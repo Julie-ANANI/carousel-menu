@@ -9,7 +9,6 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prestart": "ng build --prod --aot",
     "start": "ts-node src/server.ts"
   },
   "private": true,
