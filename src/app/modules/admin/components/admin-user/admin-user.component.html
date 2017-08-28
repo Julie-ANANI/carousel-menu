@@ -1,0 +1,82 @@
+<nav class="orange darken-1">
+  <div class="nav-wrapper container">
+    <div class="col s12">
+      <a routerLink="/" class="breadcrumb">{{ 'COMMON.DASHBOARD' | translate }}</a>
+      <a routerLink="/admin" class="breadcrumb">Administration</a>
+      <a routerLink="/admin/users" class="breadcrumb">Utilisateurs</a>
+      <a routerLink="/admin/users/{{ user.id }}" class="breadcrumb">{{ user.name }}</a>
+    </div>
+  </div>
+</nav>
+
+<div class="preloader-wrapper big active" *ngIf="!dataLoaded">
+  <div class="spinner-layer">
+    <div class="circle-clipper left">
+      <div class="circle"></div>
+    </div><div class="gap-patch">
+    <div class="circle"></div>
+  </div><div class="circle-clipper right">
+    <div class="circle"></div>
+  </div>
+  </div>
+</div>
+
+
+
+<div class="container" *ngIf="dataLoaded">
+  <div class="row">
+    <app-dynamic-form [compozer]="compozerComponents"
+                      [submitButton]="'COMMON.UPDATE' | translate"
+                      (formOnSubmit)="onSubmit($event)"
+                      (formOnInit)="formOnInit($event)"
+                      class="col s6">
+    </app-dynamic-form>
+
+    <div class="input-btn col s6">
+      <div class="container">
+        <div class="row">
+          <button class="waves-effect waves-light btn">{{ 'ACCOUNT.CHANGE_PASSWORD' | translate }}</button><!-- TODO -->
+        </div>
+        <div class="row">
+          <button class="waves-effect waves-light btn red darken-2">{{ 'ACCOUNT.DELETE_ACCOUNT' | translate }}</button>
+          <!-- TODO -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--
+<div class="container" *ngIf="dataLoaded">
+  <div class="row">
+    <div class="col s12 m12">
+      <div class="card blue-grey darken-1">
+        <div class="card-tabs">
+          <ul class="tabs tabs-fixed-width" materialize="tabs">
+            <li class="tab"><a class="active" href="#user">{{ user.name }}</a></li>
+          </ul>
+        </div>
+        <div class="card-content grey lighten-4">
+          <div id="user">
+            <table class="striped highlight bordered">
+              <tr>
+                <th>Name</th>
+                <td>{{ user.name }}</td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+              </tr>
+              <tr>
+                <th>Phone</th>
+                <td>{{ user.phone }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-->

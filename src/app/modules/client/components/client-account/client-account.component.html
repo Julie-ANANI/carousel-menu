@@ -1,0 +1,28 @@
+<app-shared-breadcrumb [routes]="[
+{routerLink:'/', name:'COMMON.DASHBOARD'},
+{routerLink:'/account', name:'COMMON.MY_ACCOUNT'}
+]"></app-shared-breadcrumb>
+
+
+<div class="container">
+  <div class="row">
+    <app-dynamic-form [compozer]="compozerComponents"
+                      [submitButton]="'COMMON.UPDATE' | translate"
+                      (formOnSubmit)="onSubmit($event)"
+                      (formOnInit)="formOnInit($event)"
+                      class="col s6">
+    </app-dynamic-form>
+
+    <!-- TODO
+    <div class="input-btn col s6">
+      <div class="container">
+        <div class="row">
+          <button class="waves-effect waves-light btn">{{ 'ACCOUNT.CHANGE_PASSWORD' | translate }}</button>
+        </div>
+        <div class="row">
+          <button class="waves-effect waves-light btn red darken-2">{{ 'ACCOUNT.DELETE_ACCOUNT' | translate }}</button>
+        </div>
+      </div>
+    </div>-->
+  </div>
+</div>

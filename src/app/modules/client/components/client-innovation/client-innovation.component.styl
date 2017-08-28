@@ -1,0 +1,53 @@
+label
+  width 100%
+
+.card
+  width 100%
+
+  .card-image
+    max-height 20rem
+    overflow hidden
+    object-fit cover
+
+    img
+      width 100%
+      max-height 100%
+      left 50%
+      transform translateX(-50%)
+
+      i.material-icons
+        font-size 16.5rem
+        margin auto
+
+    .card-title
+      display block
+      position absolute
+      bottom 0
+      left 0
+      width 100%
+      background-color #333a
+
+  .card-content
+    margin auto
+    min-height 7rem
+    text-align justify
+    p
+      word-wrap break-word
+
+  .card-action
+    height 3.8rem
+    a
+      cursor pointer
+
+
+.fake-card-create
+  height 25rem
+  transition .3s ease
+  display flex
+  cursor pointer
+
+  .card-content
+      margin auto
+
+  &:hover
+    filter brightness(0.9)

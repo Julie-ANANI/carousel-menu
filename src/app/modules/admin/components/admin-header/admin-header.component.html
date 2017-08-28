@@ -1,0 +1,14 @@
+<header>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a routerLink="/admin" appLogo logoMaxWidth="100" class="brand-logo left"><span>admin</span></a>
+        <ul id="nav-mobile" class="right">
+          <li><a routerLink="/"routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="material-icons">chevron_left</i> {{ 'ADMIN_HEADER.BACK_TO_SITE' | translate }}</a></li>
+          <li><a routerLink="./quiz/edit" routerLinkActive="active">Quiz Editor</a></li><!-- TODO -->
+          <li><a routerLink="./users" routerLinkActive="active">{{ 'COMMON.USERS' | translate }}</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,9 @@
+<div ng2FileDrop class="drop-container file-field input-field upload-area"
+     ngClass="{error: errors.medias, 'nv-file-over': hasBaseDropZoneOver}"
+     (fileOver)="fileOverBase($event)"
+     [uploader]="uploader">
+  <div class="upload-button" ngClass="{error: errors.medias}">
+    <input type="file" ng2FileSelect [uploader]="uploader" />
+    <i class="material-icons large">cloud_upload</i>
+  </div>
+</div>

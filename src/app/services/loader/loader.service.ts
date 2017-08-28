@@ -1,0 +1,29 @@
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+
+@Injectable()
+export class LoaderService {
+
+  private _isLoadingSubject = new Subject<boolean>();
+  public isLoading$: Observable<boolean> = this._isLoadingSubject.asObservable();
+
+  private _nbInProgressRequests = 0;
+
+  constructor() {
+    this._isLoadingSubject.next(false);
+  }
+
+  public startLoading (): void {
+    ++this._nbInProgressRequests;
+    this._isLoadingSubject.next(true);
+  }
+
+  public stopLoading (): void {
+    --this._nbInProgressRequests;
+    if (this._nbInProgressRequests <= 0) {
+      this._isLoadingSubject.next(false);
+      this._nbInProgressRequests = 0;
+    }
+  }
+}

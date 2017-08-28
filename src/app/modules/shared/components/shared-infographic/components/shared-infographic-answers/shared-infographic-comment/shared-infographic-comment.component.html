@@ -1,0 +1,12 @@
+<div class="col s11">
+  <strong>[FLAG_{{ answerObject.country }}] {{ answerObject.job }} - </strong> {{ answerObject.entreprise }}
+</div>
+<div #proInfos>
+  <i class="col s1 material-icons right light-blue-text text-lighten-3 pro-infos" (click)="toggleShowMoreInfo">menu</i>
+
+  <div class="more-pro-infos" *ngIf="showMoreProInfos">
+    <app-shared-infographic-professional-card [professional]="answerObject"></app-shared-infographic-professional-card>
+  </div>
+</div>
+
+<span class="col s11 white-text answer">{{ answer }}</span>

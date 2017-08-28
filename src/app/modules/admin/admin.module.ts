@@ -1,0 +1,32 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AdminRoutingModule } from './admin-routing.module';
+import { AdminComponent } from './admin.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
+import { AdminUserComponent } from './components/admin-user/admin-user.component';
+import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
+import { MaterializeModule } from 'angular2-materialize';
+import { SharedModule } from '../shared/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { AdminQuizEditorComponent } from './components/admin-quiz-editor/admin-quiz-editor.component';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
+    MaterializeModule,
+    SharedModule,
+    TranslateModule.forChild()
+  ],
+  declarations: [
+    AdminComponent,
+    AdminHeaderComponent,
+    AdminDashboardComponent,
+    AdminUsersComponent,
+    AdminUserComponent,
+    AdminQuizEditorComponent
+  ]
+})
+export class AdminModule {
+}

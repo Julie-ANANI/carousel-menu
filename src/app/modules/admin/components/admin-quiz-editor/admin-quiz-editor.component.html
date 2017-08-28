@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row">
+    <div class="col s8 margin-top">
+
+      <app-dynamic-form [compozer]="compozerComponent"></app-dynamic-form>
+
+
+      <div class="new-row-editor">
+        <div *ngIf="tmpNewRow && tmpNewRow.length">
+          <div class="preview">
+            <app-dynamic-form [compozer]="compozerComponentTmpRow"></app-dynamic-form>
+          </div>
+        </div>
+
+        <a class="waves-effect waves-light btn margin-top" data-target="new-component-modal" *ngIf="tmpNewRow"><i
+          class="material-icons left">add</i> Nouvel élément</a>
+        <a class="waves-effect waves-light btn margin-top"
+           *ngIf="tmpNewRow && tmpNewRow.length" (click)="addRow();tmpNewRow = null"><i class="material-icons left">add</i> Ajouter la ligne</a>
+
+        <a class="waves-effect waves-light btn margin-top" (click)="tmpNewRow = []" *ngIf="!(tmpNewRow && tmpNewRow.length)" data-target="new-component-modal"><i class="material-icons left">add</i> Nouvelle Ligne</a>
+        <a class="waves-effect waves-light btn margin-top" (click)="tmpNewRow = null" *ngIf="tmpNewRow && tmpNewRow.length"><i class="material-icons left">clear</i> Annuler</a>
+      </div>
+
+      <div class="modal" id="new-component-modal" materialize="modal">
+        <div class="modal-content">
+          <ul>
+            <li>
+              <p class="range-field">
+                <select materialize="material_select" [(ngModel)]="tmpComponent.columns">
+                  <option value="" disabled selected>Largeur</option>
+                  <option value="3">25%</option>
+                  <option value="6">50%</option>
+                  <option value="9">75%</option>
+                  <option value="12">100%</option>
+                </select>
+              </p>
+            </li>
+            <li>
+              <div class="input-field col s12">
+                <select materialize="material_select" [(ngModel)]="tmpComponent.compozerType">
+                  <option value="" disabled selected>Type de composant</option>
+                  <option value="content">Paragraphe</option>
+                  <option value="html">HTML</option>
+                  <option value="question">Question</option>
+                </select>
+                <label>Type de composant</label>
+              </div>
+            </li>
+            <li *ngIf="tmpComponent.compozerType === 'content'">
+              <h4>Contenu</h4>
+              <textarea class="materialize-textarea" [(ngModel)]="tmpComponent.value"></textarea>
+            </li>
+            <li *ngIf="tmpComponent.compozerType === 'question'">
+              <h4>Question</h4>
+              <textarea class="materialize-textarea" [(ngModel)]="tmpComponent.value"></textarea>
+            </li>
+            <li *ngIf="tmpComponent.compozerType === 'html'">
+              <h4>HTML</h4>
+              <textarea class="materialize-textarea" [(ngModel)]="tmpComponent.value"></textarea>
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <a class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+          <a class="modal-action modal-close btn waves-green"
+             *ngIf="tmpComponent.compozerType" (click)="addCompozerComponent()">Ajouter</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s4">
+      <pre><textarea [(ngModel)]="stringCompozerObject"></textarea></pre>
+      <a class="waves-effect waves-light btn"
+         (click)="updatestringCompozerObject()">{{ 'COMMON.UPDATE' | translate }}</a>
+    </div>
+  </div>
+</div>

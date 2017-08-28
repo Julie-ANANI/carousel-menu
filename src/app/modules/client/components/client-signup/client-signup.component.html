@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col s5">
+    <div class="container">
+      <h1>{{ 'COMMON.SIGN_UP' | translate }}</h1>
+      <app-dynamic-form
+        [compozer]="compozerComponents"
+        [submitButton]="'SIGN_UP.SIGN_UP_BTN' | translate"
+        (formOnSubmit)="onSubmit($event)">
+      </app-dynamic-form>
+      <a routerLink="/login">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</a>
+    </div>
+  </div>
+</div>

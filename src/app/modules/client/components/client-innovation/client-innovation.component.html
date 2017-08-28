@@ -1,0 +1,51 @@
+<app-shared-breadcrumb [routes]="[{routerLink:'/', name:'COMMON.DASHBOARD'}, {routerLink:'/account', name:'COMMON.MY_ACCOUNT'}, {routerLink:'/innovations', name:'COMMON.MY_INNOVATIONS'}]"></app-shared-breadcrumb>
+
+
+<div class="container">
+  <div class="row">
+    <div *ngFor="let innovation of innovations" class="col s12 m6 l4">
+
+        <div class="card white">
+
+          <div class="card-image">
+
+            <img [src]="getPrincipalMedia(innovation)">
+            <a [routerLink]="'./' + innovation._id">
+              <span class="card-title">{{(innovation.name || 'Untitled innovation') | shorten: 25: '...' }}</span>
+            </a><!-- TODO translate -->
+          </div>
+
+          <!--<div class="card-content grey-text text-darken-2">
+            <p>{{ (innovation.summary || 'Loading... pepe')  | shorten: 120: '...' }}</p>
+          </div> --> <!-- TODO: Cannot show the summary because it is defined for each card and not for the innovation itself -->
+
+          <div class="card-action">
+            <a [routerLink]="'./' + innovation._id">Modifier l'innovation</a>
+            <a routerLink="./">
+              <i class="material-icons right" (click)="removeInnovation(innovation._id)">delete</i>
+            </a>
+          </div>
+
+        </div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12 m6 l4">
+
+      <div class="card white fake-card-create" (click)="wantToCreateNewCard = true">
+
+        <div class="card-content">
+          <i class="material-icons large orange-text text-darken-1">add_circle</i>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<app-shared-innovation-card-langmodal *ngIf="wantToCreateNewCard" [wantTo]="'create'" [langOptions]="langOptions" [selectLangOfCardInput]="selectLangInput"
+                                      (setLangInput)="selectLangInput = $event" (closed)="wantToCreateNewCard = false"
+                                      (createCard)="$event ? createInnovation() : null"
+></app-shared-innovation-card-langmodal>

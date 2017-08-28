@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="121px" height="191px" viewBox="0 0 121 191" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 45.2 (43514) - http://www.bohemiancoding.com/sketch -->
+    <title>umi-innovation-card</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Maquette-UMI-2017-FR" transform="translate(-202.000000, -4637.000000)">
+            <g id="umi-innovation-card" transform="translate(203.000000, 4638.000000)">
+                <g id="Fiche-innovation">
+                    <rect id="BG" stroke="#D3D3D3" fill="#FFFFFF" x="0" y="0" width="119.089678" height="188.558656"></rect>
+                    <rect id="Rectangle-path" fill="#0B90C6" x="0" y="-1.49213975e-13" width="119.089678" height="26.8153444"></rect>
+                    <rect id="Rectangle-21" fill="#D8D8D8" x="13.8937957" y="154.816581" width="17.8634516" height="17.8634516"></rect>
+                    <rect id="Rectangle-21" fill="#D8D8D8" x="51.605527" y="154.816581" width="17.8634516" height="17.8634516"></rect>
+                    <rect id="Rectangle-21" fill="#D8D8D8" x="89.3172582" y="154.816581" width="17.8634516" height="17.8634516"></rect>
+                    <rect id="Rectangle-75" fill="#D8D8D8" x="66.8901052" y="137.596679" width="39.8553453" height="2.1196127" rx="1.05980635"></rect>
+                    <rect id="Rectangle-76" fill="#D8D8D8" x="66.8901052" y="130.531303" width="39.8553453" height="2.1196127" rx="1.05980635"></rect>
+                    <rect id="Rectangle-77" fill="#D8D8D8" x="66.8901052" y="123.465927" width="39.8553453" height="2.1196127" rx="1.05980635"></rect>
+                    <rect id="Rectangle-75" fill="#D8D8D8" x="13.2997503" y="137.596679" width="39.8553453" height="2.1196127" rx="1.05980635"></rect>
+                    <rect id="Rectangle-76" fill="#D8D8D8" x="13.2997503" y="130.531303" width="39.8553453" height="2.1196127" rx="1.05980635"></rect>
+                    <rect id="Rectangle-77" fill="#D8D8D8" x="13.2997503" y="123.465927" width="39.8553453" height="2.1196127" rx="1.05980635"></rect>
+                    <rect id="Rectangle-21" fill="#D8D8D8" x="13.8937957" y="87.3324302" width="93.2869141" height="21.8331076"></rect>
+                    <rect id="Rectangle-21" fill="#0B90C6" x="13.8937957" y="41.6813872" width="27.7875914" height="27.7875914"></rect>
+                    <rect id="Rectangle-78" fill="#D8D8D8" x="51.0114815" y="62.1554082" width="55.5751829" height="2.1196127" rx="1.05980635"></rect>
+                    <rect id="Rectangle-79" fill="#D8D8D8" x="51.0114815" y="55.0900326" width="55.5751829" height="2.1196127" rx="1.05980635"></rect>
+                    <rect id="Rectangle-80" fill="#D8D8D8" x="51.0114815" y="48.0246569" width="55.5751829" height="2.1196127" rx="1.05980635"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

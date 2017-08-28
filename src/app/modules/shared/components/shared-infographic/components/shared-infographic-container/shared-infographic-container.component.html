@@ -1,0 +1,24 @@
+<h4 class="grey-text text-lighten-1">{{ question.statTitle }}</h4>
+<div class="card white"> <!-- cadre blanc -->
+  <div class="card-content">
+    <div class="row">
+
+      <app-shared-infographic-synthesis class="col s4" [infographic]="infographic" [question]="question"></app-shared-infographic-synthesis>
+      <div class="col s6">
+        <h4 class="title">{{ question.question }}</h4>
+      </div>
+
+      <app-shared-infographic-worldmap *ngIf="question.answerType === 'worldmap'" [countries]="infographic.worldMap" [color]="'#0B90C6'"></app-shared-infographic-worldmap>
+
+      <app-shared-infographic-answers [infographic]="infographic" [question]="question" [showDetails]="showDetails"></app-shared-infographic-answers>
+
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="question.answerType != ''">
+  <div class="col s4 offset-s4 btn btn-large waves-effect over-card" [ngClass]="{'grey darken-2': showDetails}" (click)="showDetails = !showDetails">
+    <span class="vertical-middle">{{ 'INFOGRAPHIC_DETAILS.' + (showDetails ? 'HIDE' : 'SHOW') | translate }}
+      <i class="material-icons vertical-middle">{{ showDetails ? 'keyboardarrowup' : 'keyboardarrowdown' }}</i>
+    </span>
+  </div>
+</div>
