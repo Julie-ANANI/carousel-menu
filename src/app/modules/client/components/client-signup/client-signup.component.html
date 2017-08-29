@@ -2,7 +2,13 @@
   <div class="col s5">
     <div class="container">
       <h1>{{ 'COMMON.SIGN_UP' | translate }}</h1>
-      <app-dynamic-form
+      <p>
+        <button class="btn btn-primary btn-lg btn-linkedin" (click)="linkedInSignIn()">
+          {{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
+        </button>
+      </p>
+
+      <div class="divider"><span>{{ 'SIGN_UP.OR' | translate }}</span></div><app-dynamic-form
         [compozer]="compozerComponents"
         [submitButton]="'SIGN_UP.SIGN_UP_BTN' | translate"
         (formOnSubmit)="onSubmit($event)">

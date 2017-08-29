@@ -40,6 +40,17 @@ export class AuthService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  public linkedinLogin(): Observable<any> {
+    return this._http.get('/auth/linkedin')
+      .map((res: Response) => {
+        const response = res.json();
+        return response;
+      })
+      .catch((error: Response) => {
+        return Observable.throw(error.json())
+      });
+  }
+
   public logout(): Observable<any> {
     return this._http.get('/auth/logout')
       .map((res: Response) => {

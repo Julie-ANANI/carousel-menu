@@ -69,6 +69,18 @@ export class ClientSignupComponent implements OnInit {
     this._titleService.setTitle('Sign up'); // TODO translate
   }
 
+  public linkedInSignIn() {
+    this._authService.linkedinLogin()
+      .subscribe(
+        data => {
+          console.log(data)
+        },
+        error => {
+          this._notificationsService.error('Erreur', error.message); // TODO translate
+        }
+      );
+  }
+
   public onSubmit(form) {
     if (form.valid) {
       const user = new User(form.value); // TODO vérifier que l'utilisateur est valide (s'il a un email) ...
