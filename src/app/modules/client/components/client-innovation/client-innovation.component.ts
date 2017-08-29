@@ -43,9 +43,12 @@ export class ClientInnovationComponent implements OnInit {
   createInnovation() {
     const lang = this._selectLangInput;
     const newInnovation = {
-      // country: lang, le serveur
-      name: ''/*,
+      /* country: lang, le serveur
+      name: ''
       lang: lang*/
+      country: lang,
+      title: lang === 'fr' ? 'Donnez un nom à votre innovation' : 'Give a name to your innovation',
+      lang: lang
     };
 
     this._innovationService.create(newInnovation).subscribe(innovation =>  {
