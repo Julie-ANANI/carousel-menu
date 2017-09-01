@@ -2,6 +2,11 @@
   <div class="col s4">
     <div class="container">
       <h1>{{ 'COMMON.LOG_IN' | translate }}</h1>
+      <p>
+        <button class="btn btn-primary btn-lg btn-linkedin" (click)="linkedInSignIn()">
+          {{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
+        </button>
+      </p>
       <app-dynamic-form
         [compozer]="compozerComponents"
         [submitButton]="'LOG_IN.LOG_IN_BTN' | translate"

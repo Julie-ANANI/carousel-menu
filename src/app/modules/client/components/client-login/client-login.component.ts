@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../models/user.model';
@@ -37,8 +37,7 @@ export class ClientLoginComponent implements OnInit {
     ]
   ]);
 
-  constructor(private _formBuilder: FormBuilder,
-              private _authService: AuthService,
+  constructor(private _authService: AuthService,
               private _router: Router,
               private _translateService: TranslateService,
               private _titleService: Title,
@@ -76,6 +75,33 @@ export class ClientLoginComponent implements OnInit {
     else {
       this._notificationsService.error('Erreur', 'Formulaire non valide'); // TODO translate
     }
+  }
+
+  public linkedInSignIn() {
+    this._authService.linkedinLogin()
+      .subscribe(
+        url => {
+          window.location.href = url;
+          if (this._authService.isAuthenticated) {
+            // Get the redirect URL from our auth service
+            // If no redirect has been set, use the default
+            const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : '/';
+
+            // Set our navigation extras object
+            // that passes on our global query params and fragment
+            const navigationExtras: NavigationExtras = {
+              preserveQueryParams: true,
+              preserveFragment: true
+            };
+
+            // Redirect the user
+            this._router.navigate([redirect], navigationExtras);
+          }
+        },
+        error => {
+          this._notificationsService.error('Erreur', error.message); // TODO translate
+        }
+      );
   }
 
   get authService (): AuthService {

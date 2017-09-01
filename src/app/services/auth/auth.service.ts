@@ -44,7 +44,7 @@ export class AuthService {
     return this._http.get('/auth/linkedin')
       .map((res: Response) => {
         const response = res.json();
-        return response;
+        return response.url;
       })
       .catch((error: Response) => {
         return Observable.throw(error.json())

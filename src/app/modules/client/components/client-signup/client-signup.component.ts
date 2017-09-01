@@ -1,3 +1,4 @@
+import { Router, NavigationExtras } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { UserService } from '../../../../services/user/user.service';
@@ -58,6 +59,7 @@ export class ClientSignupComponent implements OnInit {
   ]);
 
   constructor(private _userService: UserService,
+              private _router: Router,
               private _authService: AuthService,
               private _location: Location,
               private _titleService: Title,
@@ -72,8 +74,23 @@ export class ClientSignupComponent implements OnInit {
   public linkedInSignIn() {
     this._authService.linkedinLogin()
       .subscribe(
-        data => {
-          console.log(data)
+        url => {
+          window.location.href = url;
+          if (this._authService.isAuthenticated) {
+            // Get the redirect URL from our auth service
+            // If no redirect has been set, use the default
+            const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : '/';
+
+            // Set our navigation extras object
+            // that passes on our global query params and fragment
+            const navigationExtras: NavigationExtras = {
+              preserveQueryParams: true,
+              preserveFragment: true
+            };
+
+            // Redirect the user
+            this._router.navigate([redirect], navigationExtras);
+          }
         },
         error => {
           this._notificationsService.error('Erreur', error.message); // TODO translate
