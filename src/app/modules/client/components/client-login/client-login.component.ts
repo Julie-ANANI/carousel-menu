@@ -82,21 +82,6 @@ export class ClientLoginComponent implements OnInit {
       .subscribe(
         url => {
           window.location.href = url;
-          if (this._authService.isAuthenticated) {
-            // Get the redirect URL from our auth service
-            // If no redirect has been set, use the default
-            const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : '/';
-
-            // Set our navigation extras object
-            // that passes on our global query params and fragment
-            const navigationExtras: NavigationExtras = {
-              preserveQueryParams: true,
-              preserveFragment: true
-            };
-
-            // Redirect the user
-            this._router.navigate([redirect], navigationExtras);
-          }
         },
         error => {
           this._notificationsService.error('Erreur', error.message); // TODO translate
