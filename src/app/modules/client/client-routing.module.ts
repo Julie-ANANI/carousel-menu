@@ -7,6 +7,7 @@ import { ClientDiscoverComponent } from './components/client-discover/client-dis
 
 import { ClientInnovationComponent } from './components/client-innovation/client-innovation.component';
 import { ClientInnovationNewComponent } from './components/client-innovation-new/client-innovation-new.component';
+import { ClientCampaignsComponent } from './components/client-campaigns/client-campaigns.component';
 
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
@@ -78,6 +79,15 @@ const clientRoutes: Routes = [
           { path: '', component: ClientInnovationComponent, pathMatch: 'full' },
           { path: 'new', component: ClientInnovationNewComponent },
           { path: ':innovationId', component: SharedInnovationCardComponent }
+        ]
+      },
+      {
+        path: 'campaigns',
+        canActivate: [AuthGuard],
+        children: [
+          { path: '', component: ClientCampaignsComponent, pathMatch: 'full' },
+          { path: 'new', component: ClientCampaignsComponent },
+          { path: ':campaignId', component: ClientCampaignsComponent }
         ]
       },
       {
