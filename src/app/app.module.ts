@@ -8,6 +8,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {CookieService, CookieOptions} from "angular2-cookie/core";
 import {WhitemarkService} from "./services/whitemark/whitemark.service";
 import {InnovationService} from "./services/innovation/innovation.service";
+import {CampaignService} from "./services/campaign/campaign.service";
 import {UserService} from "./services/user/user.service";
 import {MediaService} from "./services/media/media.service";
 import {SimpleNotificationsModule} from "angular2-notifications";
@@ -47,6 +48,7 @@ import {HttpLoaderComponent} from "./components/http-loader/http-loader.componen
     WhitemarkService,
     UserService,
     InnovationService,
+    CampaignService,
     MediaService,
     LoaderService,
     {

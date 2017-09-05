@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../../services/auth/auth.service';
+import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
+import { LocalDataSource, Ng2SmartTableModule } from 'ng2-smart-table';
 
 @Component({
   selector: 'app-client-campaign',
@@ -12,19 +13,38 @@ import { Title } from '@angular/platform-browser';
 })
 export class ClientCampaignComponent implements OnInit {
 
+  private _campaigns: [any];
+  private _source: LocalDataSource;
+  private _settings = {
+    columns: {
+      title: {
+        title: 'Titre',
+      },
+      'stats.totalResponded': {
+        title: 'Réponses',
+      },
+      status: {
+        title: 'Statut',
+      },
+      created: {
+        title: 'Création',
+      },
+    },
+  };
 
-  constructor(private _authService: AuthService,
-              private _router: Router,
+  constructor(private _router: Router,
               private _translateService: TranslateService,
               private _titleService: Title,
+              private _campaignService: CampaignService,
               private _notificationsService: NotificationsService) {}
 
   ngOnInit(): void {
     initTranslation(this._translateService);
     this._titleService.setTitle('Campaigns'); // TODO translate
-  }
 
-  get authService (): AuthService {
-    return this._authService;
+    this._source = new LocalDataSource();
+    this._campaignService.getAll().subscribe(campaigns => {
+      this._source.load(campaigns.result);
+    });
   }
 }
