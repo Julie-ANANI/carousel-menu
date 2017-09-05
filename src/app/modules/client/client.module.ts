@@ -19,7 +19,8 @@ import { ClientDiscoverComponent } from './components/client-discover/client-dis
 
 import { ClientInnovationComponent } from './components/client-innovation/client-innovation.component';
 import { ClientInnovationNewComponent } from './components/client-innovation-new/client-innovation-new.component';
-import { ClientCampaignsComponent } from './components/client-campaigns/client-campaigns.component';
+
+import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
 
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
@@ -53,7 +54,7 @@ import { ClientLogoutComponent } from './components/client-logout/client-logout.
     ClientInnovationComponent,
     ClientInnovationNewComponent,
     
-    ClientCampaignsComponent,
+    ClientCampaignComponent,
 
     ClientDiscoverComponent,
     ClientLoginComponent,

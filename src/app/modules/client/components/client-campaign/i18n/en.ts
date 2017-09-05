@@ -1,5 +1,5 @@
 export const en = {
-  "CAMPAIGNS": {
+  "CAMPAIGN": {
     "TITLE": "Campaigns"
   }
 };

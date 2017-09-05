@@ -6,11 +6,11 @@ import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-client-campaigns',
-  templateUrl: './client-campaigns.component.html',
-  styleUrls: ['./client-campaigns.component.styl']
+  selector: 'app-client-campaign',
+  templateUrl: './client-campaign.component.html',
+  styleUrls: ['./client-campaign.component.styl']
 })
-export class ClientCampaignsComponent implements OnInit {
+export class ClientCampaignComponent implements OnInit {
 
 
   constructor(private _authService: AuthService,
