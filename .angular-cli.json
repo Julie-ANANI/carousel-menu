@@ -5,6 +5,7 @@
   },
   "apps": [
     {
+      "name": "umi",
       "root": "src",
       "outDir": "./dist",
       "assets": [
@@ -27,11 +28,41 @@
         "../node_modules/hammerjs/hammer.js",
         "../node_modules/materialize-css/dist/js/materialize.min.js"
       ],
-      "environmentSource": "environments/environment.ts",
+      "environmentSource": "environment.ts",
       "environments": {
-        "local": "environments/environment.ts",
-        "dev": "environments/environment.dev.ts",
-        "prod": "environments/environment.prod.ts"
+        "local": "environments/umi/environment.local.ts",
+        "dev": "environments/umi/environment.dev.ts",
+        "prod": "environments/umi/environment.prod.ts"
+      }
+    },
+    {
+      "name": "vendor1",
+      "root": "src",
+      "outDir": "./dist",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "materialize.variables.scss",
+        "styles.vendor1.styl"
+      ],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/hammerjs/hammer.js",
+        "../node_modules/materialize-css/dist/js/materialize.min.js"
+      ],
+      "environmentSource": "environment.ts",
+      "environments": {
+        "vendor1.local": "environments/vendor1/environment.vendor1.local.ts",
+        "vendor1.dev": "environments/vendor1/environment.vendor1.dev.ts"
       }
     }
   ],

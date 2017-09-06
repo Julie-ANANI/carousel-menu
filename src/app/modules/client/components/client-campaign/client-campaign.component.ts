@@ -47,4 +47,12 @@ export class ClientCampaignComponent implements OnInit {
       this._source.load(campaigns.result);
     });
   }
+
+  get source(): LocalDataSource {
+    return this._source;
+  }
+
+  get settings(): any {
+    return this._settings;
+  }
 }

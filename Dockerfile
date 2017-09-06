@@ -13,7 +13,8 @@ ADD . .
 
 WORKDIR /var/web
 RUN npm install --production
-RUN ng build --prod --aot
+#RUN ng build --prod --aot
+RUN ng build --app=vendor1 --environment=vendor1.dev --aot
 
 EXPOSE  3080
 CMD ["npm", "start"]

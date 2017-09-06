@@ -6,7 +6,7 @@ import {
   Headers,
   XHRBackend
 } from '@angular/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environment';
 import { LoaderService } from './loader/loader.service';
 import { RequestOptions } from './requestOptions';
 import { Observable } from 'rxjs/Observable';
@@ -16,6 +16,7 @@ export { Response } from '@angular/http';
 
 @Injectable()
 export class Http extends AngularHttp {
+  private _env = environment;
   private _apiUrl = environment.apiUrl;
 
   constructor(protected _backend: XHRBackend,
@@ -39,6 +40,7 @@ export class Http extends AngularHttp {
   }
 
   public post(uri: string, data?: object, options?: RequestOptionsArgs) {
+    console.log(this._env);
     this._showLoader();
     return super.post(this._getFullUrl(uri), data, this._requestOptions(options))
       .catch(this._onCatch)
