@@ -28,11 +28,11 @@
               <span>{{ 'COMMON.MY_INNOVATIONS' | translate }}</span>
             </a>
           </li>
-          <!-- <li *ngIf="authService.isAdmin"> TODO
-            <a [routerLink]="'/admin'">
-              <i class="material-icons">supervisor_account</i>
+          <li *ngIf="authService.isAdmin">
+            <a [routerLink]="'/campaign'">
+              <span>{{ 'COMMON.CAMPAIGNS' | translate }}</span>
             </a>
-          </li>-->
+          </li>
           <li>
             <a [routerLink]="'/logout'">
               <i class="material-icons">power_settings_new</i>
