@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <h1>{{total}} {{ 'CAMPAIGN.TITLE' | translate }}</h1>
-      <table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
+      <table class="table table-striped" [mfData]="data" #mf="mfDataTable">
         <thead>
         <tr>
           <th>
@@ -18,12 +18,15 @@
             <mfDefaultSorter by="created">{{ 'CAMPAIGN.CREATED' | translate }}</mfDefaultSorter>
           </th>
         </tr>
+        <tr>
+
+        </tr>
         </thead>
         <tbody>
         <tr *ngFor="let innovation of mf.data">
           <td>
-            <a [routerLink]="'../innovation/' + innovation._id">
-              {{(innovation.name || 'Untitled innovation') | shorten: 25: '...' }}
+            <a [routerLink]="'../innovations/' + innovation._id">
+              {{(innovation.name || 'Untitled innovation') | shorten: 55: '...' }}
             </a>
           </td>
           <td>
