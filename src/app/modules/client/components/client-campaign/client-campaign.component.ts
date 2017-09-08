@@ -17,6 +17,20 @@ export class ClientCampaignComponent implements OnInit {
   private _data = [];
   private _total = 0;
   private _settings = {
+    columns: {
+      title: {
+        title: 'Titre',
+      },
+      'stats.totalResponded': {
+        title: 'Réponses',
+      },
+      status: {
+        title: 'Statut',
+      },
+      created: {
+        title: 'Création',
+      },
+    },
   };
 
   constructor(private _router: Router,
