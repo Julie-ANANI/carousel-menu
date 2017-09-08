@@ -4,8 +4,6 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
-import { DataTableModule } from "angular2-datatable";
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-campaign',
@@ -36,7 +34,6 @@ export class ClientCampaignComponent implements OnInit {
   constructor(private _router: Router,
               private _translateService: TranslateService,
               private _titleService: Title,
-              private _datePipe: DatePipe,
               private _innovationService: InnovationService,
               private _notificationsService: NotificationsService) {}
 
