@@ -1,8 +1,48 @@
 <div class="row">
-  <div class="col s4">
+  <div>
     <div class="container">
-      <h1>{{ 'CAMPAIGN.TITLE' | translate }}</h1>
-      <ng2-smart-table [settings]="_settings" [source]="_source"></ng2-smart-table>
+      <h1>{{total}} {{ 'CAMPAIGN.TITLE' | translate }}</h1>
+      <table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead>
+        <tr>
+          <th>
+            <mfDefaultSorter by="name">{{ 'CAMPAIGN.NAME' | translate }}</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="owner.firstName">{{ 'CAMPAIGN.OWNER' | translate }}</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="status">{{ 'CAMPAIGN.STATUS' | translate }}</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="created">{{ 'CAMPAIGN.CREATED' | translate }}</mfDefaultSorter>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let innovation of mf.data">
+          <td>
+            <a [routerLink]="'../innovation/' + innovation._id">
+              {{(innovation.name || 'Untitled innovation') | shorten: 25: '...' }}
+            </a>
+          </td>
+          <td>
+            <a [routerLink]="'../user/' + innovation.owner._id">
+              {{innovation.owner.firstName}} {{innovation.owner.lastName}}
+            </a>
+          </td>
+          <td class="text-right">{{ 'CAMPAIGN.' + innovation.status | translate }}</td>
+          <td>{{innovation.created | date : dateFormat}}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="4">
+            <mfBootstrapPaginator [rowsOnPageSet]="[10,50,100]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
     </div>
   </div>
 </div>

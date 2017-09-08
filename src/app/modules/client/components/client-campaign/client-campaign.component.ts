@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CampaignService } from '../../../../services/campaign/campaign.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
-import { LocalDataSource, Ng2SmartTableModule } from 'ng2-smart-table';
+import { DataTableModule } from "angular2-datatable";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-campaign',
@@ -13,38 +14,36 @@ import { LocalDataSource, Ng2SmartTableModule } from 'ng2-smart-table';
 })
 export class ClientCampaignComponent implements OnInit {
 
-  private _campaigns: [any];
-  private _source: LocalDataSource;
+  private _data = [];
+  private _total = 0;
   private _settings = {
-    columns: {
-      title: {
-        title: 'Titre',
-      },
-      'stats.totalResponded': {
-        title: 'Réponses',
-      },
-      status: {
-        title: 'Statut',
-      },
-      created: {
-        title: 'Création',
-      },
-    },
   };
 
   constructor(private _router: Router,
               private _translateService: TranslateService,
               private _titleService: Title,
-              private _campaignService: CampaignService,
+              private _datePipe: DatePipe,
+              private _innovationService: InnovationService,
               private _notificationsService: NotificationsService) {}
 
   ngOnInit(): void {
     initTranslation(this._translateService);
     this._titleService.setTitle('Campaigns'); // TODO translate
 
-    this._source = new LocalDataSource();
-    this._campaignService.getAll().subscribe(campaigns => {
-      this._source.load(campaigns.result);
+    this._innovationService.getAll().subscribe(innovations => {
+      this._data = innovations.result;
+      this._total = innovations._metadata.totalCount
     });
+  }
+
+  get total(): Number {
+    return this._total;
+  }
+  get data(): any {
+    return this._data;
+  }
+
+  get settings(): any {
+    return this._settings;
   }
 }

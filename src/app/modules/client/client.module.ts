@@ -4,8 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MaterializeModule } from 'angular2-materialize/dist';
 import { LocalStorageModule } from 'angular-2-local-storage'; // TODO utiliser le localStorage pour accélérer les chargements
 import { NgPipesModule } from 'ngx-pipes';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-
+import { DataTableModule } from "angular2-datatable";
 import { SharedModule } from '../shared/shared.module';
 import { SharedInfographicModule } from '../shared/components/shared-infographic/shared-infographic.module';
 
@@ -40,7 +39,7 @@ import { ClientLogoutComponent } from './components/client-logout/client-logout.
       storageType: 'localStorage'
     }),
     NgPipesModule,
-    Ng2SmartTableModule,
+    DataTableModule,
     SharedModule,
     SharedInfographicModule
   ],
