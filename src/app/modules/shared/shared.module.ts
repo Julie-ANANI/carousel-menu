@@ -22,7 +22,7 @@ import {SharedUploadZoneVideoComponent} from "./components/shared-upload-zone-vi
 import {SharedPreloaderComponent} from "./components/shared-preloader/shared-preloader.component";
 import {SharedLoaderComponent} from "./components/shared-loader/shared-loader.component";
 import {SharedInnovationCardLangmodalComponent} from "./components/shared-innovation-card-langmodal/shared-innovation-card-langmodal.component";
-
+import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
 
 @NgModule({
   imports: [
@@ -41,6 +41,7 @@ import {SharedInnovationCardLangmodalComponent} from "./components/shared-innova
     // Directives
     FormErrorDirective,
     LogoDirective,
+    SqSortDirective,
 
     // Component
     DynamicFormComponent,
@@ -67,6 +68,7 @@ import {SharedInnovationCardLangmodalComponent} from "./components/shared-innova
     // Directives
     FormErrorDirective,
     LogoDirective,
+    SqSortDirective,
 
     // Components
     DynamicFormComponent,
