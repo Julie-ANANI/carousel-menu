@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { SmartQueryService } from '../../../../services/smartQuery/smartQuery.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
@@ -12,49 +12,37 @@ import { Title } from '@angular/platform-browser';
 })
 export class ClientCampaignComponent implements OnInit {
 
-  private _data = [];
+  private _innovations = [];
   private _total = 0;
-  private _settings = {
-    columns: {
-      title: {
-        title: 'Titre',
-      },
-      'stats.totalResponded': {
-        title: 'Réponses',
-      },
-      status: {
-        title: 'Statut',
-      },
-      created: {
-        title: 'Création',
-      },
-    },
-  };
-
+  
   constructor(private _router: Router,
               private _translateService: TranslateService,
               private _titleService: Title,
-              private _innovationService: InnovationService,
-              private _notificationsService: NotificationsService) {}
+              private _sq: SmartQueryService,
+              private _notificationsService: NotificationsService) {
+    this._sq.setRoute('/innovation');
+  }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
     this._titleService.setTitle('Campaigns'); // TODO translate
 
-    this._innovationService.getAll().subscribe(innovations => {
-      this._data = innovations.result;
-      this._total = innovations._metadata.totalCount
+    this._sq.data$.subscribe(innovations => {
+      this._innovations = innovations.result;
+      this._total = innovations._metadata.totalCount;
     });
+    this._sq.getData();
+  }
+  
+  get sq(): any {
+    return this._sq;
   }
 
-  get total(): Number {
+  get total(): number {
     return this._total;
   }
-  get data(): any {
-    return this._data;
-  }
 
-  get settings(): any {
-    return this._settings;
+  get innovations(): any[] {
+    return this._innovations;
   }
 }

@@ -2,46 +2,82 @@
   <div>
     <div class="container">
       <h1>{{total}} {{ 'CAMPAIGN.TITLE' | translate }}</h1>
-      <table class="table table-striped" [mfData]="data" #mf="mfDataTable">
+      <table wt-responsive-table class="table">
         <thead>
         <tr>
-          <th>
-            <mfDefaultSorter by="name">{{ 'CAMPAIGN.NAME' | translate }}</mfDefaultSorter>
-          </th>
-          <th>
-            <mfDefaultSorter by="owner.firstName">{{ 'CAMPAIGN.OWNER' | translate }}</mfDefaultSorter>
-          </th>
-          <th>
-            <mfDefaultSorter by="status">{{ 'CAMPAIGN.STATUS' | translate }}</mfDefaultSorter>
-          </th>
-          <th>
-            <mfDefaultSorter by="created">{{ 'CAMPAIGN.CREATED' | translate }}</mfDefaultSorter>
-          </th>
+          <th sqSort [service]="sq" prop="name" colspan="2">Titre</th>
+          <th>Campaigns</th>
+          <th sqSort [service]="sq" prop="owner.firstName">Utilisateur</th>
+          <th sqSort [service]="sq" prop="status">Statut</th>
+          <th sqSort [service]="sq" prop="created">Création</th>
+          <th class="text-right">Editer</th>
         </tr>
         <tr>
-
+          <th colspan="3">
+            <input sq-search="$name" sq-delay="2000" placeholder="Recherche" class="form-control input-sm" type="search">
+          </th>
+          <th>
+            <input sq-search="$owner_firstName" sq-delay="2000" placeholder="Recherche" class="form-control input-sm" type="search">
+          </th>
+          <th>
+            <select class="form-control input-sm" sq-search="status" ng-model="statusInvention" ng-change="saveState('statusInvention', statusInvention)">
+              <option value="">Tous</option>
+              <option value="EDITING">Edition en cours</option>
+              <option value="SUBMITTED">En attente</option>
+              <option value="EVALUATING">Campagne en cours</option>
+              <option value="EVALUATING_DONE">Campagne fermée</option>
+            </select>
+          </th>
+          <th colspan="2" class="text-right">
+            <button class="btn btn-default btn-sm" sq-reset-search ng-click="saveState('statusInvention', '')">
+              <i class="fa fa-times"></i> Reset
+            </button>
+          </th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let innovation of mf.data">
-          <td>
-            <a [routerLink]="'../innovations/' + innovation._id">
-              {{(innovation.name || 'Untitled innovation') | shorten: 55: '...' }}
+        <tr *ngFor="let innovation of innovations">
+          <td width="80">
+            <a href="" ng-if="innovation.media">
+              IMAGE
             </a>
           </td>
+          <td>
+            <a [routerLink]="'../innovation/' + innovation._id">
+              {{(innovation.name || 'Untitled innovation') | shorten: 25: '...' }}
+            </a>
+          </td>
+          <td>{{innovation.campaigns.length}}</td>
           <td>
             <a [routerLink]="'../user/' + innovation.owner._id">
               {{innovation.owner.firstName}} {{innovation.owner.lastName}}
             </a>
           </td>
+
           <td class="text-right">{{ 'CAMPAIGN.' + innovation.status | translate }}</td>
           <td>{{innovation.created | date : dateFormat}}</td>
+          <td class="text-right">
+            <button class="btn btn-default btn-sm" ui-sref="innovation-edit.card({innovationId:innovation._id})">
+              <i class="fa fa-pencil"></i> Edit
+            </button>
+          </td>
         </tr>
         </tbody>
         <tfoot>
         <tr>
-          <td colspan="4">
-            <mfBootstrapPaginator [rowsOnPageSet]="[10,50,100]"></mfBootstrapPaginator>
+          <td colspan="6">
+            <div sq-items-by-page="itemsByPagePagination" sq-pagination="" sq-template="modules/common/views/pagination.custom.html" class="text-center"></div>
+
+            <div class="form-inline text-center">
+              <select class="form-control" ng-model="itemsByPage" ng-change="saveState('itemsByPage', itemsByPage)">
+                <option value="10">10 par page</option>
+                <option value="20">20 par page</option>
+                <option value="50">50 par page</option>
+                <option value="100">100 par page</option>
+                <option value="500">500 par page</option>
+                <option value="1000000">Tous</option>
+              </select>
+            </div>
           </td>
         </tr>
         </tfoot>
