@@ -10,8 +10,7 @@
           <th sqSort [service]="sq" prop="owner.firstName">{{ 'CAMPAIGN.OWNER' | translate }}</th>
           <th sqSort [service]="sq" prop="status">{{ 'CAMPAIGN.STATUS' | translate }}</th>
           <th sqSort [service]="sq" prop="created">{{ 'CAMPAIGN.CREATED' | translate }}</th>
-          <th class="text-right">Éditer</th>
-        </tr>
+        </tr><!--
         <tr>
           <th colspan="3">
             <input sq-search="$name" sq-delay="2000" placeholder="Recherche" class="form-control input-sm" type="search">
@@ -33,7 +32,7 @@
               <i class="fa fa-times"></i> Reset
             </button>
           </th>
-        </tr>
+        </tr>-->
         </thead>
         <tbody>
         <tr *ngFor="let innovation of innovations">
@@ -56,11 +55,6 @@
 
           <td class="text-right">{{ 'CAMPAIGN.' + innovation.status | translate }}</td>
           <td>{{innovation.created | date : dateFormat}}</td>
-          <td class="text-right">
-            <button class="btn btn-default btn-sm" ui-sref="innovation-edit.card({innovationId:innovation._id})">
-              <i class="fa fa-pencil"></i> Edit
-            </button>
-          </td>
         </tr>
         </tbody>
         <tfoot>
