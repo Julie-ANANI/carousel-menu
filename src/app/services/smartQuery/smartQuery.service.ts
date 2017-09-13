@@ -57,7 +57,7 @@ export class SmartQueryService {
   }
 
   public goToPage(number: number) {
-    this._config.offset = this._config.params.limit * number;
+    this._config.offset = this._config.limit * (number - 1);
     return this.getData();
   }
 
