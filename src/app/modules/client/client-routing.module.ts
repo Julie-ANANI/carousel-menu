@@ -8,6 +8,7 @@ import { ClientDiscoverComponent } from './components/client-discover/client-dis
 import { ClientInnovationComponent } from './components/client-innovation/client-innovation.component';
 import { ClientInnovationNewComponent } from './components/client-innovation-new/client-innovation-new.component';
 import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
+import { ClientUserComponent } from './components/client-user/client-user.component';
 
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
@@ -85,9 +86,14 @@ const clientRoutes: Routes = [
         path: 'campaign',
         canActivate: [AuthGuard],
         children: [
-          { path: '', component: ClientCampaignComponent, pathMatch: 'full' },
-          { path: 'new', component: ClientCampaignComponent },
-          { path: ':campaignId', component: ClientCampaignComponent }
+          { path: '', component: ClientCampaignComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'user',
+        canActivate: [AuthGuard],
+        children: [
+          { path: '', component: ClientUserComponent, pathMatch: 'full' }
         ]
       },
       {
