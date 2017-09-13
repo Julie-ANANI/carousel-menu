@@ -5,12 +5,12 @@
       <table wt-responsive-table class="table">
         <thead>
         <tr>
-          <th sqSort [service]="sq" prop="name" colspan="2">Titre</th>
-          <th>Campaigns</th>
-          <th sqSort [service]="sq" prop="owner.firstName">Utilisateur</th>
-          <th sqSort [service]="sq" prop="status">Statut</th>
-          <th sqSort [service]="sq" prop="created">Création</th>
-          <th class="text-right">Editer</th>
+          <th sqSort [service]="sq" prop="name" colspan="2">{{ 'CAMPAIGN.NAME' | translate }}</th>
+          <th>{{ 'CAMPAIGN.TITLE' | translate }}</th>
+          <th sqSort [service]="sq" prop="owner.firstName">{{ 'CAMPAIGN.OWNER' | translate }}</th>
+          <th sqSort [service]="sq" prop="status">{{ 'CAMPAIGN.STATUS' | translate }}</th>
+          <th sqSort [service]="sq" prop="created">{{ 'CAMPAIGN.CREATED' | translate }}</th>
+          <th class="text-right">Éditer</th>
         </tr>
         <tr>
           <th colspan="3">
@@ -20,7 +20,7 @@
             <input sq-search="$owner_firstName" sq-delay="2000" placeholder="Recherche" class="form-control input-sm" type="search">
           </th>
           <th>
-            <select class="form-control input-sm" sq-search="status" ng-model="statusInvention" ng-change="saveState('statusInvention', statusInvention)">
+            <select class="form-control input-sm" sq-search="status" ng-model="statusInvention" ng-change="saveState('statusInvention', statusInvention)" class = "browser-default">
               <option value="">Tous</option>
               <option value="EDITING">Edition en cours</option>
               <option value="SUBMITTED">En attente</option>
@@ -65,19 +65,8 @@
         </tbody>
         <tfoot>
         <tr>
-          <td colspan="6">
-            <div sq-items-by-page="itemsByPagePagination" sq-pagination="" sq-template="modules/common/views/pagination.custom.html" class="text-center"></div>
-
-            <div class="form-inline text-center">
-              <select class="form-control" ng-model="itemsByPage" ng-change="saveState('itemsByPage', itemsByPage)">
-                <option value="10">10 par page</option>
-                <option value="20">20 par page</option>
-                <option value="50">50 par page</option>
-                <option value="100">100 par page</option>
-                <option value="500">500 par page</option>
-                <option value="1000000">Tous</option>
-              </select>
-            </div>
+          <td colspan="12">
+            <sqPagination [service]="sq" [total]="total"></sqPagination>
           </td>
         </tr>
         </tfoot>
