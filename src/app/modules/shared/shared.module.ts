@@ -22,6 +22,7 @@ import {SharedUploadZoneVideoComponent} from "./components/shared-upload-zone-vi
 import {SharedPreloaderComponent} from "./components/shared-preloader/shared-preloader.component";
 import {SharedLoaderComponent} from "./components/shared-loader/shared-loader.component";
 import {SharedInnovationCardLangmodalComponent} from "./components/shared-innovation-card-langmodal/shared-innovation-card-langmodal.component";
+import {SharedPaginationComponent} from "./components/shared-pagination/shared-pagination.component";
 import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
 
 @NgModule({
@@ -42,7 +43,7 @@ import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
     FormErrorDirective,
     LogoDirective,
     SqSortDirective,
-
+    
     // Component
     DynamicFormComponent,
     DynamicFormQuestionComponent,
@@ -56,7 +57,8 @@ import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
     SharedUploadZoneVideoComponent,
     SharedPreloaderComponent,
     SharedLoaderComponent,
-    SharedInnovationCardLangmodalComponent
+    SharedInnovationCardLangmodalComponent,
+    SharedPaginationComponent
   ],
   exports: [
     // Modules
@@ -83,8 +85,8 @@ import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
     SharedUploadZoneVideoComponent,
     SharedPreloaderComponent,
     SharedLoaderComponent,
-    SharedInnovationCardLangmodalComponent
-
+    SharedInnovationCardLangmodalComponent,
+    SharedPaginationComponent
   ]
 })
 export class SharedModule { }
