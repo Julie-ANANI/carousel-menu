@@ -7,8 +7,6 @@ import { NgPipesModule } from 'ngx-pipes';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { SharedModule } from '../shared/shared.module';
-import { SharedInfographicModule } from '../shared/components/shared-infographic/shared-infographic.module';
-
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientHeaderComponent } from './components/client-header/client-header.component';
 import { ClientFooterComponent } from './components/client-footer/client-footer.component';
@@ -41,8 +39,7 @@ import { ClientLogoutComponent } from './components/client-logout/client-logout.
     }),
     NgPipesModule,
     Ng2SmartTableModule,
-    SharedModule,
-    SharedInfographicModule
+    SharedModule
   ],
   declarations: [
     ClientComponent,

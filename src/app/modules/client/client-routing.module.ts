@@ -15,7 +15,8 @@ import { ClientSignupComponent } from './components/client-signup/client-signup.
 import { ClientAccountComponent } from './components/client-account/client-account.component';
 
 /* Shared */
-import { SharedInfographicComponent } from '../shared/components/shared-infographic/components/shared-infographic/shared-infographic.component';
+//import { SharedInfographicComponent } from '../shared/components/shared-infographic/components/shared-infographic/shared-infographic.component';
+import { SharedMarketReportComponent} from '../shared/components/shared-market-report/shared-market-report-module';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
 import { SharedInnovationCardComponent } from '../shared/components/shared-innovation-card/shared-innovation-card.component';
 
@@ -94,7 +95,7 @@ const clientRoutes: Routes = [
         path: 'infographic',
         canActivate: [AuthGuard],
         children: [
-          { path: '', component: SharedInfographicComponent, pathMatch: 'full' }
+          { path: '', component: SharedMarketReportComponent, pathMatch: 'full' }
         ]
       },
       {

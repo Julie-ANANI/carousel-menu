@@ -44,6 +44,12 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public getInnovationSythesis(innovationId: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/synthesis')
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public remove(innovationId: string): Observable<any> {
     return this._http.delete('/innovation/' + innovationId)
       .map((res: Response) => res.json())

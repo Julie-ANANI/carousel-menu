@@ -1,0 +1,9 @@
+<div class="flex-container">
+  <strong class="comment-name">
+    <img *ngIf="country" [src]="buildImageUrl(country)" alt="" width="37" height="25">
+    {{job}} - <span>{{company}}</span>
+  </strong>
+  <span *ngIf="isNew" class="comment-new">new</span>
+  <market-report-popover [professionals]="professionals"></market-report-popover>
+</div>
+<p class="comment-desc">{{comment}}</p>

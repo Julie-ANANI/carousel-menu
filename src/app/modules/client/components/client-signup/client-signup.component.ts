@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { UserService } from '../../../../services/user/user.service';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { EnvironmentService } from '../../../../services/common/environment.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../models/user.model';
 import { NotificationsService } from 'angular2-notifications';
@@ -64,7 +65,8 @@ export class ClientSignupComponent implements OnInit {
               private _location: Location,
               private _titleService: Title,
               private _translateService: TranslateService,
-              private _notificationsService: NotificationsService) { }
+              private _notificationsService: NotificationsService,
+              private _environmentService: EnvironmentService) { }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
@@ -86,6 +88,7 @@ export class ClientSignupComponent implements OnInit {
   public onSubmit(form) {
     if (form.valid) {
       const user = new User(form.value); // TODO vérifier que l'utilisateur est valide (s'il a un email) ...
+      user.domain = this._environmentService.getDomain();
       this._userService.create(user)
         .subscribe(
           data => {

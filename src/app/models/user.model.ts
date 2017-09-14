@@ -10,6 +10,7 @@ export class User extends Model {
   private _phone: string;
   private _password: string;
   private _profilePicture: string;
+  private _domain: string;
 
 
   constructor(user?: any) {
@@ -89,5 +90,15 @@ export class User extends Model {
 
   get profilePicture(): string {
     return this._profilePicture;
+  }
+
+  set domain(domain: string) {
+    if(domain) {
+      this._domain = domain;
+    }
+  }
+
+  get domain(): string {
+    return this._domain;
   }
 }

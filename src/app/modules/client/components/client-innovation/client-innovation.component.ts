@@ -48,7 +48,8 @@ export class ClientInnovationComponent implements OnInit {
       lang: lang*/
       country: lang,
       title: lang === 'fr' ? 'Donnez un nom à votre innovation' : 'Give a name to your innovation',
-      lang: lang
+      lang: lang,
+      domain: 'umi.us'
     };
 
     this._innovationService.create(newInnovation).subscribe(innovation =>  {
