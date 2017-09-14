@@ -20,8 +20,17 @@ import {SharedUploadZonePhotoComponent} from './components/shared-upload-zone-ph
 import {SharedUploadZoneVideoComponent} from './components/shared-upload-zone-video/shared-upload-zone-video.component';
 import {SharedPreloaderComponent} from './components/shared-preloader/shared-preloader.component';
 import {SharedLoaderComponent} from './components/shared-loader/shared-loader.component';
+import {SharedMarketReportComponent} from './components/shared-market-report/shared-market-report-module';
+import {SharedBarChartComponent} from './components/shared-bar-chart-component/shared-bar-chart.component';
+import {SharedMarketItemComponent} from './components/shared-market-item-component/shared-market-item.component';
+import {SharedMarketCommentComponent} from './components/shared-market-comment-component/shared-market-comment.component';
+import {SharedMarketReportPopoverComponent} from './components/shared-market-report-popover/shared-market-report-popover.component';
+import {SharedPricesComponent} from './components/shared-prices-component/shared-prices.component';
+import {SharedWorldMapComponent} from './components/shared-world-map-component/shared-world-map.component';
 import {SharedInnovationCardLangmodalComponent} from './components/shared-innovation-card-langmodal/shared-innovation-card-langmodal.component';
-
+import {SharedPaginationComponent} from './components/shared-pagination/shared-pagination.component';
+import {SqSortDirective} from '../../directives/smart-query/sqSort.directive';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -31,15 +40,17 @@ import {SharedInnovationCardLangmodalComponent} from './components/shared-innova
     HttpModule,
     ReactiveFormsModule,
     NgPipesModule,
-    RouterModule.forChild([]), // giving no routes but needed for all <a [routerLink]=""> uses
+    RouterModule.forChild([]), // giving no routes but needed for all <a [routerLink]=''> uses
     TranslateModule.forChild(),
     DragulaModule,
+    ChartsModule,
     FileUploadModule
   ],
   declarations: [
     // Directives
     FormErrorDirective,
     LogoDirective,
+    SqSortDirective,
 
     // Component
     DynamicFormComponent,
@@ -53,7 +64,15 @@ import {SharedInnovationCardLangmodalComponent} from './components/shared-innova
     SharedUploadZoneVideoComponent,
     SharedPreloaderComponent,
     SharedLoaderComponent,
-    SharedInnovationCardLangmodalComponent
+    SharedMarketReportComponent,
+    SharedInnovationCardLangmodalComponent,
+    SharedBarChartComponent,
+    SharedMarketItemComponent,
+    SharedMarketCommentComponent,
+    SharedMarketReportPopoverComponent,
+    SharedPricesComponent,
+    SharedWorldMapComponent,
+    SharedPaginationComponent
   ],
   exports: [
     // Modules
@@ -65,6 +84,7 @@ import {SharedInnovationCardLangmodalComponent} from './components/shared-innova
     // Directives
     FormErrorDirective,
     LogoDirective,
+    SqSortDirective,
 
     // Components
     DynamicFormComponent,
@@ -78,7 +98,9 @@ import {SharedInnovationCardLangmodalComponent} from './components/shared-innova
     SharedUploadZoneVideoComponent,
     SharedPreloaderComponent,
     SharedLoaderComponent,
-    SharedInnovationCardLangmodalComponent
+    SharedInnovationCardLangmodalComponent,
+    SharedPaginationComponent,
+    SharedMarketReportComponent
 
   ]
 })

@@ -1,0 +1,197 @@
+<i class="fa fa-bars item-menu-sandwich" aria-hidden="true"></i>
+<div class="users-menu" *ngIf="professionals && professionals.length">
+  <ul>
+    <li *ngFor="let professional of professionals; let i = index">
+      <img [src]="buildImageUrl(professional.answers[0].country.notation)"
+           alt="" width="23" height="16" class="user-flag">
+
+      <p class="user-name" *ngIf="professional.profileUrl">
+        <a href="{{professional.profileUrl}}" target="_blank">
+          {{professional.firstName}} {{professional.lastName}}
+        </a>
+      </p>
+      <p class="user-name" *ngIf="!professional.profileUrl">
+        {{professional.firstName}} {{professional.lastName}}
+      </p>
+
+      <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{professional.answers[0].job}}</p>
+      <p *ngIf="professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{professional.company}}</p>
+
+      <a href="" (click)="seeAnswer(professional)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</a><br>
+      <a href="mailto: {{professional.email}}">{{professional.email}}</a>
+    </li>
+  </ul>
+</div>
+
+<script type="text/ng-template" id="ModalAnswerByProfessional.html">
+  <div class="modal-header">
+    <h1>{{professional.firstName}} {{professional.lastName}}</h1>
+    <small *ngIf="professional.answers[0].follow">{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW' | translate }}</small>
+    <div class="metas">
+      <p>
+        <a *ngIf="(professional.firstName || professional.lastName) && professional.profileUrl"
+           href="{{professional.profileUrl}}" target="_blank">
+          <i class="fa fa-user" aria-hidden="true"></i>
+          {{ 'MARKET_REPORT.POPUP.PROFIL' | translate }}
+        </a>
+
+        <span *ngIf="professional.company">
+                    <i class="fa fa-building-o" aria-hidden="true"></i>
+                    {{professional.company}}
+                </span>
+
+        <br>
+
+        <span>
+            <a href="mailto: {{professional.email}}">{{professional.email}}</a>
+        </span>
+
+        <br>
+
+        {{ 'MARKET_REPORT.POPUP.RECEIVED' | translate }} {{professional.answers[0].date | date : dateFormat}} à {{professional.answers[0].date | date:'HH:mm'}}<br>
+      </p>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <ul>
+          <li>
+            <strong class="question">{{ 'MARKET_REPORT.POPUP.JOB' | translate }} : </strong>
+
+            <p>{{professional.answers[0].job}}</p>
+
+            <p class="noanswer" [hidden]="!professional.answers[0].job">-</p>
+          </li>
+
+          <li>
+            <strong class="question">{{ 'MARKET_REPORT.POPUP.COUNTRY' | translate }} : </strong>
+
+            <p>{{(professional.answers[0].country) ? professional.answers[0].country.text : ""}}</p>
+
+            <p class="noanswer" [hidden]="!professional.answers[0].country">-</p>
+          </li>
+
+          <li>
+            <strong class="question">{{ 'MARKET_REPORT.MARKET_NEED.QUESTION' | translate }}</strong>
+
+            <p *ngIf="professional.answers[0].relevantProblematic === 1">{{ 'MARKET_REPORT.MARKET_NEED.ANSWER_1' | translate }}</p>
+
+            <p *ngIf="professional.answers[0].relevantProblematic === 2">{{ 'MARKET_REPORT.MARKET_NEED.ANSWER_2' | translate }}</p>
+
+            <p *ngIf="professional.answers[0].relevantProblematic === 3">{{ 'MARKET_REPORT.MARKET_NEED.ANSWER_3' | translate }}</p>
+
+            <p *ngIf="professional.answers[0].relevantProblematic === 4">{{ 'MARKET_REPORT.MARKET_NEED.ANSWER_4' | translate }}</p>
+
+            <p class="noanswer" [hidden]="!professional.answers[0].relevantProblematic">-</p>
+          </li>
+
+          <li><strong class="question">{{ 'MARKET_REPORT.RELEVANCE.QUESTION' | translate }}</strong>
+
+            <p *ngIf="professional.answers[0].productAnsweringProblematic === 1">{{ 'MARKET_REPORT.RELEVANCE.ANSWER_1' | translate }}</p>
+
+            <p *ngIf="professional.answers[0].productAnsweringProblematic === 2">{{ 'MARKET_REPORT.RELEVANCE.ANSWER_2' | translate }}</p>
+
+            <p *ngIf="professional.answers[0].productAnsweringProblematic === 3">{{ 'MARKET_REPORT.RELEVANCE.ANSWER_3' | translate }}</p>
+
+            <p *ngIf="professional.answers[0].productAnsweringProblematic === 4">{{ 'MARKET_REPORT.RELEVANCE.ANSWER_4' | translate }}</p>
+
+            <p class="noanswer" [hidden]="!professional.answers[0].productAnsweringProblematic">-</p>
+          </li>
+
+          <li>
+            <strong class="question">{{ 'MARKET_REPORT.DIFFERENTIATION.QUESTION' | translate }}</strong>
+
+            <p *ngIf="professional.answers[0].productInterests === 1">{{ 'MARKET_REPORT.DIFFERENTIATION.ANSWER_1' | translate }}</p>
+
+            <p *ngIf="professional.answers[0].productInterests === 2">{{ 'MARKET_REPORT.DIFFERENTIATION.ANSWER_2' | translate }}</p>
+
+            <p *ngIf="professional.answers[0].productInterests === 3">{{ 'MARKET_REPORT.DIFFERENTIATION.ANSWER_3' | translate }}</p>
+
+            <p *ngIf="professional.answers[0].productInterests === 4">{{ 'MARKET_REPORT.DIFFERENTIATION.ANSWER_4' | translate }}</p>
+
+            <p class="noanswer" [hidden]="!professional.answers[0].productInterests">-</p>
+          </li>
+
+          <li>
+            <strong class="question">{{ 'MARKET_REPORT.ACTUAL_COMPETITION.QUESTION' | translate }}</strong>
+            <p class="noanswer" [hidden]="professional.answers[0].competitors.length === 0">-</p>
+            <ul [hidden]="professional.answers[0].competitors.length > 0" class="list">
+              <li *ngFor="let competitor of professional.answers[0].competitors">{{competitor}}</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <ul>
+          <li>
+            <strong class="question">{{ 'MARKET_REPORT.NEW_APPLICATION.QUESTION' | translate }}</strong>
+            <p class="noanswer" [hidden]="professional.answers[0].applications.length === 0">-</p>
+            <ul [hidden]="professional.answers[0].applications.length > 0" class="list">
+              <li *ngFor="let application of professional.answers[0].applications">{{application}}</li>
+            </ul>
+          </li>
+
+          <li>
+            <strong class="question">{{ 'MARKET_REPORT.PRICE.QUESTION' | translate }}</strong>
+
+            <p>{{professional.answers[0].cost}}</p>
+
+            <p class="noanswer" [hidden]="!professional.answers[0].cost">-</p>
+          </li>
+
+          <li>
+            <strong class="question">{{ 'MARKET_REPORT.POTENTIAL_PARTNER.QUESTION' | translate }}</strong>
+            <p class="noanswer" [hidden]="professional.answers[0].companies.length === 0">-</p>
+            <ul [hidden]="professional.answers[0].companies.length > 0" class="list">
+              <li *ngFor="let company of professional.answers[0].companies">{{company}}</li>
+            </ul>
+          </li>
+
+          <li>
+            <strong class="question">{{ 'MARKET_REPORT.STRONG.QUESTION' | translate }}</strong>
+
+            <p>{{professional.answers[0].commentPositive.value}}</p>
+
+            <p class="noanswer" [hidden]="!professional.answers[0].commentPositive.value">-</p>
+          </li>
+
+          <li>
+            <strong class="question">{{ 'MARKET_REPORT.WEAK.QUESTION' | translate }}</strong>
+
+            <p>{{professional.answers[0].commentNegative.value}}</p>
+
+            <p class="noanswer" [hidden]="!professional.answers[0].commentNegative.value">-</p>
+          </li>
+
+          <li>
+            <strong class="question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.QUESTION' | translate }}</strong>
+
+            <p *ngIf="professional.answers[0].client === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.CLIENT' | translate }}</p>
+
+            <p *ngIf="professional.answers[0].develop === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DEVELOP' | translate }}</p>
+
+            <p *ngIf="professional.answers[0].distributor === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DISTRIBUTE' | translate }}</p>
+
+            <p class="noanswer"
+               [hidden]="!professional.answers[0].client && !professional.answers[0].develop && !professional.answers[0].distributor">
+              -</p>
+          </li>
+
+          <li>
+            <strong class="question">{{ 'MARKET_REPORT.MARKET_POTENTIAL.QUESTION' | translate }}</strong>
+
+            <p>{{professional.answers[0].score}}</p>
+
+            <p class="noanswer" [hidden]="!professional.answers[0].score">-</p>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" (click)="$dismiss()">{{ 'MARKET_REPORT.POPUP.BACK' | translate }}</button>
+  </div>
+</script>
+

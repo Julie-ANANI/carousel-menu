@@ -1,5 +1,9 @@
 <h1>{{ 'COMMON.LOG_IN' | translate }}</h1>
 
+<button (click)="linkedInSignIn()">
+  {{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
+</button>
+
 <app-dynamic-form
   [compozer]="compozerComponents"
   [submitButton]="'LOG_IN.LOG_IN_BTN' | translate"

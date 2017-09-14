@@ -1,0 +1,5 @@
+<span *ngIf="count > 1" class="item-occurrence">{{count}}x</span>
+<img *ngIf="star" src="/assets/common/star.svg" alt="" width="22" height="22" attr.tooltip-placement="top" attr.tooltip="{{'MARKET_REPORT.PROFESSIONAL.FOLLOW' | translate}}">
+<strong class="item-name">{{value}}</strong>
+<span *ngIf="isNew" class="item-new">new</span>
+<market-report-popover [professionals]="professionals"></market-report-popover>

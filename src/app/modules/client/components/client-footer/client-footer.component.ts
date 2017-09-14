@@ -1,7 +1,7 @@
-import {Component, OnInit} from "@angular/core";
-import {TranslateService, initTranslation} from "./i18n/i18n";
-import {environment} from "../../../../../environments/environment";
-import { AuthService } from '../../../../services/auth/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {TranslateService, initTranslation} from './i18n/i18n';
+import {environment} from '../../../../../environment';
+import {AuthService} from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-client-footer',

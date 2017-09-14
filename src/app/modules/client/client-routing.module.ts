@@ -5,7 +5,9 @@ import { ClientComponent } from './client.component';
 import { ClientDashboardComponent } from './components/client-dashboard/client-dashboard.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 
-import { ClientInnovationsComponent } from './components/client-innovations/client-innovations.component';
+import { ClientInnovationComponent } from './components/client-innovation/client-innovation.component';
+import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
+import { ClientUserComponent } from './components/client-user/client-user.component';
 import { ClientInnovationSettingsComponent } from './components/client-innovation-settings/client-innovation-settings.component';
 
 import { ClientLoginComponent } from './components/client-login/client-login.component';
@@ -14,9 +16,9 @@ import { ClientSignupComponent } from './components/client-signup/client-signup.
 import { ClientAccountComponent } from './components/client-account/client-account.component';
 
 /* Shared */
-import { SharedInfographicComponent } from '../shared/components/shared-infographic/components/shared-infographic/shared-infographic.component';
+// import { SharedInfographicComponent } from '../shared/components/shared-infographic/components/shared-infographic/shared-infographic.component';
+import { SharedMarketReportComponent} from '../shared/components/shared-market-report/shared-market-report-module';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
-import { ClientInnovationComponent } from './components/client-innovation/client-innovation.component';
 
 /* Guards */
 import { NonAuthGuard } from '../../non-auth-guard.service';
@@ -84,11 +86,25 @@ const clientRoutes: Routes = [
           }
         ]
       },
+      {
+        path: 'campaign',
+        canActivate: [AuthGuard],
+        children: [
+          { path: '', component: ClientCampaignComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'user',
+        canActivate: [AuthGuard],
+        children: [
+          { path: '', component: ClientUserComponent, pathMatch: 'full' }
+        ]
+      },
       { // TODO remove
         path: 'infographic',
         canActivate: [AuthGuard],
         children: [
-          { path: '', component: SharedInfographicComponent, pathMatch: 'full' }
+          { path: '', component: SharedMarketReportComponent, pathMatch: 'full' }
         ]
       },
       {

@@ -6,6 +6,8 @@
       <li *ngIf="authService.isAuthenticated"><a [routerLink]="'/projects'">{{ 'COMMON.MY_INNOVATIONS' | translate }}</a></li>
       <li *ngIf="authService.isAuthenticated"><a [routerLink]="'/logout'">Logout</a></li>
       <li *ngIf="authService.isAuthenticated">Mon compte (ouvre le volet lattéral)</li>
+      <li *ngIf="authService.isAdmin"><a [routerLink]="'/campaign'">{{ 'COMMON.CAMPAIGNS' | translate }}</a></li>
+      <li *ngIf="authService.isAdmin"><a [routerLink]="'/user'">{{ 'COMMON.USERS' | translate }}</a></li>
 
       <!-- Non connecté -->
       <li *ngIf="!authService.isAuthenticated"><a [routerLink]="'/signup'">{{ 'COMMON.SIGN_UP' | translate }}</a></li>
