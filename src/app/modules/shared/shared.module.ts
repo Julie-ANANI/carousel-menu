@@ -30,6 +30,7 @@ import {SharedPricesComponent} from "./components/shared-prices-component/shared
 import {SharedWorldMapComponent} from "./components/shared-world-map-component/shared-world-map.component";
 import {SharedInnovationCardLangmodalComponent} from "./components/shared-innovation-card-langmodal/shared-innovation-card-langmodal.component";
 import {SharedPaginationComponent} from "./components/shared-pagination/shared-pagination.component";
+import {SharedFilterInputComponent} from "./components/shared-filter-input/shared-filter-input.component";
 import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
 import {ChartsModule} from 'ng2-charts';
 
@@ -52,7 +53,7 @@ import {ChartsModule} from 'ng2-charts';
     FormErrorDirective,
     LogoDirective,
     SqSortDirective,
-
+    
     // Component
     DynamicFormComponent,
     DynamicFormQuestionComponent,
@@ -74,7 +75,8 @@ import {ChartsModule} from 'ng2-charts';
     SharedMarketReportPopoverComponent,
     SharedPricesComponent,
     SharedWorldMapComponent,
-    SharedPaginationComponent
+    SharedPaginationComponent,
+    SharedFilterInputComponent
   ],
   exports: [
     // Modules
@@ -103,6 +105,7 @@ import {ChartsModule} from 'ng2-charts';
     SharedLoaderComponent,
     SharedInnovationCardLangmodalComponent,
     SharedPaginationComponent,
+    SharedFilterInputComponent,
     SharedMarketReportComponent
 
   ]
