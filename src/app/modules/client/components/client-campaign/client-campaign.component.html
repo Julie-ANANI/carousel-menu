@@ -1,8 +1,70 @@
 <div class="row">
-  <div class="col s4">
+  <div>
     <div class="container">
-      <h1>{{ 'CAMPAIGN.TITLE' | translate }}</h1>
-      <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
+      <h1>{{total}} {{ 'CAMPAIGN.TITLE' | translate }}</h1>
+      <table wt-responsive-table class="table">
+        <thead>
+        <tr>
+          <th sqSort [service]="sq" prop="name" colspan="2">{{ 'CAMPAIGN.NAME' | translate }}</th>
+          <th>{{ 'CAMPAIGN.TITLE' | translate }}</th>
+          <th sqSort [service]="sq" prop="owner.firstName">{{ 'CAMPAIGN.OWNER' | translate }}</th>
+          <th sqSort [service]="sq" prop="status">{{ 'CAMPAIGN.STATUS' | translate }}</th>
+          <th sqSort [service]="sq" prop="created">{{ 'CAMPAIGN.CREATED' | translate }}</th>
+        </tr><!--
+        <tr>
+          <th colspan="3">
+            <input sq-search="$name" sq-delay="2000" placeholder="Recherche" class="form-control input-sm" type="search">
+          </th>
+          <th>
+            <input sq-search="$owner_firstName" sq-delay="2000" placeholder="Recherche" class="form-control input-sm" type="search">
+          </th>
+          <th>
+            <select class="form-control input-sm" sq-search="status" ng-model="statusInvention" ng-change="saveState('statusInvention', statusInvention)" class = "browser-default">
+              <option value="">Tous</option>
+              <option value="EDITING">Edition en cours</option>
+              <option value="SUBMITTED">En attente</option>
+              <option value="EVALUATING">Campagne en cours</option>
+              <option value="EVALUATING_DONE">Campagne fermée</option>
+            </select>
+          </th>
+          <th colspan="2" class="text-right">
+            <button class="btn btn-default btn-sm" sq-reset-search ng-click="saveState('statusInvention', '')">
+              <i class="fa fa-times"></i> Reset
+            </button>
+          </th>
+        </tr>-->
+        </thead>
+        <tbody>
+        <tr *ngFor="let innovation of innovations">
+          <td width="80">
+            <a href="" ng-if="innovation.media">
+              IMAGE
+            </a>
+          </td>
+          <td>
+            <a [routerLink]="'../innovations/' + innovation._id">
+              {{(innovation.name || 'Untitled innovation') | shorten: 25: '...' }}
+            </a>
+          </td>
+          <td>{{innovation.campaigns.length}}</td>
+          <td>
+            <a [routerLink]="'../user/' + innovation.owner._id">
+              {{innovation.owner.firstName}} {{innovation.owner.lastName}}
+            </a>
+          </td>
+
+          <td class="text-right">{{ 'CAMPAIGN.' + innovation.status | translate }}</td>
+          <td>{{innovation.created | date : dateFormat}}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="12">
+            <sqPagination [service]="sq" [total]="total"></sqPagination>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
     </div>
   </div>
 </div>

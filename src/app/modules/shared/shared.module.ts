@@ -29,7 +29,8 @@ import {SharedMarketReportPopoverComponent} from "./components/shared-market-rep
 import {SharedPricesComponent} from "./components/shared-prices-component/shared-prices.component";
 import {SharedWorldMapComponent} from "./components/shared-world-map-component/shared-world-map.component";
 import {SharedInnovationCardLangmodalComponent} from "./components/shared-innovation-card-langmodal/shared-innovation-card-langmodal.component";
-
+import {SharedPaginationComponent} from "./components/shared-pagination/shared-pagination.component";
+import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import {SharedInnovationCardLangmodalComponent} from "./components/shared-innova
     // Directives
     FormErrorDirective,
     LogoDirective,
+    SqSortDirective,
 
     // Component
     DynamicFormComponent,
@@ -69,7 +71,8 @@ import {SharedInnovationCardLangmodalComponent} from "./components/shared-innova
     SharedMarketCommentComponent,
     SharedMarketReportPopoverComponent,
     SharedPricesComponent,
-    SharedWorldMapComponent
+    SharedWorldMapComponent,
+    SharedPaginationComponent
   ],
   exports: [
     // Modules
@@ -81,6 +84,7 @@ import {SharedInnovationCardLangmodalComponent} from "./components/shared-innova
     // Directives
     FormErrorDirective,
     LogoDirective,
+    SqSortDirective,
 
     // Components
     DynamicFormComponent,
@@ -95,6 +99,8 @@ import {SharedInnovationCardLangmodalComponent} from "./components/shared-innova
     SharedUploadZoneVideoComponent,
     SharedPreloaderComponent,
     SharedLoaderComponent,
+    SharedInnovationCardLangmodalComponent,
+    SharedPaginationComponent
     SharedMarketReportComponent,
     SharedInnovationCardLangmodalComponent
 

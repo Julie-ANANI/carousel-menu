@@ -4,8 +4,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MaterializeModule } from 'angular2-materialize/dist';
 import { LocalStorageModule } from 'angular-2-local-storage'; // TODO utiliser le localStorage pour accélérer les chargements
 import { NgPipesModule } from 'ngx-pipes';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-
 import { SharedModule } from '../shared/shared.module';
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientHeaderComponent } from './components/client-header/client-header.component';
@@ -18,8 +16,8 @@ import { ClientDiscoverComponent } from './components/client-discover/client-dis
 
 import { ClientInnovationComponent } from './components/client-innovation/client-innovation.component';
 import { ClientInnovationNewComponent } from './components/client-innovation-new/client-innovation-new.component';
-
 import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
+import { ClientUserComponent } from './components/client-user/client-user.component';
 
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
@@ -39,7 +37,8 @@ import { ClientLogoutComponent } from './components/client-logout/client-logout.
     }),
     NgPipesModule,
     Ng2SmartTableModule,
-    SharedModule
+    SharedModule,
+    SharedInfographicModule
   ],
   declarations: [
     ClientComponent,
@@ -51,8 +50,8 @@ import { ClientLogoutComponent } from './components/client-logout/client-logout.
 
     ClientInnovationComponent,
     ClientInnovationNewComponent,
-
     ClientCampaignComponent,
+    ClientUserComponent,
 
     ClientDiscoverComponent,
     ClientLoginComponent,

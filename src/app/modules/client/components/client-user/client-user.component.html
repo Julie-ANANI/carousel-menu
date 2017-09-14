@@ -1,0 +1,37 @@
+<div class="row">
+  <div>
+    <div class="container">
+      <h1>{{total}} {{ 'COMMON.USERS' | translate }}</h1>
+      <table wt-responsive-table class="table">
+        <thead>
+        <tr>
+          <th></th>
+          <th sqSort [service]="sq" prop="firstName">{{ 'USER.NAME' | translate }}</th>
+          <th sqSort [service]="sq" prop="companyName" >{{ 'USER.COMPANY' | translate }}</th>
+          <th sqSort [service]="sq" prop="jobTitle">{{ 'USER.JOB' | translate }}</th>
+          <th sqSort [service]="sq" prop="created">{{ 'USER.CREATED' | translate }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users">
+          <td width="80">
+            <img *ngIf="user.media" src={{user.media.url}} />
+            <i *ngIf="!user.media" class="material-icons">account_circle</i>
+          </td>
+          <td>{{user.firstName}} {{user.lastName}}</td>
+          <td>{{user.companyName}}</td>
+          <td>{{user.jobTitle}}</td>
+          <td>{{user.created | date : dateFormat}}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="12">
+            <sqPagination [service]="sq" [total]="total"></sqPagination>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

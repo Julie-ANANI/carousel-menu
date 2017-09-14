@@ -6,34 +6,34 @@ import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-client-campaign',
-  templateUrl: './client-campaign.component.html',
-  styleUrls: ['./client-campaign.component.styl']
+  selector: 'app-client-user',
+  templateUrl: './client-user.component.html',
+  styleUrls: ['./client-user.component.styl']
 })
-export class ClientCampaignComponent implements OnInit {
+export class ClientUserComponent implements OnInit {
 
-  private _innovations = [];
+  private _users = [];
   private _total = 0;
-  
+
   constructor(private _router: Router,
               private _translateService: TranslateService,
               private _titleService: Title,
               private _sq: SmartQueryService,
               private _notificationsService: NotificationsService) {
-    this._sq.setRoute('/innovation');
+    this._sq.setRoute('/user');
   }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-    this._titleService.setTitle('Campaigns'); // TODO translate
+    this._titleService.setTitle('Users'); // TODO translate
 
-    this._sq.data$.subscribe(innovations => {
-      this._innovations = innovations.result;
-      this._total = innovations._metadata.totalCount;
+    this._sq.data$.subscribe(users => {
+      this._users = users.result;
+      this._total = users._metadata.totalCount;
     });
     this._sq.getData();
   }
-  
+
   get sq(): any {
     return this._sq;
   }
@@ -42,7 +42,7 @@ export class ClientCampaignComponent implements OnInit {
     return this._total;
   }
 
-  get innovations(): any[] {
-    return this._innovations;
+  get users(): any[] {
+    return this._users;
   }
 }

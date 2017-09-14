@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClientCampaignComponent } from './client-campaign.component';
+import { SharedPaginationComponent } from './shared-pagination.component';
 
-describe('ClientCampaignComponent', () => {
-  let component: ClientCampaignComponent;
-  let fixture: ComponentFixture<ClientCampaignComponent>;
+describe('SharedPaginationComponent', () => {
+  let component: SharedPaginationComponent;
+  let fixture: ComponentFixture<SharedPaginationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientCampaignComponent ]
+      declarations: [ SharedPaginationComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClientCampaignComponent);
+    fixture = TestBed.createComponent(SharedPaginationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
