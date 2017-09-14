@@ -11,6 +11,13 @@
           <th sqSort [service]="sq" prop="jobTitle">{{ 'USER.JOB' | translate }}</th>
           <th sqSort [service]="sq" prop="created">{{ 'USER.CREATED' | translate }}</th>
         </tr>
+        <tr>
+          <th></th>
+          <th><sqFilter [service]="sq" prop="firstName"></sqFilter></th>
+          <th><sqFilter [service]="sq" prop="companyName"></sqFilter></th>
+          <th><sqFilter [service]="sq" prop="jobTitle"></sqFilter></th>
+          <th></th>
+        </tr>
         </thead>
         <tbody>
         <tr *ngFor="let user of users">

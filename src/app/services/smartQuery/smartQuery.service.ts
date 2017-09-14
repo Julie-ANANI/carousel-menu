@@ -45,7 +45,7 @@ export class SmartQueryService {
     this.getData();
   }
 
-  public search(key: string, value: any) {
+  public filter(key: string, value: any) {
     if (this._config.search[key] && value == "") {
       delete this._config.search[key]
     } else {
