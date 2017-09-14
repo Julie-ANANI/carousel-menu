@@ -5,7 +5,8 @@
       <table wt-responsive-table class="table">
         <thead>
         <tr>
-          <th sqSort [service]="sq" prop="firstName" colspan="2">{{ 'USER.NAME' | translate }}</th>
+          <th></th>
+          <th sqSort [service]="sq" prop="firstName">{{ 'USER.NAME' | translate }}</th>
           <th sqSort [service]="sq" prop="companyName" >{{ 'USER.COMPANY' | translate }}</th>
           <th sqSort [service]="sq" prop="jobTitle">{{ 'USER.JOB' | translate }}</th>
           <th sqSort [service]="sq" prop="created">{{ 'USER.CREATED' | translate }}</th>
@@ -13,7 +14,10 @@
         </thead>
         <tbody>
         <tr *ngFor="let user of users">
-          <td width="80">IMAGE</td>
+          <td width="80">
+            <img *ngIf="user.media" src={{user.media.url}} />
+            <i *ngIf="!user.media" class="material-icons">account_circle</i>
+          </td>
           <td>{{user.firstName}} {{user.lastName}}</td>
           <td>{{user.companyName}}</td>
           <td>{{user.jobTitle}}</td>
