@@ -3,6 +3,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
+import { EnvironmentService } from '../../../../services/common/environment.service';
 import { User } from '../../../../models/user.model';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
@@ -41,7 +42,8 @@ export class ClientLoginComponent implements OnInit {
               private _router: Router,
               private _translateService: TranslateService,
               private _titleService: Title,
-              private _notificationsService: NotificationsService) { }
+              private _notificationsService: NotificationsService,
+              private _environmentService: EnvironmentService) { }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
@@ -78,7 +80,8 @@ export class ClientLoginComponent implements OnInit {
   }
 
   public linkedInSignIn() {
-    this._authService.linkedinLogin()
+    const domain = this._environmentService.getDomain();
+    this._authService.linkedinLogin(domain)
       .subscribe(
         url => {
           window.location.href = url;

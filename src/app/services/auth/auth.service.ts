@@ -40,8 +40,8 @@ export class AuthService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
-  public linkedinLogin(): Observable<any> {
-    return this._http.get('/auth/linkedin')
+  public linkedinLogin(domain: string): Observable<any> {
+    return this._http.get(`/auth/linkedin?domain=${domain}`)
       .map((res: Response) => {
         const response = res.json();
         return response.url;

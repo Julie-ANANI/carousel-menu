@@ -74,7 +74,8 @@ export class ClientSignupComponent implements OnInit {
   }
 
   public linkedInSignIn() {
-    this._authService.linkedinLogin()
+    const domain = this._environmentService.getDomain();
+    this._authService.linkedinLogin(domain)
       .subscribe(
         url => {
           window.location.href = url;
