@@ -36,9 +36,7 @@ import { ClientLogoutComponent } from './components/client-logout/client-logout.
       storageType: 'localStorage'
     }),
     NgPipesModule,
-    Ng2SmartTableModule,
-    SharedModule,
-    SharedInfographicModule
+    SharedModule
   ],
   declarations: [
     ClientComponent,

@@ -100,7 +100,7 @@ import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
     SharedPreloaderComponent,
     SharedLoaderComponent,
     SharedInnovationCardLangmodalComponent,
-    SharedPaginationComponent
+    SharedPaginationComponent,
     SharedMarketReportComponent,
     SharedInnovationCardLangmodalComponent
 
