@@ -19,6 +19,7 @@ import {Observable} from "rxjs/Observable";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {LoaderService} from "./services/loader/loader.service";
 import {HttpLoaderComponent} from "./components/http-loader/http-loader.component";
+import {ChartsModule} from 'ng2-charts';
 
 // TODO pour problème import npm start : ajouter include ['../node_modules/@ngx-translate', '../node_modules/angular2-materialize'] dans le tsconfig.app.json
 
@@ -38,7 +39,8 @@ import {HttpLoaderComponent} from "./components/http-loader/http-loader.componen
         provide: TranslateLoader,
         useFactory: (CreateTranslateLoader)
       }
-    })
+    }),
+    ChartsModule
   ],
   providers: [
     Title,
