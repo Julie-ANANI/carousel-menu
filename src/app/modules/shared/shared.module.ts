@@ -31,7 +31,6 @@ import {SharedWorldMapComponent} from "./components/shared-world-map-component/s
 import {SharedInnovationCardLangmodalComponent} from "./components/shared-innovation-card-langmodal/shared-innovation-card-langmodal.component";
 import {SharedPaginationComponent} from "./components/shared-pagination/shared-pagination.component";
 import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
-
 import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
@@ -83,7 +82,6 @@ import {ChartsModule} from 'ng2-charts';
     ReactiveFormsModule,
     RouterModule,
     DragulaModule,
-
 
     // Directives
     FormErrorDirective,
