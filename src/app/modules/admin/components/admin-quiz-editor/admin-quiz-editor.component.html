@@ -21,12 +21,12 @@
         <a class="waves-effect waves-light btn margin-top" (click)="tmpNewRow = null" *ngIf="tmpNewRow && tmpNewRow.length"><i class="material-icons left">clear</i> Annuler</a>
       </div>
 
-      <div class="modal" id="new-component-modal" materialize="modal">
-        <div class="modal-content">
+      <div>
+        <div>
           <ul>
             <li>
-              <p class="range-field">
-                <select materialize="material_select" [(ngModel)]="tmpComponent.columns">
+              <p>
+                <select [(ngModel)]="tmpComponent.columns">
                   <option value="" disabled selected>Largeur</option>
                   <option value="3">25%</option>
                   <option value="6">50%</option>
@@ -36,8 +36,8 @@
               </p>
             </li>
             <li>
-              <div class="input-field col s12">
-                <select materialize="material_select" [(ngModel)]="tmpComponent.compozerType">
+              <div>
+                <select [(ngModel)]="tmpComponent.compozerType">
                   <option value="" disabled selected>Type de composant</option>
                   <option value="content">Paragraphe</option>
                   <option value="html">HTML</option>
@@ -48,22 +48,21 @@
             </li>
             <li *ngIf="tmpComponent.compozerType === 'content'">
               <h4>Contenu</h4>
-              <textarea class="materialize-textarea" [(ngModel)]="tmpComponent.value"></textarea>
+              <textarea [(ngModel)]="tmpComponent.value"></textarea>
             </li>
             <li *ngIf="tmpComponent.compozerType === 'question'">
               <h4>Question</h4>
-              <textarea class="materialize-textarea" [(ngModel)]="tmpComponent.value"></textarea>
+              <textarea [(ngModel)]="tmpComponent.value"></textarea>
             </li>
             <li *ngIf="tmpComponent.compozerType === 'html'">
               <h4>HTML</h4>
-              <textarea class="materialize-textarea" [(ngModel)]="tmpComponent.value"></textarea>
+              <textarea [(ngModel)]="tmpComponent.value"></textarea>
             </li>
           </ul>
         </div>
-        <div class="modal-footer">
-          <a class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-          <a class="modal-action modal-close btn waves-green"
-             *ngIf="tmpComponent.compozerType" (click)="addCompozerComponent()">Ajouter</a>
+        <div>
+          <a (click)="alert('TODO')">Close</a>
+          <a *ngIf="tmpComponent.compozerType" (click)="addCompozerComponent()">Ajouter</a>
         </div>
       </div>
     </div>

@@ -17,12 +17,13 @@ import { ClientAccountSidenavComponent } from './components/client-account-siden
 import { ClientAccountComponent } from './components/client-account/client-account.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 
-import { ClientInnovationComponent } from './components/client-innovation/client-innovation.component';
-import { ClientInnovationNewComponent } from './components/client-innovation-new/client-innovation-new.component';
+import { ClientInnovationsComponent } from './components/client-innovations/client-innovations.component';
 
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
+import { ClientInnovationSettingsComponent } from './components/client-innovation-settings/client-innovation-settings.component';
+import { ClientInnovationComponent } from './components/client-innovation/client-innovation.component';
 
 
 @NgModule({
@@ -49,8 +50,9 @@ import { ClientLogoutComponent } from './components/client-logout/client-logout.
     ClientAccountSidenavComponent,
     ClientDashboardComponent,
 
+    ClientInnovationsComponent,
+    ClientInnovationSettingsComponent,
     ClientInnovationComponent,
-    ClientInnovationNewComponent,
 
     ClientDiscoverComponent,
     ClientLoginComponent,

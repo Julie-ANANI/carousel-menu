@@ -7,6 +7,8 @@ export const fr = {
     'EMAIL': 'Email',
     'PHONE': 'Téléphone',
     'PASSWORD': 'Mot de passe',
+    'COMPANY': 'Entreprise',
+    'JOBTITLE': 'Poste',
 
     'DASHBOARD': 'Dashboard',
     'UPDATE': 'Mettre à jour',

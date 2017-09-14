@@ -10,7 +10,7 @@ import {WhitemarkService} from "./services/whitemark/whitemark.service";
 import {InnovationService} from "./services/innovation/innovation.service";
 import {UserService} from "./services/user/user.service";
 import {MediaService} from "./services/media/media.service";
-import {SimpleNotificationsModule} from "angular2-notifications";
+import {SimpleNotificationsModule, NotificationsService} from "angular2-notifications";
 import {TranslateModule, TranslateLoader, TranslateService} from "@ngx-translate/core";
 import {Observable} from "rxjs/Observable";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -52,7 +52,7 @@ import {HttpLoaderComponent} from "./components/http-loader/http-loader.componen
     {
       provide: Http,
       useFactory: httpFactory,
-      deps: [XHRBackend, RequestOptions, LoaderService ]
+      deps: [XHRBackend, RequestOptions, LoaderService, NotificationsService]
     }
   ],
   bootstrap: [AppComponent]

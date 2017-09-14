@@ -1,0 +1,24 @@
+Breadcrumb :
+<a routerLink="/">{{ 'COMMON.DASHBOARD' | translate }}</a> >
+<a routerLink="/account">{{ 'COMMON.MY_ACCOUNT' | translate }}</a> >
+<a routerLink="/innovations">{{ 'COMMON.MY_INNOVATIONS' | translate }}</a>
+
+
+<div *ngFor="let innovation of innovations">
+  <div>
+    <img [src]="getPrincipalMedia(innovation)">
+  </div>
+  <a [routerLink]="'./' + innovation._id">{{(innovation.name || 'Untitled project') | shorten: 25: '...' }}</a>
+
+  <a [routerLink]="'./' + innovation._id">Modifier l'innovation</a>
+  <a (click)="removeInnovation(innovation._id)">Delete</a>
+</div>
+
+<a (click)="wantToCreateNewCard = true">Créer une carte</a>
+
+
+<app-shared-innovation-card-langmodal *ngIf="wantToCreateNewCard" [wantTo]="'create'" [langOptions]="langOptions"
+                                      [selectLangOfCardInput]="selectLangInput"
+                                      (setLangInput)="selectLangInput = $event" (closed)="wantToCreateNewCard = false"
+                                      (createCard)="$event ? createInnovation() : null"
+></app-shared-innovation-card-langmodal>

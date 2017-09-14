@@ -11,6 +11,7 @@ import { LoaderService } from './loader/loader.service';
 import { RequestOptions } from './requestOptions';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
+import {NotificationsService} from 'angular2-notifications';
 
 export { Response } from '@angular/http';
 
@@ -20,7 +21,8 @@ export class Http extends AngularHttp {
 
   constructor(protected _backend: XHRBackend,
               protected _defaultOptions: RequestOptions,
-              private _loaderService: LoaderService) {
+              private _loaderService: LoaderService,
+              protected _notificationsService: NotificationsService) {
     super(_backend, _defaultOptions);
   }
 
@@ -111,12 +113,11 @@ export class Http extends AngularHttp {
     return Observable.throw(error);
   }
 
-  private _onSuccess(res: Response): void {
-    // console.log('Request successful');
-  }
+  private _onSuccess(res: Response): void { }
 
   private _onError(res: Response): void {
-    console.log('Error, status code: ' + res.status);
+    console.error(res);
+    this._notificationsService.success('Error', 'status code: ' + res.status);
   }
 
   private _onEnd(): void {

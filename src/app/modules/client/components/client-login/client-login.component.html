@@ -1,13 +1,9 @@
-<div class="row">
-  <div class="col s4">
-    <div class="container">
-      <h1>{{ 'COMMON.LOG_IN' | translate }}</h1>
-      <app-dynamic-form
-        [compozer]="compozerComponents"
-        [submitButton]="'LOG_IN.LOG_IN_BTN' | translate"
-        (formOnSubmit)="onSubmit($event)">
-      </app-dynamic-form>
-      <a routerLink="/signup">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</a>
-    </div>
-  </div>
-</div>
+<h1>{{ 'COMMON.LOG_IN' | translate }}</h1>
+
+<app-dynamic-form
+  [compozer]="compozerComponents"
+  [submitButton]="'LOG_IN.LOG_IN_BTN' | translate"
+  (formOnSubmit)="onSubmit($event)">
+</app-dynamic-form>
+
+<a routerLink="/signup">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</a>

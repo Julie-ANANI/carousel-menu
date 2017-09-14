@@ -7,6 +7,8 @@ export const en = {
     'EMAIL': 'Email',
     'PHONE': 'Phone',
     'PASSWORD': 'Password',
+    'COMPANY': 'Company',
+    'JOBTITLE': 'Job title',
 
     'DASHBOARD': 'Dashboard',
     'UPDATE': 'Update',
