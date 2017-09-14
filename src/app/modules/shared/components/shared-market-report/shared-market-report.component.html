@@ -176,17 +176,13 @@
               <div class="big-blue-synthesis">
                 <canvas
                   class="chart chart-pie"
-                  chart-labels="['Non-existent', 'Possibly', 'Frequently', 'Critical']"
-                  chart-data="[10,20,30,40]"
-                  chart-colors="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
+                  baseChart
+                  [chartType]="'pie'"
+                  [legend]="false"
+                  [datasets]="getPiechartData('relevantProblematic')"
+                  [labels]="getLevels('relevantProblematic', 'en')"
+                  [colors]="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
                 </canvas>
-                <!--<canvas
-                  ng-show="language === 'fr'"
-                  class="chart chart-pie"
-                  chart-labels="['Non', 'Eventuellement', 'Oui', 'Cruciale']"
-                  chart-data="chartValuesRelevantProblematic"
-                  chart-colors="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
-                </canvas>-->
                 <div class="number-ratio">
                   <span>{{infographics.pieCharts.relevantProblematic[3].percentage + infographics.pieCharts.relevantProblematic[4].percentage}}%</span>
                   {{ 'MARKET_REPORT.PIE_CHART' | translate }}
@@ -228,18 +224,13 @@
             <div class="flex-container">
               <div class="big-blue-synthesis">
                 <canvas
-                  ng-show="language === 'en'"
                   class="chart chart-pie"
-                  chart-labels="['No', 'Possibly', 'Likely', 'Yes']"
-                  chart-data="chartValuesProductAnsweringProblematic"
-                  chart-colors="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
-                </canvas>
-                <canvas
-                  ng-show="language === 'fr'"
-                  class="chart chart-pie"
-                  chart-labels="['Non', 'Partiellement', 'Bien', 'Très bien']"
-                  chart-data="chartValuesProductAnsweringProblematic"
-                  chart-colors="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
+                  baseChart
+                  [chartType]="'pie'"
+                  [legend]="false"
+                  [datasets]="getPiechartData('productAnsweringProblematic')"
+                  [labels]="getLevels('productAnsweringProblematic', 'en')"
+                  [colors]="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
                 </canvas>
                 <div class="number-ratio">
                   <span>{{infographics.pieCharts.productAnsweringProblematic[3].percentage + infographics.pieCharts.productAnsweringProblematic[4].percentage}}%</span>
@@ -283,18 +274,13 @@
             <div class="flex-container">
               <div class="big-blue-synthesis">
                 <canvas
-                  ng-show="language === 'en'"
                   class="chart chart-pie"
-                  chart-labels="['No – less relevant', 'Equivalent', 'Yes – A few advantages', 'Absolutely']"
-                  chart-data="chartValuesProductInterests"
-                  chart-colors="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
-                </canvas>
-                <canvas
-                  ng-show="language === 'fr'"
-                  class="chart chart-pie"
-                  chart-labels="['Non', 'Peut-être', 'Oui', 'Indiscutablement']"
-                  chart-data="chartValuesProductInterests"
-                  chart-colors="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
+                  baseChart
+                  [chartType]="'pie'"
+                  [legend]="false"
+                  [datasets]="getPiechartData('productInterests')"
+                  [labels]="getLevels('productInterests', 'en')"
+                  [colors]="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
                 </canvas>
                 <div class="number-ratio">
                   <span>{{infographics.pieCharts.productInterests[3].percentage + infographics.pieCharts.productInterests[4].percentage}}%</span>

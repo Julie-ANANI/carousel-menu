@@ -32,6 +32,8 @@ import {SharedInnovationCardLangmodalComponent} from "./components/shared-innova
 import {SharedPaginationComponent} from "./components/shared-pagination/shared-pagination.component";
 import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
 
+import {ChartsModule} from 'ng2-charts';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -43,6 +45,7 @@ import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
     RouterModule.forChild([]), // giving no routes but needed for all <a [routerLink]=""> uses
     TranslateModule.forChild(),
     DragulaModule,
+    ChartsModule,
     FileUploadModule
   ],
   declarations: [
@@ -81,6 +84,7 @@ import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
     RouterModule,
     DragulaModule,
 
+
     // Directives
     FormErrorDirective,
     LogoDirective,
@@ -100,9 +104,8 @@ import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
     SharedPreloaderComponent,
     SharedLoaderComponent,
     SharedInnovationCardLangmodalComponent,
-    SharedPaginationComponent
-    SharedMarketReportComponent,
-    SharedInnovationCardLangmodalComponent
+    SharedPaginationComponent,
+    SharedMarketReportComponent
 
   ]
 })

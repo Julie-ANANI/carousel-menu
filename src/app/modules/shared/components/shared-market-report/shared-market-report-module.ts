@@ -19,6 +19,8 @@ export class SharedMarketReportComponent implements OnInit {
 
   private _selectLangInput = 'en';
   private _detailsExpanded: boolean;
+  private _chartPieData: any;
+
 
   private _infographics: any;
   private _showDetails: any;
@@ -54,6 +56,22 @@ export class SharedMarketReportComponent implements OnInit {
       this._infographics = synthesis.infographics;
       // Calcul du score max
       this._maxCountScore = _.max(_.map(this._infographics.scores, function(score){ return score['count']; } ));
+      // Calculate the piecharts
+      if(this._infographics.pieCharts) {
+        this._chartPieData = {
+          "productAnsweringProblematic": SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productAnsweringProblematic),
+          "relevantProblematic": SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.relevantProblematic),
+          "productInterests": SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productInterests)
+        };
+      }
+      /*
+       function getChartValues(stats, N) {
+       var list = [];
+       for (var i = 1; i <= N; i++) list.push(stats[i].count);
+       return list;
+       }
+       */
+
     });
     this._showDetails = { //TODO change to the right default
       "professionals": true,
@@ -68,6 +86,12 @@ export class SharedMarketReportComponent implements OnInit {
       "commentsNegative": true,
       "applications": true
     }
+  }
+
+  static getChartValues(stats) {
+    return _.map(stats, function(stat){
+      return stat['count'];
+    })
   }
 
   public toggleSections(){
@@ -86,6 +110,13 @@ export class SharedMarketReportComponent implements OnInit {
     } else {
       return [];
     }
+  }
+
+  public getPiechartData(section: string): any {
+    let data = [
+      {"data": this._chartPieData[section] || [],"backgroundColor": ['#C0210F', '#F2C500', '#82CD30', '#34AC01']}
+    ];
+    return data;
   }
 
   public getFillPerc(value: number): string {
