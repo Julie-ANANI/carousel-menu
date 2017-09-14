@@ -1,53 +1,166 @@
-label
-  width 100%
+#lang-choice
+  text-align center
 
-.card
-  width 100%
+  .flag
+    cursor pointer
+    margin-top 3rem
+    filter grayscale(0.6) opacity(0.4)
+    transition all 0.2s
+    height 3rem
+    width auto
 
-  .card-image
-    max-height 20rem
-    overflow hidden
-    object-fit cover
+    &:hover
+      filter grayscale(0.4) opacity(0.6)
 
-    img
+    &.material-icons
+      color #F79323
+      margin-top 2.5rem
+      filter opacity(0.8)
+
+      &:hover
+        filter grayscale(0) opacity(1)
+
+      &.color-blue
+        color #0B90C6
+
+      &.color-grey
+        color #AAA
+
+    &.selectedLang
+      opacity 1
+      filter grayscale(.1)
+      transition 200ms all
+      box-shadow 0 4px 8px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19)
+
+
+.innovation-card
+  background-color white
+  margin-top 20px
+  text-align left
+
+  #banner
+    text-align center
+    background-color #0b90c6
+    color #fff
+    padding 60px 30px
+    margin-bottom 30px
+
+    input
+      font-size 3rem
+      text-align center
+
+    textarea
+      font-size 1.1rem
+
+  #intro
+    img, iframe
+      border-radius 1%
       width 100%
-      max-height 100%
-      left 50%
-      transform translateX(-50%)
 
-      i.material-icons
-        font-size 16.5rem
-        margin auto
-
-    .card-title
-      display block
-      position absolute
-      bottom 0
-      left 0
-      width 100%
-      background-color #333a
-
-  .card-content
-    margin auto
-    min-height 7rem
-    text-align justify
-    p
-      word-wrap break-word
-
-  .card-action
-    height 3.8rem
-    a
-      cursor pointer
-
-
-.fake-card-create
-  height 25rem
-  transition .3s ease
-  display flex
-  cursor pointer
-
-  .card-content
+    #inputs
       margin auto
 
-  &:hover
-    filter brightness(0.9)
+
+  #benefits
+    margin-top 20px
+    padding 30px
+    display flex
+    flex-flow row wrap
+    justify-content center
+
+    .title
+      flex 1 0 auto
+      background-color #0b90c6
+      font-size 20px
+      font-weight 700
+      color #fff
+      display flex
+      min-width 50%
+      padding 60px 0
+
+      span
+        margin auto
+
+    .list
+      flex 1 1 auto
+      background-color #f2efef
+      padding 25px 65px
+      color #484848
+
+      .input-field
+
+        input
+          padding-right 2rem
+
+        i.material-icons.prefix
+          cursor pointer
+          margin-top 0.4rem
+          margin-left -2rem
+          transition ease .3s
+
+          &:hover
+            filter brightness(0.9)
+
+
+      ul
+        padding 0
+        margin-top 0
+
+        li
+          margin 7px 0
+          font-size 14px
+          font-weight 400
+
+          i
+            margin-right 8px
+
+    .blue-icon
+      color #0b90c6
+
+
+  #problem-solution
+    padding 30px
+    margin-top 20px
+    text-align justify
+
+    .title
+      font-size 20px
+      font-weight 700
+      text-transform uppercase
+      line-height 30px
+
+    .pb-sol-content
+      white-space pre-wrap
+
+
+  #secondary-images .image-container
+    text-align center
+    position relative
+    overflow hidden
+
+    &:hover
+      img
+        opacity 0.3
+
+      .centered-button
+        opacity 1
+
+    img
+      border-radius 1%
+      width auto
+      min-width 100%
+      height 361px
+      margin-bottom 1rem
+      opacity 1
+      backface-visibility hidden
+      transition .5s ease
+
+    .centered-button
+      opacity 0
+      transition .5s ease
+      width 67%
+
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)

@@ -1,0 +1,200 @@
+ <h3>Ciblage marché</h3>
+
+
+        <h4>Périmètre géographique</h4>
+        <input type="checkbox" name="world" id="world"
+               [(ngModel)]="innovation.settings.geography.continentTarget.world"
+               (change)="onCheckboxValueChange($event)">
+        <label for="world">Monde entier</label><br>
+
+        <input type="checkbox" name="africa" id="africa"
+               [(ngModel)]="innovation.settings.geography.continentTarget.africa"
+               [disabled]="innovation.settings.geography.continentTarget.world"
+               (change)="onCheckboxValueChange($event)">
+        <label for="africa">Afrique</label><br>
+
+        <input type="checkbox" name="oceania" id="oceania"
+               [(ngModel)]="innovation.settings.geography.continentTarget.oceania"
+               [disabled]="innovation.settings.geography.continentTarget.world"
+               (change)="onCheckboxValueChange($event)">
+        <label for="oceania">Océanie</label><br>
+
+        <input type="checkbox" name="asia" id="asia"
+               [(ngModel)]="innovation.settings.geography.continentTarget.asia"
+               [disabled]="innovation.settings.geography.continentTarget.world"
+               (change)="onCheckboxValueChange($event)">
+        <label for="asia">Asie</label><br>
+
+        <input type="checkbox" name="europe" id="europe"
+               [(ngModel)]="innovation.settings.geography.continentTarget.europe"
+               [disabled]="innovation.settings.geography.continentTarget.world"
+               (change)="onCheckboxValueChange($event)">
+        <label for="europe">Europe</label><br>
+
+        <input type="checkbox" name="americaNord" id="americaNord"
+               [(ngModel)]="innovation.settings.geography.continentTarget.americaNord"
+               [disabled]="innovation.settings.geography.continentTarget.world"
+               (change)="onCheckboxValueChange($event)">
+        <label for="americaNord">Amérique du Nord</label><br>
+
+        <input type="checkbox" name="americaSud" id="americaSud"
+               [(ngModel)]="innovation.settings.geography.continentTarget.americaSud"
+               [disabled]="innovation.settings.geography.continentTarget.world"
+               (change)="onCheckboxValueChange($event)">
+        <label for="americaSud">Amérique du Sud</label>
+
+
+        <h5>Pays à exclure</h5>
+        <input class="col s11 url-input" type="text"
+               placeholder="Pays à exclure"
+               materialize="autocomplete"
+               [materializeParams]="[{'data': autocomplete.countries}]"
+               [(ngModel)]="tmpInnovationSettings.geography.countriesToExclude">
+        <i class="material-icons prefix fa-mouse-pointer"
+           (click)="addItemToArray(innovation.settings.geography.countriesToExclude, tmpInnovationSettings.geography.countriesToExclude)">add_box</i>
+
+        <div class="chip" *ngFor="let countryExcluded of innovation.settings.geography.countriesToExclude">
+          {{ countryExcluded | shorten : '40' : '...' }}<i class="close material-icons"
+                                                           (click)="removeItemFromArray(innovation.settings.geography.countriesToExclude, countryExcluded)">close</i>
+        </div>
+
+
+        <h5>Demande spécifique</h5>
+        <textarea name="" [(ngModel)]="innovation.settings.geography.comments"></textarea>
+
+        <h4>Secteur d'activité</h4>
+
+
+        <h5>Sélectionnez dans la liste suivante le ou les domaines d'activité que vous souhaitez cibler</h5>
+        <input class="col s11 url-input" type="text"
+               placeholder="Domaine d'activité à cibler"
+               materialize="autocomplete"
+               [materializeParams]="[{'data': marketSectorAutoCompleteList}]"
+               [(ngModel)]="tmpInnovationSettings.market.sectors">
+        <i class="material-icons prefix fa-mouse-pointer"
+           (click)="addItemToArray(innovation.settings.market.sectors, tmpInnovationSettings.market.sectors)">add_box</i>
+
+        <div class="chip" *ngFor="let sector of innovation.settings.market.sectors">
+          {{ sector | shorten : '40' : '...' }}<i class="close material-icons"
+                                                  (click)="removeItemFromArray(innovation.settings.market.sectors, sector)">close</i>
+        </div>
+
+
+        <h5>Précisions</h5>
+        <textarea name="" [(ngModel)]="innovation.settings.market.comments"></textarea>
+
+        <h4>Entreprises</h4>
+
+
+        <h5>Définissez le type d'entreprises à cibler</h5>
+        <textarea name="" [(ngModel)]="innovation.settings.companies.description"></textarea>
+
+
+        <h5>Avez-vous des exemple en tête?</h5>
+        <input class="col s11 url-input" type="text"
+               placeholder="Domaine d'activité à cibler"
+               [(ngModel)]="tmpInnovationSettings.companies.include">
+        <i class="material-icons prefix fa-mouse-pointer"
+           (click)="addItemToArray(innovation.settings.companies.include, tmpInnovationSettings.companies.include)">add_box</i>
+
+        <div class="chip" *ngFor="let company of innovation.settings.companies.include">
+          {{ company | shorten : '40' : '...' }}<i class="close material-icons"
+                                                   (click)="removeItemFromArray(innovation.settings.companies.include, company)">close</i>
+        </div>
+
+
+        <h5>Entreprises à exclure?</h5>
+        <input class="col s11 url-input" type="text"
+               placeholder="Intel"
+               [(ngModel)]="tmpInnovationSettings.companies.exclude">
+        <i class="material-icons prefix fa-mouse-pointer"
+           (click)="addItemToArray(innovation.settings.companies.exclude, tmpInnovationSettings.companies.exclude)">add_box</i>
+
+        <div class="chip" *ngFor="let company of innovation.settings.companies.exclude">
+          {{ company | shorten : '40' : '...' }}<i class="close material-icons"
+                                                   (click)="removeItemFromArray(innovation.settings.companies.exclude, company)">close</i>
+        </div>
+
+      <h4>Professionnels</h4>
+
+
+      <h5>Décrivez le profil des professionnels que vous souhaitez cibler</h5>
+      <textarea name="" [(ngModel)]="innovation.settings.professionals.description"></textarea>
+
+
+      <h5>Définissez le type d'entreprises à cibler</h5>
+      <textarea name="" [(ngModel)]="innovation.settings.professionals.examples"></textarea>
+
+
+
+      <h3>Pour nous aider</h3>
+
+
+
+      <h4>Mots-clés pertinents</h4>
+
+
+
+      <h5>Quel est le jargon utilisé dans le secteur visé ?</h5>
+      <input class="col s11 url-input" type="text"
+             placeholder=""
+             [(ngModel)]="tmpInnovationSettings.keywords">
+      <i class="material-icons prefix fa-mouse-pointer"
+         (click)="addItemToArray(innovation.settings.keywords, tmpInnovationSettings.keywords)">add_box</i>
+
+      <div class="chip" *ngFor="let keyword of innovation.settings.keywords">
+        {{ keyword | shorten : '40' : '...' }}<i class="close material-icons"
+                                                 (click)="removeItemFromArray(innovation.settings.keywords, keyword)">close</i>
+      </div>
+
+
+      <h4>Informations complémentaires</h4>
+
+
+
+
+      <h5>En complément, n'hésitez pas à ajouter ici les informations que vous connaissez déjà qui vous semblent
+        pertinentes pour nous aider à cibler les bons professionnels, les bonnes entreprises et les bons marchés</h5>
+      <textarea name="" [(ngModel)]="innovation.settings.comments"></textarea>
+
+
+
+
+
+
+
+<form novalidate (ngSubmit)="onSubmit(settings)" [formGroup]="settings">
+  <label>
+    <span>Data1</span>
+    <input type="text" placeholder="Data1" formControlName="data1">
+  </label>
+  <div formGroupName="account">
+    <label>
+      <span>Email address</span>
+      <input type="email" placeholder="Your email address" formControlName="email">
+    </label>
+    <div
+      class="error"
+      *ngIf="settings.get('account').get('email').hasError('required') && settings.get('account').get('email').touched">
+      Email is required
+    </div>
+    <label>
+      <span>Confirm address</span>
+      <input type="email" placeholder="Confirm your email address" formControlName="confirm">
+    </label>
+    <div
+      class="error"
+      *ngIf="settings.get('account').get('confirm').hasError('required') && settings.get('account').get('confirm').touched">
+      Confirming email is required
+    </div>
+  </div>
+  <div formArrayName="numbers">
+    <!-- iterate the array of phone numbers -->
+    <button (click)="addNumber()">Ajouter un numéro de téléphone</button>
+    <div *ngFor="let number of settings.controls.numbers.controls; let i = index">
+      <label>PhoneNumber {{i+1}} </label>
+      <input formControlName="{{i}}" />
+    </div>
+  </div>
+  <button type="submit" [disabled]="settings.invalid">Sign up</button>
+</form>

@@ -15,7 +15,7 @@ const adminRoutes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/innovations', // TODO remove
+        redirectTo: '/projects',
         component: AdminDashboardComponent
       },
       {

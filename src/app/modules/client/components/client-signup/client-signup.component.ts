@@ -41,6 +41,24 @@ export class ClientSignupComponent implements OnInit {
     ],
     [
       new TextboxCompozerComponent({
+        key: 'companyName',
+        label: 'COMMON.COMPANY',
+        type: 'text',
+        placeholder: 'United Motion Ideas',
+        validators: Validators.required
+      })
+    ],
+    [
+      new TextboxCompozerComponent({
+        key: 'jobTitle',
+        label: 'COMMON.JOBTITLE',
+        type: 'text',
+        placeholder: 'Ingénieur en aérodynamisme', // TODO translate
+        validators: Validators.required
+      })
+    ],
+    [
+      new TextboxCompozerComponent({
         key: 'email',
         label: 'Email',
         placeholder: 'john.doe@gmail.com',

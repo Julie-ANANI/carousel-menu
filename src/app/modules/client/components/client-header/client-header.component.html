@@ -1,151 +1,19 @@
 <header>
-  <div class="navbar-fixed">
-    <nav>
+  <nav>
+    <a routerLink="/" appLogo logoMaxWidth="100"></a>
+    <ul>
+      <!-- Connecté -->
+      <li *ngIf="authService.isAuthenticated"><a [routerLink]="'/projects'">{{ 'COMMON.MY_INNOVATIONS' | translate }}</a></li>
+      <li *ngIf="authService.isAuthenticated"><a [routerLink]="'/logout'">Logout</a></li>
+      <li *ngIf="authService.isAuthenticated">Mon compte (ouvre le volet lattéral)</li>
+      <li *ngIf="authService.isAdmin"><a [routerLink]="'/campaign'">{{ 'COMMON.CAMPAIGNS' | translate }}</a></li>
+      <li *ngIf="authService.isAdmin"><a [routerLink]="'/user'">{{ 'COMMON.USERS' | translate }}</a></li>
 
-      <div class="nav-wrapper hide-on-med-and-down">
-        <a routerLink="/" appLogo logoMaxWidth="100" class="brand-logo left"></a>
-
-        <ul *ngIf="authService.isAuthenticated"  class="nav-icons right">
-          <li>
-            <a class="dropdown-button" materialize="dropdown" data-activates="header-language-dropdown-large-only" [materializeParams]="[{belowOrigin:true}]">
-              {{ 'COMMON.LANG.'+translate.currentLang.toUpperCase() | translate }}<i class="material-icons right">arrow_drop_down</i>
-            </a>
-          </li>
-
-          <!--<li> TODO
-            <a [routerLink]="'/'">
-              <i class="material-icons left">dashboard</i>
-              <span>{{ 'COMMON.DASHBOARD' | translate }}</span>
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="'/discover-and-evaluate'">
-              <span>{{ 'COMMON.DISCOVER_AND_EVALUATE' | translate }}</span>
-            </a>
-          </li>-->
-          <li>
-            <a [routerLink]="'/innovations'">
-              <span>{{ 'COMMON.MY_INNOVATIONS' | translate }}</span>
-            </a>
-          </li>
-          <li *ngIf="authService.isAdmin">
-            <a [routerLink]="'/campaign'">
-              <span>{{ 'COMMON.CAMPAIGNS' | translate }}</span>
-            </a>
-          </li>
-          <li *ngIf="authService.isAdmin">
-            <a [routerLink]="'/user'">
-              <span>{{ 'COMMON.USERS' | translate }}</span>
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="'/logout'">
-              <i class="material-icons">power_settings_new</i>
-            </a>
-          </li>
-          <li>
-            <a materialize="sideNav" data-activates="account-sidenav" [materializeParams]="[{edge:'right', menuWidth: 500, draggable:true, closeOnClick:true}]">
-              <i class="material-icons">account_circle</i>
-            </a>
-          </li>
-
-        </ul>
-
-        <ul *ngIf="!authService.isAuthenticated"  class="nav-icons right">
-
-          <li>
-            <a class="dropdown-button" materialize="dropdown" data-activates="header-language-dropdown-large-only" [materializeParams]="[{belowOrigin:true}]">
-              {{ 'COMMON.LANG.'+translate.currentLang.toUpperCase() | translate }}<i class="material-icons right">arrow_drop_down</i>
-            </a>
-          </li>
-
-          <li>
-            <a [routerLink]="'/signup'">
-              <i class="material-icons left">power_settings_new</i>
-              <span>{{ 'COMMON.SIGN_UP' | translate }}</span>
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="'/login'">
-              <i class="material-icons left">power_settings_new</i>
-              <span>{{ 'COMMON.LOG_IN' | translate }}</span>
-            </a>
-          </li>
-
-        </ul>
-      </div>
-
-      <div class="nav-wrapper hide-on-large-only">
-        <a routerLink="/" appLogo logoMaxWidth="100" class="brand-logo left"></a>
-
-        <ul class="nav-icons" class="right">
-          <li>
-            <a class="dropdown-button" materialize="dropdown" data-activates="header-language-dropdown-med-and-down" [materializeParams]="[{belowOrigin:true}]">
-              {{ 'COMMON.LANG.'+translate.currentLang.toUpperCase() | translate }}<i class="material-icons right">arrow_drop_down</i>
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-button" materialize="dropdown" data-activates='header-small-device-dropdown' [materializeParams]="[{belowOrigin:true, constrainWidth:false}]">
-              <i class="material-icons">menu</i>
-            </a>
-          </li>
-          <li *ngIf="authService.isAuthenticated">
-            <a materialize="sideNav" data-activates="account-sidenav" [materializeParams]="[{edge:'right', menuWidth: 500, draggable:true, closeOnClick:true}]">
-              <i class="material-icons">account_circle</i>
-            </a>
-          </li>
-        </ul>
-
-      </div>
-    </nav>
-  </div>
-
+      <!-- Non connecté -->
+      <li *ngIf="!authService.isAuthenticated"><a [routerLink]="'/signup'">{{ 'COMMON.SIGN_UP' | translate }}</a></li>
+      <li *ngIf="!authService.isAuthenticated"><a [routerLink]="'/login'">{{ 'COMMON.LOG_IN' | translate }}</a></li>
+    </ul>
+  </nav>
 </header>
-
-
-<ul id="header-language-dropdown-large-only" class="dropdown-content">
-  <li *ngIf="translate.currentLang !== 'fr'"><a (click)="translate.use('fr')">{{ 'COMMON.LANG.FR' | translate }}</a></li>
-  <li *ngIf="translate.currentLang !== 'en'"><a (click)="translate.use('en')">{{ 'COMMON.LANG.EN' | translate }}</a></li>
-</ul>
-
-<ul id="header-language-dropdown-med-and-down" class="dropdown-content">
-  <li *ngIf="translate.currentLang !== 'fr'"><a (click)="translate.use('fr')">{{ 'COMMON.LANG.FR' | translate }}</a></li>
-  <li *ngIf="translate.currentLang !== 'en'"><a (click)="translate.use('en')">{{ 'COMMON.LANG.EN' | translate }}</a></li>
-</ul>
-
-
-<ul id="header-small-device-dropdown" class="dropdown-content">
-  <!--<li> TODO
-    <a [routerLink]="'/'">
-      <span>{{ 'COMMON.DASHBOARD' | translate }}</span>
-    </a>
-  </li>
-  <li>
-    <a [routerLink]="'/discover-and-evaluate'">
-      <span>{{ 'COMMON.DISCOVER_AND_EVALUATE' | translate }}</span>
-    </a>
-  </li>-->
-  <li>
-    <a [routerLink]="'/innovations'">
-      <span>{{ 'COMMON.MY_INNOVATIONS' | translate }}</span>
-    </a>
-  </li>
-  <li *ngIf="!authService.isAuthenticated">
-    <a [routerLink]="'/signup'">
-      <span>{{ 'COMMON.SIGN_UP' | translate }}</span>
-    </a>
-  </li>
-  <li *ngIf="!authService.isAuthenticated">
-    <a [routerLink]="'/login'">
-      <span>{{ 'COMMON.LOG_IN' | translate }}</span>
-    </a>
-  </li>
-  <li *ngIf="authService.isAuthenticated">
-    <a [routerLink]="'/logout'">
-      <span>{{ 'COMMON.LOG_OUT' | translate }}</span>
-    </a>
-  </li>
-</ul>
-
 
 <app-client-account-sidenav></app-client-account-sidenav>

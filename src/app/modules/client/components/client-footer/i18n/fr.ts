@@ -1,6 +1,6 @@
 export const fr = {
-  "FOOTER": {
-    "COPYRIGHTS": "Tous droits réservés",
-    "DESCRIPTION": "L'étude de marché digitalisée pour vos innovations"
+  'FOOTER': {
+    'LEGAL_NOTICE': 'Mentions légales',
+    'TERMS': 'Conditions générales'
   }
 };

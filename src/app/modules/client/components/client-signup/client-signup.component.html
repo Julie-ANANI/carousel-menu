@@ -1,19 +1,13 @@
-<div class="row">
-  <div class="col s5">
-    <div class="container">
-      <h1>{{ 'COMMON.SIGN_UP' | translate }}</h1>
-      <p>
-        <button class="btn btn-primary btn-lg btn-linkedin" (click)="linkedInSignIn()">
-          {{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
-        </button>
-      </p>
+<h1>{{ 'COMMON.SIGN_UP' | translate }}</h1>
 
-      <div class="divider"><span>{{ 'SIGN_UP.OR' | translate }}</span></div><app-dynamic-form
-        [compozer]="compozerComponents"
-        [submitButton]="'SIGN_UP.SIGN_UP_BTN' | translate"
-        (formOnSubmit)="onSubmit($event)">
-      </app-dynamic-form>
-      <a routerLink="/login">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</a>
-    </div>
-  </div>
-</div>
+<button (click)="linkedInSignIn()">{{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}</button>
+
+{{ 'SIGN_UP.OR' | translate }}
+
+<app-dynamic-form
+  [compozer]="compozerComponents"
+  [submitButton]="'SIGN_UP.SIGN_UP_BTN' | translate"
+  (formOnSubmit)="onSubmit($event)">
+</app-dynamic-form>
+
+<a routerLink="/login">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</a>

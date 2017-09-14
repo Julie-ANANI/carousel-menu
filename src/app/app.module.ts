@@ -13,7 +13,7 @@ import {CampaignService} from "./services/campaign/campaign.service";
 import {SmartQueryService} from "./services/smartQuery/smartQuery.service";
 import {UserService} from "./services/user/user.service";
 import {MediaService} from "./services/media/media.service";
-import {SimpleNotificationsModule} from "angular2-notifications";
+import {SimpleNotificationsModule, NotificationsService} from "angular2-notifications";
 import {TranslateModule, TranslateLoader, TranslateService} from "@ngx-translate/core";
 import {Observable} from "rxjs/Observable";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -59,7 +59,7 @@ import {ChartsModule} from 'ng2-charts';
     {
       provide: Http,
       useFactory: httpFactory,
-      deps: [XHRBackend, RequestOptions, LoaderService ]
+      deps: [XHRBackend, RequestOptions, LoaderService, NotificationsService]
     },
     EnvironmentService
   ],

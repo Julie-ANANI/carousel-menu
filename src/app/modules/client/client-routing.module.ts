@@ -6,9 +6,9 @@ import { ClientDashboardComponent } from './components/client-dashboard/client-d
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 
 import { ClientInnovationComponent } from './components/client-innovation/client-innovation.component';
-import { ClientInnovationNewComponent } from './components/client-innovation-new/client-innovation-new.component';
 import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
 import { ClientUserComponent } from './components/client-user/client-user.component';
+import { ClientInnovationSettingsComponent } from './components/client-innovation-settings/client-innovation-settings.component';
 
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
@@ -16,10 +16,9 @@ import { ClientSignupComponent } from './components/client-signup/client-signup.
 import { ClientAccountComponent } from './components/client-account/client-account.component';
 
 /* Shared */
-//import { SharedInfographicComponent } from '../shared/components/shared-infographic/components/shared-infographic/shared-infographic.component';
+// import { SharedInfographicComponent } from '../shared/components/shared-infographic/components/shared-infographic/shared-infographic.component';
 import { SharedMarketReportComponent} from '../shared/components/shared-market-report/shared-market-report-module';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
-import { SharedInnovationCardComponent } from '../shared/components/shared-innovation-card/shared-innovation-card.component';
 
 /* Guards */
 import { NonAuthGuard } from '../../non-auth-guard.service';
@@ -33,11 +32,10 @@ const clientRoutes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: '/innovations'
-        /*canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         children: [
           { path: '', component: ClientDashboardComponent, pathMatch: 'full' }
-        ]*/
+        ]
       },
       {
         path: 'login',
@@ -68,19 +66,24 @@ const clientRoutes: Routes = [
         ]
       },
       {
-        path: 'discover-and-evaluate',
+        path: 'discover',
         /*canActivate: [AuthGuard],
         children: [
         ]*/
-        redirectTo: '/innovations'
+        redirectTo: '/projects'
       },
       {
-        path: 'innovations',
+        path: 'projects',
         canActivate: [AuthGuard],
         children: [
-          { path: '', component: ClientInnovationComponent, pathMatch: 'full' },
-          { path: 'new', component: ClientInnovationNewComponent },
-          { path: ':innovationId', component: SharedInnovationCardComponent }
+          { path: '', component: ClientInnovationsComponent, pathMatch: 'full' },
+          {
+            path: ':innovationId',
+            children: [
+              { path: '',    component: ClientInnovationComponent },
+              { path: 'settings', component: ClientInnovationSettingsComponent },
+            ]
+          }
         ]
       },
       {
@@ -97,7 +100,7 @@ const clientRoutes: Routes = [
           { path: '', component: ClientUserComponent, pathMatch: 'full' }
         ]
       },
-      {
+      { // TODO remove
         path: 'infographic',
         canActivate: [AuthGuard],
         children: [
