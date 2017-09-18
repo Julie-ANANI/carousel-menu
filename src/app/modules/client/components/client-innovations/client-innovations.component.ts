@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 import {UserService} from "../../../../services/user/user.service";
 import {InnovationService} from "../../../../services/innovation/innovation.service";
+import {EnvironmentService} from '../../../../services/common/environment.service';
 import {MediaService} from "../../../../services/media/media.service";
 import {langSelectOptions} from "../../../../data/innovation.data";
 
@@ -28,6 +29,7 @@ export class ClientInnovationsComponent implements OnInit {
               private _innovationService: InnovationService,
               private _titleService: Title,
               private _mediaService: MediaService,
+              private _environmentService: EnvironmentService,
               private _router: Router) { }
 
 
@@ -42,11 +44,13 @@ export class ClientInnovationsComponent implements OnInit {
 
   createInnovation() {
     const lang = this._selectLangInput;
+    const domain = this._environmentService.getDomain();
     const newInnovation = {
       /* country: lang, le serveur
       name: ''
       lang: lang*/
       country: lang,
+      domain: domain,
       title: lang === 'fr' ? 'Donnez un nom à votre innovation' : 'Give a name to your innovation',
       lang: lang
     };
