@@ -5,6 +5,7 @@ import { ClientComponent } from './client.component';
 import { ClientDashboardComponent } from './components/client-dashboard/client-dashboard.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 
+import { ClientInnovationsComponent } from './components/client-innovations/client-innovations.component';
 import { ClientInnovationComponent } from './components/client-innovation/client-innovation.component';
 import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
 import { ClientUserComponent } from './components/client-user/client-user.component';
@@ -76,7 +77,7 @@ const clientRoutes: Routes = [
         path: 'projects',
         canActivate: [AuthGuard],
         children: [
-          { path: '', component: ClientInnovationComponent, pathMatch: 'full' },
+          { path: '', component: ClientInnovationsComponent, pathMatch: 'full' },
           {
             path: ':innovationId',
             children: [
