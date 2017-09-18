@@ -15,6 +15,12 @@ export class UserService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  public getInnovations(userId): Observable<any> {
+    return this._http.get(`/user/${userId}/innovations`)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.json()));
+  }
+
   public create(user: User): Observable<any> {
     return this._http.post('/user', user.toJSON())
       .map((res: Response) => res.json())

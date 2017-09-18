@@ -10,12 +10,14 @@
           <th sqSort [service]="sq" prop="companyName" >{{ 'USER.COMPANY' | translate }}</th>
           <th sqSort [service]="sq" prop="jobTitle">{{ 'USER.JOB' | translate }}</th>
           <th sqSort [service]="sq" prop="created">{{ 'USER.CREATED' | translate }}</th>
+          <th>{{ 'COMMON.INNOVATIONS' | translate }}</th>
         </tr>
         <tr>
           <th></th>
           <th><sqFilter [service]="sq" prop="firstName"></sqFilter></th>
           <th><sqFilter [service]="sq" prop="companyName"></sqFilter></th>
           <th><sqFilter [service]="sq" prop="jobTitle"></sqFilter></th>
+          <th></th>
           <th></th>
         </tr>
         </thead>
@@ -29,6 +31,7 @@
           <td>{{user.companyName}}</td>
           <td>{{user.jobTitle}}</td>
           <td>{{user.created | date : dateFormat}}</td>
+          <td><button (click)="loadInnovations(user._id)">Voir innos</button></td>
         </tr>
         </tbody>
         <tfoot>
