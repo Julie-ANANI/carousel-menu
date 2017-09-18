@@ -1,19 +1,23 @@
-<header>
-  <nav>
-    <a routerLink="/" appLogo logoMaxWidth="100"></a>
-    <ul>
-      <!-- Connecté -->
-      <li *ngIf="authService.isAuthenticated"><a [routerLink]="'/projects'">{{ 'COMMON.MY_INNOVATIONS' | translate }}</a></li>
-      <li *ngIf="authService.isAuthenticated"><a [routerLink]="'/logout'">Logout</a></li>
-      <li *ngIf="authService.isAuthenticated">Mon compte (ouvre le volet lattéral)</li>
-      <li *ngIf="authService.isAdmin"><a [routerLink]="'/campaign'">{{ 'COMMON.CAMPAIGNS' | translate }}</a></li>
-      <li *ngIf="authService.isAdmin"><a [routerLink]="'/user'">{{ 'COMMON.USERS' | translate }}</a></li>
+<header class="navbar">
+  <div class="container">
+    <section class="navbar-section">
+      <a routerLink="/" appLogo logoMaxWidth="100"></a>
+    </section>
+    <section class="navbar-section">
+      <ul class="nav">
+        <!-- Connecté -->
+        <li class="nav-item" *ngIf="authService.isAuthenticated"><a [routerLink]="'/projects'">{{ 'COMMON.MY_INNOVATIONS' | translate }}</a></li>
+        <li class="nav-item" *ngIf="authService.isAuthenticated"><a [routerLink]="'/logout'">Logout</a></li>
+        <li class="nav-item" *ngIf="authService.isAuthenticated">Mon compte (ouvre le volet lattéral)</li>
+        <li class="nav-item" *ngIf="authService.isAdmin"><a [routerLink]="'/campaign'">{{ 'COMMON.CAMPAIGNS' | translate }}</a></li>
+        <li class="nav-item" *ngIf="authService.isAdmin"><a [routerLink]="'/user'">{{ 'COMMON.USERS' | translate }}</a></li>
 
-      <!-- Non connecté -->
-      <li *ngIf="!authService.isAuthenticated"><a [routerLink]="'/signup'">{{ 'COMMON.SIGN_UP' | translate }}</a></li>
-      <li *ngIf="!authService.isAuthenticated"><a [routerLink]="'/login'">{{ 'COMMON.LOG_IN' | translate }}</a></li>
-    </ul>
-  </nav>
+        <!-- Non connecté -->
+        <li class="nav-item" *ngIf="!authService.isAuthenticated"><a [routerLink]="'/signup'">{{ 'COMMON.SIGN_UP' | translate }}</a></li>
+        <li class="nav-item" *ngIf="!authService.isAuthenticated"><a [routerLink]="'/login'">{{ 'COMMON.LOG_IN' | translate }}</a></li>
+      </ul>
+    </section>
+  </div>
 </header>
 
 <app-client-account-sidenav></app-client-account-sidenav>
