@@ -76,7 +76,7 @@ const clientRoutes: Routes = [
         path: 'projects',
         canActivate: [AuthGuard],
         children: [
-          { path: '', component: ClientInnovationsComponent, pathMatch: 'full' },
+          { path: '', component: ClientInnovationComponent, pathMatch: 'full' },
           {
             path: ':innovationId',
             children: [

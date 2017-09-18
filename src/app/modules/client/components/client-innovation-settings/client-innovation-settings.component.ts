@@ -7,7 +7,7 @@ import { IndexService } from '../../../../services/index/index.service';
   templateUrl: './client-innovation-settings.component.html',
   styleUrls: ['./client-innovation-settings.component.styl']
 })
-export class ClientInnovationSettingsComponent implements OnInit, Input {
+export class ClientInnovationSettingsComponent implements OnInit {
 
   @Input() innovation: any;
   @Input() innovationCard: any;
