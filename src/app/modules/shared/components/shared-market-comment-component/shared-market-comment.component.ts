@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'market-comment',
   templateUrl: 'shared-market-comment.component.html',
-  styleUrls: ['shared-market-comment.component.styl']
+  styleUrls: ['shared-market-comment.component.styl', '../shared-market-report/shared-market-report.component.styl']
 })
 
 export class SharedMarketCommentComponent implements OnInit {
@@ -22,7 +22,7 @@ export class SharedMarketCommentComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.professionals);
+    console.log("Shared market comment");
   }
 
   public buildImageUrl(country: string): string {

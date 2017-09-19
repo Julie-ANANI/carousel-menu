@@ -98,7 +98,7 @@ const clientRoutes: Routes = [
         ]
       },
       {
-        path: 'infographic',
+        path: 'infographic', //?isAdmin=true //TODO comment modifier cette route ?
         canActivate: [AuthGuard],
         children: [
           { path: '', component: SharedMarketReportComponent, pathMatch: 'full' }

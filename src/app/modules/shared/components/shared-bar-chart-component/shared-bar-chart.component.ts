@@ -20,7 +20,7 @@ export class SharedBarChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.levels);
+    //console.log(this.levels);
   }
 
   public barFill(percentage: number): string {

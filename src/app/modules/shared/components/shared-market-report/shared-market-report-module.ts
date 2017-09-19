@@ -3,6 +3,7 @@
  */
 import { Component, OnInit } from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
+import { ActivatedRoute } from '@angular/router';
 import { NgClass } from '@angular/common';
 import * as _ from "lodash";
 
@@ -12,7 +13,7 @@ import { InnovationService } from "./../../../../services/innovation/innovation.
 @Component({
   selector: 'app-shared-market-report',
   templateUrl: './shared-market-report.component.html',
-  styleUrls: ['./shared-market-report.component.styl', './shared-market-report.component-popover.styl']
+  styleUrls: ['./shared-market-report.component.styl']
 })
 
 export class SharedMarketReportComponent implements OnInit {
@@ -20,9 +21,11 @@ export class SharedMarketReportComponent implements OnInit {
   private _selectLangInput = 'en';
   private _detailsExpanded: boolean;
   private _chartPieData: any;
+  private _modalActive: string = "";
 
 
   private _infographics: any;
+  private _syntheses: any;
   private _showDetails: any;
   private _maxCountScore: number;
 
@@ -45,15 +48,25 @@ export class SharedMarketReportComponent implements OnInit {
     }
   };
 
+  public readonly: boolean;
+
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
+              private _route: ActivatedRoute
               ) { }
 
   ngOnInit() {
+    this.readonly = true;
+    this._route
+      .queryParams
+      .subscribe(params => {
+        this.readonly = !(params['isAdmin'] &&  params['isAdmin'] === "true" );
+      });
     this._detailsExpanded = false;
     this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
-    this._innovationService.getInnovationSythesis("59ae4e1ff560630254dac7b9").subscribe(synthesis => {
+    this._innovationService.getInnovationSythesis("59ae4e1ff560630254dac795").subscribe(synthesis => {
       this._infographics = synthesis.infographics;
+      this._syntheses= synthesis.synthesis || {};
       // Calcul du score max
       this._maxCountScore = _.max(_.map(this._infographics.scores, function(score){ return score['count']; } ));
       // Calculate the piecharts
@@ -64,13 +77,6 @@ export class SharedMarketReportComponent implements OnInit {
           "productInterests": SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productInterests)
         };
       }
-      /*
-       function getChartValues(stats, N) {
-       var list = [];
-       for (var i = 1; i <= N; i++) list.push(stats[i].count);
-       return list;
-       }
-       */
 
     });
     this._showDetails = { //TODO change to the right default
@@ -105,8 +111,22 @@ export class SharedMarketReportComponent implements OnInit {
     if (this._infographics && this._infographics.professionals) {
       let pros = this._infographics.professionals;
       return _.map(personsList, function (person) {
-        return _.find(pros, '_id', person.professionalId);
+        return _.find(pros, function(pro){
+          return pro['_id'] === person.professionalId;
+        });
       });
+    } else {
+      return [];
+    }
+  }
+
+  public getCommentPro(comment:any): Array<any> {
+    if (this._infographics && this._infographics.professionals) {
+      let pros = this._infographics.professionals;
+      let pro = _.find(pros, function(pro){
+          return pro['_id'] === comment.professionalId;
+        });
+      return [pro];
     } else {
       return [];
     }
@@ -129,6 +149,15 @@ export class SharedMarketReportComponent implements OnInit {
 
   public seeAnswer(professional: any) { //TODO modal
     console.log("OKAY");
+    this._modalActive = 'active';
+  }
+
+  public keyupHandlerFunction(event) {
+    console.log(event);
+  }
+
+  get active(): string {
+    return this._modalActive;
   }
 
   public getFlag(country: string): string {
@@ -149,6 +178,10 @@ export class SharedMarketReportComponent implements OnInit {
 
   get infographics(): any {
     return this._infographics;
+  }
+
+  get syntheses(): any {
+    return this._syntheses;
   }
 
   get detailsExpanded(): boolean {

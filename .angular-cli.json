@@ -21,6 +21,7 @@
       "prefix": "app",
       "styles": [
         "../node_modules/font-awesome/css/font-awesome.css",
+        "../node_modules/spectre.css/dist/spectre.min.css",
         "materialize.variables.scss",
         "styles.styl"
       ],
@@ -28,7 +29,12 @@
         "../node_modules/jquery/dist/jquery.js",
         "../node_modules/hammerjs/hammer.js",
         "../node_modules/materialize-css/dist/js/materialize.min.js",
-        "../node_modules/chart.js/dist/Chart.min.js"
+        "../node_modules/chart.js/dist/Chart.min.js",
+        "../node_modules/tinymce/tinymce.min.js",
+        "../node_modules/tinymce/themes/modern/theme.min.js",
+        "../node_modules/tinymce/plugins/link/plugin.min.js",
+        "../node_modules/tinymce/plugins/paste/plugin.min.js",
+        "../node_modules/tinymce/plugins/table/plugin.min.js"
       ],
       "environmentSource": "environment.ts",
       "environments": {

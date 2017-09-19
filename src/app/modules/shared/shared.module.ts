@@ -28,8 +28,10 @@ import {SharedMarketCommentComponent} from "./components/shared-market-comment-c
 import {SharedMarketReportPopoverComponent} from "./components/shared-market-report-popover/shared-market-report-popover.component";
 import {SharedPricesComponent} from "./components/shared-prices-component/shared-prices.component";
 import {SharedWorldMapComponent} from "./components/shared-world-map-component/shared-world-map.component";
+import {SharedModalComponent} from "./components/shared-modal-component/shared-modal.component";
 import {SharedInnovationCardLangmodalComponent} from "./components/shared-innovation-card-langmodal/shared-innovation-card-langmodal.component";
 import {SharedPaginationComponent} from "./components/shared-pagination/shared-pagination.component";
+import {SharedTextZoneComponent} from "./components/shared-text-zone/shared-text-zone.component";
 import {SqSortDirective} from "../../directives/smart-query/sqSort.directive";
 import {ChartsModule} from 'ng2-charts';
 
@@ -45,7 +47,7 @@ import {ChartsModule} from 'ng2-charts';
     TranslateModule.forChild(),
     DragulaModule,
     ChartsModule,
-    FileUploadModule
+    FileUploadModule,
   ],
   declarations: [
     // Directives
@@ -74,7 +76,9 @@ import {ChartsModule} from 'ng2-charts';
     SharedMarketReportPopoverComponent,
     SharedPricesComponent,
     SharedWorldMapComponent,
-    SharedPaginationComponent
+    SharedPaginationComponent,
+    SharedModalComponent,
+    SharedTextZoneComponent
   ],
   exports: [
     // Modules
