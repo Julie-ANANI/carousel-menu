@@ -1,0 +1,965 @@
+/* ==========================================================================
+   Infographie du rapport des professionnels
+   ========================================================================== */
+
+#infography {
+  position: relative;
+  padding: 70px;
+  color: white;
+  font-size: 15px;
+  background-image: linear-gradient(-90deg, #032D45 1%, #145174 51%, #032D45 100%);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+  -moz-osx-font-smoothing: grayscale;
+
+  a {
+    color: #FDD47B;
+  }
+
+  a:hover {
+    color: #FDD47B;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  h1 {
+    margin-top: 70px;
+    margin-bottom: 100px;
+    font-size: 50px;
+    color: white;
+  }
+
+  h2 {
+    background: rgba(0,0,0,0.7) url('/images/infographics/picto-earth.svg') left center no-repeat;
+    border-radius: 500px;
+    font-size: 21px;
+    color: white;
+    padding: 16px 16px 16px 70px;
+    margin-top: 120px;
+    margin-bottom: 40px;
+    line-height: 24px;
+    text-align: left;
+    font-weight: normal;
+  }
+
+  .count {
+    background: #FED57C;
+    color: #51401A;
+    border-radius: 12px;
+    width: 20px;
+    line-height: 19px;
+    font-size: 11px;
+    height: 20px;
+    margin-right: 5px;
+    display: inline-block;
+  }
+
+  .switch-with-text {
+    position: absolute;
+    right: 36px;
+    top: 26px;
+    text-align: right;
+  }
+
+  .list-detail-tag {
+
+    ul li {
+            display: block;
+    background: #0D90AD;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 500px;
+    text-align: center;
+  }
+
+  ul li:hover:after {
+    content: '?';
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -15px;
+    margin-right: 2px;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    cursor: pointer;
+    vertical-align: center;
+  }
+
+  ul li:nth-child(even) {
+            background: rgba(255,255,255,0.17);
+}
+
+}
+
+.cited {
+  font-size: 28px;
+  margin: 30px 0 10px 0;
+
+  strong {
+    font-size: 40px;
+  }
+}
+
+input.cmn-toggle-round-flat:checked + label {
+  background: #0B90C6;
+}
+
+input.cmn-toggle-round-flat + label {
+  background-color: #f39200;
+}
+
+input.cmn-toggle-round-flat:checked + label:after {
+  background-color: #0B90C6;
+}
+
+input.cmn-toggle-round-flat + label:after {
+  background-color: #f39200;
+}
+
+
+/* =========================================================================
+Carte Potentiel Marché
+========================================================================== */
+
+#market-potential {
+
+  #map {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    border: 4px solid #002135;
+  }
+
+  #infobox {
+    padding: 16px 25px 6px 25px;
+    background: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    position: absolute;
+    right: 56px;
+    top: 10px;
+    color: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+
+    strong {
+      font-size: 18px;
+    }
+  }
+
+  /*
+  path {
+      fill: #000;
+      fill-opacity: 0;
+      stroke: #fff;
+      stroke-width: 0;
+  }*/
+
+  path:hover {
+    fill-opacity: 1;
+    stroke: #fff;
+  }
+
+}
+
+/* =========================================================================
+Les professionnels
+========================================================================== */
+
+#professionnals {
+
+  h2 {
+    background-image: url('/images/infographics/picto-professionnal.svg');
+  }
+
+  ul li {
+            margin: 0 0 20px 0;
+  display: block;
+
+  img {
+    max-width: inherit;
+  }
+
+  .media, .media-body {
+    overflow: visible;
+  }
+
+  .country {
+    font-size: 12px;
+    opacity: 0.8;
+    top: -9px;
+    position: relative;
+  }
+
+  .follower {
+    display: inline-block;
+    top: -8px;
+    position: relative;
+    font-size: 14px;
+
+    i {
+      color: #FFD67D;
+    }
+  }
+
+  .function {
+    display: block;
+    top: -14px;
+    position: relative;
+    font-size: 14px;
+  }
+}
+
+.big-number {
+  margin-top: 30px;
+  opacity: 0.85;
+}
+
+.big-number span {
+  position: relative;
+  top: 39px;
+  font-size: 120px;
+  font-weight: 300;
+}
+
+.followers-stats {
+  display: inline-block;
+  text-align: left;
+  border-left: solid 3px rgba(255, 255, 255, 0.2);
+  padding-left: 14px;
+  margin-left: 20px;
+  vertical-align: middle;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 15px;
+
+  .follower {
+    display: inline-block;
+    top: -5px;
+    position: relative;
+    font-size: 26px;
+
+    i {
+      color: #FFD67D;
+    }
+  }
+
+  .number {
+    font-size: 35px;
+  }
+
+  .desc {
+    display: block;
+    font-size: 14px;
+  }
+}
+
+}
+
+
+/* =========================================================================
+Marques d'intérêt
+========================================================================== */
+
+#interest-of-professionals {
+
+  h2 {
+    background-image: url('/images/infographics/picto-thumb.svg');
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+}
+
+
+/* =========================================================================
+Les partenaires
+========================================================================== */
+
+#partners {
+
+  h2 {
+    background-image: url('/images/infographics/picto-link.svg');
+  }
+
+}
+
+
+/* =========================================================================
+Les concurrents
+========================================================================== */
+
+#competitors {
+
+  h2 {
+    background-image: url('/images/infographics/picto-bell.svg');
+  }
+
+  .competitors-intensity {
+    p {
+      font-size: 18px;
+    }
+
+    .help {
+      display: inline-block;
+    }
+
+    .help:after {
+      content: '?';
+      font-weight: bold;
+      display: block;
+      margin-left: 5px;
+      height: 19px;
+      width: 19px;
+      color: black;
+      line-height: 20px;
+      background-color: rgba(255,255, 255,0.8);
+      border-radius: 31px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .progressbar {
+      background: #FFF;
+      background: linear-gradient(#FFF, #DDD);
+      height: 20px;
+      border-radius: 15px;
+      margin-bottom: 100px;
+
+      .full {
+        width:40%;
+        height: 100%;
+        border-radius: 15px;
+        position: relative;
+        padding-left: 30px;
+        background: #ca681e;
+        background: linear-gradient(#e68034, #ca681e);
+
+        .value {
+          background-color: #ca681e;
+          position: absolute;
+          top: 35px;
+          right: -58px;
+          padding: 8px;
+          border-radius: 4px;
+          font-size: 17px;
+          width: 120px;
+          text-align: center;
+
+          &:before { // arrow
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 8px 10px 8px;
+            border-color: transparent transparent #ca681e transparent;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+            top: -10px;
+          }
+        }
+
+
+        &.low {
+          background: #799c24;
+          background: linear-gradient(#a8cd4c, #799c24);
+
+          .value {
+            background-color: #799c24;
+            &:before {
+              border-color: transparent transparent #799c24 transparent;
+            }
+          }
+        }
+
+        &.high {
+          background: #C12E29;
+          background: linear-gradient(#c14e46, #C12E29);
+
+          .value {
+            background-color: #C12E29;
+            &:before {
+              border-color: transparent transparent #C12E29 transparent;
+            }
+          }
+        }
+      }
+    }
+
+    .progress {
+      border-radius: 500px;
+      height: 25px;
+    }
+
+    .progress-bar-danger {
+      background: #C12E29;
+      border-radius: 500px;
+    }
+
+    .progress-bar-danger span {
+      margin-top: 2px;
+      position: absolute;
+    }
+  }
+}
+
+
+/* =========================================================================
+Les prix
+========================================================================== */
+
+#prices {
+
+  h2 {
+    background-image: url('/images/infographics/picto-money.svg');
+  }
+
+  svg {
+    margin: 40px 0;
+    width: 100%;
+    height: auto;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: white;
+  }
+
+  .x.axis {
+    fill: white;
+  }
+
+  .tick text {
+    opacity: 0.5;
+  }
+
+  .big-price {
+    display: inline-block;
+    background: rgba(3,35,56,0.7);
+    border-radius: 6px;
+    padding: 30px 25px 5px 25px;
+  }
+
+  .big-price img {
+    top: -13px;
+    position: relative;
+  }
+
+  .big-price .price {
+    font-size: 55px;
+    color: white;
+  }
+
+  .big-price .devise {
+    font-size: 55px;
+    color: #4D89AE;
+    opacity: 0.6;
+  }
+}
+
+
+/* =========================================================================
+Les commentaires
+========================================================================== */
+
+.list-comments {
+  h2 {
+    background-image: url('/images/infographics/picto-bulls.svg');
+  }
+
+  article {
+    margin-bottom: 20px;
+  }
+
+  .positive img,
+  .negative img {
+    border-radius: 500px;
+    margin-top: 7px;
+    height: 45px;
+  }
+
+  .positive .comment,
+  .negative .comment {
+    position: relative;
+    background: #032338;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+
+  .negative .comment {
+    background: #D9534F;
+  }
+
+  .positive .comment:after {
+    position: absolute;
+    left: -10px;
+    top: 24px;
+    content:'';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 10.4px 6px 0;
+    border-color: transparent #032338 transparent transparent;
+  }
+
+  .negative .comment:after {
+    position: absolute;
+    right: -10px;
+    top: 24px;
+    content:'';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 0 6px 10.4px;
+    border-color: transparent transparent transparent #D9534F;
+  }
+
+  .positive .comment .job,
+  .negative .comment .job {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .positive .comment .job {
+    color: #2DB3D8;
+  }
+
+  .negative .comment .job {
+    color: #530604;
+  }
+}
+
+
+/* =========================================================================
+Nouveaux domaines d'application
+========================================================================== */
+
+#applications {
+  h2 {
+    background-image: url('/images/infographics/picto-network.svg');
+  }
+
+  article {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+  }
+
+  article > div {
+    display: flex;
+    align-items: center;
+    background: #032338;
+    border-radius: 7px;
+    padding: 20px 22px 25px 22px;
+    width: 200px;
+    min-height: 143px;
+    font-size: 16px;
+    margin: 0 10px 30px 10px;
+
+    i {
+      display: block;
+      font-size: 30px;
+      color: #FDD47B;
+      margin-bottom: 5px;
+    }
+
+    > div {
+      margin: 0 auto;
+    }
+  }
+}
+
+
+/* =========================================================================
+Pour résumer
+========================================================================== */
+
+#qualities {
+
+  h2 {
+    background-image: url('/images/infographics/picto-cog.svg');
+  }
+
+  .progress-wrapper {
+    position: relative;
+    margin: 20px auto 10px auto;
+    font-size: 25px;
+    width: 170px;
+  }
+
+  .progresscircle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    line-height: 5em;
+    text-align: center;
+  }
+
+  article .title {
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+}
+
+
+/* =========================================================================
+Score total
+========================================================================== */
+
+#scores {
+
+  h2 {
+    background-image: url('/images/infographics/picto-graph.svg');
+    margin-bottom: 50px;
+  }
+
+  .logo-synapse {
+    margin-top: 110px;
+  }
+
+  .bar {
+    display: inline-block;
+    margin-right: 22px;
+  }
+
+  .bar .bg {
+    position: relative;
+    width: 28px;
+    height: 300px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 40px;
+  }
+
+  .bar .bg > div {
+    position: absolute;
+    bottom: 0;
+    border-radius: 40px;
+    padding: 5px 0 10px 0;
+    width: 28px;
+    height: 70px;
+    transition: all linear 0.2s;
+  }
+
+  .bar .bg .score1 {
+    background-image: linear-gradient(-180deg, #CE392D 0%, #B0261B 100%);
+  }
+
+  .bar .bg .score2 {
+    background-image: linear-gradient(-180deg, #D75A3E 0%, #C14023 100%);
+  }
+
+  .bar .bg .score3 {
+    background-image: linear-gradient(-180deg, #E68034 0%, #CA681E 100%);
+  }
+
+  .bar .bg .score4 {
+    background-image: linear-gradient(-180deg, #F4B11B 0%, #C18601 100%);
+  }
+
+  .bar .bg .score5 {
+    background-image: linear-gradient(-180deg, #EFD622 0%, #CBB515 100%);
+  }
+
+  .bar .bg .score6 {
+    background-image: linear-gradient(-180deg, #D6D556 0%, #B9B837 98%);
+  }
+
+  .bar .bg .score7 {
+    background-image: linear-gradient(-180deg, #CBDD51 0%, #99AA24 100%);
+  }
+
+  .bar .bg .score8 {
+    background-image: linear-gradient(-180deg, #A8CD4C 0%, #799C24 100%);
+  }
+
+  .bar .bg .score9 {
+    background-image: linear-gradient(-180deg, #95C84F 0%, #659C19 100%);
+  }
+
+  .bar .bg .score10 {
+    background-image: linear-gradient(-180deg, #9ADA43 2%, #64971C 100%);
+  }
+
+  .bar .score {
+    font-size: 12px;
+  }
+
+  .bar .bg strong {
+    color: white;
+    display: block;
+    font-size: 16px;
+  }
+
+  .big-score {
+    text-align: center;
+    font-size: 120px;
+    margin: 80px auto 70px auto;
+    font-weight: 300;
+  }
+}
+
+}
+
+
+
+
+/* =========================================================================
+    Colors for print
+    ========================================================================== */
+
+#infography.print {
+  color: rgba(0,0,0,0.8);
+  background: white;
+
+  h1 {
+    color: inherit;
+  }
+
+  h2 {
+    background-color: rgba(0,0,0,0.05);
+    font-size: 27px;
+    color: inherit;
+    line-height: 27px;
+    font-weight: bold;
+  }
+
+  .list-detail-tag {
+
+    ul li {
+            font-weight: bold;
+    color: white;
+    background: #007791;
+  }
+
+  ul li:nth-child(even) {
+            background: #34AAC4;
+}
+
+}
+
+/* =========================================================================
+Carte Potentiel Marché
+========================================================================== */
+
+#market-potential {
+
+  #map {
+    border: 4px solid transparent;
+  }
+
+}
+
+/* =========================================================================
+Les professionnels
+========================================================================== */
+
+#professionnals {
+
+  ul li {
+
+    .country {
+      font-weight: bold;
+    }
+
+  }
+
+  .followers-stats {
+    border-left: solid 3px rgba(0, 0, 0, 0.3);
+  }
+
+}
+
+
+/* =========================================================================
+Les concurrents
+========================================================================== */
+
+#competitors {
+
+  .competitors-intensity {
+
+    .help:after {
+      background-color: rgba(0,0, 0,0.8);
+      color: white;
+    }
+
+    .progressbar {
+      background: #EAEAEA;
+
+      .full .value {
+        color: white;
+      }
+    }
+  }
+}
+
+
+/* =========================================================================
+Les prix
+========================================================================== */
+
+#prices {
+
+  .axis path,
+  .axis line {
+    stroke: grey;
+  }
+
+  .x.axis {
+    fill: black;
+  }
+
+  .big-price {
+    background: #0B90C6;
+    padding: 30px 25px 18px 25px;
+  }
+
+  .big-price img {
+    display: none;
+  }
+
+  .big-price .price {
+    color: white;
+  }
+
+  .big-price .devise {
+    color: white;
+    opacity: 0.6;
+  }
+}
+
+
+/* =========================================================================
+Les commentaires
+========================================================================== */
+
+.list-comments {
+
+  .positive .comment,
+  .negative .comment {
+    background: #0B90C6;
+    color: white;
+    font-weight: bold;
+  }
+
+  .negative .comment {
+    background: #EF605C;
+  }
+
+  .positive .comment:after {
+    border-color: transparent #0B90C6 transparent transparent;
+  }
+
+  .negative .comment:after {
+    border-color: transparent transparent transparent #EF605C;
+  }
+
+  .positive .comment .job {
+    color: #0A222C;
+  }
+
+  .negative .comment .job {
+    color: #530604;
+  }
+}
+
+
+/* =========================================================================
+Nouveaux domaines d'application
+========================================================================== */
+
+#applications {
+
+  article > div {
+    background: #0B90C6;
+    color: white;
+    font-weight: bold;
+  }
+}
+
+
+/* =========================================================================
+Pour résumer
+========================================================================== */
+
+#qualities {
+
+  article .title {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+}
+
+
+/* =========================================================================
+Score total
+========================================================================== */
+
+#scores {
+
+  .bar .score {
+    font-weight: bold;
+  }
+
+  .big-score {
+    color: #9B9B9B;
+  }
+}
+
+}
+
+
+/* =========================================================================
+Mobile
+========================================================================== */
+
+@media (max-width: 768px) {
+
+  body.campaign-edit-infographic .panel .panel-body,
+  body.campaign-edit-infographic-new .panel .panel-body {
+    padding:10px 0 0 0;
+  }
+
+  #infography {
+    padding: 70px 10px;
+
+    #partners .spacing {
+      min-height: inherit;
+    }
+
+    #partners article {
+      margin-bottom: 30px;
+    }
+
+    #comments article.right .job img,
+    #comments article.left .job img {
+      height: 30px;
+    }
+
+    #comments article .job span {
+      width: inherit;
+    }
+
+    #applications .lines{
+      background: none;
+      width: 100%;
+    }
+  }
+
+}

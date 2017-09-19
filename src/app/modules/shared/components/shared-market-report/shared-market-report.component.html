@@ -684,16 +684,16 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.PRICE.QUESTION' | translate }}</p>
-                <!--<text-zone [elementId]="'prices'"
+                <text-zone [elementId]="'prices-edit'"
                            [readonly]="readonly"
                            [data]="syntheses.prices || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>-->
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.prices)"></p>-->
               </div>
             </div>
 
             <div class="bloc" id="prices" *ngIf="infographics.priceAverage">
-              <infographics-prices [data]="infographics.prices"></infographics-prices>
+              <infographics-prices [rawData]="infographics.prices"></infographics-prices>
 
               <div class="average">Moyenne : {{infographics.priceAverage}}€</div>
             </div>
