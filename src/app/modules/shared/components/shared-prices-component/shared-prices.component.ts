@@ -43,20 +43,23 @@ export class SharedPricesComponent implements OnInit {
     this.drawCoins();
   }
 
-
-
-  public computePrices(){
-
+  private setup(): void {
+    // Calcul la largeur du graphique
+    let infographicsWidth = this.element.nativeElement.parentNode.offsetWidth;
+    this.margin = 40;
+    this.width = infographicsWidth;
+    this.ymax = this.data.length === 0 ? 0 : D3.max(this.data, function (d) {return d['count'];});
+    this.height = this.margin + (6 * this.ymax);
+    // Trouve les valeurs minimums et maximums et les fait correspondre à la hauteur du graphique
+    this.xScale = D3.scaleLinear().range([0, this.width - this.margin]); //Avant (v3) c'était d3.scale.linear()
+    this.yScale = D3.scaleLinear().range([this.height - this.margin, 0]);
+    this.xScale.domain(D3.extent(this.data, function (d) {return d.value;})).nice();
+    this.yScale.domain(D3.extent(this.data, function (d) {return d.count;}));
+    this.xAxis = D3.axisBottom(this.xScale) //Avant (v3), c'étatit d3.svg.axis()
+      .tickFormat(function (d) {
+        return d + "€";
+      });
   }
-
-  /* Will Update on every @Input change */
-  /*ngOnChanges(): void {
-    this.transformData();
-    this.setup();
-    this.buildSVG();
-    this.drawCoins();
-  }*/
-
   private transformData() {
     // Init data
     this.data = [];
@@ -71,28 +74,6 @@ export class SharedPricesComponent implements OnInit {
   }
 
   /* Will setup the chart container */
-  private setup(): void {
-    // Calcul la largeur du graphique
-    let infographicsWidth = this.element.nativeElement.parentNode.offsetWidth;
-    this.margin = 40;
-    this.width = infographicsWidth;
-    this.ymax = this.data.length === 0 ? 0 : D3.max(this.data, function (d) {return d['count'];});
-    this.height = this.margin + (6 * this.ymax);// this.width * 0.5 - this.margin.top - this.margin.bottom;
-    // Trouve les valeurs minimums et maximums et les fait correspondre à la hauteur du graphique
-    this.xScale = D3.scaleLinear().range([0, this.width - this.margin]);
-    this.yScale = D3.scaleLinear().range([this.height - this.margin, 0]);
-    this.xScale.domain(D3.extent(this.data, function (d) {return d.value;})).nice();
-    this.yScale.domain(D3.extent(this.data, function (d) {return d.count;}));
-    //this.xScale = D3.time.scale().range([0, this.width]);
-    this.xAxis = D3.axisBottom(this.xScale) //TODO take a look ...
-      .tickFormat(function (d) {
-        return d + "€";
-      })
-      //.orient("bottom");
-    // On vide le graphique pour éviter d'en ajouter un nouveau à chaque calcul
-    //this.htmlElement.empty();
-
-  }
 
   /* Will build the SVG Element */
   private buildSVG(): void {
@@ -111,11 +92,6 @@ export class SharedPricesComponent implements OnInit {
       .call(this.xAxis);
   }
 
-  /**
-   * Now we populate using our dataset, mapping the x and y values
-   * into the x and y domains, also we set the interpolation so we decide
-   * how the Area Chart is plotted.
-   **/
   private drawCoins(): void {
     // Ajout des pièces
     let that = this;
@@ -133,5 +109,4 @@ export class SharedPricesComponent implements OnInit {
       .attr("width", 22)
       .attr("height", 13);
   }
-
 };
