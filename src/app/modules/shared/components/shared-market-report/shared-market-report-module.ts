@@ -2,7 +2,7 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, OnInit } from '@angular/core';
-import {TranslateService} from "@ngx-translate/core";
+import { TranslateService } from "@ngx-translate/core";
 import { ActivatedRoute } from '@angular/router';
 import { NgClass } from '@angular/common';
 import * as _ from "lodash";
@@ -22,7 +22,7 @@ export class SharedMarketReportComponent implements OnInit {
   private _detailsExpanded: boolean;
   private _chartPieData: any;
   private _modalActive: string = "";
-
+  private _isSaving = false;
 
   private _infographics: any;
   private _syntheses: any;
@@ -50,6 +50,8 @@ export class SharedMarketReportComponent implements OnInit {
 
   public readonly: boolean;
 
+  private innoid = "59ae4e1ff560630254dac795";
+
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _route: ActivatedRoute
@@ -64,7 +66,7 @@ export class SharedMarketReportComponent implements OnInit {
       });
     this._detailsExpanded = false;
     this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
-    this._innovationService.getInnovationSythesis("59ae4e1ff560630254dac795").subscribe(synthesis => {
+    this._innovationService.getInnovationSythesis(this.innoid).subscribe(synthesis => {
       this._infographics = synthesis.infographics;
       this._syntheses= synthesis.synthesis || {};
       // Calcul du score max
@@ -153,7 +155,15 @@ export class SharedMarketReportComponent implements OnInit {
   }
 
   public keyupHandlerFunction(event) {
-    console.log(event);
+    this._syntheses[event['id']] = event['content'];
+    //Saving
+    this._isSaving = true;
+    this._innovationService.updateSynthesis(this.innoid, this._syntheses)
+      .subscribe(data=>{
+        this._syntheses= data.synthesis;
+        //Saved
+        this._isSaving = false;
+      });
   }
 
   get active(): string {
