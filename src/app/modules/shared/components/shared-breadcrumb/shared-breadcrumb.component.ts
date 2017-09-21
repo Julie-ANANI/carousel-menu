@@ -4,7 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'app-shared-breadcrumb',
   templateUrl: './shared-breadcrumb.component.html',
-  styleUrls: ['./shared-breadcrumb.component.styl']
+  styleUrls: ['./shared-breadcrumb.component.scss']
 })
 export class SharedBreadcrumbComponent implements OnInit {
 

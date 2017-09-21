@@ -7,7 +7,7 @@ import 'rxjs/add/operator/pairwise';
 
 @Component({
   selector: 'app-root',
-  styleUrls: ['./app.component.styl'],
+  styleUrls: ['./app.component.scss'],
   template: '<simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>' +
   '<app-http-loader></app-http-loader>' +
   '<router-outlet></router-outlet>'

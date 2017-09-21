@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 @Component({
   selector: 'app-shared-upload-zone-video',
   templateUrl: './shared-upload-zone-video.component.html',
-  styleUrls: ['./shared-upload-zone-video.component.styl']
+  styleUrls: ['./shared-upload-zone-video.component.scss']
 })
 export class SharedUploadZoneVideoComponent implements OnInit {
 

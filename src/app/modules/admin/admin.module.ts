@@ -6,7 +6,6 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminUserComponent } from './components/admin-user/admin-user.component';
 import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
-import { MaterializeModule } from 'angular2-materialize';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AdminQuizEditorComponent } from './components/admin-quiz-editor/admin-quiz-editor.component';
@@ -15,7 +14,6 @@ import { AdminQuizEditorComponent } from './components/admin-quiz-editor/admin-q
   imports: [
     CommonModule,
     AdminRoutingModule,
-    MaterializeModule,
     SharedModule,
     TranslateModule.forChild()
   ],

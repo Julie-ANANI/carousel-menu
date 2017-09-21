@@ -12,7 +12,7 @@ import 'rxjs/add/operator/filter';
 @Component({
   selector: 'app-client-account',
   templateUrl: './client-account.component.html',
-  styleUrls: ['./client-account.component.styl']
+  styleUrls: ['./client-account.component.scss']
 })
 export class ClientAccountComponent implements OnInit {
 

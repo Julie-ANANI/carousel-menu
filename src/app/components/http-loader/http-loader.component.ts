@@ -5,7 +5,7 @@ import { LoaderService } from '../../services/loader/loader.service';
 @Component({
   selector: 'app-http-loader',
   templateUrl: './http-loader.component.html',
-  styleUrls: ['./http-loader.component.styl']
+  styleUrls: ['./http-loader.component.scss']
 })
 export class HttpLoaderComponent implements OnInit, OnDestroy {
   public show = true;

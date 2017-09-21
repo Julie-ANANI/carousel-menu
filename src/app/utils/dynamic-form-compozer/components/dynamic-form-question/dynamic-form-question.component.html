@@ -1,4 +1,4 @@
-<div class="col {{ compozerComponent.materializeWidth }} input-field" [formGroup]="form">
+<div class="col {{ compozerComponent.classAddition }} input-field" [formGroup]="form">
 
   <i *ngIf="compozerComponent.prefixIcon" class="material-icons prefix">{{ compozerComponent.prefixIcon }}</i>
 
@@ -8,9 +8,8 @@
             [ngClass]="{invalid: isFieldInvalid(compozerComponent.key)}"
             [attr.disabled]="compozerComponent.disabled"
             [attr.placeholder]="compozerComponent.placeholder || null"
-            [(ngModel)]="compozerComponent.value"
-            class="materialize-textarea"
-            materialize></textarea>
+            [(ngModel)]="compozerComponent.value">
+  </textarea>
 
   <input *ngIf="type === 'textbox'"
          [formControlName]="compozerComponent.key"
@@ -25,8 +24,7 @@
           [id]="compozerComponent.key"
           [ngClass]="{invalid: isFieldInvalid(compozerComponent.key)}"
           [attr.disabled]="compozerComponent.disabled"
-          [(ngModel)]="compozerComponent.value"
-          materialize="material_select">
+          [(ngModel)]="compozerComponent.value">
 
     <option *ngFor="let opt of compozerComponent.options"
             [value]="opt.key"

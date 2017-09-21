@@ -8,13 +8,13 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-client-campaign',
   templateUrl: './client-campaign.component.html',
-  styleUrls: ['./client-campaign.component.styl']
+  styleUrls: ['./client-campaign.component.scss']
 })
 export class ClientCampaignComponent implements OnInit {
 
   private _innovations = [];
   private _total = 0;
-  
+
   constructor(private _router: Router,
               private _translateService: TranslateService,
               private _titleService: Title,
@@ -33,7 +33,7 @@ export class ClientCampaignComponent implements OnInit {
     });
     this._sq.getData();
   }
-  
+
   get sq(): any {
     return this._sq;
   }

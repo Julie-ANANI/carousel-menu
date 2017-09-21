@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'bar-chart',
   templateUrl: 'shared-bar-chart.component.html',
-  styleUrls: ['shared-bar-chart.component.styl']
+  styleUrls: ['shared-bar-chart.component.scss']
 })
 
 export class SharedBarChartComponent implements OnInit {

@@ -1,6 +1,5 @@
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MaterializeModule} from 'angular2-materialize';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {HttpModule} from '@angular/http';
@@ -36,7 +35,6 @@ import {ChartsModule} from 'ng2-charts';
 @NgModule({
   imports: [
     CommonModule,
-    MaterializeModule,
     FormsModule,
     HttpModule,
     ReactiveFormsModule,

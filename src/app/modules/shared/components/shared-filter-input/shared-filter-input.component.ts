@@ -3,7 +3,7 @@ import {Component, Input} from '@angular/core';
 @Component({
   selector: 'sqFilter',
   templateUrl: './shared-filter-input.component.html',
-  styleUrls: ['./shared-filter-input.component.styl']
+  styleUrls: ['./shared-filter-input.component.scss']
 })
 export class SharedFilterInputComponent {
   @Input() service: any;

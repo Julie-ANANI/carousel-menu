@@ -20,15 +20,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/font-awesome/css/font-awesome.css",
-        "materialize.variables.scss",
-        "styles.styl",
-        "../node_modules/spectre.css/dist/spectre.min.css"
+        "styles.umi.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
         "../node_modules/hammerjs/hammer.js",
-        "../node_modules/materialize-css/dist/js/materialize.min.js",
         "../node_modules/chart.js/dist/Chart.min.js"
       ],
       "environmentSource": "environment.ts",
@@ -54,14 +50,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/font-awesome/css/font-awesome.css",
-        "materialize.variables.scss",
-        "styles.vendor1.styl"
+        "styles.vendor1.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
         "../node_modules/hammerjs/hammer.js",
-        "../node_modules/materialize-css/dist/js/materialize.min.js",
         "https://canvasjs.com/assets/script/canvasjs.min.js"
       ],
       "environmentSource": "environment.ts",
@@ -93,7 +86,7 @@
     }
   },
   "defaults": {
-    "styleExt": "styl",
+    "styleExt": "scss",
     "component": {
     }
   }

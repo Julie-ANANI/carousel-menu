@@ -7,7 +7,7 @@ import * as _ from "lodash";
 @Component({
   selector: 'infographics-prices',
   templateUrl: 'shared-prices.component.html',
-  styleUrls: ['shared-prices.component.styl']
+  styleUrls: ['shared-prices.component.scss']
 })
 
 export class SharedPricesComponent implements OnInit {

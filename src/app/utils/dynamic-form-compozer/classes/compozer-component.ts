@@ -11,7 +11,7 @@ export class CompozerComponent<T> {
   public disabled: boolean;
   public validators: ValidatorFn | ValidatorFn[];
   public errorsMessages: any;
-  public materializeWidth: string;
+  public classAddition: string;
   public prefixIcon: string;
 
   constructor(options: {
@@ -25,7 +25,7 @@ export class CompozerComponent<T> {
     disabled?: boolean,
     validators?: ValidatorFn | ValidatorFn[],
     errorsMessages?: any,
-    materializeWidth?: string,
+    classAddition?: string,
     prefixIcon?: string,
   } = {}) {
     this.value = options.value;
@@ -38,7 +38,7 @@ export class CompozerComponent<T> {
     this.disabled = options.disabled;
     this.validators = options.validators || null;
     this.errorsMessages = options.errorsMessages || null;
-    this.materializeWidth = options.materializeWidth || 's12';
+    this.classAddition = options.classAddition || 's12';
     this.prefixIcon = options.prefixIcon || '';
   }
 }

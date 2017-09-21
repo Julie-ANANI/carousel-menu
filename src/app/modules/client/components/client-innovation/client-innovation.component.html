@@ -9,7 +9,7 @@ Breadcrumb :
 <div *ngIf="dataLoaded">
   <div class="row">
     <div class="col s12 m9 l10">
-      <div id="top" materialize="scrollSpy" class="section scrollspy">
+      <div id="top" class="section scrollspy">
         <div class="row" id="lang-choice">
           <div class="col s2">
             <div class="center-align col s6">
@@ -56,7 +56,7 @@ Breadcrumb :
         </div>
       </div>
 
-      <div id="innovation-card" materialize="scrollSpy" class="section scrollspy">
+      <div id="innovation-card" class="section">
         <div class="row innovation-card">
           <!-- Bannière du titre -->
           <div class="col s12" id="banner">
@@ -70,11 +70,9 @@ Breadcrumb :
             <!-- Descriptif -->
             <div class="col s12 input-field">
         <textarea id="desc"
-                  class="materialize-textarea"
                   placeholder="Décrivez rapidement votre innovation ici"
                   [(ngModel)]="innovationCard.summary"
-                  (change)="addModification('innovationCard.summary')"
-                  materialize>
+                  (change)="addModification('innovationCard.summary')">
         </textarea>
             </div>
 
@@ -108,8 +106,7 @@ Breadcrumb :
                 <i class="material-icons prefix">settings</i>
                 <select id="project-state"
                         [(ngModel)]="innovation.projectStatus"
-                        (change)="addModification('projectStatus')"
-                        materialize="material_select">
+                        (change)="addModification('projectStatus')">
                   <option *ngFor="let opt of projectStatusOptions" [value]="opt.key">{{opt.value}}</option>
                 </select>
                 <label for="project-state">{{ translationsCardLang ? translationsCardLang['INNOVATION_CARD.PROJECT_STATE'] :
@@ -121,8 +118,7 @@ Breadcrumb :
                 <i class="material-icons prefix">av_timer</i>
                 <select id="time-to-market"
                         [(ngModel)]="innovation.timeToMarket"
-                        (change)="addModification('timeToMarket')"
-                        materialize="material_select">
+                        (change)="addModification('timeToMarket')">
                   <option *ngFor="let opt of timeToMarketOptions" [value]="opt.key">{{opt.value}}</option>
                 </select>
                 <label for="time-to-market">{{ translationsCardLang ? translationsCardLang['INNOVATION_CARD.TIME_TO_MARKET'] :
@@ -159,11 +155,9 @@ Breadcrumb :
             <!-- Problem -->
             <div class="col l6 s12 input-field">
         <textarea id="problem"
-                  class="materialize-textarea"
                   placeholder="Quelle était la problématique donnée ?"
                   [(ngModel)]="innovationCard.problem"
-                  (change)="addModification('innovationCard.problem')"
-                  materialize>
+                  (change)="addModification('innovationCard.problem')">
         </textarea>
               <label for="problem" class="error-form active">{{ 'Problématique' | translate }}</label>
             </div>
@@ -171,11 +165,9 @@ Breadcrumb :
             <!-- Solution -->
             <div class="col l6 s12 input-field">
         <textarea id="solution"
-                  class="materialize-textarea"
                   placeholder="Décrivez rapidement comment vous avez résolu la problématique ici"
                   [(ngModel)]="innovationCard.solution"
-                  (change)="addModification('innovationCard.solution')"
-                  materialize>
+                  (change)="addModification('innovationCard.solution')">
         </textarea>
               <label for="solution" class="error-form active">{{ 'Solution' | translate }}</label>
             </div>
@@ -211,11 +203,11 @@ Breadcrumb :
         </div>
       </div>
 
-      <div id="params" materialize="scrollSpy" class="section scrollspy">
+      <div id="params" class="section">
         <app-client-innovation-settings [innovation]="innovation" [innovationCard]="innovationCard"></app-client-innovation-settings>
       </div>
 
-      <div id="synthesis" materialize="scrollSpy" class="section scrollspy">
+      <div id="synthesis" class="section">
         <p>Synthèse</p>
         <br>
         <br>

@@ -8,7 +8,7 @@ import 'rxjs/add/observable/throw';
 @Component({
   selector: 'app-client-discover',
   templateUrl: './client-discover.component.html',
-  styleUrls: ['./client-discover.component.styl']
+  styleUrls: ['./client-discover.component.scss']
 })
 export class ClientDiscoverComponent implements OnInit {
 

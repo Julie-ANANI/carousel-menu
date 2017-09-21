@@ -6,7 +6,7 @@ import { Component, OnInit, Input, ElementRef } from '@angular/core';
 @Component({
   selector: 'world-map',
   templateUrl: 'shared-world-map.component.html',
-  styleUrls: ['shared-world-map.component.styl']
+  styleUrls: ['shared-world-map.component.scss']
 })
 
 export class SharedWorldMapComponent implements OnInit {

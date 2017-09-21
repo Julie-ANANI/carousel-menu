@@ -11,7 +11,7 @@ import {langSelectOptions} from "../../../../data/innovation.data";
 @Component({
   selector: 'app-client-innovations',
   templateUrl: './client-innovations.component.html',
-  styleUrls: ['./client-innovations.component.styl']
+  styleUrls: ['./client-innovations.component.scss']
 })
 export class ClientInnovationsComponent implements OnInit {
 

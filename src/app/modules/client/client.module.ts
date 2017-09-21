@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterializeModule } from 'angular2-materialize/dist';
 import { LocalStorageModule } from 'angular-2-local-storage'; // TODO utiliser le localStorage pour accélérer les chargements
 import { NgPipesModule } from 'ngx-pipes';
 import { SharedModule } from '../shared/shared.module';
@@ -28,7 +27,6 @@ import { ClientInnovationSettingsComponent } from './components/client-innovatio
 @NgModule({
   imports: [
     CommonModule,
-    MaterializeModule,
     ClientRoutingModule,
     SharedModule,
     TranslateModule.forChild(),

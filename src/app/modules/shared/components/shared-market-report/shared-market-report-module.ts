@@ -12,7 +12,7 @@ import { InnovationService } from "./../../../../services/innovation/innovation.
 @Component({
   selector: 'app-shared-market-report',
   templateUrl: './shared-market-report.component.html',
-  styleUrls: ['./shared-market-report.component.styl', './shared-market-report.component-popover.styl']
+  styleUrls: ['./shared-market-report.component.scss', './shared-market-report.component-popover.scss']
 })
 
 export class SharedMarketReportComponent implements OnInit {

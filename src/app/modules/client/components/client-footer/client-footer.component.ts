@@ -6,7 +6,7 @@ import {AuthService} from '../../../../services/auth/auth.service';
 @Component({
   selector: 'app-client-footer',
   templateUrl: './client-footer.component.html',
-  styleUrls: ['./client-footer.component.styl']
+  styleUrls: ['./client-footer.component.scss']
 })
 export class ClientFooterComponent implements OnInit {
   private _companyName: string = environment.companyName;

@@ -17,7 +17,7 @@ import * as _ from 'lodash';
 @Component({
   selector: 'app-client-innovation',
   templateUrl: './client-innovation.component.html',
-  styleUrls: ['./client-innovation.component.styl']
+  styleUrls: ['./client-innovation.component.scss']
 })
 export class ClientInnovationComponent implements OnInit {
 

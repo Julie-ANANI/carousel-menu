@@ -5,7 +5,7 @@ import { LoaderService } from '../../../../services/loader/loader.service';
 @Component({
   selector: 'app-shared-loader',
   templateUrl: './shared-loader.component.html',
-  styleUrls: ['./shared-loader.component.styl']
+  styleUrls: ['./shared-loader.component.scss']
 })
 export class SharedLoaderComponent implements OnInit, OnDestroy {
   public show = true;

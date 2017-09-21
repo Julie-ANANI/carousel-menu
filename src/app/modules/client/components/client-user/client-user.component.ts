@@ -9,7 +9,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-client-user',
   templateUrl: './client-user.component.html',
-  styleUrls: ['./client-user.component.styl']
+  styleUrls: ['./client-user.component.scss']
 })
 export class ClientUserComponent implements OnInit {
 

@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-client-header',
   templateUrl: './client-header.component.html',
-  styleUrls: ['./client-header.component.styl']
+  styleUrls: ['./client-header.component.scss']
 })
 export class ClientHeaderComponent implements OnInit {
 

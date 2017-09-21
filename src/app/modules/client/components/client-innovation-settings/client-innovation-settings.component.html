@@ -47,8 +47,6 @@
         <h5>Pays à exclure</h5>
         <input class="col s11 url-input" type="text"
                placeholder="Pays à exclure"
-               materialize="autocomplete"
-               [materializeParams]="[{'data': autocomplete.countries}]"
                [(ngModel)]="tmpInnovationSettings.geography.countriesToExclude">
         <i class="material-icons prefix fa-mouse-pointer"
            (click)="addItemToArray(innovation.settings.geography.countriesToExclude, tmpInnovationSettings.geography.countriesToExclude)">add_box</i>
@@ -68,8 +66,6 @@
         <h5>Sélectionnez dans la liste suivante le ou les domaines d'activité que vous souhaitez cibler</h5>
         <input class="col s11 url-input" type="text"
                placeholder="Domaine d'activité à cibler"
-               materialize="autocomplete"
-               [materializeParams]="[{'data': marketSectorAutoCompleteList}]"
                [(ngModel)]="tmpInnovationSettings.market.sectors">
         <i class="material-icons prefix fa-mouse-pointer"
            (click)="addItemToArray(innovation.settings.market.sectors, tmpInnovationSettings.market.sectors)">add_box</i>

@@ -14,8 +14,7 @@
     ],
     "types": [
       "node",
-      "jquery",
-      "materialize-css"
+      "jquery"
     ],
     "lib": [
       "es2016",

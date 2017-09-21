@@ -13,7 +13,7 @@ import { TextboxCompozerComponent } from '../../../../utils/dynamic-form-compoze
 @Component({
   selector: 'app-client-login',
   templateUrl: './client-login.component.html',
-  styleUrls: ['./client-login.component.styl']
+  styleUrls: ['./client-login.component.scss']
 })
 export class ClientLoginComponent implements OnInit {
 

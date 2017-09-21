@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-quiz-header',
   templateUrl: './quiz-header.component.html',
-  styleUrls: ['./quiz-header.component.styl']
+  styleUrls: ['./quiz-header.component.scss']
 })
 export class QuizHeaderComponent implements OnInit {
 

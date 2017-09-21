@@ -16,7 +16,7 @@ import 'rxjs/add/operator/filter';
 @Component({
   selector: 'app-client-signup',
   templateUrl: './client-signup.component.html',
-  styleUrls: ['./client-signup.component.styl']
+  styleUrls: ['./client-signup.component.scss']
 })
 export class ClientSignupComponent implements OnInit {
 
@@ -28,7 +28,7 @@ export class ClientSignupComponent implements OnInit {
         label: 'Firstname',
         placeholder: 'John',
         validators: Validators.required,
-        materializeWidth: 's6'
+        classAddition: 's6'
       }),
       new TextboxCompozerComponent({
         type: 'text',
@@ -36,7 +36,7 @@ export class ClientSignupComponent implements OnInit {
         label: 'Lastname',
         placeholder: 'Doe',
         validators: Validators.required,
-        materializeWidth: 's6'
+        classAddition: 's6'
       })
     ],
     [

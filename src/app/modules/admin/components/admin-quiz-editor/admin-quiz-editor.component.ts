@@ -6,7 +6,7 @@ import { NotificationsService } from 'angular2-notifications';
 @Component({
   selector: 'app-admin-quiz-editor',
   templateUrl: './admin-quiz-editor.component.html',
-  styleUrls: ['./admin-quiz-editor.component.styl']
+  styleUrls: ['./admin-quiz-editor.component.scss']
 })
 export class AdminQuizEditorComponent implements OnInit {
 
@@ -43,7 +43,7 @@ export class AdminQuizEditorComponent implements OnInit {
       case 'content': {
         this.tmpNewRow.push({
           compozerType: 'content',
-          materializeWidth: this.tmpComponent.columns,
+          classAddition: this.tmpComponent.columns,
           value: this.tmpComponent.value
         });
         break;
@@ -52,7 +52,7 @@ export class AdminQuizEditorComponent implements OnInit {
         this.tmpNewRow.push({
           compozerType: 'question',
           type: 'textbox',
-          materializeWidth: this.tmpComponent.columns,
+          classAddition: this.tmpComponent.columns,
           key: 'azeaze',
           label: this.tmpComponent.value
         });
@@ -61,7 +61,7 @@ export class AdminQuizEditorComponent implements OnInit {
       case 'html': {
         this.tmpNewRow.push({
           compozerType: 'html',
-          materializeWidth: this.tmpComponent.columns,
+          classAddition: this.tmpComponent.columns,
           value: this.tmpComponent.value
         });
         break;

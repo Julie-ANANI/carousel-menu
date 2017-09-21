@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'market-report-popover',
   templateUrl: 'shared-market-report-popover.component.html',
-  styleUrls: ['shared-market-report-popover.component.styl']
+  styleUrls: ['shared-market-report-popover.component.scss']
 })
 
 export class SharedMarketReportPopoverComponent implements OnInit {

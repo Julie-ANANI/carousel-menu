@@ -5,7 +5,7 @@ import { TranslateService, initTranslation } from './i18n/i18n';
 @Component({
   selector: 'app-shared-not-found',
   templateUrl: './shared-not-found.component.html',
-  styleUrls: ['./shared-not-found.component.styl']
+  styleUrls: ['./shared-not-found.component.scss']
 })
 export class SharedNotFoundComponent implements OnInit {
 

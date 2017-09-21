@@ -6,7 +6,7 @@ import { TranslateService } from '../../../../i18n/i18n';
 @Component({
   selector: 'app-dynamic-form-question',
   templateUrl: './dynamic-form-question.component.html',
-  styleUrls: ['./dynamic-form-question.component.styl']
+  styleUrls: ['./dynamic-form-question.component.scss']
 })
 export class DynamicFormQuestionComponent implements OnInit {
 

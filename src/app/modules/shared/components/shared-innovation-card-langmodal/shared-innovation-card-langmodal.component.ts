@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, Output, EventEmitter, AfterViewInit} from '@angular/core';
-import { MaterializeAction } from 'angular2-materialize';
 
 @Component({
   selector: 'app-shared-innovation-card-langmodal',
   templateUrl: './shared-innovation-card-langmodal.component.html',
-  styleUrls: ['./shared-innovation-card-langmodal.component.styl']
+  styleUrls: ['./shared-innovation-card-langmodal.component.scss']
 })
 export class SharedInnovationCardLangmodalComponent implements AfterViewInit {
+  // TODO vérifier si on peut supprimer ce module
 
   @Input() public langOptions;
   @Input() public selectLangOfCardInput;
@@ -20,7 +20,7 @@ export class SharedInnovationCardLangmodalComponent implements AfterViewInit {
   @Output() public save = new EventEmitter ();
   @Output() public setLangInput = new EventEmitter ();
 
-  public modalActions = new EventEmitter<string|MaterializeAction> ();
+  public modalActions = new EventEmitter<any> ();
 
   constructor() { }
 

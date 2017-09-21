@@ -6,7 +6,7 @@ const base_api_url = 'http://localhost:3000/api/media';
 @Component({
   selector: 'app-shared-upload-zone-photo',
   templateUrl: './shared-upload-zone-photo.component.html',
-  styleUrls: ['./shared-upload-zone-photo.component.styl']
+  styleUrls: ['./shared-upload-zone-photo.component.scss']
 })
 
 export class SharedUploadZonePhotoComponent implements OnInit{

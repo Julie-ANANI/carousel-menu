@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-dynamic-form-content',
   templateUrl: './dynamic-form-content.component.html',
-  styleUrls: ['./dynamic-form-content.component.styl']
+  styleUrls: ['./dynamic-form-content.component.scss']
 })
 export class DynamicFormContentComponent {
 

@@ -5,7 +5,7 @@ import { IndexService } from '../../../../services/index/index.service';
 @Component({
   selector: 'app-client-innovation-settings',
   templateUrl: './client-innovation-settings.component.html',
-  styleUrls: ['./client-innovation-settings.component.styl']
+  styleUrls: ['./client-innovation-settings.component.scss']
 })
 export class ClientInnovationSettingsComponent implements OnInit {
 

@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'market-comment',
   templateUrl: 'shared-market-comment.component.html',
-  styleUrls: ['shared-market-comment.component.styl']
+  styleUrls: ['shared-market-comment.component.scss']
 })
 
 export class SharedMarketCommentComponent implements OnInit {

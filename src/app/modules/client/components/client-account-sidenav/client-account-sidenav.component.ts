@@ -6,7 +6,7 @@ import { User } from '../../../../models/user.model';
 @Component({
   selector: 'app-client-account-sidenav',
   templateUrl: './client-account-sidenav.component.html',
-  styleUrls: ['./client-account-sidenav.component.styl']
+  styleUrls: ['./client-account-sidenav.component.scss']
 })
 export class ClientAccountSidenavComponent implements OnInit {
 

@@ -4,7 +4,7 @@ import { TranslateService, initTranslation } from './i18n/i18n';
 @Component({
   selector: 'sqPagination',
   templateUrl: './shared-pagination.component.html',
-  styleUrls: ['./shared-pagination.component.styl']
+  styleUrls: ['./shared-pagination.component.scss']
 })
 export class SharedPaginationComponent implements OnInit {
   @Input() service: any;

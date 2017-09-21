@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-client-dashboard',
   templateUrl: './client-dashboard.component.html',
-  styleUrls: ['./client-dashboard.component.styl']
+  styleUrls: ['./client-dashboard.component.scss']
 })
 export class ClientDashboardComponent implements OnInit{
 

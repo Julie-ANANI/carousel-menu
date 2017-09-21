@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-quiz-form',
   templateUrl: './quiz-form.component.html',
-  styleUrls: ['./quiz-form.component.styl']
+  styleUrls: ['./quiz-form.component.scss']
 })
 export class QuizFormComponent implements OnInit {
 
@@ -28,25 +28,25 @@ export class QuizFormComponent implements OnInit {
       new TextboxCompozerComponent({
         key: 'data1',
         label: 'Do you know this market sector?',
-        materializeWidth: 's6'
+        classAddition: 's6'
       }),
       {
         questionType: 'textbox',
         key: 'data1',
         label: 'Do you know this market sector?',
-        materializeWidth: 's6'
+        classAddition: 's6'
       },
       {
         questionType: 'textbox',
         key: 'data1',
         label: 'Do you know this market sector?',
-        materializeWidth: 's8'
+        classAddition: 's8'
       },
       {
         questionType: 'textbox',
         key: 'data1',
         label: 'Do you know this market sector?',
-        materializeWidth: 's4'
+        classAddition: 's4'
       }
     ],
     [

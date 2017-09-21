@@ -4,7 +4,7 @@ import { TranslateService, initTranslation } from './i18n/i18n';
 @Component({
   selector: 'app-admin-header',
   templateUrl: './admin-header.component.html',
-  styleUrls: ['./admin-header.component.styl']
+  styleUrls: ['./admin-header.component.scss']
 })
 export class AdminHeaderComponent implements OnInit{
 
