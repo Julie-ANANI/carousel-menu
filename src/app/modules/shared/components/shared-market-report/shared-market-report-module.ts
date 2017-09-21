@@ -81,7 +81,7 @@ export class SharedMarketReportComponent implements OnInit {
       }
 
     });
-    this._showDetails = { //TODO change to the right default
+    this._showDetails = { //TODO change to the right default (open or closed)
       "professionals": true,
       "relevantProblematic": true,
       "productAnsweringProblematic": true,
