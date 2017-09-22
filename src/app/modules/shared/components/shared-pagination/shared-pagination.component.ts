@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService, initTranslation } from './i18n/i18n';
 
 @Component({

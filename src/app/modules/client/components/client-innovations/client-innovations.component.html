@@ -1,9 +1,3 @@
-Breadcrumb :
-<a routerLink="/">{{ 'COMMON.DASHBOARD' | translate }}</a> >
-<a routerLink="/account">{{ 'COMMON.MY_ACCOUNT' | translate }}</a> >
-<a routerLink="/innovations">{{ 'COMMON.MY_INNOVATIONS' | translate }}</a>
-
-
 <div *ngFor="let innovation of innovations">
   <div>
     <img [src]="getPrincipalMedia(innovation)">

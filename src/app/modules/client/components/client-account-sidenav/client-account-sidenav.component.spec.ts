@@ -1,6 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {ClientAccountSidenavComponent} from './client-account-sidenav.component';
+import { ClientAccountSidenavComponent } from './client-account-sidenav.component';
 
 describe('ClientAccountSidenavComponent', () => {
   let component: ClientAccountSidenavComponent;

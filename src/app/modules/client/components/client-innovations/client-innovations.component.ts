@@ -1,12 +1,12 @@
-import {Component, OnInit} from "@angular/core";
-import {Title} from "@angular/platform-browser";
-import {Router} from "@angular/router";
-import {TranslateService} from "@ngx-translate/core";
-import {UserService} from "../../../../services/user/user.service";
-import {InnovationService} from "../../../../services/innovation/innovation.service";
-import {EnvironmentService} from '../../../../services/common/environment.service';
-import {MediaService} from "../../../../services/media/media.service";
-import {langSelectOptions} from "../../../../data/innovation.data";
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { UserService } from '../../../../services/user/user.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { EnvironmentService } from '../../../../services/common/environment.service';
+import { MediaService } from '../../../../services/media/media.service';
+import { langSelectOptions } from '../../../../data/innovation.data';
 
 @Component({
   selector: 'app-client-innovations',

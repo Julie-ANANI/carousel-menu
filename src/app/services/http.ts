@@ -11,7 +11,7 @@ import { LoaderService } from './loader/loader.service';
 import { RequestOptions } from './requestOptions';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-import {NotificationsService} from 'angular2-notifications';
+import { NotificationsService } from 'angular2-notifications';
 
 export { Response } from '@angular/http';
 

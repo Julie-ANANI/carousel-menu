@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import 'zone.js/dist/zone-node';
-import {renderModuleFactory} from '@angular/platform-server';
-import {enableProdMode} from '@angular/core';
-//import {AppServerModuleNgFactory} from '../dist/ngfactory/src/server.module.ngfactory'; // Do not delete. Generated file.
+import { renderModuleFactory } from '@angular/platform-server';
+import { enableProdMode } from '@angular/core';
+//import { AppServerModuleNgFactory } from '../dist/ngfactory/src/server.module.ngfactory'; // Do not delete. Generated file.
 import * as express from 'express';
 import * as fs from 'fs';
 import * as path from 'path';

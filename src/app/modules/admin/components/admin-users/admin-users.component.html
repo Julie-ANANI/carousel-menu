@@ -1,13 +1,14 @@
-<nav class="orange darken-1">
-  <div class="nav-wrapper container">
-    <div class="col s12">
-      <a routerLink="/" class="breadcrumb">{{ 'COMMON.DASHBOARD' | translate }}</a>
-      <a routerLink="/admin" class="breadcrumb">Administration</a>
-      <a routerLink="/admin" class="breadcrumb">Utilisateurs</a>
-    </div>
-  </div>
-</nav>
-
+<ul class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a routerLink="/">App</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a routerLink="/admin">Administration</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a routerLink="/admin/users">Utilisateurs</a>
+  </li>
+</ul>
 
 <div class="container" *ngIf="dataLoaded">
   <div class="row">

@@ -1,12 +1,5 @@
-Breadcrumb :
-<a routerLink="/">{{ 'COMMON.DASHBOARD' | translate }}</a> >
-<a routerLink="/account">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
-
-<div>
-    <app-dynamic-form [compozer]="compozerComponents"
-                      [submitButton]="'COMMON.UPDATE' | translate"
-                      (formOnSubmit)="onSubmit($event)"
-                      (formOnInit)="formOnInit($event)"
-                      class="col s6">
-    </app-dynamic-form>
-</div>
+<app-dynamic-form [compozer]="compozerComponents"
+                  [submitButton]="'COMMON.UPDATE' | translate"
+                  (formOnSubmit)="onSubmit($event)"
+                  (formOnInit)="formOnInit($event)">
+</app-dynamic-form>

@@ -1,8 +1,12 @@
-Breadcrumb :
-<a routerLink="/">{{ 'COMMON.DASHBOARD' | translate }}</a> >
-<a routerLink="/account">{{ 'COMMON.MY_ACCOUNT' | translate }}</a> >
-<a routerLink="/innovations">{{ 'COMMON.MY_INNOVATIONS' | translate }}</a> >
-<a routerLink="./">{{ innovation  ? innovation.name : ''}}</a>
+<ul class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a routerLink="/projects">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a routerLink="./">{{ innovation  ? innovation.name : ''}}</a>
+  </li>
+</ul>
+
 
 <app-shared-preloader *ngIf="!dataLoaded"></app-shared-preloader>
 

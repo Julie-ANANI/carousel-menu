@@ -15,7 +15,7 @@ export class LogoDirective implements AfterViewInit {
   ngAfterViewInit() {
     this._logo = this._whitemarkService.getLogo();
     this._resizeToFitIdealSize();
-    this._el.nativeElement.style.display = 'inline-block';
+    this._el.nativeElement.style.display = 'block';
     this._el.nativeElement.style.width = this._logo.width + 'px';
     this._el.nativeElement.style.height = this._logo.height + 'px';
     this._el.nativeElement.style.backgroundImage = 'url(' + this._logo.url + ')';

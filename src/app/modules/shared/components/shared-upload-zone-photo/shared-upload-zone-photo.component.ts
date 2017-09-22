@@ -1,5 +1,5 @@
-import {Component, Input, Output, OnInit, EventEmitter} from "@angular/core";
-import {FileUploader, FilterFunction, FileItem, ParsedResponseHeaders} from "ng2-file-upload";
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { FileUploader, FilterFunction, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 
 const base_api_url = 'http://localhost:3000/api/media';
 

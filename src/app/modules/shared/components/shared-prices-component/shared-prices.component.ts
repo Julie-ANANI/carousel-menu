@@ -2,7 +2,7 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, OnInit, Input } from '@angular/core';
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 @Component({
   selector: 'infographics-prices',

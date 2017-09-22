@@ -1,9 +1,9 @@
 /**
  * Created by juandavidcruzgomez on 26/07/2017.
  */
-import {Injectable} from '@angular/core';
-import {Http, Response} from '../http';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Http, Response } from '../http';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class MediaService {

@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {NotificationsService} from 'angular2-notifications';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
 import {
   langSelectOptions,
   projectStatusSelectOptions,
   timeToMarketSelectOptions
 } from '../../../../data/innovation.data';
-import {initTranslation, TranslateService} from './i18n/i18n';
-import {InnovationService} from '../../../../services/innovation/innovation.service';
-import {MediaService} from '../../../../services/media/media.service';
-import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import { initTranslation, TranslateService } from './i18n/i18n';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { MediaService } from '../../../../services/media/media.service';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import * as flat from 'flat-angular';
 import * as _ from 'lodash';
 
@@ -84,7 +84,7 @@ export class ClientInnovationComponent implements OnInit {
     };
 
     this._innovationService.create(newInnovation).subscribe(innovation =>  {
-      this._router.navigate(['/innovations/' + innovation._id])
+      this._router.navigate(['/projects/' + innovation._id])
     });
   }
 

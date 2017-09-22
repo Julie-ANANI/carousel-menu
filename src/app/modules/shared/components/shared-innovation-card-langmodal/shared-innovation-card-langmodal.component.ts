@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter, AfterViewInit} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-shared-innovation-card-langmodal',

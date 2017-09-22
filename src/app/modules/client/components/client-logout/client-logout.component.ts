@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';

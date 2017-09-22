@@ -42,8 +42,8 @@
             </a>
           </td>
           <td>
-            <a [routerLink]="'../innovations/' + innovation._id">
-              {{(innovation.name || 'Untitled innovation') | shorten: 25: '...' }}
+            <a [routerLink]="'../projects/' + innovation._id">
+              {{(innovation.name || 'Untitled project') | shorten: 25: '...' }}
             </a>
           </td>
           <td>{{innovation.campaigns.length}}</td>

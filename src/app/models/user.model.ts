@@ -1,5 +1,5 @@
-import {emailRegEx, phoneRegEx} from "../utils/regex";
-import {Model} from "./model";
+import { emailRegEx, phoneRegEx } from '../utils/regex';
+import { Model } from './model';
 
 export class User extends Model {
 

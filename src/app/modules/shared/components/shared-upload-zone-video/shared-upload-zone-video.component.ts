@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Http, Response } from '../../../../services/http';
 import { videoDomainRegEx, videoIdRegEx } from '../../../../utils/regex';
 import { DomSanitizer } from '@angular/platform-browser';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 @Component({

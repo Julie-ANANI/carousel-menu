@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ClientComponent } from './client.component';
-import { ClientDashboardComponent } from './components/client-dashboard/client-dashboard.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 
 import { ClientInnovationsComponent } from './components/client-innovations/client-innovations.component';
@@ -33,10 +32,7 @@ const clientRoutes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        canActivate: [AuthGuard],
-        children: [
-          { path: '', component: ClientDashboardComponent, pathMatch: 'full' }
-        ]
+        redirectTo: '/projects'
       },
       {
         path: 'login',

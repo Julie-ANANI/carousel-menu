@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../../services/auth/auth.service';
-import { TranslateService } from '@ngx-translate/core';
+import { initTranslation, TranslateService } from './i18n/i18n';
 
 @Component({
   selector: 'app-client-header',
@@ -13,6 +13,7 @@ export class ClientHeaderComponent implements OnInit {
               private _authService: AuthService) {}
 
   ngOnInit(): void {
+    initTranslation(this._translateService);
   }
 
   get authService (): AuthService {

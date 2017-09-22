@@ -11,7 +11,7 @@
     </ul>
   </div>
   <div class="col-lg-6">
-    <select [ngModel]="perPage" class = "browser-default" (ngModelChange)="perPage = $event">
+    <select [ngModel]="perPage" class="browser-default" (ngModelChange)="perPage = $event">
       <option *ngFor="let perPage of perPageValues" [value]="perPage">{{perPage}} {{ 'PAGINATION.PER_PAGE' | translate }}</option>
       <option value="1000000">{{ 'PAGINATION.ALL' | translate }}</option>
     </select>

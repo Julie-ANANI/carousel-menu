@@ -1,25 +1,25 @@
-import {NgModule} from "@angular/core";
-import {BrowserModule, Title} from "@angular/platform-browser";
-import {HttpModule, XHRBackend, RequestOptions} from "@angular/http";
-import {Http} from "./services/http";
-import {EnvironmentService} from "./services/common/environment.service";
-import {httpFactory} from "./factories/http.factory";
-import {AppComponent} from "./app.component";
-import {AppRoutingModule} from "./app-routing.module";
-import {CookieService, CookieOptions} from "angular2-cookie/core";
-import {WhitemarkService} from "./services/whitemark/whitemark.service";
-import {InnovationService} from "./services/innovation/innovation.service";
-import {CampaignService} from "./services/campaign/campaign.service";
-import {SmartQueryService} from "./services/smartQuery/smartQuery.service";
-import {UserService} from "./services/user/user.service";
-import {MediaService} from "./services/media/media.service";
-import {SimpleNotificationsModule, NotificationsService} from "angular2-notifications";
-import {TranslateModule, TranslateLoader, TranslateService} from "@ngx-translate/core";
-import {Observable} from "rxjs/Observable";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {LoaderService} from "./services/loader/loader.service";
-import {HttpLoaderComponent} from "./components/http-loader/http-loader.component";
-import {ChartsModule} from 'ng2-charts';
+import { NgModule } from '@angular/core';
+import { BrowserModule, Title } from '@angular/platform-browser';
+import { HttpModule, XHRBackend, RequestOptions } from '@angular/http';
+import { Http } from './services/http';
+import { EnvironmentService } from './services/common/environment.service';
+import { httpFactory } from './factories/http.factory';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { CookieService, CookieOptions } from 'angular2-cookie/core';
+import { WhitemarkService } from './services/whitemark/whitemark.service';
+import { InnovationService } from './services/innovation/innovation.service';
+import { CampaignService } from './services/campaign/campaign.service';
+import { SmartQueryService } from './services/smartQuery/smartQuery.service';
+import { UserService } from './services/user/user.service';
+import { MediaService } from './services/media/media.service';
+import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs/Observable';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoaderService } from './services/loader/loader.service';
+import { HttpLoaderComponent } from './components/http-loader/http-loader.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [

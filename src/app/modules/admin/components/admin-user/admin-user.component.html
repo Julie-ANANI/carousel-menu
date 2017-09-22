@@ -1,25 +1,19 @@
-<nav class="orange darken-1">
-  <div class="nav-wrapper container">
-    <div class="col s12">
-      <a routerLink="/" class="breadcrumb">{{ 'COMMON.DASHBOARD' | translate }}</a>
-      <a routerLink="/admin" class="breadcrumb">Administration</a>
-      <a routerLink="/admin/users" class="breadcrumb">Utilisateurs</a>
-      <a routerLink="/admin/users/{{ user.id }}" class="breadcrumb">{{ user.name }}</a>
-    </div>
-  </div>
-</nav>
+<ul class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a routerLink="/">App</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a routerLink="/admin">Administration</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a routerLink="/admin/users">Utilisateurs</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a routerLink="/admin/users/{{ user.id }}">{{ user.name }}</a>
+  </li>
+</ul>
 
-<div class="preloader-wrapper big active" *ngIf="!dataLoaded">
-  <div class="spinner-layer">
-    <div class="circle-clipper left">
-      <div class="circle"></div>
-    </div><div class="gap-patch">
-    <div class="circle"></div>
-  </div><div class="circle-clipper right">
-    <div class="circle"></div>
-  </div>
-  </div>
-</div>
+<div *ngIf="!dataLoaded">Loading...</div>
 
 
 

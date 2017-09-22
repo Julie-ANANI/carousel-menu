@@ -2,12 +2,12 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, OnInit } from '@angular/core';
-import {TranslateService} from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 
-import { InnovationService } from "./../../../../services/innovation/innovation.service";
+import { InnovationService } from './../../../../services/innovation/innovation.service';
 
 @Component({
   selector: 'app-shared-market-report',

@@ -8,9 +8,7 @@ import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../models/user.model';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
-import { Compozer } from '../../../../utils/dynamic-form-compozer/classes/compozer';
-import { TextboxCompozerComponent } from '../../../../utils/dynamic-form-compozer/classes/compozer-textbox';
-import { Validators } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -20,65 +18,13 @@ import 'rxjs/add/operator/filter';
 })
 export class ClientSignupComponent implements OnInit {
 
-  public compozerComponents: Compozer = new Compozer([
-    [
-      new TextboxCompozerComponent({
-        type: 'text',
-        key: 'firstName',
-        label: 'Firstname',
-        placeholder: 'John',
-        validators: Validators.required,
-        classAddition: 's6'
-      }),
-      new TextboxCompozerComponent({
-        type: 'text',
-        key: 'lastName',
-        label: 'Lastname',
-        placeholder: 'Doe',
-        validators: Validators.required,
-        classAddition: 's6'
-      })
-    ],
-    [
-      new TextboxCompozerComponent({
-        key: 'companyName',
-        label: 'COMMON.COMPANY',
-        type: 'text',
-        placeholder: 'United Motion Ideas',
-        validators: Validators.required
-      })
-    ],
-    [
-      new TextboxCompozerComponent({
-        key: 'jobTitle',
-        label: 'COMMON.JOBTITLE',
-        type: 'text',
-        placeholder: 'Ingénieur en aérodynamisme', // TODO translate
-        validators: Validators.required
-      })
-    ],
-    [
-      new TextboxCompozerComponent({
-        key: 'email',
-        label: 'Email',
-        placeholder: 'john.doe@gmail.com',
-        validators: [Validators.required, Validators.email],
-        type: 'email'
-      })
-    ],
-    [
-      new TextboxCompozerComponent({
-        key: 'password',
-        label: 'Password',
-        placeholder: '••••••••••',
-        validators: Validators.required,
-        type: 'password'
-      })
-    ]
-  ]);
+  public displayEmailForm = false;
+
+  public formData: FormGroup;
+  public passwordMinLength = 5;
 
   constructor(private _userService: UserService,
-              private _router: Router,
+              private _formBuilder: FormBuilder,
               private _authService: AuthService,
               private _location: Location,
               private _titleService: Title,
@@ -88,7 +34,16 @@ export class ClientSignupComponent implements OnInit {
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-    this._titleService.setTitle('Sign up'); // TODO translate
+    this._translateService.get('COMMON.SIGN_UP').subscribe(title => this._titleService.setTitle(title));
+
+    this.formData = this._formBuilder.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      companyName: ['', [Validators.required]],
+      jobTitle: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(this.passwordMinLength)]]
+    });
   }
 
   public linkedInSignIn() {
@@ -104,9 +59,9 @@ export class ClientSignupComponent implements OnInit {
       );
   }
 
-  public onSubmit(form) {
-    if (form.valid) {
-      const user = new User(form.value); // TODO vérifier que l'utilisateur est valide (s'il a un email) ...
+  public onSubmit({ value, valid }: { value: User, valid: boolean }) {
+    if (valid) {
+      const user = new User(value); // TODO vérifier que l'utilisateur est valide (s'il a un email) ...
       user.domain = this._environmentService.getDomain();
       this._userService.create(user)
         .subscribe(
