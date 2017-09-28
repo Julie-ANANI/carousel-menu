@@ -14,6 +14,7 @@ import 'rxjs/add/operator/pairwise';
 })
 export class AppComponent implements OnInit {
 
+
   public notificationsOptions = {
     position: ['top', 'right'],
     timeOut: 5000,

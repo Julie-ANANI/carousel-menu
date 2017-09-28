@@ -3,6 +3,7 @@ export const en = {
     'SAVE': 'Save',
     'UPDATE': 'Update',
     'EDIT': 'Edit',
+    'DELETE': 'Delete',
     'LOG_IN': 'Log in',
     'SIGN_UP': 'Sign up',
     'LOG_OUT': 'Log out',
@@ -42,9 +43,20 @@ export const en = {
     'USERS': 'Users',
     'HOME': 'Home',
     'ADMIN': 'Admin',
-    'MY_PROJECTS': 'My innovations',
+    'MY_PROJECTS': 'My projects',
+    'MY_USERS': 'My users',
+    'MY_ACCOUNT': 'My account',
     'PROJECTS': 'Projects',
     'CAMPAIGNS': 'Campaigns',
+    'DISCOVER': 'Discover',
+
+    'SORT': {
+      'ALPHABETICALLY': 'Alphabetically',
+      'BY_COMPANY': 'By company',
+      'BY_AUTHOR': 'By author',
+      'BY_DATE': 'By date',
+      'BY_DEFAULT': 'By default'
+    }
   },
 
   'MARKET_REPORT': {

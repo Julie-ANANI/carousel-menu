@@ -7,7 +7,6 @@ import { httpFactory } from './factories/http.factory';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CookieService, CookieOptions } from 'angular2-cookie/core';
-import { WhitemarkService } from './services/whitemark/whitemark.service';
 import { InnovationService } from './services/innovation/innovation.service';
 import { CampaignService } from './services/campaign/campaign.service';
 import { SmartQueryService } from './services/smartQuery/smartQuery.service';
@@ -47,7 +46,6 @@ import { ChartsModule } from 'ng2-charts';
       provide: CookieOptions,
       useValue: {}
     },
-    WhitemarkService,
     UserService,
     InnovationService,
     CampaignService,

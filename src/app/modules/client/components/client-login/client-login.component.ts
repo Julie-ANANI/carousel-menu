@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { Validators } from '@angular/forms';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { EnvironmentService } from '../../../../services/common/environment.service';
 import { User } from '../../../../models/user.model';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
-import { Compozer } from '../../../../utils/dynamic-form-compozer/classes/compozer';
-import { TextboxCompozerComponent } from '../../../../utils/dynamic-form-compozer/classes/compozer-textbox';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-client-login',
@@ -17,29 +15,12 @@ import { TextboxCompozerComponent } from '../../../../utils/dynamic-form-compoze
 })
 export class ClientLoginComponent implements OnInit {
 
-  public compozerComponents: Compozer = new Compozer([
-    [
-      new TextboxCompozerComponent({
-        key: 'email',
-        label: 'Email',
-        type: 'email',
-        placeholder: 'john.doe@gmail.com',
-        validators: [Validators.required, Validators.email]
-      })
-    ],
-    [
-      new TextboxCompozerComponent({
-        key: 'password',
-        label: 'Password',
-        type: 'password',
-        placeholder: '••••••••••',
-        validators: [Validators.required, Validators.minLength(4)]
-      })
-    ]
-  ]);
+  public formData: FormGroup;
+  public passwordMinLength = 5;
 
   constructor(private _authService: AuthService,
               private _router: Router,
+              private _formBuilder: FormBuilder,
               private _translateService: TranslateService,
               private _titleService: Title,
               private _notificationsService: NotificationsService,
@@ -48,6 +29,11 @@ export class ClientLoginComponent implements OnInit {
   ngOnInit(): void {
     initTranslation(this._translateService);
     this._titleService.setTitle('Log in'); // TODO translate
+
+    this.formData = this._formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(this.passwordMinLength)]]
+    });
   }
 
   onSubmit(form) {
@@ -65,6 +51,8 @@ export class ClientLoginComponent implements OnInit {
             preserveQueryParams: true,
             preserveFragment: true
           };
+
+          this._notificationsService.success('Welcome back!', 'You now are logged in.'); // TODO translate
 
           // Redirect the user
           this._router.navigate([redirect], navigationExtras);

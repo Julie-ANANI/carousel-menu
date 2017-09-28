@@ -1,8 +1,24 @@
-header {
-  background-color: #252831;
-  padding: 15px;
-}
+$dark-background: #262831;
+$primary-color: #F79323;
 
-.btn-link {
-  color: #FFF;
+header {
+  background: $dark-background;
+  padding: 10px;
+
+  .navbar-brand {
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    margin-top: 5px;
+  }
+
+  .btn.btn-link {
+    color: white;
+    font-weight: 600;
+    margin-left: 20px;
+  }
+
+  .btn.btn-link:hover {
+    color: $primary-color;
+  }
 }

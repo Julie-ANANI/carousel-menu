@@ -9,6 +9,8 @@ import { initTranslation, TranslateService } from './i18n/i18n';
 })
 export class ClientHeaderComponent implements OnInit {
 
+  public displaySideNav = false;
+
   constructor(private _translateService: TranslateService,
               private _authService: AuthService) {}
 

@@ -1,36 +1,31 @@
-<header class="container">
-  <div class="columns">
-    <div class="column col-10 col-mx-auto navbar">
-      <section class="navbar-section">
-        <a routerLink="/" appLogo logoMaxWidth="100"></a>
-      </section>
+<header class="navbar">
+  <section class="navbar-section">
+    <a routerLink="/" class="navbar-brand mr-2">
+      <img src="http://res.cloudinary.com/umi/image/upload/c_scale,h_30/v1506515143/Application/logo-umi.png" alt="Logo UMI" height="30">
+    </a>
+  </section>
 
-      <!-- Non connecté -->
-      <section class="navbar-section" *ngIf="!authService.isAuthenticated">
-        <a [routerLink]="'/todo'" class="btn btn-link">{{ 'HEADER.ABOUT' | translate}}</a>
-        <a [routerLink]="'/todo'" class="btn btn-link">Solution</a>
-        <a [routerLink]="'/todo'" class="btn btn-link">{{ 'HEADER.CONTRIBUTORS' | translate}}</a>
-        <a [routerLink]="'/todo'" class="btn btn-link">Ressources</a>
-        <a [routerLink]="'/todo'" class="btn btn-link">Blog</a>
-        <a [routerLink]="'/login'" class="btn btn-link">{{ 'COMMON.LOG_IN' | translate}}</a>
-        <a [routerLink]="'/signup'" class="btn btn-primary">{{ 'HEADER.START' | translate}}</a>
-      </section>
+  <!-- Non connecté -->
+  <section class="navbar-section" *ngIf="!authService.isAuthenticated">
+    <a [routerLink]="'/todo'" class="btn btn-link">{{ 'HEADER.ABOUT' | translate}}</a>
+    <a [routerLink]="'/todo'" class="btn btn-link">Solution</a>
+    <a [routerLink]="'/todo'" class="btn btn-link">{{ 'HEADER.CONTRIBUTORS' | translate}}</a>
+    <a [routerLink]="'/todo'" class="btn btn-link">Ressources</a>
+    <a [routerLink]="'/todo'" class="btn btn-link">Blog</a>
+    <a [routerLink]="'/login'" class="btn btn-link">{{ 'COMMON.LOG_IN' | translate}}</a>
+    <a [routerLink]="'/signup'" class="btn btn-primary">{{ 'HEADER.START' | translate}}</a>
+  </section>
 
-      <!-- Connecté -->
-      <section class="navbar-section" *ngIf="authService.isAuthenticated">
-        <a [routerLink]="'/projects'" class="btn btn-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
-        <a [routerLink]="'/logout'" class="btn btn-link">Logout</a>
-        <div class="btn btn-link">Mon compte (ouvre le volet lattéral)</div>
+  <!-- Connecté -->
+  <section class="navbar-section" *ngIf="authService.isAuthenticated">
+    <a [routerLink]="'/help'" class="btn btn-link">Aide</a><!-- TODO -->
+    <a [routerLink]="'/discover'" class="btn btn-link">{{ 'COMMON.DISCOVER' | translate }}</a><!-- TODO -->
+    <a [routerLink]="'/projects'" class="btn btn-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
+    <a [routerLink]="'/users'" class="btn btn-link" *ngIf="authService.isAdmin">{{ 'COMMON.MY_USERS' | translate }}</a><!-- TODO -->
+    <a (click)="displaySideNav = !displaySideNav" class="btn btn-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
 
-        <!-- Connecté & admin -->
-        <div *ngIf="authService.isAdmin">
-          <a [routerLink]="'/campaign'" class="btn btn-link">{{ 'COMMON.CAMPAIGNS' | translate}}</a>
-          <a [routerLink]="'/user'" class="btn btn-link">{{ 'COMMON.USERS' | translate }}</a>
-        </div>
-      </section>
-
-    </div>
-  </div>
+    <!--<a [routerLink]="'/logout'" class="btn btn-link">Logout</a>-->
+  </section>
 </header>
 
-<app-client-account-sidenav *ngIf="authService.isAuthenticated"></app-client-account-sidenav>
+<app-client-account-sidenav *ngIf="authService.isAuthenticated" [show]="displaySideNav"></app-client-account-sidenav>

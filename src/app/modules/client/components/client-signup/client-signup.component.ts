@@ -1,4 +1,3 @@
-import { Router, NavigationExtras } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { UserService } from '../../../../services/user/user.service';

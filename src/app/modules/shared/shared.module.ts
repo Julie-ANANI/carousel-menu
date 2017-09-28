@@ -8,7 +8,6 @@ import { DragulaModule } from 'ng2-dragula';
 import { NgPipesModule } from 'ngx-pipes';
 import { FileUploadModule } from 'ng2-file-upload';
 import { FormErrorDirective } from '../../utils/dynamic-form-compozer/directives/form-error/form-error.directive';
-import { LogoDirective } from '../../directives/logo/logo.directive';
 import { DynamicFormComponent } from '../../utils/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
 import { DynamicFormQuestionComponent } from '../../utils/dynamic-form-compozer/components/dynamic-form-question/dynamic-form-question.component';
 import { DynamicFormContentComponent } from '../../utils/dynamic-form-compozer/components/dynamic-form-content/dynamic-form-content.component';
@@ -25,7 +24,6 @@ import { SharedMarketCommentComponent } from './components/shared-market-comment
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { SharedPricesComponent } from './components/shared-prices-component/shared-prices.component';
 import { SharedWorldMapComponent } from './components/shared-world-map-component/shared-world-map.component';
-import { SharedInnovationCardLangmodalComponent } from './components/shared-innovation-card-langmodal/shared-innovation-card-langmodal.component';
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
 import { SharedFilterInputComponent } from './components/shared-filter-input/shared-filter-input.component';
 import { SqSortDirective } from '../../directives/smart-query/sqSort.directive';
@@ -47,7 +45,6 @@ import { ChartsModule } from 'ng2-charts';
   declarations: [
     // Directives
     FormErrorDirective,
-    LogoDirective,
     SqSortDirective,
 
     // Component
@@ -62,7 +59,6 @@ import { ChartsModule } from 'ng2-charts';
     SharedPreloaderComponent,
     SharedLoaderComponent,
     SharedMarketReportComponent,
-    SharedInnovationCardLangmodalComponent,
     SharedBarChartComponent,
     SharedMarketItemComponent,
     SharedMarketCommentComponent,
@@ -81,7 +77,6 @@ import { ChartsModule } from 'ng2-charts';
 
     // Directives
     FormErrorDirective,
-    LogoDirective,
     SqSortDirective,
 
     // Components
@@ -95,7 +90,6 @@ import { ChartsModule } from 'ng2-charts';
     SharedUploadZoneVideoComponent,
     SharedPreloaderComponent,
     SharedLoaderComponent,
-    SharedInnovationCardLangmodalComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedMarketReportComponent

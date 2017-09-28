@@ -1,13 +1,4 @@
-<ul class="breadcrumb">
-  <li class="breadcrumb-item">
-    <a routerLink="/projects">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
-  </li>
-  <li class="breadcrumb-item">
-    <a routerLink="./">{{ innovation  ? innovation.name : ''}}</a>
-  </li>
-</ul>
-
-
+<!--
 <app-shared-preloader *ngIf="!dataLoaded"></app-shared-preloader>
 
 <div *ngIf="dataLoaded">
@@ -31,19 +22,19 @@
 
             <div class="center-align col s2 offset-s1">
               <i *ngIf="innovationCardsLangs.length > 3 && langStartIndex > 0" class="material-icons medium flag"
-                 (click)="langStartIndex = langStartIndex - 3">navigate_before</i> <!-- " += " doesn't work ?? -->
+                 (click)="langStartIndex = langStartIndex - 3">navigate_before</i> --><!-- " += " doesn't work ?? --><!--
             </div>
 
             <div class="col s6">
               <div *ngFor="let lang of threeCardsLangFromIndex" [ngClass]="lang" class="center-align col s4">
                 <img class="flag" [ngClass]="{'selectedLang': lang === langOfCard}"
-                     [src]="'/assets/common/flag-' + lang + '.svg'" (click)="useCardWithLang(lang)">
+                     [src]="'/assets/common/flag-' + lang + '.svg'" (click)="useCardWithLang(lang)"> --><!-- TODO ne plus utiliser assets pour les images mais Cloudinary --><!--
               </div>
             </div>
 
             <div class="center-align col s2">
               <i *ngIf="innovationCardsLangs.length > langStartIndex + 3" class="material-icons medium flag"
-                 (click)="langStartIndex = langStartIndex + 3">navigate_next</i> <!-- " += " doesn't work ?? -->
+                 (click)="langStartIndex = langStartIndex + 3">navigate_next</i> --><!-- " += " doesn't work ?? --><!--
             </div>
 
           </div>
@@ -62,16 +53,16 @@
 
       <div id="innovation-card" class="section">
         <div class="row innovation-card">
-          <!-- Bannière du titre -->
+          --><!-- Bannière du titre --><!--
           <div class="col s12" id="banner">
 
-            <!-- Titre -->
+            --><!-- Titre --><!--
             <div class="col s10 offset-s1 container input-field">
               <input id="title" type="text" placeholder="Donnez un nom à votre innovation ici"
                      [(ngModel)]="innovationCard.title" (change)="addModification('innovationCard.title')">
             </div>
 
-            <!-- Descriptif -->
+            --><!-- Descriptif --><!--
             <div class="col s12 input-field">
         <textarea id="desc"
                   placeholder="Décrivez rapidement votre innovation ici"
@@ -82,19 +73,19 @@
 
           </div>
 
-          <!-- Image and some inputs -->
+          --><!-- Image and some inputs --><!--
           <div class="col s12" id="intro">
 
-            <!-- Media principal -->
+            --><!-- Media principal --><!--
             <div class="col m6 s12">
               <img *ngIf="getPrimary(innovationCard.media).type === 'PHOTO'"
                    [src]="getMediaUrl(getPrimary(innovationCard.media).id)">
-              <!--<iframe *ngIf="getPrimary(innovationCard.media).type === 'VIDEO'" height="361px" [src]="getPrimary(innovationCard.media).url" frameborder="0" allowfullscreen></iframe>-->
+              --><!--<iframe *ngIf="getPrimary(innovationCard.media).type === 'VIDEO'" height="361px" [src]="getPrimary(innovationCard.media).url" frameborder="0" allowfullscreen></iframe>--><!--
             </div>
 
             <div class="col m6 s12">
 
-              <!-- Market Sector -->
+              --><!-- Market Sector --><!--
               <div class="input-field col s12">
                 <i class="material-icons prefix">language</i>
                 <input id="market-sector"
@@ -105,7 +96,6 @@
                   'Market sector'}}</label>
               </div>
 
-              <!-- Project state -->
               <div class="input-field col s12">
                 <i class="material-icons prefix">settings</i>
                 <select id="project-state"
@@ -117,7 +107,6 @@
                   'Project state'}}</label>
               </div>
 
-              <!-- Time to market -->
               <div class="input-field col s12">
                 <i class="material-icons prefix">av_timer</i>
                 <select id="time-to-market"
@@ -139,7 +128,6 @@
 
             <div class="col l6 s12 list">
 
-              <!-- Market advantages -->
               <div class="col s12 input-field">
                 <input class="col s11 url-input" type="text"
                        placeholder="{{ translationsCardLang ? translationsCardLang['INNOVATION_CARD.ADD_ADVANTAGE'] : 'Add an advantage' }}"
@@ -156,7 +144,6 @@
 
           <div id="problem-solution">
 
-            <!-- Problem -->
             <div class="col l6 s12 input-field">
         <textarea id="problem"
                   placeholder="Quelle était la problématique donnée ?"
@@ -166,7 +153,6 @@
               <label for="problem" class="error-form active">{{ 'Problématique' | translate }}</label>
             </div>
 
-            <!-- Solution -->
             <div class="col l6 s12 input-field">
         <textarea id="solution"
                   placeholder="Décrivez rapidement comment vous avez résolu la problématique ici"
@@ -195,7 +181,7 @@
                   <button class="btn btn-md waves-effect waves-light center upload-button" ngClass="{error: errors.medias}"
                           (click)="definePrimary(media.id)"
                           [disabled]="getPrimary(innovationCard.media).type === 'VIDEO' && media.type !== 'VIDEO'">
-                    <!-- Disable the "define principal" because video is more important than photo -->
+                    --><!-- Disable the "define principal" because video is more important than photo --><!--
                     Définir comme {{ media.type === 'PHOTO' ? 'image' : 'vidéo' }} principale
                   </button>
                 </div>
@@ -208,32 +194,11 @@
       </div>
 
       <div id="params" class="section">
-        <app-client-innovation-settings [innovation]="innovation" [innovationCard]="innovationCard"></app-client-innovation-settings>
+        --><app-client-innovation-settings [innovation]="innovation" [innovationCard]="innovationCard"></app-client-innovation-settings><!--
       </div>
-
-      <div id="synthesis" class="section">
-        <p>Synthèse</p>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-      </div>
-    </div>
-    <div class="col hide-on-small-only m3 l2">
-      <ul class="section table-of-contents toc-wrapper pinned">
-        <li><a href="#top">Gestion</a></li>
-        <li><a href="#innovation-card">Fiche innovation</a></li>
-        <li><a href="#params">Ciblage des professionnels</a></li>
-        <li><a href="#synthesis">Synthèse</a></li>
-      </ul>
-    </div>
   </div>
 </div>
+-->
 
 
 
@@ -241,22 +206,3 @@
 
 
 
-
-
-
-<!-- Modal that create new card -->
-<app-shared-innovation-card-langmodal
-  *ngIf="wantToCreateNewCard" [wantTo]="'create'" [langOptions]="langOptions"
-  [selectLangOfCardInput]="selectLangInput"
-  (setLangInput)="selectLangInput = $event" (closed)="wantToCreateNewCard = false"
-  (createCard)="$event ? createInnovationCard() : null">
-</app-shared-innovation-card-langmodal>
-
-<!-- Modal that change lang -->
-<app-shared-innovation-card-langmodal
-  *ngIf="wantToModifyLang" [wantTo]="'modify'" [langOptions]="langOptions"
-  [selectLangOfCardInput]="selectLangInput"
-  (setLangInput)="selectLangInput = $event" (langOfCard)="langOfCard = $event"
-  (addModif)="addModification($event)" (save)="$event ? save() : null"
-  (closed)="wantToModifyLang = false">
-</app-shared-innovation-card-langmodal>

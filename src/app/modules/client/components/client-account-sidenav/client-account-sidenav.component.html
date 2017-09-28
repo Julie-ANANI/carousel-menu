@@ -1,6 +1,9 @@
-<ul>
-  <li>{{ user.firstName || "" }} {{ user.lastName || "" }} - {{ user.email || "" }}</li>
-  <li><a [routerLink]="'/account'">My account</a></li>
-  <li><a [routerLink]="'/projects'">My projects</a></li>
-  <li><a [routerLink]="'/logout'">Log out</a></li>
-</ul>
+<div class="overlay" *ngIf="show"></div>
+<div class="sidenav" *ngIf="show">
+  <ul>
+    <li>{{ user.firstName || "" }} {{ user.lastName || "" }} - {{ user.email || "" }}</li>
+    <li><a [routerLink]="'/account'">My account</a></li>
+    <li><a [routerLink]="'/projects'">My projects</a></li>
+    <li><a [routerLink]="'/logout'">Log out</a></li>
+  </ul>
+</div>

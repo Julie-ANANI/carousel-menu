@@ -26,7 +26,7 @@ export class SharedMarketCommentComponent implements OnInit {
   }
 
   public buildImageUrl(country: string): string {
-    return `/assets/flags/${country}.png`;
+    return `https://res.cloudinary.com/umi/image/upload/v1506516853/Flags/${country}.png`;
   }
 
 };

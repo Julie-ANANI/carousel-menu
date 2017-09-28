@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ClientComponent } from './client.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 
-import { ClientInnovationsComponent } from './components/client-innovations/client-innovations.component';
+import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
 import { ClientInnovationComponent } from './components/client-innovation/client-innovation.component';
 import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
 import { ClientUserComponent } from './components/client-user/client-user.component';
@@ -73,7 +73,7 @@ const clientRoutes: Routes = [
         path: 'projects',
         canActivate: [AuthGuard],
         children: [
-          { path: '', component: ClientInnovationsComponent, pathMatch: 'full' },
+          { path: '', component: ClientMyProjectsComponent, pathMatch: 'full' },
           {
             path: ':innovationId',
             children: [

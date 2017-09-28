@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '../../../../services/user/user.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { EnvironmentService } from '../../../../services/common/environment.service';
 import { MediaService } from '../../../../services/media/media.service';
 import { langSelectOptions } from '../../../../data/innovation.data';
+import { TranslateService, initTranslation } from './i18n/i18n';
 
 @Component({
-  selector: 'app-client-innovations',
-  templateUrl: './client-innovations.component.html',
-  styleUrls: ['./client-innovations.component.scss']
+  selector: 'app-client-my-projects',
+  templateUrl: './client-my-projects.component.html',
+  styleUrls: ['./client-my-projects.component.scss']
 })
-export class ClientInnovationsComponent implements OnInit {
+export class ClientMyProjectsComponent implements OnInit {
 
   // private _selectedOrderBy: any; TODO
   // private _selectedFilterBy: any; TODO
 
 
-  private _innovations: [any];
+  private _projects: [any];
   private _selectLangInput = '';
-  private _wantToCreateNewCard = false;
+  private _wantToCreateNewProject = false;
 
 
   constructor(private _translateService: TranslateService,
@@ -34,43 +34,43 @@ export class ClientInnovationsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this._titleService.setTitle('My innovations'); // TODO translate
-    this._userService.getMyInnovations().subscribe(innovations => {
-      this._innovations = innovations.innovations;
+    initTranslation(this._translateService);
+    this._titleService.setTitle('My projects'); // TODO translate
+    this._userService.getMyInnovations().subscribe(projects => {
+      this._projects = projects.innovations;
     });
 
     this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
   }
 
-  createInnovation() {
+  createProject() {
     const lang = this._selectLangInput;
     const domain = this._environmentService.getDomain();
-    const newInnovation = {
+    const newProject = {
       /* country: lang, le serveur
       name: ''
       lang: lang*/
       country: lang,
       domain: domain,
-      title: lang === 'fr' ? 'Donnez un nom à votre innovation' : 'Give a name to your innovation',
+      title: lang === 'fr' ? 'Donnez un nom à votre project' : 'Give a name to your project',
       lang: lang
     };
 
-    this._innovationService.create(newInnovation).subscribe(innovation =>  {
-      this._router.navigate(['/projects/' + innovation._id])
+    this._innovationService.create(newProject).subscribe(project =>  {
+      this._router.navigate(['/projects/' + project._id])
     });
   }
 
-  removeInnovation(innovationId) {
-    console.log('innovationId to remove : ' + innovationId);
-    this._innovationService.remove(innovationId).subscribe(
-      innovationRemoved => this._innovations.splice(this.getInnovationIndex(innovationId), 1));
+  removeProject(projectId) {
+    this._innovationService.remove(projectId).subscribe(
+      projectRemoved => this._projects.splice(this.getProjectIndex(projectId), 1));
   }
 
-  getInnovationIndex(innovationId: string): number {
-    for (const innovation of this._innovations) {
+  getProjectIndex(innovationId: string): number {
+    for (const innovation of this._projects) {
       console.log(innovationId);
       if (innovationId === innovation._id) {
-        return this._innovations.indexOf(innovation);
+        return this._projects.indexOf(innovation);
       }
     }
   }
@@ -79,13 +79,13 @@ export class ClientInnovationsComponent implements OnInit {
     if (innovation.media) {
       return this._mediaService.buildUrl(innovation.media.id);
     } else {
-      return '/assets/emptyinvention.png';
+      return 'https://res.cloudinary.com/umi/image/upload/v1506516385/Application/empty-project.png';
     }
   }
 
 
-  get innovations () { // TODO     : Innovation[] { (using server)
-    return this._innovations;
+  get innovations () { // TODO     : Project[] { (using server)
+    return this._projects;
   }
 
   get langOptions(): any {
@@ -99,10 +99,10 @@ export class ClientInnovationsComponent implements OnInit {
     this._selectLangInput = value;
   }
 
-  get wantToCreateNewCard(): boolean {
-    return this._wantToCreateNewCard;
+  get wantToCreateNewProject(): boolean {
+    return this._wantToCreateNewProject;
   }
-  set wantToCreateNewCard(value: boolean) {
-    this._wantToCreateNewCard = value;
+  set wantToCreateNewProject(value: boolean) {
+    this._wantToCreateNewProject = value;
   }
 }

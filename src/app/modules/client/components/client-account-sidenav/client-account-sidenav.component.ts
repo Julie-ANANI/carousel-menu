@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
@@ -9,6 +9,8 @@ import { User } from '../../../../models/user.model';
   styleUrls: ['./client-account-sidenav.component.scss']
 })
 export class ClientAccountSidenavComponent implements OnInit {
+
+  @Input() show = false;
 
   private _user: User = new User();
   private _isAuthenticated = false;

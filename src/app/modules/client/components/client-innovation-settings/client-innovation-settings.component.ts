@@ -49,8 +49,7 @@ export class ClientInnovationSettingsComponent implements OnInit {
       account: this._formBuilder.group({
         email: ['', Validators.required],
         confirm: ['', Validators.required]
-      }),
-      numbers: this._formBuilder.array([new FormControl()])
+      })
     });
 
 
@@ -58,14 +57,9 @@ export class ClientInnovationSettingsComponent implements OnInit {
       console.log('Form changes', value, valid);
     });
 
-    this._indexService.getCountriesForAutoComplete().subscribe((countries) => {
+    /*this._indexService.getCountriesForAutoComplete().subscribe((countries) => {
       this.countries = countries;
-    });
-  }
-
-  public addNumber() {
-    const control = <FormArray>this.settings.controls['numbers'];
-    control.push(new FormControl())
+    });*/
   }
 
   public onSubmit({ value, valid }: { value: any, valid: boolean }) {

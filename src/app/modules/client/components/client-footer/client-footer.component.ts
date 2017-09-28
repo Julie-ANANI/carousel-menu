@@ -18,6 +18,11 @@ export class ClientFooterComponent implements OnInit {
     initTranslation(this._translateService);
   }
 
+  public changeLang (newLang) {
+    this._translateService.use(newLang);
+    console.log(this._translateService.currentLang);
+  }
+
   get companyName(): string {
     return this._companyName;
   }

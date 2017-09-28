@@ -132,7 +132,7 @@ export class SharedMarketReportComponent implements OnInit {
   }
 
   public getFlag(country: string): string {
-    return `/assets/flags/${country}.png`;
+    return `https://res.cloudinary.com/umi/image/upload/v1506516853/Flags/${country}.png`;
   }
 
   public showDetails(param: string): boolean {

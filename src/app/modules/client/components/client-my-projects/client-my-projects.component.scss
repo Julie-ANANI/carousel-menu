@@ -1,0 +1,38 @@
+$primary-color: #F79323;
+$body-font-color-darker: #333333;
+
+.project {
+  display: flex;
+  border: 1px solid #D3D3D3;
+  margin-top: 65px;
+
+  .picture img {
+    height: 100%;
+    width: auto;
+  }
+
+  .description {
+    padding: 35px 70px;
+  }
+
+  .title a {
+    color: $body-font-color-darker;
+    font-size: 1.2rem;
+  }
+
+  .title a:hover {
+    text-decoration: none;
+    color: $primary-color;
+  }
+
+  .metas {
+    font-size: 0.7rem;
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+
+  .step .step-item a {
+    font-size: 0.8rem;
+  }
+}
+

@@ -119,7 +119,7 @@ export class Http extends AngularHttp {
 
   private _onError(res: Response): void {
     console.error(res);
-    this._notificationsService.success('Error', 'status code: ' + res.status);
+    this._notificationsService.error('Error ' + res.status, res.toString()); // TODO éventuellement commenter pour la PROD
   }
 
   private _onEnd(): void {

@@ -1,6 +1,8 @@
 <header>
     <nav>
-        <a routerLink="/admin" appLogo logoMaxWidth="100" class="brand-logo left"><span>admin</span></a>
+        <a routerLink="/admin" class="brand-logo left">
+          <img src="http://res.cloudinary.com/umi/image/upload/c_scale,h_30/v1506515143/Application/logo-umi.png" alt="Logo UMI" height="30"><span>admin</span>
+        </a>
 
         <ul>
           <li><a routerLink="/"routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="material-icons">chevron_left</i> {{ 'ADMIN_HEADER.BACK_TO_SITE' | translate }}</a></li>

@@ -15,16 +15,14 @@
 
 <div class="modal" [ngClass]="{'active': displayEmailForm}">
   <div class="modal-overlay" (click)="displayEmailForm = false"></div>
-  <div class="modal-container">
+  <form novalidate (ngSubmit)="onSubmit(formData)" [formGroup]="formData" class="modal-container">
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="displayEmailForm = false"></button>
       <div class="modal-title h5">{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}</div>
     </div>
     <div class="modal-body">
       <div class="content">
-
-        <form novalidate (ngSubmit)="onSubmit(formData)" [formGroup]="formData" class="columns">
-
+        <div class="columns">
           <div class="column col-6">
             <label>
               <span>{{ 'COMMON.FIRSTNAME' | translate }}</span>
@@ -36,7 +34,6 @@
               {{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}
             </div>
           </div>
-
 
           <div class="column col-6">
             <label>
@@ -94,7 +91,7 @@
           <div class="column col-6">
             <label>
               <span>{{ 'COMMON.PASSWORD' | translate }}</span>
-              <input type="email" placeholder="••••••••••" formControlName="password">
+              <input type="password" placeholder="••••••••••" formControlName="password">
             </label>
 
             <div class="error"
@@ -107,15 +104,11 @@
               {{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}
             </div>
           </div>
-
-          <button type="submit" [disabled]="formData.invalid">{{ 'SIGN_UP.SIGN_UP_BTN' | translate }}</button>
-        </form>
-
-
+        </div>
       </div>
     </div>
     <div class="modal-footer">
-      ...
+      <button type="submit" [disabled]="formData.invalid">{{ 'SIGN_UP.SIGN_UP_BTN' | translate }}</button>
     </div>
-  </div>
+  </form>
 </div>

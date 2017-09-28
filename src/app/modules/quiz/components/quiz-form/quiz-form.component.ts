@@ -13,7 +13,7 @@ export class QuizFormComponent implements OnInit {
     [
       {
         compozerType: 'html',
-        value: '<h1>Mon Titre</h1><img src="/assets/logos/logo-umi-154x48.png" alt="">'
+        value: '<h1>Mon Titre</h1><img src="http://res.cloudinary.com/umi/image/upload/v1506515143/Application/logo-umi.png" alt="">'
       },
       {
         compozerType: 'content',

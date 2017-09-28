@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="columns">
+    <div class="column col-10 col-mx-auto">
+
+      <h1>{{ 'COMMON.MY_PROJECTS' | translate }}</h1>
+
+      <div class="columns">
+        <div class="column col-2">
+          <button (click)="wantToCreateNewProject = true" class="btn btn-lg btn-primary">{{ 'MY_PROJECTS.ADD_PROJECT' | translate }} <i class="icon icon-arrow-right"></i></button>
+        </div>
+
+        <div class="column col-10">
+          <ul class="list-filter">
+            <li><a href="/todo">{{ 'COMMON.SORT.ALPHABETICALLY' | translate }}</a></li>
+            <li><a href="/todo">{{ 'COMMON.SORT.BY_COMPANY' | translate }}</a></li>
+            <li><a href="/todo">{{ 'COMMON.SORT.BY_AUTHOR' | translate }}</a></li>
+            <li><a href="/todo">{{ 'COMMON.SORT.BY_DATE' | translate }}</a></li>
+            <li><a href="/todo">{{ 'COMMON.SORT.BY_DEFAULT' | translate }}</a></li>
+            <!--<li><a href="/todo"><i class="icon icon-search"></i></a></li>-->
+          </ul>
+        </div>
+      </div>
+
+      <div class="project" *ngFor="let innovation of innovations">
+        <div class="picture">
+          <a [routerLink]="'./' + innovation._id"><img [src]="getPrincipalMedia(innovation)" width="218" height="218"></a>
+        </div>
+        <div class="description">
+          <div class="title"><a [routerLink]="'./' + innovation._id">{{(innovation.name || 'Untitled project') | shorten: 25: '...' }}</a></div>
+          <div class="metas"><a href="#">Adrien Weil</a> / United Motion Ideas • Ajoutée le 21/04/17 • Modifiée le 28/07/17 • <a (click)="removeProject(innovation._id)" class="text-error">{{ 'COMMON.DELETE' | translate }}</a></div><!-- TODO -->
+          <ul class="step">
+            <li class="step-item">
+              <a [routerLink]="'./' + innovation._id" class="tooltip" data-tooltip="27/04/2017">Description</a><!-- TODO -->
+            </li>
+            <li class="step-item active">
+              <a [routerLink]="'./' + innovation._id" class="tooltip" data-tooltip="27/04/2017">Soumis</a><!-- TODO -->
+            </li>
+            <li class="step-item">
+              <a [routerLink]="'./' + innovation._id" class="tooltip" data-tooltip="27/04/2017">Révision</a><!-- TODO -->
+            </li>
+            <li class="step-item">
+              <a [routerLink]="'./' + innovation._id" class="tooltip" data-tooltip="27/04/2017">Lancé</a><!-- TODO -->
+            </li>
+            <li class="step-item">
+              <a [routerLink]="'./' + innovation._id" class="tooltip" data-tooltip="27/04/2017">Terminé</a><!-- TODO -->
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

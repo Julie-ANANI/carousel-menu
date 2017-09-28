@@ -1,7 +1,10 @@
-$primary-color: #0B90C6;
-$secondary-color: #F79323;
+$primary-color: #F79323;
+$secondary-color: #0B90C6;
+$body-font-color: #878787;
+$base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto;
+$font-size: 16px;
 
 @import "../node_modules/spectre.css/src/spectre.scss";
 @import "../node_modules/spectre.css/src/spectre-icons.scss";
-//@import "../node_modules/spectre.css/src/spectre-exp.scss";
+// @import "../node_modules/spectre.css/src/spectre-exp.scss";
 @import "styles.scss";
