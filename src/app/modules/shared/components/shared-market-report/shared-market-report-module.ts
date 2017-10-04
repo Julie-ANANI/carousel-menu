@@ -21,7 +21,7 @@ export class SharedMarketReportComponent implements OnInit {
   private _selectLangInput = 'en';
   private _detailsExpanded: boolean;
   private _chartPieData: any;
-  private _modalActive: string = "";
+  private _modalActive: string = '';
   private _isSaving = false;
 
   private _infographics: any;
@@ -30,27 +30,27 @@ export class SharedMarketReportComponent implements OnInit {
   private _maxCountScore: number;
 
   private _configurations = {
-    "relevantProblematic":{
-      "fr": ['Non', 'Eventuellement', 'Oui', 'Cruciale'],
-      "en": ['Non-existent', 'Possibly', 'Frequently', 'Critical']
+    'relevantProblematic':{
+      'fr': ['Non', 'Eventuellement', 'Oui', 'Cruciale'],
+      'en': ['Non-existent', 'Possibly', 'Frequently', 'Critical']
     },
-    "productAnsweringProblematic": {
-      "en": ['No', 'Possibly', 'Likely', 'Yes'],
-      "fr": ['Non', 'Partiellement', 'Bien', 'Très bien']
+    'productAnsweringProblematic': {
+      'en': ['No', 'Possibly', 'Likely', 'Yes'],
+      'fr': ['Non', 'Partiellement', 'Bien', 'Très bien']
     },
-    "productInterests": {
-      "en": ['No – less relevant', 'Equivalent', 'Yes – A few advantages', 'Absolutely'],
-      "fr": ['Non', 'Peut-être', 'Oui', 'Indiscutablement']
+    'productInterests': {
+      'en': ['No – less relevant', 'Equivalent', 'Yes – A few advantages', 'Absolutely'],
+      'fr': ['Non', 'Peut-être', 'Oui', 'Indiscutablement']
     },
-    "interestOfProfessionals": {
-      "en": ['They want to be a customer', 'They wish to participate in the development', 'They want to distribute the solution'],
-      "fr": ['Ils souhaitent être client', 'Ils souhaitent participer au développement', 'Ils souhaitent distribuer la solution']
+    'interestOfProfessionals': {
+      'en': ['They want to be a customer', 'They wish to participate in the development', 'They want to distribute the solution'],
+      'fr': ['Ils souhaitent être client', 'Ils souhaitent participer au développement', 'Ils souhaitent distribuer la solution']
     }
   };
 
   public readonly: boolean;
 
-  private innoid = "59ae4e1ff560630254dac795";
+  private innoid = '59ae4e1ff560630254dac795';
 
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
@@ -62,37 +62,37 @@ export class SharedMarketReportComponent implements OnInit {
     this._route
       .queryParams
       .subscribe(params => {
-        this.readonly = !(params['isAdmin'] &&  params['isAdmin'] === "true" );
+        this.readonly = !(params['isAdmin'] &&  params['isAdmin'] === 'true' );
       });
     this._detailsExpanded = false;
     this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
     this._innovationService.getInnovationSythesis(this.innoid).subscribe(synthesis => {
       this._infographics = synthesis.infographics;
-      this._syntheses= synthesis.synthesis || {};
+      this._syntheses = synthesis.synthesis || {};
       // Calcul du score max
       this._maxCountScore = _.max(_.map(this._infographics.scores, function(score){ return score['count']; } ));
       // Calculate the piecharts
       if(this._infographics.pieCharts) {
         this._chartPieData = {
-          "productAnsweringProblematic": SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productAnsweringProblematic),
-          "relevantProblematic": SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.relevantProblematic),
-          "productInterests": SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productInterests)
+          'productAnsweringProblematic': SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productAnsweringProblematic),
+          'relevantProblematic': SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.relevantProblematic),
+          'productInterests': SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productInterests)
         };
       }
 
     });
-    this._showDetails = { //TODO change to the right default (open or closed)
-      "professionals": true,
-      "relevantProblematic": true,
-      "productAnsweringProblematic": true,
-      "productInterests": true,
-      "interestOfProfessionals": true,
-      "partners": true,
-      "competitors": true,
-      "prices": true,
-      "commentsPositive": true,
-      "commentsNegative": true,
-      "applications": true
+    this._showDetails = { // TODO change to the right default (open or closed)
+      'professionals': true,
+      'relevantProblematic': true,
+      'productAnsweringProblematic': true,
+      'productInterests': true,
+      'interestOfProfessionals': true,
+      'partners': true,
+      'competitors': true,
+      'prices': true,
+      'commentsPositive': true,
+      'commentsNegative': true,
+      'applications': true
     }
   }
 
@@ -136,7 +136,7 @@ export class SharedMarketReportComponent implements OnInit {
 
   public getPiechartData(section: string): any {
     let data = [
-      {"data": this._chartPieData[section] || [],"backgroundColor": ['#C0210F', '#F2C500', '#82CD30', '#34AC01']}
+      {'data': this._chartPieData[section] || [],'backgroundColor': ['#C0210F', '#F2C500', '#82CD30', '#34AC01']}
     ];
     return data;
   }
@@ -150,7 +150,7 @@ export class SharedMarketReportComponent implements OnInit {
   }
 
   public seeAnswer(professional: any) { //TODO modal
-    console.log("OKAY");
+    console.log('OKAY');
     this._modalActive = 'active';
   }
 
