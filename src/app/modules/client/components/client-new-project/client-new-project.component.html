@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="columns">
+    <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit(formData)" class="column col-10 col-mx-auto">
+
+      <h1>{{ 'NEW_PROJECT.TITLE' | translate }}</h1>
+
+      <div class="columns">
+        <div class="column col-7 col-mx-auto">
+
+          <p class="text-center">{{ 'NEW_PROJECT.DESCRIPTION.LINE1' | translate }}<br>{{ 'NEW_PROJECT.DESCRIPTION.LINE2' | translate }}</p>
+
+          <div class="form-group text-center language-choice">
+            <label class="form-label"></label>
+            <label class="form-radio">
+              <input type="radio" value="en" name="choosenLang" formControlName="choosenLang">
+              <i class="form-icon"></i> {{ 'COMMON.LANG.EN' | translate }}
+            </label>
+            <label class="form-radio">
+              <input type="radio" value="fr" name="choosenLang" formControlName="choosenLang">
+              <i class="form-icon"></i> {{ 'COMMON.LANG.FR' | translate }}
+            </label>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="columns">
+        <div class="column col-4">
+          <div class="tip">
+            <img src="http://res.cloudinary.com/umi/image/upload/app/picto-download.svg" width="56" height="">
+            <h3>{{ 'NEW_PROJECT.DOWNLOAD' | translate }}</h3>
+          </div>
+        </div>
+
+        <div class="column col-4">
+          <div class="tip">
+            <img src="http://res.cloudinary.com/umi/image/upload/app/picto-refresh.svg" width="56" height="">
+            <h3>{{ 'NEW_PROJECT.AUTOSAVE' | translate }}</h3>
+          </div>
+        </div>
+
+        <div class="column col-4">
+          <div class="tip">
+            <img src="http://res.cloudinary.com/umi/image/upload/app/picto-lock.svg" width="56" height="">
+            <h3>{{ 'NEW_PROJECT.PRIVATE' | translate }}</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <button type="submit" class="btn btn-xxl btn-primary centered tooltip-bottom" [attr.data-tooltip]="'NEW_PROJECT.LANG_NOT_CHOOSEN' | translate" [disabled]="formData.invalid" [ngClass]="{'tooltip': formData.invalid}">{{ 'NEW_PROJECT.UNDERSTAND' | translate }}</button>
+
+    </form>
+  </div>
+</div>
