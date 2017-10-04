@@ -117,6 +117,10 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'professionals'"
+                           [readonly]="readonly"
+                           [data]="syntheses.professionals || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.professionals)"></p>-->
               </div>
             </div>
@@ -191,6 +195,10 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.MARKET_NEED.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'relevantProblematic'"
+                           [readonly]="readonly"
+                           [data]="syntheses.relevantProblematic || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.relevantProblematic)"></p>-->
               </div>
             </div>
@@ -240,6 +248,10 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.RELEVANCE.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'productAnsweringProblematic'"
+                           [readonly]="readonly"
+                           [data]="syntheses.productAnsweringProblematic || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.productAnsweringProblematic)"></p>-->
               </div>
             </div>
@@ -290,6 +302,10 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.DIFFERENTIATION.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'productInterests'"
+                           [readonly]="readonly"
+                           [data]="syntheses.productInterests || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.productInterests)"></p>-->
               </div>
             </div>
@@ -334,6 +350,10 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'interestOfProfessionals'"
+                           [readonly]="readonly"
+                           [data]="syntheses.interestOfProfessionals || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(infographic.synthesis.interestOfProfessionals)"></p>-->
               </div>
             </div>
@@ -484,6 +504,10 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.POTENTIAL_PARTNER.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'partners'"
+                           [readonly]="readonly"
+                           [data]="syntheses.partners || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.partners)"></p>-->
               </div>
             </div>
@@ -540,7 +564,7 @@
                     [company]="comment.company"
                     [comment]="comment.comment"
                     [isNew]="false"
-                    [professionals]="comment.professionalsList">
+                    [professionals]="getCommentPro(comment)">
                   </market-comment>
                 </li>
               </ul>
@@ -570,6 +594,10 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.ACTUAL_COMPETITION.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'competitors'"
+                           [readonly]="readonly"
+                           [data]="syntheses.competitors || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.competitors)"></p>-->
               </div>
             </div>
@@ -626,7 +654,7 @@
                     [company]="comment.company"
                     [comment]="comment.comment"
                     [isNew]="false"
-                    [professionals]="comment.professionalsList">
+                    [professionals]="getCommentPro(comment)">
                   </market-comment>
                 </li>
               </ul>
@@ -656,12 +684,16 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.PRICE.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'prices-edit'"
+                           [readonly]="readonly"
+                           [data]="syntheses.prices || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.prices)"></p>-->
               </div>
             </div>
 
             <div class="bloc" id="prices" *ngIf="infographics.priceAverage">
-              <infographics-prices [data]="infographics.prices"></infographics-prices>
+              <infographics-prices [rawData]="infographics.prices"></infographics-prices>
 
               <div class="average">Moyenne : {{infographics.priceAverage}}€</div>
             </div>
@@ -685,7 +717,7 @@
                     [company]="comment.company"
                     [comment]="comment.comment"
                     [isNew]="false"
-                    [professionals]="comment.professionalsList">
+                    [professionals]="getCommentPro(comment)">
                   </market-comment>
                 </li>
               </ul>
@@ -715,6 +747,10 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.STRONG.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'commentsPositive'"
+                           [readonly]="readonly"
+                           [data]="syntheses.commentsPositive || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.commentsPositive)"></p>-->
               </div>
             </div>
@@ -736,7 +772,7 @@
                     [company]="comment.company"
                     [comment]="comment.comment"
                     [isNew]="false"
-                    [professionals]="comment.professionalsList">
+                    [professionals]="getCommentPro(comment)">
                   </market-comment>
                 </li>
               </ul>
@@ -767,6 +803,10 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.WEAK.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'commentsNegative'"
+                           [readonly]="readonly"
+                           [data]="syntheses.commentsNegative || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.commentsNegative)"></p>-->
               </div>
             </div>
@@ -788,7 +828,7 @@
                     [company]="comment.company"
                     [comment]="comment.comment"
                     [isNew]="false"
-                    [professionals]="comment.professionalsList">
+                    [professionals]="getCommentPro(comment)">
                   </market-comment>
                 </li>
               </ul>
@@ -820,6 +860,10 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.NEW_APPLICATION.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'applications'"
+                           [readonly]="readonly"
+                           [data]="syntheses.applications || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.applications)"></p>-->
               </div>
             </div>
@@ -874,7 +918,7 @@
                     [company]="comment.company"
                     [comment]="comment.comment"
                     [isNew]="false"
-                    [professionals]="comment.professionalsList">
+                    [professionals]="getCommentPro(comment)">
                   </market-comment>
                 </li>
               </ul>
@@ -899,6 +943,10 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.MARKET_POTENTIAL.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'marketPotential'"
+                           [readonly]="readonly"
+                           [data]="syntheses.marketPotential || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.marketPotential)"></p>-->
               </div>
             </div>
@@ -922,4 +970,23 @@
 
       </div>
     </div>
+
+  <!-- Modal -->
+  <div class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <button class="btn btn-clear float-right"></button>
+        <div class="modal-title h5">Modal title</div>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          Let's see of it works.
+        </div>
+      </div>
+      <div class="modal-footer">
+        ...
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,10 @@
+<div>
+  <div *ngIf="!readonly">
+    <textarea id="{{elementId}}"></textarea>
+  </div>
+  <div *ngIf="readonly">
+    <p class="desc" [innerHTML]="data"></p>
+  </div>
+</div>
+
+

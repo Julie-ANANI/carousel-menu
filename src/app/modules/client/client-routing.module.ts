@@ -19,7 +19,6 @@ import { ClientLegalNoticeComponent } from './components/client-legal-notice/cli
 import { ClientTermsAndConditionsComponent } from './components/client-terms-and-conditions/client-terms-and-conditions.component';
 
 /* Shared */
-// import { SharedInfographicComponent } from '../shared/components/shared-infographic/components/shared-infographic/shared-infographic.component';
 import { SharedMarketReportComponent} from '../shared/components/shared-market-report/shared-market-report-module';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
 
@@ -101,8 +100,8 @@ const clientRoutes: Routes = [
           { path: '', component: ClientUserComponent, pathMatch: 'full' }
         ]
       },
-      { // TODO remove
-        path: 'infographic',
+      {
+        path: 'infographic', //?isAdmin=true //TODO comment modifier cette route ?
         canActivate: [AuthGuard],
         children: [
           { path: '', component: SharedMarketReportComponent, pathMatch: 'full' }

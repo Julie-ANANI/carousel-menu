@@ -2,6 +2,7 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, OnInit, Input } from '@angular/core';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'market-report-popover',
@@ -13,11 +14,18 @@ export class SharedMarketReportPopoverComponent implements OnInit {
 
   @Input() public professionals: any;
 
-
   constructor() { }
 
   ngOnInit() {
-    console.log(this.professionals);
+
+  }
+
+  public click(event) {
+    event.stopPropagation();
+    let selectedMenu = $(event.target).next(".users-menu");
+    // On replie tous les menus sauf celui sélectionné
+    $(".users-menu").not(selectedMenu).slideUp("fast");
+    selectedMenu.slideToggle("fast");
   }
 
   public buildImageUrl(country: string): string {
@@ -25,6 +33,8 @@ export class SharedMarketReportPopoverComponent implements OnInit {
   }
 
   public seeAnswer(professional: any) {
+    //const modalRef = this.modalService.open(NgbdModalContent);
+    //modalRef.componentInstance.name = 'World';
     console.log('Answer?');
   }
 

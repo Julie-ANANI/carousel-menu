@@ -57,8 +57,13 @@ export class InnovationService {
   }
 
   public save(innovationId: string, delta: any, innovationCardId?: any): Observable<any> {
-    console.log(delta);
     return this._http.put('/innovation/' + innovationId, { delta: delta, innovationCardId: innovationCardId })
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public updateSynthesis(innovationId: string, data: any): Observable<any> {
+    return this._http.put('/innovation/' + innovationId + '/synthesis', { payload: data })
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

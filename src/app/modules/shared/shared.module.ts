@@ -29,6 +29,7 @@ import { SharedFilterInputComponent } from './components/shared-filter-input/sha
 import { SqSortDirective } from '../../directives/smart-query/sqSort.directive';
 import { ChartsModule } from 'ng2-charts';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
+import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
 
 @NgModule({
   imports: [
@@ -68,7 +69,8 @@ import { Ng2PageScrollModule } from 'ng2-page-scroll';
     SharedPricesComponent,
     SharedWorldMapComponent,
     SharedPaginationComponent,
-    SharedFilterInputComponent
+    SharedFilterInputComponent,
+    SharedTextZoneComponent
   ],
   exports: [
     // Modules
