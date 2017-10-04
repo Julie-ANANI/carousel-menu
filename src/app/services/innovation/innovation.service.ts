@@ -9,7 +9,7 @@ export class InnovationService {
   }
 
   public create(innovationObj): Observable<any> {
-    return this._http.post('/innovation/', innovationObj)
+    return this._http.post('/innovation', innovationObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

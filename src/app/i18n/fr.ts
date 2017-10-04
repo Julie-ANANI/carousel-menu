@@ -7,6 +7,8 @@ export const fr = {
     'LOG_IN': 'Connexion',
     'SIGN_UP': 'Inscription',
     'LOG_OUT': 'Se déconnecter',
+    'CANCEL': 'Annuler',
+    'ADD': 'Ajouter',
 
     'FIRSTNAME': 'Prénom',
     'LASTNAME': 'Nom',
@@ -26,6 +28,14 @@ export const fr = {
       'JOBTITLE': 'Le poste est requis',
     },
 
+    'PROJECT_STATE': {
+      'DESCRIPTION': 'Description',
+      'SUBMITTED': 'Soumis',
+      'REVIEWING': 'Révision',
+      'LAUNCHED': 'Lancé',
+      'COMPLETED': 'Terminé'
+    },
+
     'INVALID': {
       'EMAIL': 'L\'email est invalide',
       'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court'
@@ -43,6 +53,7 @@ export const fr = {
     'USERS': 'Utilisateurs',
     'HOME': 'Accueil',
     'ADMIN': 'Admin',
+    'MY_PROJECT': 'Mon projet',
     'MY_PROJECTS': 'Mes projets',
     'MY_USERS': 'Mes utilisateurs',
     'MY_ACCOUNT': 'Mon compte',

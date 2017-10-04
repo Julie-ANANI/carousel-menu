@@ -7,6 +7,8 @@ export const en = {
     'LOG_IN': 'Log in',
     'SIGN_UP': 'Sign up',
     'LOG_OUT': 'Log out',
+    'CANCEL': 'Cancel',
+    'ADD': 'Add',
 
     'FIRSTNAME': 'Firstname',
     'LASTNAME': 'Lastname',
@@ -26,6 +28,14 @@ export const en = {
       'JOBTITLE': 'Job title is required',
     },
 
+    'PROJECT_STATE': {
+      'DESCRIPTION': 'Description',
+      'SUBMITTED': 'Submitted',
+      'REVIEWING': 'Reviewing',
+      'LAUNCHED': 'Launched',
+      'COMPLETED': 'Completed'
+    },
+
     'INVALID': {
       'EMAIL': 'Email is invalid',
       'PASSWORD_TOO_SHORT': 'Password is too short'
@@ -43,6 +53,7 @@ export const en = {
     'USERS': 'Users',
     'HOME': 'Home',
     'ADMIN': 'Admin',
+    'MY_PROJECT': 'My project',
     'MY_PROJECTS': 'My projects',
     'MY_USERS': 'My users',
     'MY_ACCOUNT': 'My account',

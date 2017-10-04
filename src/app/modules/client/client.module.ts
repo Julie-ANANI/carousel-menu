@@ -12,7 +12,7 @@ import { ClientAccountSidenavComponent } from './components/client-account-siden
 import { ClientAccountComponent } from './components/client-account/client-account.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 
-import { ClientInnovationComponent } from './components/client-innovation/client-innovation.component';
+import { ClientProjectComponent } from './components/client-project/client-project.component';
 import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
 import { ClientUserComponent } from './components/client-user/client-user.component';
 import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
@@ -20,7 +20,10 @@ import { ClientMyProjectsComponent } from './components/client-my-projects/clien
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
-import { ClientInnovationSettingsComponent } from './components/client-innovation-settings/client-innovation-settings.component';
+import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
+import { ClientLegalNoticeComponent } from './components/client-legal-notice/client-legal-notice.component';
+import { ClientTermsAndConditionsComponent } from './components/client-terms-and-conditions/client-terms-and-conditions.component';
+import { ClientNewProjectComponent } from './components/client-new-project/client-new-project.component';
 
 
 @NgModule({
@@ -44,15 +47,18 @@ import { ClientInnovationSettingsComponent } from './components/client-innovatio
     ClientAccountSidenavComponent,
 
     ClientMyProjectsComponent,
-    ClientInnovationSettingsComponent,
-    ClientInnovationComponent,
+    ClientProjectEditComponent,
+    ClientProjectComponent,
     ClientCampaignComponent,
     ClientUserComponent,
 
     ClientDiscoverComponent,
     ClientLoginComponent,
     ClientSignupComponent,
-    ClientLogoutComponent
+    ClientLogoutComponent,
+    ClientLegalNoticeComponent,
+    ClientTermsAndConditionsComponent,
+    ClientNewProjectComponent
   ]
 })
 export class ClientModule {

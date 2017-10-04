@@ -19,8 +19,7 @@ export class ClientFooterComponent implements OnInit {
   }
 
   public changeLang (newLang) {
-    this._translateService.use(newLang);
-    console.log(this._translateService.currentLang);
+    this._translateService.use(newLang); // TODO retenir la préférence dans un cookie éventuellement
   }
 
   get companyName(): string {

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { AuthService } from './services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { NotificationsService } from 'angular2-notifications';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 import 'rxjs/add/operator/pairwise';
 
@@ -12,8 +14,9 @@ import 'rxjs/add/operator/pairwise';
   '<app-http-loader></app-http-loader>' +
   '<router-outlet></router-outlet>'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewChecked {
 
+  private _scrollExecuted = false;
 
   public notificationsOptions = {
     position: ['top', 'right'],
@@ -24,6 +27,7 @@ export class AppComponent implements OnInit {
   };
 
   constructor(private _translateService: TranslateService,
+              private _activatedRoute: ActivatedRoute,
               private _authService: AuthService,
               private _notificationsService: NotificationsService) {}
 
@@ -33,7 +37,7 @@ export class AppComponent implements OnInit {
     if (this._authService.isAcceptingCookies) { // CNIL
       this._authService.initializeSession().subscribe(
         res => null,
-        error => this._notificationsService.error('Erreur', 'Serveur inaccessible', { // TODO translate
+        error => this._notificationsService.error('Error', 'Cannot reach server', { // TODO translate
           clickToClose: false,
           timeOut: 0
         })
@@ -41,4 +45,23 @@ export class AppComponent implements OnInit {
     }
   }
 
+  ngAfterViewChecked(): void {
+    // FIXME, voir pour une autre solution, car s'exécute à chaque modification de composant.
+    if (!this._scrollExecuted) {
+      let routeFragmentSubscription: Subscription;
+      // Automatic scroll to anchor if exists in URL (ex : umi.us/<some_path>#targeting) -> scroll to id="targeting"
+      routeFragmentSubscription = this._activatedRoute.fragment.subscribe(fragment => {
+        if (fragment) {
+          const element = document.getElementById(fragment);
+          if (element) {
+            element.scrollIntoView({behavior: 'smooth'}); // Smooth only for Firefox
+            this._scrollExecuted = true;
+
+            // Free resources after 1s
+            setTimeout(_ => routeFragmentSubscription.unsubscribe(), 1000);
+          }
+        }
+      });
+    }
+  }
 }

@@ -1,30 +1,28 @@
 <header class="navbar">
   <section class="navbar-section">
     <a routerLink="/" class="navbar-brand mr-2">
-      <img src="http://res.cloudinary.com/umi/image/upload/c_scale,h_30/v1506515143/Application/logo-umi.png" alt="Logo UMI" height="30">
+      <img src="https://res.cloudinary.com/umi/image/upload/c_scale,h_30/app/logo-umi.png" alt="Logo UMI" height="30">
     </a>
   </section>
 
   <!-- Non connecté -->
   <section class="navbar-section" *ngIf="!authService.isAuthenticated">
     <a [routerLink]="'/todo'" class="btn btn-link">{{ 'HEADER.ABOUT' | translate}}</a>
-    <a [routerLink]="'/todo'" class="btn btn-link">Solution</a>
+    <a [routerLink]="'/todo'" class="btn btn-link">{{ 'HEADER.SOLUTION' | translate}}</a>
     <a [routerLink]="'/todo'" class="btn btn-link">{{ 'HEADER.CONTRIBUTORS' | translate}}</a>
-    <a [routerLink]="'/todo'" class="btn btn-link">Ressources</a>
-    <a [routerLink]="'/todo'" class="btn btn-link">Blog</a>
+    <a [routerLink]="'/todo'" class="btn btn-link">{{ 'HEADER.RESSOURCES' | translate}}</a>
+    <a [href]="'https://www.umi.us/'+ translate.currentLang +'/blog' + (translate.currentLang==='fr' ? 'fr' : '') + '/'" target="_blank" class="btn btn-link">{{ 'HEADER.BLOG' | translate}}</a>
     <a [routerLink]="'/login'" class="btn btn-link">{{ 'COMMON.LOG_IN' | translate}}</a>
     <a [routerLink]="'/signup'" class="btn btn-primary">{{ 'HEADER.START' | translate}}</a>
   </section>
 
   <!-- Connecté -->
   <section class="navbar-section" *ngIf="authService.isAuthenticated">
-    <a [routerLink]="'/help'" class="btn btn-link">Aide</a><!-- TODO -->
-    <a [routerLink]="'/discover'" class="btn btn-link">{{ 'COMMON.DISCOVER' | translate }}</a><!-- TODO -->
+    <a [routerLink]="'/todo'" class="btn btn-link">Aide</a><!-- TODO -->
+    <a [routerLink]="'/todo'" class="btn btn-link">{{ 'COMMON.DISCOVER' | translate }}</a><!-- TODO -->
     <a [routerLink]="'/projects'" class="btn btn-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
-    <a [routerLink]="'/users'" class="btn btn-link" *ngIf="authService.isAdmin">{{ 'COMMON.MY_USERS' | translate }}</a><!-- TODO -->
+    <a [routerLink]="'/todo'" class="btn btn-link" *ngIf="authService.isAdmin">{{ 'COMMON.MY_USERS' | translate }}</a><!-- TODO -->
     <a (click)="displaySideNav = !displaySideNav" class="btn btn-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
-
-    <!--<a [routerLink]="'/logout'" class="btn btn-link">Logout</a>-->
   </section>
 </header>
 

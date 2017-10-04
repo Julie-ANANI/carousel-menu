@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Compozer, TextboxCompozerComponent } from '../../../../utils/dynamic-form-compozer/classes/compozer';
+import { Compozer, TextboxCompozerComponent } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -13,7 +13,7 @@ export class QuizFormComponent implements OnInit {
     [
       {
         compozerType: 'html',
-        value: '<h1>Mon Titre</h1><img src="http://res.cloudinary.com/umi/image/upload/v1506515143/Application/logo-umi.png" alt="">'
+        value: '<h1>Mon Titre</h1><img src="https://res.cloudinary.com/umi/image/upload/app/logo-umi.png" alt="">'
       },
       {
         compozerType: 'content',

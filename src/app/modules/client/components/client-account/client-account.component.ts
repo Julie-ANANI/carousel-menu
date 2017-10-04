@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
 import { UserService } from '../../../../services/user/user.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../models/user.model';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
-import { Compozer } from '../../../../utils/dynamic-form-compozer/classes/compozer';
-import { TextboxCompozerComponent } from '../../../../utils/dynamic-form-compozer/classes/compozer-textbox';
+import { Compozer } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer';
+import { TextboxCompozerComponent } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer-textbox';
 import 'rxjs/add/operator/filter';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-client-account',
@@ -16,76 +16,29 @@ import 'rxjs/add/operator/filter';
 })
 export class ClientAccountComponent implements OnInit {
 
-  public compozerComponents: Compozer = new Compozer([
-    [
-      new TextboxCompozerComponent({
-        key: 'firstName',
-        label: 'COMMON.FIRSTNAME',
-        type: 'text',
-        placeholder: 'John',
-        validators: Validators.required
-      })
-    ],
-    [
-      new TextboxCompozerComponent({
-        key: 'lastName',
-        label: 'COMMON.LASTNAME',
-        type: 'text',
-        placeholder: 'Doe',
-        validators: Validators.required
-      })
-    ],
-    [
-      new TextboxCompozerComponent({
-        key: 'companyName',
-        label: 'COMMON.COMPANY',
-        type: 'text',
-        placeholder: 'United Motion Ideas',
-        validators: Validators.required
-      })
-    ],
-    [
-      new TextboxCompozerComponent({
-        key: 'jobTitle',
-        label: 'COMMON.JOBTITLE',
-        type: 'text',
-        placeholder: 'Ingénieur en aérodynamisme', // TODO translate
-        validators: Validators.required
-      })
-    ],
-    [
-      new TextboxCompozerComponent({
-        key: 'email',
-        label: 'COMMON.EMAIL',
-        type: 'email',
-        disabled: true,
-        placeholder: 'john.doe@gmail.com',
-        validators: [Validators.required, Validators.email]
-      })
-    ],
-    [
-      new TextboxCompozerComponent({
-        key: 'phone',
-        label: 'COMMON.PHONE',
-        type: 'tel',
-        placeholder: '+33 4 05 06 07 08'
-      })
-    ]
-  ]);
+  public formData: FormGroup;
 
   constructor(private _userService: UserService,
               private _translateService: TranslateService,
               private _notificationsService: NotificationsService,
+              private _formBuilder: FormBuilder,
               private _titleService: Title) {}
 
   ngOnInit(): void {
     initTranslation(this._translateService);
     this._titleService.setTitle('My account'); // TODO translate
-  }
 
-  public formOnInit(form) {
+    this.formData = this._formBuilder.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      companyName: ['', [Validators.required]],
+      jobTitle: ['', [Validators.required]],
+      phone: ['', [Validators.required]]
+    });
+
     this._userService.getSelf().subscribe(user => {
-      form.patchValue(user); // TODO form
+      this.formData.patchValue(user);
     });
   }
 

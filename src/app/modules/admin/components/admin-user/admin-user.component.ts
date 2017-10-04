@@ -4,8 +4,8 @@ import { UserService } from '../../../../services/user/user.service';
 import { User } from '../../../../models/user.model';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/switchMap';
-import { Compozer } from '../../../../utils/dynamic-form-compozer/classes/compozer';
-import { TextboxCompozerComponent } from '../../../../utils/dynamic-form-compozer/classes/compozer-textbox';
+import { Compozer } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer';
+import { TextboxCompozerComponent } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer-textbox';
 import { Validators } from '@angular/forms';
 
 @Component({

@@ -7,11 +7,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DragulaModule } from 'ng2-dragula';
 import { NgPipesModule } from 'ngx-pipes';
 import { FileUploadModule } from 'ng2-file-upload';
-import { FormErrorDirective } from '../../utils/dynamic-form-compozer/directives/form-error/form-error.directive';
-import { DynamicFormComponent } from '../../utils/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
-import { DynamicFormQuestionComponent } from '../../utils/dynamic-form-compozer/components/dynamic-form-question/dynamic-form-question.component';
-import { DynamicFormContentComponent } from '../../utils/dynamic-form-compozer/components/dynamic-form-content/dynamic-form-content.component';
-import { DynamicFormHtmlComponent } from '../../utils/dynamic-form-compozer/components/dynamic-form-html/dynamic-form-html.component';
+import { FormErrorDirective } from '../../../../.toreview/dynamic-form-compozer/directives/form-error/form-error.directive';
+import { DynamicFormComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
+import { DynamicFormQuestionComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-question/dynamic-form-question.component';
+import { DynamicFormContentComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-content/dynamic-form-content.component';
+import { DynamicFormHtmlComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-html/dynamic-form-html.component';
 import { SharedNotFoundComponent } from './components/shared-not-found/shared-not-found.component';
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
@@ -28,6 +28,7 @@ import { SharedPaginationComponent } from './components/shared-pagination/shared
 import { SharedFilterInputComponent } from './components/shared-filter-input/shared-filter-input.component';
 import { SqSortDirective } from '../../directives/smart-query/sqSort.directive';
 import { ChartsModule } from 'ng2-charts';
+import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { ChartsModule } from 'ng2-charts';
     TranslateModule.forChild(),
     DragulaModule,
     ChartsModule,
-    FileUploadModule
+    FileUploadModule,
+    Ng2PageScrollModule
   ],
   declarations: [
     // Directives
@@ -74,6 +76,7 @@ import { ChartsModule } from 'ng2-charts';
     ReactiveFormsModule,
     RouterModule,
     DragulaModule,
+    Ng2PageScrollModule,
 
     // Directives
     FormErrorDirective,

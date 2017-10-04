@@ -1,6 +1,15 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+$body-font-color-darker: #333333 !default;
+$body-font-color: #878787 !default;
+$base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
+$font-size: 16px !default;
+$primary-color: #F79323 !default;
+$secondary-color: #0B90C6 !default;
 
-$body-font-color-darker: #333333;
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+@import "../node_modules/spectre.css/src/spectre.scss";
+@import "../node_modules/spectre.css/src/spectre-icons.scss";
+@import "../node_modules/spectre.css/src/spectre-exp.scss";
+
 
 * {
   -webkit-font-smoothing: antialiased;
@@ -113,8 +122,6 @@ ul.list-filter {
   font-size: 12px;
   position: relative;
 }
-
-
 
 /* DEV */ body:after {
 /* DEV */   display: block;

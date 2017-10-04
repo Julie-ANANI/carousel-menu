@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Compozer } from '../../../../utils/dynamic-form-compozer/classes/compozer';
-import { DynamicFormComponent } from '../../../../utils/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
+import { Compozer } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer';
+import { DynamicFormComponent } from '../../../../../../.toreview/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({
