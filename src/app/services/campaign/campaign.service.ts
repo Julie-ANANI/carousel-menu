@@ -7,14 +7,14 @@ export class CampaignService {
 
   constructor(private _http: Http) {
   }
-  
-  public create(campaignObj): Observable<any> {
+
+  public create(campaignObj: any): Observable<any> {
     return this._http.post('/campaign/', campaignObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public get(id): Observable<any> {
+  public get(id: string): Observable<any> {
     return this._http.get('/campaign/' + id)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));

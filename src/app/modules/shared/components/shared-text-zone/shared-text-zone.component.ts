@@ -14,7 +14,7 @@ declare var tinymce: any;
 
 export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
 
-  @Input() readonly : boolean;
+  @Input() readonly: boolean;
   @Input() data: string;
 
 
@@ -46,7 +46,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
           const content = editor.getContent();
           this.contentHash();
           if(this._contentHash !== actualHash) {
-            this.onEditorKeyup.emit({id:this.elementId, content:content});
+            this.onEditorKeyup.emit({id: this.elementId, content: content});
           } else {
             console.log("There's nothing new to save");
           }

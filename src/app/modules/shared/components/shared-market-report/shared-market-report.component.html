@@ -693,7 +693,7 @@
             </div>
 
             <div class="bloc" id="prices" *ngIf="infographics.priceAverage">
-              <infographics-prices [rawData]="infographics.prices"></infographics-prices>
+              <app-shared-infographics-prices [rawData]="infographics.prices"></app-shared-infographics-prices>
 
               <div class="average">Moyenne : {{infographics.priceAverage}}€</div>
             </div>

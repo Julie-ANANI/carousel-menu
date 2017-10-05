@@ -8,13 +8,13 @@ export class InnovationService {
   constructor(private _http: Http) {
   }
 
-  public create(innovationObj): Observable<any> {
+  public create(innovationObj: any): Observable<any> {
     return this._http.post('/innovation', innovationObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public get(id): Observable<any> {
+  public get(id: string): Observable<any> {
     return this._http.get('/innovation/' + id)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
@@ -26,13 +26,13 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public createInnovationCard(innovationId, innovationCardObj: any): Observable<any> {
+  public createInnovationCard(innovationId: string, innovationCardObj: any): Observable<any> {
     return this._http.post('/innovation/' + innovationId + '/innovationCard', innovationCardObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public removeInnovationCard(innovationId, innovationCardId): Observable<any> {
+  public removeInnovationCard(innovationId: string, innovationCardId: string): Observable<any> {
     return this._http.delete('/innovation/' + innovationId + '/innovationCard/' + innovationCardId)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
