@@ -4,9 +4,9 @@ import { UserService } from '../../../../services/user/user.service';
 import { User } from '../../../../models/user.model';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/switchMap';
-import { Compozer } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer';
-import { TextboxCompozerComponent } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer-textbox';
-import { Validators } from '@angular/forms';
+// import { Compozer } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer';
+// import { TextboxCompozerComponent } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer-textbox';
+// import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-user',
@@ -20,7 +20,7 @@ export class AdminUserComponent implements OnInit {
 
 
 
-  public compozerComponents: Compozer = new Compozer([
+  /*public compozerComponents: Compozer = new Compozer([
     [
       new TextboxCompozerComponent({
         key: 'firstName',
@@ -57,7 +57,7 @@ export class AdminUserComponent implements OnInit {
         placeholder: '+33 4 05 06 07 08'
       })
     ]
-  ]);
+  ]);*/
 
 
   constructor(private _userService: UserService,

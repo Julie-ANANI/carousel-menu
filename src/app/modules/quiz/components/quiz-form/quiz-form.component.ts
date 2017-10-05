@@ -9,7 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class QuizFormComponent implements OnInit {
 
-  public compozerComponent: Compozer = new Compozer([
+  /*public compozerComponent: Compozer = new Compozer([
     [
       {
         compozerType: 'html',
@@ -119,7 +119,7 @@ export class QuizFormComponent implements OnInit {
         label: 'Do you know potential partners?',
       }
     ]
-  ]);
+  ]);*/
 
   constructor(private _sanitizer: DomSanitizer) {
   }

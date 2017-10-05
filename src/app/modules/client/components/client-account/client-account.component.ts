@@ -4,8 +4,6 @@ import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../models/user.model';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
-import { Compozer } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer';
-import { TextboxCompozerComponent } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer-textbox';
 import 'rxjs/add/operator/filter';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 

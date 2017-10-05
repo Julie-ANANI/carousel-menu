@@ -6,7 +6,7 @@ import { Directive } from '@angular/core';
 @Directive({
   selector: '[sqReset]'
 })
-export class SqReset {
+export class SqResetDirective {
   //TODO
   constructor() { }
 }

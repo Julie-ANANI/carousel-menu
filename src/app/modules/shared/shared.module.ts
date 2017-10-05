@@ -7,11 +7,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DragulaModule } from 'ng2-dragula';
 import { NgPipesModule } from 'ngx-pipes';
 import { FileUploadModule } from 'ng2-file-upload';
-import { FormErrorDirective } from '../../../../.toreview/dynamic-form-compozer/directives/form-error/form-error.directive';
-import { DynamicFormComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
-import { DynamicFormQuestionComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-question/dynamic-form-question.component';
-import { DynamicFormContentComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-content/dynamic-form-content.component';
-import { DynamicFormHtmlComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-html/dynamic-form-html.component';
+// import { FormErrorDirective } from '../../../../.toreview/dynamic-form-compozer/directives/form-error/form-error.directive';
+// import { DynamicFormComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
+// import { DynamicFormQuestionComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-question/dynamic-form-question.component';
+// import { DynamicFormContentComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-content/dynamic-form-content.component';
+// import { DynamicFormHtmlComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-html/dynamic-form-html.component';
 import { SharedNotFoundComponent } from './components/shared-not-found/shared-not-found.component';
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
@@ -27,6 +27,8 @@ import { SharedWorldMapComponent } from './components/shared-world-map-component
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
 import { SharedFilterInputComponent } from './components/shared-filter-input/shared-filter-input.component';
 import { SqSortDirective } from '../../directives/smart-query/sqSort.directive';
+import { SqResetDirective } from '../../directives/smart-query/sqReset.directive';
+import { SharedModalComponent } from './components/shared-modal-component/shared-modal.component';
 import { ChartsModule } from 'ng2-charts';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
@@ -47,14 +49,15 @@ import { SharedTextZoneComponent } from './components/shared-text-zone/shared-te
   ],
   declarations: [
     // Directives
-    FormErrorDirective,
+    // FormErrorDirective,
     SqSortDirective,
+    SqResetDirective,
 
     // Component
-    DynamicFormComponent,
-    DynamicFormQuestionComponent,
-    DynamicFormContentComponent,
-    DynamicFormHtmlComponent,
+    // DynamicFormComponent,
+    // DynamicFormQuestionComponent,
+    // DynamicFormContentComponent,
+    // DynamicFormHtmlComponent,
 
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
@@ -70,7 +73,8 @@ import { SharedTextZoneComponent } from './components/shared-text-zone/shared-te
     SharedWorldMapComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
-    SharedTextZoneComponent
+    SharedTextZoneComponent,
+    SharedModalComponent
   ],
   exports: [
     // Modules
@@ -81,14 +85,15 @@ import { SharedTextZoneComponent } from './components/shared-text-zone/shared-te
     Ng2PageScrollModule,
 
     // Directives
-    FormErrorDirective,
+    // FormErrorDirective,
     SqSortDirective,
+    SqResetDirective,
 
     // Components
-    DynamicFormComponent,
-    DynamicFormQuestionComponent,
-    DynamicFormContentComponent,
-    DynamicFormHtmlComponent,
+    // DynamicFormComponent,
+    // DynamicFormQuestionComponent,
+    // DynamicFormContentComponent,
+    // DynamicFormHtmlComponent,
 
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
@@ -97,7 +102,8 @@ import { SharedTextZoneComponent } from './components/shared-text-zone/shared-te
     SharedLoaderComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
-    SharedMarketReportComponent
+    SharedMarketReportComponent,
+    SharedModalComponent
 
   ]
 })

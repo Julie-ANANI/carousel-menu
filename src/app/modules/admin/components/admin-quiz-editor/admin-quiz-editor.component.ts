@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Compozer } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer';
-import { DynamicFormComponent } from '../../../../../../.toreview/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
+// import { Compozer } from '../../../../../../.toreview/dynamic-form-compozer/classes/compozer';
+// import { DynamicFormComponent } from '../../../../../../.toreview/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({
@@ -11,7 +11,7 @@ import { NotificationsService } from 'angular2-notifications';
 export class AdminQuizEditorComponent implements OnInit {
 
 
-  public compozerObject: object[][] = []; // final live object
+  /*public compozerObject: object[][] = []; // final live object
 
   public compozerComponent: Compozer;
   public compozerComponentTmpRow: Compozer;
@@ -29,17 +29,18 @@ export class AdminQuizEditorComponent implements OnInit {
 
   @ViewChild(DynamicFormComponent) child: DynamicFormComponent;
 
+  */
   constructor(private _notificationsService: NotificationsService) {
   }
 
   ngOnInit() {
-    this.compozerComponent = new Compozer();
-    this.compozerComponentTmpRow = new Compozer();
-    this.stringCompozerObject = JSON.stringify(this.compozerObject, null, 2);
+    // this.compozerComponent = new Compozer();
+    // this.compozerComponentTmpRow = new Compozer();
+    // this.stringCompozerObject = JSON.stringify(this.compozerObject, null, 2);
   }
 
   public addCompozerComponent(): void {
-    switch (this.tmpComponent.compozerType) {
+    /*switch (this.tmpComponent.compozerType) {
       case 'content': {
         this.tmpNewRow.push({
           compozerType: 'content',
@@ -73,22 +74,23 @@ export class AdminQuizEditorComponent implements OnInit {
     this.tmpComponent.value = null;
     this.tmpComponent.compozerType = null;
     this.tmpComponent.columns = null; // TODO déduire la somme des composants existants de 12
+    */
   }
 
   public addRow(): void {
-    this.compozerObject.push(this.tmpNewRow);
+    /*this.compozerObject.push(this.tmpNewRow);
     this.compozerComponent = new Compozer(this.compozerObject);
     this.stringCompozerObject = JSON.stringify(this.compozerObject, null, 2);
-    this.child.prepareForm();
+    this.child.prepareForm();*/
   }
 
   public updatestringCompozerObject (): void {
-    try {
+    /*try {
       this.compozerComponent = new Compozer(JSON.parse(this.stringCompozerObject));
       this._notificationsService.success('Formulaire mis à jour', 'Succès'); // TODO translate
     } catch (e) {
       console.error(e);
       this._notificationsService.error('Erreur', 'Mauvais format'); // TODO translate
-    }
+    }*/
   }
 }
