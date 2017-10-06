@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { EnvironmentService } from '../../../../services/common/environment.service';
+import { environment } from '../../../../../environments/environment';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,7 +18,6 @@ export class ClientNewProjectComponent implements OnInit {
 
 
   constructor(private _router: Router,
-              private _environmentService: EnvironmentService,
               private _formBuilder: FormBuilder,
               private _innovationService: InnovationService,
               private _translateService: TranslateService) { }
@@ -29,7 +28,7 @@ export class ClientNewProjectComponent implements OnInit {
 
   public onSubmit({value, valid}: { value: any, valid: boolean }) {
     const newProject = {
-      domain: this._environmentService.getDomain(),
+      domain: environment.domain,
       lang: value.choosenLang
     };
 

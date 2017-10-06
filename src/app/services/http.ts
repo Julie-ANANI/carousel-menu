@@ -6,7 +6,7 @@ import {
   Headers,
   XHRBackend
 } from '@angular/http';
-import { environment } from '../../environment';
+import { environment } from '../../environments/environment';
 import { LoaderService } from './loader/loader.service';
 import { RequestOptions } from './requestOptions';
 import { Observable } from 'rxjs/Observable';

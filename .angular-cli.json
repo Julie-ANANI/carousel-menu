@@ -31,7 +31,7 @@
         "../node_modules/tinymce/plugins/paste/plugin.min.js",
         "../node_modules/tinymce/plugins/table/plugin.min.js"
       ],
-      "environmentSource": "environment.ts",
+      "environmentSource": "environments/environment.ts",
       "environments": {
         "local": "environments/umi/environment.local.ts",
         "dev": "environments/umi/environment.dev.ts",
@@ -60,7 +60,7 @@
         "../node_modules/hammerjs/hammer.js",
         "https://canvasjs.com/assets/script/canvasjs.min.js"
       ],
-      "environmentSource": "environment.ts",
+      "environmentSource": "environments/environment.ts",
       "environments": {
         "vendor1.local": "environments/vendor1/environment.vendor1.local.ts",
         "vendor1.dev": "environments/vendor1/environment.vendor1.dev.ts"
@@ -74,13 +74,16 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json"
+      "project": "src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
     },
     {
-      "project": "src/tsconfig.spec.json"
+      "project": "src/tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
     },
     {
-      "project": "e2e/tsconfig.e2e.json"
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
     }
   ],
   "test": {
@@ -90,7 +93,6 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "component": {
-    }
+    "component": {}
   }
 }

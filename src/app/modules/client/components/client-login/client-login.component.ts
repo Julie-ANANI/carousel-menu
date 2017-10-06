@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
-import { EnvironmentService } from '../../../../services/common/environment.service';
+import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
@@ -23,8 +23,7 @@ export class ClientLoginComponent implements OnInit {
               private _formBuilder: FormBuilder,
               private _translateService: TranslateService,
               private _titleService: Title,
-              private _notificationsService: NotificationsService,
-              private _environmentService: EnvironmentService) { }
+              private _notificationsService: NotificationsService) { }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
@@ -68,7 +67,7 @@ export class ClientLoginComponent implements OnInit {
   }
 
   public linkedInSignIn() {
-    const domain = this._environmentService.getDomain();
+    const domain = environment.domain;
     this._authService.linkedinLogin(domain)
       .subscribe(
         url => {

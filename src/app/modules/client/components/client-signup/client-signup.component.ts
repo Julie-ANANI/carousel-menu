@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { UserService } from '../../../../services/user/user.service';
 import { AuthService } from '../../../../services/auth/auth.service';
-import { EnvironmentService } from '../../../../services/common/environment.service';
+import { environment } from '../../../../../environments/environment';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../models/user.model';
 import { NotificationsService } from 'angular2-notifications';
@@ -28,8 +28,7 @@ export class ClientSignupComponent implements OnInit {
               private _location: Location,
               private _titleService: Title,
               private _translateService: TranslateService,
-              private _notificationsService: NotificationsService,
-              private _environmentService: EnvironmentService) { }
+              private _notificationsService: NotificationsService) { }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
@@ -46,7 +45,7 @@ export class ClientSignupComponent implements OnInit {
   }
 
   public linkedInSignIn() {
-    const domain = this._environmentService.getDomain();
+    const domain = environment.domain
     this._authService.linkedinLogin(domain)
       .subscribe(
         url => {
@@ -61,7 +60,7 @@ export class ClientSignupComponent implements OnInit {
   public onSubmit({ value, valid }: { value: User, valid: boolean }) {
     if (valid) {
       const user = new User(value); // TODO vérifier que l'utilisateur est valide (s'il a un email) ...
-      user.domain = this._environmentService.getDomain();
+      user.domain = environment.domain;
       this._userService.create(user)
         .subscribe(
           data => {

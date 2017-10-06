@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { HttpModule, XHRBackend, RequestOptions } from '@angular/http';
 import { Http } from './services/http';
-import { EnvironmentService } from './services/common/environment.service';
 import { httpFactory } from './factories/http.factory';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -56,8 +55,7 @@ import { ChartsModule } from 'ng2-charts';
       provide: Http,
       useFactory: httpFactory,
       deps: [XHRBackend, RequestOptions, LoaderService, NotificationsService]
-    },
-    EnvironmentService
+    }
   ],
   bootstrap: [AppComponent]
 })
