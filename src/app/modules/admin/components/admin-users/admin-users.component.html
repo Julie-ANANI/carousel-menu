@@ -10,6 +10,8 @@
   </li>
 </ul>
 
+<app-shared-loader *ngIf="!dataLoaded"></app-shared-loader>
+
 <div class="container" *ngIf="dataLoaded">
   <div class="row">
     <div class="col s12 m12">
@@ -40,6 +42,3 @@
     </div>
   </div>
 </div>
-
-
-<app-shared-loader *ngIf="!dataLoaded"></app-shared-loader>

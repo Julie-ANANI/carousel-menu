@@ -14,7 +14,7 @@ export class SharedNotFoundComponent implements OnInit {
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-    this._translateService.get('PAGE_NOT_FOUND').subscribe((res: string) => {
+    this._translateService.get('404.PAGE_NOT_FOUND').subscribe((res: string) => {
       this._titleService.setTitle(res);
     });
   }

@@ -22,8 +22,6 @@
     <a [routerLink]="'/todo'" class="btn btn-link">{{ 'COMMON.DISCOVER' | translate }}</a><!-- TODO -->
     <a [routerLink]="'/projects'" class="btn btn-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
     <a [routerLink]="'/todo'" class="btn btn-link" *ngIf="authService.isAdmin">{{ 'COMMON.MY_USERS' | translate }}</a><!-- TODO -->
-    <a (click)="displaySideNav = !displaySideNav" class="btn btn-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
+    <a [routerLink]="'/account'" class="btn btn-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
   </section>
 </header>
-
-<app-client-account-sidenav *ngIf="authService.isAuthenticated" [show]="displaySideNav"></app-client-account-sidenav>

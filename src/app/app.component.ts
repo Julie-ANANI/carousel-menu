@@ -1,7 +1,8 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
 import { AuthService } from './services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { NotificationsService } from 'angular2-notifications';
+import { LoaderService } from './services/loader/loader.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -11,14 +12,15 @@ import 'rxjs/add/operator/pairwise';
   selector: 'app-root',
   styleUrls: ['./app.component.scss'],
   template: '<simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>' +
-  '<app-http-loader></app-http-loader>' +
+  '<progress class="progress" max="100" *ngIf="displayLoader"></progress>' +
   '<router-outlet></router-outlet>'
 })
-export class AppComponent implements OnInit, AfterViewChecked {
+export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private _scrollExecuted = false;
-
-  public notificationsOptions = {
+  private _appIsLoadingSubscription: Subscription;
+  public displayLoader = true;
+  public notificationsOptions: object = {
     position: ['top', 'right'],
     timeOut: 5000,
     lastOnBottom: false,
@@ -29,10 +31,15 @@ export class AppComponent implements OnInit, AfterViewChecked {
   constructor(private _translateService: TranslateService,
               private _activatedRoute: ActivatedRoute,
               private _authService: AuthService,
+              private _loaderService: LoaderService,
               private _notificationsService: NotificationsService) {}
 
   ngOnInit(): void {
     initTranslation(this._translateService);
+
+    this._appIsLoadingSubscription = this._loaderService.isLoading$.subscribe((isLoading: boolean) => {
+      this.displayLoader = isLoading;
+    });
 
     if (this._authService.isAcceptingCookies) { // CNIL
       this._authService.initializeSession().subscribe(
@@ -43,6 +50,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
         })
       );
     }
+  }
+
+  ngOnDestroy() {
+    this._appIsLoadingSubscription.unsubscribe();
   }
 
   ngAfterViewChecked(): void {

@@ -16,13 +16,11 @@ import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-transla
 import { Observable } from 'rxjs/Observable';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoaderService } from './services/loader/loader.service';
-import { HttpLoaderComponent } from './components/http-loader/http-loader.component';
 import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HttpLoaderComponent
+    AppComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'umi-application-client'}),

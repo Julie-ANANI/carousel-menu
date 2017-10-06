@@ -8,9 +8,6 @@
       "name": "umi",
       "root": "src",
       "outDir": "./dist",
-      "assets": [
-        "assets"
-      ],
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
@@ -20,6 +17,13 @@
       "prefix": "app",
       "styles": [
         "styles.scss"
+      ],
+      "assets": [
+        {
+          "glob": "**/*",
+          "input": "../node_modules/tinymce/skins",
+          "output": "./assets/skins"
+        }
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
@@ -42,9 +46,6 @@
       "name": "vendor1",
       "root": "src",
       "outDir": "./dist",
-      "assets": [
-        "assets"
-      ],
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
@@ -54,6 +55,13 @@
       "prefix": "app",
       "styles": [
         "styles.vendor1.scss"
+      ],
+      "assets": [
+        {
+          "glob": "**/*",
+          "input": "../node_modules/tinymce/skins",
+          "output": "./assets/skins"
+        }
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",

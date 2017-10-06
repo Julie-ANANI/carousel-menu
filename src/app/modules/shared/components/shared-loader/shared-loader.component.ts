@@ -4,8 +4,7 @@ import { LoaderService } from '../../../../services/loader/loader.service';
 
 @Component({
   selector: 'app-shared-loader',
-  templateUrl: './shared-loader.component.html',
-  styleUrls: ['./shared-loader.component.scss']
+  template: '<div class="loading loading-lg" *ngIf="show"></div>'
 })
 export class SharedLoaderComponent implements OnInit, OnDestroy {
   public show = true;

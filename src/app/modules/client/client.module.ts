@@ -8,7 +8,6 @@ import { ClientRoutingModule } from './client-routing.module';
 import { ClientHeaderComponent } from './components/client-header/client-header.component';
 import { ClientFooterComponent } from './components/client-footer/client-footer.component';
 import { ClientComponent } from './client.component';
-import { ClientAccountSidenavComponent } from './components/client-account-sidenav/client-account-sidenav.component';
 import { ClientAccountComponent } from './components/client-account/client-account.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 
@@ -44,7 +43,6 @@ import { ClientNewProjectComponent } from './components/client-new-project/clien
     ClientHeaderComponent,
     ClientFooterComponent,
     ClientAccountComponent,
-    ClientAccountSidenavComponent,
 
     ClientMyProjectsComponent,
     ClientProjectEditComponent,

@@ -15,7 +15,6 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { SharedNotFoundComponent } from './components/shared-not-found/shared-not-found.component';
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
-import { SharedPreloaderComponent } from './components/shared-preloader/shared-preloader.component';
 import { SharedLoaderComponent } from './components/shared-loader/shared-loader.component';
 import { SharedMarketReportComponent } from './components/shared-market-report/shared-market-report-module';
 import { SharedBarChartComponent } from './components/shared-bar-chart-component/shared-bar-chart.component';
@@ -62,7 +61,6 @@ import { SharedTextZoneComponent } from './components/shared-text-zone/shared-te
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
-    SharedPreloaderComponent,
     SharedLoaderComponent,
     SharedMarketReportComponent,
     SharedBarChartComponent,
@@ -98,7 +96,6 @@ import { SharedTextZoneComponent } from './components/shared-text-zone/shared-te
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
-    SharedPreloaderComponent,
     SharedLoaderComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,

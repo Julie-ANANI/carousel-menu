@@ -13,9 +13,7 @@
   </li>
 </ul>
 
-<div *ngIf="!dataLoaded">Loading...</div>
-
-
+<app-shared-loader *ngIf="!dataLoaded"></app-shared-loader>
 
 <div class="container" *ngIf="dataLoaded">
   <div class="row">
