@@ -13,24 +13,6 @@
       filter: grayscale(0.4) opacity(0.6);
     }
 
-    &.material-icons {
-      color: #F79323;
-      margin-top: 2.5rem;
-      filter: opacity(0.8);
-
-      &:hover {
-        filter: grayscale(0) opacity(1);
-      }
-
-      &.color-blue {
-        color: #0B90C6;
-      }
-
-      &.color-grey {
-        color: #AAA;
-      }
-    }
-
     &.selectedLang {
       opacity: 1;
       filter: grayscale(.1);
@@ -108,16 +90,6 @@
           padding-right: 2rem;
         }
 
-        i.material-icons.prefix {
-          cursor: pointer;
-          margin-top: 0.4rem;
-          margin-left: -2rem;
-          transition: ease .3s;
-
-          &:hover {
-            filter: brightness(0.9);
-          }
-        }
       }
 
       ul {

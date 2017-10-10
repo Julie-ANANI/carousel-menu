@@ -8,11 +8,11 @@ import 'rxjs/add/operator/filter';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-client-account',
-  templateUrl: './client-account.component.html',
-  styleUrls: ['./client-account.component.scss']
+  selector: 'app-client-my-account',
+  templateUrl: './client-my-account.component.html',
+  styleUrls: ['./client-my-account.component.scss']
 })
-export class ClientAccountComponent implements OnInit {
+export class ClientMyAccountComponent implements OnInit {
 
   public formData: FormGroup;
 

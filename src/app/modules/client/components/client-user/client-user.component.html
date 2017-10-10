@@ -24,8 +24,7 @@
         <tbody>
         <tr *ngFor="let user of users">
           <td width="80">
-            <img *ngIf="user.media" src={{user.media.url}} />
-            <i *ngIf="!user.media" class="material-icons">account_circle</i>
+            <img *ngIf="user.media" src={{user.media.url}} /><!-- TODO voir comment ça rend si !user.media -->
           </td>
           <td>{{user.firstName}} {{user.lastName}}</td>
           <td>{{user.companyName}}</td>

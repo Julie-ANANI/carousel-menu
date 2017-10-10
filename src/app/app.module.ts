@@ -23,7 +23,9 @@ import { ChartsModule } from 'ng2-charts';
     AppComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({appId: 'umi-application-client'}),
+    BrowserModule.withServerTransition({
+      appId: 'umi-application-front'
+    }),
     HttpModule,
     AppRoutingModule,
     SimpleNotificationsModule.forRoot(),

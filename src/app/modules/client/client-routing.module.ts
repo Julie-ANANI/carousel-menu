@@ -9,14 +9,12 @@ import { ClientProjectComponent } from './components/client-project/client-proje
 import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
 import { ClientUserComponent } from './components/client-user/client-user.component';
 import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
-import { ClientNewProjectComponent } from './components/client-new-project/client-new-project.component';
+import { ClientProjectNewComponent } from './components/client-project-new/client-project-new.component';
 
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
-import { ClientAccountComponent } from './components/client-account/client-account.component';
-import { ClientLegalNoticeComponent } from './components/client-legal-notice/client-legal-notice.component';
-import { ClientTermsAndConditionsComponent } from './components/client-terms-and-conditions/client-terms-and-conditions.component';
+import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 
 /* Shared */
 import { SharedMarketReportComponent} from '../shared/components/shared-market-report/shared-market-report-module';
@@ -61,7 +59,7 @@ const clientRoutes: Routes = [
         path: 'account',
         canActivate: [AuthGuard],
         children: [
-          { path: '', component: ClientAccountComponent, pathMatch: 'full' }
+          { path: '', component: ClientMyAccountComponent, pathMatch: 'full' }
         ]
       },
       {
@@ -76,7 +74,7 @@ const clientRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
           { path: '', component: ClientMyProjectsComponent, pathMatch: 'full' },
-          { path: 'new', component: ClientNewProjectComponent, pathMatch: 'full' },
+          { path: 'new', component: ClientProjectNewComponent, pathMatch: 'full' },
           {
             path: ':innovationId',
             children: [
@@ -106,16 +104,6 @@ const clientRoutes: Routes = [
         children: [
           { path: '', component: SharedMarketReportComponent, pathMatch: 'full' }
         ]
-      },
-      {
-        path: 'terms',
-        component: ClientTermsAndConditionsComponent,
-        pathMatch: 'full'
-      },
-      {
-        path: 'legal',
-        component: ClientLegalNoticeComponent,
-        pathMatch: 'full'
       },
       {
         path: '**',

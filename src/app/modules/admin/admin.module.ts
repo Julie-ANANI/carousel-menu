@@ -8,7 +8,6 @@ import { AdminUserComponent } from './components/admin-user/admin-user.component
 import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { AdminQuizEditorComponent } from './components/admin-quiz-editor/admin-quiz-editor.component';
 
 @NgModule({
   imports: [
@@ -22,8 +21,7 @@ import { AdminQuizEditorComponent } from './components/admin-quiz-editor/admin-q
     AdminHeaderComponent,
     AdminDashboardComponent,
     AdminUsersComponent,
-    AdminUserComponent,
-    AdminQuizEditorComponent
+    AdminUserComponent
   ]
 })
 export class AdminModule {

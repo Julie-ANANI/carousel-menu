@@ -18,7 +18,7 @@
 
   <!-- Connecté -->
   <section class="navbar-section" *ngIf="authService.isAuthenticated">
-    <a [routerLink]="'/todo'" class="btn btn-link">Aide</a><!-- TODO -->
+    <a href="http://help.umi.us" target="_blank" class="btn btn-link">{{ 'COMMON.HELP' | translate }}</a>
     <a [routerLink]="'/todo'" class="btn btn-link">{{ 'COMMON.DISCOVER' | translate }}</a><!-- TODO -->
     <a [routerLink]="'/projects'" class="btn btn-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
     <a [routerLink]="'/todo'" class="btn btn-link" *ngIf="authService.isAdmin">{{ 'COMMON.MY_USERS' | translate }}</a><!-- TODO -->

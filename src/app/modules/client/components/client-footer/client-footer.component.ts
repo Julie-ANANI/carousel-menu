@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { environment } from '../../../../../environments/environment';
-import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-client-footer',
@@ -11,27 +10,21 @@ import { AuthService } from '../../../../services/auth/auth.service';
 export class ClientFooterComponent implements OnInit {
   private _companyName: string = environment.companyName;
 
-  constructor (private _translateService: TranslateService,
-               private _authService: AuthService) {}
+  constructor (private _translateService: TranslateService) {}
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-  }
-
-  public changeLang (newLang) {
-    this._translateService.use(newLang); // TODO retenir la préférence dans un cookie éventuellement
   }
 
   get companyName(): string {
     return this._companyName;
   }
 
-  get authService (): AuthService {
-    return this._authService;
-  }
-
   get translate (): TranslateService {
     return this._translateService;
   }
 
+  get copyrightDate (): string {
+    return (new Date()).getFullYear().toString();
+  }
 }

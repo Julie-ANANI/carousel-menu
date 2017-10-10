@@ -6,11 +6,11 @@ import { TranslateService, initTranslation } from './i18n/i18n';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-client-new-project',
-  templateUrl: './client-new-project.component.html',
-  styleUrls: ['./client-new-project.component.scss']
+  selector: 'app-client-project-new',
+  templateUrl: './client-project-new.component.html',
+  styleUrls: ['./client-project-new.component.scss']
 })
-export class ClientNewProjectComponent implements OnInit {
+export class ClientProjectNewComponent implements OnInit {
 
   public formData: FormGroup = this._formBuilder.group({
     choosenLang: [null, Validators.required]

@@ -20,9 +20,9 @@
 
       <div class="divider"></div>
 
-      ©2017 {{ companyName }}
-      • <a [routerLink]="'/legal'">{{ 'FOOTER.LEGAL_NOTICE' | translate }}</a>
-      • <a [routerLink]="'/terms'">{{ 'FOOTER.TERMS' | translate }}</a>
+      ©{{ copyrightDate }} {{ companyName }}
+      • <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')">{{ 'FOOTER.LEGAL_NOTICE' | translate }}</a>
+      • <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">{{ 'FOOTER.TERMS' | translate }}</a>
     </div>
   </div>
 </footer>
