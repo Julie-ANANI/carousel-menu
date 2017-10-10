@@ -11,9 +11,9 @@ import { ClientUserComponent } from './components/client-user/client-user.compon
 import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
 import { ClientProjectNewComponent } from './components/client-project-new/client-project-new.component';
 
-import { ClientLoginComponent } from './components/client-login/client-login.component';
-import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
-import { ClientSignupComponent } from './components/client-signup/client-signup.component';
+import { ClientLoginComponent } from './components/layout/client-login/client-login.component';
+import { ClientLogoutComponent } from './components/layout/client-logout/client-logout.component';
+import { ClientSignupComponent } from './components/layout/client-signup/client-signup.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 
 /* Shared */
