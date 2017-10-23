@@ -9,6 +9,7 @@ import { ClientProjectComponent } from './components/client-project/client-proje
 import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
 import { ClientUserComponent } from './components/client-user/client-user.component';
 import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
+import { ClientProjectSynthesisComponent } from './components/client-project-synthesis/client-project-synthesis.component';
 import { ClientProjectNewComponent } from './components/client-project-new/client-project-new.component';
 
 import { ClientLoginComponent } from './components/layout/client-login/client-login.component';
@@ -17,7 +18,6 @@ import { ClientSignupComponent } from './components/layout/client-signup/client-
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 
 /* Shared */
-import { SharedMarketReportComponent} from '../shared/components/shared-market-report/shared-market-report-module';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
 
 /* Guards */
@@ -80,6 +80,7 @@ const clientRoutes: Routes = [
             children: [
               { path: '',    component: ClientProjectComponent },
               { path: 'edit', component: ClientProjectEditComponent },
+              { path: 'synthesis', component: ClientProjectSynthesisComponent } // ?isAdmin=true //TODO comment modifier cette route ?
             ]
           }
         ]
@@ -96,13 +97,6 @@ const clientRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
           { path: '', component: ClientUserComponent, pathMatch: 'full' }
-        ]
-      },
-      {
-        path: 'infographic', //?isAdmin=true //TODO comment modifier cette route ?
-        canActivate: [AuthGuard],
-        children: [
-          { path: '', component: SharedMarketReportComponent, pathMatch: 'full' }
         ]
       },
       {

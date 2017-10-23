@@ -43,8 +43,7 @@
             <label class="form-label" for="email">{{ "COMMON.EMAIL" | translate }}</label>
           </div>
           <div class="col-9">
-            <input class="form-input" id="email" name="email" formControlName="email" type="email" disabled="disabled"
-                   placeholder="john.doe@gmail.com">
+            <input class="form-input" id="email" name="email" formControlName="email" type="email" placeholder="john.doe@gmail.com">
           </div>
         </div>
 
@@ -57,6 +56,9 @@
                    placeholder="+33 4 05 06 07 08">
           </div>
         </div>
+
+        <button type="submit" class="btn btn-primary centered" [disabled]="formData.invalid">{{ 'COMMON.SAVE' | translate }}</button>
+
       </form>
     </div>
   </div>

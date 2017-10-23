@@ -15,7 +15,18 @@ export const fr = {
       }
     },
     'TARGETING': {
-      'GEOGRAPHY': 'Périmètre géographique'
+      'GEOGRAPHY': 'Périmètre géographique',
+      'ENTIRE_WORLD': 'Monde entier',
+      'SPECIFY_COUNTRIES_TO_EXCLUDE': 'Indiquer des pays à exclure'
+    },
+    'MARKET': {
+      'LABEL': 'Secteurs d’activité',
+      'PLACEHOLDER': 'Branche micro-électronique, secteur photovoltaïque, sécurité industrielle...'
+    },
+    'COMPANIES': {
+      'LABEL': 'Types d’entreprises',
+      'PLACEHOLDER': 'Fabricants industriels de composants, distributeurs, éditeurs de logiciels... Ex : IBM, Intel',
+      'TO_EXCLUDE': 'Indiquer des entreprises à ne pas contacter'
     },
     'DESCRIPTION': {
       'LANGUAGE_CHOICE': 'Je décris mon projet en'

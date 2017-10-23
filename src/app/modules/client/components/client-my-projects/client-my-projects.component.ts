@@ -41,6 +41,19 @@ export class ClientMyProjectsComponent implements OnInit {
       });
   }
 
+  public getRelevantLink (project) {
+    const link = './' + project._id;
+    switch (project.status) {
+      case 'FINISHED':
+      case 'LAUNCHED':
+        return link + '/synthesis';
+      case 'SUBMITTED':
+        return link;
+      default:
+        return link + '/edit';
+    }
+  }
+
   private _getProjectIndex(projectId: string): number {
     for (const project of this._projects) {
       if (projectId === project._id) {

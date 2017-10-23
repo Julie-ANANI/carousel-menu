@@ -34,29 +34,29 @@
 
       <div class="project" *ngFor="let project of projects">
         <div class="picture">
-          <a [routerLink]="'./' + project._id"><img [src]="getPrincipalMedia(project)" width="218" height="218"></a>
+          <a [routerLink]="getRelevantLink(project)"><img [src]="getPrincipalMedia(project)" width="218" height="218"></a>
         </div>
         <div class="description">
-          <div class="title"><a [routerLink]="'./' + project._id">{{ project.name || ('MY_PROJECTS.UNTITLED' | translate) }}</a></div>
-          <div class="metas"><a href="#">{{ project.owner.name }}</a> / {{ project.owner.companyName }}
+          <div class="title"><a [routerLink]="getRelevantLink(project)">{{ project.name || ('MY_PROJECTS.UNTITLED' | translate) }}</a></div>
+          <div class="metas"><a href="#TODO" (click)="false">{{ project.owner.name }}</a> / {{ project.owner.companyName }}
             • {{ 'MY_PROJECTS.ADDED' | translate }} {{ project.created | date:dateFormat }}
             • {{ 'MY_PROJECTS.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
             • <a (click)="selectedProjectIdToBeDeleted = project._id" class="text-error c-hand">{{ 'COMMON.DELETE' | translate }}</a></div><!-- TODO -->
           <ul class="step">
-            <li class="step-item">
-              <a [routerLink]="'./' + project._id" class="tooltip" data-tooltip="27/04/2017">Description</a><!-- TODO -->
+            <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !project.reviewing }">
+              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.EDITING' | translate }}</a><!-- TODO tooltip -->
             </li>
-            <li class="step-item active">
-              <a [routerLink]="'./' + project._id" class="tooltip" data-tooltip="27/04/2017">Soumis</a><!-- TODO -->
+            <li class="step-item" [ngClass]="{ 'active': project.status === 'SUBMITTED' }">
+              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.SUBMITTED' | translate }}</a><!-- TODO tooltip -->
             </li>
-            <li class="step-item">
-              <a [routerLink]="'./' + project._id" class="tooltip" data-tooltip="27/04/2017">Révision</a><!-- TODO -->
+            <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !!project.reviewing }">
+              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.REVIEWING' | translate }}</a><!-- TODO tooltip -->
             </li>
-            <li class="step-item">
-              <a [routerLink]="'./' + project._id" class="tooltip" data-tooltip="27/04/2017">Lancé</a><!-- TODO -->
+            <li class="step-item" [ngClass]="{ 'active': project.status === 'LAUNCHED' }">
+              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.LAUNCHED' | translate }}</a><!-- TODO tooltip -->
             </li>
-            <li class="step-item">
-              <a [routerLink]="'./' + project._id" class="tooltip" data-tooltip="27/04/2017">Terminé</a><!-- TODO -->
+            <li class="step-item" [ngClass]="{ 'active': project.status === 'FINISHED' }">
+              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.FINISHED' | translate }}</a><!-- TODO tooltip -->
             </li>
           </ul>
         </div>

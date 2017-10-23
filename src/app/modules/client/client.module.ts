@@ -21,6 +21,7 @@ import { ClientSignupComponent } from './components/layout/client-signup/client-
 import { ClientLogoutComponent } from './components/layout/client-logout/client-logout.component';
 import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
 import { ClientProjectNewComponent } from './components/client-project-new/client-project-new.component';
+import { ClientProjectSynthesisComponent } from './components/client-project-synthesis/client-project-synthesis.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { ClientProjectNewComponent } from './components/client-project-new/clien
     ClientLoginComponent,
     ClientSignupComponent,
     ClientLogoutComponent,
-    ClientProjectNewComponent
+    ClientProjectNewComponent,
+    ClientProjectSynthesisComponent
   ]
 })
 export class ClientModule {

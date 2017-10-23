@@ -50,7 +50,7 @@ export class SharedMarketReportComponent implements OnInit {
 
   public readonly: boolean;
 
-  private innoid = '59ae4e1ff560630254dac795';
+  private innoid = '599c0029719e572041aafe0d';
 
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,

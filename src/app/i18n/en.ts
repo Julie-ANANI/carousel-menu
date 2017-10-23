@@ -9,6 +9,7 @@ export const en = {
     'LOG_OUT': 'Log out',
     'CANCEL': 'Cancel',
     'ADD': 'Add',
+    'CLOSE': 'Close',
 
     'FIRSTNAME': 'Firstname',
     'LASTNAME': 'Lastname',
@@ -29,11 +30,11 @@ export const en = {
     },
 
     'PROJECT_STATE': {
-      'DESCRIPTION': 'Description',
+      'EDITING': 'Description',
       'SUBMITTED': 'Submitted',
       'REVIEWING': 'Reviewing',
       'LAUNCHED': 'Launched',
-      'COMPLETED': 'Completed'
+      'FINISHED': 'Completed'
     },
 
     'INVALID': {

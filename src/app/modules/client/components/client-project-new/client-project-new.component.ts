@@ -13,7 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ClientProjectNewComponent implements OnInit {
 
   public formData: FormGroup = this._formBuilder.group({
-    choosenLang: [null, Validators.required]
+    choosenLang: [null, Validators.required],
+    name: ['', Validators.required]
   });
 
 
@@ -29,7 +30,8 @@ export class ClientProjectNewComponent implements OnInit {
   public onSubmit({value, valid}: { value: any, valid: boolean }) {
     const newProject = {
       domain: environment.domain,
-      lang: value.choosenLang
+      lang: value.choosenLang,
+      name: value.name
     };
 
     this._innovationService.create(newProject).subscribe(project => {

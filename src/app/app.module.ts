@@ -9,6 +9,7 @@ import { CookieService, CookieOptions } from 'angular2-cookie/core';
 import { InnovationService } from './services/innovation/innovation.service';
 import { CampaignService } from './services/campaign/campaign.service';
 import { SmartQueryService } from './services/smartQuery/smartQuery.service';
+import { WindowRefService } from './services/window-ref/window-ref.service';
 import { UserService } from './services/user/user.service';
 import { MediaService } from './services/media/media.service';
 import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
@@ -50,6 +51,7 @@ import { ChartsModule } from 'ng2-charts';
     CampaignService,
     MediaService,
     LoaderService,
+    WindowRefService,
     SmartQueryService,
     {
       provide: Http,

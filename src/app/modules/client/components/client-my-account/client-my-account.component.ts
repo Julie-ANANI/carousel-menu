@@ -16,6 +16,8 @@ export class ClientMyAccountComponent implements OnInit {
 
   public formData: FormGroup;
 
+  // TODO : profile picture, reset password, description, location
+
   constructor(private _userService: UserService,
               private _translateService: TranslateService,
               private _notificationsService: NotificationsService,
@@ -29,10 +31,10 @@ export class ClientMyAccountComponent implements OnInit {
     this.formData = this._formBuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      companyName: ['', [Validators.required]],
-      jobTitle: ['', [Validators.required]],
-      phone: ['', [Validators.required]]
+      email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
+      companyName: '',
+      jobTitle: '',
+      phone: ''
     });
 
     this._userService.getSelf().subscribe(user => {
@@ -44,10 +46,10 @@ export class ClientMyAccountComponent implements OnInit {
     if (form.valid) {
       const user = new User(form.value);
       this._userService.update(user).subscribe(
-          data => {
-            this._notificationsService.success('Mise à jour réussie', 'Votre profil a été mis à jour'); // TODO translate
-            form.patchValue(data);
-          },
+        data => {
+          this._notificationsService.success('Mise à jour réussie', 'Votre profil a été mis à jour'); // TODO translate
+          form.patchValue(data);
+        },
         error => {
           this._notificationsService.error('Erreur', error.message); // TODO translate
         });

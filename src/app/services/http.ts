@@ -17,7 +17,6 @@ export { Response } from '@angular/http';
 
 @Injectable()
 export class Http extends AngularHttp {
-  private _env = environment;
   private _apiUrl = environment.apiUrl;
 
   constructor(protected _backend: XHRBackend,
@@ -27,9 +26,14 @@ export class Http extends AngularHttp {
     super(_backend, _defaultOptions);
   }
 
-  public get(uri: string, options?: RequestOptionsArgs): Observable<any> {
+  public get(UriOrUrl: string, options?: RequestOptionsArgs): Observable<any> {
     this._showLoader();
-    return super.get(this._getFullUrl(uri), this._requestOptions(options))
+
+    if (UriOrUrl.indexOf('http') === -1) { // Si ce n'est pas une URL
+      UriOrUrl = this._getFullUrl(UriOrUrl);
+    }
+
+    return super.get(UriOrUrl, this._requestOptions(options))
       .catch(this._onCatch)
       .do((res: Response) => {
         this._onSuccess(res);
@@ -41,10 +45,14 @@ export class Http extends AngularHttp {
       });
   }
 
-  public post(uri: string, data?: object, options?: RequestOptionsArgs) {
-    console.log(this._env);
+  public post(UriOrUrl: string, data?: object, options?: RequestOptionsArgs) {
     this._showLoader();
-    return super.post(this._getFullUrl(uri), data, this._requestOptions(options))
+
+    if (UriOrUrl.indexOf('http') === -1) { // Si ce n'est pas une URL
+      UriOrUrl = this._getFullUrl(UriOrUrl);
+    }
+
+    return super.post(UriOrUrl, data, this._requestOptions(options))
       .catch(this._onCatch)
       .do((res: Response) => {
         this._onSuccess(res);
@@ -56,9 +64,14 @@ export class Http extends AngularHttp {
       });
   }
 
-  public put(uri: string, data?: object, options?: RequestOptionsArgs) {
+  public put(UriOrUrl: string, data?: object, options?: RequestOptionsArgs) {
     this._showLoader();
-    return super.put(this._getFullUrl(uri), data, this._requestOptions(options))
+
+    if (UriOrUrl.indexOf('http') === -1) { // Si ce n'est pas une URL
+      UriOrUrl = this._getFullUrl(UriOrUrl);
+    }
+
+    return super.put(UriOrUrl, data, this._requestOptions(options))
       .catch(this._onCatch)
       .do((res: Response) => {
         this._onSuccess(res);
@@ -70,9 +83,14 @@ export class Http extends AngularHttp {
       });
   }
 
-  public delete(uri: string, options?: RequestOptionsArgs) {
+  public delete(UriOrUrl: string, options?: RequestOptionsArgs) {
     this._showLoader();
-    return super.delete(this._getFullUrl(uri), this._requestOptions(options))
+
+    if (UriOrUrl.indexOf('http') === -1) { // Si ce n'est pas une URL
+      UriOrUrl = this._getFullUrl(UriOrUrl);
+    }
+
+    return super.delete(UriOrUrl, this._requestOptions(options))
       .catch(this._onCatch)
       .do((res: Response) => {
         this._onSuccess(res);
@@ -83,7 +101,6 @@ export class Http extends AngularHttp {
         this._onEnd();
       });
   }
-
 
   private _requestOptions(options?: RequestOptionsArgs): RequestOptionsArgs {
     if (!options) {

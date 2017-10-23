@@ -8,7 +8,8 @@ export const fr = {
     'DOWNLOAD': 'Télécharger votre projet à tout moment',
     'AUTOSAVE': 'Sauvegarde automatique',
     'PRIVATE': 'Rien ne sera publié à ce stade',
-    'LANG_NOT_CHOOSEN': 'Veuillez choisir une langue',
-    'UNDERSTAND': 'J\'ai compris'
+    'FORM_NOT_VALID': 'Merci de répondre à toutes les questions',
+    'UNDERSTAND': 'J\'ai compris',
+    'COMPANY_NAME_LABEL': 'Comment souhaitez-vous appeler ce projet dans notre application ?'
   }
 };

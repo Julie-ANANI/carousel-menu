@@ -10,7 +10,6 @@
           <p class="text-center">{{ 'NEW_PROJECT.DESCRIPTION.LINE1' | translate }}<br>{{ 'NEW_PROJECT.DESCRIPTION.LINE2' | translate }}</p>
 
           <div class="form-group text-center language-choice">
-            <label class="form-label"></label>
             <label class="form-radio">
               <input type="radio" value="en" name="choosenLang" formControlName="choosenLang">
               <i class="form-icon"></i> {{ 'COMMON.LANG.EN' | translate }}
@@ -19,6 +18,12 @@
               <input type="radio" value="fr" name="choosenLang" formControlName="choosenLang">
               <i class="form-icon"></i> {{ 'COMMON.LANG.FR' | translate }}
             </label>
+          </div>
+
+          <div class="form-group text-center">
+              <label class="form-label" for="name">{{ "NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</label>
+              <input class="form-input" id="name" name="name" formControlName="name" type="text"
+                     placeholder="">
           </div>
 
         </div>
@@ -51,7 +56,7 @@
 
       <div class="divider"></div>
 
-      <button type="submit" class="btn btn-xxl btn-primary centered tooltip-bottom" [attr.data-tooltip]="'NEW_PROJECT.LANG_NOT_CHOOSEN' | translate" [disabled]="formData.invalid" [ngClass]="{'tooltip': formData.invalid}">{{ 'NEW_PROJECT.UNDERSTAND' | translate }}</button>
+      <button type="submit" class="btn btn-xxl btn-primary centered tooltip-top" [attr.data-tooltip]="'NEW_PROJECT.FORM_NOT_VALID' | translate" [disabled]="formData.invalid" [ngClass]="{'tooltip': formData.invalid}">{{ 'NEW_PROJECT.UNDERSTAND' | translate }}</button>
 
     </form>
   </div>
