@@ -12,12 +12,10 @@ import { MediaService } from '../../../../services/media/media.service';
 })
 export class ClientProjectComponent implements OnInit {
 
-  private _innovation: any;
-  private _innovationCards: [any];
-  private _actualInnovationCard: any;
-  private _langOfCard: string;
+  private _project: any;
+  public idInnovationCard = 0;
 
-  constructor(private _route: ActivatedRoute,
+  constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _notificationsService: NotificationsService,
               private _translateService: TranslateService,
@@ -25,36 +23,20 @@ export class ClientProjectComponent implements OnInit {
 
 
   ngOnInit() {
-    // Translations and double lang
     initTranslation(this._translateService);
-    // this._langOfCard = this._translateService.currentLang;
 
-    this._route.params.subscribe(params => {
-      this.loadData(params['innovationId']);
+    this._activatedRoute.params.subscribe(params => {
+      const innovationId = params['innovationId'];
+
+      this._innovationService.get(innovationId).subscribe(innovation => {
+          this._project = innovation;
+        },
+        error => this._notificationsService.error('Error', error.message)
+      );
     });
   }
 
-  // SERVER INTERACTIONS
-  loadData(innovationId: string, langToUse?: string) {
-    this._innovationService.get(innovationId).subscribe(
-      innovation => {
-        this._innovation = innovation;
-        this._innovationCards = innovation.innovationCards;
-      },
-      error => this._notificationsService.error('Erreur', error.message)
-    );
-  }
-
-  get innovationCard(): any {
-    return this._actualInnovationCard;
-  }
-
-  set innovationCard(card: any) {
-    this._actualInnovationCard = card;
-    this._langOfCard = card.lang;
-  }
-
-  get innovation(): any {
-    return this._innovation;
+  get project (): any {
+    return this._project;
   }
 }
