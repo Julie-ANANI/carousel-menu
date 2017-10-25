@@ -30,6 +30,10 @@ export class ClientProjectComponent implements OnInit {
 
       this._innovationService.get(innovationId).subscribe(innovation => {
           this._project = innovation;
+          this._displayInnovationCardWithLang(this._translateService.currentLang);
+          this._translateService.onLangChange.subscribe(data => {
+            this._displayInnovationCardWithLang(data.lang);
+          });
         },
         error => this._notificationsService.error('Error', error.message)
       );
@@ -38,5 +42,15 @@ export class ClientProjectComponent implements OnInit {
 
   get project (): any {
     return this._project;
+  }
+
+  private _displayInnovationCardWithLang (lang) {
+    for (const i in this.project.innovationCards) {
+      if (this.project.innovationCards[i]) {
+        if (this.project.innovationCards[i].lang === lang) {
+          this.idInnovationCard = parseInt(i, 10);
+        }
+      }
+    }
   }
 }

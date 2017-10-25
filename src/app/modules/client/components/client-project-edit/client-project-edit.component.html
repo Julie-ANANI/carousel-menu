@@ -13,6 +13,10 @@
             • {{ 'PROJECT_EDIT.ADDED' | translate }} {{ project.created | date:dateFormat }}
             • {{ 'PROJECT_EDIT.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
           </div>
+          <div>
+            <button class="btn btn-lg btn-primary" [routerLink]="'../'">{{ 'COMMON.PREVIEW' | translate }} <i
+              class="icon icon-arrow-right"></i></button><!-- TODO if not owner -->
+          </div>
           <ul class="step">
             <li class="step-item active">
               <a href="#" (click)="false"><!-- TODO Tooltip : class="tooltip" [attr.data-tooltip]="'27/04/2017'" -->
@@ -678,7 +682,7 @@
                   <div *ngIf="displayCountriesToExcludeSection">
                     <!-- TODO -->
                     <div class="form-group">
-                      <input class="form-input" type="text" id="newCountryToExclude" placeholder="Ex : France"
+                      <input class="form-input" type="text" id="newCountryToExclude" [attr.placeholder]="'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER' | translate"
                               formControlName="tmpNewCompanyToExclude">
 
                       <button class="btn btn-primary bg-secondary" (click)="addCountryToExclude()">
@@ -689,7 +693,8 @@
                       <span class="chip">
                         <input type="text" [formControlName]="i.value">
 
-                        <a href="#" class="btn btn-clear" [attr.aria-label]="'COMMON.CLOSE' | translate" role="button"></a>
+                        <a href="#" class="btn btn-clear" [attr.aria-label]="'COMMON.CLOSE' | translate"
+                           role="button"></a>
                       </span>
                       </div>
                     </div>
@@ -699,7 +704,8 @@
 
               <div class="form-group" formGroupName="market">
                 <div class="col-4">
-                  <label class="form-label" for="innovation-sector">{{ 'PROJECT_EDIT.MARKET.LABEL' | translate }}</label>
+                  <label class="form-label" for="innovation-sector">{{ 'PROJECT_EDIT.MARKET.LABEL' | translate
+                    }}</label>
                 </div>
                 <div class="col-8">
                 <textarea class="form-input" id="innovation-sector"
@@ -711,7 +717,8 @@
 
               <div class="form-group" formGroupName="companies">
                 <div class="col-4">
-                  <label class="form-label" for="innovation-companies">{{ 'PROJECT_EDIT.COMPANIES.LABEL' | translate }}</label>
+                  <label class="form-label" for="innovation-companies">{{ 'PROJECT_EDIT.COMPANIES.LABEL' | translate
+                    }}</label>
                 </div>
                 <div class="col-8">
                 <textarea class="form-input" id="innovation-companies"
@@ -719,7 +726,8 @@
                           [attr.placeholder]="'PROJECT_EDIT.MARKET.PLACEHOLDER' | translate"
                           rows="4"></textarea>
 
-                  <a (click)="displayCompanyToExcludeSection = !displayCompanyToExcludeSection" class="c-hand">{{ 'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
+                  <a (click)="displayCompanyToExcludeSection = !displayCompanyToExcludeSection" class="c-hand">{{
+                    'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
                   <div *ngIf="displayCompanyToExcludeSection">
                     <!-- TODO -->
@@ -729,16 +737,14 @@
 
               <div class="form-group" formGroupName="professionals">
                 <div class="col-4">
-                  <label class="form-label" for="innovation-pros">Profils des professionnels</label>
+                  <label class="form-label" for="innovation-pros">{{ 'PROJECT_EDIT.PROFESSIONALS.LABEL' | translate }}</label>
                 </div>
                 <div class="col-8">
                 <textarea class="form-input" id="innovation-pros"
                           formControlName="description"
-                          placeholder="Ingénieur R&D sur les matériaux isolants, responsable business development
-Ex : John Doe chez IBM http://www.linkedin.com/in/johndoe" rows="4"></textarea>
+                          [attr.placeholder]="'PROJECT_EDIT.PROFESSIONALS.PLACEHOLDER' | translate" rows="4"></textarea>
 
-                  <a (click)="displayPersonsToExcludeSection = !displayPersonsToExcludeSection" class="c-hand">Indiquer
-                    des personnes à exclure <i class="icon icon-arrow-right"></i></a>
+                  <a (click)="displayPersonsToExcludeSection = !displayPersonsToExcludeSection" class="c-hand">{{ 'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
                   <div *ngIf="displayPersonsToExcludeSection">
                     TODO
@@ -748,13 +754,12 @@ Ex : John Doe chez IBM http://www.linkedin.com/in/johndoe" rows="4"></textarea>
 
               <div class="form-group">
                 <div class="col-4">
-                  <label class="form-label" for="other-comments">Complément / Mots-clés</label>
+                  <label class="form-label" for="other-comments">{{ 'PROJECT_EDIT.OTHER.LABEL' | translate }}</label>
                 </div>
                 <div class="col-8">
                 <textarea class="form-input" id="other-comments"
                           formControlName="comments"
-                          placeholder="ANDRH, norme antibruit EN352-1, Ansys Maxwell est un logiciel concurrent…
-Ex : Computational fluid dynamics, LEED Building, Moteur brushless" rows="4"></textarea>
+                          [attr.placeholder]="'PROJECT_EDIT.OTHER.PLACEHOLDER' | translate" rows="4"></textarea>
                 </div>
               </div>
             </div>
@@ -765,152 +770,159 @@ Ex : Computational fluid dynamics, LEED Building, Moteur brushless" rows="4"></t
           </div>
           <div>
             <div class="columns">
-              <div class="column col-3">
-                <div class="language-choice">
-                  <p>{{ 'PROJECT_EDIT.DESCRIPTION.LANGUAGE_CHOICE' | translate }} :</p>
-                  <ul formArrayName="innovationCards">
+              <div class="column col-8">
+                <div class="columns">
+                  <div class="column col-4"></div>
+                  <div class="column col-8">
+                    <div>
+                      <label class="form-label">{{ 'PROJECT_EDIT.WHAT_STAGE' | translate }}</label>
+                      <label class="form-radio">
+                        <input type="radio" name="projectStatus" formControlName="projectStatus" [value]="0">
+                        <i class="form-icon"></i> {{ 'COMMON.PROJECT_STATUS.0' | translate }}
 
-                    <li *ngFor="let innovationCard of formData.get('innovationCards').value; let i = index"
-                        [ngClass]="{'active': innovationCardEditingIndex === i }"
-                        (click)="innovationCardEditingIndex = i">
-                      {{ 'COMMON.LANG.'+innovationCard.lang | uppercase | translate }}
-                      <span *ngIf="innovationCard.principal">Langue principale</span>
-                      <span *ngIf="!innovationCard.principal" (click)="setAsPrincipal(innovationCard.id)">Devenir langue principale <i
-                        class="icon icon-arrow-right"></i></span>
-                    </li>
-                    <li *ngIf="project.innovationCards.length < 2" (click)="createInnovationCard()">
-                      {{ 'COMMON.ADD' | translate }} <i class="icon icon-plus"></i>
-                    </li>
-                  </ul>
+                      </label>
+                      <label class="form-radio">
+                        <input type="radio" name="projectStatus" formControlName="projectStatus" [value]="1">
+                        <i class="form-icon"></i> {{ 'COMMON.PROJECT_STATUS.1' | translate }}
+                      </label>
+                      <label class="form-radio">
+                        <input type="radio" name="projectStatus" formControlName="projectStatus" [value]="2">
+                        <i class="form-icon"></i> {{ 'COMMON.PROJECT_STATUS.2' | translate }}
+                      </label>
+                    </div>
+
+                    <div>
+                      <label class="form-label">{{ 'PROJECT_EDIT.IS_PATENTED' | translate }}</label>
+                      <label class="form-radio">
+                        <input type="radio" name="patented" formControlName="patented" [value]="false">
+                        <i class="form-icon"></i> {{ 'COMMON.NO' | translate }}
+                      </label>
+                      <label class="form-radio">
+                        <input type="radio" name="patented" formControlName="patented" [value]="true">
+                        <i class="form-icon"></i> {{ 'COMMON.YES' | translate }}
+                      </label>
+                    </div>
+                  </div>
+                  <div class="column col-12">
+                    <div class="divider"></div>
+                  </div>
+                  <div class="column col-4">
+                    <div class="language-choice">
+                      <p>{{ 'PROJECT_EDIT.DESCRIPTION.LANGUAGE_CHOICE' | translate }} :</p>
+                      <ul formArrayName="innovationCards">
+                        <li *ngFor="let innovationCard of formData.get('innovationCards').value; let i = index"
+                            [ngClass]="{'active': innovationCardEditingIndex === i }"
+                            (click)="innovationCardEditingIndex = i">
+                          {{ 'COMMON.LANG.'+innovationCard.lang | uppercase | translate }}
+                          <span *ngIf="innovationCard.principal">{{ 'PROJECT_EDIT.DESCRIPTION.MAIN_LANG' | translate }}</span>
+                          <span *ngIf="!innovationCard.principal" (click)="setAsPrincipalCard(innovationCard.id)">{{ 'PROJECT_EDIT.DESCRIPTION.SET_AS_MAIN_LANG' | translate }} <i class="icon icon-arrow-right"></i></span>
+                        </li>
+                        <li *ngIf="project.innovationCards.length < 2" (click)="createInnovationCard()">
+                          {{ 'COMMON.ADD' | translate }} <i class="icon icon-plus"></i>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="column col-8">
+                    <div formArrayName="innovationCards">
+                      <div *ngFor="let item of formData.get('innovationCards').controls; let i = index"
+                           [formGroup]="item">
+                        <div *ngIf="innovationCardEditingIndex === i">
+                          <div>
+                            <label class="form-label" for="innovation-title">{{ 'PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</label>
+                            <input class="form-input input-lg" type="text" id="innovation-title" [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.TITLE.PLACEHOLDER' | translate" formControlName="title">
+                          </div>
+
+                          <div>
+                            <label class="form-label" for="innovation-summary">{{ 'PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</label>
+                            <textarea class="form-input" id="innovation-summary" [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate" rows="2" formControlName="summary"></textarea>
+                          </div>
+
+                          <div>
+                            <label class="form-label" for="innovation-problem">{{ 'PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</label>
+                            <textarea class="form-input" id="innovation-problem" [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate" rows="6" formControlName="problem"></textarea>
+                          </div>
+
+                          <div>
+                            <label class="form-label" for="innovation-solution">{{ 'PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</label>
+                            <textarea class="form-input" id="innovation-solution" [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate" rows="6"
+                                      formControlName="solution"></textarea>
+                          </div>
+
+                          <div>
+                            <label class="form-label">{{ 'PROJECT_EDIT.DESCRIPTION.ADVANTAGE.LABEL' | translate }}</label>
+                            <div class="input-group">
+                              <input type="text" class="form-input input-lg" placeholder="">
+                              <button class="btn btn-primary input-group-btn btn-lg"
+                              (click)="addAdvantage()"><i class="icon icon-plus"></i>
+                                {{ 'PROJECT_EDIT.DESCRIPTION.ADVANTAGE.INPUT' | translate }}
+                              </button>
+                            </div>
+                          </div>
+
+                          <div>
+                            <label class="form-label">{{ 'PROJECT_EDIT.MEDIA.ADD' | translate }}</label>
+                            <div class="pictures-upload text-center">
+                              <button class="btn btn-lg btn-primary"><i class="icon icon-upload"></i> {{ 'PROJECT_EDIT.MEDIA.UPLOAD' | translate }}</button>
+                              <p>({{ 'PROJECT_EDIT.MEDIA.SLIDE' | translate }})</p>
+                            </div>
+
+                            <div class="videos-upload text-center">
+                              <p>{{ 'PROJECT_EDIT.MEDIA.URL' | translate }}</p>
+                              <div class="input-group">
+                                <input type="text" class="form-input input-lg"
+                                       placeholder="Ex : https://www.youtube.com/watch?v=1c9V-Re5QJA">
+                                <button class="btn btn-primary input-group-btn btn-lg"><i class="icon icon-plus"></i>
+                                  {{ 'COMMON.ADD' | translate }}
+                                </button>
+                              </div>
+                              <div class="logos-videos">
+                                <img
+                                  [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_35/app/logo-youtube.png'"
+                                  width="" height="35">
+                                <img
+                                  [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_31/app/logo-vimeo.png'"
+                                  width="" height="31">
+                                <img
+                                  [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_35/app/logo-dailymotion.png'"
+                                  width="" height="35">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="column col-6" formArrayName="innovationCards">
-                <div *ngFor="let item of formData.get('innovationCards').controls; let i = index"
-                     [formGroup]="item">
-                  <div *ngIf="innovationCardEditingIndex === i">
-                  <div>
-                    <label class="form-label" for="innovation-title">Give your project a name</label>
-                    <input class="form-input input-lg" type="text" id="innovation-title" placeholder=""
-                           formControlName="title">
-                  </div>
-
-                  <div>
-                    <label class="form-label" for="innovation-summary">Summarize your project in a short
-                      sentence</label>
-                    <textarea class="form-input" id="innovation-summary" placeholder="" rows="2"
-                              formControlName="summary"></textarea>
-                  </div>
-
-                  <div>
-                    <label class="form-label" for="innovation-problem">What problem or issue motivated the creation of
-                      this
-                      project?</label>
-                    <textarea class="form-input" id="innovation-problem" placeholder="" rows="6"
-                              formControlName="problem"></textarea>
-                  </div>
-
-                  <div>
-                    <label class="form-label" for="input-example-3">What solution does your project introduce?</label>
-                    <textarea class="form-input" id="input-example-3" placeholder="" rows="6"
-                              formControlName="solution"></textarea>
-                  </div>
-
-                  <div>
-                    <label class="form-label">At what stage is your project?</label>
-                    <label class="form-radio">
-                      <input type="radio" name="gender" checked>
-                      <i class="form-icon"></i> Idea
-                    </label>
-                    <label class="form-radio">
-                      <input type="radio" name="gender">
-                      <i class="form-icon"></i> Development in progress
-                    </label>
-                    <label class="form-radio">
-                      <input type="radio" name="gender">
-                      <i class="form-icon"></i> Already available
-                    </label>
-                  </div>
-
-                  <div>
-                    <label class="form-label">What advantages does your project provide to the market?</label>
-                    <div class="input-group">
-                      <input type="text" class="form-input input-lg" placeholder="">
-                      <button class="btn btn-primary input-group-btn btn-lg"><i class="icon icon-plus"></i> Ajouter
-                        cet
-                        avantage
-                      </button>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label class="form-label">Protégé par brevet ?</label>
-                    <label class="form-radio">
-                      <input type="radio" name="gender" checked>
-                      <i class="form-icon"></i> Yes
-                    </label>
-                    <label class="form-radio">
-                      <input type="radio" name="gender">
-                      <i class="form-icon"></i> No
-                    </label>
-                  </div>
-
-                  <div>
-                    <label class="form-label">Ajoutez une ou plusieurs images pour illustrer votre projet.</label>
-                    <div class="pictures-upload text-center">
-                      <button class="btn btn-lg btn-primary"><i class="icon icon-upload"></i> Télécharger des photos
-                      </button>
-                      <p>(Vous pouvez également faire glisser les fichiers ici)</p>
-                    </div>
-
-                    <div class="videos-upload text-center">
-                      <p>Indiquer ici l'adresse de votre vidéo</p>
-                      <div class="input-group">
-                        <input type="text" class="form-input input-lg"
-                               placeholder="Ex : https://www.youtube.com/watch?v=1c9V-Re5QJA">
-                        <button class="btn btn-primary input-group-btn btn-lg"><i class="icon icon-plus"></i> Ajouter
-                        </button>
-                      </div>
-                      <div class="logos-videos">
-                        <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_35/app/logo-youtube.png'"
-                             width="" height="35">
-                        <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_31/app/logo-vimeo.png'"
-                             width="" height="31">
-                        <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_35/app/logo-dailymotion.png'"
-                             width="" height="35">
-                      </div>
-                    </div>
-                  </div>
-                  </div>
-                </div>
-              </div>
-
+              <div class="column col-1"></div>
               <div class="column col-3">
                 <div class="help-block">
-                  <h3 class="text-center">Aide</h3>
-                  Une bonne description doit être :
+                  <h3 class="text-center">{{ 'COMMON.HELP' | translate }}</h3>
+                  {{ 'PROJECT_EDIT.HELP.MUST_BE' | translate }} :
                   <ul>
-                    <li>Non publicitaire</li>
-                    <li>Non technique</li>
-                    <li>Concise</li>
+                    <li>{{ 'PROJECT_EDIT.HELP.NO_AD' | translate }}</li>
+                    <li>{{ 'PROJECT_EDIT.HELP.NO_TECH' | translate }}</li>
+                    <li>{{ 'PROJECT_EDIT.HELP.BRIEF' | translate }}</li>
                   </ul>
 
                   <div class="divider"></div>
 
-                  Exemples de descriptions efficaces :<br>
+                  {{ 'PROJECT_EDIT.HELP.EXAMPLES' | translate }} :<br>
 
                   <a href="#TODO"><img
                     [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_201,w_94/app/project-sample01.png'"
-                    width="94" height="201"></a>
+                    width="94" height="201"></a><!-- TODO agrandir les images -->
 
                   <a href="#TODO"><img
                     [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_201,w_94/app/project-sample02.png'"
-                    width="94" height="201"></a>
+                    width="94" height="201"></a><!-- TODO agrandir les images -->
 
                   <div class="divider"></div>
 
-                  <button class="btn btn-lg centered">Prévisualiser mon projet</button><!-- TODO -->
+                  <button class="btn btn-lg centered">{{ 'PROJECT_EDIT.HELP.PREVIEW' | translate }}</button><!-- TODO -->
 
-                  <button class="btn btn-lg centered">Télécharger mon projet</button><!-- TODO -->
+                  <button class="btn btn-lg centered">{{ 'PROJECT_EDIT.HELP.DOWNLOAD' | translate }}</button><!-- TODO -->
                 </div>
               </div>
             </div>

@@ -5,28 +5,29 @@
     <div class="container">
       <div class="columns">
         <div class="column col-10 col-mx-auto">
-          <pre>{{ project | json }}</pre>
           <h1>{{ project.innovationCards[idInnovationCard].title }}</h1>
-          <div class="metas">Project already available • Protected by patent</div>
+          <div class="metas">
+            {{ 'COMMON.PROJECT_STATUS.' + project.projectStatus | translate }}
+            {{ project.patented ? ' • ' + ('PROJECT.PATENTED' | translate) : '' }}
+
+          </div>
           <div class="pitch">{{ project.innovationCards[idInnovationCard].summary }}</div>
 
           <div class="columns">
             <div class="column col-9">
-              <button class="btn btn-lg btn-primary" [routerLink]="'./edit'" *ngIf="project.status === 'EDITING'">Editer
-                ce projet <i class="icon icon-arrow-right"></i></button><!-- TODO if owner and in editing status -->
-              <button class="btn btn-lg btn-primary"><!-- TODO -->Contact the project manager <i
-                class="icon icon-arrow-right"></i></button><!-- TODO if not owner -->
+              <button class="btn btn-lg btn-primary" [routerLink]="'./edit'" *ngIf="project.status === 'EDITING'"><!-- TODO if owner and in editing status -->
+                {{ 'COMMON.EDIT' | translate}} <i class="icon icon-arrow-right"></i>
+              </button>
+              <button class="btn btn-lg btn-primary" *ngIf="true"><!-- TODO popup textarea de contact --><!-- TODO if not owner -->
+                {{ 'PROJECT.CONTACT_PROJECT_MANAGER' | translate}} <i class="icon icon-arrow-right"></i>
+              </button>
             </div>
             <div class="column col-3 share">
               Share<br>
-              <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/app/share-linkedin.png" width="52"
-                               height="52"></a><!-- TODO -->
-              <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/app/share-twitter.png" width="52"
-                               height="52"></a><!-- TODO -->
-              <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/app/share-facebook.png" width="52"
-                               height="52"></a><!-- TODO -->
-              <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/app/share-google.png" width="52"
-                               height="52"></a><!-- TODO -->
+              <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/app/share-linkedin.png" width="52" height="52"></a><!-- TODO lien de partage -->
+              <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/app/share-twitter.png" width="52" height="52"></a><!-- TODO lien de partage -->
+              <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/app/share-facebook.png" width="52" height="52"></a><!-- TODO lien de partage -->
+              <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/app/share-google.png" width="52" height="52"></a><!-- TODO lien de partage -->
             </div>
           </div>
         </div>
@@ -39,6 +40,8 @@
       <div class="column col-10 col-mx-auto">
         <div class="columns">
           <div class="column col-4">
+            <!-- TODO image du projet -->
+            <!-- TODO agrandissement image au clic -->
             <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/c_fill,g_auto,h_418,w_597/app/dummy.jpg"
                              width="597" height="418" class="img-responsive"></a>
           </div>
@@ -59,13 +62,9 @@
     <div class="container">
       <div class="columns">
         <div class="column col-10 col-mx-auto">
-          <h2>Market benefits</h2>
+          <h2>{{ 'PROJECT.MARKET_BENEFITS' | translate }}</h2>
           <ul>
-            <li>No intimidating needles, blood sampling by laypersons</li>
-            <li>High sample quality, standardized, volume controlled and secured blood collection</li>
-            <li>No collection center, cold storage nor biohazard packaging required</li>
-            <li>High throughput due to automation capacity of standard filter card</li>
-            <li>~30-40% lower due to less time, energy and resources required</li>
+            <li><!-- TODO lister les bénéfices --></li>
           </ul>
         </div>
       </div>
@@ -77,11 +76,11 @@
       <div class="column col-10 col-mx-auto">
         <div class="columns">
           <div class="column col-6">
-            <h2>Issue</h2>
+            <h2>{{ 'PROJECT.ISSUE' | translate }}</h2>
             <p>{{ project.innovationCards[idInnovationCard].problem }}</p>
           </div>
           <div class="column col-6">
-            <h2>Solution</h2>
+            <h2>{{ 'PROJECT.SOLUTION' | translate }}</h2>
             <p>{{ project.innovationCards[idInnovationCard].solution }}</p>
           </div>
         </div>

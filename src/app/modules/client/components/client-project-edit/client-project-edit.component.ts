@@ -15,7 +15,7 @@ export class ClientProjectEditComponent implements OnInit {
 
   private _project: any;
 
-  private innovationCardEditingIndex = 0; // Index de l'innovationCard que l'on édite
+  private innovationCardEditingIndex = 0; // Index de l'innovationCard que l'on édite (système d'onglets)
 
   private _autoSave: {
     timeout: any,
@@ -57,6 +57,8 @@ export class ClientProjectEditComponent implements OnInit {
       }),
       comments: ['']
     }),
+    patented: [undefined, Validators.required],
+    projectStatus: [undefined, Validators.required],
     innovationCards: this._formBuilder.array([])
   });
 
@@ -103,9 +105,7 @@ export class ClientProjectEditComponent implements OnInit {
                 clearTimeout(this._autoSave.timeout);
               }
               this._autoSave.timeout = setTimeout(_ => this._save(), 700);
-
             }
-
           });
         },
         error => this._notificationsService.error('Error', error.message)
@@ -132,7 +132,6 @@ export class ClientProjectEditComponent implements OnInit {
     const tmpValue = this.formData.get('settings').get('geography').get('tmpNewCompanyToExclude');
     this.countriesToExclude.push(this._formBuilder.control(tmpValue.value));
     tmpValue.setValue('');
-
   }
 
   public areAllContinentChecked(): boolean {
@@ -173,6 +172,12 @@ export class ClientProjectEditComponent implements OnInit {
     }
   }
 
+  public addAdvantage () {
+    // TODO
+    // this.formData.get('innovationCards')[this.innovationCardEditingIndex].get('');
+    alert('add advantage');
+  }
+
   public setAsPrincipal (innovationCardId) {
     alert('TODO'); // TODO
   }
@@ -192,6 +197,6 @@ export class ClientProjectEditComponent implements OnInit {
   }
 
   get countriesToExclude(): FormArray {
-    return this.formData.get('settings').get('geography').get('countriesToExclude') as FormArray; // TODO change any
+    return this.formData.get('settings').get('geography').get('countriesToExclude') as FormArray;
   }
 }

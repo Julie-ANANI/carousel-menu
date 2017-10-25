@@ -10,6 +10,9 @@ export const fr = {
     'CANCEL': 'Annuler',
     'ADD': 'Ajouter',
     'CLOSE': 'Fermer',
+    'PREVIEW': 'Prévisualiser',
+    'NO': 'Non',
+    'YES': 'Oui',
 
     'FIRSTNAME': 'Prénom',
     'LASTNAME': 'Nom',
@@ -35,6 +38,12 @@ export const fr = {
       'REVIEWING': 'Révision',
       'LAUNCHED': 'Lancé',
       'FINISHED': 'Terminé'
+    },
+
+    'PROJECT_STATUS': {
+      '0': 'Idée',
+      '1': 'Développement en cours',
+      '2': 'Déjà disponible'
     },
 
     'INVALID': {
