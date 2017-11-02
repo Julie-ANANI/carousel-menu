@@ -44,8 +44,8 @@ export class ClientMyProjectsComponent implements OnInit {
   public getRelevantLink (project) {
     const link = './' + project._id;
     switch (project.status) {
-      case 'FINISHED':
-      case 'LAUNCHED':
+      case 'DONE':
+      case 'EVALUATING':
         return link + '/synthesis';
       case 'SUBMITTED':
         return link;

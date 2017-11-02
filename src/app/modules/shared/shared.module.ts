@@ -31,6 +31,7 @@ import { SharedModalComponent } from './components/shared-modal-component/shared
 import { ChartsModule } from 'ng2-charts';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
+import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
 
 @NgModule({
   imports: [
@@ -72,7 +73,8 @@ import { SharedTextZoneComponent } from './components/shared-text-zone/shared-te
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedTextZoneComponent,
-    SharedModalComponent
+    SharedModalComponent,
+    SharedProjectDescriptionComponent
   ],
   exports: [
     // Modules
@@ -100,8 +102,8 @@ import { SharedTextZoneComponent } from './components/shared-text-zone/shared-te
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedMarketReportComponent,
-    SharedModalComponent
-
+    SharedModalComponent,
+    SharedProjectDescriptionComponent
   ]
 })
 export class SharedModule { }

@@ -1,0 +1,59 @@
+$dark-bg: #262831;
+$second-color: #0B90C6;
+
+.project-header {
+  background: $dark-bg;
+  color: white;
+  padding-bottom: 64px;
+  margin-bottom: 100px;
+
+  h1 {
+    color: white;
+    margin-top: 50px;
+    font-size: 2.3rem;
+  }
+
+  h1::after {
+    display: none;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  .pitch {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+  }
+
+  .metas {
+    font-size: 0.8rem;
+    color: #878787;
+    line-height: 36px;
+  }
+
+  .metas::after {
+    display: block;
+    content: '';
+    width: 124px;
+    background: white;
+    height: 2px;
+    margin-top: 10px;
+    margin-bottom: 26px;
+  }
+
+  .share {
+    color: #929398;
+  }
+}
+
+.market-benefits {
+  background: #FAFAFA;
+  padding: 60px 0;
+  margin-bottom: 80px;
+  margin-top: 80px;
+}
+
+h3 {
+  color: $second-color;
+}

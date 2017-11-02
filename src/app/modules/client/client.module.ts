@@ -22,6 +22,8 @@ import { ClientLogoutComponent } from './components/layout/client-logout/client-
 import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
 import { ClientProjectNewComponent } from './components/client-project-new/client-project-new.component';
 import { ClientProjectSynthesisComponent } from './components/client-project-synthesis/client-project-synthesis.component';
+import { ClientProjectEditExample2Component } from './components/client-project-edit/client-project-edit-example2/client-project-edit-example2.component';
+import { ClientProjectEditExample1Component } from './components/client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
 
 
 @NgModule({
@@ -54,7 +56,9 @@ import { ClientProjectSynthesisComponent } from './components/client-project-syn
     ClientSignupComponent,
     ClientLogoutComponent,
     ClientProjectNewComponent,
-    ClientProjectSynthesisComponent
+    ClientProjectSynthesisComponent,
+    ClientProjectEditExample2Component,
+    ClientProjectEditExample1Component
   ]
 })
 export class ClientModule {

@@ -7,8 +7,8 @@ export const fr = {
     'STEP2': 'Décrivez votre projet',
     'STEP3': 'Soumettez-nous votre projet',
     'SUBMIT': {
-      'TITLE': 'Vous avez tout rempli ? Soumettez-nous votre projet.',
       'BUTTON': 'Soumettre mon projet',
+      'TITLE': 'Vous avez tout rempli ? Soumettez-nous votre projet.',
       'DESCRIPTION': {
         'LINE1': 'Après avoir reçu votre projet, nous validons le texte',
         'LINE2': 'pour lancer l’étude de façon optimale.'

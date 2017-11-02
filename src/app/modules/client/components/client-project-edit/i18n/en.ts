@@ -7,8 +7,8 @@ export const en = {
     'STEP2': 'Describe your project',
     'STEP3': 'Submit your project to us',
     'SUBMIT': {
-      'TITLE': 'Have you finished? Submit your project to us.',
       'BUTTON': 'Submit my project',
+      'TITLE': 'Have you finished? Submit your project to us.',
       'DESCRIPTION': {
         'LINE1': 'After you have submitted your project to us, we will validate it',
         'LINE2': 'so it is prefectly ready to be published.'

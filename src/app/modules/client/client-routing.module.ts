@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ClientComponent } from './client.component';
-import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 
 import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
 import { ClientProjectComponent } from './components/client-project/client-project.component';
 import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
 import { ClientUserComponent } from './components/client-user/client-user.component';
 import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
+import { ClientProjectEditExample1Component } from './components/client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
+import { ClientProjectEditExample2Component } from './components/client-project-edit/client-project-edit-example2/client-project-edit-example2.component';
 import { ClientProjectSynthesisComponent } from './components/client-project-synthesis/client-project-synthesis.component';
 import { ClientProjectNewComponent } from './components/client-project-new/client-project-new.component';
 
@@ -81,6 +82,13 @@ const clientRoutes: Routes = [
               { path: '',    component: ClientProjectComponent },
               { path: 'edit', component: ClientProjectEditComponent },
               { path: 'synthesis', component: ClientProjectSynthesisComponent } // ?isAdmin=true //TODO comment modifier cette route ?
+            ]
+          },
+          {
+            path: 'example',
+            children: [
+              { path: '1',    component: ClientProjectEditExample1Component },
+              { path: '2', component: ClientProjectEditExample2Component }
             ]
           }
         ]

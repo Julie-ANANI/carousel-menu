@@ -32,6 +32,12 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public changePrincipalCard(innovationId: string, newPrincpalInnovationCardId: string): Observable<any> {
+    return this._http.post('/innovation/' + innovationId + '/newPrincipalInnovationCard/' + newPrincpalInnovationCardId)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public removeInnovationCard(innovationId: string, innovationCardId: string): Observable<any> {
     return this._http.delete('/innovation/' + innovationId + '/innovationCard/' + innovationCardId)
       .map((res: Response) => res.json())
@@ -64,6 +70,12 @@ export class InnovationService {
 
   public updateSynthesis(innovationId: string, data: any): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/synthesis', { payload: data })
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public submitProjectToValidation (innovationId: string) {
+    return this._http.put('/innovation/' + innovationId + '/submit')
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

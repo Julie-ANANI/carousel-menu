@@ -36,8 +36,8 @@ export const fr = {
       'EDITING': 'Description',
       'SUBMITTED': 'Soumis',
       'REVIEWING': 'Révision',
-      'LAUNCHED': 'Lancé',
-      'FINISHED': 'Terminé'
+      'EVALUATING': 'Lancé',
+      'DONE': 'Terminé'
     },
 
     'PROJECT_STATUS': {

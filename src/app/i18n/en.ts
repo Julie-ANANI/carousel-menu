@@ -36,8 +36,8 @@ export const en = {
       'EDITING': 'Description',
       'SUBMITTED': 'Submitted',
       'REVIEWING': 'Reviewing',
-      'LAUNCHED': 'Launched',
-      'FINISHED': 'Completed'
+      'EVALUATING': 'Launched',
+      'DONE': 'Completed'
     },
 
     'PROJECT_STATUS': {

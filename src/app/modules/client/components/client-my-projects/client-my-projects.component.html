@@ -52,11 +52,11 @@
             <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !!project.reviewing }">
               <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.REVIEWING' | translate }}</a><!-- TODO tooltip -->
             </li>
-            <li class="step-item" [ngClass]="{ 'active': project.status === 'LAUNCHED' }">
-              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.LAUNCHED' | translate }}</a><!-- TODO tooltip -->
+            <li class="step-item" [ngClass]="{ 'active': project.status === 'EVALUATING' }">
+              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.EVALUATING' | translate }}</a><!-- TODO tooltip -->
             </li>
-            <li class="step-item" [ngClass]="{ 'active': project.status === 'FINISHED' }">
-              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.FINISHED' | translate }}</a><!-- TODO tooltip -->
+            <li class="step-item" [ngClass]="{ 'active': project.status === 'DONE' }">
+              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.DONE' | translate }}</a><!-- TODO tooltip -->
             </li>
           </ul>
         </div>
