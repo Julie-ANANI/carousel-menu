@@ -1,9 +1,9 @@
-import { BaseRequestOptions } from '@angular/http';
+import {BaseRequestOptions, RequestOptionsArgs} from '@angular/http';
 
 export class RequestOptions extends BaseRequestOptions {
   // public token: string; // For token authentication
 
-  constructor (options?: any) {
+  constructor (options?: RequestOptionsArgs) {
     super();
 
     /* For token authentication

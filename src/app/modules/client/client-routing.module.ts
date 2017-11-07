@@ -13,9 +13,9 @@ import { ClientProjectEditExample2Component } from './components/client-project-
 import { ClientProjectSynthesisComponent } from './components/client-project-synthesis/client-project-synthesis.component';
 import { ClientProjectNewComponent } from './components/client-project-new/client-project-new.component';
 
-import { ClientLoginComponent } from './components/layout/client-login/client-login.component';
-import { ClientLogoutComponent } from './components/layout/client-logout/client-logout.component';
-import { ClientSignupComponent } from './components/layout/client-signup/client-signup.component';
+import { ClientLoginComponent } from './components/client-login/client-login.component';
+import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
+import { ClientSignupComponent } from './components/client-signup/client-signup.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 
 /* Shared */
@@ -24,6 +24,7 @@ import { SharedNotFoundComponent } from '../shared/components/shared-not-found/s
 /* Guards */
 import { NonAuthGuard } from '../../non-auth-guard.service';
 import { AuthGuard } from '../../auth-guard.service';
+import { PendingChangesGuard } from '../../pending-changes-guard.service';
 
 const clientRoutes: Routes = [
   {
@@ -72,16 +73,15 @@ const clientRoutes: Routes = [
       },
       {
         path: 'projects',
-        canActivate: [AuthGuard],
         children: [
-          { path: '', component: ClientMyProjectsComponent, pathMatch: 'full' },
-          { path: 'new', component: ClientProjectNewComponent, pathMatch: 'full' },
+          { path: '', component: ClientMyProjectsComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+          { path: 'new', component: ClientProjectNewComponent, pathMatch: 'full', canActivate: [AuthGuard] },
           {
             path: ':innovationId',
             children: [
               { path: '',    component: ClientProjectComponent },
-              { path: 'edit', component: ClientProjectEditComponent },
-              { path: 'synthesis', component: ClientProjectSynthesisComponent } // ?isAdmin=true //TODO comment modifier cette route ?
+              { path: 'edit', component: ClientProjectEditComponent, canActivate: [AuthGuard], canDeactivate: [PendingChangesGuard] },
+              { path: 'synthesis', component: ClientProjectSynthesisComponent, canActivate: [AuthGuard] } // ?isAdmin=true //TODO comment modifier cette route ?
             ]
           },
           {

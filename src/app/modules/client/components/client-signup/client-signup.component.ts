@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { UserService } from '../../../../../services/user/user.service';
-import { AuthService } from '../../../../../services/auth/auth.service';
-import { environment } from '../../../../../../environments/environment';
+import { UserService } from '../../../../services/user/user.service';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { environment } from '../../../../../environments/environment';
 import { TranslateService, initTranslation } from './i18n/i18n';
-import { User } from '../../../../../models/user.model';
+import { User } from '../../../../models/user.model';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';

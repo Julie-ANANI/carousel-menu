@@ -6,8 +6,16 @@
 
       <div class="columns">
         <div class="column col-7 col-mx-auto">
+          <div class="form-group text-center">
+            <label class="form-label h3" for="name">{{ "NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</label>
+            <input class="form-input" id="name" name="name" formControlName="name" type="text"
+                   placeholder="">
+          </div>
 
-          <p class="text-center">{{ 'NEW_PROJECT.DESCRIPTION.LINE1' | translate }}<br>{{ 'NEW_PROJECT.DESCRIPTION.LINE2' | translate }}</p>
+          <h3>{{ 'NEW_PROJECT.DESCRIPTION.LINE1' | translate }}</h3>
+          <p class="text-center">
+            {{ 'NEW_PROJECT.DESCRIPTION.LINE2' | translate }}
+          </p>
 
           <div class="form-group text-center language-choice">
             <label class="form-radio">
@@ -19,13 +27,6 @@
               <i class="form-icon"></i> {{ 'COMMON.LANG.FR' | translate }}
             </label>
           </div>
-
-          <div class="form-group text-center">
-              <label class="form-label" for="name">{{ "NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</label>
-              <input class="form-input" id="name" name="name" formControlName="name" type="text"
-                     placeholder="">
-          </div>
-
         </div>
       </div>
 

@@ -4,6 +4,7 @@ import { AuthService } from './services/auth/auth.service';
 import { IndexService } from './services/index/index.service';
 import { NonAuthGuard } from './non-auth-guard.service';
 import { AuthGuard } from './auth-guard.service';
+import { PendingChangesGuard } from './pending-changes-guard.service';
 
 const appRoutes: Routes = [
   {
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
     AuthGuard,
     NonAuthGuard,
     AuthService,
+    PendingChangesGuard,
     IndexService
   ]
 })

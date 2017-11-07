@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { initTranslation, TranslateService } from './i18n/i18n';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-shared-project-description',
@@ -11,7 +12,8 @@ export class SharedProjectDescriptionComponent implements OnInit {
   @Input() project: any;
   public idInnovationCard = 0;
 
-  constructor(private _translateService: TranslateService) { }
+  constructor(private _translateService: TranslateService,
+              private _authService: AuthService) { }
 
 
   ngOnInit() {
@@ -32,5 +34,9 @@ export class SharedProjectDescriptionComponent implements OnInit {
         }
       }
     }
+  }
+
+  get isProjectOwner (): boolean {
+    return this._authService.userId === this.project.owner.id;
   }
 }

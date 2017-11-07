@@ -5,8 +5,7 @@ import { LocalStorageModule } from 'angular-2-local-storage'; // TODO utiliser l
 import { NgPipesModule } from 'ngx-pipes';
 import { SharedModule } from '../shared/shared.module';
 import { ClientRoutingModule } from './client-routing.module';
-import { ClientHeaderComponent } from './components/layout/client-header/client-header.component';
-import { ClientFooterComponent } from './components/layout/client-footer/client-footer.component';
+import { ClientFooterComponent } from './components/client-footer/client-footer.component';
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
@@ -16,9 +15,9 @@ import { ClientCampaignComponent } from './components/client-campaign/client-cam
 import { ClientUserComponent } from './components/client-user/client-user.component';
 import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
 
-import { ClientLoginComponent } from './components/layout/client-login/client-login.component';
-import { ClientSignupComponent } from './components/layout/client-signup/client-signup.component';
-import { ClientLogoutComponent } from './components/layout/client-logout/client-logout.component';
+import { ClientLoginComponent } from './components/client-login/client-login.component';
+import { ClientSignupComponent } from './components/client-signup/client-signup.component';
+import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
 import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
 import { ClientProjectNewComponent } from './components/client-project-new/client-project-new.component';
 import { ClientProjectSynthesisComponent } from './components/client-project-synthesis/client-project-synthesis.component';
@@ -41,7 +40,6 @@ import { ClientProjectEditExample1Component } from './components/client-project-
   ],
   declarations: [
     ClientComponent,
-    ClientHeaderComponent,
     ClientFooterComponent,
     ClientMyAccountComponent,
 

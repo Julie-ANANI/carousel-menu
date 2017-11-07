@@ -14,7 +14,6 @@ const adminRoutes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/projects',
         component: AdminDashboardComponent
       },
       {

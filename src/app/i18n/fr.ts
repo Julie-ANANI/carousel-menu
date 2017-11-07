@@ -72,11 +72,11 @@ export const fr = {
     'DISCOVER': 'Découvrir',
 
     'SORT': {
-      'ALPHABETICALLY': 'Ordre alphabétique',
-      'BY_COMPANY': 'Par entreprise',
-      'BY_AUTHOR': 'Par auteur',
-      'BY_DATE': 'Par date',
-      'BY_DEFAULT': 'Par défaut'
+      'BY_NAME': 'Nom',
+      'BY_COMPANY': 'Entreprise',
+      'BY_AUTHOR': 'Auteur',
+      'BY_CREATION_DATE': 'Création',
+      'BY_UPDATE_DATE': 'Mise à jour'
     }
   },
 

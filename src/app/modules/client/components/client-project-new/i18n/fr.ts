@@ -10,6 +10,6 @@ export const fr = {
     'PRIVATE': 'Rien ne sera publié à ce stade',
     'FORM_NOT_VALID': 'Merci de répondre à toutes les questions',
     'UNDERSTAND': 'J\'ai compris',
-    'COMPANY_NAME_LABEL': 'Comment souhaitez-vous appeler ce projet dans notre application ?'
+    'COMPANY_NAME_LABEL': 'Donnez un nom à votre projet'
   }
 };

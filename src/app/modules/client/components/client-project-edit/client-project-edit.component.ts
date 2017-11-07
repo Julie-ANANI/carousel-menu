@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService, initTranslation} from './i18n/i18n';
 import {ActivatedRoute} from '@angular/router';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
 import {NotificationsService} from 'angular2-notifications';
+import {ComponentCanDeactivate} from '../../../../pending-changes-guard.service';
+import {Observable} from 'rxjs/Observable';
 
 // TODO : Optimisation : Ne pas envoyer tout l'objet Innovation à chaque mise à jour. Retenir la version sauvegardée et n'envoyer que la différence.
 
@@ -12,7 +14,7 @@ import {NotificationsService} from 'angular2-notifications';
   templateUrl: './client-project-edit.component.html',
   styleUrls: ['./client-project-edit.component.scss']
 })
-export class ClientProjectEditComponent implements OnInit {
+export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivate {
 
   private _project: any;
 
@@ -206,6 +208,20 @@ export class ClientProjectEditComponent implements OnInit {
       this._project.status = data.status;
     });
   }
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    return !this._autoSave.isSaving && !this._autoSave.newSaveRequired;
+  }
+
+  // TODO ajouter pour IE éventuellement, à tester
+  // @ HostListener allows us to also guard against browser refresh, close, etc.
+  /*@ HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    if (!this.canDeactivate()) {
+      $event.returnValue = "This message is displayed to the user in IE and Edge when they navigate without using Angular routing (type another URL/close the browser/etc)";
+    }
+  }*/
 
   get canEdit () {
     return this._project.status === 'EDITING';

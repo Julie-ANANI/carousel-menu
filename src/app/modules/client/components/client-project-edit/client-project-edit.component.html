@@ -49,7 +49,7 @@
     </div>
   </div>
 
-  <div class="project-help">
+  <div class="project-help" style="position:sticky; top: 0;z-index:956">
     <div class="container">
       <div class="columns">
         <div class="column col-10 col-mx-auto">
@@ -788,6 +788,7 @@
                     </div>
                   </div>
                   <div class="column col-8">
+                    <!-- TODO voir pourquoi on peut quand même éditer ces champs quand canEdit est à false -->
                     <div formArrayName="innovationCards">
                       <div *ngFor="let item of formData.get('innovationCards').controls; let i = index"
                            [formGroup]="item">

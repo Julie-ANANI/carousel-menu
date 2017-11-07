@@ -14,6 +14,7 @@ export class ClientMyProjectsComponent implements OnInit {
 
   private _projects: [any];
   public selectedProjectIdToBeDeleted: any = null;
+  public sortAsc = false;
 
   constructor(private _translateService: TranslateService,
               private _userService: UserService,
@@ -26,6 +27,7 @@ export class ClientMyProjectsComponent implements OnInit {
     this._titleService.setTitle('My projects'); // TODO translate
     this._userService.getMyInnovations().subscribe(projects => {
       this._projects = projects.innovations;
+      this.sortProjectsBy('created');
     });
   }
 
@@ -41,7 +43,7 @@ export class ClientMyProjectsComponent implements OnInit {
       });
   }
 
-  public getRelevantLink (project) {
+  public getRelevantLink (project) { // routerLink : /projects/:project_id
     const link = './' + project._id;
     switch (project.status) {
       case 'DONE':
@@ -71,7 +73,29 @@ export class ClientMyProjectsComponent implements OnInit {
   }
 
   public sortProjectsBy(sortBy) {
-    alert('Not implemented yet'); // TODO
+    this.sortAsc = !this.sortAsc;
+
+    const getValue  = (item) => {
+      switch (sortBy) {
+        case 'owner.companyName':
+          return item.owner.companyName.toLowerCase();
+        case 'owner.name':
+          return item.owner.name.toLowerCase();
+        default:
+          return item[sortBy].toLowerCase();
+      }
+    };
+
+    this._projects = this._projects.sort((a, b) => {
+      a = getValue(a);
+      b = getValue(b);
+      if (this.sortAsc) {
+        return (a < b) ? -1 : (a > b) ? 1 : 0;
+      }
+      else {
+        return (a > b) ? -1 : (a < b) ? 1 : 0;
+      }
+    });
   }
 
   get projects () { // TODO     : Project[] { (using server)

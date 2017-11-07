@@ -17,6 +17,8 @@ export class AuthService {
   private _admin = false;
   private _redirectUrl: string;
 
+  private _user: any;
+
   constructor(private _http: Http,
               private _cookieService: CookieService) {
   /**
@@ -35,6 +37,7 @@ export class AuthService {
         const response = res.json();
         this._setAuthenticatedTo(response.isAuthenticated);
         this._setAdminTo(response.isAdmin);
+        this._user = response;
         return response;
       })
       .catch((error: Response) => Observable.throw(error.json()));
@@ -44,6 +47,9 @@ export class AuthService {
     return this._http.get(`/auth/linkedin?domain=${domain}`)
       .map((res: Response) => {
         const response = res.json();
+        this._setAuthenticatedTo(response.isAuthenticated);
+        this._setAdminTo(response.isAdmin);
+        this._user = response;
         return response.url;
       })
       .catch((error: Response) => {
@@ -57,6 +63,7 @@ export class AuthService {
         const response = res.json();
         this._setAuthenticatedTo(response.isAuthenticated);
         this._setAdminTo(response.isAdmin);
+        this._user = null;
         return response;
       })
       .catch((error: Response) => Observable.throw(error.json()));
@@ -71,6 +78,7 @@ export class AuthService {
         const response = res.json();
         this._setAuthenticatedTo(response.isAuthenticated);
         this._setAdminTo(response.isAdmin);
+        this._user = response.user || null;
         return response;
       })
       .catch((error: Response) => Observable.throw(error.json()));
@@ -97,6 +105,15 @@ export class AuthService {
 
   get isAdmin(): boolean {
     return this._admin;
+  }
+
+  get user (): any {
+    return this._user;
+  }
+
+  get userId (): string {
+    console.log(this._user);
+    return this._user ? this._user.id : null;
   }
 
   get isAcceptingCookies(): Boolean { // TODO éventuellement - CNIL

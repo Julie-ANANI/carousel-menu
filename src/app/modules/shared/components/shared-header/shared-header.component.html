@@ -23,5 +23,6 @@
     <a [routerLink]="'/projects'" class="btn btn-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
     <a [routerLink]="'/todo'" class="btn btn-link" *ngIf="authService.isAdmin">{{ 'COMMON.MY_USERS' | translate }}</a><!-- TODO -->
     <a [routerLink]="'/account'" class="btn btn-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
+    <a [routerLink]="'/admin'" class="btn btn-link" *ngIf="authService.isAdmin">{{ 'COMMON.ADMIN' | translate }}</a>
   </section>
 </header>

@@ -11,11 +11,11 @@
 
         <div class="column col-10">
           <ul class="list-filter">
-            <li><button class="btn btn-link" (click)="sortProjectsBy('name')">{{ 'COMMON.SORT.ALPHABETICALLY' | translate }}</button></li>
-            <li><button class="btn btn-link" (click)="sortProjectsBy('company')">{{ 'COMMON.SORT.BY_COMPANY' | translate }}</button></li>
-            <li><button class="btn btn-link" (click)="sortProjectsBy('author')">{{ 'COMMON.SORT.BY_AUTHOR' | translate }}</button></li>
-            <li><button class="btn btn-link" (click)="sortProjectsBy('date')">{{ 'COMMON.SORT.BY_DATE' | translate }}</button></li>
-            <li><button class="btn btn-link" (click)="sortProjectsBy('default')">{{ 'COMMON.SORT.BY_DEFAULT' | translate }}</button></li>
+            <li><button class="btn btn-link" (click)="sortProjectsBy('name')">{{ 'COMMON.SORT.BY_NAME' | translate }}</button><i class="icon icon-resize-vert"></i></li>
+            <li><button class="btn btn-link" (click)="sortProjectsBy('owner.companyName')">{{ 'COMMON.SORT.BY_COMPANY' | translate }}</button><i class="icon icon-resize-vert"></i></li>
+            <li><button class="btn btn-link" (click)="sortProjectsBy('owner.name')">{{ 'COMMON.SORT.BY_AUTHOR' | translate }}</button><i class="icon icon-resize-vert"></i></li>
+            <li><button class="btn btn-link" (click)="sortProjectsBy('updated')">{{ 'COMMON.SORT.BY_UPDATE_DATE' | translate }}</button><i class="icon icon-resize-vert"></i></li>
+            <li><button class="btn btn-link" (click)="sortProjectsBy('created')">{{ 'COMMON.SORT.BY_CREATION_DATE' | translate }} <i class="icon" [ngClass]="{'icon-arrow-down': sortAsc, 'icon-arrow-up': !sortAsc}"></i></button></li>
             <!--<li><a href="/todo"><i class="icon icon-search"></i></a></li>-->
           </ul>
         </div>
@@ -34,7 +34,7 @@
 
       <div class="project" *ngFor="let project of projects">
         <div class="picture">
-          <a [routerLink]="getRelevantLink(project)"><img [src]="getPrincipalMedia(project)" width="218" height="218"></a>
+          <a [routerLink]="getRelevantLink(project)"><img [src]="getPrincipalMedia(project)" class="img-fit-cover" width="218" height="218"></a>
         </div>
         <div class="description">
           <div class="title"><a [routerLink]="getRelevantLink(project)">{{ project.name || ('MY_PROJECTS.UNTITLED' | translate) }}</a></div>
@@ -81,7 +81,7 @@
       <div class="content">{{ 'MY_PROJECTS.DELETE_PROJECT_MODAL.CONTENT' | translate }}</div>
     </div>
     <div class="modal-footer">
-      <button class="btn" (click)="removeProject(selectedProjectIdToBeDeleted)">{{ 'COMMON.DELETE' | translate }}</button>
+      <button class="btn btn-link" (click)="removeProject(selectedProjectIdToBeDeleted)">{{ 'COMMON.DELETE' | translate }}</button>
       <button class="btn btn-primary" (click)="selectedProjectIdToBeDeleted = null">{{ 'COMMON.CANCEL' | translate }}</button>
     </div>
   </div>

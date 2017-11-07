@@ -72,11 +72,11 @@ export const en = {
     'DISCOVER': 'Discover',
 
     'SORT': {
-      'ALPHABETICALLY': 'Alphabetically',
+      'BY_NAME': 'By name',
       'BY_COMPANY': 'By company',
       'BY_AUTHOR': 'By author',
-      'BY_DATE': 'By date',
-      'BY_DEFAULT': 'By default'
+      'BY_CREATION_DATE': 'By date',
+      'BY_UPDATE_DATE': 'By default'
     }
   },
 

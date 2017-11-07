@@ -16,6 +16,7 @@ import { SharedNotFoundComponent } from './components/shared-not-found/shared-no
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
 import { SharedLoaderComponent } from './components/shared-loader/shared-loader.component';
+import { SharedHeaderComponent } from './components/shared-header/shared-header.component';
 import { SharedMarketReportComponent } from './components/shared-market-report/shared-market-report-module';
 import { SharedBarChartComponent } from './components/shared-bar-chart-component/shared-bar-chart.component';
 import { SharedMarketItemComponent } from './components/shared-market-item-component/shared-market-item.component';
@@ -63,6 +64,7 @@ import { SharedProjectDescriptionComponent } from './components/shared-project-d
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
+    SharedHeaderComponent,
     SharedMarketReportComponent,
     SharedBarChartComponent,
     SharedMarketItemComponent,
@@ -99,6 +101,7 @@ import { SharedProjectDescriptionComponent } from './components/shared-project-d
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
+    SharedHeaderComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedMarketReportComponent,

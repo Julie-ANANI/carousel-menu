@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-admin',
-  template: '<app-admin-header></app-admin-header><router-outlet></router-outlet>'
+  template: '<app-shared-header></app-shared-header><router-outlet></router-outlet>'
 })
 export class AdminComponent implements OnInit {
 

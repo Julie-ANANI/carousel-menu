@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService, initTranslation } from './i18n/i18n';
-import { environment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-client-footer',
@@ -25,6 +25,6 @@ export class ClientFooterComponent implements OnInit {
   }
 
   get copyrightDate (): string {
-    return (new Date()).getFullYear().toString();
+    return (new Date()).getFullYear().toString().slice(-2);
   }
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { AuthService } from '../../../../../services/auth/auth.service';
+import { AuthService } from '../../../../services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
-import { environment } from '../../../../../../environments/environment';
-import { User } from '../../../../../models/user.model';
+import { environment } from '../../../../../environments/environment';
+import { User } from '../../../../models/user.model';
 import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
