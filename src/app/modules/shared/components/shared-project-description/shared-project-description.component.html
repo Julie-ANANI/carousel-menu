@@ -9,23 +9,31 @@
             {{ project.patented ? ' • ' + ('PROJECT.PATENTED' | translate) : '' }}
 
           </div>
-          <div class="pitch">{{ project.innovationCards[idInnovationCard].summary }} {{ isProjectOwner}}</div>
+          <div class="pitch">{{ project.innovationCards[idInnovationCard].summary }}</div>
 
           <div class="columns">
             <div class="column col-9">
               <button class="btn btn-lg btn-primary" [routerLink]="'./edit'" *ngIf="project.status === 'EDITING' && isProjectOwner">
                 {{ 'COMMON.EDIT' | translate}} <i class="icon icon-arrow-right"></i>
               </button>
-              <button class="btn btn-lg btn-primary" *ngIf="project.owner"><!-- TODO popup textarea de contact --><!-- TODO if not owner -->
+              <button class="btn btn-lg btn-primary" *ngIf="project.owner && !isProjectOwner"><!-- TODO popup textarea de contact --><!-- TODO if not owner -->
                 {{ 'PROJECT.CONTACT_PROJECT_MANAGER' | translate}} <i class="icon icon-arrow-right"></i>
               </button>
             </div>
             <div class="column col-3 share">
               Share<br>
-              <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/app/share-linkedin.png" width="52" height="52"></a><!-- TODO lien de partage -->
-              <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/app/share-twitter.png" width="52" height="52"></a><!-- TODO lien de partage -->
-              <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/app/share-facebook.png" width="52" height="52"></a><!-- TODO lien de partage -->
-              <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/app/share-google.png" width="52" height="52"></a><!-- TODO lien de partage -->
+              <a [href]="shareService.linkedinProjectShareLink(project)" target="_blank">
+                <img src="https://res.cloudinary.com/umi/image/upload/app/share-linkedin.png" width="52" height="52">
+              </a>
+              <a [href]="shareService.twitterProjectShareLink(project)" target="_blank">
+                <img src="https://res.cloudinary.com/umi/image/upload/app/share-twitter.png" width="52" height="52">
+              </a>
+              <a [href]="shareService.facebookProjectShareLink(project)" target="_blank">
+                <img src="https://res.cloudinary.com/umi/image/upload/app/share-facebook.png" width="52" height="52">
+              </a>
+              <a href="#">
+                <img src="https://res.cloudinary.com/umi/image/upload/app/share-google.png" width="52" height="52">
+              </a><!-- TODO remplacer par EMAIL -->
             </div>
           </div>
         </div>
@@ -37,17 +45,8 @@
     <div class="columns">
       <div class="column col-10 col-mx-auto">
         <div class="columns">
-          <div class="column col-4">
-            <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/c_fill,g_auto,h_418,w_597/app/dummy.jpg"
-                             width="597" height="418" class="img-responsive"></a>
-          </div>
-          <div class="column col-4">
-            <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/c_fill,g_auto,h_418,w_597/app/dummy.jpg"
-                             width="597" height="418" class="img-responsive"></a>
-          </div>
-          <div class="column col-4">
-            <a href="#"><img src="https://res.cloudinary.com/umi/image/upload/c_fill,g_auto,h_418,w_597/app/dummy.jpg"
-                             width="597" height="418" class="img-responsive"></a>
+          <div class="column col-4 col-mx-auto" *ngFor="let media of project.innovationCards[idInnovationCard].media">
+            <a [href]="media" target="_blank"><img [src]="'https://res.cloudinary.com/umi/image/upload/' + media" alt="" width="597" height="418" class="img-responsive"></a>
           </div>
         </div>
       </div>
@@ -73,11 +72,11 @@
         <div class="columns">
           <div class="column col-6">
             <h2>{{ 'PROJECT.ISSUE' | translate }}</h2>
-            <p>{{ project.innovationCards[idInnovationCard].problem }}</p>
+            <p [innerHtml]="project.innovationCards[idInnovationCard].problem"></p>
           </div>
           <div class="column col-6">
             <h2>{{ 'PROJECT.SOLUTION' | translate }}</h2>
-            <p>{{ project.innovationCards[idInnovationCard].solution }}</p>
+            <p [innerHtml]="project.innovationCards[idInnovationCard].solution"></p>
           </div>
         </div>
       </div>

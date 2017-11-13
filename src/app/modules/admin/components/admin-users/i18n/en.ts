@@ -1,5 +1,5 @@
 export const en = {
-  "USER": {
+  "USERS": {
     "NAME": "Name",
     "COMPANY": "Company",
     "JOB": "Job title",

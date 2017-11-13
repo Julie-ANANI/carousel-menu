@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
-import { IndexService } from './services/index/index.service';
 import { NonAuthGuard } from './non-auth-guard.service';
 import { AuthGuard } from './auth-guard.service';
 import { PendingChangesGuard } from './pending-changes-guard.service';
@@ -24,14 +23,13 @@ const appRoutes: Routes = [
   exports: [
     RouterModule
   ],
-  declarations: [
-  ],
-  providers: [
+  declarations: [],
+  providers: [ // /!\ Ne mettre ici que les service liés au routage (utilisés par un Guard), sinon les mettre dans app.module.ts
+    AuthService,
+    // Guards :
     AuthGuard,
     NonAuthGuard,
-    AuthService,
-    PendingChangesGuard,
-    IndexService
+    PendingChangesGuard
   ]
 })
 export class AppRoutingModule { }

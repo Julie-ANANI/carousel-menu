@@ -112,7 +112,6 @@ export class AuthService {
   }
 
   get userId (): string {
-    console.log(this._user);
     return this._user ? this._user.id : null;
   }
 

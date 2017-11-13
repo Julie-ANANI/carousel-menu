@@ -37,7 +37,6 @@ export class SharedUploadZonePhotoComponent implements OnInit{
 
     this._uploader.onCompleteItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
       if (status !== 200) {
-        console.error('Fuck!');
         console.error(response);
       } else {
         try {

@@ -80,6 +80,12 @@ export const en = {
     }
   },
 
+  'ERROR': {
+    'PROJECT': {
+      'NOT_FOUND': 'Project not found'
+    }
+  },
+
   'MARKET_REPORT': {
     'TITLE': 'Exploring market potential',
     'COLLAPSE': 'Collapse',

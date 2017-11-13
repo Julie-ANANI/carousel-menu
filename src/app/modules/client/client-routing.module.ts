@@ -6,7 +6,6 @@ import { ClientComponent } from './client.component';
 import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
 import { ClientProjectComponent } from './components/client-project/client-project.component';
 import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
-import { ClientUserComponent } from './components/client-user/client-user.component';
 import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
 import { ClientProjectEditExample1Component } from './components/client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
 import { ClientProjectEditExample2Component } from './components/client-project-edit/client-project-edit-example2/client-project-edit-example2.component';
@@ -98,13 +97,6 @@ const clientRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
           { path: '', component: ClientCampaignComponent, pathMatch: 'full' }
-        ]
-      },
-      {
-        path: 'user',
-        canActivate: [AuthGuard],
-        children: [
-          { path: '', component: ClientUserComponent, pathMatch: 'full' }
         ]
       },
       {

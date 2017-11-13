@@ -1,5 +1,5 @@
 export const fr = {
-  "CAMPAIGN": {
+  "USERS": {
     "NAME": "Name",
     "COMPANY": "Entreprise",
     "JOB": "Poste",

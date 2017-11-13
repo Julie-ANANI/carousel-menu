@@ -11,11 +11,11 @@
 
         <div class="column col-10">
           <ul class="list-filter">
-            <li><button class="btn btn-link" (click)="sortProjectsBy('name')">{{ 'COMMON.SORT.BY_NAME' | translate }}</button><i class="icon icon-resize-vert"></i></li>
-            <li><button class="btn btn-link" (click)="sortProjectsBy('owner.companyName')">{{ 'COMMON.SORT.BY_COMPANY' | translate }}</button><i class="icon icon-resize-vert"></i></li>
-            <li><button class="btn btn-link" (click)="sortProjectsBy('owner.name')">{{ 'COMMON.SORT.BY_AUTHOR' | translate }}</button><i class="icon icon-resize-vert"></i></li>
-            <li><button class="btn btn-link" (click)="sortProjectsBy('updated')">{{ 'COMMON.SORT.BY_UPDATE_DATE' | translate }}</button><i class="icon icon-resize-vert"></i></li>
-            <li><button class="btn btn-link" (click)="sortProjectsBy('created')">{{ 'COMMON.SORT.BY_CREATION_DATE' | translate }} <i class="icon" [ngClass]="{'icon-arrow-down': sortAsc, 'icon-arrow-up': !sortAsc}"></i></button></li>
+            <li><button class="btn btn-link" (click)="sortProjectsBy('name')">{{ 'COMMON.SORT.BY_NAME' | translate }} <i *ngIf="sortingBy === 'name'" class="icon" [ngClass]="{'icon-arrow-down': sortAsc, 'icon-arrow-up': !sortAsc}"></i><i *ngIf="sortingBy !== 'name'" class="icon icon-resize-vert text-gray"></i></button></li>
+            <li><button class="btn btn-link" (click)="sortProjectsBy('owner.companyName')">{{ 'COMMON.SORT.BY_COMPANY' | translate }} <i *ngIf="sortingBy === 'owner.companyName'" class="icon" [ngClass]="{'icon-arrow-down': sortAsc, 'icon-arrow-up': !sortAsc}"></i><i *ngIf="sortingBy !== 'owner.companyName'" class="icon icon-resize-vert text-gray"></i></button></li>
+            <li><button class="btn btn-link" (click)="sortProjectsBy('owner.name')">{{ 'COMMON.SORT.BY_AUTHOR' | translate }} <i *ngIf="sortingBy === 'owner.name'" class="icon" [ngClass]="{'icon-arrow-down': sortAsc, 'icon-arrow-up': !sortAsc}"></i><i *ngIf="sortingBy !== 'owner.name'" class="icon icon-resize-vert text-gray"></i></button></li>
+            <li><button class="btn btn-link" (click)="sortProjectsBy('updated')">{{ 'COMMON.SORT.BY_UPDATE_DATE' | translate }} <i *ngIf="sortingBy === 'updated'" class="icon" [ngClass]="{'icon-arrow-down': sortAsc, 'icon-arrow-up': !sortAsc}"></i><i *ngIf="sortingBy !== 'updated'" class="icon icon-resize-vert text-gray"></i></button></li>
+            <li><button class="btn btn-link" (click)="sortProjectsBy('created')">{{ 'COMMON.SORT.BY_CREATION_DATE' | translate }} <i *ngIf="sortingBy === 'created'" class="icon" [ngClass]="{'icon-arrow-down': sortAsc, 'icon-arrow-up': !sortAsc}"></i><i *ngIf="sortingBy !== 'created'" class="icon icon-resize-vert text-gray"></i></button></li>
             <!--<li><a href="/todo"><i class="icon icon-search"></i></a></li>-->
           </ul>
         </div>

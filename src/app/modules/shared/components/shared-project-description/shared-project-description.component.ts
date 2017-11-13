@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { ShareService } from '../../../../services/share/share.service';
 
 @Component({
   selector: 'app-shared-project-description',
@@ -13,13 +15,22 @@ export class SharedProjectDescriptionComponent implements OnInit {
   public idInnovationCard = 0;
 
   constructor(private _translateService: TranslateService,
-              private _authService: AuthService) { }
+              private _router: Router,
+              private _authService: AuthService,
+              public shareService: ShareService) { }
 
 
   ngOnInit() {
     initTranslation(this._translateService);
 
     this._displayInnovationCardWithLang(this._translateService.currentLang);
+
+    for (const innovationCard of this.project.innovationCards) {
+      if (innovationCard) {
+        innovationCard.problem = innovationCard.problem.split('\n').join('<br>');
+        innovationCard.solution = innovationCard.solution.split('\n').join('<br>');
+      }
+    }
 
     this._translateService.onLangChange.subscribe(data => {
       this._displayInnovationCardWithLang(data.lang);

@@ -18,6 +18,8 @@ import { Observable } from 'rxjs/Observable';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoaderService } from './services/loader/loader.service';
 import { ChartsModule } from 'ng2-charts';
+import { IndexService } from './services/index/index.service';
+import { ShareService } from './services/share/share.service';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { ChartsModule } from 'ng2-charts';
     MediaService,
     LoaderService,
     WindowRefService,
+    IndexService,
+    ShareService,
     SmartQueryService,
     {
       provide: Http,

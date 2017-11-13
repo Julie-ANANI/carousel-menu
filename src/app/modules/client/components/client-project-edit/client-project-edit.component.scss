@@ -2,8 +2,17 @@ path, g {
   fill: #E2E2E2;
   cursor: pointer;
 }
-g.selected, path.selected, .selected g, .selected path {
+g.selected,
+path.selected,
+.selected g,
+.selected path {
   fill: #74D537;
+}
+g.clickable:not(.selected):hover,
+path.clickable:not(.selected):hover,
+.clickable:not(.selected):hover g,
+.clickable:not(.selected):hover path {
+  fill: #BBBBBB;
 }
 
 
@@ -114,6 +123,10 @@ $secondary-color: #0B90C6;
   border: 2px dashed #979797;
   padding: 90px 30px 60px 30px;
   margin: 20px 0;
+
+  &.dragging {
+    border: 2px dashed #74D537;
+  }
 }
 
 .videos-upload {

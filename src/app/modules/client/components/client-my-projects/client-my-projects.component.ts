@@ -15,6 +15,7 @@ export class ClientMyProjectsComponent implements OnInit {
   private _projects: [any];
   public selectedProjectIdToBeDeleted: any = null;
   public sortAsc = false;
+  public sortingBy = 'created';
 
   constructor(private _translateService: TranslateService,
               private _userService: UserService,
@@ -27,7 +28,7 @@ export class ClientMyProjectsComponent implements OnInit {
     this._titleService.setTitle('My projects'); // TODO translate
     this._userService.getMyInnovations().subscribe(projects => {
       this._projects = projects.innovations;
-      this.sortProjectsBy('created');
+      this.sortProjectsBy(this.sortingBy);
     });
   }
 
@@ -73,8 +74,12 @@ export class ClientMyProjectsComponent implements OnInit {
   }
 
   public sortProjectsBy(sortBy) {
-    this.sortAsc = !this.sortAsc;
-
+    if (sortBy === this.sortingBy) {
+      this.sortAsc = !this.sortAsc;
+    }
+    else {
+      this.sortingBy = sortBy;
+    }
     const getValue  = (item) => {
       switch (sortBy) {
         case 'owner.companyName':

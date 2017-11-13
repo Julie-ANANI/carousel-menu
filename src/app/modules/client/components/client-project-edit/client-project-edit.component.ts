@@ -1,11 +1,13 @@
 import {Component, OnInit, HostListener} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService, initTranslation} from './i18n/i18n';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
 import {NotificationsService} from 'angular2-notifications';
 import {ComponentCanDeactivate} from '../../../../pending-changes-guard.service';
 import {Observable} from 'rxjs/Observable';
+
+import {Ng2FileDropAcceptedFile, Ng2FileDropRejectedFile} from 'ng2-file-drop';
 
 // TODO : Optimisation : Ne pas envoyer tout l'objet Innovation à chaque mise à jour. Retenir la version sauvegardée et n'envoyer que la différence.
 
@@ -71,10 +73,14 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   public displayCountriesToExcludeSection = false;
   public displayCompanyToExcludeSection = false;
   public displayPersonsToExcludeSection = false;
+  public draggingPhoto = false;
+
+  public supportedFileTypes: string[] = ['image/png', 'image/jpeg', 'image/gif'];
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _translateService: TranslateService,
+              private _router: Router,
               private _notificationsService: NotificationsService,
               private _formBuilder: FormBuilder) {}
 
@@ -109,7 +115,12 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
             }
           });
         },
-        error => this._notificationsService.error('Error', error.message)
+        errorTranslateCode => {
+          this._translateService.get(errorTranslateCode).subscribe(errorMessage =>
+            this._notificationsService.error('Error', errorMessage) // TODO Translate Error
+          );
+          this._router.navigate(['/projects']);
+        }
       );
     });
   }
@@ -179,6 +190,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
           lang: this._project.innovationCards[0].lang === 'en' ? 'fr' : 'en' // Pour l'instant il n'y a que deux langues
         }).subscribe((data) => {
           this._addInnovationCardWithData(data);
+          this._project.innovationCards.push(data);
         });
       }
     }
@@ -211,7 +223,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
-    return !this._autoSave.isSaving && !this._autoSave.newSaveRequired;
+    return !(this._autoSave.isSaving || this._autoSave.newSaveRequired);
   }
 
   // TODO ajouter pour IE éventuellement, à tester
@@ -223,12 +235,20 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     }
   }*/
 
-  get canEdit () {
-    return this._project.status === 'EDITING';
+  public dragFileAccepted(acceptedFile: Ng2FileDropAcceptedFile) {
+    console.log(acceptedFile);
   }
 
-  get disable () {
-    return this.canEdit ? 'enable' : 'disable';
+  public dragFileRejected(rejectedFile: Ng2FileDropRejectedFile) {
+    console.log(rejectedFile);
+  }
+
+  public dragFilesDropped(event) {
+    console.log(event);
+  }
+
+  get canEdit () {
+    return this._project.status === 'EDITING';
   }
 
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }

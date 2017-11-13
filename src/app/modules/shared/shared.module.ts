@@ -33,6 +33,7 @@ import { ChartsModule } from 'ng2-charts';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
+import { Ng2FileDropModule } from 'ng2-file-drop';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { SharedProjectDescriptionComponent } from './components/shared-project-d
     DragulaModule,
     ChartsModule,
     FileUploadModule,
-    Ng2PageScrollModule
+    Ng2PageScrollModule,
+    Ng2FileDropModule
   ],
   declarations: [
     // Directives
@@ -83,8 +85,9 @@ import { SharedProjectDescriptionComponent } from './components/shared-project-d
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    DragulaModule,
-    Ng2PageScrollModule,
+    DragulaModule, // TODO delete
+    Ng2PageScrollModule, // TODO utilisé ?
+    Ng2FileDropModule,
 
     // Directives
     // FormErrorDirective,
