@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { LocalStorageModule } from 'angular-2-local-storage'; // TODO utiliser le localStorage pour accélérer les chargements
-import { NgPipesModule } from 'ngx-pipes';
 import { SharedModule } from '../shared/shared.module';
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientFooterComponent } from './components/client-footer/client-footer.component';
@@ -34,7 +33,6 @@ import { ClientProjectEditExample1Component } from './components/client-project-
       prefix: 'umi',
       storageType: 'localStorage'
     }),
-    NgPipesModule,
     SharedModule
   ],
   declarations: [

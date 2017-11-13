@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { DragulaModule } from 'ng2-dragula';
-import { NgPipesModule } from 'ngx-pipes';
 import { FileUploadModule } from 'ng2-file-upload';
 // import { FormErrorDirective } from '../../../../.toreview/dynamic-form-compozer/directives/form-error/form-error.directive';
 // import { DynamicFormComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
@@ -41,7 +40,6 @@ import { Ng2FileDropModule } from 'ng2-file-drop';
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
-    NgPipesModule,
     RouterModule.forChild([]), // giving no routes but needed for all <a [routerLink]=''> uses
     TranslateModule.forChild(),
     DragulaModule,
