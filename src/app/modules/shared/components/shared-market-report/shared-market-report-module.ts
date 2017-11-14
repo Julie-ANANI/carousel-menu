@@ -55,45 +55,49 @@ export class SharedMarketReportComponent implements OnInit {
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _route: ActivatedRoute
-              ) { }
+  ) { }
 
   ngOnInit() {
-    this.readonly = true;
-    this._route
-      .queryParams
-      .subscribe(params => {
-        this.readonly = !(params['isAdmin'] &&  params['isAdmin'] === 'true' );
-      });
-    this._detailsExpanded = false;
-    this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
-    this._innovationService.getInnovationSythesis(this.innoid).subscribe(synthesis => {
-      this._infographics = synthesis.infographics;
-      this._syntheses = synthesis.synthesis || {};
-      // Calcul du score max
-      this._maxCountScore = _.max(_.map(this._infographics.scores, function(score){ return score['count']; } ));
-      // Calculate the piecharts
-      if(this._infographics.pieCharts) {
-        this._chartPieData = {
-          'productAnsweringProblematic': SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productAnsweringProblematic),
-          'relevantProblematic': SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.relevantProblematic),
-          'productInterests': SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productInterests)
-        };
-      }
+    this._route.params.subscribe(params => {
+      const innovationId = params['innovationId'] || this.innoid;
 
+        this.readonly = true;
+      this._route
+        .queryParams
+        .subscribe(params => {
+          this.readonly = !(params['isAdmin'] &&  params['isAdmin'] === 'true' );
+        });
+      this._detailsExpanded = false;
+      this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
+      this._innovationService.getInnovationSythesis(innovationId).subscribe(synthesis => {
+        this._infographics = synthesis.infographics;
+        this._syntheses = synthesis.synthesis || {};
+        // Calcul du score max
+        this._maxCountScore = _.max(_.map(this._infographics.scores, function(score){ return score['count']; } ));
+        // Calculate the piecharts
+        if(this._infographics.pieCharts) {
+          this._chartPieData = {
+            'productAnsweringProblematic': SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productAnsweringProblematic),
+            'relevantProblematic': SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.relevantProblematic),
+            'productInterests': SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productInterests)
+          };
+        }
+
+      });
+      this._showDetails = { // TODO change to the right default (open or closed)
+        'professionals': true,
+        'relevantProblematic': true,
+        'productAnsweringProblematic': true,
+        'productInterests': true,
+        'interestOfProfessionals': true,
+        'partners': true,
+        'competitors': true,
+        'prices': true,
+        'commentsPositive': true,
+        'commentsNegative': true,
+        'applications': true
+      }
     });
-    this._showDetails = { // TODO change to the right default (open or closed)
-      'professionals': true,
-      'relevantProblematic': true,
-      'productAnsweringProblematic': true,
-      'productInterests': true,
-      'interestOfProfessionals': true,
-      'partners': true,
-      'competitors': true,
-      'prices': true,
-      'commentsPositive': true,
-      'commentsNegative': true,
-      'applications': true
-    }
   }
 
   static getChartValues(stats) {
