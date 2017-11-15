@@ -20,6 +20,7 @@ import { LoaderService } from './services/loader/loader.service';
 import { ChartsModule } from 'ng2-charts';
 import { IndexService } from './services/index/index.service';
 import { ShareService } from './services/share/share.service';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ShareService } from './services/share/share.service';
         useFactory: (CreateTranslateLoader)
       }
     }),
-    ChartsModule
+    ChartsModule,
+    Angular2FontawesomeModule
   ],
   providers: [
     Title,
