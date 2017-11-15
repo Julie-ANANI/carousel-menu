@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { TranslateModule } from '@ngx-translate/core';
-import { DragulaModule } from 'ng2-dragula';
 import { FileUploadModule } from 'ng2-file-upload';
 // import { FormErrorDirective } from '../../../../.toreview/dynamic-form-compozer/directives/form-error/form-error.directive';
 // import { DynamicFormComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
@@ -29,10 +28,10 @@ import { SqSortDirective } from '../../directives/smart-query/sqSort.directive';
 import { SqResetDirective } from '../../directives/smart-query/sqReset.directive';
 import { SharedModalComponent } from './components/shared-modal-component/shared-modal.component';
 import { ChartsModule } from 'ng2-charts';
-import { Ng2PageScrollModule } from 'ng2-page-scroll';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
 import { Ng2FileDropModule } from 'ng2-file-drop';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 
 @NgModule({
   imports: [
@@ -42,11 +41,10 @@ import { Ng2FileDropModule } from 'ng2-file-drop';
     ReactiveFormsModule,
     RouterModule.forChild([]), // giving no routes but needed for all <a [routerLink]=''> uses
     TranslateModule.forChild(),
-    DragulaModule,
     ChartsModule,
     FileUploadModule,
-    Ng2PageScrollModule,
-    Ng2FileDropModule
+    Ng2FileDropModule,
+    Angular2FontawesomeModule
   ],
   declarations: [
     // Directives
@@ -83,8 +81,6 @@ import { Ng2FileDropModule } from 'ng2-file-drop';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    DragulaModule, // TODO delete
-    Ng2PageScrollModule, // TODO utilisé ?
     Ng2FileDropModule,
 
     // Directives
