@@ -2,10 +2,10 @@
 <div class="users-menu" *ngIf="answers && answers.length">
   <ul>
     <li *ngFor="let answer of answers; let i = index">
-      <img [src]="buildImageUrl(answer.country.notation)"
-           alt="" width="23" height="16" class="user-flag">
 
       <p class="user-name" *ngIf="answer.professional.profileUrl">
+        <img [src]="buildImageUrl(answer.country.notation)"
+             alt="" width="23" height="16" class="user-flag">
         <a href="{{answer.professional.profileUrl}}" target="_blank">
           {{answer.professional.firstName}} {{answer.professional.lastName}}
         </a>
