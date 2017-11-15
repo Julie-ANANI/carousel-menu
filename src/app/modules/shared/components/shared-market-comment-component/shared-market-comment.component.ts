@@ -22,7 +22,6 @@ export class SharedMarketCommentComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("Shared market comment");
   }
 
   public buildImageUrl(country: string): string {

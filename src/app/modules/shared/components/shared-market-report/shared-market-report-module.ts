@@ -110,19 +110,10 @@ export class SharedMarketReportComponent implements OnInit {
     });
   }
 
-  public getAnswers(answersList:Array<any>): Array<any> {
+  public getAnswers(commentsList:Array<any>): Array<any> {
     if (this._infographics && this._infographics.answers) {
       let answers = this._infographics.answers;
-      return _.map(answersList, answer => _.find(answers, '_id', answer.answerId));
-    } else {
-      return [];
-    }
-  }
-
-  public getCommentPro(comment:any): Array<any> {
-    if (this._infographics && this._infographics.answers) {
-      let answers = this._infographics.answers;
-      return [_.find(answers, '_id', comment.answerId)];
+      return _.map(commentsList, comment => _.find(answers, (answer: any) => answer.id === comment.answerId));
     } else {
       return [];
     }
