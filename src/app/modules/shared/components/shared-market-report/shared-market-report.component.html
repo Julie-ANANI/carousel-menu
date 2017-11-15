@@ -104,12 +104,12 @@
             <div class="flex-container">
               <div class="big-blue-synthesis">
                 <div class="number-answers">
-                  <span>{{infographics.professionals.length}}</span>
+                  <span>{{infographics.answers.length}}</span>
                   {{ 'MARKET_REPORT.PROFESSIONAL.NUMBER' | translate }}
                 </div>
                 <hr>
                 <div class="number-follow-innovation">
-                  <img src="https://res.cloudinary.com/umi/image/upload/app/star.svg" alt="" width="22" height="22" class="center-block">
+                  <img src="https://res.cloudinary.com/umi/image/upload/app/star.svg" alt="" width="22" height="22" class="centered">
                   <span>{{infographics.stats.percentageFollow}}%</span>
                   {{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}
                 </div>
@@ -119,22 +119,22 @@
                 <p class="title">{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</p>
                 <text-zone [elementId]="'professionals'"
                            [readonly]="readonly"
-                           [data]="syntheses.professionals || ''"
+                           [data]="conclusions.answers || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.professionals)"></p>-->
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.professionals)"></p>-->
               </div>
             </div>
 
             <div class="bloc">
-              <div class="map center-block" width="684" height="339">
+              <div class="map centered" width="684" height="339">
                 <world-map [countries]="infographics.worldMap" [color]="'#0B90C6'"></world-map>
               </div>
             </div>
 
-            <button type="button" class="market-report-btn center-block"
+            <button type="button" class="market-report-btn centered"
                     [ngClass]="{'active': showDetails('professionals')}"
                     (click)="toggleDetails('professionals')">
-              {{showDetails('professionals') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN' | translate}}
+              {{(showDetails('professionals') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
               <i class="fa" aria-hidden="true"
                  [ngClass]="{'fa-angle-up': showDetails('professionals'), 'fa-angle-down': !showDetails('professionals')}"></i>
             </button>
@@ -142,25 +142,25 @@
             <div class="bloc details" *ngIf="showDetails('professionals')">
               <div class="flex-container wrap">
 
-                <div *ngFor="let professional of infographics.professionals" class="professional-item">
-                  <img [src]="getFlag(professional.answers[0].country.notation)"
+                <div *ngFor="let answer of infographics.answers" class="professional-item">
+                  <img [src]="getFlag(answer.country.notation)"
                        alt="" width="37" height="25" class="user-flag">
 
-                  <p class="user-name" *ngIf="professional.profileUrl">
+                  <p class="user-name" *ngIf="answer.professional.profileUrl">
                     <a href="{{showDetails('professionals')}}" target="_blank">
-                      {{professional.firstName}} {{professional.lastName}}
+                      {{answer.professional.firstName}} {{answer.professional.lastName}}
                     </a>
                   </p>
-                  <p class="user-name" *ngIf="!professional.profileUrl">
-                    {{professional.firstName}} {{professional.lastName}}
-                    <img src="http://res.cloudinary.com/umi/image/upload/c_scale,h_15/app/star.svg" alt="" width="15" height="15" *ngIf="professional.answers[0].follow" attr.tooltip-placement="top" attr.tooltip="{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}">
+                  <p class="user-name" *ngIf="!answer.professional.profileUrl">
+                    {{answer.professional.firstName}} {{answer.professional.lastName}}
+                    <img src="http://res.cloudinary.com/umi/image/upload/c_scale,h_15/app/star.svg" alt="" width="15" height="15" *ngIf="answer.follow" attr.tooltip-placement="top" attr.tooltip="{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}">
                   </p>
 
-                  <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{professional.answers[0].job}}</p>
-                  <p *ngIf="professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{professional.company}}</p>
+                  <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job}}</p>
+                  <p *ngIf="answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional.company}}</p>
 
-                  <a href="" (click)="seeAnswer(professional)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</a><br>
-                  <a href="mailto: {{professional.email}}">{{professional.email}}</a>
+                  <a href="" (click)="seeAnswer(answer)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</a><br>
+                  <a href="mailto: {{answer.professional.email}}">{{answer.professional.email}}</a>
                 </div>
 
               </div>
@@ -197,16 +197,16 @@
                 <p class="title">{{ 'MARKET_REPORT.MARKET_NEED.QUESTION' | translate }}</p>
                 <text-zone [elementId]="'relevantProblematic'"
                            [readonly]="readonly"
-                           [data]="syntheses.relevantProblematic || ''"
+                           [data]="conclusions.relevantProblematic || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.relevantProblematic)"></p>-->
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.relevantProblematic)"></p>-->
               </div>
             </div>
 
-            <button type="button" class="market-report-btn center-block"
+            <button type="button" class="market-report-btn centered"
                     [ngClass]="{'active': showDetails('relevantProblematic')}"
                     (click)="toggleDetails('relevantProblematic')">
-              {{showDetails('relevantProblematic') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN' | translate}}
+              {{(showDetails('relevantProblematic') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
               <i class="fa" aria-hidden="true"
                  [ngClass]="{'fa-angle-up': showDetails('relevantProblematic'), 'fa-angle-down': !showDetails('relevantProblematic')}"></i>
             </button>
@@ -250,16 +250,16 @@
                 <p class="title">{{ 'MARKET_REPORT.RELEVANCE.QUESTION' | translate }}</p>
                 <text-zone [elementId]="'productAnsweringProblematic'"
                            [readonly]="readonly"
-                           [data]="syntheses.productAnsweringProblematic || ''"
+                           [data]="conclusions.productAnsweringProblematic || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.productAnsweringProblematic)"></p>-->
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.productAnsweringProblematic)"></p>-->
               </div>
             </div>
 
-            <button type="button" class="market-report-btn center-block"
+            <button type="button" class="market-report-btn centered"
                     [ngClass]="{'active': showDetails('productAnsweringProblematic')}"
                     (click)="toggleDetails('productAnsweringProblematic')">
-              {{showDetails('productAnsweringProblematic') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN' | translate}}
+              {{(showDetails('productAnsweringProblematic') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
               <i class="fa" aria-hidden="true"
                  [ngClass]="{'fa-angle-up': showDetails('productAnsweringProblematic'), 'fa-angle-down': !showDetails('productAnsweringProblematic')}"></i>
             </button>
@@ -304,16 +304,16 @@
                 <p class="title">{{ 'MARKET_REPORT.DIFFERENTIATION.QUESTION' | translate }}</p>
                 <text-zone [elementId]="'productInterests'"
                            [readonly]="readonly"
-                           [data]="syntheses.productInterests || ''"
+                           [data]="conclusions.productInterests || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.productInterests)"></p>-->
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.productInterests)"></p>-->
               </div>
             </div>
 
-            <button type="button" class="market-report-btn center-block"
+            <button type="button" class="market-report-btn centered"
                     [ngClass]="{'active': showDetails('productInterests')}"
                     (click)="toggleDetails('productInterests')">
-              {{showDetails('productInterests') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN' | translate}}
+              {{(showDetails('productInterests') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
               <i class="fa" aria-hidden="true"
                  [ngClass]="{'fa-angle-up': showDetails('productInterests'), 'fa-angle-down': !showDetails('productInterests')}"></i>
             </button>
@@ -330,7 +330,7 @@
 
         <!-- *********************************************************
                         Marques d’intérêt
-                    ************************************************************** -->
+        ************************************************************** -->
 
         <section id="expression-of-interest">
           <h2>{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.TITLE' | translate }}</h2>
@@ -352,16 +352,16 @@
                 <p class="title">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.QUESTION' | translate }}</p>
                 <text-zone [elementId]="'interestOfProfessionals'"
                            [readonly]="readonly"
-                           [data]="syntheses.interestOfProfessionals || ''"
+                           [data]="conclusions.interestOfProfessionals || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
                 <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(infographic.synthesis.interestOfProfessionals)"></p>-->
               </div>
             </div>
 
-            <button type="button" class="market-report-btn center-block"
+            <button type="button" class="market-report-btn centered"
                     [ngClass]="{'active': showDetails('interestOfProfessionals')}"
                     (click)="toggleDetails('interestOfProfessionals')">
-              {{showDetails('interestOfProfessionals') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN' | translate}}
+              {{(showDetails('interestOfProfessionals') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
               <i class="fa" aria-hidden="true"
                  [ngClass]="{'fa-angle-up': showDetails('interestOfProfessionals'), 'fa-angle-down': !showDetails('interestOfProfessionals')}"></i>
             </button>
@@ -384,7 +384,7 @@
                     <li *ngFor="let client of infographics.interestOfProfessionals.client; let i = index"
                         [hidden]="i >= infographics.interestOfProfessionals.client.length/2">
                       <market-item class="flex-container"
-                                   [professionals]="getProfessionals(client.persons)"
+                                   [answers]="getAnswers(client.answers)"
                                    [value]="client.value"
                                    [count]="client.count"
                                    [url]="client.url"
@@ -398,7 +398,7 @@
                     <li *ngFor="let client of infographics.interestOfProfessionals.client; let i = index"
                         [hidden]="i < infographics.interestOfProfessionals.client.length/2">
                       <market-item class="flex-container"
-                                   [professionals]="getProfessionals(client.persons)"
+                                   [answers]="getAnswers(client.answers)"
                                    [value]="client.value"
                                    [count]="client.count"
                                    [url]="client.url"
@@ -419,7 +419,7 @@
                     <li *ngFor="let develop of infographics.interestOfProfessionals.develop; let i = index"
                         [hidden]="i >= infographics.interestOfProfessionals.develop.length/2">
                       <market-item class="flex-container"
-                                   [professionals]="getProfessionals(develop.persons)"
+                                   [answers]="getAnswers(develop.answers)"
                                    [value]="develop.value"
                                    [count]="develop.count"
                                    [url]="develop.url"
@@ -433,7 +433,7 @@
                     <li *ngFor="let develop of infographics.interestOfProfessionals.develop; let i = index"
                         [hidden]="i < infographics.interestOfProfessionals.develop.length/2">
                       <market-item class="flex-container"
-                                   [professionals]="getProfessionals(develop.persons)"
+                                   [answers]="getAnswers(develop.answers)"
                                    [value]="develop.value"
                                    [count]="develop.count"
                                    [url]="develop.url"
@@ -454,7 +454,7 @@
                     <li *ngFor="let distributor of infographics.interestOfProfessionals.distributor; let i = index"
                         [hidden]="i >= infographics.interestOfProfessionals.distributor.length/2">
                       <market-item class="flex-container"
-                                   [professionals]="getProfessionals(distributor.persons)"
+                                   [answers]="getAnswers(distributor.answers)"
                                    [value]="distributor.value"
                                    [count]="distributor.count"
                                    [url]="distributor.url"
@@ -468,7 +468,7 @@
                     <li *ngFor="let distributor of infographics.interestOfProfessionals.distributor; let i = index"
                         [hidden]="i < infographics.interestOfProfessionals.distributor.length/2">
                       <market-item class="flex-container"
-                                   [professionals]="getProfessionals(distributor.persons)"
+                                   [answers]="getAnswers(distributor.answers)"
                                    [value]="distributor.value"
                                    [count]="distributor.count"
                                    [url]="distributor.url"
@@ -506,16 +506,16 @@
                 <p class="title">{{ 'MARKET_REPORT.POTENTIAL_PARTNER.QUESTION' | translate }}</p>
                 <text-zone [elementId]="'partners'"
                            [readonly]="readonly"
-                           [data]="syntheses.partners || ''"
+                           [data]="conclusions.partners || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.partners)"></p>-->
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.partners)"></p>-->
               </div>
             </div>
 
-            <button type="button" class="market-report-btn center-block"
+            <button type="button" class="market-report-btn centered"
                     [ngClass]="{'active': showDetails('partners')}"
                     (click)="toggleDetails('partners')">
-              {{showDetails('partners') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN' | translate}}
+              {{(showDetails('partners') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
               <i class="fa" aria-hidden="true"
                  [ngClass]="{'fa-angle-up': showDetails('partners'), 'fa-angle-down': !showDetails('partners')}"></i>
             </button>
@@ -527,7 +527,7 @@
                     <li *ngFor="let partner of infographics.partnersByProfessionals; let i = index"
                         [hidden]="i >= infographics.partnersByProfessionals.length/2">
                       <market-item class="flex-container"
-                                   [professionals]="getProfessionals(partner.persons)"
+                                   [answers]="getAnswers(partner.answers)"
                                    [value]="partner.value"
                                    [count]="partner.count"
                                    [url]="partner.url"
@@ -541,7 +541,7 @@
                     <li *ngFor="let partner of infographics.partnersByProfessionals; let i = index"
                         [hidden]="i < infographics.partnersByProfessionals.length/2">
                       <market-item class="flex-container"
-                                   [professionals]="getProfessionals(partner.persons)"
+                                   [answers]="getAnswers(partner.answers)"
                                    [value]="partner.value"
                                    [count]="partner.count"
                                    [url]="partner.url"
@@ -564,7 +564,7 @@
                     [company]="comment.company"
                     [comment]="comment.comment"
                     [isNew]="false"
-                    [professionals]="getCommentPro(comment)">
+                    [answers]="getCommentPro(comment)">
                   </market-comment>
                 </li>
               </ul>
@@ -596,17 +596,17 @@
                 <p class="title">{{ 'MARKET_REPORT.ACTUAL_COMPETITION.QUESTION' | translate }}</p>
                 <text-zone [elementId]="'competitors'"
                            [readonly]="readonly"
-                           [data]="syntheses.competitors || ''"
+                           [data]="conclusions.competitors || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.competitors)"></p>-->
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.competitors)"></p>-->
               </div>
             </div>
 
-            <button type="button" class="market-report-btn center-block"
+            <button type="button" class="market-report-btn centered"
                     [ngClass]="{'active': showDetails('competitors')}"
                     (click)="toggleDetails('competitors')">
-              {{showDetails('partners') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN' | translate}}
-              <i class="fa" aria-hidden="true"
+              {{(showDetails('partners') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
+              <i fa class="fa" aria-hidden="true"
                  [ngClass]="{'fa-angle-up': showDetails('competitors'), 'fa-angle-down': !showDetails('competitors')}"></i>
             </button>
 
@@ -617,7 +617,7 @@
                     <li *ngFor="let competitor of infographics.competitors.companies; let i = index"
                         [hidden]="i >= infographics.competitors.companies.length/2">
                       <market-item class="flex-container"
-                                   [professionals]="getProfessionals(competitor.persons)"
+                                   [answers]="getAnswers(competitor.answers)"
                                    [value]="competitor.value"
                                    [count]="competitor.count"
                                    [url]="competitor.url"
@@ -631,7 +631,7 @@
                     <li *ngFor="let competitor of infographics.competitors.companies; let i = index"
                         [hidden]="i < infographics.competitors.companies.length/2">
                       <market-item class="flex-container"
-                                   [professionals]="getProfessionals(competitor.persons)"
+                                   [answers]="getAnswers(competitor.answers)"
                                    [value]="competitor.value"
                                    [count]="competitor.count"
                                    [url]="competitor.url"
@@ -654,7 +654,7 @@
                     [company]="comment.company"
                     [comment]="comment.comment"
                     [isNew]="false"
-                    [professionals]="getCommentPro(comment)">
+                    [answers]="getCommentPro(comment)">
                   </market-comment>
                 </li>
               </ul>
@@ -686,9 +686,9 @@
                 <p class="title">{{ 'MARKET_REPORT.PRICE.QUESTION' | translate }}</p>
                 <text-zone [elementId]="'prices-edit'"
                            [readonly]="readonly"
-                           [data]="syntheses.prices || ''"
+                           [data]="conclusions.prices || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.prices)"></p>-->
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.prices)"></p>-->
               </div>
             </div>
 
@@ -698,10 +698,10 @@
               <div class="average">Moyenne : {{infographics.priceAverage}}€</div>
             </div>
 
-            <button type="button" class="market-report-btn center-block"
+            <button type="button" class="market-report-btn centered"
                     [ngClass]="{'active': showDetails('prices')}"
                     (click)="toggleDetails('prices')">
-              {{showDetails('prices') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN' | translate}}
+              {{(showDetails('prices') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
               <i class="fa" aria-hidden="true"
                  [ngClass]="{'fa-angle-up': showDetails('prices'), 'fa-angle-down': !showDetails('prices')}"></i>
             </button>
@@ -717,7 +717,7 @@
                     [company]="comment.company"
                     [comment]="comment.comment"
                     [isNew]="false"
-                    [professionals]="getCommentPro(comment)">
+                    [answers]="getCommentPro(comment)">
                   </market-comment>
                 </li>
               </ul>
@@ -749,16 +749,16 @@
                 <p class="title">{{ 'MARKET_REPORT.STRONG.QUESTION' | translate }}</p>
                 <text-zone [elementId]="'commentsPositive'"
                            [readonly]="readonly"
-                           [data]="syntheses.commentsPositive || ''"
+                           [data]="conclusions.commentsPositive || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.commentsPositive)"></p>-->
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.commentsPositive)"></p>-->
               </div>
             </div>
 
-            <button type="button" class="market-report-btn center-block"
+            <button type="button" class="market-report-btn centered"
                     [ngClass]="{'active': showDetails('commentsPositive')}"
                     (click)="toggleDetails('commentsPositive')">
-              {{showDetails('commentsPositive') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN' | translate}}
+              {{(showDetails('commentsPositive') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
               <i class="fa" aria-hidden="true"
                  [ngClass]="{'fa-angle-up': showDetails('commentsPositive'), 'fa-angle-down': !showDetails('commentsPositive')}"></i>
             </button>
@@ -772,7 +772,7 @@
                     [company]="comment.company"
                     [comment]="comment.comment"
                     [isNew]="false"
-                    [professionals]="getCommentPro(comment)">
+                    [answers]="getCommentPro(comment)">
                   </market-comment>
                 </li>
               </ul>
@@ -805,16 +805,16 @@
                 <p class="title">{{ 'MARKET_REPORT.WEAK.QUESTION' | translate }}</p>
                 <text-zone [elementId]="'commentsNegative'"
                            [readonly]="readonly"
-                           [data]="syntheses.commentsNegative || ''"
+                           [data]="conclusions.commentsNegative || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.commentsNegative)"></p>-->
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.commentsNegative)"></p>-->
               </div>
             </div>
 
-            <button type="button" class="market-report-btn center-block"
+            <button type="button" class="market-report-btn centered"
                     [ngClass]="{'active': showDetails('commentsNegative')}"
                     (click)="toggleDetails('commentsNegative')">
-              {{showDetails('commentsNegative') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN' | translate}}
+              {{(showDetails('commentsNegative') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
               <i class="fa" aria-hidden="true"
                  [ngClass]="{'fa-angle-up': showDetails('commentsNegative'), 'fa-angle-down': !showDetails('commentsNegative')}"></i>
             </button>
@@ -828,7 +828,7 @@
                     [company]="comment.company"
                     [comment]="comment.comment"
                     [isNew]="false"
-                    [professionals]="getCommentPro(comment)">
+                    [answers]="getCommentPro(comment)">
                   </market-comment>
                 </li>
               </ul>
@@ -862,16 +862,16 @@
                 <p class="title">{{ 'MARKET_REPORT.NEW_APPLICATION.QUESTION' | translate }}</p>
                 <text-zone [elementId]="'applications'"
                            [readonly]="readonly"
-                           [data]="syntheses.applications || ''"
+                           [data]="conclusions.applications || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.applications)"></p>-->
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.applications)"></p>-->
               </div>
             </div>
 
-            <button type="button" class="market-report-btn center-block"
+            <button type="button" class="market-report-btn centered"
                     [ngClass]="{'active': showDetails('applications')}"
                     (click)="toggleDetails('applications')">
-              {{showDetails('applications') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN' | translate}}
+              {{(showDetails('applications') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
               <i class="fa" aria-hidden="true"
                  [ngClass]="{'fa-angle-up': showDetails('applications'), 'fa-angle-down': !showDetails('applications')}"></i>
             </button>
@@ -883,7 +883,7 @@
                     <li *ngFor="let application of infographics.applications; let i = index"
                         [hidden]="i >= infographics.applications.length/2">
                       <market-item class="flex-container"
-                                   [professionals]="getProfessionals(application.persons)"
+                                   [answers]="getAnswers(application.answers)"
                                    [value]="application.value"
                                    [count]="application.count"
                                    [isNew]="false">
@@ -896,7 +896,7 @@
                     <li *ngFor="let application of infographics.applications; let i = index"
                         [hidden]="i < infographics.applications.length/2">
                       <market-item class="flex-container"
-                                   [professionals]="getProfessionals(application.persons)"
+                                   [answers]="getAnswers(application.answers)"
                                    [value]="application.value"
                                    [count]="application.count"
                                    [isNew]="false">
@@ -918,7 +918,7 @@
                     [company]="comment.company"
                     [comment]="comment.comment"
                     [isNew]="false"
-                    [professionals]="getCommentPro(comment)">
+                    [answers]="getCommentPro(comment)">
                   </market-comment>
                 </li>
               </ul>
@@ -945,9 +945,9 @@
                 <p class="title">{{ 'MARKET_REPORT.MARKET_POTENTIAL.QUESTION' | translate }}</p>
                 <text-zone [elementId]="'marketPotential'"
                            [readonly]="readonly"
-                           [data]="syntheses.marketPotential || ''"
+                           [data]="conclusions.marketPotential || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(syntheses.marketPotential)"></p>-->
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.marketPotential)"></p>-->
               </div>
             </div>
 

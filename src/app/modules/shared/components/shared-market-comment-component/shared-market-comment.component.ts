@@ -16,7 +16,7 @@ export class SharedMarketCommentComponent implements OnInit {
   @Input() public company: any;
   @Input() public comment: any;
   @Input() public isNew: any;
-  @Input() public professionals: any;
+  @Input() public answers: any;
 
 
   constructor() { }

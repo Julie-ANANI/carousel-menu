@@ -25,7 +25,7 @@ export class SharedMarketReportComponent implements OnInit {
   private _isSaving = false;
 
   private _infographics: any;
-  private _syntheses: any;
+  private _conclusions: any;
   private _showDetails: any;
   private _maxCountScore: number;
 
@@ -60,8 +60,7 @@ export class SharedMarketReportComponent implements OnInit {
   ngOnInit() {
     this._route.params.subscribe(params => {
       const innovationId = params['innovationId'] || this.innoid;
-
-        this.readonly = true;
+      this.readonly = true;
       this._route
         .queryParams
         .subscribe(params => {
@@ -71,9 +70,9 @@ export class SharedMarketReportComponent implements OnInit {
       this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
       this._innovationService.getInnovationSythesis(innovationId).subscribe(synthesis => {
         this._infographics = synthesis.infographics;
-        this._syntheses = synthesis.synthesis || {};
+        this._conclusions = synthesis.conclusions || {};
         // Calcul du score max
-        this._maxCountScore = _.max(_.map(this._infographics.scores, function(score){ return score['count']; } ));
+        this._maxCountScore = _.max(_.map(this._infographics.scores, score => score['count']));
         // Calculate the piecharts
         if(this._infographics.pieCharts) {
           this._chartPieData = {
@@ -101,38 +100,29 @@ export class SharedMarketReportComponent implements OnInit {
   }
 
   static getChartValues(stats) {
-    return _.map(stats, function(stat){
-      return stat['count'];
-    })
+    return _.map(stats, stat => stat['count']);
   }
 
   public toggleSections(){
     let self = this;
-    _.forEach(this._showDetails, function(detail, key){
+    _.forEach(this._showDetails, (detail, key) => {
       self[key] = !detail;
-    })
+    });
   }
 
-  public getProfessionals(personsList:Array<any>): Array<any> {
-    if (this._infographics && this._infographics.professionals) {
-      let pros = this._infographics.professionals;
-      return _.map(personsList, function (person) {
-        return _.find(pros, function(pro){
-          return pro['_id'] === person.professionalId;
-        });
-      });
+  public getAnswers(answersList:Array<any>): Array<any> {
+    if (this._infographics && this._infographics.answers) {
+      let answers = this._infographics.answers;
+      return _.map(answersList, answer => _.find(answers, '_id', answer.answerId));
     } else {
       return [];
     }
   }
 
   public getCommentPro(comment:any): Array<any> {
-    if (this._infographics && this._infographics.professionals) {
-      let pros = this._infographics.professionals;
-      let pro = _.find(pros, function(pro){
-          return pro['_id'] === comment.professionalId;
-        });
-      return [pro];
+    if (this._infographics && this._infographics.answers) {
+      let answers = this._infographics.answers;
+      return [_.find(answers, '_id', comment.answerId)];
     } else {
       return [];
     }
@@ -153,18 +143,18 @@ export class SharedMarketReportComponent implements OnInit {
     return this._configurations[section][lang] || [];
   }
 
-  public seeAnswer(professional: any) { //TODO modal
+  public seeAnswer(answer: any) { //TODO modal
     console.log('OKAY');
     this._modalActive = 'active';
   }
 
   public keyupHandlerFunction(event) {
-    this._syntheses[event['id']] = event['content'];
+    this._conclusions[event['id']] = event['content'];
     //Saving
     this._isSaving = true;
-    this._innovationService.updateSynthesis(this.innoid, this._syntheses)
+    this._innovationService.updateSynthesis(this.innoid, this._conclusions)
       .subscribe(data=>{
-        this._syntheses= data.synthesis;
+        this._conclusions= data.synthesis;
         //Saved
         this._isSaving = false;
       });
@@ -194,8 +184,8 @@ export class SharedMarketReportComponent implements OnInit {
     return this._infographics;
   }
 
-  get syntheses(): any {
-    return this._syntheses;
+  get conclusions(): any {
+    return this._conclusions;
   }
 
   get detailsExpanded(): boolean {
