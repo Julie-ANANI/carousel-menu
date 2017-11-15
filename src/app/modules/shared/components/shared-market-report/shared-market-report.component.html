@@ -3,95 +3,96 @@
     <h1>{{infographics.title}}</h1>
     <p class="subtitle">{{ 'MARKET_REPORT.TITLE' | translate }}</p>
 
+  <!-- *********************************************************
+        Sidebar
+    ************************************************************** -->
+
+  <div class="sidebar sidebarIsSticky">
+    <div (click)="toggleSections()" class="toggle-sections">
+      {{ detailsExpanded ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND' | translate}}
+      <i class="fa float-right" aria-hidden="true"
+         [ngClass]="{'fa-plus-square-o': !detailsExpanded, 'fa-minus-square-o': detailsExpanded}"></i>
+    </div>
+    <ul>
+      <li>
+        <a href="#professional" du-smooth-scroll du-scrollspy>
+          {{ 'MARKET_REPORT.PROFESSIONAL.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#market-need" du-smooth-scroll du-scrollspy>
+          {{ 'MARKET_REPORT.MARKET_NEED.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#relevance-solution" du-smooth-scroll du-scrollspy>
+          {{ 'MARKET_REPORT.RELEVANCE.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#differentiation" du-smooth-scroll du-scrollspy>
+          {{ 'MARKET_REPORT.DIFFERENTIATION.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#expression-of-interest" du-smooth-scroll du-scrollspy>
+          {{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#potential-partners" du-smooth-scroll du-scrollspy>
+          {{ 'MARKET_REPORT.POTENTIAL_PARTNER.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#actual-competitors" du-smooth-scroll du-scrollspy>
+          {{ 'MARKET_REPORT.ACTUAL_COMPETITION.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#price-suggestion" du-smooth-scroll du-scrollspy>
+          {{ 'MARKET_REPORT.PRICE.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#strong-points" du-smooth-scroll du-scrollspy>
+          {{ 'MARKET_REPORT.STRONG.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#objections" du-smooth-scroll du-scrollspy>
+          {{ 'MARKET_REPORT.WEAK.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#new-application-fields" du-smooth-scroll du-scrollspy>
+          {{ 'MARKET_REPORT.NEW_APPLICATION.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#market-potential" du-smooth-scroll du-scrollspy>
+          {{ 'MARKET_REPORT.MARKET_POTENTIAL.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
 
     <div class="flex-container">
-      <!-- *********************************************************
-            Sidebar
-        ************************************************************** -->
 
-      <div class="sidebar" sticky body-class="sidebarIsSticky" sticky-class="imSoSticky" stick-limit="false">
-        <div (click)="toggleSections()" class="toggle-sections">
-          {{ detailsExpanded ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND' | translate}}
-          <i class="fa float-right" aria-hidden="true"
-             [ngClass]="{'fa-plus-square-o': !detailsExpanded, 'fa-minus-square-o': detailsExpanded}"></i>
-        </div>
-        <ul>
-          <li>
-            <a href="#professional" du-smooth-scroll du-scrollspy>
-              {{ 'MARKET_REPORT.PROFESSIONAL.SIDEBAR' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#market-need" du-smooth-scroll du-scrollspy>
-              {{ 'MARKET_REPORT.MARKET_NEED.SIDEBAR' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#relevance-solution" du-smooth-scroll du-scrollspy>
-              {{ 'MARKET_REPORT.RELEVANCE.SIDEBAR' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#differentiation" du-smooth-scroll du-scrollspy>
-              {{ 'MARKET_REPORT.DIFFERENTIATION.SIDEBAR' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#expression-of-interest" du-smooth-scroll du-scrollspy>
-              {{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.SIDEBAR' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#potential-partners" du-smooth-scroll du-scrollspy>
-              {{ 'MARKET_REPORT.POTENTIAL_PARTNER.SIDEBAR' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#actual-competitors" du-smooth-scroll du-scrollspy>
-              {{ 'MARKET_REPORT.ACTUAL_COMPETITION.SIDEBAR' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#price-suggestion" du-smooth-scroll du-scrollspy>
-              {{ 'MARKET_REPORT.PRICE.SIDEBAR' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#strong-points" du-smooth-scroll du-scrollspy>
-              {{ 'MARKET_REPORT.STRONG.SIDEBAR' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#objections" du-smooth-scroll du-scrollspy>
-              {{ 'MARKET_REPORT.WEAK.SIDEBAR' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#new-application-fields" du-smooth-scroll du-scrollspy>
-              {{ 'MARKET_REPORT.NEW_APPLICATION.SIDEBAR' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#market-potential" du-smooth-scroll du-scrollspy>
-              {{ 'MARKET_REPORT.MARKET_POTENTIAL.SIDEBAR' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-
+      <div class="sidebar"></div>
       <div class="content">
         <!-- *********************************************************
                 Liste des professionnels
