@@ -143,7 +143,7 @@
             <div class="bloc details" *ngIf="showDetails('professionals')">
               <div class="flex-container wrap">
 
-                <div *ngFor="let answer of infographics.answers" class="professional-item">
+                <div *ngFor="let answer of infographics.answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
                   <img [src]="getFlag(answer.country.notation)"
                        alt="" width="37" height="25" class="user-flag">
 
@@ -383,7 +383,8 @@
                 <div class="column">
                   <ul class="items">
                     <li *ngFor="let client of infographics.interestOfProfessionals.client; let i = index"
-                        [hidden]="i >= infographics.interestOfProfessionals.client.length/2">
+                        [hidden]="i >= infographics.interestOfProfessionals.client.length/2"
+                        [ngClass]="{'top-profil': client.quality === 2}">
                       <market-item class="flex-container"
                                    [answers]="getAnswers(client.answers)"
                                    [value]="client.value"
@@ -397,7 +398,8 @@
                 <div class="column">
                   <ul class="items">
                     <li *ngFor="let client of infographics.interestOfProfessionals.client; let i = index"
-                        [hidden]="i < infographics.interestOfProfessionals.client.length/2">
+                        [hidden]="i < infographics.interestOfProfessionals.client.length/2"
+                        [ngClass]="{'top-profil': client.quality === 2}">
                       <market-item class="flex-container"
                                    [answers]="getAnswers(client.answers)"
                                    [value]="client.value"
@@ -418,7 +420,8 @@
                 <div class="column">
                   <ul class="items">
                     <li *ngFor="let develop of infographics.interestOfProfessionals.develop; let i = index"
-                        [hidden]="i >= infographics.interestOfProfessionals.develop.length/2">
+                        [hidden]="i >= infographics.interestOfProfessionals.develop.length/2"
+                        [ngClass]="{'top-profil': develop.quality === 2}">
                       <market-item class="flex-container"
                                    [answers]="getAnswers(develop.answers)"
                                    [value]="develop.value"
@@ -432,7 +435,8 @@
                 <div class="column">
                   <ul class="items">
                     <li *ngFor="let develop of infographics.interestOfProfessionals.develop; let i = index"
-                        [hidden]="i < infographics.interestOfProfessionals.develop.length/2">
+                        [hidden]="i < infographics.interestOfProfessionals.develop.length/2"
+                        [ngClass]="{'top-profil': develop.quality === 2}">
                       <market-item class="flex-container"
                                    [answers]="getAnswers(develop.answers)"
                                    [value]="develop.value"
@@ -453,7 +457,8 @@
                 <div class="column">
                   <ul class="items">
                     <li *ngFor="let distributor of infographics.interestOfProfessionals.distributor; let i = index"
-                        [hidden]="i >= infographics.interestOfProfessionals.distributor.length/2">
+                        [hidden]="i >= infographics.interestOfProfessionals.distributor.length/2"
+                        [ngClass]="{'top-profil': distributor.quality === 2}">
                       <market-item class="flex-container"
                                    [answers]="getAnswers(distributor.answers)"
                                    [value]="distributor.value"
@@ -467,7 +472,8 @@
                 <div class="column">
                   <ul class="items">
                     <li *ngFor="let distributor of infographics.interestOfProfessionals.distributor; let i = index"
-                        [hidden]="i < infographics.interestOfProfessionals.distributor.length/2">
+                        [hidden]="i < infographics.interestOfProfessionals.distributor.length/2"
+                        [ngClass]="{'top-profil': distributor.quality === 2}">
                       <market-item class="flex-container"
                                    [answers]="getAnswers(distributor.answers)"
                                    [value]="distributor.value"
@@ -526,7 +532,8 @@
                 <div class="column">
                   <ul class="items">
                     <li *ngFor="let partner of infographics.partnersByProfessionals; let i = index"
-                        [hidden]="i >= infographics.partnersByProfessionals.length/2">
+                        [hidden]="i >= infographics.partnersByProfessionals.length/2"
+                        [ngClass]="{'top-profil': partner.quality === 2}">
                       <market-item class="flex-container"
                                    [answers]="getAnswers(partner.answers)"
                                    [value]="partner.value"
@@ -540,7 +547,8 @@
                 <div class="column">
                   <ul class="items">
                     <li *ngFor="let partner of infographics.partnersByProfessionals; let i = index"
-                        [hidden]="i < infographics.partnersByProfessionals.length/2">
+                        [hidden]="i < infographics.partnersByProfessionals.length/2"
+                        [ngClass]="{'top-profil': partner.quality === 2}">
                       <market-item class="flex-container"
                                    [answers]="getAnswers(partner.answers)"
                                    [value]="partner.value"
@@ -616,7 +624,8 @@
                 <div class="column">
                   <ul class="items">
                     <li *ngFor="let competitor of infographics.competitors.companies; let i = index"
-                        [hidden]="i >= infographics.competitors.companies.length/2">
+                        [hidden]="i >= infographics.competitors.companies.length/2"
+                        [ngClass]="{'top-profil': competitors.quality === 2}">
                       <market-item class="flex-container"
                                    [answers]="getAnswers(competitor.answers)"
                                    [value]="competitor.value"
@@ -630,7 +639,8 @@
                 <div class="column">
                   <ul class="items">
                     <li *ngFor="let competitor of infographics.competitors.companies; let i = index"
-                        [hidden]="i < infographics.competitors.companies.length/2">
+                        [hidden]="i < infographics.competitors.companies.length/2"
+                        [ngClass]="{'top-profil': competitors.quality === 2}">
                       <market-item class="flex-container"
                                    [answers]="getAnswers(competitor.answers)"
                                    [value]="competitor.value"
