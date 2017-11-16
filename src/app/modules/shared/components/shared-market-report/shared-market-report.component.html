@@ -776,7 +776,8 @@
 
             <div class="bloc details" *ngIf="showDetails('commentsPositive') && infographics.commentsPositive.length">
               <ul class="comments">
-                <li *ngFor="let comment of infographics.commentsPositive; let i = index">
+                <li *ngFor="let comment of infographics.commentsPositive; let i = index"
+                    [ngClass]="{'top-profil': comment.quality === 2}">
                   <market-comment
                     [job]="comment.job"
                     [country]="comment.flag"
@@ -832,7 +833,8 @@
 
             <div class="bloc details" *ngIf="showDetails('commentsNegative') && infographics.commentsNegative.length">
               <ul class="comments">
-                <li *ngFor="let comment of infographics.commentsNegative; let i = index">
+                <li *ngFor="let comment of infographics.commentsNegative; let i = index"
+                    [ngClass]="{'top-profil': comment.quality === 2}">
                   <market-comment
                     [job]="comment.job"
                     [country]="comment.flag"
