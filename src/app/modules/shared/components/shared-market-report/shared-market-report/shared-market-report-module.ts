@@ -8,7 +8,7 @@ import { NgClass } from '@angular/common';
 import * as _ from 'lodash';
 
 
-import { InnovationService } from './../../../../services/innovation/innovation.service';
+import { InnovationService } from './../../../../../services/innovation/innovation.service';
 
 @Component({
   selector: 'app-shared-market-report',

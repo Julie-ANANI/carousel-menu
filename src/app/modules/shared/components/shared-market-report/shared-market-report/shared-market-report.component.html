@@ -275,6 +275,98 @@
           </div>
         </section>
 
+        <!-- *********************************************************
+                Concurrence actuelle
+            ************************************************************** -->
+
+        <section id="actual-competitors">
+          <h2>{{ 'MARKET_REPORT.ACTUAL_COMPETITION.TITLE' | translate }}</h2>
+
+          <div class="white-frame">
+            <div class="flex-container">
+              <div class="big-blue-synthesis">
+                <div class="number-answers">
+                  <span>{{infographics.competitors.companies.length}}</span>
+                  {{ 'MARKET_REPORT.ACTUAL_COMPETITION.NUMBER' | translate }}
+                </div>
+                <hr>
+                <div class="number-ratio">
+                  <span>{{infographics.stats.percentageCompetitors}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
+                </div>
+              </div>
+
+              <div class="umi-synthesis flex-container">
+                <p class="title">{{ 'MARKET_REPORT.ACTUAL_COMPETITION.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'competitors'"
+                           [readonly]="readonly"
+                           [data]="conclusions.competitors || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.competitors)"></p>-->
+              </div>
+            </div>
+
+            <button type="button" class="market-report-btn centered"
+                    [ngClass]="{'active': showDetails('competitors')}"
+                    (click)="toggleDetails('competitors')">
+              {{(showDetails('partners') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
+              <i fa class="fa" aria-hidden="true"
+                 [ngClass]="{'fa-angle-up': showDetails('competitors'), 'fa-angle-down': !showDetails('competitors')}"></i>
+            </button>
+
+            <div class="bloc details" *ngIf="showDetails('competitors')">
+              <div class="flex-container">
+                <div class="column">
+                  <ul class="items">
+                    <li *ngFor="let competitor of infographics.competitors.companies; let i = index"
+                        [hidden]="i >= infographics.competitors.companies.length/2"
+                        [ngClass]="{'top-profil': competitors.quality === 2}">
+                      <market-item class="flex-container"
+                                   [answers]="getAnswers(competitor.answers)"
+                                   [value]="competitor.value"
+                                   [count]="competitor.count"
+                                   [url]="competitor.url"
+                                   [isNew]="false">
+                      </market-item>
+                    </li>
+                  </ul>
+                </div>
+                <div class="column">
+                  <ul class="items">
+                    <li *ngFor="let competitor of infographics.competitors.companies; let i = index"
+                        [hidden]="i < infographics.competitors.companies.length/2"
+                        [ngClass]="{'top-profil': competitors.quality === 2}">
+                      <market-item class="flex-container"
+                                   [answers]="getAnswers(competitor.answers)"
+                                   [value]="competitor.value"
+                                   [count]="competitor.count"
+                                   [url]="competitor.url"
+                                   [isNew]="false">
+                      </market-item>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="bloc details" *ngIf="showDetails('competitors') && infographics.competitorsComments.length">
+              <p class="title-question">{{infographics.competitorsComments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
+
+              <ul class="comments">
+                <li *ngFor="let comment of infographics.competitorsComments; let i = index">
+                  <market-comment
+                    [job]="comment.job"
+                    [country]="comment.flag"
+                    [company]="comment.company"
+                    [comment]="comment.comment"
+                    [isNew]="false"
+                    [answers]="getAnswers([comment])">
+                  </market-comment>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
 
         <!-- *********************************************************
                 Différenciation
@@ -325,6 +417,281 @@
                 [stats]="infographics.pieCharts.productInterests"
                 [number]="true">
               </bar-chart>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- *********************************************************
+                Key Advantages
+            ************************************************************** -->
+
+        <section id="key-advantages">
+          <h2>{{ 'MARKET_REPORT.BENEFIT.TITLE' | translate }}</h2>
+        </section>
+
+        <!-- *********************************************************
+                Points forts
+            ************************************************************** -->
+
+        <section id="strong-points">
+          <h2>{{ 'MARKET_REPORT.STRONG.TITLE' | translate }}</h2>
+
+          <div class="white-frame">
+            <div class="flex-container">
+              <div class="big-blue-synthesis">
+                <div class="number-answers">
+                  <span>{{infographics.commentsPositive.length}}</span>
+                  {{ 'MARKET_REPORT.STRONG.NUMBER' | translate }}
+                </div>
+                <hr>
+                <div class="number-ratio">
+                  <span>{{infographics.stats.percentageCommentsPositive}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
+                </div>
+              </div>
+
+              <div class="umi-synthesis flex-container">
+                <p class="title">{{ 'MARKET_REPORT.STRONG.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'commentsPositive'"
+                           [readonly]="readonly"
+                           [data]="conclusions.commentsPositive || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.commentsPositive)"></p>-->
+              </div>
+            </div>
+
+            <button type="button" class="market-report-btn centered"
+                    [ngClass]="{'active': showDetails('commentsPositive')}"
+                    (click)="toggleDetails('commentsPositive')">
+              {{(showDetails('commentsPositive') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
+              <i class="fa" aria-hidden="true"
+                 [ngClass]="{'fa-angle-up': showDetails('commentsPositive'), 'fa-angle-down': !showDetails('commentsPositive')}"></i>
+            </button>
+
+            <div class="bloc details" *ngIf="showDetails('commentsPositive') && infographics.commentsPositive.length">
+              <ul class="comments">
+                <li *ngFor="let comment of infographics.commentsPositive; let i = index"
+                    [ngClass]="{'top-profil': comment.quality === 2}">
+                  <market-comment
+                    [job]="comment.job"
+                    [country]="comment.flag"
+                    [company]="comment.company"
+                    [comment]="comment.comment"
+                    [isNew]="false"
+                    [answers]="getAnswers([comment])">
+                  </market-comment>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- *********************************************************
+            Objections
+        ************************************************************** -->
+
+        <section id="objections">
+          <h2>{{ 'MARKET_REPORT.WEAK.TITLE' | translate }}</h2>
+
+          <div class="white-frame">
+            <div class="flex-container">
+              <div class="big-blue-synthesis">
+                <div class="number-answers">
+                  <span>{{infographics.commentsNegative.length}}</span>
+                  {{ 'MARKET_REPORT.WEAK.NUMBER' | translate }}
+                </div>
+                <hr>
+                <div class="number-ratio">
+                  <span>{{infographics.stats.percentageCommentsNegative}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
+                </div>
+              </div>
+
+              <div class="umi-synthesis flex-container">
+                <p class="title">{{ 'MARKET_REPORT.WEAK.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'commentsNegative'"
+                           [readonly]="readonly"
+                           [data]="conclusions.commentsNegative || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.commentsNegative)"></p>-->
+              </div>
+            </div>
+
+            <button type="button" class="market-report-btn centered"
+                    [ngClass]="{'active': showDetails('commentsNegative')}"
+                    (click)="toggleDetails('commentsNegative')">
+              {{(showDetails('commentsNegative') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
+              <i class="fa" aria-hidden="true"
+                 [ngClass]="{'fa-angle-up': showDetails('commentsNegative'), 'fa-angle-down': !showDetails('commentsNegative')}"></i>
+            </button>
+
+            <div class="bloc details" *ngIf="showDetails('commentsNegative') && infographics.commentsNegative.length">
+              <ul class="comments">
+                <li *ngFor="let comment of infographics.commentsNegative; let i = index"
+                    [ngClass]="{'top-profil': comment.quality === 2}">
+                  <market-comment
+                    [job]="comment.job"
+                    [country]="comment.flag"
+                    [company]="comment.company"
+                    [comment]="comment.comment"
+                    [isNew]="false"
+                    [answers]="getAnswers([comment])">
+                  </market-comment>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- *********************************************************
+                        Recommandations de prix
+                    ************************************************************** -->
+
+        <section id="price-suggestion">
+          <h2>{{ 'MARKET_REPORT.PRICE.TITLE' | translate }}</h2>
+
+          <div class="white-frame">
+            <div class="flex-container">
+              <div class="big-blue-synthesis">
+                <div class="number-answers">
+                  <span>{{infographics.prices.length + infographics.pricesComments.length}}</span>
+                  {{ 'MARKET_REPORT.PRICE.NUMBER' | translate }}
+                </div>
+                <hr>
+                <div class="number-ratio">
+                  <span>{{infographics.stats.percentagePrices}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
+                </div>
+              </div>
+
+              <div class="umi-synthesis flex-container">
+                <p class="title">{{ 'MARKET_REPORT.PRICE.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'prices-edit'"
+                           [readonly]="readonly"
+                           [data]="conclusions.prices || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.prices)"></p>-->
+              </div>
+            </div>
+
+            <div class="bloc" id="prices" *ngIf="infographics.priceAverage">
+              <app-shared-infographics-prices [rawData]="infographics.prices"></app-shared-infographics-prices>
+
+              <div class="average">Moyenne : {{infographics.priceAverage}}€</div>
+            </div>
+
+            <button type="button" class="market-report-btn centered"
+                    [ngClass]="{'active': showDetails('prices')}"
+                    (click)="toggleDetails('prices')">
+              {{(showDetails('prices') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
+              <i class="fa" aria-hidden="true"
+                 [ngClass]="{'fa-angle-up': showDetails('prices'), 'fa-angle-down': !showDetails('prices')}"></i>
+            </button>
+
+            <div class="bloc details" *ngIf="showDetails('prices') && infographics.pricesComments.length">
+              <p class="title-question">{{infographics.pricesComments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
+
+              <ul class="comments">
+                <li *ngFor="let comment of infographics.pricesComments; let i = index">
+                  <market-comment
+                    [job]="comment.job"
+                    [country]="comment.flag"
+                    [company]="comment.company"
+                    [comment]="comment.comment"
+                    [isNew]="false"
+                    [answers]="getAnswers([comment])">
+                  </market-comment>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- *********************************************************
+               Nouvelles applications
+           ************************************************************** -->
+
+        <section id="new-application-fields">
+          <h2>{{ 'MARKET_REPORT.NEW_APPLICATION.TITLE' | translate }}</h2>
+
+          <div class="white-frame">
+            <div class="flex-container">
+              <div class="big-blue-synthesis">
+                <div class="number-answers">
+                  <span>{{infographics.applications.length}}</span>
+                  {{ 'MARKET_REPORT.NEW_APPLICATION.NUMBER' | translate }}
+                </div>
+                <hr>
+                <div class="number-ratio">
+                  <span>{{infographics.stats.percentageApplications}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
+                </div>
+              </div>
+
+              <div class="umi-synthesis flex-container">
+                <p class="title">{{ 'MARKET_REPORT.NEW_APPLICATION.QUESTION' | translate }}</p>
+                <text-zone [elementId]="'applications'"
+                           [readonly]="readonly"
+                           [data]="conclusions.applications || ''"
+                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
+                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.applications)"></p>-->
+              </div>
+            </div>
+
+            <button type="button" class="market-report-btn centered"
+                    [ngClass]="{'active': showDetails('applications')}"
+                    (click)="toggleDetails('applications')">
+              {{(showDetails('applications') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
+              <i class="fa" aria-hidden="true"
+                 [ngClass]="{'fa-angle-up': showDetails('applications'), 'fa-angle-down': !showDetails('applications')}"></i>
+            </button>
+
+            <div class="bloc details" *ngIf="showDetails('applications')">
+              <div class="flex-container">
+                <div class="column">
+                  <ul class="items">
+                    <li *ngFor="let application of infographics.applications; let i = index"
+                        [hidden]="i >= infographics.applications.length/2">
+                      <market-item class="flex-container"
+                                   [answers]="getAnswers(application.answers)"
+                                   [value]="application.value"
+                                   [count]="application.count"
+                                   [isNew]="false">
+                      </market-item>
+                    </li>
+                  </ul>
+                </div>
+                <div class="column">
+                  <ul class="items">
+                    <li *ngFor="let application of infographics.applications; let i = index"
+                        [hidden]="i < infographics.applications.length/2">
+                      <market-item class="flex-container"
+                                   [answers]="getAnswers(application.answers)"
+                                   [value]="application.value"
+                                   [count]="application.count"
+                                   [isNew]="false">
+                      </market-item>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="bloc details" *ngIf="showDetails('applications') && infographics.applicationsComments.length">
+              <p class="title-question">{{infographics.applicationsComments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
+
+              <ul class="comments">
+                <li *ngFor="let comment of infographics.applicationsComments; let i = index">
+                  <market-comment
+                    [job]="comment.job"
+                    [country]="comment.flag"
+                    [company]="comment.company"
+                    [comment]="comment.comment"
+                    [isNew]="false"
+                    [answers]="getAnswers([comment])">
+                  </market-comment>
+                </li>
+              </ul>
             </div>
           </div>
         </section>
@@ -567,364 +934,6 @@
 
               <ul class="comments">
                 <li *ngFor="let comment of infographics.partnersComments; let i = index">
-                  <market-comment
-                    [job]="comment.job"
-                    [country]="comment.flag"
-                    [company]="comment.company"
-                    [comment]="comment.comment"
-                    [isNew]="false"
-                    [answers]="getAnswers([comment])">
-                  </market-comment>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <!-- *********************************************************
-                Concurrence actuelle
-            ************************************************************** -->
-
-        <section id="actual-competitors">
-          <h2>{{ 'MARKET_REPORT.ACTUAL_COMPETITION.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.competitors.companies.length}}</span>
-                  {{ 'MARKET_REPORT.ACTUAL_COMPETITION.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-ratio">
-                  <span>{{infographics.stats.percentageCompetitors}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.ACTUAL_COMPETITION.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'competitors'"
-                           [readonly]="readonly"
-                           [data]="conclusions.competitors || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.competitors)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('competitors')}"
-                    (click)="toggleDetails('competitors')">
-              {{(showDetails('partners') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i fa class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('competitors'), 'fa-angle-down': !showDetails('competitors')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('competitors')">
-              <div class="flex-container">
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let competitor of infographics.competitors.companies; let i = index"
-                        [hidden]="i >= infographics.competitors.companies.length/2"
-                        [ngClass]="{'top-profil': competitors.quality === 2}">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(competitor.answers)"
-                                   [value]="competitor.value"
-                                   [count]="competitor.count"
-                                   [url]="competitor.url"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let competitor of infographics.competitors.companies; let i = index"
-                        [hidden]="i < infographics.competitors.companies.length/2"
-                        [ngClass]="{'top-profil': competitors.quality === 2}">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(competitor.answers)"
-                                   [value]="competitor.value"
-                                   [count]="competitor.count"
-                                   [url]="competitor.url"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="bloc details" *ngIf="showDetails('competitors') && infographics.competitorsComments.length">
-              <p class="title-question">{{infographics.competitorsComments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
-
-              <ul class="comments">
-                <li *ngFor="let comment of infographics.competitorsComments; let i = index">
-                  <market-comment
-                    [job]="comment.job"
-                    [country]="comment.flag"
-                    [company]="comment.company"
-                    [comment]="comment.comment"
-                    [isNew]="false"
-                    [answers]="getAnswers([comment])">
-                  </market-comment>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <!-- *********************************************************
-                        Recommandations de prix
-                    ************************************************************** -->
-
-        <section id="price-suggestion">
-          <h2>{{ 'MARKET_REPORT.PRICE.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.prices.length + infographics.pricesComments.length}}</span>
-                  {{ 'MARKET_REPORT.PRICE.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-ratio">
-                  <span>{{infographics.stats.percentagePrices}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.PRICE.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'prices-edit'"
-                           [readonly]="readonly"
-                           [data]="conclusions.prices || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.prices)"></p>-->
-              </div>
-            </div>
-
-            <div class="bloc" id="prices" *ngIf="infographics.priceAverage">
-              <app-shared-infographics-prices [rawData]="infographics.prices"></app-shared-infographics-prices>
-
-              <div class="average">Moyenne : {{infographics.priceAverage}}€</div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('prices')}"
-                    (click)="toggleDetails('prices')">
-              {{(showDetails('prices') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('prices'), 'fa-angle-down': !showDetails('prices')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('prices') && infographics.pricesComments.length">
-              <p class="title-question">{{infographics.pricesComments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
-
-              <ul class="comments">
-                <li *ngFor="let comment of infographics.pricesComments; let i = index">
-                  <market-comment
-                    [job]="comment.job"
-                    [country]="comment.flag"
-                    [company]="comment.company"
-                    [comment]="comment.comment"
-                    [isNew]="false"
-                    [answers]="getAnswers([comment])">
-                  </market-comment>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <!-- *********************************************************
-                Points forts
-            ************************************************************** -->
-
-        <section id="strong-points">
-          <h2>{{ 'MARKET_REPORT.STRONG.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.commentsPositive.length}}</span>
-                  {{ 'MARKET_REPORT.STRONG.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-ratio">
-                  <span>{{infographics.stats.percentageCommentsPositive}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.STRONG.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'commentsPositive'"
-                           [readonly]="readonly"
-                           [data]="conclusions.commentsPositive || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.commentsPositive)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('commentsPositive')}"
-                    (click)="toggleDetails('commentsPositive')">
-              {{(showDetails('commentsPositive') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('commentsPositive'), 'fa-angle-down': !showDetails('commentsPositive')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('commentsPositive') && infographics.commentsPositive.length">
-              <ul class="comments">
-                <li *ngFor="let comment of infographics.commentsPositive; let i = index"
-                    [ngClass]="{'top-profil': comment.quality === 2}">
-                  <market-comment
-                    [job]="comment.job"
-                    [country]="comment.flag"
-                    [company]="comment.company"
-                    [comment]="comment.comment"
-                    [isNew]="false"
-                    [answers]="getAnswers([comment])">
-                  </market-comment>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- *********************************************************
-            Objections
-        ************************************************************** -->
-
-        <section id="objections">
-          <h2>{{ 'MARKET_REPORT.WEAK.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.commentsNegative.length}}</span>
-                  {{ 'MARKET_REPORT.WEAK.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-ratio">
-                  <span>{{infographics.stats.percentageCommentsNegative}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.WEAK.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'commentsNegative'"
-                           [readonly]="readonly"
-                           [data]="conclusions.commentsNegative || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.commentsNegative)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('commentsNegative')}"
-                    (click)="toggleDetails('commentsNegative')">
-              {{(showDetails('commentsNegative') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('commentsNegative'), 'fa-angle-down': !showDetails('commentsNegative')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('commentsNegative') && infographics.commentsNegative.length">
-              <ul class="comments">
-                <li *ngFor="let comment of infographics.commentsNegative; let i = index"
-                    [ngClass]="{'top-profil': comment.quality === 2}">
-                  <market-comment
-                    [job]="comment.job"
-                    [country]="comment.flag"
-                    [company]="comment.company"
-                    [comment]="comment.comment"
-                    [isNew]="false"
-                    [answers]="getAnswers([comment])">
-                  </market-comment>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-        </section>
-
-
-        <!-- *********************************************************
-               Nouvelles applications
-           ************************************************************** -->
-
-        <section id="new-application-fields">
-          <h2>{{ 'MARKET_REPORT.NEW_APPLICATION.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.applications.length}}</span>
-                  {{ 'MARKET_REPORT.NEW_APPLICATION.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-ratio">
-                  <span>{{infographics.stats.percentageApplications}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.NEW_APPLICATION.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'applications'"
-                           [readonly]="readonly"
-                           [data]="conclusions.applications || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.applications)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('applications')}"
-                    (click)="toggleDetails('applications')">
-              {{(showDetails('applications') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('applications'), 'fa-angle-down': !showDetails('applications')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('applications')">
-              <div class="flex-container">
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let application of infographics.applications; let i = index"
-                        [hidden]="i >= infographics.applications.length/2">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(application.answers)"
-                                   [value]="application.value"
-                                   [count]="application.count"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let application of infographics.applications; let i = index"
-                        [hidden]="i < infographics.applications.length/2">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(application.answers)"
-                                   [value]="application.value"
-                                   [count]="application.count"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="bloc details" *ngIf="showDetails('applications') && infographics.applicationsComments.length">
-              <p class="title-question">{{infographics.applicationsComments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
-
-              <ul class="comments">
-                <li *ngFor="let comment of infographics.applicationsComments; let i = index">
                   <market-comment
                     [job]="comment.job"
                     [country]="comment.flag"

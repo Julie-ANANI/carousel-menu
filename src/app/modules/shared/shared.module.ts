@@ -15,10 +15,10 @@ import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
 import { SharedLoaderComponent } from './components/shared-loader/shared-loader.component';
 import { SharedHeaderComponent } from './components/shared-header/shared-header.component';
-import { SharedMarketReportComponent } from './components/shared-market-report/shared-market-report-module';
+import { SharedMarketReportComponent } from './components/shared-market-report/shared-market-report/shared-market-report-module';
 import { SharedBarChartComponent } from './components/shared-bar-chart-component/shared-bar-chart.component';
-import { SharedMarketItemComponent } from './components/shared-market-item-component/shared-market-item.component';
-import { SharedMarketCommentComponent } from './components/shared-market-comment-component/shared-market-comment.component';
+import { SharedMarketItemComponent } from './components/shared-market-report/shared-market-item-component/shared-market-item.component';
+import { SharedMarketCommentComponent } from './components/shared-market-report/shared-market-comment-component/shared-market-comment.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { SharedPricesComponent } from './components/shared-prices-component/shared-prices.component';
 import { SharedWorldMapComponent } from './components/shared-world-map-component/shared-world-map.component';
