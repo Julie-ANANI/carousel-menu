@@ -84,17 +84,17 @@ export class SharedMarketReportComponent implements OnInit {
 
       });
       this._showDetails = { // TODO change to the right default (open or closed)
-        'professionals': true,
-        'relevantProblematic': true,
-        'productAnsweringProblematic': true,
-        'productInterests': true,
-        'interestOfProfessionals': true,
-        'partners': true,
-        'competitors': true,
-        'prices': true,
-        'commentsPositive': true,
-        'commentsNegative': true,
-        'applications': true
+        'professionals': this._detailsExpanded,
+        'relevantProblematic': this._detailsExpanded,
+        'productAnsweringProblematic': this._detailsExpanded,
+        'productInterests': this._detailsExpanded,
+        'interestOfProfessionals': this._detailsExpanded,
+        'partners': this._detailsExpanded,
+        'competitors': this._detailsExpanded,
+        'prices': this._detailsExpanded,
+        'commentsPositive': this._detailsExpanded,
+        'commentsNegative': this._detailsExpanded,
+        'applications': this._detailsExpanded
       }
     });
   }
@@ -104,9 +104,9 @@ export class SharedMarketReportComponent implements OnInit {
   }
 
   public toggleSections(){
-    let self = this;
+    this._detailsExpanded = !this._detailsExpanded;
     _.forEach(this._showDetails, (detail, key) => {
-      self[key] = !detail;
+      this._showDetails[key] = this._detailsExpanded;
     });
   }
 

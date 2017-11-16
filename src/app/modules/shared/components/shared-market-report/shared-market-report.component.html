@@ -9,7 +9,7 @@
 
   <div class="sidebar sidebarIsSticky">
     <div (click)="toggleSections()" class="toggle-sections">
-      {{ detailsExpanded ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND' | translate}}
+      {{ (detailsExpanded ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND') | translate}}
       <i class="fa float-right" aria-hidden="true"
          [ngClass]="{'fa-plus-square-o': !detailsExpanded, 'fa-minus-square-o': detailsExpanded}"></i>
     </div>
