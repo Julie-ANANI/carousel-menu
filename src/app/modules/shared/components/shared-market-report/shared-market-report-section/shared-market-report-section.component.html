@@ -49,6 +49,13 @@
       </div>
     </div>
 
+    <!--======= Prix =======-->
+    <div class="bloc" id="prices" *ngIf="priceAverage && type === 'prices'">
+      <app-shared-infographics-prices [rawData]="prices"></app-shared-infographics-prices>
+
+      <div class="average">Moyenne : {{priceAverage}}€</div>
+    </div>
+
     <!--======= Bouton plier/déplier =======-->
     <button type="button" class="market-report-btn centered"
             *ngIf="type!='score'"
@@ -60,6 +67,9 @@
     </button>
 
     <div class="bloc details" *ngIf="showDetails">
+      <p class="title-question">{{comments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
+
+      <!--======= Liste des pros =======-->
       <div *ngIf="type === 'pros'" class="prosList">
         <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
           <img [src]="getFlag(answer.country.notation)"
@@ -82,12 +92,28 @@
           <a href="mailto: {{answer.professional.email}}">{{answer.professional.email}}</a>
         </div>
       </div>
+
+      <!--======= Bar Chart =======-->
       <bar-chart
         *ngIf="type === 'pie'"
         [levels]="getLevels('en')"
         [stats]="pieChartData"
         [number]="true">
       </bar-chart>
+
+      <!--======= Liste de commentaires =======-->
+      <ul class="comments">
+        <li *ngFor="let comment of comments; let i = index">
+          <market-comment
+            [job]="comment.job"
+            [country]="comment.flag"
+            [company]="comment.company"
+            [comment]="comment.comment"
+            [isNew]="false"
+            [answers]="getAnswers([comment])">
+          </market-comment>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

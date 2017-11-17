@@ -392,66 +392,18 @@
         <!-- *********************************************************
                         Recommandations de prix
                     ************************************************************** -->
-
-        <section id="price-suggestion">
-          <h2>{{ 'MARKET_REPORT.PRICE.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.prices.length + infographics.pricesComments.length}}</span>
-                  {{ 'MARKET_REPORT.PRICE.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-ratio">
-                  <span>{{infographics.stats.percentagePrices}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.PRICE.QUESTION' | translate }}</p>
-                <!--<text-zone [elementId]="'prices-edit'"
-                           [readonly]="readonly"
-                           [data]="conclusions.prices || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.prices)"></p>-->
-              </div>
-            </div>
-
-            <div class="bloc" id="prices" *ngIf="infographics.priceAverage">
-              <app-shared-infographics-prices [rawData]="infographics.prices"></app-shared-infographics-prices>
-
-              <div class="average">Moyenne : {{infographics.priceAverage}}€</div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('prices')}"
-                    (click)="toggleDetails('prices')">
-              {{(showDetails('prices') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('prices'), 'fa-angle-down': !showDetails('prices')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('prices') && infographics.pricesComments.length">
-              <p class="title-question">{{infographics.pricesComments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
-
-              <ul class="comments">
-                <li *ngFor="let comment of infographics.pricesComments; let i = index">
-                  <market-comment
-                    [job]="comment.job"
-                    [country]="comment.flag"
-                    [company]="comment.company"
-                    [comment]="comment.comment"
-                    [isNew]="false"
-                    [answers]="getAnswers([comment])">
-                  </market-comment>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
+        <market-report-section
+          [id]="'price-suggestion'"
+          [i18n]="'PRICE'"
+          [key]="'prices'"
+          [innoid]="innoid"
+          [priceAverage]="infographics.priceAverage"
+          [prices]="infographics.prices"
+          [comments]="infographics.pricesComments"
+          [percentage]="infographics.stats.percentagePrices"
+          [answers]="answers"
+          [type]="'prices'">
+        </market-report-section>
 
         <!-- *********************************************************
                Nouvelles applications

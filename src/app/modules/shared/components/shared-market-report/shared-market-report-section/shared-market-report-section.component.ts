@@ -26,9 +26,12 @@ export class SharedMarketReportSectionComponent implements OnInit {
   @Input() public innoid: string;
   @Input() public conclusion: string;
   @Input() public answers: any;
+  @Input() public prices: number[];
+  @Input() public comments: any[];
   @Input() public countries: any;
   @Input() public pieChartData: any;
   @Input() public configuration: any;
+  @Input() public priceAverage: number;
   @Input() public scoreAverage: number;
   @Input() public scores: number[];
   @Input() public percentage: number;
@@ -57,6 +60,9 @@ export class SharedMarketReportSectionComponent implements OnInit {
         // Calcul du score max
         this._maxCountScore = _.maxBy(this.scores, 'count')['count'];
         break;
+      case 'prices':
+        this._numberFocus = this.prices.length + this.comments.length;
+        break;
       default:
         console.log('Coucou !');
     }
@@ -84,6 +90,14 @@ export class SharedMarketReportSectionComponent implements OnInit {
         //Saved
         this._isSaving = false;
       });
+  }
+
+  public getAnswers(commentsList:Array<any>): Array<any> {
+    if (this.answers) {
+      return _.map(commentsList, comment => _.find(this.answers, (answer: any) => answer.id === comment.answerId));
+    } else {
+      return [];
+    }
   }
 
   public getFillPerc(value: number): string {
