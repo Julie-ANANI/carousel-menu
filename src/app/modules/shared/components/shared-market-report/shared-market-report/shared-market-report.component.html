@@ -119,6 +119,7 @@
           [configuration]="getConfig('relevantProblematic')"
           [pieChartData]="infographics.pieCharts.relevantProblematic"
           [innoid]="innoid"
+          [comments]="infographics.relevantProblematicComments"
           [type]="'pie'">
         </market-report-section>
 
@@ -133,6 +134,7 @@
           [configuration]="getConfig('productAnsweringProblematic')"
           [pieChartData]="infographics.pieCharts.productAnsweringProblematic"
           [innoid]="innoid"
+          [comments]="infographics.productAnsweringProblematicComments"
           [type]="'pie'">
         </market-report-section>
 
@@ -252,142 +254,42 @@
           [type]="'pie'">
         </market-report-section>
 
-        <section id="differentiation">
-          <h2>{{ 'MARKET_REPORT.DIFFERENTIATION.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="bloc details" *ngIf="showDetails('productInterests')">
-              <bar-chart
-                [levels]="getLevels('productInterests', 'en')"
-                [stats]="infographics.pieCharts.productInterests"
-                [number]="true">
-              </bar-chart>
-            </div>
-          </div>
-        </section>
-
-
         <!-- *********************************************************
                 Key Advantages
-            ************************************************************** -->
-
-        <section id="key-advantages">
-          <h2>{{ 'MARKET_REPORT.BENEFIT.TITLE' | translate }}</h2>
-        </section>
+        ************************************************************** -->
+        <market-report-section
+          [id]="'key-advantages'"
+          [i18n]="'BENEFIT'"
+          [key]="'keyAdvantages'"
+          [innoid]="innoid"
+          [type]="'stars'">
+        </market-report-section>
 
         <!-- *********************************************************
                 Points forts
-            ************************************************************** -->
-
-        <section id="strong-points">
-          <h2>{{ 'MARKET_REPORT.STRONG.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.commentsPositive.length}}</span>
-                  {{ 'MARKET_REPORT.STRONG.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-ratio">
-                  <span>{{infographics.stats.percentageCommentsPositive}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.STRONG.QUESTION' | translate }}</p>
-                <!--<text-zone [elementId]="'commentsPositive'"
-                           [readonly]="readonly"
-                           [data]="conclusions.commentsPositive || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.commentsPositive)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('commentsPositive')}"
-                    (click)="toggleDetails('commentsPositive')">
-              {{(showDetails('commentsPositive') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('commentsPositive'), 'fa-angle-down': !showDetails('commentsPositive')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('commentsPositive') && infographics.commentsPositive.length">
-              <ul class="comments">
-                <li *ngFor="let comment of infographics.commentsPositive; let i = index"
-                    [ngClass]="{'top-profil': comment.quality === 2}">
-                  <market-comment
-                    [job]="comment.job"
-                    [country]="comment.flag"
-                    [company]="comment.company"
-                    [comment]="comment.comment"
-                    [isNew]="false"
-                    [answers]="getAnswers([comment])">
-                  </market-comment>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-        </section>
+        ************************************************************** -->
+        <market-report-section
+          [id]="'strong-points'"
+          [i18n]="'STRONG'"
+          [key]="'commentsPositive'"
+          [innoid]="innoid"
+          [comments]="infographics.commentsPositive"
+          [percentage]="infographics.stats.percentageCommentsPositive"
+          [type]="'comments'">
+        </market-report-section>
 
         <!-- *********************************************************
             Objections
         ************************************************************** -->
-
-        <section id="objections">
-          <h2>{{ 'MARKET_REPORT.WEAK.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.commentsNegative.length}}</span>
-                  {{ 'MARKET_REPORT.WEAK.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-ratio">
-                  <span>{{infographics.stats.percentageCommentsNegative}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.WEAK.QUESTION' | translate }}</p>
-                <!--<text-zone [elementId]="'commentsNegative'"
-                           [readonly]="readonly"
-                           [data]="conclusions.commentsNegative || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.commentsNegative)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('commentsNegative')}"
-                    (click)="toggleDetails('commentsNegative')">
-              {{(showDetails('commentsNegative') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('commentsNegative'), 'fa-angle-down': !showDetails('commentsNegative')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('commentsNegative') && infographics.commentsNegative.length">
-              <ul class="comments">
-                <li *ngFor="let comment of infographics.commentsNegative; let i = index"
-                    [ngClass]="{'top-profil': comment.quality === 2}">
-                  <market-comment
-                    [job]="comment.job"
-                    [country]="comment.flag"
-                    [company]="comment.company"
-                    [comment]="comment.comment"
-                    [isNew]="false"
-                    [answers]="getAnswers([comment])">
-                  </market-comment>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-        </section>
+        <market-report-section
+          [id]="'objections'"
+          [i18n]="'WEAK'"
+          [key]="'commentsNegative'"
+          [innoid]="innoid"
+          [comments]="infographics.commentsNegative"
+          [percentage]="infographics.stats.percentageCommentsNegative"
+          [type]="'comments'">
+        </market-report-section>
 
         <!-- *********************************************************
                         Recommandations de prix

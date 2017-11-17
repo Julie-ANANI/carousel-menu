@@ -63,6 +63,9 @@ export class SharedMarketReportSectionComponent implements OnInit {
       case 'prices':
         this._numberFocus = this.prices.length + this.comments.length;
         break;
+      case 'comments':
+        this._numberFocus = this.comments.length;
+        break;
       default:
         console.log('Coucou !');
     }

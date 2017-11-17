@@ -67,7 +67,6 @@
     </button>
 
     <div class="bloc details" *ngIf="showDetails">
-      <p class="title-question">{{comments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
 
       <!--======= Liste des pros =======-->
       <div *ngIf="type === 'pros'" class="prosList">
@@ -102,18 +101,22 @@
       </bar-chart>
 
       <!--======= Liste de commentaires =======-->
-      <ul class="comments">
-        <li *ngFor="let comment of comments; let i = index">
-          <market-comment
-            [job]="comment.job"
-            [country]="comment.flag"
-            [company]="comment.company"
-            [comment]="comment.comment"
-            [isNew]="false"
-            [answers]="getAnswers([comment])">
-          </market-comment>
-        </li>
-      </ul>
+      <div *ngIf="comments && comments.length > 0">
+        <p class="title-question">{{comments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
+        <ul class="comments">
+          <li *ngFor="let comment of comments"
+              [ngClass]="{'top-profil': comment.quality === 2}">
+            <market-comment
+              [job]="comment.job"
+              [country]="comment.flag"
+              [company]="comment.company"
+              [comment]="comment.comment"
+              [isNew]="false"
+              [answers]="getAnswers([comment])">
+            </market-comment>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
