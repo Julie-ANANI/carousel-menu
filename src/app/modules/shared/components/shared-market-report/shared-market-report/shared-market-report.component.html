@@ -173,107 +173,29 @@
                 Besoin du marché
             ************************************************************** -->
 
-        <section id="market-need">
-          <h2>{{ 'MARKET_REPORT.MARKET_NEED.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <canvas
-                  class="chart chart-pie"
-                  baseChart
-                  [chartType]="'pie'"
-                  [legend]="false"
-                  [datasets]="getPiechartData('relevantProblematic')"
-                  [labels]="getLevels('relevantProblematic', 'en')"
-                  [colors]="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
-                </canvas>
-                <div class="number-ratio">
-                  <span>{{infographics.pieCharts.relevantProblematic[3].percentage + infographics.pieCharts.relevantProblematic[4].percentage}}%</span>
-                  {{ 'MARKET_REPORT.PIE_CHART' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.MARKET_NEED.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'relevantProblematic'"
-                           [readonly]="readonly"
-                           [data]="conclusions.relevantProblematic || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.relevantProblematic)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('relevantProblematic')}"
-                    (click)="toggleDetails('relevantProblematic')">
-              {{(showDetails('relevantProblematic') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('relevantProblematic'), 'fa-angle-down': !showDetails('relevantProblematic')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('relevantProblematic')">
-              <bar-chart
-                [levels]="getLevels('relevantProblematic', 'en')"
-                [stats]="infographics.pieCharts.relevantProblematic"
-                [number]="true">
-              </bar-chart>
-            </div>
-          </div>
-        </section>
+        <market-report-section
+          [id]="'market-need'"
+          [i18n]="'MARKET_NEED'"
+          [key]="'relevantProblematic'"
+          [configuration]="getConfig('relevantProblematic')"
+          [pieChartData]="infographics.pieCharts.relevantProblematic"
+          [innoid]="innoid"
+          [type]="'pie'">
+        </market-report-section>
 
         <!-- *********************************************************
                         Pertinence de la solution
                     ************************************************************** -->
 
-        <section id="relevance-solution">
-          <h2>{{ 'MARKET_REPORT.RELEVANCE.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <canvas
-                  class="chart chart-pie"
-                  baseChart
-                  [chartType]="'pie'"
-                  [legend]="false"
-                  [datasets]="getPiechartData('productAnsweringProblematic')"
-                  [labels]="getLevels('productAnsweringProblematic', 'en')"
-                  [colors]="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
-                </canvas>
-                <div class="number-ratio">
-                  <span>{{infographics.pieCharts.productAnsweringProblematic[3].percentage + infographics.pieCharts.productAnsweringProblematic[4].percentage}}%</span>
-                  {{ 'MARKET_REPORT.PIE_CHART' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.RELEVANCE.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'productAnsweringProblematic'"
-                           [readonly]="readonly"
-                           [data]="conclusions.productAnsweringProblematic || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.productAnsweringProblematic)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('productAnsweringProblematic')}"
-                    (click)="toggleDetails('productAnsweringProblematic')">
-              {{(showDetails('productAnsweringProblematic') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('productAnsweringProblematic'), 'fa-angle-down': !showDetails('productAnsweringProblematic')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('productAnsweringProblematic')">
-              <bar-chart
-                [levels]="getLevels('productAnsweringProblematic', 'en')"
-                [stats]="infographics.pieCharts.productAnsweringProblematic"
-                [number]="true">
-              </bar-chart>
-            </div>
-          </div>
-        </section>
+        <market-report-section
+          [id]="'relevance-solution'"
+          [i18n]="'RELEVANCE'"
+          [key]="'productAnsweringProblematic'"
+          [configuration]="getConfig('productAnsweringProblematic')"
+          [pieChartData]="infographics.pieCharts.productAnsweringProblematic"
+          [innoid]="innoid"
+          [type]="'pie'">
+        </market-report-section>
 
         <!-- *********************************************************
                 Concurrence actuelle
@@ -372,45 +294,21 @@
                 Différenciation
             ************************************************************** -->
 
+
+        <market-report-section
+          [id]="'differentiation'"
+          [i18n]="'DIFFERENTIATION'"
+          [key]="'productInterests'"
+          [configuration]="getConfig('productInterests')"
+          [pieChartData]="infographics.pieCharts.productInterests"
+          [innoid]="innoid"
+          [type]="'pie'">
+        </market-report-section>
+
         <section id="differentiation">
           <h2>{{ 'MARKET_REPORT.DIFFERENTIATION.TITLE' | translate }}</h2>
 
           <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <canvas
-                  class="chart chart-pie"
-                  baseChart
-                  [chartType]="'pie'"
-                  [legend]="false"
-                  [datasets]="getPiechartData('productInterests')"
-                  [labels]="getLevels('productInterests', 'en')"
-                  [colors]="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
-                </canvas>
-                <div class="number-ratio">
-                  <span>{{infographics.pieCharts.productInterests[3].percentage + infographics.pieCharts.productInterests[4].percentage}}%</span>
-                  {{ 'MARKET_REPORT.PIE_CHART' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.DIFFERENTIATION.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'productInterests'"
-                           [readonly]="readonly"
-                           [data]="conclusions.productInterests || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.productInterests)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('productInterests')}"
-                    (click)="toggleDetails('productInterests')">
-              {{(showDetails('productInterests') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('productInterests'), 'fa-angle-down': !showDetails('productInterests')}"></i>
-            </button>
-
             <div class="bloc details" *ngIf="showDetails('productInterests')">
               <bar-chart
                 [levels]="getLevels('productInterests', 'en')"

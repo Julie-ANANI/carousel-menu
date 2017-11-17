@@ -134,6 +134,10 @@ export class SharedMarketReportComponent implements OnInit {
     return this._configurations[section][lang] || [];
   }
 
+  public getConfig(section:string): Array<any> {
+    return this._configurations[section] || [];
+  }
+
   public seeAnswer(answer: any) { //TODO modal
     console.log('OKAY');
     this._modalActive = 'active';

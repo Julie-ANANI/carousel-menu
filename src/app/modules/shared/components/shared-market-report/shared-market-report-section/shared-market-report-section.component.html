@@ -1,0 +1,36 @@
+<section id={{id}}>
+  <h2>{{ 'MARKET_REPORT.' + i18n + '.TITLE' | translate }}</h2>
+
+  <div class="white-frame">
+    <div class="flex-container">
+      <market-report-piechart
+        [pieChartData]="chartValues"
+        [configuration]="configuration"
+        [percentage]="percentage"
+      ></market-report-piechart>
+      <div class="umi-synthesis flex-container">
+        <p class="title">{{ 'MARKET_REPORT.' + i18n + '.QUESTION' | translate }}</p>
+        <text-zone [elementId]="key"
+                   [readonly]="readonly"
+                   [data]="conclusion || ''"
+                   (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
+      </div>
+    </div>
+
+    <button type="button" class="market-report-btn centered"
+            [ngClass]="{'active': showDetails}"
+            (click)="toggleDetails()">
+      {{(showDetails ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
+      <i class="fa" aria-hidden="true"
+         [ngClass]="{'fa-angle-up': showDetails, 'fa-angle-down': !showDetails}"></i>
+    </button>
+
+    <div class="bloc details" *ngIf="showDetails">
+      <bar-chart
+        [levels]="getLevels('en')"
+        [stats]="pieChartData"
+        [number]="true">
+      </bar-chart>
+    </div>
+  </div>
+</section>
