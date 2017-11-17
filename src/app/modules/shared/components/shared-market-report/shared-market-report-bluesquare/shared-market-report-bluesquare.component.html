@@ -1,10 +1,15 @@
 <div class="big-blue-synthesis">
   <div class="number-answers">
-    <span>{{number}}</span>
+    <span>{{numberFocus}}</span>
     {{ 'MARKET_REPORT.' + i18n + '.NUMBER' | translate }}
   </div>
   <hr>
-  <div class="number-ratio">
+  <div class="number-ratio" *ngIf="type!='pros'">
     <span>{{percentage}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
+  </div>
+  <div class="number-follow-innovation" *ngIf="type==='pros'">
+    <img src="https://res.cloudinary.com/umi/image/upload/app/star.svg" alt="" width="22" height="22" class="centered">
+    <span>{{percentage}}%</span>
+    {{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}
   </div>
 </div>

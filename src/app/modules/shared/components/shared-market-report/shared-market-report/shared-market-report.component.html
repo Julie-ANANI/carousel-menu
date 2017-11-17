@@ -97,77 +97,16 @@
         <!-- *********************************************************
                 Liste des professionnels
             ************************************************************** -->
-
-        <section id="professional">
-          <h2>{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.answers.length}}</span>
-                  {{ 'MARKET_REPORT.PROFESSIONAL.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-follow-innovation">
-                  <img src="https://res.cloudinary.com/umi/image/upload/app/star.svg" alt="" width="22" height="22" class="centered">
-                  <span>{{infographics.stats.percentageFollow}}%</span>
-                  {{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'professionals'"
-                           [readonly]="readonly"
-                           [data]="conclusions.answers || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.professionals)"></p>-->
-              </div>
-            </div>
-
-            <div class="bloc">
-              <div class="map centered" width="684" height="339">
-                <world-map [countries]="infographics.worldMap" [color]="'#0B90C6'"></world-map>
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('professionals')}"
-                    (click)="toggleDetails('professionals')">
-              {{(showDetails('professionals') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('professionals'), 'fa-angle-down': !showDetails('professionals')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('professionals')">
-              <div class="flex-container wrap">
-
-                <div *ngFor="let answer of infographics.answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
-                  <img [src]="getFlag(answer.country.notation)"
-                       alt="" width="37" height="25" class="user-flag">
-
-                  <p class="user-name" *ngIf="answer.professional.profileUrl">
-                    <a href="{{showDetails('professionals')}}" target="_blank">
-                      {{answer.professional.firstName}} {{answer.professional.lastName}}
-                    </a>
-                  </p>
-                  <p class="user-name" *ngIf="!answer.professional.profileUrl">
-                    {{answer.professional.firstName}} {{answer.professional.lastName}}
-                    <img src="http://res.cloudinary.com/umi/image/upload/c_scale,h_15/app/star.svg" alt="" width="15" height="15" *ngIf="answer.follow" attr.tooltip-placement="top" attr.tooltip="{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}">
-                  </p>
-
-                  <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job}}</p>
-                  <p *ngIf="answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional.company}}</p>
-
-                  <a href="" (click)="seeAnswer(answer)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</a><br>
-                  <a href="mailto: {{answer.professional.email}}">{{answer.professional.email}}</a>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </section>
+        <market-report-section
+          [id]="'professional'"
+          [key]="'answers'"
+          [i18n]="'PROFESSIONAL'"
+          [answers]="infographics.answers"
+          [percentage]="infographics.stats.percentageFollow"
+          [countries]="infographics.worldMap"
+          [innoid]="innoid"
+          [type]="'pros'">
+        </market-report-section>
 
         <!-- *********************************************************
                 Besoin du marché

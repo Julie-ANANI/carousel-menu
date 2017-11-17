@@ -15,7 +15,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
 
   private _showDetails: boolean;
   private _maxCountScore: number;
-  private _percentage: number;
+  private _numberFocus: number;
   private _isSaving = false;
   private _chartValues: any;
 
@@ -25,9 +25,12 @@ export class SharedMarketReportSectionComponent implements OnInit {
   @Input() public type: string;
   @Input() public innoid: string;
   @Input() public conclusion: string;
+  @Input() public answers: any;
+  @Input() public countries: any;
   @Input() public pieChartData: any;
   @Input() public configuration: any;
   @Input() public maxCountScore: number;
+  @Input() public percentage: number;
 
 
   constructor(private _innovationService: InnovationService) { }
@@ -42,8 +45,11 @@ export class SharedMarketReportSectionComponent implements OnInit {
             'data': data || [],
             'backgroundColor': ['#C0210F', '#F2C500', '#82CD30', '#34AC01']
           }];
-          this._percentage = this.pieChartData[3].percentage + this.pieChartData[4].percentage;
+          this.percentage = this.pieChartData[3].percentage + this.pieChartData[4].percentage;
         }
+        break;
+      case 'pros':
+        this._numberFocus = this.answers.length;
         break;
       default:
         console.log('Coucou !');
@@ -86,8 +92,8 @@ export class SharedMarketReportSectionComponent implements OnInit {
     return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
   }
 
-  get percentage(): number {
-    return this._percentage;
+  get numberFocus(): number {
+    return this._numberFocus;
   }
 
   get chartValues(): any {

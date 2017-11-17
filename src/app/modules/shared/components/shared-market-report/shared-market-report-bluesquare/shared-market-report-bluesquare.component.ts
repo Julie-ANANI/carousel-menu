@@ -7,14 +7,15 @@ import * as _ from 'lodash';
 
 @Component({
   selector: 'market-report-bluesquare',
-  templateUrl: 'shared-market-report-piechart.bluesquare.html',
-  styleUrls: ['shared-market-report-piechart.bluesquare.scss']
+  templateUrl: 'shared-market-report-bluesquare.component.html',
+  styleUrls: ['shared-market-report-bluesquare.component.scss']
 })
 
 export class SharedMarketReportBluesquareComponent implements OnInit {
 
-  @Input() public number: number;
+  @Input() public numberFocus: number;
   @Input() public i18n: string;
+  @Input() public type: string;
   @Input() public percentage: number;
 
   constructor() { }
