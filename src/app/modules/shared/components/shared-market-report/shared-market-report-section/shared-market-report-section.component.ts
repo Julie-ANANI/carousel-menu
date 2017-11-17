@@ -14,7 +14,7 @@ import * as _ from 'lodash';
 export class SharedMarketReportSectionComponent implements OnInit {
 
   private _showDetails: boolean;
-  private _maxCountScore: number;
+  private _maxCountScore: any;
   private _numberFocus: number;
   private _isSaving = false;
   private _chartValues: any;
@@ -29,7 +29,8 @@ export class SharedMarketReportSectionComponent implements OnInit {
   @Input() public countries: any;
   @Input() public pieChartData: any;
   @Input() public configuration: any;
-  @Input() public maxCountScore: number;
+  @Input() public scoreAverage: number;
+  @Input() public scores: number[];
   @Input() public percentage: number;
 
 
@@ -50,6 +51,11 @@ export class SharedMarketReportSectionComponent implements OnInit {
         break;
       case 'pros':
         this._numberFocus = this.answers.length;
+        break;
+      case 'score':
+        this._numberFocus = this.scoreAverage;
+        // Calcul du score max
+        this._maxCountScore = _.maxBy(this.scores, 'count')['count'];
         break;
       default:
         console.log('Coucou !');

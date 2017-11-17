@@ -36,8 +36,22 @@
       </div>
     </div>
 
+    <!--======= Scores =======-->
+    <div class="bloc" *ngIf="type === 'score'">
+      <div class="column-graph flex-container">
+        <div *ngFor="let score of scores; let i = index"
+             class="vertical-bar number{{score.value}}">
+          <div class="bar-fill" [style.height]="getFillPerc(score.count)" *ngIf="score.count"></div>
+          <div class="bar-stats" *ngIf="score.count">{{score.count}}</div>
+          <div class="bar-picture" *ngIf="score.count"></div>
+          <div class="bar-score">{{score.value}}/10</div>
+        </div>
+      </div>
+    </div>
+
     <!--======= Bouton plier/déplier =======-->
     <button type="button" class="market-report-btn centered"
+            *ngIf="type!='score'"
             [ngClass]="{'active': showDetails}"
             (click)="toggleDetails()">
       {{(showDetails ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}

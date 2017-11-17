@@ -124,7 +124,7 @@
 
         <!-- *********************************************************
                         Pertinence de la solution
-                    ************************************************************** -->
+        ************************************************************** -->
 
         <market-report-section
           [id]="'relevance-solution'"
@@ -139,7 +139,15 @@
         <!-- *********************************************************
                 Concurrence actuelle
             ************************************************************** -->
-
+<!--
+        <market-report-section
+          [id]="'actual-competitors'"
+          [i18n]="'ACTUAL_COMPETITION'"
+          [key]="'productAnsweringProblematic'"
+          [innoid]="innoid"
+          [type]="'blue'">
+        </market-report-section>
+-->
         <section id="actual-competitors">
           <h2>{{ 'MARKET_REPORT.ACTUAL_COMPETITION.TITLE' | translate }}</h2>
 
@@ -158,11 +166,11 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.ACTUAL_COMPETITION.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'competitors'"
+                <!--<text-zone [elementId]="'competitors'"
                            [readonly]="readonly"
                            [data]="conclusions.competitors || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.competitors)"></p>-->
+                <p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.competitors)"></p>-->
               </div>
             </div>
 
@@ -289,7 +297,7 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.STRONG.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'commentsPositive'"
+                <!--<text-zone [elementId]="'commentsPositive'"
                            [readonly]="readonly"
                            [data]="conclusions.commentsPositive || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
@@ -346,7 +354,7 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.WEAK.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'commentsNegative'"
+                <!--<text-zone [elementId]="'commentsNegative'"
                            [readonly]="readonly"
                            [data]="conclusions.commentsNegative || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
@@ -403,7 +411,7 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.PRICE.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'prices-edit'"
+                <!--<text-zone [elementId]="'prices-edit'"
                            [readonly]="readonly"
                            [data]="conclusions.prices || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
@@ -467,7 +475,7 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.NEW_APPLICATION.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'applications'"
+                <!--text-zone [elementId]="'applications'"
                            [readonly]="readonly"
                            [data]="conclusions.applications || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
@@ -555,7 +563,7 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'interestOfProfessionals'"
+                <!--text-zone [elementId]="'interestOfProfessionals'"
                            [readonly]="readonly"
                            [data]="conclusions.interestOfProfessionals || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
@@ -715,7 +723,7 @@
 
               <div class="umi-synthesis flex-container">
                 <p class="title">{{ 'MARKET_REPORT.POTENTIAL_PARTNER.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'partners'"
+                <!--text-zone [elementId]="'partners'"
                            [readonly]="readonly"
                            [data]="conclusions.partners || ''"
                            (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
@@ -788,45 +796,15 @@
         <!-- *********************************************************
                 Potentiel marché
             ************************************************************** -->
-
-        <section id="market-potential">
-          <h2>{{ 'MARKET_REPORT.MARKET_POTENTIAL.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="total-score">
-                  <span>{{infographics.scoreAverage}}</span>/10
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.MARKET_POTENTIAL.QUESTION' | translate }}</p>
-                <text-zone [elementId]="'marketPotential'"
-                           [readonly]="readonly"
-                           [data]="conclusions.marketPotential || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.marketPotential)"></p>-->
-              </div>
-            </div>
-
-            <div class="bloc">
-              <div class="column-graph flex-container">
-                <div *ngFor="let score of infographics.scores; let i = index"
-                     class="vertical-bar number{{score.value}}">
-                  <div class="bar-fill" [style.height]="getFillPerc(score.count)" *ngIf="score.count"></div>
-                  <div class="bar-stats" *ngIf="score.count">{{score.count}}</div>
-                  <div class="bar-picture" *ngIf="score.count"></div>
-                  <div class="bar-score">{{score.value}}/10</div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-
-
+        <market-report-section
+          [id]="'market-potential'"
+          [i18n]="'MARKET_POTENTIAL'"
+          [key]="'marketPotential'"
+          [innoid]="innoid"
+          [scoreAverage]="infographics.scoreAverage"
+          [scores]="infographics.scores"
+          [type]="'score'">
+        </market-report-section>
       </div>
     </div>
 
