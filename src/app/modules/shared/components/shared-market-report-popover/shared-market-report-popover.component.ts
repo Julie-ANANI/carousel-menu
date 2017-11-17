@@ -12,7 +12,7 @@ import * as $ from 'jquery';
 
 export class SharedMarketReportPopoverComponent implements OnInit {
 
-  @Input() public professionals: any;
+  @Input() public answers: any;
 
   constructor() { }
 
@@ -32,7 +32,7 @@ export class SharedMarketReportPopoverComponent implements OnInit {
     return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
   }
 
-  public seeAnswer(professional: any) {
+  public seeAnswer(answer: any) {
     //const modalRef = this.modalService.open(NgbdModalContent);
     //modalRef.componentInstance.name = 'World';
     console.log('Answer?');

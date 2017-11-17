@@ -1,5 +1,10 @@
 /* === Horizontals bars === */
 
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .horizontal-bar {
   position: relative;
   border: 1px solid #D6D6D6;

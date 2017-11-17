@@ -126,7 +126,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   }
 
   private _save() {
-    if (this.canEdit) {
+    if (this.canEdit && !this._autoSave.isSaving) {
       this._autoSave.isSaving = true;
       this._innovationService.save(this._project.id, this._autoSave.data, this._project.innovationCards[0].id).subscribe(data => {
         this._autoSave.isSaving = false;

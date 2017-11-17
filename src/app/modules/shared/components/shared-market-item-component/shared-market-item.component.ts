@@ -16,7 +16,7 @@ export class SharedMarketItemComponent implements OnInit {
   @Input() public star: any;
   @Input() public url: any;
   @Input() public isNew: any;
-  @Input() public professionals: any;
+  @Input() public answers: any;
 
 
   constructor() { }
