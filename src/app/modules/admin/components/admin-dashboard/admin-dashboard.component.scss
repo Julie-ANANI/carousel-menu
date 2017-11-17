@@ -1,0 +1,175 @@
+$secondary-color: #0B90C6;
+$dark-background: #262831;
+
+.projects-stats {
+  background: $secondary-color;
+  display: flex;
+  color: #CFE8F2;
+  min-height: 82px;
+
+  span {
+    font-size: 1.1rem;
+    color: white;
+  }
+
+  div {
+    margin: auto 30px auto 0;
+  }
+
+  .form-select {
+    width: 150px;
+    color: $dark-background;
+    margin: auto 36px auto 30px;
+  }
+}
+
+.emails-stats {
+  background: #FAFAFA;
+  display: flex;
+  min-height: 82px;
+
+  span {
+    font-size: 1.1rem;
+    color: $secondary-color;
+  }
+
+  div {
+    margin: auto 30px auto 0;
+  }
+
+  .form-select {
+    width: 150px;
+    color: $dark-background;
+    margin: auto 36px auto 30px;
+  }
+}
+
+.content {
+  margin: 0 35px;
+
+  .title-section {
+    font-size: 1.2rem;
+    color: $dark-background;
+    line-height: 44px;
+    margin-top: 45px;
+
+    span {
+      color: $secondary-color;
+    }
+  }
+
+  .see-all {
+    margin-top: 20px;
+    font-size: 0.7rem;
+  }
+
+  .project-completed {
+    margin-bottom: 45px;
+  }
+}
+
+
+.table {
+
+  th {
+    border-bottom: 0.05rem solid #e5e5e5;
+    font-size: 0.8rem;
+    color: $dark-background;
+    font-weight: 400;
+    padding: 0.6rem 0;
+  }
+
+  td {
+    padding: 0;
+    border-bottom: 0.05rem solid #e5e5e5;
+  }
+
+  .project-image {
+    line-height: 0;
+  }
+
+  .project-description {
+    line-height: 1.3rem;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .project-professional,
+  .project-emails-ok,
+  .project-email-received,
+  .project-email-opened,
+  .project-email-clicked,
+  .project-to-check,
+  .project-time-limit,
+  .project-answer,
+  .project-status,
+  .project-tagging,
+  .project-conclusion,
+  .project-restitution,
+  .project-thanks {
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .project-status.alert {
+    cursor: pointer;
+  }
+
+  .title a {
+    font-size: 0.8rem;
+    color: $dark-background;
+  }
+
+  .metas {
+    display: block;
+    font-size: 0.6rem;
+  }
+
+  .warning {
+    color: #D02A2A;
+  }
+
+  .alert {
+    background-color: #D02A2A;
+    color: white;
+  }
+
+  .all-is-fine {
+    background-color: #7ED321;
+    color: white;
+  }
+
+}
+
+@media (max-width: 840px) {
+
+  .sidebar {
+    min-height: inherit;
+  }
+
+  .projects-stats {
+    flex-direction: column;
+    padding: 30px;
+  }
+
+  .emails-stats {
+    flex-direction: column;
+    padding: 30px;
+  }
+
+  .projects-stats .form-select,
+  .emails-stats .form-select {
+    margin: auto;
+  }
+
+  // Yaak...
+  table,
+  tbody,
+  th,
+  tr,
+  td {
+    display: block;
+    width: auto!important;
+  }
+
+}

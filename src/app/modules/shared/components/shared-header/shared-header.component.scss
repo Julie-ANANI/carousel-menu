@@ -16,9 +16,9 @@ header {
     color: white;
     font-weight: 600;
     margin-left: 20px;
+    &.active, &:hover {
+      color: $primary-color;
+    }
   }
 
-  .btn.btn-link:hover {
-    color: $primary-color;
-  }
 }
