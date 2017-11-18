@@ -16,6 +16,7 @@ import { ClientLoginComponent } from './components/client-login/client-login.com
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
+import { ClientMyUsersComponent } from './components/client-my-users/client-my-users.component';
 
 /* Shared */
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
@@ -64,11 +65,11 @@ const clientRoutes: Routes = [
         ]
       },
       {
-        path: 'discover',
-        /*canActivate: [AuthGuard],
+        path: 'users',
+        canActivate: [AuthGuard],
         children: [
-        ]*/
-        redirectTo: '/projects'
+          { path: '', component: ClientMyUsersComponent, pathMatch: 'full' },
+        ]
       },
       {
         path: 'projects',

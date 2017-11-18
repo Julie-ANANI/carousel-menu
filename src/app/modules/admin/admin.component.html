@@ -1,0 +1,19 @@
+<app-shared-header></app-shared-header>
+<div class="columns col-gapless">
+  <div class="column col-2 col-md-12 sidebar">
+    <ul>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><a [routerLink]="'/admin'" title="">Dashboard</a></li>
+      <li routerLinkActive="active"><a [routerLink]="'/admin/users'" title="">Utilisateurs</a></li>
+      <li routerLinkActive="active"><a [routerLink]="'/admin/projects'" title="">Projets</a></li>
+      <li routerLinkActive="active"><a [routerLink]="'/admin/campaigns'" title="">Campagnes</a></li>
+      <li routerLinkActive="active"><a [routerLink]="'/admin/searches'" title="">Recherches</a></li>
+      <li routerLinkActive="active"><a [routerLink]="'/admin/emails'" title="">Emails</a></li>
+      <li routerLinkActive="active"><a [routerLink]="'/admin/index'" title="">Index</a></li>
+      <li routerLinkActive="active"><a [routerLink]="'/admin/patents'" title="">Brevets</a></li>
+    </ul>
+  </div>
+
+  <div class="column col-10 col-md-12">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+$primary-color: #F79323;
+
+.sidebar {
+  background: #262831;
+  min-height: 100vh;
+  padding-bottom: 0.9rem;
+
+  ul {
+    list-style: none;
+    margin: 0 30px;
+
+    li {
+      margin-top: 0.9rem;
+    }
+  }
+
+  a {
+    color: #878787;
+  }
+
+  a:hover,
+  a.active,
+  li.active a {
+    color: $primary-color;
+    text-decoration: none;
+  }
+}

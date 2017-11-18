@@ -21,6 +21,7 @@ import { ClientProjectNewComponent } from './components/client-project-new/clien
 import { ClientProjectSynthesisComponent } from './components/client-project-synthesis/client-project-synthesis.component';
 import { ClientProjectEditExample2Component } from './components/client-project-edit/client-project-edit-example2/client-project-edit-example2.component';
 import { ClientProjectEditExample1Component } from './components/client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
+import { ClientMyUsersComponent } from './components/client-my-users/client-my-users.component';
 
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
 import { InputListComponent } from '../../directives/input-list/input-list.component';
@@ -56,6 +57,7 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
     ClientProjectSynthesisComponent,
     ClientProjectEditExample2Component,
     ClientProjectEditExample1Component,
+    ClientMyUsersComponent
 
     AutocompleteInputComponent,
     InputListComponent

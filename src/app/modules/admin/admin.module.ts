@@ -6,6 +6,12 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AdminProjectsComponent } from './components/admin-projects/admin-projects.component';
+import { AdminCampaignsComponent } from './components/admin-campaigns/admin-campaigns.component';
+import { AdminEmailsComponent } from './components/admin-emails/admin-emails.component';
+import { AdminIndexComponent } from './components/admin-index/admin-index.component';
+import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
+import { AdminSearchesComponent } from './components/admin-searches/admin-searches.component';
 
 @NgModule({
   imports: [
@@ -18,7 +24,13 @@ import { TranslateModule } from '@ngx-translate/core';
     AdminComponent,
     AdminDashboardComponent,
     AdminUsersComponent,
-    AdminUsersComponent
+    AdminUsersComponent,
+    AdminProjectsComponent,
+    AdminCampaignsComponent,
+    AdminEmailsComponent,
+    AdminIndexComponent,
+    AdminPatentsComponent,
+    AdminSearchesComponent
   ]
 })
 export class AdminModule {
