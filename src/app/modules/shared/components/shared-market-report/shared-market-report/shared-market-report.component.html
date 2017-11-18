@@ -1,0 +1,299 @@
+<div class="market-report" *ngIf="canShow()">
+
+    <h1>{{infographics.title}}</h1>
+    <p class="subtitle">{{ 'MARKET_REPORT.TITLE' | translate }}</p>
+
+  <!-- *********************************************************
+        Sidebar
+    ************************************************************** -->
+
+  <div class="sidebar sidebarIsSticky">
+    <div (click)="toggleSections()" class="toggle-sections">
+      {{ (detailsExpanded ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND') | translate}}
+      <i class="fa float-right" aria-hidden="true"
+         [ngClass]="{'fa-plus-square-o': !detailsExpanded, 'fa-minus-square-o': detailsExpanded}"></i>
+    </div>
+    <ul>
+      <li>
+        <a href="#professional">
+          {{ 'MARKET_REPORT.PROFESSIONAL.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#market-need">
+          {{ 'MARKET_REPORT.MARKET_NEED.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#relevance-solution">
+          {{ 'MARKET_REPORT.RELEVANCE.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#differentiation">
+          {{ 'MARKET_REPORT.DIFFERENTIATION.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#expression-of-interest">
+          {{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#potential-partners">
+          {{ 'MARKET_REPORT.POTENTIAL_PARTNER.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#actual-competitors">
+          {{ 'MARKET_REPORT.ACTUAL_COMPETITION.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#price-suggestion">
+          {{ 'MARKET_REPORT.PRICE.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#strong-points">
+          {{ 'MARKET_REPORT.STRONG.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#objections">
+          {{ 'MARKET_REPORT.WEAK.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#new-application-fields">
+          {{ 'MARKET_REPORT.NEW_APPLICATION.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#market-potential">
+          {{ 'MARKET_REPORT.MARKET_POTENTIAL.SIDEBAR' | translate }}
+          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+    <div class="flex-container">
+
+      <div class="sidebar"></div>
+      <div class="content">
+        <!-- *********************************************************
+                Liste des professionnels
+            ************************************************************** -->
+        <market-report-section
+          [id]="'professional'"
+          [key]="'answers'"
+          [i18n]="'PROFESSIONAL'"
+          [answers]="infographics.answers"
+          [percentage]="infographics.stats.percentageFollow"
+          [countries]="infographics.worldMap"
+          [innoid]="innoid"
+          [type]="'pros'">
+        </market-report-section>
+
+        <!-- *********************************************************
+                Besoin du marché
+            ************************************************************** -->
+
+        <market-report-section
+          [id]="'market-need'"
+          [i18n]="'MARKET_NEED'"
+          [key]="'relevantProblematic'"
+          [configuration]="getConfig('relevantProblematic')"
+          [pieChartData]="infographics.pieCharts.relevantProblematic"
+          [innoid]="innoid"
+          [comments]="infographics.relevantProblematicComments"
+          [type]="'pie'">
+        </market-report-section>
+
+        <!-- *********************************************************
+                        Pertinence de la solution
+        ************************************************************** -->
+
+        <market-report-section
+          [id]="'relevance-solution'"
+          [i18n]="'RELEVANCE'"
+          [key]="'productAnsweringProblematic'"
+          [configuration]="getConfig('productAnsweringProblematic')"
+          [pieChartData]="infographics.pieCharts.productAnsweringProblematic"
+          [innoid]="innoid"
+          [comments]="infographics.productAnsweringProblematicComments"
+          [type]="'pie'">
+        </market-report-section>
+
+        <!-- *********************************************************
+                Concurrence actuelle
+            ************************************************************** -->
+
+        <market-report-section
+          [id]="'actual-competitors'"
+          [i18n]="'ACTUAL_COMPETITION'"
+          [key]="'competitors'"
+          [innoid]="innoid"
+          [type]="'competitors'"
+          [competitors]="infographics.competitors.companies"
+          [percentage]="infographics.stats.percentageCompetitors"
+          [comments]="infographics.competitorsComments">
+        </market-report-section>
+
+        <!-- *********************************************************
+                Différenciation
+            ************************************************************** -->
+
+
+        <market-report-section
+          [id]="'differentiation'"
+          [i18n]="'DIFFERENTIATION'"
+          [key]="'productInterests'"
+          [configuration]="getConfig('productInterests')"
+          [pieChartData]="infographics.pieCharts.productInterests"
+          [innoid]="innoid"
+          [type]="'pie'">
+        </market-report-section>
+
+        <!-- *********************************************************
+                Key Advantages
+        ************************************************************** -->
+        <market-report-section
+          [id]="'key-advantages'"
+          [i18n]="'BENEFIT'"
+          [key]="'keyAdvantages'"
+          [innoid]="innoid"
+          [type]="'stars'">
+        </market-report-section>
+
+        <!-- *********************************************************
+                Points forts
+        ************************************************************** -->
+        <market-report-section
+          [id]="'strong-points'"
+          [i18n]="'STRONG'"
+          [key]="'commentsPositive'"
+          [innoid]="innoid"
+          [comments]="infographics.commentsPositive"
+          [percentage]="infographics.stats.percentageCommentsPositive"
+          [type]="'comments'">
+        </market-report-section>
+
+        <!-- *********************************************************
+            Objections
+        ************************************************************** -->
+        <market-report-section
+          [id]="'objections'"
+          [i18n]="'WEAK'"
+          [key]="'commentsNegative'"
+          [innoid]="innoid"
+          [comments]="infographics.commentsNegative"
+          [percentage]="infographics.stats.percentageCommentsNegative"
+          [type]="'comments'">
+        </market-report-section>
+
+        <!-- *********************************************************
+                        Recommandations de prix
+                    ************************************************************** -->
+        <market-report-section
+          [id]="'price-suggestion'"
+          [i18n]="'PRICE'"
+          [key]="'prices'"
+          [innoid]="innoid"
+          [priceAverage]="infographics.priceAverage"
+          [prices]="infographics.prices"
+          [comments]="infographics.pricesComments"
+          [percentage]="infographics.stats.percentagePrices"
+          [answers]="answers"
+          [type]="'prices'">
+        </market-report-section>
+
+        <!-- *********************************************************
+               Nouvelles applications
+           ************************************************************** -->
+        <market-report-section
+          [id]="'new-application-fields'"
+          [i18n]="'NEW_APPLICATION'"
+          [key]="'applications'"
+          [innoid]="innoid"
+          [type]="'applications'"
+          [applications]="infographics.applications"
+          [percentage]="infographics.stats.percentageApplications"
+          [comments]="infographics.applicationsComments">
+        </market-report-section>
+
+        <!-- *********************************************************
+                        Marques d’intérêt
+        ************************************************************** -->
+        <market-report-section
+          [id]="'expression-of-interest'"
+          [i18n]="'EXPRESSION_OF_INTEREST'"
+          [key]="'interestOfProfessionals'"
+          [innoid]="innoid"
+          [type]="'interest'"
+          [interestOfProfessionals]="infographics.interestOfProfessionals"
+          [percentage]="infographics.stats.percentageInterestOfProfessionals"
+          [comments]="infographics.interestOfProfessionalsComments">
+        </market-report-section>
+
+        <!-- *********************************************************
+                        Partenaires potentiels
+        ************************************************************** -->
+        <market-report-section
+          [id]="'potential-partners'"
+          [i18n]="'POTENTIAL_PARTNER'"
+          [key]="'partners'"
+          [innoid]="innoid"
+          [type]="'partners'"
+          [partnersByProfessionals]="infographics.partnersByProfessionals"
+          [percentage]="infographics.stats.percentagePartners"
+          [comments]="infographics.partnersComments">
+        </market-report-section>
+
+        <!-- *********************************************************
+                Potentiel marché
+            ************************************************************** -->
+        <market-report-section
+          [id]="'market-potential'"
+          [i18n]="'MARKET_POTENTIAL'"
+          [key]="'marketPotential'"
+          [innoid]="innoid"
+          [scoreAverage]="infographics.scoreAverage"
+          [scores]="infographics.scores"
+          [type]="'score'">
+        </market-report-section>
+      </div>
+    </div>
+
+  <!-- Modal -->
+  <div class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <button class="btn btn-clear float-right"></button>
+        <div class="modal-title h5">Modal title</div>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          Let's see of it works.
+        </div>
+      </div>
+      <div class="modal-footer">
+        ...
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://dev.umi.us/api',
+  apiUrl: 'http://localhost:3000/api',
   companyName: 'UMI (dev)',
   domain: 'umi.us'
 };

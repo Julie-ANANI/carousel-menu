@@ -116,16 +116,16 @@ export const fr = {
     'MARKET_NEED': {
       'SIDEBAR': 'Besoin du marché',
       'TITLE': 'Besoin du marché',
-      'QUESTION': 'Cette problématique est-elle un enjeu sur ce marché ?',
+      'QUESTION': 'Cette problématique est-elle un véritable enjeu sur ce marché ?',
       'ANSWER_1': 'Non',
       'ANSWER_2': 'Eventuellement',
       'ANSWER_3': 'Oui',
-      'ANSWER_4': 'Cruciale'
+      'ANSWER_4': 'Indiscutablement'
     },
     'RELEVANCE': {
       'SIDEBAR': 'Pertinence',
       'TITLE': 'Pertinence de la solution',
-      'QUESTION': 'La solution répond-elle bien au besoin du marché ?',
+      'QUESTION': 'Cette solution répond-elle bien à la problématique ?',
       'ANSWER_1': 'Non',
       'ANSWER_2': 'Partiellement',
       'ANSWER_3': 'Bien',
@@ -134,7 +134,7 @@ export const fr = {
     'DIFFERENTIATION': {
       'SIDEBAR': 'Différenciation',
       'TITLE': 'Différenciation',
-      'QUESTION': 'La solution est-elle plus pertinente que les solutions existantes ?',
+      'QUESTION': 'La solution vous paraît-elle réellement innovante ?',
       'ANSWER_1': 'Non',
       'ANSWER_2': 'Peut-être',
       'ANSWER_3': 'Oui',
@@ -144,15 +144,16 @@ export const fr = {
       'SIDEBAR': 'Avantages clés',
       'TITLE': 'Avantages clés',
       'NUMBER': 'Avantage clé',
-      'QUESTION': 'Quel est l\'avantage clé de cette solution pour le marché ?'
+      'QUESTION': 'Notez les avantages clés de cette solution pour le marché'
     },
     'EXPRESSION_OF_INTEREST': {
       'SIDEBAR': 'Marques d’intérêt',
       'TITLE': 'Marques d’intérêt',
-      'QUESTION': 'Imaginez-vous que votre entreprise puisse acheter / développer / distribuer ?',
+      'QUESTION': 'Imaginez-vous que votre entreprise puisse acheter / développer / distribuer / investir ?',
       'CLIENT': 'Ils souhaitent être client',
       'DEVELOP': 'Ils souhaitent participer au développement',
       'DISTRIBUTE': 'Ils souhaitent distribuer la solution',
+      'INVEST': 'Ils souhaitent investir dans la solution',
       'NUMBER': 'Marques d’intérêt'
     },
     'POTENTIAL_PARTNER': {
@@ -189,7 +190,7 @@ export const fr = {
     'NEW_APPLICATION': {
       'SIDEBAR': 'Nouvelles applications',
       'TITLE': 'Nouvelles applications',
-      'QUESTION': 'Pour quelles autres applications cette innovation aurait-elle un intérêt ?',
+      'QUESTION': 'Pensez-vous à d\'autres applications ?',
       'NUMBER': 'Applications citées'
     },
     'MARKET_POTENTIAL': {

@@ -8,7 +8,7 @@ import { NgClass } from '@angular/common';
 import * as _ from 'lodash';
 
 
-import { InnovationService } from './../../../../services/innovation/innovation.service';
+import { InnovationService } from './../../../../../services/innovation/innovation.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -70,18 +70,6 @@ export class SharedMarketReportComponent implements OnInit {
       this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
       this._innovationService.getInnovationSythesis(innovationId).subscribe(synthesis => {
         this._infographics = synthesis.infographics;
-        this._conclusions = synthesis.conclusions || {};
-        // Calcul du score max
-        this._maxCountScore = _.max(_.map(this._infographics.scores, score => score['count']));
-        // Calculate the piecharts
-        if(this._infographics.pieCharts) {
-          this._chartPieData = {
-            'productAnsweringProblematic': SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productAnsweringProblematic),
-            'relevantProblematic': SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.relevantProblematic),
-            'productInterests': SharedMarketReportComponent.getChartValues(this._infographics.pieCharts.productInterests)
-          };
-        }
-
       });
       this._showDetails = { // TODO change to the right default (open or closed)
         'professionals': this._detailsExpanded,
@@ -132,6 +120,10 @@ export class SharedMarketReportComponent implements OnInit {
 
   public getLevels(section:string, lang:string): Array<any> {
     return this._configurations[section][lang] || [];
+  }
+
+  public getConfig(section:string): Array<any> {
+    return this._configurations[section] || [];
   }
 
   public seeAnswer(answer: any) { //TODO modal

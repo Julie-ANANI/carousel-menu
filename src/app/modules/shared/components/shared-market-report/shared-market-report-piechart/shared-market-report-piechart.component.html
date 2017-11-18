@@ -1,0 +1,15 @@
+<div class="big-synthesis">
+  <canvas
+    class="chart chart-pie"
+    baseChart
+    [chartType]="'pie'"
+    [legend]="false"
+    [datasets]="pieChartData"
+    [labels]="getLevels('en')"
+    [colors]="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
+  </canvas>
+  <div class="number-ratio">
+    <span>{{percentage}}%</span>
+    {{ 'MARKET_REPORT.PIE_CHART' | translate }}
+  </div>
+</div>
