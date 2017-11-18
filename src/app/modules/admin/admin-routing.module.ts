@@ -2,8 +2,15 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
+import { AdminProjectsComponent } from './components/admin-projects/admin-projects.component';
+import { AdminCampaignsComponent } from './components/admin-campaigns/admin-campaigns.component';
+import { AdminEmailsComponent } from './components/admin-emails/admin-emails.component';
+import { AdminIndexComponent } from './components/admin-index/admin-index.component';
+import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
+import { AdminSearchesComponent } from './components/admin-searches/admin-searches.component';
 import { AdminComponent } from './admin.component';
 import { AdminAuthGuard } from './admin-auth-guard.service';
+import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
 
 const adminRoutes: Routes = [
   {
@@ -13,19 +20,54 @@ const adminRoutes: Routes = [
     children: [
       {
         path: '',
-        component: AdminDashboardComponent
+        component: AdminDashboardComponent,
+        pathMatch: 'full'
       },
-      /*{
-        path: 'user',
-        children: [
-          { path: '', component: ClientUserComponent, pathMatch: 'full' }
-        ]
-      },*/
       {
         path: 'users',
         children: [
           { path: '', component: AdminUsersComponent, pathMatch: 'full' }
         ]
+      },
+      {
+        path: 'projects',
+        children: [
+          { path: '', component: AdminProjectsComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'campaigns',
+        children: [
+          { path: '', component: AdminCampaignsComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'searches',
+        children: [
+          { path: '', component: AdminSearchesComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'emails',
+        children: [
+          { path: '', component: AdminEmailsComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'index',
+        children: [
+          { path: '', component: AdminIndexComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'patents',
+        children: [
+          { path: '', component: AdminPatentsComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: '**',
+        component: SharedNotFoundComponent
       }
     ]
   }

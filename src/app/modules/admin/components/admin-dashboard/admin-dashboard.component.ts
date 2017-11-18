@@ -8,6 +8,12 @@ import { Title } from '@angular/platform-browser';
 })
 export class AdminDashboardComponent implements OnInit {
 
+  public nbProjectsToValidate = 87;
+  public nbProjectsToCheck = 124;
+  public nbProjectsToFind = 412;
+
+
+
   constructor(private _titleService: Title) { }
 
   ngOnInit(): void {

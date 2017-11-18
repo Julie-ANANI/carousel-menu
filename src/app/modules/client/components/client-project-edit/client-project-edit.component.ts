@@ -1,13 +1,19 @@
 import {Component, OnInit, HostListener} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import {TranslateService, initTranslation} from './i18n/i18n';
 import {ActivatedRoute, Router} from '@angular/router';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
 import {NotificationsService} from 'angular2-notifications';
 import {ComponentCanDeactivate} from '../../../../pending-changes-guard.service';
 import {Observable} from 'rxjs/Observable';
+import {InputListComponent} from '../../../../directives/input-list/input-list.component';
+
+//import { Clearbit } from '../../../../models/clearbit';
 
 import {Ng2FileDropAcceptedFile, Ng2FileDropRejectedFile} from 'ng2-file-drop';
+
+import "rxjs/add/operator/distinctUntilChanged";
+import "rxjs/add/operator/debounceTime";
 
 // TODO : Optimisation : Ne pas envoyer tout l'objet Innovation à chaque mise à jour. Retenir la version sauvegardée et n'envoyer que la différence.
 
@@ -32,39 +38,46 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     data: null
   };
 
-  public formData: FormGroup = this._formBuilder.group({
-    settings: this._formBuilder.group({
-      geography: this._formBuilder.group({
-        continentTarget: this._formBuilder.group({
-          europe: [false, [Validators.required]],
-          africa: [false, [Validators.required]],
-          asia: [false, [Validators.required]],
-          oceania: [false, [Validators.required]],
-          russia: [false, [Validators.required]],
-          americaNord: [false, [Validators.required]],
-          americaSud: [false, [Validators.required]]
+  public formData: FormGroup;
+
+  buildForm(): void {
+    this.formData = this._formBuilder.group({
+      settings: this._formBuilder.group({
+        geography: this._formBuilder.group({
+          continentTarget: this._formBuilder.group({
+            europe: [false, [Validators.required]],
+            africa: [false, [Validators.required]],
+            asia: [false, [Validators.required]],
+            oceania: [false, [Validators.required]],
+            russia: [false, [Validators.required]],
+            americaNord: [false, [Validators.required]],
+            americaSud: [false, [Validators.required]]
+          }),
+          countriesToExclude: this._formBuilder.group({
+            exclude: [[]]
+          }),
+          tmpNewCountryToExclude: ['']
         }),
-        countriesToExclude: this._formBuilder.array([]),
-        tmpNewCompanyToExclude: ['']
-      }),
-      market: this._formBuilder.group({
+        market: this._formBuilder.group({
+          comments: ['']
+        }),
+        companies: this._formBuilder.group({
+          exclude: [[]],
+          description: ['']
+        }),
+        professionals: this._formBuilder.group({
+          exclude: [[]],
+          examples: [[]],
+          description: ['']
+        }),
         comments: ['']
       }),
-      companies: this._formBuilder.group({
-        exclude: [[]],
-        description: ['']
-      }),
-      professionals: this._formBuilder.group({
-        examples: [[]],
-        description: ['']
-      }),
-      comments: ['']
-    }),
-    patented: [undefined, Validators.required],
-    projectStatus: [undefined, Validators.required],
-    innovationCards: this._formBuilder.array([])
-  });
-
+      patented: [undefined, Validators.required],
+      projectStatus: [undefined, Validators.required],
+      innovationCards: this._formBuilder.array([]),
+      dirty: ['']
+    });
+  }
 
   /*
    * Gestion de l'affichage :
@@ -87,6 +100,8 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   ngOnInit() {
     initTranslation(this._translateService);
 
+    this.buildForm();
+
     this._activatedRoute.params.subscribe(params => {
       const innovationId = params['innovationId'];
 
@@ -94,6 +109,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
           this._project = innovation;
           // delete innovation._id;
           this.formData.patchValue(innovation);
+
           if (!this.canEdit) {
             this.formData.disable();
           }
@@ -102,17 +118,13 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
           }
           // displayCountriesToExcludeSection = innovation..length > 0;
 
-          this.formData.valueChanges.subscribe((newVersion) => {
+          this.formData.valueChanges
+            .debounceTime(1000)
+            .distinctUntilChanged()
+            .subscribe((newVersion) => {
             this._autoSave.data = newVersion;
-            if (this._autoSave.isSaving) {
+              this._save();
               this._autoSave.newSaveRequired = true;
-            }
-            else {
-              if (typeof this._autoSave !== 'undefined') {
-                clearTimeout(this._autoSave.timeout);
-              }
-              this._autoSave.timeout = setTimeout(_ => this._save(), 700);
-            }
           });
         },
         errorTranslateCode => {
@@ -126,10 +138,12 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   }
 
   private _save() {
-    if (this.canEdit) {
+    if (this.canEdit && !this._autoSave.isSaving) {
+      console.log("Start saving");
       this._autoSave.isSaving = true;
       this._innovationService.save(this._project.id, this._autoSave.data, this._project.innovationCards[0].id).subscribe(data => {
         this._autoSave.isSaving = false;
+        console.log("End saving");
         if (this._autoSave.newSaveRequired) {
           this._autoSave.newSaveRequired = false;
           this._save();
@@ -169,6 +183,82 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     return !!this.formData.get('settings').get('geography').get('continentTarget').get(continent).value;
   }
 
+  /*public varUpdate(object: string, event: {value: string | Array<string> | Array<Clearbit>}) {
+    //this.answer[object] = event.value;
+    console.log(event);
+  }*/
+
+  /**
+   * Expands the list of countries. If there's at least one country, it is expanded by default
+   * @returns {boolean}
+   */
+  public excludedCountriesListExpanded(): boolean {
+    return this.displayCountriesToExcludeSection ||
+      this.formData.get('settings').get('geography').get('countriesToExclude').get('exclude').value.length;
+  }
+
+  /**
+   * Add a country to the exclusion list
+   */
+  public addCountryToExclude(event): void {
+    this.formData.get('settings').get('geography')
+      .get('countriesToExclude').get('exclude').setValue(event.value);
+  }
+
+  /**
+   * Add a company to exclude
+   * @param event
+   */
+  public addCompanyToExclude(event): void {
+    this.formData.get('settings').get('companies')
+      .get('exclude').setValue(event.value);
+  }
+
+  /**
+   * Add people to exclude
+   * @param event
+   */
+  public addPeopleToExclude(event): void {
+    this.formData.get('settings').get('professionals')
+      .get('exclude').setValue(event.value);
+  }
+
+  public getConfig(type: string): any {
+    const _inputConfig = {
+      'advantages': {
+        placeholder: 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.INPUT',
+        initialData: []
+      },
+      'excludedPeople': {
+        placeholder: 'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE',
+        initialData: this.formData.get('settings')
+          .get('professionals').get('exclude').value
+      },
+      'excludedCompanies': {
+        placeholder: 'PROJECT_EDIT.COMPANIES.TO_EXCLUDE',
+        initialData: this.formData.get('settings')
+          .get('companies').get('exclude').value
+      },
+      'excludedCountries': {
+        placeholder: 'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
+        initialData: this.formData.get('settings').get('geography')
+          .get('countriesToExclude').get('exclude').value
+      }
+    };
+    return _inputConfig[type] || {
+      placeholder: 'Input',
+      initialData: ''
+    };
+  }
+
+  /**
+   * Returns the list of excluded countries
+   * @returns {any}
+   */
+  public getCountriesToExclude(): Array<any> {
+      return this.formData.get('settings').get('geography').get('countriesToExclude').get('exclude').value;
+  }
+
   private _newInnovationCardFormBuilderGroup (data) {
     return this._formBuilder.group({
       id: [data.id, Validators.required],
@@ -201,10 +291,14 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     innovationCards.push(this._newInnovationCardFormBuilderGroup(innovationCardData));
   }
 
-  public addAdvantageToInventionCard () {
-    // TODO
-    // this.formData.get('innovationCards')[this.innovationCardEditingIndex].get('');
-    alert('add advantage');
+  /**
+   * Add an advantage to the invention card
+   * @param event
+   */
+  public addAdvantageToInventionCard (event, cardIdx) {
+    let card = this.formData.get('innovationCards').value[cardIdx] as FormGroup;
+    card['advantages'].push(event.value);
+    this.formData.get('dirty').setValue(Date.now());
   }
 
   public setAsPrincipal (innovationCardId) {
