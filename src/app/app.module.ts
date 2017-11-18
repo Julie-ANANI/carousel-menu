@@ -20,6 +20,7 @@ import { LoaderService } from './services/loader/loader.service';
 import { ChartsModule } from 'ng2-charts';
 import { IndexService } from './services/index/index.service';
 import { ShareService } from './services/share/share.service';
+import { AutocompleteService } from './services/autocomplete/autocomplete.service';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { ShareService } from './services/share/share.service';
       provide: Http,
       useFactory: httpFactory,
       deps: [XHRBackend, RequestOptions, LoaderService, NotificationsService]
-    }
+    },
+    AutocompleteService
   ],
   bootstrap: [AppComponent]
 })

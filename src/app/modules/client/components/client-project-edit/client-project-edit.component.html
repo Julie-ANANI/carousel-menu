@@ -679,25 +679,29 @@
                     class="icon icon-arrow-right"></i>
                   </a>
 
-                  <div *ngIf="displayCountriesToExcludeSection">
-                    <!-- TODO -->
-                    <div class="form-group">
-                      <input class="form-input" type="text" id="newCountryToExclude" [attr.placeholder]="'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER' | translate"
-                              formControlName="tmpNewCompanyToExclude">
+                  <div *ngIf="excludedCountriesListExpanded()">
 
-                      <button class="btn btn-primary bg-secondary">
+                    <app-input-list (update)="addCountryToExclude($event)"
+                                    [config]="getConfig('excludedCountries')"></app-input-list>
+                    <!-- TODO -->
+                    <!--<div class="form-group">
+                      <input class="form-input" type="text" id="newCountryToExclude" [attr.placeholder]="'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER' | translate"
+                              formControlName="tmpNewCountryToExclude">
+
+                      <button class="btn btn-primary bg-secondary" (click)="addCountryToExclude()">
                         {{ 'COMMON.ADD' | translate }} <i class="icon icon-arrow-right"></i>
                       </button>
 
-                      <div *ngFor="let countryExcluded of formData.get('settings').get('geography').get('countriesToExclude').controls; let i=index">
+                      <div *ngFor="let countryExcluded of getCountriesToExclude(); let i=index">
                       <span class="chip">
-                        <input type="text" [formControlName]="i.value">
+                        <p>{{countryExcluded}}</p>
 
-                        <a href="#" class="btn btn-clear" [attr.aria-label]="'COMMON.CLOSE' | translate"
-                           role="button"></a>
+                        <button (click)="removeFromCountriesList(i)" class="btn btn-clear"
+                                [attr.aria-label]="'COMMON.CLOSE' | translate"
+                                role="button"></button>
                       </span>
                       </div>
-                    </div>
+                    </div>-->
                   </div>
                 </div>
               </div>
@@ -728,8 +732,9 @@
                   <a (click)="displayCompanyToExcludeSection = !displayCompanyToExcludeSection" class="c-hand">{{
                     'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
-                  <div *ngIf="displayCompanyToExcludeSection">
-                    <!-- TODO -->
+                  <div *ngIf="displayCompanyToExcludeSection || true">
+                    <app-input-list (update)="addCompanyToExclude($event)"
+                                    [config]="getConfig('excludedCompanies')"></app-input-list>
                   </div>
                 </div>
               </div>
@@ -745,8 +750,9 @@
 
                   <a (click)="displayPersonsToExcludeSection = !displayPersonsToExcludeSection" class="c-hand">{{ 'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
-                  <div *ngIf="displayPersonsToExcludeSection">
-                    TODO
+                  <div *ngIf="displayPersonsToExcludeSection || true">
+                    <app-input-list (update)="addPeopleToExclude($event)"
+                                    [config]="getConfig('excludedPeople')"></app-input-list>
                   </div>
                 </div>
               </div>
@@ -817,13 +823,15 @@
                           <div>
                             <label class="form-label">{{ 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</label>
                             <div class="input-group">
-                              <form>
+                              <app-input-list (update)="addAdvantageToInventionCard($event, i)"
+                                              [config]="getConfig('advantages')"></app-input-list>
+                              <!--<form>
                               <input type="text" class="form-input input-lg" placeholder="">
                               <button class="btn btn-primary input-group-btn btn-lg"
                               (click)="addAdvantageToInventionCard()"><i class="icon icon-plus"></i>
                                 {{ 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.INPUT' | translate }}
                               </button>
-                              </form>
+                              </form>-->
                             </div>
                           </div>
 
