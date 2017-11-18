@@ -31,6 +31,10 @@ export class SharedMarketReportSectionComponent implements OnInit {
   @Input() public countries: any;
   @Input() public pieChartData: any;
   @Input() public configuration: any;
+  @Input() public competitors: any;
+  @Input() public applications: any;
+  @Input() public interestOfProfessionals: any;
+  @Input() public partnersByProfessionals: any;
   @Input() public priceAverage: number;
   @Input() public scoreAverage: number;
   @Input() public scores: number[];
@@ -65,6 +69,21 @@ export class SharedMarketReportSectionComponent implements OnInit {
         break;
       case 'comments':
         this._numberFocus = this.comments.length;
+        break;
+      case 'competitors':
+        this._numberFocus = this.competitors.length;
+        break;
+      case 'applications':
+        this._numberFocus = this.applications.length;
+        break;
+      case 'partners':
+        this._numberFocus = this.partnersByProfessionals.length;
+        break;
+      case 'interest':
+        this._numberFocus = this.interestOfProfessionals.client.length +
+          this.interestOfProfessionals.develop.length +
+          this.interestOfProfessionals.invest.length +
+          this.interestOfProfessionals.distributor.length;
         break;
       default:
         console.log('Coucou !');

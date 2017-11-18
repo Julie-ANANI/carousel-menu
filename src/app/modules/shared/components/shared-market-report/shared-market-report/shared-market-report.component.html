@@ -15,73 +15,73 @@
     </div>
     <ul>
       <li>
-        <a href="#professional" du-smooth-scroll du-scrollspy>
+        <a href="#professional">
           {{ 'MARKET_REPORT.PROFESSIONAL.SIDEBAR' | translate }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="#market-need" du-smooth-scroll du-scrollspy>
+        <a href="#market-need">
           {{ 'MARKET_REPORT.MARKET_NEED.SIDEBAR' | translate }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="#relevance-solution" du-smooth-scroll du-scrollspy>
+        <a href="#relevance-solution">
           {{ 'MARKET_REPORT.RELEVANCE.SIDEBAR' | translate }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="#differentiation" du-smooth-scroll du-scrollspy>
+        <a href="#differentiation">
           {{ 'MARKET_REPORT.DIFFERENTIATION.SIDEBAR' | translate }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="#expression-of-interest" du-smooth-scroll du-scrollspy>
+        <a href="#expression-of-interest">
           {{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.SIDEBAR' | translate }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="#potential-partners" du-smooth-scroll du-scrollspy>
+        <a href="#potential-partners">
           {{ 'MARKET_REPORT.POTENTIAL_PARTNER.SIDEBAR' | translate }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="#actual-competitors" du-smooth-scroll du-scrollspy>
+        <a href="#actual-competitors">
           {{ 'MARKET_REPORT.ACTUAL_COMPETITION.SIDEBAR' | translate }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="#price-suggestion" du-smooth-scroll du-scrollspy>
+        <a href="#price-suggestion">
           {{ 'MARKET_REPORT.PRICE.SIDEBAR' | translate }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="#strong-points" du-smooth-scroll du-scrollspy>
+        <a href="#strong-points">
           {{ 'MARKET_REPORT.STRONG.SIDEBAR' | translate }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="#objections" du-smooth-scroll du-scrollspy>
+        <a href="#objections">
           {{ 'MARKET_REPORT.WEAK.SIDEBAR' | translate }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="#new-application-fields" du-smooth-scroll du-scrollspy>
+        <a href="#new-application-fields">
           {{ 'MARKET_REPORT.NEW_APPLICATION.SIDEBAR' | translate }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="#market-potential" du-smooth-scroll du-scrollspy>
+        <a href="#market-potential">
           {{ 'MARKET_REPORT.MARKET_POTENTIAL.SIDEBAR' | translate }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
@@ -141,103 +141,17 @@
         <!-- *********************************************************
                 Concurrence actuelle
             ************************************************************** -->
-<!--
+
         <market-report-section
           [id]="'actual-competitors'"
           [i18n]="'ACTUAL_COMPETITION'"
-          [key]="'productAnsweringProblematic'"
+          [key]="'competitors'"
           [innoid]="innoid"
-          [type]="'blue'">
+          [type]="'competitors'"
+          [competitors]="infographics.competitors.companies"
+          [percentage]="infographics.stats.percentageCompetitors"
+          [comments]="infographics.competitorsComments">
         </market-report-section>
--->
-        <section id="actual-competitors">
-          <h2>{{ 'MARKET_REPORT.ACTUAL_COMPETITION.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.competitors.companies.length}}</span>
-                  {{ 'MARKET_REPORT.ACTUAL_COMPETITION.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-ratio">
-                  <span>{{infographics.stats.percentageCompetitors}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.ACTUAL_COMPETITION.QUESTION' | translate }}</p>
-                <!--<text-zone [elementId]="'competitors'"
-                           [readonly]="readonly"
-                           [data]="conclusions.competitors || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.competitors)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('competitors')}"
-                    (click)="toggleDetails('competitors')">
-              {{(showDetails('partners') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i fa class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('competitors'), 'fa-angle-down': !showDetails('competitors')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('competitors')">
-              <div class="flex-container">
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let competitor of infographics.competitors.companies; let i = index"
-                        [hidden]="i >= infographics.competitors.companies.length/2"
-                        [ngClass]="{'top-profil': competitors.quality === 2}">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(competitor.answers)"
-                                   [value]="competitor.value"
-                                   [count]="competitor.count"
-                                   [url]="competitor.url"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let competitor of infographics.competitors.companies; let i = index"
-                        [hidden]="i < infographics.competitors.companies.length/2"
-                        [ngClass]="{'top-profil': competitors.quality === 2}">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(competitor.answers)"
-                                   [value]="competitor.value"
-                                   [count]="competitor.count"
-                                   [url]="competitor.url"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="bloc details" *ngIf="showDetails('competitors') && infographics.competitorsComments.length">
-              <p class="title-question">{{infographics.competitorsComments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
-
-              <ul class="comments">
-                <li *ngFor="let comment of infographics.competitorsComments; let i = index">
-                  <market-comment
-                    [job]="comment.job"
-                    [country]="comment.flag"
-                    [company]="comment.company"
-                    [comment]="comment.comment"
-                    [isNew]="false"
-                    [answers]="getAnswers([comment])">
-                  </market-comment>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
 
         <!-- *********************************************************
                 Différenciation
@@ -310,342 +224,44 @@
         <!-- *********************************************************
                Nouvelles applications
            ************************************************************** -->
-
-        <section id="new-application-fields">
-          <h2>{{ 'MARKET_REPORT.NEW_APPLICATION.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.applications.length}}</span>
-                  {{ 'MARKET_REPORT.NEW_APPLICATION.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-ratio">
-                  <span>{{infographics.stats.percentageApplications}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.NEW_APPLICATION.QUESTION' | translate }}</p>
-                <!--text-zone [elementId]="'applications'"
-                           [readonly]="readonly"
-                           [data]="conclusions.applications || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.applications)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('applications')}"
-                    (click)="toggleDetails('applications')">
-              {{(showDetails('applications') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('applications'), 'fa-angle-down': !showDetails('applications')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('applications')">
-              <div class="flex-container">
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let application of infographics.applications; let i = index"
-                        [hidden]="i >= infographics.applications.length/2">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(application.answers)"
-                                   [value]="application.value"
-                                   [count]="application.count"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let application of infographics.applications; let i = index"
-                        [hidden]="i < infographics.applications.length/2">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(application.answers)"
-                                   [value]="application.value"
-                                   [count]="application.count"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="bloc details" *ngIf="showDetails('applications') && infographics.applicationsComments.length">
-              <p class="title-question">{{infographics.applicationsComments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
-
-              <ul class="comments">
-                <li *ngFor="let comment of infographics.applicationsComments; let i = index">
-                  <market-comment
-                    [job]="comment.job"
-                    [country]="comment.flag"
-                    [company]="comment.company"
-                    [comment]="comment.comment"
-                    [isNew]="false"
-                    [answers]="getAnswers([comment])">
-                  </market-comment>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+        <market-report-section
+          [id]="'new-application-fields'"
+          [i18n]="'NEW_APPLICATION'"
+          [key]="'applications'"
+          [innoid]="innoid"
+          [type]="'applications'"
+          [applications]="infographics.applications"
+          [percentage]="infographics.stats.percentageApplications"
+          [comments]="infographics.applicationsComments">
+        </market-report-section>
 
         <!-- *********************************************************
                         Marques d’intérêt
         ************************************************************** -->
-
-        <section id="expression-of-interest">
-          <h2>{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.interestOfProfessionals.client.length + infographics.interestOfProfessionals.develop.length + infographics.interestOfProfessionals.distributor.length}}</span>
-                  {{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-ratio">
-                  <span>{{infographics.stats.percentageInterestOfProfessionals}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.QUESTION' | translate }}</p>
-                <!--text-zone [elementId]="'interestOfProfessionals'"
-                           [readonly]="readonly"
-                           [data]="conclusions.interestOfProfessionals || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(infographic.synthesis.interestOfProfessionals)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('interestOfProfessionals')}"
-                    (click)="toggleDetails('interestOfProfessionals')">
-              {{(showDetails('interestOfProfessionals') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('interestOfProfessionals'), 'fa-angle-down': !showDetails('interestOfProfessionals')}"></i>
-            </button>
-
-
-            <div class="bloc details" *ngIf="showDetails('interestOfProfessionals')">
-              <bar-chart
-                [levels]="getLevels('interestOfProfessionals', 'en')"
-                [stats]="infographics.pieCharts.interestOfProfessionals"
-                [number]="false">
-              </bar-chart>
-            </div>
-
-            <div class="bloc details" *ngIf="showDetails('interestOfProfessionals') && infographics.interestOfProfessionals.client.length">
-              <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.CLIENT' | translate }}</p>
-
-              <div class="flex-container">
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let client of infographics.interestOfProfessionals.client; let i = index"
-                        [hidden]="i >= infographics.interestOfProfessionals.client.length/2"
-                        [ngClass]="{'top-profil': client.quality === 2}">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(client.answers)"
-                                   [value]="client.value"
-                                   [count]="client.count"
-                                   [url]="client.url"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let client of infographics.interestOfProfessionals.client; let i = index"
-                        [hidden]="i < infographics.interestOfProfessionals.client.length/2"
-                        [ngClass]="{'top-profil': client.quality === 2}">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(client.answers)"
-                                   [value]="client.value"
-                                   [count]="client.count"
-                                   [url]="client.url"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="bloc details" *ngIf="showDetails('interestOfProfessionals') && infographics.interestOfProfessionals.develop.length">
-              <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DEVELOP' | translate }}</p>
-
-              <div class="flex-container">
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let develop of infographics.interestOfProfessionals.develop; let i = index"
-                        [hidden]="i >= infographics.interestOfProfessionals.develop.length/2"
-                        [ngClass]="{'top-profil': develop.quality === 2}">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(develop.answers)"
-                                   [value]="develop.value"
-                                   [count]="develop.count"
-                                   [url]="develop.url"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let develop of infographics.interestOfProfessionals.develop; let i = index"
-                        [hidden]="i < infographics.interestOfProfessionals.develop.length/2"
-                        [ngClass]="{'top-profil': develop.quality === 2}">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(develop.answers)"
-                                   [value]="develop.value"
-                                   [count]="develop.count"
-                                   [url]="develop.url"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="bloc details" *ngIf="showDetails('interestOfProfessionals') && infographics.interestOfProfessionals.distributor.length">
-              <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DISTRIBUTE' | translate }}</p>
-
-              <div class="flex-container">
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let distributor of infographics.interestOfProfessionals.distributor; let i = index"
-                        [hidden]="i >= infographics.interestOfProfessionals.distributor.length/2"
-                        [ngClass]="{'top-profil': distributor.quality === 2}">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(distributor.answers)"
-                                   [value]="distributor.value"
-                                   [count]="distributor.count"
-                                   [url]="distributor.url"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let distributor of infographics.interestOfProfessionals.distributor; let i = index"
-                        [hidden]="i < infographics.interestOfProfessionals.distributor.length/2"
-                        [ngClass]="{'top-profil': distributor.quality === 2}">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(distributor.answers)"
-                                   [value]="distributor.value"
-                                   [count]="distributor.count"
-                                   [url]="distributor.url"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <market-report-section
+          [id]="'expression-of-interest'"
+          [i18n]="'EXPRESSION_OF_INTEREST'"
+          [key]="'interestOfProfessionals'"
+          [innoid]="innoid"
+          [type]="'interest'"
+          [interestOfProfessionals]="infographics.interestOfProfessionals"
+          [percentage]="infographics.stats.percentageInterestOfProfessionals"
+          [comments]="infographics.interestOfProfessionalsComments">
+        </market-report-section>
 
         <!-- *********************************************************
                         Partenaires potentiels
-                    ************************************************************** -->
-
-        <section id="potential-partners">
-          <h2>{{ 'MARKET_REPORT.POTENTIAL_PARTNER.TITLE' | translate }}</h2>
-
-          <div class="white-frame">
-            <div class="flex-container">
-              <div class="big-blue-synthesis">
-                <div class="number-answers">
-                  <span>{{infographics.partnersByProfessionals.length}}</span>
-                  {{ 'MARKET_REPORT.POTENTIAL_PARTNER.NUMBER' | translate }}
-                </div>
-                <hr>
-                <div class="number-ratio">
-                  <span>{{infographics.stats.percentagePartners}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-                </div>
-              </div>
-
-              <div class="umi-synthesis flex-container">
-                <p class="title">{{ 'MARKET_REPORT.POTENTIAL_PARTNER.QUESTION' | translate }}</p>
-                <!--text-zone [elementId]="'partners'"
-                           [readonly]="readonly"
-                           [data]="conclusions.partners || ''"
-                           (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-                <!--<p class="desc" ng-bind-html="$sce.trustAsHtml(conclusions.partners)"></p>-->
-              </div>
-            </div>
-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showDetails('partners')}"
-                    (click)="toggleDetails('partners')">
-              {{(showDetails('partners') ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
-                 [ngClass]="{'fa-angle-up': showDetails('partners'), 'fa-angle-down': !showDetails('partners')}"></i>
-            </button>
-
-            <div class="bloc details" *ngIf="showDetails('partners')">
-              <div class="flex-container">
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let partner of infographics.partnersByProfessionals; let i = index"
-                        [hidden]="i >= infographics.partnersByProfessionals.length/2"
-                        [ngClass]="{'top-profil': partner.quality === 2}">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(partner.answers)"
-                                   [value]="partner.value"
-                                   [count]="partner.count"
-                                   [url]="partner.url"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-                <div class="column">
-                  <ul class="items">
-                    <li *ngFor="let partner of infographics.partnersByProfessionals; let i = index"
-                        [hidden]="i < infographics.partnersByProfessionals.length/2"
-                        [ngClass]="{'top-profil': partner.quality === 2}">
-                      <market-item class="flex-container"
-                                   [answers]="getAnswers(partner.answers)"
-                                   [value]="partner.value"
-                                   [count]="partner.count"
-                                   [url]="partner.url"
-                                   [isNew]="false">
-                      </market-item>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="bloc details" *ngIf="showDetails('partners') && infographics.partnersComments.length">
-              <p class="title-question">{{infographics.partnersComments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
-
-              <ul class="comments">
-                <li *ngFor="let comment of infographics.partnersComments; let i = index">
-                  <market-comment
-                    [job]="comment.job"
-                    [country]="comment.flag"
-                    [company]="comment.company"
-                    [comment]="comment.comment"
-                    [isNew]="false"
-                    [answers]="getAnswers([comment])">
-                  </market-comment>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+        ************************************************************** -->
+        <market-report-section
+          [id]="'potential-partners'"
+          [i18n]="'POTENTIAL_PARTNER'"
+          [key]="'partners'"
+          [innoid]="innoid"
+          [type]="'partners'"
+          [partnersByProfessionals]="infographics.partnersByProfessionals"
+          [percentage]="infographics.stats.percentagePartners"
+          [comments]="infographics.partnersComments">
+        </market-report-section>
 
         <!-- *********************************************************
                 Potentiel marché
