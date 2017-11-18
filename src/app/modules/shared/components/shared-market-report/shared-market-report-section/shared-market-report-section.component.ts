@@ -3,6 +3,7 @@
  */
 import { Component, OnInit, Input } from '@angular/core';
 import { InnovationService } from './../../../../../services/innovation/innovation.service';
+import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 
 @Component({
@@ -14,6 +15,7 @@ import * as _ from 'lodash';
 export class SharedMarketReportSectionComponent implements OnInit {
 
   private _showDetails: boolean;
+  public readonly: boolean;
   private _maxCountScore: any;
   private _numberFocus: number;
   private _isSaving = false;
@@ -41,10 +43,17 @@ export class SharedMarketReportSectionComponent implements OnInit {
   @Input() public percentage: number;
 
 
-  constructor(private _innovationService: InnovationService) { }
+  constructor(private _innovationService: InnovationService,
+              private _route: ActivatedRoute) { }
 
   ngOnInit() {
     this._showDetails = false;
+    this.readonly = true;
+    this._route
+      .queryParams
+      .subscribe(params => {
+        this.readonly = !(params['isAdmin'] &&  params['isAdmin'] === 'true' );
+      });
     switch(this.type) {
       case 'pie':
         if (this.pieChartData) {
