@@ -57,7 +57,7 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
     ClientProjectSynthesisComponent,
     ClientProjectEditExample2Component,
     ClientProjectEditExample1Component,
-    ClientMyUsersComponent
+    ClientMyUsersComponent,
 
     AutocompleteInputComponent,
     InputListComponent
