@@ -116,13 +116,12 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
           for (const innovationCard of innovation.innovationCards) {
             this._addInnovationCardWithData(innovationCard);
           }
-          // displayCountriesToExcludeSection = innovation..length > 0;
 
           this.formData.valueChanges
-            .debounceTime(1000)
+            .debounceTime(20000) //This is the time in ms that the form waits before emitting the valueChanges event
             .distinctUntilChanged()
             .subscribe((newVersion) => {
-            this._autoSave.data = newVersion;
+              this._autoSave.data = newVersion;
               this._save();
               this._autoSave.newSaveRequired = true;
           });
@@ -183,11 +182,6 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     return !!this.formData.get('settings').get('geography').get('continentTarget').get(continent).value;
   }
 
-  /*public varUpdate(object: string, event: {value: string | Array<string> | Array<Clearbit>}) {
-    //this.answer[object] = event.value;
-    console.log(event);
-  }*/
-
   /**
    * Expands the list of countries. If there's at least one country, it is expanded by default
    * @returns {boolean}
@@ -223,6 +217,12 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
       .get('exclude').setValue(event.value);
   }
 
+  /**
+   * This configuration tells the directive what text to use for the placeholder and if it exists,
+   * the initial data to show.
+   * @param type
+   * @returns {any|{placeholder: string, initialData: string}}
+   */
   public getConfig(type: string): any {
     const _inputConfig = {
       'advantages': {
@@ -249,14 +249,6 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
       placeholder: 'Input',
       initialData: ''
     };
-  }
-
-  /**
-   * Returns the list of excluded countries
-   * @returns {any}
-   */
-  public getCountriesToExclude(): Array<any> {
-      return this.formData.get('settings').get('geography').get('countriesToExclude').get('exclude').value;
   }
 
   private _newInnovationCardFormBuilderGroup (data) {
@@ -293,7 +285,8 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
 
   /**
    * Add an advantage to the invention card
-   * @param event
+   * @param event the resulting value sent from the component directive
+   * @param cardIdx this is the index of the innovation card being edited.
    */
   public addAdvantageToInventionCard (event, cardIdx) {
     let card = this.formData.get('innovationCards').value[cardIdx] as FormGroup;

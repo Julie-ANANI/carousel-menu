@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
   private _appIsLoadingSubscription: Subscription;
   public displayLoader = false;
 
-  public notificationsOptions: object = {
+  public notificationsOptions = {
     position: ['top', 'right'],
     timeOut: 5000,
     lastOnBottom: false,
