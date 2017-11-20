@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Clearbit } from '../../models/clearbit';
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
-import { FormControl } from '@angular/forms';
+//import { FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
@@ -14,14 +16,23 @@ import 'rxjs/add/operator/switchMap';
 
 export class AutocompleteInputComponent implements OnInit {
 
+  public inputForm: FormGroup;
+
   @Output() update = new EventEmitter<any>();
+
   clearbitCompanies: Observable<Clearbit[]>;
   companyName: FormControl = new FormControl();
-  answerList: Array<Clearbit> = [];
+  answerList: Array<string> = [];
 
-  constructor(private service: AutocompleteService) {}
+  constructor(private service: AutocompleteService,
+              private _fbuilder: FormBuilder,
+              private _sanitizer: DomSanitizer) {}
 
   ngOnInit() {
+    this.inputForm = this._fbuilder.group({
+      answer : "",
+    });
+
     this.companyName.valueChanges.subscribe(x => {
       if (x) {
         this.clearbitCompanies = this.service.get(x).catch(_ => []);
@@ -29,7 +40,12 @@ export class AutocompleteInputComponent implements OnInit {
     });
   }
 
-  addCompany(val: string): void {
+  public autocompleListFormatter = (data: any) : SafeHtml => {
+    let html = `<span>${data.name}</span>`;
+    return this._sanitizer.bypassSecurityTrustHtml(html);
+  };
+
+  /*addCompany(val: string): void {
     const clearbitObject = {name: val};
     this.answerList.push(clearbitObject);
     this.update.emit({value: this.answerList});
@@ -43,6 +59,6 @@ export class AutocompleteInputComponent implements OnInit {
   rmProposition(i: number): void {
     this.answerList.splice(i, 1);
     this.update.emit({value: this.answerList});
-  }
+  }*/
 
 }

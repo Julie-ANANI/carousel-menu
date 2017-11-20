@@ -1,26 +1,15 @@
-<form (ngSubmit)="companyName.value && addCompany(companyName.value); companyName.reset()" >
-  <div class="input-group">
-    <!--<input type="text" class="form-input input-lg" [formControl]="companyName" matInput [matAutocomplete]="auto" required />-->
-    <input type="text" class="form-input input-lg">
-    <button class="btn btn-primary btn-lg input-group-btn" translate>
-      QUIZ.ADD
-      <i class="icon icon-arrow-right"></i>
-    </button>
+<form class="form-horizontal" [formGroup]="inputForm" (ngSubmit)="onSubmit(inputForm.value)">
+  <div>
+    <div class="col-sm-5">
+      <input  ng2-auto-complete
+              formControlName="continent"
+              [source]="answer"
+              [list-formatter]="autocompleListFormatter"
+              value-property-name="id"
+              display-property-name="name"
+              placeholder="Contients"
+              class="form-control">
+    </div><br/>
+    <button type="submit">Submit</button>
   </div>
-
-  <!--<mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let option of clearbitCompanies | async" (click)="addClearbit(option)">
-      <img style="vertical-align:middle;" aria-hidden src="{{option.logo}}" height="35" />
-      <span>{{option.name}}</span>
-    </mat-option>
-  </mat-autocomplete>
-
-  <ul *ngFor="let a of answerList; index as i" class="answerList">
-    <li>
-      <span>{{a.name}}</span>
-      <a [routerLink]="" class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
-        <img src="assets/images/delete.svg" width="" height="">
-      </a>
-    </li>
-  </ul>-->
 </form>
