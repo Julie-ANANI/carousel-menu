@@ -7,15 +7,15 @@
       <market-report-piechart
         *ngIf="type==='pie'"
         [pieChartData]="chartValues"
-        [configuration]="configuration"
-        [percentage]="percentage"
+        [configuration]="configurations[id]"
+        [percentage]="info.percentage"
       ></market-report-piechart>
       <!--======= ou Encadré Bleu =======-->
       <market-report-bluesquare
         *ngIf="type!='pie'"
-        [numberFocus]="numberFocus"
+        [numberFocus]="info.numberFocus"
         [i18n]="i18n"
-        [percentage]="percentage"
+        [percentage]="info.percentage"
         [type]="type"
       ></market-report-bluesquare>
 
@@ -24,7 +24,7 @@
         <p class="title">{{ 'MARKET_REPORT.' + i18n + '.QUESTION' | translate }}</p>
         <text-zone [elementId]="key"
                    [readonly]="readonly"
-                   [data]="conclusion || ''"
+                   [data]="info.conclusion || ''"
                    (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
       </div>
     </div>
@@ -32,14 +32,14 @@
     <!--======= Map du monde =======-->
     <div class="bloc" *ngIf="type === 'pros'">
       <div class="map centered" width="684" height="339">
-        <world-map [countries]="countries" [color]="'#0B90C6'"></world-map>
+        <world-map [countries]="info.data" [color]="'#0B90C6'"></world-map>
       </div>
     </div>
 
     <!--======= Scores =======-->
     <div class="bloc" *ngIf="type === 'score'">
       <div class="column-graph flex-container">
-        <div *ngFor="let score of scores; let i = index"
+        <div *ngFor="let score of info.data; let i = index"
              class="vertical-bar number{{score.value}}">
           <div class="bar-fill" [style.height]="getFillPerc(score.count)" *ngIf="score.count"></div>
           <div class="bar-stats" *ngIf="score.count">{{score.count}}</div>
@@ -50,10 +50,10 @@
     </div>
 
     <!--======= Prix =======-->
-    <div class="bloc" id="prices" *ngIf="priceAverage && type === 'prices'">
-      <app-shared-infographics-prices [rawData]="prices"></app-shared-infographics-prices>
+    <div class="bloc" id="prices" *ngIf="info.priceverage && type === 'prices'">
+      <app-shared-infographics-prices [rawData]="info.data"></app-shared-infographics-prices>
 
-      <div class="average">Moyenne : {{priceAverage}}€</div>
+      <div class="average">Moyenne : {{info.priceverage}}€</div>
     </div>
 
     <!--======= Bouton plier/déplier =======-->
@@ -99,7 +99,7 @@
       <bar-chart
         *ngIf="type === 'pie'"
         [levels]="getLevels('en')"
-        [stats]="pieChartData"
+        [stats]="info.pieChart"
         [number]="true">
       </bar-chart>
 

@@ -17,30 +17,34 @@ export class SharedMarketReportSectionComponent implements OnInit {
   private _showDetails: boolean;
   public readonly: boolean;
   private _maxCountScore: any;
-  private _numberFocus: number;
   private _isSaving = false;
   private _chartValues: any;
 
+  private _configurations = {
+    'relevantProblematic':{
+      'fr': ['Non', 'Eventuellement', 'Oui', 'Cruciale'],
+      'en': ['Non-existent', 'Possibly', 'Frequently', 'Critical']
+    },
+    'productAnsweringProblematic': {
+      'en': ['No', 'Possibly', 'Likely', 'Yes'],
+      'fr': ['Non', 'Partiellement', 'Bien', 'Très bien']
+    },
+    'productInterests': {
+      'en': ['No – less relevant', 'Equivalent', 'Yes – A few advantages', 'Absolutely'],
+      'fr': ['Non', 'Peut-être', 'Oui', 'Indiscutablement']
+    },
+    'interestOfProfessionals': {
+      'en': ['They want to be a customer', 'They wish to participate in the development', 'They want to distribute the solution'],
+      'fr': ['Ils souhaitent être client', 'Ils souhaitent participer au développement', 'Ils souhaitent distribuer la solution']
+    }
+  };
+
   @Input() public id: string;
   @Input() public i18n: string;
-  @Input() public key: string;
   @Input() public type: string;
   @Input() public innoid: string;
-  @Input() public conclusion: string;
   @Input() public answers: any;
-  @Input() public prices: number[];
-  @Input() public comments: any[];
-  @Input() public countries: any;
-  @Input() public pieChartData: any;
-  @Input() public configuration: any;
-  @Input() public competitors: any;
-  @Input() public applications: any;
-  @Input() public interestOfProfessionals: any;
-  @Input() public partnersByProfessionals: any;
-  @Input() public priceAverage: number;
-  @Input() public scoreAverage: number;
-  @Input() public scores: number[];
-  @Input() public percentage: number;
+  @Input() public info: any;
 
 
   constructor(private _innovationService: InnovationService,
@@ -56,51 +60,24 @@ export class SharedMarketReportSectionComponent implements OnInit {
       });
     switch(this.type) {
       case 'pie':
-        if (this.pieChartData) {
-          let data = SharedMarketReportSectionComponent.getChartValues(this.pieChartData);
+        if (this.info.pieChart) {
+          let data = SharedMarketReportSectionComponent.getChartValues(this.info.pieChart);
+          console.log(data);
           this._chartValues = [{
             'data': data || [],
             'backgroundColor': ['#C0210F', '#F2C500', '#82CD30', '#34AC01']
           }];
-          this.percentage = this.pieChartData[3].percentage + this.pieChartData[4].percentage;
         }
         break;
-      case 'pros':
-        this._numberFocus = this.answers.length;
-        break;
       case 'score':
-        this._numberFocus = this.scoreAverage;
         // Calcul du score max
-        this._maxCountScore = _.maxBy(this.scores, 'count')['count'];
+        this._maxCountScore = _.maxBy(this.info.data, 'count')['count'];
         break;
-      case 'prices':
-        this._numberFocus = this.prices.length + this.comments.length;
-        break;
-      case 'comments':
-        this._numberFocus = this.comments.length;
-        break;
-      case 'competitors':
-        this._numberFocus = this.competitors.length;
-        break;
-      case 'applications':
-        this._numberFocus = this.applications.length;
-        break;
-      case 'partners':
-        this._numberFocus = this.partnersByProfessionals.length;
-        break;
-      case 'interest':
-        this._numberFocus = this.interestOfProfessionals.client.length +
-          this.interestOfProfessionals.develop.length +
-          this.interestOfProfessionals.invest.length +
-          this.interestOfProfessionals.distributor.length;
-        break;
-      default:
-        console.log('Coucou !');
     }
   }
 
   static getChartValues(stats) {
-    return _.map(stats, stat => stat['count']);
+    return _.map(stats, s => s['count']);
   }
 
   public toggleDetails(){
@@ -112,12 +89,12 @@ export class SharedMarketReportSectionComponent implements OnInit {
   }
 
   public keyupHandlerFunction(event) {
-    this.conclusion = event['content'];
+    this.info.conclusion = event['content'];
     //Saving
     this._isSaving = true;
-    this._innovationService.updateSynthesis(this.innoid, this.conclusion)
-      .subscribe(data=>{
-        this.conclusion = data.synthesis[this.key];
+    this._innovationService.updateSynthesis(this.innoid, this.info.conclusion)
+      .subscribe(info=>{
+        //this.info.conclusion = info.synthesis[this.key];
         //Saved
         this._isSaving = false;
       });
@@ -136,15 +113,15 @@ export class SharedMarketReportSectionComponent implements OnInit {
   }
 
   public getLevels(lang:string): Array<any> {
-    return this.configuration[lang] || [];
+    return this.configurations[this.id][lang] || [];
   }
 
   public getFlag(country: string): string {
     return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
   }
 
-  get numberFocus(): number {
-    return this._numberFocus;
+  get configurations(): any {
+    return this._configurations;
   }
 
   get chartValues(): any {

@@ -98,12 +98,10 @@
                 Liste des professionnels
             ************************************************************** -->
         <market-report-section
-          [id]="'professional'"
-          [key]="'answers'"
+          [id]="'professionals'"
           [i18n]="'PROFESSIONAL'"
+          [info]="infographics.professionals"
           [answers]="infographics.answers"
-          [percentage]="infographics.stats.percentageFollow"
-          [countries]="infographics.worldMap"
           [innoid]="innoid"
           [type]="'pros'">
         </market-report-section>
@@ -113,13 +111,10 @@
             ************************************************************** -->
 
         <market-report-section
-          [id]="'market-need'"
+          [id]="'relevantProblematic'"
           [i18n]="'MARKET_NEED'"
-          [key]="'relevantProblematic'"
-          [configuration]="getConfig('relevantProblematic')"
-          [pieChartData]="infographics.pieCharts.relevantProblematic"
+          [info]="infographics.relevantProblematic"
           [innoid]="innoid"
-          [comments]="infographics.relevantProblematicComments"
           [type]="'pie'">
         </market-report-section>
 
@@ -128,13 +123,10 @@
         ************************************************************** -->
 
         <market-report-section
-          [id]="'relevance-solution'"
+          [id]="'productAnsweringProblematic'"
           [i18n]="'RELEVANCE'"
-          [key]="'productAnsweringProblematic'"
-          [configuration]="getConfig('productAnsweringProblematic')"
-          [pieChartData]="infographics.pieCharts.productAnsweringProblematic"
+          [info]="infographics.productAnsweringProblematic"
           [innoid]="innoid"
-          [comments]="infographics.productAnsweringProblematicComments"
           [type]="'pie'">
         </market-report-section>
 
@@ -143,14 +135,11 @@
             ************************************************************** -->
 
         <market-report-section
-          [id]="'actual-competitors'"
+          [id]="'competitors'"
           [i18n]="'ACTUAL_COMPETITION'"
-          [key]="'competitors'"
+          [info]="infographics.competitors"
           [innoid]="innoid"
-          [type]="'competitors'"
-          [competitors]="infographics.competitors.companies"
-          [percentage]="infographics.stats.percentageCompetitors"
-          [comments]="infographics.competitorsComments">
+          [type]="'competitors'">
         </market-report-section>
 
         <!-- *********************************************************
@@ -159,11 +148,9 @@
 
 
         <market-report-section
-          [id]="'differentiation'"
+          [id]="'productInterests'"
           [i18n]="'DIFFERENTIATION'"
-          [key]="'productInterests'"
-          [configuration]="getConfig('productInterests')"
-          [pieChartData]="infographics.pieCharts.productInterests"
+          [info]="infographics.productInterests"
           [innoid]="innoid"
           [type]="'pie'">
         </market-report-section>
@@ -174,7 +161,7 @@
         <market-report-section
           [id]="'key-advantages'"
           [i18n]="'BENEFIT'"
-          [key]="'keyAdvantages'"
+          [info]="infographics.keyAdvantages"
           [innoid]="innoid"
           [type]="'stars'">
         </market-report-section>
@@ -183,12 +170,10 @@
                 Points forts
         ************************************************************** -->
         <market-report-section
-          [id]="'strong-points'"
+          [id]="'commentPositive'"
           [i18n]="'STRONG'"
-          [key]="'commentsPositive'"
+          [info]="infographics.commentPositive"
           [innoid]="innoid"
-          [comments]="infographics.commentsPositive"
-          [percentage]="infographics.stats.percentageCommentsPositive"
           [type]="'comments'">
         </market-report-section>
 
@@ -196,12 +181,10 @@
             Objections
         ************************************************************** -->
         <market-report-section
-          [id]="'objections'"
+          [id]="'commentNegative'"
           [i18n]="'WEAK'"
-          [key]="'commentsNegative'"
+          [info]="infographics.commentNegative"
           [innoid]="innoid"
-          [comments]="infographics.commentsNegative"
-          [percentage]="infographics.stats.percentageCommentsNegative"
           [type]="'comments'">
         </market-report-section>
 
@@ -209,15 +192,10 @@
                         Recommandations de prix
                     ************************************************************** -->
         <market-report-section
-          [id]="'price-suggestion'"
+          [id]="'prices'"
           [i18n]="'PRICE'"
-          [key]="'prices'"
+          [info]="infographics.prices"
           [innoid]="innoid"
-          [priceAverage]="infographics.priceAverage"
-          [prices]="infographics.prices"
-          [comments]="infographics.pricesComments"
-          [percentage]="infographics.stats.percentagePrices"
-          [answers]="answers"
           [type]="'prices'">
         </market-report-section>
 
@@ -225,54 +203,42 @@
                Nouvelles applications
            ************************************************************** -->
         <market-report-section
-          [id]="'new-application-fields'"
+          [id]="'applications'"
           [i18n]="'NEW_APPLICATION'"
-          [key]="'applications'"
+          [info]="infographics.applications"
           [innoid]="innoid"
-          [type]="'applications'"
-          [applications]="infographics.applications"
-          [percentage]="infographics.stats.percentageApplications"
-          [comments]="infographics.applicationsComments">
+          [type]="'applications'">
         </market-report-section>
 
         <!-- *********************************************************
                         Marques d’intérêt
         ************************************************************** -->
         <market-report-section
-          [id]="'expression-of-interest'"
+          [id]="'interests'"
           [i18n]="'EXPRESSION_OF_INTEREST'"
-          [key]="'interestOfProfessionals'"
-          [innoid]="innoid"
-          [type]="'interest'"
-          [interestOfProfessionals]="infographics.interestOfProfessionals"
-          [percentage]="infographics.stats.percentageInterestOfProfessionals"
-          [comments]="infographics.interestOfProfessionalsComments">
+          [info]="infographics.interests"
+          [innoid]="innoid">
         </market-report-section>
 
         <!-- *********************************************************
                         Partenaires potentiels
         ************************************************************** -->
         <market-report-section
-          [id]="'potential-partners'"
+          [id]="'partners'"
           [i18n]="'POTENTIAL_PARTNER'"
-          [key]="'partners'"
+          [info]="infographics.partners"
           [innoid]="innoid"
-          [type]="'partners'"
-          [partnersByProfessionals]="infographics.partnersByProfessionals"
-          [percentage]="infographics.stats.percentagePartners"
-          [comments]="infographics.partnersComments">
+          [type]="'partners'">
         </market-report-section>
 
         <!-- *********************************************************
                 Potentiel marché
             ************************************************************** -->
         <market-report-section
-          [id]="'market-potential'"
+          [id]="'marketPotential'"
           [i18n]="'MARKET_POTENTIAL'"
-          [key]="'marketPotential'"
+          [info]="infographics.marketPotential"
           [innoid]="innoid"
-          [scoreAverage]="infographics.scoreAverage"
-          [scores]="infographics.scores"
           [type]="'score'">
         </market-report-section>
       </div>
