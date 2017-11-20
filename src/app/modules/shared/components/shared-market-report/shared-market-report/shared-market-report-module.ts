@@ -27,9 +27,9 @@ export class SharedMarketReportComponent implements OnInit {
 
   ngOnInit() {
     this._route.params.subscribe(params => {
-      const innovationId = params['innovationId'] || this.innoid;
+      this.innoid = params['innovationId'] || this.innoid;
       this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
-      this._innovationService.getInnovationSythesis(innovationId).subscribe(synthesis => {
+      this._innovationService.getInnovationSythesis(this.innoid).subscribe(synthesis => {
         this._infographics = synthesis.infographics;
       });
     });

@@ -22,7 +22,7 @@
       <!--======= Conclusion =======-->
       <div class="umi-synthesis flex-container">
         <p class="title">{{ 'MARKET_REPORT.' + i18n + '.QUESTION' | translate }}</p>
-        <text-zone [elementId]="key"
+        <text-zone [elementId]="conclusionId"
                    [readonly]="readonly"
                    [data]="info.conclusion || ''"
                    (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>

@@ -19,6 +19,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
   private _maxCountScore: any;
   private _isSaving = false;
   private _chartValues: any;
+  private _conclusionId: string;
 
   private _configurations = {
     'relevantProblematic':{
@@ -51,6 +52,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
               private _route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.conclusionId = `${this.id}Conclusion`;
     this._showDetails = false;
     this.readonly = true;
     this._route
@@ -91,7 +93,10 @@ export class SharedMarketReportSectionComponent implements OnInit {
     //Saving
     this._isSaving = true;
     const savedObject = {};
-    savedObject[this.id]['conclusion'] = event['content'];
+    savedObject[this.id] = {
+      conclusion: event['content']
+    };
+    console.log(savedObject);
     this._innovationService.updateSynthesis(this.innoid, savedObject)
       .subscribe(data => {
         this.info.conclusion = data.infographics[this.id]['conclusion'];
@@ -127,5 +132,13 @@ export class SharedMarketReportSectionComponent implements OnInit {
 
   get chartValues(): any {
     return this._chartValues;
+  }
+
+  set conclusionId(value: string) {
+    this._conclusionId = value;
+  }
+
+  get conclusionId(): string {
+    return this._conclusionId;
   }
 }
