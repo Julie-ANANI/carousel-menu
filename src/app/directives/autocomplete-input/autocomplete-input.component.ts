@@ -1,9 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Clearbit } from '../../models/clearbit';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
+import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import 'rxjs/add/operator/switchMap';
+import 'lodash';
 
 @Component({
   moduleId: module.id,
@@ -14,35 +14,73 @@ import 'rxjs/add/operator/switchMap';
 
 export class AutocompleteInputComponent implements OnInit {
 
-  @Output() update = new EventEmitter<any>();
-  clearbitCompanies: Observable<Clearbit[]>;
-  companyName: FormControl = new FormControl();
-  answerList: Array<Clearbit> = [];
+  public inputForm: FormGroup;
 
-  constructor(private service: AutocompleteService) {}
+  @Output() update = new EventEmitter<any>();
+
+  companyName: FormControl = new FormControl();
+  answerList: Array<{name: string, domain: string, flag: string}> = [];
+  optionsList: Array<any> = [];//Observable<{name: string, domain: string, flag: string}[]>;
+  answer = "";
+
+  /*
+   * Component configuration
+   */
+  private _placeholder = "";
+  private _autocompleteType = "";
+  ////////////////////////////////////////////////////////////////////
+
+  constructor(private _fbuilder: FormBuilder,
+              private _sanitizer: DomSanitizer,
+              private _autocompleteService: AutocompleteService) {}
+
+  @Input()
+  set config(config: {placeholder: string, type: string, initialData: any}) {
+    if(config) {
+      this._placeholder = config.placeholder || '';
+      this._autocompleteType = config.type || '';
+      config.initialData.forEach(val =>{
+        if(this.answerList.findIndex(t=>{return t === val}) === -1) {
+          this.answerList.push(val);
+        }
+      });
+    }
+  }
+
+  get placeholder(): string {
+    return this._placeholder;
+  }
 
   ngOnInit() {
-    this.companyName.valueChanges.subscribe(x => {
-      if (x) {
-        this.clearbitCompanies = this.service.get(x).catch(_ => []);
-      }
+    this.inputForm = this._fbuilder.group({
+      answer : "",
     });
   }
 
-  addCompany(val: string): void {
-    const clearbitObject = {name: val};
-    this.answerList.push(clearbitObject);
-    this.update.emit({value: this.answerList});
+  public suggestions(keyword: any) {
+      const queryConf = {
+        keyword: keyword,
+        type: this._autocompleteType
+      };
+      return this._autocompleteService.get(queryConf).catch(_=>[]);
   }
 
-  addClearbit(val: Clearbit): void {
-    this.answerList.push(val);
-    this.update.emit({value: this.answerList});
+  public autocompleListFormatter = (data: any) : SafeHtml => {
+    let html = `<span>${data.name}</span>`;
+    return this._sanitizer.bypassSecurityTrustHtml(html);
+  };
+
+  addProposition(val: any): void {
+    val = val ? val.get('answer').value : "";
+    if(val && this.answerList.findIndex(t=>{return t.name === val.name}) === -1) {
+      this.answerList.push(val);
+      this.update.emit({value: this.answerList});
+    }
   }
 
-  rmProposition(i: number): void {
+/*  rmProposition(i: number): void {
     this.answerList.splice(i, 1);
     this.update.emit({value: this.answerList});
-  }
+  }*/
 
 }

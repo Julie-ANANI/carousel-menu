@@ -1,19 +1,19 @@
-<form (ngSubmit)="companyName.value && addCompany(companyName.value); companyName.reset()" >
+<form class="form-horizontal" [formGroup]="inputForm" (ngSubmit)="addProposition(inputForm)">
+
   <div class="input-group">
-    <!--<input type="text" class="form-input input-lg" [formControl]="companyName" matInput [matAutocomplete]="auto" required />-->
-    <input type="text" class="form-input input-lg">
+      <input ng2-auto-complete
+              formControlName="answer"
+              [list-formatter]="autocompleListFormatter"
+              [source]="suggestions.bind(this)"
+              value-property-name="id"
+              display-property-name="name"
+             [attr.placeholder]="placeholder | translate"
+              class="form-input form-control input-lg">
     <button class="btn btn-primary btn-lg input-group-btn" translate>
-      QUIZ.ADD
+      COMMON.ADD
       <i class="icon icon-arrow-right"></i>
     </button>
   </div>
-
-  <!--<mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let option of clearbitCompanies | async" (click)="addClearbit(option)">
-      <img style="vertical-align:middle;" aria-hidden src="{{option.logo}}" height="35" />
-      <span>{{option.name}}</span>
-    </mat-option>
-  </mat-autocomplete>
 
   <ul *ngFor="let a of answerList; index as i" class="answerList">
     <li>
@@ -22,5 +22,5 @@
         <img src="assets/images/delete.svg" width="" height="">
       </a>
     </li>
-  </ul>-->
+  </ul>
 </form>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { LocalStorageModule } from 'angular-2-local-storage'; // TODO utiliser le localStorage pour accélérer les chargements
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { SharedModule } from '../shared/shared.module';
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientFooterComponent } from './components/client-footer/client-footer.component';
@@ -37,7 +38,8 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
       prefix: 'umi',
       storageType: 'localStorage'
     }),
-    SharedModule
+    SharedModule,
+    Ng2AutoCompleteModule
   ],
   declarations: [
     ClientComponent,
