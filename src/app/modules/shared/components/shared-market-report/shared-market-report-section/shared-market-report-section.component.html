@@ -107,8 +107,8 @@
       <div class="flex-container" *ngIf="type === 'competitors'">
         <div class="column">
           <ul class="items">
-            <li *ngFor="let competitor of competitors; let i = index"
-                [hidden]="i >= competitors.length/2"
+            <li *ngFor="let competitor of info.data; let i = index"
+                [hidden]="i >= info.data.length/2"
                 [ngClass]="{'top-profil': competitor.quality === 2}">
               <market-item class="flex-container"
                            [answers]="getAnswers(competitor.answers)"
