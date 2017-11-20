@@ -1,13 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Clearbit } from '../../models/clearbit';
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
-//import { FormControl } from '@angular/forms';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'lodash';
-import {element} from "protractor";
 
 @Component({
   moduleId: module.id,
