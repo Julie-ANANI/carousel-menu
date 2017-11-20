@@ -6,7 +6,7 @@
     <span>{{numberFocus}}</span>
     {{ 'MARKET_REPORT.' + i18n + '.NUMBER' | translate }}
   </div>
-  <hr>
+  <hr *ngIf="type!='score'">
   <div class="number-ratio" *ngIf="type!='pros' && type!='score'">
     <span>{{percentage}}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
   </div>
