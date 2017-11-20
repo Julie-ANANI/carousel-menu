@@ -50,10 +50,10 @@
     </div>
 
     <!--======= Prix =======-->
-    <div class="bloc" id="prices" *ngIf="info.priceverage && type === 'prices'">
+    <div class="bloc" id="prices" *ngIf="info.average && type === 'prices'">
       <app-shared-infographics-prices [rawData]="info.data"></app-shared-infographics-prices>
 
-      <div class="average">Moyenne : {{info.priceverage}}€</div>
+      <div class="average">Moyenne : {{info.average}}€</div>
     </div>
 
     <!--======= Bouton plier/déplier =======-->
@@ -141,8 +141,8 @@
       <div class="flex-container" *ngIf="type === 'applications'">
         <div class="column">
           <ul class="items">
-            <li *ngFor="let application of applications; let i = index"
-                [hidden]="i >= applications.length/2"
+            <li *ngFor="let application of info.data; let i = index"
+                [hidden]="i >= info.data.length/2"
                 [ngClass]="{'top-profil': application.quality === 2}">
               <market-item class="flex-container"
                            [answers]="getAnswers(application.answers)"
@@ -155,8 +155,8 @@
         </div>
         <div class="column">
           <ul class="items">
-            <li *ngFor="let application of applications; let i = index"
-                [hidden]="i < applications.length/2"
+            <li *ngFor="let application of info.data; let i = index"
+                [hidden]="i < info.data.length/2"
                 [ngClass]="{'top-profil': application.quality === 2}">
               <market-item class="flex-container"
                            [answers]="getAnswers(application.answers)"
@@ -171,14 +171,14 @@
 
       <!--======= Marques d'intérêt =======-->
 
-      <div *ngIf="type === 'interest' && interestOfProfessionals.client.length">
+      <div *ngIf="type === 'interests' && info.data.client.length">
         <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.CLIENT' | translate }}</p>
 
         <div class="flex-container">
           <div class="column">
             <ul class="items">
-              <li *ngFor="let client of interestOfProfessionals.client; let i = index"
-                  [hidden]="i >= interestOfProfessionals.client.length/2"
+              <li *ngFor="let client of info.data.client; let i = index"
+                  [hidden]="i >= info.data.client.length/2"
                   [ngClass]="{'top-profil': client.quality === 2}">
                 <market-item class="flex-container"
                              [answers]="getAnswers(client.answers)"
@@ -192,8 +192,8 @@
           </div>
           <div class="column">
             <ul class="items">
-              <li *ngFor="let client of interestOfProfessionals.client; let i = index"
-                  [hidden]="i < interestOfProfessionals.client.length/2"
+              <li *ngFor="let client of info.data.client; let i = index"
+                  [hidden]="i < info.data.client.length/2"
                   [ngClass]="{'top-profil': client.quality === 2}">
                 <market-item class="flex-container"
                              [answers]="getAnswers(client.answers)"
@@ -208,14 +208,14 @@
         </div>
       </div>
 
-      <div *ngIf="type === 'interest' && interestOfProfessionals.develop.length">
+      <div *ngIf="type === 'interests' && info.data.develop.length">
         <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DEVELOP' | translate }}</p>
 
         <div class="flex-container">
           <div class="column">
             <ul class="items">
-              <li *ngFor="let develop of interestOfProfessionals.develop; let i = index"
-                  [hidden]="i >= interestOfProfessionals.develop.length/2"
+              <li *ngFor="let develop of info.data.develop; let i = index"
+                  [hidden]="i >= info.data.develop.length/2"
                   [ngClass]="{'top-profil': develop.quality === 2}">
                 <market-item class="flex-container"
                              [answers]="getAnswers(develop.answers)"
@@ -229,8 +229,8 @@
           </div>
           <div class="column">
             <ul class="items">
-              <li *ngFor="let develop of interestOfProfessionals.develop; let i = index"
-                  [hidden]="i < interestOfProfessionals.develop.length/2"
+              <li *ngFor="let develop of info.data.develop; let i = index"
+                  [hidden]="i < info.data.develop.length/2"
                   [ngClass]="{'top-profil': develop.quality === 2}">
                 <market-item class="flex-container"
                              [answers]="getAnswers(develop.answers)"
@@ -245,14 +245,14 @@
         </div>
       </div>
 
-      <div *ngIf="type === 'interest' && interestOfProfessionals.distributor.length">
+      <div *ngIf="type === 'interests' && info.data.distributor.length">
         <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DISTRIBUTE' | translate }}</p>
 
         <div class="flex-container">
           <div class="column">
             <ul class="items">
-              <li *ngFor="let distributor of interestOfProfessionals.distributor; let i = index"
-                  [hidden]="i >= interestOfProfessionals.distributor.length/2"
+              <li *ngFor="let distributor of info.data.distributor; let i = index"
+                  [hidden]="i >= info.data.distributor.length/2"
                   [ngClass]="{'top-profil': distributor.quality === 2}">
                 <market-item class="flex-container"
                              [answers]="getAnswers(distributor.answers)"
@@ -266,8 +266,8 @@
           </div>
           <div class="column">
             <ul class="items">
-              <li *ngFor="let distributor of interestOfProfessionals.distributor; let i = index"
-                  [hidden]="i < interestOfProfessionals.distributor.length/2"
+              <li *ngFor="let distributor of info.data.distributor; let i = index"
+                  [hidden]="i < info.data.distributor.length/2"
                   [ngClass]="{'top-profil': distributor.quality === 2}">
                 <market-item class="flex-container"
                              [answers]="getAnswers(distributor.answers)"
@@ -282,14 +282,14 @@
         </div>
       </div>
 
-      <div *ngIf="type === 'interest' && interestOfProfessionals.invest.length">
+      <div *ngIf="type === 'interests' && info.data.invest.length">
         <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.INVEST' | translate }}</p>
 
         <div class="flex-container">
           <div class="column">
             <ul class="items">
-              <li *ngFor="let investor of interestOfProfessionals.invest; let i = index"
-                  [hidden]="i >= interestOfProfessionals.invest.length/2"
+              <li *ngFor="let investor of info.data.invest; let i = index"
+                  [hidden]="i >= info.data.invest.length/2"
                   [ngClass]="{'top-profil': investor.quality === 2}">
                 <market-item class="flex-container"
                              [answers]="getAnswers(investor.answers)"
@@ -303,8 +303,8 @@
           </div>
           <div class="column">
             <ul class="items">
-              <li *ngFor="let investor of interestOfProfessionals.invest; let i = index"
-                  [hidden]="i < interestOfProfessionals.invest.length/2"
+              <li *ngFor="let investor of info.data.invest; let i = index"
+                  [hidden]="i < info.data.invest.length/2"
                   [ngClass]="{'top-profil': investor.quality === 2}">
                 <market-item class="flex-container"
                              [answers]="getAnswers(investor.answers)"
@@ -324,7 +324,7 @@
         <div class="column">
           <ul class="items">
             <li *ngFor="let partner of partnersByProfessionals; let i = index"
-                [hidden]="i >= partnersByProfessionals.length/2"
+                [hidden]="i >= info.data.length/2"
                 [ngClass]="{'top-profil': partner.quality === 2}">
               <market-item class="flex-container"
                            [answers]="getAnswers(partner.answers)"
@@ -338,8 +338,8 @@
         </div>
         <div class="column">
           <ul class="items">
-            <li *ngFor="let partner of partnersByProfessionals; let i = index"
-                [hidden]="i < partnersByProfessionals.length/2"
+            <li *ngFor="let partner of info.data; let i = index"
+                [hidden]="i < info.data.length/2"
                 [ngClass]="{'top-profil': partner.quality === 2}">
               <market-item class="flex-container"
                            [answers]="getAnswers(partner.answers)"
@@ -355,10 +355,10 @@
     </div>
 
     <!--======= Liste de commentaires =======-->
-    <div *ngIf="showDetails && comments && comments.length > 0">
-      <p class="title-question">{{comments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
+    <div *ngIf="showDetails && info.comments && info.comments.length > 0">
+      <p class="title-question">{{info.comments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
       <ul class="comments">
-        <li *ngFor="let comment of comments"
+        <li *ngFor="let comment of info.comments"
             [ngClass]="{'top-profil': comment.quality === 2}">
           <market-comment
             [job]="comment.job"

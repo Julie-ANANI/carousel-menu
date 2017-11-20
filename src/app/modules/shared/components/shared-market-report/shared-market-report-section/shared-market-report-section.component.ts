@@ -62,7 +62,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
       case 'pie':
         if (this.info.pieChart) {
           let data = SharedMarketReportSectionComponent.getChartValues(this.info.pieChart);
-          console.log(data);
           this._chartValues = [{
             'data': data || [],
             'backgroundColor': ['#C0210F', '#F2C500', '#82CD30', '#34AC01']
