@@ -829,7 +829,14 @@
 
                           <div>
                             <label class="form-label">{{ 'PROJECT_EDIT.MEDIA.ADD' | translate }}</label>
-                            <div class="pictures-upload text-center"
+                            <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_200/' + img.cloudinary.public_id" *ngFor="let img of project.innovationCards[innovationCardEditingIndex].media" alt="" width="200">
+
+                            <app-shared-upload-zone-photo
+                              (cbFn)="imageUploaded($event)">
+                            </app-shared-upload-zone-photo>
+
+
+                            <!--<div class="pictures-upload text-center"
                                  [ngClass]="{'dragging': draggingPhoto}"
                                  ng2FileDrop [ng2FileDropAcceptMultiple]="true"
                                  (ng2FileDropHoverStart)="draggingPhoto = true"
@@ -839,9 +846,16 @@
                                  (ng2FileDropFilesDropped)="dragFilesDropped($event)"
                                  (ng2FileDropFileAccepted)="dragFileAccepted($event)"
                                  (ng2FileDropFileRejected)="dragFileRejected($event)">
-                              <button class="btn btn-lg btn-primary"><i class="icon icon-upload"></i> {{ 'PROJECT_EDIT.MEDIA.UPLOAD' | translate }}</button>
+
+                              <div style="height:0;overflow:hidden">
+                                <input type="file" id="fileInput" name="fileInput"  #fileInput (change)="upload($event)" />
+                              </div>
+
+                              <button class="btn btn-lg btn-primary" (click)="fileInput.click()">
+                                <i class="icon icon-upload"></i> {{ 'PROJECT_EDIT.MEDIA.UPLOAD' | translate }}
+                              </button>
                               <p>({{ 'PROJECT_EDIT.MEDIA.SLIDE' | translate }})</p>
-                            </div>
+                            </div>-->
 
                             <div class="videos-upload text-center">
                               <p>{{ 'PROJECT_EDIT.MEDIA.URL' | translate }}</p>

@@ -16,9 +16,7 @@ export class SharedUploadZonePhotoComponent implements OnInit{
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
 
-  @Input() public mediaContainer: any;
   @Input() public type: any;
-  // @Output() public cbFn: any;
   @Output() public cbFn: EventEmitter <any> = new EventEmitter();
 
 
@@ -30,9 +28,7 @@ export class SharedUploadZonePhotoComponent implements OnInit{
       autoUpload: true,
       filters: this._filters,
       maxFileSize: 1024 * 1024,
-      additionalParameter: {
-        'test': 'testParam'
-      }
+      additionalParameter: {} // à transmettre au serveur au moment de la sauvegarde
     });
 
     this._uploader.onCompleteItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
