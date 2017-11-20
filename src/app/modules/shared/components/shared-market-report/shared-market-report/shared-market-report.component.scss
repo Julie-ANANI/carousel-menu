@@ -407,51 +407,6 @@ body.sample-infographic {
     }
   }
 
-  /* === Items list === */
-
-  ul.items {
-
-    > li {
-      position: relative;
-      color: white;
-      padding: 8px 15px;
-      margin-bottom: 5px;
-      border-radius: 2px;
-
-      .flex-container {
-        align-items: flex-start;
-      }
-
-      .item-name {
-        flex: 1;
-        margin-left: 10px;
-        font-weight: 600;
-      }
-
-      .item-occurrence {
-        font-weight: 600;
-        font-size: 14px;
-        color: #0878A5;
-        padding: 0 4px;
-        border-radius: 500px;
-        background: rgba(255, 255, 255, 0.8);
-      }
-
-      > a, > a:visited, > a:focus {
-        color: white;
-        outline: none;
-        text-decoration: underline;
-      }
-    }
-
-    > li:nth-child(even) {
-      background: #4FA9CE;
-    }
-
-    > li:nth-child(odd) {
-      background: #0B90C6;
-    }
-  }
 
   /* === Comments list === */
 
