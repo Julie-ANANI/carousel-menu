@@ -88,12 +88,13 @@ export class SharedMarketReportSectionComponent implements OnInit {
   }
 
   public keyupHandlerFunction(event) {
-    this.info.conclusion = event['content'];
     //Saving
     this._isSaving = true;
-    this._innovationService.updateSynthesis(this.innoid, this.info.conclusion)
-      .subscribe(info=>{
-        //this.info.conclusion = info.synthesis[this.key];
+    const savedObject = {};
+    savedObject[this.id]['conclusion'] = event['content'];
+    this._innovationService.updateSynthesis(this.innoid, savedObject)
+      .subscribe(data => {
+        this.info.conclusion = data.infographics[this.id]['conclusion'];
         //Saved
         this._isSaving = false;
       });
@@ -101,7 +102,8 @@ export class SharedMarketReportSectionComponent implements OnInit {
 
   public getAnswers(commentsList:Array<any>): Array<any> {
     if (this.answers) {
-      return _.map(commentsList, comment => _.find(this.answers, (answer: any) => answer.id === comment.answerId));
+      let answers = _.map(commentsList, comment => _.find(this.answers, (answer: any) => answer.id === comment.answerId));
+      return _.filter(answers, a => a);
     } else {
       return [];
     }

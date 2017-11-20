@@ -104,272 +104,53 @@
       </bar-chart>
 
       <!--======= Concurrents =======-->
-      <div class="flex-container" *ngIf="type === 'competitors'">
-        <div class="column">
-          <ul class="items">
-            <li *ngFor="let competitor of info.data; let i = index"
-                [hidden]="i >= info.data.length/2"
-                [ngClass]="{'top-profil': competitor.quality === 2}">
-              <market-item class="flex-container"
-                           [answers]="getAnswers(competitor.answers)"
-                           [value]="competitor.value"
-                           [count]="competitor.count"
-                           [url]="competitor.url"
-                           [isNew]="false">
-              </market-item>
-            </li>
-          </ul>
-        </div>
-        <div class="column">
-          <ul class="items">
-            <li *ngFor="let competitor of competitors; let i = index"
-                [hidden]="i < competitors.length/2"
-                [ngClass]="{'top-profil': competitor.quality === 2}">
-              <market-item class="flex-container"
-                           [answers]="getAnswers(competitor.answers)"
-                           [value]="competitor.value"
-                           [count]="competitor.count"
-                           [url]="competitor.url"
-                           [isNew]="false">
-              </market-item>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <market-item-list [answers]="answers" *ngIf="type==='competitors'" [list]="info.data"></market-item-list>
 
       <!--======= Applications =======-->
-      <div class="flex-container" *ngIf="type === 'applications'">
-        <div class="column">
-          <ul class="items">
-            <li *ngFor="let application of info.data; let i = index"
-                [hidden]="i >= info.data.length/2"
-                [ngClass]="{'top-profil': application.quality === 2}">
-              <market-item class="flex-container"
-                           [answers]="getAnswers(application.answers)"
-                           [value]="application.value"
-                           [count]="application.count"
-                           [isNew]="false">
-              </market-item>
-            </li>
-          </ul>
-        </div>
-        <div class="column">
-          <ul class="items">
-            <li *ngFor="let application of info.data; let i = index"
-                [hidden]="i < info.data.length/2"
-                [ngClass]="{'top-profil': application.quality === 2}">
-              <market-item class="flex-container"
-                           [answers]="getAnswers(application.answers)"
-                           [value]="application.value"
-                           [count]="application.count"
-                           [isNew]="false">
-              </market-item>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <market-item-list [answers]="answers" [list]="info.data" *ngIf="type === 'applications'"></market-item-list>
 
       <!--======= Marques d'intérêt =======-->
 
       <div *ngIf="type === 'interests' && info.data.client.length">
         <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.CLIENT' | translate }}</p>
-
-        <div class="flex-container">
-          <div class="column">
-            <ul class="items">
-              <li *ngFor="let client of info.data.client; let i = index"
-                  [hidden]="i >= info.data.client.length/2"
-                  [ngClass]="{'top-profil': client.quality === 2}">
-                <market-item class="flex-container"
-                             [answers]="getAnswers(client.answers)"
-                             [value]="client.value"
-                             [count]="client.count"
-                             [url]="client.url"
-                             [isNew]="false">
-                </market-item>
-              </li>
-            </ul>
-          </div>
-          <div class="column">
-            <ul class="items">
-              <li *ngFor="let client of info.data.client; let i = index"
-                  [hidden]="i < info.data.client.length/2"
-                  [ngClass]="{'top-profil': client.quality === 2}">
-                <market-item class="flex-container"
-                             [answers]="getAnswers(client.answers)"
-                             [value]="client.value"
-                             [count]="client.count"
-                             [url]="client.url"
-                             [isNew]="false">
-                </market-item>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <market-item-list [answers]="answers" [list]="info.data.client"></market-item-list>
       </div>
 
       <div *ngIf="type === 'interests' && info.data.develop.length">
         <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DEVELOP' | translate }}</p>
-
-        <div class="flex-container">
-          <div class="column">
-            <ul class="items">
-              <li *ngFor="let develop of info.data.develop; let i = index"
-                  [hidden]="i >= info.data.develop.length/2"
-                  [ngClass]="{'top-profil': develop.quality === 2}">
-                <market-item class="flex-container"
-                             [answers]="getAnswers(develop.answers)"
-                             [value]="develop.value"
-                             [count]="develop.count"
-                             [url]="develop.url"
-                             [isNew]="false">
-                </market-item>
-              </li>
-            </ul>
-          </div>
-          <div class="column">
-            <ul class="items">
-              <li *ngFor="let develop of info.data.develop; let i = index"
-                  [hidden]="i < info.data.develop.length/2"
-                  [ngClass]="{'top-profil': develop.quality === 2}">
-                <market-item class="flex-container"
-                             [answers]="getAnswers(develop.answers)"
-                             [value]="develop.value"
-                             [count]="develop.count"
-                             [url]="develop.url"
-                             [isNew]="false">
-                </market-item>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <market-item-list [answers]="answers" [list]="info.data.develop"></market-item-list>
       </div>
 
       <div *ngIf="type === 'interests' && info.data.distributor.length">
         <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DISTRIBUTE' | translate }}</p>
-
-        <div class="flex-container">
-          <div class="column">
-            <ul class="items">
-              <li *ngFor="let distributor of info.data.distributor; let i = index"
-                  [hidden]="i >= info.data.distributor.length/2"
-                  [ngClass]="{'top-profil': distributor.quality === 2}">
-                <market-item class="flex-container"
-                             [answers]="getAnswers(distributor.answers)"
-                             [value]="distributor.value"
-                             [count]="distributor.count"
-                             [url]="distributor.url"
-                             [isNew]="false">
-                </market-item>
-              </li>
-            </ul>
-          </div>
-          <div class="column">
-            <ul class="items">
-              <li *ngFor="let distributor of info.data.distributor; let i = index"
-                  [hidden]="i < info.data.distributor.length/2"
-                  [ngClass]="{'top-profil': distributor.quality === 2}">
-                <market-item class="flex-container"
-                             [answers]="getAnswers(distributor.answers)"
-                             [value]="distributor.value"
-                             [count]="distributor.count"
-                             [url]="distributor.url"
-                             [isNew]="false">
-                </market-item>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <market-item-list [answers]="answers" [list]="info.data.distributor"></market-item-list>
       </div>
 
       <div *ngIf="type === 'interests' && info.data.invest.length">
         <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.INVEST' | translate }}</p>
-
-        <div class="flex-container">
-          <div class="column">
-            <ul class="items">
-              <li *ngFor="let investor of info.data.invest; let i = index"
-                  [hidden]="i >= info.data.invest.length/2"
-                  [ngClass]="{'top-profil': investor.quality === 2}">
-                <market-item class="flex-container"
-                             [answers]="getAnswers(investor.answers)"
-                             [value]="investor.value"
-                             [count]="investor.count"
-                             [url]="investor.url"
-                             [isNew]="false">
-                </market-item>
-              </li>
-            </ul>
-          </div>
-          <div class="column">
-            <ul class="items">
-              <li *ngFor="let investor of info.data.invest; let i = index"
-                  [hidden]="i < info.data.invest.length/2"
-                  [ngClass]="{'top-profil': investor.quality === 2}">
-                <market-item class="flex-container"
-                             [answers]="getAnswers(investor.answers)"
-                             [value]="investor.value"
-                             [count]="investor.count"
-                             [url]="investor.url"
-                             [isNew]="false">
-                </market-item>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <market-item-list [answers]="answers" [list]="info.data.invest"></market-item-list>
       </div>
 
       <!--======= Partenaires potentiels =======-->
-      <div class="flex-container" *ngIf="type==='partners'">
-        <div class="column">
-          <ul class="items">
-            <li *ngFor="let partner of partnersByProfessionals; let i = index"
-                [hidden]="i >= info.data.length/2"
-                [ngClass]="{'top-profil': partner.quality === 2}">
-              <market-item class="flex-container"
-                           [answers]="getAnswers(partner.answers)"
-                           [value]="partner.value"
-                           [count]="partner.count"
-                           [url]="partner.url"
-                           [isNew]="false">
-              </market-item>
-            </li>
-          </ul>
-        </div>
-        <div class="column">
-          <ul class="items">
-            <li *ngFor="let partner of info.data; let i = index"
-                [hidden]="i < info.data.length/2"
-                [ngClass]="{'top-profil': partner.quality === 2}">
-              <market-item class="flex-container"
-                           [answers]="getAnswers(partner.answers)"
-                           [value]="partner.value"
-                           [count]="partner.count"
-                           [url]="partner.url"
-                           [isNew]="false">
-              </market-item>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+      <market-item-list [answers]="answers" *ngIf="type==='partners'" [list]="info.data"></market-item-list>
 
-    <!--======= Liste de commentaires =======-->
-    <div *ngIf="showDetails && info.comments && info.comments.length > 0">
-      <p class="title-question">{{info.comments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
-      <ul class="comments">
-        <li *ngFor="let comment of info.comments"
-            [ngClass]="{'top-profil': comment.quality === 2}">
-          <market-comment
-            [job]="comment.job"
-            [country]="comment.flag"
-            [company]="comment.company"
-            [comment]="comment.comment"
-            [isNew]="false"
-            [answers]="getAnswers([comment])">
-          </market-comment>
-        </li>
-      </ul>
+      <!--======= Liste de commentaires =======-->
+      <div *ngIf="showDetails && info.comments && info.comments.length > 0">
+        <p class="title-question">{{info.comments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
+        <ul class="comments">
+          <li *ngFor="let comment of info.comments"
+              [ngClass]="{'top-profil': comment.quality === 2}">
+            <market-comment
+              [job]="comment.job"
+              [country]="comment.flag"
+              [company]="comment.company"
+              [comment]="comment.comment"
+              [isNew]="false"
+              [answers]="getAnswers([comment])">
+            </market-comment>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>

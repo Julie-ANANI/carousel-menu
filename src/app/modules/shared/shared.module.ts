@@ -18,6 +18,7 @@ import { SharedHeaderComponent } from './components/shared-header/shared-header.
 import { SharedMarketReportComponent } from './components/shared-market-report/shared-market-report/shared-market-report-module';
 import { SharedBarChartComponent } from './components/shared-bar-chart-component/shared-bar-chart.component';
 import { SharedMarketItemComponent } from './components/shared-market-report/shared-market-item-component/shared-market-item.component';
+import { SharedMarketItemListComponent } from './components/shared-market-report/shared-market-item-list-component/shared-market-item-list.component';
 import { SharedMarketReportSectionComponent } from './components/shared-market-report/shared-market-report-section/shared-market-report-section.component';
 import { SharedMarketReportPiechartComponent } from './components/shared-market-report/shared-market-report-piechart/shared-market-report-piechart.component';
 import { SharedMarketReportBluesquareComponent } from './components/shared-market-report/shared-market-report-bluesquare/shared-market-report-bluesquare.component';
@@ -73,6 +74,7 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
     SharedMarketReportPopoverComponent,
     SharedMarketReportSectionComponent,
     SharedMarketReportPiechartComponent,
+    SharedMarketItemListComponent,
     SharedMarketReportBluesquareComponent,
     SharedPricesComponent,
     SharedWorldMapComponent,
