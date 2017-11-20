@@ -683,25 +683,6 @@
 
                     <app-input-list (update)="addCountryToExclude($event)"
                                     [config]="getConfig('excludedCountries')"></app-input-list>
-                    <!-- TODO -->
-                    <!--<div class="form-group">
-                      <input class="form-input" type="text" id="newCountryToExclude" [attr.placeholder]="'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER' | translate"
-                              formControlName="tmpNewCountryToExclude">
-
-                      <button class="btn btn-primary bg-secondary" (click)="addCountryToExclude()">
-                        {{ 'COMMON.ADD' | translate }} <i class="icon icon-arrow-right"></i>
-                      </button>
-
-                      <div *ngFor="let countryExcluded of getCountriesToExclude(); let i=index">
-                      <span class="chip">
-                        <p>{{countryExcluded}}</p>
-
-                        <button (click)="removeFromCountriesList(i)" class="btn btn-clear"
-                                [attr.aria-label]="'COMMON.CLOSE' | translate"
-                                role="button"></button>
-                      </span>
-                      </div>
-                    </div>-->
                   </div>
                 </div>
               </div>
@@ -764,7 +745,8 @@
                 <div class="col-8">
                 <textarea class="form-input" id="other-comments"
                           formControlName="comments"
-                          [attr.placeholder]="'PROJECT_EDIT.OTHER.PLACEHOLDER' | translate" rows="4"></textarea>
+                          [attr.placeholder]="'PROJECT_EDIT.OTHER.PLACEHOLDER' | translate"
+                          rows="4"></textarea>
                 </div>
               </div>
             </div>
@@ -783,8 +765,10 @@
                       <ul formArrayName="innovationCards">
                         <li *ngFor="let innovationCard of formData.get('innovationCards').value; let i = index"
                             [ngClass]="{'active': innovationCardEditingIndex === i }">
-                          <div (click)="innovationCardEditingIndex = i">{{ 'COMMON.LANG.'+innovationCard.lang | uppercase | translate }}</div>
-                          <span *ngIf="innovationCard.principal" class="c-auto">{{ 'PROJECT_EDIT.DESCRIPTION.MAIN_LANG' | translate }}</span>
+                          <div (click)="innovationCardEditingIndex = i">
+                            {{ 'COMMON.LANG.'+innovationCard.lang | uppercase | translate }}</div>
+                          <span *ngIf="innovationCard.principal" class="c-auto">
+                            {{ 'PROJECT_EDIT.DESCRIPTION.MAIN_LANG' | translate }}</span>
                           <span *ngIf="!innovationCard.principal" (click)="setAsPrincipal(innovationCard.id)">{{ 'PROJECT_EDIT.DESCRIPTION.SET_AS_MAIN_LANG' | translate }} <i class="icon icon-arrow-right"></i></span>
                         </li>
                         <li *ngIf="project.innovationCards.length < 2" (click)="createInnovationCard()">
@@ -800,23 +784,35 @@
                            [formGroup]="item">
                         <div *ngIf="innovationCardEditingIndex === i">
                           <div>
-                            <label class="form-label" for="innovation-title">{{ 'PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</label>
-                            <input class="form-input input-lg" type="text" id="innovation-title" [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.TITLE.PLACEHOLDER' | translate" formControlName="title">
+                            <label class="form-label" for="innovation-title">
+                              {{ 'PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</label>
+                            <input class="form-input input-lg" type="text" id="innovation-title"
+                                   [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
+                                   formControlName="title">
                           </div>
 
                           <div>
-                            <label class="form-label" for="innovation-summary">{{ 'PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</label>
-                            <textarea class="form-input" id="innovation-summary" [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate" rows="2" formControlName="summary"></textarea>
+                            <label class="form-label" for="innovation-summary">
+                              {{ 'PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</label>
+                            <textarea class="form-input" id="innovation-summary"
+                                      [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
+                                      rows="2" formControlName="summary"></textarea>
                           </div>
 
                           <div>
-                            <label class="form-label" for="innovation-problem">{{ 'PROJECT_EDIT.DESCRIPTION.PROBLEM.LABEL' | translate }}</label>
-                            <textarea class="form-input" id="innovation-problem" [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate" rows="6" formControlName="problem"></textarea>
+                            <label class="form-label" for="innovation-problem">
+                              {{ 'PROJECT_EDIT.DESCRIPTION.PROBLEM.LABEL' | translate }}</label>
+                            <textarea class="form-input" id="innovation-problem"
+                                      [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
+                                      rows="6" formControlName="problem"></textarea>
                           </div>
 
                           <div>
-                            <label class="form-label" for="innovation-solution">{{ 'PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</label>
-                            <textarea class="form-input" id="innovation-solution" [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate" rows="6"
+                            <label class="form-label" for="innovation-solution">
+                              {{ 'PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</label>
+                            <textarea class="form-input" id="innovation-solution"
+                                      [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
+                                      rows="6"
                                       formControlName="solution"></textarea>
                           </div>
 
@@ -825,13 +821,6 @@
                             <div class="input-group">
                               <app-input-list (update)="addAdvantageToInventionCard($event, i)"
                                               [config]="getConfig('advantages')"></app-input-list>
-                              <!--<form>
-                              <input type="text" class="form-input input-lg" placeholder="">
-                              <button class="btn btn-primary input-group-btn btn-lg"
-                              (click)="addAdvantageToInventionCard()"><i class="icon icon-plus"></i>
-                                {{ 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.INPUT' | translate }}
-                              </button>
-                              </form>-->
                             </div>
                           </div>
 
@@ -847,7 +836,8 @@
                                  (ng2FileDropFilesDropped)="dragFilesDropped($event)"
                                  (ng2FileDropFileAccepted)="dragFileAccepted($event)"
                                  (ng2FileDropFileRejected)="dragFileRejected($event)">
-                              <button class="btn btn-lg btn-primary"><i class="icon icon-upload"></i> {{ 'PROJECT_EDIT.MEDIA.UPLOAD' | translate }}</button>
+                              <button class="btn btn-lg btn-primary"><i class="icon icon-upload"></i>
+                                {{ 'PROJECT_EDIT.MEDIA.UPLOAD' | translate }}</button>
                               <p>({{ 'PROJECT_EDIT.MEDIA.SLIDE' | translate }})</p>
                             </div>
 
