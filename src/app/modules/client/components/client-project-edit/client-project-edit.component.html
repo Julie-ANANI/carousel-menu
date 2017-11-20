@@ -681,9 +681,11 @@
 
                   <div *ngIf="excludedCountriesListExpanded()">
 
-                    <app-input-list (update)="addCountryToExclude($event)"
-                                    [config]="getConfig('excludedCountries')"></app-input-list>
+                    <app-autocomplete-input (update)="addCountryToExclude($event)"
+                                            [config]="getConfig('countries')"></app-autocomplete-input>
+
                   </div>
+
                 </div>
               </div>
 
@@ -714,8 +716,8 @@
                     'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
                   <div *ngIf="displayCompanyToExcludeSection || true">
-                    <app-input-list (update)="addCompanyToExclude($event)"
-                                    [config]="getConfig('excludedCompanies')"></app-input-list>
+                    <app-autocomplete-input (update)="addCompanyToExclude($event)"
+                                            [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
                   </div>
                 </div>
               </div>

@@ -8,12 +8,11 @@ export class AutocompleteService {
   constructor(private _http: Http) { }
 
 
-  public get(keyword: string): Observable<any> {
-
-    return this._http.get('/misc/suggestions', {params: {type: 'companies', query: keyword}})
+  public get(params: {keyword: string, type: string}): Observable<{name: string, domain: string, flag: string}[]> {
+    return this._http.get('/misc/suggestions', {params: {type: params.type, query: params.keyword}})
       .map((res: Response) => {
         const response = res.json();
-        return response;
+        return response.result;
       })
       .catch((error: Response) => Observable.throw(error.json()));
   }

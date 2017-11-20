@@ -118,7 +118,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
           }
 
           this.formData.valueChanges
-            .debounceTime(20000) //This is the time in ms that the form waits before emitting the valueChanges event
+            .debounceTime(5000) //This is the time in ms that the form waits before emitting the valueChanges event
             .distinctUntilChanged()
             .subscribe((newVersion) => {
               this._autoSave.data = newVersion;
@@ -137,7 +137,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   }
 
   private _save() {
-    if (this.canEdit && !this._autoSave.isSaving) {
+    if ((this.canEdit||true) && !this._autoSave.isSaving) {
       console.log("Start saving");
       this._autoSave.isSaving = true;
       this._innovationService.save(this._project.id, this._autoSave.data, this._project.innovationCards[0].id).subscribe(data => {
@@ -197,6 +197,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   public addCountryToExclude(event): void {
     this.formData.get('settings').get('geography')
       .get('countriesToExclude').get('exclude').setValue(event.value);
+    //this.formData.get('dirty').setValue(Date.now());
   }
 
   /**
@@ -225,6 +226,12 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
    */
   public getConfig(type: string): any {
     const _inputConfig = {
+      'countries': {
+        placeholder: 'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
+        initialData: this.formData.get('settings').get('geography')
+          .get('countriesToExclude').get('exclude').value,
+        type: 'countries'
+      },
       'advantages': {
         placeholder: 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.INPUT',
         initialData: []
@@ -237,12 +244,8 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
       'excludedCompanies': {
         placeholder: 'PROJECT_EDIT.COMPANIES.TO_EXCLUDE',
         initialData: this.formData.get('settings')
-          .get('companies').get('exclude').value
-      },
-      'excludedCountries': {
-        placeholder: 'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.formData.get('settings').get('geography')
-          .get('countriesToExclude').get('exclude').value
+          .get('companies').get('exclude').value,
+        type: 'company'
       }
     };
     return _inputConfig[type] || {
@@ -340,4 +343,5 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
 
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
   get project(): any { return this._project; }
+
 }

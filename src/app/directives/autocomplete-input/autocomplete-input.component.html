@@ -1,15 +1,26 @@
-<form class="form-horizontal" [formGroup]="inputForm" (ngSubmit)="onSubmit(inputForm.value)">
-  <div>
-    <div class="col-sm-5">
-      <input  ng2-auto-complete
-              formControlName="continent"
-              [source]="answer"
+<form class="form-horizontal" [formGroup]="inputForm" (ngSubmit)="addProposition(inputForm)">
+
+  <div class="input-group">
+      <input ng2-auto-complete
+              formControlName="answer"
               [list-formatter]="autocompleListFormatter"
+              [source]="suggestions.bind(this)"
               value-property-name="id"
               display-property-name="name"
-              placeholder="Contients"
-              class="form-control">
-    </div><br/>
-    <button type="submit">Submit</button>
+             [attr.placeholder]="placeholder | translate"
+              class="form-input form-control input-lg">
+    <button class="btn btn-primary btn-lg input-group-btn" translate>
+      COMMON.ADD
+      <i class="icon icon-arrow-right"></i>
+    </button>
   </div>
+
+  <ul *ngFor="let a of answerList; index as i" class="answerList">
+    <li>
+      <span>{{a.name}}</span>
+      <a [routerLink]="" class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
+        <img src="assets/images/delete.svg" width="" height="">
+      </a>
+    </li>
+  </ul>
 </form>
