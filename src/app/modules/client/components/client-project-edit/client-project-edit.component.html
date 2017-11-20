@@ -679,26 +679,13 @@
                     class="icon icon-arrow-right"></i>
                   </a>
 
-                  <div *ngIf="displayCountriesToExcludeSection">
-                    <!-- TODO -->
-                    <div class="form-group">
-                      <input class="form-input" type="text" id="newCountryToExclude" [attr.placeholder]="'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER' | translate"
-                              formControlName="tmpNewCompanyToExclude">
+                  <div *ngIf="excludedCountriesListExpanded()">
 
-                      <button class="btn btn-primary bg-secondary">
-                        {{ 'COMMON.ADD' | translate }} <i class="icon icon-arrow-right"></i>
-                      </button>
+                    <app-autocomplete-input (update)="addCountryToExclude($event)"
+                                            [config]="getConfig('countries')"></app-autocomplete-input>
 
-                      <div *ngFor="let countryExcluded of formData.get('settings').get('geography').get('countriesToExclude').controls; let i=index">
-                      <span class="chip">
-                        <input type="text" [formControlName]="i.value">
-
-                        <a href="#" class="btn btn-clear" [attr.aria-label]="'COMMON.CLOSE' | translate"
-                           role="button"></a>
-                      </span>
-                      </div>
-                    </div>
                   </div>
+
                 </div>
               </div>
 
@@ -728,8 +715,9 @@
                   <a (click)="displayCompanyToExcludeSection = !displayCompanyToExcludeSection" class="c-hand">{{
                     'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
-                  <div *ngIf="displayCompanyToExcludeSection">
-                    <!-- TODO -->
+                  <div *ngIf="displayCompanyToExcludeSection || true">
+                    <app-autocomplete-input (update)="addCompanyToExclude($event)"
+                                            [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
                   </div>
                 </div>
               </div>
@@ -745,8 +733,9 @@
 
                   <a (click)="displayPersonsToExcludeSection = !displayPersonsToExcludeSection" class="c-hand">{{ 'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
-                  <div *ngIf="displayPersonsToExcludeSection">
-                    TODO
+                  <div *ngIf="displayPersonsToExcludeSection || true">
+                    <app-input-list (update)="addPeopleToExclude($event)"
+                                    [config]="getConfig('excludedPeople')"></app-input-list>
                   </div>
                 </div>
               </div>
@@ -758,7 +747,8 @@
                 <div class="col-8">
                 <textarea class="form-input" id="other-comments"
                           formControlName="comments"
-                          [attr.placeholder]="'PROJECT_EDIT.OTHER.PLACEHOLDER' | translate" rows="4"></textarea>
+                          [attr.placeholder]="'PROJECT_EDIT.OTHER.PLACEHOLDER' | translate"
+                          rows="4"></textarea>
                 </div>
               </div>
             </div>
@@ -777,8 +767,10 @@
                       <ul formArrayName="innovationCards">
                         <li *ngFor="let innovationCard of formData.get('innovationCards').value; let i = index"
                             [ngClass]="{'active': innovationCardEditingIndex === i }">
-                          <div (click)="innovationCardEditingIndex = i">{{ 'COMMON.LANG.'+innovationCard.lang | uppercase | translate }}</div>
-                          <span *ngIf="innovationCard.principal" class="c-auto">{{ 'PROJECT_EDIT.DESCRIPTION.MAIN_LANG' | translate }}</span>
+                          <div (click)="innovationCardEditingIndex = i">
+                            {{ 'COMMON.LANG.'+innovationCard.lang | uppercase | translate }}</div>
+                          <span *ngIf="innovationCard.principal" class="c-auto">
+                            {{ 'PROJECT_EDIT.DESCRIPTION.MAIN_LANG' | translate }}</span>
                           <span *ngIf="!innovationCard.principal" (click)="setAsPrincipal(innovationCard.id)">{{ 'PROJECT_EDIT.DESCRIPTION.SET_AS_MAIN_LANG' | translate }} <i class="icon icon-arrow-right"></i></span>
                         </li>
                         <li *ngIf="project.innovationCards.length < 2" (click)="createInnovationCard()">
@@ -794,36 +786,43 @@
                            [formGroup]="item">
                         <div *ngIf="innovationCardEditingIndex === i">
                           <div>
-                            <label class="form-label" for="innovation-title">{{ 'PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</label>
-                            <input class="form-input input-lg" type="text" id="innovation-title" [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.TITLE.PLACEHOLDER' | translate" formControlName="title">
+                            <label class="form-label" for="innovation-title">
+                              {{ 'PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</label>
+                            <input class="form-input input-lg" type="text" id="innovation-title"
+                                   [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
+                                   formControlName="title">
                           </div>
 
                           <div>
-                            <label class="form-label" for="innovation-summary">{{ 'PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</label>
-                            <textarea class="form-input" id="innovation-summary" [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate" rows="2" formControlName="summary"></textarea>
+                            <label class="form-label" for="innovation-summary">
+                              {{ 'PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</label>
+                            <textarea class="form-input" id="innovation-summary"
+                                      [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
+                                      rows="2" formControlName="summary"></textarea>
                           </div>
 
                           <div>
-                            <label class="form-label" for="innovation-problem">{{ 'PROJECT_EDIT.DESCRIPTION.PROBLEM.LABEL' | translate }}</label>
-                            <textarea class="form-input" id="innovation-problem" [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate" rows="6" formControlName="problem"></textarea>
+                            <label class="form-label" for="innovation-problem">
+                              {{ 'PROJECT_EDIT.DESCRIPTION.PROBLEM.LABEL' | translate }}</label>
+                            <textarea class="form-input" id="innovation-problem"
+                                      [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
+                                      rows="6" formControlName="problem"></textarea>
                           </div>
 
                           <div>
-                            <label class="form-label" for="innovation-solution">{{ 'PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</label>
-                            <textarea class="form-input" id="innovation-solution" [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate" rows="6"
+                            <label class="form-label" for="innovation-solution">
+                              {{ 'PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</label>
+                            <textarea class="form-input" id="innovation-solution"
+                                      [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
+                                      rows="6"
                                       formControlName="solution"></textarea>
                           </div>
 
                           <div>
                             <label class="form-label">{{ 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</label>
                             <div class="input-group">
-                              <form>
-                              <input type="text" class="form-input input-lg" placeholder="">
-                              <button class="btn btn-primary input-group-btn btn-lg"
-                              (click)="addAdvantageToInventionCard()"><i class="icon icon-plus"></i>
-                                {{ 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.INPUT' | translate }}
-                              </button>
-                              </form>
+                              <app-input-list (update)="addAdvantageToInventionCard($event, i)"
+                                              [config]="getConfig('advantages')"></app-input-list>
                             </div>
                           </div>
 
@@ -849,7 +848,7 @@
 
                               <div style="height:0;overflow:hidden">
                                 <input type="file" id="fileInput" name="fileInput"  #fileInput (change)="upload($event)" />
-                              </div>
+                            </div>
 
                               <button class="btn btn-lg btn-primary" (click)="fileInput.click()">
                                 <i class="icon icon-upload"></i> {{ 'PROJECT_EDIT.MEDIA.UPLOAD' | translate }}

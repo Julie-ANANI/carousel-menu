@@ -1,0 +1,39 @@
+// Import variables
+$primary-color: #3498DB !default;
+$secondary-color: #2ECC71 !default;
+$dark-color: #333 !default;
+
+.answerList {
+  margin: 0;
+
+  li {
+    list-style: none;
+    display: flex;
+    margin-bottom: 23px;
+  }
+
+  li span {
+    background: $secondary-color;
+    border-radius: 2px 0 0 2px;
+    padding: 15px 25px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+  }
+
+  a.delete {
+    display: flex;
+    background: #11A751;
+    border-radius: 0 2px 2px 0;
+    padding: 12px 17px;
+    border: none;
+
+    img {
+    }
+  }
+
+  a.delete:hover {
+    background: #D02A2A;
+  }
+}

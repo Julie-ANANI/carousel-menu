@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { LocalStorageModule } from 'angular-2-local-storage'; // TODO utiliser le localStorage pour accélérer les chargements
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { SharedModule } from '../shared/shared.module';
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientFooterComponent } from './components/client-footer/client-footer.component';
@@ -23,6 +24,9 @@ import { ClientProjectEditExample2Component } from './components/client-project-
 import { ClientProjectEditExample1Component } from './components/client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
 import { ClientMyUsersComponent } from './components/client-my-users/client-my-users.component';
 
+import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
+import { InputListComponent } from '../../directives/input-list/input-list.component';
+
 
 @NgModule({
   imports: [
@@ -34,7 +38,8 @@ import { ClientMyUsersComponent } from './components/client-my-users/client-my-u
       prefix: 'umi',
       storageType: 'localStorage'
     }),
-    SharedModule
+    SharedModule,
+    Ng2AutoCompleteModule
   ],
   declarations: [
     ClientComponent,
@@ -54,7 +59,11 @@ import { ClientMyUsersComponent } from './components/client-my-users/client-my-u
     ClientProjectSynthesisComponent,
     ClientProjectEditExample2Component,
     ClientProjectEditExample1Component,
-    ClientMyUsersComponent
+    ClientMyUsersComponent,
+
+    AutocompleteInputComponent,
+    InputListComponent
+
   ]
 })
 export class ClientModule {

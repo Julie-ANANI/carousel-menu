@@ -1,0 +1,32 @@
+<div class="flex-container">
+  <div class="column">
+    <ul class="items">
+      <li *ngFor="let item of list; let i = index"
+          [hidden]="i >= list.length/2"
+          [ngClass]="{'top-profil': item.quality === 2}">
+        <market-item class="flex-container"
+                     [answers]="getAnswers(item.answers)"
+                     [value]="item.value"
+                     [count]="item.count"
+                     [url]="item.url"
+                     [isNew]="false">
+        </market-item>
+      </li>
+    </ul>
+  </div>
+  <div class="column">
+    <ul class="items">
+      <li *ngFor="let item of list; let i = index"
+          [hidden]="i < list.length/2"
+          [ngClass]="{'top-profil': item.quality === 2}">
+        <market-item class="flex-container"
+                     [answers]="getAnswers(item.answers)"
+                     [value]="item.value"
+                     [count]="item.count"
+                     [url]="item.url"
+                     [isNew]="false">
+        </market-item>
+      </li>
+    </ul>
+  </div>
+</div>
