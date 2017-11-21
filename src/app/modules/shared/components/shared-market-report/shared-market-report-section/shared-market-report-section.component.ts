@@ -49,7 +49,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
     this._showDetails = value;
   }
   @Input() set readonly(value: boolean) {
-    console.log(value);
     this._readonly = value;
   }
   @Input() public answers: any;
