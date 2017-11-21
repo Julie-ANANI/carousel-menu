@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovationService } from './../../../../../services/innovation/innovation.service';
+import { PageScrollConfig } from 'ng2-page-scroll';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -32,6 +33,7 @@ export class SharedMarketReportComponent implements OnInit {
         this._infographics = synthesis.infographics;
       });
     });
+    PageScrollConfig.defaultDuration = 800;
   }
 
   public toggleEditionMode(): any {

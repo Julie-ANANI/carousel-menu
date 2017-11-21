@@ -36,6 +36,7 @@ import { SharedTextZoneComponent } from './components/shared-text-zone/shared-te
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
 import { Ng2FileDropModule } from 'ng2-file-drop';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
+import {Ng2PageScrollModule} from 'ng2-page-scroll';
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
     ChartsModule,
     FileUploadModule,
     Ng2FileDropModule,
-    Angular2FontawesomeModule
+    Angular2FontawesomeModule,
+    Ng2PageScrollModule
   ],
   declarations: [
     // Directives
