@@ -4,6 +4,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { InnovationService } from './../../../../../services/innovation/innovation.service';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 
 @Component({
@@ -15,12 +16,13 @@ import * as _ from 'lodash';
 export class SharedMarketReportSectionComponent implements OnInit {
 
   private _showDetails: boolean;
-  public readonly: boolean;
+  private _readonly: boolean;
   private _maxCountScore: any;
   private _isSaving = false;
   private _chartValues: any;
   private _conclusionId: string;
-
+  private _innoid: string;
+  private _selectLangInput = 'en';
   private _configurations = {
     'relevantProblematic':{
       'fr': ['Non', 'Eventuellement', 'Oui', 'Cruciale'],
@@ -43,23 +45,27 @@ export class SharedMarketReportSectionComponent implements OnInit {
   @Input() public id: string;
   @Input() public i18n: string;
   @Input() public type: string;
-  @Input() public innoid: string;
+  @Input() set showDetails(value: boolean) {
+    this._showDetails = value;
+  }
+  @Input() set readonly(value: boolean) {
+    console.log(value);
+    this._readonly = value;
+  }
   @Input() public answers: any;
   @Input() public info: any;
 
 
-  constructor(private _innovationService: InnovationService,
+  constructor(private _translateService: TranslateService,
+              private _innovationService: InnovationService,
               private _route: ActivatedRoute) { }
 
   ngOnInit() {
+    this._route.params.subscribe(params => {
+      this.innoid = params['innovationId'];
+      this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
+    });
     this.conclusionId = `${this.id}Conclusion`;
-    this._showDetails = false;
-    this.readonly = true;
-    this._route
-      .queryParams
-      .subscribe(params => {
-        this.readonly = !(params['isAdmin'] &&  params['isAdmin'] === 'true' );
-      });
     switch(this.type) {
       case 'pie':
         if (this.info.pieChart) {
@@ -83,10 +89,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
 
   public toggleDetails(){
     this._showDetails = !this._showDetails;
-  }
-
-  get showDetails(): boolean {
-    return this._showDetails;
   }
 
   public keyupHandlerFunction(event) {
@@ -124,6 +126,22 @@ export class SharedMarketReportSectionComponent implements OnInit {
 
   public getFlag(country: string): string {
     return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+  }
+
+  get readonly(): boolean {
+    return this._readonly;
+  }
+
+  get showDetails(): boolean {
+    return this._showDetails;
+  }
+
+  get innoid(): string {
+    return this._innoid;
+  }
+
+  set innoid(value: string) {
+    this._innoid = value;
   }
 
   get configurations(): any {

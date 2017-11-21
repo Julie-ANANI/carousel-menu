@@ -1,17 +1,25 @@
 <div class="market-report" *ngIf="canShow()">
 
-    <h1>{{infographics.title}}</h1>
-    <p class="subtitle">{{ 'MARKET_REPORT.TITLE' | translate }}</p>
+  <h1>{{infographics.title}}</h1>
+  <p class="subtitle">{{ 'MARKET_REPORT.TITLE' | translate }}</p>
+  <div *ngIf="authService.isAdmin">
+    <button type="button" class="centered btn-primary"
+            (click)="toggleEditionMode()">
+      {{(editionMode ? 'MARKET_REPORT.BTN_VIEW_MODE' : 'MARKET_REPORT.BTN_EDITION_MODE') | translate}}
+      <i class="fa" aria-hidden="true"
+         [ngClass]="{'fa-eye': editionMode, 'fa-edit': !editionMode}"></i>
+    </button>
+  </div>
 
   <!-- *********************************************************
         Sidebar
     ************************************************************** -->
 
   <div class="sidebar sidebarIsSticky">
-    <div (click)="toggleSections()" class="toggle-sections">
-      {{ (detailsExpanded ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND') | translate}}
+    <div (click)="toggleDetails()" class="toggle-sections">
+      {{ (showDetails ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND') | translate}}
       <i class="fa float-right" aria-hidden="true"
-         [ngClass]="{'fa-plus-square-o': !detailsExpanded, 'fa-minus-square-o': detailsExpanded}"></i>
+         [ngClass]="{'fa-plus-square-o': !showDetails, 'fa-minus-square-o': showDetails}"></i>
     </div>
     <ul>
       <li>
@@ -102,7 +110,8 @@
           [i18n]="'PROFESSIONAL'"
           [info]="infographics.professionals"
           [answers]="infographics.answers"
-          [innoid]="innoid"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
           [type]="'pros'">
         </market-report-section>
 
@@ -115,7 +124,8 @@
           [i18n]="'MARKET_NEED'"
           [info]="infographics.relevantProblematic"
           [answers]="infographics.answers"
-          [innoid]="innoid"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
           [type]="'pie'">
         </market-report-section>
 
@@ -128,7 +138,8 @@
           [i18n]="'RELEVANCE'"
           [info]="infographics.productAnsweringProblematic"
           [answers]="infographics.answers"
-          [innoid]="innoid"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
           [type]="'pie'">
         </market-report-section>
 
@@ -141,7 +152,8 @@
           [i18n]="'ACTUAL_COMPETITION'"
           [info]="infographics.competitors"
           [answers]="infographics.answers"
-          [innoid]="innoid"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
           [type]="'competitors'">
         </market-report-section>
 
@@ -155,7 +167,8 @@
           [i18n]="'DIFFERENTIATION'"
           [info]="infographics.productInterests"
           [answers]="infographics.answers"
-          [innoid]="innoid"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
           [type]="'pie'">
         </market-report-section>
 
@@ -163,11 +176,12 @@
                 Key Advantages
         ************************************************************** -->
         <market-report-section
-          [id]="'key-advantages'"
+          [id]="'keyAdvantages'"
           [i18n]="'BENEFIT'"
           [info]="infographics.keyAdvantages"
           [answers]="infographics.answers"
-          [innoid]="innoid"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
           [type]="'stars'">
         </market-report-section>
 
@@ -179,7 +193,8 @@
           [i18n]="'STRONG'"
           [info]="infographics.commentPositive"
           [answers]="infographics.answers"
-          [innoid]="innoid"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
           [type]="'comments'">
         </market-report-section>
 
@@ -191,7 +206,8 @@
           [i18n]="'WEAK'"
           [info]="infographics.commentNegative"
           [answers]="infographics.answers"
-          [innoid]="innoid"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
           [type]="'comments'">
         </market-report-section>
 
@@ -203,7 +219,8 @@
           [i18n]="'PRICE'"
           [info]="infographics.prices"
           [answers]="infographics.answers"
-          [innoid]="innoid"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
           [type]="'prices'">
         </market-report-section>
 
@@ -215,7 +232,8 @@
           [i18n]="'NEW_APPLICATION'"
           [info]="infographics.applications"
           [answers]="infographics.answers"
-          [innoid]="innoid"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
           [type]="'applications'">
         </market-report-section>
 
@@ -227,8 +245,9 @@
           [i18n]="'EXPRESSION_OF_INTEREST'"
           [info]="infographics.interests"
           [answers]="infographics.answers"
-          [type]="'interests'"
-          [innoid]="innoid">
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
+          [type]="'interests'">
         </market-report-section>
 
         <!-- *********************************************************
@@ -239,7 +258,8 @@
           [i18n]="'POTENTIAL_PARTNER'"
           [info]="infographics.partners"
           [answers]="infographics.answers"
-          [innoid]="innoid"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
           [type]="'partners'">
         </market-report-section>
 
@@ -251,7 +271,8 @@
           [i18n]="'MARKET_POTENTIAL'"
           [info]="infographics.marketPotential"
           [answers]="infographics.answers"
-          [innoid]="innoid"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
           [type]="'score'">
         </market-report-section>
       </div>

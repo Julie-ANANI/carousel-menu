@@ -96,6 +96,8 @@ export const en = {
     'ANSWER': 'answer',
     'ANSWERS': 'answers',
     'SEE_ANSWERS': 'Show answer',
+    'BTN_EDITION_MODE': 'Go to Edition mode',
+    'BTN_VIEW_MODE': 'Go to view mode',
     'BTN_DETAILS_OPEN': 'Show details',
     'BTN_DETAILS_CLOSE': 'Hide details',
     'POPUP': {

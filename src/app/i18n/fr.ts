@@ -96,6 +96,8 @@ export const fr = {
     'ANSWER': 'réponse',
     'ANSWERS': 'réponses',
     'SEE_ANSWERS': 'Voir la réponse',
+    'BTN_EDITION_MODE': 'Passer en mode édition',
+    'BTN_VIEW_MODE': 'Passer en mode visualisation',
     'BTN_DETAILS_OPEN': 'Voir les détails',
     'BTN_DETAILS_CLOSE': 'Masquer les détails',
     'POPUP': {
