@@ -1,4 +1,4 @@
-import {Component, OnInit, HostListener} from '@angular/core';
+import {Component, OnInit, HostListener, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import {TranslateService, initTranslation} from './i18n/i18n';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -86,9 +86,9 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   public displayCountriesToExcludeSection = false;
   public displayCompanyToExcludeSection = false;
   public displayPersonsToExcludeSection = false;
-  public draggingPhoto = false;
 
-  public supportedFileTypes: string[] = ['image/png', 'image/jpeg', 'image/gif'];
+
+  // @ViewChild('fileInput') fileInput;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
@@ -125,6 +125,8 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
               this._save();
               this._autoSave.newSaveRequired = true;
           });
+
+
         },
         errorTranslateCode => {
           this._translateService.get(errorTranslateCode).subscribe(errorMessage =>
@@ -311,6 +313,11 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     });
   }
 
+  public imageUploaded(media) {
+    this._project.innovationCards[this.innovationCardEditingIndex].media.push(media);
+    // TODO ajouter l'image dans la fiche projet puis la sauvegarder
+  }
+
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     return !(this._autoSave.isSaving || this._autoSave.newSaveRequired);
@@ -325,17 +332,28 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     }
   }*/
 
-  public dragFileAccepted(acceptedFile: Ng2FileDropAcceptedFile) {
-    console.log(acceptedFile);
-  }
-
-  public dragFileRejected(rejectedFile: Ng2FileDropRejectedFile) {
-    console.log(rejectedFile);
-  }
-
-  public dragFilesDropped(event) {
+  /*public dragFilesDropped(event) {
     console.log(event);
-  }
+    for (let file of event.acceptedFiles) {
+      console.log(file);
+    }
+  }*/
+
+
+  /*public upload(event) {
+    let fileList: any = event.target.files;
+    if(fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData:FormData = new FormData();
+      formData.append('uploadFile', file, file.name);
+      this._innovationService.addMedia(this.project.id, formData).subscribe(res => {
+        // do stuff w/my uploaded file
+        console.log(res);
+      }, err => {
+        console.log(err);
+      });
+    }
+  }*/
 
   get canEdit () {
     return this._project.status === 'EDITING';
