@@ -1,3 +1,4 @@
+<market-report-modal [modalAnswer]="modalAnswer"></market-report-modal>
 <div class="market-report" *ngIf="canShow()">
 
   <h1>{{infographics.title}}</h1>
@@ -13,7 +14,7 @@
 
   <!-- *********************************************************
         Sidebar
-    ************************************************************** -->
+  ************************************************************** -->
 
   <div class="sidebar sidebarIsSticky">
     <div (click)="toggleDetails()" class="toggle-sections">
@@ -103,203 +104,195 @@
     </ul>
   </div>
 
+  <div class="flex-container">
+    <div class="sidebar"></div>
+    <div class="content">
+      <!-- *********************************************************
+              Liste des professionnels
+      ************************************************************** -->
+      <market-report-section
+        [id]="'professionals'"
+        [i18n]="'PROFESSIONAL'"
+        [info]="infographics.professionals"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'pros'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
 
-    <div class="flex-container">
+      <!-- *********************************************************
+              Besoin du marché
+      ************************************************************** -->
 
-      <div class="sidebar"></div>
-      <div class="content">
-        <!-- *********************************************************
-                Liste des professionnels
-            ************************************************************** -->
-        <market-report-section
-          [id]="'professionals'"
-          [i18n]="'PROFESSIONAL'"
-          [info]="infographics.professionals"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'pros'">
-        </market-report-section>
+      <market-report-section
+        [id]="'relevantProblematic'"
+        [i18n]="'MARKET_NEED'"
+        [info]="infographics.relevantProblematic"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'pie'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
 
-        <!-- *********************************************************
-                Besoin du marché
-            ************************************************************** -->
+      <!-- *********************************************************
+                      Pertinence de la solution
+      ************************************************************** -->
 
-        <market-report-section
-          [id]="'relevantProblematic'"
-          [i18n]="'MARKET_NEED'"
-          [info]="infographics.relevantProblematic"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'pie'">
-        </market-report-section>
+      <market-report-section
+        [id]="'productAnsweringProblematic'"
+        [i18n]="'RELEVANCE'"
+        [info]="infographics.productAnsweringProblematic"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'pie'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
 
-        <!-- *********************************************************
-                        Pertinence de la solution
-        ************************************************************** -->
+      <!-- *********************************************************
+              Concurrence actuelle
+      ************************************************************** -->
 
-        <market-report-section
-          [id]="'productAnsweringProblematic'"
-          [i18n]="'RELEVANCE'"
-          [info]="infographics.productAnsweringProblematic"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'pie'">
-        </market-report-section>
+      <market-report-section
+        [id]="'competitors'"
+        [i18n]="'ACTUAL_COMPETITION'"
+        [info]="infographics.competitors"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'competitors'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
 
-        <!-- *********************************************************
-                Concurrence actuelle
-            ************************************************************** -->
-
-        <market-report-section
-          [id]="'competitors'"
-          [i18n]="'ACTUAL_COMPETITION'"
-          [info]="infographics.competitors"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'competitors'">
-        </market-report-section>
-
-        <!-- *********************************************************
-                Différenciation
-            ************************************************************** -->
+      <!-- *********************************************************
+              Différenciation
+      ************************************************************** -->
 
 
-        <market-report-section
-          [id]="'productInterests'"
-          [i18n]="'DIFFERENTIATION'"
-          [info]="infographics.productInterests"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'pie'">
-        </market-report-section>
+      <market-report-section
+        [id]="'productInterests'"
+        [i18n]="'DIFFERENTIATION'"
+        [info]="infographics.productInterests"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'pie'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
 
-        <!-- *********************************************************
-                Key Advantages
-        ************************************************************** -->
-        <market-report-section
-          [id]="'keyAdvantages'"
-          [i18n]="'BENEFIT'"
-          [info]="infographics.keyAdvantages"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'stars'">
-        </market-report-section>
+      <!-- *********************************************************
+              Key Advantages
+      ************************************************************** -->
+      <market-report-section
+        [id]="'keyAdvantages'"
+        [i18n]="'BENEFIT'"
+        [info]="infographics.keyAdvantages"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'stars'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
 
-        <!-- *********************************************************
-                Points forts
-        ************************************************************** -->
-        <market-report-section
-          [id]="'commentPositive'"
-          [i18n]="'STRONG'"
-          [info]="infographics.commentPositive"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'comments'">
-        </market-report-section>
+      <!-- *********************************************************
+              Points forts
+      ************************************************************** -->
+      <market-report-section
+        [id]="'commentPositive'"
+        [i18n]="'STRONG'"
+        [info]="infographics.commentPositive"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'comments'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
 
-        <!-- *********************************************************
-            Objections
-        ************************************************************** -->
-        <market-report-section
-          [id]="'commentNegative'"
-          [i18n]="'WEAK'"
-          [info]="infographics.commentNegative"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'comments'">
-        </market-report-section>
+      <!-- *********************************************************
+          Objections
+      ************************************************************** -->
+      <market-report-section
+        [id]="'commentNegative'"
+        [i18n]="'WEAK'"
+        [info]="infographics.commentNegative"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'comments'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
 
-        <!-- *********************************************************
-                        Recommandations de prix
-                    ************************************************************** -->
-        <market-report-section
-          [id]="'prices'"
-          [i18n]="'PRICE'"
-          [info]="infographics.prices"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'prices'">
-        </market-report-section>
+      <!-- *********************************************************
+                      Recommandations de prix
+      ************************************************************** -->
+      <market-report-section
+        [id]="'prices'"
+        [i18n]="'PRICE'"
+        [info]="infographics.prices"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'prices'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
 
-        <!-- *********************************************************
-               Nouvelles applications
-           ************************************************************** -->
-        <market-report-section
-          [id]="'applications'"
-          [i18n]="'NEW_APPLICATION'"
-          [info]="infographics.applications"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'applications'">
-        </market-report-section>
+      <!-- *********************************************************
+             Nouvelles applications
+      ************************************************************** -->
+      <market-report-section
+        [id]="'applications'"
+        [i18n]="'NEW_APPLICATION'"
+        [info]="infographics.applications"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'applications'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
 
-        <!-- *********************************************************
-                        Marques d’intérêt
-        ************************************************************** -->
-        <market-report-section
-          [id]="'interests'"
-          [i18n]="'EXPRESSION_OF_INTEREST'"
-          [info]="infographics.interests"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'interests'">
-        </market-report-section>
+      <!-- *********************************************************
+                      Marques d’intérêt
+      ************************************************************** -->
+      <market-report-section
+        [id]="'interests'"
+        [i18n]="'EXPRESSION_OF_INTEREST'"
+        [info]="infographics.interests"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'interests'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
 
-        <!-- *********************************************************
-                        Partenaires potentiels
-        ************************************************************** -->
-        <market-report-section
-          [id]="'partners'"
-          [i18n]="'POTENTIAL_PARTNER'"
-          [info]="infographics.partners"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'partners'">
-        </market-report-section>
+      <!-- *********************************************************
+                      Partenaires potentiels
+      ************************************************************** -->
+      <market-report-section
+        [id]="'partners'"
+        [i18n]="'POTENTIAL_PARTNER'"
+        [info]="infographics.partners"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'partners'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
 
-        <!-- *********************************************************
-                Potentiel marché
-            ************************************************************** -->
-        <market-report-section
-          [id]="'marketPotential'"
-          [i18n]="'MARKET_POTENTIAL'"
-          [info]="infographics.marketPotential"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!editionMode"
-          [type]="'score'">
-        </market-report-section>
-      </div>
-    </div>
-
-  <!-- Modal -->
-  <div class="modal">
-    <div class="modal-overlay"></div>
-    <div class="modal-container">
-      <div class="modal-header">
-        <button class="btn btn-clear float-right"></button>
-        <div class="modal-title h5">Modal title</div>
-      </div>
-      <div class="modal-body">
-        <div class="content">
-          Let's see of it works.
-        </div>
-      </div>
-      <div class="modal-footer">
-        ...
-      </div>
+      <!-- *********************************************************
+              Potentiel marché
+      ************************************************************** -->
+      <market-report-section
+        [id]="'marketPotential'"
+        [i18n]="'MARKET_POTENTIAL'"
+        [info]="infographics.marketPotential"
+        [answers]="infographics.answers"
+        [showDetails]="showDetails"
+        [readonly]="!editionMode"
+        [type]="'score'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-report-section>
     </div>
   </div>
 </div>

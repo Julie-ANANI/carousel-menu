@@ -20,6 +20,9 @@ export class SharedMarketReportComponent implements OnInit {
   private _editionMode = true;
   private _showDetails = false;
   private innoid = '599c0029719e572041aafe0d';
+  // modalAnswer : null si le modal est fermé,
+  // égal à la réponse à afficher si le modal est ouvert 
+  private modalAnswer: any;
 
   constructor(private _innovationService: InnovationService,
               private _route: ActivatedRoute,
@@ -34,6 +37,7 @@ export class SharedMarketReportComponent implements OnInit {
       });
     });
     PageScrollConfig.defaultDuration = 800;
+    this.modalAnswer = null;
   }
 
   public toggleEditionMode(): any {
@@ -42,6 +46,11 @@ export class SharedMarketReportComponent implements OnInit {
 
   public toggleDetails(): any {
     this._showDetails = !this._showDetails;
+  }
+
+  public seeAnswer(event: any) {
+    console.log("report: ", event);
+    this.modalAnswer = event;
   }
 
   public canShow(): boolean {

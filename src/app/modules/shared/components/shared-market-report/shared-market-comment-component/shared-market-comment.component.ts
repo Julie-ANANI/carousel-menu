@@ -1,7 +1,7 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'market-comment',
@@ -17,7 +17,7 @@ export class SharedMarketCommentComponent implements OnInit {
   @Input() public comment: any;
   @Input() public isNew: any;
   @Input() public answers: any;
-
+  @Output() modalAnswerChange = new EventEmitter<any>();
 
   constructor() { }
 
@@ -26,6 +26,11 @@ export class SharedMarketCommentComponent implements OnInit {
 
   public buildImageUrl(country: string): string {
     return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+  }
+
+  public seeAnswer(event: any) {
+    console.log("comment: " + event);
+    this.modalAnswerChange.emit(event);
   }
 
 };

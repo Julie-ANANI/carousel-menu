@@ -1,7 +1,7 @@
 /**
  * Created by bastien on 16/11/2017.
  */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InnovationService } from './../../../../../services/innovation/innovation.service';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -51,6 +51,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
   @Input() set readonly(value: boolean) {
     this._readonly = value;
   }
+  @Output() modalAnswerChange = new EventEmitter<any>();
   @Input() public answers: any;
   @Input() public info: any;
 
@@ -80,6 +81,11 @@ export class SharedMarketReportSectionComponent implements OnInit {
         this._maxCountScore = _.maxBy(this.info.data, 'count')['count'];
         break;
     }
+  }
+
+  public seeAnswer(event: any) {
+    console.log("section:", event);
+    this.modalAnswerChange.emit(event);
   }
 
   static getChartValues(stats) {

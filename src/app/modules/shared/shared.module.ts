@@ -24,6 +24,7 @@ import { SharedMarketReportPiechartComponent } from './components/shared-market-
 import { SharedMarketReportBluesquareComponent } from './components/shared-market-report/shared-market-report-bluesquare/shared-market-report-bluesquare.component';
 import { SharedMarketCommentComponent } from './components/shared-market-report/shared-market-comment-component/shared-market-comment.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report/shared-market-report-popover/shared-market-report-popover.component';
+import { SharedMarketReportModalComponent } from './components/shared-market-report/shared-market-report-modal/shared-market-report-modal.component';
 import { SharedPricesComponent } from './components/shared-market-report/shared-prices-component/shared-prices.component';
 import { SharedWorldMapComponent } from './components/shared-market-report/shared-world-map-component/shared-world-map.component';
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
@@ -74,6 +75,7 @@ import {Ng2PageScrollModule} from 'ng2-page-scroll';
     SharedMarketItemComponent,
     SharedMarketCommentComponent,
     SharedMarketReportPopoverComponent,
+    SharedMarketReportModalComponent,
     SharedMarketReportSectionComponent,
     SharedMarketReportPiechartComponent,
     SharedMarketItemListComponent,

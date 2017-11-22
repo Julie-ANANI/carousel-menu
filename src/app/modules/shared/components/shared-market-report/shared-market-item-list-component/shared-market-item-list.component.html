@@ -9,7 +9,8 @@
                      [value]="item.value"
                      [count]="item.count"
                      [url]="item.url"
-                     [isNew]="false">
+                     [isNew]="false"
+                     (modalAnswerChange)="seeAnswer($event)">
         </market-item>
       </li>
     </ul>
@@ -24,7 +25,8 @@
                      [value]="item.value"
                      [count]="item.count"
                      [url]="item.url"
-                     [isNew]="false">
+                     [isNew]="false"
+                     (modalAnswerChange)="seeAnswer($event)">
         </market-item>
       </li>
     </ul>
