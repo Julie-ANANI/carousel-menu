@@ -16,7 +16,8 @@ ul.comments > li.top-profil {
     color: white !important;
   }
 
-  a {
+  a, .see-answer {
+    cursor: pointer;
     color: #7cffe5 !important;
   }
 }
@@ -119,7 +120,8 @@ ul.comments > li.top-profil {
       clear: both;
     }
 
-    a {
+    a, .see-answer {
+      cursor: pointer;
       color: #F79323;
       margin-right: 15px;
       font-size: 13px;
