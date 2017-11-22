@@ -26,7 +26,6 @@ export class SharedMarketItemComponent implements OnInit {
   }
 
   public seeAnswer(event: any) {
-    console.log("item: " + event);
     this.modalAnswerChange.emit(event);
   }
 

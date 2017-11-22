@@ -34,7 +34,6 @@ export class SharedMarketReportPopoverComponent implements OnInit {
   }
 
   public seeAnswer(answer: any) {
-    console.log("popover: " + answer);
     this.modalAnswerChange.emit(answer);
   }
 

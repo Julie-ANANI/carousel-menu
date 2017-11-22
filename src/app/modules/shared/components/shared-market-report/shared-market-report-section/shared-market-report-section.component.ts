@@ -84,7 +84,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
   }
 
   public seeAnswer(event: any) {
-    console.log("section:", event);
     this.modalAnswerChange.emit(event);
   }
 

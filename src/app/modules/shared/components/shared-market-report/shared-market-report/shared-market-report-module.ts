@@ -18,7 +18,7 @@ export class SharedMarketReportComponent implements OnInit {
 
   private _infographics: any;
   private _editionMode = true;
-  private _showDetails = false;
+  private _showDetails = true;
   private innoid = '599c0029719e572041aafe0d';
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert 
@@ -49,7 +49,6 @@ export class SharedMarketReportComponent implements OnInit {
   }
 
   public seeAnswer(event: any) {
-    console.log("report: ", event);
     this.modalAnswer = event;
   }
 

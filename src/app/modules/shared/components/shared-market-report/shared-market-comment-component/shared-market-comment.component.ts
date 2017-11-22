@@ -29,7 +29,6 @@ export class SharedMarketCommentComponent implements OnInit {
   }
 
   public seeAnswer(event: any) {
-    console.log("comment: " + event);
     this.modalAnswerChange.emit(event);
   }
 
