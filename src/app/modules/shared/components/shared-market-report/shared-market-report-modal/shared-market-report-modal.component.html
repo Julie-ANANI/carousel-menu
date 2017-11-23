@@ -1,0 +1,139 @@
+<div class="modal active" *ngIf="modalAnswer">
+  <div class="modal-overlay" (click)="modalAnswer = null"></div>
+  <div class="modal-container">
+    <div class="modal-header flex">
+      <div>
+        <h3>{{modalAnswer.professional?.firstName}} {{modalAnswer.professional?.lastName}}</h3>
+        <h6>{{modalAnswer.job}}</h6>
+        <h6 *ngIf="modalAnswer.professional?.company">
+          <i class="fa fa-building-o" aria-hidden="true"></i>
+          {{modalAnswer.professional?.company}}
+        </h6>
+        <small *ngIf="modalAnswer.follow">{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW' | translate }}</small>
+      </div>
+      <p>
+        <a *ngIf="(modalAnswer.professional?.firstName || modalAnswer.professional?.lastName) && modalAnswer.professional?.profileUrl"
+           href="{{modalAnswer.professional?.profileUrl}}" target="_blank">
+          <i class="fa fa-user" aria-hidden="true"></i>
+          {{ 'MARKET_REPORT.POPUP.PROFIL' | translate }}
+        </a><br>
+        <a href="mailto: {{modalAnswer.professional?.email}}">{{modalAnswer.professional?.email}}</a><br>
+        {{ 'MARKET_REPORT.POPUP.RECEIVED' | translate }} {{modalAnswer.date | date : dateFormat}} à {{modalAnswer.date | date:'HH:mm'}}<br>
+        {{(modalAnswer.country) ? modalAnswer.country.text : ""}}
+      </p>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6">
+          <ul>
+            <li>
+              <strong class="question">{{ 'MARKET_REPORT.MARKET_NEED.QUESTION' | translate }}</strong>
+              <p *ngIf="modalAnswer.relevantProblematic === 1">{{ 'MARKET_REPORT.MARKET_NEED.ANSWER_1' | translate }}</p>
+              <p *ngIf="modalAnswer.relevantProblematic === 2">{{ 'MARKET_REPORT.MARKET_NEED.ANSWER_2' | translate }}</p>
+              <p *ngIf="modalAnswer.relevantProblematic === 3">{{ 'MARKET_REPORT.MARKET_NEED.ANSWER_3' | translate }}</p>
+              <p *ngIf="modalAnswer.relevantProblematic === 4">{{ 'MARKET_REPORT.MARKET_NEED.ANSWER_4' | translate }}</p>
+              <p class="noanswer" [hidden]="modalAnswer.relevantProblematic">-</p>
+              <p *ngIf="modalAnswer.relevantProblematicComment">{{modalAnswer.relevantProblematicComment}}</p>
+            </li>
+
+            <li><strong class="question">{{ 'MARKET_REPORT.RELEVANCE.QUESTION' | translate }}</strong>
+              <p *ngIf="modalAnswer.productAnsweringProblematic === 1">{{ 'MARKET_REPORT.RELEVANCE.ANSWER_1' | translate }}</p>
+              <p *ngIf="modalAnswer.productAnsweringProblematic === 2">{{ 'MARKET_REPORT.RELEVANCE.ANSWER_2' | translate }}</p>
+              <p *ngIf="modalAnswer.productAnsweringProblematic === 3">{{ 'MARKET_REPORT.RELEVANCE.ANSWER_3' | translate }}</p>
+              <p *ngIf="modalAnswer.productAnsweringProblematic === 4">{{ 'MARKET_REPORT.RELEVANCE.ANSWER_4' | translate }}</p>
+              <p class="noanswer" [hidden]="modalAnswer.productAnsweringProblematic">-</p>
+              <p *ngIf="modalAnswer.productAnsweringProblematicComment">{{modalAnswer.productAnsweringProblematicComment}}</p>
+            </li>
+
+            <li>
+              <strong class="question">{{ 'MARKET_REPORT.ACTUAL_COMPETITION.QUESTION' | translate }}</strong>
+              <p class="noanswer" [hidden]="modalAnswer.competitors?.length > 0">-</p>
+              <ul [hidden]="modalAnswer.competitors?.length === 0" class="list">
+                <li *ngFor="let competitor of modalAnswer.competitors">{{competitor.name}}</li>
+              </ul>
+              <p *ngIf="modalAnswer.competitorsComment">{{modalAnswer.competitorsComment}}</p>
+            </li>
+
+            <li>
+              <strong class="question">{{ 'MARKET_REPORT.DIFFERENTIATION.QUESTION' | translate }}</strong>
+              <p *ngIf="modalAnswer.productInterests === 1">{{ 'MARKET_REPORT.DIFFERENTIATION.ANSWER_1' | translate }}</p>
+              <p *ngIf="modalAnswer.productInterests === 2">{{ 'MARKET_REPORT.DIFFERENTIATION.ANSWER_2' | translate }}</p>
+              <p *ngIf="modalAnswer.productInterests === 3">{{ 'MARKET_REPORT.DIFFERENTIATION.ANSWER_3' | translate }}</p>
+              <p *ngIf="modalAnswer.productInterests === 4">{{ 'MARKET_REPORT.DIFFERENTIATION.ANSWER_4' | translate }}</p>
+              <p class="noanswer" [hidden]="modalAnswer.productInterests">-</p>
+              <p *ngIf="modalAnswer.productInterestsComment">{{modalAnswer.productInterestsComment}}</p>
+            </li>
+
+            <li>
+              <strong class="question">{{ 'MARKET_REPORT.BENEFIT.QUESTION' | translate }}</strong>
+              <ul *ngIf="modalAnswer.keyAdvantages">
+                <li *ngFor="let advantage of modalAnswer.keyAdvantages">
+                  adv: {{advantage.name}}: {{advantage.value}}
+                </li>
+              </ul>
+              <p class="noanswer" [hidden]="modalAnswer.keyAdvantages">-</p>
+              <p *ngIf="modalAnswer.keyAdvantagesComment">{{modalAnswer.keyAdvantagesComment}}</p>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <ul>
+            <li>
+              <strong class="question">{{ 'MARKET_REPORT.STRONG.QUESTION' | translate }}</strong>
+              <p>{{modalAnswer.commentPositive}}</p>
+              <p class="noanswer" [hidden]="modalAnswer.commentPositive">-</p>
+            </li>
+            <li>
+              <strong class="question">{{ 'MARKET_REPORT.WEAK.QUESTION' | translate }}</strong>
+              <p>{{modalAnswer.commentNegative}}</p>
+              <p class="noanswer" [hidden]="modalAnswer.commentNegative">-</p>
+            </li>
+
+            <li>
+              <strong class="question">{{ 'MARKET_REPORT.PRICE.QUESTION' | translate }}</strong>
+              <p>{{modalAnswer.costValue}}</p>
+              <p class="noanswer" [hidden]="modalAnswer.cost">-</p>
+              <p *ngIf="modalAnswer.cost">{{modalAnswer.cost}}</p>
+            </li>
+            <li>
+              <strong class="question">{{ 'MARKET_REPORT.NEW_APPLICATION.QUESTION' | translate }}</strong>
+              <p class="noanswer" [hidden]="modalAnswer.applications?.length > 0">-</p>
+              <ul [hidden]="modalAnswer.applications?.length === 0" class="list">
+                <li *ngFor="let application of modalAnswer.applications">{{application.text}}</li>
+              </ul>
+              <p *ngIf="modalAnswer.applicationsComment">{{modalAnswer.applicationsComment}}</p>
+            </li>
+
+            <li>
+              <strong class="question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.QUESTION' | translate }}</strong>
+              <p *ngIf="modalAnswer.client === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.CLIENT' | translate }}</p>
+              <p *ngIf="modalAnswer.develop === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DEVELOP' | translate }}</p>
+              <p *ngIf="modalAnswer.distributor === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DISTRIBUTE' | translate }}</p>
+              <p *ngIf="modalAnswer.invest === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.INVEST' | translate }}</p>
+              <p class="noanswer" [hidden]="modalAnswer.client && !modalAnswer.develop && !modalAnswer.distributor && !modalAnswer.invest">-</p>
+              <p *ngIf="modalAnswer.interestsComment">{{modalAnswer.interestsComment}}</p>
+            </li>
+
+            <li>
+              <strong class="question">{{ 'MARKET_REPORT.POTENTIAL_PARTNER.QUESTION' | translate }}</strong>
+              <p class="noanswer" [hidden]="modalAnswer.companies?.length === 0">-</p>
+              <ul [hidden]="modalAnswer.companies?.length > 0" class="list">
+                <li *ngFor="let company of modalAnswer.companies">{{company.name}}</li>
+              </ul>
+              <p *ngIf="modalAnswer.partnersComment">{{modalAnswer.partnersComment}}</p>
+            </li>
+
+            <li>
+              <strong class="question">{{ 'MARKET_REPORT.MARKET_POTENTIAL.QUESTION' | translate }}</strong>
+              <p>{{modalAnswer.score}}</p>
+              <p class="noanswer" [hidden]="modalAnswer.score">-</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" (click)="modalAnswer = null">{{ 'MARKET_REPORT.POPUP.BACK' | translate }}</button>
+    </div>
+  </div>
+</div>

@@ -9,7 +9,7 @@ declare var tinymce: any;
 @Component({
   selector: 'text-zone',
   templateUrl: 'shared-text-zone.component.html',
-  styleUrls: ['shared-text-zone.component.styl']
+  styleUrls: ['shared-text-zone.component.scss']
 })
 
 export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {

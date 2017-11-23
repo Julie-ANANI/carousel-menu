@@ -1,7 +1,7 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as $ from 'jquery';
 
 @Component({
@@ -13,6 +13,7 @@ import * as $ from 'jquery';
 export class SharedMarketReportPopoverComponent implements OnInit {
 
   @Input() public answers: any;
+  @Output() modalAnswerChange = new EventEmitter<any>();
 
   constructor() { }
 
@@ -33,9 +34,7 @@ export class SharedMarketReportPopoverComponent implements OnInit {
   }
 
   public seeAnswer(answer: any) {
-    //const modalRef = this.modalService.open(NgbdModalContent);
-    //modalRef.componentInstance.name = 'World';
-    console.log('Answer?');
+    this.modalAnswerChange.emit(answer);
   }
 
 }

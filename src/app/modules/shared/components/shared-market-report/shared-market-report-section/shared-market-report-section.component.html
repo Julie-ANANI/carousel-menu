@@ -20,7 +20,7 @@
       ></market-report-bluesquare>
 
       <!--======= Conclusion =======-->
-      <div class="umi-synthesis flex-container">
+      <div class="umi-synthesis">
         <p class="title">{{ 'MARKET_REPORT.' + i18n + '.QUESTION' | translate }}</p>
         <text-zone [elementId]="conclusionId"
                    [readonly]="readonly"
@@ -90,7 +90,7 @@
           <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job}}</p>
           <p *ngIf="answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional.company}}</p>
 
-          <a href="" (click)="seeAnswer(answer)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</a><br>
+          <span (click)="seeAnswer(answer)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
           <a href="mailto: {{answer.professional.email}}">{{answer.professional.email}}</a>
         </div>
       </div>
@@ -104,35 +104,67 @@
       </bar-chart>
 
       <!--======= Concurrents =======-->
-      <market-item-list [answers]="answers" *ngIf="type==='competitors'" [list]="info.data"></market-item-list>
+      <market-item-list
+        [answers]="answers"
+        *ngIf="type==='competitors'"
+        [list]="info.data"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-item-list>
 
       <!--======= Applications =======-->
-      <market-item-list [answers]="answers" [list]="info.data" *ngIf="type === 'applications'"></market-item-list>
+      <market-item-list
+        [answers]="answers"
+        [list]="info.data"
+        *ngIf="type === 'applications'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-item-list>
 
       <!--======= Marques d'intérêt =======-->
 
       <div *ngIf="type === 'interests' && info.data.client.length">
         <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.CLIENT' | translate }}</p>
-        <market-item-list [answers]="answers" [list]="info.data.client"></market-item-list>
+        <market-item-list
+          [answers]="answers"
+          [list]="info.data.client"
+          (modalAnswerChange)="seeAnswer($event)">
+        </market-item-list>
       </div>
 
       <div *ngIf="type === 'interests' && info.data.develop.length">
         <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DEVELOP' | translate }}</p>
-        <market-item-list [answers]="answers" [list]="info.data.develop"></market-item-list>
+        <market-item-list
+          [answers]="answers"
+          [list]="info.data.develop"
+          (modalAnswerChange)="seeAnswer($event)">
+        </market-item-list>
       </div>
 
       <div *ngIf="type === 'interests' && info.data.distributor.length">
         <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DISTRIBUTE' | translate }}</p>
-        <market-item-list [answers]="answers" [list]="info.data.distributor"></market-item-list>
+        <market-item-list
+          [answers]="answers"
+          [list]="info.data.distributor"
+          (modalAnswerChange)="seeAnswer($event)">
+        </market-item-list>
       </div>
 
       <div *ngIf="type === 'interests' && info.data.invest.length">
         <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.INVEST' | translate }}</p>
-        <market-item-list [answers]="answers" [list]="info.data.invest"></market-item-list>
+        <market-item-list
+          [answers]="answers"
+          [list]="info.data.invest"
+          (modalAnswerChange)="seeAnswer($event)"
+        >
+        </market-item-list>
       </div>
 
       <!--======= Partenaires potentiels =======-->
-      <market-item-list [answers]="answers" *ngIf="type==='partners'" [list]="info.data"></market-item-list>
+      <market-item-list
+        [answers]="answers"
+        *ngIf="type==='partners'"
+        [list]="info.data"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-item-list>
 
       <!--======= Liste de commentaires =======-->
       <div *ngIf="showDetails && info.comments && info.comments.length > 0">
@@ -146,7 +178,8 @@
               [company]="comment.company"
               [comment]="comment.comment"
               [isNew]="false"
-              [answers]="getAnswers([comment])">
+              [answers]="getAnswers([comment])"
+              (modalAnswerChange)="seeAnswer($event)">
             </market-comment>
           </li>
         </ul>

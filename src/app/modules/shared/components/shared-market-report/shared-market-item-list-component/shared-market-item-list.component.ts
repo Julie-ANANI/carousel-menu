@@ -1,7 +1,7 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 
 @Component({
@@ -14,7 +14,8 @@ export class SharedMarketItemListComponent implements OnInit {
 
   @Input() public list: any;
   @Input() public answers: any;
-  
+  @Output() modalAnswerChange = new EventEmitter<any>();
+
   constructor() { }
 
   ngOnInit() {
@@ -28,6 +29,10 @@ export class SharedMarketItemListComponent implements OnInit {
     } else {
       return [];
     }
+  }
+
+  public seeAnswer(event: any) {
+    this.modalAnswerChange.emit(event);
   }
 
 }

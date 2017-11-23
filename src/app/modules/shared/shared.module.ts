@@ -24,6 +24,7 @@ import { SharedMarketReportPiechartComponent } from './components/shared-market-
 import { SharedMarketReportBluesquareComponent } from './components/shared-market-report/shared-market-report-bluesquare/shared-market-report-bluesquare.component';
 import { SharedMarketCommentComponent } from './components/shared-market-report/shared-market-comment-component/shared-market-comment.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report/shared-market-report-popover/shared-market-report-popover.component';
+import { SharedMarketReportModalComponent } from './components/shared-market-report/shared-market-report-modal/shared-market-report-modal.component';
 import { SharedPricesComponent } from './components/shared-market-report/shared-prices-component/shared-prices.component';
 import { SharedWorldMapComponent } from './components/shared-market-report/shared-world-map-component/shared-world-map.component';
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
@@ -36,6 +37,7 @@ import { SharedTextZoneComponent } from './components/shared-text-zone/shared-te
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
 import { Ng2FileDropModule } from 'ng2-file-drop';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
+import {Ng2PageScrollModule} from 'ng2-page-scroll';
 
 @NgModule({
   imports: [
@@ -48,7 +50,8 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
     ChartsModule,
     FileUploadModule,
     Ng2FileDropModule,
-    Angular2FontawesomeModule
+    Angular2FontawesomeModule,
+    Ng2PageScrollModule
   ],
   declarations: [
     // Directives
@@ -72,6 +75,7 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
     SharedMarketItemComponent,
     SharedMarketCommentComponent,
     SharedMarketReportPopoverComponent,
+    SharedMarketReportModalComponent,
     SharedMarketReportSectionComponent,
     SharedMarketReportPiechartComponent,
     SharedMarketItemListComponent,

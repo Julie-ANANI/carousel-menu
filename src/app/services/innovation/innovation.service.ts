@@ -80,6 +80,12 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public recalculateSynthesis(innovationId: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/recalculateSynthesis')
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public submitProjectToValidation (innovationId: string) {
     return this._http.put('/innovation/' + innovationId + '/submit')
       .map((res: Response) => res.json())

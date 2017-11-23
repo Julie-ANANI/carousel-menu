@@ -6,10 +6,9 @@
           [ngClass]="{'top-profil': item.quality === 2}">
         <market-item class="flex-container"
                      [answers]="getAnswers(item.answers)"
-                     [value]="item.value"
-                     [count]="item.count"
-                     [url]="item.url"
-                     [isNew]="false">
+                     [item]="item"
+                     [isNew]="false"
+                     (modalAnswerChange)="seeAnswer($event)">
         </market-item>
       </li>
     </ul>
@@ -21,10 +20,9 @@
           [ngClass]="{'top-profil': item.quality === 2}">
         <market-item class="flex-container"
                      [answers]="getAnswers(item.answers)"
-                     [value]="item.value"
-                     [count]="item.count"
-                     [url]="item.url"
-                     [isNew]="false">
+                     [item]="item"
+                     [isNew]="false"
+                     (modalAnswerChange)="seeAnswer($event)">
         </market-item>
       </li>
     </ul>

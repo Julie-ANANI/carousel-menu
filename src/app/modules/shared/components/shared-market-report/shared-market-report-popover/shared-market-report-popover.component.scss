@@ -34,7 +34,8 @@
       line-height: 21px;
       margin: -1rem 0 auto;
 
-      a {
+      a, .see-answer {
+        cursor: pointer;
         position: relative;
         top: -3px;
       }
@@ -50,7 +51,8 @@
       line-height: 21px;
     }
 
-    a {
+    a, .see-answer {
+      cursor: pointer;
       color: #F79323;
       margin-right: 15px;
       font-size: 13px;
