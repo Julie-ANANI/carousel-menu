@@ -8,12 +8,10 @@ import {ComponentCanDeactivate} from '../../../../pending-changes-guard.service'
 import {Observable} from 'rxjs/Observable';
 import {InputListComponent} from '../../../../directives/input-list/input-list.component';
 
-//import { Clearbit } from '../../../../models/clearbit';
+// import { Clearbit } from '../../../../models/clearbit';
 
-import {Ng2FileDropAcceptedFile, Ng2FileDropRejectedFile} from 'ng2-file-drop';
-
-import "rxjs/add/operator/distinctUntilChanged";
-import "rxjs/add/operator/debounceTime";
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/debounceTime';
 
 // TODO : Optimisation : Ne pas envoyer tout l'objet Innovation à chaque mise à jour. Retenir la version sauvegardée et n'envoyer que la différence.
 
@@ -37,6 +35,15 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     newSaveRequired: false,
     data: null
   };
+
+  /*
+   * Gestion de l'affichage :
+   */
+  public innovationCardEditingIndex = 0; // Index de l'innovationCard que l'on édite (système d'onglets)
+  public displayCountriesToExcludeSection = false;
+  public displayCompanyToExcludeSection = false;
+  public displayPersonsToExcludeSection = false;
+
 
   public formData: FormGroup;
 
@@ -79,17 +86,6 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     });
   }
 
-  /*
-   * Gestion de l'affichage :
-   */
-  public innovationCardEditingIndex = 0; // Index de l'innovationCard que l'on édite (système d'onglets)
-  public displayCountriesToExcludeSection = false;
-  public displayCompanyToExcludeSection = false;
-  public displayPersonsToExcludeSection = false;
-
-
-  // @ViewChild('fileInput') fileInput;
-
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _translateService: TranslateService,
@@ -118,7 +114,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
           }
 
           this.formData.valueChanges
-            .debounceTime(5000) //This is the time in ms that the form waits before emitting the valueChanges event
+            .debounceTime(5000) // This is the time in ms that the form waits before emitting the valueChanges event
             .distinctUntilChanged()
             .subscribe((newVersion) => {
               this._autoSave.data = newVersion;
@@ -139,12 +135,12 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   }
 
   private _save() {
-    if ((this.canEdit||true) && !this._autoSave.isSaving) {
-      console.log("Start saving");
+    if ((this.canEdit || true) && !this._autoSave.isSaving) {
+      console.log('Start saving');
       this._autoSave.isSaving = true;
       this._innovationService.save(this._project.id, this._autoSave.data, this._project.innovationCards[0].id).subscribe(data => {
         this._autoSave.isSaving = false;
-        console.log("End saving");
+        console.log('End saving');
         if (this._autoSave.newSaveRequired) {
           this._autoSave.newSaveRequired = false;
           this._save();
@@ -199,7 +195,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   public addCountryToExclude(event): void {
     this.formData.get('settings').get('geography')
       .get('countriesToExclude').get('exclude').setValue(event.value);
-    //this.formData.get('dirty').setValue(Date.now());
+    // this.formData.get('dirty').setValue(Date.now());
   }
 
   /**
@@ -294,7 +290,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
    * @param cardIdx this is the index of the innovation card being edited.
    */
   public addAdvantageToInventionCard (event, cardIdx) {
-    let card = this.formData.get('innovationCards').value[cardIdx] as FormGroup;
+    const card = this.formData.get('innovationCards').value[cardIdx] as FormGroup;
     card['advantages'].push(event.value);
     this.formData.get('dirty').setValue(Date.now());
   }
@@ -315,7 +311,13 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
 
   public imageUploaded(media) {
     this._project.innovationCards[this.innovationCardEditingIndex].media.push(media);
-    // TODO ajouter l'image dans la fiche projet puis la sauvegarder
+    this._innovationService.addMediaToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  public downloadInnovationCard () {
+    alert('TODO :  [href]="/:innovationId/exportInventionCard/:innovationCardId"'); // TODO
   }
 
   @HostListener('window:beforeunload')

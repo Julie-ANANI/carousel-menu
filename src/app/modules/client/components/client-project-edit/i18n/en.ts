@@ -6,6 +6,7 @@ export const en = {
     'STEP1': 'Define your target market',
     'STEP2': 'Describe your project',
     'STEP3': 'Submit your project to us',
+    'EXTERNAL_DIFFUSION': 'I authorize UMI to diffuse my project to it\'s ambassadors community',
     'SUBMIT': {
       'BUTTON': 'Submit my project',
       'TITLE': 'Have you finished? Submit your project to us.',

@@ -1,15 +1,18 @@
 .upload-area {
+  background: #FAFAFA;
+  border: 2px dashed #979797;
+  padding: 60px 10px 60px 10px;
+  margin: 20px 0;
+
   position: relative;
-  background: #f5f5f5;
   cursor: pointer;
   height: 200px;
-  border: 4px dashed #dbdbdb;
   transition: all linear .2s;
-  margin-bottom: 30px;
   display: flex;
+  text-align: center;
 
   &:hover {
-    border-color: #F79323C8;
+    border: 2px dashed #74D537;
 
     .upload-button {
       color: #888;
@@ -22,7 +25,6 @@
     transition: .2s ease;
   }
 }
-
 
 .text-center {
   text-align: center;

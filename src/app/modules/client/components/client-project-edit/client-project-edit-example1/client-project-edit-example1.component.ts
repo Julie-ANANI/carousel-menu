@@ -68,8 +68,14 @@ export class ClientProjectEditExample1Component implements OnInit {
             'Proximité d\'approvisionnement sur le territoire national'
           ],
           'media': [
-            'app/project-example-1.jpg'
+            {
+              '_id': '0123456789',
+              'cloudinary': {
+                'public_id': 'app/project-example-1.jpg'
+              }
+            }
           ],
+          'principalMediaId': '0123456789',
           'lang': 'fr'
         },
         {
@@ -119,8 +125,14 @@ export class ClientProjectEditExample1Component implements OnInit {
             'Locally supplied around the country'
           ],
           'media': [
-            'app/project-example-1.jpg'
+            {
+              '_id': '0123456789',
+              'cloudinary': {
+                'public_id': 'app/project-example-1.jpg'
+              }
+            }
           ],
+          'principalMediaId': '0123456789',
           'lang': 'en'
         }
       ]

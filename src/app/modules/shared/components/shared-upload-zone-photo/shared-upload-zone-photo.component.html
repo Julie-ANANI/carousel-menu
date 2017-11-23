@@ -3,6 +3,16 @@
      (fileOver)="fileOverBase($event)"
      [uploader]="uploader">
   <div class="upload-button" ngClass="{error: errors.medias}">
-    <input type="file" ng2FileSelect [uploader]="uploader" />
+
+    <div style="height:0;overflow:hidden">
+      <input type="file" ng2FileSelect [uploader]="uploader" id="fileInput" name="fileInput"  #fileInput />
+    </div>
+
+    <button class="btn btn-lg btn-primary" (click)="fileInput.click()" *ngIf="!loading">
+      <i class="icon icon-upload"></i> {{ 'PROJECT_EDIT.MEDIA.UPLOAD' | translate }}
+    </button>
+
+    <div class="loading loading-lg" *ngIf="loading"></div>
+
   </div>
 </div>

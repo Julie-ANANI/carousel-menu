@@ -828,33 +828,18 @@
 
                           <div>
                             <label class="form-label">{{ 'PROJECT_EDIT.MEDIA.ADD' | translate }}</label>
-                            <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_200/' + img.cloudinary.public_id" *ngFor="let img of project.innovationCards[innovationCardEditingIndex].media" alt="" width="200">
+
+                            <div class="medias">
+                              <div class="media">
+
+                              </div>
+                            </div>
+
+                            <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_200/' + img.cloudinary.public_id" *ngFor="let img of project.innovationCards[innovationCardEditingIndex].media" alt="" width="100" height="100">
 
                             <app-shared-upload-zone-photo
                               (cbFn)="imageUploaded($event)">
                             </app-shared-upload-zone-photo>
-
-
-                            <!--<div class="pictures-upload text-center"
-                                 [ngClass]="{'dragging': draggingPhoto}"
-                                 ng2FileDrop [ng2FileDropAcceptMultiple]="true"
-                                 (ng2FileDropHoverStart)="draggingPhoto = true"
-                                 (ng2FileDropHoverEnd)="draggingPhoto = false"
-                                 [ng2FileDropSupportedFileTypes]="supportedFileTypes"
-                                 [ng2FileDropDisableStyles]="true"
-                                 (ng2FileDropFilesDropped)="dragFilesDropped($event)"
-                                 (ng2FileDropFileAccepted)="dragFileAccepted($event)"
-                                 (ng2FileDropFileRejected)="dragFileRejected($event)">
-
-                              <div style="height:0;overflow:hidden">
-                                <input type="file" id="fileInput" name="fileInput"  #fileInput (change)="upload($event)" />
-                            </div>
-
-                              <button class="btn btn-lg btn-primary" (click)="fileInput.click()">
-                                <i class="icon icon-upload"></i> {{ 'PROJECT_EDIT.MEDIA.UPLOAD' | translate }}
-                              </button>
-                              <p>({{ 'PROJECT_EDIT.MEDIA.SLIDE' | translate }})</p>
-                            </div>-->
 
                             <div class="videos-upload text-center">
                               <p>{{ 'PROJECT_EDIT.MEDIA.URL' | translate }}</p>
@@ -947,13 +932,25 @@
 
                   <a class="btn btn-lg centered" target="_blank" [routerLink]="'../'">{{ 'PROJECT_EDIT.HELP.PREVIEW' | translate }}</a>
 
-                  <button class="btn btn-lg centered">{{ 'PROJECT_EDIT.HELP.DOWNLOAD' | translate }}</button><!-- TODO -->
+                  <button class="btn btn-lg centered" (click)="downloadInnovationCard()">{{ 'PROJECT_EDIT.HELP.DOWNLOAD' | translate }}</button><!-- TODO -->
                 </div>
               </div>
             </div>
 
             <div *ngIf="canEdit">
               <h2 id="submit">3. {{ 'PROJECT_EDIT.STEP3' | translate }}</h2>
+
+
+              <!--<form novalidate [formGroup]="formData" class="form-horizontal">
+                  <div>
+                    <label class="form-label">{{ 'PROJECT_EDIT.EXTERNAL_DIFFUSION' | translate }}</label>
+                    <label class="form-radio">
+                      <input type="radio" name="patented" formControlName="external_diffusion" [value]="false">
+                      <i class="form-icon"></i> {{ 'COMMON.NO' | translate }}
+                    </label>
+                  </div>
+              </form>-->
+
 
               <div class="project-submit">
                 <h3 class="text-center">{{ 'PROJECT_EDIT.SUBMIT.TITLE' | translate }}</h3>

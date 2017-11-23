@@ -18,7 +18,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, {useHash: true})
+    RouterModule.forRoot(appRoutes, {useHash: true}) // TODO {useHash: true} annule le fonctionnement des ancres
   ],
   exports: [
     RouterModule

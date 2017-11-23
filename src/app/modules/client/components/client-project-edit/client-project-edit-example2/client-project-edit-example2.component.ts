@@ -55,8 +55,14 @@ export class ClientProjectEditExample2Component implements OnInit {
             'Technologie protégée'
           ],
           'media': [
-            'app/project-example-2.jpg'
+            {
+              '_id': '0123456789',
+              'cloudinary': {
+                'public_id': 'app/project-example-2.jpg'
+              }
+            }
           ],
+          'principalMediaId': '0123456789',
           'lang': 'fr'
         },
         {
@@ -93,8 +99,14 @@ export class ClientProjectEditExample2Component implements OnInit {
             'Proprietary technology'
           ],
           'media': [
-            'app/project-example-2.jpg'
+            {
+              '_id': '0123456789',
+              'cloudinary': {
+                'public_id': 'app/project-example-2.jpg'
+              }
+            }
           ],
+          'principalMediaId': '0123456789',
           'lang': 'en'
         },
       ]

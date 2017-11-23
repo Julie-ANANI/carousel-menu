@@ -1,5 +1,6 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { FileUploader, FilterFunction, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { NotificationsService } from 'angular2-notifications';
 
 const base_api_url = 'http://localhost:3000/api/media';
 
@@ -15,9 +16,11 @@ export class SharedUploadZonePhotoComponent implements OnInit{
   private _uploader: FileUploader;
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
+  public loading = false;
 
   @Input() public type: any;
   @Output() public cbFn: EventEmitter <any> = new EventEmitter();
+  @ViewChild('fileInput') fileInput;
 
 
   ngOnInit() {
@@ -31,14 +34,24 @@ export class SharedUploadZonePhotoComponent implements OnInit{
       additionalParameter: {} // à transmettre au serveur au moment de la sauvegarde
     });
 
+    this._uploader.onBeforeUploadItem = (item: FileItem): any => {
+      this.loading = true;
+    };
+
+    this._uploader.onErrorItem = (item: FileItem, response: string, status: number) => {
+      this._notificationsService.error('Error', response);
+      this.loading = false;
+    };
+
     this._uploader.onCompleteItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
       if (status !== 200) {
         console.error(response);
       } else {
         try {
-          const id = JSON.parse(response);
+          const image = JSON.parse(response);
+          this.loading = false;
           // Call back to the media
-          this.cbFn.emit(id);
+          this.cbFn.emit(image);
         } catch (ex) {
           console.error(`There's an error: ${ex}`);
         }
@@ -71,7 +84,7 @@ export class SharedUploadZonePhotoComponent implements OnInit{
     }
   }
 
-  constructor() {  }
+  constructor(private _notificationsService: NotificationsService) {  }
 
   get uploader() {
     return this._uploader;

@@ -46,7 +46,10 @@
       <div class="column col-10 col-mx-auto">
         <div class="columns">
           <div class="column col-4 col-mx-auto" *ngFor="let media of project.innovationCards[idInnovationCard].media">
-            <a [href]="media" target="_blank"><img [src]="'https://res.cloudinary.com/umi/image/upload/' + media" alt="" width="597" height="418" class="img-responsive"></a>
+            <a [href]="'https://res.cloudinary.com/umi/image/upload/' + media.cloudinary.public_id" target="_blank">
+              <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_600/' + media.cloudinary.public_id"
+                   alt="" width="597" height="418" class="img-responsive">
+            </a>
           </div>
         </div>
       </div>

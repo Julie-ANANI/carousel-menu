@@ -6,6 +6,7 @@ export const fr = {
     'STEP1': 'Définissez votre marché cible',
     'STEP2': 'Décrivez votre projet',
     'STEP3': 'Soumettez-nous votre projet',
+    'EXTERNAL_DIFFUSION': 'J\'autorise UMI à diffuser mon projet auprès de sa communauté d\'ambassadeurs',
     'SUBMIT': {
       'BUTTON': 'Soumettre mon projet',
       'TITLE': 'Vous avez tout rempli ? Soumettez-nous votre projet.',

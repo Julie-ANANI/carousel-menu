@@ -38,6 +38,12 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public addMediaToInnovationCard(innovationId: string, innovationCardId: string, mediaId: string): Observable<any> {
+    return this._http.post('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/' + mediaId)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public removeInnovationCard(innovationId: string, innovationCardId: string): Observable<any> {
     return this._http.delete('/innovation/' + innovationId + '/innovationCard/' + innovationCardId)
       .map((res: Response) => res.json())
