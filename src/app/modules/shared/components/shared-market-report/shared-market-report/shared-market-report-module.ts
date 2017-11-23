@@ -19,6 +19,7 @@ export class SharedMarketReportComponent implements OnInit {
   private _infographics: any;
   private _editionMode = true;
   private _showDetails = true;
+  private _calculating = false;
   private innoid = '599c0029719e572041aafe0d';
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert 
@@ -34,10 +35,18 @@ export class SharedMarketReportComponent implements OnInit {
       this.innoid = params['innovationId'] || this.innoid;
       this._innovationService.getInnovationSythesis(this.innoid).subscribe(synthesis => {
         this._infographics = synthesis.infographics;
+        this.modalAnswer = this._infographics.answers[0];
       });
     });
     PageScrollConfig.defaultDuration = 800;
-    this.modalAnswer = null;
+  }
+
+  public recalculateSynthesis(): any {
+    this._calculating = true;
+    this._innovationService.recalculateSynthesis(this.innoid).subscribe(synthesis => {
+      this._calculating = false;
+      this._infographics = synthesis.infographics;
+    });
   }
 
   public toggleEditionMode(): any {
@@ -58,6 +67,14 @@ export class SharedMarketReportComponent implements OnInit {
 
   get infographics(): any {
     return this._infographics;
+  }
+
+  set calculating (value: boolean) {
+    this._calculating = value;
+  }
+
+  get calculating (): boolean {
+    return this._calculating;
   }
 
   set showDetails (value: boolean) {

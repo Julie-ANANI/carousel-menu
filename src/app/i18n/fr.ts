@@ -100,6 +100,7 @@ export const fr = {
     'BTN_VIEW_MODE': 'Passer en mode visualisation',
     'BTN_DETAILS_OPEN': 'Voir les détails',
     'BTN_DETAILS_CLOSE': 'Masquer les détails',
+    'BTN_RECOMPUTE': 'Recalculer l\'infographie',
     'POPUP': {
       'PROFIL': 'Profil',
       'RECEIVED': 'Reçu le',
