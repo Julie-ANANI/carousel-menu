@@ -35,7 +35,7 @@ export class SharedMarketReportComponent implements OnInit {
       this.innoid = params['innovationId'] || this.innoid;
       this._innovationService.getInnovationSythesis(this.innoid).subscribe(synthesis => {
         this._infographics = synthesis.infographics;
-        this.modalAnswer = this._infographics.answers[0];
+        this.modalAnswer = null;
       });
     });
     PageScrollConfig.defaultDuration = 800;
