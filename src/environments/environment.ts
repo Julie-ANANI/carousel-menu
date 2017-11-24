@@ -7,6 +7,6 @@ export const environment = {
   production: false,
   apiUrl: '',
   companyName: '',
-  domain: 'localhost'
+  domain: ''
 };
 

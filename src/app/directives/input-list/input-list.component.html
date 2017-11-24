@@ -1,6 +1,6 @@
 <form #f="ngForm" novalidate
       (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)" >
-  <div class="input-group">
+  <div class="input-group" *ngIf="canEdit">
     <input type="text" class="form-input input-lg" name="answers" [(ngModel)]="answer" required
            [attr.placeholder]="placeholder | translate" />
     <button class="btn btn-primary btn-lg input-group-btn" translate>

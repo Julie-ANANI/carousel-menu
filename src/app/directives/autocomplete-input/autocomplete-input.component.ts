@@ -17,6 +17,7 @@ export class AutocompleteInputComponent implements OnInit {
   public inputForm: FormGroup;
 
   @Output() update = new EventEmitter<any>();
+  @Input() canEdit = true;
 
   companyName: FormControl = new FormControl();
   answerList: Array<{name: string, domain: string, flag: string}> = [];
@@ -74,13 +75,14 @@ export class AutocompleteInputComponent implements OnInit {
     val = val ? val.get('answer').value : "";
     if(val && this.answerList.findIndex(t=>{return t.name === val.name}) === -1) {
       this.answerList.push(val);
+      this.inputForm.get('answer').setValue('');
       this.update.emit({value: this.answerList});
     }
   }
 
-/*  rmProposition(i: number): void {
+  rmProposition(i: number): void {
     this.answerList.splice(i, 1);
     this.update.emit({value: this.answerList});
-  }*/
+  }
 
 }

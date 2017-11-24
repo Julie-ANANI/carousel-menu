@@ -60,7 +60,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
             this._addInnovationCardWithData(innovationCard);
           }
 
-          this.displayCountriesToExcludeSection = this.formData.get('settings').get('geography').get('countriesToExclude').get('exclude').value.length > 0;
+          this.displayCountriesToExcludeSection = this.formData.get('settings').get('geography').get('exclude').value.length > 0;
           this.displayCompanyToExcludeSection = this.formData.get('settings').get('companies').get('exclude').value.length > 0;
           this.displayPersonsToExcludeSection = this.formData.get('settings').get('professionals').get('exclude').value.length > 0;
 
@@ -94,7 +94,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
             americaNord: [false, [Validators.required]],
             americaSud: [false, [Validators.required]]
           }),
-          countriesToExclude:  [[]],
+          exclude:  [[]],
           tmpNewCountryToExclude: ['']
         }),
         market: this._formBuilder.group({
@@ -173,7 +173,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
    */
   public addCountryToExclude(event): void {
     this.formData.get('settings').get('geography')
-      .get('countriesToExclude').setValue(event.value); // TODO Antoine tester push plutot que setValue ?
+      .get('exclude').setValue(event.value);
   }
 
   /**
@@ -205,7 +205,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
       'countries': {
         placeholder: 'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
         initialData: this.formData.get('settings').get('geography')
-          .get('countriesToExclude').value,
+          .get('exclude').value,
         type: 'countries'
       },
       'advantages': {
@@ -267,10 +267,9 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
    * @param event the resulting value sent from the component directive
    * @param cardIdx this is the index of the innovation card being edited.
    */
-  public addAdvantageToInventionCard (event, cardIdx) {
+  public addAdvantageToInventionCard (event, cardIdx) { // TODO TEST
     const card = this.formData.get('innovationCards').value[cardIdx] as FormGroup;
     card['advantages'].push(event.value);
-    this.formData.get('dirty').setValue(Date.now());
   }
 
   public setAsPrincipal (innovationCardId) {
@@ -285,11 +284,12 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     this.save(_ => {
       this._innovationService.submitProjectToValidation(this._project.id).subscribe(data2 => {
         this._router.navigate(['../']);
+        this._notificationsService.success('Submitted', 'Your project has been sent to validation.'); // TODO translate
       });
     });
   }
 
-  public imageUploaded(media) {
+  public imageUploaded(media) { // TODO TEST
     this._project.innovationCards[this.innovationCardEditingIndex].media.push(media);
     this._innovationService.addMediaToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
       console.log(res);
@@ -313,11 +313,8 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     }
   }
 
-  get canEdit () {
-    return this._project && this._project.status === 'EDITING';
-  }
-
-  get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y HH:mm:ss' : 'y/MM/dd HH:mm:ss'; }
+  get canEdit () { return this._project && this._project.status === 'EDITING'; }
+  get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
   get project(): any { return this._project; }
 
 }

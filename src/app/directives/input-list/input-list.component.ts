@@ -11,6 +11,8 @@ export class InputListComponent {
   _placeholder: string;
 
   @Output() update = new EventEmitter<any>();
+  @Input() canEdit = true;
+
   answer: string;
   answerList: Array<string> = [];
 
@@ -35,6 +37,7 @@ export class InputListComponent {
   addProposition(val: string): void {
     if(this.answerList.findIndex(t=>{return t === val}) === -1) {
       this.answerList.push(val);
+      this.answer = '';
       this.update.emit({value: this.answerList});
     }
   }
