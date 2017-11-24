@@ -4,6 +4,10 @@
   opacity: 0.5;
   align-self: auto;
 }
+
+.item-menu-sandwich:hover {
+  opacity: 1;
+}
 /* === Menu hover détails utilisateurs === */
 
 .users-menu {
@@ -15,7 +19,7 @@
   box-shadow: 1px 2px 4px 0 rgba(0,0,0,0.37);
   width: 100%;
   max-width: 290px;
-  z-index: 999;
+  z-index: 3;
 
   ul li {
     border-bottom: 1px solid #E0E0E0;
