@@ -50,8 +50,14 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public getInnovationCard(innovationCardId: string, lang: string): Observable<any> {
-    return this._http.get('/innovation/card/' + innovationCardId, { params: {lang: lang }}) // TODO check si le serveur reçoit bien la langue
+  public getInnovationCard(innovationCardId: string): Observable<any> {
+    return this._http.get('/innovation/card/' + innovationCardId)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public getInnovationCardByLanguage(innovationId: string, lang: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/card', { params: {lang: lang }})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

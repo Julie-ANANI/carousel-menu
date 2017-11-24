@@ -21,8 +21,4 @@ export class SharedMarketReportPiechartComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  public getLevels(lang:string): Array<any> {
-    return this.configuration[lang] || [];
-  }
 }

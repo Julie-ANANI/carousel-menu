@@ -23,6 +23,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
   private _conclusionId: string;
   private _innoid: string;
   private _selectLangInput = 'en';
+  private _advantages: string[];
   private _configurations = {
     'relevantProblematic':{
       'fr': ['Non', 'Eventuellement', 'Oui', 'Cruciale'],
@@ -76,6 +77,11 @@ export class SharedMarketReportSectionComponent implements OnInit {
           }];
         }
         break;
+      case 'stars':
+        this._innovationService.getInnovationCardByLanguage(this.innoid, this._selectLangInput).subscribe(card => {
+          this._advantages = card.advantages;
+        });
+        break;
       case 'score':
         // Calcul du score max
         this._maxCountScore = _.maxBy(this.info.data, 'count')['count'];
@@ -124,12 +130,16 @@ export class SharedMarketReportSectionComponent implements OnInit {
     return `${Math.round(value / this._maxCountScore * 100)}%`;
   }
 
-  public getLevels(lang:string): Array<any> {
-    return this.configurations[this.id][lang] || [];
+  public getLevels(): Array<any> {
+    return this.configurations[this.id][this._selectLangInput] || [];
   }
 
   public getFlag(country: string): string {
     return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+  }
+
+  get advantages(): string[] {
+    return this._advantages;
   }
 
   get readonly(): boolean {
