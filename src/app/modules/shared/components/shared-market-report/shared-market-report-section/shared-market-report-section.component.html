@@ -7,7 +7,7 @@
       <market-report-piechart
         *ngIf="type==='pie'"
         [pieChartData]="chartValues"
-        [configuration]="configurations[id]"
+        [configuration]="getLevels()"
         [percentage]="info.percentage"
       ></market-report-piechart>
       <!--======= ou Encadré Bleu =======-->
@@ -98,7 +98,7 @@
       <!--======= Bar Chart =======-->
       <bar-chart
         *ngIf="type === 'pie'"
-        [levels]="getLevels('en')"
+        [levels]="getLevels()"
         [stats]="info.pieChart"
         [number]="true">
       </bar-chart>
@@ -110,6 +110,13 @@
         [list]="info.data"
         (modalAnswerChange)="seeAnswer($event)">
       </market-item-list>
+
+      <!--======= Avantages Clés =======-->
+      <div *ngIf="type === 'stars'">
+        <div *ngFor="let advantage of advantages; let i = index">
+          {{advantage}} : <stars [note]="info?.data[i]?.average"></stars>
+        </div>
+      </div>
 
       <!--======= Applications =======-->
       <market-item-list
