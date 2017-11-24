@@ -94,9 +94,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
             americaNord: [false, [Validators.required]],
             americaSud: [false, [Validators.required]]
           }),
-          countriesToExclude: this._formBuilder.group({
-            exclude: [[]]
-          }),
+          countriesToExclude:  [[]],
           tmpNewCountryToExclude: ['']
         }),
         market: this._formBuilder.group({
@@ -175,7 +173,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
    */
   public addCountryToExclude(event): void {
     this.formData.get('settings').get('geography')
-      .get('countriesToExclude').get('exclude').setValue(event.value); // TODO Antoine tester push plutot que setValue ?
+      .get('countriesToExclude').setValue(event.value); // TODO Antoine tester push plutot que setValue ?
   }
 
   /**
@@ -207,7 +205,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
       'countries': {
         placeholder: 'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
         initialData: this.formData.get('settings').get('geography')
-          .get('countriesToExclude').get('exclude').value,
+          .get('countriesToExclude').value,
         type: 'countries'
       },
       'advantages': {
