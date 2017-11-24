@@ -6,7 +6,7 @@ g.selected,
 path.selected,
 .selected g,
 .selected path {
-  fill: #74D537;
+  fill: #2ECC71;
 }
 g.clickable:not(.selected):hover,
 path.clickable:not(.selected):hover,
@@ -19,10 +19,7 @@ path.clickable:not(.selected):hover,
 
 $dark-bg: #262831;
 $body-font-color-darker: #333333;
-$primary-color: #F79323;
-$secondary-color: #0B90C6;
-
-
+$primary-color: #3498DB;
 
 
 
@@ -69,12 +66,8 @@ $secondary-color: #0B90C6;
       margin-right: 30px;
     }
 
-    a {
-      color: #878787;
-    }
-
     span {
-      background: $secondary-color;
+      background: $primary-color;
       border-radius: 500px;
       padding: 2px 9px;
       color: white;
@@ -185,4 +178,8 @@ $secondary-color: #0B90C6;
   .media {
 
   }
+}
+
+.flex-container {
+  display: flex;
 }

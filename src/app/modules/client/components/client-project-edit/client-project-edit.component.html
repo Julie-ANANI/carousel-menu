@@ -7,7 +7,7 @@
         <div class="column col-10 col-mx-auto">
           <h1>{{ project.name }}</h1>
           <div class="metas">
-            <a href="#TODO" (click)="false" class="c-text">{{ project.owner.name }}</a>
+            {{ project.owner.name }}
             / {{ project.owner.companyName }}
             • {{ 'PROJECT_EDIT.ADDED' | translate }} {{ project.created | date:dateFormat }}
             • {{ 'PROJECT_EDIT.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
@@ -49,14 +49,20 @@
       <div class="columns">
         <div class="column col-10 col-mx-auto">
           <h3>{{ 'PROJECT_EDIT.HOW' | translate }}</h3>
-          <ul class="steps">
-            <li><span>1</span><a pageScroll href="#targeting">{{ 'PROJECT_EDIT.STEP1' | translate }}</a> <i
-              class="icon icon-arrow-right"></i></li>
-            <li><span>2</span><a pageScroll href="#description">{{ 'PROJECT_EDIT.STEP2' | translate }}</a> <i
-              class="icon icon-arrow-right"></i></li>
-            <li><span>3</span><a pageScroll href="#submit">{{ 'PROJECT_EDIT.STEP3' | translate }}</a> <i
-              class="icon icon-arrow-right"></i></li>
-          </ul>
+          <div class="flex-container">
+            <ul class="steps">
+              <li><a pageScroll href="#targeting"><span>1</span> {{ 'PROJECT_EDIT.STEP1' | translate }}</a> <i
+                class="icon icon-arrow-right"></i></li>
+              <li><a pageScroll href="#description"><span>2</span> {{ 'PROJECT_EDIT.STEP2' | translate }}</a> <i
+                class="icon icon-arrow-right"></i></li>
+              <li><a pageScroll href="#submit"><span>3</span> {{ 'PROJECT_EDIT.STEP3' | translate }}</a> <i
+                class="icon icon-arrow-right"></i></li>
+            </ul>
+            <button *ngIf="canEdit" class="btn btn-primary input-group-btn btn-lg" (click)="save()">
+              {{ 'COMMON.SAVE_DRAFT' | translate }}
+            </button>
+            <div *ngIf="lastSavedDate"> {{ 'COMMON.LAST_SAVED_AT' | translate }} {{ lastSavedDate | date:'HH:mm:ss' }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -675,24 +681,22 @@
                   </div>
 
                   <a (click)="displayCountriesToExcludeSection = !displayCountriesToExcludeSection" class="c-hand">
-                    {{ 'PROJECT_EDIT.TARGETING.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }} <i
-                    class="icon icon-arrow-right"></i>
+                    {{ 'PROJECT_EDIT.TARGETING.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
+                    <i class="icon icon-arrow-right"></i>
                   </a>
 
-                  <div *ngIf="excludedCountriesListExpanded()">
-
+                  <div *ngIf="displayCountriesToExcludeSection">
                     <app-autocomplete-input (update)="addCountryToExclude($event)"
                                             [config]="getConfig('countries')"></app-autocomplete-input>
-
                   </div>
-
                 </div>
               </div>
 
               <div class="form-group" formGroupName="market">
                 <div class="col-4">
-                  <label class="form-label" for="innovation-sector">{{ 'PROJECT_EDIT.MARKET.LABEL' | translate
-                    }}</label>
+                  <label class="form-label" for="innovation-sector">
+                    {{ 'PROJECT_EDIT.MARKET.LABEL' | translate }}
+                  </label>
                 </div>
                 <div class="col-8">
                 <textarea class="form-input" id="innovation-sector"
@@ -715,7 +719,7 @@
                   <a (click)="displayCompanyToExcludeSection = !displayCompanyToExcludeSection" class="c-hand">{{
                     'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
-                  <div *ngIf="displayCompanyToExcludeSection || true">
+                  <div *ngIf="displayCompanyToExcludeSection">
                     <app-autocomplete-input (update)="addCompanyToExclude($event)"
                                             [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
                   </div>
@@ -733,7 +737,7 @@
 
                   <a (click)="displayPersonsToExcludeSection = !displayPersonsToExcludeSection" class="c-hand">{{ 'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
-                  <div *ngIf="displayPersonsToExcludeSection || true">
+                  <div *ngIf="displayPersonsToExcludeSection">
                     <app-input-list (update)="addPeopleToExclude($event)"
                                     [config]="getConfig('excludedPeople')"></app-input-list>
                   </div>
@@ -835,7 +839,7 @@
                               </div>
                             </div>
 
-                            <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_200/' + img.cloudinary.public_id" *ngFor="let img of project.innovationCards[innovationCardEditingIndex].media" alt="" width="100" height="100">
+                            <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_100/' + img.cloudinary.public_id" *ngFor="let img of project.innovationCards[innovationCardEditingIndex].media" alt="" width="100" height="100">
 
                             <app-shared-upload-zone-photo
                               (cbFn)="imageUploaded($event)">
@@ -932,7 +936,7 @@
 
                   <a class="btn btn-lg centered" target="_blank" [routerLink]="'../'">{{ 'PROJECT_EDIT.HELP.PREVIEW' | translate }}</a>
 
-                  <button class="btn btn-lg centered" (click)="downloadInnovationCard()">{{ 'PROJECT_EDIT.HELP.DOWNLOAD' | translate }}</button><!-- TODO -->
+                  <button class="btn btn-lg centered" (click)="downloadInnovationCard()">{{ 'PROJECT_EDIT.HELP.DOWNLOAD' | translate }}</button>
                 </div>
               </div>
             </div>
@@ -940,17 +944,14 @@
             <div *ngIf="canEdit">
               <h2 id="submit">3. {{ 'PROJECT_EDIT.STEP3' | translate }}</h2>
 
-
-              <!--<form novalidate [formGroup]="formData" class="form-horizontal">
+              <form novalidate [formGroup]="formData" class="form-horizontal">
                   <div>
-                    <label class="form-label">{{ 'PROJECT_EDIT.EXTERNAL_DIFFUSION' | translate }}</label>
-                    <label class="form-radio">
-                      <input type="radio" name="patented" formControlName="external_diffusion" [value]="false">
-                      <i class="form-icon"></i> {{ 'COMMON.NO' | translate }}
+                    <label class="form-checkbox">
+                      <input type="checkbox" name="external_diffusion" formControlName="external_diffusion">
+                      <i class="form-icon"></i> {{ 'PROJECT_EDIT.EXTERNAL_DIFFUSION' | translate }}
                     </label>
                   </div>
-              </form>-->
-
+              </form>
 
               <div class="project-submit">
                 <h3 class="text-center">{{ 'PROJECT_EDIT.SUBMIT.TITLE' | translate }}</h3>

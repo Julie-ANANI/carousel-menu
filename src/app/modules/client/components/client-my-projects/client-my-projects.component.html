@@ -38,7 +38,7 @@
         </div>
         <div class="description">
           <div class="title"><a [routerLink]="getRelevantLink(project)">{{ project.name || ('MY_PROJECTS.UNTITLED' | translate) }}</a></div>
-          <div class="metas"><a href="#TODO" (click)="false">{{ project.owner.name }}</a> / {{ project.owner.companyName }}
+          <div class="metas">{{ project.owner.name }} / {{ project.owner.companyName }}
             • {{ 'MY_PROJECTS.ADDED' | translate }} {{ project.created | date:dateFormat }}
             • {{ 'MY_PROJECTS.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
             • <a (click)="selectedProjectIdToBeDeleted = project._id" class="text-error c-hand">{{ 'COMMON.DELETE' | translate }}</a></div><!-- TODO -->

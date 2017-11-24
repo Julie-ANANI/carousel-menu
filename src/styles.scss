@@ -2,8 +2,7 @@ $body-font-color-darker: #333333 !default;
 $body-font-color: #878787 !default;
 $base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
 $font-size: 16px !default;
-$primary-color: #F79323 !default;
-$secondary-color: #0B90C6 !default;
+$primary-color: #3498DB !default;
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 @import "../node_modules/spectre.css/src/spectre.scss";
@@ -31,7 +30,7 @@ h1::after {
   display: block;
   content: '';
   width: 124px;
-  background: $secondary-color;
+  background: $primary-color;
   height: 3px;
   margin-top: 30px;
   margin-bottom:56px;
@@ -40,7 +39,7 @@ h1::after {
 h2 {
   font-weight: 400;
   font-size: 1.5rem;
-  color: $secondary-color;
+  color: $body-font-color-darker;
   letter-spacing: 0;
   margin-top: 60px;
   margin-bottom: 40px;

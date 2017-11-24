@@ -1,6 +1,8 @@
 export const fr = {
   'COMMON': {
     'SAVE': 'Sauvegarder',
+    'SAVE_DRAFT': 'Sauvegarder en brouillon',
+    'LAST_SAVED_AT': 'Sauvegardé à',
     'UPDATE': 'Mettre à jour',
     'EDIT': 'Éditer',
     'DELETE': 'Supprimer',

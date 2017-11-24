@@ -1,8 +1,9 @@
 import { Component, Input, Output, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { FileUploader, FilterFunction, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { NotificationsService } from 'angular2-notifications';
+import { environment } from '../../../../../environments/environment';
 
-const base_api_url = 'http://localhost:3000/api/media';
+
 
 @Component({
   selector: 'app-shared-upload-zone-photo',
@@ -10,13 +11,15 @@ const base_api_url = 'http://localhost:3000/api/media';
   styleUrls: ['./shared-upload-zone-photo.component.scss']
 })
 
-export class SharedUploadZonePhotoComponent implements OnInit{
+export class SharedUploadZonePhotoComponent implements OnInit {
 
   private _filters: Array<FilterFunction>;
   private _uploader: FileUploader;
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
   public loading = false;
+
+  public base_api_url: string;
 
   @Input() public type: any;
   @Output() public cbFn: EventEmitter <any> = new EventEmitter();
@@ -25,9 +28,11 @@ export class SharedUploadZonePhotoComponent implements OnInit{
 
   ngOnInit() {
     this._filters = Array<FilterFunction>();
+    this.base_api_url = environment.apiUrl + '/media';
+
     // this._createFilter(this.type);
     this._uploader = new FileUploader({
-      url: base_api_url,
+      url: this.base_api_url,
       autoUpload: true,
       filters: this._filters,
       maxFileSize: 1024 * 1024,

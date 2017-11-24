@@ -1,6 +1,8 @@
 export const en = {
   'COMMON': {
     'SAVE': 'Save',
+    'SAVE_DRAFT': 'Save as draft',
+    'LAST_SAVED_AT': 'Last saved at',
     'UPDATE': 'Update',
     'EDIT': 'Edit',
     'DELETE': 'Delete',

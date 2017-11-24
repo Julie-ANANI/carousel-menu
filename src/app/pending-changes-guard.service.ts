@@ -13,11 +13,11 @@ export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate
   constructor (private _translateService: TranslateService) {}
 
   private _getMessage (): string {
-    return this._translateService.currentLang === 'fr'
-      ? 'ATTENTION : Certaines données sont en train d\'être sauvegardées ou vont être sauvegardées prochainement. ' +
-      'Si vous quittez maintenant, certaines données pourront être perdues. Êtes-vous sûr(e) de vouloir quitter ?'
-      : 'WARNING: Some data are currently beeing saved or will be saved soon. If you close this window now, some ' +
-      'data may be lost. Are you sure you want to leave?';
+    return this._translateService.currentLang === 'fr' // TODO Checker les messages :
+      ? 'ATTENTION : Certaines de vos modifications n\'ont pas été sauvegardées.' +
+      'Si vous quittez cette page, ces modifications seront perdues. Êtes-vous sûr(e) de vouloir quitter ?'
+      : 'WARNING: Some of your modifications are unsaved. If you leave this page, theses ' +
+      'changes will be lost. Are you sure you want to leave?';
   }
 
   canDeactivate(component: ComponentCanDeactivate): boolean | Observable<boolean> {

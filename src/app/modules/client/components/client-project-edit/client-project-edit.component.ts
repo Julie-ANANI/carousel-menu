@@ -1,19 +1,14 @@
-import {Component, OnInit, HostListener, ViewChild} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import {Component, OnInit, HostListener} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService, initTranslation} from './i18n/i18n';
 import {ActivatedRoute, Router} from '@angular/router';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
 import {NotificationsService} from 'angular2-notifications';
 import {ComponentCanDeactivate} from '../../../../pending-changes-guard.service';
 import {Observable} from 'rxjs/Observable';
-import {InputListComponent} from '../../../../directives/input-list/input-list.component';
-
-// import { Clearbit } from '../../../../models/clearbit';
 
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
-
-// TODO : Optimisation : Ne pas envoyer tout l'objet Innovation à chaque mise à jour. Retenir la version sauvegardée et n'envoyer que la différence.
 
 @Component({
   selector: 'app-client-project-edit',
@@ -23,31 +18,70 @@ import 'rxjs/add/operator/debounceTime';
 export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivate {
 
   private _project: any;
-
-  private _autoSave: {
-    timeout: any,
-    isSaving: boolean,
-    newSaveRequired: boolean,
-    data: any
-  } = {
-    timeout: null,
-    isSaving: false,
-    newSaveRequired: false,
-    data: null
-  };
+  public formData: FormGroup;
 
   /*
-   * Gestion de l'affichage :
+   * Gestion de l'affichage
    */
   public innovationCardEditingIndex = 0; // Index de l'innovationCard que l'on édite (système d'onglets)
   public displayCountriesToExcludeSection = false;
   public displayCompanyToExcludeSection = false;
   public displayPersonsToExcludeSection = false;
 
+  /*
+   * Gestion de la sauvegarde
+   */
+  public shouldSave = false; // To prevent leaving page
+  public lastSavedDate: Date;
 
-  public formData: FormGroup;
 
-  buildForm(): void {
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _innovationService: InnovationService,
+              private _translateService: TranslateService,
+              private _router: Router,
+              private _notificationsService: NotificationsService,
+              private _formBuilder: FormBuilder) {}
+
+  ngOnInit() {
+    initTranslation(this._translateService);
+
+    this._buildForm();
+
+    this._activatedRoute.params.subscribe(params => {
+      const innovationId = params['innovationId'];
+      this._innovationService.get(innovationId).subscribe(innovation => {
+          this._project = innovation;
+          this.formData.patchValue(innovation);
+
+          if (!this.canEdit) {
+            this.formData.disable();
+          }
+          for (const innovationCard of innovation.innovationCards) {
+            this._addInnovationCardWithData(innovationCard);
+          }
+
+          this.displayCountriesToExcludeSection = this.formData.get('settings').get('geography').get('countriesToExclude').get('exclude').value.length > 0;
+          this.displayCompanyToExcludeSection = this.formData.get('settings').get('companies').get('exclude').value.length > 0;
+          this.displayPersonsToExcludeSection = this.formData.get('settings').get('professionals').get('exclude').value.length > 0;
+
+          this.formData.valueChanges
+            .distinctUntilChanged()
+            .subscribe(newVersion => {
+              this.shouldSave = true;
+            });
+        },
+        errorTranslateCode => {
+          this._translateService.get(errorTranslateCode).subscribe(errorMessage =>
+            this._notificationsService.error('Error', errorMessage) // TODO Translate Error
+          );
+          this._router.navigate(['/projects']);
+        }
+      );
+    });
+  }
+
+
+  private _buildForm(): void {
     this.formData = this._formBuilder.group({
       settings: this._formBuilder.group({
         geography: this._formBuilder.group({
@@ -82,70 +116,26 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
       patented: [undefined, Validators.required],
       projectStatus: [undefined, Validators.required],
       innovationCards: this._formBuilder.array([]),
-      dirty: ['']
+      external_diffusion: [false, [Validators.required]]
     });
   }
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _innovationService: InnovationService,
-              private _translateService: TranslateService,
-              private _router: Router,
-              private _notificationsService: NotificationsService,
-              private _formBuilder: FormBuilder) {}
-
-  ngOnInit() {
-    initTranslation(this._translateService);
-
-    this.buildForm();
-
-    this._activatedRoute.params.subscribe(params => {
-      const innovationId = params['innovationId'];
-
-      this._innovationService.get(innovationId).subscribe(innovation => {
-          this._project = innovation;
-          // delete innovation._id;
-          this.formData.patchValue(innovation);
-
-          if (!this.canEdit) {
-            this.formData.disable();
-          }
-          for (const innovationCard of innovation.innovationCards) {
-            this._addInnovationCardWithData(innovationCard);
-          }
-
-          this.formData.valueChanges
-            .debounceTime(5000) // This is the time in ms that the form waits before emitting the valueChanges event
-            .distinctUntilChanged()
-            .subscribe((newVersion) => {
-              this._autoSave.data = newVersion;
-              this._save();
-              this._autoSave.newSaveRequired = true;
-          });
-
-
-        },
-        errorTranslateCode => {
-          this._translateService.get(errorTranslateCode).subscribe(errorMessage =>
-            this._notificationsService.error('Error', errorMessage) // TODO Translate Error
-          );
-          this._router.navigate(['/projects']);
-        }
-      );
-    });
-  }
-
-  private _save() {
-    if ((this.canEdit || true) && !this._autoSave.isSaving) {
-      console.log('Start saving');
-      this._autoSave.isSaving = true;
-      this._innovationService.save(this._project.id, this._autoSave.data, this._project.innovationCards[0].id).subscribe(data => {
-        this._autoSave.isSaving = false;
-        console.log('End saving');
-        if (this._autoSave.newSaveRequired) {
-          this._autoSave.newSaveRequired = false;
-          this._save();
+  /**
+   * Sauvegarde
+   * @param callback
+   */
+  public save(callback) {
+    if (this.canEdit) {
+      this._innovationService.save(this._project.id, this.formData.value, this._project.innovationCards[0].id).subscribe(data => {
+        this.lastSavedDate = new Date(data.updated);
+        this._project = data;
+        this.shouldSave = false;
+        if (callback) {
+          callback();
         }
       });
+    } else {
+      this._notificationsService.error('Unforbidden', 'You can\'t edit this project');
     }
   }
 
@@ -181,21 +171,11 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   }
 
   /**
-   * Expands the list of countries. If there's at least one country, it is expanded by default
-   * @returns {boolean}
-   */
-  public excludedCountriesListExpanded(): boolean {
-    return this.displayCountriesToExcludeSection ||
-      this.formData.get('settings').get('geography').get('countriesToExclude').get('exclude').value.length;
-  }
-
-  /**
    * Add a country to the exclusion list
    */
   public addCountryToExclude(event): void {
     this.formData.get('settings').get('geography')
-      .get('countriesToExclude').get('exclude').setValue(event.value);
-    // this.formData.get('dirty').setValue(Date.now());
+      .get('countriesToExclude').get('exclude').setValue(event.value); // TODO Antoine tester push plutot que setValue ?
   }
 
   /**
@@ -304,8 +284,10 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   }
 
   public submitProjectToValidation () {
-    this._innovationService.submitProjectToValidation(this._project.id).subscribe(data => {
-      this._project.status = data.status;
+    this.save(_ => {
+      this._innovationService.submitProjectToValidation(this._project.id).subscribe(data2 => {
+        this._router.navigate(['../']);
+      });
     });
   }
 
@@ -316,52 +298,28 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     });
   }
 
-  public downloadInnovationCard () {
-    alert('TODO :  [href]="/:innovationId/exportInventionCard/:innovationCardId"'); // TODO
+  public downloadInnovationCard () { // TODO Antoine
+    alert('TODO :  [href]="/:innovationId/exportInventionCard/:innovationCardId"');
   }
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
-    return !(this._autoSave.isSaving || this._autoSave.newSaveRequired);
+    return !this.shouldSave;
   }
 
-  // TODO ajouter pour IE éventuellement, à tester
-  // @ HostListener allows us to also guard against browser refresh, close, etc.
-  /*@ HostListener('window:beforeunload', ['$event'])
+  // @HostListener allows us to also guard against browser refresh, close, etc. (IE !?)
+  @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if (!this.canDeactivate()) {
-      $event.returnValue = "This message is displayed to the user in IE and Edge when they navigate without using Angular routing (type another URL/close the browser/etc)";
+      $event.returnValue = 'You have unsaved changes. Please save as draft before leaving this page.'; // TODO translate
     }
-  }*/
-
-  /*public dragFilesDropped(event) {
-    console.log(event);
-    for (let file of event.acceptedFiles) {
-      console.log(file);
-    }
-  }*/
-
-
-  /*public upload(event) {
-    let fileList: any = event.target.files;
-    if(fileList.length > 0) {
-      let file: File = fileList[0];
-      let formData:FormData = new FormData();
-      formData.append('uploadFile', file, file.name);
-      this._innovationService.addMedia(this.project.id, formData).subscribe(res => {
-        // do stuff w/my uploaded file
-        console.log(res);
-      }, err => {
-        console.log(err);
-      });
-    }
-  }*/
-
-  get canEdit () {
-    return this._project.status === 'EDITING';
   }
 
-  get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
+  get canEdit () {
+    return this._project && this._project.status === 'EDITING';
+  }
+
+  get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y HH:mm:ss' : 'y/MM/dd HH:mm:ss'; }
   get project(): any { return this._project; }
 
 }

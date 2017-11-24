@@ -6,7 +6,7 @@ export const en = {
       'LINE2': 'You will be able to translate it in another language later.'
     },
     'DOWNLOAD': 'Download your project anytime',
-    'AUTOSAVE': 'Automatic backup',
+    'ANONYMOUS': 'Remain anonymous',
     'PRIVATE': 'Nothing will be published at this stage',
     'FORM_NOT_VALID': 'Please answer to all questions',
     'UNDERSTAND': 'I understand',
