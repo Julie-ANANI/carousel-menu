@@ -3,16 +3,17 @@
 
   <h1>{{infographics.title}}</h1>
   <p class="subtitle">{{ 'MARKET_REPORT.TITLE' | translate }}</p>
-  <div *ngIf="authService.isAdmin">
+  <div *ngIf="authService.isAdmin" class="admin-buttons">
     <button type="button"
-            class="btn btn-lg btn-primary centered"
+            class="btn btn-lg btn-primary"
             (click)="recalculateSynthesis()"
+            [disabled]="calculating"
             [ngClass]="{'loading': calculating, '': !calculating}"
     >
       {{'MARKET_REPORT.BTN_RECOMPUTE' | translate}}
       <i class="fa fa-refresh" aria-hidden="true"></i>
     </button>
-    <button type="button" class="btn btn-lg btn-primary centered"
+    <button type="button" class="btn btn-lg btn-primary"
             (click)="toggleEditionMode()">
       {{(editionMode ? 'MARKET_REPORT.BTN_VIEW_MODE' : 'MARKET_REPORT.BTN_EDITION_MODE') | translate}}
       <i class="fa" aria-hidden="true"
