@@ -1,4 +1,11 @@
-<div class="star-ratings-css">
-  <div class="top" [style.width]="percentage"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-  <div class="bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+<div class="popover">
+  <div class="star-ratings-css">
+    <div class="top" [style.width]="percentage"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+    <div class="bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  </div>
+  <div class="popover-container">
+    <span class="grade" *ngIf="note">{{ 'MARKET_REPORT.GRADE' | translate }} : <span class="grade-number">{{note}}</span></span>
+    <span class="grade" *ngIf="!note">{{ 'MARKET_REPORT.NO_GRADE' | translate }}</span>
+    <small *ngIf="count"><br> {{count}} {{ 'MARKET_REPORT.PEOPLE_VOTED' | translate }}</small>
+  </div>
 </div>

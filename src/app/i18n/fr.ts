@@ -103,6 +103,9 @@ export const fr = {
     'BTN_DETAILS_OPEN': 'Voir les détails',
     'BTN_DETAILS_CLOSE': 'Masquer les détails',
     'BTN_RECOMPUTE': 'Recalculer l\'infographie',
+    'PEOPLE_VOTED': 'personnes ont voté',
+    'GRADE': 'Note',
+    'NO_GRADE': 'Pas de note',
     'POPUP': {
       'PROFIL': 'Profil',
       'RECEIVED': 'Reçu le',
