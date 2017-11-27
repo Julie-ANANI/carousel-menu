@@ -13,6 +13,7 @@ export class SharedStarsComponent implements OnInit {
 
   private _percentage: any;
   @Input() public note: number;
+  @Input() public count: number;
 
   constructor() { }
 

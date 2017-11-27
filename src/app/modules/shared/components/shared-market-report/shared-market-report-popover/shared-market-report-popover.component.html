@@ -1,24 +1,26 @@
-<i class="fa fa-bars item-menu-sandwich" aria-hidden="true" (click)="click($event)"></i>
-<div class="users-menu" *ngIf="answers && answers.length">
-  <ul>
-    <li *ngFor="let answer of answers; let i = index">
+<div class="popover popover-bottom">
+  <i class="fa fa-bars item-menu-sandwich" aria-hidden="true"></i>
+  <div class="users-menu popover-container" *ngIf="answers && answers.length">
+    <ul>
+      <li *ngFor="let answer of answers; let i = index">
 
-      <p class="user-name" *ngIf="answer.professional.profileUrl">
-        <img [src]="buildImageUrl(answer.country.notation)"
-             alt="" width="23" height="16" class="user-flag">
-        <a href="{{answer.professional.profileUrl}}" target="_blank">
+        <p class="user-name" *ngIf="answer.professional.profileUrl">
+          <img [src]="buildImageUrl(answer.country.notation)"
+               alt="" width="23" height="16" class="user-flag">
+          <a href="{{answer.professional.profileUrl}}" target="_blank">
+            {{answer.professional.firstName}} {{answer.professional.lastName}}
+          </a>
+        </p>
+        <p class="user-name" *ngIf="!answer.professional.profileUrl">
           {{answer.professional.firstName}} {{answer.professional.lastName}}
-        </a>
-      </p>
-      <p class="user-name" *ngIf="!answer.professional.profileUrl">
-        {{answer.professional.firstName}} {{answer.professional.lastName}}
-      </p>
+        </p>
 
-      <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job}}</p>
-      <p *ngIf="answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional.company}}</p>
+        <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job}}</p>
+        <p *ngIf="answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional.company}}</p>
 
-      <span (click)="seeAnswer(answer)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
-      <a href="mailto: {{answer.professional.email}}">{{answer.professional.email}}</a>
-    </li>
-  </ul>
+        <span (click)="seeAnswer(answer)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
+        <a href="mailto: {{answer.professional.email}}">{{answer.professional.email}}</a>
+      </li>
+    </ul>
+  </div>
 </div>

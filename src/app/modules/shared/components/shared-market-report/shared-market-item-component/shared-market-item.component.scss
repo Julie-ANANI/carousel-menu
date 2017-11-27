@@ -13,3 +13,17 @@
   border-radius: 500px;
   background: rgba(255, 255, 255, 0.8);
 }
+
+.item-name {
+  flex: 1;
+  margin-left: 10px;
+  font-weight: 600;
+
+  a {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  a:hover, a:focus {
+    color: white
+  }
+}

@@ -1,0 +1,21 @@
+/* === Echelle de prix === */
+
+svg {
+  margin: 20px 0;
+  width: 100%;
+  height: auto;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #b3b3b3;
+}
+
+.x.axis {
+  fill: black;
+}
+
+.tick text {
+  opacity: 0.5;
+}

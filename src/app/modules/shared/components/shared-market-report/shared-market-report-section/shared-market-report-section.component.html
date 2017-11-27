@@ -113,9 +113,12 @@
 
       <!--======= Avantages Clés =======-->
       <div *ngIf="type === 'stars'">
-        <div *ngFor="let advantage of advantages; let i = index">
-          {{advantage}} : <stars [note]="info?.data[i]?.average"></stars>
-        </div>
+        <table>
+          <tr *ngFor="let advantage of advantages; let i = index">
+            <td>{{advantage}}</td>
+            <td><stars [note]="info?.data[i]?.average" [count]="info?.data[i]?.count"></stars></td>
+          </tr>
+        </table>
       </div>
 
       <!--======= Applications =======-->
