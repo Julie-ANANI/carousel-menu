@@ -57,8 +57,8 @@ export class SharedMarketReportComponent implements OnInit {
     this._showDetails = !this._showDetails;
   }
 
-  public seeAnswer(event: any) {
-    this.modalAnswer = event;
+  public seeAnswer(answer: any) {
+    this.modalAnswer = answer;
   }
 
   public canShow(): boolean {

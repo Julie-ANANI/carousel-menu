@@ -1,5 +1,5 @@
 <div class="modal active" *ngIf="modalAnswer">
-  <div class="modal-overlay" (click)="modalAnswer = null"></div>
+  <div class="modal-overlay" (click)="close()"></div>
   <div class="modal-container">
     <div class="modal-header flex">
       <div>
@@ -133,7 +133,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-default" (click)="modalAnswer = null">{{ 'MARKET_REPORT.POPUP.BACK' | translate }}</button>
+      <button class="btn btn-default" (click)="close()">{{ 'MARKET_REPORT.POPUP.BACK' | translate }}</button>
     </div>
   </div>
 </div>

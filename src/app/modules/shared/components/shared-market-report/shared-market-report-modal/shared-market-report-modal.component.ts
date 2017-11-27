@@ -1,7 +1,7 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from './../../../../../services/innovation/innovation.service';
 
@@ -21,6 +21,7 @@ export class SharedMarketReportModalComponent implements OnInit {
     this._modalAnswer = value;
   }
   @Input() public innoid: string;
+  @Output() modalAnswerChange = new EventEmitter<any>();
 
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService) { }
@@ -30,6 +31,10 @@ export class SharedMarketReportModalComponent implements OnInit {
     this._innovationService.getInnovationCardByLanguage(this.innoid, this._selectLangInput).subscribe(card => {
       this._advantages = card.advantages;
     });
+  }
+
+  public close() {
+    this.modalAnswerChange.emit(null);
   }
 
   get advantages(): string[] {
