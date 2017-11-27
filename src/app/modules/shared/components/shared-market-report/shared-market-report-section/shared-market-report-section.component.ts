@@ -65,8 +65,8 @@ export class SharedMarketReportSectionComponent implements OnInit {
   ngOnInit() {
     this._route.params.subscribe(params => {
       this.innoid = params['innovationId'];
-      this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
     });
+    this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
     this.conclusionId = `${this.id}Conclusion`;
     
     if ((this.pie || this.id === 'interests') && this.info.pieChart) {

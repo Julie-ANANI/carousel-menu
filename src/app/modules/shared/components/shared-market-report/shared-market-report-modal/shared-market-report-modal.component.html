@@ -68,7 +68,7 @@
               <strong class="question">{{ 'MARKET_REPORT.BENEFIT.QUESTION' | translate }}</strong>
               <ul *ngIf="modalAnswer.keyAdvantages">
                 <li *ngFor="let advantage of modalAnswer.keyAdvantages">
-                  adv: {{advantage.name}}: {{advantage.value}}
+                  {{advantages[advantage.index]}}: {{ '★'.repeat(advantage.value) }}
                 </li>
               </ul>
               <p class="noanswer" [hidden]="modalAnswer.keyAdvantages">-</p>
