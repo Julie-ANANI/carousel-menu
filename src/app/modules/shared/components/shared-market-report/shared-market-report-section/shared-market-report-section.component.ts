@@ -37,7 +37,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
       'en': ['No – less relevant', 'Equivalent', 'Yes – A few advantages', 'Absolutely'],
       'fr': ['Non', 'Peut-être', 'Oui', 'Indiscutablement']
     },
-    'interestOfProfessionals': {
+    'interests': {
       'en': ['They want to be a customer', 'They wish to participate in the development', 'They want to distribute the solution'],
       'fr': ['Ils souhaitent être client', 'Ils souhaitent participer au développement', 'Ils souhaitent distribuer la solution']
     }
@@ -45,7 +45,8 @@ export class SharedMarketReportSectionComponent implements OnInit {
 
   @Input() public id: string;
   @Input() public i18n: string;
-  @Input() public type: string;
+  @Input() public pie: boolean;
+  @Input() public items: boolean;
   @Input() set showDetails(value: boolean) {
     this._showDetails = value;
   }
@@ -67,22 +68,22 @@ export class SharedMarketReportSectionComponent implements OnInit {
       this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
     });
     this.conclusionId = `${this.id}Conclusion`;
-    switch(this.type) {
-      case 'pie':
-        if (this.info.pieChart) {
-          let data = SharedMarketReportSectionComponent.getChartValues(this.info.pieChart);
-          this._chartValues = [{
-            'data': data || [],
-            'backgroundColor': ['#C0210F', '#F2C500', '#82CD30', '#34AC01']
-          }];
-        }
-        break;
-      case 'stars':
+    
+    if ((this.pie || this.id === 'interests') && this.info.pieChart) {
+      let data = SharedMarketReportSectionComponent.getChartValues(this.info.pieChart);
+      this._chartValues = [{
+        'data': data || [],
+        'backgroundColor': ['#C0210F', '#F2C500', '#82CD30', '#34AC01']
+      }];
+    }
+    
+    switch(this.id) {
+      case 'keyAdvantages':
         this._innovationService.getInnovationCardByLanguage(this.innoid, this._selectLangInput).subscribe(card => {
           this._advantages = card.advantages;
         });
         break;
-      case 'score':
+      case 'marketPotential':
         // Calcul du score max
         this._maxCountScore = _.maxBy(this.info.data, 'count')['count'];
         break;

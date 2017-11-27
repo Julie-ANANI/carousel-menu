@@ -15,7 +15,7 @@ export class SharedMarketReportBluesquareComponent implements OnInit {
 
   @Input() public numberFocus: number;
   @Input() public i18n: string;
-  @Input() public type: string;
+  @Input() public id: string;
   @Input() public percentage: number;
 
   constructor() { }

@@ -5,18 +5,18 @@
     <div class="flex-container">
       <!--======= Pie Chart =======-->
       <market-report-piechart
-        *ngIf="type==='pie'"
+        *ngIf="pie"
         [pieChartData]="chartValues"
         [configuration]="getLevels()"
         [percentage]="info.percentage"
       ></market-report-piechart>
       <!--======= ou Encadré Bleu =======-->
       <market-report-bluesquare
-        *ngIf="type!='pie'"
+        *ngIf="!pie"
         [numberFocus]="info.numberFocus"
         [i18n]="i18n"
         [percentage]="info.percentage"
-        [type]="type"
+        [id]="id"
       ></market-report-bluesquare>
 
       <!--======= Conclusion =======-->
@@ -30,14 +30,14 @@
     </div>
 
     <!--======= Map du monde =======-->
-    <div class="bloc" *ngIf="type === 'pros'">
+    <div class="bloc" *ngIf="id === 'professionals'">
       <div class="map centered" width="684" height="339">
         <world-map [countries]="info.data" [color]="'#0B90C6'"></world-map>
       </div>
     </div>
 
     <!--======= Scores =======-->
-    <div class="bloc" *ngIf="type === 'score'">
+    <div class="bloc" *ngIf="id === 'marketPotential'">
       <div class="column-graph flex-container">
         <div *ngFor="let score of info.data; let i = index"
              class="vertical-bar number{{score.value}}">
@@ -50,7 +50,7 @@
     </div>
 
     <!--======= Prix =======-->
-    <div class="bloc" id="prices" *ngIf="info.average && type === 'prices'">
+    <div class="bloc" id="prices" *ngIf="info.average && id === 'prices'">
       <app-shared-infographics-prices [rawData]="info.data"></app-shared-infographics-prices>
 
       <div class="average">Moyenne : {{info.average}}€</div>
@@ -58,7 +58,7 @@
 
     <!--======= Bouton plier/déplier =======-->
     <button type="button" class="market-report-btn centered"
-            *ngIf="type!='score'"
+            *ngIf="id!='marketPotential'"
             [ngClass]="{'active': showDetails}"
             (click)="toggleDetails()">
       {{(showDetails ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
@@ -72,7 +72,7 @@
     <div class="bloc details" *ngIf="showDetails">
 
       <!--======= Liste des pros =======-->
-      <div *ngIf="type === 'pros'" class="prosList">
+      <div *ngIf="id === 'professionals'" class="prosList">
         <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
           <img [src]="getFlag(answer.country.notation)"
                alt="" width="37" height="25" class="user-flag">
@@ -97,22 +97,14 @@
 
       <!--======= Bar Chart =======-->
       <bar-chart
-        *ngIf="type === 'pie'"
+        *ngIf="pie || id ==='interests'"
         [levels]="getLevels()"
         [stats]="info.pieChart"
         [number]="true">
       </bar-chart>
 
-      <!--======= Concurrents =======-->
-      <market-item-list
-        [answers]="answers"
-        *ngIf="type==='competitors'"
-        [list]="info.data"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-item-list>
-
       <!--======= Avantages Clés =======-->
-      <div *ngIf="type === 'stars'">
+      <div *ngIf="id === 'keyAdvantages'">
         <table>
           <tr *ngFor="let advantage of advantages; let i = index">
             <td>{{advantage}}</td>
@@ -121,60 +113,54 @@
         </table>
       </div>
 
-      <!--======= Applications =======-->
+      <!--======= Liste d'items (applications, concurrents, partenaires potentiels) =======-->
       <market-item-list
         [answers]="answers"
         [list]="info.data"
-        *ngIf="type === 'applications'"
+        *ngIf="items"
         (modalAnswerChange)="seeAnswer($event)">
       </market-item-list>
 
       <!--======= Marques d'intérêt =======-->
 
-      <div *ngIf="type === 'interests' && info.data.client.length">
-        <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.CLIENT' | translate }}</p>
-        <market-item-list
-          [answers]="answers"
-          [list]="info.data.client"
-          (modalAnswerChange)="seeAnswer($event)">
-        </market-item-list>
-      </div>
+      <div *ngIf="id === 'interests'">
+        <div *ngIf="info.data.client.length">
+          <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.CLIENT' | translate }}</p>
+          <market-item-list
+            [answers]="answers"
+            [list]="info.data.client"
+            (modalAnswerChange)="seeAnswer($event)">
+          </market-item-list>
+        </div>
 
-      <div *ngIf="type === 'interests' && info.data.develop.length">
-        <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DEVELOP' | translate }}</p>
-        <market-item-list
-          [answers]="answers"
-          [list]="info.data.develop"
-          (modalAnswerChange)="seeAnswer($event)">
-        </market-item-list>
-      </div>
+        <div *ngIf="info.data.develop.length">
+          <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DEVELOP' | translate }}</p>
+          <market-item-list
+            [answers]="answers"
+            [list]="info.data.develop"
+            (modalAnswerChange)="seeAnswer($event)">
+          </market-item-list>
+        </div>
 
-      <div *ngIf="type === 'interests' && info.data.distributor.length">
-        <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DISTRIBUTE' | translate }}</p>
-        <market-item-list
-          [answers]="answers"
-          [list]="info.data.distributor"
-          (modalAnswerChange)="seeAnswer($event)">
-        </market-item-list>
-      </div>
+        <div *ngIf="info.data.distributor.length">
+          <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DISTRIBUTE' | translate }}</p>
+          <market-item-list
+            [answers]="answers"
+            [list]="info.data.distributor"
+            (modalAnswerChange)="seeAnswer($event)">
+          </market-item-list>
+        </div>
 
-      <div *ngIf="type === 'interests' && info.data.invest.length">
-        <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.INVEST' | translate }}</p>
-        <market-item-list
-          [answers]="answers"
-          [list]="info.data.invest"
-          (modalAnswerChange)="seeAnswer($event)"
-        >
-        </market-item-list>
+        <div *ngIf="info.data.invest.length">
+          <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.INVEST' | translate }}</p>
+          <market-item-list
+            [answers]="answers"
+            [list]="info.data.invest"
+            (modalAnswerChange)="seeAnswer($event)"
+          >
+          </market-item-list>
+        </div>
       </div>
-
-      <!--======= Partenaires potentiels =======-->
-      <market-item-list
-        [answers]="answers"
-        *ngIf="type==='partners'"
-        [list]="info.data"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-item-list>
 
       <!--======= Liste de commentaires =======-->
       <div *ngIf="showDetails && info.comments && info.comments.length > 0">
