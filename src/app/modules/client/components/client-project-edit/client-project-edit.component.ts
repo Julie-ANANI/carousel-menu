@@ -210,7 +210,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
       },
       'advantages': {
         placeholder: 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.INPUT',
-        initialData: []
+        initialData: this.formData.get('innovationCards').value[this.innovationCardEditingIndex]['advantages'] // TODO Antoine
       },
       'excludedPeople': {
         placeholder: 'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE',
@@ -269,7 +269,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
    */
   public addAdvantageToInventionCard (event, cardIdx) { // TODO TEST
     const card = this.formData.get('innovationCards').value[cardIdx] as FormGroup;
-    card['advantages'].push(event.value);
+    card['advantages'] = event.value;
   }
 
   public setAsPrincipal (innovationCardId) {
@@ -292,6 +292,18 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   public imageUploaded(media) { // TODO TEST
     this._project.innovationCards[this.innovationCardEditingIndex].media.push(media);
     this._innovationService.addMediaToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  public setImageAsPrimary (media) {
+    this._innovationService.setPrincipalMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  public deleteImage (media) {
+    this._innovationService.deleteMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
       console.log(res);
     });
   }

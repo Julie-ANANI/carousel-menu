@@ -9,15 +9,13 @@ import { environment } from '../../../../../environments/environment'
   styleUrls: ['./shared-upload-zone-photo.component.scss']
 })
 
-export class SharedUploadZonePhotoComponent implements OnInit {
+export class SharedUploadZonePhotoComponent implements OnInit{
 
   private _filters: Array<FilterFunction>;
   private _uploader: FileUploader;
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
   public loading = false;
-
-  public base_api_url: string = environment.apiUrl + '/media';
 
   @Input() public type: any;
   @Output() public cbFn: EventEmitter <any> = new EventEmitter();
@@ -26,10 +24,9 @@ export class SharedUploadZonePhotoComponent implements OnInit {
 
   ngOnInit() {
     this._filters = Array<FilterFunction>();
-
     // this._createFilter(this.type);
     this._uploader = new FileUploader({
-      url: this.base_api_url,
+      url: environment.apiUrl + '/media',
       autoUpload: true,
       filters: this._filters,
       maxFileSize: 1024 * 1024,

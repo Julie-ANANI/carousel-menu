@@ -2,17 +2,17 @@
   <div class="columns">
     <div class="column col-10 col-mx-auto">
 
-      <div class="dropdown">
+      <div class="dropdown" [ngClass]="{'active': displayLangChoices}">
         <div class="btn-group">
-          <button class="btn dropdown-toggle" tabindex="0">
+          <button class="btn dropdown-toggle" (click)="displayLangChoices = !displayLangChoices">
             {{ 'COMMON.LANG.'+translate.currentLang.toUpperCase() | translate }} <i class="icon icon-caret"></i>
           </button>
           <ul class="menu">
             <li *ngIf="translate.currentLang !== 'fr'">
-              <a (click)="translate.use('fr')">{{ 'COMMON.LANG.FR' | translate }}</a>
+              <a (click)="displayLangChoices=false;translate.use('fr')">{{ 'COMMON.LANG.FR' | translate }}</a>
             </li>
             <li *ngIf="translate.currentLang !== 'en'">
-              <a (click)="translate.use('en')">{{ 'COMMON.LANG.EN' | translate }}</a>
+              <a (click)="displayLangChoices=false;translate.use('en')">{{ 'COMMON.LANG.EN' | translate }}</a>
             </li>
           </ul>
         </div>

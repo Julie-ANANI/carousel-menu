@@ -9,6 +9,7 @@ import { environment } from '../../../../../environments/environment';
 })
 export class ClientFooterComponent implements OnInit {
   private _companyName: string = environment.companyName;
+  public displayLangChoices = false;
 
   constructor (private _translateService: TranslateService) {}
 
