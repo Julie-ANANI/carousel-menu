@@ -1,5 +1,5 @@
 <div class="modal active" *ngIf="modalAnswer">
-  <div class="modal-overlay" (click)="modalAnswer = null"></div>
+  <div class="modal-overlay" (click)="close()"></div>
   <div class="modal-container">
     <div class="modal-header flex">
       <div>
@@ -68,7 +68,7 @@
               <strong class="question">{{ 'MARKET_REPORT.BENEFIT.QUESTION' | translate }}</strong>
               <ul *ngIf="modalAnswer.keyAdvantages">
                 <li *ngFor="let advantage of modalAnswer.keyAdvantages">
-                  adv: {{advantage.name}}: {{advantage.value}}
+                  {{advantages[advantage.index]}}: {{ '★'.repeat(advantage.value) }}
                 </li>
               </ul>
               <p class="noanswer" [hidden]="modalAnswer.keyAdvantages">-</p>
@@ -133,7 +133,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-default" (click)="modalAnswer = null">{{ 'MARKET_REPORT.POPUP.BACK' | translate }}</button>
+      <button class="btn btn-default" (click)="close()">{{ 'MARKET_REPORT.POPUP.BACK' | translate }}</button>
     </div>
   </div>
 </div>
