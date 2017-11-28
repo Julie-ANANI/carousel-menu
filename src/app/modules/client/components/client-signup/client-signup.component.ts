@@ -20,7 +20,7 @@ export class ClientSignupComponent implements OnInit {
   public displayEmailForm = false;
 
   public formData: FormGroup;
-  public passwordMinLength = 5;
+  public passwordMinLength = 8;
 
   constructor(private _userService: UserService,
               private _formBuilder: FormBuilder,

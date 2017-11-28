@@ -35,8 +35,8 @@ export class UserService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
-  public updatePassword(data: {email: string, password: string, passwordConfirm: string}): Observable<any> {
-    return this._http.post('/user/resetPassword', data)
+  public updatePassword(data: {email: string, password: string, passwordConfirm: string, tokenEmail: string}): Observable<any> {
+    return this._http.post('/user/updatePassword', data)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }

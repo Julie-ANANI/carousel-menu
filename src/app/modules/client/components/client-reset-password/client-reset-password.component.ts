@@ -4,7 +4,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
 import { NotificationsService } from 'angular2-notifications';
 import { TranslateService, initTranslation } from './i18n/i18n';
-
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-reset-password',
@@ -14,9 +14,11 @@ import { TranslateService, initTranslation } from './i18n/i18n';
 export class ClientResetPasswordComponent implements OnInit {
 
   public formData: FormGroup;
-  public passwordMinLength = 5;
+  public passwordMinLength = 8;
 
   constructor(private _authService: AuthService,
+              private _activatedRoute: ActivatedRoute,
+              private _router: Router,
               private _notificationsService: NotificationsService,
               private _translateService: TranslateService,
               private _userService: UserService,
@@ -32,17 +34,29 @@ export class ClientResetPasswordComponent implements OnInit {
   }
 
   onSubmit(form) {
-    if (form.valid && form) {
-      this._userService.updatePassword(form).subscribe(() => { // TODO Antoine
-
-        },
-        err => {
-          this._notificationsService.error('Erreur', err.message); // TODO translate
+    if (form.valid && form.get('email').value) {
+      if (form.get('password').value === form.get('passwordConfirm').value) {
+        this._activatedRoute.params.subscribe(params => {
+          const tokenEmail = params['tokenEmail'];
+          this._userService.updatePassword({
+            email: form.get('email').value,
+            password: form.get('password').value,
+            passwordConfirm: form.get('passwordConfirm').value,
+            tokenEmail: tokenEmail
+          }).subscribe((data) => {
+              this._notificationsService.success('Password updated', 'The password has been updated.'); // TODO translate
+              this._router.navigate(['/account']);
+            },
+            err => {
+              this._notificationsService.error('Erreur', err.message); // TODO translate
+            });
         });
+      } else {
+        this._notificationsService.error('Erreur', 'Les mots de passe doivent être identiques'); // TODO translate
+      }
     }
     else {
       this._notificationsService.error('Erreur', 'Formulaire non valide'); // TODO translate
     }
   }
-
 }
