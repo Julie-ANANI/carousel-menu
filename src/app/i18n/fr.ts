@@ -21,6 +21,7 @@ export const fr = {
     'EMAIL': 'Email',
     'PHONE': 'Téléphone',
     'PASSWORD': 'Mot de passe',
+    'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
     'COMPANY': 'Entreprise',
     'JOBTITLE': 'Poste',
 

@@ -17,7 +17,7 @@ export class AdminDashboardComponent implements OnInit {
   constructor(private _titleService: Title) { }
 
   ngOnInit(): void {
-    this._titleService.setTitle('Admin Dashboard'); // TODO translate
+    this._titleService.setTitle('Admin Dashboard');
   }
 
 }

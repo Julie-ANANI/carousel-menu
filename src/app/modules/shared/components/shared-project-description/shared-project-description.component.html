@@ -16,7 +16,7 @@
               <button class="btn btn-lg btn-primary" [routerLink]="'./edit'" *ngIf="project.status === 'EDITING' && isProjectOwner">
                 {{ 'COMMON.EDIT' | translate}} <i class="icon icon-arrow-right"></i>
               </button>
-              <button class="btn btn-lg btn-primary" *ngIf="project.owner && !isProjectOwner"><!-- TODO popup textarea de contact --><!-- TODO if not owner -->
+              <button class="btn btn-lg btn-primary" *ngIf="project.owner && !isProjectOwner"><!-- TODO popup textarea de contact -->
                 {{ 'PROJECT.CONTACT_PROJECT_MANAGER' | translate}} <i class="icon icon-arrow-right"></i>
               </button>
             </div>

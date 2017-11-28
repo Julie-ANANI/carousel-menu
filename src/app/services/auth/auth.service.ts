@@ -115,7 +115,7 @@ export class AuthService {
     return this._user ? this._user.id : null;
   }
 
-  get isAcceptingCookies(): Boolean { // TODO éventuellement - CNIL
+  get isAcceptingCookies(): Boolean { // CNIL
     return true;
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { UserService } from '../../../../services/user/user.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
@@ -19,6 +20,7 @@ export class ClientLoginComponent implements OnInit {
   public passwordMinLength = 5;
 
   constructor(private _authService: AuthService,
+              private _userService: UserService,
               private _router: Router,
               private _formBuilder: FormBuilder,
               private _translateService: TranslateService,
@@ -31,7 +33,7 @@ export class ClientLoginComponent implements OnInit {
 
     this.formData = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(this.passwordMinLength)]]
+      password: ['', [Validators.minLength(this.passwordMinLength)]]
     });
   }
 
@@ -77,6 +79,18 @@ export class ClientLoginComponent implements OnInit {
           this._notificationsService.error('Erreur', error.message); // TODO translate
         }
       );
+  }
+
+  public changePassword() {
+    if (!this.formData.get('email').value) {
+      this._notificationsService.error('Empty email', 'Please enter your email before.'); // TODO translate
+    }
+    else {
+      this._userService.changePassword(this.formData.get('email').value).subscribe(res => {
+        console.log(res);
+        this._notificationsService.success('We just sent you an email', 'To change your password, pease click on the link we just sent you by email.');
+      });
+    }
   }
 
   get authService (): AuthService {

@@ -6,6 +6,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-my-account',
@@ -22,6 +23,7 @@ export class ClientMyAccountComponent implements OnInit {
               private _translateService: TranslateService,
               private _notificationsService: NotificationsService,
               private _formBuilder: FormBuilder,
+              private _router: Router,
               private _titleService: Title) {}
 
   ngOnInit(): void {
@@ -39,6 +41,12 @@ export class ClientMyAccountComponent implements OnInit {
 
     this._userService.getSelf().subscribe(user => {
       this.formData.patchValue(user);
+    });
+  }
+
+  public changePassword() {
+    this._userService.changePassword().subscribe(res => {
+      this._router.navigate(['/reset-password/' + res.token])
     });
   }
 

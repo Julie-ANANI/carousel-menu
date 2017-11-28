@@ -27,7 +27,7 @@ export class AdminUsersComponent implements OnInit {
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-    this._titleService.setTitle('Users'); // TODO translate
+    this._titleService.setTitle('Utilisateurs');
 
     this._sq.data$.subscribe(users => {
       this._users = users.result;

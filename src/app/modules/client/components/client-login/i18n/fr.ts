@@ -4,6 +4,7 @@ export const fr = {
     'LOG_IN_BTN': 'Se connecter',
     'LOG_IN_LINKEDIN': 'Connexion par LinkedIn',
     'OR': 'ou continuer avec',
-    'LOG_IN_TO_CONTINUE': 'Connectez-vous pour continuer'
+    'LOG_IN_TO_CONTINUE': 'Connectez-vous pour continuer',
+    'FORGOT_PASSWORD': 'J\'ai oublié mon mot de passe'
   }
 };

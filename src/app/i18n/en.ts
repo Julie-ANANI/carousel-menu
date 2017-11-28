@@ -21,6 +21,7 @@ export const en = {
     'EMAIL': 'Email',
     'PHONE': 'Phone',
     'PASSWORD': 'Password',
+    'PASSWORD_CONFIRM': 'Password confirmation',
     'COMPANY': 'Company',
     'JOBTITLE': 'Job title',
 
