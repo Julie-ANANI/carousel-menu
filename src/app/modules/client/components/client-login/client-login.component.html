@@ -46,6 +46,7 @@
 
           <div class="column col-12">
             <button class="btn btn-lg" type="submit" [disabled]="formData.invalid">{{ 'LOG_IN.LOG_IN_BTN' | translate }}</button>
+            <a (click)="changePassword()" class="c-hand">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
           </div>
         </form>
       </div>

@@ -22,8 +22,4 @@ export class MediaService {
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error));
   }
-
-  public buildUrl(id: string): string {
-    return this._http.getApiUrl() + '/media/' + id;
-  }
 }

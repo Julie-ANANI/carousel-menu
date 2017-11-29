@@ -20,7 +20,7 @@ export class ClientSignupComponent implements OnInit {
   public displayEmailForm = false;
 
   public formData: FormGroup;
-  public passwordMinLength = 5;
+  public passwordMinLength = 8;
 
   constructor(private _userService: UserService,
               private _formBuilder: FormBuilder,
@@ -59,7 +59,7 @@ export class ClientSignupComponent implements OnInit {
 
   public onSubmit({ value, valid }: { value: User, valid: boolean }) {
     if (valid) {
-      const user = new User(value); // TODO vérifier que l'utilisateur est valide (s'il a un email) ...
+      const user = new User(value);
       user.domain = environment.domain;
       this._userService.create(user)
         .subscribe(

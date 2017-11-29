@@ -60,6 +60,7 @@
         <button type="submit" class="btn btn-primary centered" [disabled]="formData.invalid">{{ 'COMMON.SAVE' | translate }}</button>
       </form>
 
+      <a (click)="changePassword()" class="c-hand">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</a>
       <a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}</a>
     </div>
   </div>

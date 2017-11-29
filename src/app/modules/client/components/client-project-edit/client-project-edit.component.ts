@@ -58,6 +58,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
           }
           for (const innovationCard of innovation.innovationCards) {
             this._addInnovationCardWithData(innovationCard);
+
           }
 
           this.displayCountriesToExcludeSection = this.formData.get('settings').get('geography').get('exclude').value.length > 0;
@@ -72,7 +73,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
         },
         errorTranslateCode => {
           this._translateService.get(errorTranslateCode).subscribe(errorMessage =>
-            this._notificationsService.error('Error', errorMessage) // TODO Translate Error
+            this._notificationsService.error('Error', errorMessage) // TODO Translate
           );
           this._router.navigate(['/projects']);
         }
@@ -210,7 +211,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
       },
       'advantages': {
         placeholder: 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.INPUT',
-        initialData: this.formData.get('innovationCards').value[this.innovationCardEditingIndex]['advantages'] // TODO Antoine
+        initialData: this.formData.get('innovationCards').value[this.innovationCardEditingIndex]['advantages']
       },
       'excludedPeople': {
         placeholder: 'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE',
@@ -232,15 +233,15 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
 
   private _newInnovationCardFormBuilderGroup (data) {
     return this._formBuilder.group({
-      id: [data.id, Validators.required],
-      title: [data.title, Validators.required],
-      summary: [data.summary, Validators.required],
-      problem: [data.problem, Validators.required],
-      solution: [data.solution, Validators.required],
-      advantages: [[]],
-      lang: [data.lang, Validators.required],
-      principal: [data.principal, Validators.required],
-      media: [data.media, Validators.required]
+      id: [{value: data.id, disabled: !this.canEdit}, Validators.required],
+      title: [{value: data.title, disabled: !this.canEdit}, Validators.required],
+      summary: [{value: data.summary, disabled: !this.canEdit}, Validators.required],
+      problem: [{value: data.problem, disabled: !this.canEdit}, Validators.required],
+      solution: [{value: data.solution, disabled: !this.canEdit}, Validators.required],
+      advantages: [{value: data.advantages, disabled: !this.canEdit}],
+      lang: [{value: data.lang, disabled: !this.canEdit}, Validators.required],
+      principal: [{value: data.principal, disabled: !this.canEdit}, Validators.required],
+      media: [{value: data.media, disabled: !this.canEdit}, Validators.required]
     });
   }
 
@@ -267,7 +268,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
    * @param event the resulting value sent from the component directive
    * @param cardIdx this is the index of the innovation card being edited.
    */
-  public addAdvantageToInventionCard (event, cardIdx) { // TODO TEST
+  public addAdvantageToInventionCard (event, cardIdx) {
     const card = this.formData.get('innovationCards').value[cardIdx] as FormGroup;
     card['advantages'] = event.value;
   }
@@ -289,7 +290,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     });
   }
 
-  public imageUploaded(media) { // TODO TEST
+  public imageUploaded(media) {
     this._project.innovationCards[this.innovationCardEditingIndex].media.push(media);
     this._innovationService.addMediaToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
       console.log(res);
@@ -308,7 +309,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     });
   }
 
-  public downloadInnovationCard () { // TODO Antoine
+  public downloadInnovationCard () {
     alert('TODO :  [href]="/:innovationId/exportInventionCard/:innovationCardId"');
   }
 

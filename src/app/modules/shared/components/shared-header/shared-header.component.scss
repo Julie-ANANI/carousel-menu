@@ -14,10 +14,11 @@ header {
 
   .btn.btn-link {
     color: white;
-    font-weight: 600;
+    font-weight: 400;
     margin-left: 20px;
-    &.active, &:hover {
-      color: $primary-color;
+    &.active/*, &:hover*/ {
+      // color: $primary-color;
+      font-weight: bolder;
     }
   }
 

@@ -34,29 +34,31 @@
 
       <div class="project" *ngFor="let project of projects">
         <div class="picture">
-          <a [routerLink]="getRelevantLink(project)"><img [src]="getPrincipalMedia(project)" class="img-fit-cover" width="218" height="218"></a>
+          <a [routerLink]="getRelevantLink(project)">
+            <img [src]="getPrincipalMedia(project)" class="img-fit-cover" width="218" height="218">
+          </a>
         </div>
         <div class="description">
           <div class="title"><a [routerLink]="getRelevantLink(project)">{{ project.name || ('MY_PROJECTS.UNTITLED' | translate) }}</a></div>
           <div class="metas">{{ project.owner.name }} / {{ project.owner.companyName }}
             • {{ 'MY_PROJECTS.ADDED' | translate }} {{ project.created | date:dateFormat }}
             • {{ 'MY_PROJECTS.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
-            • <a (click)="selectedProjectIdToBeDeleted = project._id" class="text-error c-hand">{{ 'COMMON.DELETE' | translate }}</a></div><!-- TODO -->
+            • <a (click)="selectedProjectIdToBeDeleted = project._id" class="text-error c-hand">{{ 'COMMON.DELETE' | translate }}</a></div>
           <ul class="step">
             <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !project.reviewing }">
-              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.EDITING' | translate }}</a><!-- TODO tooltip -->
+              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.EDITING' | translate }}</a>
             </li>
             <li class="step-item" [ngClass]="{ 'active': project.status === 'SUBMITTED' }">
-              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.SUBMITTED' | translate }}</a><!-- TODO tooltip -->
+              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.SUBMITTED' | translate }}</a>
             </li>
             <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !!project.reviewing }">
-              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.REVIEWING' | translate }}</a><!-- TODO tooltip -->
+              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.REVIEWING' | translate }}</a>
             </li>
             <li class="step-item" [ngClass]="{ 'active': project.status === 'EVALUATING' }">
-              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.EVALUATING' | translate }}</a><!-- TODO tooltip -->
+              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.EVALUATING' | translate }}</a>
             </li>
             <li class="step-item" [ngClass]="{ 'active': project.status === 'DONE' }">
-              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.DONE' | translate }}</a><!-- TODO tooltip -->
+              <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.DONE' | translate }}</a>
             </li>
           </ul>
         </div>

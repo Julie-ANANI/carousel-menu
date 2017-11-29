@@ -17,6 +17,7 @@ import { ClientLogoutComponent } from './components/client-logout/client-logout.
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientMyUsersComponent } from './components/client-my-users/client-my-users.component';
+import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 
 /* Shared */
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
@@ -55,6 +56,12 @@ const clientRoutes: Routes = [
         canActivate: [NonAuthGuard],
         children: [
           { path: '', component: ClientSignupComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'reset-password',
+        children: [
+          { path: ':tokenEmail', component: ClientResetPasswordComponent, pathMatch: 'full' }
         ]
       },
       {
