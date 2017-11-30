@@ -38,7 +38,9 @@ import { SharedTextZoneComponent } from './components/shared-text-zone/shared-te
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
 import { Ng2FileDropModule } from 'ng2-file-drop';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
-import {Ng2PageScrollModule} from 'ng2-page-scroll';
+import { Ng2PageScrollModule } from 'ng2-page-scroll';
+
+import { SharedLatexManagerComponent } from './components/shared-latex-manager/shared-latex-manager.component';
 
 @NgModule({
   imports: [
@@ -88,7 +90,8 @@ import {Ng2PageScrollModule} from 'ng2-page-scroll';
     SharedTextZoneComponent,
     SharedModalComponent,
     SharedStarsComponent,
-    SharedProjectDescriptionComponent
+    SharedProjectDescriptionComponent,
+    SharedLatexManagerComponent
   ],
   exports: [
     // Modules

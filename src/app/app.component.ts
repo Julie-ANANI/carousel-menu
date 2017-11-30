@@ -38,6 +38,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit(): void {
     initTranslation(this._translateService);
 
+    this._appIsLoadingSubscription = this._loaderService.isLoading$.subscribe((isLoading: boolean) => {
+      // Bug corrigé avec setTimeout : https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
+      setTimeout(_ => { this.displayLoader = isLoading; });
+    });
+
     if (this._authService.isAcceptingCookies) { // CNIL
       this._authService.initializeSession().subscribe(
         res => null,
@@ -54,11 +59,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    this._appIsLoadingSubscription = this._loaderService.isLoading$.subscribe((isLoading: boolean) => {
-      // Bug corrigé avec setTimeout : https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
-      setTimeout(_ => { this.displayLoader = isLoading; });
-    });
-
     // FIXME, voir pour une autre solution, car s'exécute à chaque modification de composant.
     if (!this._scrollExecuted) {
       let routeFragmentSubscription: Subscription;

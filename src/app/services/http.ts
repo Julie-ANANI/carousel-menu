@@ -4,7 +4,8 @@ import {
   RequestOptionsArgs,
   Response,
   Headers,
-  XHRBackend
+  XHRBackend,
+  ResponseContentType
 } from '@angular/http';
 import { environment } from '../../environments/environment';
 import { LoaderService } from './loader/loader.service';
@@ -91,6 +92,29 @@ export class Http extends AngularHttp {
     }
 
     return super.delete(UriOrUrl, this._requestOptions(options))
+      .catch(this._onCatch)
+      .do((res: Response) => {
+        this._onSuccess(res);
+      }, (error: any) => {
+        this._onError(error);
+      })
+      .finally(() => {
+        this._onEnd();
+      });
+  }
+
+  public download(UriOrUrl: string, options?: RequestOptionsArgs) {
+    this._showLoader();
+    if(!options) {
+      options = new RequestOptions();
+    }
+    options.responseType = ResponseContentType.Blob;
+
+    if (UriOrUrl.indexOf('http') === -1) { // Si ce n'est pas une URL
+      UriOrUrl = this._getFullUrl(UriOrUrl);
+    }
+
+    return super.get(UriOrUrl, this._requestOptions(options))
       .catch(this._onCatch)
       .do((res: Response) => {
         this._onSuccess(res);

@@ -110,4 +110,10 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public exportPDF(innovationId: string, innovationCardId: string, jobOptions: any) {
+    return this._http.get(`/innovation/${innovationId}/exportInventionCard/${innovationCardId}`, jobOptions)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
 }

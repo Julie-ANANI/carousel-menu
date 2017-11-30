@@ -19,6 +19,8 @@
               <button class="btn btn-lg btn-primary" *ngIf="project.owner && !isProjectOwner"><!-- TODO popup textarea de contact -->
                 {{ 'PROJECT.CONTACT_PROJECT_MANAGER' | translate}} <i class="icon icon-arrow-right"></i>
               </button>
+              <pdf-generator [model]="getModel()" *ngIf="project.status !== 'EDITING'">
+              </pdf-generator>
             </div>
             <div class="column col-3 share">
               Share<br>
