@@ -333,18 +333,14 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   }
 
   public setMediaAsPrimary (media) {
-    this._innovationService.setPrincipalMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
+    const mediaSubs = this._innovationService.setPrincipalMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
       console.log(res);
     });
     this._subscriptions.push(mediaSubs);
   }
 
-  public deleteImage (media) {
-    const mediaSubs = this._innovationService
-      .deleteMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
-      .subscribe(res => {
   public deleteMedia (media) {
-    this._innovationService.deleteMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
+    const mediaSubs = this._innovationService.deleteMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
       console.log(res);
     });
     this._subscriptions.push(mediaSubs);
