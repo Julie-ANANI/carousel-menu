@@ -27,7 +27,10 @@ export class ClientResetPasswordComponent implements OnInit {
   ngOnInit() {
     initTranslation(this._translateService);
     this.formData = this._formBuilder.group({
-      email: [{value: this._authService.isAuthenticated ? this._authService.user.email : '', disabled: this._authService.isAuthenticated && this._authService.user.email}, [Validators.required, Validators.email]],
+      email: [{
+        value: this._authService.isAuthenticated ? this._authService.user.email : '',
+        disabled: this._authService.isAuthenticated && this._authService.user.email
+      }, [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(this.passwordMinLength)]],
       passwordConfirm: ['', [Validators.required, Validators.minLength(this.passwordMinLength)]]
     });

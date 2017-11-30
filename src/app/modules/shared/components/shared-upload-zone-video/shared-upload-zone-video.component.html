@@ -1,10 +1,23 @@
-<div class="drop-container input-field">
-  <div class="upload-area center">
-    <div class="container">
-
-        <input class="col s10 url-input" type="text" placeholder="Collez l'adresse Youtube ou Vimeo de la vidéo" [(ngModel)]="videoUrlInput">
-      <a (click)="videoUrlInput ? addVideo() : ''" >send</a>
-
-    </div>
+<div class="videos-upload text-center">
+  <p>{{ 'PROJECT_EDIT.MEDIA.URL' | translate }}</p>
+  <div class="input-group">
+    <input type="text" class="form-input input-lg"
+           placeholder="Ex : https://www.youtube.com/watch?v=1c9V-Re5QJA"
+           [(ngModel)]="videoUrlInput">
+    <button class="btn btn-primary input-group-btn btn-lg"
+            (click)="videoUrlInput ? addVideo() : ''">
+      <i class="icon icon-plus"></i> {{ 'COMMON.ADD' | translate }}
+    </button>
+  </div>
+  <div class="logos-videos">
+    <img
+      [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_35/app/logo-youtube.png'"
+      width="" height="35">
+    <img
+      [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_31/app/logo-vimeo.png'"
+      width="" height="31">
+    <!--<img
+      [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_35/app/logo-dailymotion.png'"
+      width="" height="35">-->
   </div>
 </div>

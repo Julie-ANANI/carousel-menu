@@ -60,8 +60,28 @@
         <button type="submit" class="btn btn-primary centered" [disabled]="formData.invalid">{{ 'COMMON.SAVE' | translate }}</button>
       </form>
 
-      <a (click)="changePassword()" class="c-hand">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</a>
+      <a (click)="changePassword()" class="c-hand">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</a> -
+      <a (click)="accountDeletionAsked = true;" class="c-hand text-error">{{ 'MY_ACCOUNT.DELETE' | translate }}</a> -
       <a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL : Are you sure you want to delete your account ? -->
+<div class="modal" [ngClass]="{'active': accountDeletionAsked}">
+  <div class="modal-overlay" (click)="accountDeletionAsked = false"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="accountDeletionAsked = false"></button>
+      <div class="modal-title h5">{{ 'MY_ACCOUNT.DELETE_MODAL.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">{{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="accountDeletionAsked = false; deleteAccount()">{{ 'COMMON.DELETE' | translate }}</button>
+      <button class="btn btn-primary" (click)="accountDeletionAsked = false">{{ 'COMMON.CANCEL' | translate }}</button>
     </div>
   </div>
 </div>

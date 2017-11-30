@@ -3,12 +3,14 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService, initTranslation} from './i18n/i18n';
 import {ActivatedRoute, Router} from '@angular/router';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
+import {AuthService} from '../../../../services/auth/auth.service';
 import {NotificationsService} from 'angular2-notifications';
 import {ComponentCanDeactivate} from '../../../../pending-changes-guard.service';
 import {Observable} from 'rxjs/Observable';
 
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-client-project-edit',
@@ -37,6 +39,8 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
+              private _authService: AuthService,
+              private _domSanitizer: DomSanitizer,
               private _translateService: TranslateService,
               private _router: Router,
               private _notificationsService: NotificationsService,
@@ -132,6 +136,8 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
         if (callback) {
           callback();
         }
+      }, err => {
+        this._notificationsService.error('Unforbidden', err);
       });
     } else {
       this._notificationsService.error('Unforbidden', 'You can\'t edit this project');
@@ -290,6 +296,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     });
   }
 
+
   public imageUploaded(media) {
     this._project.innovationCards[this.innovationCardEditingIndex].media.push(media);
     this._innovationService.addMediaToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
@@ -297,13 +304,20 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     });
   }
 
-  public setImageAsPrimary (media) {
+  public newOnlineVideoToAdd (videoInfos) {
+    console.log(videoInfos);
+    this._innovationService.addNewMediaVideoToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  public setMediaAsPrimary (media) {
     this._innovationService.setPrincipalMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
       console.log(res);
     });
   }
 
-  public deleteImage (media) {
+  public deleteMedia (media) {
     this._innovationService.deleteMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
       console.log(res);
     });
@@ -326,7 +340,8 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
     }
   }
 
-  get canEdit () { return this._project && this._project.status === 'EDITING'; }
+  get domSanitizer() { return this._domSanitizer; }
+  get canEdit () { return this._project && (this._project.status === 'EDITING' || this._authService.isAdmin); }
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
   get project(): any { return this._project; }
 

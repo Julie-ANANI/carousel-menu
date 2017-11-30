@@ -136,7 +136,9 @@ export class Http extends AngularHttp {
 
   private _onError(res: Response): void {
     console.error(res);
-    this._notificationsService.error('Error ' + res.status, res.toString()); // TODO éventuellement commenter pour la PROD
+    if (!environment.production) {
+      this._notificationsService.error('[DEBUG] Error ' + res.status, res.toString());
+    }
   }
 
   private _onEnd(): void {

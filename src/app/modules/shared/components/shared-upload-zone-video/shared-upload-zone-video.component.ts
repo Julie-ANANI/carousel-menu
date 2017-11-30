@@ -1,8 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Http, Response } from '../../../../services/http';
-import { videoDomainRegEx, videoIdRegEx } from '../../../../utils/regex';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import {Component, Output, OnInit, EventEmitter} from '@angular/core';
+import {Http, Response} from '../../../../services/http';
+import {videoDomainRegEx, videoIdRegEx} from '../../../../utils/regex';
+import {DomSanitizer} from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -12,78 +11,66 @@ import 'rxjs/add/operator/map';
 })
 export class SharedUploadZoneVideoComponent implements OnInit {
 
-  @Input() public mediaContainer: any;
+  private _videoUrlInput: string;
+  private _videoParameters: string[];
 
-  private _videoUrlInput = '';
-  private videoParameters: any;
+  @Output() public cbFn: EventEmitter<any> = new EventEmitter();
 
-  constructor(private _sanitize: DomSanitizer,
-              private _http: Http) { }
+  constructor(private _http: Http) {
+  }
 
   ngOnInit() {
-    this.videoParameters = ['showinfo=0', 'color=white', 'rel=0', 'autohide=1', 'playsinline=1', 'modestbranding=1', 'iv_load_policy=3'];
+    this._videoParameters = ['showinfo=0', 'color=white', 'rel=0', 'autohide=1', 'playsinline=1', 'modestbranding=1', 'iv_load_policy=3'];
   }
-
 
   addVideo() {
-    const url = this.normalizeUrl(this._videoUrlInput) + this.getParams(); // Normalize the URL
-    this._videoUrlInput = '';
+    const videoProvider = videoDomainRegEx.exec(this._videoUrlInput)[0]; // vimeo || youtube
+    const givenUrl = this._videoUrlInput; // URL donnée par l'utilisateur
+    this._videoUrlInput = ''; // On vide le formulaire
 
-    for (const media of this.mediaContainer) { // verification that video isn't already existing
-      if (media.type === 'VIDEO' && media.url === url) {
-        return new Error ('VIDEO_ALREADY_ADDED');
+
+    if (videoProvider) {
+      const videoKey = videoIdRegEx.exec(givenUrl)[1] || videoIdRegEx.exec(givenUrl)[2]; // ID de la vidéo chez le provider
+      switch (videoProvider) {
+        case 'vimeo': {
+          const embeddableUrl = 'https://player.vimeo.com/video/' + videoKey + this._getUrlArgs();
+          const returnValue: any = {
+            url: givenUrl,
+            public_id: videoKey,
+            embeddableUrl: embeddableUrl,
+            provider: 'vimeo',
+            name: ''
+          };
+          this._http.get('https://vimeo.com/api/v2/video/' + videoKey + '.json')
+            .map((res: Response) => res)
+            .subscribe(res => {
+              const thumbSplit = JSON.parse(res['_body'])[0].thumbnail_large.split(/\d{3}(?=.jpg)/);
+              returnValue.thumbnail = thumbSplit[0] + '1280x720' + thumbSplit[1];
+              returnValue.name = JSON.parse(res['_body'])[0].title;
+              this.cbFn.emit(returnValue);
+            });
+        }
+          break;
+        default: {
+          const embeddableUrl = 'https://www.youtube.com/embed/' + videoKey + this._getUrlArgs();
+          this.cbFn.emit({
+            url: givenUrl,
+            public_id: videoKey,
+            embeddableUrl: embeddableUrl,
+            provider: 'youtube',
+            thumbnail: 'https://i.ytimg.com/vi/' + videoKey + '/hqdefault.jpg'
+          });
+        }
       }
-    }
-
-    for (const media of this.mediaContainer) { // Else, reset all media to not primary
-      media.isPrimary = false;
-    }
-
-    this.mediaContainer.push({
-      url: this._sanitize.bypassSecurityTrustResourceUrl(url),
-      type: 'VIDEO',
-      thumbnail: null,
-      isPrimary: true // add the video as a primary media (video is more important that photo cf Adrien)
-    });
-
-    this.updateThumbnail(url, this.mediaContainer[this.mediaContainer.length - 1]);
-  }
-
-  normalizeUrl(url: string): string {
-    const videoKey = videoIdRegEx.exec(url)[1] || videoIdRegEx.exec(url)[2];
-    return (videoDomainRegEx.exec(url)[0] === 'vimeo' ? 'https://player.vimeo.com/video/' : 'https://www.youtube.com/embed/') + videoKey;
-  }
-
-  updateThumbnail(url: string, videoObj: any) {
-
-    if (!videoDomainRegEx.test(url)) {
-      console.error('NOT_VALID_VIDEO_URL');
-      return new Error('NOT_VALID_VIDEO_URL');
     }
     else {
-      if (videoDomainRegEx.exec(url)[0] === 'youtube') {
-        const videoKey = videoIdRegEx.exec(url)[1] || videoIdRegEx.exec(url)[2];
-        videoObj.thumbnail = 'https://i.ytimg.com/vi/' + videoKey + '/hqdefault.jpg';
-      }
-      else if (videoDomainRegEx.exec(url)[0] === 'vimeo') {
-        const videoKey = videoIdRegEx.exec(url)[1] || videoIdRegEx.exec(url)[2];
-        this._http.get('https://vimeo.com/api/v2/video/' + videoKey + '.json')
-          .map((res: Response) => res)
-          .catch((error: Response) => { console.log(error); return Observable.throw(error) })
-          .subscribe(res => {
-            console.log(JSON.parse(res._body)[0]);
-            const thumbSRClarge = JSON.parse(res._body)[0].thumbnail_large;
-            const thumbSplit = thumbSRClarge.split(/\d{3}(?=.jpg)/);
-            videoObj.thumbnail = thumbSplit[0] + '1280x720' + thumbSplit[1];
-          });
-      }
+      return null;
     }
-
   }
 
-  getParams(): string { // Transform params to a string ?options=value&....
+  private _getUrlArgs(): string { // Transform params to a string ?options=value&....
     let paramsString = '?';
-    for (const parameters of this.videoParameters) {
+    for (const parameters of this._videoParameters) {
       paramsString += parameters + '&';
     }
     paramsString = paramsString.slice(0, -1); // Remove last &
@@ -93,6 +80,7 @@ export class SharedUploadZoneVideoComponent implements OnInit {
   get videoUrlInput(): string {
     return this._videoUrlInput;
   }
+
   set videoUrlInput(value: string) {
     this._videoUrlInput = value;
   }

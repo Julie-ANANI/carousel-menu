@@ -67,7 +67,12 @@ export class ClientMyProjectsComponent implements OnInit {
 
   public getPrincipalMedia(project): string {
     if (project.principalMedia) {
-      return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + project.principalMedia.cloudinary.public_id;
+      if (project.principalMedia.type === 'PHOTO') {
+        return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + project.principalMedia.cloudinary.public_id;
+      }
+      else {
+        return project.principalMedia.video.thumbnail;
+      }
     } else {
       return 'https://res.cloudinary.com/umi/image/upload/app/no-image.png';
     }
