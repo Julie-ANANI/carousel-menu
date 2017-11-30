@@ -57,7 +57,56 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary centered" [disabled]="formData.invalid">{{ 'COMMON.SAVE' | translate }}</button>
+        <div class="form-group">
+          <div class="col-3">
+            <label class="form-label" for="lang">{{ "COMMON.LANGUAGE" | translate }}</label>
+          </div>
+          <div class="col-9">
+            <select class="form-select" id="lang" name="lang" formControlName="language">
+              <option value="en">{{ 'COMMON.LANG.EN' | translate }}</option>
+              <option value="fr">{{ 'COMMON.LANG.FR' | translate }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-3">
+            <label class="form-label">{{ 'MY_ACCOUNT.SECTORS' | translate }}</label>
+          </div>
+          <div class="col-9">
+            <div class="input-group">
+              <app-input-list (update)="addSector($event)"
+                              [config]="{
+                                placeholder: ('MY_ACCOUNT.SECTORS' | translate),
+                                initialData: this.formData.get('sectors').value
+                              }">
+              </app-input-list>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-3">
+            <label class="form-label">{{ 'MY_ACCOUNT.TECHNOLOGIES' | translate }}</label>
+          </div>
+          <div class="col-9">
+            <div class="input-group">
+              <app-input-list (update)="addTechnology($event)"
+                              [config]="{
+                                placeholder: ('MY_ACCOUNT.TECHNOLOGIES' | translate),
+                                initialData: this.formData.get('technologies').value
+                              }">
+              </app-input-list>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="col-3"></div>
+          <div class="col-9">
+            <button type="submit" class="btn btn-xxl btn-primary centered tooltip-top" [disabled]="formData.invalid">{{ 'COMMON.SAVE' | translate }}</button>
+          </div>
+        </div>
       </form>
 
       <a (click)="changePassword()" class="c-hand">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</a> -

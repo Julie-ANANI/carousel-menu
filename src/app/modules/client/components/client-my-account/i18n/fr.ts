@@ -5,5 +5,7 @@ export const fr = {
     'DELETE_MODAL': {
       'TITLE': 'Êtes-vous sûr(e) de vouloir supprimer votre compte ?',
       'CONTENT': 'Toutes vos données personnelles seront définitivement supprimées.'
-    }
+    },
+    'SECTORS': 'Secteurs d\'activité',
+    'TECHNOLOGIES': 'Technologies'
   }};
