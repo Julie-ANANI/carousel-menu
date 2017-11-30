@@ -1,24 +1,13 @@
-.upload-area {
-  position: relative;
-  background: #f5f5f5;
-  cursor: pointer;
-  height: 200px;
-  border: 4px dashed #dbdbdb;
-  transition: all linear .2s;
-  margin-bottom: 30px;
-  display: flex;
+.videos-upload {
+  background: #FAFAFA;
+  border: 2px dashed #979797;
+  padding: 60px 30px 60px 30px;
 
-  &:hover {
-    border-color: #3498DB;
-  }
+  .logos-videos {
+    margin-top: 10px;
 
-  .container {
-    margin: auto;
-    line-height: 32px;
-
-    .url-input {
-      margin-bottom: 0;
-      height: 3rem;
+    img {
+      margin: 0 5px;
     }
   }
 }

@@ -9,12 +9,12 @@ import { environment } from '../../../../../environments/environment'
   styleUrls: ['./shared-upload-zone-photo.component.scss']
 })
 
-export class SharedUploadZonePhotoComponent implements OnInit{
+export class SharedUploadZonePhotoComponent implements OnInit {
 
   private _filters: Array<FilterFunction>;
   private _uploader: FileUploader;
   public hasBaseDropZoneOver = false;
-  public hasAnotherDropZoneOver = false;
+  // public hasAnotherDropZoneOver = false;
   public loading = false;
 
   @Input() public type: any;
@@ -29,7 +29,7 @@ export class SharedUploadZonePhotoComponent implements OnInit{
       url: environment.apiUrl + '/media',
       autoUpload: true,
       filters: this._filters,
-      maxFileSize: 1024 * 1024,
+      // maxFileSize: 1024 * 1024,
       additionalParameter: {} // à transmettre au serveur au moment de la sauvegarde
     });
 
@@ -58,7 +58,7 @@ export class SharedUploadZonePhotoComponent implements OnInit{
     }
   }
 
-  private _createFilter(type: string): any {
+  /*private _createFilter(type: string): any {
     switch (type) {
       case('images'):
         const imagesFilters = ['gif', 'jpeg', 'jpg', 'png'];
@@ -81,7 +81,7 @@ export class SharedUploadZonePhotoComponent implements OnInit{
       default:
 
     }
-  }
+  }*/
 
   constructor(private _notificationsService: NotificationsService) {  }
 
@@ -93,8 +93,8 @@ export class SharedUploadZonePhotoComponent implements OnInit{
     this.hasBaseDropZoneOver = e;
   }
 
-  public fileOverAnother(e: any): void {
+  /*public fileOverAnother(e: any): void {
     this.hasAnotherDropZoneOver = e;
-  }
+  }*/
 
 }

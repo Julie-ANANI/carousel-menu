@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class ClientMyAccountComponent implements OnInit {
 
   public formData: FormGroup;
+  public accountDeletionAsked = false;
 
   // TODO : profile picture, reset password, description, location
 
@@ -65,6 +66,10 @@ export class ClientMyAccountComponent implements OnInit {
     else {
       this._notificationsService.error('Erreur', 'Formulaire non valide'); // TODO translate
     }
+  }
+
+  public deleteAccount () {
+    alert('TODO'); // TODO Antoine
   }
 
 }

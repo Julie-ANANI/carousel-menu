@@ -833,16 +833,21 @@
 
                           <div>
                             <label class="form-label">{{ 'PROJECT_EDIT.MEDIA.ADD' | translate }}</label>
-
                             <div class="medias" *ngIf="project.innovationCards[innovationCardEditingIndex].media.length > 0">
                               <div class="media" *ngFor="let media of project.innovationCards[innovationCardEditingIndex].media">
+                                <iframe width="200" height="100"
+                                        [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+                                        *ngIf="media.type==='VIDEO'">
+                                </iframe>
+
                                 <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_100/' + media.cloudinary.public_id"
+                                     *ngIf="media.type==='PHOTO'"
                                      alt="" width="100" height="100">
                                 <div *ngIf="canEdit">
-                                  <a class="delete c-hand" aria-label="Close" role="button" (click)="deleteImage(media)">
+                                  <a class="delete c-hand" aria-label="Close" role="button" (click)="deleteMedia(media)">
                                     <img [src]="'https://res.cloudinary.com/umi/image/upload/app/delete.svg'" width="22" height="22">
                                   </a>
-                                  <a class="primary c-hand" aria-label="Close" role="button" (click)="setImageAsPrimary(media)">
+                                  <a class="primary c-hand" aria-label="Close" role="button" (click)="setMediaAsPrimary(media)">
                                     <img [src]="'https://res.cloudinary.com/umi/image/upload/app/'+ (project.innovationCards[innovationCardEditingIndex].principalMediaId === media._id ? '' : 'empty-') + 'star.svg'" width="24" height="22">
                                   </a>
                                 </div>
@@ -854,27 +859,11 @@
                               (cbFn)="imageUploaded($event)">
                             </app-shared-upload-zone-photo>
 
-                            <div class="videos-upload text-center" *ngIf="canEdit">
-                              <p>{{ 'PROJECT_EDIT.MEDIA.URL' | translate }}</p>
-                              <div class="input-group">
-                                <input type="text" class="form-input input-lg"
-                                       placeholder="Ex : https://www.youtube.com/watch?v=1c9V-Re5QJA">
-                                <button class="btn btn-primary input-group-btn btn-lg"><i class="icon icon-plus"></i>
-                                  {{ 'COMMON.ADD' | translate }}
-                                </button>
-                              </div>
-                              <div class="logos-videos">
-                                <img
-                                  [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_35/app/logo-youtube.png'"
-                                  width="" height="35">
-                                <img
-                                  [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_31/app/logo-vimeo.png'"
-                                  width="" height="31">
-                                <img
-                                  [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_35/app/logo-dailymotion.png'"
-                                  width="" height="35">
-                              </div>
-                            </div>
+
+                            <app-shared-upload-zone-video
+                              (cbFn)="newOnlineVideoToAdd($event)">
+                              *ngIf="canEdit">
+                            </app-shared-upload-zone-video>
                           </div>
                         </div>
                       </div>
@@ -954,12 +943,12 @@
               <h2 id="submit">3. {{ 'PROJECT_EDIT.STEP3' | translate }}</h2>
 
               <form novalidate [formGroup]="formData" class="form-horizontal">
-                  <div>
-                    <label class="form-checkbox">
-                      <input type="checkbox" name="external_diffusion" formControlName="external_diffusion">
-                      <i class="form-icon"></i> {{ 'PROJECT_EDIT.EXTERNAL_DIFFUSION' | translate }}
-                    </label>
-                  </div>
+                <div>
+                  <label class="form-checkbox c-hand">
+                    <input type="checkbox" name="external_diffusion" formControlName="external_diffusion">
+                    <i class="form-icon"></i> {{ 'PROJECT_EDIT.EXTERNAL_DIFFUSION' | translate }}
+                  </label>
+                </div>
               </form>
 
               <div class="project-submit">

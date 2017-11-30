@@ -58,6 +58,7 @@ export const fr = {
     'HELP': 'Aide',
     'OR': 'ou',
 
+    'LANGUAGE': 'Langue',
     'LANG': {
       'FR': 'Français',
       'EN': 'Anglais'

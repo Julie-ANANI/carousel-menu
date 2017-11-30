@@ -51,6 +51,10 @@ export class SharedProjectDescriptionComponent implements OnInit {
     return this._authService.userId === this.project.owner.id;
   }
 
+  get isAdmin (): boolean {
+    return this._authService.isAdmin;
+  }
+
   /**
    * Builds the data required to ask the API for a PDF
    * @returns {{projectId, innovationCardId}}
