@@ -105,8 +105,8 @@ export const en = {
     'BTN_DETAILS_CLOSE': 'Hide details',
     'BTN_RECOMPUTE': 'Recompute infographics',
     'PEOPLE_VOTED': 'people voted',
-    'GRADE': 'Grade',
-    'NO_GRADE': 'No grade',
+    'GRADE': 'Rating',
+    'NO_GRADE': 'No rating',
     'POPUP': {
       'PROFIL': 'Profil',
       'RECEIVED': 'Received at',
