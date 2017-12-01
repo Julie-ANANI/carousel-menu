@@ -18,10 +18,10 @@ export class LatexService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public downloadJob(jobId: string, jobType: string, fileName: string): Observable<any> {
+  public downloadJob(jobId: string, jobType: string): Observable<any> {
     //let requestOptions: RequestOptionsArgs;
     //requestOptions.responseType = ResponseContentType.Blob;
-    return this._http.download(`/latex/job?jobId=${jobId}&jobType=${jobType}&fileName=${fileName}`)
+    return this._http.download(`/latex/job?jobId=${jobId}&jobType=${jobType}`)
       .map((res: Response) => res.blob())
       .catch((error: Response) => {
         console.error(error);

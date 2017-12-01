@@ -14,7 +14,7 @@ import * as FileSaver from 'file-saver';
 
 export class SharedLatexManagerComponent implements OnInit {
 
-  @Input() model: {lang: string, jobType: string, labels: string, pdfDataseedFunction: any, compilingStatus: any};
+  @Input() model: {lang: string, jobType: string, labels: string, pdfDataseedFunction: any};
 
   private _compiling: boolean = false;
   private _recheck: boolean = false;
@@ -47,9 +47,9 @@ export class SharedLatexManagerComponent implements OnInit {
    * @param event
    */
   public startJob(event): void {
-    this.model.compilingStatus("Started the compiling process!");
-    this._generateInnovationCard();
-    console.log(`Starting job: ${event}`);
+    if(!this.isCompiling()) {
+      this._generateInnovationCard();
+    }
   }
 
   /**
@@ -79,6 +79,7 @@ export class SharedLatexManagerComponent implements OnInit {
       clearInterval(this._checkInterval);
       this._checkInterval = null;
     }
+    this._compiling = false;
     this._recheck = false;
   }
 
@@ -87,6 +88,7 @@ export class SharedLatexManagerComponent implements OnInit {
    * @private
    */
   private _generateInnovationCard() {
+    this._compiling = true;
     this._innovationService.exportPDF(this.model.pdfDataseedFunction.projectId,
       this.model.pdfDataseedFunction.innovationCardId, {lang:'en', force: true})
       .subscribe(exportServiceResp => {
@@ -102,17 +104,24 @@ export class SharedLatexManagerComponent implements OnInit {
               });
             }
           }catch(ex) {
-            this._recheck = false;
+            this._stopClock();
             console.error(ex);
           }
         },
-        error => this._notificationsService.error('Error', error.message)
-      );
+        error => {
+          this._stopClock();
+          this._notificationsService.error('Error', error.message);
+        });
   }
 
+  /**
+   * If the job is done, download the file
+   * @param conf
+   * @private
+   */
   private _download(conf) {
     if (conf['jobId'] && conf['jobType']) {
-      this._latexService.downloadJob(conf['jobId'], conf['jobType'], "test.pdf")
+      this._latexService.downloadJob(conf['jobId'], conf['jobType'])
         .subscribe(file=>{
             FileSaver.saveAs(file, this._fileName || 'test.pdf');
             this._stopClock();
@@ -126,7 +135,7 @@ export class SharedLatexManagerComponent implements OnInit {
 
   /**
    * Check the job status
-   * @param info
+   * @param jobId
    * @private
    */
   private _checkFunc(jobId) {
@@ -147,24 +156,19 @@ export class SharedLatexManagerComponent implements OnInit {
                     'jobType': result['jobType']
                   });
                   break;
-                case('QUEUED'):
-                  //Wait a little and check again
-                  this._recheck = true;
-                  setTimeout(function(){
-                    console.log("Checking again for job " + result['jobId']);
-                    //$rootScope.$broadcast('check', info);
-                  }, 5000);
-                  break;
                 case('ERROR'):
                   //Report the error (activate the icon of death)
                   this._recheck = false;
+                  break;
+                case('QUEUED'):
+                  console.log("Job's still queued");
                   break;
                 default:
                 //Reset everything
               }
             }catch(ex) {
-              this._stopClock();
               console.error(ex);
+              this._stopClock();
             }
           } else if(result && result['error']) {
             //Report the error (activate the icon of death)
