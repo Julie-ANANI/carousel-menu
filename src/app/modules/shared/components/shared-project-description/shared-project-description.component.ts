@@ -72,6 +72,7 @@ export class SharedProjectDescriptionComponent implements OnInit {
    * @param event
    */
   public compilingStatus(event) {
+    //Put the loader control here!
     console.log(event);
   }
 

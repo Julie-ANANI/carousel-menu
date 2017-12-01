@@ -2,6 +2,7 @@ import { Component, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { NotificationsService } from 'angular2-notifications';
 import { LatexService } from '../../../../services/latex/latex.service';
+import { initTranslation, TranslateService } from './i18n/i18n';
 
 import * as FileSaver from 'file-saver';
 
@@ -13,7 +14,7 @@ import * as FileSaver from 'file-saver';
 
 export class SharedLatexManagerComponent implements OnInit {
 
-  @Input() model: {lang: string, jobType: string, labels: Array<string>, pdfDataseedFunction: any, compilingStatus: any};
+  @Input() model: {lang: string, jobType: string, labels: string, pdfDataseedFunction: any, compilingStatus: any};
 
   private _compiling: boolean = false;
   private _recheck: boolean = false;
@@ -23,9 +24,11 @@ export class SharedLatexManagerComponent implements OnInit {
 
   constructor(private _innovationService: InnovationService,
               private _latexService: LatexService,
-              private _notificationsService: NotificationsService) { }
+              private _notificationsService: NotificationsService,
+              private _translateService: TranslateService,) { }
 
   ngOnInit() {
+    initTranslation(this._translateService);
     //Verify that we have received have all we need
     this._fileName = this.model.pdfDataseedFunction.title;
     console.log(this.model);

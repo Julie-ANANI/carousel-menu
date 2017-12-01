@@ -120,7 +120,8 @@ import { SharedLatexManagerComponent } from './components/shared-latex-manager/s
     SharedFilterInputComponent,
     SharedMarketReportComponent,
     SharedModalComponent,
-    SharedProjectDescriptionComponent
+    SharedProjectDescriptionComponent,
+    SharedLatexManagerComponent
   ]
 })
 export class SharedModule { }

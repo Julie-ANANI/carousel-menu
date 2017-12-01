@@ -934,7 +934,12 @@
 
                   <a class="btn btn-lg centered" target="_blank" [routerLink]="'../'">{{ 'PROJECT_EDIT.HELP.PREVIEW' | translate }}</a>
 
-                  <button class="btn btn-lg centered" (click)="downloadInnovationCard()">{{ 'PROJECT_EDIT.HELP.DOWNLOAD' | translate }}</button>
+                  <pdf-generator [model]="getModel()" *ngIf="project.status !== 'EDITING'">
+                  </pdf-generator>
+
+                  <button class="btn btn-lg centered" (click)="downloadInnovationCard()">
+                    {{ 'PROJECT_EDIT.HELP.DOWNLOAD' | translate }}
+                  </button>
                 </div>
               </div>
             </div>

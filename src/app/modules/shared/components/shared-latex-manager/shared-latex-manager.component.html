@@ -1,5 +1,5 @@
 <button class="btn btn-lg btn-primary" (click)="startJob($event)" [disabled]="isCompiling()">
-  Hello, I'm the pdf generator manager!
+  {{ model.labels | translate }}
 </button>
 <!-- <button class="btn btn-lg btn-primary" [routerLink]="'./edit'" *ngIf="project.status !== 'EDITING'">
                 {{ 'COMMON.EXPORT' | translate}} <i class="icon icon-arrow-right"></i>
