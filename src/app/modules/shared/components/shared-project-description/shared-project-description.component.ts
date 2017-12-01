@@ -67,22 +67,12 @@ export class SharedProjectDescriptionComponent implements OnInit {
     }
   }
 
-  /**
-   *
-   * @param event
-   */
-  public compilingStatus(event) {
-    //Put the loader control here!
-    console.log(event);
-  }
-
   public getModel (): any {
     return {
       lang: 'en',
       jobType: 'innovationCard',
       labels: 'EXPORT.INNOVATION.CARD',
-      pdfDataseedFunction: this.dataBuilder(),
-      compilingStatus: this.compilingStatus
+      pdfDataseedFunction: this.dataBuilder()
     };
   }
 }
