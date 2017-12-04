@@ -367,10 +367,6 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     };
   }
 
-  public downloadInnovationCard () {
-    alert('TODO :  [href]="/:innovationId/exportInventionCard/:innovationCardId"');
-  }
-
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     return !this.shouldSave;

@@ -25,13 +25,12 @@ export class SharedLatexManagerComponent implements OnInit {
   constructor(private _innovationService: InnovationService,
               private _latexService: LatexService,
               private _notificationsService: NotificationsService,
-              private _translateService: TranslateService,) { }
+              private _translateService: TranslateService) {  }
 
   ngOnInit() {
     initTranslation(this._translateService);
     //Verify that we have received have all we need
     this._fileName = this.model.pdfDataseedFunction.title;
-    console.log(this.model);
   }
 
   /**
@@ -48,7 +47,16 @@ export class SharedLatexManagerComponent implements OnInit {
    */
   public startJob(event): void {
     if(!this.isCompiling()) {
-      this._generateInnovationCard();
+      switch(this.model.jobType) {
+        case('inventionCard'):
+          this._generateInnovationCard();
+          break;
+        case('synthesis'):
+          this._generateSynthesis();
+          break;
+        default:
+          console.error(`The job type '${this.model.jobType}' is not a known pdf export type.`);
+      }
     }
   }
 
@@ -84,6 +92,53 @@ export class SharedLatexManagerComponent implements OnInit {
   }
 
   /**
+   * Takes and process a generic response from latex service
+   * @param exportServiceResp
+   * @private
+   */
+  private _processResponse(exportServiceResp: any) {
+    try{
+      let result = JSON.parse(exportServiceResp['status']);
+      if(result['status']==='QUEUED'){
+        this._recheck = true;
+        this._startJobClock(result['jobId']);
+      } else {
+        this._download({
+          'jobId': result['jobId'],
+          'jobType': result['jobType']
+        });
+      }
+    }catch(ex) {
+      this._stopClock();
+      console.error(ex);
+    }
+  }
+
+  /**
+   * Manages the generic error response
+   * @param error
+   * @private
+   */
+  private _errorManager(error: any) {
+    this._stopClock();
+    this._notificationsService.error('Error', error.message);
+  }
+
+  /**
+   * Asks latex service to generate the syntheis pdf document
+   * @private
+   */
+  private _generateSynthesis() {
+    this._compiling = true;
+    this._innovationService.exportSynthesis(this.model.pdfDataseedFunction.projectId)
+      .subscribe(exportServiceResp => {
+        this._processResponse(exportServiceResp);
+      }, error => {
+        this._errorManager(error);
+      });
+  }
+
+  /**
    * Asks latex service for an innovation card
    * @private
    */
@@ -92,26 +147,10 @@ export class SharedLatexManagerComponent implements OnInit {
     this._innovationService.exportPDF(this.model.pdfDataseedFunction.projectId,
       this.model.pdfDataseedFunction.innovationCardId, {lang:'en', force: true})
       .subscribe(exportServiceResp => {
-          try{
-            let result = JSON.parse(exportServiceResp['status']);
-            if(result['status']==='QUEUED'){
-              this._recheck = true;
-              this._startJobClock(result['jobId']);
-            } else {
-              this._download({
-                'jobId': result['jobId'],
-                'jobType': result['jobType']
-              });
-            }
-          }catch(ex) {
-            this._stopClock();
-            console.error(ex);
-          }
-        },
-        error => {
-          this._stopClock();
-          this._notificationsService.error('Error', error.message);
-        });
+        this._processResponse(exportServiceResp);
+      }, error => {
+        this._errorManager(error);
+      });
   }
 
   /**
@@ -140,13 +179,12 @@ export class SharedLatexManagerComponent implements OnInit {
    */
   private _checkFunc(jobId) {
     if(this._recheck){
-      const id = jobId;
-      this._latexService.checkJob(id).subscribe(
+      this._latexService.checkJob(jobId).subscribe(
         result=>{
           if(result && result['status']){
             try {
               result = JSON.parse(result['status']);
-              var procStatus = result['status'];
+              const procStatus = result['status'];
               switch (procStatus) {
                 case('GENERATED'):
                   //Stop the checking and download the thing (or make the url available)
@@ -178,8 +216,7 @@ export class SharedLatexManagerComponent implements OnInit {
         error=>{
           this._stopClock();
           this._notificationsService.error('Error', error.message);
-        }
-      );
+        });
     }
   }
 }
