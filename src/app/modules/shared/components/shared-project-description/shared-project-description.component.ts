@@ -70,7 +70,7 @@ export class SharedProjectDescriptionComponent implements OnInit {
   public getModel (): any {
     return {
       lang: 'en',
-      jobType: 'innovationCard',
+      jobType: 'inventionCard',
       labels: 'EXPORT.INNOVATION.CARD',
       pdfDataseedFunction: this.dataBuilder()
     };

@@ -65,7 +65,7 @@ export class SharedMarketReportComponent implements OnInit {
   public dataBuilder(): any {
     return {
       projectId: this.innoid,
-      title: `${this._invention.name}.pdf`
+      title: this._invention.name.slice(0, Math.min(20, this._invention.name.length)) + "-" + "synthesis" +"(" + (this._invention.name.lang || 'en') +").pdf"
     }
   }
 
