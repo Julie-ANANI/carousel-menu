@@ -131,9 +131,10 @@ export class Http extends AngularHttp {
       options = new RequestOptions();
     }
 
-    if (options.headers === null) {
+    if (!options.headers) {
       options.headers = new Headers();
     }
+    options.headers.append('api-token', 'umi-front-application,TXnKAVHh0xpiFlC8D01S3e8ZkD45VIDJ');
 
     options.withCredentials = true;
 
