@@ -14,6 +14,9 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { NotificationsService } from 'angular2-notifications';
 
+import * as SessionVerificationController from '@umius/umi-session-verifications';
+const SessionVerification = new SessionVerificationController();
+
 export { Response } from '@angular/http';
 
 @Injectable()
@@ -134,7 +137,7 @@ export class Http extends AngularHttp {
     if (!options.headers) {
       options.headers = new Headers();
     }
-    options.headers.append('api-token', 'umi-front-application,TXnKAVHh0xpiFlC8D01S3e8ZkD45VIDJ');
+    SessionVerification.setHeaderAngular2(options, 'umi-front-application');
 
     options.withCredentials = true;
 
