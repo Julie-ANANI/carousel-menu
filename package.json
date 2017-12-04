@@ -32,6 +32,7 @@
     "@types/jquery": "^2.0.48",
     "@types/lodash": "^4.14.71",
     "@types/node": "^7.0.39",
+    "@umius/umi-session-verifications": "0.0.2",
     "angular-2-local-storage": "^1.0.1",
     "angular2-autosize": "^1.0.1",
     "angular2-cookie": "^1.2.6",
