@@ -62,7 +62,7 @@ export class ClientProjectEditExample2Component implements OnInit {
               }
             }
           ],
-          'principalMediaId': '0123456789',
+          'principalMediaIdx': '0',
           'lang': 'fr'
         },
         {
@@ -106,7 +106,7 @@ export class ClientProjectEditExample2Component implements OnInit {
               }
             }
           ],
-          'principalMediaId': '0123456789',
+          'principalMediaIdx': '0',
           'lang': 'en'
         },
       ]
