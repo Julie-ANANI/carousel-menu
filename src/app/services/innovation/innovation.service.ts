@@ -56,7 +56,6 @@ export class InnovationService {
 
   public setPrincipalMediaOfInnovationCard(innovationId: string, innovationCardId: string, mediaId: string): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/' + mediaId + '/principal')
-      .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
