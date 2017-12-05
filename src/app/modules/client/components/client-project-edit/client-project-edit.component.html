@@ -834,7 +834,7 @@
                           <div>
                             <label class="form-label">{{ 'PROJECT_EDIT.MEDIA.ADD' | translate }}</label>
                             <div class="medias" *ngIf="project.innovationCards[innovationCardEditingIndex].media.length > 0">
-                              <div class="media" *ngFor="let media of project.innovationCards[innovationCardEditingIndex].media">
+                              <div class="media" *ngFor="let media of project.innovationCards[innovationCardEditingIndex].media; let idx = index">
                                 <iframe width="200" height="100"
                                         [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
                                         *ngIf="media.type==='VIDEO'">
@@ -848,7 +848,7 @@
                                     <img [src]="'https://res.cloudinary.com/umi/image/upload/app/delete.svg'" width="22" height="22">
                                   </a>
                                   <a class="primary c-hand" aria-label="Close" role="button" (click)="setMediaAsPrimary(media)">
-                                    <img [src]="'https://res.cloudinary.com/umi/image/upload/app/'+ (project.innovationCards[innovationCardEditingIndex].principalMediaId === media._id ? '' : 'empty-') + 'star.svg'" width="24" height="22">
+                                    <img [src]="'https://res.cloudinary.com/umi/image/upload/app/'+ (project.innovationCards[innovationCardEditingIndex].principalMediaIdx === idx ? '' : 'empty-') + 'star.svg'" width="24" height="22">
                                   </a>
                                 </div>
                               </div>
