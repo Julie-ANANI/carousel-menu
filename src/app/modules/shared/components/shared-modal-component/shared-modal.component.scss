@@ -3,5 +3,15 @@
 }
 
 .modal-lg {
-  maw-width: 90%;
+  .modal-overlay {
+    background: rgba(248, 249, 250, 0.75);
+  }
+
+  .modal-container {
+    max-width: 90%;
+
+    .modal-body {
+      max-height: 80vh;
+    }
+  }
 }

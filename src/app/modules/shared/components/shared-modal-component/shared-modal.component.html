@@ -1,6 +1,6 @@
-<button class="btn btn-lg centered" (click)="active=true">
-  {{ buttonText | translate }}
-</button>
+<span (click)="active=true">
+  <ng-content select="[button]"></ng-content>
+</span>
 <div class="modal" [ngClass]="[active ? 'active': '', 'modal-'+size]">
   <div class="modal-overlay" (click)="active=false"></div>
   <div class="modal-container">
@@ -9,7 +9,7 @@
     </div>
     <div class="modal-body">
       <div class="content">
-        <ng-content></ng-content>
+        <ng-content select="[content]"></ng-content>
       </div>
     </div>
     <div class="modal-footer">

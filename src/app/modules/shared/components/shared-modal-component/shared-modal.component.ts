@@ -10,7 +10,6 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SharedModalComponent implements OnInit {
 
   @Input() title: string;
-  @Input() buttonText: string;
   @Input() size: string;
 
   private _active = false;
