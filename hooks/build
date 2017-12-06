@@ -8,13 +8,13 @@ BUILD_ENV=prod
 
 if [ $CACHE_TAG = $VENDOR ]
 then
-  $FRONT_VERSION=$VENDOR
+  FRONT_VERSION=$VENDOR
 fi
-echo $FRONT_VERSION
+echo Building image using $FRONT_VERSION
 
 if [ $CACHE_TAG = $LATEST ]
 then
-  $BUILD_ENV=dev
+  BUILD_ENV=dev
 fi
 echo $BUILD_ENV
 
