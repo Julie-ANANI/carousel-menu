@@ -1,17 +1,33 @@
-import { Component, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
-import * as $ from 'jquery';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'modal',
-  templateUrl:  './shared-modal.component.html'
+  templateUrl:  './shared-modal.component.html',
+  styleUrls: ['./shared-modal.component.scss']
 })
 
 
 export class SharedModalComponent implements OnInit {
 
-  @Input() title;
-  @Input() content;
+  @Input() title: string;
+  @Input() buttonText: string;
+  @Input() size: string;
 
-  ngOnInit() {}
+  private _active = false;
+
+  ngOnInit() {
+    if (this.size != 'lg' && this.size !='md' && this.size !='sm') {
+      this.size = 'md';
+      console.log("Wrong modal size specified, medium has been used");
+    }
+  }
+
+  set active (value: boolean) {
+    this._active = value;
+  }
+
+  get active(): boolean {
+    return this._active;
+  }
 
 }
