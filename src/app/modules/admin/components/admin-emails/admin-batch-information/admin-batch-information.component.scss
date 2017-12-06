@@ -1,0 +1,45 @@
+$secondary-color: #0B90C6;
+$dark-background: #262831;
+
+.projects-stats {
+  background: $secondary-color;
+  display: flex;
+  color: #CFE8F2;
+  min-height: 82px;
+
+  span {
+    font-size: 1.1rem;
+    color: white;
+  }
+
+  div {
+    margin: auto 30px auto 0;
+  }
+
+  .form-select {
+    width: 150px;
+    color: $dark-background;
+    margin: auto 36px auto 30px;
+  }
+}
+
+.emails-stats {
+  background: #FAFAFA;
+  display: flex;
+  min-height: 82px;
+
+  span {
+    font-size: 1.1rem;
+    color: $secondary-color;
+  }
+
+  div {
+    margin: auto 30px auto 0;
+  }
+
+  .form-select {
+    width: 150px;
+    color: $dark-background;
+    margin: auto 36px auto 30px;
+  }
+}

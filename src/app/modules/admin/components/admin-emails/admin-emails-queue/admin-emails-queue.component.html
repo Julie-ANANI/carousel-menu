@@ -1,5 +1,5 @@
 <div>
-  <table>
+  <table class="table">
     <thead>
       <th width="250">Campaign name</th>
       <th width="190">Creation date</th>
@@ -16,7 +16,7 @@
         <td>{{transaction.startDate}}</td>
         <td>{{transaction.endDate}}</td>
         <td>{{batchSize(transaction)}}</td>
-        <td>{{transaction.status}}</td>
+        <td><a (click)="changeStatus(transaction)">{{transaction.status}}</a></td>
         <td><a class="btn btn-action" [routerLink]="['batch/'+transaction._id]"><i class="fa fa-info"></i></a></td>
       </tr>
     </tbody>

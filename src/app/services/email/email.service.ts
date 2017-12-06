@@ -7,6 +7,15 @@ export class EmailService {
 
   constructor(private _http: Http) { }
 
+  public stopBatch(batchId: string): Observable<any> {
+    return this._http.post( '/mail/queue/'+batchId, {newStatus: 'CANCELED'} )
+      .map((res: Response) => {
+        const response = res.json();
+        return response;
+      })
+      .catch((error: Response) => Observable.throw(error.json()));
+  }
+
   public getBatch(batchId: string): Observable<any> {
     return this._http.get( '/mail/queue/'+batchId )
       .map((res: Response) => {
