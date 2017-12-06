@@ -937,7 +937,7 @@
                     <button button class="btn btn-lg centered">
                       {{ 'PROJECT_EDIT.HELP.PREVIEW' | translate }}
                     </button>
-                    <app-client-project content></app-client-project>
+                    <app-client-project content [project]=project></app-client-project>
                   </modal>
 
                   <pdf-generator class="btn btn-lg centered" [model]="getModel()" *ngIf="project.status !== 'EDITING'">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
@@ -9,8 +9,8 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
   styleUrls: ['./client-project.component.scss']
 })
 export class ClientProjectComponent implements OnInit {
-
-  private _project: any;
+  
+  @Input() project: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
@@ -18,18 +18,16 @@ export class ClientProjectComponent implements OnInit {
 
 
   ngOnInit() {
-    this._activatedRoute.params.subscribe(params => {
-      const innovationId = params['innovationId'];
+    if (!this.project) {
+      this._activatedRoute.params.subscribe(params => {
+        const innovationId = params['innovationId'];
 
-      this._innovationService.get(innovationId).subscribe(innovation => {
-          this._project = innovation;
-        },
-        error => this._notificationsService.error('Error', error.message)
-      );
-    });
-  }
-
-  get project (): any {
-    return this._project;
+        this._innovationService.get(innovationId).subscribe(innovation => {
+            this.project = innovation;
+          },
+          error => this._notificationsService.error('Error', error.message)
+        );
+      });
+    }
   }
 }
