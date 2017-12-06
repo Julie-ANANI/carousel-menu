@@ -15,11 +15,10 @@ export class SharedVideoComponent implements OnInit {
 
     ngOnInit() {
         // that way we avoid loading the iframe with the parent component.
-        this.url = this.sanitizeUrl(this.media.url);
+        this.url = this.sanitizeUrl(this.media.video.embeddableUrl);
     }
 
     sanitizeUrl(url: string): SafeResourceUrl {
-        const updated_url = url.replace("watch?v=", "embed/");
-        return this.sanitizer.bypassSecurityTrustResourceUrl(updated_url);
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 }
