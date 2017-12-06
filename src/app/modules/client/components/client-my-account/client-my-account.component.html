@@ -78,7 +78,7 @@
               <app-input-list (update)="addSector($event)"
                               [config]="{
                                 placeholder: ('MY_ACCOUNT.SECTORS' | translate),
-                                initialData: this.formData.get('sectors').value
+                                initialData: formData.get('sectors').value
                               }">
               </app-input-list>
             </div>
@@ -94,7 +94,7 @@
               <app-input-list (update)="addTechnology($event)"
                               [config]="{
                                 placeholder: ('MY_ACCOUNT.TECHNOLOGIES' | translate),
-                                initialData: this.formData.get('technologies').value
+                                initialData: formData.get('technologies').value
                               }">
               </app-input-list>
             </div>
