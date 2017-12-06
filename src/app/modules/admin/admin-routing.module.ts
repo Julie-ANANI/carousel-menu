@@ -10,6 +10,7 @@ import { AdminPatentsComponent } from './components/admin-patents/admin-patents.
 import { AdminSearchesComponent } from './components/admin-searches/admin-searches.component';
 import { AdminComponent } from './admin.component';
 import { AdminAuthGuard } from './admin-auth-guard.service';
+import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
 
 const adminRoutes: Routes = [
@@ -50,7 +51,8 @@ const adminRoutes: Routes = [
       {
         path: 'emails',
         children: [
-          { path: '', component: AdminEmailsComponent, pathMatch: 'full' }
+          { path: '', component: AdminEmailsComponent, pathMatch: 'full' },
+          { path: 'batch/:batchId', component: AdminBatchInformationComponent, pathMatch: 'full' }
         ]
       },
       {

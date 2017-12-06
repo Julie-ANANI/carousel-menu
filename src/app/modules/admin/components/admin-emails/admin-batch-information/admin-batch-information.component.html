@@ -1,0 +1,43 @@
+<div>
+  <div class="container">
+    <h3>Batch summary for campaign -- {{campaign.name || "Untitled"}}</h3>
+    <div class="projects-stats">
+      <div>Creation date:<span>{{batch.created | date: 'shortDate'}}</span></div>
+      <div>Start date:<span>{{batch.startDate | date: 'short'}}</span></div>
+      <div>End date:<span>{{batch.endDate | date: 'short'}}</span></div>
+    </div>
+    <div class="emails-stats">
+      <div>Accepted e-mails: <span>N/A</span></div>
+      <div>Delivered e-mails: <span>N/A</span></div>
+      <div>Bounced e-mails: <span>N/A</span></div>
+      <div>Ratio 80/100: <span>N/A</span></div>
+    </div>
+    <div>
+
+    </div>
+  </div>
+  <hr>
+  <div class="container">
+    <h3>Recipient list</h3>
+    <table class="table">
+      <thead>
+        <th width="180">Recipient name</th>
+        <th width="250">E-mail (confidence)</th>
+        <th width="180">Company</th>
+        <th width="180">Created</th>
+        <th width="80">Campaigns</th>
+        <th width="80">Answers</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let recipient of recipients">
+          <td>{{recipient.firstName + ' ' + recipient.lastName}}</td>
+          <td>{{recipient.email}}~({{recipient.emailConfidence}}%)</td>
+          <td><a href="recipient.url" target="_blank">{{recipient.company}}</a></td>
+          <td>{{recipient.created}}</td>
+          <td>{{recipient.campaigns.length || 0}}</td>
+          <td>{{recipient.answers.length || 0}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

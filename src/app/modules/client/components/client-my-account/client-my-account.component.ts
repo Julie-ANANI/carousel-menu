@@ -37,7 +37,10 @@ export class ClientMyAccountComponent implements OnInit {
       email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
       companyName: '',
       jobTitle: '',
-      phone: ''
+      phone: '',
+      language: '',
+      technologies: [[]],
+      sectors: [[]]
     });
 
     this._userService.getSelf().subscribe(user => {
@@ -70,6 +73,14 @@ export class ClientMyAccountComponent implements OnInit {
 
   public deleteAccount () {
     alert('TODO'); // TODO Antoine
+  }
+
+  public addTechnology(event) {
+    console.log(event);
+  }
+
+  public addSector(event) {
+    console.log(event);
   }
 
 }
