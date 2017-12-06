@@ -33,6 +33,7 @@ import { SqSortDirective } from '../../directives/smart-query/sqSort.directive';
 import { SqResetDirective } from '../../directives/smart-query/sqReset.directive';
 import { SharedModalComponent } from './components/shared-modal-component/shared-modal.component';
 import { SharedStarsComponent } from './components/shared-stars-component/shared-stars.component';
+import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { ChartsModule } from 'ng2-charts';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
@@ -91,7 +92,8 @@ import { SharedLatexManagerComponent } from './components/shared-latex-manager/s
     SharedModalComponent,
     SharedStarsComponent,
     SharedProjectDescriptionComponent,
-    SharedLatexManagerComponent
+    SharedLatexManagerComponent,
+    SharedVideoComponent
   ],
   exports: [
     // Modules
