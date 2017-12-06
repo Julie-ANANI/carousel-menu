@@ -47,9 +47,6 @@ export class AuthService {
     return this._http.get(`/auth/linkedin?domain=${domain}`)
       .map((res: Response) => {
         const response = res.json();
-        this._setAuthenticatedTo(response.isAuthenticated);
-        this._setAdminTo(response.isAdmin);
-        this._user = response;
         return response.url;
       })
       .catch((error: Response) => {

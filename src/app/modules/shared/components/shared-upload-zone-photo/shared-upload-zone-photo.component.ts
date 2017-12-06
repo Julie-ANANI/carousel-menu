@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter, ViewChild } from '@angular/core';
-import { FileUploader, FilterFunction, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { FileUploader, FilterFunction, FileItem, ParsedResponseHeaders, FileUploaderOptions } from 'ng2-file-upload';
 import { NotificationsService } from 'angular2-notifications';
 import { environment } from '../../../../../environments/environment'
 
@@ -32,6 +32,9 @@ export class SharedUploadZonePhotoComponent implements OnInit {
       // maxFileSize: 1024 * 1024,
       additionalParameter: {} // à transmettre au serveur au moment de la sauvegarde
     });
+    const uo: FileUploaderOptions = {};
+    uo.headers = [{ name: 'api-token', value : 'umi-front-application,TXnKAVHh0xpiFlC8D01S3e8ZkD45VIDJ' } ];
+    this._uploader.setOptions(uo);
 
     this._uploader.onBeforeUploadItem = (item: FileItem): any => {
       this.loading = true;
