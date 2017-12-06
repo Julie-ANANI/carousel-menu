@@ -320,15 +320,14 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     const mediaSubs = this._innovationService
       .addMediaToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
       .subscribe(res => {
-      console.log(res);
+        this._project = res;
     });
     this._subscriptions.push(mediaSubs);
   }
 
   public newOnlineVideoToAdd (videoInfos) {
-    console.log(videoInfos);
     this._innovationService.addNewMediaVideoToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos).subscribe(res => {
-      console.log(res);
+      this._project = res;
     });
   }
 

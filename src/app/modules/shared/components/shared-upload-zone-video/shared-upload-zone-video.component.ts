@@ -41,14 +41,7 @@ export class SharedUploadZoneVideoComponent implements OnInit {
             provider: 'vimeo',
             name: ''
           };
-          this._http.get('https://vimeo.com/api/v2/video/' + videoKey + '.json')
-            .map((res: Response) => res)
-            .subscribe(res => {
-              const thumbSplit = JSON.parse(res['_body'])[0].thumbnail_large.split(/\d{3}(?=.jpg)/);
-              returnValue.thumbnail = thumbSplit[0] + '1280x720' + thumbSplit[1];
-              returnValue.name = JSON.parse(res['_body'])[0].title;
-              this.cbFn.emit(returnValue);
-            });
+          this.cbFn.emit(returnValue);
         }
           break;
         default: {
