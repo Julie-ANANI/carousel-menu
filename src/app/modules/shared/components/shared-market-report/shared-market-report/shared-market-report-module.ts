@@ -21,10 +21,10 @@ export class SharedMarketReportComponent implements OnInit {
   private _showDetails = true;
   private _calculating = false;
   private _invention = null;
-  private innoid = '599c0029719e572041aafe0d';
+  private _innoid = '599c0029719e572041aafe0d';
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
-  private modalAnswer: any;
+  private _modalAnswer: any;
 
   constructor(private _innovationService: InnovationService,
               private _route: ActivatedRoute,
@@ -33,12 +33,9 @@ export class SharedMarketReportComponent implements OnInit {
 
   ngOnInit() {
     this._route.params.subscribe(params => {
-      this.innoid = params['innovationId'] || this.innoid;
-      this.modalAnswer = null;
-      /*this._innovationService.getInnovationSythesis(this.innoid).subscribe(synthesis => {
-        this._infographics = synthesis.infographics;
-      });*/
-      this._innovationService.get(this.innoid)
+      this._innoid = params['innovationId'] || this._innoid;
+      this._modalAnswer = null;
+      this._innovationService.get(this._innoid)
         .subscribe(invention => {
           this._invention = invention;
           this._infographics = invention.synthesis[0].infographics;
@@ -52,7 +49,7 @@ export class SharedMarketReportComponent implements OnInit {
 
   public recalculateSynthesis(): any {
     this._calculating = true;
-    this._innovationService.recalculateSynthesis(this.innoid).subscribe(synthesis => {
+    this._innovationService.recalculateSynthesis(this._innoid).subscribe(synthesis => {
       this._calculating = false;
       this._infographics = synthesis.infographics;
     });
@@ -64,7 +61,7 @@ export class SharedMarketReportComponent implements OnInit {
    */
   public dataBuilder(): any {
     return {
-      projectId: this.innoid,
+      projectId: this._innoid,
       title: this._invention.name.slice(0, Math.min(20, this._invention.name.length)) + "-" + "synthesis" +"(" + (this._invention.name.lang || 'en') +").pdf"
     }
   }
@@ -87,11 +84,23 @@ export class SharedMarketReportComponent implements OnInit {
   }
 
   public seeAnswer(answer: any) {
-    this.modalAnswer = answer;
+    this._modalAnswer = answer;
   }
 
   public canShow(): boolean {
     return !!this._infographics;
+  }
+
+  get modalAnswer(): any {
+    return this._modalAnswer;
+  }
+
+  set modalAnswer(modalAnswer: any) {
+    this._modalAnswer = modalAnswer;
+  }
+
+  get innoid(): string {
+    return this._innoid;
   }
 
   get infographics(): any {
