@@ -57,6 +57,9 @@ $primary-color: #3498DB;
 .project-help {
   background: #FAFAFA;
   padding: 40px 0;
+  position:sticky;
+  top: 0;
+  z-index:300;
 
   .steps {
     margin: 0;
