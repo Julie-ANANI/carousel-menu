@@ -18,6 +18,12 @@ export class ClientProjectEditExample1Component implements OnInit {
       'projectStatus': 1,
       'isPublic': true,
       'status': 'SUBMITTED',
+      'principalMedia': {
+        '_id': '0123456789',
+        'cloudinary': {
+          'public_id': 'app/project-example-1.jpg'
+        }
+      },
       'innovationCards': [
         {
           'principal': false,
