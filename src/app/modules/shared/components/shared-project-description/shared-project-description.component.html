@@ -43,16 +43,17 @@
     </div>
   </div>
 
-  <div class="container" *ngIf="project.principalMedia">
+  <div class="container centered" *ngIf="project.principalMedia">
     <div class="columns">
       <div class="column col-10 col-mx-auto">
-        <div class="columns">
-          <div class="column col-4 col-mx-auto">
-            <a [href]="'https://res.cloudinary.com/umi/image/upload/' + project.principalMedia.cloudinary.public_id" target="_blank">
-              <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_600/' + project.principalMedia.cloudinary.public_id"
-                   alt="" width="597" height="418" class="img-responsive">
-            </a>
-          </div>
+        <!-- Si le média principal est une photo -->
+        <a *ngIf="project.principalMedia.type == 'PHOTO'" [href]="'https://res.cloudinary.com/umi/image/upload/' + project.principalMedia.cloudinary.public_id" target="_blank">
+          <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_600/' + project.principalMedia.cloudinary.public_id"
+               alt="" width="597" height="418" class="img-responsive centered">
+        </a>
+        <!-- Si le média principal est une vidéo -->
+        <div class="centered">
+          <app-video *ngIf="project.principalMedia.type == 'VIDEO'" [media]="project.principalMedia"></app-video>
         </div>
       </div>
     </div>
@@ -90,10 +91,13 @@
                 <div
                   [hidden]="project.innovationCards[idInnovationCard].principalMediaIdx == idx"
                   class="column col-4 col-mx-auto" *ngFor="let media of project.innovationCards[idInnovationCard].media;let idx = index">
-                  <a [href]="'https://res.cloudinary.com/umi/image/upload/' + media.cloudinary.public_id" target="_blank">
+                  <!-- Si le média est une photo -->
+                  <a *ngIf="media.type == 'PHOTO'" [href]="'https://res.cloudinary.com/umi/image/upload/' + media.cloudinary.public_id" target="_blank">
                     <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_600/' + media.cloudinary.public_id"
                          alt="" width="597" height="418" class="img-responsive">
                   </a>
+                  <!-- Si le média est une vidéo -->
+                  <app-video *ngIf="media.type == 'VIDEO'" [media]="media"></app-video>
                 </div>
               </div>
             </div>
