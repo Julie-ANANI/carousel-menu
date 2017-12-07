@@ -71,7 +71,8 @@ export const en = {
       'NO_AD': 'Non-advertising',
       'NO_TECH': 'Non-technical',
       'BRIEF': 'Brief',
-      'EXAMPLES': 'Examples of efficients descriptions',
+      'EXAMPLES': 'Examples of efficient descriptions',
+      'EXAMPLE_TITLE': 'Example of efficient description',
       'PREVIEW': 'Preview my project',
       'DOWNLOAD': 'Download my project'
     },

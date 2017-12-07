@@ -38,9 +38,9 @@ export class ClientMyAccountComponent implements OnInit {
       companyName: '',
       jobTitle: '',
       phone: '',
-      language: '',
+      sectors: [[]],
       technologies: [[]],
-      sectors: [[]]
+      language: ['', [Validators.required]]
     });
 
     this._userService.getSelf().subscribe(user => {
@@ -71,16 +71,18 @@ export class ClientMyAccountComponent implements OnInit {
     }
   }
 
-  public deleteAccount () {
-    alert('TODO'); // TODO Antoine
+  public addSector(event) {
+    this.formData.get('sectors').setValue(event.value);
   }
 
   public addTechnology(event) {
-    console.log(event);
+    this.formData.get('technologies').setValue(event.value);
   }
 
-  public addSector(event) {
-    console.log(event);
+  public deleteAccount () {
+    this._userService.delete().subscribe(function (res) {
+      console.log(res);
+    });
   }
 
 }

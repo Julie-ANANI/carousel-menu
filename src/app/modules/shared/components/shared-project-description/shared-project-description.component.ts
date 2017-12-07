@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ShareService } from '../../../../services/share/share.service';
@@ -13,9 +13,10 @@ export class SharedProjectDescriptionComponent implements OnInit {
 
   @Input() project: any;
   public idInnovationCard = 0;
+  private _onEditingPage = false;
 
   constructor(private _translateService: TranslateService,
-              private _router: Router,
+              private _activatedRoute: ActivatedRoute,
               private _authService: AuthService,
               public shareService: ShareService) { }
 
@@ -31,6 +32,12 @@ export class SharedProjectDescriptionComponent implements OnInit {
         innovationCard.solution = innovationCard.solution.split('\n').join('<br>');
       }
     }
+
+    this._activatedRoute.url.subscribe(segments => {
+      if (segments[0] && segments[0].path == 'edit') {
+        this._onEditingPage = true;
+      }
+    });
 
     this._translateService.onLangChange.subscribe(data => {
       this._displayInnovationCardWithLang(data.lang);
@@ -53,6 +60,10 @@ export class SharedProjectDescriptionComponent implements OnInit {
 
   get isAdmin (): boolean {
     return this._authService.isAdmin;
+  }
+  
+  get onEditingPage(): boolean {
+    return this._onEditingPage;
   }
 
   /**
