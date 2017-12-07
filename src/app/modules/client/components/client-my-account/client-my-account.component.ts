@@ -37,7 +37,10 @@ export class ClientMyAccountComponent implements OnInit {
       email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
       companyName: '',
       jobTitle: '',
-      phone: ''
+      phone: '',
+      sectors: [[]],
+      technologies: [[]],
+      language: ['', [Validators.required]]
     });
 
     this._userService.getSelf().subscribe(user => {
@@ -66,6 +69,14 @@ export class ClientMyAccountComponent implements OnInit {
     else {
       this._notificationsService.error('Erreur', 'Formulaire non valide'); // TODO translate
     }
+  }
+
+  public addSector(event) {
+    this.formData.get('sectors').setValue(event.value);
+  }
+
+  public addTechnology(event) {
+    this.formData.get('technologies').setValue(event.value);
   }
 
   public deleteAccount () {

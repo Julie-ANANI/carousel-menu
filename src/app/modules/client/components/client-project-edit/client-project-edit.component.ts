@@ -280,6 +280,9 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   }
 
   public setAsPrincipal (innovationCardId) {
+    /*this._innovationService.setInnovationCardAsPrincipal(this._project.id, innovationCardId).subscribe(data => { // TODO remove
+      this._project = data;
+    });*/
     const innovationCards = this.formData.get('innovationCards').value;
     for (const innovationCard of innovationCards) {
       innovationCard.principal = innovationCard.id === innovationCardId;
@@ -299,27 +302,30 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
 
   public imageUploaded(media) {
     this._project.innovationCards[this.innovationCardEditingIndex].media.push(media);
-    this._innovationService.addMediaToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
-      console.log(res);
+    this._innovationService.addMediaToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(data => {
+      this._project.innovationCards[this.innovationCardEditingIndex].principalMediaId = data.principalMediaId;
     });
   }
 
   public newOnlineVideoToAdd (videoInfos) {
     console.log(videoInfos);
-    this._innovationService.addNewMediaVideoToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos).subscribe(res => {
-      console.log(res);
+    this._innovationService.addNewMediaVideoToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos).subscribe(media => {
+      this._project.innovationCards[this.innovationCardEditingIndex].media.push(media);
     });
   }
 
   public setMediaAsPrimary (media) {
     this._innovationService.setPrincipalMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
-      console.log(res);
+      const card = this.formData.get('innovationCards').value[this.innovationCardEditingIndex] as FormGroup;
+      card['principalMediaId'] = res.principalMediaId;
     });
   }
 
   public deleteMedia (media) {
     this._innovationService.deleteMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
-      console.log(res);
+      const card = this.formData.get('innovationCards').value[this.innovationCardEditingIndex] as FormGroup;
+      card['media'] = res.innovationCardMedias;
+      card['principalMediaId'] = res.innovationCardPrincipalMediaId;
     });
   }
 

@@ -56,6 +56,12 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  /*public setInnovationCardAsPrincipal(innovationId: string, innovationCardId: string): Observable<any> { // TODO remove
+    return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/principal')
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }*/
+
   public setPrincipalMediaOfInnovationCard(innovationId: string, innovationCardId: string, mediaId: string): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/' + mediaId + '/principal')
       .map((res: Response) => res.json())
