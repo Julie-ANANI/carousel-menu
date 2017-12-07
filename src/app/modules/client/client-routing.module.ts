@@ -18,6 +18,7 @@ import { ClientSignupComponent } from './components/client-signup/client-signup.
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientMyUsersComponent } from './components/client-my-users/client-my-users.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
+import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 
 /* Shared */
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
@@ -36,6 +37,13 @@ const clientRoutes: Routes = [
         path: '',
         pathMatch: 'full',
         redirectTo: '/projects'
+      },
+      {
+        path: 'welcome',
+        //canCativate: '',
+        children: [
+          { path: '', component: ClientWelcomeComponent, pathMatch: 'full' }
+        ]
       },
       {
         path: 'login',
@@ -88,7 +96,7 @@ const clientRoutes: Routes = [
             children: [
               { path: '', component: ClientProjectComponent},
               { path: 'edit', component: ClientProjectEditComponent, canActivate: [AuthGuard], canDeactivate: [PendingChangesGuard] },
-              { path: 'synthesis', component: ClientProjectSynthesisComponent, canActivate: [AuthGuard] } // ?isAdmin=true //TODO comment modifier cette route ?
+              { path: 'synthesis', component: ClientProjectSynthesisComponent, canActivate: [AuthGuard] }
             ]
           },
           {

@@ -13,10 +13,10 @@ export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate
   constructor (private _translateService: TranslateService) {}
 
   private _getMessage (): string {
-    return this._translateService.currentLang === 'fr' // TODO Checker les messages :
+    return this._translateService.currentLang === 'fr'
       ? 'ATTENTION : Certaines de vos modifications n\'ont pas été sauvegardées.' +
       'Si vous quittez cette page, ces modifications seront perdues. Êtes-vous sûr(e) de vouloir quitter ?'
-      : 'WARNING: Some of your modifications are unsaved. If you leave this page, these ' +
+      : 'WARNING: Some of your modifications are not saved. If you leave this page, these ' +
       'changes will be lost. Are you sure you want to leave?';
   }
 

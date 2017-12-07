@@ -15,6 +15,7 @@ export class AuthService {
   private _authenticated = false;
   private _authenticatedSource = new Subject<boolean>();
   private _admin = false;
+  private _confirmed = false;
   private _redirectUrl: string;
 
   private _user: any;
@@ -29,6 +30,7 @@ export class AuthService {
      */
     this._setAuthenticatedTo(this._cookieService.get('hasBeenAuthenticated') === 'true');
     this._setAdminTo(this._cookieService.get('hasBeenAdmin') === 'true');
+    this._setConfirmedTo(this._cookieService.get('hasBeenConfirmed') === 'true');
   }
 
   public login(user: User): Observable<User> {
@@ -37,6 +39,7 @@ export class AuthService {
         const response = res.json();
         this._setAuthenticatedTo(response.isAuthenticated);
         this._setAdminTo(response.isAdmin);
+        this._setConfirmedTo(response.isConfirmed);
         this._user = response;
         return response;
       })
@@ -60,6 +63,7 @@ export class AuthService {
         const response = res.json();
         this._setAuthenticatedTo(response.isAuthenticated);
         this._setAdminTo(response.isAdmin);
+        this._setConfirmedTo(response.isConfirmed);
         this._user = null;
         return response;
       })
@@ -75,10 +79,16 @@ export class AuthService {
         const response = res.json();
         this._setAuthenticatedTo(response.isAuthenticated);
         this._setAdminTo(response.isAdmin);
+        this._setConfirmedTo(response.isConfirmed);
         this._user = response.user || null;
         return response;
       })
       .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+  private _setConfirmedTo(newValue: boolean): void {
+    this._confirmed = newValue;
+    this._cookieService.put('hasBeenConfirmed', newValue.toString());
   }
 
   private _setAuthenticatedTo(newValue: boolean): void {
@@ -100,6 +110,10 @@ export class AuthService {
     return this._authenticated;
   }
 
+  get isConfirmed(): boolean {
+    return this._confirmed;
+  }
+
   get isAdmin(): boolean {
     return this._admin;
   }
@@ -114,6 +128,10 @@ export class AuthService {
 
   get isAcceptingCookies(): Boolean { // CNIL
     return true;
+  }
+
+  set isConfirmed(confirmed: boolean) {
+    this._confirmed = confirmed;
   }
 
   set redirectUrl (redirectUrl: string) {
