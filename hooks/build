@@ -22,7 +22,7 @@ else
   then
     FRONT_VERSION="umi"
     BUILD_ENV="dev"
-    OTHER_PARAMS=""
+    OTHER_PARAMS="--aot"
   fi
 fi
 
