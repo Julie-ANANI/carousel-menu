@@ -19,8 +19,8 @@ ADD . .
 WORKDIR /var/web
 RUN npm install --production
 #RUN ng build --prod --aot
-RUN ng build --app=umi --environment=prod --aot
-#RUN ng build --app=$APP_NAME --environment=$BUILD_ENV $OTHER_PARAMS
+#RUN ng build --app=umi --environment=prod --aot
+RUN ng build --app=$APP_NAME --environment=$BUILD_ENV $OTHER_PARAMS
 RUN rm -f /var/web/.npmrc
 
 EXPOSE  3080
