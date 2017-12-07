@@ -22,7 +22,6 @@ export class SharedMarketReportComponent implements OnInit {
   private _editionMode = true;
   private _showDetails = true;
   private _calculating = false;
-  private _selectLangInput = 'en';
   private _innoid = '599c0029719e572041aafe0d';
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
@@ -44,7 +43,6 @@ export class SharedMarketReportComponent implements OnInit {
       }, error => this._notificationsService.error('Error', error.message));
     });
     PageScrollConfig.defaultDuration = 800;
-    this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
 
   public recalculateSynthesis(): any {
@@ -59,19 +57,21 @@ export class SharedMarketReportComponent implements OnInit {
    * Builds the data required to ask the API for a PDF
    * @returns {{projectId, innovationCardId}}
    */
-  public dataBuilder(): any {
+  public dataBuilder(lang): any {
     return {
       projectId: this._innoid,
-      title: this._infographics.title.slice(0, Math.min(20, this._infographics.title.length)) + "-synthesis(" + this._selectLangInput +").pdf"
+      title: this._infographics.title.slice(0, Math.min(20, this._infographics.title.length)) + "-synthesis(" + lang +").pdf"
     }
   }
 
   public getModel (): any {
+    const lang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+    console.log('getModel   ', lang);
     return {
-      lang: this._selectLangInput,
+      lang: lang,
       jobType: 'synthesis',
       labels: 'EXPORT.INNOVATION.SYNTHESIS',
-      pdfDataseedFunction: this.dataBuilder()
+      pdfDataseedFunction: this.dataBuilder(lang)
     };
   }
 

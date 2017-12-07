@@ -30,7 +30,6 @@ export class SharedLatexManagerComponent implements OnInit {
   ngOnInit() {
     initTranslation(this._translateService);
     //Verify that we have received have all we need
-    this._fileName = this.model.pdfDataseedFunction.title;
   }
 
   /**
@@ -46,6 +45,7 @@ export class SharedLatexManagerComponent implements OnInit {
    * @param event
    */
   public startJob(event): void {
+    this._fileName = this.model.pdfDataseedFunction.title;
     if(!this.isCompiling()) {
       switch(this.model.jobType) {
         case('inventionCard'):
@@ -130,7 +130,7 @@ export class SharedLatexManagerComponent implements OnInit {
    */
   private _generateSynthesis() {
     this._compiling = true;
-    this._innovationService.exportSynthesis(this.model.pdfDataseedFunction.projectId)
+    this._innovationService.exportSynthesis(this.model.pdfDataseedFunction.projectId, this.model.lang)
       .subscribe(exportServiceResp => {
         this._processResponse(exportServiceResp);
       }, error => {
