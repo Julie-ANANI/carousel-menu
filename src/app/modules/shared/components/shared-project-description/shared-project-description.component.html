@@ -13,7 +13,7 @@
 
           <div class="columns">
             <div class="column col-9">
-              <button class="btn btn-lg btn-primary" [routerLink]="'./edit'" *ngIf="(project.status === 'EDITING' && isProjectOwner) || isAdmin">
+              <button class="btn btn-lg btn-primary" [routerLink]="'./edit'" *ngIf="((project.status === 'EDITING' && isProjectOwner) || isAdmin) && !onEditingPage">
                 {{ 'COMMON.EDIT' | translate}} <i class="icon icon-arrow-right"></i>
               </button>
               <button class="btn btn-lg btn-primary" *ngIf="false && project.owner && !isProjectOwner"><!-- TODO popup textarea de contact -->
