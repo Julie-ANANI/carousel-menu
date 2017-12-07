@@ -24,6 +24,7 @@ import { ClientProjectEditExample2Component } from './components/client-project-
 import { ClientProjectEditExample1Component } from './components/client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
 import { ClientMyUsersComponent } from './components/client-my-users/client-my-users.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
+import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
 import { InputListComponent } from '../../directives/input-list/input-list.component';
@@ -53,6 +54,7 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
     ClientCampaignComponent,
 
     ClientDiscoverComponent,
+    ClientWelcomeComponent,
     ClientLoginComponent,
     ClientSignupComponent,
     ClientLogoutComponent,

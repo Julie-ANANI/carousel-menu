@@ -47,6 +47,12 @@ export class UserService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  public activate(state: string): Observable<any> {
+    return this._http.put('/user/me', {state:state})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.json()));
+  }
+
   public getSelf(): Observable<any> {
     return this._http.get('/user/me')
       .map((res: Response) => res.json())
