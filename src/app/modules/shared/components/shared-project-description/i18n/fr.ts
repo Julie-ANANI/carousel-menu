@@ -4,6 +4,7 @@ export const fr = {
     'CONTACT_PROJECT_MANAGER': 'Contacter le responsable',
     'SOLUTION': 'Solution',
     'ISSUE': 'Problématique',
-    'MARKET_BENEFITS': 'Avantages marché'
+    'MARKET_BENEFITS': 'Avantages marché',
+    'GALLERY': 'Galerie'
   }
 };

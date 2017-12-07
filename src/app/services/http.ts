@@ -4,7 +4,8 @@ import {
   RequestOptionsArgs,
   Response,
   Headers,
-  XHRBackend
+  XHRBackend,
+  ResponseContentType
 } from '@angular/http';
 import { environment } from '../../environments/environment';
 import { LoaderService } from './loader/loader.service';
@@ -12,6 +13,9 @@ import { RequestOptions } from './requestOptions';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { NotificationsService } from 'angular2-notifications';
+
+import * as SessionVerificationController from '@umius/umi-session-verifications';
+const SessionVerification = new SessionVerificationController();
 
 export { Response } from '@angular/http';
 
@@ -102,14 +106,38 @@ export class Http extends AngularHttp {
       });
   }
 
+  public download(UriOrUrl: string, options?: RequestOptionsArgs) {
+    this._showLoader();
+    if(!options) {
+      options = new RequestOptions();
+    }
+    options.responseType = ResponseContentType.Blob;
+
+    if (UriOrUrl.indexOf('http') === -1) { // Si ce n'est pas une URL
+      UriOrUrl = this._getFullUrl(UriOrUrl);
+    }
+
+    return super.get(UriOrUrl, this._requestOptions(options))
+      .catch(this._onCatch)
+      .do((res: Response) => {
+        this._onSuccess(res);
+      }, (error: any) => {
+        this._onError(error);
+      })
+      .finally(() => {
+        this._onEnd();
+      });
+  }
+
   private _requestOptions(options?: RequestOptionsArgs): RequestOptionsArgs {
     if (!options) {
       options = new RequestOptions();
     }
 
-    if (options.headers === null) {
+    if (!options.headers) {
       options.headers = new Headers();
     }
+    SessionVerification.setHeaderAngular2(options, 'umi-front-application');
 
     options.withCredentials = true;
 

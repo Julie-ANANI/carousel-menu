@@ -21,6 +21,8 @@ import { ChartsModule } from 'ng2-charts';
 import { IndexService } from './services/index/index.service';
 import { ShareService } from './services/share/share.service';
 import { AutocompleteService } from './services/autocomplete/autocomplete.service';
+import { LatexService } from './services/latex/latex.service';
+import { EmailService } from './services/email/email.service';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 @NgModule({
@@ -58,6 +60,8 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
     LoaderService,
     WindowRefService,
     IndexService,
+    LatexService,
+    EmailService,
     ShareService,
     SmartQueryService,
     {

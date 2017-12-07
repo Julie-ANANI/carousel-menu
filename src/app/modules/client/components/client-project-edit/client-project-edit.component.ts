@@ -1,4 +1,4 @@
-import {Component, OnInit, HostListener} from '@angular/core';
+import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService, initTranslation} from './i18n/i18n';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -7,6 +7,7 @@ import {AuthService} from '../../../../services/auth/auth.service';
 import {NotificationsService} from 'angular2-notifications';
 import {ComponentCanDeactivate} from '../../../../pending-changes-guard.service';
 import {Observable} from 'rxjs/Observable';
+import { ISubscription } from "rxjs/Subscription";
 
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
@@ -17,10 +18,12 @@ import {DomSanitizer} from '@angular/platform-browser';
   templateUrl: './client-project-edit.component.html',
   styleUrls: ['./client-project-edit.component.scss']
 })
-export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivate {
+export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
 
   private _project: any;
   public formData: FormGroup;
+
+  private _subscriptions: Array<ISubscription> = [];
 
   /*
    * Gestion de l'affichage
@@ -51,9 +54,9 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
 
     this._buildForm();
 
-    this._activatedRoute.params.subscribe(params => {
+    const subs = this._activatedRoute.params.subscribe(params => {
       const innovationId = params['innovationId'];
-      this._innovationService.get(innovationId).subscribe(innovation => {
+      const subs = this._innovationService.get(innovationId).subscribe(innovation => {
           this._project = innovation;
           this.formData.patchValue(innovation);
 
@@ -69,19 +72,29 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
           this.displayCompanyToExcludeSection = this.formData.get('settings').get('companies').get('exclude').value.length > 0;
           this.displayPersonsToExcludeSection = this.formData.get('settings').get('professionals').get('exclude').value.length > 0;
 
-          this.formData.valueChanges
+          const formSubs = this.formData.valueChanges
             .distinctUntilChanged()
             .subscribe(newVersion => {
               this.shouldSave = true;
             });
+          this._subscriptions.push(formSubs);
         },
         errorTranslateCode => {
-          this._translateService.get(errorTranslateCode).subscribe(errorMessage =>
+          const translateSubs = this._translateService.get(errorTranslateCode).subscribe(errorMessage =>
             this._notificationsService.error('Error', errorMessage) // TODO Translate
           );
+          this._subscriptions.push(translateSubs);
           this._router.navigate(['/projects']);
         }
       );
+      this._subscriptions.push(subs);
+    });
+    this._subscriptions.push(subs);
+  }
+
+  ngOnDestroy() {
+    this._subscriptions.forEach(subs=>{
+      subs.unsubscribe();
     });
   }
 
@@ -129,7 +142,9 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
    */
   public save(callback) {
     if (this.canEdit) {
-      this._innovationService.save(this._project.id, this.formData.value, this._project.innovationCards[0].id).subscribe(data => {
+      const saveSubs = this._innovationService
+        .save(this._project.id, this.formData.value, this._project.innovationCards[0].id)
+        .subscribe(data => {
         this.lastSavedDate = new Date(data.updated);
         this._project = data;
         this.shouldSave = false;
@@ -139,6 +154,7 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
       }, err => {
         this._notificationsService.error('Unforbidden', err);
       });
+      this._subscriptions.push(saveSubs);
     } else {
       this._notificationsService.error('Unforbidden', 'You can\'t edit this project');
     }
@@ -254,12 +270,13 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   public createInnovationCard() {
     if (this.canEdit) {
       if (this._project.innovationCards.length < 2 && this._project.innovationCards.length !== 0) {
-        this._innovationService.createInnovationCard(this._project.id, {
+        const innoCardSubs = this._innovationService.createInnovationCard(this._project.id, {
           lang: this._project.innovationCards[0].lang === 'en' ? 'fr' : 'en' // Pour l'instant il n'y a que deux langues
         }).subscribe((data) => {
           this._addInnovationCardWithData(data);
           this._project.innovationCards.push(data);
         });
+        this._subscriptions.push(innoCardSubs);
       }
     }
   }
@@ -280,9 +297,6 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
   }
 
   public setAsPrincipal (innovationCardId) {
-    /*this._innovationService.setInnovationCardAsPrincipal(this._project.id, innovationCardId).subscribe(data => { // TODO remove
-      this._project = data;
-    });*/
     const innovationCards = this.formData.get('innovationCards').value;
     for (const innovationCard of innovationCards) {
       innovationCard.principal = innovationCard.id === innovationCardId;
@@ -292,45 +306,64 @@ export class ClientProjectEditComponent implements OnInit, ComponentCanDeactivat
 
   public submitProjectToValidation () {
     this.save(_ => {
-      this._innovationService.submitProjectToValidation(this._project.id).subscribe(data2 => {
+      const saveSubs = this._innovationService.submitProjectToValidation(this._project.id).subscribe(data2 => {
         this._router.navigate(['../']);
         this._notificationsService.success('Submitted', 'Your project has been sent to validation.'); // TODO translate
       });
+      this._subscriptions.push(saveSubs);
     });
   }
 
 
   public imageUploaded(media) {
     this._project.innovationCards[this.innovationCardEditingIndex].media.push(media);
-    this._innovationService.addMediaToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(data => {
-      this._project.innovationCards[this.innovationCardEditingIndex].principalMediaId = data.principalMediaId;
+    const mediaSubs = this._innovationService
+      .addMediaToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
+      .subscribe(res => {
+        this._project = res;
     });
+    this._subscriptions.push(mediaSubs);
   }
 
   public newOnlineVideoToAdd (videoInfos) {
-    console.log(videoInfos);
-    this._innovationService.addNewMediaVideoToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos).subscribe(media => {
-      this._project.innovationCards[this.innovationCardEditingIndex].media.push(media);
+    this._innovationService.addNewMediaVideoToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos).subscribe(res => {
+      this._project = res;
     });
   }
 
   public setMediaAsPrimary (media) {
-    this._innovationService.setPrincipalMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
-      const card = this.formData.get('innovationCards').value[this.innovationCardEditingIndex] as FormGroup;
-      card['principalMediaId'] = res.principalMediaId;
+    const mediaSubs = this._innovationService.setPrincipalMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
+      this._project = res;
     });
+    this._subscriptions.push(mediaSubs);
   }
 
   public deleteMedia (media) {
-    this._innovationService.deleteMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
-      const card = this.formData.get('innovationCards').value[this.innovationCardEditingIndex] as FormGroup;
-      card['media'] = res.innovationCardMedias;
-      card['principalMediaId'] = res.innovationCardPrincipalMediaId;
+    const mediaSubs = this._innovationService.deleteMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
+      this._project = res;
     });
+    this._subscriptions.push(mediaSubs);
   }
 
-  public downloadInnovationCard () {
-    alert('TODO :  [href]="/:innovationId/exportInventionCard/:innovationCardId"');
+  /**
+   * Builds the data required to ask the API for a PDF
+   * @returns {{projectId, innovationCardId}}
+   */
+  public dataBuilder(): any {
+    return {
+      projectId: this._project.id,
+      innovationCardId: this._project.innovationCards[0].id,
+      title: this._project.innovationCards[0].title.slice(0, Math.min(20, this._project.innovationCards[0].title.length)) + "-" + "project" +"(" + (this.project.innovationCards[0].lang || 'en') +").pdf"
+    }
+  }
+
+  public getModel (): any {
+    return {
+      lang: 'en',
+      jobType: 'innovationCard',
+      labels: 'EXPORT.INNOVATION.CARD',
+      pdfDataseedFunction: this.dataBuilder()
+    };
   }
 
   @HostListener('window:beforeunload')

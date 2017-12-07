@@ -45,7 +45,7 @@ export class ClientSignupComponent implements OnInit {
   }
 
   public linkedInSignIn() {
-    const domain = environment.domain
+    const domain = environment.domain;
     this._authService.linkedinLogin(domain)
       .subscribe(
         url => {

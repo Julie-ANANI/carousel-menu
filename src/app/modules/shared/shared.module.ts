@@ -33,12 +33,15 @@ import { SqSortDirective } from '../../directives/smart-query/sqSort.directive';
 import { SqResetDirective } from '../../directives/smart-query/sqReset.directive';
 import { SharedModalComponent } from './components/shared-modal-component/shared-modal.component';
 import { SharedStarsComponent } from './components/shared-stars-component/shared-stars.component';
+import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { ChartsModule } from 'ng2-charts';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
 import { Ng2FileDropModule } from 'ng2-file-drop';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
-import {Ng2PageScrollModule} from 'ng2-page-scroll';
+import { Ng2PageScrollModule } from 'ng2-page-scroll';
+
+import { SharedLatexManagerComponent } from './components/shared-latex-manager/shared-latex-manager.component';
 
 @NgModule({
   imports: [
@@ -88,7 +91,9 @@ import {Ng2PageScrollModule} from 'ng2-page-scroll';
     SharedTextZoneComponent,
     SharedModalComponent,
     SharedStarsComponent,
-    SharedProjectDescriptionComponent
+    SharedProjectDescriptionComponent,
+    SharedLatexManagerComponent,
+    SharedVideoComponent
   ],
   exports: [
     // Modules
@@ -117,7 +122,8 @@ import {Ng2PageScrollModule} from 'ng2-page-scroll';
     SharedFilterInputComponent,
     SharedMarketReportComponent,
     SharedModalComponent,
-    SharedProjectDescriptionComponent
+    SharedProjectDescriptionComponent,
+    SharedLatexManagerComponent
   ]
 })
 export class SharedModule { }

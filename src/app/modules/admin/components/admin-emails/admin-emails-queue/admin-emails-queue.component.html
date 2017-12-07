@@ -1,0 +1,26 @@
+<div>
+  <table class="table">
+    <thead>
+      <th width="250">Campaign name</th>
+      <th width="190">Creation date</th>
+      <th width="190">Start date</th>
+      <th width="190">End date</th>
+      <th width="80">Batch size</th>
+      <th width="100">Status</th>
+      <th width="60">Information</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of queue">
+        <td>{{campaignName(transaction)}}</td>
+        <td>{{transaction.created}}</td>
+        <td>{{transaction.startDate}}</td>
+        <td>{{transaction.endDate}}</td>
+        <td>{{batchSize(transaction)}}</td>
+        <td><a (click)="changeStatus(transaction)">{{transaction.status}}</a></td>
+        <td><a class="btn btn-action" [routerLink]="['batch/'+transaction._id]"><i class="fa fa-info"></i></a></td>
+      </tr>
+    </tbody>
+  </table>
+  <div >
+  </div>
+</div>

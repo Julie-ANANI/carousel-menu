@@ -68,7 +68,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
     });
     this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
     this.conclusionId = `${this.id}Conclusion`;
-    
+
     if ((this.pie || this.id === 'interests') && this.info.pieChart) {
       let data = SharedMarketReportSectionComponent.getChartValues(this.info.pieChart);
       this._chartValues = [{
@@ -76,7 +76,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
         'backgroundColor': ['#C0210F', '#F2C500', '#82CD30', '#34AC01']
       }];
     }
-    
+
     switch(this.id) {
       case 'keyAdvantages':
         this._innovationService.getInnovationCardByLanguage(this.innoid, this._selectLangInput).subscribe(card => {
@@ -85,7 +85,8 @@ export class SharedMarketReportSectionComponent implements OnInit {
         break;
       case 'marketPotential':
         // Calcul du score max
-        this._maxCountScore = _.maxBy(this.info.data, 'count')['count'];
+        const max = _.maxBy(this.info.data, 'count') || {};
+        this._maxCountScore = max['count'] || 0;
         break;
     }
   }

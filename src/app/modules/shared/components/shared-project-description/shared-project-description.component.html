@@ -19,6 +19,8 @@
               <button class="btn btn-lg btn-primary" *ngIf="false && project.owner && !isProjectOwner"><!-- TODO popup textarea de contact -->
                 {{ 'PROJECT.CONTACT_PROJECT_MANAGER' | translate}} <i class="icon icon-arrow-right"></i>
               </button>
+              <pdf-generator class="btn btn-lg btn-primary" [model]="getModel()" *ngIf="project.status !== 'EDITING'">
+              </pdf-generator>
             </div>
             <div class="column col-3 share">
               Share<br>
@@ -41,16 +43,17 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="container centered" *ngIf="project.principalMedia">
     <div class="columns">
       <div class="column col-10 col-mx-auto">
-        <div class="columns">
-          <div class="column col-4 col-mx-auto" *ngFor="let media of project.innovationCards[idInnovationCard].media">
-            <a [href]="'https://res.cloudinary.com/umi/image/upload/' + media.cloudinary.public_id" target="_blank">
-              <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_600/' + media.cloudinary.public_id"
-                   alt="" width="597" height="418" class="img-responsive">
-            </a>
-          </div>
+        <!-- Si le média principal est une photo -->
+        <a *ngIf="project.principalMedia.type == 'PHOTO'" [href]="'https://res.cloudinary.com/umi/image/upload/' + project.principalMedia.cloudinary.public_id" target="_blank">
+          <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_600/' + project.principalMedia.cloudinary.public_id"
+               alt="" width="597" height="418" class="img-responsive centered">
+        </a>
+        <!-- Si le média principal est une vidéo -->
+        <div class="centered">
+          <app-video *ngIf="project.principalMedia.type == 'VIDEO'" [media]="project.principalMedia"></app-video>
         </div>
       </div>
     </div>
@@ -80,6 +83,24 @@
           <div class="column col-6">
             <h2>{{ 'PROJECT.SOLUTION' | translate }}</h2>
             <p [innerHtml]="project.innovationCards[idInnovationCard].solution"></p>
+          </div>
+          <div class="column col-12" *ngIf="project.innovationCards[idInnovationCard].media.length > 1">
+            <h2>{{ 'PROJECT.GALLERY' | translate }}</h2>
+            <div class="column col-10 col-mx-auto">
+              <div class="columns">
+                <div
+                  [hidden]="project.innovationCards[idInnovationCard].principalMediaIdx == idx"
+                  class="column col-4 col-mx-auto" *ngFor="let media of project.innovationCards[idInnovationCard].media;let idx = index">
+                  <!-- Si le média est une photo -->
+                  <a *ngIf="media.type == 'PHOTO'" [href]="'https://res.cloudinary.com/umi/image/upload/' + media.cloudinary.public_id" target="_blank">
+                    <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_600/' + media.cloudinary.public_id"
+                         alt="" width="597" height="418" class="img-responsive">
+                  </a>
+                  <!-- Si le média est une vidéo -->
+                  <app-video *ngIf="media.type == 'VIDEO'" [media]="media"></app-video>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -86,7 +86,7 @@ const clientRoutes: Routes = [
           {
             path: ':innovationId',
             children: [
-              { path: '',    component: ClientProjectComponent },
+              { path: '', component: ClientProjectComponent},
               { path: 'edit', component: ClientProjectEditComponent, canActivate: [AuthGuard], canDeactivate: [PendingChangesGuard] },
               { path: 'synthesis', component: ClientProjectSynthesisComponent, canActivate: [AuthGuard] } // ?isAdmin=true //TODO comment modifier cette route ?
             ]

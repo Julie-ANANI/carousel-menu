@@ -54,4 +54,25 @@ export class SharedProjectDescriptionComponent implements OnInit {
   get isAdmin (): boolean {
     return this._authService.isAdmin;
   }
+
+  /**
+   * Builds the data required to ask the API for a PDF
+   * @returns {{projectId, innovationCardId}}
+   */
+  public dataBuilder(): any {
+    return {
+      projectId: this.project.id,
+      innovationCardId: this.project.innovationCards[0].id,
+      title: this.project.innovationCards[0].title.slice(0, Math.min(20, this.project.innovationCards[0].title.length)) + "-" + "project" +"(" + (this.project.innovationCards[0].lang || 'en') +").pdf"
+    }
+  }
+
+  public getModel (): any {
+    return {
+      lang: 'en',
+      jobType: 'inventionCard',
+      labels: 'EXPORT.INNOVATION.CARD',
+      pdfDataseedFunction: this.dataBuilder()
+    };
+  }
 }

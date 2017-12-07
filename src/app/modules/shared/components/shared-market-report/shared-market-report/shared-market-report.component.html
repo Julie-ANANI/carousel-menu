@@ -1,7 +1,7 @@
 <market-report-modal [(modalAnswer)]="modalAnswer" [innoid]="innoid"></market-report-modal>
 <div class="market-report" *ngIf="canShow()">
 
-  <h1>{{infographics.title}}</h1>
+  <h1>{{invention.name}}</h1>
   <p class="subtitle">{{ 'MARKET_REPORT.TITLE' | translate }}</p>
   <div *ngIf="authService.isAdmin" class="admin-buttons">
     <button type="button"
@@ -19,6 +19,8 @@
       <i class="fa" aria-hidden="true"
          [ngClass]="{'fa-eye': editionMode, 'fa-edit': !editionMode}"></i>
     </button>
+    <pdf-generator class="btn btn-lg btn-primary" [model]="getModel()" style="margin:10px;">
+    </pdf-generator>
   </div>
 
   <!-- *********************************************************
