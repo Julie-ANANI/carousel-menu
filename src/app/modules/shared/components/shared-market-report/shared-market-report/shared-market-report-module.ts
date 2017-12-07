@@ -107,10 +107,6 @@ export class SharedMarketReportComponent implements OnInit {
     return this._infographics;
   }
 
-  get invention(): any {
-    return this._invention;
-  }
-
   set calculating (value: boolean) {
     this._calculating = value;
   }
