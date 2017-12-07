@@ -22,7 +22,8 @@ export class ClientProjectEditExample1Component implements OnInit {
         '_id': '0123456789',
         'cloudinary': {
           'public_id': 'app/project-example-1.jpg'
-        }
+        },
+        'type': 'PHOTO'
       },
       'innovationCards': [
         {
@@ -78,7 +79,8 @@ export class ClientProjectEditExample1Component implements OnInit {
               '_id': '0123456789',
               'cloudinary': {
                 'public_id': 'app/project-example-1.jpg'
-              }
+              },
+              'type': 'PHOTO'
             }
           ],
           'principalMediaIdx': '0',
@@ -135,7 +137,8 @@ export class ClientProjectEditExample1Component implements OnInit {
               '_id': '0123456789',
               'cloudinary': {
                 'public_id': 'app/project-example-1.jpg'
-              }
+              },
+              'type': 'PHOTO'
             }
           ],
           'principalMediaIdx': '0',

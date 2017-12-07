@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovationService } from './../../../../../services/innovation/innovation.service';
 import { PageScrollConfig } from 'ng2-page-scroll';
+import { NotificationsService } from 'angular2-notifications';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -20,29 +22,25 @@ export class SharedMarketReportComponent implements OnInit {
   private _editionMode = true;
   private _showDetails = true;
   private _calculating = false;
-  private _invention = null;
   private _innoid = '599c0029719e572041aafe0d';
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: any;
 
-  constructor(private _innovationService: InnovationService,
+  constructor(private _translateService: TranslateService,
+              private _innovationService: InnovationService,
               private _route: ActivatedRoute,
-              private _authService: AuthService
+              private _authService: AuthService,
+              private _notificationsService: NotificationsService
   ) { }
 
   ngOnInit() {
     this._route.params.subscribe(params => {
       this._innoid = params['innovationId'] || this._innoid;
       this._modalAnswer = null;
-      this._innovationService.get(this._innoid)
-        .subscribe(invention => {
-          this._invention = invention;
-          this._infographics = invention.synthesis[0].infographics;
-        }, error=>{
-          //error => this._notificationsService.error('Error', error.message)
-          console.log(error);
-        });
+      this._innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
+        this._infographics = synthesis.infographics;
+      }, error => this._notificationsService.error('Error', error.message));
     });
     PageScrollConfig.defaultDuration = 800;
   }
@@ -59,19 +57,21 @@ export class SharedMarketReportComponent implements OnInit {
    * Builds the data required to ask the API for a PDF
    * @returns {{projectId, innovationCardId}}
    */
-  public dataBuilder(): any {
+  public dataBuilder(lang): any {
     return {
       projectId: this._innoid,
-      title: this._invention.name.slice(0, Math.min(20, this._invention.name.length)) + "-" + "synthesis" +"(" + (this._invention.name.lang || 'en') +").pdf"
+      title: this._infographics.title.slice(0, Math.min(20, this._infographics.title.length)) + "-synthesis(" + lang +").pdf"
     }
   }
 
   public getModel (): any {
+    const lang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+    console.log('getModel   ', lang);
     return {
-      lang: 'en',
+      lang: lang,
       jobType: 'synthesis',
       labels: 'EXPORT.INNOVATION.SYNTHESIS',
-      pdfDataseedFunction: this.dataBuilder()
+      pdfDataseedFunction: this.dataBuilder(lang)
     };
   }
 
@@ -105,10 +105,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   get infographics(): any {
     return this._infographics;
-  }
-
-  get invention(): any {
-    return this._invention;
   }
 
   set calculating (value: boolean) {

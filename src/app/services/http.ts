@@ -112,6 +112,7 @@ export class Http extends AngularHttp {
       options = new RequestOptions();
     }
     options.responseType = ResponseContentType.Blob;
+    SessionVerification.setHeaderAngular2(options, 'umi-front-application');
 
     if (UriOrUrl.indexOf('http') === -1) { // Si ce n'est pas une URL
       UriOrUrl = this._getFullUrl(UriOrUrl);

@@ -72,6 +72,7 @@ export const fr = {
       'NO_TECH': 'Non technique',
       'BRIEF': 'Concise',
       'EXAMPLES': 'Exemples de descriptions efficaces',
+      'EXAMPLE_TITLE': 'Exemple de description efficace',
       'PREVIEW': 'Prévisualiser mon projet',
       'DOWNLOAD': 'Télécharger mon projet'
     },
