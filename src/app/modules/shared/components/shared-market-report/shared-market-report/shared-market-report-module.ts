@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovationService } from './../../../../../services/innovation/innovation.service';
 import { PageScrollConfig } from 'ng2-page-scroll';
+import { NotificationsService } from 'angular2-notifications';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -20,34 +22,29 @@ export class SharedMarketReportComponent implements OnInit {
   private _editionMode = true;
   private _showDetails = true;
   private _calculating = false;
-  private _invention = null;
+  private _selectLangInput = 'en';
   private innoid = '599c0029719e572041aafe0d';
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
   private modalAnswer: any;
 
-  constructor(private _innovationService: InnovationService,
+  constructor(private _translateService: TranslateService,
+              private _innovationService: InnovationService,
               private _route: ActivatedRoute,
-              private _authService: AuthService
+              private _authService: AuthService,
+              private _notificationsService: NotificationsService
   ) { }
 
   ngOnInit() {
     this._route.params.subscribe(params => {
       this.innoid = params['innovationId'] || this.innoid;
       this.modalAnswer = null;
-      /*this._innovationService.getInnovationSythesis(this.innoid).subscribe(synthesis => {
+      this._innovationService.getInnovationSythesis(this.innoid).subscribe(synthesis => {
         this._infographics = synthesis.infographics;
-      });*/
-      this._innovationService.get(this.innoid)
-        .subscribe(invention => {
-          this._invention = invention;
-          this._infographics = invention.synthesis[0].infographics;
-        }, error=>{
-          //error => this._notificationsService.error('Error', error.message)
-          console.log(error);
-        });
+      }, error => this._notificationsService.error('Error', error.message));
     });
     PageScrollConfig.defaultDuration = 800;
+    this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
 
   public recalculateSynthesis(): any {
@@ -65,13 +62,13 @@ export class SharedMarketReportComponent implements OnInit {
   public dataBuilder(): any {
     return {
       projectId: this.innoid,
-      title: this._invention.name.slice(0, Math.min(20, this._invention.name.length)) + "-" + "synthesis" +"(" + (this._invention.name.lang || 'en') +").pdf"
+      title: this._infographics.title.slice(0, Math.min(20, this._infographics.title.length)) + "-synthesis(" + this._selectLangInput +").pdf"
     }
   }
 
   public getModel (): any {
     return {
-      lang: 'en',
+      lang: this._selectLangInput,
       jobType: 'synthesis',
       labels: 'EXPORT.INNOVATION.SYNTHESIS',
       pdfDataseedFunction: this.dataBuilder()
@@ -96,10 +93,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   get infographics(): any {
     return this._infographics;
-  }
-
-  get invention(): any {
-    return this._invention;
   }
 
   set calculating (value: boolean) {
