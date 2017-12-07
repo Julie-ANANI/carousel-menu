@@ -8,9 +8,9 @@
 #CACHE_TAG="vendor1"
 
 #$APP_NAME --environment=$BUILD_ENV $OTHER_PARAMS
-#FRONT_VERSION="umi"
-#BUILD_ENV="prod"
-#OTHER_PARAMS=""
+FRONT_VERSION="umi"
+BUILD_ENV="prod"
+OTHER_PARAMS="--aot"
 
 if [[ $CACHE_TAG == *"vendor"* ]]
 then
