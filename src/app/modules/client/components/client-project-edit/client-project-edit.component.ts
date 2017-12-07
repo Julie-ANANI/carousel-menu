@@ -263,7 +263,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
       advantages: [{value: data.advantages, disabled: !this.canEdit}],
       lang: [{value: data.lang, disabled: !this.canEdit}, Validators.required],
       principal: [{value: data.principal, disabled: !this.canEdit}, Validators.required],
-      media: [{value: data.media, disabled: !this.canEdit}, Validators.required]
+      // media: [{value: data.media, disabled: !this.canEdit}, Validators.required] // On ne les gère plus dans le reactive form
     });
   }
 
