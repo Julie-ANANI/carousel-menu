@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
+import { AuthService } from '../../../../services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../models/user.model';
 import { NotificationsService } from 'angular2-notifications';
@@ -23,6 +24,7 @@ export class ClientMyAccountComponent implements OnInit {
   constructor(private _userService: UserService,
               private _translateService: TranslateService,
               private _notificationsService: NotificationsService,
+              private _authService: AuthService,
               private _formBuilder: FormBuilder,
               private _router: Router,
               private _titleService: Title) {}
@@ -80,8 +82,11 @@ export class ClientMyAccountComponent implements OnInit {
   }
 
   public deleteAccount () {
-    this._userService.delete().subscribe(function (res) {
-      console.log(res);
+    this._userService.delete().subscribe((res) => {
+      this._authService.logout().subscribe(() => {
+        this._notificationsService.success('Account deleted', 'Votre compte a bien été supprimé.'); // TODO translate
+        this._router.navigate(['/']);
+      });
     });
   }
 
