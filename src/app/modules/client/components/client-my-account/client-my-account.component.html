@@ -101,17 +101,17 @@
           </div>
         </div>
 
-        <div>
-          <div class="col-3"></div>
-          <div class="col-9">
+        <div class="text-center">
             <button type="submit" class="btn btn-xxl btn-primary centered tooltip-top" [disabled]="formData.invalid">{{ 'COMMON.SAVE' | translate }}</button>
-          </div>
+            <p>
+              <br>
+              <a (click)="changePassword()" class="c-hand">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</a> -
+              <a (click)="accountDeletionAsked = true;" class="c-hand text-error">{{ 'MY_ACCOUNT.DELETE' | translate }}</a> -
+              <a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}</a>
+            </p>
         </div>
       </form>
 
-      <a (click)="changePassword()" class="c-hand">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</a> -
-      <a (click)="accountDeletionAsked = true;" class="c-hand text-error">{{ 'MY_ACCOUNT.DELETE' | translate }}</a> -
-      <a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}</a>
     </div>
   </div>
 </div>

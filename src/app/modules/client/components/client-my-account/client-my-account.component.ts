@@ -80,7 +80,9 @@ export class ClientMyAccountComponent implements OnInit {
   }
 
   public deleteAccount () {
-    alert('TODO'); // TODO Antoine
+    this._userService.delete().subscribe(function (res) {
+      console.log(res);
+    });
   }
 
 }
