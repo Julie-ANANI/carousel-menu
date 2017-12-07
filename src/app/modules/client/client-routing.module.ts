@@ -88,7 +88,7 @@ const clientRoutes: Routes = [
             children: [
               { path: '', component: ClientProjectComponent},
               { path: 'edit', component: ClientProjectEditComponent, canActivate: [AuthGuard], canDeactivate: [PendingChangesGuard] },
-              { path: 'synthesis', component: ClientProjectSynthesisComponent, canActivate: [AuthGuard] } // ?isAdmin=true //TODO comment modifier cette route ?
+              { path: 'synthesis', component: ClientProjectSynthesisComponent, canActivate: [AuthGuard] }
             ]
           },
           {
