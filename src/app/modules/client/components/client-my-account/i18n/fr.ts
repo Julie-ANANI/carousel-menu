@@ -7,5 +7,6 @@ export const fr = {
       'CONTENT': 'Toutes vos données personnelles seront définitivement supprimées.'
     },
     'SECTORS': 'Secteurs d\'activité',
-    'TECHNOLOGIES': 'Technologies'
+    'TECHNOLOGIES': 'Technologies',
+    'JOB_TITLE_EXAMPLE': 'Ingénieur en  aérodynamique'
   }};

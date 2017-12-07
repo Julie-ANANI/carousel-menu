@@ -7,6 +7,7 @@ export const en = {
       'CONTENT': 'All your personal data will be definitely deleted.'
     },
     'SECTORS': 'Line of business',
-    'TECHNOLOGIES': 'Technologies'
+    'TECHNOLOGIES': 'Technologies',
+    'JOB_TITLE_EXAMPLE': 'Aerodynamics Engineer'
   }
 };
