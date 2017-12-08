@@ -236,12 +236,12 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
         initialData: this.formData.get('innovationCards').value[this.innovationCardEditingIndex]['advantages']
       },
       'excludedPeople': {
-        placeholder: 'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE',
+        placeholder: 'PROJECT_EDIT.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
         initialData: this.formData.get('settings')
           .get('professionals').get('exclude').value
       },
       'excludedCompanies': {
-        placeholder: 'PROJECT_EDIT.COMPANIES.TO_EXCLUDE',
+        placeholder: 'PROJECT_EDIT.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
         initialData: this.formData.get('settings')
           .get('companies').get('exclude').value,
         type: 'company'

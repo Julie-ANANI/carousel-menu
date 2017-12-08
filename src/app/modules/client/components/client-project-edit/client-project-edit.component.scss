@@ -56,10 +56,11 @@ $primary-color: #3498DB;
 
 .project-help {
   background: #FAFAFA;
-  padding: 40px 0;
+  padding: 15px 0;
   position:sticky;
   top: 0;
   z-index:300;
+  font-size: 0.8rem;
 
   .steps {
     margin: 0;

@@ -28,12 +28,14 @@ export const en = {
     'PROFESSIONALS': {
       'LABEL': 'Professionals profiles',
       'PLACEHOLDER': 'R&D engineer sur les matériaux isolants, responsable business development\nEx : John Doe chez IBM http://www.linkedin.com/in/johndoe',
-      'TO_EXCLUDE': 'Specify people you want to exclude'
+      'TO_EXCLUDE': 'Specify people you want to exclude',
+      'NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER': 'Ex : John Doe (http://www.linkedin.com/in/johndoe)'
     },
     'COMPANIES': {
       'LABEL': 'Companies types',
       'PLACEHOLDER': 'Fabricants industriels de composants, distributeurs, éditeurs de logiciels... Ex : IBM, Intel',
-      'TO_EXCLUDE': 'Specify companies you don\'t want to contact'
+      'TO_EXCLUDE': 'Specify companies you don\'t want to contact',
+      'NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER': 'Ex : Google'
     },
     'OTHER': {
       'LABEL': 'Anything else? / Keywords',
