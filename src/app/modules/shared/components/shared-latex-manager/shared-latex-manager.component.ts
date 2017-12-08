@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { NotificationsService } from 'angular2-notifications';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { LatexService } from '../../../../services/latex/latex.service';
 import { initTranslation, TranslateService } from './i18n/i18n';
 
@@ -24,7 +24,7 @@ export class SharedLatexManagerComponent implements OnInit {
 
   constructor(private _innovationService: InnovationService,
               private _latexService: LatexService,
-              private _notificationsService: NotificationsService,
+              private _notificationsService: TranslateNotificationsService,
               private _translateService: TranslateService) {  }
 
   ngOnInit() {
@@ -121,7 +121,7 @@ export class SharedLatexManagerComponent implements OnInit {
    */
   private _errorManager(error: any) {
     this._stopClock();
-    this._notificationsService.error('Error', error.message);
+    this._notificationsService.error('ERROR.ERROR', error.message);
   }
 
   /**
@@ -167,7 +167,7 @@ export class SharedLatexManagerComponent implements OnInit {
         },
           error=>{
             this._stopClock();
-            this._notificationsService.error('Error', error.message);
+            this._notificationsService.error('ERROR.ERROR', error.message);
           });
     }
   }
@@ -194,7 +194,7 @@ export class SharedLatexManagerComponent implements OnInit {
                     'jobType': result['jobType']
                   });
                   break;
-                case('ERROR'):
+                case('ERROR.ERROR'):
                   //Report the error (activate the icon of death)
                   this._recheck = false;
                   break;
@@ -208,14 +208,14 @@ export class SharedLatexManagerComponent implements OnInit {
               console.error(ex);
               this._stopClock();
             }
-          } else if(result && result['error']) {
+          } else if(result && result['ERROR.ERROR']) {
             //Report the error (activate the icon of death)
-            this._notificationsService.error('Error', result['error']);
+            this._notificationsService.error('ERROR.ERROR', result['error']);
           }
         },
         error=>{
           this._stopClock();
-          this._notificationsService.error('Error', error.message);
+          this._notificationsService.error('ERROR.ERROR', error.message);
         });
     }
   }

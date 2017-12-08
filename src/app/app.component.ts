@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from './services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
-import { NotificationsService } from 'angular2-notifications';
+import {TranslateNotificationsService} from './services/notifications/notifications.service';
 import { LoaderService } from './services/loader/loader.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private _translateService: TranslateService,
               private _authService: AuthService,
               private _loaderService: LoaderService,
-              private _notificationsService: NotificationsService) {}
+              private _notificationsService: TranslateNotificationsService) {}
 
   ngOnInit(): void {
     initTranslation(this._translateService);
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this._authService.isAcceptingCookies) { // CNIL
       this._authService.initializeSession().subscribe(
         res => null,
-        error => this._notificationsService.error('Error', 'Cannot reach server', { // TODO translate
+        error => this._notificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
           clickToClose: false,
           timeOut: 0
         })

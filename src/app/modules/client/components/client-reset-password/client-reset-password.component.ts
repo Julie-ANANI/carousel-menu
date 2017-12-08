@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
-import { NotificationsService } from 'angular2-notifications';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -19,7 +19,7 @@ export class ClientResetPasswordComponent implements OnInit {
   constructor(private _authService: AuthService,
               private _activatedRoute: ActivatedRoute,
               private _router: Router,
-              private _notificationsService: NotificationsService,
+              private _notificationsService: TranslateNotificationsService,
               private _translateService: TranslateService,
               private _userService: UserService,
               private _formBuilder: FormBuilder) { }
@@ -47,19 +47,19 @@ export class ClientResetPasswordComponent implements OnInit {
             passwordConfirm: form.get('passwordConfirm').value,
             tokenEmail: tokenEmail
           }).subscribe((data) => {
-              this._notificationsService.success('Password updated', 'The password has been updated.'); // TODO translate
+              this._notificationsService.success('ERROR.ACCOUNT.PASSWORD_UPDATED', 'ERROR.ACCOUNT.PASSWORD_UPDATED_TEXT');
               this._router.navigate(['/account']);
             },
             err => {
-              this._notificationsService.error('Erreur', err.message); // TODO translate
+              this._notificationsService.error('ERROR.ERROR', err.message);
             });
         });
       } else {
-        this._notificationsService.error('Erreur', 'Les mots de passe doivent être identiques'); // TODO translate
+        this._notificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.SAME_PASSWORD');
       }
     }
     else {
-      this._notificationsService.error('Erreur', 'Formulaire non valide'); // TODO translate
+      this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { FileUploader, FilterFunction, FileItem, ParsedResponseHeaders, FileUploaderOptions } from 'ng2-file-upload';
-import { NotificationsService } from 'angular2-notifications';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { environment } from '../../../../../environments/environment'
 
 @Component({
@@ -41,7 +41,7 @@ export class SharedUploadZonePhotoComponent implements OnInit {
     };
 
     this._uploader.onErrorItem = (item: FileItem, response: string, status: number) => {
-      this._notificationsService.error('Error', response);
+      this._notificationsService.error('ERROR.ERROR', response);
       this.loading = false;
     };
 
@@ -86,7 +86,7 @@ export class SharedUploadZonePhotoComponent implements OnInit {
     }
   }*/
 
-  constructor(private _notificationsService: NotificationsService) {  }
+  constructor(private _notificationsService: TranslateNotificationsService) {  }
 
   get uploader() {
     return this._uploader;

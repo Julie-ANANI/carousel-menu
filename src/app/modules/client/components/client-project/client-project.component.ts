@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NotificationsService } from 'angular2-notifications';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class ClientProjectComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
-              private _notificationsService: NotificationsService) { }
+              private _notificationsService: TranslateNotificationsService) { }
 
 
   ngOnInit() {
@@ -25,7 +25,7 @@ export class ClientProjectComponent implements OnInit {
         this._innovationService.get(innovationId).subscribe(innovation => {
             this.project = innovation;
           },
-          error => this._notificationsService.error('Error', error.message)
+          error => this._notificationsService.error('ERROR.ERROR', error.message)
         );
       });
     }
