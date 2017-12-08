@@ -45,4 +45,8 @@ export class ClientWelcomeComponent implements OnInit {
   get isAdmin(): boolean {
     return this._user ? this._user['isAdmin'] : false;
   }
+
+  get translate (): TranslateService {
+    return this._translateService;
+  }
 }

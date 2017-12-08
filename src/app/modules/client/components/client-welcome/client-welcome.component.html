@@ -1,21 +1,28 @@
 <div class="container">
-  <h2>Welcome {{name}}</h2>
-  <div *ngIf="isAdmin">
-    <p>Hey, you're an admin. You have super powers and as a well known rice maker said,
-      "With great powers comes great responsibility", pay attention to what you do around here.</p>
-    <p>Happy UMIing</p>
+  <div class="columns">
+    <div class="column col-7 col-xl-10 col-md-11 col-mx-auto">
+      <h1>{{ 'WELCOME.WELCOME' | translate }} {{name}}</h1>
 
-  </div>
-  <div *ngIf="!isAdmin">
-    <p>Please, read this note carefully...</p>
-    <p>Happy UMIing</p>
-  </div>
 
-  <div>
-    <p>I understand and accept the terms:</p>
-    <button class="btn btn-action" (click)="acceptTerms()">Accept</button>
-  </div>
+      <div *ngIf="isAdmin">
+        <p>Hey, you're an admin. You have super powers and as a well known rice maker said,
+          "With great powers comes great responsibility", pay attention to what you do around here.</p>
+        <p>Happy UMIing</p>
 
+      </div>
+      <div *ngIf="!isAdmin">
+        <p>Please, read this note carefully...</p>
+        <p>Happy UMIing</p>
+      </div>
+
+      <div>
+        <p>{{ 'WELCOME.I_UNDERSTAND' | translate }} <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">{{ 'WELCOME.TERMS' | translate }}</a> :</p>
+        <button class="btn btn-action" (click)="acceptTerms()">Accept</button>
+      </div>
+
+
+    </div>
+  </div>
 </div>
 
 
