@@ -24,18 +24,18 @@
             </div>
             <div class="column col-3 share">
               Share<br>
-              <a [href]="shareService.linkedinProjectShareLink(project)" target="_blank">
+              <a [href]="shareService.linkedinProjectShareLink(project, lang)" target="_blank">
                 <img src="https://res.cloudinary.com/umi/image/upload/app/share-linkedin.png" width="52" height="52">
               </a>
-              <a [href]="shareService.twitterProjectShareLink(project)" target="_blank">
+              <a [href]="shareService.twitterProjectShareLink(project, lang)" target="_blank">
                 <img src="https://res.cloudinary.com/umi/image/upload/app/share-twitter.png" width="52" height="52">
               </a>
               <a [href]="shareService.facebookProjectShareLink(project)" target="_blank">
                 <img src="https://res.cloudinary.com/umi/image/upload/app/share-facebook.png" width="52" height="52">
               </a>
-              <a href="#">
+              <a [href]="shareService.mailProjectShareLink(project, lang)" target="_blank">
                 <img src="https://res.cloudinary.com/umi/image/upload/app/share-google.png" width="52" height="52">
-              </a><!-- TODO remplacer par EMAIL -->
+              </a><!-- TODO changer l'image par logo EMAIL -->
             </div>
           </div>
         </div>

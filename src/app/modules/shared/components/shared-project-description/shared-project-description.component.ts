@@ -43,6 +43,10 @@ export class SharedProjectDescriptionComponent implements OnInit {
       this._displayInnovationCardWithLang(data.lang);
     });
   }
+  
+  get lang() {
+    return this._translateService.currentLang;
+  }
 
   private _displayInnovationCardWithLang (lang) {
     for (const i in this.project.innovationCards) {

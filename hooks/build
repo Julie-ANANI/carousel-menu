@@ -8,9 +8,9 @@
 #CACHE_TAG="vendor1"
 
 #$APP_NAME --environment=$BUILD_ENV $OTHER_PARAMS
-#FRONT_VERSION="umi"
-#BUILD_ENV="prod"
-#OTHER_PARAMS=""
+FRONT_VERSION="umi"
+BUILD_ENV="prod"
+OTHER_PARAMS="--aot"
 
 if [[ $CACHE_TAG == *"vendor"* ]]
 then
@@ -22,7 +22,7 @@ else
   then
     FRONT_VERSION="umi"
     BUILD_ENV="dev"
-    OTHER_PARAMS=""
+    OTHER_PARAMS="--aot"
   fi
 fi
 
@@ -30,6 +30,4 @@ echo docker build --build-arg APP_NAME=$FRONT_VERSION \
       --build-arg BUILD_ENV=$BUILD_ENV \
       --build-arg OTHER_PARAMS=$OTHER_PARAMS -t $IMAGE_NAME .
 
-docker build --build-arg APP_NAME=$FRONT_VERSION \
-      --build-arg BUILD_ENV=$BUILD_ENV \
-      --build-arg OTHER_PARAMS=$OTHER_PARAMS -t $IMAGE_NAME
+docker build --build-arg APP_NAME=$FRONT_VERSION --build-arg BUILD_ENV=$BUILD_ENV  -t $IMAGE_NAME .

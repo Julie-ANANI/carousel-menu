@@ -2,5 +2,6 @@ export const environment = {
   production: true,
   apiUrl: 'https://dev.umi.us/api',
   companyName: 'UMI (dev)',
-  domain: 'umi.us'
+  domain: 'umi.us',
+  innovationUrl: 'https://umicli-dev.umi.us'
 };

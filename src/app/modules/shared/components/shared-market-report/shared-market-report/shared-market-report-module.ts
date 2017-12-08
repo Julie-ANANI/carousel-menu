@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovationService } from './../../../../../services/innovation/innovation.service';
-import { PageScrollConfig, PageScrollService, PageScrollInstance } from 'ng2-page-scroll';
+import { PageScrollConfig } from 'ng2-page-scroll';
 import { NotificationsService } from 'angular2-notifications';
 import { TranslateService } from '@ngx-translate/core';
 import { DOCUMENT} from '@angular/common';
@@ -33,7 +33,6 @@ export class SharedMarketReportComponent implements OnInit {
               private _route: ActivatedRoute,
               private _authService: AuthService,
               private _notificationsService: NotificationsService,
-              private _pageScrollService: PageScrollService,
               @Inject(DOCUMENT) private _document: any
   ) { }
 
@@ -46,11 +45,6 @@ export class SharedMarketReportComponent implements OnInit {
       }, error => this._notificationsService.error('Error', error.message));
     });
     PageScrollConfig.defaultDuration = 800;
-  }
-
-  ngAfterViewInit() {
-    let pageScrollInstance: PageScrollInstance = PageScrollInstance.simpleInstance(this._document, '#title');
-    setTimeout(_=>this._pageScrollService.start(pageScrollInstance), 2000);
   }
 
   public recalculateSynthesis(): any {
