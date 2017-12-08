@@ -1,19 +1,36 @@
 <div class="container">
-  <h2>Welcome {{name}}</h2>
-  <div *ngIf="isAdmin">
-    <p>Hey, you're an admin. You have super powers and as a well known rice maker said,
-      "With great powers comes great responsibility", pay attention to what you do around here.</p>
-    <p>Happy UMIing</p>
+  <div class="columns ">
+    <div class="column col-4"></div>
+    <div class="column col-4">
+      <h2>Welcome {{name}}</h2>
+      <div *ngIf="!isAdmin">
+        <p>This is the new version of UMI, here you can create your innovation projects, follow your progress and see
+        the synthesis of your project.</p>
+        <p>We know, this text is lame, we're working on something nice.
+        <img src="https://res.cloudinary.com/umi/image/upload/q_61/v1512724331/writing_dmzmwg.gif" align="middle"/></p>
+        <p>Happy UMIing</p>
+      </div>
 
-  </div>
-  <div *ngIf="!isAdmin">
-    <p>Please, read this note carefully...</p>
-    <p>Happy UMIing</p>
-  </div>
+      <div *ngIf="isAdmin">
+        <p>This is the new version of UMI, here you can create your innovation projects, follow your progress and see
+          the synthesis of your project.</p>
+        <p>We know, this text is lame, we're working on something nice.
+          <img src="https://res.cloudinary.com/umi/image/upload/q_61/v1512724331/writing_dmzmwg.gif" align="middle"/></p>
 
-  <div>
-    <p>I understand and accept the terms:</p>
-    <button class="btn btn-action" (click)="acceptTerms()">Accept</button>
+        <p>WAIT!, you're an administrator. You have super powers and "With great power comes great responsibility",
+          pay attention to what you do around here.</p>
+
+        <p>Happy UMIing</p>
+
+      </div>
+
+      <div>
+        <p>I understand and accept the terms:
+          <br><button class="btn btn-success" (click)="acceptTerms()">Accept</button>
+        </p>
+      </div>
+    </div>
+    <div class="column col-4"></div>
   </div>
 
 </div>
