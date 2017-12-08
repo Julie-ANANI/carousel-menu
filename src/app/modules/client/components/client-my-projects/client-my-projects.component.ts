@@ -25,7 +25,7 @@ export class ClientMyProjectsComponent implements OnInit {
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-    this._titleService.setTitle('MY_PROJECTS.TITLE'); // TODO translate
+    this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._userService.getMyInnovations().subscribe(projects => {
       this._projects = projects.innovations;
       this.sortProjectsBy(this.sortingBy);
