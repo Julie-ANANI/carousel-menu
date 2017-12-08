@@ -702,7 +702,7 @@
                 <textarea class="form-input" id="innovation-sector"
                           formControlName="comments"
                           [attr.placeholder]="'PROJECT_EDIT.MARKET.PLACEHOLDER' | translate"
-                          rows="4"></textarea>
+                          rows="5"></textarea>
                 </div>
               </div>
 
@@ -713,8 +713,8 @@
                 <div class="col-8">
                 <textarea class="form-input" id="innovation-companies"
                           formControlName="description"
-                          [attr.placeholder]="'PROJECT_EDIT.MARKET.PLACEHOLDER' | translate"
-                          rows="4"></textarea>
+                          [attr.placeholder]="'PROJECT_EDIT.COMPANIES.PLACEHOLDER' | translate"
+                          rows="5"></textarea>
 
                   <a (click)="displayCompanyToExcludeSection = !displayCompanyToExcludeSection" class="c-hand">{{
                     'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
@@ -734,7 +734,7 @@
                 <div class="col-8">
                 <textarea class="form-input" id="innovation-pros"
                           formControlName="description"
-                          [attr.placeholder]="'PROJECT_EDIT.PROFESSIONALS.PLACEHOLDER' | translate" rows="4"></textarea>
+                          [attr.placeholder]="'PROJECT_EDIT.PROFESSIONALS.PLACEHOLDER' | translate" rows="5"></textarea>
 
                   <a (click)="displayPersonsToExcludeSection = !displayPersonsToExcludeSection" class="c-hand">{{ 'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
@@ -754,7 +754,7 @@
                 <textarea class="form-input" id="other-comments"
                           formControlName="comments"
                           [attr.placeholder]="'PROJECT_EDIT.OTHER.PLACEHOLDER' | translate"
-                          rows="4"></textarea>
+                          rows="5"></textarea>
                 </div>
               </div>
             </div>
@@ -803,7 +803,7 @@
                               {{ 'PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</label>
                             <textarea class="form-input" id="innovation-summary"
                                       [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
-                                      rows="2" formControlName="summary"></textarea>
+                                      rows="6" formControlName="summary"></textarea>
                           </div>
 
                           <div>
@@ -811,7 +811,7 @@
                               {{ 'PROJECT_EDIT.DESCRIPTION.PROBLEM.LABEL' | translate }}</label>
                             <textarea class="form-input" id="innovation-problem"
                                       [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
-                                      rows="6" formControlName="problem"></textarea>
+                                      rows="20" formControlName="problem"></textarea>
                           </div>
 
                           <div>
@@ -819,7 +819,7 @@
                               {{ 'PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</label>
                             <textarea class="form-input" id="innovation-solution"
                                       [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
-                                      rows="6"
+                                      rows="20"
                                       formControlName="solution"></textarea>
                           </div>
 
