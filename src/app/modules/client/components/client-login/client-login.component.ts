@@ -87,8 +87,10 @@ export class ClientLoginComponent implements OnInit {
     }
     else {
       this._userService.changePassword(this.formData.get('email').value).subscribe(res => {
-        console.log(res);
         this._notificationsService.success('We just sent you an email', 'To change your password, pease click on the link we just sent you by email.');
+      }, err => {
+        this._notificationsService.error('Error', 'An error occurred. Email not found.');
+
       });
     }
   }
