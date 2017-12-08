@@ -23,7 +23,7 @@
 
 <div class="modal" [ngClass]="{'active': displayEmailForm}">
   <div class="modal-overlay" (click)="displayEmailForm = false"></div>
-  <form novalidate (ngSubmit)="onSubmit(formData)" [formGroup]="formData" class="modal-container">
+  <form novalidate (ngSubmit)="onSubmit(formData)" [formGroup]="formData" class="modal-container signup-form">
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="displayEmailForm = false"></button>
       <h2 class="modal-title">{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}</h2>

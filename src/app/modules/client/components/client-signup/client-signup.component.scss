@@ -27,11 +27,23 @@ label {
     transition-duration: .5s;
 
     &:hover, &:focus {
-      border-bottom: solid 2px #3498DB;
+      border-bottom: solid 1px #3498DB;
     }
   }
 }
 
 .error {
   color: red;
+}
+
+.signup-form {
+  padding: 30px;
+
+  .modal-header {
+    padding-bottom: 30px;
+  }
+
+  .column {
+    padding: 5px 20px;
+  }
 }
