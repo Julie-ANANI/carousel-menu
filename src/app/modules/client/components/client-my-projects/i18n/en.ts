@@ -1,5 +1,6 @@
 export const en = {
   'MY_PROJECTS': {
+    'TITLE': 'My projects',
     'ADD_PROJECT': 'Add a project',
     'ADDED': 'Added',
     'UPDATED': 'Updated',

@@ -6,7 +6,7 @@ import { environment } from '../../../../../environments/environment';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { Title } from '@angular/platform-browser';
+import { TranslateTitleService } from '../../../../services/title/title.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import 'rxjs/add/operator/filter';
 
@@ -26,13 +26,13 @@ export class ClientSignupComponent implements OnInit {
               private _formBuilder: FormBuilder,
               private _authService: AuthService,
               private _location: Location,
-              private _titleService: Title,
+              private _titleService: TranslateTitleService,
               private _translateService: TranslateService,
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-    this._translateService.get('COMMON.SIGN_UP').subscribe(title => this._titleService.setTitle(title));
+    this._titleService.setTitle('COMMON.SIGN_UP');
 
     this.formData = this._formBuilder.group({
       firstName: ['', [Validators.required]],

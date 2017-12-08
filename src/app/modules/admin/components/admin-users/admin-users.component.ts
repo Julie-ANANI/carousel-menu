@@ -4,7 +4,7 @@ import { SmartQueryService } from '../../../../services/smartQuery/smartQuery.se
 import { UserService } from '../../../../services/user/user.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { NotificationsService } from 'angular2-notifications';
-import { Title } from '@angular/platform-browser';
+import { TranslateTitleService } from '../../../../services/title/title.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -18,7 +18,7 @@ export class AdminUsersComponent implements OnInit {
 
   constructor(private _router: Router,
               private _translateService: TranslateService,
-              private _titleService: Title,
+              private _titleService: TranslateTitleService,
               private _sq: SmartQueryService,
               private _userService: UserService,
               private _notificationsService: NotificationsService) {
@@ -27,7 +27,7 @@ export class AdminUsersComponent implements OnInit {
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-    this._titleService.setTitle('Utilisateurs');
+    this._titleService.setTitle('USERS.TITLE');
 
     this._sq.data$.subscribe(users => {
       this._users = users.result;

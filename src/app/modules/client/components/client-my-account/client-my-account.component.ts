@@ -4,7 +4,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { Title } from '@angular/platform-browser';
+import { TranslateTitleService } from '../../../../services/title/title.service';
 import 'rxjs/add/operator/filter';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -27,11 +27,11 @@ export class ClientMyAccountComponent implements OnInit {
               private _authService: AuthService,
               private _formBuilder: FormBuilder,
               private _router: Router,
-              private _titleService: Title) {}
+              private _titleService: TranslateTitleService) {}
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-    this._titleService.setTitle('My account'); // TODO translate
+    this._titleService.setTitle('MY_ACCOUNT.TITLE');
 
     this.formData = this._formBuilder.group({
       firstName: ['', [Validators.required]],

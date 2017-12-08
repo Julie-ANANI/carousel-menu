@@ -1,5 +1,6 @@
 export const fr = {
   'LOG_IN': {
+    'TITLE': 'Connexion',
     'DOES_NOT_HAVE_ACCOUNT': 'Vous n\'avez pas de compte UMI ?',
     'LOG_IN_BTN': 'Se connecter',
     'LOG_IN_LINKEDIN': 'Connexion par LinkedIn',

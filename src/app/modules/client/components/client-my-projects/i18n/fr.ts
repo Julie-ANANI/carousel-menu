@@ -1,5 +1,6 @@
 export const fr = {
   'MY_PROJECTS': {
+    'TITLE': 'Mes projets',
     'ADD_PROJECT': 'Ajouter un projet',
     'ADDED': 'Ajoutée le',
     'UPDATED': 'Modifiée le',

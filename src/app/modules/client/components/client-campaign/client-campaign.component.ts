@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SmartQueryService } from '../../../../services/smartQuery/smartQuery.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
-import { NotificationsService } from 'angular2-notifications';
-import { Title } from '@angular/platform-browser';
+import { TranslateTitleService } from '../../../../services/title/title.service';
 
 @Component({
   selector: 'app-client-campaign',
@@ -17,15 +16,14 @@ export class ClientCampaignComponent implements OnInit {
 
   constructor(private _router: Router,
               private _translateService: TranslateService,
-              private _titleService: Title,
-              private _sq: SmartQueryService,
-              private _notificationsService: NotificationsService) {
+              private _titleService: TranslateTitleService,
+              private _sq: SmartQueryService) {
     this._sq.setRoute('/innovation');
   }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-    this._titleService.setTitle('Campaigns'); // TODO translate
+    this._titleService.setTitle('CAMPAIGN.TITLE');
 
     this._sq.data$.subscribe(innovations => {
       this._innovations = innovations.result;
