@@ -1,3 +1,37 @@
+.left, .right {
+  padding: 30px;
+}
+
+.left {
+  border-right: solid 1px #e0e0e0;
+}
+
+.btn-linkedin, .btn-email  {
+  width: 100%;
+}
+
+.divider {
+  margin: 30px 0;
+}
+
+label {
+  span {
+    display: block;
+  }
+  input {
+    border: none;
+    border-bottom: solid 1px #333;
+    width: 100%;
+    padding: 5px 10px;
+    margin-bottom: 30px;
+    transition-duration: .5s;
+
+    &:hover, &:focus {
+      border-bottom: solid 2px #3498DB;
+    }
+  }
+}
+
 .error {
   color: red;
 }
