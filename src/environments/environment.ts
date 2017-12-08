@@ -7,6 +7,7 @@ export const environment = {
   production: false,
   apiUrl: '',
   companyName: '',
-  domain: ''
+  domain: '',
+  innovationUrl: ''
 };
 

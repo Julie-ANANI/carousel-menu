@@ -23,19 +23,23 @@
               </pdf-generator>
             </div>
             <div class="column col-3 share">
-              Share<br>
-              <a [href]="shareService.linkedinProjectShareLink(project)" target="_blank">
-                <img src="https://res.cloudinary.com/umi/image/upload/app/share-linkedin.png" width="52" height="52">
+              {{ 'PROJECT.SHARE.TITLE' | translate}}<br>
+              <a [href]="shareService.linkedinProjectShareLink(project, lang)" target="_blank">
+                <img src="https://res.cloudinary.com/umi/image/upload/app/share-linkedin.png" width="52" height="52"
+                title="{{ 'PROJECT.SHARE.LINKEDIN' | translate}}">
               </a>
-              <a [href]="shareService.twitterProjectShareLink(project)" target="_blank">
-                <img src="https://res.cloudinary.com/umi/image/upload/app/share-twitter.png" width="52" height="52">
+              <a [href]="shareService.twitterProjectShareLink(project, lang)" target="_blank">
+                <img src="https://res.cloudinary.com/umi/image/upload/app/share-twitter.png" width="52" height="52"
+                     title="{{ 'PROJECT.SHARE.TWITTER' | translate}}">
               </a>
               <a [href]="shareService.facebookProjectShareLink(project)" target="_blank">
-                <img src="https://res.cloudinary.com/umi/image/upload/app/share-facebook.png" width="52" height="52">
+                <img src="https://res.cloudinary.com/umi/image/upload/app/share-facebook.png" width="52" height="52"
+                     title="{{ 'PROJECT.SHARE.FACEBOOK' | translate}}">
               </a>
-              <a href="#">
-                <img src="https://res.cloudinary.com/umi/image/upload/app/share-google.png" width="52" height="52">
-              </a><!-- TODO remplacer par EMAIL -->
+              <a [href]="shareService.mailProjectShareLink(project, lang)" target="_blank">
+                <img src="https://res.cloudinary.com/umi/image/upload/v1512724745/share-mail_e8xztz.png" width="52" height="52"
+                     title="{{ 'PROJECT.SHARE.MAIL' | translate}}">
+              </a>
             </div>
           </div>
         </div>

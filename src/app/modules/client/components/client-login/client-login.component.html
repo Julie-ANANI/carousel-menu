@@ -1,57 +1,67 @@
 <div class="container">
   <div class="columns">
-    <div class="column col-3 col-xl-5 col-md-8 col-sm-10 col-xs-12 col-mx-auto">
+    <div class="column col-7 col-xl-10 col-md-11 col-mx-auto">
       <h1>{{ 'LOG_IN.LOG_IN_TO_CONTINUE' | translate }}</h1>
 
-      <div>
-        <button class="btn btn-lg btn-primary" (click)="linkedInSignIn()">{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}</button>
-
-        <div class="divider text-center" [attr.data-content]="'COMMON.OR' | translate"></div>
-
-        <form novalidate (ngSubmit)="onSubmit(formData)" [formGroup]="formData" class="columns">
-
-          <div class="column col-12">
-            <label>
-              <span>{{ 'COMMON.EMAIL' | translate }}</span>
-              <input type="email" placeholder="john.doe@gmail.com" formControlName="email">
-            </label>
-
-            <div class="error"
-                 *ngIf="formData.get('email').hasError('required') && formData.get('email').touched">
-              {{ 'COMMON.REQUIRED.EMAIL' | translate }}
-            </div>
-
-            <div class="error"
-                 *ngIf="formData.get('email').hasError('email') && formData.get('email').touched">
-              {{ 'COMMON.INVALID.EMAIL' | translate }}
-            </div>
-          </div>
-
-          <div class="column col-12">
-            <label>
-              <span>{{ 'COMMON.PASSWORD' | translate }}</span>
-              <input type="password" placeholder="••••••••••" formControlName="password">
-            </label>
-
-            <div class="error"
-                 *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
-              {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
-            </div>
-
-            <div class="error"
-                 *ngIf="formData.get('password').hasError('minlength') && formData.get('password').touched">
-              {{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}
-            </div>
-          </div>
-
-          <div class="column col-12">
-            <button class="btn btn-lg" type="submit" [disabled]="formData.invalid">{{ 'LOG_IN.LOG_IN_BTN' | translate }}</button>
+      <div class="columns">
+        <div class="column col-4 left">
+          <p>
+            {{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}
+            <a routerLink="/signup">{{ 'COMMON.SIGN_UP' | translate }}</a>
+          </p>
+          <p>
             <a (click)="changePassword()" class="c-hand">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
-          </div>
-        </form>
-      </div>
+          </p>
+        </div>
+        <div class="column col-8 right">
+          <button class="btn btn-lg btn-primary btn-linkedin" (click)="linkedInSignIn()">{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
+          </button>
 
-      {{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }} <a routerLink="/signup">{{ 'COMMON.SIGN_UP' | translate }}</a>
+          <div class="divider text-center" [attr.data-content]="'COMMON.OR' | translate"></div>
+
+          <form novalidate (ngSubmit)="onSubmit(formData)" [formGroup]="formData" class="columns">
+
+            <div class="column col-12">
+              <label>
+                <span>{{ 'COMMON.EMAIL' | translate }}</span>
+                <input type="email" placeholder="john.doe@gmail.com" formControlName="email">
+              </label>
+
+              <!--<div class="error"
+                   *ngIf="formData.get('email').hasError('required') && formData.get('email').touched">
+                {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+              </div>
+
+              <div class="error"
+                   *ngIf="formData.get('email').hasError('email') && formData.get('email').touched">
+                {{ 'COMMON.INVALID.EMAIL' | translate }}
+              </div>-->
+            </div>
+
+            <div class="column col-12">
+              <label>
+                <span>{{ 'COMMON.PASSWORD' | translate }}</span>
+                <input type="password" placeholder="••••••••••" formControlName="password">
+              </label>
+
+              <!--<div class="error"
+                   *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
+                {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+              </div>
+
+              <div class="error"
+                   *ngIf="formData.get('password').hasError('minlength') && formData.get('password').touched">
+                {{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}
+              </div>-->
+            </div>
+
+            <div class="column col-12">
+              <button class="btn btn-lg" type="submit" [disabled]="formData.invalid">{{ 'LOG_IN.LOG_IN_BTN' | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>
