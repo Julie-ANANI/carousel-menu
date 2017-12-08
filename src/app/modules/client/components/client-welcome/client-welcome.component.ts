@@ -43,7 +43,12 @@ export class ClientWelcomeComponent implements OnInit {
   }
 
   get isAdmin(): boolean {
-    return this._user ? this._user['isAdmin'] : false;
+    if (this._user) {
+      return this._user['isAdmin'] || (this._user['roles'] ? this._user['roles'] === 'super-admin' : false);
+    }
+    else {
+      return false;
+    }
   }
 
   get translate (): TranslateService {

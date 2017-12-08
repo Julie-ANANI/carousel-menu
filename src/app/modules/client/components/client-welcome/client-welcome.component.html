@@ -3,31 +3,40 @@
     <div class="column col-7 col-xl-10 col-md-11 col-mx-auto">
       <h1>{{ 'WELCOME.WELCOME' | translate }} {{name}}</h1>
 
+      <div class="columns">
+        <div class="column col-6 col-sm-12">
+          <p>
+            {{ 'WELCOME.MAIN_SENTENCE' | translate }}
+          </p>
+          <p>
+            <img src="https://res.cloudinary.com/umi/image/upload/q_61/v1512724331/writing_dmzmwg.gif"
+                 align="middle"/>
+          </p>
+          <p  *ngIf="isAdmin">
+            {{ 'WELCOME.ADMIN_SENTENCE' | translate }}
+          </p>
+          <p>
+            Happy UMIing
+          </p>
+        </div>
 
-      <div *ngIf="isAdmin">
-        <p>This is the new version of UMI, here you can create your innovation projects, follow your progress and see
-          the synthesis of your project.</p>
-        <p>We know, this text is lame, we're working on something nice.
-          <img src="https://res.cloudinary.com/umi/image/upload/q_61/v1512724331/writing_dmzmwg.gif" align="middle"/></p>
-        <p>WAIT!, you're an administrator. You have super powers and "With great power comes great responsibility",
-          pay attention to what you do around here.</p>
-        <p>Happy UMIing</p>
+        <div class="column col-12">
+          <p>
+            <b>
+              {{ 'WELCOME.I_UNDERSTAND' | translate }}
+              <a target="_blank"
+                 [href]="'https://www.umi.us' + (translate.currentLang==='fr'
+                 ? '/fr/conditions-generales-utilisation/'
+                 : '/end-user-license-agreement/')">
+                {{ 'WELCOME.TERMS' | translate }}
+              </a> :
+            </b>
+          </p>
+          <button class="btn btn-primary" (click)="acceptTerms()">
+            {{ 'COMMON.ACCEPT' | translate }}
+          </button>
+        </div>
       </div>
-
-      <div *ngIf="!isAdmin">
-        <p>This is the new version of UMI, here you can create your innovation projects, follow your progress and see
-          the synthesis of your project.</p>
-        <p>We know, this text is lame, we're working on something nice.
-          <img src="https://res.cloudinary.com/umi/image/upload/q_61/v1512724331/writing_dmzmwg.gif" align="middle"/></p>
-        <p>Happy UMIing</p>
-      </div>
-
-      <div>
-        <p>{{ 'WELCOME.I_UNDERSTAND' | translate }} <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">{{ 'WELCOME.TERMS' | translate }}</a> :</p>
-        <button class="btn btn-primary" (click)="acceptTerms()">Accept</button>
-      </div>
-
-
     </div>
   </div>
 </div>
