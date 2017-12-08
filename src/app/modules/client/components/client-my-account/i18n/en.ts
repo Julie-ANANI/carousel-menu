@@ -1,5 +1,6 @@
 export const en = {
   'MY_ACCOUNT': {
+    'TITLE': 'My account',
     'CHANGE_PASSWORD': 'Change password',
     'DELETE': 'Delete my account',
     'DELETE_MODAL': {

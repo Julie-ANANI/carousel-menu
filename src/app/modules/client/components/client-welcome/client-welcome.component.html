@@ -1,21 +1,44 @@
 <div class="container">
-  <h2>Welcome {{name}}</h2>
-  <div *ngIf="isAdmin">
-    <p>Hey, you're an admin. You have super powers and as a well known rice maker said,
-      "With great powers comes great responsibility", pay attention to what you do around here.</p>
-    <p>Happy UMIing</p>
+  <div class="columns">
+    <div class="column col-7 col-xl-10 col-md-11 col-mx-auto">
+      <h1>{{ 'WELCOME.WELCOME' | translate }} {{name}}</h1>
 
-  </div>
-  <div *ngIf="!isAdmin">
-    <p>Please, read this note carefully...</p>
-    <p>Happy UMIing</p>
-  </div>
+      <div class="columns">
+        <div class="column col-6 col-sm-12">
+          <p>
+            {{ 'WELCOME.MAIN_SENTENCE' | translate }}
+          </p>
+          <p>
+            <img src="https://res.cloudinary.com/umi/image/upload/q_61/v1512724331/writing_dmzmwg.gif"
+                 align="middle"/>
+          </p>
+          <p  *ngIf="isAdmin">
+            {{ 'WELCOME.ADMIN_SENTENCE' | translate }}
+          </p>
+          <p>
+            Happy UMIing
+          </p>
+        </div>
 
-  <div>
-    <p>I understand and accept the terms:</p>
-    <button class="btn btn-action" (click)="acceptTerms()">Accept</button>
+        <div class="column col-12">
+          <p>
+            <b>
+              {{ 'WELCOME.I_UNDERSTAND' | translate }}
+              <a target="_blank"
+                 [href]="'https://www.umi.us' + (translate.currentLang==='fr'
+                 ? '/fr/conditions-generales-utilisation/'
+                 : '/end-user-license-agreement/')">
+                {{ 'WELCOME.TERMS' | translate }}
+              </a> :
+            </b>
+          </p>
+          <button class="btn btn-primary" (click)="acceptTerms()">
+            {{ 'COMMON.ACCEPT' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-
 </div>
 
 

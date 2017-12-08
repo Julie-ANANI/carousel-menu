@@ -1,5 +1,6 @@
 export const fr = {
   'MY_ACCOUNT': {
+    'TITLE': 'Mon compte',
     'CHANGE_PASSWORD': 'Changer de mot de passe',
     'DELETE': 'Supprimer mon compte',
     'DELETE_MODAL': {

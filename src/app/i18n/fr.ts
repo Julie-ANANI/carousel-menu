@@ -15,6 +15,7 @@ export const fr = {
     'PREVIEW': 'Prévisualiser',
     'NO': 'Non',
     'YES': 'Oui',
+    'ACCEPT': 'Accepter',
 
     'FIRSTNAME': 'Prénom',
     'LASTNAME': 'Nom',

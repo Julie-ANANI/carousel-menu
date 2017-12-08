@@ -1,10 +1,9 @@
 export const fr = {
-  'LOG_IN': {
-    'DOES_NOT_HAVE_ACCOUNT': 'Vous n\'avez pas de compte UMI ?',
-    'LOG_IN_BTN': 'Se connecter',
-    'LOG_IN_LINKEDIN': 'Connexion par LinkedIn',
-    'OR': 'ou continuer avec',
-    'LOG_IN_TO_CONTINUE': 'Connectez-vous pour continuer',
-    'FORGOT_PASSWORD': 'J\'ai oublié mon mot de passe'
+  'WELCOME': {
+    'WELCOME': 'Bienvenue',
+    'I_UNDERSTAND': 'Je comprends et j\'accepte les',
+    'TERMS': 'conditions générales d\'utilisation',
+    'ADMIN_SENTENCE': 'Attendez ! Vous êtes administrateur-trice. Vous avez donc de super pouvoirs, et "With great power comes great responsibility", faites attention à ce que vous ferez ici.',
+    'MAIN_SENTENCE': 'Ceci est la nouvelle version d\'UMI, vous pouvez y créer vos projets, en suivre la progression et voir la synthèse de vos projets.'
   }
 };
