@@ -8,7 +8,7 @@ export class ShareService {
   constructor() {}
 
   private _getShareUrl (project: any): string {
-    return encodeURIComponent(`${environment.innovationUrl}/innovation/${project._id}`);
+    return encodeURIComponent(`${environment.innovationUrl}/#/projects/${project._id}`);
   }
 
   private _getTitle (project: any, lang: string): string {

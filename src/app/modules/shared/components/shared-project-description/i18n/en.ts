@@ -5,6 +5,13 @@ export const en = {
     'SOLUTION': 'Solution',
     'ISSUE': 'Issue',
     'MARKET_BENEFITS': 'Market benefits',
-    'GALLERY': 'Gallery'
+    'GALLERY': 'Gallery',
+    'SHARE': {
+      'TITLE': 'Share',
+      'LINKEDIN': 'Share on LinkedIn',
+      'TWITTER': 'Share on Twitter',
+      'FACEBOOK': 'Share on Facebook',
+      'MAIL': 'Share by email',
+    }
   }
 };
