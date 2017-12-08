@@ -2,9 +2,9 @@ import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateService, initTranslation} from './i18n/i18n';
 import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
 import {AuthService} from '../../../../services/auth/auth.service';
-import {NotificationsService} from 'angular2-notifications';
 import {ComponentCanDeactivate} from '../../../../pending-changes-guard.service';
 import {Observable} from 'rxjs/Observable';
 import { ISubscription } from "rxjs/Subscription";
@@ -46,7 +46,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
               private _domSanitizer: DomSanitizer,
               private _translateService: TranslateService,
               private _router: Router,
-              private _notificationsService: NotificationsService,
+              private _notificationsService: TranslateNotificationsService,
               private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
@@ -81,7 +81,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
         },
         errorTranslateCode => {
           const translateSubs = this._translateService.get(errorTranslateCode).subscribe(errorMessage =>
-            this._notificationsService.error('Error', errorMessage) // TODO Translate
+            this._notificationsService.error('ERROR.ERROR', errorMessage)
           );
           this._subscriptions.push(translateSubs);
           this._router.navigate(['/projects']);
@@ -152,11 +152,11 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
           callback();
         }
       }, err => {
-        this._notificationsService.error('Unforbidden', err);
+        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
       this._subscriptions.push(saveSubs);
     } else {
-      this._notificationsService.error('Unforbidden', 'You can\'t edit this project');
+      this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', 'ERROR.CANT_EDIT');
     }
   }
 
@@ -308,7 +308,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     this.save(_ => {
       const saveSubs = this._innovationService.submitProjectToValidation(this._project.id).subscribe(data2 => {
         this._router.navigate(['../']);
-        this._notificationsService.success('Submitted', 'Your project has been sent to validation.'); // TODO translate
+        this._notificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
       });
       this._subscriptions.push(saveSubs);
     });

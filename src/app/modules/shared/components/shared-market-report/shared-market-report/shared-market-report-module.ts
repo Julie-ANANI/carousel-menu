@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovationService } from './../../../../../services/innovation/innovation.service';
 import { PageScrollConfig } from 'ng2-page-scroll';
-import { NotificationsService } from 'angular2-notifications';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DOCUMENT} from '@angular/common';
 
@@ -32,7 +32,7 @@ export class SharedMarketReportComponent implements OnInit {
               private _innovationService: InnovationService,
               private _route: ActivatedRoute,
               private _authService: AuthService,
-              private _notificationsService: NotificationsService,
+              private _notificationsService: TranslateNotificationsService,
               @Inject(DOCUMENT) private _document: any
   ) { }
 
@@ -42,7 +42,7 @@ export class SharedMarketReportComponent implements OnInit {
       this._modalAnswer = null;
       this._innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
         this._infographics = synthesis.infographics;
-      }, error => this._notificationsService.error('Error', error.message));
+      }, error => this._notificationsService.error('ERROR.ERROR', error.message));
     });
     PageScrollConfig.defaultDuration = 800;
   }

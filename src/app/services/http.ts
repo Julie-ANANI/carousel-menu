@@ -12,7 +12,7 @@ import { LoaderService } from './loader/loader.service';
 import { RequestOptions } from './requestOptions';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-import { NotificationsService } from 'angular2-notifications';
+import { TranslateNotificationsService } from './notifications/notifications.service';
 
 import * as SessionVerificationController from '@umius/umi-session-verifications';
 const SessionVerification = new SessionVerificationController();
@@ -26,7 +26,7 @@ export class Http extends AngularHttp {
   constructor(protected _backend: XHRBackend,
               protected _defaultOptions: RequestOptions,
               private _loaderService: LoaderService,
-              protected _notificationsService: NotificationsService) {
+              protected _notificationsService: TranslateNotificationsService) {
     super(_backend, _defaultOptions);
   }
 
@@ -166,7 +166,7 @@ export class Http extends AngularHttp {
   private _onError(res: Response): void {
     console.error(res);
     if (!environment.production) {
-      this._notificationsService.error('[DEBUG] Error ' + res.status, res.toString());
+      this._notificationsService.error('ERROR.ERROR ' + res.status, res.toString());
     }
   }
 

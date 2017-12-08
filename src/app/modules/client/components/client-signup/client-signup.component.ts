@@ -5,7 +5,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../models/user.model';
-import { NotificationsService } from 'angular2-notifications';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Title } from '@angular/platform-browser';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import 'rxjs/add/operator/filter';
@@ -28,7 +28,7 @@ export class ClientSignupComponent implements OnInit {
               private _location: Location,
               private _titleService: Title,
               private _translateService: TranslateService,
-              private _notificationsService: NotificationsService) { }
+              private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
@@ -52,7 +52,7 @@ export class ClientSignupComponent implements OnInit {
           window.location.href = url;
         },
         error => {
-          this._notificationsService.error('Erreur', error.message); // TODO translate
+          this._notificationsService.error('ERROR.ERROR', error.message);
         }
       );
   }
@@ -69,17 +69,17 @@ export class ClientSignupComponent implements OnInit {
                 this._location.back();
               },
               error => {
-                this._notificationsService.error('Erreur', error.message); // TODO translate
+                this._notificationsService.error('ERROR.ERROR', error.message);
               }
             );
           },
           error => {
-            this._notificationsService.error('Erreur', error.message); // TODO translate
+            this._notificationsService.error('ERROR.ERROR', error.message);
           }
         );
     }
     else {
-      this._notificationsService.error('Erreur', 'Formulaire non valide'); // TODO translate
+      this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NotificationsService } from 'angular2-notifications';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { EmailService } from './../../../../services/email/email.service';
 import { EmailQueueModel } from '../../../../models/mail.queue.model';
 
@@ -18,7 +18,7 @@ export class AdminEmailsComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _emailService: EmailService,
-              private _notificationsService: NotificationsService) { }
+              private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._activatedRoute.params.subscribe(() => {
@@ -28,7 +28,7 @@ export class AdminEmailsComponent implements OnInit {
           this._queueList = queue;
           console.log('yay!');
         },
-        error => this._notificationsService.error('Error', error.message)
+        error => this._notificationsService.error('ERROR', error.message)
       );
     });
   }

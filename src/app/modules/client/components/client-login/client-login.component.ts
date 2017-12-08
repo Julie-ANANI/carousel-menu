@@ -5,7 +5,7 @@ import { UserService } from '../../../../services/user/user.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
-import { NotificationsService } from 'angular2-notifications';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Title } from '@angular/platform-browser';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
@@ -25,7 +25,7 @@ export class ClientLoginComponent implements OnInit {
               private _formBuilder: FormBuilder,
               private _translateService: TranslateService,
               private _titleService: Title,
-              private _notificationsService: NotificationsService) { }
+              private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
@@ -53,18 +53,18 @@ export class ClientLoginComponent implements OnInit {
             preserveFragment: true
           };
 
-          this._notificationsService.success('Welcome back!', 'You now are logged in.'); // TODO translate
+          this._notificationsService.success('ERROR.LOGIN.WELCOME', 'ERROR.LOGIN.LOGGED_IN');
 
           // Redirect the user
           this._router.navigate([redirect], navigationExtras);
         }
       },
       err => {
-        this._notificationsService.error('Erreur', err.message); // TODO translate
+        this._notificationsService.error('ERROR.ERROR', err.message);
       });
     }
     else {
-      this._notificationsService.error('Erreur', 'Formulaire non valide'); // TODO translate
+      this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
   }
 
@@ -76,21 +76,20 @@ export class ClientLoginComponent implements OnInit {
           window.location.href = url;
         },
         error => {
-          this._notificationsService.error('Erreur', error.message); // TODO translate
+          this._notificationsService.error('ERROR.ERROR', error.message);
         }
       );
   }
 
   public changePassword() {
     if (!this.formData.get('email').value) {
-      this._notificationsService.error('Empty email', 'Please enter your email before.'); // TODO translate
+      this._notificationsService.error('ERROR.LOGIN.EMPTY_EMAIL', 'ERROR.LOGIN.EMAIL_PLEASE');
     }
     else {
       this._userService.changePassword(this.formData.get('email').value).subscribe(res => {
-        this._notificationsService.success('We just sent you an email', 'To change your password, pease click on the link we just sent you by email.');
+        this._notificationsService.success('ERROR.LOGIN.EMAIL_SENT', 'ERROR.LOGIN.CHANGE_PASSWORD');
       }, err => {
-        this._notificationsService.error('Error', 'An error occurred. Email not found.');
-
+        this._notificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_NOT_FOUND');
       });
     }
   }

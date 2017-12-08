@@ -3,7 +3,7 @@ import { UserService } from '../../../../services/user/user.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../models/user.model';
-import { NotificationsService } from 'angular2-notifications';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -23,7 +23,7 @@ export class ClientMyAccountComponent implements OnInit {
 
   constructor(private _userService: UserService,
               private _translateService: TranslateService,
-              private _notificationsService: NotificationsService,
+              private _notificationsService: TranslateNotificationsService,
               private _authService: AuthService,
               private _formBuilder: FormBuilder,
               private _router: Router,
@@ -61,15 +61,15 @@ export class ClientMyAccountComponent implements OnInit {
       const user = new User(form.value);
       this._userService.update(user).subscribe(
         data => {
-          this._notificationsService.success('Mise à jour réussie', 'Votre profil a été mis à jour'); // TODO translate
+          this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
           form.patchValue(data);
         },
         error => {
-          this._notificationsService.error('Erreur', error.message); // TODO translate
+          this._notificationsService.error('ERROR.ERROR', error.message);
         });
     }
     else {
-      this._notificationsService.error('Erreur', 'Formulaire non valide'); // TODO translate
+      this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
   }
 
@@ -84,7 +84,7 @@ export class ClientMyAccountComponent implements OnInit {
   public deleteAccount () {
     this._userService.delete().subscribe((res) => {
       this._authService.logout().subscribe(() => {
-        this._notificationsService.success('Account deleted', 'Votre compte a bien été supprimé.'); // TODO translate
+        this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
         this._router.navigate(['/']);
       });
     });
