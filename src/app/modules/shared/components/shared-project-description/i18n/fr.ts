@@ -5,6 +5,13 @@ export const fr = {
     'SOLUTION': 'Solution',
     'ISSUE': 'Problématique',
     'MARKET_BENEFITS': 'Avantages marché',
-    'GALLERY': 'Galerie'
+    'GALLERY': 'Galerie',
+    'SHARE': {
+      'TITLE': 'Partager',
+      'LINKEDIN': 'Partager sur LinkedIn',
+      'TWITTER': 'Partager sur Twitter',
+      'FACEBOOK': 'Partager sur Facebook',
+      'MAIL': 'Partager par email',
+    }
   }
 };
