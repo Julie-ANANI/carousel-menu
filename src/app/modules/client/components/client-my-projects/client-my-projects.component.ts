@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
-import { UserService } from '../../../../services/user/user.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { MediaService } from '../../../../services/media/media.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
+import { SmartQueryService } from '../../../../services/smartQuery/smartQuery.service';
 
 @Component({
   selector: 'app-client-my-projects',
@@ -14,22 +13,27 @@ export class ClientMyProjectsComponent implements OnInit {
 
   private _projects: [any];
   public selectedProjectIdToBeDeleted: any = null;
-  public sortAsc = false;
-  public sortingBy = 'created';
+  private _total: number;
 
   constructor(private _translateService: TranslateService,
-              private _userService: UserService,
               private _innovationService: InnovationService,
               private _titleService: TranslateTitleService,
-              private _mediaService: MediaService) { }
+              private _sq: SmartQueryService) {
+    this._sq.setRoute('/user/me/innovations');
+  }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
     this._titleService.setTitle('MY_PROJECTS.TITLE');
-    this._userService.getMyInnovations().subscribe(projects => {
-      this._projects = projects.innovations;
-      this.sortProjectsBy(this.sortingBy);
+    this._sq.data$.subscribe(innovations => {
+      this._projects = innovations.result;
+      this._total = innovations._metadata.totalCount;
     });
+    this._sq.getData();
+  }
+  
+  get sq(): any {
+    return this._sq;
   }
 
   /**
@@ -78,37 +82,11 @@ export class ClientMyProjectsComponent implements OnInit {
     }
   }
 
-  public sortProjectsBy(sortBy) {
-    if (sortBy === this.sortingBy) {
-      this.sortAsc = !this.sortAsc;
-    }
-    else {
-      this.sortingBy = sortBy;
-    }
-    const getValue  = (item) => {
-      switch (sortBy) {
-        case 'owner.companyName':
-          return item.owner.companyName.toLowerCase();
-        case 'owner.name':
-          return item.owner.name.toLowerCase();
-        default:
-          return item[sortBy].toLowerCase();
-      }
-    };
-
-    this._projects = this._projects.sort((a, b) => {
-      a = getValue(a);
-      b = getValue(b);
-      if (this.sortAsc) {
-        return (a < b) ? -1 : (a > b) ? 1 : 0;
-      }
-      else {
-        return (a > b) ? -1 : (a < b) ? 1 : 0;
-      }
-    });
+  get total () {
+    return this._total;
   }
 
-  get projects () { // TODO     : Project[] { (using server)
+  get projects () {
     return this._projects;
   }
 

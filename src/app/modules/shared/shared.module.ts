@@ -29,11 +29,11 @@ import { SharedPricesComponent } from './components/shared-market-report/shared-
 import { SharedWorldMapComponent } from './components/shared-market-report/shared-world-map-component/shared-world-map.component';
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
 import { SharedFilterInputComponent } from './components/shared-filter-input/shared-filter-input.component';
-import { SqSortDirective } from '../../directives/smart-query/sqSort.directive';
 import { SqResetDirective } from '../../directives/smart-query/sqReset.directive';
 import { SharedModalComponent } from './components/shared-modal-component/shared-modal.component';
 import { SharedStarsComponent } from './components/shared-stars-component/shared-stars.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
+import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
 import { ChartsModule } from 'ng2-charts';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
@@ -60,7 +60,6 @@ import { SharedLatexManagerComponent } from './components/shared-latex-manager/s
   declarations: [
     // Directives
     // FormErrorDirective,
-    SqSortDirective,
     SqResetDirective,
 
     // Component
@@ -93,7 +92,8 @@ import { SharedLatexManagerComponent } from './components/shared-latex-manager/s
     SharedStarsComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
-    SharedVideoComponent
+    SharedVideoComponent,
+    SharedSortComponent
   ],
   exports: [
     // Modules
@@ -104,7 +104,6 @@ import { SharedLatexManagerComponent } from './components/shared-latex-manager/s
 
     // Directives
     // FormErrorDirective,
-    SqSortDirective,
     SqResetDirective,
 
     // Components
@@ -123,7 +122,8 @@ import { SharedLatexManagerComponent } from './components/shared-latex-manager/s
     SharedMarketReportComponent,
     SharedModalComponent,
     SharedProjectDescriptionComponent,
-    SharedLatexManagerComponent
+    SharedLatexManagerComponent,
+    SharedSortComponent
   ]
 })
 export class SharedModule { }

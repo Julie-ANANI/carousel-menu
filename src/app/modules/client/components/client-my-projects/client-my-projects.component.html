@@ -11,11 +11,11 @@
 
         <div class="column col-10">
           <ul class="list-filter">
-            <li><button class="btn btn-link" (click)="sortProjectsBy('name')">{{ 'COMMON.SORT.BY_NAME' | translate }} <i *ngIf="sortingBy === 'name'" class="icon" [ngClass]="{'icon-arrow-down': sortAsc, 'icon-arrow-up': !sortAsc}"></i><i *ngIf="sortingBy !== 'name'" class="icon icon-resize-vert text-gray"></i></button></li>
-            <li><button class="btn btn-link" (click)="sortProjectsBy('owner.companyName')">{{ 'COMMON.SORT.BY_COMPANY' | translate }} <i *ngIf="sortingBy === 'owner.companyName'" class="icon" [ngClass]="{'icon-arrow-down': sortAsc, 'icon-arrow-up': !sortAsc}"></i><i *ngIf="sortingBy !== 'owner.companyName'" class="icon icon-resize-vert text-gray"></i></button></li>
-            <li><button class="btn btn-link" (click)="sortProjectsBy('owner.name')">{{ 'COMMON.SORT.BY_AUTHOR' | translate }} <i *ngIf="sortingBy === 'owner.name'" class="icon" [ngClass]="{'icon-arrow-down': sortAsc, 'icon-arrow-up': !sortAsc}"></i><i *ngIf="sortingBy !== 'owner.name'" class="icon icon-resize-vert text-gray"></i></button></li>
-            <li><button class="btn btn-link" (click)="sortProjectsBy('updated')">{{ 'COMMON.SORT.BY_UPDATE_DATE' | translate }} <i *ngIf="sortingBy === 'updated'" class="icon" [ngClass]="{'icon-arrow-down': sortAsc, 'icon-arrow-up': !sortAsc}"></i><i *ngIf="sortingBy !== 'updated'" class="icon icon-resize-vert text-gray"></i></button></li>
-            <li><button class="btn btn-link" (click)="sortProjectsBy('created')">{{ 'COMMON.SORT.BY_CREATION_DATE' | translate }} <i *ngIf="sortingBy === 'created'" class="icon" [ngClass]="{'icon-arrow-down': sortAsc, 'icon-arrow-up': !sortAsc}"></i><i *ngIf="sortingBy !== 'created'" class="icon icon-resize-vert text-gray"></i></button></li>
+            <li><sq-sort [service]="sq" [prop]="'name'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_NAME' | translate }}</button></sq-sort></li>
+            <li><sq-sort [service]="sq" [prop]="'owner.companyName'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_COMPANY' | translate }}</button></sq-sort></li>
+            <li><sq-sort [service]="sq" [prop]="'owner.name'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_AUTHOR' | translate }} </button></sq-sort></li>
+            <li><sq-sort [service]="sq" [prop]="'updated'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_UPDATE_DATE' | translate }} </button></sq-sort></li>
+            <li><sq-sort [service]="sq" [prop]="'created'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_CREATION_DATE' | translate }}</button></sq-sort></li>
             <!--<li><a href="/todo"><i class="icon icon-search"></i></a></li>-->
           </ul>
         </div>
@@ -63,6 +63,7 @@
           </ul>
         </div>
       </div>
+      <sqPagination [service]="sq" [total]="total"></sqPagination>
     </div>
   </div>
 </div>
