@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { TranslateTitleService } from '../../../../services/title/title.service';
 import { UserService } from '../../../../services/user/user.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { MediaService } from '../../../../services/media/media.service';
@@ -20,12 +20,12 @@ export class ClientMyProjectsComponent implements OnInit {
   constructor(private _translateService: TranslateService,
               private _userService: UserService,
               private _innovationService: InnovationService,
-              private _titleService: Title,
+              private _titleService: TranslateTitleService,
               private _mediaService: MediaService) { }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-    this._titleService.setTitle('My projects'); // TODO translate
+    this._titleService.setTitle('MY_PROJECTS.TITLE'); // TODO translate
     this._userService.getMyInnovations().subscribe(projects => {
       this._projects = projects.innovations;
       this.sortProjectsBy(this.sortingBy);

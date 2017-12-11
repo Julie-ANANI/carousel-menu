@@ -11,6 +11,7 @@ import { CampaignService } from './services/campaign/campaign.service';
 import { SmartQueryService } from './services/smartQuery/smartQuery.service';
 import { WindowRefService } from './services/window-ref/window-ref.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
+import { TranslateTitleService } from './services/title/title.service';
 import { UserService } from './services/user/user.service';
 import { MediaService } from './services/media/media.service';
 import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
@@ -71,7 +72,8 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
       deps: [XHRBackend, RequestOptions, LoaderService, NotificationsService]
     },
     AutocompleteService,
-    TranslateNotificationsService
+    TranslateNotificationsService,
+    TranslateTitleService
   ],
   bootstrap: [AppComponent]
 })

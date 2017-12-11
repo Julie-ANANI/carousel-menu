@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { TranslateTitleService } from '../../../../services/title/title.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,7 +14,7 @@ export class AdminDashboardComponent implements OnInit {
 
 
 
-  constructor(private _titleService: Title) { }
+  constructor(private _titleService: TranslateTitleService) { }
 
   ngOnInit(): void {
     this._titleService.setTitle('Admin Dashboard');

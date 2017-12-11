@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { TranslateTitleService } from '../../../../services/title/title.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 
 @Component({
@@ -9,7 +9,7 @@ import { TranslateService, initTranslation } from './i18n/i18n';
 })
 export class SharedNotFoundComponent implements OnInit {
 
-  constructor(private _titleService: Title,
+  constructor(private _titleService: TranslateTitleService,
               private _translateService: TranslateService) {}
 
   ngOnInit(): void {
