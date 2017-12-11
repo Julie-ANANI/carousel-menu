@@ -5,11 +5,11 @@
       <table wt-responsive-table class="table">
         <thead>
         <tr>
-          <th sqSort [service]="sq" prop="name" colspan="2">{{ 'CAMPAIGN.NAME' | translate }}</th>
+          <th><sq-sort [service]="sq" [prop]="'name'" colspan="2">{{ 'CAMPAIGN.NAME' | translate }}</sq-sort></th>
           <th>{{ 'CAMPAIGN.TITLE' | translate }}</th>
-          <th sqSort [service]="sq" prop="owner.firstName">{{ 'CAMPAIGN.OWNER' | translate }}</th>
-          <th sqSort [service]="sq" prop="status">{{ 'CAMPAIGN.STATUS' | translate }}</th>
-          <th sqSort [service]="sq" prop="created">{{ 'CAMPAIGN.CREATED' | translate }}</th>
+          <th><sq-sort [service]="sq" [prop]="'owner.firstName'">{{ 'CAMPAIGN.OWNER' | translate }}</sq-sort></th>
+          <th><sq-sort [service]="sq" [prop]="'status'">{{ 'CAMPAIGN.STATUS' | translate }}</sq-sort></th>
+          <th><sq-sort [service]="sq" [prop]="'created'">{{ 'CAMPAIGN.CREATED' | translate }}</sq-sort></th>
         </tr><!--
         <tr>
           <th colspan="3">

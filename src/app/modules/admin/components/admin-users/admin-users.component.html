@@ -6,10 +6,10 @@
         <thead>
         <tr>
           <th></th>
-          <th sqSort [service]="sq" prop="firstName">{{ 'USERS.NAME' | translate }}</th>
-          <th sqSort [service]="sq" prop="companyName" >{{ 'USERS.COMPANY' | translate }}</th>
-          <th sqSort [service]="sq" prop="jobTitle">{{ 'USERS.JOB' | translate }}</th>
-          <th sqSort [service]="sq" prop="created">{{ 'USERS.CREATED' | translate }}</th>
+          <th><sq-sort [service]="sq" [prop]="'firstName'">{{ 'USERS.NAME' | translate }}</sq-sort></th>
+          <th><sq-sort [service]="sq" [prop]="'companyName'" >{{ 'USERS.COMPANY' | translate }}</sq-sort></th>
+          <th><sq-sort [service]="sq" [prop]="'jobTitle'">{{ 'USERS.JOB' | translate }}</sq-sort></th>
+          <th><sq-sort [service]="sq" [prop]="'created'">{{ 'USERS.CREATED' | translate }}</sq-sort></th>
           <th>{{ 'COMMON.PROJECTS' | translate }}</th>
         </tr>
         <tr>
