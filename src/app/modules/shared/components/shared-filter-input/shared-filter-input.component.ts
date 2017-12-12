@@ -13,7 +13,6 @@ export class SharedFilterInputComponent {
   constructor() {}
 
   filter(event) {
-    console.log(event);
     const value = (<HTMLInputElement> event.srcElement).value;
     if (this.config.search[this.prop] && value == "") {
       delete this.config.search[this.prop];

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SmartQueryService } from '../../../../services/smartQuery/smartQuery.service';
 import { UserService } from '../../../../services/user/user.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { NotificationsService } from 'angular2-notifications';
