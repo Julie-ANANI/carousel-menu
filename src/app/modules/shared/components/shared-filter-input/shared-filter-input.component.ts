@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'sqFilter',
@@ -6,13 +6,23 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./shared-filter-input.component.scss']
 })
 export class SharedFilterInputComponent {
-  @Input() service: any;
+  @Input() config: any;
+  @Output() configChange = new EventEmitter <any>();
   @Input() prop: string;
 
   constructor() {}
 
   filter(event) {
     console.log(event);
-    this.service.filter(this.prop, (<HTMLInputElement> event.srcElement).value);
+    const value = (<HTMLInputElement> event.srcElement).value;
+    if (this.config.search[this.prop] && value == "") {
+      delete this.config.search[this.prop];
+      this.configChange.emit(this.config);
+    } else {
+      if (value != "") {
+        this.config.search[this.prop] = value;
+        this.configChange.emit(this.config);
+      }
+    }
   }
 }

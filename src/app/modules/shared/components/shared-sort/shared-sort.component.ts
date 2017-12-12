@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'sq-sort',
@@ -6,23 +6,27 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./shared-sort.component.scss']
 })
 export class SharedSortComponent implements OnInit {
-  @Input() service: any;
+  @Input() config: any;
+  @Output() configChange = new EventEmitter <any>(); 
   @Input() prop: string;
-  private _order: number;
 
   constructor() {
-    this._order = 0;
   }
 
   ngOnInit() {
   }
 
   public sort(): void {
-    this._order = this._order == 1 ? -1 : this._order + 1;
-    this.service.sortBy(this.prop, this._order);
+    const previousOrder = this.config.sort[this.prop] || 0;
+    const newOrder = previousOrder == 1 ? -1 : previousOrder + 1;
+    this.config.sort = {};
+    if (newOrder == 1 || newOrder == -1) {
+      this.config.sort[this.prop] = newOrder;
+    }
+    this.configChange.emit(this.config);
   }
 
   get order(): number {
-    return this._order;
+    return this.config.sort[this.prop] || 0;
   }
 }
