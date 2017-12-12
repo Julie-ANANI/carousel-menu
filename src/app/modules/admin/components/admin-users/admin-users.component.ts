@@ -15,25 +15,34 @@ export class AdminUsersComponent implements OnInit {
 
   private _users = [];
   private _total = 0;
+  private _config = {
+    fields: '',
+    limit: 10,
+    offset: 0,
+    search: {},
+    sort: {
+      created: -1
+    }
+  };
 
   constructor(private _router: Router,
               private _translateService: TranslateService,
               private _titleService: TranslateTitleService,
-              private _sq: SmartQueryService,
               private _userService: UserService,
-              private _notificationsService: NotificationsService) {
-    this._sq.setRoute('/user');
-  }
+              private _notificationsService: NotificationsService) {}
 
   ngOnInit(): void {
     initTranslation(this._translateService);
     this._titleService.setTitle('USERS.TITLE');
+    this.loadUsers(this._config);
+  }
 
-    this._sq.data$.subscribe(users => {
+  loadUsers(config: any): void {
+    this._config = config;
+    this._userService.getAll(this._config).subscribe(users => {
       this._users = users.result;
       this._total = users._metadata.totalCount;
     });
-    this._sq.getData();
   }
 
   loadInnovations(userId): void {
@@ -42,8 +51,12 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
-  get sq(): any {
-    return this._sq;
+  set config(value: any) {
+    this._config = value;
+  }
+
+  get config(): any {
+    return this._config;
   }
 
   get total(): number {

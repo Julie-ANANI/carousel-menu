@@ -6,17 +6,17 @@
         <thead>
         <tr>
           <th></th>
-          <th><sq-sort [service]="sq" [prop]="'firstName'">{{ 'USERS.NAME' | translate }}</sq-sort></th>
-          <th><sq-sort [service]="sq" [prop]="'companyName'" >{{ 'USERS.COMPANY' | translate }}</sq-sort></th>
-          <th><sq-sort [service]="sq" [prop]="'jobTitle'">{{ 'USERS.JOB' | translate }}</sq-sort></th>
-          <th><sq-sort [service]="sq" [prop]="'created'">{{ 'USERS.CREATED' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'firstName'">{{ 'USERS.NAME' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'companyName'" >{{ 'USERS.COMPANY' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'jobTitle'">{{ 'USERS.JOB' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'created'">{{ 'USERS.CREATED' | translate }}</sq-sort></th>
           <th>{{ 'COMMON.PROJECTS' | translate }}</th>
         </tr>
         <tr>
           <th></th>
-          <th><sqFilter [service]="sq" prop="firstName"></sqFilter></th>
-          <th><sqFilter [service]="sq" prop="companyName"></sqFilter></th>
-          <th><sqFilter [service]="sq" prop="jobTitle"></sqFilter></th>
+          <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="firstName"></sqFilter></th>
+          <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="companyName"></sqFilter></th>
+          <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="jobTitle"></sqFilter></th>
           <th></th>
           <th></th>
         </tr>
@@ -36,7 +36,7 @@
         <tfoot>
         <tr>
           <td colspan="12">
-            <sqPagination [service]="sq" [total]="total"></sqPagination>
+            <sqPagination [config]="config" (configChange)="loadUsers($event)" [total]="total"></sqPagination>
           </td>
         </tr>
         </tfoot>
