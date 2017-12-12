@@ -11,7 +11,6 @@ import { ClientMyAccountComponent } from './components/client-my-account/client-
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 
 import { ClientProjectComponent } from './components/client-project/client-project.component';
-import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
 import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
 
 import { ClientLoginComponent } from './components/client-login/client-login.component';
@@ -51,7 +50,6 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
     ClientMyProjectsComponent,
     ClientProjectEditComponent,
     ClientProjectComponent,
-    ClientCampaignComponent,
 
     ClientDiscoverComponent,
     ClientWelcomeComponent,
