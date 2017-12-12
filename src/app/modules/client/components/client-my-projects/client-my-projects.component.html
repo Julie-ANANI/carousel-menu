@@ -11,12 +11,12 @@
 
         <div class="column col-10">
           <ul class="list-filter">
-            <li><sq-sort [service]="sq" [prop]="'name'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_NAME' | translate }}</button></sq-sort></li>
-            <li><sq-sort [service]="sq" [prop]="'owner.companyName'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_COMPANY' | translate }}</button></sq-sort></li>
-            <li><sq-sort [service]="sq" [prop]="'owner.name'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_AUTHOR' | translate }} </button></sq-sort></li>
-            <li><sq-sort [service]="sq" [prop]="'updated'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_UPDATE_DATE' | translate }} </button></sq-sort></li>
-            <li><sq-sort [service]="sq" [prop]="'created'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_CREATION_DATE' | translate }}</button></sq-sort></li>
-            <!--<li><a href="/todo"><i class="icon icon-search"></i></a></li>-->
+            <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'name'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_NAME' | translate }}</button></sq-sort></li>
+            <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'owner.companyName'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_COMPANY' | translate }}</button></sq-sort></li>
+            <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'owner.name'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_AUTHOR' | translate }} </button></sq-sort></li>
+            <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'updated'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_UPDATE_DATE' | translate }} </button></sq-sort></li>
+            <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'created'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_CREATION_DATE' | translate }}</button></sq-sort></li>
+            <li><sqFilter [config]="config" (configChange)="loadProjects($event)" prop="name"></sqFilter><i class="icon icon-search"></i></li>
           </ul>
         </div>
       </div>
@@ -63,7 +63,7 @@
           </ul>
         </div>
       </div>
-      <sqPagination [service]="sq" [total]="total"></sqPagination>
+      <sqPagination [config]="config" (configChange)="loadProjects($event)" [total]="total"></sqPagination>
     </div>
   </div>
 </div>
