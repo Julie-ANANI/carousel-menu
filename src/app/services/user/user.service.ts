@@ -65,8 +65,8 @@ export class UserService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
-  public getAll(): Observable<any[]> {
-    return this._http.get('/user')
+  public getAll(config: any): Observable<any> {
+    return this._http.get('/user', {params: config})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }
