@@ -1,0 +1,17 @@
+.page-item {
+  cursor: pointer;
+  padding: 0 0.4em 0 0.4em;
+}
+
+.disabled {
+  cursor: not-allowed;
+}
+
+.current-page {
+  position: relative;
+  top: -3px;
+
+  input {
+    width: 30px;
+  }
+}

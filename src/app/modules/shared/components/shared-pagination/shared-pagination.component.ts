@@ -35,6 +35,12 @@ export class SharedPaginationComponent implements OnInit {
   get currentPage(): number {
     return (this.config.offset / this.config.limit) + 1;
   }
+  
+  goToPage(event: any): void {
+    const page = parseInt((<HTMLInputElement> event.srcElement).value);
+    this.config.offset = this.config.limit * (page - 1);
+    this.configChange.emit(this.config);
+  }
 
   set currentPage(page: number) {
     this.config.offset = this.config.limit * (page - 1);
