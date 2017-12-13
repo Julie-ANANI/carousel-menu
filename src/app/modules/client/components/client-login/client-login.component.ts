@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
-import { TranslateService, initTranslation } from './i18n/i18n';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -23,12 +22,10 @@ export class ClientLoginComponent implements OnInit {
               private _userService: UserService,
               private _router: Router,
               private _formBuilder: FormBuilder,
-              private _translateService: TranslateService,
               private _titleService: TranslateTitleService,
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit(): void {
-    initTranslation(this._translateService);
     this._titleService.setTitle('LOG_IN.TITLE');
 
     this.formData = this._formBuilder.group({

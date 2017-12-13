@@ -2,7 +2,6 @@ import { Component, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { LatexService } from '../../../../services/latex/latex.service';
-import { initTranslation, TranslateService } from './i18n/i18n';
 
 import * as FileSaver from 'file-saver';
 
@@ -24,12 +23,9 @@ export class SharedLatexManagerComponent implements OnInit {
 
   constructor(private _innovationService: InnovationService,
               private _latexService: LatexService,
-              private _notificationsService: TranslateNotificationsService,
-              private _translateService: TranslateService) {  }
+              private _notificationsService: TranslateNotificationsService) {  }
 
   ngOnInit() {
-    initTranslation(this._translateService);
-    //Verify that we have received have all we need
   }
 
   /**

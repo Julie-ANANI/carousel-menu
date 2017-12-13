@@ -1,9 +1,7 @@
-export const fr = {
-  "USERS": {
-    "TITLE": "Utilisateurs",
-    "NAME": "Name",
-    "COMPANY": "Entreprise",
-    "JOB": "Poste",
-    "CREATED": "Créé le"
-  }
+export const ADMIN_USERS = {
+  "TITLE": "Utilisateurs",
+  "NAME": "Nom",
+  "COMPANY": "Entreprise",
+  "JOB": "Poste",
+  "CREATED": "Créé le"
 };

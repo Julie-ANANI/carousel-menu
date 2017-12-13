@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../../services/user/user.service';
-import { TranslateService, initTranslation } from './i18n/i18n';
 import { NotificationsService } from 'angular2-notifications';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 
@@ -25,13 +24,11 @@ export class AdminUsersComponent implements OnInit {
   };
 
   constructor(private _router: Router,
-              private _translateService: TranslateService,
               private _titleService: TranslateTitleService,
               private _userService: UserService,
               private _notificationsService: NotificationsService) {}
 
   ngOnInit(): void {
-    initTranslation(this._translateService);
     this._titleService.setTitle('USERS.TITLE');
     this.loadUsers(this._config);
   }

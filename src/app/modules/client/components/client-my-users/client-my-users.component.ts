@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService, initTranslation } from './i18n/i18n';
 
 @Component({
   selector: 'app-client-my-users',
@@ -8,10 +7,8 @@ import { TranslateService, initTranslation } from './i18n/i18n';
 })
 export class ClientMyUsersComponent implements OnInit {
 
-  constructor(private _translateService: TranslateService) { }
+  constructor() {}
 
-  ngOnInit() {
-    initTranslation(this._translateService);
-  }
+  ngOnInit() {}
 
 }

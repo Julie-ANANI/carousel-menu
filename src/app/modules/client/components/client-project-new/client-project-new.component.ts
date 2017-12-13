@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { TranslateService, initTranslation } from './i18n/i18n';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ISubscription } from "rxjs/Subscription";
 
@@ -23,11 +22,9 @@ export class ClientProjectNewComponent implements OnInit, OnDestroy {
 
   constructor(private _router: Router,
               private _formBuilder: FormBuilder,
-              private _innovationService: InnovationService,
-              private _translateService: TranslateService) { }
+              private _innovationService: InnovationService) { }
 
   ngOnInit() {
-    initTranslation(this._translateService);
   }
 
   ngOnDestroy() {

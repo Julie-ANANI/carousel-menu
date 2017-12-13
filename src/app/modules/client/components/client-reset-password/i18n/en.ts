@@ -1,5 +1,3 @@
-export const en = {
-  'RESET_PASSWORD': {
-    'TITLE': 'Password update'
-  }
+export const RESET_PASSWORD = {
+  'TITLE': 'Password update'
 };

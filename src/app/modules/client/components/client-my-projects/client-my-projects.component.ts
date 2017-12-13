@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { UserService } from '../../../../services/user/user.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { TranslateService, initTranslation } from './i18n/i18n';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-client-my-projects',
@@ -30,7 +30,6 @@ export class ClientMyProjectsComponent implements OnInit {
               private _titleService: TranslateTitleService) {}
 
   ngOnInit(): void {
-    initTranslation(this._translateService);
     this._titleService.setTitle('MY_PROJECTS.TITLE');
     this.loadProjects(this._config);
   }

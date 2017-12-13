@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { TranslateService, initTranslation } from './i18n/i18n';
 
 @Component({
   selector: 'sqPagination',
@@ -15,13 +14,12 @@ export class SharedPaginationComponent implements OnInit {
   private _numPages: number;
   private _currentPage: number;
 
-  constructor(private _translateService: TranslateService) {
+  constructor() {
     this.perPageValues = this.perPageValues || [10, 20, 50, 100];
     this._currentPage = 1;
   }
 
   ngOnInit() {
-    initTranslation(this._translateService);
   }
 
   ngOnChanges() {

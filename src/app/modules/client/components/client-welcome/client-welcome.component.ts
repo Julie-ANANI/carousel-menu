@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
-import { TranslateService, initTranslation } from './i18n/i18n';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-client-welcome',
@@ -19,7 +19,6 @@ export class ClientWelcomeComponent implements OnInit {
               private _translateService: TranslateService) { }
 
   ngOnInit(): void {
-    initTranslation(this._translateService);
     this._user = this._authService.user;
     if(!this._user) {
       this._router.navigate(['/logout']);

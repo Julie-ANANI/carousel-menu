@@ -1,240 +1,37 @@
+import { COMMON } from './common_fr';
+import { ERROR } from './error_fr';
+import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/fr';
+import { FOOTER } from '../modules/client/components/client-footer/i18n/fr';
+import { LOG_IN } from '../modules/client/components/client-login/i18n/fr';
+import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/fr';
+import { MY_PROJECTS } from '../modules/client/components/client-my-projects/i18n/fr';
+import { PROJECT_EDIT } from '../modules/client/components/client-project-edit/i18n/fr';
+import { NEW_PROJECT } from '../modules/client/components/client-project-new/i18n/fr';
+import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/fr';
+import { SIGN_UP } from '../modules/client/components/client-signup/i18n/fr';
+import { WELCOME } from '../modules/client/components/client-welcome/i18n/fr';
+import { HEADER } from '../modules/shared/components/shared-header/i18n/fr';
+import { EXPORT } from '../modules/shared/components/shared-latex-manager/i18n/fr';
+import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
+import { PAGINATION } from '../modules/shared/components/shared-pagination/i18n/fr';
+import { PROJECT } from '../modules/shared/components/shared-project-description/i18n/fr';
+
 export const fr = {
-  'COMMON': {
-    'SAVE': 'Sauvegarder',
-    'SAVE_DRAFT': 'Sauvegarder en brouillon',
-    'LAST_SAVED_AT': 'Sauvegardé à',
-    'UPDATE': 'Mettre à jour',
-    'EDIT': 'Éditer',
-    'DELETE': 'Supprimer',
-    'LOG_IN': 'Connexion',
-    'SIGN_UP': 'Inscription',
-    'LOG_OUT': 'Se déconnecter',
-    'CANCEL': 'Annuler',
-    'ADD': 'Ajouter',
-    'CLOSE': 'Fermer',
-    'PREVIEW': 'Prévisualiser',
-    'NO': 'Non',
-    'YES': 'Oui',
-    'ACCEPT': 'Accepter',
-
-    'FIRSTNAME': 'Prénom',
-    'LASTNAME': 'Nom',
-    'EMAIL': 'Email',
-    'PHONE': 'Téléphone',
-    'PASSWORD': 'Mot de passe',
-    'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
-    'COMPANY': 'Entreprise',
-    'JOBTITLE': 'Poste',
-
-    'REQUIRED': {
-      'FIRSTNAME': 'Le prénom est requis',
-      'LASTNAME': 'Le nom est requis',
-      'EMAIL': 'L\'adresse email est requise',
-      'PHONE': 'Le numéro de téléphone est requis',
-      'PASSWORD': 'Le mot de passe est requis',
-      'COMPANY': 'Le nom de l\'entreprise est requis',
-      'JOBTITLE': 'Le poste est requis',
-    },
-
-    'PROJECT_STATE': {
-      'EDITING': 'Description',
-      'SUBMITTED': 'Soumis',
-      'REVIEWING': 'Révision',
-      'EVALUATING': 'Lancé',
-      'DONE': 'Terminé'
-    },
-
-    'PROJECT_STATUS': {
-      '0': 'Idée',
-      '1': 'Développement en cours',
-      '2': 'Déjà disponible'
-    },
-
-    'INVALID': {
-      'EMAIL': 'L\'email est invalide',
-      'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court'
-    },
-
-    'LINKS': 'Liens',
-    'HELP': 'Aide',
-    'OR': 'ou',
-
-    'LANGUAGE': 'Langue',
-    'LANG': {
-      'FR': 'Français',
-      'EN': 'Anglais'
-    },
-
-    'USERS': 'Utilisateurs',
-    'HOME': 'Accueil',
-    'ADMIN': 'Admin',
-    'MY_PROJECT': 'Mon projet',
-    'MY_PROJECTS': 'Mes projets',
-    'MY_USERS': 'Mes utilisateurs',
-    'MY_ACCOUNT': 'Mon compte',
-    'PROJECTS': 'Projets',
-    'CAMPAIGNS': 'Campagnes',
-    'DISCOVER': 'Découvrir',
-
-    'SORT': {
-      'BY_NAME': 'Nom',
-      'BY_COMPANY': 'Entreprise',
-      'BY_AUTHOR': 'Auteur',
-      'BY_CREATION_DATE': 'Création',
-      'BY_UPDATE_DATE': 'Mise à jour'
-    }
-  },
-
-  'ERROR': {
-    'ERROR': 'Erreur',
-    'CANNOT_REACH': 'Le serveur ne répond pas.',
-    'INVALID_FORM': 'Le formulaire est invalide.',
-    'LOGIN': {
-      'WELCOME': 'Bienvenue !',
-      'LOGGED_IN': 'Vous êtes bien connecté(e).',
-      'EMPTY_EMAIL': 'Email vide',
-      'EMAIL_PLEASE': 'Veuillez entrer votre email.',
-      'EMAIL_SENT': 'Nous vous avons envoyé un email',
-      'CHANGE_PASSWORD': 'Pour changer votre mot de passe, veuillez cliquer sur le lien envoyé par email.',
-      'EMAIL_NOT_FOUND': 'Adresse email introuvable.',
-      'LOGOUT': 'Déconnexion',
-      'LOGOUT_TEXT': 'Vous êtes bien déconnecté(e).',
-    },
-    'ACCOUNT': {
-      'UPDATE': 'Mise à jour réussie',
-      'UPDATE_TEXT': 'Votre profil a bien été mis à jour.',
-      'DELETED': 'Compte supprimé',
-      'DELETED_TEXT': 'Votre compte a bien été supprimé.',
-      'PASSWORD_UPDATED': 'Mot de passe mis à jour.',
-      'PASSWORD_UPDATED_TEXT': 'Votre mot de passe a bien été mis à jour.',
-      'SAME_PASSWORD': 'Les deux mots de passe doivent être identiques.'
-    },
-    'PROJECT': {
-      'NOT_FOUND': 'Projet introuvable',
-      'UNFORBIDDEN': 'Accès interdit',
-      'CANT_EDIT': 'Vous ne pouvez pas éditer ce projet.',
-      'SUBMITTED': 'Projet envoyé',
-      'SUBMITTED_TEXT': 'Votre projet a été transmis pour la validation.'
-    }
-  },
-
-  'MARKET_REPORT': {
-    'TITLE': 'Exploration du potentiel marché',
-    'COLLAPSE': 'Tout plier',
-    'EXPAND': 'Tout déplier',
-    'SYNTHESIS_FRAME': 'des professionnels',
-    'PIE_CHART': 'des réponses sont favorables',
-    'COMMENTS': 'commentaires',
-    'ANSWER': 'réponse',
-    'ANSWERS': 'réponses',
-    'SEE_ANSWERS': 'Voir la réponse',
-    'BTN_EDITION_MODE': 'Passer en mode édition',
-    'BTN_VIEW_MODE': 'Passer en mode visualisation',
-    'BTN_DETAILS_OPEN': 'Voir les détails',
-    'BTN_DETAILS_CLOSE': 'Masquer les détails',
-    'BTN_RECOMPUTE': 'Recalculer l\'infographie',
-    'PEOPLE_VOTED': 'personnes ont voté',
-    'GRADE': 'Note',
-    'NO_GRADE': 'Pas de note',
-    'POPUP': {
-      'PROFIL': 'Profil',
-      'RECEIVED': 'Reçu le',
-      'JOB': 'Profession',
-      'COUNTRY': 'Pays',
-      'BACK': 'Retour'
-    },
-    'PROFESSIONAL': {
-      'SIDEBAR': 'Professionnels',
-      'TITLE': 'Les professionnels',
-      'NUMBER': 'réponses de professionnels',
-      'FOLLOW_PLURAL': 'souhaitent suivre votre innovation',
-      'FOLLOW': 'souhaite suivre votre innovation',
-      'QUESTION': 'Origine des réponses'
-    },
-    'MARKET_NEED': {
-      'SIDEBAR': 'Besoin du marché',
-      'TITLE': 'Besoin du marché',
-      'QUESTION': 'Cette problématique est-elle un véritable enjeu sur ce marché ?',
-      'ANSWER_1': 'Non',
-      'ANSWER_2': 'Eventuellement',
-      'ANSWER_3': 'Oui',
-      'ANSWER_4': 'Indiscutablement'
-    },
-    'RELEVANCE': {
-      'SIDEBAR': 'Pertinence',
-      'TITLE': 'Pertinence de la solution',
-      'QUESTION': 'Cette solution répond-elle bien à la problématique ?',
-      'ANSWER_1': 'Non',
-      'ANSWER_2': 'Partiellement',
-      'ANSWER_3': 'Bien',
-      'ANSWER_4': 'Très bien'
-    },
-    'DIFFERENTIATION': {
-      'SIDEBAR': 'Différenciation',
-      'TITLE': 'Différenciation',
-      'QUESTION': 'La solution vous paraît-elle réellement innovante ?',
-      'ANSWER_1': 'Non',
-      'ANSWER_2': 'Peut-être',
-      'ANSWER_3': 'Oui',
-      'ANSWER_4': 'Indiscutablement'
-    },
-    'BENEFIT': {
-      'SIDEBAR': 'Avantages clés',
-      'TITLE': 'Avantages clés',
-      'NUMBER': 'Avantage clé',
-      'QUESTION': 'Notez les avantages clés de cette solution pour le marché'
-    },
-    'EXPRESSION_OF_INTEREST': {
-      'SIDEBAR': 'Marques d’intérêt',
-      'TITLE': 'Marques d’intérêt',
-      'QUESTION': 'Imaginez-vous que votre entreprise puisse acheter / développer / distribuer / investir ?',
-      'CLIENT': 'Ils souhaitent être client',
-      'DEVELOP': 'Ils souhaitent participer au développement',
-      'DISTRIBUTE': 'Ils souhaitent distribuer la solution',
-      'INVEST': 'Ils souhaitent investir dans la solution',
-      'NUMBER': 'Marques d’intérêt'
-    },
-    'POTENTIAL_PARTNER': {
-      'SIDEBAR': 'Partenaires potentiels',
-      'TITLE': 'Partenaires potentiels',
-      'QUESTION': 'Quels autres partenaires potentiels suggéreriez-vous ?',
-      'NUMBER': 'Partenaires suggérés'
-    },
-    'ACTUAL_COMPETITION': {
-      'SIDEBAR': 'Concurrence actuelle',
-      'TITLE': 'Concurrence actuelle',
-      'QUESTION': 'Quels concurrents / solutions alternatives connaissez-vous ?',
-      'NUMBER': 'Concurrents cités'
-    },
-    'PRICE': {
-      'SIDEBAR': 'Prix acceptable',
-      'TITLE': 'Prix acceptable',
-      'QUESTION': 'Quel prix vous semble acceptable par le marché ?',
-      'NUMBER': 'suggestions de prix',
-      'AVERAGE': 'Moyenne'
-    },
-    'STRONG': {
-      'SIDEBAR': 'Points forts',
-      'TITLE': 'Points forts',
-      'QUESTION': 'Quels sont les points forts de cette innovation ?',
-      'NUMBER': 'Commentaires'
-    },
-    'WEAK': {
-      'SIDEBAR': 'Objections',
-      'TITLE': 'Objections',
-      'QUESTION': 'Quels sont les points faibles de cette innovation ?',
-      'NUMBER': 'Objections'
-    },
-    'NEW_APPLICATION': {
-      'SIDEBAR': 'Nouvelles applications',
-      'TITLE': 'Nouvelles applications',
-      'QUESTION': 'Pensez-vous à d\'autres applications ?',
-      'NUMBER': 'Applications citées'
-    },
-    'MARKET_POTENTIAL': {
-      'SIDEBAR': 'Potentiel marché',
-      'TITLE': 'Potentiel marché',
-      'QUESTION': 'Quel est le potentiel de cette innovation sur le marché ?'
-    }
-  }
+  'COMMON': COMMON,
+  'ERROR': ERROR,
+  'MARKET_REPORT': MARKET_REPORT,
+  'USERS': ADMIN_USERS,
+  'FOOTER': FOOTER,
+  'LOG_IN': LOG_IN,
+  'MY_ACCOUNT': MY_ACCOUNT,
+  'MY_PROJECTS': MY_PROJECTS,
+  'PROJECT_EDIT': PROJECT_EDIT,
+  'NEW_PROJECT': NEW_PROJECT,
+  'RESET_PASSWORD': RESET_PASSWORD,
+  'SIGN_UP': SIGN_UP,
+  'WELCOME': WELCOME,
+  'HEADER': HEADER,
+  'EXPORT': EXPORT,
+  'PAGINATION': PAGINATION,
+  'PROJECT': PROJECT
 };

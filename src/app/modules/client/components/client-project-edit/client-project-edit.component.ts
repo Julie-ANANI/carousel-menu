@@ -1,6 +1,6 @@
 import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {TranslateService, initTranslation} from './i18n/i18n';
+import { TranslateService } from '@ngx-translate/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
@@ -50,7 +50,6 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
               private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    initTranslation(this._translateService);
 
     this._buildForm();
 
