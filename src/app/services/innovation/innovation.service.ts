@@ -20,8 +20,8 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public getAll(): Observable<any> {
-    return this._http.get('/innovation/')
+  public getAll(config: any): Observable<any> {
+    return this._http.get('/innovation/', {params: config})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

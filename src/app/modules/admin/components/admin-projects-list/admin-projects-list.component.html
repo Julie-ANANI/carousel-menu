@@ -1,0 +1,64 @@
+<div [ngClass]="{'project-preparation': status==='SUBMITTED', 'project-launched': status==='EVALUATING', 'project-completed': status==='DONE'}">
+  <div class="title-section" *ngIf="status==='SUBMITTED'"><span>{{total}}</span> projets en préparation</div>
+  <div class="title-section" *ngIf="status==='EVALUATING'"><span>{{total}}</span> projets lancés</div>
+  <div class="title-section" *ngIf="status==='DONE'"><span>{{total}}</span> projets terminés</div>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th width="80"></th>
+      <th>Nom</th>
+      <th *ngIf="status==='SUBMITTED'" width="90" class="text-center">Pros</th>
+      <th *ngIf="status==='SUBMITTED'" width="100" class="text-center">Emails OK</th>
+      <th *ngIf="status==='SUBMITTED'" width="90" class="text-center">Statut <i class="icon icon-arrow-down"></i></th>
+      <th *ngIf="status==='EVALUATING'" width="60" class="text-center">Pros</th>
+      <th *ngIf="status==='EVALUATING'" width="90" class="text-center">Emails OK</th>
+      <th *ngIf="status==='EVALUATING'" width="70" class="text-center">Reçus</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Ouverts</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Cliqués</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">A traiter</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Délai <i class="icon icon-arrow-down"></i></th>
+      <th *ngIf="status==='EVALUATING'" width="90" class="text-center">Réponses</th>
+      <th *ngIf="status==='DONE'" width="90" class="text-center">Tagging</th>
+      <th *ngIf="status==='DONE'" width="120" class="text-center">Conclusions <i class="icon icon-arrow-down"></i></th>
+      <th *ngIf="status==='DONE'" width="100" class="text-center">Restitution</th>
+      <th *ngIf="status==='DONE'" width="130" class="text-center">Remerciement</th>
+      <th *ngIf="status==='DONE'" width="100" class="text-center">Réponses</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let project of projects">
+      <td class="project-image">
+        <a [routerLink]="getRelevantLink(project)">
+          <img [src]="getPrincipalMedia(project)" class="img-fit-cover" width="80px" height="80px"/>
+        </a>
+      </td>
+      <td class="project-description">
+        <span class="title"><a [routerLink]="getRelevantLink(project)" title="">{{project.name}}</a></span>
+        <span class="metas">{{ project.owner.firstName }} {{ project.owner.lastName }} / {{ project.owner.companyName }}
+            • {{ 'MY_PROJECTS.ADDED' | translate }} {{ project.created | date:dateFormat }}
+            • {{ 'MY_PROJECTS.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
+            • <a (click)="selectedProjectIdToBeDeleted = project._id" class="text-error c-hand">{{ 'COMMON.DELETE' | translate }}</a></span>
+      </td>
+      <td *ngIf="status==='SUBMITTED'" class="project-professional warning">7451</td>
+      <td *ngIf="status==='SUBMITTED'" class="project-emails-ok">4512</td>
+      <td *ngIf="status==='SUBMITTED'" class="project-status alert">A valider</td>
+      <td *ngIf="status==='EVALUATING'" class="project-professional">8456</td>
+      <td *ngIf="status==='EVALUATING'" class="project-emails-ok">2140</td>
+      <td *ngIf="status==='EVALUATING'" class="project-email-received">2131</td>
+      <td *ngIf="status==='EVALUATING'" class="project-email-opened warning"><span class="tooltip" data-tooltip="876">8%</span></td>
+      <td *ngIf="status==='EVALUATING'" class="project-email-clicked"><span class="tooltip" data-tooltip="678">7%</span></td>
+      <td *ngIf="status==='EVALUATING'" class="project-to-check"><a [routerLink]="null">8</a></td>
+      <td *ngIf="status==='EVALUATING'" class="project-time-limit warning">2j.</td>
+      <td *ngIf="status==='EVALUATING'" class="project-answer alert">15</td>
+      <td *ngIf="status==='DONE'" class="project-tagging">OK</td>
+      <td *ngIf="status==='DONE'" class="project-conclusion"><a [routerLink]="null" title="">TODO</a></td>
+      <td *ngIf="status==='DONE'" class="project-restitution"><a [routerLink]="null" title="">TODO</a></td>
+      <td *ngIf="status==='DONE'" class="project-thanks"><a [routerLink]="null" title="">TODO</a></td>
+      <td *ngIf="status==='DONE'" class="project-answer">43</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="see-all text-right"><a [routerLink]="null" title="">Voir plus</a> <i class="icon icon-arrow-down"></i></div>
+</div>
