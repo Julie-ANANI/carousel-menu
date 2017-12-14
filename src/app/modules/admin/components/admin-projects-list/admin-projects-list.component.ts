@@ -32,10 +32,35 @@ export class AdminProjectsListComponent implements OnInit {
     this.loadProjects(this._config);
   }
 
+  ratio(value1: number, value2: number): any {
+    if (value2 == 0) {
+      return value1 == 0 ? 0 : '?';
+    } else {
+      return Math.round(100 * value1 / value2);
+    }
+  };
+
   loadProjects(config: any): void {
     this._config = config;
     this._innovationService.getAll(this._config).subscribe(projects => {
-      this._projects = projects.result;
+      
+      this._projects = projects.result.map(project => {
+        /**********************************************
+        Temporaire, pour générer des fausses stats */
+        project.answers = Math.round(Math.random()*(100-7)+7);
+        project.pros = Math.round(Math.random()*(15000-2000)+2000);
+        project.emails = Math.round(Math.random()*(project.pros-project.pros*0.6)+project.pros*0.6);
+        project.received = Math.round(Math.random()*(project.emails-project.emails*0.8)+project.emails*0.8);
+        project.opened = Math.round(Math.random()*(project.received*0.5-project.received*0.05)+project.received*0.05);
+        project.clicked = Math.round(Math.random()*(project.opened*0.5-project.opened*0.05)+project.opened*0.05);
+        project.submittedAnswers = Math.round(Math.random()*12);
+        /**********************************************
+         Permanent, pour calculer les rations */
+        project.receivedRatio = this.ratio(project.received, project.emails);
+        project.openedRatio = this.ratio(project.opened, project.received);
+        project.clickedRatio = this.ratio(project.clicked, project.opened);
+        return project;
+      });
       this._total = projects._metadata.totalCount;
     });
   }
@@ -53,7 +78,7 @@ export class AdminProjectsListComponent implements OnInit {
   }
 
   public getRelevantLink (project) { // routerLink : /projects/:project_id
-    const link = './' + project._id;
+    const link = '../projects/' + project._id;
     switch (project.status) {
       case 'DONE':
       case 'EVALUATING':
