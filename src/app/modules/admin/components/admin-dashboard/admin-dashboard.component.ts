@@ -18,8 +18,7 @@ export class AdminDashboardComponent implements OnInit {
 
   public operatorData = {
     nbProjectsToValidate: null,
-    nbProjectsToTreat: null,
-    nbProjectsToFind: null
+    nbProjectsToTreat: null
   };
 
   public statistics = {

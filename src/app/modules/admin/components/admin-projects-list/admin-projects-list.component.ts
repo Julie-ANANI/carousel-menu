@@ -62,6 +62,9 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
         else {
           this._config.operator = {$exists: true};
         }
+        this._config.sort = {
+          status: -1 // SUBMITTED est prioritaire
+        };
         break;
       }
       case 'WITHOUT_OPERATOR': {

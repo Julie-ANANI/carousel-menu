@@ -6,8 +6,8 @@
     </option>
   </select>
 
-  <div *ngIf="operatorData.nbProjectsToValidate"><span>{{ operatorData.nbProjectsToValidate }}</span> projets à valider</div>
-  <div *ngIf="operatorData.nbProjectsToTreat"><span>{{ operatorData.nbProjectsToTreat }}</span> réponses à traiter</div>
+  <div *ngIf="operatorData.nbProjectsToValidate"><span>{{ operatorData.nbProjectsToValidate }}</span> projet{{ operatorData.nbProjectsToValidate>1?'s':'' }} à valider</div>
+  <div *ngIf="operatorData.nbProjectsToTreat"><span>{{ operatorData.nbProjectsToTreat }}</span> réponse{{ operatorData.nbProjectsToTreat>1?'s':'' }} à traiter</div>
 </div>
 <div class="emails-stats">
   <select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="newPeriodOfStatsSelected($event)">
