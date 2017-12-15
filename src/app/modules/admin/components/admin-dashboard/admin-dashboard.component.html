@@ -172,7 +172,7 @@
     </table>
 
     <div class="see-all text-right"><a [routerLink]="null" title="">Voir plus</a> <i class="icon icon-arrow-down"></i>
-      <app-admin-projects-list [status]="'SUBMITTED'"></app-admin-projects-list>
+      <app-admin-projects-list [status]="{$in: ['EDITING','SUBMITTED']}"></app-admin-projects-list>
 
       <app-admin-projects-list [status]="'EVALUATING'"></app-admin-projects-list>
 
