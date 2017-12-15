@@ -29,7 +29,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     this.build();
     if (this.refreshNeededEmitter) {
       this.refreshNeededEmitter.subscribe((data) => {
-        if (data.operatorId) {
+        if (typeof data.operatorId !== 'undefined') {
           this.operatorId = data.operatorId;
         }
         this.build();
