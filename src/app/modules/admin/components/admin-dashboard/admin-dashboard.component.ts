@@ -59,14 +59,6 @@ export class AdminDashboardComponent implements OnInit {
     this._dashboardService.getOperatorData().subscribe((operatorData) =>
       this.operatorData = operatorData);
     this._dashboardService.getStatistics().subscribe((globalData) => this.statistics = globalData);
-    this._dashboardService.getInPreparationProjects().subscribe((data) =>
-      this.projects.preparation = {
-        total: data._metadata.totalCount,
-        list: data.result
-      }
-    );
-    this._dashboardService.getLaunchedProjects().subscribe((data) => this.projects.launched.list = data);
-    this._dashboardService.getFinishedProjects().subscribe((data) => this.projects.finished.list = data);
   }
 
   public newOperatorSelected(event) {
