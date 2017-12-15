@@ -25,22 +25,4 @@ export class DashboardService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public getInPreparationProjects(): Observable<any> {
-    return this._http.get('/dashboard/projects/preparation', {params: {limit: 5,  search: {/*$orderBy: {updated: -1},*/ $or: [{status: 'EDITING'}, {status: 'SUBMITTED'}]}}})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
-  }
-
-  public getLaunchedProjects(): Observable<any> {
-    return this._http.get('/dashboard/projects')
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
-  }
-
-  public getFinishedProjects(): Observable<any> {
-    return this._http.get('/dashboard/projects')
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
-  }
-
 }

@@ -28,7 +28,7 @@ export class AdminProjectsListComponent implements OnInit {
         created: -1
       }
     };
-    this._config.status = this.status;
+    this._config.status = this.status === 'PREPARING' ? {$in: ['EDITING', 'SUBMITTED']} : this.status;
     this.loadProjects(this._config);
   }
 
@@ -43,7 +43,7 @@ export class AdminProjectsListComponent implements OnInit {
   loadProjects(config: any): void {
     this._config = config;
     this._innovationService.getAll(this._config).subscribe(projects => {
-      
+
       this._projects = projects.result.map(project => {
         /**********************************************
         Temporaire, pour générer des fausses stats */

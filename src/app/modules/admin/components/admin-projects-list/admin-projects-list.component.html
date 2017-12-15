@@ -1,5 +1,5 @@
-<div [ngClass]="{'project-preparation': status==='SUBMITTED', 'project-launched': status==='EVALUATING', 'project-completed': status==='DONE'}">
-  <div class="title-section" *ngIf="status==='SUBMITTED'"><span>{{total}}</span> projets en préparation</div>
+<div [ngClass]="{'project-preparation': status==='PREPARING', 'project-launched': status==='EVALUATING', 'project-completed': status==='DONE'}">
+  <div class="title-section" *ngIf="status==='PREPARING'"><span>{{total}}</span> projets en préparation</div>
   <div class="title-section" *ngIf="status==='EVALUATING'"><span>{{total}}</span> projets lancés</div>
   <div class="title-section" *ngIf="status==='DONE'"><span>{{total}}</span> projets terminés</div>
 
@@ -8,16 +8,16 @@
     <tr>
       <th width="80"></th>
       <th>Nom</th>
-      <th *ngIf="status==='SUBMITTED'" width="90" class="text-center">Tagging</th>
-      <th *ngIf="status==='SUBMITTED' || status==='EVALUATING'" width="90" class="text-center">Pros</th>
-      <th *ngIf="status==='SUBMITTED' || status==='EVALUATING'" width="100" class="text-center">Emails OK</th>
-      <th *ngIf="status==='SUBMITTED'" width="90" class="text-center">Statut <i class="icon icon-arrow-down"></i></th>
+      <th *ngIf="status==='PREPARING'" width="90" class="text-center">Tagging</th>
+      <th *ngIf="status==='PREPARING' || status==='EVALUATING'" width="90" class="text-center">Pros</th>
+      <th *ngIf="status==='PREPARING' || status==='EVALUATING'" width="100" class="text-center">Emails OK</th>
+      <th *ngIf="status==='PREPARING'" width="90" class="text-center">Statut <!--<i class="icon icon-arrow-down"></i>--></th>
       <th *ngIf="status==='EVALUATING'" width="70" class="text-center">Reçus</th>
       <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Ouverts</th>
       <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Cliqués</th>
-      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">A traiter</th>
-      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Délai <i class="icon icon-arrow-down"></i></th>
-      <th *ngIf="status==='DONE'" width="120" class="text-center">Conclusions <i class="icon icon-arrow-down"></i></th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">À traiter</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Délai <!--<i class="icon icon-arrow-down"></i>--></th>
+      <th *ngIf="status==='DONE'" width="120" class="text-center">Conclusions <!--<i class="icon icon-arrow-down"></i>--></th>
       <th *ngIf="status==='DONE'" width="100" class="text-center">Restitution</th>
       <th *ngIf="status==='DONE'" width="130" class="text-center">Remerciement</th>
       <th *ngIf="status==='EVALUATING' || status==='DONE'" width="90" class="text-center">Réponses</th>
@@ -31,40 +31,47 @@
         </a>
       </td>
       <td class="project-description">
-        <span class="title"><a [routerLink]="getRelevantLink(project)" title="">{{project.name}}</a></span>
-        <span class="metas">{{ project.owner.firstName }} {{ project.owner.lastName }}<span *ngIf="project.owner.companyName"> / {{ project.owner.companyName }}</span>
-            • {{ 'MY_PROJECTS.ADDED' | translate }} {{ project.created | date:dateFormat }}
+        <span class="title"><a [routerLink]="getRelevantLink(project)" title="">{{ project.name || '--' }}</a></span>
+        <span class="metas"><span *ngIf="project.owner">{{ project.owner.firstName }} {{ project.owner.lastName }}<span *ngIf="project.owner.companyName"> / {{ project.owner.companyName }}</span>
+            • </span>
+            {{ 'MY_PROJECTS.ADDED' | translate }} {{ project.created | date:dateFormat }}
             • {{ 'MY_PROJECTS.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
             • <a (click)="selectedProjectIdToBeDeleted = project._id" class="text-error c-hand">{{ 'COMMON.DELETE' | translate }}</a></span>
       </td>
 
-      <td *ngIf="status==='SUBMITTED' && project.tags.length" class="project-tagging">OK</td>
-      <td *ngIf="status==='SUBMITTED' && !project.tags.length" class="project-tagging warning">TODO</td>
+      <td *ngIf="status==='PREPARING' && project.tags.length" class="project-tagging">OK</td>
+      <td *ngIf="status==='PREPARING' && !project.tags.length" class="project-tagging warning">TODO</td>
 
-      <td *ngIf="status==='SUBMITTED' || status==='EVALUATING'" class="project-professional"
-          [ngClass]="{'alert': project.pros < 5000, 'warning': project.pros < 8000 && project.pros > 5000}">
+      <td *ngIf="status==='PREPARING' || status==='EVALUATING'" class="project-professional"
+          [ngClass]="{'warning': project.pros < 7000}">
         {{project.pros}}
       </td>
 
-      <td *ngIf="status==='SUBMITTED' || status==='EVALUATING'" class="project-emails-ok"
-          [ngClass]="{'alert': project.emails < 4000, 'warning': project.emails < 6000 && project.emails > 4000}">
+      <td *ngIf="status==='PREPARING' || status==='EVALUATING'" class="project-emails-ok"
+          [ngClass]="{'warning': project.emails < 5000}">
         {{project.emails}}
       </td>
-      <td *ngIf="status==='SUBMITTED'" class="project-status alert">A valider</td>
+      <td *ngIf="status==='PREPARING'" class="project-status"
+          [ngClass]="{'alert': project.status === 'SUBMITTED'}">
+        {{ 'DASHBOARD.PROJECT_STATE.' + project.status | translate }}
+      </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-received"
-          [ngClass]="{'alert': project.receivedRatio < 90, 'warning': project.receivedRatio < 95 && project.answers > 90}">
+          [ngClass]="{'alert': project.receivedRatio < 99}">
         {{project.receivedRatio}}%
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-opened"
-          [ngClass]="{'alert': project.openedRatio < 10, 'warning': project.openedRatio < 20 && project.openedRatio > 10}">
+          [ngClass]="{'warning': project.openedRatio < 10}">
         {{project.openedRatio}}%
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-clicked"
-          [ngClass]="{'alert': project.clickedRatio < 10, 'warning': project.clickedRatio < 20 && project.clickedRatio > 10}">
+          [ngClass]="{'warning': project.clickedRatio < 10}">
         {{project.clickedRatio}}%
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-to-check"><a [routerLink]="null">{{project.submittedAnswers}}</a></td>
-      <td *ngIf="status==='EVALUATING'" class="project-time-limit warning">2j.</td>
+      <td *ngIf="status==='EVALUATING'" class="project-time-limit warning"
+          [ngClass]="{
+            'warning': 5 <= 8
+          }">XXj.</td><!-- TODO condition couleur + valeur -->
       <td *ngIf="status==='DONE' && project.conclusions" class="project-conclusion">OK</td>
       <td *ngIf="status==='DONE' && !project.conclusions" class="project-conclusion warning"><a [routerLink]=getRelevantLink(project) title="">TODO</a></td>
       <td *ngIf="status==='DONE' && project.restitution" class="project-restitution">TODO</td>
@@ -72,7 +79,10 @@
       <td *ngIf="status==='DONE' && project.thanks" class="project-thanks">OK</td>
       <td *ngIf="status==='DONE' && !project.thanks" class="project-thanks warning">TODO</td>
       <td *ngIf="status==='EVALUATING' || status==='DONE'" class="project-answer"
-          [ngClass]="{'alert': project.answers < 20, 'warning': project.answers < 40 && project.answers > 20}">
+          [ngClass]="{
+          'alert': project.answers <= 20,
+          'warning': project.answers <= 25 && project.answers > 20,
+          'all-is-fine': project.answers > 25}">
         {{project.answers}}
       </td>
     </tr>
