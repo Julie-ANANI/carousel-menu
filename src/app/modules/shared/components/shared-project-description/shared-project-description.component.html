@@ -88,7 +88,7 @@
             <h2>{{ 'PROJECT.SOLUTION' | translate }}</h2>
             <p [innerHtml]="project.innovationCards[idInnovationCard].solution"></p>
           </div>
-          <div class="column col-12" *ngIf="project.innovationCards[idInnovationCard].media.length > 1">
+          <div class="column col-12" *ngIf="project.innovationCards[idInnovationCard].media?.length > 1">
             <h2>{{ 'PROJECT.GALLERY' | translate }}</h2>
             <div class="column col-10 col-mx-auto">
               <div class="columns">

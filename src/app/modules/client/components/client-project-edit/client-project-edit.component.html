@@ -833,7 +833,7 @@
 
                           <div>
                             <label class="form-label">{{ 'PROJECT_EDIT.MEDIA.ADD' | translate }}</label>
-                            <div class="medias" *ngIf="project.innovationCards[innovationCardEditingIndex].media.length > 0">
+                            <div class="medias" *ngIf="project.innovationCards[innovationCardEditingIndex].media?.length > 0">
                               <div class="media" *ngFor="let media of project.innovationCards[innovationCardEditingIndex].media; let idx = index">
                                 <iframe width="200" height="100"
                                         [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
