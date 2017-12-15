@@ -4,7 +4,7 @@
 
       <h1>{{ 'COMMON.MY_PROJECTS' | translate }}</h1>
 
-      <div class="columns" *ngIf="projects && projects.length">
+      <div class="columns" *ngIf="projects && (projects.length || config.search.name)">
         <div class="column col-2">
           <button [routerLink]="'/projects/new'" class="btn btn-lg btn-primary">{{ 'MY_PROJECTS.ADD_PROJECT' | translate }} <i class="icon icon-arrow-right"></i></button>
         </div>

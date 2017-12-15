@@ -85,11 +85,19 @@ $dark-background: #262831;
   .alert {
     background-color: #D02A2A;
     color: white;
+
+    select {
+      color: black;
+    }
   }
 
   .all-is-fine {
     background-color: #7ED321;
     color: white;
+
+    select {
+      color: black;
+    }
   }
 
 }

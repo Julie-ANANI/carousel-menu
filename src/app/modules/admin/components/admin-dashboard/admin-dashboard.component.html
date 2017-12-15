@@ -8,14 +8,12 @@
 
   <div *ngIf="operatorData.nbProjectsToValidate"><span>{{ operatorData.nbProjectsToValidate }}</span> projets à valider</div>
   <div *ngIf="operatorData.nbProjectsToTreat"><span>{{ operatorData.nbProjectsToTreat }}</span> réponses à traiter</div>
-  <div *ngIf="operatorData.nbProjectsToFind"><span>{{ operatorData.nbProjectsToFind }}</span> réponses manquantes</div>
 </div>
 <div class="emails-stats">
   <select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="newPeriodOfStatsSelected($event)">
-    <option value="30" [ngValue]="30" selected="selected">30 derniers jours</option>
-    <option value="14" [ngValue]="14">2 dernières semaines</option>
-    <option value="7" [ngValue]="7">dernière semaine</option>
-    <option value="1" [ngValue]="1">dernières 24h</option>
+    <option [value]="''">Comparer...</option>
+    <option [value]="'30'" [ngValue]="30" selected="selected">Dernier mois</option>
+    <option [value]="'365'" [ngValue]="365">Dernière année</option>
   </select>
   <div *ngIf="statistics.percentFoundedPros">Pros trouvés : <span>{{ statistics.percentFoundedPros }}</span></div>
   <div *ngIf="statistics.percentFoundedEmails">Emails trouvés : <span>{{ statistics.percentFoundedEmails }}%</span></div>
@@ -24,9 +22,13 @@
 </div>
 
 <div class="content">
-  <app-admin-projects-list [status]="'PREPARING'"></app-admin-projects-list>
+  <app-admin-projects-list [status]="'WITHOUT_OPERATOR'" [operators]="operators"></app-admin-projects-list>
 
-  <app-admin-projects-list [status]="'EVALUATING'"></app-admin-projects-list>
+  <app-admin-projects-list [status]="'PREPARING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
-  <app-admin-projects-list [status]="'DONE'"></app-admin-projects-list>
+  <app-admin-projects-list [status]="'EVALUATING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
+
+  <app-admin-projects-list [status]="'DONE'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 </div>
+
+

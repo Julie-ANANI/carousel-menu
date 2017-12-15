@@ -1,24 +1,49 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-admin-projects-list',
   templateUrl: './admin-projects-list.component.html',
   styleUrls: ['./admin-projects-list.component.scss']
 })
-export class AdminProjectsListComponent implements OnInit {
+export class AdminProjectsListComponent implements OnInit, OnDestroy {
 
   @Input() status: string;
-  private _projects: [any];
+  @Input() operators: any[];
+  @Input() operatorId: string; // Filtrer les résultats pour un utilisateur en particulier
+  @Input() refreshNeededEmitter: Subject<any>;
+  private _projects: any[];
   public selectedProjectIdToBeDeleted: any = null;
   private _total: number;
   private _config: any;
 
+
   constructor(private _translateService: TranslateService,
+              private _notificationService: TranslateNotificationsService,
               private _innovationService: InnovationService) {}
 
   ngOnInit(): void {
+    this.build();
+    if (this.refreshNeededEmitter) {
+      this.refreshNeededEmitter.subscribe((data) => {
+        if (data.operatorId) {
+          this.operatorId = data.operatorId;
+        }
+        this.build();
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.refreshNeededEmitter) {
+      this.refreshNeededEmitter.unsubscribe();
+    }
+  }
+
+  build () {
     this._config = {
       fields: '',
       limit: 5,
@@ -28,7 +53,35 @@ export class AdminProjectsListComponent implements OnInit {
         created: -1
       }
     };
-    this._config.status = this.status === 'PREPARING' ? {$in: ['EDITING', 'SUBMITTED']} : this.status;
+    switch (this.status) {
+      case 'PREPARING': {
+        this._config.status = {$in: ['EDITING', 'SUBMITTED']};
+        if (this.operatorId && this.operatorId !== '') {
+          this._config.operator = this.operatorId;
+        }
+        else {
+          this._config.operator = {$exists: true};
+        }
+        break;
+      }
+      case 'WITHOUT_OPERATOR': {
+        this._config.operator = null;
+        break;
+      }
+      case 'DONE': {
+        this._config.status = {$in: ['DONE', 'EVALUATING_DONE']};
+        if (this.operatorId && this.operatorId !== '') {
+          this._config.operator = this.operatorId;
+        }
+        break;
+      }
+      default: {
+        this._config.status = this.status;
+        if (this.operatorId && this.operatorId !== '') {
+          this._config.operator = this.operatorId;
+        }
+      }
+    }
     this.loadProjects(this._config);
   }
 
@@ -43,19 +96,17 @@ export class AdminProjectsListComponent implements OnInit {
   loadProjects(config: any): void {
     this._config = config;
     this._innovationService.getAll(this._config).subscribe(projects => {
-
       this._projects = projects.result.map(project => {
-        /**********************************************
-        Temporaire, pour générer des fausses stats */
-        project.answers = Math.round(Math.random()*(100-7)+7);
-        project.pros = Math.round(Math.random()*(15000-2000)+2000);
-        project.emails = Math.round(Math.random()*(project.pros-project.pros*0.6)+project.pros*0.6);
-        project.received = Math.round(Math.random()*(project.emails-project.emails*0.8)+project.emails*0.8);
-        project.opened = Math.round(Math.random()*(project.received*0.5-project.received*0.05)+project.received*0.05);
-        project.clicked = Math.round(Math.random()*(project.opened*0.5-project.opened*0.05)+project.opened*0.05);
-        project.submittedAnswers = Math.round(Math.random()*12);
-        /**********************************************
-         Permanent, pour calculer les rations */
+        // Temporaire, pour générer des fausses stats
+        project.answers = 'XX';// Math.round(Math.random()*(100-7)+7);
+        project.pros = 'XX';// Math.round(Math.random()*(15000-2000)+2000);
+        project.emails = 'XX';// Math.round(Math.random()*(project.pros-project.pros*0.6)+project.pros*0.6);
+        project.received = 'XX';// Math.round(Math.random()*(project.emails-project.emails*0.8)+project.emails*0.8);
+        project.opened = 'XX';// Math.round(Math.random()*(project.received*0.5-project.received*0.05)+project.received*0.05);
+        project.clicked = 'XX';// Math.round(Math.random()*(project.opened*0.5-project.opened*0.05)+project.opened*0.05);
+        project.submittedAnswers = 'XX';// Math.round(Math.random()*12);
+
+        // Permanent, pour calculer les ratios
         project.receivedRatio = this.ratio(project.received, project.emails);
         project.openedRatio = this.ratio(project.opened, project.received);
         project.clickedRatio = this.ratio(project.clicked, project.opened);
@@ -109,6 +160,12 @@ export class AdminProjectsListComponent implements OnInit {
     } else {
       return 'https://res.cloudinary.com/umi/image/upload/app/no-image.png';
     }
+  }
+
+  public setOperator (operatorId, project) {
+    this._innovationService.setOperator(project._id, operatorId).subscribe(data => {
+      this._notificationService.success('Opérateur affecté', data.message);
+    });
   }
 
   set config(value: any) {

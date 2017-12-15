@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { DashboardService } from '../../../../services/dashboard/dashboard.service';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -12,7 +13,8 @@ export class AdminDashboardComponent implements OnInit {
 
   public operators = [];
   public operatorId = '';
-  public nbDaysOfStats = '30';
+
+  public nbDaysOfStats = '';
 
   public operatorData = {
     nbProjectsToValidate: null,
@@ -27,21 +29,8 @@ export class AdminDashboardComponent implements OnInit {
     percentReceivedEmails: null
   };
 
+  private refreshNeededEmitter = new Subject<any>();
 
-  public projects = {
-    preparation: {
-      total: null,
-      list: []
-    },
-    launched: {
-      total: null,
-      list: []
-    },
-    finished: {
-      total: null,
-      list: []
-    }
-  };
 
   constructor(private _titleService: TranslateTitleService,
               private _dashboardService: DashboardService,
@@ -49,20 +38,23 @@ export class AdminDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this._titleService.setTitle('Admin Dashboard');
+
     if (this._authService.user.isOperator) {
       this.operatorId = this._authService.user._id;
     }
 
-    this._dashboardService.getOperators().subscribe((operators) =>
-      this.operators = operators.result
-    );
-    this._dashboardService.getOperatorData().subscribe((operatorData) =>
-      this.operatorData = operatorData);
+    this._dashboardService.getOperators().subscribe((operators) => this.operators = operators.result);
+
+    this._dashboardService.getOperatorData(this.operatorId).subscribe((operatorData) => this.operatorData = operatorData);
+
     this._dashboardService.getStatistics().subscribe((globalData) => this.statistics = globalData);
   }
 
   public newOperatorSelected(event) {
-    alert('TODO actualiser les données avec le nouvel opérateur');
+    this.refreshNeededEmitter.next({
+      operatorId: event
+    });
+    this._dashboardService.getOperatorData(this.operatorId).subscribe((operatorData) => this.operatorData = operatorData);
   }
 
   public newPeriodOfStatsSelected(event) {
