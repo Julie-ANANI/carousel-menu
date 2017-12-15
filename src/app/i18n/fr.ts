@@ -15,6 +15,7 @@ import { EXPORT } from '../modules/shared/components/shared-latex-manager/i18n/f
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
 import { PAGINATION } from '../modules/shared/components/shared-pagination/i18n/fr';
 import { PROJECT } from '../modules/shared/components/shared-project-description/i18n/fr';
+import { DASHBOARD } from '../modules/admin/components/admin-dashboard/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -33,5 +34,6 @@ export const fr = {
   'HEADER': HEADER,
   'EXPORT': EXPORT,
   'PAGINATION': PAGINATION,
-  'PROJECT': PROJECT
+  'PROJECT': PROJECT,
+  'DASHBOARD': DASHBOARD
 };

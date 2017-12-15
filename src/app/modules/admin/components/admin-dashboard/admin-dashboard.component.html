@@ -1,28 +1,177 @@
+<div class="projects-stats">
+  <select class="form-select" [(ngModel)]="operatorId" (ngModelChange)="newOperatorSelected($event)">
+    <option value="">Tous opérateurs</option>
+    <option *ngFor="let operator of operators" [ngValue]="operator._id" [selected]="operatorId === operator._id">{{
+      operator.firstName + ' ' + operator.lastName }}
+    </option>
+  </select>
 
-    <div class="projects-stats">
-      <select class="form-select">
-        <option>Tous opérateurs</option>
-        <option>Flavien Collard</option>
-        <option>Julien Oger</option>
-      </select>
-      <div><span>{{ nbProjectsToValidate }}</span> projets à valider</div>
-      <div><span>{{ nbProjectsToCheck }}</span> réponses à traiter</div>
-      <div><span>{{ nbProjectsToFind }}</span> réponses manquantes</div>
-    </div>
-    <div class="emails-stats">
-      <select class="form-select">
-        <option>30 derniers j.</option>
-        <option>2 dernières s.</option>
-        <option>dernière s.</option>
-        <option>dernières 24h</option>
-      </select>
-      <div>Pros trouvés <span>71%</span></div>
-      <div>Emails trouvés <span>86%</span></div>
-      <div>Emails OK <span>31%</span></div>
-      <div>Emails reçus <span>28%</span></div>
-    </div>
+  <div *ngIf="operatorData.nbProjectsToValidate"><span>{{ operatorData.nbProjectsToValidate }}</span> projets à valider</div>
+  <div *ngIf="operatorData.nbProjectsToTreat"><span>{{ operatorData.nbProjectsToTreat }}</span> réponses à traiter</div>
+  <div *ngIf="operatorData.nbProjectsToFind"><span>{{ operatorData.nbProjectsToFind }}</span> réponses manquantes</div>
+</div>
+<div class="emails-stats">
+  <select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="newPeriodOfStatsSelected($event)">
+    <option value="30" [ngValue]="30" selected="selected">30 derniers jours</option>
+    <option value="14" [ngValue]="14">2 dernières semaines</option>
+    <option value="7" [ngValue]="7">dernière semaine</option>
+    <option value="1" [ngValue]="1">dernières 24h</option>
+  </select>
+  <div *ngIf="statistics.percentFoundedPros">Pros trouvés : <span>{{ statistics.percentFoundedPros }}</span></div>
+  <div *ngIf="statistics.percentFoundedEmails">Emails trouvés : <span>{{ statistics.percentFoundedEmails }}%</span></div>
+  <div *ngIf="statistics.percentOkEmails">Emails OK : <span>{{ statistics.percentOkEmails }}%</span></div>
+  <div *ngIf="statistics.percentReceivedEmails">Emails reçus : <span>{{ statistics.percentReceivedEmails }}%</span></div>
+</div>
 
-    <div class="content">
+<div class="content">
+
+  <div class="project-preparation">
+    <div class="title-section"><span *ngIf="projects.preparation.total">{{ projects.preparation.total }}</span> projets en préparation</div>
+
+    <table class="table" *ngIf="projects.preparation.list">
+      <thead>
+      <tr>
+        <th width="80"></th>
+        <th>Nom</th>
+        <th width="90" class="text-center">Pros</th>
+        <th width="100" class="text-center">Emails OK</th>
+        <th width="90" class="text-center">Statut</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let project of projects.preparation.list">
+        <td class="project-image">
+          <a [routerLink]="null" title="">
+            <img [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_80,w_80/' + (project.principalMedia ? project.principalMedia.cloudinary.public_id : 'app/no-image.png')"
+                 width="80" height="80" class="img-fit-cover">
+          </a>
+        </td>
+        <td class="project-description">
+          <span class="title"><a [routerLink]="null" title="">{{ project.name || '--' }}</a></span>
+          <span class="metas"><span *ngIf="project.owner"><a [routerLink]="null" title="">{{ project.owner.name }}</a>  •  {{ project.owner.company }}  •  </span>Ajouté le {{ project.created | date:'dd/MM/y' }}</span>
+        </td>
+        <td class="project-professional" [ngClass]="{
+                'warning': project.nbProfessionals < 7000
+              }">{{ project.nbProfessionals || "--" }}
+        </td>
+        <td class="project-emails-ok" [ngClass]="{
+                'warning': project.nbOkEmails < 5000
+              }">{{ project.nbOkEmails || "--" }}
+        </td>
+        <td class="project-status" [ngClass]="{
+                'alert': project.status === 'SUBMITTED'
+              }">{{ 'DASHBOARD.PROJECT_STATE.' + project.status | translate }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="see-all text-right"><a [routerLink]="null" title="">Voir plus</a> <i class="icon icon-arrow-down"></i>
+    </div>
+  </div>
+
+
+  <div class="project-launched">
+    <div class="title-section"><span *ngIf="projects.launched.total">{{ projects.launched.total }}</span> projets lancés</div>
+
+    <table class="table" *ngIf="projects.launched.list">
+      <thead>
+      <tr>
+        <th width="80"></th>
+        <th>Nom</th>
+        <th width="60" class="text-center">Pros</th>
+        <th width="90" class="text-center">Emails OK</th>
+        <th width="70" class="text-center">Reçus</th>
+        <th width="80" class="text-center">Ouverts</th>
+        <th width="80" class="text-center">Cliqués</th>
+        <th width="80" class="text-center">A traiter</th>
+        <th width="80" class="text-center">Délais</th>
+        <th width="90" class="text-center">Réponses</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let project of launchedProjects">
+        <td class="project-image">
+          <a [routerLink]="null" title="">
+            <img
+              [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_80,w_80/' + (project.principalMedia ? project.principalMedia.cloudinary.public_id : 'app/no-image.png')"
+              width="80" height="80" class="img-fit-cover">
+          </a>
+        </td>
+        <td class="project-description">
+          <span class="title"><a [routerLink]="null" title="">{{ project.name }}</a></span>
+          <span class="metas" *ngIf="project.owner"><a [routerLink]="null" title="">{{ project.owner.name }}</a>  •  {{ project.owner.company }}</span>
+        </td>
+        <td class="project-professional">{{ project.nbProfessionals }}</td>
+        <td class="project-emails-ok">{{ project.nbOkEmails }}</td>
+        <td class="project-email-received" [ngClass]="{
+                  'alert': project.nbReceivedEmails < (project.nbOkEmails * 99 / 100)
+                }">{{ project.nbReceivedEmails }}
+        </td>
+        <td class="project-email-opened" [ngClass]="{
+                  'warning': project.percentOpenedEmails < 10
+                }"><span class="tooltip" data-tooltip="876">{{ project.percentOpenedEmails }}%</span></td>
+        <td class="project-email-clicked" [ngClass]="{
+                  'warning': project.percentClickedEmails < 10
+                }"><span class="tooltip" data-tooltip="678">{{ project.percentClickedEmails }}%</span></td>
+        <td class="project-to-check"><a [routerLink]="null">{{ project.nbToCheckEmails }}</a></td>
+        <td class="project-time-limit" [ngClass]="{
+                  'warning': project.nbDaysBeforeDeadline <= 8
+                }">{{ project.nbDaysBeforeDeadline }}j.
+        </td>
+        <td class="project-answer" [ngClass]="{
+                  'alert': project.nbAnswers < 20,
+                  'all-is-fine': project.nbAnswers > 25
+                }">{{ project.nbAnswers }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="see-all text-right"><a [routerLink]="null" title="">Voir plus</a> <i class="icon icon-arrow-down"></i>
+    </div>
+  </div>
+
+
+  <div class="project-completed">
+    <div class="title-section"><span *ngIf="projects.finished.total">{{ projects.finished.total }}</span> projets terminés</div>
+
+    <table class="table" *ngIf="projects.finished.list">
+      <thead>
+      <tr>
+        <th width="80"></th>
+        <th>Nom</th>
+        <th width="90" class="text-center">Tagging</th>
+        <th width="120" class="text-center">Conclusions</th>
+        <th width="100" class="text-center">Restitution</th>
+        <th width="130" class="text-center">Remerciement</th>
+        <th width="100" class="text-center">Réponses</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let project of finishedProjects">
+        <td class="project-image">
+          <a [routerLink]="null" title="">
+            <img
+              [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_80,w_80/' + (project.principalMedia ? project.principalMedia.cloudinary.public_id : 'app/no-image.png')"
+              width="80" height="80" class="img-fit-cover">
+          </a>
+        </td>
+        <td class="project-description">
+          <span class="title"><a [routerLink]="null" title="">{{ project.name }}</a></span>
+          <span class="metas" *ngIf="project.owner"><a [routerLink]="null" title="">{{ project.owner.name }}</a>  •  {{ project.owner.company }}</span>
+        </td>
+        <td class="project-tagging">{{ project.tagging ? 'OK' : 'TODO'}}</td>
+        <td class="project-conclusion"><a [routerLink]="null" title="">{{ project.conclusions ? 'OK' : 'TODO'}}</a></td>
+        <td class="project-restitution"><a [routerLink]="null" title="">{{ project.restitution ? 'OK' : 'TODO'}}</a>
+        </td>
+        <td class="project-thanks"><a [routerLink]="null" title="">{{ project.thanks ? 'OK' : 'TODO'}}</a></td>
+        <td class="project-answer">{{ project.nbAnswers }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="see-all text-right"><a [routerLink]="null" title="">Voir plus</a> <i class="icon icon-arrow-down"></i>
       <app-admin-projects-list [status]="'SUBMITTED'"></app-admin-projects-list>
 
       <app-admin-projects-list [status]="'EVALUATING'"></app-admin-projects-list>

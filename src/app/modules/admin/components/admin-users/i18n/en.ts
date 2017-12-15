@@ -3,5 +3,7 @@ export const ADMIN_USERS = {
   "NAME": "Name",
   "COMPANY": "Company",
   "JOB": "Job title",
-  "CREATED": "Created"
+  "CREATED": "Created",
+  'INVITE_USER': 'Invite a user',
+  'WAITING_INVITATIONS': 'Waiting invitations'
 };

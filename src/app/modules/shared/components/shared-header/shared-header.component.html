@@ -20,7 +20,6 @@
   <section class="navbar-section" *ngIf="authService.isAuthenticated">
     <!--<a href="http://help.umi.us" target="_blank" class="btn btn-link">{{ 'COMMON.HELP' | translate }}</a>-->
     <a [routerLink]="'/projects'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
-    <a [routerLink]="'/users'" routerLinkActive="active" class="btn btn-link" *ngIf="authService.isAdmin">{{ 'COMMON.MY_USERS' | translate }}</a>
     <a [routerLink]="'/account'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
     <a [routerLink]="'/admin'" routerLinkActive="active" class="btn btn-link" *ngIf="authService.isAdmin">{{ 'COMMON.ADMIN' | translate }}</a>
   </section>

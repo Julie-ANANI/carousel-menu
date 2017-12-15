@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
+import { DashboardService } from '../../../../services/dashboard/dashboard.service';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -8,16 +10,71 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 })
 export class AdminDashboardComponent implements OnInit {
 
-  public nbProjectsToValidate = 87;
-  public nbProjectsToCheck = 124;
-  public nbProjectsToFind = 412;
+  public operators = [];
+  public operatorId = '';
+  public nbDaysOfStats = '30';
+
+  public operatorData = {
+    nbProjectsToValidate: null,
+    nbProjectsToTreat: null,
+    nbProjectsToFind: null
+  };
+
+  public statistics = {
+    percentFoundedPros: null,
+    percentFoundedEmails: null,
+    percentOkEmails: null,
+    percentReceivedEmails: null
+  };
 
 
+  public projects = {
+    preparation: {
+      total: null,
+      list: []
+    },
+    launched: {
+      total: null,
+      list: []
+    },
+    finished: {
+      total: null,
+      list: []
+    }
+  };
 
-  constructor(private _titleService: TranslateTitleService) { }
+  constructor(private _titleService: TranslateTitleService,
+              private _dashboardService: DashboardService,
+              private _authService: AuthService) { }
 
   ngOnInit(): void {
     this._titleService.setTitle('Admin Dashboard');
+    if (this._authService.user.isOperator) {
+      this.operatorId = this._authService.user._id;
+    }
+
+    this._dashboardService.getOperators().subscribe((operators) =>
+      this.operators = operators.result
+    );
+    this._dashboardService.getOperatorData().subscribe((operatorData) =>
+      this.operatorData = operatorData);
+    this._dashboardService.getStatistics().subscribe((globalData) => this.statistics = globalData);
+    this._dashboardService.getInPreparationProjects().subscribe((data) =>
+      this.projects.preparation = {
+        total: data._metadata.totalCount,
+        list: data.result
+      }
+    );
+    this._dashboardService.getLaunchedProjects().subscribe((data) => this.projects.launched.list = data);
+    this._dashboardService.getFinishedProjects().subscribe((data) => this.projects.finished.list = data);
+  }
+
+  public newOperatorSelected(event) {
+    alert('TODO actualiser les données avec le nouvel opérateur');
+  }
+
+  public newPeriodOfStatsSelected(event) {
+    alert('TODO actualiser les données avec la nouvelle période');
   }
 
 }

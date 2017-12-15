@@ -23,6 +23,11 @@ export class AdminUsersComponent implements OnInit {
     }
   };
 
+  public pending_invitations = [
+    // 'kcaulfield@umi.us',
+    // 'hello@umi.us'
+  ];
+
   constructor(private _router: Router,
               private _titleService: TranslateTitleService,
               private _userService: UserService,
@@ -41,6 +46,9 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
+  inviteUser () {
+    alert('TODO'); // TODO
+  }
   loadInnovations(userId): void {
     this._userService.getInnovations(userId).subscribe(innovations => {
       console.log(innovations.innovations);

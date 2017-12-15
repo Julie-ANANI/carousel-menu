@@ -1,17 +1,14 @@
-.page-item {
-  cursor: pointer;
-  padding: 0 0.4em 0 0.4em;
-}
+ul {
+  list-style: none;
+  text-align: center;
 
-.disabled {
-  cursor: not-allowed;
-}
+  li {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
 
-.current-page {
-  position: relative;
-  top: -3px;
-
-  input {
-    width: 30px;
+    &:hover {
+      background-color: #DDD;
+    }
   }
 }

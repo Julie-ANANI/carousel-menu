@@ -3,5 +3,7 @@ export const ADMIN_USERS = {
   "NAME": "Nom",
   "COMPANY": "Entreprise",
   "JOB": "Poste",
-  "CREATED": "Créé le"
+  "CREATED": "Créé le",
+  'INVITE_USER': 'Inviter un utilisateur',
+  'WAITING_INVITATIONS': 'Invitations en attente de réponse'
 };
