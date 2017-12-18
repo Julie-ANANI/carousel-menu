@@ -14,28 +14,24 @@
       <table class="table users" wt-responsive-table>
         <thead>
         <tr>
-          <th></th>
-          <th><sq-sort [service]="sq" [prop]="'firstName'">{{ 'USERS.NAME' | translate }}</sq-sort></th>
-          <th><sq-sort [service]="sq" [prop]="'companyName'" >{{ 'USERS.COMPANY' | translate }}</sq-sort></th>
-          <th><sq-sort [service]="sq" [prop]="'jobTitle'">{{ 'USERS.JOB' | translate }}</sq-sort></th>
-          <th><sq-sort [service]="sq" [prop]="'domain'">{{ 'USERS.DOMAIN' | translate }}</sq-sort></th>
-          <th><sq-sort [service]="sq" [prop]="'created'">{{ 'USERS.CREATED' | translate }}</sq-sort></th>
           <th width="80"></th>
           <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'firstName'">{{ 'USERS.NAME' | translate }}</sq-sort></th>
           <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'companyName'" >{{ 'USERS.COMPANY' | translate }}</sq-sort></th>
           <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'jobTitle'">{{ 'USERS.JOB' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'domain'">{{ 'USERS.DOMAIN' | translate }}</sq-sort></th>
           <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'created'">{{ 'USERS.CREATED' | translate }}</sq-sort></th>
           <th>{{ 'COMMON.PROJECTS' | translate }}</th>
+          <th></th>
+          <th></th>
         </tr>
         <tr>
           <th></th>
-          <th><sqFilter [service]="sq" prop="firstName"></sqFilter></th>
-          <th><sqFilter [service]="sq" prop="companyName"></sqFilter></th>
-          <th><sqFilter [service]="sq" prop="jobTitle"></sqFilter></th>
-          <th><sqFilter [service]="sq" prop="domain"></sqFilter></th>
           <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="firstName"></sqFilter></th>
           <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="companyName"></sqFilter></th>
           <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="jobTitle"></sqFilter></th>
+          <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="domain"></sqFilter></th>
+          <th></th>
+          <th></th>
           <th></th>
           <th></th>
         </tr>
@@ -51,18 +47,19 @@
                  src="https://res.cloudinary.com/umi/image/upload/c_scale,h_80,w_80/app/no-image.png"
                  width="80" height="80"/>
           </td>
-          <td><a [routerLink]="['user/'+user._id]">{{user.firstName}} {{user.lastName}}</a></td>
+          <!--<td><a [routerLink]="['user/'+user._id]">{{user.firstName}} {{user.lastName}}</a></td>
           <td>{{user.companyName}}</td>
           <td>{{user.jobTitle}}</td>
           <td>{{user.domain}}</td>
           <td>{{user.created | date : dateFormat}}</td>
-          <td><button (click)="loadInnovations(user._id)">Voir innos</button></td>
+          <td><button (click)="loadInnovations(user._id)">Voir innos</button></td>-->
           <td class="user-description">
-            <span class="title">{{user.firstName}} {{user.lastName}}</span>
+            <span class="title"><a [routerLink]="['user/'+user._id]">{{user.firstName}} {{user.lastName}}</a></span>
             <span class="metas"><a [href]="'mailto:' + user.email">{{user.email}}</a></span>
           </td>
           <td class="user-company">{{user.companyName}}</td>
-
+          <td>{{user.jobTitle}}</td>
+          <td>{{user.domain}}</td>
           <td class="user-added">{{user.created | date : dateFormat}}</td>
           <td class="user-project"><a class="c-hand" (click)="loadInnovations(user._id)">5</a></td>
           <td class="user-launched-study"><a href="#" title="">2</a></td>

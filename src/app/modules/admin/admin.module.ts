@@ -38,7 +38,7 @@ import { AdminProjectsListComponent } from './components/admin-projects-list/adm
     AdminSearchesComponent,
     AdminEmailQueueComponent,
     AdminBatchInformationComponent,
-    AdminUserDetailsComponent
+    AdminUserDetailsComponent,
     AdminProjectsListComponent
   ]
 })
