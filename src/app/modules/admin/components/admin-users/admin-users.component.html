@@ -4,12 +4,14 @@
 
       <h1>{{total}} {{ 'COMMON.USERS' | translate }}</h1>
 
+      <!-- TODO
       <button class="btn btn-lg btn-primary" (click)="inviteUser()">{{ 'USERS.INVITE_USER' | translate }}</button>
 
       <div class="invitation-pending" *ngIf="pending_invitations && pending_invitations.length > 0">
         <h3>{{ 'USERS.WAITING_INVITATIONS' | translate }}</h3>
         <p>{{ pending_invitations.join(', ') }}</p>
       </div>
+      -->
 
       <table class="table users" wt-responsive-table>
         <thead>
@@ -21,8 +23,7 @@
           <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'domain'">{{ 'USERS.DOMAIN' | translate }}</sq-sort></th>
           <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'created'">{{ 'USERS.CREATED' | translate }}</sq-sort></th>
           <th>{{ 'COMMON.PROJECTS' | translate }}</th>
-          <th></th>
-          <th></th>
+          <th>{{ 'USERS.LAUNCHED_PROJECTS' | translate }}</th>
         </tr>
         <tr>
           <th></th>
@@ -30,7 +31,6 @@
           <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="companyName"></sqFilter></th>
           <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="jobTitle"></sqFilter></th>
           <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="domain"></sqFilter></th>
-          <th></th>
           <th></th>
           <th></th>
           <th></th>
@@ -61,13 +61,12 @@
           <td>{{user.jobTitle}}</td>
           <td>{{user.domain}}</td>
           <td class="user-added">{{user.created | date : dateFormat}}</td>
-          <td class="user-project"><a class="c-hand" (click)="loadInnovations(user._id)">5</a></td>
-          <td class="user-launched-study"><a href="#" title="">2</a></td>
-          <td class="user-revoke"><a href="#" title="">Révoquer</a></td>
+          <td class="user-project"><a class="c-hand" (click)="loadInnovations(user._id)">--</a></td>
+          <td class="user-launched-study"><a href="#" title="">--</a></td>
         </tr>
 
         <!-- A afficher au clic et si l'utilisateur a des projets-->
-        <tr>
+        <!--<tr>
           <td colspan="7">
             <table class="table user-projects">
               <tr>
@@ -82,7 +81,7 @@
                 </td>
                 <td width="110" class="user-projects-status">
               <span class="project-status-description"><img
-                [src]="'https://res.cloudinary.com/umi/image/upload/app/picto-description.svg'" width="" height=""> Description</span>
+                [src]="'https://res.cloudinary.com/umi/image/upload/app/picto-description.svg'" width="" height=""> Description</span>-->
                   <!--
                   Autres status de projet
                   <span class="project-status-submitted"><img src="images/picto-submitted.svg" width="" height=""> Soumis</span>
@@ -90,11 +89,11 @@
                   <span class="project-status-launched"><img src="images/picto-launched.svg" width="" height=""> Lancé</span>
                   <span class="project-status-done"><img src="images/picto-done.svg" width="" height=""> Terminé</span>
                   -->
-                </td>
+                <!--</td>
               </tr>
             </table>
           </td>
-        </tr>
+        </tr>-->
         </tbody>
         <tfoot>
         <tr>
