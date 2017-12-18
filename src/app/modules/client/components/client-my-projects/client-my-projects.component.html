@@ -44,6 +44,8 @@
             • {{ 'MY_PROJECTS.ADDED' | translate }} {{ project.created | date:dateFormat }}
             • {{ 'MY_PROJECTS.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
             • <a (click)="selectedProjectIdToBeDeleted = project._id" class="text-error c-hand">{{ 'COMMON.DELETE' | translate }}</a></div>
+
+          {{ project.status }} {{ project.reviewing}}
           <ul class="step">
             <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !project.reviewing }">
               <a [routerLink]="getRelevantLink(project)">{{ 'COMMON.PROJECT_STATE.EDITING' | translate }}</a>

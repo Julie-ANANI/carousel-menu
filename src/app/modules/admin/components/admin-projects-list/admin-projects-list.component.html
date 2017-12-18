@@ -17,7 +17,7 @@
       <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Ouverts</th>
       <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Cliqués</th>
       <th *ngIf="status==='EVALUATING'" width="80" class="text-center">À traiter</th>
-      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Délai <!--<i class="icon icon-arrow-down"></i>--></th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Délai <i class="icon icon-arrow-down"></i></th>
       <th *ngIf="status==='DONE'" width="120" class="text-center">Conclusions <!--<i class="icon icon-arrow-down"></i>--></th>
       <th *ngIf="status==='DONE'" width="100" class="text-center">Restitution</th>
       <th *ngIf="status==='DONE'" width="130" class="text-center">Remerciement</th>
@@ -55,7 +55,9 @@
       </td>
       <td *ngIf="status==='PREPARING'" class="project-status"
           [ngClass]="{'alert': project.status === 'SUBMITTED'}">
-        {{ 'DASHBOARD.PROJECT_STATE.' + project.status | translate }}
+        <a [routerLink]=getRelevantLink(project)>
+          {{ 'DASHBOARD.PROJECT_STATE.' + (project.reviewing ? 'REVIEWING' : project.status) | translate }}
+        </a>
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-received"
           [ngClass]="{'alert': project.receivedRatio < 99}">
@@ -99,7 +101,7 @@
     </tbody>
   </table>
 
-  <div class="see-all text-right"><a [routerLink]="null" title="">Voir plus</a> <i class="icon icon-arrow-down"></i></div>
+  <div class="see-all text-right"><a (click)="seeMore()" title="">Voir plus</a> <i class="icon icon-arrow-down"></i></div>
 </div>
 
 

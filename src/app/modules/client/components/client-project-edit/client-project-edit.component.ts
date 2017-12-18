@@ -365,6 +365,20 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     };
   }
 
+  public validateProject () {
+    this._innovationService.validate(this._project.id).subscribe(data => {
+      this._notificationsService.success('Projet validé', 'Le projet a bien été validé');
+      this._router.navigate(['/admin']);
+    });
+  }
+
+  public askRevision () {
+    this._innovationService.askRevision(this._project.id).subscribe(data => {
+      this._notificationsService.success('Projet en révision', 'Le projet a été passé en status de révision, veuillez avertir le propriétaire des chagements à effectuer');
+      this._router.navigate(['/admin']);
+    });
+  }
+
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     return !this.shouldSave;
@@ -382,5 +396,6 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   get canEdit () { return this._project && (this._project.status === 'EDITING' || this._authService.isAdmin); }
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
   get project(): any { return this._project; }
+  get isAdmin(): boolean { return this._authService.isAdmin; }
 
 }

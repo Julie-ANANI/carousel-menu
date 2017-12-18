@@ -2,7 +2,7 @@ export const DASHBOARD = {
   'PROJECT_STATE': {
     'EDITING': 'Édition',
     'SUBMITTED': 'À valider',
-    'REVIEWING': 'Modification',
+    'REVIEWING': 'Révision',
     'EVALUATING': 'Lancé',
 
     'DONE': 'Terminé',

@@ -20,12 +20,14 @@
           <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'jobTitle'">{{ 'USERS.JOB' | translate }}</sq-sort></th>
           <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'created'">{{ 'USERS.CREATED' | translate }}</sq-sort></th>
           <th>{{ 'COMMON.PROJECTS' | translate }}</th>
+          <th></th>
         </tr>
         <tr>
           <th></th>
           <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="firstName"></sqFilter></th>
           <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="companyName"></sqFilter></th>
           <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="jobTitle"></sqFilter></th>
+          <th></th>
           <th></th>
           <th></th>
         </tr>
@@ -45,11 +47,10 @@
             <span class="title">{{user.firstName}} {{user.lastName}}</span>
             <span class="metas"><a [href]="'mailto:' + user.email">{{user.email}}</a></span>
           </td>
-          <td class="user-company">{{user.companyName}}</td>
-
+          <td class="user-company">{{user.companyName || '--'}}</td>
+          <td class="user-company">{{user.jobTitle || '--'}}</td>
           <td class="user-added">{{user.created | date : dateFormat}}</td>
           <td class="user-project"><a class="c-hand" (click)="loadInnovations(user._id)">5</a></td>
-          <td class="user-launched-study"><a href="#" title="">2</a></td>
           <td class="user-revoke"><a href="#" title="">Révoquer</a></td>
         </tr>
 
@@ -85,7 +86,7 @@
         </tbody>
         <tfoot>
         <tr>
-          <td colspan="12">
+          <td colspan="12" class="text-center">
             <sqPagination [config]="config" (configChange)="loadUsers($event)" [total]="total"></sqPagination>
           </td>
         </tr>

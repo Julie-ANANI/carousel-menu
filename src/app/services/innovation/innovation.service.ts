@@ -140,4 +140,22 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public validate(innovationId: string) {
+    return this._http.put('/innovation/' + innovationId, {
+      delta: {
+        status: 'EVALUATING'
+      }
+    }).map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public askRevision(innovationId: string) {
+    return this._http.put('/innovation/' + innovationId, {
+      delta: {
+        status: 'EDITING'
+      }
+    }).map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
 }

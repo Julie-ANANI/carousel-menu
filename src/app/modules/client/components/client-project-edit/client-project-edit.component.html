@@ -947,7 +947,7 @@
               </div>
             </div>
 
-            <div *ngIf="canEdit">
+            <div *ngIf="canEdit && project.status !== 'SUBMITTED'">
               <h2 id="submit">3. {{ 'PROJECT_EDIT.STEP3' | translate }}</h2>
 
               <form novalidate [formGroup]="formData" class="form-horizontal">
@@ -970,6 +970,20 @@
                   {{ 'PROJECT_EDIT.SUBMIT.DESCRIPTION.LINE2' | translate }}
                 </p>
               </div>
+            </div>
+          </div>
+
+          <div *ngIf="isAdmin && project.status === 'SUBMITTED'">
+            <h2>3. {{ 'PROJECT_EDIT.STEP3' | translate }}</h2>
+
+            <div class="project-submit">
+              <h3 class="text-center">Validation du projet</h3>
+              <button class="btn btn-xxl btn-primary centered" (click)="validateProject()">
+                Valider
+              </button>
+              <button class="btn btn-xxl btn-error centered" (click)="askRevision()">
+                Demander une révision
+              </button>
             </div>
           </div>
         </form>

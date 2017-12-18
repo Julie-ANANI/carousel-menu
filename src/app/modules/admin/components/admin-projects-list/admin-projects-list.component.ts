@@ -83,6 +83,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
         if (this.operatorId && this.operatorId !== '') {
           this._config.operator = this.operatorId;
         }
+        // TODO trier par jours restants pour les projets en cours
       }
     }
     this.loadProjects(this._config);
@@ -137,8 +138,8 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
       case 'DONE':
       case 'EVALUATING':
         return link + '/synthesis';
-      case 'SUBMITTED':
-        return link;
+      // case 'SUBMITTED':
+      //   return link;
       default:
         return link + '/edit';
     }
@@ -169,6 +170,10 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     this._innovationService.setOperator(project._id, operatorId).subscribe(data => {
       this._notificationService.success('Opérateur affecté', data.message);
     });
+  }
+
+  public seeMore () {
+    // TODO
   }
 
   set config(value: any) {
