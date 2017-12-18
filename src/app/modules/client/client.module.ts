@@ -65,7 +65,7 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
     ClientMyUsersComponent,
 
     AutocompleteInputComponent,
-    InputListComponent,
+
     ClientResetPasswordComponent
 
   ]

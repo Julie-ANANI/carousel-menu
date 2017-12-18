@@ -14,6 +14,8 @@ import { AdminPatentsComponent } from './components/admin-patents/admin-patents.
 import { AdminSearchesComponent } from './components/admin-searches/admin-searches.component';
 import { AdminEmailQueueComponent } from './components/admin-emails/admin-emails-queue/admin-emails-queue.component';
 import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
+import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
+import { InputListComponent } from '../../directives/input-list/input-list.component';
 
 @NgModule({
   imports: [
@@ -34,7 +36,8 @@ import { AdminBatchInformationComponent } from './components/admin-emails/admin-
     AdminPatentsComponent,
     AdminSearchesComponent,
     AdminEmailQueueComponent,
-    AdminBatchInformationComponent
+    AdminBatchInformationComponent,
+    AdminUserDetailsComponent
   ]
 })
 export class AdminModule {
