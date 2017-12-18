@@ -11,6 +11,7 @@ import { AdminSearchesComponent } from './components/admin-searches/admin-search
 import { AdminComponent } from './admin.component';
 import { AdminAuthGuard } from './admin-auth-guard.service';
 import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
+import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
 
 const adminRoutes: Routes = [
@@ -27,7 +28,8 @@ const adminRoutes: Routes = [
       {
         path: 'users',
         children: [
-          { path: '', component: AdminUsersComponent, pathMatch: 'full' }
+          { path: '', component: AdminUsersComponent, pathMatch: 'full' },
+          { path: 'user/:userId', component: AdminUserDetailsComponent, pathMatch: 'full' }
         ]
       },
       {

@@ -47,6 +47,12 @@ export class UserService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  public updateOther(user: User): Observable<any> {
+    return this._http.put(`/user/${user.id}`, user.toJSON())
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.json()));
+  }
+
   public activate(state: string): Observable<any> {
     return this._http.put('/user/me', {state:state})
       .map((res: Response) => res.json())

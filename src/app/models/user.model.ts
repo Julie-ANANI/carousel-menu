@@ -11,6 +11,7 @@ export class User extends Model {
   private _password: string;
   private _profilePicture: string;
   private _domain: string;
+  private _isOperator: boolean;
 
 
   constructor(user?: any) {
@@ -19,6 +20,10 @@ export class User extends Model {
 
   get id(): string {
     return this._id;
+  }
+
+  set id(value: string) {
+    this._id = this._id || value;
   }
 
   get name(): string {
@@ -100,5 +105,13 @@ export class User extends Model {
 
   get domain(): string {
     return this._domain;
+  }
+
+  get isOperator(): boolean {
+    return this._isOperator;
+  }
+
+  set isOperator(value: boolean) {
+    this._isOperator = value;
   }
 }

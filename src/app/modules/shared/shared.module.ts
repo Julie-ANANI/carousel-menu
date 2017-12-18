@@ -42,6 +42,7 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
 import { SharedLatexManagerComponent } from './components/shared-latex-manager/shared-latex-manager.component';
+import { InputListComponent } from '../../directives/input-list/input-list.component';
 
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ import { SharedLatexManagerComponent } from './components/shared-latex-manager/s
     // Directives
     // FormErrorDirective,
     SqResetDirective,
+    InputListComponent,
 
     // Component
     // DynamicFormComponent,
@@ -105,6 +107,7 @@ import { SharedLatexManagerComponent } from './components/shared-latex-manager/s
     // Directives
     // FormErrorDirective,
     SqResetDirective,
+    InputListComponent,
 
     // Components
     // DynamicFormComponent,
