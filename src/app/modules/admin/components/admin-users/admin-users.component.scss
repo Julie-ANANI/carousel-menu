@@ -1,0 +1,107 @@
+$primary-color: #3498DB;
+$secondary-color: #0B90C6;
+$dark-background: #262831;
+
+.invitation-pending {
+  background: #FAFAFA;
+  padding: 50px;
+  margin-top: 50px;
+}
+
+h1 {
+  margin-top: 50px;
+}
+
+td {
+  padding: 0;
+}
+
+.table.users {
+  margin-top: 30px;
+  margin-bottom: 30px;
+
+  .user-image {
+    line-height: 0;
+  }
+
+  .user-description {
+    line-height: 1.3rem;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    .title {
+      font-size: 1rem;
+      color: $dark-background;
+    }
+
+    .metas {
+      display: block;
+      font-size: 0.6rem;
+    }
+  }
+
+  .user-company,
+  .user-added {
+    text-align: center;
+    font-size: 0.7rem;
+  }
+
+  .user-project,
+  .user-launched-study {
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .user-revoke {
+    text-align: center;
+    font-size: 0.7rem;
+
+    a {
+      color: #D02A2A;
+    }
+  }
+
+}
+
+.table.user-projects {
+  background: #262831;
+
+  .user-projects-description {
+    line-height: 1.3rem;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    .title {
+      display: block;
+    }
+
+    .title a {
+      font-size: 0.8rem;
+      color: white;
+    }
+
+    .metas {
+      display: inline-block;
+      font-size: 0.6rem;
+    }
+
+    .icon-arrow-right {
+      color: $primary-color;
+    }
+
+    .label {
+      background: $secondary-color;
+      color: white;
+      font-size: 0.6rem;
+      padding: .2rem .5rem;
+    }
+  }
+
+  .user-projects-status {
+    font-size: 0.6rem;
+
+    img {
+      margin-right: 7px;
+    }
+  }
+}

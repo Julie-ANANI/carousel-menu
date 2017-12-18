@@ -11,7 +11,6 @@ import { ClientMyAccountComponent } from './components/client-my-account/client-
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 
 import { ClientProjectComponent } from './components/client-project/client-project.component';
-import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
 import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
 
 import { ClientLoginComponent } from './components/client-login/client-login.component';
@@ -22,7 +21,6 @@ import { ClientProjectNewComponent } from './components/client-project-new/clien
 import { ClientProjectSynthesisComponent } from './components/client-project-synthesis/client-project-synthesis.component';
 import { ClientProjectEditExample2Component } from './components/client-project-edit/client-project-edit-example2/client-project-edit-example2.component';
 import { ClientProjectEditExample1Component } from './components/client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
-import { ClientMyUsersComponent } from './components/client-my-users/client-my-users.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 
@@ -51,7 +49,6 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
     ClientMyProjectsComponent,
     ClientProjectEditComponent,
     ClientProjectComponent,
-    ClientCampaignComponent,
 
     ClientDiscoverComponent,
     ClientWelcomeComponent,
@@ -62,7 +59,6 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
     ClientProjectSynthesisComponent,
     ClientProjectEditExample2Component,
     ClientProjectEditExample1Component,
-    ClientMyUsersComponent,
 
     AutocompleteInputComponent,
 

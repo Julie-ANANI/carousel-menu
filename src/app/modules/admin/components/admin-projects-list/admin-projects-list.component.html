@@ -1,0 +1,124 @@
+<div [ngClass]="{'project-preparation': status==='PREPARING', 'project-launched': status==='EVALUATING', 'project-completed': status==='DONE'}">
+  <div class="title-section" *ngIf="status==='PREPARING'"><span>{{total}}</span> projets en préparation</div>
+  <div class="title-section" *ngIf="status==='EVALUATING'"><span>{{total}}</span> projets lancés</div>
+  <div class="title-section" *ngIf="status==='DONE'"><span>{{total}}</span> projets terminés</div>
+  <div class="title-section" *ngIf="status==='WITHOUT_OPERATOR'"><span>{{total}}</span> projets à attribuer</div>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th width="80"></th>
+      <th>Nom</th>
+      <th *ngIf="status==='PREPARING'" width="90" class="text-center">Tagging</th>
+      <th *ngIf="status==='PREPARING' || status==='EVALUATING'" width="90" class="text-center">Pros</th>
+      <th *ngIf="status==='PREPARING' || status==='EVALUATING'" width="100" class="text-center">Emails OK</th>
+      <th *ngIf="status==='PREPARING'" width="90" class="text-center">Statut <i class="icon icon-arrow-down"></i></th>
+      <th *ngIf="status==='EVALUATING'" width="70" class="text-center">Reçus</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Ouverts</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Cliqués</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">À traiter</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Délai <!--<i class="icon icon-arrow-down"></i>--></th>
+      <th *ngIf="status==='DONE'" width="120" class="text-center">Conclusions <!--<i class="icon icon-arrow-down"></i>--></th>
+      <th *ngIf="status==='DONE'" width="100" class="text-center">Restitution</th>
+      <th *ngIf="status==='DONE'" width="130" class="text-center">Remerciement</th>
+      <th *ngIf="status==='EVALUATING' || status==='DONE'" width="90" class="text-center">Réponses</th>
+      <th *ngIf="status==='WITHOUT_OPERATOR'" width="120" class="text-center">Opérateur</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let project of projects">
+      <td class="project-image">
+        <a [routerLink]="getRelevantLink(project)">
+          <img [src]="getPrincipalMedia(project)" class="img-fit-cover" width="80px" height="80px"/>
+        </a>
+      </td>
+      <td class="project-description">
+        <span class="title"><a [routerLink]="getRelevantLink(project)" title="">{{ project.name || '--' }}</a></span>
+        <span class="metas"><span *ngIf="project.owner">{{ project.owner.firstName }} {{ project.owner.lastName }}<span *ngIf="project.owner.companyName"> / {{ project.owner.companyName }}</span>
+            • </span>
+            {{ 'MY_PROJECTS.ADDED' | translate }} {{ project.created | date:dateFormat }}
+            • {{ 'MY_PROJECTS.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
+            • <a (click)="selectedProjectIdToBeDeleted = project._id" class="text-error c-hand">{{ 'COMMON.DELETE' | translate }}</a></span>
+      </td>
+
+      <td *ngIf="status==='PREPARING' && project.tags.length" class="project-tagging">OK</td>
+      <td *ngIf="status==='PREPARING' && !project.tags.length" class="project-tagging warning">TODO</td>
+
+      <td *ngIf="status==='PREPARING' || status==='EVALUATING'" class="project-professional"
+          [ngClass]="{'warning': project.pros < 7000}">
+        {{project.pros}}
+      </td>
+
+      <td *ngIf="status==='PREPARING' || status==='EVALUATING'" class="project-emails-ok"
+          [ngClass]="{'warning': project.emails < 5000}">
+        {{project.emails}}
+      </td>
+      <td *ngIf="status==='PREPARING'" class="project-status"
+          [ngClass]="{'alert': project.status === 'SUBMITTED'}">
+        {{ 'DASHBOARD.PROJECT_STATE.' + project.status | translate }}
+      </td>
+      <td *ngIf="status==='EVALUATING'" class="project-email-received"
+          [ngClass]="{'alert': project.receivedRatio < 99}">
+        {{project.receivedRatio}}%
+      </td>
+      <td *ngIf="status==='EVALUATING'" class="project-email-opened"
+          [ngClass]="{'warning': project.openedRatio < 10}">
+        {{project.openedRatio}}%
+      </td>
+      <td *ngIf="status==='EVALUATING'" class="project-email-clicked"
+          [ngClass]="{'warning': project.clickedRatio < 10}">
+        {{project.clickedRatio}}%
+      </td>
+      <td *ngIf="status==='EVALUATING'" class="project-to-check"><a [routerLink]="null">{{project.submittedAnswers}}</a></td>
+      <td *ngIf="status==='EVALUATING'" class="project-time-limit warning"
+          [ngClass]="{
+            'warning': 5 <= 8
+          }">XXj.</td><!-- TODO condition couleur + valeur -->
+      <td *ngIf="status==='DONE' && project.conclusions" class="project-conclusion">OK</td>
+      <td *ngIf="status==='DONE' && !project.conclusions" class="project-conclusion warning"><a [routerLink]=getRelevantLink(project) title="">TODO</a></td>
+      <td *ngIf="status==='DONE' && project.restitution" class="project-restitution">TODO</td>
+      <td *ngIf="status==='DONE' && !project.restitution" class="project-restitution warning">TODO</td>
+      <td *ngIf="status==='DONE' && project.thanks" class="project-thanks">OK</td>
+      <td *ngIf="status==='DONE' && !project.thanks" class="project-thanks warning">TODO</td>
+      <td *ngIf="status==='EVALUATING' || status==='DONE'" class="project-answer"
+          [ngClass]="{
+          'alert': project.answers <= 20,
+          'warning': project.answers <= 25 && project.answers > 20,
+          'all-is-fine': project.answers > 25}">
+        {{project.answers}}
+      </td>
+      <td *ngIf="status==='WITHOUT_OPERATOR'" [ngClass]="{'alert': !project.operator, 'all-is-fine': project.operator}">
+        <select class="form-select" [(ngModel)]="project.operator" (ngModelChange)="setOperator($event, project)">
+          <option [ngValue]="undefined">Aucun</option>
+          <option *ngFor="let operator of operators" [ngValue]="operator._id">
+            {{ operator.firstName + ' ' + operator.lastName }}
+          </option>
+        </select>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="see-all text-right"><a [routerLink]="null" title="">Voir plus</a> <i class="icon icon-arrow-down"></i></div>
+</div>
+
+
+
+
+<!-- MODAL : Are you sure you want to delete this project ? -->
+<div class="modal" [ngClass]="{'active': selectedProjectIdToBeDeleted}">
+  <div class="modal-overlay" (click)="selectedProjectIdToBeDeleted = null"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="selectedProjectIdToBeDeleted = null"></button>
+      <div class="modal-title h5">{{ 'MY_PROJECTS.DELETE_PROJECT_MODAL.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">{{ 'MY_PROJECTS.DELETE_PROJECT_MODAL.CONTENT' | translate }}</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="removeProject(selectedProjectIdToBeDeleted)">{{ 'COMMON.DELETE' | translate }}</button>
+      <button class="btn btn-primary" (click)="selectedProjectIdToBeDeleted = null">{{ 'COMMON.CANCEL' | translate }}</button>
+    </div>
+  </div>
+</div>

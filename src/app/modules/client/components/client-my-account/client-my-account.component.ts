@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
 import { AuthService } from '../../../../services/auth/auth.service';
-import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
@@ -22,7 +21,6 @@ export class ClientMyAccountComponent implements OnInit {
   // TODO : profile picture, reset password, description, location
 
   constructor(private _userService: UserService,
-              private _translateService: TranslateService,
               private _notificationsService: TranslateNotificationsService,
               private _authService: AuthService,
               private _formBuilder: FormBuilder,
@@ -30,7 +28,6 @@ export class ClientMyAccountComponent implements OnInit {
               private _titleService: TranslateTitleService) {}
 
   ngOnInit(): void {
-    initTranslation(this._translateService);
     this._titleService.setTitle('MY_ACCOUNT.TITLE');
 
     this.formData = this._formBuilder.group({

@@ -1,19 +1,13 @@
-<nav class="row">
-  <div class="col-lg-6">
-    <ul *ngIf="numPages >= 2">
-      <li [ngClass]="{disabled: currentPage === 1}" (click)="currentPage = 1">{{ 'PAGINATION.START' | translate }}</li>
-      <li [ngClass]="{disabled: currentPage === 1}" (click)="currentPage = currentPage - 1">«</li>
-      <li class="current-page">
-        <input type="text" class="select-page" [ngModel]="inputPage" (ngModelChange)="currentPage = $event"/><span> / {{numPages}}</span>
-      </li>
-      <li [ngClass]="{disabled: currentPage === numPages}" (click)="currentPage = currentPage + 1">»</li>
-      <li [ngClass]="{disabled: currentPage === numPages}" (click)="currentPage = numPages">{{ 'PAGINATION.END' | translate }}</li>
-    </ul>
-  </div>
-  <div class="col-lg-6">
-    <select [ngModel]="perPage" class="browser-default" (ngModelChange)="perPage = $event">
-      <option *ngFor="let perPage of perPageValues" [value]="perPage">{{perPage}} {{ 'PAGINATION.PER_PAGE' | translate }}</option>
-      <option value="1000000">{{ 'PAGINATION.ALL' | translate }}</option>
-    </select>
-  </div>
-</nav>
+<ul class="pagination" *ngIf="numPages >= 2">
+  <li class="page-item" *ngIf="currentPage > 1" (click)="currentPage = 1">1</li>
+  <li class="page-item" *ngIf="currentPage > 1" (click)="currentPage > 1 ? currentPage = currentPage - 1 : currentPage = 1">«</li>
+  <li class="current-page">
+    <input type="text" [ngModel]="currentPage" (keyup.enter)="goToPage($event)"/>
+  </li>
+  <li class="page-item" *ngIf="currentPage < numPages" (click)="currentPage = currentPage + 1">»</li>
+  <li class="page-item" *ngIf="currentPage < numPages" (click)="currentPage = numPages">{{ numPages }}</li>
+</ul>
+<select [ngModel]="perPage" (ngModelChange)="perPage = $event">
+  <option *ngFor="let perPage of perPageValues" [value]="perPage">{{perPage}} {{ 'PAGINATION.PER_PAGE' | translate }}</option>
+  <option value="1000000">{{ 'PAGINATION.ALL' | translate }}</option>
+</select>

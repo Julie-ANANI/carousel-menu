@@ -1,8 +1,17 @@
-<div class="row">
-  <div>
-    <div class="container">
+<div class="container">
+  <div class="columns">
+    <div class="column col-11 col-mx-auto">
+
       <h1>{{total}} {{ 'COMMON.USERS' | translate }}</h1>
-      <table wt-responsive-table class="table">
+
+      <button class="btn btn-lg btn-primary" (click)="inviteUser()">{{ 'USERS.INVITE_USER' | translate }}</button>
+
+      <div class="invitation-pending" *ngIf="pending_invitations && pending_invitations.length > 0">
+        <h3>{{ 'USERS.WAITING_INVITATIONS' | translate }}</h3>
+        <p>{{ pending_invitations.join(', ') }}</p>
+      </div>
+
+      <table class="table users" wt-responsive-table>
         <thead>
         <tr>
           <th></th>
@@ -11,6 +20,11 @@
           <th><sq-sort [service]="sq" [prop]="'jobTitle'">{{ 'USERS.JOB' | translate }}</sq-sort></th>
           <th><sq-sort [service]="sq" [prop]="'domain'">{{ 'USERS.DOMAIN' | translate }}</sq-sort></th>
           <th><sq-sort [service]="sq" [prop]="'created'">{{ 'USERS.CREATED' | translate }}</sq-sort></th>
+          <th width="80"></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'firstName'">{{ 'USERS.NAME' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'companyName'" >{{ 'USERS.COMPANY' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'jobTitle'">{{ 'USERS.JOB' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'created'">{{ 'USERS.CREATED' | translate }}</sq-sort></th>
           <th>{{ 'COMMON.PROJECTS' | translate }}</th>
         </tr>
         <tr>
@@ -19,14 +33,23 @@
           <th><sqFilter [service]="sq" prop="companyName"></sqFilter></th>
           <th><sqFilter [service]="sq" prop="jobTitle"></sqFilter></th>
           <th><sqFilter [service]="sq" prop="domain"></sqFilter></th>
+          <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="firstName"></sqFilter></th>
+          <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="companyName"></sqFilter></th>
+          <th><sqFilter [config]="config" (configChange)="loadUsers($event)" prop="jobTitle"></sqFilter></th>
           <th></th>
           <th></th>
         </tr>
         </thead>
         <tbody>
+
         <tr *ngFor="let user of users">
-          <td width="80">
-            <img *ngIf="user.media" src={{user.media.url}} /><!-- TODO voir comment ça rend si !user.media -->
+          <td class="user-image" width="80">
+            <img *ngIf="user.media"
+                 [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_80,w_80/' + user.media.cloudinary.public_id"
+                 width="80" height="80"/><!-- TODO voir comment ça rend si !user.media -->
+            <img *ngIf="!user.media"
+                 src="https://res.cloudinary.com/umi/image/upload/c_scale,h_80,w_80/app/no-image.png"
+                 width="80" height="80"/>
           </td>
           <td><a [routerLink]="['user/'+user._id]">{{user.firstName}} {{user.lastName}}</a></td>
           <td>{{user.companyName}}</td>
@@ -34,12 +57,52 @@
           <td>{{user.domain}}</td>
           <td>{{user.created | date : dateFormat}}</td>
           <td><button (click)="loadInnovations(user._id)">Voir innos</button></td>
+          <td class="user-description">
+            <span class="title">{{user.firstName}} {{user.lastName}}</span>
+            <span class="metas"><a [href]="'mailto:' + user.email">{{user.email}}</a></span>
+          </td>
+          <td class="user-company">{{user.companyName}}</td>
+
+          <td class="user-added">{{user.created | date : dateFormat}}</td>
+          <td class="user-project"><a class="c-hand" (click)="loadInnovations(user._id)">5</a></td>
+          <td class="user-launched-study"><a href="#" title="">2</a></td>
+          <td class="user-revoke"><a href="#" title="">Révoquer</a></td>
+        </tr>
+
+        <!-- A afficher au clic et si l'utilisateur a des projets-->
+        <tr>
+          <td colspan="7">
+            <table class="table user-projects">
+              <tr>
+                <td width="80" class="user-projects-image">
+                  <img [src]="'https://res.cloudinary.com/umi/image/upload/app/woman.png'" width="80" height="80">
+                </td>
+                <td class="user-projects-description">
+              <span class="title"><a href="#" title="">Automated hand disinfection solution using an organic disinfectant</a> <i
+                class="icon icon-arrow-right"></i></span>
+                  <span class="metas">Ajouté le 21/04/17 • Modifié le 28/07/17</span> • <span
+                  class="label">Collaborator</span>
+                </td>
+                <td width="110" class="user-projects-status">
+              <span class="project-status-description"><img
+                [src]="'https://res.cloudinary.com/umi/image/upload/app/picto-description.svg'" width="" height=""> Description</span>
+                  <!--
+                  Autres status de projet
+                  <span class="project-status-submitted"><img src="images/picto-submitted.svg" width="" height=""> Soumis</span>
+                  <span class="project-status-reviewed"><img src="images/picto-reviewed.svg" width="" height=""> Révision</span>
+                  <span class="project-status-launched"><img src="images/picto-launched.svg" width="" height=""> Lancé</span>
+                  <span class="project-status-done"><img src="images/picto-done.svg" width="" height=""> Terminé</span>
+                  -->
+                </td>
+              </tr>
+            </table>
+          </td>
         </tr>
         </tbody>
         <tfoot>
         <tr>
           <td colspan="12">
-            <sqPagination [service]="sq" [total]="total"></sqPagination>
+            <sqPagination [config]="config" (configChange)="loadUsers($event)" [total]="total"></sqPagination>
           </td>
         </tr>
         </tfoot>

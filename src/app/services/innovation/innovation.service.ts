@@ -20,8 +20,8 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public getAll(): Observable<any> {
-    return this._http.get('/innovation/')
+  public getAll(config: any): Observable<any> {
+    return this._http.get('/innovation/', {params: config})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
@@ -130,6 +130,12 @@ export class InnovationService {
 
   public exportPDF(innovationId: string, innovationCardId: string, jobOptions: any) {
     return this._http.get(`/innovation/${innovationId}/exportInventionCard/${innovationCardId}`, jobOptions)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public setOperator(innovationId: string, operatorId: string): Observable<any> {
+    return this._http.put('/innovation/' + innovationId + '/operator', {operatorId: operatorId})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

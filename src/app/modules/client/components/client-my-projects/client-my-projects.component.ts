@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
+import { UserService } from '../../../../services/user/user.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { TranslateService, initTranslation } from './i18n/i18n';
-import { SmartQueryService } from '../../../../services/smartQuery/smartQuery.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-client-my-projects',
@@ -14,26 +14,32 @@ export class ClientMyProjectsComponent implements OnInit {
   private _projects: [any];
   public selectedProjectIdToBeDeleted: any = null;
   private _total: number;
+  private _config = {
+    fields: '',
+    limit: 10,
+    offset: 0,
+    search: {},
+    sort: {
+      created: -1
+    }
+  };
 
   constructor(private _translateService: TranslateService,
+              private _userService: UserService,
               private _innovationService: InnovationService,
-              private _titleService: TranslateTitleService,
-              private _sq: SmartQueryService) {
-    this._sq.setRoute('/user/me/innovations');
-  }
+              private _titleService: TranslateTitleService) {}
 
   ngOnInit(): void {
-    initTranslation(this._translateService);
     this._titleService.setTitle('MY_PROJECTS.TITLE');
-    this._sq.data$.subscribe(innovations => {
-      this._projects = innovations.result;
-      this._total = innovations._metadata.totalCount;
-    });
-    this._sq.getData();
+    this.loadProjects(this._config);
   }
-  
-  get sq(): any {
-    return this._sq;
+
+  loadProjects(config: any): void {
+    this._config = config;
+    this._userService.getMyInnovations(this._config).subscribe(projects => {
+      this._projects = projects.result;
+      this._total = projects._metadata.totalCount;
+    });
   }
 
   /**
@@ -80,6 +86,14 @@ export class ClientMyProjectsComponent implements OnInit {
     } else {
       return 'https://res.cloudinary.com/umi/image/upload/app/no-image.png';
     }
+  }
+
+  set config(value: any) {
+    this._config = value;
+  }
+
+  get config(): any {
+    return this._config;
   }
 
   get total () {

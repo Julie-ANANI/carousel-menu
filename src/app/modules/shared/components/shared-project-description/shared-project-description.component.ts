@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { initTranslation, TranslateService } from './i18n/i18n';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ShareService } from '../../../../services/share/share.service';
 
@@ -22,8 +22,6 @@ export class SharedProjectDescriptionComponent implements OnInit {
 
 
   ngOnInit() {
-    initTranslation(this._translateService);
-
     this._displayInnovationCardWithLang(this._translateService.currentLang);
 
     for (const innovationCard of this.project.innovationCards) {

@@ -5,7 +5,6 @@ import { ClientComponent } from './client.component';
 
 import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
 import { ClientProjectComponent } from './components/client-project/client-project.component';
-import { ClientCampaignComponent } from './components/client-campaign/client-campaign.component';
 import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
 import { ClientProjectEditExample1Component } from './components/client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
 import { ClientProjectEditExample2Component } from './components/client-project-edit/client-project-edit-example2/client-project-edit-example2.component';
@@ -16,7 +15,6 @@ import { ClientLoginComponent } from './components/client-login/client-login.com
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
-import { ClientMyUsersComponent } from './components/client-my-users/client-my-users.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 
@@ -80,13 +78,6 @@ const clientRoutes: Routes = [
         ]
       },
       {
-        path: 'users',
-        canActivate: [AuthGuard],
-        children: [
-          { path: '', component: ClientMyUsersComponent, pathMatch: 'full' },
-        ]
-      },
-      {
         path: 'projects',
         children: [
           { path: '', component: ClientMyProjectsComponent, pathMatch: 'full', canActivate: [AuthGuard] },
@@ -106,13 +97,6 @@ const clientRoutes: Routes = [
               { path: '2', component: ClientProjectEditExample2Component }
             ]
           }
-        ]
-      },
-      {
-        path: 'campaign',
-        canActivate: [AuthGuard],
-        children: [
-          { path: '', component: ClientCampaignComponent, pathMatch: 'full' }
         ]
       },
       {

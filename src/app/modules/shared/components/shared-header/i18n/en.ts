@@ -1,5 +1,3 @@
-export const en = {
-  'HEADER': {
-    'START': 'Start'
-  }
+export const HEADER = {
+  'START': 'Start'
 };

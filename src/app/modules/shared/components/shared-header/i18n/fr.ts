@@ -1,5 +1,3 @@
-export const fr = {
-  'HEADER': {
-    'START': 'Commencer'
-  }
+export const HEADER = {
+  'START': 'Commencer'
 };

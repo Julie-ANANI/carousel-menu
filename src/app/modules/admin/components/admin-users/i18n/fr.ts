@@ -1,9 +1,9 @@
-export const fr = {
-  "USERS": {
-    "TITLE": "Utilisateurs",
-    "NAME": "Name",
-    "COMPANY": "Entreprise",
-    "JOB": "Poste",
-    "CREATED": "Créé le"
-  }
+export const ADMIN_USERS = {
+  "TITLE": "Utilisateurs",
+  "NAME": "Nom",
+  "COMPANY": "Entreprise",
+  "JOB": "Poste",
+  "CREATED": "Créé le",
+  'INVITE_USER': 'Inviter un utilisateur',
+  'WAITING_INVITATIONS': 'Invitations en attente de réponse'
 };

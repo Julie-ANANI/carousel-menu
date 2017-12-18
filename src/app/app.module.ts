@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CookieService, CookieOptions } from 'angular2-cookie/core';
 import { InnovationService } from './services/innovation/innovation.service';
 import { CampaignService } from './services/campaign/campaign.service';
-import { SmartQueryService } from './services/smartQuery/smartQuery.service';
+import { DashboardService } from './services/dashboard/dashboard.service';
 import { WindowRefService } from './services/window-ref/window-ref.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { TranslateTitleService } from './services/title/title.service';
@@ -62,10 +62,10 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
     LoaderService,
     WindowRefService,
     IndexService,
+    DashboardService,
     LatexService,
     EmailService,
     ShareService,
-    SmartQueryService,
     {
       provide: Http,
       useFactory: httpFactory,

@@ -11,8 +11,8 @@ export class UserService {
 
   constructor(private _http: Http) {}
 
-  public getMyInnovations(): Observable<any> {
-    return this._http.get('/user/me/innovations')
+  public getMyInnovations(config?: any): Observable<any> {
+    return this._http.get('/user/me/innovations', {params: config})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }
@@ -71,8 +71,8 @@ export class UserService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
-  public getAll(): Observable<any[]> {
-    return this._http.get('/user')
+  public getAll(config?: any): Observable<any> {
+    return this._http.get('/user', {params: config})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }

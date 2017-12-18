@@ -3,7 +3,6 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { TranslateService, initTranslation } from './i18n/i18n';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -20,12 +19,10 @@ export class ClientResetPasswordComponent implements OnInit {
               private _activatedRoute: ActivatedRoute,
               private _router: Router,
               private _notificationsService: TranslateNotificationsService,
-              private _translateService: TranslateService,
               private _userService: UserService,
               private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    initTranslation(this._translateService);
     this.formData = this._formBuilder.group({
       email: [{
         value: this._authService.isAuthenticated ? this._authService.user.email : '',
