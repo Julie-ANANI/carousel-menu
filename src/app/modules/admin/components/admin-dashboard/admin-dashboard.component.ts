@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { DashboardService } from '../../../../services/dashboard/dashboard.service';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { SearchService } from '../../../../services/search/search.service';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
@@ -14,7 +15,7 @@ export class AdminDashboardComponent implements OnInit {
   public operators = [];
   public operatorId = '';
 
-  public nbDaysOfStats = '';
+  public nbDaysOfStats = 1;
 
   public operatorData = {
     nbProjectsToValidate: null,
@@ -22,8 +23,8 @@ export class AdminDashboardComponent implements OnInit {
   };
 
   public statistics = {
-    percentFoundedPros: null,
-    percentFoundedEmails: null,
+    percentFoundPros: null,
+    percentFoundEmails: null,
     percentOkEmails: null,
     percentReceivedEmails: null
   };
@@ -33,6 +34,7 @@ export class AdminDashboardComponent implements OnInit {
 
   constructor(private _titleService: TranslateTitleService,
               private _dashboardService: DashboardService,
+              private _searchService: SearchService,
               private _authService: AuthService) { }
 
   ngOnInit(): void {
@@ -45,8 +47,8 @@ export class AdminDashboardComponent implements OnInit {
     this._dashboardService.getOperators().subscribe((operators) => this.operators = operators.result);
 
     this._dashboardService.getOperatorData(this.operatorId).subscribe((operatorData) => this.operatorData = operatorData);
-
-    this._dashboardService.getStatistics().subscribe((globalData) => this.statistics = globalData);
+    
+    this.getPeriodStats();
   }
 
   public newOperatorSelected(event) {
@@ -56,8 +58,14 @@ export class AdminDashboardComponent implements OnInit {
     this._dashboardService.getOperatorData(this.operatorId).subscribe((operatorData) => this.operatorData = operatorData);
   }
 
-  public newPeriodOfStatsSelected(event) {
-    alert('TODO actualiser les données avec la nouvelle période');
+  public getPeriodStats() {
+    this._searchService.getEmailStats(this.nbDaysOfStats).subscribe(stats => {
+      const totalMails = stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut;
+      this.statistics.percentFoundEmails = totalMails ? Math.round(stats.total.found / totalMails *100) : 'NA';
+      this.statistics.percentFoundPros = 'TODO';
+      this.statistics.percentOkEmails = 'TODO';
+      this.statistics.percentReceivedEmails = 'TODO';
+    });
   }
 
 }
