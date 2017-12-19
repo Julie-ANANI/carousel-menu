@@ -28,7 +28,7 @@ export class AdminDashboardComponent implements OnInit {
     percentReceivedEmails: null
   };
 
-  private refreshNeededEmitter = new Subject<any>();
+  private _refreshNeededEmitter = new Subject<any>();
 
 
   constructor(private _titleService: TranslateTitleService,
@@ -58,6 +58,10 @@ export class AdminDashboardComponent implements OnInit {
 
   public newPeriodOfStatsSelected(event) {
     alert('TODO actualiser les données avec la nouvelle période');
+  }
+
+  get refreshNeededEmitter(): Subject<any> {
+    return this._refreshNeededEmitter;
   }
 
 }
