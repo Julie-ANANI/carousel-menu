@@ -10,13 +10,13 @@
   <div *ngIf="operatorData.nbProjectsToTreat"><span>{{ operatorData.nbProjectsToTreat }}</span> réponse{{ operatorData.nbProjectsToTreat>1?'s':'' }} à traiter</div>
 </div>
 <div class="emails-stats">
-  <select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="newPeriodOfStatsSelected($event)">
-    <option [value]="''">Comparer...</option>
-    <option [value]="'30'" [ngValue]="30" selected="selected">Dernier mois</option>
-    <option [value]="'365'" [ngValue]="365">Dernière année</option>
+  <select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="getPeriodStats()">
+    <option [value]="1">Comparer...</option>
+    <option [value]="30">Dernier mois</option>
+    <option [value]="365">Dernière année</option>
   </select>
-  <div *ngIf="statistics.percentFoundedPros">Pros trouvés : <span>{{ statistics.percentFoundedPros }}</span></div>
-  <div *ngIf="statistics.percentFoundedEmails">Emails trouvés : <span>{{ statistics.percentFoundedEmails }}%</span></div>
+  <div *ngIf="statistics.percentFoundPros">Pros trouvés : <span>{{ statistics.percentFoundPros }}</span></div>
+  <div *ngIf="statistics.percentFoundEmails">Emails trouvés : <span>{{ statistics.percentFoundEmails }}%</span></div>
   <div *ngIf="statistics.percentOkEmails">Emails OK : <span>{{ statistics.percentOkEmails }}%</span></div>
   <div *ngIf="statistics.percentReceivedEmails">Emails reçus : <span>{{ statistics.percentReceivedEmails }}%</span></div>
 </div>

@@ -25,6 +25,7 @@ import { ShareService } from './services/share/share.service';
 import { AutocompleteService } from './services/autocomplete/autocomplete.service';
 import { LatexService } from './services/latex/latex.service';
 import { EmailService } from './services/email/email.service';
+import { SearchService } from './services/search/search.service';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 @NgModule({
@@ -66,6 +67,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
     LatexService,
     EmailService,
     ShareService,
+    SearchService,
     {
       provide: Http,
       useFactory: httpFactory,
