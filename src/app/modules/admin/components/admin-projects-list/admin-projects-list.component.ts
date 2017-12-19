@@ -170,7 +170,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
 
   public setOperator (operatorId, project) {
     this._innovationService.setOperator(project._id, operatorId).subscribe(data => {
-      this._notificationService.success('Opérateur affecté', data.message);
+      this._notificationService.success('Opérateur affecté', "OK");
     });
   }
 
