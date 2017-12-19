@@ -68,6 +68,7 @@ export class AdminUserDetailsComponent implements OnInit {
       //Verify other configurations that aren't in the form (like the operator configuration and the id)
       user.isOperator = this._userBasicData['isOperator'];
       user.id = this._userBasicData['id'];
+      user.roles = this._userBasicData['roles'];
       this._userService.updateOther(user).subscribe(
         data => {
           this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
@@ -92,7 +93,16 @@ export class AdminUserDetailsComponent implements OnInit {
 
   public isAdmin(): boolean {
     const roles = this._userBasicData['roles'];
-    return _.includes(['admin', 'super-admin'], roles);
+    return _.includes(['super-admin'], roles);
+  }
+
+  get domainAdmin(): boolean {
+    const roles = this._userBasicData['roles'];
+    return _.includes(['admin'], roles);
+  }
+
+  set domainAdmin(value: boolean) {
+    this._userBasicData['roles'] = value ? 'admin' : 'user';
   }
 
   get isOperator(): boolean {

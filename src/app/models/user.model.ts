@@ -12,6 +12,7 @@ export class User extends Model {
   private _profilePicture: string;
   private _domain: string;
   private _isOperator: boolean;
+  private _roles: string;
 
 
   constructor(user?: any) {
@@ -113,5 +114,13 @@ export class User extends Model {
 
   set isOperator(value: boolean) {
     this._isOperator = value;
+  }
+
+  get roles(): string {
+    return this._roles;
+  }
+
+  set roles(value: string) {
+    this._roles = value || 'user';
   }
 }

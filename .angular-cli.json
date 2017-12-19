@@ -76,7 +76,7 @@
       }
     },
     {
-      "name": "vendorTest",
+      "name": "dynergie",
       "root": "src",
       "outDir": "./dist",
       "index": "index.html",
@@ -87,7 +87,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.vendor1.scss",
+        "styles.dynergie.scss",
         "../node_modules/font-awesome/css/font-awesome.css"
       ],
       "assets": [
@@ -109,9 +109,9 @@
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
-        "local": "environments/vendorTest/environment.vendorTest.local.ts",
-        "dev":   "environments/vendorTest/environment.vendorTest.dev.ts",
-        "prod":  "environments/vendorTest/environment.vendorTest.prod.ts"
+        "local": "environments/dynergie/environment.dynergie.local.ts",
+        "dev":   "environments/dynergie/environment.dynergie.dev.ts",
+        "prod":  "environments/dynergie/environment.dynergie.prod.ts"
       }
     }
   ],

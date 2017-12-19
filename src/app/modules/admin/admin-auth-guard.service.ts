@@ -17,7 +17,7 @@ export class AdminAuthGuard implements CanActivate {
       this._authService.redirectUrl = url;
       this._router.navigate(['/login']);
     }
-    else if (this._authService.isAdmin) { return true; }
+    else if (this._authService.adminLevel > 0) { return true; }
     this._router.navigate(['/']);
     return false;
   }

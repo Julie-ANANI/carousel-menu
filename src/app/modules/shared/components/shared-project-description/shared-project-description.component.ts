@@ -61,7 +61,7 @@ export class SharedProjectDescriptionComponent implements OnInit {
   }
 
   get isAdmin (): boolean {
-    return this._authService.isAdmin;
+    return (this._authService.adminLevel & 2) >= 2;
   }
   
   get onEditingPage(): boolean {
