@@ -12,6 +12,9 @@ FRONT_VERSION="umi"
 BUILD_ENV="prod"
 OTHER_PARAMS="--aot"
 
+FRONT_VERSION=$(cut -d '-' -f2 <<< "$CACHE_TAG")
+echo $FRONT_VERSION
+
 if [[ $CACHE_TAG == *"vendor"* ]]
 then
   FRONT_VERSION=$(cut -d '-' -f2 <<< "$CACHE_TAG")
