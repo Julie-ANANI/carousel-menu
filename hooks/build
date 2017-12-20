@@ -4,8 +4,8 @@ FRONT_VERSION="umi"
 BUILD_ENV="prod"
 OTHER_PARAMS="--aot"
 
-echo $CACHE_TAG
-FRONT_VERSION=$(cut -d '-' -f1 <<< "$CACHE_TAG")
+echo $SOURCE_BRANCH
+FRONT_VERSION=$(cut -d '-' -f1 <<< "$SOURCE_BRANCH")
 echo $FRONT_VERSION
 
 
@@ -14,7 +14,7 @@ then
   FRONT_VERSION="umi"
   BUILD_ENV="dev"
 else
-  FRONT_VERSION=$(cut -d '-' -f1 <<< "$CACHE_TAG")
+  FRONT_VERSION=$(cut -d '-' -f1 <<< "$SOURCE_BRANCH")
   BUILD_ENV="prod"
 fi
 
