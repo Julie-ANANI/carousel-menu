@@ -1,37 +1,25 @@
 #!/bin/bash
 
-
-#####
-#TEMP
-#####
-#IMAGE_NAME="umi-application-front:jdc"
-#CACHE_TAG="vendor1"
-
-#$APP_NAME --environment=$BUILD_ENV $OTHER_PARAMS
 FRONT_VERSION="umi"
 BUILD_ENV="prod"
 OTHER_PARAMS="--aot"
 
 echo $CACHE_TAG
-FRONT_VERSION=$(cut -d '-' -f2 <<< "$CACHE_TAG")
+FRONT_VERSION=$(cut -d '-' -f1 <<< "$CACHE_TAG")
 echo $FRONT_VERSION
 
-if [[ $CACHE_TAG == *"vendor"* ]]
+
+if [[ $CACHE_TAG == *"latest"* ]]
 then
-  FRONT_VERSION=$(cut -d '-' -f2 <<< "$CACHE_TAG")
-  BUILD_ENV="prod"
-  OTHER_PARAMS="--aot"
+  FRONT_VERSION="umi"
+  BUILD_ENV="dev"
 else
-  if [[ $CACHE_TAG == *"latest"* ]]
-  then
-    FRONT_VERSION="umi"
-    BUILD_ENV="dev"
-    OTHER_PARAMS="--aot"
-  fi
+  FRONT_VERSION=$(cut -d '-' -f1 <<< "$CACHE_TAG")
+  BUILD_ENV="prod"
 fi
 
 echo docker build --build-arg APP_NAME=$FRONT_VERSION \
       --build-arg BUILD_ENV=$BUILD_ENV \
       --build-arg OTHER_PARAMS=$OTHER_PARAMS -t $IMAGE_NAME .
 
-docker build --build-arg APP_NAME=$FRONT_VERSION --build-arg BUILD_ENV=$BUILD_ENV  -t $IMAGE_NAME .
+#docker build --build-arg APP_NAME=$FRONT_VERSION --build-arg BUILD_ENV=$BUILD_ENV  -t $IMAGE_NAME .
