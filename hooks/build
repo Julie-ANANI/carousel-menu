@@ -12,6 +12,7 @@ FRONT_VERSION="umi"
 BUILD_ENV="prod"
 OTHER_PARAMS="--aot"
 
+echo $CACHE_TAG
 FRONT_VERSION=$(cut -d '-' -f2 <<< "$CACHE_TAG")
 echo $FRONT_VERSION
 
