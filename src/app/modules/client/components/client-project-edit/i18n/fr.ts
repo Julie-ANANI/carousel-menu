@@ -1,5 +1,6 @@
 export const PROJECT_EDIT = {
   'HOW': 'Comment lancer l’étude de mon projet ?',
+  'ADD_COLLABORATORS': 'Ajouter des collaborateurs',
   'ADDED': 'Ajoutée le',
   'UPDATED': 'Modifiée le',
   'STEP1': 'Définissez votre marché cible',
@@ -95,5 +96,9 @@ export const PROJECT_EDIT = {
     'UPLOAD': 'Télécharger des photos',
     'SLIDE': 'Vous pouvez également faire glisser les fichiers ici',
     'URL': 'Indiquer ici l\'adresse de votre vidéo'
+  },
+  'ADD_COLLABORATORS_MODAL': {
+    'TITLE': 'Ajout de collaborateurs à ce projet',
+    'CONTENT': 'Veuillez écrire les adresses e-mail des collaborateurs dont vous souhaitez que nous autorisions l\'accès à la gestion de votre projet ci-dessous :'
   }
 };

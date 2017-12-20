@@ -23,6 +23,17 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   private _project: any;
   public formData: FormGroup;
 
+  /*
+   * Ajout de collaborateurs
+   */
+  public displayAddCollaboratorsModal = false;
+  public displayCollaboratorsAddingProcess = false;
+  public collaborators_emails = '';
+  public collaboratorsAddingProcess: any = {
+    usersAdded: [],
+    invitationsToSend: []
+  };
+
   private _subscriptions: Array<ISubscription> = [];
 
   /*
@@ -376,6 +387,26 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     this._innovationService.askRevision(this._project.id).subscribe(data => {
       this._notificationsService.success('Projet en révision', 'Le projet a été passé en status de révision, veuillez avertir le propriétaire des chagements à effectuer');
       this._router.navigate(['/admin']);
+    });
+  }
+
+  public addCollaborators () {
+    if (this.collaborators_emails !== '') {
+      this._innovationService.inviteCollaborators(this._project.id, this.collaborators_emails).subscribe(data => {
+        if (data.usersAdded.length || data.invitationsToSend.length) {
+          this.collaboratorsAddingProcess = data;
+          this.displayCollaboratorsAddingProcess = true;
+          this.collaboratorsAddingProcess.inviteUrl = this._innovationService.getInvitationUrl(this._project);
+        }
+        this.collaborators_emails = '';
+        this.displayAddCollaboratorsModal = false;
+      });
+    }
+  }
+
+  public removeCollaborator (collaborator: any) {
+    this._innovationService.removeCollaborator(this._project.id, collaborator).subscribe(collaborators => {
+      this.project.collaborators = collaborators;
     });
   }
 

@@ -158,6 +158,25 @@ $primary-color: #3498DB;
   }
 }
 
+.collaborators {
+  margin-top: 60px;
+  text-align: right;
+
+  .btn-bordered {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    white-space: normal;
+    height: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+
+  .btn-bordered:focus, .btn-bordered:hover {
+    border-color: $primary-color;
+  }
+}
+
 
 .step-item a {
   pointer: text;
@@ -195,4 +214,11 @@ $primary-color: #3498DB;
 
 .last-saved {
   padding: 0.45rem 0.5rem;
+}
+
+.modal {
+  input {
+    width: 100%;
+    margin-top: 10px;
+  }
 }

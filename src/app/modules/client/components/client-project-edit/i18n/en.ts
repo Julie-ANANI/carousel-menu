@@ -1,5 +1,6 @@
 export const PROJECT_EDIT = {
   'HOW': 'How to launch the study of my project?',
+  'ADD_COLLABORATORS': 'Add collaborators',
   'ADDED': 'Added',
   'UPDATED': 'Updated',
   'STEP1': 'Define your target market',
@@ -82,6 +83,10 @@ export const PROJECT_EDIT = {
     'UPLOAD': 'Download pictures',
     'SLIDE': 'You can slide pictures here too',
     'URL': 'Enter the address of your video here'
+  },
+  'ADD_COLLABORATORS_MODAL': {
+    'TITLE': 'Add collaborators to this project',
+    'CONTENT': 'Please add the email address of people you want to add to this project :'
   }
 };
 

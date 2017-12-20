@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '../http';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class InnovationService {
@@ -156,6 +157,24 @@ export class InnovationService {
       }
     }).map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public inviteCollaborators(innovationId: string, collaboratorsEmails: string) {
+    return this._http.post('/innovation/' + innovationId + '/invite', {
+      collaborators: collaboratorsEmails
+    }).map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+
+  public removeCollaborator(innovationId: string, collaborator: any) {
+    return this._http.delete('/innovation/' + innovationId + '/collaborator/' + collaborator._id)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public getInvitationUrl (project: any): string {
+    return encodeURIComponent(`${environment.apiUrl}/innovation/${project._id}/join`);
   }
 
 }
