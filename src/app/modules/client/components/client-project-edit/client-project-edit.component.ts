@@ -31,7 +31,8 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   public collaborators_emails = '';
   public collaboratorsAddingProcess: any = {
     usersAdded: [],
-    invitationsToSend: []
+    invitationsToSend: [],
+    invitationsToSendAgain: []
   };
 
   private _subscriptions: Array<ISubscription> = [];
@@ -393,10 +394,14 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   public addCollaborators () {
     if (this.collaborators_emails !== '') {
       this._innovationService.inviteCollaborators(this._project.id, this.collaborators_emails).subscribe(data => {
-        if (data.usersAdded.length || data.invitationsToSend.length) {
+        if (data.usersAdded.length || data.invitationsToSend.length || data.invitationsToSendAgain.length) {
           this.collaboratorsAddingProcess = data;
+          this.collaboratorsAddingProcess.inviteUrl = this._innovationService.getInvitationUrl();
           this.displayCollaboratorsAddingProcess = true;
-          this.collaboratorsAddingProcess.inviteUrl = this._innovationService.getInvitationUrl(this._project);
+
+          if (data.usersAdded.length) {
+            this._project.collaborators = this._project.collaborators.concat(data.usersAdded);
+          }
         }
         this.collaborators_emails = '';
         this.displayAddCollaboratorsModal = false;

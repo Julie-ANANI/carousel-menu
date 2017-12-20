@@ -173,8 +173,12 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public getInvitationUrl (project: any): string {
-    return encodeURIComponent(`${environment.apiUrl}/innovation/${project._id}/join`);
+  /**
+   * URL sent to people when we invite them to sign in to UMI
+   * When we want to add them as Collaborator
+   */
+  public getInvitationUrl (): string {
+    return encodeURIComponent(`${environment.innovationUrl}/#/signup?invitation=true`);
   }
 
 }

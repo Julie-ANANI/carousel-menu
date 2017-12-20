@@ -100,5 +100,8 @@ export const PROJECT_EDIT = {
   'ADD_COLLABORATORS_MODAL': {
     'TITLE': 'Ajout de collaborateurs à ce projet',
     'CONTENT': 'Veuillez écrire les adresses e-mail des collaborateurs dont vous souhaitez que nous autorisions l\'accès à la gestion de votre projet ci-dessous :'
+  },
+  'INVITE_COLLABORATORS_MODAL': {
+    'TITLE': 'Ajout de collaborateurs à ce projet'
   }
 };

@@ -87,6 +87,9 @@ export const PROJECT_EDIT = {
   'ADD_COLLABORATORS_MODAL': {
     'TITLE': 'Add collaborators to this project',
     'CONTENT': 'Please add the email address of people you want to add to this project :'
+  },
+  'INVITE_COLLABORATORS_MODAL': {
+    'TITLE': 'Add collaborators to this project',
   }
 };
 

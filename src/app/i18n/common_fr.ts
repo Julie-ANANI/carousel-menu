@@ -19,6 +19,9 @@ export const COMMON = {
   'SEARCHES': 'Recherches',
   'PATENTS': 'Brevets',
   'INVITE': 'Inviter',
+  'REINVITE': 'Inviter à nouveau',
+  'I_FINISHED': 'J\'ai terminé',
+  'SYNTHESIS': 'Synthèse',
 
   'FIRSTNAME': 'Prénom',
   'LASTNAME': 'Nom',

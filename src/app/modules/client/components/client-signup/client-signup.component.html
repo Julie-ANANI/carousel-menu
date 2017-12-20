@@ -1,7 +1,8 @@
 <div class="container">
   <div class="columns">
     <div class="column col-7 col-xl-10 col-md-11 col-mx-auto">
-      <h1>{{ 'SIGN_UP.SIGN_UP_TO_CONTINUE' | translate }}</h1>
+      <h1 *ngIf="!isInvitation">{{ 'SIGN_UP.SIGN_UP_TO_CONTINUE' | translate }}</h1>
+      <h1 *ngIf="isInvitation">{{ 'SIGN_UP.SIGN_UP_TO_JOIN_PROJECT' | translate }}</h1>
       <div class="columns">
         <div class="column col-4 left">
           <p>

@@ -7,6 +7,7 @@ import { User } from '../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -17,6 +18,7 @@ import 'rxjs/add/operator/filter';
 export class ClientSignupComponent implements OnInit {
 
   public displayEmailForm = false;
+  public isInvitation = false;
 
   public formData: FormGroup;
   public passwordMinLength = 8;
@@ -24,12 +26,17 @@ export class ClientSignupComponent implements OnInit {
   constructor(private _userService: UserService,
               private _formBuilder: FormBuilder,
               private _authService: AuthService,
+              private _activatedRoute: ActivatedRoute,
               private _location: Location,
               private _titleService: TranslateTitleService,
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit(): void {
     this._titleService.setTitle('COMMON.SIGN_UP');
+
+    this._activatedRoute.queryParams.subscribe((params: Params) => {
+      this.isInvitation = params['invitation'] && params['invitation'] === 'true';
+    });
 
     this.formData = this._formBuilder.group({
       firstName: ['', [Validators.required]],
