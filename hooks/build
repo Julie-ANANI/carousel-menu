@@ -14,7 +14,7 @@ OTHER_PARAMS="--aot"
 
 if [[ $CACHE_TAG == *"vendor"* ]]
 then
-  FRONT_VERSION=$CACHE_TAG
+  FRONT_VERSION=$(cut -d '-' -f2 <<< "$CACHE_TAG")
   BUILD_ENV="prod"
   OTHER_PARAMS="--aot"
 else
