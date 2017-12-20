@@ -18,6 +18,7 @@ export const COMMON = {
   'FILTER': 'Filter',
   'SEARCHES': 'Searches',
   'PATENTS': 'Patents',
+  'INVITE': 'Invite',
 
   'FIRSTNAME': 'Firstname',
   'LASTNAME': 'Lastname',
