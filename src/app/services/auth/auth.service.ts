@@ -126,8 +126,16 @@ export class AuthService {
     return this._user ? this._user.id : null;
   }
 
-  get isAcceptingCookies(): Boolean { // CNIL
+  get isAcceptingCookies(): boolean { // CNIL
     return true;
+  }
+
+  get emailVerified(): boolean {
+    return this._user.emailVerified || false;
+  }
+
+  set emailVerified(value: boolean) {
+    this._user.emailVerified = value;
   }
 
   set isConfirmed(confirmed: boolean) {

@@ -15,7 +15,7 @@ export class SharedHeaderComponent implements OnInit {
   }
 
   public logoName(): string {
-    return `logo-${environment.domain||'umi'}.png`;
+    return `logo-${environment.domain || 'umi.us'}.png`;
   }
 
   get authService (): AuthService {

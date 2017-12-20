@@ -53,8 +53,9 @@ export class UserService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
-  public activate(state: string): Observable<any> {
-    return this._http.put('/user/me', {state:state})
+  public activate(state: string, tokenEmail?: string): Observable<any> {
+    // On envoie emailToken pour vérifier l'adresse email.
+    return this._http.put('/user/me', {state: state, tokenEmail: tokenEmail})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }

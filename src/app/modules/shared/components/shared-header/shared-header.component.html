@@ -21,6 +21,6 @@
     <!--<a href="http://help.umi.us" target="_blank" class="btn btn-link">{{ 'COMMON.HELP' | translate }}</a>-->
     <a [routerLink]="'/projects'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
     <a [routerLink]="'/account'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
-    <a [routerLink]="'/admin'" routerLinkActive="active" class="btn btn-link" *ngIf="authService.adminLevel > 0">{{ 'COMMON.ADMIN' | translate }}</a>
+    <a [routerLink]="'/admin'" routerLinkActive="active" class="btn btn-link" *ngIf="authService.adminLevel > 0 && authService.emailVerified === true">{{ 'COMMON.ADMIN' | translate }}</a>
   </section>
 </header>

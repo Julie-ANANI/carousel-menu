@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ClientWelcomeComponent implements OnInit {
 
   private _user = {};
+  public tokenEmail: string;
 
   constructor(private _authService: AuthService,
               private _userService: UserService,
@@ -27,18 +28,18 @@ export class ClientWelcomeComponent implements OnInit {
 
   public acceptTerms(): void {
     this._authService.user.state = 'confirmed';
-    this._userService.activate(this._authService.user.state)
-      .subscribe(res=>{
+    this._userService.activate(this._authService.user.state, this.tokenEmail)
+      .subscribe(res => {
         this._authService.isConfirmed = true;
         this._router.navigate(['/projects']);
-      }, error=>{
+      }, error => {
         console.error(error);
         this._router.navigate(['/logout']);
       })
   }
 
   get name(): string {
-    return this._user ? this._user['name'] : "";
+    return this._user ? this._user['name'] : '';
   }
 
   get isAdmin(): boolean {

@@ -14,6 +14,7 @@
           </p>
           <p  *ngIf="isAdmin">
             {{ 'WELCOME.ADMIN_SENTENCE' | translate }}
+            <input type="text" [(ngModel)]="tokenEmail">
           </p>
           <p>
             Happy UMIing
@@ -32,7 +33,7 @@
               </a> :
             </b>
           </p>
-          <button class="btn btn-primary" (click)="acceptTerms()">
+          <button class="btn btn-primary" (click)="acceptTerms()" [disabled]="isAdmin && !tokenEmail">
             {{ 'COMMON.ACCEPT' | translate }}
           </button>
         </div>
