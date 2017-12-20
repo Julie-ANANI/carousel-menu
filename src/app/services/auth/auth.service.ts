@@ -14,7 +14,7 @@ export class AuthService {
 
   private _authenticated = false;
   private _authenticatedSource = new Subject<boolean>();
-  private _admin = false;
+  private _admin = 0;
   private _confirmed = false;
   private _redirectUrl: string;
 
@@ -29,7 +29,7 @@ export class AuthService {
      et <admin> sont encore à <false> (la réponse du serveur (<initializeSession()>) n'a pas encore été reçue).
      */
     this._setAuthenticatedTo(this._cookieService.get('hasBeenAuthenticated') === 'true');
-    this._setAdminTo(this._cookieService.get('hasBeenAdmin') === 'true');
+    this._setAdminTo(parseInt(this._cookieService.get('hasBeenAdmin'), 10));
     this._setConfirmedTo(this._cookieService.get('hasBeenConfirmed') === 'true');
   }
 
@@ -38,7 +38,7 @@ export class AuthService {
       .map((res: Response) => {
         const response = res.json();
         this._setAuthenticatedTo(response.isAuthenticated);
-        this._setAdminTo(response.isAdmin);
+        this._setAdminTo(response.adminLevel);
         this._setConfirmedTo(response.isConfirmed);
         this._user = response;
         return response;
@@ -62,7 +62,7 @@ export class AuthService {
       .map((res: Response) => {
         const response = res.json();
         this._setAuthenticatedTo(response.isAuthenticated);
-        this._setAdminTo(response.isAdmin);
+        this._setAdminTo(response.adminLevel);
         this._setConfirmedTo(response.isConfirmed);
         this._user = null;
         return response;
@@ -78,7 +78,7 @@ export class AuthService {
       .map((res) => {
         const response = res.json();
         this._setAuthenticatedTo(response.isAuthenticated);
-        this._setAdminTo(response.isAdmin);
+        this._setAdminTo(response.adminLevel);
         this._setConfirmedTo(response.isConfirmed);
         this._user = response.user || null;
         return response;
@@ -97,9 +97,9 @@ export class AuthService {
     this._cookieService.put('hasBeenAuthenticated', newValue.toString());
   }
 
-  private _setAdminTo(newValue: boolean): void {
+  private _setAdminTo(newValue: number): void {
     this._admin = newValue;
-    this._cookieService.put('hasBeenAdmin', newValue.toString());
+    this._cookieService.put('hasBeenAdmin', `${newValue}`);
   }
 
   get isAuthenticated$(): Observable<boolean> {
@@ -114,7 +114,7 @@ export class AuthService {
     return this._confirmed;
   }
 
-  get isAdmin(): boolean {
+  get adminLevel(): number {
     return this._admin;
   }
 

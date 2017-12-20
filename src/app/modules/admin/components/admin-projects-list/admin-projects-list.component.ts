@@ -91,7 +91,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
 
   ratio(value1: number, value2: number): any {
     if (value2 == 0) {
-      return value1 == 0 ? 0 : '?';
+      return value1 == 0 ? 0 : 'NA';
     } else {
       return Math.round(100 * value1 / value2);
     }
@@ -101,19 +101,21 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     this._config = config;
     this._innovationService.getAll(this._config).subscribe(projects => {
       this._projects = projects.result.map(project => {
-        // Temporaire, pour générer des fausses stats
-        project.answers = 'XX';// Math.round(Math.random()*(100-7)+7);
-        project.pros = 'XX';// Math.round(Math.random()*(15000-2000)+2000);
-        project.emails = 'XX';// Math.round(Math.random()*(project.pros-project.pros*0.6)+project.pros*0.6);
-        project.received = 'XX';// Math.round(Math.random()*(project.emails-project.emails*0.8)+project.emails*0.8);
-        project.opened = 'XX';// Math.round(Math.random()*(project.received*0.5-project.received*0.05)+project.received*0.05);
-        project.clicked = 'XX';// Math.round(Math.random()*(project.opened*0.5-project.opened*0.05)+project.opened*0.05);
-        project.submittedAnswers = 'XX';// Math.round(Math.random()*12);
-
-        // Permanent, pour calculer les ratios
-        project.receivedRatio = this.ratio(project.received, project.emails);
-        project.openedRatio = this.ratio(project.opened, project.received);
-        project.clickedRatio = this.ratio(project.clicked, project.opened);
+        if (!project.stats) {
+          project.stats = {
+            pros: 0,
+            answers: 0,
+            submittedAnswers: 0,
+            emailsOK: 0,
+            received: 0,
+            opened: 0,
+            clicked: 0
+          }
+        } else {
+          project.receivedRatio = this.ratio(project.stats.received, project.stats.emailsOK);
+          project.openedRatio = this.ratio(project.stats.opened, project.stats.received);
+          project.clickedRatio = this.ratio(project.stats.clicked, project.stats.opened);
+        }
         return project;
       });
       this._total = projects._metadata.totalCount;
@@ -168,7 +170,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
 
   public setOperator (operatorId, project) {
     this._innovationService.setOperator(project._id, operatorId).subscribe(data => {
-      this._notificationService.success('Opérateur affecté', data.message);
+      this._notificationService.success('Opérateur affecté', "OK");
     });
   }
 

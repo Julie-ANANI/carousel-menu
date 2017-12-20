@@ -47,14 +47,9 @@
                  src="https://res.cloudinary.com/umi/image/upload/c_scale,h_80,w_80/app/no-image.png"
                  width="80" height="80"/>
           </td>
-          <!--<td><a [routerLink]="['user/'+user._id]">{{user.firstName}} {{user.lastName}}</a></td>
-          <td>{{user.companyName}}</td>
-          <td>{{user.jobTitle}}</td>
-          <td>{{user.domain}}</td>
-          <td>{{user.created | date : dateFormat}}</td>
-          <td><button (click)="loadInnovations(user._id)">Voir innos</button></td>-->
           <td class="user-description">
-            <span class="title"><a [routerLink]="['user/'+user._id]">{{user.firstName}} {{user.lastName}}</a></span>
+            <span *ngIf="isSelf(user._id)" class="title"><a [routerLink]="['/account']">{{user.firstName}} {{user.lastName}}&nbsp;(You)</a></span>
+            <span *ngIf="!isSelf(user._id)" class="title"><a [routerLink]="['user/'+user._id]">{{user.firstName}} {{user.lastName}}</a></span>
             <span class="metas"><a [href]="'mailto:' + user.email">{{user.email}}</a></span>
           </td>
           <td class="user-company">{{user.companyName}}</td>

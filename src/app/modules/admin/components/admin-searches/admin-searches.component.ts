@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminSearchesComponent implements OnInit {
 
+  private _total = 0;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  get total(): number {
+    return this._total;
   }
 
 }

@@ -19,10 +19,4 @@ export class DashboardService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public getStatistics(): Observable<any> {
-    return this._http.get('/dashboard/statistics')
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
-  }
-
 }

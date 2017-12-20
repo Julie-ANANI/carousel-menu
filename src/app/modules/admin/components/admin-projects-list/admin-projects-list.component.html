@@ -45,13 +45,13 @@
       <td *ngIf="status==='PREPARING' && !project.tags.length" class="project-tagging warning">TODO</td>
 
       <td *ngIf="status==='PREPARING' || status==='EVALUATING'" class="project-professional"
-          [ngClass]="{'warning': project.pros < 7000}">
-        {{project.pros}}
+          [ngClass]="{'warning': project.stats.pros < 7000}">
+        {{project.stats.pros}}
       </td>
 
       <td *ngIf="status==='PREPARING' || status==='EVALUATING'" class="project-emails-ok"
-          [ngClass]="{'warning': project.emails < 5000}">
-        {{project.emails}}
+          [ngClass]="{'warning': project.stats.emailsOK < 5000}">
+        {{project.stats.emailsOK}}
       </td>
       <td *ngIf="status==='PREPARING'" class="project-status"
           [ngClass]="{'alert': project.status === 'SUBMITTED'}">
@@ -71,7 +71,7 @@
           [ngClass]="{'warning': project.clickedRatio < 10}">
         {{project.clickedRatio}}%
       </td>
-      <td *ngIf="status==='EVALUATING'" class="project-to-check"><a [routerLink]="null">{{project.submittedAnswers}}</a></td>
+      <td *ngIf="status==='EVALUATING'" class="project-to-check"><a [routerLink]="null">{{project.stats.submittedAnswers}}</a></td>
       <td *ngIf="status==='EVALUATING'" class="project-time-limit warning"
           [ngClass]="{
             'warning': 5 <= 8
@@ -84,10 +84,10 @@
       <td *ngIf="status==='DONE' && !project.thanks" class="project-thanks warning">TODO</td>
       <td *ngIf="status==='EVALUATING' || status==='DONE'" class="project-answer"
           [ngClass]="{
-          'alert': project.answers <= 20,
-          'warning': project.answers <= 25 && project.answers > 20,
-          'all-is-fine': project.answers > 25}">
-        {{project.answers}}
+          'alert': project.stats.answers <= 20,
+          'warning': project.stats.answers <= 25 && project.stats.answers > 20,
+          'all-is-fine': project.stats.answers > 25}">
+        {{project.stats.answers}}
       </td>
       <td *ngIf="status==='WITHOUT_OPERATOR'" [ngClass]="{'alert': !project.operator, 'all-is-fine': project.operator}">
         <select class="form-select" [(ngModel)]="project.operator" (ngModelChange)="setOperator($event, project)">

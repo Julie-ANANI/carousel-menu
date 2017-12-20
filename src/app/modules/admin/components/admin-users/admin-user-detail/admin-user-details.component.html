@@ -111,6 +111,12 @@
           </div>
           <hr>
         </div>
+        <div class="input-group" *ngIf="!isAdmin()">
+          <label class="form-switch">
+            <input type="checkbox" [checked]="domainAdmin" (change)="domainAdmin = !domainAdmin">
+            <i class="form-icon"></i> Make this user a domain admin.
+          </label>
+        </div>
         <div class="text-center">
             <button type="submit" class="btn btn-xxl btn-primary centered tooltip-top" [disabled]="formData.invalid">{{ 'COMMON.SAVE' | translate }}</button>
         </div>

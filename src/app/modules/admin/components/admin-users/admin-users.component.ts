@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../../services/user/user.service';
 import { NotificationsService } from 'angular2-notifications';
 import { TranslateTitleService } from '../../../../services/title/title.service';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -12,6 +13,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 export class AdminUsersComponent implements OnInit {
 
   private _users = [];
+  private _selfId = "";
   private _total = 0;
   private _config = {
     fields: '',
@@ -31,10 +33,12 @@ export class AdminUsersComponent implements OnInit {
   constructor(private _router: Router,
               private _titleService: TranslateTitleService,
               private _userService: UserService,
-              private _notificationsService: NotificationsService) {}
+              private _notificationsService: NotificationsService,
+              private _authService: AuthService) {}
 
   ngOnInit(): void {
     this._titleService.setTitle('USERS.TITLE');
+    this._selfId = this._authService.userId;
     this.loadUsers(this._config);
   }
 
@@ -49,6 +53,15 @@ export class AdminUsersComponent implements OnInit {
   inviteUser () {
     alert('TODO'); // TODO
   }
+
+  get selfId(): string {
+    return this._selfId;
+  }
+
+  public isSelf(id: string): boolean {
+    return id && id === this.selfId;
+  }
+
   loadInnovations(userId): void {
     this._userService.getInnovations(userId).subscribe(innovations => {
       console.log(innovations.innovations);
