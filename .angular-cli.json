@@ -76,7 +76,7 @@
       }
     },
     {
-      "name": "vendor0",
+      "name": "dynergie",
       "root": "src",
       "outDir": "./dist",
       "index": "index.html",
