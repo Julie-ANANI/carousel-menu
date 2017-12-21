@@ -30,6 +30,9 @@ export class ClientWelcomeComponent implements OnInit {
     this._authService.user.state = 'confirmed';
     this._userService.activate(this._authService.user.state, this.tokenEmail)
       .subscribe(res => {
+        if (res.emailVerified === true) {
+          this._authService.emailVerified = true;
+        }
         this._authService.isConfirmed = true;
         this._router.navigate(['/projects']);
       }, error => {
