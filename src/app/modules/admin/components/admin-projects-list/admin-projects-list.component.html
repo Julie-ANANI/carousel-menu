@@ -96,7 +96,7 @@
       </td>
       <td *ngIf="status==='WITHOUT_OPERATOR'"> <!-- Opérateur -->
         <select class="form-select" [(ngModel)]="project.operator" (ngModelChange)="setOperator($event, project)">
-          <option [ngValue]="undefined">Aucun</option>
+          <option [ngValue]="undefined" *ngIf="!project.operator">Aucun</option>
           <option *ngFor="let operator of operators" [ngValue]="operator._id">
             {{ operator.firstName + ' ' + operator.lastName }}
           </option>
