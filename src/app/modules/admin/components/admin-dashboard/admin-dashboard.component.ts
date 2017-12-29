@@ -31,7 +31,6 @@ export class AdminDashboardComponent implements OnInit {
 
   private _refreshNeededEmitter = new Subject<any>();
 
-
   constructor(private _titleService: TranslateTitleService,
               private _dashboardService: DashboardService,
               private _searchService: SearchService,
@@ -47,7 +46,7 @@ export class AdminDashboardComponent implements OnInit {
     this._dashboardService.getOperators().subscribe((operators) => this.operators = operators.result);
 
     this._dashboardService.getOperatorData(this.operatorId).subscribe((operatorData) => this.operatorData = operatorData);
-    
+
     this.getPeriodStats();
   }
 

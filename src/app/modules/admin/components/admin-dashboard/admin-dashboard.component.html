@@ -10,11 +10,11 @@
   <div *ngIf="operatorData.nbProjectsToTreat"><span>{{ operatorData.nbProjectsToTreat }}</span> réponse{{ operatorData.nbProjectsToTreat>1?'s':'' }} à traiter</div>
 </div>
 <div class="emails-stats">
-  <select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="getPeriodStats()">
+  <!--<select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="getPeriodStats()">
     <option [value]="1">Comparer...</option>
     <option [value]="30">Dernier mois</option>
     <option [value]="365">Dernière année</option>
-  </select>
+  </select>-->
   <div *ngIf="statistics.percentFoundPros">Pros trouvés : <span>{{ statistics.percentFoundPros }}</span></div>
   <div *ngIf="statistics.percentFoundEmails">Emails trouvés : <span>{{ statistics.percentFoundEmails }}%</span></div>
   <div *ngIf="statistics.percentOkEmails">Emails OK : <span>{{ statistics.percentOkEmails }}%</span></div>
@@ -29,6 +29,7 @@
   <app-admin-projects-list [status]="'EVALUATING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
   <app-admin-projects-list [status]="'DONE'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
+  <p class="italic">* La colonne Conclusions indique uniquement si la rédaction d'une conclusion a été commencée.</p>
 </div>
 
 

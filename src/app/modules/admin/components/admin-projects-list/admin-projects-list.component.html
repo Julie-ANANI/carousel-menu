@@ -28,16 +28,17 @@
     <tbody>
     <tr *ngFor="let project of projects">
       <td class="project-image">
-        <a [routerLink]="getRelevantLink(project)">
+        <a [routerLink]="getRelevantLink(project)" target="_blank">
           <img [src]="getPrincipalMedia(project)" class="img-fit-cover" width="80px" height="80px"/>
         </a>
       </td>
       <td class="project-description">
-        <span class="title"><a [routerLink]="getRelevantLink(project)" title="">{{ project.name || '--' }}</a></span>
+        <span class="title"><a [routerLink]="getRelevantLink(project)" target="_blank" title="">{{ project.name || '--' }}</a></span>
         <span class="metas"><span *ngIf="project.owner">{{ project.owner.firstName }} {{ project.owner.lastName }}<span *ngIf="project.owner.companyName"> / {{ project.owner.companyName }}</span>
             • </span>
             {{ 'MY_PROJECTS.ADDED' | translate }} {{ project.created | date:dateFormat }}
             • {{ 'MY_PROJECTS.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
+            <span *ngIf="status==='EVALUATING'">• {{ 'MY_PROJECTS.LAUNCHED' | translate }} {{ project.launched | date:dateFormat }}</span>
             • <a (click)="selectedProjectIdToBeDeleted = project._id" class="text-error c-hand">{{ 'COMMON.DELETE' | translate }}</a></span>
       </td>
 
@@ -45,51 +46,55 @@
       <td *ngIf="status==='PREPARING' && !project.tags.length" class="project-tagging warning">TODO</td>
 
       <td *ngIf="status==='PREPARING' || status==='EVALUATING'" class="project-professional"
-          [ngClass]="{'warning': project.stats.pros < 7000}">
+          [ngClass]="{'warning': project.stats.pros < 7000}"> <!-- Pros -->
         {{project.stats.pros}}
       </td>
 
       <td *ngIf="status==='PREPARING' || status==='EVALUATING'" class="project-emails-ok"
-          [ngClass]="{'warning': project.stats.emailsOK < 5000}">
+          [ngClass]="{'warning': project.stats.emailsOK < 5000}"> <!-- Emails OK -->
         {{project.stats.emailsOK}}
       </td>
       <td *ngIf="status==='PREPARING'" class="project-status"
-          [ngClass]="{'alert': project.status === 'SUBMITTED'}">
-        <a [routerLink]=getRelevantLink(project)>
+          [ngClass]="{'alert': project.status === 'SUBMITTED'}"> <!-- Statut -->
+        <a [routerLink]=getRelevantLink(project) target="_blank">
           {{ 'DASHBOARD.PROJECT_STATE.' + (project.reviewing ? 'REVIEWING' : project.status) | translate }}
         </a>
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-received"
-          [ngClass]="{'alert': project.receivedRatio < 99}">
+          [ngClass]="{'alert': project.receivedRatio < 99}"> <!-- Reçus -->
         {{project.receivedRatio}}%
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-opened"
-          [ngClass]="{'warning': project.openedRatio < 10}">
+          [ngClass]="{'warning': project.openedRatio < 10}"> <!-- Ouverts -->
         {{project.openedRatio}}%
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-clicked"
-          [ngClass]="{'warning': project.clickedRatio < 10}">
+          [ngClass]="{'warning': project.clickedRatio < 10}"> <!-- Cliqués -->
         {{project.clickedRatio}}%
       </td>
-      <td *ngIf="status==='EVALUATING'" class="project-to-check"><a [routerLink]="null">{{project.stats.submittedAnswers}}</a></td>
+      <td *ngIf="status==='EVALUATING'" class="project-to-check"><a [routerLink]="null" target="_blank">{{project.stats.submittedAnswers}}</a></td> <!-- À traiter -->
       <td *ngIf="status==='EVALUATING'" class="project-time-limit warning"
           [ngClass]="{
-            'warning': 5 <= 8
-          }">XXj.</td><!-- TODO condition couleur + valeur -->
-      <td *ngIf="status==='DONE' && project.conclusions" class="project-conclusion">OK</td>
-      <td *ngIf="status==='DONE' && !project.conclusions" class="project-conclusion warning"><a [routerLink]=getRelevantLink(project) title="">TODO</a></td>
-      <td *ngIf="status==='DONE' && project.restitution" class="project-restitution">TODO</td>
-      <td *ngIf="status==='DONE' && !project.restitution" class="project-restitution warning">TODO</td>
-      <td *ngIf="status==='DONE' && project.thanks" class="project-thanks">OK</td>
-      <td *ngIf="status==='DONE' && !project.thanks" class="project-thanks warning">TODO</td>
+            'warning': project.delai <= 4 && project.delai > 0,
+            'alert': project.delai <= 0
+          }">{{ project.delai }}j.</td> <!-- Délai -->
+      <!-- Conclusions -->
+      <td *ngIf="status==='DONE' && project.conclusions" class="project-conclusion">OK*</td>
+      <td *ngIf="status==='DONE' && !project.conclusions" class="project-conclusion warning"><a [routerLink]=getRelevantLink(project) target="_blank" title="">TODO</a></td>
+      <!-- Restitution -->
+      <td *ngIf="status==='DONE' && project.restitution" class="project-restitution c-hand" (click)="updateRestitutionState(project)">OK</td>
+      <td *ngIf="status==='DONE' && !project.restitution" class="project-restitution c-hand warning" (click)="updateRestitutionState(project)">TODO</td>
+      <!-- Remerciements -->
+      <td *ngIf="status==='DONE' && project.thanks" class="project-thanks c-hand" (click)="updateThanksState(project)">OK</td>
+      <td *ngIf="status==='DONE' && !project.thanks" class="project-thanks c-hand warning" (click)="updateThanksState(project)">TODO</td>
       <td *ngIf="status==='EVALUATING' || status==='DONE'" class="project-answer"
           [ngClass]="{
           'alert': project.stats.answers <= 20,
           'warning': project.stats.answers <= 25 && project.stats.answers > 20,
-          'all-is-fine': project.stats.answers > 25}">
+          'all-is-fine': project.stats.answers > 25}"> <!-- Réponses -->
         {{project.stats.answers}}
       </td>
-      <td *ngIf="status==='WITHOUT_OPERATOR'" [ngClass]="{'alert': !project.operator, 'all-is-fine': project.operator}">
+      <td *ngIf="status==='WITHOUT_OPERATOR'"> <!-- Opérateur -->
         <select class="form-select" [(ngModel)]="project.operator" (ngModelChange)="setOperator($event, project)">
           <option [ngValue]="undefined">Aucun</option>
           <option *ngFor="let operator of operators" [ngValue]="operator._id">
@@ -101,7 +106,7 @@
     </tbody>
   </table>
 
-  <div class="see-all text-right"><a (click)="seeMore()" title="">Voir plus</a> <i class="icon icon-arrow-down"></i></div>
+  <div class="see-all text-right" *ngIf="projects.length < total"><a class="c-hand" (click)="seeMore()" title="">Voir plus</a> <i class="icon icon-arrow-down"></i></div>
 </div>
 
 

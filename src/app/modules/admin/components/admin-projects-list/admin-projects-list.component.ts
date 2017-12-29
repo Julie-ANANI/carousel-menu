@@ -15,9 +15,9 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   @Input() operators: any[];
   @Input() operatorId: string; // Filtrer les résultats pour un utilisateur en particulier
   @Input() refreshNeededEmitter: Subject<any>;
-  private _projects: any[];
+  private _projects: any[] = [];
   public selectedProjectIdToBeDeleted: any = null;
-  private _total: number;
+  private _total = 0;
   private _config: any;
 
 
@@ -83,24 +83,28 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
         if (this.operatorId && this.operatorId !== '') {
           this._config.operator = this.operatorId;
         }
-        // TODO trier par jours restants pour les projets en cours
+        this._config.sort = {
+          launched: 1
+        };
       }
     }
     this.loadProjects(this._config);
   }
 
   ratio(value1: number, value2: number): any {
-    if (value2 == 0) {
-      return value1 == 0 ? 0 : 'NA';
+    if (value2 === 0) {
+      return value1 === 0 ? 0 : 'NA';
     } else {
       return Math.round(100 * value1 / value2);
     }
   };
 
-  loadProjects(config: any): void {
-    this._config = config;
+  loadProjects(config?: any): void {
+    if (config) {
+      this._config = config;
+    }
     this._innovationService.getAll(this._config).subscribe(projects => {
-      this._projects = projects.result.map(project => {
+      this._projects = this._projects.concat(projects.result.map(project => {
         if (!project.stats) {
           project.stats = {
             pros: 0,
@@ -116,9 +120,13 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
           project.openedRatio = this.ratio(project.stats.opened, project.stats.received);
           project.clickedRatio = this.ratio(project.stats.clicked, project.stats.opened);
         }
+        if (project.launched) {
+          project.delai = this.getDelai(project.launched);
+        }
         return project;
-      });
+      }));
       this._total = projects._metadata.totalCount;
+      this._config.offset += 5;
     });
   }
 
@@ -168,14 +176,33 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     }
   }
 
+  public getDelai (date) {
+    const delai = 8; // On se donne 8 jours à compter de la validation du projet
+    date = new Date(date);
+    const today: any = new Date();
+    return delai - Math.round((today - date) / (1000 * 60 * 60 * 24));
+  }
+
+  public updateThanksState (project) {
+    this._innovationService.save(project._id, {thanks: !project.thanks}).subscribe(data => {
+      project.thanks = data.thanks;
+    });
+  }
+
+  public updateRestitutionState (project) {
+    this._innovationService.save(project._id, {restitution: !project.restitution}).subscribe(data => {
+      project.restitution = data.restitution;
+    });
+  }
+
   public setOperator (operatorId, project) {
     this._innovationService.setOperator(project._id, operatorId).subscribe(data => {
-      this._notificationService.success('Opérateur affecté', "OK");
+      this._notificationService.success('Opérateur affecté', 'OK');
     });
   }
 
   public seeMore () {
-    // TODO
+    this.loadProjects();
   }
 
   set config(value: any) {
