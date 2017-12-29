@@ -6,8 +6,8 @@
     </option>
   </select>
 
-  <div *ngIf="operatorData.nbProjectsToValidate"><span>{{ operatorData.nbProjectsToValidate }}</span> projet{{ operatorData.nbProjectsToValidate>1?'s':'' }} à valider</div>
-  <div *ngIf="operatorData.nbProjectsToTreat"><span>{{ operatorData.nbProjectsToTreat }}</span> réponse{{ operatorData.nbProjectsToTreat>1?'s':'' }} à traiter</div>
+  <div *ngIf="operatorData.nbProjectsToValidate !== 'undefined'"><span>{{ operatorData.nbProjectsToValidate }}</span> projet{{ operatorData.nbProjectsToValidate>1?'s':'' }} à valider</div>
+  <div *ngIf="operatorData.nbProjectsToTreat !== 'undefined'"><span>{{ operatorData.nbProjectsToTreat }}</span> réponse{{ operatorData.nbProjectsToTreat>1?'s':'' }} à traiter</div>
 </div>
 <div class="emails-stats">
   <!--<select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="getPeriodStats()">
@@ -29,7 +29,6 @@
   <app-admin-projects-list [status]="'EVALUATING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
   <app-admin-projects-list [status]="'DONE'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
-  <p class="italic">* La colonne Conclusions indique uniquement si la rédaction d'une conclusion a été commencée.</p>
 </div>
 
 

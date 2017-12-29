@@ -1,4 +1,4 @@
-<div [ngClass]="{'project-preparation': status==='PREPARING', 'project-launched': status==='EVALUATING', 'project-completed': status==='DONE'}">
+<div [ngClass]="{'project-preparation': status==='PREPARING', 'project-launched': status==='EVALUATING', 'project-completed': status==='DONE'}" *ngIf="projects.length">
   <div class="title-section" *ngIf="status==='PREPARING'"><span>{{total}}</span> projets en préparation</div>
   <div class="title-section" *ngIf="status==='EVALUATING'"><span>{{total}}</span> projets lancés</div>
   <div class="title-section" *ngIf="status==='DONE'"><span>{{total}}</span> projets terminés</div>
@@ -101,6 +101,11 @@
             {{ operator.firstName + ' ' + operator.lastName }}
           </option>
         </select>
+      </td>
+    </tr>
+    <tr *ngIf="status==='DONE'">
+      <td colspan="6">
+        <p class="italic">* La colonne Conclusions indique uniquement si la rédaction d'une conclusion a été commencée.</p>
       </td>
     </tr>
     </tbody>

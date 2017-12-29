@@ -44,6 +44,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   }
 
   build () {
+    this._projects = [];
     this._config = {
       fields: '',
       limit: 5,
