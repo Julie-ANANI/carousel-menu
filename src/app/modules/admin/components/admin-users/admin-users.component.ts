@@ -16,7 +16,7 @@ export class AdminUsersComponent implements OnInit {
   private _selfId = "";
   private _total = 0;
   private _config = {
-    fields: '',
+    fields: 'companyName jobTitle created domain firstName lastName',
     limit: 10,
     offset: 0,
     search: {},
