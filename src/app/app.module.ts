@@ -26,6 +26,7 @@ import { AutocompleteService } from './services/autocomplete/autocomplete.servic
 import { LatexService } from './services/latex/latex.service';
 import { EmailService } from './services/email/email.service';
 import { SearchService } from './services/search/search.service';
+import { PresetService } from './services/preset/preset.service';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 @NgModule({
@@ -68,6 +69,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
     EmailService,
     ShareService,
     SearchService,
+    PresetService,
     {
       provide: Http,
       useFactory: httpFactory,
