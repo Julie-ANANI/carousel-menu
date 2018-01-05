@@ -36,9 +36,9 @@
         <span class="title"><a [routerLink]="getRelevantLink(project)" target="_blank" title="">{{ project.name || '--' }}</a></span>
         <span class="metas"><span *ngIf="project.owner">{{ project.owner.firstName }} {{ project.owner.lastName }}<span *ngIf="project.owner.companyName"> / {{ project.owner.companyName }}</span>
             • </span>
-            {{ 'MY_PROJECTS.ADDED' | translate }} {{ project.created | date:dateFormat }}
-            • {{ 'MY_PROJECTS.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
-            <span *ngIf="status==='EVALUATING'">• {{ 'MY_PROJECTS.LAUNCHED' | translate }} {{ project.launched | date:dateFormat }}</span>
+            {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
+            • {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
+            <span *ngIf="status==='EVALUATING'">• {{ 'COMMON.LAUNCHED' | translate }} {{ project.launched | date:dateFormat }}</span>
             • <a (click)="selectedProjectIdToBeDeleted = project._id" class="text-error c-hand">{{ 'COMMON.DELETE' | translate }}</a></span>
       </td>
 

@@ -1,8 +1,6 @@
 export const PROJECT_EDIT = {
   'HOW': 'Comment lancer l’étude de mon projet ?',
   'ADD_COLLABORATORS': 'Ajouter des collaborateurs',
-  'ADDED': 'Ajoutée le',
-  'UPDATED': 'Modifiée le',
   'STEP1': 'Définissez votre marché cible',
   'STEP2': 'Décrivez votre projet',
   'STEP3': 'Soumettez-nous votre projet',

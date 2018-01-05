@@ -17,11 +17,11 @@
         <thead>
         <tr>
           <th width="80"></th>
-          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'firstName'">{{ 'USERS.NAME' | translate }}</sq-sort></th>
-          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'companyName'" >{{ 'USERS.COMPANY' | translate }}</sq-sort></th>
-          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'jobTitle'">{{ 'USERS.JOB' | translate }}</sq-sort></th>
-          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'domain'">{{ 'USERS.DOMAIN' | translate }}</sq-sort></th>
-          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'created'">{{ 'USERS.CREATED' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'firstName'">{{ 'COMMON.NAME' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'companyName'" >{{ 'COMMON.COMPANY' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'jobTitle'">{{ 'COMMON.JOBTITLE' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'domain'">{{ 'COMMON.DOMAIN' | translate }}</sq-sort></th>
+          <th><sq-sort [config]="config" (configChange)="loadUsers($event)" [prop]="'created'">{{ 'COMMON.CREATED' | translate }}</sq-sort></th>
           <th>{{ 'COMMON.PROJECTS' | translate }}</th>
           <th>{{ 'USERS.LAUNCHED_PROJECTS' | translate }}</th>
         </tr>

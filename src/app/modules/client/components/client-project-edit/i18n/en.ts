@@ -1,8 +1,6 @@
 export const PROJECT_EDIT = {
   'HOW': 'How to launch the study of my project?',
   'ADD_COLLABORATORS': 'Add collaborators',
-  'ADDED': 'Added',
-  'UPDATED': 'Updated',
   'STEP1': 'Define your target market',
   'STEP2': 'Describe your project',
   'STEP3': 'Submit your project to us',
