@@ -14,6 +14,7 @@ import { AdminAuthGuard } from './admin-auth-guard.service';
 import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
+import { AdminPresetsComponent } from '../admin/components/admin-presets/admin-presets.component';
 
 const adminRoutes: Routes = [
   {
@@ -69,6 +70,12 @@ const adminRoutes: Routes = [
         path: 'patents',
         children: [
           { path: '', component: AdminPatentsComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'presets',
+        children: [
+          { path: '', component: AdminPresetsComponent, pathMatch: 'full' }
         ]
       },
       {

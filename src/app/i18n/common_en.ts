@@ -88,6 +88,8 @@ export const COMMON = {
   'PROJECTS': 'Projects',
   'CAMPAIGNS': 'Campaigns',
   'DISCOVER': 'Discover',
+  'PRESET': 'Preset',
+  'PRESETS': 'Presets',
 
   'SORT': {
     'BY_NAME': 'By name',
