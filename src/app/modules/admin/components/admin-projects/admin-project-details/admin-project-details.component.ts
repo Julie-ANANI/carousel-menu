@@ -34,6 +34,18 @@ export class AdminProjectsDetailsComponent implements OnInit {
     });
   }
 
+  get innovationTitle(): string {
+    return this._projectInformation.name || "Untitled";
+  }
+
+  get projectSettings(): any {
+    return this._projectInformation.settings;
+  }
+
+  set projectSettings(_settings: any) {
+    this._projectInformation.settings = _settings;
+  }
+
 
 
   /**
