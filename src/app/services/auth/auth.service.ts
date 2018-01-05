@@ -131,7 +131,7 @@ export class AuthService {
   }
 
   get emailVerified(): boolean {
-    return this._user.emailVerified || false;
+    return this._user && this._user.emailVerified || false;
   }
 
   set emailVerified(value: boolean) {
