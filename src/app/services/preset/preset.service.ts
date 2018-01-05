@@ -37,4 +37,64 @@ export class PresetService {
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public createSection(SectionObj: any): Observable<any> {
+    return this._http.post('/section', SectionObj)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public getSection(id: string): Observable<any> {
+    return this._http.get('/section/' + id)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public getAllSections(config: any): Observable<any> {
+    return this._http.get('/section/', {params: config})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public removeSection(sectionId: string): Observable<any> {
+    return this._http.delete('/section/' + sectionId)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public saveSection(sectionId: string, sectionObj: any): Observable<any> {
+    return this._http.put('/section/' + sectionId, { sectionObj: sectionObj })
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public createQuestion(sectionObj: any): Observable<any> {
+    return this._http.post('/question', sectionObj)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public getQuestion(id: string): Observable<any> {
+    return this._http.get('/question/' + id)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public getAllQuestions(config: any): Observable<any> {
+    return this._http.get('/question/', {params: config})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public removeQuestion(QuestionId: string): Observable<any> {
+    return this._http.delete('/question/' + QuestionId)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public saveQuestion(QuestionId: string, QuestionObj: any): Observable<any> {
+    return this._http.put('/question/' + QuestionId, { QuestionObj: QuestionObj })
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
 }
