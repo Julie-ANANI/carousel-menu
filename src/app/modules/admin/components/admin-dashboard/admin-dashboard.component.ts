@@ -62,7 +62,7 @@ export class AdminDashboardComponent implements OnInit {
       const totalMails = stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut;
       this.statistics.percentFoundEmails = totalMails ? Math.round(stats.total.found / totalMails * 100) : 'NA';
       this.statistics.percentFoundPros = 'XX';
-      this.statistics.percentOkEmails = 'XX';
+      this.statistics.percentOkEmails =  stats.total.found ? Math.round((stats.total.confidence['100'] || 0) / stats.total.found * 100) : 'NA';
       this.statistics.percentReceivedEmails = 'XX';
     });
   }
