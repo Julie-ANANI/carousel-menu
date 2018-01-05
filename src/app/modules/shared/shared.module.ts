@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { FileUploadModule } from 'ng2-file-upload';
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 // import { FormErrorDirective } from '../../../../.toreview/dynamic-form-compozer/directives/form-error/form-error.directive';
 // import { DynamicFormComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
 // import { DynamicFormQuestionComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-question/dynamic-form-question.component';
@@ -43,6 +44,9 @@ import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
 import { SharedLatexManagerComponent } from './components/shared-latex-manager/shared-latex-manager.component';
 import { InputListComponent } from '../../directives/input-list/input-list.component';
+import { SharedProjectSettingsComponent } from './components/shared-project-settings-component/shared-project-settings.component';
+import { SharedClickableWorldmapComponent } from './components/shared-clickable-worldmap-component/shared-clickable-worldmap.component';
+import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
 
 @NgModule({
   imports: [
@@ -56,7 +60,8 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
     FileUploadModule,
     Ng2FileDropModule,
     Angular2FontawesomeModule,
-    Ng2PageScrollModule
+    Ng2PageScrollModule,
+    Ng2AutoCompleteModule
   ],
   declarations: [
     // Directives
@@ -95,7 +100,10 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedVideoComponent,
-    SharedSortComponent
+    SharedSortComponent,
+    SharedProjectSettingsComponent,
+    SharedClickableWorldmapComponent,
+    AutocompleteInputComponent
   ],
   exports: [
     // Modules
@@ -126,7 +134,10 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
     SharedModalComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
-    SharedSortComponent
+    SharedSortComponent,
+    SharedProjectSettingsComponent,
+    SharedClickableWorldmapComponent,
+    AutocompleteInputComponent
   ]
 })
 export class SharedModule { }

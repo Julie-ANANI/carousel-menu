@@ -171,35 +171,18 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     }
   }
 
-  public areAllContinentChecked(): boolean {
-    for (const o in this.formData.get('settings').get('geography').get('continentTarget').value) {
-      if (!this.formData.get('settings').get('geography').get('continentTarget').get(o).value) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  public switchWorldCheckbox($event): void {
-    if (this.canEdit) {
-      const worldCheckboxValue = $event.target.checked;
+  public continentModificationDrain(event) {
+    if(event) {
       for (const o in this.formData.get('settings').get('geography').get('continentTarget').value) {
         if (typeof this.formData.get('settings').get('geography').get('continentTarget').get(o) !== 'undefined') {
-          this.formData.get('settings').get('geography').get('continentTarget').get(o).setValue(worldCheckboxValue);
+          this.formData.get('settings').get('geography').get('continentTarget').get(o).setValue(event.continents[o]);
         }
       }
     }
   }
 
-  public clickOnContinent(continent): void {
-    if (this.canEdit) {
-      continent = this.formData.get('settings').get('geography').get('continentTarget').get(continent);
-      continent.setValue(!continent.value);
-    }
-  }
-
-  public getContinentSelectionStatus(continent): boolean {
-    return !!this.formData.get('settings').get('geography').get('continentTarget').get(continent).value;
+  get continentTarget(): any {
+    return this.formData.get('settings').get('geography').get('continentTarget').value;
   }
 
   /**

@@ -39,6 +39,10 @@ export const PROJECT_EDIT = {
     'LABEL': 'Compléments / Mots-clefs',
     'PLACEHOLDER': 'ANDRH, norme antibruit EN352-1, Ansys Maxwell est un logiciel concurrent…\nEx : Computational fluid dynamics, LEED Building, Moteur brushless'
   },
+  'KEYWORDS': {
+    'LABEL': 'Mots-clefs',
+    'PLACEHOLDER': 'Ex : Computational fluid dynamics, LEED Building, Moteur brushless'
+  },
   'DESCRIPTION': {
     'LANGUAGE_CHOICE': 'Je décris mon projet en',
     'SET_AS_MAIN_LANG': 'Devenir langue principale',

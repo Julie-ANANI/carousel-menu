@@ -54,16 +54,7 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   public getRelevantLink (project) { // routerLink : /projects/:project_id
-    const link = './' + project._id;
-    switch (project.status) {
-      case 'DONE':
-      case 'EVALUATING':
-        return link + '/synthesis';
-      case 'SUBMITTED':
-        return link;
-      default:
-        return link + '/edit';
-    }
+    return 'project/' + project._id;
   }
 
   private _getProjectIndex(projectId: string): number {

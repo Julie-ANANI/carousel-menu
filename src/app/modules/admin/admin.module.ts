@@ -17,6 +17,7 @@ import { AdminBatchInformationComponent } from './components/admin-emails/admin-
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AdminProjectsListComponent } from './components/admin-projects-list/admin-projects-list.component';
+import { AdminProjectsDetailsComponent } from './components/admin-projects/admin-project-details/admin-project-details.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { AdminProjectsListComponent } from './components/admin-projects-list/adm
     AdminEmailQueueComponent,
     AdminBatchInformationComponent,
     AdminUserDetailsComponent,
-    AdminProjectsListComponent
+    AdminProjectsListComponent,
+    AdminProjectsDetailsComponent
   ]
 })
 export class AdminModule {

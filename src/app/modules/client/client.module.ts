@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { LocalStorageModule } from 'angular-2-local-storage'; // TODO utiliser le localStorage pour accélérer les chargements
-import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { SharedModule } from '../shared/shared.module';
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientFooterComponent } from './components/client-footer/client-footer.component';
@@ -24,9 +23,6 @@ import { ClientProjectEditExample1Component } from './components/client-project-
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 
-import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
-import { InputListComponent } from '../../directives/input-list/input-list.component';
-
 
 @NgModule({
   imports: [
@@ -38,8 +34,7 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
       prefix: 'umi',
       storageType: 'localStorage'
     }),
-    SharedModule,
-    Ng2AutoCompleteModule
+    SharedModule
   ],
   declarations: [
     ClientComponent,
@@ -59,9 +54,6 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
     ClientProjectSynthesisComponent,
     ClientProjectEditExample2Component,
     ClientProjectEditExample1Component,
-
-    AutocompleteInputComponent,
-
     ClientResetPasswordComponent
 
   ]
