@@ -1,0 +1,22 @@
+<app-shared-loader *ngIf="!section"></app-shared-loader>
+
+<div *ngIf="section">
+
+  <div class="container">
+    <div class="columns">
+      <div class="column col-10 col-mx-auto">
+        <h2>{{ section.name }}</h2>
+        <form novalidate [formGroup]="formData" class="form-horizontal">
+          <div class="form-group text-center" formGroupName="title">
+            <label class="form-label h3">{{ "PRESETS.SECTION.EDIT.TITLE" | translate }}</label>
+            EN: <input class="form-input" id="titleEn" name="en" formControlName="en" type="text"
+                   placeholder="">
+            FR: <input class="form-input" id="titleFr" name="fr" formControlName="fr" type="text"
+                   placeholder="">
+          </div>
+          <button type="submit" class="btn btn-primary centered" (click)="save()">{{ 'PRESETS.SECTION.GO' | translate }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

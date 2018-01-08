@@ -29,5 +29,14 @@ export const ERROR = {
     'CANT_EDIT': 'Vous ne pouvez pas éditer ce projet.',
     'SUBMITTED': 'Projet envoyé',
     'SUBMITTED_TEXT': 'Votre projet a été transmis pour la validation.'
+  },
+  'PRESET': {
+    'UPDATED': 'Configuration bien mise à jour'
+  },
+  'SECTION': {
+    'UPDATED': 'Section bien mise à jour'
+  },
+  'QUESTION': {
+    'UPDATED': 'Question bien mise à jour'
   }
 };

@@ -36,8 +36,8 @@
         <div class="description">
           <div class="title"><a [routerLink]="getRelevantLink(project)">{{ project.name || ('MY_PROJECTS.UNTITLED' | translate) }}</a></div>
           <div class="metas">{{ project.owner ? project.owner.name : "N/A" }}<span *ngIf="project.owner && project.owner.companyName"> / {{ project.owner.companyName }}</span>
-            • {{ 'MY_PROJECTS.ADDED' | translate }} {{ project.created | date:dateFormat }}
-            • {{ 'MY_PROJECTS.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
+            • {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
+            • {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
             • <a (click)="selectedProjectIdToBeDeleted = project._id" class="text-error c-hand">{{ 'COMMON.DELETE' | translate }}</a></div>
           <ul class="step">
             <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !project.reviewing }">

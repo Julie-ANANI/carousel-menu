@@ -10,6 +10,10 @@ export const COMMON = {
   'LOG_OUT': 'Log out',
   'CANCEL': 'Cancel',
   'ADD': 'Add',
+  'ADDED': 'Added on',
+  'CREATED': 'Created on',
+  'UPDATED': 'Updated on',
+  'LAUNCHED': 'Launched on',
   'CLOSE': 'Close',
   'PREVIEW': 'Preview',
   'NO': 'No',
@@ -23,6 +27,7 @@ export const COMMON = {
   'I_FINISHED': 'I finished',
   'SYNTHESIS': 'Synthesis',
 
+  'NAME': 'Name',
   'FIRSTNAME': 'Firstname',
   'LASTNAME': 'Lastname',
   'EMAIL': 'Email',
@@ -31,6 +36,8 @@ export const COMMON = {
   'PASSWORD_CONFIRM': 'Password confirmation',
   'COMPANY': 'Company',
   'JOBTITLE': 'Job title',
+  'TYPE': 'Type',
+  'DOMAIN': 'Domain',
 
   'REQUIRED': {
     'FIRSTNAME': 'Firstname is required',
@@ -81,6 +88,8 @@ export const COMMON = {
   'PROJECTS': 'Projects',
   'CAMPAIGNS': 'Campaigns',
   'DISCOVER': 'Discover',
+  'PRESET': 'Preset',
+  'PRESETS': 'Presets',
 
   'SORT': {
     'BY_NAME': 'By name',

@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="columns">
+    <div class="column col-10 col-mx-auto">
+
+      <h1>{{total}} {{ 'COMMON.PRESETS' | translate }}</h1>
+
+
+      <div class="empty" *ngIf="presets && !presets.length">
+        <p class="empty-title h5">{{ 'PRESETS.PRESET.NONE.TITLE' | translate }}</p>
+        <p class="empty-subtitle">{{ 'PRESETS.PRESET.NONE.CONTENT' | translate }}</p>
+        <div class="empty-action">
+          <button [routerLink]="'new'" class="btn btn-lg btn-primary">{{ 'PRESETS.PRESET.ADD' | translate }} <i class="icon icon-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <div class="columns" *ngIf="presets && presets.length">
+        <button [routerLink]="'new'" class="btn btn-lg btn-primary">{{ 'PRESETS.PRESET.ADD' | translate }} <i class="icon icon-arrow-right"></i></button>
+        <table class="table presets" wt-responsive-table>
+          <thead>
+            <tr>
+              <th><sq-sort [config]="config" (configChange)="loadPresets($event)" [prop]="'name'">{{ 'COMMON.NAME' | translate }}</sq-sort></th>
+              <th>{{ 'PRESETS.SECTIONS' | translate }}</th>
+              <th><sq-sort [config]="config" (configChange)="loadPresets($event)" [prop]="'domain'">{{ 'COMMON.DOMAIN' | translate }}</sq-sort></th>
+              <th><sq-sort [config]="config" (configChange)="loadPresets($event)" [prop]="'updated'">{{ 'COMMON.UPDATED' | translate }}</sq-sort></th>
+              <th><sq-sort [config]="config" (configChange)="loadPresets($event)" [prop]="'created'">{{ 'COMMON.CREATED' | translate }}</sq-sort></th>
+            </tr>
+          </thead>
+          <tbody>
+
+          <tr *ngFor="let preset of presets">
+            <td><a [routerLink]="[preset._id + '/edit']">{{preset.name}}</a></td>
+            <td>{{preset.sections ? preset.sections.length : 0}}</td>
+            <td>{{preset.domain}}</td>
+            <td>{{preset.created | date : dateFormat}}</td>
+            <td>{{preset.updated | date : dateFormat}}</td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="12">
+              <sqPagination [config]="config" (configChange)="loadPresets($event)" [total]="total"></sqPagination>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- MODAL : Are you sure you want to delete this preset ? -->
+  <div class="modal" [ngClass]="{'active': selectedPresetIdToBeDeleted}">
+    <div class="modal-overlay" (click)="selectedPresetIdToBeDeleted = null"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <button class="btn btn-clear float-right" (click)="selectedPresetIdToBeDeleted = null"></button>
+        <div class="modal-title h5">{{ 'PRESETS.PRESET.DELETE_MODAL.TITLE' | translate }}</div>
+      </div>
+      <div class="modal-body">
+        <div class="content">{{ 'PRESETS.PRESET.DELETE_MODAL.CONTENT' | translate }}</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-link" (click)="removePreset(selectedPresetIdToBeDeleted)">{{ 'COMMON.DELETE' | translate }}</button>
+        <button class="btn btn-primary" (click)="selectedPresetIdToBeDeleted = null">{{ 'COMMON.CANCEL' | translate }}</button>
+      </div>
+    </div>
+  </div>

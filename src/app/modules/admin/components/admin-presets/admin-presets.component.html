@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="columns">
+    <div class="column col-10 col-mx-auto">
+
+   <!-- This is a trick for using tabs with spectre and no JS. To validate...-->
+      <input type="radio" id="tab1" name="tabs" class="tab-locator" hidden checked />
+      <input type="radio" id="tab2" name="tabs" class="tab-locator" hidden />
+      <input type="radio" id="tab3" name="tabs" class="tab-locator" hidden />
+
+      <ul class="tab tab-block">
+        <li class="tab-item"><label for="tab1"><a>{{ 'COMMON.PRESETS' | translate }}</a></label></li>
+        <li class="tab-item"><label for="tab2"><a>{{ 'PRESETS.SECTIONS' | translate }}</a></label></li>
+        <li class="tab-item"><label for="tab3"><a>{{ 'PRESETS.QUESTIONS' | translate }}</a></label></li>
+      </ul>
+
+      <div class="tabs">
+        <div class="tab-content">
+          <app-admin-presets-list></app-admin-presets-list>
+        </div>
+
+        <div class="tab-content">
+          <app-admin-sections-list></app-admin-sections-list>
+        </div>
+
+        <div class="tab-content">
+          <app-admin-questions-list></app-admin-questions-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

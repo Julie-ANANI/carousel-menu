@@ -10,6 +10,10 @@ export const COMMON = {
   'LOG_OUT': 'Se déconnecter',
   'CANCEL': 'Annuler',
   'ADD': 'Ajouter',
+  'ADDED': 'Ajouté le',
+  'CREATED': 'Créé le',
+  'UPDATED': 'Modifié le',
+  'LAUNCHED': 'Lancé le',
   'CLOSE': 'Fermer',
   'PREVIEW': 'Prévisualiser',
   'NO': 'Non',
@@ -23,6 +27,7 @@ export const COMMON = {
   'I_FINISHED': 'J\'ai terminé',
   'SYNTHESIS': 'Synthèse',
 
+  'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
   'LASTNAME': 'Nom',
   'EMAIL': 'Email',
@@ -31,6 +36,8 @@ export const COMMON = {
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
   'COMPANY': 'Entreprise',
   'JOBTITLE': 'Poste',
+  'TYPE': 'Type',
+  'DOMAIN': 'Domain',
 
   'REQUIRED': {
     'FIRSTNAME': 'Le prénom est requis',
@@ -81,6 +88,8 @@ export const COMMON = {
   'PROJECTS': 'Projets',
   'CAMPAIGNS': 'Campagnes',
   'DISCOVER': 'Découvrir',
+  'PRESET': 'Configuration',
+  'PRESETS': 'Configurations',
 
   'SORT': {
     'BY_NAME': 'Nom',
