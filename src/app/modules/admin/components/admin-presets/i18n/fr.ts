@@ -42,6 +42,24 @@ export const PRESETS = {
     'NEW': 'Nouvelle question',
     'GO': 'Créer la question',
     'GIVE_NAME': 'Donnez un nom à la question',
-    'UNIQUE_NAME': 'Attention, ce nom ne doit pas être déjà utilisé dans les questions existantes'
+    'UNIQUE_NAME': 'Attention, ce nom ne doit pas être déjà utilisé dans les questions existantes',
+    'TYPE': {
+      'CHOOSE': 'Choisissez le type de question',
+      'LIST': 'List d\'items',
+      'CLEARBIT': 'List d\'entreprises',
+      'RADIO': 'Question radio',
+      'SCALE': 'Note',
+      'STARS': 'Note étoiles',
+      'TEXTAREA': 'Zone de texte',
+      'TEXTBOX': 'Input de texte',
+      'TOGGLE': 'Toggle',
+      'CHECKBOX': 'Question checkbox'
+    },
+    'EDIT': {
+      'TITLE': 'Titre dans l\'infographie',
+      'SUBTITLE': 'Sous-titre dans l\'infographie',
+      'LABEL': 'Intitulé de la question',
+      'CAN_COMMENT': 'Possibilité d\'ajouter un commentaire'
+    }
   }
 };

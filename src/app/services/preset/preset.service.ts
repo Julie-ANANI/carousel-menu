@@ -33,7 +33,7 @@ export class PresetService {
   }
 
   public save(presetId: string, presetObj: any): Observable<any> {
-    return this._http.put('/preset/' + presetId, { presetObj: presetObj })
+    return this._http.put('/preset/' + presetId, presetObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
@@ -63,7 +63,7 @@ export class PresetService {
   }
 
   public saveSection(sectionId: string, sectionObj: any): Observable<any> {
-    return this._http.put('/section/' + sectionId, { sectionObj: sectionObj })
+    return this._http.put('/section/' + sectionId, sectionObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
@@ -93,7 +93,7 @@ export class PresetService {
   }
 
   public saveQuestion(QuestionId: string, QuestionObj: any): Observable<any> {
-    return this._http.put('/question/' + QuestionId, { QuestionObj: QuestionObj })
+    return this._http.put('/question/' + QuestionId, QuestionObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

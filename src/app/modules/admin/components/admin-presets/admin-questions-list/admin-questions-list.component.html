@@ -14,7 +14,7 @@
       </div>
 
       <div class="columns" *ngIf="questions && questions.length">
-        <button [routerLink]="'new'" class="btn btn-lg btn-primary">{{ 'PRESETS.QUESTION.ADD' | translate }} <i class="icon icon-arrow-right"></i></button>
+        <button [routerLink]="'/admin/questions/new'" class="btn btn-lg btn-primary">{{ 'PRESETS.QUESTION.ADD' | translate }} <i class="icon icon-arrow-right"></i></button>
         <table class="table questions" wt-responsive-table>
           <thead>
             <tr>
@@ -27,7 +27,7 @@
           <tbody>
 
           <tr *ngFor="let question of questions">
-            <td><a [routerLink]="[question._id + '/edit']">{{question.name}}</a></td>
+            <td><a [routerLink]="['/admin/questions/' + question._id + '/edit']">{{question.name}}</a></td>
             <td>{{question.domain}}</td>
             <td>{{question.created | date : dateFormat}}</td>
             <td>{{question.updated | date : dateFormat}}</td>

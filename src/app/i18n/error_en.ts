@@ -29,5 +29,14 @@ export const ERROR = {  //TODO: repasser sur les trads des erreurs ! (traduit pa
     'CANT_EDIT': 'You cannot edit this project.',
     'SUBMITTED': 'Project submitted',
     'SUBMITTED_TEXT': 'Your project has been sent to validation.'
+  },
+  'PRESET': {
+    'UPDATED': 'Configuration has been updated'
+  },
+  'SECTION': {
+    'UPDATED': 'Section has been updated'
+  },
+  'QUESTION': {
+    'UPDATED': 'Question has been updated'
   }
 };

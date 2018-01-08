@@ -1,0 +1,44 @@
+<app-shared-loader *ngIf="!question"></app-shared-loader>
+
+<div *ngIf="question">
+
+  <div class="container">
+    <div class="columns">
+      <div class="column col-10 col-mx-auto">
+        <h2>{{ question.name }}</h2>
+        <h5>{{ 'PRESETS.QUESTION.TYPE.' + question.controlType.toUpperCase() | translate }}</h5>
+        <form novalidate [formGroup]="formData" class="form-horizontal">
+          <div class="form-group text-center" formGroupName="label">
+            <label class="form-label h3">{{ "PRESETS.QUESTION.EDIT.LABEL" | translate }}</label>
+            EN: <input class="form-input" id="labelEn" name="en" formControlName="en" type="text"
+                   placeholder="">
+            FR: <input class="form-input" id="labelFr" name="fr" formControlName="fr" type="text"
+                   placeholder="">
+          </div>
+          <div class="form-group text-center" formGroupName="title">
+            <label class="form-label h3">{{ "PRESETS.QUESTION.EDIT.TITLE" | translate }}</label>
+            EN: <input class="form-input" id="titleEn" name="en" formControlName="en" type="text"
+                   placeholder="">
+            FR: <input class="form-input" id="titleFr" name="fr" formControlName="fr" type="text"
+                   placeholder="">
+          </div>
+          <div class="form-group text-center" formGroupName="subTitle">
+            <label class="form-label h3">{{ "PRESETS.QUESTION.EDIT.SUBTITLE" | translate }}</label>
+            EN: <input class="form-input" id="subTitleEn" name="en" formControlName="en" type="text"
+                   placeholder="">
+            FR: <input class="form-input" id="subTitleFr" name="fr" formControlName="fr" type="text"
+                   placeholder="">
+          </div>
+          <div class="form-group">
+            <label class="form-switch" for="canComment">
+              {{ "PRESETS.QUESTION.EDIT.CAN_COMMENT" | translate }}
+              <input type="checkbox" name="canComment" formControlName="canComment" id="canComment">
+              <i class="form-icon"></i>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary centered" (click)="save()">{{ 'PRESETS.QUESTION.GO' | translate }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
