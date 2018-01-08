@@ -46,7 +46,7 @@ export class AdminSectionsListComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removePreset(sectionId) {
+  public removeSection(sectionId) {
     this._presetService
       .removeSection(sectionId)
       .subscribe(sectionRemoved => {
