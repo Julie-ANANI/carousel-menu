@@ -6,14 +6,14 @@
 
       <!-- This is a trick for using tabs with spectre and no JS. To validate...-->
       <input type="radio" id="tab1" name="tabs" class="tab-locator" hidden checked />
-      <input type="radio" id="tab2" name="tabs" class="tab-locator" hidden />
+      <!--<input type="radio" id="tab2" name="tabs" class="tab-locator" hidden />-->
       <input type="radio" id="tab3" name="tabs" class="tab-locator" hidden />
       <input type="radio" id="tab4" name="tabs" class="tab-locator" hidden />
       <input type="radio" id="tab5" name="tabs" class="tab-locator" hidden />
 
       <ul class="tab tab-block">
         <li class="tab-item"><label for="tab1"><a>Parameters</a></label></li>
-        <li class="tab-item"><label for="tab2"><a>Innovation cards</a></label></li>
+        <!--<li class="tab-item"><label for="tab2"><a>Innovation cards</a></label></li>-->
         <li class="tab-item"><label for="tab3"><a>Campaigns</a></label></li>
         <li class="tab-item"><label for="tab4"><a>Synthesis</a></label></li>
         <li class="tab-item"><label for="tab5"><a>Mail configuration</a></label></li>
@@ -25,14 +25,14 @@
           <app-shared-project-settings [settings]="projectSettings"></app-shared-project-settings>
         </div>
 
-        <!-- Innovation cards -->
+        <!-- Innovation cards
         <div class="tab-content">
           SOME MORE CONTENT, TAB B!
-        </div>
+        </div> -->
 
         <!-- Campaigns -->
         <div class="tab-content">
-          NOW, TAB C!
+          <app-admin-campaigns></app-admin-campaigns>
         </div>
 
         <!-- Synthesis -->

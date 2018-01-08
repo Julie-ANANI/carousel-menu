@@ -33,6 +33,12 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public campaigns(innovationId: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/campaigns')
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public changePrincipalCard(innovationId: string, newPrincpalInnovationCardId: string): Observable<any> {
     return this._http.post('/innovation/' + innovationId + '/newPrincipalInnovationCard/' + newPrincpalInnovationCardId)
       .map((res: Response) => res.json())

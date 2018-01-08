@@ -1,3 +1,28 @@
-<p>
-  admin-campaigns works!
-</p>
+<div class="container">
+  <p class="text-right">
+    <button class="btn btn-primary">Add a new campaign</button>
+  </p>
+  <table class="table users" wt-responsive-table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th width="60">Professionals</th>
+      <th width="60">Answers</th>
+      <th width="130">Status</th>
+      <th width="100">Update stats</th>
+      <th width="100">Clone</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let campaign of campaigns">
+      <td>{{campaign.title}}</td>
+      <td class="text-center">{{campaign.stats ? campaign.stats['campaign']['nbProfessionals']||0 : 0}}</td>
+      <td class="text-center">{{campaign.stats ? ((campaign.stats['campaign']['nbValidatedResp']||0)+(campaign.stats['campaign']['nbToValidateResp']||0)) : 0}}</td>
+      <td>{{campaign.status}}</td>
+      <td><button class="btn btn-primary" (click)="updateStats(campaign)"><i class="fa fa-repeat"></i> Update stats</button></td>
+      <td><button class="btn btn-primary"><i class="fa fa-copy"></i> Clone</button></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
