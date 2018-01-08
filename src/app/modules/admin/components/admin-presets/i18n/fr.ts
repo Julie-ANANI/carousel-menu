@@ -27,7 +27,10 @@ export const PRESETS = {
     'NEW': 'Nouvelle section',
     'GO': 'Créer la section',
     'GIVE_NAME': 'Donnez un nom à la section',
-    'UNIQUE_NAME': 'Attention, ce nom ne doit pas être déjà utilisé dans les sections existantes'
+    'UNIQUE_NAME': 'Attention, ce nom ne doit pas être déjà utilisé dans les sections existantes',
+    'EDIT': {
+      'TITLE': 'Titre de la section dans le quiz'
+    }
   },
   'QUESTION': {
     'ADD': 'Ajouter une question',

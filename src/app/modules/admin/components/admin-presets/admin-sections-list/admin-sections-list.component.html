@@ -9,12 +9,12 @@
         <p class="empty-title h5">{{ 'PRESETS.SECTION.NONE.TITLE' | translate }}</p>
         <p class="empty-subtitle">{{ 'PRESETS.SECTION.NONE.CONTENT' | translate }}</p>
         <div class="empty-action">
-          <button [routerLink]="'/admin/question/new'" class="btn btn-lg btn-primary">{{ 'PRESETS.SECTION.ADD' | translate }} <i class="icon icon-arrow-right"></i></button>
+          <button [routerLink]="'/admin/sections/new'" class="btn btn-lg btn-primary">{{ 'PRESETS.SECTION.ADD' | translate }} <i class="icon icon-arrow-right"></i></button>
         </div>
       </div>
 
       <div class="columns" *ngIf="sections && sections.length">
-        <button [routerLink]="'new'" class="btn btn-lg btn-primary">{{ 'PRESETS.SECTION.ADD' | translate }} <i class="icon icon-arrow-right"></i></button>
+        <button [routerLink]="'/admin/sections/new'" class="btn btn-lg btn-primary">{{ 'PRESETS.SECTION.ADD' | translate }} <i class="icon icon-arrow-right"></i></button>
         <table class="table sections" wt-responsive-table>
           <thead>
             <tr>
@@ -28,7 +28,7 @@
           <tbody>
 
           <tr *ngFor="let section of sections">
-            <td><a [routerLink]="[section._id + '/edit']">{{section.name}}</a></td>
+            <td><a [routerLink]="['/admin/sections/' + section._id + '/edit']">{{section.name}}</a></td>
             <td>{{section.questions ? section.questions.length : 0}}</td>
             <td>{{section.domain}}</td>
             <td>{{section.created | date : dateFormat}}</td>

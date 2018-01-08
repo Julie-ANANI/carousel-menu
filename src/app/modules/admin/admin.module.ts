@@ -24,6 +24,8 @@ import { AdminSectionsListComponent } from './components/admin-presets/admin-sec
 import { AdminQuestionsListComponent } from './components/admin-presets/admin-questions-list/admin-questions-list.component';
 import { AdminQuestionNewComponent } from './components/admin-presets/admin-question-new/admin-question-new.component';
 import { AdminQuestionEditComponent } from './components/admin-presets/admin-question-edit/admin-question-edit.component';
+import { AdminSectionNewComponent } from './components/admin-presets/admin-section-new/admin-section-new.component';
+import { AdminSectionEditComponent } from './components/admin-presets/admin-section-edit/admin-section-edit.component';
 
 @NgModule({
   imports: [
@@ -53,7 +55,9 @@ import { AdminQuestionEditComponent } from './components/admin-presets/admin-que
     AdminSectionsListComponent,
     AdminQuestionsListComponent,
     AdminQuestionNewComponent,
-    AdminQuestionEditComponent
+    AdminQuestionEditComponent,
+    AdminSectionNewComponent,
+    AdminSectionEditComponent
   ]
 })
 export class AdminModule {
