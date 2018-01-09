@@ -8,29 +8,36 @@
           <p>
             {{ 'WELCOME.MAIN_SENTENCE' | translate }}
           </p>
-          <p>
-            <img src="https://res.cloudinary.com/umi/image/upload/q_61/v1512724331/writing_dmzmwg.gif"
-                 align="middle"/>
-          </p>
-          <p  *ngIf="isAdmin">
-            {{ 'WELCOME.ADMIN_SENTENCE' | translate }}
-            <input type="text" [(ngModel)]="tokenEmail">
-          </p>
-          <p>
-            Happy UMIing
-          </p>
+          <div *ngIf="isMainDomain()">
+            <p>
+              <img src="https://res.cloudinary.com/umi/image/upload/q_61/v1512724331/writing_dmzmwg.gif"
+                   align="middle"/>
+            </p>
+            <p  *ngIf="isAdmin">
+              {{ 'WELCOME.ADMIN_SENTENCE' | translate }}
+              <input type="text" [(ngModel)]="tokenEmail">
+            </p>
+            <p>
+              Happy UMIing
+            </p>
+          </div>
         </div>
 
         <div class="column col-12">
           <p>
             <b>
               {{ 'WELCOME.I_UNDERSTAND' | translate }}
-              <a target="_blank"
-                 [href]="'https://www.umi.us' + (translate.currentLang==='fr'
+              <span *ngIf="isMainDomain()">
+                <a target="_blank"
+                   [href]="'https://www.umi.us' + (translate.currentLang==='fr'
                  ? '/fr/conditions-generales-utilisation/'
                  : '/end-user-license-agreement/')">
                 {{ 'WELCOME.TERMS' | translate }}
-              </a> :
+              </a>
+              </span>
+              <span *ngIf="!isMainDomain()">
+                {{ 'WELCOME.TERMS' | translate }}
+              </span>
             </b>
           </p>
           <button class="btn btn-primary" (click)="acceptTerms()" [disabled]="isAdmin && !tokenEmail">

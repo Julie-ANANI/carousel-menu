@@ -94,4 +94,8 @@ export class ClientLoginComponent implements OnInit {
   get authService (): AuthService {
     return this._authService;
   }
+
+  public isMainDomain(): boolean {
+    return environment.domain === 'umi';
+  }
 }

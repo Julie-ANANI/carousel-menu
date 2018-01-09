@@ -86,4 +86,12 @@ export class ClientSignupComponent implements OnInit {
       this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
   }
+
+  get domainCompanyName(): string {
+    return environment.companyName;
+  }
+
+  public isMainDomain(): boolean {
+    return environment.domain === 'umi';
+  }
 }

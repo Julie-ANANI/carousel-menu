@@ -17,6 +17,10 @@ export class ClientFooterComponent implements OnInit {
     initTranslation(this._translateService);
   }
 
+  public isMainDomain(): boolean {
+    return environment.domain === "umi";
+  }
+
   get companyName(): string {
     return this._companyName;
   }
@@ -26,6 +30,6 @@ export class ClientFooterComponent implements OnInit {
   }
 
   get copyrightDate (): string {
-    return (new Date()).getFullYear().toString().slice(-2);
+    return (new Date()).getFullYear().toString();
   }
 }

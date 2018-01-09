@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-client-welcome',
@@ -56,5 +57,9 @@ export class ClientWelcomeComponent implements OnInit {
 
   get translate (): TranslateService {
     return this._translateService;
+  }
+
+  public isMainDomain(): boolean {
+    return environment.domain === 'umi';
   }
 }

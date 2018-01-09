@@ -11,9 +11,11 @@
           </p>
         </div>
         <div class="column col-8 right">
-          <button class="btn btn-lg btn-primary btn-linkedin" (click)="linkedInSignIn()">{{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
-          </button>
-          <div class="divider text-center" [attr.data-content]="'COMMON.OR' | translate"></div>
+          <div *ngIf="isMainDomain()">
+            <button class="btn btn-lg btn-primary btn-linkedin" (click)="linkedInSignIn()">{{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
+            </button>
+            <div class="divider text-center" [attr.data-content]="'COMMON.OR' | translate"></div>
+          </div>
           <button class="btn btn-lg btn-email" (click)="displayEmailForm = true">{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}</button>
         </div>
       </div>
@@ -49,7 +51,7 @@
           <div class="column col-6">
             <label>
               <span>{{ 'COMMON.COMPANY' | translate }}</span>
-              <input type="text" placeholder="United Motion Ideas" formControlName="companyName">
+              <input type="text" placeholder="{{domainCompanyName}}" formControlName="companyName">
             </label>
           </div>
 
@@ -116,6 +118,7 @@
           {{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}
         </div>
       </div>-->
+      <p>{{'SIGN_UP.SIGNUP_MESSAGE' | translate}}</p>
       <button type="submit" class="btn btn-primary submit-button" [disabled]="formData.invalid">{{ 'SIGN_UP.SIGN_UP_BTN' | translate }}</button>
     </div>
   </form>
