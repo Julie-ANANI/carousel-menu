@@ -19,6 +19,8 @@ import { AdminQuestionEditComponent } from '../admin/components/admin-presets/ad
 import { AdminQuestionNewComponent } from '../admin/components/admin-presets/admin-question-new/admin-question-new.component';
 import { AdminSectionNewComponent } from './components/admin-presets/admin-section-new/admin-section-new.component';
 import { AdminSectionEditComponent } from './components/admin-presets/admin-section-edit/admin-section-edit.component';
+import { AdminPresetNewComponent } from '../admin/components/admin-presets/admin-preset-new/admin-preset-new.component';
+import { AdminPresetEditComponent } from '../admin/components/admin-presets/admin-preset-edit/admin-preset-edit.component';
 
 const adminRoutes: Routes = [
   {
@@ -79,7 +81,15 @@ const adminRoutes: Routes = [
       {
         path: 'presets',
         children: [
-          { path: '', component: AdminPresetsComponent, pathMatch: 'full' }
+          { path: '', component: AdminPresetsComponent, pathMatch: 'full' },
+          { path: 'new', component: AdminPresetNewComponent, pathMatch: 'full' },
+          {
+            path: ':presetId',
+            children: [
+              { path: 'edit', component: AdminPresetEditComponent, pathMatch: 'full' }
+
+            ]
+          }
         ]
       },
       {

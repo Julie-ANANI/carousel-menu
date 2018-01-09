@@ -12,7 +12,12 @@ export const PRESETS = {
     'NEW': 'Nouvelle configuration',
     'GO': 'Créer la configuration',
     'GIVE_NAME': 'Donnez un nom à la configuration',
-    'UNIQUE_NAME': 'Attention, ce nom ne doit pas être déjà utilisé dans les configurations existantes'
+    'UNIQUE_NAME': 'Attention, ce nom ne doit pas être déjà utilisé dans les configurations existantes',
+    'EDIT': {
+      'SAVE': 'Sauvegarder la configuration',
+      'ADD': 'Ajouter des sections à la configuration',
+      'SECTION_PLACEHOLDER': 'marketPotential'
+    }
   },
   'SECTION': {
     'ADD': 'Ajouter une section',
@@ -29,6 +34,8 @@ export const PRESETS = {
     'GIVE_NAME': 'Donnez un nom à la section',
     'UNIQUE_NAME': 'Attention, ce nom ne doit pas être déjà utilisé dans les sections existantes',
     'EDIT': {
+      'SAVE': 'Sauvegarder la section',
+      'ADD': 'Ajouter des questions à la section',
       'TITLE': 'Titre de la section dans le quiz'
     }
   },
@@ -62,7 +69,8 @@ export const PRESETS = {
       'TITLE': 'Titre dans l\'infographie',
       'SUBTITLE': 'Sous-titre dans l\'infographie',
       'LABEL': 'Intitulé de la question',
-      'CAN_COMMENT': 'Possibilité d\'ajouter un commentaire'
+      'CAN_COMMENT': 'Possibilité d\'ajouter un commentaire',
+      'SAVE': 'Sauvegarder la question'
     }
   }
 };

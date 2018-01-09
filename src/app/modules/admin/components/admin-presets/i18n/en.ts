@@ -13,6 +13,11 @@ export const PRESETS = {
     'GO': 'Create the preset',
     'GIVE_NAME': 'Give a name to the preset',
     'UNIQUE_NAME': 'Be careful, this name must be different from the already existing configurations',
+    'EDIT': {
+      'SAVE': 'Save the preset',
+      'ADD': 'Add sections to the preset',
+      'SECTION_PLACEHOLDER': 'marketPotential'
+    }
   },
   'SECTION': {
     'ADD_PRESET': 'Add a section',
@@ -29,6 +34,8 @@ export const PRESETS = {
     'GIVE_NAME': 'Give a name to the section',
     'UNIQUE_NAME': 'Be careful, this name must be different from the already existing sections',
     'EDIT': {
+      'SAVE': 'Save the section',
+      'ADD': 'Add questions to the section',
       'TITLE': 'Title of the section in the quiz'
     }
   },
@@ -59,6 +66,7 @@ export const PRESETS = {
       'CHECKBOX': 'Checkbox question'
     },
     'EDIT': {
+      'SAVE': 'Save the question',
       'TITLE': 'Title in the infographics',
       'SUBTITLE': 'Subtitle in the infographics',
       'LABEL': 'Label of the question',
