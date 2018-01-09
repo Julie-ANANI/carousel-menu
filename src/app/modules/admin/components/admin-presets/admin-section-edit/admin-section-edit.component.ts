@@ -19,6 +19,11 @@ export class AdminSectionEditComponent implements OnInit, OnDestroy {
 
   private _section: any;
   public formData: FormGroup;
+  private _addQuestionConfig = {
+    placeholder: 'PRESETS.SECTION.EDIT.QUESTION_PLACEHOLDER',
+    initialData: [],
+    type: 'questions'
+  };
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _presetService: PresetService,
@@ -34,11 +39,13 @@ export class AdminSectionEditComponent implements OnInit, OnDestroy {
       const sectionId = params['sectionId'];
       const subs = this._presetService.getSection(sectionId).subscribe(section => {
         this._section = section;
+        this._addQuestionConfig.initialData = section.questions;
         this.formData = this._formBuilder.group({
           title: this._formBuilder.group({
             fr: [section.title ? section.title.fr || '' : '', Validators.required],
             en: [section.title ? section.title.en || '' : '', Validators.required]
-          })
+          }),
+          questions: []
         });
       });
     });
@@ -62,6 +69,11 @@ export class AdminSectionEditComponent implements OnInit, OnDestroy {
       });
   }
 
+  public addQuestion(event): void {
+    this.formData.get('questions').setValue(event.value);
+  }
+
+  get addQuestionConfig() { return this._addQuestionConfig; }
   get domSanitizer() { return this._domSanitizer; }
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
   get section(): any { return this._section; }

@@ -36,7 +36,8 @@ export const PRESETS = {
     'EDIT': {
       'SAVE': 'Sauvegarder la section',
       'ADD': 'Ajouter des questions à la section',
-      'TITLE': 'Titre de la section dans le quiz'
+      'TITLE': 'Titre de la section dans le quiz',
+      'QUESTION_PLACEHOLDER': 'relevantProblematic'
     }
   },
   'QUESTION': {
