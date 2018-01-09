@@ -1,4 +1,4 @@
-<div class="projects-stats">
+<div class="projects-stats" *ngIf="adminLevel > 2">
   <select class="form-select" [(ngModel)]="operatorId" (ngModelChange)="newOperatorSelected($event)">
     <option value="">Tous opérateurs</option>
     <option *ngFor="let operator of operators" [ngValue]="operator._id" [selected]="operatorId === operator._id">{{
@@ -9,7 +9,7 @@
   <div *ngIf="operatorData.nbProjectsToValidate !== 'undefined'"><span>{{ operatorData.nbProjectsToValidate }}</span> projet{{ operatorData.nbProjectsToValidate>1?'s':'' }} à valider</div>
   <div *ngIf="operatorData.nbProjectsToTreat !== 'undefined'"><span>{{ operatorData.nbProjectsToTreat }}</span> réponse{{ operatorData.nbProjectsToTreat>1?'s':'' }} à traiter</div>
 </div>
-<div class="emails-stats">
+<div class="emails-stats" *ngIf="adminLevel > 2">
   <select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="getPeriodStats()">
     <option [value]="1">Comparer...</option>
     <option [value]="30">Dernier mois</option>

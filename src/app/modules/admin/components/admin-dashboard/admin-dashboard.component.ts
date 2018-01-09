@@ -71,4 +71,7 @@ export class AdminDashboardComponent implements OnInit {
     return this._refreshNeededEmitter;
   }
 
+  get adminLevel(): number {
+    return this._authService.adminLevel;
+  }
 }
