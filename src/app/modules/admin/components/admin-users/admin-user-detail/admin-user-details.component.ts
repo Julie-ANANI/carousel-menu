@@ -114,11 +114,10 @@ export class AdminUserDetailsComponent implements OnInit {
   }
 
   public deleteAccount () {
-    this._userService.delete().subscribe((res) => {
-      this._authService.logout().subscribe(() => {
-        this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
-        this._router.navigate(['/']);
-      });
+    this._userService.deleteUser(this._userBasicData['id'])
+        .subscribe((res) => {
+          this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
+          this._router.navigate(['/admin/users']);
     });
   }
 

@@ -4,7 +4,7 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { UserService } from '../../../../../services/user/user.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { TranslateService } from '@ngx-translate/core';
-import {NotificationsService} from "angular2-notifications/dist";
+import { NotificationsService } from "angular2-notifications/dist";
 
 @Component({
   selector: 'app-admin-project-details',

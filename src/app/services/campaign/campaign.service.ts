@@ -31,4 +31,10 @@ export class CampaignService {
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public updateStats(campaignId: string): Observable<any> {
+    return this._http.put(`/campaign/${campaignId}/stats`)
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.text()));
+  }
 }

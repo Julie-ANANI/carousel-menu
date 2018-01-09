@@ -84,4 +84,10 @@ export class UserService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  public deleteUser(userId: string): Observable<any> {
+    return this._http.delete(`/user/${userId}`)
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.json()));
+  }
+
 }

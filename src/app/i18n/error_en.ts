@@ -18,7 +18,7 @@ export const ERROR = {  //TODO: repasser sur les trads des erreurs ! (traduit pa
     'UPDATE': 'Successful update',
     'UPDATE_TEXT': 'Your profile has been successfully updated.',
     'DELETED': 'Account deleted',
-    'DELETED_TEXT': 'Your account has been successfully deleted.',
+    'DELETED_TEXT': 'The account has been successfully deleted.',
     'PASSWORD_UPDATED': 'Password updated.',
     'PASSWORD_UPDATED_TEXT': 'Your password has been successfully updated.',
     'SAME_PASSWORD': 'The passwords must be the same.'
