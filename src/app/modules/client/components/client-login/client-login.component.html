@@ -14,10 +14,11 @@
           </p>
         </div>
         <div class="column col-8 right">
-          <button class="btn btn-lg btn-primary btn-linkedin" (click)="linkedInSignIn()">{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
-          </button>
-
-          <div class="divider text-center" [attr.data-content]="'COMMON.OR' | translate"></div>
+          <div *ngIf="isMainDomain()">
+            <button class="btn btn-lg btn-primary btn-linkedin" (click)="linkedInSignIn()">{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
+            </button>
+            <div class="divider text-center" [attr.data-content]="'COMMON.OR' | translate"></div>
+          </div>
 
           <form novalidate (ngSubmit)="onSubmit(formData)" [formGroup]="formData" class="columns">
 
