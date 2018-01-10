@@ -27,6 +27,8 @@ import { LatexService } from './services/latex/latex.service';
 import { EmailService } from './services/email/email.service';
 import { SearchService } from './services/search/search.service';
 import { PresetService } from './services/preset/preset.service';
+import { CampaignResolver } from './resolvers/campaign.resolver';
+import { InnovationResolver } from './resolvers/innovation.resolver';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 @NgModule({
@@ -77,7 +79,9 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
     },
     AutocompleteService,
     TranslateNotificationsService,
-    TranslateTitleService
+    TranslateTitleService,
+    CampaignResolver,
+    InnovationResolver
   ],
   bootstrap: [AppComponent]
 })
