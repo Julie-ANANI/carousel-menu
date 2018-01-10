@@ -18,7 +18,6 @@ import { AdminUserDetailsComponent } from './components/admin-users/admin-user-d
 import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AdminProjectsListComponent } from './components/admin-projects-list/admin-projects-list.component';
 import { AdminProjectsDetailsComponent } from './components/admin-projects/admin-project-details/admin-project-details.component';
-import { AdminPresetsComponent } from './components/admin-presets/admin-presets.component';
 import { AdminPresetsListComponent } from './components/admin-presets/admin-presets-list/admin-presets-list.component';
 import { AdminSectionsListComponent } from './components/admin-presets/admin-sections-list/admin-sections-list.component';
 import { AdminQuestionsListComponent } from './components/admin-presets/admin-questions-list/admin-questions-list.component';
@@ -52,7 +51,6 @@ import { AdminPresetEditComponent } from './components/admin-presets/admin-prese
     AdminUserDetailsComponent,
     AdminProjectsListComponent,
     AdminProjectsDetailsComponent,
-    AdminPresetsComponent,
     AdminPresetNewComponent,
     AdminPresetEditComponent,
     AdminPresetsListComponent,

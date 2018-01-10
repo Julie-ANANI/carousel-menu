@@ -14,7 +14,9 @@ import { AdminAuthGuard } from './admin-auth-guard.service';
 import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
-import { AdminPresetsComponent } from '../admin/components/admin-presets/admin-presets.component';
+import { AdminPresetsListComponent } from '../admin/components/admin-presets/admin-presets-list/admin-presets-list.component';
+import { AdminSectionsListComponent } from '../admin/components/admin-presets/admin-sections-list/admin-sections-list.component';
+import { AdminQuestionsListComponent } from '../admin/components/admin-presets/admin-questions-list/admin-questions-list.component';
 import { AdminQuestionEditComponent } from '../admin/components/admin-presets/admin-question-edit/admin-question-edit.component';
 import { AdminQuestionNewComponent } from '../admin/components/admin-presets/admin-question-new/admin-question-new.component';
 import { AdminSectionNewComponent } from './components/admin-presets/admin-section-new/admin-section-new.component';
@@ -81,7 +83,7 @@ const adminRoutes: Routes = [
       {
         path: 'presets',
         children: [
-          { path: '', component: AdminPresetsComponent, pathMatch: 'full' },
+          { path: '', component: AdminPresetsListComponent, pathMatch: 'full' },
           { path: 'new', component: AdminPresetNewComponent, pathMatch: 'full' },
           {
             path: ':presetId',
@@ -95,6 +97,7 @@ const adminRoutes: Routes = [
       {
         path: 'questions',
         children: [
+          { path: '', component: AdminQuestionsListComponent, pathMatch: 'full' },
           { path: 'new', component: AdminQuestionNewComponent, pathMatch: 'full'},
           {
             path: ':questionId',
@@ -108,6 +111,7 @@ const adminRoutes: Routes = [
       {
         path: 'sections',
         children: [
+          { path: '', component: AdminSectionsListComponent, pathMatch: 'full' },
           { path: 'new', component: AdminSectionNewComponent, pathMatch: 'full'},
           {
             path: ':sectionId',

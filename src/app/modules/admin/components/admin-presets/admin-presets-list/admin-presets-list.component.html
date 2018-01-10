@@ -2,6 +2,12 @@
   <div class="columns">
     <div class="column col-10 col-mx-auto">
 
+      <ul class="tab tab-block">
+        <li class="tab-item"><a class="active">{{ 'COMMON.PRESETS' | translate }}</a></li>
+        <li class="tab-item"><a [routerLink]="'/admin/sections'">{{ 'PRESETS.SECTIONS' | translate }}</a></li>
+        <li class="tab-item"><a [routerLink]="'/admin/questions'">{{ 'PRESETS.QUESTIONS' | translate }}</a></li>
+      </ul>
+
       <h1>{{total}} {{ 'COMMON.PRESETS' | translate }}</h1>
 
 
@@ -72,3 +78,4 @@
       </div>
     </div>
   </div>
+</div>
