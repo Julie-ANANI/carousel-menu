@@ -19,6 +19,7 @@ export class AdminQuestionEditComponent implements OnInit, OnDestroy {
 
   private _question: any;
   public formData: FormGroup;
+  private _options: FormArray;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _presetService: PresetService,
@@ -39,17 +40,18 @@ export class AdminQuestionEditComponent implements OnInit, OnDestroy {
             fr: [question.title ? question.title.fr || '' : '', Validators.required],
             en: [question.title ? question.title.en || '' : '', Validators.required]
           }),
-          subTitle: this._formBuilder.group({
-            fr: [question.subTitle ? question.subTitle.fr || '' : '', Validators.required],
-            en: [question.subTitle ? question.subTitle.en || '' : '', Validators.required]
+          subtitle: this._formBuilder.group({
+            fr: [question.subtitle ? question.subtitle.fr || '' : '', Validators.required],
+            en: [question.subtitle ? question.subtitle.en || '' : '', Validators.required]
           }),
           label: this._formBuilder.group({
             fr: [question.label ? question.label.fr || '' : '', Validators.required],
             en: [question.label ? question.label.en || '' : '', Validators.required]
           }),
-          choices: (question.controlType === 'radio' || question.controlType === 'checkbox') ? [] : null,
+          options: this._formBuilder.array([]),
           canComment: question.canComment || (question.controlType != 'textArea' && question.controlType != 'toggle')
         });
+        this.buildOptions(question.options);
       });
     });
   }
@@ -72,6 +74,34 @@ export class AdminQuestionEditComponent implements OnInit, OnDestroy {
       });
   }
 
+  buildOptions(options) {
+    const optionsFormArray = this._formBuilder.array(options.length ?
+      options.map(option => this.buildOption(option)) :
+      [this.buildOption()]);
+    this.formData.setControl('options', optionsFormArray);
+  }
+
+  buildOption(option?) {
+    return this._formBuilder.group({
+      id: [option && option.id || ''],
+      label: this._formBuilder.group({
+        fr: [option && option.label ? option.label.fr || '' : ''],
+        en: [option && option.label ? option.label.en || '' : ''],
+      })
+    })
+  }
+
+  addOption() {
+    this.options.push(this._formBuilder.group({id: '', label: { en: '', fr: ''}}));
+  }
+
+  removeOption(index) {
+    const tmp = this.options.controls.splice(index, 1)
+    this.options.patchValue(tmp);
+  }
+  
+  set options(value: FormArray) { this._options = value; }
+  get options(): FormArray { return this.formData.get('options') as FormArray; };
   get domSanitizer() { return this._domSanitizer; }
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
   get question(): any { return this._question; }

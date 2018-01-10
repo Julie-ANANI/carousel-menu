@@ -71,7 +71,9 @@ export const PRESETS = {
       'TITLE': 'Title in the infographics',
       'SUBTITLE': 'Subtitle in the infographics',
       'LABEL': 'Label of the question',
-      'CAN_COMMENT': 'Possibility to add a comment'
+      'CAN_COMMENT': 'Possibility to add a comment',
+      'CHOICES': 'Possible answers',
+      'ADD': 'Add a new choice'
     }
   },
   'SECTIONS': 'Sections',
