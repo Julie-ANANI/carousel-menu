@@ -23,6 +23,7 @@
               <th><sq-sort [config]="config" (configChange)="loadSections($event)" [prop]="'domain'">{{ 'COMMON.DOMAIN' | translate }}</sq-sort></th>
               <th><sq-sort [config]="config" (configChange)="loadSections($event)" [prop]="'updated'">{{ 'COMMON.UPDATED' | translate }}</sq-sort></th>
               <th><sq-sort [config]="config" (configChange)="loadSections($event)" [prop]="'created'">{{ 'COMMON.CREATED' | translate }}</sq-sort></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -33,6 +34,9 @@
             <td>{{section.domain}}</td>
             <td>{{section.created | date : dateFormat}}</td>
             <td>{{section.updated | date : dateFormat}}</td>
+            <td><a class="delete c-hand" aria-label="Close" role="button" (click)="selectedSectionIdToBeDeleted=section._id">
+              <i class="icon icon-delete"></i>
+            </a></td>
           </tr>
           </tbody>
           <tfoot>

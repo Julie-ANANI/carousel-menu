@@ -31,6 +31,9 @@
             <td>{{question.domain}}</td>
             <td>{{question.created | date : dateFormat}}</td>
             <td>{{question.updated | date : dateFormat}}</td>
+            <td><a class="delete c-hand" aria-label="Close" role="button" (click)="selectedQuestionIdToBeDeleted=question._id">
+              <i class="icon icon-delete"></i>
+            </a></td>
           </tr>
           </tbody>
           <tfoot>
