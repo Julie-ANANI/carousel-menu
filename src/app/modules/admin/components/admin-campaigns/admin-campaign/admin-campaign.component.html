@@ -10,23 +10,23 @@
   </ul>
 
   <div class="tabs">
-    <div class="tab-content" [hidden]="currentPage != 'details'">
+    <div class="tab-content" *ngIf="currentPage == 'details'">
       <app-admin-campaign-details></app-admin-campaign-details>
     </div>
 
-    <div class="tab-content" [hidden]="currentPage != 'history'">
+    <div class="tab-content" *ngIf="currentPage == 'history'">
       <app-admin-campaign-history></app-admin-campaign-history>
     </div>
 
-    <div class="tab-content" [hidden]="currentPage != 'search'">
+    <div class="tab-content" *ngIf="currentPage == 'search'">
       <app-admin-campaign-search></app-admin-campaign-search>
     </div>
 
-    <div class="tab-content" [hidden]="currentPage != 'pros'">
+    <div class="tab-content" *ngIf="currentPage == 'pros'">
       <app-admin-campaign-pros></app-admin-campaign-pros>
     </div>
 
-    <div class="tab-content" [hidden]="currentPage != 'answers'">
+    <div class="tab-content" *ngIf="currentPage == 'answers'">
       <app-admin-campaign-answers></app-admin-campaign-answers>
     </div>
   </div>
