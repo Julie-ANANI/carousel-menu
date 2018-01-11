@@ -1,1 +1,46 @@
-<h1>{{ 'CAMPAIGNS.SEARCH' | translate }}</h1>
+<table class="table pros" wt-responsive-table>
+  <thead>
+  <tr>
+    <th width="80"></th>
+    <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'language'">{{ 'COMMON.LANGUAGE' | translate }}</sq-sort></th>
+    <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'firstName'" >{{ 'COMMON.NAME' | translate }}</sq-sort></th>
+    <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'company'">{{ 'COMMON.COMPANY' | translate }}</sq-sort></th>
+    <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'email'">{{ 'COMMON.EMAIL' | translate }}</sq-sort></th>
+    <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'emailConfidence'">{{ 'CAMPAIGNS.EMAIL_CONFIDENCE' | translate }}</sq-sort></th>
+  </tr>
+  <tr>
+    <th></th>
+    <th></th>
+    <th>
+      <sqFilter [config]="config" (configChange)="loadPros($event)" prop="firstName"></sqFilter>
+      <sqFilter [config]="config" (configChange)="loadPros($event)" prop="lastName"></sqFilter>
+    </th>
+    <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="company"></sqFilter></th>
+    <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="email"></sqFilter></th>
+    <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="emailConfidence"></sqFilter></th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let pro of pros">
+    <td></td>
+    <td>{{ pro.language }}</td>
+    <td>
+      <span class="title">{{ pro.firstName }} {{ pro.lastName }}</span>
+    </td>
+    <td>{{pro.company}}</td>
+    <td>
+      <span class="metas"><a [href]="'mailto:' + pro.email">{{ pro.email }}</a></span>
+    </td>
+    <td>{{ pro.emailConfidence }}</td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="12">
+      <sqPagination [config]="config" (configChange)="loadPros($event)" [total]="total"></sqPagination>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+
