@@ -21,6 +21,8 @@ import { AdminSectionNewComponent } from './components/admin-presets/admin-secti
 import { AdminSectionEditComponent } from './components/admin-presets/admin-section-edit/admin-section-edit.component';
 import { AdminPresetNewComponent } from '../admin/components/admin-presets/admin-preset-new/admin-preset-new.component';
 import { AdminPresetEditComponent } from '../admin/components/admin-presets/admin-preset-edit/admin-preset-edit.component';
+import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
+import { CampaignResolver } from '../../resolvers/campaign.resolver';
 
 const adminRoutes: Routes = [
   {
@@ -50,7 +52,14 @@ const adminRoutes: Routes = [
       {
         path: 'campaigns',
         children: [
-          { path: '', component: AdminCampaignsComponent, pathMatch: 'full' }
+          { path: '', component: AdminCampaignsComponent, pathMatch: 'full' },
+          { path: 'campaign/:campaignId', resolve: { campaign : CampaignResolver }, children: [
+            { path: 'details', component: AdminCampaignComponent,pathMatch: 'full'},
+            { path: 'pros', component: AdminCampaignComponent,pathMatch: 'full'},
+            { path: 'search', component: AdminCampaignComponent,pathMatch: 'full'},
+            { path: 'history', component: AdminCampaignComponent,pathMatch: 'full'},
+            { path: 'answers', component: AdminCampaignComponent,pathMatch: 'full'}
+          ]}
         ]
       },
       {

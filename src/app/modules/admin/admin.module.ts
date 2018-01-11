@@ -28,6 +28,12 @@ import { AdminSectionNewComponent } from './components/admin-presets/admin-secti
 import { AdminSectionEditComponent } from './components/admin-presets/admin-section-edit/admin-section-edit.component';
 import { AdminPresetNewComponent } from './components/admin-presets/admin-preset-new/admin-preset-new.component';
 import { AdminPresetEditComponent } from './components/admin-presets/admin-preset-edit/admin-preset-edit.component';
+import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
+import { AdminCampaignDetailsComponent } from './components/admin-campaigns/admin-campaign-details/admin-campaign-details.component';
+import { AdminCampaignProsComponent } from './components/admin-campaigns/admin-campaign-pros/admin-campaign-pros.component';
+import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admin-campaign-history/admin-campaign-history.component';
+import { AdminCampaignSearchComponent } from './components/admin-campaigns/admin-campaign-search/admin-campaign-search.component';
+import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admin-campaign-answers/admin-campaign-answers.component';
 
 @NgModule({
   imports: [
@@ -61,7 +67,13 @@ import { AdminPresetEditComponent } from './components/admin-presets/admin-prese
     AdminQuestionNewComponent,
     AdminQuestionEditComponent,
     AdminSectionNewComponent,
-    AdminSectionEditComponent
+    AdminSectionEditComponent,
+    AdminCampaignComponent,
+    AdminCampaignDetailsComponent,
+    AdminCampaignProsComponent,
+    AdminCampaignHistoryComponent,
+    AdminCampaignSearchComponent,
+    AdminCampaignAnswersComponent
   ]
 })
 export class AdminModule {
