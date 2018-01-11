@@ -20,8 +20,14 @@ export class CampaignService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public getAll(): Observable<any> {
-    return this._http.get('/campaign/')
+  public getAll(config: any): Observable<any> {
+    return this._http.get('/campaign/', {params: config})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public getPros(campaignId: string, config: any): Observable<any> {
+    return this._http.get('/campaign/' + campaignId + '/pros', {params: config})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
