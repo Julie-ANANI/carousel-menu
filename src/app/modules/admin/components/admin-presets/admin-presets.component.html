@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="columns">
+    <div class="column col-10 col-mx-auto">
+
+      <ul class="tab tab-block">
+        <li class="tab-item"><a [routerLink]="'/admin/presets'" [ngClass]="{'active': currentPage == 'presets'}">
+          {{ 'COMMON.PRESETS' | translate }}
+        </a></li>
+        <li class="tab-item"><a [routerLink]="'/admin/sections'" [ngClass]="{'active': currentPage == 'sections'}">
+          {{ 'PRESETS.SECTIONS' | translate }}
+        </a></li>
+        <li class="tab-item"><a [routerLink]="'/admin/questions'" [ngClass]="{'active': currentPage == 'questions'}">
+          {{ 'PRESETS.QUESTIONS' | translate }}
+        </a></li>
+      </ul>
+
+      <div class="tabs">
+        <div class="tab-content" [hidden]="currentPage != 'presets'">
+          <app-admin-presets-list></app-admin-presets-list>
+        </div>
+
+        <div class="tab-content" [hidden]="currentPage != 'sections'">
+          <app-admin-sections-list></app-admin-sections-list>
+        </div>
+
+        <div class="tab-content" [hidden]="currentPage != 'questions'">
+          <app-admin-questions-list></app-admin-questions-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
