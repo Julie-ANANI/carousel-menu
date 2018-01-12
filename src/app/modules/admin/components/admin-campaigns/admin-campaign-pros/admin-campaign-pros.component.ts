@@ -43,6 +43,11 @@ export class AdminCampaignProsComponent implements OnInit {
     });
   }
 
+  public buildImageUrl(country: string): string {
+    if (country) return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+    return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
+  }
+
   set config(value: any) {
     this._config = value;
   }
