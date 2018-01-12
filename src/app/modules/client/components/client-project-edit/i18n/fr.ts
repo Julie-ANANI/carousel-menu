@@ -13,6 +13,13 @@ export const PROJECT_EDIT = {
       'LINE2': 'pour lancer l’étude de façon optimale.'
     }
   },
+  'PRESET': {
+    'LABEL':'Type de projet',
+    'PLACEHOLDER': '',
+    'TYPE1':'Application discovery',
+    'TYPE2':'Market potential evaluation',
+    'TYPE3':'Business leads'
+  },
   'TARGETING': {
     'GEOGRAPHY': 'Périmètre géographique',
     'ENTIRE_WORLD': 'Monde entier',
