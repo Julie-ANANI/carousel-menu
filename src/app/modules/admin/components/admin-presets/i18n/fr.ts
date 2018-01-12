@@ -71,7 +71,9 @@ export const PRESETS = {
       'SUBTITLE': 'Sous-titre dans l\'infographie',
       'LABEL': 'Intitulé de la question',
       'CAN_COMMENT': 'Possibilité d\'ajouter un commentaire',
-      'SAVE': 'Sauvegarder la question'
+      'SAVE': 'Sauvegarder la question',
+      'CHOICES': 'Réponses possibles',
+      'ADD': 'Ajouter une autre réponse'
     }
   }
 };

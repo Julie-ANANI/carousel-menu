@@ -17,6 +17,7 @@ import { PAGINATION } from '../modules/shared/components/shared-pagination/i18n/
 import { PROJECT } from '../modules/shared/components/shared-project-description/i18n/fr';
 import { DASHBOARD } from '../modules/admin/components/admin-dashboard/i18n/fr';
 import { PRESETS } from '../modules/admin/components/admin-presets/i18n/fr';
+import { CAMPAIGNS } from '../modules/admin/components/admin-campaigns/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -37,5 +38,6 @@ export const fr = {
   'PAGINATION': PAGINATION,
   'PROJECT': PROJECT,
   'DASHBOARD': DASHBOARD,
-  'PRESETS': PRESETS
+  'PRESETS': PRESETS,
+  'CAMPAIGNS': CAMPAIGNS
 };

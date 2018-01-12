@@ -48,7 +48,7 @@ export class AdminQuestionsListComponent implements OnInit {
    */
   public removeQuestion(questionId) {
     this._presetService
-      .removeSection(questionId)
+      .removeQuestion(questionId)
       .subscribe(questionRemoved => {
         this._questions.splice(this._getQuestionIndex(questionId), 1);
         this.selectedQuestionIdToBeDeleted = null;
