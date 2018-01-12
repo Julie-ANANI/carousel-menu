@@ -32,6 +32,12 @@ export class CampaignService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public getAnswers(campaignId: string): Observable<any> {
+    return this._http.get('/campaign/' + campaignId + '/answer')
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public remove(campaignId: string): Observable<any> {
     return this._http.delete('/campaign/' + campaignId)
       .map((res: Response) => res.json())
