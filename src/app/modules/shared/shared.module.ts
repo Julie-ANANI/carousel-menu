@@ -137,7 +137,8 @@ import { AutocompleteInputComponent } from '../../directives/autocomplete-input/
     SharedSortComponent,
     SharedProjectSettingsComponent,
     SharedClickableWorldmapComponent,
-    AutocompleteInputComponent
+    AutocompleteInputComponent,
+    SharedAnswerModalComponent
   ]
 })
 export class SharedModule { }
