@@ -9,7 +9,6 @@ import { InnovationService } from './../../../../../services/innovation/innovati
 import { PageScrollConfig } from 'ng2-page-scroll';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
-import { DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -32,8 +31,7 @@ export class SharedMarketReportComponent implements OnInit {
               private _innovationService: InnovationService,
               private _route: ActivatedRoute,
               private _authService: AuthService,
-              private _notificationsService: TranslateNotificationsService,
-              @Inject(DOCUMENT) private _document: any
+              private _notificationsService: TranslateNotificationsService
   ) { }
 
   ngOnInit() {
