@@ -26,6 +26,7 @@ import { SharedMarketReportBluesquareComponent } from './components/shared-marke
 import { SharedMarketCommentComponent } from './components/shared-market-report/shared-market-comment-component/shared-market-comment.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report/shared-market-report-popover/shared-market-report-popover.component';
 import { SharedAnswerModalComponent } from './components/shared-answer-modal/shared-answer-modal.component';
+import { SharedAnswerQuestionComponent } from './components/shared-answer-question/shared-answer-question.component';
 import { SharedPricesComponent } from './components/shared-market-report/shared-prices-component/shared-prices.component';
 import { SharedWorldMapComponent } from './components/shared-market-report/shared-world-map-component/shared-world-map.component';
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
@@ -86,6 +87,7 @@ import { AutocompleteInputComponent } from '../../directives/autocomplete-input/
     SharedMarketCommentComponent,
     SharedMarketReportPopoverComponent,
     SharedAnswerModalComponent,
+    SharedAnswerQuestionComponent,
     SharedMarketReportSectionComponent,
     SharedMarketReportPiechartComponent,
     SharedMarketItemListComponent,
@@ -138,7 +140,8 @@ import { AutocompleteInputComponent } from '../../directives/autocomplete-input/
     SharedProjectSettingsComponent,
     SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
-    SharedAnswerModalComponent
+    SharedAnswerModalComponent,
+    SharedAnswerQuestionComponent
   ]
 })
 export class SharedModule { }
