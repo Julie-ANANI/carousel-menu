@@ -19,6 +19,7 @@ export class SharedAnswerModalComponent implements OnInit {
   private _advantages: string[];
   private _modalAnswer: any;
   private _selectLangInput = 'en';
+  public floor: any;
 
   @Input() set modalAnswer(value: any) {
     this._modalAnswer = value;
@@ -36,6 +37,7 @@ export class SharedAnswerModalComponent implements OnInit {
   ngOnInit() {
     this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
     this.adminMode = this.adminMode && this._authService.adminLevel > 2;
+    this.floor = Math.floor;
     this._innovationService.getInnovationCardByLanguage(this.innoid, this._selectLangInput).subscribe(card => {
       this._advantages = card.advantages;
     });
@@ -58,6 +60,11 @@ export class SharedAnswerModalComponent implements OnInit {
       this._modalAnswer.id = this._modalAnswer._id;
       this._answerService.save(this._modalAnswer._id, this._modalAnswer);
     }
+  }
+
+  public buildImageUrl(country: string): string {
+    if (country) return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+    return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
   }
 
   public close() {
