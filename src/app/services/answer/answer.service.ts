@@ -38,4 +38,10 @@ export class AnswerService {
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public changeStatus(answerId: string, status: string): Observable<any> {
+    return this._http.post(`/answer/${answerId}/changeStatus`, { newStatus: status })
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
 }

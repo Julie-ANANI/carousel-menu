@@ -133,6 +133,30 @@
       </div>
     </div>
     <div class="modal-footer">
+      <div *ngIf="adminMode">
+
+      </div>
+      <button class="btn btn-error"
+              *ngIf="modalAnswer.status === 'SUBMITTED' || modalAnswer.status === 'TO_COMPLETE'"
+              (click)="changeStatus('REJECTED')">
+        <i class="fa fa-trash"></i> Rejeter
+      </button>
+      <button class="btn btn-warning"
+              *ngIf="modalAnswer.status === 'SUBMITTED' || modalAnswer.status === 'TO_COMPLETE' || modalAnswer.status === 'REJECTED' || (modalAnswer.status === 'DRAFT' && modalAnswer.professional.email)"
+              (click)="changeStatus('TO_COMPLETE')">
+        <i class="fa fa-rocket"></i> À compléter
+      </button>
+      <button class="btn btn-success"
+              *ngIf="modalAnswer.status !== 'VALIDATED' && modalAnswer.professional.email"
+              (click)="changeStatus('VALIDATED')">
+        <i class="fa fa-check"></i> Valider
+      </button>
+      <button class="btn btn-error"
+              *ngIf="modalAnswer.status === 'VALIDATED' && modalAnswer.professional.email"
+              (click)="changeStatus('SUBMITTED')">
+        <i class="fa fa-minus"></i> Invalider
+      </button>
+      <button *ngIf="adminMode" class="btn btn-primary" (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>
       <button class="btn btn-default" (click)="close()">{{ 'MARKET_REPORT.POPUP.BACK' | translate }}</button>
     </div>
   </div>
