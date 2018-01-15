@@ -27,6 +27,7 @@ import { LatexService } from './services/latex/latex.service';
 import { EmailService } from './services/email/email.service';
 import { SearchService } from './services/search/search.service';
 import { PresetService } from './services/preset/preset.service';
+import { AnswerService } from './services/answer/answer.service';
 import { CampaignResolver } from './resolvers/campaign.resolver';
 import { InnovationResolver } from './resolvers/innovation.resolver';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
@@ -72,6 +73,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
     ShareService,
     SearchService,
     PresetService,
+    AnswerService,
     {
       provide: Http,
       useFactory: httpFactory,
