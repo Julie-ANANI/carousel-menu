@@ -2,6 +2,26 @@
   border-bottom: 2px solid #0B90C6;
 }
 
+.modal {
+  color: #878787;
+}
+
+.modal-lg {
+  .modal-overlay {
+    background: rgba(248, 249, 250, 0.75);
+  }
+
+  .modal-container {
+    max-width: 80%;
+    box-shadow: 0 0.2rem 0.5rem rgba(69, 77, 93, 0.3);
+
+    .modal-body {
+      max-height: 60vh;
+    }
+  }
+}
+
+
 .flex {
   display: flex;
   flex-direction: row;
