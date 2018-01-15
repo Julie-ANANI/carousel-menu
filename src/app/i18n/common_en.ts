@@ -38,6 +38,7 @@ export const COMMON = {
   'JOBTITLE': 'Job title',
   'TYPE': 'Type',
   'DOMAIN': 'Domain',
+  'COUNTRY': 'Country',
 
   'REQUIRED': {
     'FIRSTNAME': 'Firstname is required',

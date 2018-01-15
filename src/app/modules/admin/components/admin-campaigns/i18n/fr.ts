@@ -7,5 +7,10 @@ export const CAMPAIGNS = {
   'SEARCH': 'Recherche',
   'PROS': 'Pros',
   'ANSWERS': 'Réponses',
-  'EMAIL_CONFIDENCE': 'Indice de confiance'
+  'EMAIL_CONFIDENCE': 'Indice de confiance',
+  'VALIDATED': 'Réponses validées',
+  'SUBMITTED': 'Réponses en attente de validation',
+  'TO_COMPLETE': 'Réponses à compléter',
+  'DRAFTS': 'Brouillons',
+  'REJECTED': 'Réponses rejetées'
 };
