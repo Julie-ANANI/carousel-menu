@@ -3,7 +3,7 @@
 
   <h1 id="title">{{infographics.title}}</h1>
   <p class="subtitle">{{ 'MARKET_REPORT.TITLE' | translate }}</p>
-  <div *ngIf="authService.isAdmin" class="admin-buttons">
+  <div *ngIf="authService.adminLevel > 2" class="admin-buttons">
     <button type="button"
             class="btn btn-lg btn-primary"
             (click)="recalculateSynthesis()"
