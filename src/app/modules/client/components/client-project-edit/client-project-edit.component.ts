@@ -140,6 +140,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
         }),
         comments: ['']
       }),
+      preset: [undefined, Validators.required], //new
       patented: [undefined, Validators.required],
       projectStatus: [undefined, Validators.required],
       innovationCards: this._formBuilder.array([]),
@@ -337,6 +338,10 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
       this._project = res;
     });
     this._subscriptions.push(mediaSubs);
+  }
+
+  public setProjectType(event) {
+    console.log(event);
   }
 
   /**

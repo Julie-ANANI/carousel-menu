@@ -13,6 +13,13 @@ export const PROJECT_EDIT = {
       'LINE2': 'so it is prefectly ready to be published.'
     }
   },
+  'PRESET': {
+    'LABEL':'Project type',
+    'PLACEHOLDER': '',
+    'TYPE1':'Application discovery',
+    'TYPE2':'Market potential evaluation',
+    'TYPE3':'Business leads'
+  },
   'TARGETING': {
     'GEOGRAPHY': 'Geographical area',
     'ENTIRE_WORLD': 'Entire world',
