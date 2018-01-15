@@ -3,15 +3,15 @@
  */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { InnovationService } from './../../../../../services/innovation/innovation.service';
+import { InnovationService } from './../../../../services/innovation/innovation.service';
 
 @Component({
-  selector: 'market-report-modal',
-  templateUrl: 'shared-market-report-modal.component.html',
-  styleUrls: ['shared-market-report-modal.component.scss']
+  selector: 'shared-answer-modal',
+  templateUrl: 'shared-answer-modal.component.html',
+  styleUrls: ['shared-answer-modal.component.scss']
 })
 
-export class SharedMarketReportModalComponent implements OnInit {
+export class SharedAnswerModalComponent implements OnInit {
 
   private _advantages: string[];
   private _modalAnswer: any;
