@@ -1,27 +1,26 @@
-<section id={{id}}>
-  <h2>{{ 'MARKET_REPORT.' + i18n + '.TITLE' | translate }}</h2>
+<section id={{info.id}}>
+  <h2>{{ info.title[lang] }}</h2>
 
   <div class="white-frame">
     <div class="flex-container">
       <!--======= Pie Chart =======-->
       <market-report-piechart
-        *ngIf="pie"
+        *ngIf="info.controlType == 'radio'"
         [pieChartData]="chartValues"
-        [configuration]="getLevels()"
         [percentage]="info.percentage"
       ></market-report-piechart>
       <!--======= ou Encadré Bleu =======-->
       <market-report-bluesquare
-        *ngIf="!pie"
+        *ngIf="info.controlType != 'radio'"
         [numberFocus]="info.numberFocus"
-        [i18n]="i18n"
         [percentage]="info.percentage"
-        [id]="id"
+        [subtitle]="info.subtitle[lang]"
+        [id]="info.id"
       ></market-report-bluesquare>
 
       <!--======= Conclusion =======-->
       <div class="umi-synthesis">
-        <p class="title">{{ 'MARKET_REPORT.' + i18n + '.QUESTION' | translate }}</p>
+        <p class="title">{{ info.label[lang] }}</p>
         <text-zone [elementId]="conclusionId"
                    [readonly]="readonly"
                    [data]="info.conclusion || ''"
@@ -30,14 +29,14 @@
     </div>
 
     <!--======= Map du monde =======-->
-    <div class="bloc" *ngIf="id === 'professionals'">
+    <div class="bloc" *ngIf="info.id === 'professionals'">
       <div class="map centered" width="684" height="339">
         <world-map [countries]="info.data" [color]="'#0B90C6'"></world-map>
       </div>
     </div>
 
     <!--======= Scores =======-->
-    <div class="bloc" *ngIf="id === 'marketPotential'">
+    <div class="bloc" *ngIf="info.controlType === 'scale'">
       <div class="column-graph flex-container">
         <div *ngFor="let score of info.data; let i = index"
              class="vertical-bar number{{score.value}}">
@@ -50,7 +49,7 @@
     </div>
 
     <!--======= Prix =======-->
-    <div class="bloc" id="prices" *ngIf="info.average && id === 'prices'">
+    <div class="bloc" *ngIf="info.average && info.controlType === 'textbox'">
       <app-shared-infographics-prices [rawData]="info.data"></app-shared-infographics-prices>
 
       <div class="average">Moyenne : {{info.average}}€</div>
@@ -72,7 +71,7 @@
     <div class="bloc details" *ngIf="showDetails">
 
       <!--======= Liste des pros =======-->
-      <div *ngIf="id === 'professionals'" class="prosList">
+      <div *ngIf="info.id === 'professionals'" class="prosList">
         <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
           <img [src]="getFlag(answer.country.notation)"
                alt="" width="37" height="25" class="user-flag">
@@ -97,14 +96,13 @@
 
       <!--======= Bar Chart =======-->
       <bar-chart
-        *ngIf="pie || id ==='interests'"
-        [levels]="getLevels()"
+        *ngIf="info.controlType == 'radio' || info.id ==='interests'"
         [stats]="info.pieChart"
         [number]="true">
       </bar-chart>
 
       <!--======= Avantages Clés =======-->
-      <div *ngIf="id === 'keyAdvantages'">
+      <div *ngIf="info.controlType === 'stars'">
         <table>
           <tr *ngFor="let advantage of advantages; let i = index">
             <td>{{advantage}}</td>
@@ -117,7 +115,7 @@
       <market-item-list
         [answers]="answers"
         [list]="info.data"
-        *ngIf="items"
+        *ngIf="info.controlType === 'list' || info.controlType === 'clearbit'"
         (modalAnswerChange)="seeAnswer($event)">
       </market-item-list>
 

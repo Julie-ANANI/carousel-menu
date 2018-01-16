@@ -85,52 +85,21 @@ export class SharedMarketReportComponent implements OnInit {
   public seeAnswer(answer: any) {
     this._modalAnswer = answer;
   }
-
+  
   public canShow(): boolean {
     return !!this._infographics;
+  
   }
-
-  get modalAnswer(): any {
-    return this._modalAnswer;
-  }
-
-  set modalAnswer(modalAnswer: any) {
-    this._modalAnswer = modalAnswer;
-  }
-
-  get innoid(): string {
-    return this._innoid;
-  }
-
-  get infographics(): any {
-    return this._infographics;
-  }
-
-  set calculating (value: boolean) {
-    this._calculating = value;
-  }
-
-  get calculating (): boolean {
-    return this._calculating;
-  }
-
-  set showDetails (value: boolean) {
-    this.showDetails = value;
-  }
-
-  get showDetails (): boolean {
-    return this._showDetails;
-  }
-
-  set editionMode (value: boolean) {
-    this._editionMode = value;
-  }
-
-  get editionMode (): boolean {
-    return this._editionMode;
-  }
-
-  get authService (): AuthService {
-    return this._authService;
-  }
+  get modalAnswer(): any { return this._modalAnswer; }
+  set modalAnswer(modalAnswer: any) { this._modalAnswer = modalAnswer; }
+  get innoid(): string { return this._innoid; }
+  get infographics(): any { return this._infographics; }
+  set calculating (value: boolean) { this._calculating = value; }
+  get calculating (): boolean { return this._calculating; }
+  set showDetails (value: boolean) { this.showDetails = value; }
+  get showDetails (): boolean { return this._showDetails; }
+  set editionMode (value: boolean) { this._editionMode = value; }
+  get lang(): any { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
+  get editionMode (): boolean { return this._editionMode; }
+  get authService (): AuthService { return this._authService; }
 };

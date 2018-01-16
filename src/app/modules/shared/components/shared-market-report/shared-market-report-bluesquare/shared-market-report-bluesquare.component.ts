@@ -14,8 +14,8 @@ import * as _ from 'lodash';
 export class SharedMarketReportBluesquareComponent implements OnInit {
 
   @Input() public numberFocus: number;
-  @Input() public i18n: string;
   @Input() public id: string;
+  @Input() public subtitle: string;
   @Input() public percentage: number;
 
   constructor() { }
