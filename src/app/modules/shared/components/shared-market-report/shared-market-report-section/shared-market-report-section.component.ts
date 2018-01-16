@@ -89,7 +89,12 @@ export class SharedMarketReportSectionComponent implements OnInit {
     console.log(savedObject);
     this._innovationService.updateSynthesis(this.innoid, savedObject)
       .subscribe(data => {
-        this.info.conclusion = data.infographics[this.info.id]['conclusion'];
+        if (this.info.id === 'professionals') {
+          this.info.conclusion = data.infographics.professionals.conclusion;
+        } else {
+          const questionIndex = _.findIndex(data.infographics.questions, (q: any) => q.id === this.info.id);
+          if (questionIndex > -1) this.info.conclusion = data.infographics.questions[questionIndex].conclusion;
+        }
         //Saved
         this._isSaving = false;
       });
