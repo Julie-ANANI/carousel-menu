@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   apiUrl: 'https://dev.umi.us/api',
-  companyName: 'SpaceX',
-  domain: 'sx',
-  innovationUrl: 'https://sx.umi.us'
+  companyName: 'Airbus',
+  domain: 'airbus1',
+  innovationUrl: 'https://airbus.umi.us'
 };

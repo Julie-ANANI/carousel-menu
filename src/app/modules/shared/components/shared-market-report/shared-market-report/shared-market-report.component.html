@@ -1,4 +1,4 @@
-<market-report-modal [(modalAnswer)]="modalAnswer" [innoid]="innoid"></market-report-modal>
+<shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="innoid"></shared-answer-modal>
 <div class="market-report" *ngIf="canShow()">
 
   <h1 id="title">{{infographics.title}}</h1>
@@ -56,8 +56,6 @@
     <div class="content">
       <!-- La carte du monde et la liste des pros -->
       <market-report-section
-        [id]="'professionals'"
-        [i18n]="'PROFESSIONAL'"
         [info]="infographics.professionals"
         [answers]="infographics.answers"
         [showDetails]="showDetails"
