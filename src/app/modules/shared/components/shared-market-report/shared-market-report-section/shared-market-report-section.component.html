@@ -77,21 +77,21 @@
           <img [src]="getFlag(answer.country.notation)"
                alt="" width="37" height="25" class="user-flag">
 
-          <p class="user-name" *ngIf="answer.professional.profileUrl">
+          <p class="user-name" *ngIf="answer.professional && answer.professional.profileUrl">
             <a target="_blank">
               {{answer.professional.firstName}} {{answer.professional.lastName}}
             </a>
           </p>
-          <p class="user-name" *ngIf="!answer.professional.profileUrl">
+          <p class="user-name" *ngIf="answer.professional && !answer.professional.profileUrl">
             {{answer.professional.firstName}} {{answer.professional.lastName}}
             <img src="http://res.cloudinary.com/umi/image/upload/c_scale,h_15/app/star.svg" alt="" width="15" height="15" *ngIf="answer.follow" attr.tooltip-placement="top" attr.tooltip="{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}">
           </p>
 
           <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job}}</p>
-          <p *ngIf="answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional.company}}</p>
+          <p *ngIf="answer.professional && answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional ? answer.professional.company : ""}}</p>
 
           <span (click)="seeAnswer(answer)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
-          <a href="mailto: {{answer.professional.email}}">{{answer.professional.email}}</a>
+          <a href="mailto: {{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ""}}</a>
         </div>
       </div>
 
