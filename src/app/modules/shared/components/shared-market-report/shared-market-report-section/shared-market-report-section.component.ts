@@ -22,31 +22,8 @@ export class SharedMarketReportSectionComponent implements OnInit {
   private _chartValues: any;
   private _conclusionId: string;
   private _innoid: string;
-  private _selectLangInput = 'en';
   private _advantages: string[];
-  private _configurations = {
-    'relevantProblematic':{
-      'fr': ['Non', 'Eventuellement', 'Oui', 'Cruciale'],
-      'en': ['Non-existent', 'Possibly', 'Frequently', 'Critical']
-    },
-    'productAnsweringProblematic': {
-      'en': ['No', 'Possibly', 'Likely', 'Yes'],
-      'fr': ['Non', 'Partiellement', 'Bien', 'Très bien']
-    },
-    'productInterests': {
-      'en': ['No – less relevant', 'Equivalent', 'Yes – A few advantages', 'Absolutely'],
-      'fr': ['Non', 'Peut-être', 'Oui', 'Indiscutablement']
-    },
-    'interests': {
-      'en': ['They want to be a customer', 'They wish to participate in the development', 'They want to distribute the solution'],
-      'fr': ['Ils souhaitent être client', 'Ils souhaitent participer au développement', 'Ils souhaitent distribuer la solution']
-    }
-  };
 
-  @Input() public id: string;
-  @Input() public i18n: string;
-  @Input() public pie: boolean;
-  @Input() public items: boolean;
   @Input() set showDetails(value: boolean) {
     this._showDetails = value;
   }
@@ -66,10 +43,9 @@ export class SharedMarketReportSectionComponent implements OnInit {
     this._route.params.subscribe(params => {
       this.innoid = params['innovationId'];
     });
-    this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
-    this.conclusionId = `${this.id}Conclusion`;
+    this.conclusionId = `${this.info.id}Conclusion`;
 
-    if ((this.pie || this.id === 'interests') && this.info.pieChart) {
+    if (this.info.pieChart) {
       let data = SharedMarketReportSectionComponent.getChartValues(this.info.pieChart);
       this._chartValues = [{
         'data': data || [],
@@ -77,13 +53,13 @@ export class SharedMarketReportSectionComponent implements OnInit {
       }];
     }
 
-    switch(this.id) {
-      case 'keyAdvantages':
-        this._innovationService.getInnovationCardByLanguage(this.innoid, this._selectLangInput).subscribe(card => {
+    switch(this.info.controlType) {
+      case 'stars':
+        this._innovationService.getInnovationCardByLanguage(this.innoid, this.lang).subscribe(card => {
           this._advantages = card.advantages;
         });
         break;
-      case 'marketPotential':
+      case 'scale':
         // Calcul du score max
         const max = _.maxBy(this.info.data, 'count') || {};
         this._maxCountScore = max['count'] || 0;
@@ -107,13 +83,13 @@ export class SharedMarketReportSectionComponent implements OnInit {
     //Saving
     this._isSaving = true;
     const savedObject = {};
-    savedObject[this.id] = {
+    savedObject[this.info.id] = {
       conclusion: event['content']
     };
     console.log(savedObject);
     this._innovationService.updateSynthesis(this.innoid, savedObject)
       .subscribe(data => {
-        this.info.conclusion = data.infographics[this.id]['conclusion'];
+        this.info.conclusion = data.infographics[this.info.id]['conclusion'];
         //Saved
         this._isSaving = false;
       });
@@ -132,47 +108,17 @@ export class SharedMarketReportSectionComponent implements OnInit {
     return `${Math.round(value / this._maxCountScore * 100)}%`;
   }
 
-  public getLevels(): Array<any> {
-    return this.configurations[this.id][this._selectLangInput] || [];
-  }
-
   public getFlag(country: string): string {
     return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
   }
 
-  get advantages(): string[] {
-    return this._advantages;
-  }
-
-  get readonly(): boolean {
-    return this._readonly;
-  }
-
-  get showDetails(): boolean {
-    return this._showDetails;
-  }
-
-  get innoid(): string {
-    return this._innoid;
-  }
-
-  set innoid(value: string) {
-    this._innoid = value;
-  }
-
-  get configurations(): any {
-    return this._configurations;
-  }
-
-  get chartValues(): any {
-    return this._chartValues;
-  }
-
-  set conclusionId(value: string) {
-    this._conclusionId = value;
-  }
-
-  get conclusionId(): string {
-    return this._conclusionId;
-  }
+  get advantages(): string[] { return this._advantages; }
+  get readonly(): boolean { return this._readonly; }
+  get showDetails(): boolean { return this._showDetails; }
+  get innoid(): string { return this._innoid; }
+  set innoid(value: string) { this._innoid = value; }
+  get chartValues(): any { return this._chartValues; }
+  set conclusionId(value: string) { this._conclusionId = value; }
+  get conclusionId(): string { return this._conclusionId; }
+  get lang(): any { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
 }

@@ -1,1 +1,28 @@
-<h1>{{ 'CAMPAIGNS.ANSWERS' | translate }}</h1>
+<shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="campaign.innovation._id" [adminMode]="true"></shared-answer-modal>
+
+<h2>{{ total }} {{ 'CAMPAIGNS.ANSWERS' | translate }}</h2>
+
+<div class="bg-success answers-header">
+  <h5>{{validatedAnswers.length}} {{ 'CAMPAIGNS.VALIDATED' | translate }}</h5>
+</div>
+<app-admin-answers-list [answers]="validatedAnswers" (modalAnswerChange)="seeAnswer($event)"></app-admin-answers-list>
+
+<div class="bg-warning answers-header">
+  <h5>{{submittedAnswers.length}} {{ 'CAMPAIGNS.SUBMITTED' | translate }}</h5>
+</div>
+<app-admin-answers-list [answers]="submittedAnswers" (modalAnswerChange)="seeAnswer($event)"></app-admin-answers-list>
+
+<div class="bg-primary answers-header">
+  <h5>{{toCompleteAnswers.length}} {{ 'CAMPAIGNS.TO_COMPLETE' | translate }}</h5>
+</div>
+<app-admin-answers-list [answers]="toCompleteAnswers" (modalAnswerChange)="seeAnswer($event)"></app-admin-answers-list>
+
+<div class="bg-dark answers-header">
+  <h5>{{draftAnswers.length}} {{ 'CAMPAIGNS.DRAFTS' | translate }}</h5>
+</div>
+<app-admin-answers-list [answers]="draftAnswers" (modalAnswerChange)="seeAnswer($event)"></app-admin-answers-list>
+
+<div class="bg-error answers-header">
+  <h5>{{rejectedAnswers.length}} {{ 'CAMPAIGNS.REJECTED' | translate }}</h5>
+</div>
+<app-admin-answers-list [answers]="rejectedAnswers" (modalAnswerChange)="seeAnswer($event)"></app-admin-answers-list>

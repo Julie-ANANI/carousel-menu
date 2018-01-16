@@ -34,6 +34,7 @@ import { AdminCampaignProsComponent } from './components/admin-campaigns/admin-c
 import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admin-campaign-history/admin-campaign-history.component';
 import { AdminCampaignSearchComponent } from './components/admin-campaigns/admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admin-campaign-answers/admin-campaign-answers.component';
+import { AdminAnswersListComponent } from './components/admin-answers-list/admin-answers-list.component';
 
 @NgModule({
   imports: [
@@ -73,7 +74,8 @@ import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admi
     AdminCampaignProsComponent,
     AdminCampaignHistoryComponent,
     AdminCampaignSearchComponent,
-    AdminCampaignAnswersComponent
+    AdminCampaignAnswersComponent,
+    AdminAnswersListComponent
   ]
 })
 export class AdminModule {

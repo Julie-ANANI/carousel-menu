@@ -3,7 +3,7 @@
 
   <h1 id="title">{{infographics.title}}</h1>
   <p class="subtitle">{{ 'MARKET_REPORT.TITLE' | translate }}</p>
-  <div *ngIf="authService.adminLevel > 1" class="admin-buttons">
+  <div *ngIf="authService.adminLevel > 2" class="admin-buttons">
     <button type="button"
             class="btn btn-lg btn-primary"
             (click)="recalculateSynthesis()"
@@ -38,79 +38,13 @@
     <ul>
       <li>
         <a pageScroll href="#professionals">
-          {{ 'MARKET_REPORT.PROFESSIONAL.SIDEBAR' | translate }}
+          {{ infographics.professionals.title[lang] }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
-      <li>
-        <a pageScroll href="#relevantProblematic">
-          {{ 'MARKET_REPORT.MARKET_NEED.SIDEBAR' | translate }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a pageScroll href="#productAnsweringProblematic">
-          {{ 'MARKET_REPORT.RELEVANCE.SIDEBAR' | translate }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a pageScroll href="#competitors">
-          {{ 'MARKET_REPORT.ACTUAL_COMPETITION.SIDEBAR' | translate }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a pageScroll href="#productInterests">
-          {{ 'MARKET_REPORT.DIFFERENTIATION.SIDEBAR' | translate }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a pageScroll href="#keyAdvantages">
-          {{ 'MARKET_REPORT.BENEFIT.SIDEBAR' | translate }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a pageScroll href="#strengths">
-          {{ 'MARKET_REPORT.STRONG.SIDEBAR' | translate }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a pageScroll href="#objections">
-          {{ 'MARKET_REPORT.WEAK.SIDEBAR' | translate }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a pageScroll href="#prices">
-          {{ 'MARKET_REPORT.PRICE.SIDEBAR' | translate }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a pageScroll href="#applications">
-          {{ 'MARKET_REPORT.NEW_APPLICATION.SIDEBAR' | translate }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a pageScroll href="#interests">
-          {{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.SIDEBAR' | translate }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a pageScroll href="#partners">
-          {{ 'MARKET_REPORT.POTENTIAL_PARTNER.SIDEBAR' | translate }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a pageScroll href="#marketPotential">
-          {{ 'MARKET_REPORT.MARKET_POTENTIAL.SIDEBAR' | translate }}
+      <li *ngFor="let question of infographics.questions">
+        <a pageScroll [href]="'#' + question.id">
+          {{ question.title[lang] }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
       </li>
@@ -120,9 +54,7 @@
   <div class="flex-container">
     <div class="sidebar"></div>
     <div class="content">
-      <!-- *********************************************************
-              Liste des professionnels
-      ************************************************************** -->
+      <!-- La carte du monde et la liste des pros -->
       <market-report-section
         [id]="'professionals'"
         [i18n]="'PROFESSIONAL'"
@@ -133,172 +65,15 @@
         (modalAnswerChange)="seeAnswer($event)">
       </market-report-section>
 
-      <!-- *********************************************************
-              Besoin du marché
-      ************************************************************** -->
-
-      <market-report-section
-        [id]="'relevantProblematic'"
-        [i18n]="'MARKET_NEED'"
-        [info]="infographics.relevantProblematic"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!editionMode"
-        [pie]="true"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
-
-      <!-- *********************************************************
-                      Pertinence de la solution
-      ************************************************************** -->
-
-      <market-report-section
-        [id]="'productAnsweringProblematic'"
-        [i18n]="'RELEVANCE'"
-        [info]="infographics.productAnsweringProblematic"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!editionMode"
-        [pie]="true"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
-
-      <!-- *********************************************************
-              Concurrence actuelle
-      ************************************************************** -->
-
-      <market-report-section
-        [id]="'competitors'"
-        [i18n]="'ACTUAL_COMPETITION'"
-        [info]="infographics.competitors"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!editionMode"
-        [items]="true"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
-
-      <!-- *********************************************************
-              Différenciation
-      ************************************************************** -->
-
-
-      <market-report-section
-        [id]="'productInterests'"
-        [i18n]="'DIFFERENTIATION'"
-        [info]="infographics.productInterests"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!editionMode"
-        [pie]="true"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
-
-      <!-- *********************************************************
-              Key Advantages
-      ************************************************************** -->
-      <market-report-section
-        [id]="'keyAdvantages'"
-        [i18n]="'BENEFIT'"
-        [info]="infographics.keyAdvantages"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!editionMode"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
-
-      <!-- *********************************************************
-              Points forts
-      ************************************************************** -->
-      <market-report-section
-        [id]="'strengths'"
-        [i18n]="'STRONG'"
-        [info]="infographics.strengths"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!editionMode"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
-
-      <!-- *********************************************************
-          Objections
-      ************************************************************** -->
-      <market-report-section
-        [id]="'objections'"
-        [i18n]="'WEAK'"
-        [info]="infographics.objections"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!editionMode"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
-
-      <!-- *********************************************************
-                      Recommandations de prix
-      ************************************************************** -->
-      <market-report-section
-        [id]="'prices'"
-        [i18n]="'PRICE'"
-        [info]="infographics.prices"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!editionMode"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
-
-      <!-- *********************************************************
-             Nouvelles applications
-      ************************************************************** -->
-      <market-report-section
-        [id]="'applications'"
-        [i18n]="'NEW_APPLICATION'"
-        [info]="infographics.applications"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!editionMode"
-        [items]="true"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
-
-      <!-- *********************************************************
-                      Marques d’intérêt
-      ************************************************************** -->
-      <market-report-section
-        [id]="'interests'"
-        [i18n]="'EXPRESSION_OF_INTEREST'"
-        [info]="infographics.interests"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!editionMode"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
-
-      <!-- *********************************************************
-                      Partenaires potentiels
-      ************************************************************** -->
-      <market-report-section
-        [id]="'partners'"
-        [i18n]="'POTENTIAL_PARTNER'"
-        [info]="infographics.partners"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!editionMode"
-        [items]="true"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
-
-      <!-- *********************************************************
-              Potentiel marché
-      ************************************************************** -->
-      <market-report-section
-        [id]="'marketPotential'"
-        [i18n]="'MARKET_POTENTIAL'"
-        [info]="infographics.marketPotential"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!editionMode"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
-    </div>
+      <!-- Les autres questions -->
+      <div *ngFor="let question of infographics.questions">
+        <market-report-section
+          [info]="question"
+          [answers]="infographics.answers"
+          [showDetails]="showDetails"
+          [readonly]="!editionMode"
+          (modalAnswerChange)="seeAnswer($event)">
+        </market-report-section>
+      </div>
   </div>
 </div>

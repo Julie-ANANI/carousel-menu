@@ -1,37 +1,33 @@
 <div class="container">
-  <div class="columns">
-    <div class="column col-10 col-mx-auto">
-      <h2>{{ campaign.title }}</h2>
+  <h2>{{ campaign.title }}</h2>
 
-      <ul class="tab tab-block">
-        <li class="tab-item" *ngFor="let tab of tabs">
-          <a [ngClass]="{'active': currentPage == tab}" [routerLink]="baseUrl + tab">
-            {{ 'CAMPAIGNS.' + tab.toUpperCase() | translate }}
-          </a>
-        </li>
-      </ul>
+  <ul class="tab tab-block">
+    <li class="tab-item" *ngFor="let tab of tabs">
+      <a [ngClass]="{'active': currentPage == tab}" [routerLink]="baseUrl + tab">
+        {{ 'CAMPAIGNS.' + tab.toUpperCase() | translate }}
+      </a>
+    </li>
+  </ul>
 
-      <div class="tabs">
-        <div class="tab-content" [hidden]="currentPage != 'details'">
-          <app-admin-campaign-details></app-admin-campaign-details>
-        </div>
+  <div class="tabs">
+    <div class="tab-content" *ngIf="currentPage == 'details'">
+      <app-admin-campaign-details></app-admin-campaign-details>
+    </div>
 
-        <div class="tab-content" [hidden]="currentPage != 'history'">
-          <app-admin-campaign-history></app-admin-campaign-history>
-        </div>
+    <div class="tab-content" *ngIf="currentPage == 'history'">
+      <app-admin-campaign-history></app-admin-campaign-history>
+    </div>
 
-        <div class="tab-content" [hidden]="currentPage != 'search'">
-          <app-admin-campaign-search></app-admin-campaign-search>
-        </div>
+    <div class="tab-content" *ngIf="currentPage == 'search'">
+      <app-admin-campaign-search></app-admin-campaign-search>
+    </div>
 
-        <div class="tab-content" [hidden]="currentPage != 'pros'">
-          <app-admin-campaign-pros></app-admin-campaign-pros>
-        </div>
+    <div class="tab-content" *ngIf="currentPage == 'pros'">
+      <app-admin-campaign-pros></app-admin-campaign-pros>
+    </div>
 
-        <div class="tab-content" [hidden]="currentPage != 'answers'">
-          <app-admin-campaign-answers></app-admin-campaign-answers>
-        </div>
-      </div>
+    <div class="tab-content" *ngIf="currentPage == 'answers'">
+      <app-admin-campaign-answers></app-admin-campaign-answers>
     </div>
   </div>
 </div>
