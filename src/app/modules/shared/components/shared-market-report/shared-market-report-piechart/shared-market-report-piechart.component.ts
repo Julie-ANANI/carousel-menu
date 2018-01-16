@@ -14,7 +14,7 @@ import * as _ from 'lodash';
 export class SharedMarketReportPiechartComponent implements OnInit {
 
   @Input() public pieChartData: any;
-  @Input() public configuration: any;
+  @Input() public labels: string[];
   @Input() public percentage: number;
 
   constructor() { }

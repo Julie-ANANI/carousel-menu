@@ -5,13 +5,14 @@
     <div class="flex-container">
       <!--======= Pie Chart =======-->
       <market-report-piechart
-        *ngIf="info.controlType == 'radio'"
+        *ngIf="info.pieChart"
         [pieChartData]="chartValues"
+        [labels]="info.labels ? info.labels[lang] : []"
         [percentage]="info.percentage"
       ></market-report-piechart>
       <!--======= ou Encadré Bleu =======-->
       <market-report-bluesquare
-        *ngIf="info.controlType != 'radio'"
+        *ngIf="!info.pieChart"
         [numberFocus]="info.numberFocus"
         [percentage]="info.percentage"
         [subtitle]="info.subtitle[lang]"
