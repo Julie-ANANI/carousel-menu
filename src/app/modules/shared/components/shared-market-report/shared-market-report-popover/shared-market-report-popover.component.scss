@@ -19,7 +19,8 @@
   ul li {
     border-bottom: 1px solid #E0E0E0;
     padding-bottom: 15px;
-    margin-bottom: 15px;
+    margin: 15px;
+    list-style: none;
 
     .user-flag {
       margin-right: 10px;
@@ -59,7 +60,7 @@
 
     &:last-child {
       border-bottom: 0;
-      padding: 0;
+      padding: 20px 0 0 0;
       margin: 0;
     }
   }
