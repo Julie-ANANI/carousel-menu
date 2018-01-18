@@ -11,5 +11,10 @@ export const PROJECT = {
     'TWITTER': 'Share on Twitter',
     'FACEBOOK': 'Share on Facebook',
     'MAIL': 'Share by email',
-  }
+  },
+  'CAMPAIGNS': 'Campaigns',
+  'SETTINGS': 'Settings',
+  'CARDS': 'Innovation Cards',
+  'SYNTHESIS': 'Synthesis',
+  'MAIL_CONFIG': 'Email Configuration'
 };

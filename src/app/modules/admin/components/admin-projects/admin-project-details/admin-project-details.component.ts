@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { UserService } from '../../../../../services/user/user.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
@@ -14,8 +14,11 @@ import { NotificationsService } from "angular2-notifications/dist";
 export class AdminProjectsDetailsComponent implements OnInit {
 
   private _projectInformation: any = {};
+  private _tabs = ['settings', 'cards', 'campaigns', 'synthesis', 'mail_config'];
+  private _currentPage = 'settings';
 
   constructor(private _activatedRoute: ActivatedRoute,
+              private _router: Router,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _notificationsService: NotificationsService,
@@ -23,15 +26,9 @@ export class AdminProjectsDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
-    this._activatedRoute.params.subscribe(params => {
-
-      this._innovationService.get(params.projectId)
-          .subscribe(innovation => {
-                this._projectInformation = innovation;
-              },
-              error => this._notificationsService.error('ERROR', error.message)
-          );
-    });
+    this._projectInformation = this._activatedRoute.snapshot.data['innovation'];
+    const url = this._router.routerState.snapshot.url.split('/');
+    if (url && url[5]) this._currentPage = url[5];
   }
 
   get innovationTitle(): string {
@@ -76,4 +73,7 @@ export class AdminProjectsDetailsComponent implements OnInit {
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
+  get baseUrl(): any { return `/admin/projects/project/${this._projectInformation._id}/`; }
+  get tabs(): any { return this._tabs; }
+  get currentPage() { return this._currentPage; }
 }

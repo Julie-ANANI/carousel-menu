@@ -23,6 +23,7 @@ import { AdminPresetNewComponent } from '../admin/components/admin-presets/admin
 import { AdminPresetEditComponent } from '../admin/components/admin-presets/admin-preset-edit/admin-preset-edit.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
 import { CampaignResolver } from '../../resolvers/campaign.resolver';
+import { InnovationResolver } from '../../resolvers/innovation.resolver';
 
 const adminRoutes: Routes = [
   {
@@ -46,7 +47,13 @@ const adminRoutes: Routes = [
         path: 'projects',
         children: [
           { path: '', component: AdminProjectsComponent, pathMatch: 'full' },
-          { path: 'project/:projectId', component: AdminProjectsDetailsComponent, pathMatch: 'full' }
+          { path: 'project/:projectId', resolve: { innovation : InnovationResolver }, children: [
+            { path: 'settings', component: AdminProjectsDetailsComponent,pathMatch: 'full'},
+            { path: 'cards', component: AdminProjectsDetailsComponent,pathMatch: 'full'},
+            { path: 'synthesis', component: AdminProjectsDetailsComponent,pathMatch: 'full'},
+            { path: 'campaigns', component: AdminProjectsDetailsComponent,pathMatch: 'full'},
+            { path: 'mail_config', component: AdminProjectsDetailsComponent,pathMatch: 'full'}
+          ]}
         ]
       },
       {
