@@ -97,8 +97,9 @@
 
       <!--======= Bar Chart =======-->
       <bar-chart
-        *ngIf="info.controlType == 'radio' || info.id ==='interests'"
+        *ngIf="info.pieChart"
         [stats]="info.pieChart"
+        [labels]="info.labels ? info.labels[lang] : []"
         [number]="true">
       </bar-chart>
 

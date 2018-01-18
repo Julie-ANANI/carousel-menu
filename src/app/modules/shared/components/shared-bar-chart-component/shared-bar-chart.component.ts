@@ -11,7 +11,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 export class SharedBarChartComponent implements OnInit {
 
-  @Input() public levels: any;
+  @Input() public labels: any;
   @Input() public stats: any;
   @Input() public number: any;
 
@@ -22,7 +22,7 @@ export class SharedBarChartComponent implements OnInit {
   ngOnInit() {
     if(!this.stats) {
       this.stats = {};
-      this.levels.forEach((val, index)=>{
+      this.labels.forEach((val, index)=>{
         this.stats[index+1] = {
           percentage: 0,
           count: 0
