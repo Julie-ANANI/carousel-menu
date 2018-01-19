@@ -19,15 +19,7 @@ export class ClientProjectComponent implements OnInit {
 
   ngOnInit() {
     if (!this.project) {
-      this._activatedRoute.params.subscribe(params => {
-        const innovationId = params['innovationId'];
-
-        this._innovationService.get(innovationId).subscribe(innovation => {
-            this.project = innovation;
-          },
-          error => this._notificationsService.error('ERROR.ERROR', error.message)
-        );
-      });
+      this.project = this._activatedRoute.snapshot.data['innovation'];
     }
   }
 }

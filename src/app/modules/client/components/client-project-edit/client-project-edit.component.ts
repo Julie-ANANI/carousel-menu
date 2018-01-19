@@ -64,43 +64,28 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   ngOnInit() {
 
     this._buildForm();
+    this._project = this._activatedRoute.snapshot.data['innovation'];
 
-    const subs = this._activatedRoute.params.subscribe(params => {
-      const innovationId = params['innovationId'];
-      const subs = this._innovationService.get(innovationId).subscribe(innovation => {
-          this._project = innovation;
-          this.formData.patchValue(innovation);
+    this.formData.patchValue(this._project);
 
-          if (!this.canEdit) {
-            this.formData.disable();
-          }
-          for (const innovationCard of innovation.innovationCards) {
-            this._addInnovationCardWithData(innovationCard);
+    if (!this.canEdit) {
+      this.formData.disable();
+    }
+    for (const innovationCard of this._project.innovationCards) {
+      this._addInnovationCardWithData(innovationCard);
 
-          }
+    }
 
-          this.displayCountriesToExcludeSection = this.formData.get('settings').get('geography').get('exclude').value.length > 0;
-          this.displayCompanyToExcludeSection = this.formData.get('settings').get('companies').get('exclude').value.length > 0;
-          this.displayPersonsToExcludeSection = this.formData.get('settings').get('professionals').get('exclude').value.length > 0;
+    this.displayCountriesToExcludeSection = this.formData.get('settings').get('geography').get('exclude').value.length > 0;
+    this.displayCompanyToExcludeSection = this.formData.get('settings').get('companies').get('exclude').value.length > 0;
+    this.displayPersonsToExcludeSection = this.formData.get('settings').get('professionals').get('exclude').value.length > 0;
 
-          const formSubs = this.formData.valueChanges
-            .distinctUntilChanged()
-            .subscribe(newVersion => {
-              this.shouldSave = true;
-            });
-          this._subscriptions.push(formSubs);
-        },
-        errorTranslateCode => {
-          const translateSubs = this._translateService.get(errorTranslateCode).subscribe(errorMessage =>
-            this._notificationsService.error('ERROR.ERROR', errorMessage)
-          );
-          this._subscriptions.push(translateSubs);
-          this._router.navigate(['/projects']);
-        }
-      );
-      this._subscriptions.push(subs);
-    });
-    this._subscriptions.push(subs);
+    const formSubs = this.formData.valueChanges
+      .distinctUntilChanged()
+      .subscribe(newVersion => {
+        this.shouldSave = true;
+      });
+    this._subscriptions.push(formSubs);
   }
 
   ngOnDestroy() {
