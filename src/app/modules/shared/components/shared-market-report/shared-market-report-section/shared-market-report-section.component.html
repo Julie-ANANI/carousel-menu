@@ -58,7 +58,7 @@
 
     <!--======= Bouton plier/déplier =======-->
     <button type="button" class="market-report-btn centered"
-            *ngIf="id!='marketPotential'"
+            *ngIf="info.id!='marketPotential'"
             [ngClass]="{'active': showDetails}"
             (click)="toggleDetails()">
       {{(showDetails ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
