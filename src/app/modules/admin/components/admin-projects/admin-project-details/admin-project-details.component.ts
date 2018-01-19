@@ -76,4 +76,5 @@ export class AdminProjectsDetailsComponent implements OnInit {
   get baseUrl(): any { return `/admin/projects/project/${this._projectInformation._id}/`; }
   get tabs(): any { return this._tabs; }
   get currentPage() { return this._currentPage; }
+  get project() { return this._projectInformation; }
 }
