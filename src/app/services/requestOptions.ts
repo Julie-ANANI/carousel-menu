@@ -15,9 +15,8 @@ export class RequestOptions extends BaseRequestOptions {
 
     if (options != null) {
       for (const option in options) {
-        if (options.hasOwnProperty(option)) {
-          const optionValue = options[option];
-          this[option] = optionValue;
+        if (this.hasOwnProperty(option)) {
+          this[option] = options[option];
         }
       }
     }

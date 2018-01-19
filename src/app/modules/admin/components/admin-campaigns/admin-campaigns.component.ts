@@ -37,13 +37,13 @@ export class AdminCampaignsComponent implements OnInit {
       );
   }
 
-  public newCampaign(cloneInfo) {
+  public newCampaign(cloneInfo?) {
     let newTitle = '';
     if (this._innovation && this._innovation.name) {
       newTitle = this._innovation.name;
     }
-    if (!newTitle) newTitle = 'Nouvelle campagne';
-    if (cloneInfo && cloneInfo.title) newTitle = cloneInfo.title;
+    if (!newTitle) { newTitle = 'Nouvelle campagne'; }
+    if (cloneInfo && cloneInfo.title) { newTitle = cloneInfo.title; }
 
     this._newCampaign = {
       'domain': environment.domain,
@@ -58,7 +58,7 @@ export class AdminCampaignsComponent implements OnInit {
       this._newCampaign.searchCriteria.clonedInfo = true;
       this._newCampaign.settings.clonedInfo = true;
     }
-    
+
     this._campaignService.create(this._newCampaign).subscribe(() => {
       this._notificationsService.success('SUCCESS', 'SUCCESS');
     }, error => {
