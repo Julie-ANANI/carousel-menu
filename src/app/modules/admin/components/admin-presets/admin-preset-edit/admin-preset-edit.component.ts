@@ -39,7 +39,7 @@ export class AdminPresetEditComponent implements OnInit, OnDestroy {
       const presetId = params['presetId'];
       const subs = this._presetService.get(presetId).subscribe(preset => {
         this._preset = preset;
-        this._addSectionConfig.initialData = preset.sections;
+        this._addSectionConfig.initialData = preset.sections || [];
         this.formData = this._formBuilder.group({
           sections: []
         });
