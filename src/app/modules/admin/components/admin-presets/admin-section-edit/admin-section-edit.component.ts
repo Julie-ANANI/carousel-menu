@@ -41,9 +41,13 @@ export class AdminSectionEditComponent implements OnInit, OnDestroy {
         this._section = section;
         this._addQuestionConfig.initialData = section.questions;
         this.formData = this._formBuilder.group({
-          title: this._formBuilder.group({
-            fr: [section.title ? section.title.fr || '' : '', Validators.required],
-            en: [section.title ? section.title.en || '' : '', Validators.required]
+          label: this._formBuilder.group({
+            fr: [section.label ? section.label.fr || '' : '', Validators.required],
+            en: [section.label ? section.label.en || '' : '', Validators.required]
+          }),
+          description: this._formBuilder.group({
+            fr: [section.description ? section.description.fr || '' : ''],
+            en: [section.description ? section.description.en || '' : '']
           }),
           questions: []
         });

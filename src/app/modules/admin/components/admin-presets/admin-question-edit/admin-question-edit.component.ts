@@ -83,7 +83,7 @@ export class AdminQuestionEditComponent implements OnInit, OnDestroy {
 
   buildOption(option?) {
     return this._formBuilder.group({
-      id: [option && option.id || ''],
+      identifier: [option && option.identifier || ''],
       label: this._formBuilder.group({
         fr: [option && option.label ? option.label.fr || '' : ''],
         en: [option && option.label ? option.label.en || '' : ''],
@@ -92,7 +92,7 @@ export class AdminQuestionEditComponent implements OnInit, OnDestroy {
   }
 
   addOption() {
-    this.options.push(this._formBuilder.group({id: '', label: { en: '', fr: ''}}));
+    this.options.push(this._formBuilder.group({identifier: '', label: { en: '', fr: ''}}));
   }
 
   removeOption(index) {
