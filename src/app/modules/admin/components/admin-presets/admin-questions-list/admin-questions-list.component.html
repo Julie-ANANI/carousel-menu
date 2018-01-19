@@ -23,7 +23,7 @@
     <tbody>
 
     <tr *ngFor="let question of questions">
-      <td><a [routerLink]="['/admin/questions/' + question._id + '/edit']">{{question.name}}</a></td>
+      <td><a [routerLink]="['/admin/questions/' + question._id + '/edit']">{{question.identifier}}</a></td>
       <td>{{question.domain}}</td>
       <td>{{question.created | date : dateFormat}}</td>
       <td>{{question.updated | date : dateFormat}}</td>

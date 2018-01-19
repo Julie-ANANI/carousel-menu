@@ -5,7 +5,7 @@
   <div class="container">
     <div class="columns">
       <div class="column col-10 col-mx-auto">
-        <h2>{{ question.name }}</h2>
+        <h2>{{ question.identifier }}</h2>
         <h5>{{ 'PRESETS.QUESTION.TYPE.' + question.controlType.toUpperCase() | translate }}</h5>
         <form novalidate [formGroup]="formData" class="form-horizontal">
           <label class="form-label h3">{{ "PRESETS.QUESTION.EDIT.LABEL" | translate }}</label>

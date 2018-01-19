@@ -96,10 +96,10 @@ export class AdminQuestionEditComponent implements OnInit, OnDestroy {
   }
 
   removeOption(index) {
-    const tmp = this.options.controls.splice(index, 1)
+    const tmp = this.options.controls.splice(index, 1);
     this.options.patchValue(tmp);
   }
-  
+
   set options(value: FormArray) { this._options = value; }
   get options(): FormArray { return this.formData.get('options') as FormArray; };
   get domSanitizer() { return this._domSanitizer; }

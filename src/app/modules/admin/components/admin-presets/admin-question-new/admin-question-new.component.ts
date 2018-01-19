@@ -15,7 +15,7 @@ export class AdminQuestionNewComponent implements OnInit, OnDestroy {
   private _subscriptions: ISubscription;
 
   public formData: FormGroup = this._formBuilder.group({
-    name: ['', Validators.required],
+    identifier: ['', Validators.required],
     controlType: ['', Validators.required]
   });
 
@@ -34,7 +34,7 @@ export class AdminQuestionNewComponent implements OnInit, OnDestroy {
   public onSubmit({value, valid}: { value: any, valid: boolean }) {
     const newQuestion = {
       domain: environment.domain,
-      name: value.name,
+      identifier: value.identifier,
       controlType: value.controlType
     };
 
