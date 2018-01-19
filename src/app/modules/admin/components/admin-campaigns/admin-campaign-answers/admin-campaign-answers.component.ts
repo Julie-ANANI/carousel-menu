@@ -57,7 +57,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   get modalAnswer(): any { return this._modalAnswer; }
   set modalAnswer(modalAnswer: any) { this._modalAnswer = modalAnswer; }
   get total(): number { return this._total; }
-  get campaign(): number { return this._campaign; }
+  get campaign(): any { return this._campaign; }
   get validatedAnswers(): any[] { return this._validatedAnswers; }
   get submittedAnswers(): any[] { return this._submittedAnswers; }
   get toCompleteAnswers(): any[] { return this._toCompleteAnswers; }
