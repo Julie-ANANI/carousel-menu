@@ -1,3 +1,51 @@
 <div>
   <strong class="question">{{ question.label[lang] }}</strong>
+  <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier]">
+    <div *ngSwitchCase="'radio'">
+      <p>{{ question.options[fullAnswer.answers[question.identifier] - 1]['label'][lang] }}</p>
+    </div>
+
+    <div *ngSwitchCase="'clearbit'">
+      <ul [hidden]="fullAnswer.answers[question.identifier]?.length === 0" class="list">
+        <li *ngFor="let competitor of fullAnswer.answers[question.identifier]">{{competitor.name}}</li>
+      </ul>
+    </div>
+
+    <div *ngSwitchCase="'list'">
+      <ul [hidden]="fullAnswer.answers[question.identifier]?.length === 0" class="list">
+        <li *ngFor="let application of fullAnswer.answers[question.identifier]">{{application.text}}</li>
+      </ul>
+    </div>
+
+    <div *ngSwitchCase="'checkbox'">
+      <p *ngIf="fullAnswer.answers.client === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.CLIENT' | translate }}</p>
+      <p *ngIf="fullAnswer.answers.develop === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DEVELOP' | translate }}</p>
+      <p *ngIf="fullAnswer.answers.distributor === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DISTRIBUTE' | translate }}</p>
+      <p *ngIf="fullAnswer.answers.invest === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.INVEST' | translate }}</p>
+    </div>
+
+    <div *ngSwitchCase="'textbox'">
+      <p>{{fullAnswer.answers[question.identifier]}}</p>
+    </div>
+
+    <div *ngSwitchCase="'textarea'">
+      <p>{{fullAnswer.answers[question.identifier]}}</p>
+    </div>
+
+    <div *ngSwitchCase="'scale'">
+      <p>{{fullAnswer.answers[question.identifier]}}</p>
+    </div>
+
+    <div *ngSwitchCase="'stars'">
+      <ul *ngIf="fullAnswer.answers[question.identifier]">
+        <li *ngFor="let advantage of fullAnswer.answers[question.identifier]">
+          {{advantages[advantage.index]}}: {{ '★'.repeat(advantage.value) }}
+        </li>
+      </ul>
+    </div>
+    <blockquote>
+      <p *ngIf="fullAnswer.answers[question.identifier + 'Comment']">{{fullAnswer.answers[question.identifier + 'Comment']}}</p>
+    </blockquote>
+  </div>
+  <p class="noanswer"  *ngIf="!fullAnswer.answers[question.identifier]">-</p>
 </div>

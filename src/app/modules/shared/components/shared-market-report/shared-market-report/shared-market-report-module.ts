@@ -21,8 +21,8 @@ export class SharedMarketReportComponent implements OnInit {
   @Input() public project: any;
   @Input() public adminMode: boolean;
 
+  private _questions = [];
   private _infographics: any;
-  private _editionMode = true;
   private _showDetails = true;
   private _calculating = false;
   private _innoid = '599c0029719e572041aafe0d';
@@ -39,6 +39,9 @@ export class SharedMarketReportComponent implements OnInit {
 
   ngOnInit() {
     this._innoid = this.project._id;
+    this.project.preset.sections.forEach(section => {
+      this._questions = this._questions.concat(section.questions);
+    });
     this._modalAnswer = null;
     this._innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
       this._infographics = synthesis.infographics;
@@ -87,6 +90,8 @@ export class SharedMarketReportComponent implements OnInit {
     return !!this._infographics;
 
   }
+  get questions(): any[] { return this._questions; }
+  set questions(value: any[]) { this._questions = value; }
   get modalAnswer(): any { return this._modalAnswer; }
   set modalAnswer(modalAnswer: any) { this._modalAnswer = modalAnswer; }
   get innoid(): string { return this._innoid; }
