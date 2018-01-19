@@ -7,12 +7,19 @@
       <div class="column col-10 col-mx-auto">
         <h2>{{ section.name }}</h2>
         <form novalidate [formGroup]="formData" class="form-horizontal">
-          <div class="form-group text-center" formGroupName="title">
+          <div class="form-group text-center" formGroupName="label">
             <label class="form-label h3">{{ "PRESETS.SECTION.EDIT.TITLE" | translate }}</label>
-            EN: <input class="form-input" id="titleEn" name="en" formControlName="en" type="text"
+            EN: <input class="form-input" id="labelEn" name="en" formControlName="en" type="text"
                        placeholder="">
-            FR: <input class="form-input" id="titleFr" name="fr" formControlName="fr" type="text"
+            FR: <input class="form-input" id="labelFr" name="fr" formControlName="fr" type="text"
                        placeholder="">
+          </div>
+          <div class="form-group text-center" formGroupName="description">
+            <label class="form-label h3">{{ "PRESETS.SECTION.EDIT.TITLE" | translate }}</label>
+            EN: <textarea class="form-input" id="descriptionEn" name="en" formControlName="en" rows="3"
+                       placeholder=""></textarea>
+            FR: <textarea class="form-input" id="descriptionFr" name="fr" formControlName="fr" rows="3"
+                       placeholder=""></textarea>
           </div>
           <div class="form-group text-center">
             <label class="form-label h3">{{ "PRESETS.SECTION.EDIT.ADD" | translate }}</label>
