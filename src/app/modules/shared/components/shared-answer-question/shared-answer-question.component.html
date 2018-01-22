@@ -2,10 +2,19 @@
   <strong class="question">{{ question.label[lang] }}</strong>
   <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier]" class="answer">
     <div *ngSwitchCase="'radio'">
-      <p>
+      <p *ngIf="!adminMode">
         {{ question.options[fullAnswer.answers[question.identifier] - 1]['label'][lang] }}
-        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
       </p>
+      <p *ngIf="adminMode">
+        <span
+          *ngFor="let option of question.options; let i = index"
+          class="c-hand"
+          [ngClass]="{'inactive': i != fullAnswer.answers[question.identifier] - 1}"
+          (click)="selectOption(i)">
+          {{ option.label[lang] }}
+        </span>
+      </p>
+
     </div>
 
     <div *ngSwitchCase="'clearbit'">
@@ -30,7 +39,10 @@
 
     <div *ngSwitchCase="'checkbox'">
       <ul *ngFor="let option of question.options">
-        <li *ngIf="fullAnswer.answers[question.identifier][option.identifier] === true">
+        <li
+          *ngIf="fullAnswer.answers[question.identifier][option.identifier] === true || adminMode"
+          [ngClass]="{'inactive': fullAnswer.answers[question.identifier][option.identifier] != true, 'c-hand': adminMode}"
+          (click)="checkOption(option)">
           {{ optionLabel(option.identifier) }}
         </li>
       </ul>
@@ -41,10 +53,10 @@
     </div>
 
     <div *ngSwitchCase="'textarea'">
-      <p>
+      <blockquote>
         {{fullAnswer.answers[question.identifier]}}
         <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
-      </p>
+      </blockquote>
     </div>
 
     <div *ngSwitchCase="'scale'">

@@ -59,8 +59,8 @@ export class SharedAnswerModalComponent implements OnInit {
     this._modalAnswer.profileQuality = object.value;
   }
 
-  updateQuality(object) {
-    this._modalAnswer.answers[object.key + 'Quality'] = object.value;
+  updateAnswer(answer) {
+    this._modalAnswer = answer;
   }
 
   updateTags(object) {

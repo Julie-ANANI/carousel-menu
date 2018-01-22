@@ -17,7 +17,7 @@ export class SharedAnswerQuestionComponent implements OnInit {
   @Input() public question;
   @Input() public fullAnswer;
   @Input() public adminMode: boolean;
-  @Output() ratingChange = new EventEmitter <any>();
+  @Output() fullAnswerChange = new EventEmitter <any>(); 
 
   constructor(private _translateService: TranslateService,
               private _authService: AuthService) { }
@@ -26,7 +26,8 @@ export class SharedAnswerQuestionComponent implements OnInit {
   }
 
   updateQuality(object) {
-    this.ratingChange.emit(object);
+    this.fullAnswer.answers[object.key + 'Quality'] = object.value;
+    this.fullAnswerChange.emit(this.fullAnswer);
   }
 
   link(domain){
@@ -36,6 +37,16 @@ export class SharedAnswerQuestionComponent implements OnInit {
   optionLabel(identifier) {
     const option = _.find(this.question.options, (o: any) => o.identifier === identifier);
     if (option && option.label) return option.label[this.lang];
+  }
+
+  checkOption(option) {
+    this.fullAnswer.answers[this.question.identifier][option.identifier] = !this.fullAnswer.answers[this.question.identifier][option.identifier]
+    this.fullAnswerChange.emit(this.fullAnswer);
+  }
+  
+  selectOption(index) {
+    this.fullAnswer.answers[this.question.identifier] = index + 1;
+    this.fullAnswerChange.emit(this.fullAnswer);
   }
 
   get lang (): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
