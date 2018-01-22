@@ -63,6 +63,10 @@ export class SharedAnswerModalComponent implements OnInit {
     this._modalAnswer.answers[object.key + 'Quality'] = object.value;
   }
 
+  updateTags(object) {
+    this._modalAnswer.tags = object;
+  }
+
   public save() {
     if (this._modalAnswer.professional.email) {
       //Hack : les réponses anciennes n'ont pas de champ quizReference,
