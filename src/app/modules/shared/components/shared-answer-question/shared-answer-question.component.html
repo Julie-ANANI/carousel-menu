@@ -29,10 +29,11 @@
     </div>
 
     <div *ngSwitchCase="'checkbox'">
-      <p *ngIf="fullAnswer.answers.client === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.CLIENT' | translate }}</p>
-      <p *ngIf="fullAnswer.answers.develop === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DEVELOP' | translate }}</p>
-      <p *ngIf="fullAnswer.answers.distributor === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DISTRIBUTE' | translate }}</p>
-      <p *ngIf="fullAnswer.answers.invest === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.INVEST' | translate }}</p>
+      <ul *ngFor="let option of question.options">
+        <li *ngIf="fullAnswer.answers[question.identifier][option.identifier] === true">
+          {{ optionLabel(option.identifier) }}
+        </li>
+      </ul>
     </div>
 
     <div *ngSwitchCase="'textbox'">
@@ -57,12 +58,12 @@
         </li>
       </ul>
     </div>
-    <blockquote>
-      <p *ngIf="fullAnswer.answers[question.identifier + 'Comment']">
+    <p class="noanswer"  *ngIf="!fullAnswer.answers[question.identifier]">-</p>
+    <blockquote *ngIf="fullAnswer.answers[question.identifier + 'Comment']">
+      <p>
         {{fullAnswer.answers[question.identifier + 'Comment']}}
         <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
       </p>
     </blockquote>
   </div>
-  <p class="noanswer"  *ngIf="!fullAnswer.answers[question.identifier]">-</p>
 </div>
