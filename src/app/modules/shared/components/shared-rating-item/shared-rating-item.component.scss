@@ -1,15 +1,24 @@
-i {
-  font-size: 20px;
+.rating-group {
+  display: inline;
+  margin-left: 15px;
+
+  i {
+    font-size: 20px;
+  }
+
+  .fa-thumbs-up:hover, .fa-thumbs-up.active {
+    color: #00C853;
+  }
+
+  .fa-thumbs-down:hover, .fa-thumbs-down.active {
+    color: #FF5C5A;
+  }
 }
 
-.big i {
-  font-size: 28px;
-}
+.rating-group.big {
+  margin: 0;
 
-.fa-thumbs-up:hover, .fa-thumbs-up.active {
-  color: #00C853;
-}
-
-.fa-thumbs-down:hover, .fa-thumbs-down.active {
-  color: #FF5C5A;
+  i {
+    font-size: 28px;
+  }
 }
