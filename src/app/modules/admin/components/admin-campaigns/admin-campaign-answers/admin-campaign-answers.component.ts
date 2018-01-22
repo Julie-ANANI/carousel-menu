@@ -19,6 +19,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   private _draftAnswers = [];
   private _rejectedAnswers = [];
   private _total = 0;
+  private _questions = [];
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: any;
@@ -32,6 +33,9 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._campaign = this._activatedRoute.snapshot.data['campaign'];
     this.loadAnswers();
     this._modalAnswer = null;
+    this._campaign.innovation.preset.sections.forEach(section => {
+      this._questions = this._questions.concat(section.questions);
+    });
   }
 
   loadAnswers(): void {
@@ -54,6 +58,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._modalAnswer = answer;
   }
 
+  get questions(): any[] { return this._questions; }
   get modalAnswer(): any { return this._modalAnswer; }
   set modalAnswer(modalAnswer: any) { this._modalAnswer = modalAnswer; }
   get total(): number { return this._total; }
