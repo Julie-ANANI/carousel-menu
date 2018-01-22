@@ -55,6 +55,14 @@ export class SharedAnswerModalComponent implements OnInit {
     }
   }
 
+  updateProfileQuality(object) {
+    this._modalAnswer.profileQuality = object.value;
+  }
+
+  updateQuality(object) {
+    this._modalAnswer.answers[object.key + 'Quality'] = object.value;
+  }
+
   public save() {
     if (this._modalAnswer.professional.email) {
       //Hack : les réponses anciennes n'ont pas de champ quizReference,
@@ -62,7 +70,13 @@ export class SharedAnswerModalComponent implements OnInit {
       this._modalAnswer.originalAnswerReference = this._modalAnswer.originalAnswerReference || "oldQuiz";
       this._modalAnswer.quizReference = this._modalAnswer.quizReference || "oldQuiz";
       this._modalAnswer.id = this._modalAnswer._id;
-      this._answerService.save(this._modalAnswer._id, this._modalAnswer);
+      const saveSubs = this._answerService
+        .save(this._modalAnswer.id, this._modalAnswer)
+        .subscribe(data => {
+          this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
+        }, err => {
+          this._notificationsService.error('ERROR.ANSWER.UNFORBIDDEN', err);
+        });
     }
   }
 

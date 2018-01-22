@@ -2,12 +2,17 @@
   <strong class="question">{{ question.label[lang] }}</strong>
   <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier]">
     <div *ngSwitchCase="'radio'">
-      <p>{{ question.options[fullAnswer.answers[question.identifier] - 1]['label'][lang] }}</p>
+      <p>
+        {{ question.options[fullAnswer.answers[question.identifier] - 1]['label'][lang] }}
+        <shared-rating-item [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+      </p>
     </div>
 
     <div *ngSwitchCase="'clearbit'">
       <ul [hidden]="fullAnswer.answers[question.identifier]?.length === 0" class="list">
-        <li *ngFor="let competitor of fullAnswer.answers[question.identifier]">{{competitor.name}}</li>
+        <li *ngFor="let competitor of fullAnswer.answers[question.identifier]">
+          {{competitor.name}}
+        </li>
       </ul>
     </div>
 
@@ -26,10 +31,12 @@
 
     <div *ngSwitchCase="'textbox'">
       <p>{{fullAnswer.answers[question.identifier]}}</p>
+      <shared-rating-item [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
     </div>
 
     <div *ngSwitchCase="'textarea'">
       <p>{{fullAnswer.answers[question.identifier]}}</p>
+      <shared-rating-item [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
     </div>
 
     <div *ngSwitchCase="'scale'">
@@ -45,6 +52,7 @@
     </div>
     <blockquote>
       <p *ngIf="fullAnswer.answers[question.identifier + 'Comment']">{{fullAnswer.answers[question.identifier + 'Comment']}}</p>
+      <shared-rating-item [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
     </blockquote>
   </div>
   <p class="noanswer"  *ngIf="!fullAnswer.answers[question.identifier]">-</p>
