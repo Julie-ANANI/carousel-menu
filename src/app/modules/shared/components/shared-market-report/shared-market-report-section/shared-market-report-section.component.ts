@@ -23,6 +23,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
   private _conclusionId: string;
   private _innoid: string;
   private _advantages: string[];
+  private _optionsArray: any[];
 
   @Input() set showDetails(value: boolean) {
     this._showDetails = value;
@@ -63,6 +64,9 @@ export class SharedMarketReportSectionComponent implements OnInit {
         // Calcul du score max
         const max = _.maxBy(this.info.data, 'count') || {};
         this._maxCountScore = max['count'] || 0;
+        break;
+      case 'checkbox':
+        this._optionsArray = Object.keys(this.info.labels).map(key => { return { identifier: key }});
         break;
     }
   }
@@ -117,6 +121,8 @@ export class SharedMarketReportSectionComponent implements OnInit {
     return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
   }
 
+  set optionsArray(value: any[]) { this._optionsArray = value; }
+  get optionsArray(): any[] { return this._optionsArray; }
   get advantages(): string[] { return this._advantages; }
   get readonly(): boolean { return this._readonly; }
   get showDetails(): boolean { return this._showDetails; }
