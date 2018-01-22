@@ -28,5 +28,10 @@ export class SharedAnswerQuestionComponent implements OnInit {
     this.ratingChange.emit(object);
   }
 
+  link(domain){
+    return "http://www." + domain;
+  } 
+
+
   get lang (): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
 }

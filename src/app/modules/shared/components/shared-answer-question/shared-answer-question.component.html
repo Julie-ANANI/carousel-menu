@@ -1,6 +1,6 @@
 <div>
   <strong class="question">{{ question.label[lang] }}</strong>
-  <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier]">
+  <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier]" class="answer">
     <div *ngSwitchCase="'radio'">
       <p>
         {{ question.options[fullAnswer.answers[question.identifier] - 1]['label'][lang] }}
@@ -9,17 +9,23 @@
     </div>
 
     <div *ngSwitchCase="'clearbit'">
-      <ul [hidden]="fullAnswer.answers[question.identifier]?.length === 0" class="list">
-        <li *ngFor="let competitor of fullAnswer.answers[question.identifier]">
+      <div [hidden]="fullAnswer.answers[question.identifier]?.length === 0" class="list">
+        <span class="chip" *ngFor="let competitor of fullAnswer.answers[question.identifier]">
+          <img *ngIf="competitor.logo" [src]=competitor.logo width="20px" height="20px"/>
           {{competitor.name}}
-        </li>
-      </ul>
+          <a *ngIf="competitor.domain" [href]=link(competitor.domain) target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
+        </span>
+      </div>
     </div>
 
     <div *ngSwitchCase="'list'">
-      <ul [hidden]="fullAnswer.answers[question.identifier]?.length === 0" class="list">
-        <li *ngFor="let application of fullAnswer.answers[question.identifier]">{{application.text}}</li>
-      </ul>
+      <div [hidden]="fullAnswer.answers[question.identifier]?.length === 0" class="list">
+        <span class="chip" *ngFor="let application of fullAnswer.answers[question.identifier]">
+          {{application.text}}
+          <a *ngIf="application.domain" [href]=application.url target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
+        </span>
+      </div>
+
     </div>
 
     <div *ngSwitchCase="'checkbox'">
