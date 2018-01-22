@@ -5,14 +5,14 @@
     <div class="flex-container">
       <!--======= Pie Chart =======-->
       <market-report-piechart
-        *ngIf="info.pieChart"
+        *ngIf="info.controlType === 'radio'"
         [pieChartData]="chartValues"
         [labels]="info.labels ? info.labels[lang] : []"
         [percentage]="info.percentage"
       ></market-report-piechart>
       <!--======= ou Encadré Bleu =======-->
       <market-report-bluesquare
-        *ngIf="!info.pieChart"
+        *ngIf="info.controlType != 'radio'"
         [numberFocus]="info.numberFocus"
         [percentage]="info.percentage"
         [subtitle]="info.subtitle[lang]"
@@ -100,7 +100,8 @@
         *ngIf="info.pieChart"
         [stats]="info.pieChart"
         [labels]="info.labels ? info.labels[lang] : []"
-        [number]="true">
+        [number]="true"
+        [displayCount]="info.controlType === 'checkbox'">
       </bar-chart>
 
       <!--======= Avantages Clés =======-->

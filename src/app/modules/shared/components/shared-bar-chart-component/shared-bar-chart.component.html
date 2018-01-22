@@ -3,8 +3,8 @@
   <div *ngIf="number" class="bar-number">{{i+1}}</div>
   <div class="bar-fill" [style.width]="barFill(stats[i+1].percentage)"></div>
   <div class="bar-name">{{label}}</div>
-  <div class="bar-stats" tooltip-placement="top"
-       attr.tooltip="{{stats[i+1].count}} {{'MARKET_REPORT.ANSWERS' | translate}}">
-    {{stats[i+1].percentage}}%
+  <div class="bar-stats tooltip" [attr.data-tooltip]="stats[i+1].count + ' ' + ('MARKET_REPORT.ANSWERS' | translate)">
+    <span *ngIf="!displayCount">{{stats[i+1].percentage}}%</span>
+    <span *ngIf="displayCount">{{stats[i+1].count}} {{'MARKET_REPORT.ANSWERS' | translate}}</span>
   </div>
 </div>
