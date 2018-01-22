@@ -36,6 +36,7 @@ import { SharedModalComponent } from './components/shared-modal-component/shared
 import { SharedStarsComponent } from './components/shared-stars-component/shared-stars.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
+import { SharedRatingItemComponent } from './components/shared-rating-item/shared-rating-item.component';
 import { ChartsModule } from 'ng2-charts';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
@@ -105,7 +106,8 @@ import { AutocompleteInputComponent } from '../../directives/autocomplete-input/
     SharedSortComponent,
     SharedProjectSettingsComponent,
     SharedClickableWorldmapComponent,
-    AutocompleteInputComponent
+    AutocompleteInputComponent,
+    SharedRatingItemComponent
   ],
   exports: [
     // Modules
@@ -141,7 +143,8 @@ import { AutocompleteInputComponent } from '../../directives/autocomplete-input/
     SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
     SharedAnswerModalComponent,
-    SharedAnswerQuestionComponent
+    SharedAnswerQuestionComponent,
+    SharedRatingItemComponent
   ]
 })
 export class SharedModule { }
