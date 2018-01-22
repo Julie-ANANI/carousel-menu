@@ -15,6 +15,7 @@ export class SharedAnswerQuestionComponent implements OnInit {
 
   @Input() public question;
   @Input() public fullAnswer;
+  @Input() public adminMode: boolean;
   @Output() ratingChange = new EventEmitter <any>();
 
   constructor(private _translateService: TranslateService,

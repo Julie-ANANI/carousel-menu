@@ -4,7 +4,7 @@
     <div *ngSwitchCase="'radio'">
       <p>
         {{ question.options[fullAnswer.answers[question.identifier] - 1]['label'][lang] }}
-        <shared-rating-item [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
       </p>
     </div>
 
@@ -31,12 +31,13 @@
 
     <div *ngSwitchCase="'textbox'">
       <p>{{fullAnswer.answers[question.identifier]}}</p>
-      <shared-rating-item [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
     </div>
 
     <div *ngSwitchCase="'textarea'">
-      <p>{{fullAnswer.answers[question.identifier]}}</p>
-      <shared-rating-item [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+      <p>
+        {{fullAnswer.answers[question.identifier]}}
+        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+      </p>
     </div>
 
     <div *ngSwitchCase="'scale'">
@@ -51,8 +52,10 @@
       </ul>
     </div>
     <blockquote>
-      <p *ngIf="fullAnswer.answers[question.identifier + 'Comment']">{{fullAnswer.answers[question.identifier + 'Comment']}}</p>
-      <shared-rating-item [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+      <p *ngIf="fullAnswer.answers[question.identifier + 'Comment']">
+        {{fullAnswer.answers[question.identifier + 'Comment']}}
+        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+      </p>
     </blockquote>
   </div>
   <p class="noanswer"  *ngIf="!fullAnswer.answers[question.identifier]">-</p>

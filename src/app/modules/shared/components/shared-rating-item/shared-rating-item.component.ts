@@ -8,6 +8,7 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 export class SharedRatingItemComponent implements OnInit {
   @Input() rating: number;
   @Input() big: string;
+  @Input() adminMode: boolean;
   @Output() ratingChange = new EventEmitter <any>(); 
   @Input() prop: string;
 
@@ -19,20 +20,24 @@ export class SharedRatingItemComponent implements OnInit {
   }
 
   thumbsUp() {
-    if (this.rating === 1) {
-      this.rating = 0;
-    } else {
-      this.rating = 1;
+    if (this.adminMode) {
+      if (this.rating === 1) {
+        this.rating = 0;
+      } else {
+        this.rating = 1;
+      }
+      this.ratingChange.emit({key: this.prop, value: this.rating});
     }
-    this.ratingChange.emit({ key: this.prop, value: this.rating });
   }
 
   thumbsDown() {
-    if (this.rating === -1) {
-      this.rating = 0;
-    } else {
-      this.rating = -1;
+    if (this.adminMode) {
+      if (this.rating === -1) {
+        this.rating = 0;
+      } else {
+        this.rating = -1;
+      }
+      this.ratingChange.emit({key: this.prop, value: this.rating});
     }
-    this.ratingChange.emit({ key: this.prop, value: this.rating });
   }
 }

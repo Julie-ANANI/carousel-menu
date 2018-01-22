@@ -30,8 +30,8 @@
           {{floor(modalAnswer.time_elapsed%60)}} sec.
           <br>
           <strong>IP : </strong>{{modalAnswer.ip}}<br>
-          <shared-rating-item [big]="true" [prop]="profile" [rating]="modalAnswer.profileQuality" (ratingChange)="updateProfileQuality($event)"></shared-rating-item>
-          <shared-tag-item [big]="true" [prop]="profile" [tags]="modalAnswer.tags" (tagsChange)="updateTags($event)"></shared-tag-item>
+          <shared-rating-item [adminMode]="adminMode" [big]="true" [prop]="profile" [rating]="modalAnswer.profileQuality" (ratingChange)="updateProfileQuality($event)"></shared-rating-item>
+          <shared-tag-item *ngIf="adminMode" [big]="true" [prop]="profile" [tags]="modalAnswer.tags" (tagsChange)="updateTags($event)"></shared-tag-item>
         </div>
         <p>
           <a *ngIf="(modalAnswer.professional?.firstName || modalAnswer.professional?.lastName) && modalAnswer.professional?.profileUrl"
@@ -48,7 +48,12 @@
     </div>
     <div class="modal-body">
       <div *ngFor="let question of questions">
-        <shared-answer-question [question]="question" [fullAnswer]="modalAnswer" (ratingChange)="updateQuality($event)"></shared-answer-question>
+        <shared-answer-question
+          [adminMode]="adminMode"
+          [question]="question"
+          [fullAnswer]="modalAnswer"
+          (ratingChange)="updateQuality($event)"
+        ></shared-answer-question>
       </div>
     </div>
     <div class="modal-footer">
