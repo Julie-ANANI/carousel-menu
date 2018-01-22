@@ -14,6 +14,7 @@ export class SharedBarChartComponent implements OnInit {
   @Input() public labels: any;
   @Input() public stats: any;
   @Input() public number: any;
+  @Input() public displayCount: boolean;
 
   public index = 0;
 

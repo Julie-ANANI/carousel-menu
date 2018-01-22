@@ -1,3 +1,68 @@
 <div>
   <strong class="question">{{ question.label[lang] }}</strong>
+  <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier]" class="answer">
+    <div *ngSwitchCase="'radio'">
+      <p>
+        {{ question.options[fullAnswer.answers[question.identifier] - 1]['label'][lang] }}
+        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+      </p>
+    </div>
+
+    <div *ngSwitchCase="'clearbit'">
+      <div [hidden]="fullAnswer.answers[question.identifier]?.length === 0" class="list">
+        <span class="chip" *ngFor="let competitor of fullAnswer.answers[question.identifier]">
+          <img *ngIf="competitor.logo" [src]=competitor.logo width="20px" height="20px"/>
+          {{competitor.name}}
+          <a *ngIf="competitor.domain" [href]=link(competitor.domain) target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
+        </span>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'list'">
+      <div [hidden]="fullAnswer.answers[question.identifier]?.length === 0" class="list">
+        <span class="chip" *ngFor="let application of fullAnswer.answers[question.identifier]">
+          {{application.text}}
+          <a *ngIf="application.domain" [href]=application.url target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
+        </span>
+      </div>
+
+    </div>
+
+    <div *ngSwitchCase="'checkbox'">
+      <p *ngIf="fullAnswer.answers.client === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.CLIENT' | translate }}</p>
+      <p *ngIf="fullAnswer.answers.develop === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DEVELOP' | translate }}</p>
+      <p *ngIf="fullAnswer.answers.distributor === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DISTRIBUTE' | translate }}</p>
+      <p *ngIf="fullAnswer.answers.invest === true">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.INVEST' | translate }}</p>
+    </div>
+
+    <div *ngSwitchCase="'textbox'">
+      <p>{{fullAnswer.answers[question.identifier]}}</p>
+    </div>
+
+    <div *ngSwitchCase="'textarea'">
+      <p>
+        {{fullAnswer.answers[question.identifier]}}
+        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+      </p>
+    </div>
+
+    <div *ngSwitchCase="'scale'">
+      <p>{{fullAnswer.answers[question.identifier]}}</p>
+    </div>
+
+    <div *ngSwitchCase="'stars'">
+      <ul *ngIf="fullAnswer.answers[question.identifier]">
+        <li *ngFor="let advantage of fullAnswer.answers[question.identifier]">
+          {{advantages[advantage.index]}}: {{ '★'.repeat(advantage.value) }}
+        </li>
+      </ul>
+    </div>
+    <blockquote>
+      <p *ngIf="fullAnswer.answers[question.identifier + 'Comment']">
+        {{fullAnswer.answers[question.identifier + 'Comment']}}
+        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+      </p>
+    </blockquote>
+  </div>
+  <p class="noanswer"  *ngIf="!fullAnswer.answers[question.identifier]">-</p>
 </div>

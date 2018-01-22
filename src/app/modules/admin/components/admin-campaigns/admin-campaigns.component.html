@@ -16,7 +16,7 @@
     <tbody>
 
     <tr *ngFor="let campaign of campaigns">
-      <td>{{campaign.title}}</td>
+      <td><a [routerLink]="'/admin/campaigns/campaign/' + campaign._id + '/answers'">{{campaign.title}}</a></td>
       <td class="text-center">{{campaign.stats ? campaign.stats['campaign']['nbProfessionals']||0 : 0}}</td>
       <td class="text-center">{{campaign.stats ? ((campaign.stats['campaign']['nbValidatedResp']||0)+(campaign.stats['campaign']['nbToValidateResp']||0)) : 0}}</td>
       <td>{{campaign.status}}</td>
