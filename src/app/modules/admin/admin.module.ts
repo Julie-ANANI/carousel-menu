@@ -18,16 +18,10 @@ import { AdminUserDetailsComponent } from './components/admin-users/admin-user-d
 import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AdminProjectsListComponent } from './components/admin-projects-list/admin-projects-list.component';
 import { AdminProjectsDetailsComponent } from './components/admin-projects/admin-project-details/admin-project-details.component';
-import { AdminPresetsComponent } from './components/admin-presets/admin-presets.component';
-import { AdminPresetsListComponent } from './components/admin-presets/admin-presets-list/admin-presets-list.component';
-import { AdminSectionsListComponent } from './components/admin-presets/admin-sections-list/admin-sections-list.component';
-import { AdminQuestionsListComponent } from './components/admin-presets/admin-questions-list/admin-questions-list.component';
-import { AdminQuestionNewComponent } from './components/admin-presets/admin-question-new/admin-question-new.component';
-import { AdminQuestionEditComponent } from './components/admin-presets/admin-question-edit/admin-question-edit.component';
-import { AdminSectionNewComponent } from './components/admin-presets/admin-section-new/admin-section-new.component';
-import { AdminSectionEditComponent } from './components/admin-presets/admin-section-edit/admin-section-edit.component';
-import { AdminPresetNewComponent } from './components/admin-presets/admin-preset-new/admin-preset-new.component';
-import { AdminPresetEditComponent } from './components/admin-presets/admin-preset-edit/admin-preset-edit.component';
+import { AdminPresetComponent } from './components/admin-preset/admin-preset.component';
+import { AdminPresetsModule } from './components/admin-preset/admin-presets/admin-presets.module';
+import { AdminQuestionsModule } from './components/admin-preset/admin-questions/admin-questions.module';
+import { AdminSectionsModule } from './components/admin-preset/admin-sections/admin-sections.module';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
 import { AdminCampaignDetailsComponent } from './components/admin-campaigns/admin-campaign-details/admin-campaign-details.component';
 import { AdminCampaignProsComponent } from './components/admin-campaigns/admin-campaign-pros/admin-campaign-pros.component';
@@ -40,6 +34,9 @@ import { AdminAnswersListComponent } from './components/admin-answers-list/admin
   imports: [
     CommonModule,
     AdminRoutingModule,
+    AdminPresetsModule,
+    AdminQuestionsModule,
+    AdminSectionsModule,
     SharedModule,
     TranslateModule.forChild()
   ],
@@ -59,16 +56,7 @@ import { AdminAnswersListComponent } from './components/admin-answers-list/admin
     AdminUserDetailsComponent,
     AdminProjectsListComponent,
     AdminProjectsDetailsComponent,
-    AdminPresetsComponent,
-    AdminPresetNewComponent,
-    AdminPresetEditComponent,
-    AdminPresetsListComponent,
-    AdminSectionsListComponent,
-    AdminQuestionsListComponent,
-    AdminQuestionNewComponent,
-    AdminQuestionEditComponent,
-    AdminSectionNewComponent,
-    AdminSectionEditComponent,
+    AdminPresetComponent,
     AdminCampaignComponent,
     AdminCampaignDetailsComponent,
     AdminCampaignProsComponent,
