@@ -89,7 +89,7 @@ export class AutocompleteInputComponent implements OnInit {
       _obj[this._identifier] = val;
       val = _obj;
     }
-    if (val && this.answerList.findIndex(t=>{return t.name === val.name}) === -1) {
+    if (val && this.answerList.findIndex(t => {return t[this._identifier] === val[this._identifier]}) === -1) {
       this.answerList.push(val);
       this.inputForm.get('answer').setValue('');
       this.update.emit({value: this.answerList});

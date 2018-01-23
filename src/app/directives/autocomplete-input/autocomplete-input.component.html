@@ -2,11 +2,11 @@
 
   <div class="input-group" *ngIf="canEdit">
       <input ng2-auto-complete
-              formControlName="answer"
-              [list-formatter]="autocompleListFormatter"
-              [source]="suggestions.bind(this)"
-              value-property-name="id"
-              [display-property-name]="identifier"
+             formControlName="answer"
+             [list-formatter]="autocompleListFormatter"
+             [source]="suggestions.bind(this)"
+             value-property-name="id"
+             [display-property-name]="identifier"
              [attr.placeholder]="placeholder | translate"
               class="form-input form-control input-lg">
     <button class="btn btn-primary btn-lg input-group-btn" translate>
