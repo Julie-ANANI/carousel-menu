@@ -34,12 +34,12 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._campaign.innovation.preset.sections.forEach(section => {
       this._questions = this._questions.concat(section.questions);
     });
+    console.log(this._questions);
   }
 
   loadAnswers(): void {
     this._campaignService.getAnswers(this._campaign._id).subscribe(result => {
       this._answers = result.answers.localAnswers;
-      console.log(this._answers);
       this._total = this._answers.length + result.answers.draftAnswers;
       this._validatedAnswers = this.filterByStatus('VALIDATED');
       this._submittedAnswers = this.filterByStatus('SUBMITTED');
