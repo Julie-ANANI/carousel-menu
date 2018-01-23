@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
-import { UserService } from '../../../../../services/user/user.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificationsService } from "angular2-notifications/dist";
 
 @Component({
   selector: 'app-admin-project-details',
@@ -21,18 +19,17 @@ export class AdminProjectsDetailsComponent implements OnInit {
               private _router: Router,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
-              private _notificationsService: NotificationsService,
               private _titleService: TranslateTitleService) {}
 
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._projectInformation = this._activatedRoute.snapshot.data['innovation'];
     const url = this._router.routerState.snapshot.url.split('/');
-    if (url && url[5]) this._currentPage = url[5];
+    if (url && url[5]) { this._currentPage = url[5]; }
   }
 
   get innovationTitle(): string {
-    return this._projectInformation.name || "Untitled";
+    return this._projectInformation.name || 'Untitled';
   }
 
   get projectSettings(): any {
