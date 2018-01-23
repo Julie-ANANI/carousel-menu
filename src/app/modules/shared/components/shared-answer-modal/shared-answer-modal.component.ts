@@ -18,6 +18,7 @@ export class SharedAnswerModalComponent implements OnInit {
 
   private _advantages: any;
   private _modalAnswer: any;
+  public editMode = false;
   public floor: any;
 
   @Input() set modalAnswer(value: any) {

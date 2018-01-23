@@ -34,6 +34,11 @@
           <br>
           <strong>IP : </strong>{{modalAnswer.ip}}<br>
           <shared-tag-item *ngIf="adminMode" [big]="true" [prop]="profile" [tags]="modalAnswer.tags" (tagsChange)="updateTags($event)"></shared-tag-item>
+          <label class="form-switch" for="toggleAdmin">
+            <input type="checkbox" name="toggleAdmin" id="toggleAdmin"
+                   (change)="editMode = !editMode">
+            <i class="form-icon"></i>Edition  <i class="fa fa-pencil"></i>
+          </label>
         </div>
         <p>
           <a *ngIf="(modalAnswer.professional?.firstName || modalAnswer.professional?.lastName) && modalAnswer.professional?.profileUrl"
@@ -51,7 +56,7 @@
     <div class="modal-body">
       <div *ngFor="let question of questions">
         <shared-answer-question
-          [adminMode]="adminMode"
+          [adminMode]="editMode"
           [question]="question"
           [fullAnswer]="modalAnswer"
           (fullAnswerChange)="updateAnswer($event)"

@@ -49,5 +49,15 @@ export class SharedAnswerQuestionComponent implements OnInit {
     this.fullAnswerChange.emit(this.fullAnswer);
   }
 
+  addComment() {
+    this.fullAnswer.answers[this.question.identifier + 'Comment'] = " ";
+    this.fullAnswerChange.emit(this.fullAnswer);
+  }
+
+  deleteComment() {
+    delete this.fullAnswer.answers[this.question.identifier + 'Comment'];
+    this.fullAnswerChange.emit(this.fullAnswer);
+  }
+
   get lang (): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
 }
