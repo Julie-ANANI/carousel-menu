@@ -94,21 +94,21 @@
           <h2 id="targeting">1. {{ 'PROJECT_EDIT.STEP1' | translate }}</h2>
 
           <div class="column col-8">
-            <div class="form-group" formGroupName="preset">
+            <div class="form-group">
               <div class="col-4">
                 <label class="form-label">{{ 'PROJECT_EDIT.PRESET.LABEL' | translate }}</label>
               </div>
               <div class="col-8">
                 <label class="form-radio">
-                  <input type="radio" value="type1" name="preset" (click)="setProjectType('type1')">
+                  <input type="radio" value="apps" formControlName="type">
                   <i class="form-icon"></i> {{ 'PROJECT_EDIT.PRESET.TYPE1' | translate }}
                 </label>
                 <label class="form-radio">
-                  <input type="radio" value="type2" name="preset" checked="checked" (click)="setProjectType('type2')">
+                  <input type="radio" value="insights" formControlName="type" checked="checked">
                   <i class="form-icon"></i> {{ 'PROJECT_EDIT.PRESET.TYPE2' | translate }}
                 </label>
                 <label class="form-radio">
-                  <input type="radio" value="type3" name="preset" (click)="setProjectType('type3')">
+                  <input type="radio" value="leads" formControlName="type">
                   <i class="form-icon"></i> {{ 'PROJECT_EDIT.PRESET.TYPE3' | translate }}
                 </label>
               </div>
