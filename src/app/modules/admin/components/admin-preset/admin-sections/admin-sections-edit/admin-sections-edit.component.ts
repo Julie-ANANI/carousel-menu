@@ -21,7 +21,8 @@ export class AdminSectionsEditComponent implements OnInit, OnDestroy {
   private _addQuestionConfig = {
     placeholder: 'PRESETS.SECTION.EDIT.QUESTION_PLACEHOLDER',
     initialData: [],
-    type: 'questions'
+    type: 'questions',
+    identifier: 'identifier'
   };
 
   constructor(private _activatedRoute: ActivatedRoute,

@@ -6,7 +6,7 @@
               [list-formatter]="autocompleListFormatter"
               [source]="suggestions.bind(this)"
               value-property-name="id"
-              display-property-name="name"
+              [display-property-name]="identifier"
              [attr.placeholder]="placeholder | translate"
               class="form-input form-control input-lg">
     <button class="btn btn-primary btn-lg input-group-btn" translate>
@@ -17,7 +17,7 @@
 
   <ul *ngFor="let a of answerList; index as i" class="answerList">
     <li>
-      <span>{{a.name}}</span>
+      <span [innerHTML]="a[identifier]"></span>
       <a class="delete c-hand" aria-label="Close" role="button" (click)="rmProposition(i)">
         <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
       </a>
