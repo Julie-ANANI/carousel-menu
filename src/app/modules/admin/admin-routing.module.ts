@@ -14,16 +14,13 @@ import { AdminAuthGuard } from './admin-auth-guard.service';
 import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
-import { AdminPresetsComponent } from '../admin/components/admin-presets/admin-presets.component';
-import { AdminQuestionEditComponent } from '../admin/components/admin-presets/admin-question-edit/admin-question-edit.component';
-import { AdminQuestionNewComponent } from '../admin/components/admin-presets/admin-question-new/admin-question-new.component';
-import { AdminSectionNewComponent } from './components/admin-presets/admin-section-new/admin-section-new.component';
-import { AdminSectionEditComponent } from './components/admin-presets/admin-section-edit/admin-section-edit.component';
-import { AdminPresetNewComponent } from '../admin/components/admin-presets/admin-preset-new/admin-preset-new.component';
-import { AdminPresetEditComponent } from '../admin/components/admin-presets/admin-preset-edit/admin-preset-edit.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
 import { CampaignResolver } from '../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
+import { AdminPresetComponent } from './components/admin-preset/admin-preset.component';
+import { presetsRoutes } from './components/admin-preset/admin-presets/admin-presets-routing.module';
+import { questionsRoutes } from './components/admin-preset/admin-questions/admin-questions-routing.module';
+import { sectionsRoutes } from './components/admin-preset/admin-sections/admin-sections-routing.module';
 
 const adminRoutes: Routes = [
   {
@@ -61,11 +58,11 @@ const adminRoutes: Routes = [
         children: [
           { path: '', component: AdminCampaignsComponent, pathMatch: 'full' },
           { path: 'campaign/:campaignId', resolve: { campaign : CampaignResolver }, children: [
-            { path: 'details', component: AdminCampaignComponent,pathMatch: 'full'},
-            { path: 'pros', component: AdminCampaignComponent,pathMatch: 'full'},
-            { path: 'search', component: AdminCampaignComponent,pathMatch: 'full'},
-            { path: 'history', component: AdminCampaignComponent,pathMatch: 'full'},
-            { path: 'answers', component: AdminCampaignComponent,pathMatch: 'full'}
+            { path: 'details', component: AdminCampaignComponent, pathMatch: 'full'},
+            { path: 'pros', component: AdminCampaignComponent, pathMatch: 'full'},
+            { path: 'search', component: AdminCampaignComponent, pathMatch: 'full'},
+            { path: 'history', component: AdminCampaignComponent, pathMatch: 'full'},
+            { path: 'answers', component: AdminCampaignComponent, pathMatch: 'full'}
           ]}
         ]
       },
@@ -96,50 +93,26 @@ const adminRoutes: Routes = [
       },
       {
         path: 'presets',
+        component: AdminPresetComponent,
         children: [
-          { path: '', component: AdminPresetsComponent, pathMatch: 'full' },
-          { path: 'new', component: AdminPresetNewComponent, pathMatch: 'full' },
-          {
-            path: ':presetId',
-            children: [
-              { path: 'edit', component: AdminPresetEditComponent, pathMatch: 'full' }
-
-            ]
-          }
+          ...presetsRoutes
         ]
       },
       {
         path: 'questions',
+        component: AdminPresetComponent,
         children: [
-          { path: '', component: AdminPresetsComponent, pathMatch: 'full' },
-          { path: 'new', component: AdminQuestionNewComponent, pathMatch: 'full'},
-          {
-            path: ':questionId',
-            children: [
-              { path: 'edit', component: AdminQuestionEditComponent, pathMatch: 'full' }
-
-            ]
-          }
+          ...questionsRoutes
         ]
       },
       {
         path: 'sections',
+        component: AdminPresetComponent,
         children: [
-          { path: '', component: AdminPresetsComponent, pathMatch: 'full' },
-          { path: 'new', component: AdminSectionNewComponent, pathMatch: 'full'},
-          {
-            path: ':sectionId',
-            children: [
-              { path: 'edit', component: AdminSectionEditComponent, pathMatch: 'full' }
-
-            ]
-          }
+          ...sectionsRoutes
         ]
       },
-      {
-        path: '**',
-        component: SharedNotFoundComponent
-      }
+      { path: '**', component: SharedNotFoundComponent }
     ]
   }
 ];

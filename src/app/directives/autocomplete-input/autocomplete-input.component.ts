@@ -29,6 +29,7 @@ export class AutocompleteInputComponent implements OnInit {
    */
   private _placeholder = "";
   private _autocompleteType = "";
+  private _identifier: string;
   ////////////////////////////////////////////////////////////////////
 
   constructor(private _fbuilder: FormBuilder,
@@ -36,20 +37,29 @@ export class AutocompleteInputComponent implements OnInit {
               private _autocompleteService: AutocompleteService) {}
 
   @Input()
-  set config(config: {placeholder: string, type: string, initialData: any}) {
-    if(config) {
+  set config(config: {placeholder: string, type: string, initialData: any, identifier: string}) {
+    if (config) {
+      this._identifier = config.identifier || 'name';
       this._placeholder = config.placeholder || '';
       this._autocompleteType = config.type || '';
-      config.initialData.forEach(val =>{
-        if(this.answerList.findIndex(t=>{return t === val}) === -1) {
-          this.answerList.push(val);
-        }
-      });
+      if (config.initialData && Array.isArray(config.initialData)) {
+        config.initialData.forEach(val => {
+          if (this.answerList.findIndex(t => {
+              return t === val
+            }) === -1) {
+            this.answerList.push(val);
+          }
+        });
+      }
     }
   }
 
   get placeholder(): string {
     return this._placeholder;
+  }
+
+  get identifier(): string {
+    return this._identifier;
   }
 
   ngOnInit() {
@@ -67,7 +77,7 @@ export class AutocompleteInputComponent implements OnInit {
   }
 
   public autocompleListFormatter = (data: any) : SafeHtml => {
-    let html = `<span>${data.name}</span>`;
+    let html = `<span>${data[this._identifier]}</span>`;
     return this._sanitizer.bypassSecurityTrustHtml(html);
   };
 
