@@ -14,8 +14,9 @@ export class AdminAnswersListComponent implements OnInit {
   constructor(_campaignService: CampaignService) {}
 
   ngOnInit(): void {
+    console.log(this.answers)
   }
-  
+
   public seeAnswer(event: any) {
     this.modalAnswerChange.emit(event);
   }
