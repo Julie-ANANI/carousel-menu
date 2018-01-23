@@ -45,11 +45,12 @@ const adminRoutes: Routes = [
         children: [
           { path: '', component: AdminProjectsComponent, pathMatch: 'full' },
           { path: 'project/:projectId', resolve: { innovation : InnovationResolver }, children: [
-            { path: 'settings', component: AdminProjectsDetailsComponent,pathMatch: 'full'},
-            { path: 'cards', component: AdminProjectsDetailsComponent,pathMatch: 'full'},
-            { path: 'synthesis', component: AdminProjectsDetailsComponent,pathMatch: 'full'},
-            { path: 'campaigns', component: AdminProjectsDetailsComponent,pathMatch: 'full'},
-            { path: 'mail_config', component: AdminProjectsDetailsComponent,pathMatch: 'full'}
+            { path: '', redirectTo: 'settings', pathMatch: 'full'},
+            { path: 'settings', component: AdminProjectsDetailsComponent, pathMatch: 'full'},
+            { path: 'cards', component: AdminProjectsDetailsComponent, pathMatch: 'full'},
+            { path: 'synthesis', component: AdminProjectsDetailsComponent, pathMatch: 'full'},
+            { path: 'campaigns', component: AdminProjectsDetailsComponent, pathMatch: 'full'},
+            { path: 'mail_config', component: AdminProjectsDetailsComponent, pathMatch: 'full'}
           ]}
         ]
       },
@@ -58,6 +59,7 @@ const adminRoutes: Routes = [
         children: [
           { path: '', component: AdminCampaignsComponent, pathMatch: 'full' },
           { path: 'campaign/:campaignId', resolve: { campaign : CampaignResolver }, children: [
+            { path: '', redirectTo: 'answers', pathMatch: 'full'},
             { path: 'details', component: AdminCampaignComponent, pathMatch: 'full'},
             { path: 'pros', component: AdminCampaignComponent, pathMatch: 'full'},
             { path: 'search', component: AdminCampaignComponent, pathMatch: 'full'},
