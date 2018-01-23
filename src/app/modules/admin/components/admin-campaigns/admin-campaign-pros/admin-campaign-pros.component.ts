@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
-import { NotificationsService } from "angular2-notifications/dist";
 
 
 @Component({
@@ -26,7 +25,6 @@ export class AdminCampaignProsComponent implements OnInit {
   };
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _notificationsService: NotificationsService,
               private _titleService: TranslateTitleService,
               private _campaignService: CampaignService) { }
 

@@ -4,7 +4,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificationsService } from "angular2-notifications/dist";
+import { NotificationsService } from "../../../../services/notifications/notifications.service";
 import { environment } from '../../../../../environments/environment';
 
 

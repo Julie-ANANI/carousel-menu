@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../../services/user/user.service';
-import { NotificationsService } from 'angular2-notifications';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 
@@ -33,7 +32,6 @@ export class AdminUsersComponent implements OnInit {
   constructor(private _router: Router,
               private _titleService: TranslateTitleService,
               private _userService: UserService,
-              private _notificationsService: NotificationsService,
               private _authService: AuthService) {}
 
   ngOnInit(): void {
