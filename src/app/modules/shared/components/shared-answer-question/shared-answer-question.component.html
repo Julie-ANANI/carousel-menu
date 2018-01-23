@@ -3,7 +3,7 @@
   <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier]" class="answer">
     <div *ngSwitchCase="'radio'">
       <p *ngIf="!adminMode">
-        {{ question.options[fullAnswer.answers[question.identifier] - 1]['label'][lang] }}
+        {{ optionLabel(fullAnswer.answers[question.identifier]) }}
       </p>
       <p *ngIf="adminMode">
         <span
@@ -11,7 +11,7 @@
           class="c-hand"
           [ngClass]="{'inactive': i != fullAnswer.answers[question.identifier] - 1}"
           (click)="selectOption(i)">
-          {{ option.label[lang] }}
+          {{ optionLabel(option.identifier) }}
         </span>
       </p>
 
