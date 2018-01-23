@@ -40,11 +40,15 @@ export class AutocompleteInputComponent implements OnInit {
     if(config) {
       this._placeholder = config.placeholder || '';
       this._autocompleteType = config.type || '';
-      config.initialData.forEach(val =>{
-        if(this.answerList.findIndex(t=>{return t === val}) === -1) {
-          this.answerList.push(val);
-        }
-      });
+      if (config.initialData && Array.isArray(config.initialData)) {
+        config.initialData.forEach(val => {
+          if (this.answerList.findIndex(t => {
+              return t === val
+            }) === -1) {
+            this.answerList.push(val);
+          }
+        });
+      }
     }
   }
 
