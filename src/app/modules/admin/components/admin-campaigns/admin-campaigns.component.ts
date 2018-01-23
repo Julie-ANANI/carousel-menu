@@ -4,7 +4,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { TranslateService } from '@ngx-translate/core';
-import { NotificationsService } from "../../../../services/notifications/notifications.service";
+import { TranslateNotificationsService } from "../../../../services/notifications/notifications.service";
 import { environment } from '../../../../../environments/environment';
 
 
@@ -22,7 +22,7 @@ export class AdminCampaignsComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
-              private _notificationsService: NotificationsService,
+              private _notificationsService: TranslateNotificationsService,
               private _titleService: TranslateTitleService,
               private _campaignService: CampaignService) { }
 
