@@ -31,10 +31,11 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._campaign = this._activatedRoute.snapshot.data['campaign'];
     this.loadAnswers();
     this._modalAnswer = null;
-    this._campaign.innovation.preset.sections.forEach(section => {
-      this._questions = this._questions.concat(section.questions);
-    });
-    console.log(this._questions);
+    if (this._campaign.innovation.preset && Array.isArray(this._campaign.innovation.preset.sections)) {
+      this._campaign.innovation.preset.sections.forEach(section => {
+        this._questions = this._questions.concat(section.questions);
+      });
+    }
   }
 
   loadAnswers(): void {
