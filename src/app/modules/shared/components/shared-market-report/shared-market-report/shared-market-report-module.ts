@@ -39,9 +39,12 @@ export class SharedMarketReportComponent implements OnInit {
 
   ngOnInit() {
     this._innoid = this.project._id;
-    this.project.preset.sections.forEach(section => {
-      this._questions = this._questions.concat(section.questions);
-    });
+    if (this.project.preset && this.project.preset.sections) {
+      this.project.preset.sections.forEach(section => {
+        this._questions = this._questions.concat(section.questions);
+      });
+    }
+
     this._modalAnswer = null;
     this._innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
       this._infographics = synthesis.infographics;
