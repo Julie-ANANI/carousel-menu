@@ -7,7 +7,7 @@
       <market-report-piechart
         *ngIf="info.controlType === 'radio'"
         [pieChartData]="chartValues"
-        [labels]="info.labels ? info.labels[lang] : []"
+        [options]="info.options"
         [percentage]="info.percentage"
       ></market-report-piechart>
       <!--======= ou Encadré Bleu =======-->
@@ -15,7 +15,7 @@
         *ngIf="info.controlType != 'radio'"
         [numberFocus]="info.numberFocus"
         [percentage]="info.percentage"
-        [subtitle]="info.subtitle[lang]"
+        [subtitle]="info.subtitle ? info.subtitle[lang] : ''"
         [id]="info.id"
       ></market-report-bluesquare>
 
