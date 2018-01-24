@@ -15,7 +15,7 @@
     <thead>
     <tr>
       <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'name'">{{ 'COMMON.NAME' | translate }}</sq-sort></th>
-      <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'domain'">{{ 'COMMON.DOMAIN' | translate }}</sq-sort></th>
+      <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'controlType'">{{ 'COMMON.TYPE' | translate }}</sq-sort></th>
       <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'updated'">{{ 'COMMON.UPDATED' | translate }}</sq-sort></th>
       <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'created'">{{ 'COMMON.CREATED' | translate }}</sq-sort></th>
     </tr>
@@ -24,7 +24,7 @@
 
     <tr *ngFor="let question of questions">
       <td><a [routerLink]="['/admin/questions/' + question._id]">{{question.identifier}}</a></td>
-      <td>{{question.domain}}</td>
+      <td>{{question.controlType}}</td>
       <td>{{question.created | date : dateFormat}}</td>
       <td>{{question.updated | date : dateFormat}}</td>
       <td><a class="delete c-hand" aria-label="Close" role="button" (click)="selectedQuestionIdToBeDeleted=question._id">
