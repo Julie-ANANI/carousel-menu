@@ -34,7 +34,6 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._campaign.innovation.preset.sections.forEach(section => {
       this._questions = this._questions.concat(section.questions);
     });
-    console.log(this._questions);
   }
 
   loadAnswers(): void {
