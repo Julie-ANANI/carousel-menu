@@ -8,10 +8,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ClientProjectSynthesisComponent implements OnInit {
 
+  private _project: any;
+
   constructor(private _activatedRoute: ActivatedRoute) { }
 
-  private _project: any;
-  
   ngOnInit() {
     this._project = this._activatedRoute.snapshot.data['innovation'];
   }
