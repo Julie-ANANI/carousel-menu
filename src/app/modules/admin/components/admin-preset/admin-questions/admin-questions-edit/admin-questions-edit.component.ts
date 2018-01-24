@@ -35,6 +35,7 @@ export class AdminQuestionsEditComponent implements OnInit, OnDestroy {
       const subs = this._presetService.getQuestion(questionId).subscribe(question => {
         this._question = question;
         this.formData = this._formBuilder.group({
+          controlType: [this._question.controlType, Validators.required],
           title: this._formBuilder.group({
             fr: [question.title ? question.title.fr || '' : '', Validators.required],
             en: [question.title ? question.title.en || '' : '', Validators.required]
@@ -48,7 +49,7 @@ export class AdminQuestionsEditComponent implements OnInit, OnDestroy {
             en: [question.label ? question.label.en || '' : '', Validators.required]
           }),
           options: this._formBuilder.array([]),
-          canComment: question.canComment || (question.controlType != 'textArea' && question.controlType != 'toggle')
+          canComment: [question.canComment && question.controlType != 'textArea' && question.controlType != 'toggle']
         });
         this.buildOptions(question.options);
       });
@@ -85,8 +86,9 @@ export class AdminQuestionsEditComponent implements OnInit, OnDestroy {
       identifier: [option && option.identifier || ''],
       label: this._formBuilder.group({
         fr: [option && option.label ? option.label.fr || '' : ''],
-        en: [option && option.label ? option.label.en || '' : ''],
-      })
+        en: [option && option.label ? option.label.en || '' : '']
+      }),
+      positive: [option.positive]
     })
   }
 

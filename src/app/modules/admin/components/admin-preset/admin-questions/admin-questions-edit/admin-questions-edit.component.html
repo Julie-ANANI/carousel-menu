@@ -6,8 +6,21 @@
     <div class="columns">
       <div class="column col-10 col-mx-auto">
         <h2>{{ question.identifier }}</h2>
-        <h5>{{ 'PRESETS.QUESTION.TYPE.' + question.controlType.toUpperCase() | translate }}</h5>
         <form novalidate [formGroup]="formData" class="form-horizontal">
+          <div class="form-group text-center">
+            <select class="form-select" id="controlType" name="controlType" formControlName="controlType">
+              <option [value]="null">...</option>
+              <option [value]="'checkbox'">{{ "PRESETS.QUESTION.TYPE.CHECKBOX" | translate }}</option>
+              <option [value]="'list'">{{ "PRESETS.QUESTION.TYPE.LIST" | translate }}</option>
+              <option [value]="'clearbit'">{{ "PRESETS.QUESTION.TYPE.CLEARBIT" | translate }}</option>
+              <option [value]="'radio'">{{ "PRESETS.QUESTION.TYPE.RADIO" | translate }}</option>
+              <option [value]="'scale'">{{ "PRESETS.QUESTION.TYPE.SCALE" | translate }}</option>
+              <option [value]="'stars'">{{ "PRESETS.QUESTION.TYPE.STARS" | translate }}</option>
+              <option [value]="'textarea'">{{ "PRESETS.QUESTION.TYPE.TEXTAREA" | translate }}</option>
+              <option [value]="'textbox'">{{ "PRESETS.QUESTION.TYPE.TEXTBOX" | translate }}</option>
+              <option [value]="'toggle'">{{ "PRESETS.QUESTION.TYPE.TOGGLE" | translate }}</option>
+            </select>
+          </div>
           <label class="form-label h3">{{ "PRESETS.QUESTION.EDIT.LABEL" | translate }}</label>
           <div class="form-group text-center" formGroupName="label">
             EN: <input class="form-input" id="labelEn" name="en" formControlName="en" type="text"
@@ -45,6 +58,12 @@
                   FR: <input class="form-input" id="'optionFr'+i" name="fr" formControlName="fr" type="text"
                              placeholder="">
                 </div>
+                <div class="form-group text-center" *ngIf="question.controlType === 'radio'">
+                  <label for="positive">
+                    Positif
+                    <input type="checkbox" name="positive" formControlName="positive" id="positive">
+                  </label>
+                </div>
                 <div>
                   <a class="delete c-hand" aria-label="Close" role="button" (click)="removeOption(i)">
                     <i class="icon icon-delete"></i>
@@ -58,10 +77,9 @@
             {{ 'PRESETS.QUESTION.EDIT.ADD' | translate }} <i class="icon icon-plus"></i>
           </button>
           <div class="form-group">
-            <label class="form-switch" for="canComment">
+            <label for="canComment">
               {{ "PRESETS.QUESTION.EDIT.CAN_COMMENT" | translate }}
               <input type="checkbox" name="canComment" formControlName="canComment" id="canComment">
-              <i class="form-icon"></i>
             </label>
           </div>
           <button type="submit" class="btn btn-primary centered" (click)="save()">{{ 'PRESETS.QUESTION.EDIT.SAVE' | translate }}</button>
