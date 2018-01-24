@@ -99,7 +99,7 @@
       <bar-chart
         *ngIf="info.pieChart"
         [stats]="info.pieChart"
-        [labels]="info.labels ? info.labels[lang] : []"
+        [options]="info.options || []"
         [number]="true"
         [displayCount]="info.controlType === 'checkbox'">
       </bar-chart>
