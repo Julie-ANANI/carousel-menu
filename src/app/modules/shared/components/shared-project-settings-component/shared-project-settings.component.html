@@ -1,30 +1,25 @@
-<div>
+<div class="column col-8">
   <!-- GEOGRAPHY -->
-  <div class="col-4">
-    <label class="form-label">{{ 'PROJECT_EDIT.TARGETING.GEOGRAPHY' | translate }}</label>
-  </div>
-  <div class="container">
-    <div class="columns">
-      <div class="column col-6">
-        <clickable-worldmap (notifier)="continentModificationDrain($event)"
-                            [initialConfiguration]="continentTarget"
-                            [canEdit]="true"></clickable-worldmap>
-      </div>
-      <div class="column col-6">
-        <a (click)="displayCountriesToExcludeSection = !displayCountriesToExcludeSection" class="c-hand">
-          {{ 'PROJECT_EDIT.TARGETING.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
-          <i class="icon icon-arrow-right"></i>
-        </a>
+  <div class="form-group">
+    <div class="col-4">
+      <label class="form-label">{{ 'PROJECT_EDIT.TARGETING.GEOGRAPHY' | translate }}</label>
+    </div>
+    <div class="col-8">
+      <clickable-worldmap (notifier)="continentModificationDrain($event)"
+                          [initialConfiguration]="continentTarget"
+                          [canEdit]="true"></clickable-worldmap>
+      <a (click)="displayCountriesToExcludeSection = !displayCountriesToExcludeSection" class="c-hand">
+        {{ 'PROJECT_EDIT.TARGETING.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
+        <i class="icon icon-arrow-right"></i>
+      </a>
 
-        <div *ngIf="displayCountriesToExcludeSection">
-          <app-autocomplete-input (update)="addCountryToExclude($event)"
-                                  [canEdit]="true"
-                                  [config]="getConfig('countries')"></app-autocomplete-input>
-        </div>
+      <div *ngIf="displayCountriesToExcludeSection">
+        <app-autocomplete-input (update)="addCountryToExclude($event)"
+                                [canEdit]="true"
+                                [config]="getConfig('countries')"></app-autocomplete-input>
       </div>
     </div>
   </div>
-  <hr>
 
   <!-- ACTIVITY SECTORS -->
   <div class="form-group">
@@ -33,10 +28,10 @@
         {{ 'PROJECT_EDIT.MARKET.LABEL' | translate }}
       </label>
     </div>
-    <div class="col-12">
+    <div class="col-8">
         <textarea class="form-input" id="innovation-sector"
                   [attr.placeholder]="'PROJECT_EDIT.MARKET.PLACEHOLDER' | translate"
-                  rows="5"></textarea>
+                  rows="5" (change)="updateSettings()"></textarea>
     </div>
   </div>
 
@@ -46,27 +41,23 @@
       <label class="form-label" for="innovation-companies">
         {{ 'PROJECT_EDIT.COMPANIES.LABEL' | translate }}</label>
     </div>
-    <div class="container">
-      <div class="columns">
-        <div class="column col-6">
+    <div class="col-8">
         <textarea class="form-input" id="innovation-companies"
                   [attr.placeholder]="'PROJECT_EDIT.COMPANIES.PLACEHOLDER' | translate"
-                  rows="5"></textarea>
-        </div>
-        <div class="column col-6">
-          <a (click)="displayCompanyToExcludeSection = !displayCompanyToExcludeSection" class="c-hand">{{
-            'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
+                  rows="5" (change)="updateSettings()"></textarea>
 
-          <div *ngIf="displayCompanyToExcludeSection">
-            <app-autocomplete-input (update)="addCompanyToExclude($event)"
-                                    [canEdit]="true"
-                                    [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
-          </div>
+      <div class="col-6">
+        <a (click)="displayCompanyToExcludeSection = !displayCompanyToExcludeSection" class="c-hand">{{
+          'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
+
+        <div *ngIf="displayCompanyToExcludeSection">
+          <app-autocomplete-input (update)="addCompanyToExclude($event)"
+                                  [canEdit]="true"
+                                  [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
         </div>
       </div>
     </div>
   </div>
-  <hr>
 
   <!-- PROFESSIONALS PROFILES -->
   <div class="form-group">
@@ -74,55 +65,49 @@
       <label class="form-label" for="innovation-pros">{{ 'PROJECT_EDIT.PROFESSIONALS.LABEL' | translate
         }}</label>
     </div>
-    <div class="container">
-      <div class="columns">
-        <div class="column col-6">
-          <textarea class="form-input" id="innovation-pros"
-                [attr.placeholder]="'PROJECT_EDIT.PROFESSIONALS.PLACEHOLDER' | translate" rows="5"></textarea>
-        </div>
-        <div class="column col-6">
-          <a (click)="displayPersonsToExcludeSection = !displayPersonsToExcludeSection" class="c-hand">{{
-            'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
+    <div class="col-8">
+      <textarea class="form-input" id="innovation-pros"
+                [attr.placeholder]="'PROJECT_EDIT.PROFESSIONALS.PLACEHOLDER' | translate"
+                rows="5" (change)="updateSettings()"></textarea>
+      <a (click)="displayPersonsToExcludeSection = !displayPersonsToExcludeSection" class="c-hand">{{
+        'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
-          <div *ngIf="displayPersonsToExcludeSection">
-            <app-input-list (update)="addPeopleToExclude($event)"
-                            [canEdit]="true"
-                            [config]="getConfig('excludedPeople')"></app-input-list>
-          </div>
-        </div>
+      <div *ngIf="displayPersonsToExcludeSection">
+        <app-input-list (update)="addPeopleToExclude($event)"
+                        [canEdit]="true"
+                        [config]="getConfig('excludedPeople')"></app-input-list>
       </div>
     </div>
   </div>
-  <hr>
+
   <!-- KEYWORDS AND OTHER STUFF -->
   <div class="form-group">
     <div class="col-4">
       <label class="form-label" for="other-comments">{{ 'PROJECT_EDIT.OTHER.LABEL' | translate }}</label>
     </div>
-    <div class="container">
-      <div class="columns">
-        <div class="column col-6">
+    <div class="col-8">
         <textarea class="form-input" id="other-comments"
                   [(ngModel)]="comments"
                   [attr.placeholder]="'PROJECT_EDIT.OTHER.PLACEHOLDER' | translate"
-                  rows="5"></textarea>
-        </div>
+                  rows="5" (change)="updateSettings()"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
 
-        <div class="column col-6">
-          <a (click)="displayKeywordsSection = !displayKeywordsSection" class="c-hand">{{
-            'PROJECT_EDIT.KEYWORDS.LABEL' | translate }} <i class="icon icon-arrow-right"></i></a>
+    <div class="col-8" *ngIf="adminMode">
+      <a (click)="displayKeywordsSection = !displayKeywordsSection" class="c-hand">{{
+        'PROJECT_EDIT.KEYWORDS.LABEL' | translate }} <i class="icon icon-arrow-right"></i></a>
 
-          <div *ngIf="displayKeywordsSection">
-            <app-input-list (update)="addKeywordToExclude($event)"
-                            [canEdit]="true"
-                            [config]="getConfig('keywords')"></app-input-list>
-          </div>
+      <div *ngIf="displayKeywordsSection">
+        <app-input-list (update)="addKeywordToExclude($event)"
+                        [canEdit]="true"
+                        [config]="getConfig('keywords')"></app-input-list>
       </div>
     </div>
   </div>
-  <hr>
+
   <!-- BLACKLIST -->
-  <div>
+  <div *ngIf="adminMode">
     <div class="container">
       <div class="columns">
         <div class="column col-6">
