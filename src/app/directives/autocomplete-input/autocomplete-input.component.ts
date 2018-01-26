@@ -18,6 +18,7 @@ export class AutocompleteInputComponent implements OnInit {
 
   @Output() update = new EventEmitter<any>();
   @Input() canEdit = true;
+  @Input() onlyOne = false; //si le booléen est à true, on accepte une seule valeur et non un tableau
 
   companyName: FormControl = new FormControl();
   answerList: Array<{name: string, domain: string, flag: string}> = [];
@@ -90,7 +91,11 @@ export class AutocompleteInputComponent implements OnInit {
       val = _obj;
     }
     if (val && this.answerList.findIndex(t => {return t[this._identifier] === val[this._identifier]}) === -1) {
-      this.answerList.push(val);
+      if (this.onlyOne) {
+        this.answerList = [val];
+      } else {
+        this.answerList.push(val);
+      }
       this.inputForm.get('answer').setValue('');
       this.update.emit({value: this.answerList});
     }
