@@ -26,6 +26,12 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.adminMode = this.adminMode && this._authService.adminLevel >= 1;
+    if (this.settings) {
+      this._displayCountriesToExcludeSection = this.settings.geography && this.settings.geography.exclude && this.settings.geography.exclude.length > 0;
+      this._displayCompanyToExcludeSection = this.settings.companies && this.settings.companies.exclude && this.settings.companies.exclude.length > 0;
+      this._displayPersonsToExcludeSection = this.settings.professionals && this.settings.professionals.exclude && this.settings.professionals.exclude.length > 0;
+      this._displayKeywordsSection = this.settings.keywords.length > 0;
+    }
   }
 
   get lang() {
@@ -42,33 +48,33 @@ export class SharedProjectSettingsComponent implements OnInit {
     const _inputConfig = {
       'countries': {
         placeholder: 'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.settings ? this.settings.geography.exclude : [],
+        initialData: this.settings && this.settings.geography ? this.settings.geography.exclude || [] : [],
         type: 'countries'
       },
       'excludedPeople': {
         placeholder: 'PROJECT_EDIT.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.settings ? this.settings.professionals.exclude : []
+        initialData: this.settings && this.settings.professionals ? this.settings.professionals.exclude || [] : []
       },
       'excludedCompanies': {
         placeholder: 'PROJECT_EDIT.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.settings ? this.settings.companies.exclude : [],
+        initialData: this.settings && this.settings.companies ? this.settings.companies.exclude || [] : [],
         type: 'company'
       },
       'keywords': {
         placeholder: 'PROJECT_EDIT.KEYWORDS.PLACEHOLDER',
-        initialData: this.settings ? this.settings.keywords : []
+        initialData: this.settings ? this.settings.keywords || [] : []
       },
       'domainBL': {
         placeholder: 'Ex. apple.com',
-        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.domains : []
+        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.domains || [] : []
       },
       'emailBL': {
         placeholder: 'Ex. sjobs@apple.com',
-        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.emails : []
+        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.emails || [] : []
       },
       'peopleBL': {
         placeholder: 'Ex. sjobs@apple.com',
-        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.emails : []
+        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.people || [] : []
       }
     };
     return _inputConfig[type] || {

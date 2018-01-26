@@ -1,4 +1,4 @@
-<div class="column col-8">
+<div>
   <!-- GEOGRAPHY -->
   <div class="form-group">
     <div class="col-4">
@@ -46,15 +46,13 @@
                   [attr.placeholder]="'PROJECT_EDIT.COMPANIES.PLACEHOLDER' | translate"
                   rows="5" [(ngModel)]="settings.companies.description" (change)="updateSettings()"></textarea>
 
-      <div class="col-6">
-        <a (click)="displayCompanyToExcludeSection = !displayCompanyToExcludeSection" class="c-hand">{{
-          'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
+      <a (click)="displayCompanyToExcludeSection = !displayCompanyToExcludeSection" class="c-hand">{{
+        'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
-        <div *ngIf="displayCompanyToExcludeSection">
-          <app-autocomplete-input (update)="addCompanyToExclude($event)"
-                                  [canEdit]="true"
-                                  [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
-        </div>
+      <div *ngIf="displayCompanyToExcludeSection">
+        <app-autocomplete-input (update)="addCompanyToExclude($event)"
+                                [canEdit]="true"
+                                [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
       </div>
     </div>
   </div>
@@ -92,46 +90,53 @@
                   rows="5"  [(ngModel)]="settings.comments"(change)="updateSettings()"></textarea>
     </div>
   </div>
-  <div class="form-group">
-
-    <div class="col-8" *ngIf="adminMode">
+  <div class="form-group" *ngIf="adminMode">
+    <div class="col-4">
+      <label class="form-label" for="keywords">Mots clés</label>
+    </div>
+    <div class="col-8">
       <a (click)="displayKeywordsSection = !displayKeywordsSection" class="c-hand">{{
         'PROJECT_EDIT.KEYWORDS.LABEL' | translate }} <i class="icon icon-arrow-right"></i></a>
 
       <div *ngIf="displayKeywordsSection">
         <app-input-list (update)="addKeywordToExclude($event)"
                         [canEdit]="true"
+                        id="keywords"
                         [config]="getConfig('keywords')"></app-input-list>
       </div>
     </div>
   </div>
 
   <!-- BLACKLIST -->
-  <div *ngIf="adminMode">
-    <div class="container">
-      <div class="columns">
-        <div class="column col-6">
-          Noms de domains à exclure
-          <app-input-list (update)="addDomainToExclude($event)"
-                          [canEdit]="true"
-                          [config]="getConfig('domainBL')"></app-input-list>
-        </div>
-        <div class="column col-6">
-          E-mails à exclure
-          <app-input-list (update)="addEMailToExclude($event)"
-                          [canEdit]="true"
-                          [config]="getConfig('emailBL')"></app-input-list>
-        </div>
-      </div>
+  <div *ngIf="adminMode" class="form-group">
+    <div class="col-4">
+      <label class="form-label" for="domain-to-exclude">Blacklist domaines</label>
     </div>
-
-
-
-
-    <!--Personnes à exclure
-    <app-input-list (update)="addKeywordToExclude($event)"
-                    [canEdit]="true"
-                    [config]="getConfig('peopleBL')"></app-input-list>-->
+    <div class="col-8">
+      Noms de domains à exclure
+      <app-input-list (update)="addDomainToExclude($event)"
+                      [canEdit]="true"
+                      id="domain-to-exclude"
+                      [config]="getConfig('domainBL')"></app-input-list>
+    </div>
   </div>
+  <div *ngIf="adminMode" class="form-group">
+    <div class="col-4">
+      <label class="form-label" for="emails-to-exclude">Blacklist emails</label>
+    </div>
+    <div class="col-8">
+      E-mails à exclure
+      <app-input-list (update)="addEMailToExclude($event)"
+                      [canEdit]="true"
+                      id="emails-to-exclude"
+                      [config]="getConfig('emailBL')"></app-input-list>
+    </div>
+  </div>
+
+
+  <!--Personnes à exclure
+  <app-input-list (update)="addKeywordToExclude($event)"
+                  [canEdit]="true"
+                  [config]="getConfig('peopleBL')"></app-input-list>-->
 
 </div>
