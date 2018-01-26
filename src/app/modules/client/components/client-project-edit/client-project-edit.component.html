@@ -115,7 +115,9 @@
             </div>
           </div>
 
-          <app-shared-project-settings [settings]="project.settings" (settingsChange)="updateSettings($event)"></app-shared-project-settings>
+          <div class="column col-8">
+            <app-shared-project-settings [settings]="project.settings" (settingsChange)="updateSettings($event)"></app-shared-project-settings>
+          </div>
 
           <div class="divider"></div>
 
