@@ -31,7 +31,7 @@
     <div class="col-8">
         <textarea class="form-input" id="innovation-sector"
                   [attr.placeholder]="'PROJECT_EDIT.MARKET.PLACEHOLDER' | translate"
-                  rows="5" (change)="updateSettings()"></textarea>
+                  rows="5" [(ngModel)]="settings.market.comments" (change)="updateSettings()"></textarea>
     </div>
   </div>
 
@@ -44,7 +44,7 @@
     <div class="col-8">
         <textarea class="form-input" id="innovation-companies"
                   [attr.placeholder]="'PROJECT_EDIT.COMPANIES.PLACEHOLDER' | translate"
-                  rows="5" (change)="updateSettings()"></textarea>
+                  rows="5" [(ngModel)]="settings.companies.description" (change)="updateSettings()"></textarea>
 
       <div class="col-6">
         <a (click)="displayCompanyToExcludeSection = !displayCompanyToExcludeSection" class="c-hand">{{
@@ -68,7 +68,7 @@
     <div class="col-8">
       <textarea class="form-input" id="innovation-pros"
                 [attr.placeholder]="'PROJECT_EDIT.PROFESSIONALS.PLACEHOLDER' | translate"
-                rows="5" (change)="updateSettings()"></textarea>
+                rows="5" [(ngModel)]="settings.professionals.description" (change)="updateSettings()"></textarea>
       <a (click)="displayPersonsToExcludeSection = !displayPersonsToExcludeSection" class="c-hand">{{
         'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
 
@@ -89,7 +89,7 @@
         <textarea class="form-input" id="other-comments"
                   [(ngModel)]="comments"
                   [attr.placeholder]="'PROJECT_EDIT.OTHER.PLACEHOLDER' | translate"
-                  rows="5" (change)="updateSettings()"></textarea>
+                  rows="5"  [(ngModel)]="settings.comments"(change)="updateSettings()"></textarea>
     </div>
   </div>
   <div class="form-group">
