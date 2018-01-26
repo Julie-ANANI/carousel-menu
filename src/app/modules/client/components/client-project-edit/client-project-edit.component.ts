@@ -76,10 +76,6 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
 
     }
 
-    this.displayCountriesToExcludeSection = this.formData.get('settings').get('geography').get('exclude').value.length > 0;
-    this.displayCompanyToExcludeSection = this.formData.get('settings').get('companies').get('exclude').value.length > 0;
-    this.displayPersonsToExcludeSection = this.formData.get('settings').get('professionals').get('exclude').value.length > 0;
-
     const formSubs = this.formData.valueChanges
       .distinctUntilChanged()
       .subscribe(newVersion => {
@@ -94,38 +90,14 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     });
   }
 
-
+  public updateSettings(event) {
+    this.formData.get('settings').setValue(event);
+  }
+  
   private _buildForm(): void {
     this.formData = this._formBuilder.group({
-      settings: this._formBuilder.group({
-        geography: this._formBuilder.group({
-          continentTarget: this._formBuilder.group({
-            europe: [false, [Validators.required]],
-            africa: [false, [Validators.required]],
-            asia: [false, [Validators.required]],
-            oceania: [false, [Validators.required]],
-            russia: [false, [Validators.required]],
-            americaNord: [false, [Validators.required]],
-            americaSud: [false, [Validators.required]]
-          }),
-          exclude:  [[]],
-          tmpNewCountryToExclude: ['']
-        }),
-        market: this._formBuilder.group({
-          comments: ['']
-        }),
-        companies: this._formBuilder.group({
-          exclude: [[]],
-          description: ['']
-        }),
-        professionals: this._formBuilder.group({
-          exclude: [[]],
-          examples: [[]],
-          description: ['']
-        }),
-        comments: ['']
-      }),
-      type: [undefined, Validators.required], //new
+      settings: [undefined, Validators.required],
+      type: [undefined, Validators.required],
       patented: [undefined, Validators.required],
       projectStatus: [undefined, Validators.required],
       innovationCards: this._formBuilder.array([]),
@@ -140,7 +112,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   public save(callback) {
     if (this.canEdit) {
       const saveSubs = this._innovationService
-        .save(this._project.id, this.formData.value, this._project.innovationCards[0].id)
+        .save(this._project.id, this.formData.value)
         .subscribe(data => {
         this.lastSavedDate = new Date(data.updated);
         this._project = data;
@@ -157,46 +129,6 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     }
   }
 
-  public continentModificationDrain(event) {
-    if(event) {
-      for (const o in this.formData.get('settings').get('geography').get('continentTarget').value) {
-        if (typeof this.formData.get('settings').get('geography').get('continentTarget').get(o) !== 'undefined') {
-          this.formData.get('settings').get('geography').get('continentTarget').get(o).setValue(event.continents[o]);
-        }
-      }
-    }
-  }
-
-  get continentTarget(): any {
-    return this.formData.get('settings').get('geography').get('continentTarget').value;
-  }
-
-  /**
-   * Add a country to the exclusion list
-   */
-  public addCountryToExclude(event): void {
-    this.formData.get('settings').get('geography')
-      .get('exclude').setValue(event.value);
-  }
-
-  /**
-   * Add a company to exclude
-   * @param event
-   */
-  public addCompanyToExclude(event): void {
-    this.formData.get('settings').get('companies')
-      .get('exclude').setValue(event.value);
-  }
-
-  /**
-   * Add people to exclude
-   * @param event
-   */
-  public addPeopleToExclude(event): void {
-    this.formData.get('settings').get('professionals')
-      .get('exclude').setValue(event.value);
-  }
-
   /**
    * This configuration tells the directive what text to use for the placeholder and if it exists,
    * the initial data to show.
@@ -205,26 +137,9 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
    */
   public getConfig(type: string): any {
     const _inputConfig = {
-      'countries': {
-        placeholder: 'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.formData.get('settings').get('geography')
-          .get('exclude').value,
-        type: 'countries'
-      },
       'advantages': {
         placeholder: 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.INPUT',
         initialData: this.formData.get('innovationCards').value[this.innovationCardEditingIndex]['advantages']
-      },
-      'excludedPeople': {
-        placeholder: 'PROJECT_EDIT.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.formData.get('settings')
-          .get('professionals').get('exclude').value
-      },
-      'excludedCompanies': {
-        placeholder: 'PROJECT_EDIT.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.formData.get('settings')
-          .get('companies').get('exclude').value,
-        type: 'company'
       }
     };
     return _inputConfig[type] || {

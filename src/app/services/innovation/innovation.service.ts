@@ -105,8 +105,8 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public save(innovationId: string, delta: any, innovationCardId?: any): Observable<any> {
-    return this._http.put('/innovation/' + innovationId, { delta: delta, innovationCardId: innovationCardId })
+  public save(innovationId: string, innovationObj: any): Observable<any> {
+    return this._http.put('/innovation/' + innovationId, innovationObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

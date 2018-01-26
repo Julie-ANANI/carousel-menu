@@ -115,116 +115,11 @@
             </div>
           </div>
 
-          <div formGroupName="settings">
+          <app-shared-project-settings [settings]="project.settings" (settingsChange)="updateSettings($event)"></app-shared-project-settings>
 
+          <div class="divider"></div>
 
-            <div class="column col-8">
-              <div class="form-group" formGroupName="geography">
-                <div class="col-4">
-                  <label class="form-label">{{ 'PROJECT_EDIT.TARGETING.GEOGRAPHY' | translate }}</label>
-                </div>
-                <div class="col-8">
-                  <!-- <div class="form-group">
-                    <label class="form-switch" for="world">
-                      <input type="checkbox" name="world" id="world"
-                             [checked]="areAllContinentChecked()"
-                             (change)="switchWorldCheckbox($event)" [disabled]="!canEdit">
-                      <i class="form-icon"></i> {{ 'PROJECT_EDIT.TARGETING.ENTIRE_WORLD' | translate }}
-                    </label>
-                  </div>-->
-
-                  <!-- countries... -->
-                  <clickable-worldmap (notifier)="continentModificationDrain($event)"
-                                      [initialConfiguration]="continentTarget"
-                                      [canEdit]="canEdit"></clickable-worldmap>
-
-                  <a (click)="displayCountriesToExcludeSection = !displayCountriesToExcludeSection" class="c-hand">
-                    {{ 'PROJECT_EDIT.TARGETING.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
-                    <i class="icon icon-arrow-right"></i>
-                  </a>
-
-                  <div *ngIf="displayCountriesToExcludeSection">
-                    <app-autocomplete-input (update)="addCountryToExclude($event)"
-                                            [canEdit]="canEdit"
-                                            [config]="getConfig('countries')"></app-autocomplete-input>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group" formGroupName="market">
-                <div class="col-4">
-                  <label class="form-label" for="innovation-sector">
-                    {{ 'PROJECT_EDIT.MARKET.LABEL' | translate }}
-                  </label>
-                </div>
-                <div class="col-8">
-                <textarea class="form-input" id="innovation-sector"
-                          formControlName="comments"
-                          [attr.placeholder]="'PROJECT_EDIT.MARKET.PLACEHOLDER' | translate"
-                          rows="5"></textarea>
-                </div>
-              </div>
-
-              <div class="form-group" formGroupName="companies">
-                <div class="col-4">
-                  <label class="form-label" for="innovation-companies">{{ 'PROJECT_EDIT.COMPANIES.LABEL' | translate
-                    }}</label>
-                </div>
-                <div class="col-8">
-                <textarea class="form-input" id="innovation-companies"
-                          formControlName="description"
-                          [attr.placeholder]="'PROJECT_EDIT.COMPANIES.PLACEHOLDER' | translate"
-                          rows="5"></textarea>
-
-                  <a (click)="displayCompanyToExcludeSection = !displayCompanyToExcludeSection" class="c-hand">{{
-                    'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
-
-                  <div *ngIf="displayCompanyToExcludeSection">
-                    <app-autocomplete-input (update)="addCompanyToExclude($event)"
-                                            [canEdit]="canEdit"
-                                            [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group" formGroupName="professionals">
-                <div class="col-4">
-                  <label class="form-label" for="innovation-pros">{{ 'PROJECT_EDIT.PROFESSIONALS.LABEL' | translate
-                    }}</label>
-                </div>
-                <div class="col-8">
-                <textarea class="form-input" id="innovation-pros"
-                          formControlName="description"
-                          [attr.placeholder]="'PROJECT_EDIT.PROFESSIONALS.PLACEHOLDER' | translate" rows="5"></textarea>
-
-                  <a (click)="displayPersonsToExcludeSection = !displayPersonsToExcludeSection" class="c-hand">{{
-                    'PROJECT_EDIT.PROFESSIONALS.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
-
-                  <div *ngIf="displayPersonsToExcludeSection">
-                    <app-input-list (update)="addPeopleToExclude($event)"
-                                    [canEdit]="canEdit"
-                                    [config]="getConfig('excludedPeople')"></app-input-list>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-4">
-                  <label class="form-label" for="other-comments">{{ 'PROJECT_EDIT.OTHER.LABEL' | translate }}</label>
-                </div>
-                <div class="col-8">
-                <textarea class="form-input" id="other-comments"
-                          formControlName="comments"
-                          [attr.placeholder]="'PROJECT_EDIT.OTHER.PLACEHOLDER' | translate"
-                          rows="5"></textarea>
-                </div>
-              </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <h2 id="description">2. {{ 'PROJECT_EDIT.STEP2' | translate }}</h2>
-          </div>
+          <h2 id="description">2. {{ 'PROJECT_EDIT.STEP2' | translate }}</h2>
           <div>
             <div class="columns">
               <div class="column col-8">
