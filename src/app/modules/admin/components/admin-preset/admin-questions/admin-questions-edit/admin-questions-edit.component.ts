@@ -83,12 +83,13 @@ export class AdminQuestionsEditComponent implements OnInit, OnDestroy {
 
   buildOption(option?) {
     return this._formBuilder.group({
-      identifier: [option && option.identifier || ''],
+      identifier: [option && option.identifier || '', Validators.required],
       label: this._formBuilder.group({
-        fr: [option && option.label ? option.label.fr || '' : ''],
-        en: [option && option.label ? option.label.en || '' : '']
+        fr: [option && option.label ? option.label.fr || '' : '', Validators.required],
+        en: [option && option.label ? option.label.en || '' : '', Validators.required]
       }),
-      positive: [option.positive]
+      positive: [option.positive],
+      color: [option.color, Validators.required]
     })
   }
 
