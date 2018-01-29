@@ -46,12 +46,24 @@ export class SharedMarketReportSectionComponent implements OnInit {
     });
     this.conclusionId = `${this.info.id}Conclusion`;
 
-    if (this.info.pieChart) {
-      let data = SharedMarketReportSectionComponent.getChartValues(this.info.pieChart);
-      this._chartValues = [{
-        'data': data || [],
-        'backgroundColor': ['#C0210F', '#F2C500', '#82CD30', '#34AC01']
-      }];
+    if (this.info.controlType === 'radio') {
+      this._chartValues = {
+        data: [{
+          data: [],
+          backgroundColor: []
+        }],
+        labels: {
+          fr: [],
+          en: []
+        },
+        colors: []
+      };
+      this.info.options.forEach(option => {
+        this._chartValues.data[0].data.push(this.info.pieChart[option.identifier].count);
+        this._chartValues.labels.fr.push(option.label.fr);
+        this._chartValues.labels.en.push(option.label.en);
+        this._chartValues.data[0].backgroundColor.push(this.info.pieChart[option.identifier].color);
+      });
     }
 
     switch(this.info.controlType) {
@@ -73,10 +85,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
 
   public seeAnswer(event: any) {
     this.modalAnswerChange.emit(event);
-  }
-
-  static getChartValues(stats) {
-    return _.map(stats, s => s['count']);
   }
 
   public toggleDetails(){

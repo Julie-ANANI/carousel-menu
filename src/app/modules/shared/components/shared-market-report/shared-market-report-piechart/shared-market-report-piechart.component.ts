@@ -13,20 +13,14 @@ import { TranslateService } from '@ngx-translate/core';
 export class SharedMarketReportPiechartComponent implements OnInit {
 
   @Input() public pieChartData: any;
-  @Input() public options: any;
   @Input() public percentage: number;
-
-  private _labels : any;
 
   constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
-    this._labels = {
-      en: this.options.map((o: any) => o.label.en),
-      fr: this.options.map((o: any) => o.label.fr)
-    };
   }
-  set labels(value: any) { this._labels = value; }
-  get labels(): any { return this._labels; }
+  get data(): string[] { return this.pieChartData.data; }
+  get colors(): string[] { return this.pieChartData.data[0].backgroundColor; }
+  get labels(): any { return this.pieChartData.labels; }
   get lang(): any { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
 }
