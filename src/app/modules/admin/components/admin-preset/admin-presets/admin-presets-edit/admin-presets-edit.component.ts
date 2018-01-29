@@ -21,6 +21,7 @@ export class AdminPresetsEditComponent implements OnInit, OnDestroy {
   public formData: FormGroup;
   private _addSectionConfig = {
     placeholder: 'PRESETS.PRESET.EDIT.SECTION_PLACEHOLDER',
+    canOrder: true,
     initialData: [],
     type: 'sections'
   };

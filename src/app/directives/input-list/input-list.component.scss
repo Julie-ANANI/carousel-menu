@@ -17,8 +17,6 @@ $dark-color: #333 !default;
     border-radius: 2px 0 0 2px;
     padding: 15px 25px;
     color: white;
-    font-size: 16px;
-    font-weight: 600;
     width: 100%;
   }
 
@@ -28,9 +26,13 @@ $dark-color: #333 !default;
     border-radius: 0 2px 2px 0;
     padding: 12px 17px;
     border: none;
+  }
 
-    img {
-    }
+  a.updown {
+    background: $secondary-color;
+    padding: 15px 0;
+    color: white;
+    width: 100%;
   }
 
   a.delete:hover {

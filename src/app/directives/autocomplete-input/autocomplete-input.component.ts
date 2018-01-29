@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import 'rxjs/add/operator/switchMap';
@@ -18,11 +18,11 @@ export class AutocompleteInputComponent implements OnInit {
 
   @Output() update = new EventEmitter<any>();
   @Input() canEdit = true;
-  @Input() onlyOne = false; //si le booléen est à true, on accepte une seule valeur et non un tableau
+  @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
 
   companyName: FormControl = new FormControl();
   answerList: Array<{name: string, domain: string, flag: string}> = [];
-  optionsList: Array<any> = [];//Observable<{name: string, domain: string, flag: string}[]>;
+  optionsList: Array<any> = [];// Observable<{name: string, domain: string, flag: string}[]>;
   answer = "";
 
   /*
@@ -31,6 +31,7 @@ export class AutocompleteInputComponent implements OnInit {
   private _placeholder = "";
   private _autocompleteType = "";
   private _identifier: string;
+  private _canOrder: boolean;
   ////////////////////////////////////////////////////////////////////
 
   constructor(private _fbuilder: FormBuilder,
@@ -38,9 +39,10 @@ export class AutocompleteInputComponent implements OnInit {
               private _autocompleteService: AutocompleteService) {}
 
   @Input()
-  set config(config: {placeholder: string, type: string, initialData: any, identifier: string}) {
+  set config(config: {placeholder: string, type: string, initialData: any, identifier: string, canOrder: boolean}) {
     if (config) {
       this._identifier = config.identifier || 'name';
+      this._canOrder = config.canOrder || false;
       this._placeholder = config.placeholder || '';
       this._autocompleteType = config.type || '';
       if (config.initialData && Array.isArray(config.initialData)) {
@@ -61,6 +63,10 @@ export class AutocompleteInputComponent implements OnInit {
 
   get identifier(): string {
     return this._identifier;
+  }
+
+  get canOrder(): boolean {
+    return this._canOrder;
   }
 
   ngOnInit() {
@@ -97,6 +103,22 @@ export class AutocompleteInputComponent implements OnInit {
         this.answerList.push(val);
       }
       this.inputForm.get('answer').setValue('');
+      this.update.emit({value: this.answerList});
+    }
+  }
+
+  up(i: number): void {
+    if (i !== 0) {
+      const elem = this.answerList.splice(i, 1);
+      this.answerList.splice(i - 1, 0, elem[0]);
+      this.update.emit({value: this.answerList});
+    }
+  }
+
+  down(i: number): void {
+    if (i !== this.answerList.length - 1) {
+      const elem = this.answerList.splice(i, 1);
+      this.answerList.splice(i + 1, 0, elem[0]);
       this.update.emit({value: this.answerList});
     }
   }
