@@ -144,7 +144,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   }
 
   public getRelevantLink (project) { // routerLink : /projects/:project_id
-    const link = '../projects/' + project._id;
+    const link = 'projects/project/' + project._id;
     switch (project.status) {
       case 'DONE':
       case 'EVALUATING':
@@ -152,7 +152,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
       // case 'SUBMITTED':
       //   return link;
       default:
-        return link + '/edit';
+        return link + '/settings';
     }
   }
 

@@ -33,7 +33,7 @@
         </a>
       </td>
       <td class="project-description">
-        <span class="title"><a [routerLink]="getRelevantLink(project)" target="_blank" title="">{{ project.name || '--' }}</a></span>
+        <span class="title"><a [routerLink]="getRelevantLink(project)" title="">{{ project.name || '--' }}</a></span>
         <span class="metas"><span *ngIf="project.owner">{{ project.owner.firstName }} {{ project.owner.lastName }}<span *ngIf="project.owner.companyName"> / {{ project.owner.companyName }}</span>
             • </span>
             {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
