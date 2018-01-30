@@ -97,7 +97,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   private _buildForm(): void {
     this.formData = this._formBuilder.group({
       settings: [undefined, Validators.required],
-      type: [undefined, Validators.required],
+      type: ['insights', Validators.required],
       patented: [undefined, Validators.required],
       projectStatus: [undefined, Validators.required],
       innovationCards: this._formBuilder.array([]),
