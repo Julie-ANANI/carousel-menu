@@ -48,7 +48,7 @@
           </a><br>
           <a href="mailto: {{modalAnswer.professional?.email}}">{{modalAnswer.professional?.email}}</a><br>
           {{ 'MARKET_REPORT.POPUP.RECEIVED' | translate }} {{modalAnswer.date | date : dateFormat}} à {{modalAnswer.date | date:'HH:mm'}}<br>
-          <img *ngIf="modalAnswer.country" [src]="buildImageUrl(modalAnswer.country.notation)" width="30" height="20">
+          <img *ngIf="modalAnswer.country" [src]="buildImageUrl(modalAnswer.country)" width="30" height="20">
           {{(modalAnswer.country) ? modalAnswer.country.text : ""}}
         </p>
       </div>
