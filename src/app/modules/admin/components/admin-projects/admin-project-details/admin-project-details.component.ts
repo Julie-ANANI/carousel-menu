@@ -31,7 +31,7 @@ export class AdminProjectsDetailsComponent implements OnInit {
     this._project = this._activatedRoute.snapshot.data['innovation'];
     const url = this._router.routerState.snapshot.url.split('/');
     if (url && url[5]) { this._currentPage = url[5]; }
-    this._preset = [this._project.preset];
+    this._preset = this._project.preset ? [this._project.preset] : [];
   }
 
   get innovationTitle(): string {
@@ -40,7 +40,7 @@ export class AdminProjectsDetailsComponent implements OnInit {
 
   set preset(value: any) { this._preset = value; }
   get preset(): any { return this._preset; }
-  
+
   public updatePreset(event) {
     this._preset = event.value;
     this._project.preset = this._preset[0];
