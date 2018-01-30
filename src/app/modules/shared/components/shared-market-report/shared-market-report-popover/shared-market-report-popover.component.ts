@@ -20,7 +20,7 @@ export class SharedMarketReportPopoverComponent implements OnInit {
 
   }
 
-  public buildImageUrl(country: string): string {
+  public buildImageUrl(country: any): string {
     if (country && country.notation) return `https://res.cloudinary.com/umi/image/upload/app/${country.notation}.png`;
     return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
   }
