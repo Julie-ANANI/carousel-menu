@@ -30,7 +30,6 @@ export class AdminCampaignsComponent implements OnInit {
     this._innovation =  this._activatedRoute.snapshot.data['innovation'];
     this._innovationService.campaigns(this._innovation._id)
       .subscribe(campaigns => {
-          console.log(campaigns);
           this._campaigns = campaigns.result;
         },
         error => this._notificationsService.error('ERROR', error.message)
@@ -59,8 +58,9 @@ export class AdminCampaignsComponent implements OnInit {
       this._newCampaign.settings.clonedInfo = true;
     }
 
-    this._campaignService.create(this._newCampaign).subscribe(() => {
+    this._campaignService.create(this._newCampaign).subscribe((c) => {
       this._notificationsService.success('SUCCESS', 'SUCCESS');
+      this.campaigns.push(c);
     }, error => {
       this._notificationsService.error('ERROR', error.message);
     });
