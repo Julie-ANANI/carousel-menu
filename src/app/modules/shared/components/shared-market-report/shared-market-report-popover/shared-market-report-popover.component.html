@@ -5,7 +5,7 @@
       <li *ngFor="let answer of answers; let i = index">
 
         <p class="user-name" *ngIf="answer.professional.profileUrl">
-          <img [src]="buildImageUrl(answer.country.notation)"
+          <img [src]="buildImageUrl(answer.country)"
                alt="" width="23" height="16" class="user-flag">
           <a href="{{answer.professional.profileUrl}}" target="_blank">
             {{answer.professional.firstName}} {{answer.professional.lastName}}
