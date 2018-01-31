@@ -80,7 +80,7 @@ export class SharedAnswerModalComponent implements OnInit {
         .subscribe(data => {
           this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
         }, err => {
-          this._notificationsService.error('ERROR.ANSWER.UNFORBIDDEN', err);
+          this._notificationsService.error('ERROR.ERROR', err);
         });
     }
   }

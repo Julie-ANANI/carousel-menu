@@ -173,6 +173,13 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+
+  public createQuiz(innovationId: string) {
+    return this._http.post('/innovation/' + innovationId + '/quiz')
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   /**
    * URL sent to people when we invite them to sign in to UMI
    * When we want to add them as Collaborator

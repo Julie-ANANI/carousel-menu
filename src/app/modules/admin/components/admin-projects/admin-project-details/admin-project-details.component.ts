@@ -49,6 +49,17 @@ export class AdminProjectsDetailsComponent implements OnInit {
   public updateSettings(value) {
     this._project.settings = value;
   }
+  
+  public generateQuiz() {
+    const quizSubs = this._innovationService
+      .createQuiz(this._project.id)
+      .subscribe(() => {
+        this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , 'ERROR.QUIZ.CREATED');
+      }, err => {
+        this._notificationsService.error('ERROR.ERROR', err);
+      });
+    this._subscriptions.push(quizSubs);
+  }
 
   /**
    * Sauvegarde

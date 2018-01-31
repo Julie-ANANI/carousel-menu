@@ -115,7 +115,6 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
         .save(this._project.id, this.formData.value)
         .subscribe(data => {
         this.lastSavedDate = new Date(data.updated);
-        this._project = data;
         this.shouldSave = false;
         if (callback) {
           callback();

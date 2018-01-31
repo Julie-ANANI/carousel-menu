@@ -21,6 +21,10 @@
             <div class="column col-4">
               <h3>Administration</h3>
 
+              <button class="btn btn-primary btn-lg" type="button" (click)="generateQuiz()">
+                Générer le quiz
+              </button>
+
               <app-autocomplete-input
                 (update)="updatePreset($event)" [onlyOne]="true"
                 [config]="{placeholder: 'preset', initialData: preset || [], type: 'preset'}"
