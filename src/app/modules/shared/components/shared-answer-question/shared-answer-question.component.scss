@@ -6,6 +6,18 @@
   color: #adadad;
 }
 
+.topItem {
+  background: #00b700;
+  color: white;
+
+  i {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  i:hover {
+    color: white;
+  }
+}
+
 blockquote {
   font-style: italic;
 }

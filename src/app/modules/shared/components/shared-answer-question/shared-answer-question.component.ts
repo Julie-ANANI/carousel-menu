@@ -16,7 +16,7 @@ export class SharedAnswerQuestionComponent implements OnInit {
 
   @Input() public question;
   @Input() public fullAnswer;
-  @Input() public adminMode: boolean;
+  @Input() public adminMode: boolean = false;
   @Output() fullAnswerChange = new EventEmitter <any>(); 
 
   constructor(private _translateService: TranslateService,
@@ -44,9 +44,13 @@ export class SharedAnswerQuestionComponent implements OnInit {
     this.fullAnswerChange.emit(this.fullAnswer);
   }
   
-  selectOption(index) {
-    this.fullAnswer.answers[this.question.identifier] = index + 1;
+  selectOption(option) {
+    this.fullAnswer.answers[this.question.identifier] = option.identifier;
     this.fullAnswerChange.emit(this.fullAnswer);
+  }
+  
+  setAnswer(event) {
+    this.fullAnswer.answers[this.question.identifier] = event.value;
   }
 
   addComment() {
