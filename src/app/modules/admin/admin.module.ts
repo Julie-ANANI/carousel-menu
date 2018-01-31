@@ -11,7 +11,7 @@ import { AdminCampaignsComponent } from './components/admin-campaigns/admin-camp
 import { AdminEmailsComponent } from './components/admin-emails/admin-emails.component';
 import { AdminIndexComponent } from './components/admin-index/admin-index.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
-import { AdminSearchesComponent } from './components/admin-searches/admin-searches.component';
+import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 import { AdminEmailQueueComponent } from './components/admin-emails/admin-emails-queue/admin-emails-queue.component';
 import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
@@ -29,6 +29,7 @@ import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admi
 import { AdminCampaignSearchComponent } from './components/admin-campaigns/admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admin-campaign-answers/admin-campaign-answers.component';
 import { AdminAnswersListComponent } from './components/admin-answers-list/admin-answers-list.component';
+import { AdminSearchHistoryComponent } from './components/admin-search/admin-search-history/admin-search-history.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,7 @@ import { AdminAnswersListComponent } from './components/admin-answers-list/admin
     AdminEmailsComponent,
     AdminIndexComponent,
     AdminPatentsComponent,
-    AdminSearchesComponent,
+    AdminSearchComponent,
     AdminEmailQueueComponent,
     AdminBatchInformationComponent,
     AdminUserDetailsComponent,
@@ -63,7 +64,8 @@ import { AdminAnswersListComponent } from './components/admin-answers-list/admin
     AdminCampaignHistoryComponent,
     AdminCampaignSearchComponent,
     AdminCampaignAnswersComponent,
-    AdminAnswersListComponent
+    AdminAnswersListComponent,
+    AdminSearchHistoryComponent
   ]
 })
 export class AdminModule {

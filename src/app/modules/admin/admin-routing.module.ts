@@ -8,7 +8,7 @@ import { AdminCampaignsComponent } from './components/admin-campaigns/admin-camp
 import { AdminEmailsComponent } from './components/admin-emails/admin-emails.component';
 import { AdminIndexComponent } from './components/admin-index/admin-index.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
-import { AdminSearchesComponent } from './components/admin-searches/admin-searches.component';
+import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 import { AdminComponent } from './admin.component';
 import { AdminAuthGuard } from './admin-auth-guard.service';
 import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
@@ -69,9 +69,9 @@ const adminRoutes: Routes = [
         ]
       },
       {
-        path: 'searches',
+        path: 'search',
         children: [
-          { path: '', component: AdminSearchesComponent, pathMatch: 'full' }
+          { path: '', component: AdminSearchComponent, pathMatch: 'full' }
         ]
       },
       {

@@ -20,4 +20,6 @@ export class AdminCampaignHistoryComponent implements OnInit {
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.data['campaign'];
   }
+  
+  get campaignId(): any { return this._campaign._id; }
 }
