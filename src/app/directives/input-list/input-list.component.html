@@ -19,7 +19,7 @@
     <li *ngIf="adminMode">
       <span>{{a.text}}</span>
       <div class="popover">
-        <i class="fa fa-pencil" [ngClass]="{'active': a.link && a.link.length > 0}"></i>
+        <i class="fa fa-pencil"></i>
         <div class="popover-container">
           <div class="input-group">
             <input type="text" class="form-input" [(ngModel)]="a.text" name="text"/>

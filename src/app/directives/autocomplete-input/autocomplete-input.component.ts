@@ -19,9 +19,10 @@ export class AutocompleteInputComponent implements OnInit {
   @Output() update = new EventEmitter<any>();
   @Input() canEdit = true;
   @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
+  @Input() adminMode = false;
 
   companyName: FormControl = new FormControl();
-  answerList: Array<{name: string, domain: string, flag: string}> = [];
+  answerList: Array<{name: string, domain: string, flag: string; url:string, rating: number}> = [];
   optionsList: Array<any> = [];// Observable<{name: string, domain: string, flag: string}[]>;
   answer = "";
 
@@ -128,4 +129,29 @@ export class AutocompleteInputComponent implements OnInit {
     this.update.emit({value: this.answerList});
   }
 
+  thumbsUp(index) {
+    if (this.adminMode) {
+      if (this.answerList[index].rating === 1) {
+        this.answerList[index].rating = 0;
+      } else {
+        this.answerList[index].rating = 1;
+      }
+      this.update.emit({value: this.answerList});
+    }
+  }
+
+  thumbsDown(index) {
+    if (this.adminMode) {
+      if (this.answerList[index].rating === -1) {
+        this.answerList[index].rating = 0;
+      } else {
+        this.answerList[index].rating = -1;
+      }
+      this.update.emit({value: this.answerList});
+    }
+  }
+
+  updateItem() {
+    this.update.emit({value: this.answerList});
+  }
 }
