@@ -41,7 +41,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   loadAnswers(): void {
     this._campaignService.getAnswers(this._campaign._id).subscribe(result => {
       this._answers = result.answers.localAnswers;
-      this._total = this._answers.length + result.answers.draftAnswers;
+      this._total = this._answers.length + result.answers.draftAnswers.length;
       this._validatedAnswers = this.filterByStatus('VALIDATED');
       this._submittedAnswers = this.filterByStatus('SUBMITTED');
       this._toCompleteAnswers = this.filterByStatus('TO_COMPLETE');
