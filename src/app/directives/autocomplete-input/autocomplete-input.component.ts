@@ -131,10 +131,10 @@ export class AutocompleteInputComponent implements OnInit {
 
   thumbsUp(index) {
     if (this.adminMode) {
-      if (this.answerList[index].rating === 1) {
-        this.answerList[index].rating = 0;
-      } else {
+      if (this.answerList[index].rating === 2) {
         this.answerList[index].rating = 1;
+      } else {
+        this.answerList[index].rating = 2;
       }
       this.update.emit({value: this.answerList});
     }
@@ -142,10 +142,10 @@ export class AutocompleteInputComponent implements OnInit {
 
   thumbsDown(index) {
     if (this.adminMode) {
-      if (this.answerList[index].rating === -1) {
-        this.answerList[index].rating = 0;
+      if (this.answerList[index].rating === 0) {
+        this.answerList[index].rating = 1;
       } else {
-        this.answerList[index].rating = -1;
+        this.answerList[index].rating = 0;
       }
       this.update.emit({value: this.answerList});
     }

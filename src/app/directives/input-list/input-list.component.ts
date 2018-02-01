@@ -50,10 +50,10 @@ export class InputListComponent {
 
   thumbsUp(index) {
     if (this.adminMode) {
-      if (this.answerList[index].rating === 1) {
-        this.answerList[index].rating = 0;
-      } else {
+      if (this.answerList[index].rating === 2) {
         this.answerList[index].rating = 1;
+      } else {
+        this.answerList[index].rating = 2;
       }
       this.update.emit({value: this.answerList});
     }
@@ -61,10 +61,10 @@ export class InputListComponent {
 
   thumbsDown(index) {
     if (this.adminMode) {
-      if (this.answerList[index].rating === -1) {
-        this.answerList[index].rating = 0;
+      if (this.answerList[index].rating === 0) {
+        this.answerList[index].rating = 1;
       } else {
-        this.answerList[index].rating = -1;
+        this.answerList[index].rating = 0;
       }
       this.update.emit({value: this.answerList});
     }
