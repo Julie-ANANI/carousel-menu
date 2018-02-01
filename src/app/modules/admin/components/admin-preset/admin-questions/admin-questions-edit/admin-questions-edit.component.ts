@@ -88,8 +88,8 @@ export class AdminQuestionsEditComponent implements OnInit, OnDestroy {
         fr: [option && option.label ? option.label.fr || '' : '', Validators.required],
         en: [option && option.label ? option.label.en || '' : '', Validators.required]
       }),
-      positive: [option.positive],
-      color: [option.color, Validators.required]
+      positive: [option ? option.positive : false],
+      color: [option ? option.color: '', Validators.required]
     })
   }
 
