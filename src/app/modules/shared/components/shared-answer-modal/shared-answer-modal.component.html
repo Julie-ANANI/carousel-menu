@@ -10,7 +10,7 @@
               'label-error': modalAnswer.status === 'REJECTED',
               'label-primary': modalAnswer.status === 'SUBMITTED'
               }">
-          {{ modalAnswer.status.toLowerCase() }}
+          {{ modalAnswer.status?.toLowerCase() }}
         </span>
         Réponse <span *ngIf="modalAnswer.status != 'VALIDATED'">non </span>validée
       </h3>
@@ -70,17 +70,17 @@
         <i class="fa fa-trash"></i> Rejeter
       </button>
       <button class="btn btn-warning"
-              *ngIf="adminMode && (modalAnswer.status === 'SUBMITTED' || modalAnswer.status === 'TO_COMPLETE' || modalAnswer.status === 'REJECTED' || (modalAnswer.status === 'DRAFT' && modalAnswer.professional.email))"
+              *ngIf="adminMode && (modalAnswer.status === 'SUBMITTED' || modalAnswer.status === 'TO_COMPLETE' || modalAnswer.status === 'REJECTED' || (modalAnswer.status === 'DRAFT' && modalAnswer.professional?.email))"
               (click)="changeStatus('TO_COMPLETE')">
         <i class="fa fa-rocket"></i> À compléter
       </button>
       <button class="btn btn-success"
-              *ngIf="adminMode && (modalAnswer.status !== 'VALIDATED' && modalAnswer.professional.email)"
+              *ngIf="adminMode && (modalAnswer.status !== 'VALIDATED' && modalAnswer.professional?.email)"
               (click)="changeStatus('VALIDATED')">
         <i class="fa fa-check"></i> Valider
       </button>
       <button class="btn btn-error"
-              *ngIf="adminMode && (modalAnswer.status === 'VALIDATED' && modalAnswer.professional.email)"
+              *ngIf="adminMode && (modalAnswer.status === 'VALIDATED' && modalAnswer.professional?.email)"
               (click)="changeStatus('SUBMITTED')">
         <i class="fa fa-minus"></i> Invalider
       </button>
