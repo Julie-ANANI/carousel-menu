@@ -3,7 +3,7 @@
     <ul class="items">
       <li *ngFor="let item of list; let i = index"
           [hidden]="i >= list.length/2"
-          [ngClass]="{'top-profil': item.quality === 2}">
+          [ngClass]="{'top-profil': item.quality === 1}">
         <market-item class="flex-container"
                      [answers]="getAnswers(item.answers)"
                      [item]="item"
@@ -17,7 +17,7 @@
     <ul class="items">
       <li *ngFor="let item of list; let i = index"
           [hidden]="i < list.length/2"
-          [ngClass]="{'top-profil': item.quality === 2}">
+          [ngClass]="{'top-profil': item.quality === 1}">
         <market-item class="flex-container"
                      [answers]="getAnswers(item.answers)"
                      [item]="item"
