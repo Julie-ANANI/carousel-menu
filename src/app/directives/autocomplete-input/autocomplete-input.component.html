@@ -20,12 +20,8 @@
   <ul *ngFor="let a of answerList; index as i" class="answerList">
     <li *ngIf="!adminMode">
       <span [innerHTML]="a[identifier]"></span>
-      <a *ngIf="canOrder" class="updown c-hand" aria-label="Up" role="button" (click)="up(i)">
-        up
-      </a>
-      <a *ngIf="canOrder" class="updown c-hand" aria-label="Down" role="button" (click)="down(i)">
-        down
-      </a>
+      <i *ngIf="canOrder" class="fa fa-chevron-up c-hand" aria-label="Up" role="button" (click)="up(i)"></i>
+      <i *ngIf="canOrder" class="fa fa-chevron-down c-hand" aria-label="Down" role="button" (click)="down(i)"></i>
       <a class="delete c-hand" aria-label="Close" role="button" (click)="rmProposition(i)">
         <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
       </a>
