@@ -18,6 +18,8 @@
       <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'controlType'">{{ 'COMMON.TYPE' | translate }}</sq-sort></th>
       <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'updated'">{{ 'COMMON.UPDATED' | translate }}</sq-sort></th>
       <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'created'">{{ 'COMMON.CREATED' | translate }}</sq-sort></th>
+      <th></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -27,6 +29,7 @@
       <td>{{question.controlType}}</td>
       <td>{{question.created | date : dateFormat}}</td>
       <td>{{question.updated | date : dateFormat}}</td>
+      <td><button class="btn btn-primary" (click)="selectedQuestionToBeCloned=question"><i class="fa fa-copy"></i> {{ 'COMMON.CLONE' | translate }}</button></td>
       <td><a class="delete c-hand" aria-label="Close" role="button" (click)="selectedQuestionIdToBeDeleted=question._id">
         <i class="icon icon-delete"></i>
       </a></td>
@@ -56,6 +59,27 @@
     <div class="modal-footer">
       <button class="btn btn-link" (click)="removeQuestion(selectedQuestionIdToBeDeleted)">{{ 'COMMON.DELETE' | translate }}</button>
       <button class="btn btn-primary" (click)="selectedQuestionIdToBeDeleted = null">{{ 'COMMON.CANCEL' | translate }}</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL : Nouveau nom de la question clônée ? -->
+<div class="modal" [ngClass]="{'active': selectedQuestionToBeCloned}">
+  <div class="modal-overlay" (click)="selectedQuestionToBeCloned = null"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="selectedQuestionToBeCloned = null"></button>
+      <div class="modal-title h5">{{ 'PRESETS.QUESTION.CLONE_MODAL.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content" *ngIf="selectedQuestionToBeCloned">
+        {{ 'PRESETS.QUESTION.CLONE_MODAL.CONTENT' | translate }}
+        <input class="form-input" type="text" [(ngModel)]="selectedQuestionToBeCloned.identifier"/>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" [disabled]="!selectedQuestionToBeCloned || !selectedQuestionToBeCloned.identifier" (click)="cloneQuestion(selectedQuestionToBeCloned)">{{ 'COMMON.CLONE' | translate }}</button>
+      <button class="btn btn-primary" (click)="selectedQuestionToBeCloned = null">{{ 'COMMON.CANCEL' | translate }}</button>
     </div>
   </div>
 </div>

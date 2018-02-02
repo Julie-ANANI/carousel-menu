@@ -19,6 +19,7 @@
       <th><sq-sort [config]="config" (configChange)="loadSections($event)" [prop]="'updated'">{{ 'COMMON.UPDATED' | translate }}</sq-sort></th>
       <th><sq-sort [config]="config" (configChange)="loadSections($event)" [prop]="'created'">{{ 'COMMON.CREATED' | translate }}</sq-sort></th>
       <th></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@
       <td>{{section.domain}}</td>
       <td>{{section.created | date : dateFormat}}</td>
       <td>{{section.updated | date : dateFormat}}</td>
+      <td><button class="btn btn-primary" (click)="selectedSectionToBeCloned=section"><i class="fa fa-copy"></i> {{ 'COMMON.CLONE' | translate }}</button></td>
       <td><a class="delete c-hand" aria-label="Close" role="button" (click)="selectedSectionIdToBeDeleted=section._id">
         <i class="icon icon-delete"></i>
       </a></td>
@@ -58,6 +60,27 @@
     <div class="modal-footer">
       <button class="btn btn-link" (click)="removeSection(selectedSectionIdToBeDeleted)">{{ 'COMMON.DELETE' | translate }}</button>
       <button class="btn btn-primary" (click)="selectedSectionIdToBeDeleted = null">{{ 'COMMON.CANCEL' | translate }}</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL : Nouveau nom de la section clônée ? -->
+<div class="modal" [ngClass]="{'active': selectedSectionToBeCloned}">
+  <div class="modal-overlay" (click)="selectedSectionToBeCloned = null"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="selectedSectionToBeCloned = null"></button>
+      <div class="modal-title h5">{{ 'PRESETS.SECTION.CLONE_MODAL.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content" *ngIf="selectedSectionToBeCloned">
+        {{ 'PRESETS.SECTION.CLONE_MODAL.CONTENT' | translate }}
+        <input class="form-input" type="text" [(ngModel)]="selectedSectionToBeCloned.name"/>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" [disabled]="!selectedSectionToBeCloned || !selectedSectionToBeCloned.name" (click)="cloneSection(selectedSectionToBeCloned)">{{ 'COMMON.CLONE' | translate }}</button>
+      <button class="btn btn-primary" (click)="selectedSectionToBeCloned = null">{{ 'COMMON.CANCEL' | translate }}</button>
     </div>
   </div>
 </div>
