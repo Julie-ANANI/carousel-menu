@@ -9,14 +9,14 @@ export class SharedRatingItemComponent implements OnInit {
   @Input() rating: number;
   @Input() big: string;
   @Input() adminMode: boolean;
-  @Output() ratingChange = new EventEmitter <any>(); 
+  @Output() ratingChange = new EventEmitter <any>();
   @Input() prop: string;
 
   constructor() {
   }
 
   ngOnInit() {
-    this.rating = this.rating || 0;
+    this.rating = this.rating || 1;
   }
 
   thumbsUp() {

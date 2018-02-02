@@ -19,7 +19,7 @@
 
     <div *ngSwitchCase="'clearbit'">
       <div *ngIf="!adminMode" class="list">
-        <span class="chip" [ngClass]="{'topItem': competitor.rating === 2}" *ngFor="let competitor of fullAnswer.answers[question.identifier]">
+        <span class="chip" [ngClass]="{'topItem': competitor.rating === 2, 'badItem': competitor.rating === 0}" *ngFor="let competitor of fullAnswer.answers[question.identifier]">
           <img *ngIf="competitor.logo" [src]=competitor.logo width="20px" height="20px"/>
           {{competitor.name}}
           <a *ngIf="competitor.domain" [href]=link(competitor.domain) target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -37,7 +37,7 @@
 
     <div *ngSwitchCase="'list'">
       <div *ngIf="!adminMode" class="list">
-        <span class="chip" [ngClass]="{'topItem': item.rating === 2}" *ngFor="let item of fullAnswer.answers[question.identifier]">
+        <span class="chip" [ngClass]="{'topItem': item.rating === 2, 'badItem': competitor.rating === 0}" *ngFor="let item of fullAnswer.answers[question.identifier]">
           {{item.text}}
           <a *ngIf="item.link" [href]=item.link target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
         </span>

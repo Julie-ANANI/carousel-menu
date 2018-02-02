@@ -6,7 +6,7 @@
   color: #adadad;
 }
 
-.topItem {
+.topItem, .badItem {
   background: #00b700;
   color: white;
 
@@ -16,6 +16,10 @@
   i:hover {
     color: white;
   }
+}
+
+.badItem {
+  background: #f20d0d;
 }
 
 blockquote {
