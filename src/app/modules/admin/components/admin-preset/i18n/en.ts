@@ -25,6 +25,12 @@ export const PRESETS = {
       'TITLE': 'Are you sure?',
       'CONTENT': 'Are you sure you want to definitively delete this section ? It may be used for other projects !'
     },
+    'DESCRIPTION': {
+      'NOTHING': 'Nothing',
+      'FIRST': 'Problem',
+      'SECOND': 'Solution',
+      'LIST': 'Benefits'
+    },
     'NONE': {
       'TITLE': 'You have no section yet',
       'CONTENT': 'Click the button to create your first section'

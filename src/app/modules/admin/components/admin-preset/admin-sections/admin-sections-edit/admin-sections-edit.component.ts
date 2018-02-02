@@ -38,7 +38,7 @@ export class AdminSectionsEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const subs = this._activatedRoute.params.subscribe(params => {
       const sectionId = params['sectionId'];
-      const subs = this._presetService.getSection(sectionId).subscribe(section => {
+      this._presetService.getSection(sectionId).subscribe(section => {
         this._section = section;
         this._addQuestionConfig.initialData = section.questions;
         this.formData = this._formBuilder.group({
@@ -46,10 +46,7 @@ export class AdminSectionsEditComponent implements OnInit, OnDestroy {
             fr: [section.label ? section.label.fr || '' : '', Validators.required],
             en: [section.label ? section.label.en || '' : '', Validators.required]
           }),
-          description: this._formBuilder.group({
-            fr: [section.description ? section.description.fr || '' : ''],
-            en: [section.description ? section.description.en || '' : '']
-          }),
+          description: [section.description ? section.description : 'nothing', Validators.required],
           questions: []
         });
       });

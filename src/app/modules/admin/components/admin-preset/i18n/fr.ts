@@ -25,6 +25,12 @@ export const PRESETS = {
       'TITLE': 'Êtes-vous sûr(e) ?',
       'CONTENT': 'Êtes-vous sûr(e) de vouloir définitivement supprimer cette section ? Elle est peut-être utilisée pour une autre configuration !'
     },
+    'DESCRIPTION': {
+      'NOTHING': 'Rien',
+      'FIRST': 'Problème',
+      'SECOND': 'Solution',
+      'LIST': 'Avantages'
+    },
     'NONE': {
       'TITLE': 'Vous n\'avez pas encore de section',
       'CONTENT': 'Cliquez-sur le boutton pour ajouter votre première section'

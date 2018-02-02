@@ -66,7 +66,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
       });
     }
 
-    switch(this.info.controlType) {
+    switch (this.info.controlType) {
       case 'stars':
         this._innovationService.getInnovationCardByLanguage(this.innoid, this.lang).subscribe(card => {
           this._advantages = card.advantages;
@@ -87,34 +87,35 @@ export class SharedMarketReportSectionComponent implements OnInit {
     this.modalAnswerChange.emit(event);
   }
 
-  public toggleDetails(){
+  public toggleDetails() {
     this._showDetails = !this._showDetails;
   }
 
   public keyupHandlerFunction(event) {
-    //Saving
+    // Saving
     this._isSaving = true;
     const savedObject = {};
     savedObject[this.info.id] = {
       conclusion: event['content']
     };
-    console.log(savedObject);
     this._innovationService.updateSynthesis(this.innoid, savedObject)
       .subscribe(data => {
         if (this.info.id === 'professionals') {
           this.info.conclusion = data.infographics.professionals.conclusion;
         } else {
           const questionIndex = _.findIndex(data.infographics.questions, (q: any) => q.id === this.info.id);
-          if (questionIndex > -1) this.info.conclusion = data.infographics.questions[questionIndex].conclusion;
+          if (questionIndex > -1) {
+            this.info.conclusion = data.infographics.questions[questionIndex].conclusion;
+          }
         }
-        //Saved
+        // Saved
         this._isSaving = false;
       });
   }
 
-  public getAnswers(commentsList:Array<any>): Array<any> {
+  public getAnswers(commentsList: Array<any>): Array<any> {
     if (this.answers) {
-      let answers = _.map(commentsList, comment => _.find(this.answers, (answer: any) => answer.id === comment.answerId));
+      const answers = _.map(commentsList, comment => _.find(this.answers, (answer: any) => answer.id === comment.answerId));
       return _.filter(answers, a => a);
     } else {
       return [];

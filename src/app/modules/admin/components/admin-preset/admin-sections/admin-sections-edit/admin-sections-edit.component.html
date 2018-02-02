@@ -14,10 +14,14 @@
             FR: <input class="form-input" id="labelFr" name="fr" formControlName="fr" type="text"
                        placeholder="">
           </div>
-          <div class="form-group text-center" formGroupName="description">
-            <label class="form-label h3">{{ "PRESETS.SECTION.EDIT.DESCRIPTION" | translate }}</label>
-            EN: <textarea class="form-input" id="descriptionEn" name="en" formControlName="en" rows="3"></textarea>
-            FR: <textarea class="form-input" id="descriptionFr" name="fr" formControlName="fr" rows="3"></textarea>
+          <div class="form-group text-center">
+            <label class="form-label h3" for="description">{{ "PRESETS.SECTION.EDIT.DESCRIPTION" | translate }}</label>
+            <select class="form-select" id="description" name="description" formControlName="description">
+              <option [value]="'nothing'">{{ "PRESETS.SECTION.DESCRIPTION.NOTHING" | translate }}</option>
+              <option [value]="'1st'">{{ "PRESETS.SECTION.DESCRIPTION.FIRST" | translate }}</option>
+              <option [value]="'2nd'">{{ "PRESETS.SECTION.DESCRIPTION.SECOND" | translate }}</option>
+              <option [value]="'list'">{{ "PRESETS.SECTION.DESCRIPTION.LIST" | translate }}</option>
+            </select>
           </div>
           <div class="form-group text-center">
             <label class="form-label h3">{{ "PRESETS.SECTION.EDIT.ADD" | translate }}</label>
