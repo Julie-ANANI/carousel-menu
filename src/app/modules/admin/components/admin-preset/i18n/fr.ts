@@ -80,7 +80,11 @@ export const PRESETS = {
       'CAN_COMMENT': 'Possibilité d\'ajouter un commentaire',
       'SAVE': 'Sauvegarder la question',
       'CHOICES': 'Réponses possibles',
-      'ADD': 'Ajouter une autre réponse'
+      'ADD': 'Ajouter une autre réponse',
+      'PARAMETERS': {
+        'TITLE': 'Paramètres',
+        'UNITY': 'Unité'
+      }
     }
   }
 };

@@ -80,7 +80,11 @@ export const PRESETS = {
       'LABEL': 'Label of the question',
       'CAN_COMMENT': 'Possibility to add a comment',
       'CHOICES': 'Possible answers',
-      'ADD': 'Add a new choice'
+      'ADD': 'Add a new choice',
+      'PARAMETERS': {
+        'TITLE': 'Parameters',
+        'UNITY': 'Unity'
+      }
     }
   },
   'SECTIONS': 'Sections',
