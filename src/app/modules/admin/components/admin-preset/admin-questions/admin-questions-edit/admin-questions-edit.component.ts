@@ -49,6 +49,12 @@ export class AdminQuestionsEditComponent implements OnInit, OnDestroy {
             en: [question.label ? question.label.en || '' : '', Validators.required]
           }),
           options: this._formBuilder.array([]),
+          parameters: this._formBuilder.group({
+            type: [question.parameters ? question.parameters.type || '' : '', Validators.required],
+            addon: [question.parameters ? question.parameters.addon || '' : '', Validators.required],
+            min: [question.parameters ? question.parameters.min || '' : '', Validators.required],
+            max: [question.parameters ? question.parameters.max || '' : '', Validators.required],
+          }),
           canComment: [question.canComment && question.controlType != 'textArea' && question.controlType != 'toggle']
         });
         this.buildOptions(question.options);

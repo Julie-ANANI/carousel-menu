@@ -42,6 +42,24 @@
             FR: <input class="form-input" id="subtitleFr" name="fr" formControlName="fr" type="text"
                        placeholder="">
           </div>
+          <div *ngIf="question.controlType === 'textbox'">
+            <label class="form-label h3">{{ "PRESETS.QUESTION.EDIT.PARAMETERS.TITLE" | translate }}</label>
+            <div class="form-group text-center" formGroupName="parameters">
+              {{ "PRESETS.QUESTION.EDIT.PARAMETERS.UNITY" | translate }}: <input class="form-input" id="addon" name="addon" formControlName="addon" type="text"
+                                                                                 placeholder="">
+              type: <select class="form-select" id="type" name="type" formControlName="type">
+              <option [value]="null">...</option>
+              <option [value]="'number'">number</option>
+              <option [value]="'text'">text</option>
+              <option [value]="'email'">email</option>
+              <option [value]="'url'">url</option>
+            </select>
+              min: <input class="form-input" id="min" name="min" formControlName="min" type="number"
+                          placeholder="">
+              max: <input class="form-input" id="max" name="max" formControlName="max" type="number"
+                          placeholder="">
+            </div>
+          </div>
           <h3 *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')" class="form-group text-center">{{ "PRESETS.QUESTION.EDIT.CHOICES" | translate }}</h3>
           <div *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')" class="form-group text-center">
             <fieldset formArrayName="options">
