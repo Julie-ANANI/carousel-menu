@@ -94,7 +94,7 @@ export class AdminQuestionsEditComponent implements OnInit, OnDestroy {
   }
 
   addOption() {
-    this.options.push(this._formBuilder.group({identifier: '', label: { en: '', fr: ''}}));
+    this.options.push(this.buildOption());
   }
 
   removeOption(index) {
