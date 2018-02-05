@@ -19,10 +19,10 @@
 
     <div *ngSwitchCase="'clearbit'">
       <div *ngIf="!adminMode" class="list">
-        <span class="chip" [ngClass]="{'topItem': competitor.rating === 2, 'badItem': competitor.rating === 0}" *ngFor="let competitor of fullAnswer.answers[question.identifier]">
-          <img *ngIf="competitor.logo" [src]=competitor.logo width="20px" height="20px"/>
-          {{competitor.name}}
-          <a *ngIf="competitor.domain" [href]=link(competitor.domain) target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
+        <span class="chip" [ngClass]="{'topItem': item.rating === 2, 'badItem': item.rating === 0}" *ngFor="let item of fullAnswer.answers[question.identifier]">
+          <img *ngIf="item.logo" [src]=item.logo width="20px" height="20px"/>
+          {{item.name}}
+          <a *ngIf="item.domain" [href]=link(item.domain) target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
         </span>
       </div>
       <div *ngIf="adminMode">
@@ -37,7 +37,7 @@
 
     <div *ngSwitchCase="'list'">
       <div *ngIf="!adminMode" class="list">
-        <span class="chip" [ngClass]="{'topItem': item.rating === 2, 'badItem': competitor.rating === 0}" *ngFor="let item of fullAnswer.answers[question.identifier]">
+        <span class="chip" [ngClass]="{'topItem': item.rating === 2, 'badItem': item.rating === 0}" *ngFor="let item of fullAnswer.answers[question.identifier]">
           {{item.text}}
           <a *ngIf="item.link" [href]=item.link target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
         </span>
@@ -86,8 +86,8 @@
 
     <div *ngSwitchCase="'stars'">
       <ul *ngIf="fullAnswer.answers[question.identifier]">
-        <li *ngFor="let advantage of fullAnswer.answers[question.identifier]">
-          {{advantages[advantage.index]}}: {{ '★'.repeat(advantage.value) }}
+        <li *ngFor="let advantage of question.options">
+          {{advantage.label[lang]}}: {{ '★'.repeat(fullAnswer.answers[question.identifier][advantage.identifier]) }}
         </li>
       </ul>
     </div>
