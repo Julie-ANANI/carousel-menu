@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="columns">
+    <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit(formData)" class="column col-10 col-mx-auto">
+
+      <h1>{{ 'PRESETS.QUESTIONS' | translate }}</h1>
+
+      <div class="columns">
+        <div class="column col-7 col-mx-auto">
+          <div class="form-group text-center">
+            <label class="form-label h3" for="identifier">{{ "PRESETS.QUESTION.GIVE_NAME" | translate }}</label>
+            <input class="form-input" id="identifier" name="identifier" formControlName="identifier" type="text"
+                   placeholder="">
+            {{ 'PRESETS.QUESTION.UNIQUE_NAME' | translate }}
+          </div>
+          <div class="form-group text-center">
+            <label class="form-label h3" for="controlType">{{ "PRESETS.QUESTION.TYPE.CHOOSE" | translate }}</label>
+            <select class="form-select" id="controlType" name="controlType" formControlName="controlType">
+              <option [value]="null">...</option>
+              <option [value]="'checkbox'">{{ "PRESETS.QUESTION.TYPE.CHECKBOX" | translate }}</option>
+              <option [value]="'list'">{{ "PRESETS.QUESTION.TYPE.LIST" | translate }}</option>
+              <option [value]="'clearbit'">{{ "PRESETS.QUESTION.TYPE.CLEARBIT" | translate }}</option>
+              <option [value]="'radio'">{{ "PRESETS.QUESTION.TYPE.RADIO" | translate }}</option>
+              <option [value]="'scale'">{{ "PRESETS.QUESTION.TYPE.SCALE" | translate }}</option>
+              <option [value]="'stars'">{{ "PRESETS.QUESTION.TYPE.STARS" | translate }}</option>
+              <option [value]="'textarea'">{{ "PRESETS.QUESTION.TYPE.TEXTAREA" | translate }}</option>
+              <option [value]="'textbox'">{{ "PRESETS.QUESTION.TYPE.TEXTBOX" | translate }}</option>
+              <option [value]="'toggle'">{{ "PRESETS.QUESTION.TYPE.TOGGLE" | translate }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary centered" [disabled]="formData.invalid">{{ 'PRESETS.QUESTION.GO' | translate }}</button>
+
+    </form>
+  </div>
+</div>

@@ -38,5 +38,11 @@ export const ERROR = {
   },
   'QUESTION': {
     'UPDATED': 'Question bien mise à jour'
+  },
+  'ANSWER': {
+    'UPDATED': 'Réponse bien mise à jour'
+  },
+  'QUIZ': {
+    'CREATED': 'Le quiz a bien été créé'
   }
 };

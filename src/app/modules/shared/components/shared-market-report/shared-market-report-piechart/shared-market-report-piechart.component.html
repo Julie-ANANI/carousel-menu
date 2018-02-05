@@ -4,9 +4,9 @@
     baseChart
     [chartType]="'pie'"
     [legend]="false"
-    [datasets]="pieChartData"
-    [labels]="configuration"
-    [colors]="['#C0210F', '#F2C500', '#82CD30', '#34AC01']">
+    [datasets]="data"
+    [labels]="labels[lang]"
+    [colors]="colors">
   </canvas>
   <div class="number-ratio">
     <span>{{percentage || 0}}%</span>

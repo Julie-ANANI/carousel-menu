@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NotificationsService } from 'angular2-notifications';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { EmailQueueModel } from '../../../../../models/mail.queue.model';
 import { EmailService } from '../../../../../services/email/email.service';
@@ -17,7 +16,6 @@ export class AdminEmailQueueComponent implements OnInit, OnDestroy {
   private subscriptions = [];
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _notificationsService: NotificationsService,
               private _campaignService: CampaignService,
               private _emailService: EmailService) { }
 

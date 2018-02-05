@@ -4,15 +4,15 @@
     <ul>
       <li *ngFor="let answer of answers; let i = index">
 
-        <p class="user-name" *ngIf="answer.professional && answer.professional.profileUrl">
-          <img [src]="buildImageUrl(answer.country.notation)"
+        <p class="user-name">
+          <img [src]="buildImageUrl(answer.country)"
                alt="" width="23" height="16" class="user-flag">
-          <a href="{{answer.professional ? answer.professional.profileUrl:''}}" target="_blank">
-            {{answer.professional ? answer.professional.firstName : ""}} {{answer.professional ? answer.professional.lastName : ""}}
+          <a href="{{answer.professional.profileUrl}}" target="_blank" *ngIf="answer.professional.profileUrl">
+            {{answer.professional.firstName}} {{answer.professional.lastName}}
           </a>
-        </p>
-        <p class="user-name" *ngIf="answer.professional && !answer.professional.profileUrl">
-          {{answer.professional ? answer.professional.firstName : ''}} {{answer.professional ? answer.professional.lastName : ''}}
+          <span *ngIf="!answer.professional.profileUrl">
+            {{answer.professional.firstName}} {{answer.professional.lastName}}
+          </span>
         </p>
 
         <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job}}</p>

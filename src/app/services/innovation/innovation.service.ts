@@ -105,8 +105,8 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public save(innovationId: string, delta: any, innovationCardId?: any): Observable<any> {
-    return this._http.put('/innovation/' + innovationId, { delta: delta, innovationCardId: innovationCardId })
+  public save(innovationId: string, innovationObj: any): Observable<any> {
+    return this._http.put('/innovation/' + innovationId, innovationObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
@@ -148,20 +148,14 @@ export class InnovationService {
   }
 
   public validate(innovationId: string) {
-    return this._http.put('/innovation/' + innovationId, {
-      delta: {
-        status: 'EVALUATING'
-      }
-    }).map((res: Response) => res.json())
+    return this._http.get('/innovation/' + innovationId + '/changeStatus?status=EVALUATING')
+      .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
   public askRevision(innovationId: string) {
-    return this._http.put('/innovation/' + innovationId, {
-      delta: {
-        status: 'EDITING'
-      }
-    }).map((res: Response) => res.json())
+    return this._http.put('/innovation/' + innovationId + '/changeStatus?status=EDITING')
+      .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
@@ -175,6 +169,13 @@ export class InnovationService {
 
   public removeCollaborator(innovationId: string, collaborator: any) {
     return this._http.delete('/innovation/' + innovationId + '/collaborator/' + collaborator._id)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+
+  public createQuiz(innovationId: string) {
+    return this._http.post('/innovation/' + innovationId + '/quiz')
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

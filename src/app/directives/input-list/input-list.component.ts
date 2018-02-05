@@ -12,9 +12,10 @@ export class InputListComponent {
 
   @Output() update = new EventEmitter<any>();
   @Input() canEdit = true;
+  @Input() adminMode = false;
 
   answer: string;
-  answerList: Array<string> = [];
+  answerList: Array<any> = [];
 
   @Input()
   set config(config: any) {
@@ -44,6 +45,32 @@ export class InputListComponent {
 
   rmProposition(i: number): void {
     this.answerList.splice(i, 1);
+    this.update.emit({value: this.answerList});
+  }
+
+  thumbsUp(index) {
+    if (this.adminMode) {
+      if (this.answerList[index].rating === 2) {
+        this.answerList[index].rating = 1;
+      } else {
+        this.answerList[index].rating = 2;
+      }
+      this.update.emit({value: this.answerList});
+    }
+  }
+
+  thumbsDown(index) {
+    if (this.adminMode) {
+      if (this.answerList[index].rating === 0) {
+        this.answerList[index].rating = 1;
+      } else {
+        this.answerList[index].rating = 0;
+      }
+      this.update.emit({value: this.answerList});
+    }
+  }
+
+  updateItem() {
     this.update.emit({value: this.answerList});
   }
 

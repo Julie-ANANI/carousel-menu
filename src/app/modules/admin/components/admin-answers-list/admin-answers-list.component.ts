@@ -15,13 +15,13 @@ export class AdminAnswersListComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   public seeAnswer(event: any) {
     this.modalAnswerChange.emit(event);
   }
 
-  public buildImageUrl(country: string): string {
-    if (country) return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+  public buildImageUrl(country: any): string {
+    if (country && country.flag) return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
     return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
   }
 }

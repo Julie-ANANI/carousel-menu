@@ -1,3 +1,113 @@
 <div>
   <strong class="question">{{ question.label[lang] }}</strong>
+  <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier]" class="answer">
+    <div *ngSwitchCase="'radio'">
+      <p *ngIf="!adminMode">
+        {{ optionLabel(fullAnswer.answers[question.identifier]) }}
+      </p>
+      <p *ngIf="adminMode">
+        <span
+          *ngFor="let option of question.options"
+          class="c-hand"
+          [ngClass]="{'inactive': option.identifier != fullAnswer.answers[question.identifier]}"
+          (click)="selectOption(option)">
+          {{ optionLabel(option.identifier) }}
+        </span>
+      </p>
+
+    </div>
+
+    <div *ngSwitchCase="'clearbit'">
+      <div *ngIf="!adminMode" class="list">
+        <span class="chip" [ngClass]="{'topItem': competitor.rating === 2, 'badItem': competitor.rating === 0}" *ngFor="let competitor of fullAnswer.answers[question.identifier]">
+          <img *ngIf="competitor.logo" [src]=competitor.logo width="20px" height="20px"/>
+          {{competitor.name}}
+          <a *ngIf="competitor.domain" [href]=link(competitor.domain) target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
+        </span>
+      </div>
+      <div *ngIf="adminMode">
+        <app-autocomplete-input
+          (update)="setAnswer($event)"
+          [canEdit]="true"
+          [config]="{placeholder: 'company', initialData: fullAnswer.answers[question.identifier] || [], type: 'company'}"
+          [adminMode]="adminMode">
+        </app-autocomplete-input>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'list'">
+      <div *ngIf="!adminMode" class="list">
+        <span class="chip" [ngClass]="{'topItem': item.rating === 2, 'badItem': competitor.rating === 0}" *ngFor="let item of fullAnswer.answers[question.identifier]">
+          {{item.text}}
+          <a *ngIf="item.link" [href]=item.link target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
+        </span>
+      </div>
+      <div *ngIf="adminMode">
+        <app-input-list
+          (update)="setAnswer($event)"
+          [config]="{ placeholder: '', initialData: fullAnswer.answers[question.identifier] }"
+          [adminMode]="adminMode">
+        </app-input-list>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'checkbox'">
+      <ul *ngFor="let option of question.options">
+        <li
+          *ngIf="fullAnswer.answers[question.identifier][option.identifier] === true || adminMode"
+          [ngClass]="{'inactive': fullAnswer.answers[question.identifier][option.identifier] != true, 'c-hand': adminMode}"
+          (click)="checkOption(option)">
+          {{ optionLabel(option.identifier) }}
+        </li>
+      </ul>
+    </div>
+
+    <div *ngSwitchCase="'textbox'">
+      <p>{{fullAnswer.answers[question.identifier]}}</p>
+    </div>
+
+    <div *ngSwitchCase="'textarea'">
+      <blockquote *ngIf="fullAnswer.answers[question.identifier] && !adminMode">
+        <p>
+          {{fullAnswer.answers[question.identifier]}}
+          <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+        </p>
+      </blockquote>
+      <form *ngIf="adminMode">
+        <textarea class="form-input" [(ngModel)]="fullAnswer.answers[question.identifier]" name="comment"></textarea>
+        <button type="submit" (click)="fullAnswerChange.emit(fullAnswer)">OK</button>
+        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+      </form>
+    </div>
+
+    <div *ngSwitchCase="'scale'">
+      <p>{{fullAnswer.answers[question.identifier]}}</p>
+    </div>
+
+    <div *ngSwitchCase="'stars'">
+      <ul *ngIf="fullAnswer.answers[question.identifier]">
+        <li *ngFor="let advantage of fullAnswer.answers[question.identifier]">
+          {{advantages[advantage.index]}}: {{ '★'.repeat(advantage.value) }}
+        </li>
+      </ul>
+    </div>
+    <p class="noanswer"  *ngIf="!fullAnswer.answers[question.identifier]">-</p>
+    <i
+      class="fa fa-comment"
+      *ngIf="adminMode && question.canComment && !fullAnswer.answers[question.identifier + 'Comment']"
+      (click)="addComment()"></i>
+    <blockquote *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && !adminMode">
+      <p>
+        {{fullAnswer.answers[question.identifier + 'Comment']}}
+        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+      </p>
+    </blockquote>
+    <form *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && adminMode">
+      <textarea class="form-input" [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']" name="comment"></textarea>
+      <button type="submit" (click)="fullAnswerChange.emit(fullAnswer)">OK</button>
+      <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+      <i class="fa fa-trash" *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && adminMode"
+         (click)="deleteComment()"></i>
+    </form>
+  </div>
 </div>

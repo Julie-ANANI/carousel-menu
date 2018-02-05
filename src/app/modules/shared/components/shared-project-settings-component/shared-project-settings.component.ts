@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ShareService } from '../../../../services/share/share.service';
@@ -12,6 +11,8 @@ import { ShareService } from '../../../../services/share/share.service';
 export class SharedProjectSettingsComponent implements OnInit {
 
   @Input() settings: any;
+  @Input() adminMode: boolean;
+  @Output() settingsChange = new EventEmitter<any>();
 
   private _displayCountriesToExcludeSection: boolean = false;
   private _displayCompanyToExcludeSection: boolean = false;
@@ -19,13 +20,18 @@ export class SharedProjectSettingsComponent implements OnInit {
   private _displayKeywordsSection: boolean = false;
 
   constructor(private _translateService: TranslateService,
-              private _activatedRoute: ActivatedRoute,
               private _authService: AuthService,
               public shareService: ShareService) { }
 
 
   ngOnInit() {
-    console.log(this.settings);
+    this.adminMode = this.adminMode && this._authService.adminLevel >= 1;
+    if (this.settings) {
+      this._displayCountriesToExcludeSection = this.settings.geography && this.settings.geography.exclude && this.settings.geography.exclude.length > 0;
+      this._displayCompanyToExcludeSection = this.settings.companies && this.settings.companies.exclude && this.settings.companies.exclude.length > 0;
+      this._displayPersonsToExcludeSection = this.settings.professionals && this.settings.professionals.exclude && this.settings.professionals.exclude.length > 0;
+      this._displayKeywordsSection = this.settings.keywords.length > 0;
+    }
   }
 
   get lang() {
@@ -42,37 +48,33 @@ export class SharedProjectSettingsComponent implements OnInit {
     const _inputConfig = {
       'countries': {
         placeholder: 'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.settings ? this.settings.geography.exclude : [],
+        initialData: this.settings && this.settings.geography ? this.settings.geography.exclude || [] : [],
         type: 'countries'
-      },
-      'advantages': {
-        placeholder: 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.INPUT',
-        initialData: []//this.formData.get('innovationCards').value[this.innovationCardEditingIndex]['advantages']
       },
       'excludedPeople': {
         placeholder: 'PROJECT_EDIT.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.settings ? this.settings.professionals.exclude : []
+        initialData: this.settings && this.settings.professionals ? this.settings.professionals.exclude || [] : []
       },
       'excludedCompanies': {
         placeholder: 'PROJECT_EDIT.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
-        initialData: this.settings ? this.settings.companies.exclude : [],
+        initialData: this.settings && this.settings.companies ? this.settings.companies.exclude || [] : [],
         type: 'company'
       },
       'keywords': {
         placeholder: 'PROJECT_EDIT.KEYWORDS.PLACEHOLDER',
-        initialData: this.settings ? this.settings.keywords : []
+        initialData: this.settings ? this.settings.keywords || [] : []
       },
       'domainBL': {
         placeholder: 'Ex. apple.com',
-        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.domains : []
+        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.domains || [] : []
       },
       'emailBL': {
         placeholder: 'Ex. sjobs@apple.com',
-        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.emails : []
+        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.emails || [] : []
       },
       'peopleBL': {
         placeholder: 'Ex. sjobs@apple.com',
-        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.emails : []
+        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.people || [] : []
       }
     };
     return _inputConfig[type] || {
@@ -92,6 +94,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   public continentModificationDrain(event) {
     if(event) {
       this.settings.geography.continentTarget = event.continents;
+      this.updateSettings();
     }
   }
 
@@ -100,6 +103,7 @@ export class SharedProjectSettingsComponent implements OnInit {
    */
   public addCountryToExclude(event): void {
     this.settings.geography.exclude = event.value;
+    this.updateSettings();
   }
 
   get continentTarget(): any {
@@ -124,6 +128,7 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   public addCompanyToExclude(event): void {
     this.settings.companies.exclude = event.value;
+    this.updateSettings();
   }
 
   get displayCompanyToExcludeSection(): boolean {
@@ -140,6 +145,7 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   public addPeopleToExclude(event): void {
     this.settings.professionals.exclude = event.value;
+    this.updateSettings();
   }
 
   get displayPersonsToExcludeSection(): boolean {
@@ -160,6 +166,7 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   set comments(value: string) {
     this.settings.comments = value;
+    this.updateSettings();
   }
 
   get displayKeywordsSection(): boolean {
@@ -172,6 +179,7 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   public addKeywordToExclude(event): void {
     this.settings.keywords = event.value;
+    this.updateSettings();
   }
 
   /****************************************************************************
@@ -180,17 +188,18 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   public addDomainToExclude(event): void {
     this.settings.blacklist.domains = event.value;
+    this.updateSettings();
   }
 
   public addEMailToExclude(event): void {
     this.settings.blacklist.emails = event.value;
+    this.updateSettings();
   }
-
 
   /**
    * After all the settings modifications are done, send them back to the project to be saved.
    */
   public updateSettings() {
-    console.log("Updating");
+    this.settingsChange.emit(this.settings);
   }
 }

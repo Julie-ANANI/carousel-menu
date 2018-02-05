@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { NotificationsService } from 'angular2-notifications';
 import { EmailService } from '../../../../../services/email/email.service';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 
@@ -20,9 +19,8 @@ export class AdminBatchInformationComponent implements OnInit, OnDestroy {
   private _subscriptions = [];
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _notificationsService: NotificationsService,
               private _campaignService: CampaignService,
-              private _emailService: EmailService,) { }
+              private _emailService: EmailService) { }
 
   ngOnInit() {
     this._activatedRoute.params.subscribe(params => {

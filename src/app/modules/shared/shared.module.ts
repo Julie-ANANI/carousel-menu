@@ -36,6 +36,8 @@ import { SharedModalComponent } from './components/shared-modal-component/shared
 import { SharedStarsComponent } from './components/shared-stars-component/shared-stars.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
+import { SharedRatingItemComponent } from './components/shared-rating-item/shared-rating-item.component';
+import { SharedTagItemComponent } from './components/shared-tag-item/shared-tag-item.component';
 import { ChartsModule } from 'ng2-charts';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
@@ -105,7 +107,9 @@ import { AutocompleteInputComponent } from '../../directives/autocomplete-input/
     SharedSortComponent,
     SharedProjectSettingsComponent,
     SharedClickableWorldmapComponent,
-    AutocompleteInputComponent
+    AutocompleteInputComponent,
+    SharedRatingItemComponent,
+    SharedTagItemComponent
   ],
   exports: [
     // Modules
@@ -113,6 +117,7 @@ import { AutocompleteInputComponent } from '../../directives/autocomplete-input/
     ReactiveFormsModule,
     RouterModule,
     Ng2FileDropModule,
+    Ng2PageScrollModule,
 
     // Directives
     // FormErrorDirective,
@@ -141,7 +146,9 @@ import { AutocompleteInputComponent } from '../../directives/autocomplete-input/
     SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
     SharedAnswerModalComponent,
-    SharedAnswerQuestionComponent
+    SharedAnswerQuestionComponent,
+    SharedRatingItemComponent,
+    SharedTagItemComponent
   ]
 })
 export class SharedModule { }

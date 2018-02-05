@@ -1,0 +1,149 @@
+<div *ngIf="requests?.length">
+  <h2>
+    {{total}} {{ 'SEARCH.HISTORY.SEARCHES' | translate }}
+    <span *ngIf="status==='PROCESSING'"> en cours</span>
+    <span *ngIf="status==='QUEUED'"> en attente</span>
+  </h2>
+  <h4 *ngIf="paused" class="error">Module en pause</h4>
+  <h4 *ngIf="!paused" class="success">Module en fonctionnement</h4>
+  <table class="table">
+    <thead>
+    <tr>
+      <th width="80">{{ 'SEARCH.HISTORY.TYPE' | translate }}</th>
+      <th>{{ 'SEARCH.HISTORY.REQUEST' | translate }}</th>
+      <th width="80" *ngIf="!mails">{{ 'SEARCH.COUNTRY' | translate }}</th>
+      <th width="60">{{ 'SEARCH.HISTORY.TIME' | translate }}</th>
+      <th width="100">{{ 'SEARCH.HISTORY.DATE' | translate }}</th>
+      <th width="110">{{ 'SEARCH.HISTORY.STATUS' | translate }}</th>
+      <th width="80">{{ 'SEARCH.HISTORY.COST' | translate }}</th>
+      <th width="20">{{ 'SEARCH.HISTORY.FLAG' | translate }}</th>
+      <th width="80" *ngIf="!mails">Campagne</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let request of requests">
+      <td>
+        <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON'"><i class="fa fa-users"></i></div>
+        <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON_BY_REGIONS'"><i class="fa fa-users"></i></div>
+        <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON_BY_COUNTRIES'"><i class="fa fa-globe"></i></div>
+        <div [ngClass]="request.entity" *ngIf="request.entity==='MAIL' || request.entity==='MAIL_ADDRESS'"><i class="fa fa-envelope"></i></div>
+        <div [ngClass]="request.entity" *ngIf="request.entity==='COMPANY'"><i class="fa fa-building"></i></div>
+      </td>
+
+      <td>
+        <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && !campaign" href="">{{request.keywords[0].original}}</a>
+        <a *ngIf="mails" href="">{{request.keywords[0].original}}</a>
+        <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && campaign" href="">{{request.keywords[0].original}}</a>
+        <a *ngIf="request.entity==='COMPANY'" href="">{{request.keywords[0].original}}</a>
+        <a *ngIf="request.entity==='MAIL'" href="">{{request.keywords[0].original}}</a>
+        <small *ngIf="request.entity==='PERSON'">{{request.requests.person.length}} résultats | {{request.metadata.user.name}}</small>
+        <small *ngIf="request.entity==='PERSON_BY_COUNTRIES'">{{request.totalrequests}} résultats | {{request.metadata.user.name}}</small>
+        <small *ngIf="request.entity==='PERSON_BY_REGIONS'">{{request.totalrequests}} résultats | {{request.metadata.user.name}}</small>
+        <small *ngIf="request.entity==='COMPANY'"> {{request.requests.company.length}} résultats | {{request.metadata.user.name}}</small>
+      </td>
+
+      <td class="text-center" *ngIf="!mails">
+        <img *ngIf="request.country" width="30" height="20" class="flag"
+             [src]="'/images/infographics/flags/' + request.country.toUpperCase() + '.png'">
+      </td>
+
+      <td>
+        <small>{{request.elapsedTime}}</small>
+      </td>
+
+      <td>
+        <small>{{request.created}}</small>
+      </td>
+
+      <td class="stats">
+        <div class="success" *ngIf="request.status === 'DONE'">
+          {{ 'SEARCH.HISTORY.DONE' | translate }}
+        </div>
+        <div class="loading" *ngIf="request.status === 'PROCESSING'">
+          <i class="fa fa-times" (click)="stopRequest(request)">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
+        </div>
+        <div class="error" *ngIf="request.status === 'QUEUED'">
+          <span (click)="cancelRequest(request, true)"></span> {{ 'SEARCH.HISTORY.QUEUED' | translate }}
+        </div>
+        <div class="error" *ngIf="request.status === 'CANCELED'">
+          <span (click)="cancelRequest(request, false)"></span> {{ 'SEARCH.HISTORY.CANCELED' | translate }}
+        </div>
+      </td>
+
+      <td class="text-center">
+        {{request.cost.totalCost}} €
+      </td>
+
+      <td class="text-center stats">
+        <i class="fa fa-envelope error" *ngIf="request.flag==='EMAILS_QUEUED'"></i>
+        <i class="fa fa-envelope success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
+        <i class="fa fa-envelope loading" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
+        <i class="fa fa-check-square-o success" *ngIf="request.flag==='PROS_ADDED'"></i>
+      </td>
+
+      <td class="text-center" *ngIf="!mails">
+        <button class="btn btn-default btn-sm" *ngIf="!campaign && request.campaign" ui-sref="campaign-edit.search({campaignId:request.campaign})">
+          <i class="fa fa-eye"></i> Campagne
+        </button>
+      </td>
+    </tr><!--
+    <tr *ngIf="request.show && request.entity === 'PERSON_BY_COUNTRIES'"
+        ng-repeat="request in request.request track by $index">
+      <td>
+        <div class="PERSONSMALL"><i class="fa fa-user"></i></div>
+      </td>
+      <td>
+        <a ui-sref="search.professionnals({requestId:request._id})" *ngIf="!campaign" href="">{{request.keywords[0].original}}</a>
+        <a ui-sref="campaign-edit.search({campaignId:campaign.id, requestId:request._id})" *ngIf="campaign" href="">{{request.keywords[0].original}}</a>
+        <small *ngIf="request.entity==='PERSON'">{{request.requests.person.length}} résultats | {{request.metadata.user.name}}</small>
+        <small *ngIf="request.entity==='PERSON_BY_REGIONS'">{{request.totalrequests}} résultats | {{request.metadata.user.name}}</small>
+      </td>
+
+      <td class="text-center">
+        <img *ngIf="request.country" width="30" height="20" class="flag"
+             [src]="'/images/infographics/flags/' + request.country.toUpperCase() + '.png'">
+      </td>
+
+      <td>
+        <small>{{elapsedTime(request)}}</small>
+      </td>
+
+      <td>
+        <small>{{request.created}}</small>
+      </td>
+
+      <td class="stats">
+        <div class="success" *ngIf="request.status === 'DONE'">
+          <span></span> {{ 'SEARCH.HISTORY.DONE' | translate }}
+        </div>
+        <div class="loading" *ngIf="request.status === 'PROCESSING'">
+          <i class="fa fa-times" (click)="stopRequest(request)"> {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
+        </div>
+        <div class="error" *ngIf="request.status === 'QUEUED'">
+          <span (click)="cancelRequest(request, true)"></span> {{ 'SEARCH.HISTORY.QUEUED' | translate }}
+        </div>
+        <div class="error" *ngIf="request.status === 'CANCELED'">
+          <span (click)="cancelRequest(request, false)"></span> {{ 'SEARCH.HISTORY.CANCELED' | translate }}
+        </div>
+      </td>
+
+      <td class="text-center">
+        {{request.cost.totalCost | number : 4}} €
+      </td>
+
+      <td class="text-center stats">
+        <i class="fa fa-envelope error" *ngIf="request.flag==='EMAILS_QUEUED'"></i>
+        <i class="fa fa-envelope success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
+        <i class="fa fa-envelope loading" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
+        <i class="fa fa-check-square-o success" *ngIf="request.flag==='PROS_ADDED'"></i>
+      </td>
+
+      <td class="text-center">
+        <button class="btn btn-default btn-sm" *ngIf="!campaign && request.campaign" ui-sref="campaign-edit.search({campaignId:request.campaign})">
+          <i class="fa fa-eye"></i> Campagne
+        </button>
+      </td>
+    </tr>-->
+    </tbody>
+  </table>
+</div>

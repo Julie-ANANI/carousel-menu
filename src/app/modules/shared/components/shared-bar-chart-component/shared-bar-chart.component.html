@@ -1,10 +1,9 @@
-<div *ngFor="let level of levels;let i = index"
-     class="horizontal-bar number{{i+1}}">
-  <div *ngIf="number" class="bar-number">{{i+1}}</div>
-  <div class="bar-fill" [style.width]="barFill(stats[i+1].percentage)"></div>
-  <div class="bar-name">{{level}}</div>
-  <div class="bar-stats" tooltip-placement="top"
-       attr.tooltip="{{stats[i+1].count}} {{'MARKET_REPORT.ANSWERS' | translate}}">
-    {{stats[i+1].percentage}}%
+<div *ngFor="let option of options;let i = index" class="horizontal-bar">
+  <div *ngIf="number" class="bar-number" [ngStyle]="{'background': option.color}">{{i+1}}</div>
+  <div class="bar-fill" [style.width]="barFill(stats[option.identifier].percentage)"></div>
+  <div class="bar-name">{{option.label[lang]}}</div>
+  <div class="bar-stats tooltip" [attr.data-tooltip]="stats[option.identifier].count + ' ' + ('MARKET_REPORT.ANSWERS' | translate)">
+    <span *ngIf="!displayCount">{{stats[option.identifier].percentage}}%</span>
+    <span *ngIf="displayCount">{{stats[option.identifier].count}} {{'MARKET_REPORT.ANSWERS' | translate}}</span>
   </div>
 </div>

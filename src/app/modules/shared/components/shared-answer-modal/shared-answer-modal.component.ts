@@ -16,15 +16,16 @@ import {TranslateNotificationsService} from '../../../../services/notifications/
 
 export class SharedAnswerModalComponent implements OnInit {
 
-  private _advantages: string[];
+  private _advantages: any;
   private _modalAnswer: any;
-  private _selectLangInput = 'en';
+  public editMode = false;
   public floor: any;
 
   @Input() set modalAnswer(value: any) {
     this._modalAnswer = value;
   }
   @Input() public innoid: string;
+  @Input() public questions: any[];
   @Input() public adminMode: boolean;
   @Output() modalAnswerChange = new EventEmitter<any>();
 
@@ -35,20 +36,40 @@ export class SharedAnswerModalComponent implements OnInit {
               private _answerService: AnswerService) { }
 
   ngOnInit() {
-    this._selectLangInput = this._translateService.currentLang || this._translateService.getBrowserLang() || 'fr';
     this.adminMode = this.adminMode && this._authService.adminLevel > 2;
     this.floor = Math.floor;
-    this._innovationService.getInnovationCardByLanguage(this.innoid, this._selectLangInput).subscribe(card => {
-      this._advantages = card.advantages;
+    this._innovationService.getInnovationCardByLanguage(this.innoid, 'en').subscribe(cardEn => {
+      this._innovationService.getInnovationCardByLanguage(this.innoid, 'fr').subscribe(cardFr => {
+        this._advantages = {
+          fr: cardFr ? cardFr.advantages || [] : [],
+          en: cardEn ? cardEn.advantages || [] : []
+        };
+      });
     });
   }
   
+  public updateCountry(event) {
+    this._modalAnswer.country = event.value[0];
+  }
+
   public changeStatus(status) {
     this._answerService.changeStatus(this._modalAnswer._id, status).subscribe(data => {
       this._notificationsService.success('Mis à jour', 'Statut de la réponse bien mis à jour');
     }), err => {
       this._notificationsService.success('ERROR.ERROR', err);
     }
+  }
+
+  updateProfileQuality(object) {
+    this._modalAnswer.profileQuality = object.value;
+  }
+
+  updateAnswer(answer) {
+    this._modalAnswer = answer;
+  }
+
+  updateTags(object) {
+    this._modalAnswer.tags = object;
   }
 
   public save() {
@@ -58,12 +79,18 @@ export class SharedAnswerModalComponent implements OnInit {
       this._modalAnswer.originalAnswerReference = this._modalAnswer.originalAnswerReference || "oldQuiz";
       this._modalAnswer.quizReference = this._modalAnswer.quizReference || "oldQuiz";
       this._modalAnswer.id = this._modalAnswer._id;
-      this._answerService.save(this._modalAnswer._id, this._modalAnswer);
+      const saveSubs = this._answerService
+        .save(this._modalAnswer.id, this._modalAnswer)
+        .subscribe(data => {
+          this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
+        }, err => {
+          this._notificationsService.error('ERROR.ERROR', err);
+        });
     }
   }
 
-  public buildImageUrl(country: string): string {
-    if (country) return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+  public buildImageUrl(country: any): string {
+    if (country && country.flag) return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
     return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
   }
 
@@ -71,11 +98,7 @@ export class SharedAnswerModalComponent implements OnInit {
     this.modalAnswerChange.emit(null);
   }
 
-  get advantages(): string[] {
-    return this._advantages;
-  }
-
-  get modalAnswer(): any {
-    return this._modalAnswer;
-  }
+  get lang(): any { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
+  get advantages(): any { return this._advantages; }
+  get modalAnswer(): any { return this._modalAnswer; }
 }

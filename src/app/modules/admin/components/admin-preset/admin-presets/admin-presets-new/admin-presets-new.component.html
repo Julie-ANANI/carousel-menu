@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="columns">
+    <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit(formData)" class="column col-10 col-mx-auto">
+
+      <h1>{{ 'COMMON.PRESETS' | translate }}</h1>
+
+      <div class="columns">
+        <div class="column col-8 col-mx-auto">
+          <div class="form-group text-center">
+            <label class="form-label h3" for="name">{{ "PRESETS.PRESET.GIVE_NAME" | translate }}</label>
+            <input class="form-input" id="name" name="name" formControlName="name" type="text"
+                   placeholder="">
+            {{ 'PRESETS.PRESET.UNIQUE_NAME' | translate }}
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary centered" [disabled]="formData.invalid">{{ 'PRESETS.PRESET.GO' | translate }}</button>
+
+    </form>
+  </div>
+</div>

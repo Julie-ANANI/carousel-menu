@@ -5,7 +5,7 @@
     <div class="flex-container">
       <!--======= Pie Chart =======-->
       <market-report-piechart
-        *ngIf="info.controlType == 'radio'"
+        *ngIf="info.controlType === 'radio'"
         [pieChartData]="chartValues"
         [percentage]="info.percentage"
       ></market-report-piechart>
@@ -14,7 +14,7 @@
         *ngIf="info.controlType != 'radio'"
         [numberFocus]="info.numberFocus"
         [percentage]="info.percentage"
-        [subtitle]="info.subtitle[lang]"
+        [subtitle]="info.subtitle ? info.subtitle[lang] : ''"
         [id]="info.id"
       ></market-report-bluesquare>
 
@@ -57,7 +57,7 @@
 
     <!--======= Bouton plier/déplier =======-->
     <button type="button" class="market-report-btn centered"
-            *ngIf="id!='marketPotential'"
+            *ngIf="info.id!='marketPotential'"
             [ngClass]="{'active': showDetails}"
             (click)="toggleDetails()">
       {{(showDetails ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
@@ -73,7 +73,7 @@
       <!--======= Liste des pros =======-->
       <div *ngIf="info.id === 'professionals'" class="prosList">
         <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
-          <img [src]="getFlag(answer.country.notation)"
+          <img [src]="getFlag(answer.country)"
                alt="" width="37" height="25" class="user-flag">
 
           <p class="user-name" *ngIf="answer.professional && answer.professional.profileUrl">
@@ -96,9 +96,11 @@
 
       <!--======= Bar Chart =======-->
       <bar-chart
-        *ngIf="info.controlType == 'radio' || info.id ==='interests'"
+        *ngIf="info.pieChart"
         [stats]="info.pieChart"
-        [number]="true">
+        [options]="info.options || []"
+        [number]="true"
+        [displayCount]="info.controlType === 'checkbox'">
       </bar-chart>
 
       <!--======= Avantages Clés =======-->
@@ -121,42 +123,16 @@
 
       <!--======= Marques d'intérêt =======-->
 
-      <div *ngIf="id === 'interests'">
-        <div *ngIf="info.data.client.length">
-          <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.CLIENT' | translate }}</p>
-          <market-item-list
-            [answers]="answers"
-            [list]="info.data.client"
-            (modalAnswerChange)="seeAnswer($event)">
-          </market-item-list>
-        </div>
-
-        <div *ngIf="info.data.develop.length">
-          <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DEVELOP' | translate }}</p>
-          <market-item-list
-            [answers]="answers"
-            [list]="info.data.develop"
-            (modalAnswerChange)="seeAnswer($event)">
-          </market-item-list>
-        </div>
-
-        <div *ngIf="info.data.distributor.length">
-          <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.DISTRIBUTE' | translate }}</p>
-          <market-item-list
-            [answers]="answers"
-            [list]="info.data.distributor"
-            (modalAnswerChange)="seeAnswer($event)">
-          </market-item-list>
-        </div>
-
-        <div *ngIf="info.data.invest.length">
-          <p class="title-question">{{ 'MARKET_REPORT.EXPRESSION_OF_INTEREST.INVEST' | translate }}</p>
-          <market-item-list
-            [answers]="answers"
-            [list]="info.data.invest"
-            (modalAnswerChange)="seeAnswer($event)"
-          >
-          </market-item-list>
+      <div *ngIf="info.controlType === 'checkbox'">
+        <div *ngFor="let option of optionsArray">
+          <div *ngIf="info.data[option.identifier].length">
+            <p class="title-question">{{ info.labels[option.identifier][lang]}}</p>
+            <market-item-list
+              [answers]="answers"
+              [list]="info.data[option.identifier]"
+              (modalAnswerChange)="seeAnswer($event)">
+            </market-item-list>
+          </div>
         </div>
       </div>
 
@@ -165,7 +141,7 @@
         <p class="title-question">{{info.comments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
         <ul class="comments">
           <li *ngFor="let comment of info.comments"
-              [ngClass]="{'top-profil': comment.quality === 2}">
+              [ngClass]="{'top-profil': comment.rating === 2}">
             <market-comment
               [job]="comment.job"
               [country]="comment.flag"

@@ -11,5 +11,10 @@ export const PROJECT = {
     'TWITTER': 'Partager sur Twitter',
     'FACEBOOK': 'Partager sur Facebook',
     'MAIL': 'Partager par email',
-  }
+  },
+  'CAMPAIGNS': 'Campagnes',
+  'SETTINGS': 'Paramètres',
+  'CARDS': 'Innovation Cards',
+  'SYNTHESIS': 'Synthèse',
+  'MAIL_CONFIG': 'Configuration Emails'
 };

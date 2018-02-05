@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-client-project-synthesis',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClientProjectSynthesisComponent implements OnInit {
 
-  constructor() { }
+  private _project: any;
+
+  constructor(private _activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this._project = this._activatedRoute.snapshot.data['innovation'];
   }
 
+  get project(): any { return this._project; }
 }

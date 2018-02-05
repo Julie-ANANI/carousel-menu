@@ -28,7 +28,9 @@ export class ClientProjectNewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._subscriptions.unsubscribe();
+    if (this._subscriptions) {
+      this._subscriptions.unsubscribe();
+    }
   }
 
   public onSubmit({value, valid}: { value: any, valid: boolean }) {

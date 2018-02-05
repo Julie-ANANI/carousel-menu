@@ -2,8 +2,7 @@
  * Created by bastien on 16/11/2017.
  */
 import { Component, OnInit, Input } from '@angular/core';
-import { InnovationService } from './../../../../../services/innovation/innovation.service';
-import * as _ from 'lodash';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'market-report-piechart',
@@ -14,11 +13,14 @@ import * as _ from 'lodash';
 export class SharedMarketReportPiechartComponent implements OnInit {
 
   @Input() public pieChartData: any;
-  @Input() public configuration: any;
   @Input() public percentage: number;
 
-  constructor() { }
+  constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
   }
+  get data(): string[] { return this.pieChartData.data; }
+  get colors(): string[] { return this.pieChartData.data[0].backgroundColor; }
+  get labels(): any { return this.pieChartData.labels; }
+  get lang(): any { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
 }

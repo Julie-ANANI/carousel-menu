@@ -17,8 +17,6 @@ $dark-color: #333 !default;
     border-radius: 2px 0 0 2px;
     padding: 15px 25px;
     color: white;
-    font-size: 16px;
-    font-weight: 600;
     width: 100%;
   }
 
@@ -28,12 +26,35 @@ $dark-color: #333 !default;
     border-radius: 0 2px 2px 0;
     padding: 12px 17px;
     border: none;
+  }
 
-    img {
-    }
+  i {
+    display: flex;
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.6);
+    background: #11A751;
+    border-radius: 0 2px 2px 0;
+    padding: 13px 17px;
+    border: none;
+  }
+
+  i.active, i:hover {
+    color: white;
+  }
+
+  a.updown {
+    background: $secondary-color;
+    padding: 15px 0;
+    color: white;
+    width: 100%;
   }
 
   a.delete:hover {
     background: #D02A2A;
+  }
+
+  .popover-container {
+    background: white;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
   }
 }

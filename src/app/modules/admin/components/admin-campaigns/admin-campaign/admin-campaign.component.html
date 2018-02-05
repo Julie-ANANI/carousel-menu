@@ -1,4 +1,5 @@
 <div class="container">
+  <h5><a [routerLink]="'/admin/projects/project/' + campaign.innovation._id + '/campaigns'">Retour au projet</a></h5>
   <h2>{{ campaign.title }}</h2>
 
   <ul class="tab tab-block">
@@ -9,24 +10,24 @@
     </li>
   </ul>
 
-  <div class="tabs">
-    <div class="tab-content" *ngIf="currentPage == 'details'">
+  <div class="tabs" [ngSwitch]="currentPage">
+    <div class="tab-content" *ngSwitchCase="'details'">
       <app-admin-campaign-details></app-admin-campaign-details>
     </div>
 
-    <div class="tab-content" *ngIf="currentPage == 'history'">
+    <div class="tab-content" *ngSwitchCase="'history'">
       <app-admin-campaign-history></app-admin-campaign-history>
     </div>
 
-    <div class="tab-content" *ngIf="currentPage == 'search'">
+    <div class="tab-content" *ngSwitchCase="'search'">
       <app-admin-campaign-search></app-admin-campaign-search>
     </div>
 
-    <div class="tab-content" *ngIf="currentPage == 'pros'">
+    <div class="tab-content" *ngSwitchCase="'pros'">
       <app-admin-campaign-pros></app-admin-campaign-pros>
     </div>
 
-    <div class="tab-content" *ngIf="currentPage == 'answers'">
+    <div class="tab-content" *ngSwitchCase="'answers'">
       <app-admin-campaign-answers></app-admin-campaign-answers>
     </div>
   </div>

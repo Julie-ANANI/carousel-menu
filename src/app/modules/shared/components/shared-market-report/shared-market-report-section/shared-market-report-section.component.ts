@@ -23,6 +23,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
   private _conclusionId: string;
   private _innoid: string;
   private _advantages: string[];
+  private _optionsArray: any[];
 
   @Input() set showDetails(value: boolean) {
     this._showDetails = value;
@@ -45,15 +46,27 @@ export class SharedMarketReportSectionComponent implements OnInit {
     });
     this.conclusionId = `${this.info.id}Conclusion`;
 
-    if (this.info.pieChart) {
-      let data = SharedMarketReportSectionComponent.getChartValues(this.info.pieChart);
-      this._chartValues = [{
-        'data': data || [],
-        'backgroundColor': ['#C0210F', '#F2C500', '#82CD30', '#34AC01']
-      }];
+    if (this.info.controlType === 'radio') {
+      this._chartValues = {
+        data: [{
+          data: [],
+          backgroundColor: []
+        }],
+        labels: {
+          fr: [],
+          en: []
+        },
+        colors: []
+      };
+      this.info.options.forEach(option => {
+        this._chartValues.data[0].data.push(this.info.pieChart[option.identifier].count);
+        this._chartValues.labels.fr.push(option.label.fr);
+        this._chartValues.labels.en.push(option.label.en);
+        this._chartValues.data[0].backgroundColor.push(this.info.pieChart[option.identifier].color);
+      });
     }
 
-    switch(this.info.controlType) {
+    switch (this.info.controlType) {
       case 'stars':
         this._innovationService.getInnovationCardByLanguage(this.innoid, this.lang).subscribe(card => {
           this._advantages = card.advantages;
@@ -64,6 +77,9 @@ export class SharedMarketReportSectionComponent implements OnInit {
         const max = _.maxBy(this.info.data, 'count') || {};
         this._maxCountScore = max['count'] || 0;
         break;
+      case 'checkbox':
+        this._optionsArray = Object.keys(this.info.labels).map(key => { return { identifier: key }});
+        break;
     }
   }
 
@@ -71,33 +87,35 @@ export class SharedMarketReportSectionComponent implements OnInit {
     this.modalAnswerChange.emit(event);
   }
 
-  static getChartValues(stats) {
-    return _.map(stats, s => s['count']);
-  }
-
-  public toggleDetails(){
+  public toggleDetails() {
     this._showDetails = !this._showDetails;
   }
 
   public keyupHandlerFunction(event) {
-    //Saving
+    // Saving
     this._isSaving = true;
     const savedObject = {};
     savedObject[this.info.id] = {
       conclusion: event['content']
     };
-    console.log(savedObject);
     this._innovationService.updateSynthesis(this.innoid, savedObject)
       .subscribe(data => {
-        this.info.conclusion = data.infographics[this.info.id]['conclusion'];
-        //Saved
+        if (this.info.id === 'professionals') {
+          this.info.conclusion = data.infographics.professionals.conclusion;
+        } else {
+          const questionIndex = _.findIndex(data.infographics.questions, (q: any) => q.id === this.info.id);
+          if (questionIndex > -1) {
+            this.info.conclusion = data.infographics.questions[questionIndex].conclusion;
+          }
+        }
+        // Saved
         this._isSaving = false;
       });
   }
 
-  public getAnswers(commentsList:Array<any>): Array<any> {
+  public getAnswers(commentsList: Array<any>): Array<any> {
     if (this.answers) {
-      let answers = _.map(commentsList, comment => _.find(this.answers, (answer: any) => answer.id === comment.answerId));
+      const answers = _.map(commentsList, comment => _.find(this.answers, (answer: any) => answer.id === comment.answerId));
       return _.filter(answers, a => a);
     } else {
       return [];
@@ -108,10 +126,13 @@ export class SharedMarketReportSectionComponent implements OnInit {
     return `${Math.round(value / this._maxCountScore * 100)}%`;
   }
 
-  public getFlag(country: string): string {
-    return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+  public getFlag(country: any): string {
+    if (country && country.flag) return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
+    return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
   }
 
+  set optionsArray(value: any[]) { this._optionsArray = value; }
+  get optionsArray(): any[] { return this._optionsArray; }
   get advantages(): string[] { return this._advantages; }
   get readonly(): boolean { return this._readonly; }
   get showDetails(): boolean { return this._showDetails; }

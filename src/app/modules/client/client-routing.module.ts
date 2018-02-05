@@ -17,6 +17,7 @@ import { ClientSignupComponent } from './components/client-signup/client-signup.
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
+import { InnovationResolver } from '../../resolvers/innovation.resolver';
 
 /* Shared */
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
@@ -83,7 +84,7 @@ const clientRoutes: Routes = [
           { path: '', component: ClientMyProjectsComponent, pathMatch: 'full', canActivate: [AuthGuard] },
           { path: 'new', component: ClientProjectNewComponent, pathMatch: 'full', canActivate: [AuthGuard] },
           {
-            path: ':innovationId',
+            path: ':projectId', resolve: { innovation : InnovationResolver },
             children: [
               { path: '', component: ClientProjectComponent},
               { path: 'edit', component: ClientProjectEditComponent, canActivate: [AuthGuard], canDeactivate: [PendingChangesGuard] },
