@@ -73,7 +73,7 @@
       <!--======= Liste des pros =======-->
       <div *ngIf="info.id === 'professionals'" class="prosList">
         <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
-          <img [src]="getFlag(answer.country.notation)"
+          <img [src]="getFlag(answer.country)"
                alt="" width="37" height="25" class="user-flag">
 
           <p class="user-name" *ngIf="answer.professional.profileUrl">

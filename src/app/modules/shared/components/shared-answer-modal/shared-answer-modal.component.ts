@@ -47,6 +47,10 @@ export class SharedAnswerModalComponent implements OnInit {
       });
     });
   }
+  
+  public updateCountry(event) {
+    this._modalAnswer.country = event.value[0];
+  }
 
   public changeStatus(status) {
     this._answerService.changeStatus(this._modalAnswer._id, status).subscribe(data => {
@@ -86,7 +90,7 @@ export class SharedAnswerModalComponent implements OnInit {
   }
 
   public buildImageUrl(country: any): string {
-    if (country && country.notation) return `https://res.cloudinary.com/umi/image/upload/app/${country.notation}.png`;
+    if (country && country.flag) return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
     return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
   }
 
