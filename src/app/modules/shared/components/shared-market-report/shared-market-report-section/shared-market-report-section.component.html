@@ -141,7 +141,7 @@
         <p class="title-question">{{info.comments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
         <ul class="comments">
           <li *ngFor="let comment of info.comments"
-              [ngClass]="{'top-profil': comment.quality === 2}">
+              [ngClass]="{'top-profil': comment.rating === 2}">
             <market-comment
               [job]="comment.job"
               [country]="comment.flag"
