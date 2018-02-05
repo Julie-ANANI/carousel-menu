@@ -117,6 +117,7 @@ import { AutocompleteInputComponent } from '../../directives/autocomplete-input/
     ReactiveFormsModule,
     RouterModule,
     Ng2FileDropModule,
+    Ng2PageScrollModule,
 
     // Directives
     // FormErrorDirective,

@@ -91,7 +91,7 @@
     <div class="columns">
       <div class="column col-10 col-mx-auto">
         <form novalidate [formGroup]="formData" class="form-horizontal">
-          <h2 id="targeting">1. {{ 'PROJECT_EDIT.STEP1' | translate }}</h2>
+          <h2 class="anchor" id="targeting">1. {{ 'PROJECT_EDIT.STEP1' | translate }}</h2>
 
           <div class="column col-8">
             <div class="form-group">
@@ -121,7 +121,7 @@
 
           <div class="divider"></div>
 
-          <h2 id="description">2. {{ 'PROJECT_EDIT.STEP2' | translate }}</h2>
+          <h2 class="anchor" id="description">2. {{ 'PROJECT_EDIT.STEP2' | translate }}</h2>
           <div>
             <div class="columns">
               <div class="column col-8">
@@ -318,44 +318,43 @@
                 </div>
               </div>
             </div>
+            <div>
+              <h2 class="anchor" id="submit">3. {{ 'PROJECT_EDIT.STEP3' | translate }}</h2>
+              <div *ngIf="canEdit && project.status !== 'SUBMITTED'">
 
-            <div *ngIf="canEdit && project.status !== 'SUBMITTED'">
-              <h2 id="submit">3. {{ 'PROJECT_EDIT.STEP3' | translate }}</h2>
+                <form novalidate [formGroup]="formData" class="form-horizontal">
+                  <div>
+                    <label class="form-checkbox c-hand">
+                      <input type="checkbox" name="external_diffusion" formControlName="external_diffusion">
+                      <i class="form-icon"></i> {{ 'PROJECT_EDIT.EXTERNAL_DIFFUSION' | translate }}
+                    </label>
+                  </div>
+                </form>
 
-              <form novalidate [formGroup]="formData" class="form-horizontal">
-                <div>
-                  <label class="form-checkbox c-hand">
-                    <input type="checkbox" name="external_diffusion" formControlName="external_diffusion">
-                    <i class="form-icon"></i> {{ 'PROJECT_EDIT.EXTERNAL_DIFFUSION' | translate }}
-                  </label>
+                <div class="project-submit">
+                  <h3 class="text-center">{{ 'PROJECT_EDIT.SUBMIT.TITLE' | translate }}</h3>
+                  <button class="btn btn-xxl btn-primary centered" (click)="submitProjectToValidation()">
+                    {{ 'PROJECT_EDIT.SUBMIT.BUTTON' | translate }}
+                  </button>
+
+                  <p class="text-center">
+                    {{ 'PROJECT_EDIT.SUBMIT.DESCRIPTION.LINE1' | translate }}<br>
+                    {{ 'PROJECT_EDIT.SUBMIT.DESCRIPTION.LINE2' | translate }}
+                  </p>
                 </div>
-              </form>
+              </div>
+              <div *ngIf="isAdmin && project.status === 'SUBMITTED'">
+              </div>
 
               <div class="project-submit">
-                <h3 class="text-center">{{ 'PROJECT_EDIT.SUBMIT.TITLE' | translate }}</h3>
-                <button class="btn btn-xxl btn-primary centered" (click)="submitProjectToValidation()">
-                  {{ 'PROJECT_EDIT.SUBMIT.BUTTON' | translate }}
+                <h3 class="text-center">Validation du projet</h3>
+                <button class="btn btn-xxl btn-primary centered" (click)="validateProject()">
+                  Valider
                 </button>
-
-                <p class="text-center">
-                  {{ 'PROJECT_EDIT.SUBMIT.DESCRIPTION.LINE1' | translate }}<br>
-                  {{ 'PROJECT_EDIT.SUBMIT.DESCRIPTION.LINE2' | translate }}
-                </p>
+                <button class="btn btn-xxl btn-error centered" (click)="askRevision()">
+                  Demander une révision
+                </button>
               </div>
-            </div>
-          </div>
-
-          <div *ngIf="isAdmin && project.status === 'SUBMITTED'">
-            <h2>3. {{ 'PROJECT_EDIT.STEP3' | translate }}</h2>
-
-            <div class="project-submit">
-              <h3 class="text-center">Validation du projet</h3>
-              <button class="btn btn-xxl btn-primary centered" (click)="validateProject()">
-                Valider
-              </button>
-              <button class="btn btn-xxl btn-error centered" (click)="askRevision()">
-                Demander une révision
-              </button>
             </div>
           </div>
         </form>
