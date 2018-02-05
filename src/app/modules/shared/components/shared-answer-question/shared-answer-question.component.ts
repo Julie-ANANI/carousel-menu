@@ -3,7 +3,6 @@
  */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from '../../../../services/auth/auth.service';
 import * as _ from 'lodash';
 
 @Component({
@@ -17,10 +16,9 @@ export class SharedAnswerQuestionComponent implements OnInit {
   @Input() public question;
   @Input() public fullAnswer;
   @Input() public adminMode: boolean = false;
-  @Output() fullAnswerChange = new EventEmitter <any>(); 
+  @Output() fullAnswerChange = new EventEmitter <any>();
 
-  constructor(private _translateService: TranslateService,
-              private _authService: AuthService) { }
+  constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
   }
@@ -32,7 +30,7 @@ export class SharedAnswerQuestionComponent implements OnInit {
 
   link(domain){
     return "http://www." + domain;
-  } 
+  }
 
   optionLabel(identifier) {
     const option = _.find(this.question.options, (o: any) => o.identifier === identifier);
@@ -43,12 +41,12 @@ export class SharedAnswerQuestionComponent implements OnInit {
     this.fullAnswer.answers[this.question.identifier][option.identifier] = !this.fullAnswer.answers[this.question.identifier][option.identifier]
     this.fullAnswerChange.emit(this.fullAnswer);
   }
-  
+
   selectOption(option) {
     this.fullAnswer.answers[this.question.identifier] = option.identifier;
     this.fullAnswerChange.emit(this.fullAnswer);
   }
-  
+
   setAnswer(event) {
     this.fullAnswer.answers[this.question.identifier] = event.value;
   }
