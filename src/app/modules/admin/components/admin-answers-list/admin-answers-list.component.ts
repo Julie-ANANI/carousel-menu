@@ -21,7 +21,7 @@ export class AdminAnswersListComponent implements OnInit {
   }
 
   public buildImageUrl(country: any): string {
-    if (country && country.flag) return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
+    if (country && country.notation) return `https://res.cloudinary.com/umi/image/upload/app/${country.notation}.png`;
     return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
   }
 }
