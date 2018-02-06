@@ -1,12 +1,12 @@
 <header class="navbar">
   <section class="navbar-section" *ngIf="!authService.isAuthenticated">
     <a href="https://www.umi.us" class="navbar-brand mr-2">
-      <img src="{{'http://res.cloudinary.com/umi/image/upload/app/'+logoName()}}" alt="Logo UMI" height="30">
+      <img src="{{'https://res.cloudinary.com/umi/image/upload/app/'+logoName()}}" alt="Logo UMI" height="30">
     </a>
   </section>
   <section class="navbar-section" *ngIf="authService.isAuthenticated">
     <a routerLink="/" class="navbar-brand mr-2">
-      <img src="{{'http://res.cloudinary.com/umi/image/upload/app/'+logoName()}}" alt="Logo UMI" height="30">
+      <img src="{{'https://res.cloudinary.com/umi/image/upload/app/'+logoName()}}" alt="Logo UMI" height="30">
     </a>
   </section>
 
