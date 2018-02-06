@@ -19,7 +19,7 @@ WORKDIR /var/web
 RUN npm install --production
 #RUN ng build --app=umi --environment=prod --aot
 RUN echo 'Building the image using '${APP_NAME}
-RUN ng build --app=${APP_NAME} --environment=${BUILD_ENV} --aot
+RUN ng build --app=${APP_NAME} --environment=${BUILD_ENV}
 RUN rm -f /var/web/.npmrc
 
 EXPOSE  3080
