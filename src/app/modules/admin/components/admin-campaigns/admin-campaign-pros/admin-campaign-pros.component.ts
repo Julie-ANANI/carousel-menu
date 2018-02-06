@@ -15,7 +15,7 @@ export class AdminCampaignProsComponent implements OnInit {
   private _pros = [];
   private _total = 0;
   private _config = {
-    fields: 'language firstName lastName company email emailConfidence',
+    fields: 'language firstName lastName company email emailConfidence country',
     limit: 10,
     offset: 0,
     search: {},
@@ -42,7 +42,9 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
   public buildImageUrl(country: string): string {
-    if (country) return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+    if (country) {
+      return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+    }
     return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
   }
 
