@@ -106,9 +106,9 @@
       <!--======= Avantages Clés =======-->
       <div *ngIf="info.controlType === 'stars'">
         <table>
-          <tr *ngFor="let advantage of advantages; let i = index">
-            <td>{{advantage}}</td>
-            <td><stars [note]="info?.data[i]?.average" [count]="info?.data[i]?.count"></stars></td>
+          <tr *ngFor="let advantage of info.options; let i = index">
+            <td>{{advantage.label[lang]}}</td>
+            <td><stars [note]="info?.data[advantage.identifier]?.average" [count]="info?.data[advantage.identifier]?.count"></stars></td>
           </tr>
         </table>
       </div>

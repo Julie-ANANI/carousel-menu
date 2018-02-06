@@ -22,7 +22,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
   private _chartValues: any;
   private _conclusionId: string;
   private _innoid: string;
-  private _advantages: string[];
   private _optionsArray: any[];
 
   @Input() set showDetails(value: boolean) {
@@ -67,11 +66,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
     }
 
     switch (this.info.controlType) {
-      case 'stars':
-        this._innovationService.getInnovationCardByLanguage(this.innoid, this.lang).subscribe(card => {
-          this._advantages = card.advantages;
-        });
-        break;
       case 'scale':
         // Calcul du score max
         const max = _.maxBy(this.info.data, 'count') || {};
@@ -133,7 +127,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
 
   set optionsArray(value: any[]) { this._optionsArray = value; }
   get optionsArray(): any[] { return this._optionsArray; }
-  get advantages(): string[] { return this._advantages; }
   get readonly(): boolean { return this._readonly; }
   get showDetails(): boolean { return this._showDetails; }
   get innoid(): string { return this._innoid; }
