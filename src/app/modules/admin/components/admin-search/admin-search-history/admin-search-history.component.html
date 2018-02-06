@@ -36,7 +36,7 @@
         <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && campaign" href="">{{request.keywords[0].original}}</a>
         <a *ngIf="request.entity==='COMPANY'" href="">{{request.keywords[0].original}}</a>
         <a *ngIf="request.entity==='MAIL'" href="">{{request.keywords[0].original}}</a>
-        <small *ngIf="request.entity==='PERSON'">{{request.requests.person.length}} résultats | {{request.metadata.user.name}}</small>
+        <small *ngIf="request.entity==='PERSON'">{{request.requests ? request.requests.person.length : 0}} résultats | {{request.metadata.user.name}}</small>
         <small *ngIf="request.entity==='PERSON_BY_COUNTRIES'">{{request.totalrequests}} résultats | {{request.metadata.user.name}}</small>
         <small *ngIf="request.entity==='PERSON_BY_REGIONS'">{{request.totalrequests}} résultats | {{request.metadata.user.name}}</small>
         <small *ngIf="request.entity==='COMPANY'"> {{request.requests.company.length}} résultats | {{request.metadata.user.name}}</small>

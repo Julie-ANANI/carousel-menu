@@ -22,7 +22,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
   private _chartValues: any;
   private _conclusionId: string;
   private _innoid: string;
-  private _advantages: string[];
   private _optionsArray: any[];
 
   @Input() set showDetails(value: boolean) {
@@ -46,39 +45,29 @@ export class SharedMarketReportSectionComponent implements OnInit {
     });
     this.conclusionId = `${this.info.id}Conclusion`;
 
-    if (this.info.controlType === 'radio') {
-      this._chartValues = {
-        data: [{
-          data: [],
-          backgroundColor: []
-        }],
-        labels: {
-          fr: [],
-          en: []
-        },
-        colors: []
-      };
-      this.info.options.forEach(option => {
-        this._chartValues.data[0].data.push(this.info.pieChart[option.identifier].count);
-        this._chartValues.labels.fr.push(option.label.fr);
-        this._chartValues.labels.en.push(option.label.en);
-        this._chartValues.data[0].backgroundColor.push(this.info.pieChart[option.identifier].color);
-      });
-    }
-
     switch (this.info.controlType) {
-      case 'stars':
-        this._innovationService.getInnovationCardByLanguage(this.innoid, this.lang).subscribe(card => {
-          this._advantages = card.advantages;
+      case 'radio':
+        this._chartValues = {
+          data: [{
+            data: [],
+            backgroundColor: []
+          }],
+          labels: {
+            fr: [],
+            en: []
+          },
+          colors: []
+        };
+        this.info.options.forEach(option => {
+          this._chartValues.data[0].data.push(this.info.pieChart[option.identifier].count);
+          this._chartValues.labels.fr.push(option.label.fr);
+          this._chartValues.labels.en.push(option.label.en);
+          this._chartValues.data[0].backgroundColor.push(this.info.pieChart[option.identifier].color);
         });
-        break;
       case 'scale':
         // Calcul du score max
         const max = _.maxBy(this.info.data, 'count') || {};
         this._maxCountScore = max['count'] || 0;
-        break;
-      case 'checkbox':
-        this._optionsArray = Object.keys(this.info.labels).map(key => { return { identifier: key }});
         break;
     }
   }
@@ -126,13 +115,11 @@ export class SharedMarketReportSectionComponent implements OnInit {
     return `${Math.round(value / this._maxCountScore * 100)}%`;
   }
 
-  public getFlag(country: string): string {
-    return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+  public getFlag(country: any): string {
+    if (country && country.flag) return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
+    return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
   }
 
-  set optionsArray(value: any[]) { this._optionsArray = value; }
-  get optionsArray(): any[] { return this._optionsArray; }
-  get advantages(): string[] { return this._advantages; }
   get readonly(): boolean { return this._readonly; }
   get showDetails(): boolean { return this._showDetails; }
   get innoid(): string { return this._innoid; }

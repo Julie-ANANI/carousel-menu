@@ -68,8 +68,8 @@ export class PresetService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public createQuestion(sectionObj: any): Observable<any> {
-    return this._http.post('/question', sectionObj)
+  public createQuestion(questionObj: any): Observable<any> {
+    return this._http.post('/question', questionObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

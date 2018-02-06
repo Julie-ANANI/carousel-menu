@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
+import { ISubscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './admin-sections-list.component.html',
@@ -7,8 +9,10 @@ import { PresetService } from '../../../../../../services/preset/preset.service'
 })
 export class AdminSectionsListComponent implements OnInit {
 
+  private _subscriptions: ISubscription;
   private _sections: [any];
   public selectedSectionIdToBeDeleted: any = null;
+  public selectedSectionToBeCloned: any = null;
   private _total: number;
   private _config = {
     fields: '',
@@ -20,10 +24,15 @@ export class AdminSectionsListComponent implements OnInit {
     }
   };
 
-  constructor(private _presetService: PresetService) {}
+  constructor(private _presetService: PresetService,
+              private _router: Router) {}
 
   ngOnInit(): void {
     this.loadSections(this._config);
+  }
+
+  ngOnDestroy() {
+    if (this._subscriptions) this._subscriptions.unsubscribe();
   }
 
   loadSections(config: any): void {
@@ -54,19 +63,15 @@ export class AdminSectionsListComponent implements OnInit {
       });
   }
 
-  set config(value: any) {
-    this._config = value;
-  }
+  public cloneSection(clonedSection) {
+    delete clonedSection._id;
+    this._subscriptions = this._presetService.createSection(clonedSection).subscribe(section => {
+      this._router.navigate(['/admin/sections/' + section._id])
+    });
+  } 
 
-  get config(): any {
-    return this._config;
-  }
-
-  get total () {
-    return this._total;
-  }
-
-  get sections () {
-    return this._sections;
-  }
+  set config(value: any) { this._config = value; }
+  get config(): any { return this._config; }
+  get total () { return this._total; }
+  get sections () { return this._sections; }
 }

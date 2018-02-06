@@ -1,9 +1,13 @@
 export const PRESETS = {
   'PRESET': {
     'ADD_PRESET': 'Add a preset',
-    'DELETE_PRESET_MODAL': {
+    'DELETE_MODAL': {
       'TITLE': 'Are you sure?',
       'CONTENT': 'Are you sure you want to definitively delete this preset ? It may be used for other projects !'
+    },
+    'CLONE_MODAL': {
+      'TITLE': 'Clone of preset',
+      'CONTENT': 'Please give a new name to the cloned preset'
     },
     'NONE': {
       'TITLE': 'You have no preset yet',
@@ -13,6 +17,7 @@ export const PRESETS = {
     'GO': 'Create the preset',
     'GIVE_NAME': 'Give a name to the preset',
     'UNIQUE_NAME': 'Be careful, this name must be different from the already existing configurations',
+    'TAKEN_NAME': 'This name is already used, please choose another name',
     'EDIT': {
       'SAVE': 'Save the preset',
       'ADD': 'Add sections to the preset',
@@ -21,9 +26,13 @@ export const PRESETS = {
   },
   'SECTION': {
     'ADD_PRESET': 'Add a section',
-    'DELETE_PRESET_MODAL': {
+    'DELETE_MODAL': {
       'TITLE': 'Are you sure?',
       'CONTENT': 'Are you sure you want to definitively delete this section ? It may be used for other projects !'
+    },
+    'CLONE_MODAL': {
+      'TITLE': 'Clone of section',
+      'CONTENT': 'Please give a new name to the cloned section'
     },
     'DESCRIPTION': {
       'NOTHING': 'Nothing',
@@ -49,9 +58,13 @@ export const PRESETS = {
   },
   'QUESTION': {
     'ADD_PRESET': 'Add a question',
-    'DELETE_PRESET_MODAL': {
+    'DELETE_MODAL': {
       'TITLE': 'Are you sure?',
       'CONTENT': 'Are you sure you want to definitively delete this question ? It may be used for other projects !'
+    },
+    'CLONE_MODAL': {
+      'TITLE': 'Clone of question',
+      'CONTENT': 'Please give a new name to the cloned question'
     },
     'NONE': {
       'TITLE': 'You have no question yet',

@@ -16,7 +16,6 @@ import {TranslateNotificationsService} from '../../../../services/notifications/
 
 export class SharedAnswerModalComponent implements OnInit {
 
-  private _advantages: any;
   private _modalAnswer: any;
   public editMode = false;
   public floor: any;
@@ -38,14 +37,42 @@ export class SharedAnswerModalComponent implements OnInit {
   ngOnInit() {
     this.adminMode = this.adminMode && this._authService.adminLevel > 2;
     this.floor = Math.floor;
-    this._innovationService.getInnovationCardByLanguage(this.innoid, 'en').subscribe(cardEn => {
-      this._innovationService.getInnovationCardByLanguage(this.innoid, 'fr').subscribe(cardFr => {
-        this._advantages = {
-          fr: cardFr ? cardFr.advantages || [] : [],
-          en: cardEn ? cardEn.advantages || [] : []
-        };
+    
+    // On regarde si on a une question 'étoiles'
+    const starQuestions = this.questions.filter(q => q.controlType === 'stars');
+    if (starQuestions.length) {
+      // Si question 'étoiles', on récupère les advantages
+      this._innovationService.getInnovationCardByLanguage(this.innoid, 'en').subscribe(cardEn => {
+        this._innovationService.getInnovationCardByLanguage(this.innoid, 'fr').subscribe(cardFr => {
+          // puis on les assigne aux questions stars
+          starQuestions.forEach(question => {
+            question.options = [];
+            let i = 0;
+            let advantagesLeft = true;
+            while (advantagesLeft) {
+              if ((cardFr && cardFr.advantages && cardFr.advantages[i]) || (cardEn && cardEn.advantages && cardEn.advantages[i])) {
+                question.options.push({
+                  identifier: i,
+                  label: {
+                    fr: cardFr && cardFr.advantages && cardFr.advantages[i] ? cardFr.advantages[i]: '',
+                    en: cardEn && cardEn.advantages && cardEn.advantages[i] ? cardEn.advantages[i]: ''
+                  }
+                });
+                i++;
+              } else {
+                advantagesLeft = false;
+              }
+            }
+          })
+        });
       });
-    });
+      
+      
+    }
+  }
+
+  public updateCountry(event) {
+    this._modalAnswer.country = event.value[0];
   }
 
   public changeStatus(status) {
@@ -86,7 +113,7 @@ export class SharedAnswerModalComponent implements OnInit {
   }
 
   public buildImageUrl(country: any): string {
-    if (country && country.notation) return `https://res.cloudinary.com/umi/image/upload/app/${country.notation}.png`;
+    if (country && country.flag) return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
     return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
   }
 
@@ -95,6 +122,5 @@ export class SharedAnswerModalComponent implements OnInit {
   }
 
   get lang(): any { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
-  get advantages(): any { return this._advantages; }
   get modalAnswer(): any { return this._modalAnswer; }
 }

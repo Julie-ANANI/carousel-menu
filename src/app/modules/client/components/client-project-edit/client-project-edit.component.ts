@@ -8,6 +8,7 @@ import {AuthService} from '../../../../services/auth/auth.service';
 import {ComponentCanDeactivate} from '../../../../pending-changes-guard.service';
 import {Observable} from 'rxjs/Observable';
 import { ISubscription } from "rxjs/Subscription";
+import { PageScrollConfig } from 'ng2-page-scroll';
 
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
@@ -82,6 +83,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
         this.shouldSave = true;
       });
     this._subscriptions.push(formSubs);
+    PageScrollConfig.defaultDuration = 500;
   }
 
   ngOnDestroy() {

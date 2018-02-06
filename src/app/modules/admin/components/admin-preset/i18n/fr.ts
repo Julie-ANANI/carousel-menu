@@ -5,9 +5,13 @@ export const PRESETS = {
       'TITLE': 'Êtes-vous sûr(e) ?',
       'CONTENT': 'Êtes-vous sûr(e) de vouloir définitivement supprimer cette configuration ? Elle est peut-être utilisée pour un autre projet !'
     },
+    'CLONE_MODAL': {
+      'TITLE': 'Clone de configuration',
+      'CONTENT': 'Donnez un nouveau nom à la configuration clônée'
+    },
     'NONE': {
       'TITLE': 'Vous n\'avez pas encore de configuration',
-      'CONTENT': 'Cliquez-sur le boutton pour ajouter votre première configuration'
+      'CONTENT': 'Cliquez-sur le bouton pour ajouter votre première configuration'
     },
     'NEW': 'Nouvelle configuration',
     'GO': 'Créer la configuration',
@@ -25,6 +29,10 @@ export const PRESETS = {
       'TITLE': 'Êtes-vous sûr(e) ?',
       'CONTENT': 'Êtes-vous sûr(e) de vouloir définitivement supprimer cette section ? Elle est peut-être utilisée pour une autre configuration !'
     },
+    'CLONE_MODAL': {
+      'TITLE': 'Clone de section',
+      'CONTENT': 'Donnez un nouveau nom à la section clônée'
+    },
     'DESCRIPTION': {
       'NOTHING': 'Rien',
       'FIRST': 'Problème',
@@ -33,7 +41,7 @@ export const PRESETS = {
     },
     'NONE': {
       'TITLE': 'Vous n\'avez pas encore de section',
-      'CONTENT': 'Cliquez-sur le boutton pour ajouter votre première section'
+      'CONTENT': 'Cliquez-sur le bouton pour ajouter votre première section'
     },
     'NEW': 'Nouvelle section',
     'GO': 'Créer la section',
@@ -53,14 +61,19 @@ export const PRESETS = {
       'TITLE': 'Êtes-vous sûr(e) ?',
       'CONTENT': 'Êtes-vous sûr(e) de vouloir définitivement supprimer cette question ? Elle est peut-être utilisée pour un autre projet !'
     },
+    'CLONE_MODAL': {
+      'TITLE': 'Clone de question',
+      'CONTENT': 'Donnez un nouveau nom à la question clônée'
+    },
     'NONE': {
       'TITLE': 'Vous n\'avez pas encore de question',
-      'CONTENT': 'Cliquez-sur le boutton pour ajouter votre première question'
+      'CONTENT': 'Cliquez-sur le bouton pour ajouter votre première question'
     },
     'NEW': 'Nouvelle question',
     'GO': 'Créer la question',
     'GIVE_NAME': 'Donnez un nom à la question',
     'UNIQUE_NAME': 'Attention, ce nom ne doit pas être déjà utilisé dans les questions existantes',
+    'TAKEN_NAME': 'Ce nom est déjà utilisé, merci d\'en choisir un autre',
     'TYPE': {
       'CHOOSE': 'Choisissez le type de question',
       'LIST': 'List d\'items',

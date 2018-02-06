@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
+import { ISubscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './admin-questions-list.component.html',
@@ -7,8 +9,10 @@ import { PresetService } from '../../../../../../services/preset/preset.service'
 })
 export class AdminQuestionsListComponent implements OnInit {
 
+  private _subscriptions: ISubscription;
   private _questions: [any];
   public selectedQuestionIdToBeDeleted: any = null;
+  public selectedQuestionToBeCloned: any = null;
   private _total: number;
   private _config = {
     fields: '',
@@ -20,10 +24,15 @@ export class AdminQuestionsListComponent implements OnInit {
     }
   };
 
-  constructor(private _presetService: PresetService) {}
+  constructor(private _presetService: PresetService,
+              private _router: Router) {}
 
   ngOnInit(): void {
     this.loadQuestions(this._config);
+  }
+
+  ngOnDestroy() {
+    if (this._subscriptions) this._subscriptions.unsubscribe();
   }
 
   loadQuestions(config: any): void {
@@ -53,20 +62,16 @@ export class AdminQuestionsListComponent implements OnInit {
         this.selectedQuestionIdToBeDeleted = null;
       });
   }
-
-  set config(value: any) {
-    this._config = value;
+  
+  public cloneQuestion(clonedQuestion) {
+    delete clonedQuestion._id;
+    this._subscriptions = this._presetService.createQuestion(clonedQuestion).subscribe(question => {
+      this._router.navigate(['/admin/questions/' + question._id])
+    });
   }
 
-  get config(): any {
-    return this._config;
-  }
-
-  get total () {
-    return this._total;
-  }
-
-  get questions () {
-    return this._questions;
-  }
+  set config(value: any) { this._config = value; }
+  get config(): any { return this._config; }
+  get total () { return this._total; }
+  get questions () { return this._questions; }
 }

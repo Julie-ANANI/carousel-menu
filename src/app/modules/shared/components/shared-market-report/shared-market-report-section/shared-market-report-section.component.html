@@ -73,24 +73,24 @@
       <!--======= Liste des pros =======-->
       <div *ngIf="info.id === 'professionals'" class="prosList">
         <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
-          <img [src]="getFlag(answer.country.notation)"
+          <img [src]="getFlag(answer.country)"
                alt="" width="37" height="25" class="user-flag">
 
-          <p class="user-name" *ngIf="answer.professional.profileUrl">
+          <p class="user-name" *ngIf="answer.professional && answer.professional.profileUrl">
             <a target="_blank">
               {{answer.professional.firstName}} {{answer.professional.lastName}}
             </a>
           </p>
-          <p class="user-name" *ngIf="!answer.professional.profileUrl">
+          <p class="user-name" *ngIf="answer.professional && !answer.professional.profileUrl">
             {{answer.professional.firstName}} {{answer.professional.lastName}}
             <img src="https://res.cloudinary.com/umi/image/upload/c_scale,h_15/app/star.svg" alt="" width="15" height="15" *ngIf="answer.follow" attr.tooltip-placement="top" attr.tooltip="{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}">
           </p>
 
           <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job}}</p>
-          <p *ngIf="answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional.company}}</p>
+          <p *ngIf="answer.professional && answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional ? answer.professional.company : ""}}</p>
 
           <span (click)="seeAnswer(answer)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
-          <a href="mailto: {{answer.professional.email}}">{{answer.professional.email}}</a>
+          <a href="mailto: {{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ""}}</a>
         </div>
       </div>
 
@@ -106,9 +106,9 @@
       <!--======= Avantages Clés =======-->
       <div *ngIf="info.controlType === 'stars'">
         <table>
-          <tr *ngFor="let advantage of advantages; let i = index">
-            <td>{{advantage}}</td>
-            <td><stars [note]="info?.data[i]?.average" [count]="info?.data[i]?.count"></stars></td>
+          <tr *ngFor="let advantage of info.options; let i = index">
+            <td>{{advantage.label[lang]}}</td>
+            <td><stars [note]="info?.data[advantage.identifier]?.average" [count]="info?.data[advantage.identifier]?.count"></stars></td>
           </tr>
         </table>
       </div>
@@ -124,9 +124,9 @@
       <!--======= Marques d'intérêt =======-->
 
       <div *ngIf="info.controlType === 'checkbox'">
-        <div *ngFor="let option of optionsArray">
+        <div *ngFor="let option of info.options">
           <div *ngIf="info.data[option.identifier].length">
-            <p class="title-question">{{ info.labels[option.identifier][lang]}}</p>
+            <p class="title-question">{{ option.label[lang]}}</p>
             <market-item-list
               [answers]="answers"
               [list]="info.data[option.identifier]"
@@ -141,7 +141,7 @@
         <p class="title-question">{{info.comments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
         <ul class="comments">
           <li *ngFor="let comment of info.comments"
-              [ngClass]="{'top-profil': comment.quality === 2}">
+              [ngClass]="{'top-profil': comment.rating === 2}">
             <market-comment
               [job]="comment.job"
               [country]="comment.flag"

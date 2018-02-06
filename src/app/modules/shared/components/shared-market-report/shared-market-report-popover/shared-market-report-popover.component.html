@@ -4,22 +4,22 @@
     <ul>
       <li *ngFor="let answer of answers; let i = index">
 
-        <p class="user-name" *ngIf="answer.professional.profileUrl">
+        <p class="user-name">
           <img [src]="buildImageUrl(answer.country)"
                alt="" width="23" height="16" class="user-flag">
-          <a href="{{answer.professional.profileUrl}}" target="_blank">
+          <a href="{{answer.professional.profileUrl}}" target="_blank" *ngIf="answer.professional.profileUrl">
             {{answer.professional.firstName}} {{answer.professional.lastName}}
           </a>
-        </p>
-        <p class="user-name" *ngIf="!answer.professional.profileUrl">
-          {{answer.professional.firstName}} {{answer.professional.lastName}}
+          <span *ngIf="!answer.professional.profileUrl">
+            {{answer.professional.firstName}} {{answer.professional.lastName}}
+          </span>
         </p>
 
         <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job}}</p>
-        <p *ngIf="answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional.company}}</p>
+        <p *ngIf="answer.professional && answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional.company}}</p>
 
         <span (click)="seeAnswer(answer)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
-        <a href="mailto: {{answer.professional.email}}">{{answer.professional.email}}</a>
+        <a href="mailto: {{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ''}}</a>
       </li>
     </ul>
   </div>

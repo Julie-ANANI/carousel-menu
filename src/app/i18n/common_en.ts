@@ -15,6 +15,7 @@ export const COMMON = {
   'UPDATED': 'Updated on',
   'LAUNCHED': 'Launched on',
   'CLOSE': 'Close',
+  'CLONE': 'Clone',
   'PREVIEW': 'Preview',
   'NO': 'No',
   'YES': 'Yes',

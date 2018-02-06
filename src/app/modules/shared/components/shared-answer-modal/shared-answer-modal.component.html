@@ -40,7 +40,7 @@
             <i class="form-icon"></i>Edition  <i class="fa fa-pencil"></i>
           </label>
         </div>
-        <p>
+        <div>
           <a *ngIf="(modalAnswer.professional?.firstName || modalAnswer.professional?.lastName) && modalAnswer.professional?.profileUrl"
              href="{{modalAnswer.professional?.profileUrl}}" target="_blank">
             <i class="fa fa-user" aria-hidden="true"></i>
@@ -49,8 +49,19 @@
           <a href="mailto: {{modalAnswer.professional?.email}}">{{modalAnswer.professional?.email}}</a><br>
           {{ 'MARKET_REPORT.POPUP.RECEIVED' | translate }} {{modalAnswer.date | date : dateFormat}} à {{modalAnswer.date | date:'HH:mm'}}<br>
           <img *ngIf="modalAnswer.country" [src]="buildImageUrl(modalAnswer.country)" width="30" height="20">
-          {{(modalAnswer.country) ? modalAnswer.country.text : ""}}
-        </p>
+          {{(modalAnswer.country) ? modalAnswer.country.name : ""}}
+          <div class="popover popover-bottom">
+            <i class="fa fa-pencil"></i>
+            <div class="popover-container">
+              <div class="input-group">
+                <app-autocomplete-input
+                  (update)="updateCountry($event)" [onlyOne]="true"
+                  [config]="{placeholder: 'pays', initialData: modalAnswer.country ? [modalAnswer.country] : [], type: 'countries'}"
+                ></app-autocomplete-input>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="modal-body">
