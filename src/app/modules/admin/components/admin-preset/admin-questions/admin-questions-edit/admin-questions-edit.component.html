@@ -76,12 +76,12 @@
                   FR: <input class="form-input" id="'optionFr'+i" name="fr" formControlName="fr" type="text"
                              placeholder="">
                 </div>
-                <div class="form-group text-center" *ngIf="question.controlType === 'radio'">
-                  <label for="positive">
+                <div class="form-group text-center">
+                  <label for="positive" *ngIf="question.controlType === 'radio'">
                     Réponse Positive ?
                     <input type="checkbox" name="positive" formControlName="positive" id="positive">
                   </label>
-                  <label for="color">
+                  <label for="color" *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'">
                     Couleur d'affichage
                     <select class="form-select" id="color" name="color" formControlName="color">
                       <option [value]="'#ffffff'">...</option>
