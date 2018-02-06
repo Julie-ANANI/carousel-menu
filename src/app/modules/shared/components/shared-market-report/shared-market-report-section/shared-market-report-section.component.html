@@ -124,9 +124,9 @@
       <!--======= Marques d'intérêt =======-->
 
       <div *ngIf="info.controlType === 'checkbox'">
-        <div *ngFor="let option of optionsArray">
+        <div *ngFor="let option of info.options">
           <div *ngIf="info.data[option.identifier].length">
-            <p class="title-question">{{ info.labels[option.identifier][lang]}}</p>
+            <p class="title-question">{{ option.label[lang]}}</p>
             <market-item-list
               [answers]="answers"
               [list]="info.data[option.identifier]"
