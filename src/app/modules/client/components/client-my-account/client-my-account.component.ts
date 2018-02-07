@@ -53,13 +53,13 @@ export class ClientMyAccountComponent implements OnInit {
     });
   }
 
-  public onSubmit(form) {
-    if (form.valid) {
-      const user = new User(form.value);
+  public onSubmit() {
+    if (this.formData.valid) {
+      const user = new User(this.formData.value);
       this._userService.update(user).subscribe(
         data => {
           this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
-          form.patchValue(data);
+          this.formData.patchValue(data);
         },
         error => {
           this._notificationsService.error('ERROR.ERROR', error.message);
@@ -70,11 +70,11 @@ export class ClientMyAccountComponent implements OnInit {
     }
   }
 
-  public addSector(event) {
+  public addSector(event: {value: Array<string>}) {
     this.formData.get('sectors').setValue(event.value);
   }
 
-  public addTechnology(event) {
+  public addTechnology(event: {value: Array<string>}) {
     this.formData.get('technologies').setValue(event.value);
   }
 

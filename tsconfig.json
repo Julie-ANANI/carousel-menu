@@ -1,13 +1,17 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
+    "target": "es5",
+    "module": "commonjs",
     "moduleResolution": "node",
+    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "noImplicitAny": false, //TODO: set to true
+    "suppressImplicitAnyIndexErrors": true,
+    "outDir": "./dist/out-tsc",
+    "declaration": false,
+
     "typeRoots": [
       "node_modules/@types"
     ],

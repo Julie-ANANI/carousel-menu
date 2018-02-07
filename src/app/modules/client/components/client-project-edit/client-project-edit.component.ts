@@ -1,18 +1,18 @@
-import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
-import {InnovationService} from '../../../../services/innovation/innovation.service';
-import {AuthService} from '../../../../services/auth/auth.service';
-import {ComponentCanDeactivate} from '../../../../pending-changes-guard.service';
-import {Observable} from 'rxjs/Observable';
-import { ISubscription } from "rxjs/Subscription";
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { ComponentCanDeactivate } from '../../../../pending-changes-guard.service';
+import { Observable } from 'rxjs/Observable';
+import { ISubscription } from 'rxjs/Subscription';
 import { PageScrollConfig } from 'ng2-page-scroll';
-
+import { Media } from '../../../../models/media';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
-import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-client-project-edit',
@@ -95,7 +95,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   public updateSettings(event) {
     this.formData.get('settings').setValue(event);
   }
-  
+
   private _buildForm(): void {
     this.formData = this._formBuilder.group({
       settings: [undefined, Validators.required],
@@ -187,12 +187,12 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
    * @param event the resulting value sent from the component directive
    * @param cardIdx this is the index of the innovation card being edited.
    */
-  public addAdvantageToInventionCard (event, cardIdx) {
+  public addAdvantageToInventionCard (event: {value: Array<string>}, cardIdx: number): void {
     const card = this.formData.get('innovationCards').value[cardIdx] as FormGroup;
     card['advantages'] = event.value;
   }
 
-  public setAsPrincipal (innovationCardId) {
+  public setAsPrincipal (innovationCardId: string): void {
     const innovationCards = this.formData.get('innovationCards').value;
     for (const innovationCard of innovationCards) {
       innovationCard.principal = innovationCard.id === innovationCardId;
@@ -200,7 +200,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     this.formData.get('innovationCards').setValue(innovationCards);
   }
 
-  public submitProjectToValidation () {
+  public submitProjectToValidation (): void {
     this.save(_ => {
       const saveSubs = this._innovationService.submitProjectToValidation(this._project.id).subscribe(data2 => {
         this._router.navigate(['../']);
@@ -211,7 +211,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   }
 
 
-  public imageUploaded(media) {
+  public imageUploaded(media: Media): void {
     this._project.innovationCards[this.innovationCardEditingIndex].media.push(media);
     const mediaSubs = this._innovationService
       .addMediaToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
@@ -221,20 +221,20 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     this._subscriptions.push(mediaSubs);
   }
 
-  public newOnlineVideoToAdd (videoInfos) {
+  public newOnlineVideoToAdd (videoInfos): void {
     this._innovationService.addNewMediaVideoToInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos).subscribe(res => {
       this._project = res;
     });
   }
 
-  public setMediaAsPrimary (media) {
+  public setMediaAsPrimary (media: Media): void {
     const mediaSubs = this._innovationService.setPrincipalMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
       this._project = res;
     });
     this._subscriptions.push(mediaSubs);
   }
 
-  public deleteMedia (media) {
+  public deleteMedia (media: Media): void {
     const mediaSubs = this._innovationService.deleteMediaOfInnovationCard(this._project.id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
       this._project = res;
     });
@@ -249,7 +249,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     return {
       projectId: this._project.id,
       innovationCardId: this._project.innovationCards[0].id,
-      title: this._project.innovationCards[0].title.slice(0, Math.min(20, this._project.innovationCards[0].title.length)) + "-" + "project" +"(" + (this.project.innovationCards[0].lang || 'en') +").pdf"
+      title: this._project.innovationCards[0].title.slice(0, Math.min(20, this._project.innovationCards[0].title.length)) + '-project(' + (this.project.innovationCards[0].lang || 'en') + ').pdf'
     }
   }
 
@@ -262,21 +262,21 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     };
   }
 
-  public validateProject () {
+  public validateProject (): void {
     this._innovationService.validate(this._project.id).subscribe(data => {
       this._notificationsService.success('Projet validé', 'Le projet a bien été validé');
       this._router.navigate(['/admin']);
     });
   }
 
-  public askRevision () {
+  public askRevision (): void {
     this._innovationService.askRevision(this._project.id).subscribe(data => {
       this._notificationsService.success('Projet en révision', 'Le projet a été passé en status de révision, veuillez avertir le propriétaire des chagements à effectuer');
       this._router.navigate(['/admin']);
     });
   }
 
-  public addCollaborators () {
+  public addCollaborators (): void {
     if (this.collaborators_emails !== '') {
       this._innovationService.inviteCollaborators(this._project.id, this.collaborators_emails).subscribe(data => {
         if (data.usersAdded.length || data.invitationsToSend.length || data.invitationsToSendAgain.length) {
@@ -294,7 +294,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     }
   }
 
-  public removeCollaborator (collaborator: any) {
+  public removeCollaborator (collaborator: any): void {
     this._innovationService.removeCollaborator(this._project.id, collaborator).subscribe(collaborators => {
       this.project.collaborators = collaborators;
     });

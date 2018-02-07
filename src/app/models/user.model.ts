@@ -99,7 +99,7 @@ export class User extends Model {
   }
 
   set domain(domain: string) {
-    if(domain) {
+    if (domain) {
       this._domain = domain;
     }
   }

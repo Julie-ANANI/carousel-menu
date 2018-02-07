@@ -34,9 +34,9 @@ export class ClientLoginComponent implements OnInit {
     });
   }
 
-  onSubmit(form) {
-    if (form.valid) {
-      const user = new User(form.value);
+  onSubmit() {
+    if (this.formData.valid) {
+      const user = new User(this.formData.value);
       this._authService.login(user).subscribe(() => {
         if (this._authService.isAuthenticated) {
           // Get the redirect URL from our auth service
