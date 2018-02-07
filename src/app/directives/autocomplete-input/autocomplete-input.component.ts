@@ -130,7 +130,7 @@ export class AutocompleteInputComponent implements OnInit {
     this.update.emit({value: this.answerList});
   }
 
-  thumbsUp(index) {
+  thumbsUp(index: number) {
     if (this.adminMode) {
       if (this.answerList[index].rating === 2) {
         this.answerList[index].rating = 1;
@@ -141,7 +141,7 @@ export class AutocompleteInputComponent implements OnInit {
     }
   }
 
-  thumbsDown(index) {
+  thumbsDown(index: number) {
     if (this.adminMode) {
       if (this.answerList[index].rating === 0) {
         this.answerList[index].rating = 1;

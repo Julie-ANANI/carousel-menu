@@ -15,17 +15,13 @@ export class InputListComponent {
   @Input() adminMode = false;
 
   answer: string;
-  answerList: Array<any> = [];
+  answerList: Array<any>;
 
   @Input()
   set config(config: any) {
     if (config) {
       this._placeholder = config.placeholder || '';
-      config.initialData.forEach(val => {
-        if (this.answerList.findIndex(t => {return t === val}) === -1) {
-          this.answerList.push(val);
-        }
-      });
+      this.answerList = config.initialData || [];
     }
   }
 

@@ -7,7 +7,7 @@
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noImplicitAny": false, //TODO: set to true
+    "noImplicitAny": true, //TODO: set to true
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "./dist/out-tsc",
     "declaration": false,
