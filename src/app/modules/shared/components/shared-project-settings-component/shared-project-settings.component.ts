@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ShareService } from '../../../../services/share/share.service';
+import { InnovationSettings } from '../../../../models/innov-settings';
 
 @Component({
   selector: 'app-shared-project-settings',
@@ -10,14 +11,14 @@ import { ShareService } from '../../../../services/share/share.service';
 })
 export class SharedProjectSettingsComponent implements OnInit {
 
-  @Input() settings: any;
+  @Input() settings: InnovationSettings;
   @Input() adminMode: boolean;
   @Output() settingsChange = new EventEmitter<any>();
 
-  private _displayCountriesToExcludeSection: boolean = false;
-  private _displayCompanyToExcludeSection: boolean = false;
-  private _displayPersonsToExcludeSection: boolean = false;
-  private _displayKeywordsSection: boolean = false;
+  private _displayCountriesToExcludeSection = false;
+  private _displayCompanyToExcludeSection = false;
+  private _displayPersonsToExcludeSection = false;
+  private _displayKeywordsSection = false;
 
   constructor(private _translateService: TranslateService,
               private _authService: AuthService,
@@ -91,7 +92,7 @@ export class SharedProjectSettingsComponent implements OnInit {
    * This method receives the event from a click in some continent. It should update the geography.continentTarget
    * @param event
    */
-  public continentModificationDrain(event) {
+  public continentModificationDrain(event: any) {
     if (event) {
       this.settings.geography.continentTarget = event.continents;
       this.updateSettings();
@@ -101,7 +102,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   /**
    * Add a country to the exclusion list
    */
-  public addCountryToExclude(event): void {
+  public addCountryToExclude(event: {value: Array<string>}): void {
     this.settings.geography.exclude = event.value;
     this.updateSettings();
   }
@@ -119,14 +120,10 @@ export class SharedProjectSettingsComponent implements OnInit {
   }
 
   /****************************************************************************
-   ********************************* Sectors **********************************
-   ****************************************************************************/
-
-  /****************************************************************************
    ******************************* Enterprises ********************************
    ****************************************************************************/
 
-  public addCompanyToExclude(event): void {
+  public addCompanyToExclude(event: {value: Array<string>}): void {
     this.settings.companies.exclude = event.value;
     this.updateSettings();
   }
@@ -143,7 +140,7 @@ export class SharedProjectSettingsComponent implements OnInit {
    ****************************** Professionals *******************************
    ****************************************************************************/
 
-  public addPeopleToExclude(event): void {
+  public addPeopleToExclude(event: {value: Array<string>}): void {
     this.settings.professionals.exclude = event.value;
     this.updateSettings();
   }
@@ -177,7 +174,7 @@ export class SharedProjectSettingsComponent implements OnInit {
     this._displayKeywordsSection = value;
   }
 
-  public addKeywordToExclude(event): void {
+  public addKeywordToExclude(event: {value: Array<string>}): void {
     this.settings.keywords = event.value;
     this.updateSettings();
   }
@@ -186,12 +183,12 @@ export class SharedProjectSettingsComponent implements OnInit {
    ********************************* Blacklist ********************************
    ****************************************************************************/
 
-  public addDomainToExclude(event): void {
+  public addDomainToExclude(event: {value: Array<string>}): void {
     this.settings.blacklist.domains = event.value;
     this.updateSettings();
   }
 
-  public addEMailToExclude(event): void {
+  public addEMailToExclude(event: {value: Array<string>}): void {
     this.settings.blacklist.emails = event.value;
     this.updateSettings();
   }

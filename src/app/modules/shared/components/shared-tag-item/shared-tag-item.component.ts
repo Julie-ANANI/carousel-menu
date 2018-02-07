@@ -6,7 +6,7 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
   styleUrls: ['./shared-tag-item.component.scss']
 })
 export class SharedTagItemComponent implements OnInit {
-  @Input() tags: string[];
+  @Input() tags: Array<string>;
   @Input() big: string;
   @Output() tagsChange = new EventEmitter <any>();
   @Input() prop: string;
@@ -23,11 +23,11 @@ export class SharedTagItemComponent implements OnInit {
   toggleTags() {
     this._displayTags = !this._displayTags;
   }
-  
-  updateTags(event) {
+
+  updateTags(event: {value: Array<string>}) {
     this.tagsChange.emit(event.value);
   }
-  
+
   set displayTags(value: boolean) { this._displayTags = value; }
   get displayTags(): boolean { return this._displayTags; }
 }

@@ -1,6 +1,6 @@
 export interface InnovationSettings {
   readonly geography: {
-    readonly continentTarget: {
+    continentTarget: {
       readonly africa: boolean;
       readonly oceania: boolean;
       readonly asia: boolean;
@@ -9,7 +9,7 @@ export interface InnovationSettings {
       readonly americaNord: boolean;
       readonly americaSud: boolean;
     };
-    readonly exclude: Array<>;
+    exclude: Array<>;
     readonly comments: string;
   };
   readonly market: {
@@ -18,19 +18,19 @@ export interface InnovationSettings {
   };
   readonly companies: {
     readonly include: Array<>;
-    readonly exclude: Array<>;
+    exclude: Array<>;
     readonly description: string;
   };
   readonly professionals: {
     readonly examples: string;
-    readonly exclude: Array<>;
+    exclude: Array<>;
     readonly description: string;
   };
-  readonly keywords: Array<string>;
-  readonly comments: string;
+  keywords: Array<string>;
+  comments: string;
   readonly blacklist: {
-    readonly domains: Array<string>;
-    readonly emails: Array<string>;
+    domains: Array<string>;
+    emails: Array<string>;
     readonly people: Array<>;
   };
 }

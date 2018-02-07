@@ -3,6 +3,8 @@
  */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+// import { Answer } from '../../../../models/answer';
+// import { Question } from '../../../../models/question';
 import * as _ from 'lodash';
 
 @Component({
@@ -13,9 +15,9 @@ import * as _ from 'lodash';
 
 export class SharedAnswerQuestionComponent implements OnInit {
 
-  @Input() public question;
-  @Input() public fullAnswer;
-  @Input() public adminMode: boolean = false;
+  @Input() public question: any;
+  @Input() public fullAnswer: any;
+  @Input() public adminMode = false;
   @Output() fullAnswerChange = new EventEmitter <any>();
 
   constructor(private _translateService: TranslateService) { }
@@ -28,8 +30,8 @@ export class SharedAnswerQuestionComponent implements OnInit {
     this.fullAnswerChange.emit(this.fullAnswer);
   }
 
-  link(domain){
-    return "http://www." + domain;
+  link(domain: string): string {
+    return 'http://www.' + domain;
   }
 
   optionLabel(identifier) {

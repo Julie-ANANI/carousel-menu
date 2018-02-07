@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ShareService } from '../../../../services/share/share.service';
 
@@ -32,21 +32,21 @@ export class SharedProjectDescriptionComponent implements OnInit {
     }
 
     this._activatedRoute.url.subscribe(segments => {
-      if (segments[0] && segments[0].path == 'edit') {
+      if (segments[0] && segments[0].path === 'edit') {
         this._onEditingPage = true;
       }
     });
 
-    this._translateService.onLangChange.subscribe(data => {
-      this._displayInnovationCardWithLang(data.lang);
+    this._translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+      this._displayInnovationCardWithLang(event.lang);
     });
   }
-  
-  get lang() {
+
+  get lang(): string {
     return this._translateService.currentLang;
   }
 
-  private _displayInnovationCardWithLang (lang) {
+  private _displayInnovationCardWithLang (lang: string): void {
     for (const i in this.project.innovationCards) {
       if (this.project.innovationCards[i]) {
         if (this.project.innovationCards[i].lang === lang) {
@@ -63,7 +63,7 @@ export class SharedProjectDescriptionComponent implements OnInit {
   get isAdmin (): boolean {
     return (this._authService.adminLevel & 2) >= 2;
   }
-  
+
   get onEditingPage(): boolean {
     return this._onEditingPage;
   }

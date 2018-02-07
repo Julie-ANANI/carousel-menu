@@ -12,16 +12,14 @@ export class SharedFilterInputComponent {
 
   constructor() {}
 
-  filter(event) {
+  filter(event: any) {
     const value = (<HTMLInputElement> event.srcElement).value;
-    if (this.config.search[this.prop] && value == "") {
+    if (this.config.search[this.prop] && value === '') {
       delete this.config.search[this.prop];
       this.configChange.emit(this.config);
-    } else {
-      if (value != "") {
-        this.config.search[this.prop] = value;
-        this.configChange.emit(this.config);
-      }
+    } else if (value !== '') {
+      this.config.search[this.prop] = value;
+      this.configChange.emit(this.config);
     }
   }
 }

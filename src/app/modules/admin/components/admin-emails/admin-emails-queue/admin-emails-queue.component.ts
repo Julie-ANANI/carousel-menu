@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { EmailQueueModel } from '../../../../../models/mail.queue.model';
 import { EmailService } from '../../../../../services/email/email.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-admin-email-queue',
@@ -13,7 +14,7 @@ export class AdminEmailQueueComponent implements OnInit, OnDestroy {
 
   @Input() queue: Array<EmailQueueModel>;
 
-  private subscriptions = [];
+  private subscriptions: Array<Subscription> = [];
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
@@ -24,8 +25,8 @@ export class AdminEmailQueueComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(subs=>{
-      subs.unsbscribe();
+    this.subscriptions.forEach((subs: Subscription) => {
+      subs.unsubscribe();
     })
   }
 
@@ -39,18 +40,18 @@ export class AdminEmailQueueComponent implements OnInit, OnDestroy {
 
   private _stopBatch(batch: any): void {
     this._emailService.stopBatch(batch._id)
-      .subscribe(result=>{
-        if(result && result.status === 200) {
-          batch.status = "CANCELED";
+      .subscribe((result) => {
+        if (result && result.status === 200) {
+          batch.status = 'CANCELED';
         }
         console.log(result);
-      }, error=>{
+      }, (error) => {
         console.error(error);
       })
   }
 
   public changeStatus(transaction: any) {
-    if(transaction.status === "PROCESSING") {
+    if (transaction.status === 'PROCESSING') {
       this._stopBatch(transaction);
     }
   }
