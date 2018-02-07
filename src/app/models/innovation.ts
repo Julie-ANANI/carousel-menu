@@ -12,4 +12,8 @@ export interface Innovation {
   readonly innovationCards: Array<InnovCard>;
   collaborators: Array<User>;
   readonly settings: InnovationSettings;
+  stats: any;
+  restitution: boolean;
+  thanks: boolean;
+  readonly launched: Date;
 }

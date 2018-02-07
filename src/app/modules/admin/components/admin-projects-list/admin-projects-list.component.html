@@ -61,23 +61,23 @@
         </a>
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-received"
-          [ngClass]="{'alert': project.receivedRatio < 99}"> <!-- Reçus -->
-        {{project.receivedRatio}}%
+          [ngClass]="{'alert': ratio(project.stats.received, project.stats.emailsOK) < 99}"> <!-- Reçus -->
+        {{ratio(project.stats.received, project.stats.emailsOK)}}%
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-opened"
-          [ngClass]="{'warning': project.openedRatio < 10}"> <!-- Ouverts -->
-        {{project.openedRatio}}%
+          [ngClass]="{'warning': ratio(project.stats.opened, project.stats.received) < 10}"> <!-- Ouverts -->
+        {{ratio(project.stats.opened, project.stats.received)}}%
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-clicked"
-          [ngClass]="{'warning': project.clickedRatio < 10}"> <!-- Cliqués -->
-        {{project.clickedRatio}}%
+          [ngClass]="{'warning': ratio(project.stats.clicked, project.stats.opened) < 10}"> <!-- Cliqués -->
+        {{ratio(project.stats.clicked, project.stats.opened)}}%
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-to-check"><a [routerLink]="null" target="_blank">{{project.stats.submittedAnswers}}</a></td> <!-- À traiter -->
-      <td *ngIf="status==='EVALUATING'" class="project-time-limit warning"
+      <td *ngIf="status==='EVALUATING'" class="project-time-limit warning" ng-init="delai = getDelai(project.launched)"
           [ngClass]="{
-            'warning': project.delai <= 4 && project.delai > 0,
-            'alert': project.delai <= 0
-          }">{{ project.delai }}j.</td> <!-- Délai -->
+            'warning': getDelai(project.launched) <= 4 && getDelai(project.launched) > 0,
+            'alert': getDelai(project.launched) <= 0
+          }">{{ getDelai(project.launched) }}j.</td> <!-- Délai -->
       <!-- Conclusions -->
       <td *ngIf="status==='DONE' && project.conclusions" class="project-conclusion">OK*</td>
       <td *ngIf="status==='DONE' && !project.conclusions" class="project-conclusion warning"><a [routerLink]=getRelevantLink(project) target="_blank" title="">TODO</a></td>

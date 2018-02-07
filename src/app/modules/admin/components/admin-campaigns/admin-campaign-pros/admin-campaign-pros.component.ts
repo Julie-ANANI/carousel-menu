@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
-
+import { Professional } from '../../../../../models/professional';
 
 @Component({
   selector: 'app-admin-campaign-pros',
@@ -12,7 +12,7 @@ import { CampaignService } from '../../../../../services/campaign/campaign.servi
 export class AdminCampaignProsComponent implements OnInit {
 
   private _campaign: any;
-  private _pros = [];
+  private _pros: Array<Professional> = [];
   private _total = 0;
   private _config = {
     fields: 'language firstName lastName company email emailConfidence country',
@@ -35,7 +35,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
   loadPros(config: any): void {
     this._config = config;
-    this._campaignService.getPros(this._campaign._id ,this._config).subscribe(pros => {
+    this._campaignService.getPros(this._campaign._id, this._config).subscribe(pros => {
       this._pros = pros.result;
       this._total = pros._metadata.totalCount;
     });
@@ -44,23 +44,13 @@ export class AdminCampaignProsComponent implements OnInit {
   public buildImageUrl(country: string): string {
     if (country) {
       return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+    } else {
+      return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
     }
-    return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
   }
 
-  set config(value: any) {
-    this._config = value;
-  }
-
-  get config(): any {
-    return this._config;
-  }
-
-  get total(): number {
-    return this._total;
-  }
-
-  get pros(): any[] {
-    return this._pros;
-  }
+  set config(value: any) { this._config = value; }
+  get config() { return this._config; }
+  get total() { return this._total; }
+  get pros() { return this._pros; }
 }

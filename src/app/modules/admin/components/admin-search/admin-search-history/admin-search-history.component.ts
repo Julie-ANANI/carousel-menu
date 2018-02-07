@@ -12,7 +12,7 @@ export class AdminSearchHistoryComponent implements OnInit {
   @Input() status: string;
   @Input() mails: boolean;
 
-  private _requests = [];
+  private _requests: Array<any> = [];
   private _total = 0;
   private _config = {
     fields: 'entity keywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata',
@@ -21,8 +21,7 @@ export class AdminSearchHistoryComponent implements OnInit {
     search: {},
     sort: {
       created: -1
-    },
-    motherRequest: null
+    }
   };
 
   constructor(private _searchService: SearchService) {}
@@ -37,11 +36,14 @@ export class AdminSearchHistoryComponent implements OnInit {
   }
 
   public buildImageUrl(country: any): string {
-    if (country) return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
-    return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
+    if (country) {
+      return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
+    } else {
+      return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
+    }
   }
 
-  get requests(): any[] { return this._requests; }
+  get requests(): Array<any> { return this._requests; }
   get total(): number { return this._total; }
   get config(): any { return this._config; }
 }
