@@ -92,7 +92,7 @@ export class SharedProjectSettingsComponent implements OnInit {
    * @param event
    */
   public continentModificationDrain(event) {
-    if(event) {
+    if (event) {
       this.settings.geography.continentTarget = event.continents;
       this.updateSettings();
     }
