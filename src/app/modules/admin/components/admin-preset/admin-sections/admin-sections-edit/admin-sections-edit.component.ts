@@ -1,24 +1,32 @@
-import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
-import {PresetService} from '../../../../../../services/preset/preset.service';
-import {AuthService} from '../../../../../../services/auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { PresetService } from '../../../../../../services/preset/preset.service';
+import { AuthService } from '../../../../../../services/auth/auth.service';
+import { Question } from '../../../../../../models/question';
+import { Section } from '../../../../../../models/section';
 
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
-import {DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   templateUrl: './admin-sections-edit.component.html',
   styleUrls: ['./admin-sections-edit.component.scss']
 })
-export class AdminSectionsEditComponent implements OnInit, OnDestroy {
+export class AdminSectionsEditComponent implements OnInit {
 
-  private _section: any;
+  private _section: Section;
   public formData: FormGroup;
-  private _addQuestionConfig = {
+  private _addQuestionConfig: {
+    placeholder: string,
+    initialData: Array<Question>,
+    type: string,
+    identifier: string,
+    canOrder: boolean
+  } = {
     placeholder: 'PRESETS.SECTION.EDIT.QUESTION_PLACEHOLDER',
     initialData: [],
     type: 'questions',
@@ -53,16 +61,13 @@ export class AdminSectionsEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-  }
-
   /**
    * Sauvegarde
    * @param callback
    */
   public save() {
     const saveSubs = this._presetService
-      .saveSection(this._section.id, this.formData.value)
+      .saveSection(this._section._id, this.formData.value)
       .subscribe(data => {
         this._section = data;
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.SECTION.UPDATED');
@@ -71,14 +76,14 @@ export class AdminSectionsEditComponent implements OnInit, OnDestroy {
       });
   }
 
-  public addQuestion(event): void {
+  public addQuestion(event: any): void {
     this.formData.get('questions').setValue(event.value);
   }
 
   get addQuestionConfig() { return this._addQuestionConfig; }
   get domSanitizer() { return this._domSanitizer; }
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
-  get section(): any { return this._section; }
+  get section(): Section { return this._section; }
   get isAdmin(): boolean { return (this._authService.adminLevel & 3) === 3; }
 
 }

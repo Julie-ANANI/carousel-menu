@@ -2,17 +2,18 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { ISubscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
+import { Section } from '../../../../../../models/section';
 
 @Component({
   templateUrl: './admin-sections-list.component.html',
   styleUrls: ['./admin-sections-list.component.scss']
 })
-export class AdminSectionsListComponent implements OnInit {
+export class AdminSectionsListComponent implements OnInit, OnDestroy {
 
   private _subscriptions: ISubscription;
-  private _sections: [any];
-  public selectedSectionIdToBeDeleted: any = null;
-  public selectedSectionToBeCloned: any = null;
+  private _sections: Array<Section>;
+  public selectedSectionIdToBeDeleted: string = null;
+  public selectedSectionToBeCloned: string = null;
   private _total: number;
   private _config = {
     fields: '',
@@ -32,7 +33,9 @@ export class AdminSectionsListComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this._subscriptions) this._subscriptions.unsubscribe();
+    if (this._subscriptions) {
+      this._subscriptions.unsubscribe();
+    }
   }
 
   loadSections(config: any): void {
@@ -54,7 +57,7 @@ export class AdminSectionsListComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeSection(sectionId) {
+  public removeSection(sectionId: string) {
     this._presetService
       .removeSection(sectionId)
       .subscribe(sectionRemoved => {
@@ -63,12 +66,12 @@ export class AdminSectionsListComponent implements OnInit {
       });
   }
 
-  public cloneSection(clonedSection) {
+  public cloneSection(clonedSection: Section) {
     delete clonedSection._id;
     this._subscriptions = this._presetService.createSection(clonedSection).subscribe(section => {
       this._router.navigate(['/admin/sections/' + section._id])
     });
-  } 
+  }
 
   set config(value: any) { this._config = value; }
   get config(): any { return this._config; }

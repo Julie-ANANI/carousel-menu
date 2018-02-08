@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { ISubscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
+import { Preset } from '../../../../../../models/preset';
 
 @Component({
   selector: 'app-admin-presets-list',
   templateUrl: './admin-presets-list.component.html',
   styleUrls: ['./admin-presets-list.component.scss']
 })
-export class AdminPresetsListComponent implements OnInit {
+export class AdminPresetsListComponent implements OnInit, OnDestroy {
 
   private _subscriptions: ISubscription;
-  private _presets: [any];
-  public selectedPresetIdToBeDeleted: any = null;
-  public selectedPresetToBeCloned: any = null;
+  private _presets: Array<Preset>;
+  public selectedPresetIdToBeDeleted: string = null;
+  public selectedPresetToBeCloned: string = null;
   private _total: number;
   private _config = {
     fields: '',
@@ -33,7 +34,9 @@ export class AdminPresetsListComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this._subscriptions) this._subscriptions.unsubscribe();
+    if (this._subscriptions) {
+      this._subscriptions.unsubscribe();
+    }
   }
 
   loadPresets(config: any): void {
@@ -55,7 +58,7 @@ export class AdminPresetsListComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removePreset(presetId) {
+  public removePreset(presetId: string) {
     this._presetService
       .remove(presetId)
       .subscribe(presetRemoved => {
@@ -64,7 +67,7 @@ export class AdminPresetsListComponent implements OnInit {
       });
   }
 
-  public clonePreset(clonedPreset) {
+  public clonePreset(clonedPreset: Preset) {
     delete clonedPreset._id;
     this._subscriptions = this._presetService.create(clonedPreset).subscribe(preset => {
       this._router.navigate(['/admin/presets/' + preset._id])

@@ -1,22 +1,23 @@
-import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
-import {PresetService} from '../../../../../../services/preset/preset.service';
-import {AuthService} from '../../../../../../services/auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { PresetService } from '../../../../../../services/preset/preset.service';
+import { AuthService } from '../../../../../../services/auth/auth.service';
+import { Question } from '../../../../../../models/question';
 
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
-import {DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   templateUrl: './admin-questions-edit.component.html',
   styleUrls: ['./admin-questions-edit.component.scss']
 })
-export class AdminQuestionsEditComponent implements OnInit, OnDestroy {
+export class AdminQuestionsEditComponent implements OnInit {
 
-  private _question: any;
+  private _question: Question;
   public formData: FormGroup;
   private _options: FormArray;
 
@@ -62,16 +63,13 @@ export class AdminQuestionsEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-  }
-
   /**
    * Sauvegarde
    * @param callback
    */
   public save() {
     const saveSubs = this._presetService
-      .saveQuestion(this._question.id, this.formData.value)
+      .saveQuestion(this._question._id, this.formData.value)
       .subscribe(data => {
         this._question = data;
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.QUESTION.UPDATED');
@@ -80,14 +78,14 @@ export class AdminQuestionsEditComponent implements OnInit, OnDestroy {
       });
   }
 
-  buildOptions(options) {
+  buildOptions(options: Array<any>) {
     const optionsFormArray = this._formBuilder.array(options.length ?
       options.map(option => this.buildOption(option)) :
       [this.buildOption()]);
     this.formData.setControl('options', optionsFormArray);
   }
 
-  buildOption(option?) {
+  buildOption(option?: any) {
     return this._formBuilder.group({
       identifier: [option && option.identifier || '', Validators.required],
       label: this._formBuilder.group({
@@ -103,16 +101,15 @@ export class AdminQuestionsEditComponent implements OnInit, OnDestroy {
     this.options.push(this.buildOption());
   }
 
-  removeOption(index) {
+  removeOption(index: number) {
     const tmp = this.options.controls.splice(index, 1);
     this.options.patchValue(tmp);
   }
 
   set options(value: FormArray) { this._options = value; }
   get options(): FormArray { return this.formData.get('options') as FormArray; };
-  get domSanitizer() { return this._domSanitizer; }
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
-  get question(): any { return this._question; }
+  get question() { return this._question; }
   get isAdmin(): boolean { return (this._authService.adminLevel & 3) === 3; }
 
 }

@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { ISubscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
+import { Question } from '../../../../../../models/question';
 
 @Component({
   templateUrl: './admin-questions-list.component.html',
   styleUrls: ['./admin-questions-list.component.scss']
 })
-export class AdminQuestionsListComponent implements OnInit {
+export class AdminQuestionsListComponent implements OnInit, OnDestroy {
 
   private _subscriptions: ISubscription;
-  private _questions: [any];
-  public selectedQuestionIdToBeDeleted: any = null;
-  public selectedQuestionToBeCloned: any = null;
+  private _questions: Array<Question>;
+  public selectedQuestionIdToBeDeleted: string = null;
+  public selectedQuestionToBeCloned: string = null;
   private _total: number;
   private _config = {
     fields: '',
@@ -32,7 +33,9 @@ export class AdminQuestionsListComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this._subscriptions) this._subscriptions.unsubscribe();
+    if (this._subscriptions) {
+      this._subscriptions.unsubscribe();
+    }
   }
 
   loadQuestions(config: any): void {
@@ -54,7 +57,7 @@ export class AdminQuestionsListComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeQuestion(questionId) {
+  public removeQuestion(questionId: string) {
     this._presetService
       .removeQuestion(questionId)
       .subscribe(questionRemoved => {
@@ -62,8 +65,8 @@ export class AdminQuestionsListComponent implements OnInit {
         this.selectedQuestionIdToBeDeleted = null;
       });
   }
-  
-  public cloneQuestion(clonedQuestion) {
+
+  public cloneQuestion(clonedQuestion: Question) {
     delete clonedQuestion._id;
     this._subscriptions = this._presetService.createQuestion(clonedQuestion).subscribe(question => {
       this._router.navigate(['/admin/questions/' + question._id])
