@@ -3,19 +3,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ISubscription } from "rxjs/Subscription";
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import { ISubscription } from 'rxjs/Subscription';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { Innovation } from '../../../../../models/innovation';
+import { InnovationSettings } from '../../../../../models/innov-settings';
+import { Preset } from '../../../../../models/preset';
 
 @Component({
   selector: 'app-admin-project-details',
   templateUrl: 'admin-project-details.component.html',
   styleUrls: ['admin-project-details.component.scss']
 })
-export class AdminProjectsDetailsComponent implements OnInit {
+export class AdminProjectsDetailsComponent implements OnInit, OnDestroy {
 
-  private _project: any = {};
-  private _preset: any;
-  private _tabs = ['settings', 'cards', 'campaigns', 'synthesis', 'mail_config'];
+  private _project: Innovation;
+  private _preset: Array<Preset> = [];
+  private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis', 'mail_config'];
   private _currentPage = 'settings';
   private _subscriptions: Array<ISubscription> = [];
 
@@ -38,21 +41,21 @@ export class AdminProjectsDetailsComponent implements OnInit {
     return this._project.name || 'Untitled';
   }
 
-  set preset(value: any) { this._preset = value; }
-  get preset(): any { return this._preset; }
+  set preset(value: Array<Preset>) { this._preset = value; }
+  get preset() { return this._preset; }
 
-  public updatePreset(event) {
+  public updatePreset(event: {value: Array<Preset>}) {
     this._preset = event.value;
     this._project.preset = this._preset[0];
   }
 
-  public updateSettings(value) {
+  public updateSettings(value: InnovationSettings) {
     this._project.settings = value;
   }
-  
+
   public generateQuiz() {
     const quizSubs = this._innovationService
-      .createQuiz(this._project.id)
+      .createQuiz(this._project._id)
       .subscribe(() => {
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , 'ERROR.QUIZ.CREATED');
       }, err => {
@@ -66,7 +69,7 @@ export class AdminProjectsDetailsComponent implements OnInit {
    */
   public save() {
     const saveSubs = this._innovationService
-      .save(this._project.id, this._project)
+      .save(this._project._id, this._project)
       .subscribe(data => {
         this._project = data;
       }, err => {
@@ -76,7 +79,7 @@ export class AdminProjectsDetailsComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this._subscriptions.forEach(subs=>{
+    this._subscriptions.forEach(subs => {
       subs.unsubscribe();
     });
   }
@@ -85,7 +88,7 @@ export class AdminProjectsDetailsComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeProject(projectId) {
+  public removeProject(projectId: string) {
     /*this._innovationService
       .remove(projectId)
       .subscribe(projectRemoved => {
@@ -94,12 +97,11 @@ export class AdminProjectsDetailsComponent implements OnInit {
       });*/
   }
 
-  public getPrincipalMedia(project): string {
+  public getPrincipalMedia(project: Innovation): string {
     if (project.principalMedia) {
       if (project.principalMedia.type === 'PHOTO') {
         return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + project.principalMedia.cloudinary.public_id;
-      }
-      else {
+      } else {
         return project.principalMedia.video.thumbnail;
       }
     } else {
@@ -110,8 +112,8 @@ export class AdminProjectsDetailsComponent implements OnInit {
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
-  get baseUrl(): any { return `/admin/projects/project/${this._project._id}/`; }
-  get tabs(): any { return this._tabs; }
+  get baseUrl(): string { return `/admin/projects/project/${this._project._id}/`; }
+  get tabs(): Array<string> { return this._tabs; }
   get currentPage() { return this._currentPage; }
   get project() { return this._project; }
 }

@@ -6,7 +6,8 @@ import { CampaignService } from '../../../../services/campaign/campaign.service'
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { environment } from '../../../../../environments/environment';
-
+import { Campaign } from '../../../../models/campaign';
+import { Innovation } from '../../../../models/innovation';
 
 @Component({
   selector: 'app-admin-campaigns',
@@ -15,9 +16,9 @@ import { environment } from '../../../../../environments/environment';
 })
 export class AdminCampaignsComponent implements OnInit {
 
-  private _innovation: any;
-  private _newCampaign: any;
-  private _campaigns = [];
+  private _innovation: Innovation;
+  private _newCampaign: Campaign;
+  private _campaigns: Array<Campaign> = [];
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
@@ -36,25 +37,27 @@ export class AdminCampaignsComponent implements OnInit {
       );
   }
 
-  public newCampaign(cloneInfo?) {
-    let newTitle = '';
-    if (this._innovation && this._innovation.name) {
-      newTitle = this._innovation.name;
+  public newCampaign(cloneInfo?: Campaign) {
+    let newTitle = undefined;
+    if (cloneInfo && cloneInfo.title) {
+      newTitle = cloneInfo.title;
+    } else {
+      if (this._innovation && this._innovation.name) {
+        newTitle = this._innovation.name;
+      } else {
+        newTitle = 'Nouvelle campagne';
+      }
     }
-    if (!newTitle) { newTitle = 'Nouvelle campagne'; }
-    if (cloneInfo && cloneInfo.title) { newTitle = cloneInfo.title; }
 
     this._newCampaign = {
-      'domain': environment.domain,
-      'innovation' : this._innovation.id,
-      'user'      : this._innovation.owner.id,
-      'title'     : (this._campaigns.length + 1) + '. ' + newTitle
+      domain: environment.domain,
+      innovation: this._innovation._id,
+      owner: this._innovation.owner.id,
+      title: (this._campaigns.length + 1) + '. ' + newTitle
     };
 
-    if (cloneInfo && cloneInfo.searchCriteria && cloneInfo.settings) {
-      this._newCampaign.searchCriteria = cloneInfo.searchCriteria;
+    if (cloneInfo && cloneInfo.settings) {
       this._newCampaign.settings = cloneInfo.settings;
-      this._newCampaign.searchCriteria.clonedInfo = true;
       this._newCampaign.settings.clonedInfo = true;
     }
 
@@ -70,7 +73,7 @@ export class AdminCampaignsComponent implements OnInit {
     return this._campaigns;
   }
 
-  public updateStats(campaign) {
+  public updateStats(campaign: Campaign) {
     this._campaignService.updateStats(campaign._id)
         .subscribe(stats => {
           campaign.stats = stats;

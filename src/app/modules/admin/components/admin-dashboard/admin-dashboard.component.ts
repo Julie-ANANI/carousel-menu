@@ -4,6 +4,7 @@ import { DashboardService } from '../../../../services/dashboard/dashboard.servi
 import { AuthService } from '../../../../services/auth/auth.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { Subject } from 'rxjs/Subject';
+import { User } from '../../../../models/user.model';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -12,17 +13,25 @@ import { Subject } from 'rxjs/Subject';
 })
 export class AdminDashboardComponent implements OnInit {
 
-  public operators = [];
+  public operators: Array<User> = [];
   public operatorId = '';
 
   public nbDaysOfStats = 1;
 
-  public operatorData = {
+  public operatorData: {
+    nbProjectsToValidate: number,
+    nbProjectsToTreat: number
+  } = {
     nbProjectsToValidate: null,
     nbProjectsToTreat: null
   };
 
-  public statistics = {
+  public statistics: {
+    percentFoundPros: number | 'NA',
+    percentFoundEmails: number | 'NA',
+    percentOkEmails: number | 'NA',
+    percentReceivedEmails: number | 'NA'
+  } = {
     percentFoundPros: null,
     percentFoundEmails: null,
     percentOkEmails: null,
@@ -50,9 +59,9 @@ export class AdminDashboardComponent implements OnInit {
     this.getPeriodStats();
   }
 
-  public newOperatorSelected(event) {
+  public newOperatorSelected(operatorId: string) {
     this.refreshNeededEmitter.next({
-      operatorId: event
+      operatorId: operatorId
     });
     this._dashboardService.getOperatorData(this.operatorId).subscribe((operatorData) => this.operatorData = operatorData);
   }
@@ -61,9 +70,9 @@ export class AdminDashboardComponent implements OnInit {
     this._searchService.getEmailStats(this.nbDaysOfStats).subscribe(stats => {
       const totalMails = stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut;
       this.statistics.percentFoundEmails = totalMails ? Math.round(stats.total.found / totalMails * 100) : 'NA';
-      this.statistics.percentFoundPros = 'XX';
+      this.statistics.percentFoundPros = 'NA';
       this.statistics.percentOkEmails =  stats.total.found ? Math.round((stats.total.confidence['100'] || 0) / stats.total.found * 100) : 'NA';
-      this.statistics.percentReceivedEmails = 'XX';
+      this.statistics.percentReceivedEmails = 'NA';
     });
   }
 

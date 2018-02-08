@@ -62,17 +62,17 @@ export class AdminUserDetailsComponent implements OnInit {
     });
   }
 
-  public onSubmit(form) {
-    if (form.valid) {
-      const user = new User(form.value);
-      //Verify other configurations that aren't in the form (like the operator configuration and the id)
+  public onSubmit() {
+    if (this.formData.valid) {
+      const user = new User(this.formData.value);
+      // Verify other configurations that aren't in the form (like the operator configuration and the id)
       user.isOperator = this._userBasicData['isOperator'];
       user.id = this._userBasicData['id'];
       user.roles = this._userBasicData['roles'];
       this._userService.updateOther(user).subscribe(
         data => {
           this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
-          form.patchValue(data);
+          this.formData.patchValue(data);
         },
         error => {
           this._notificationsService.error('ERROR.ERROR', error.message);
@@ -83,11 +83,11 @@ export class AdminUserDetailsComponent implements OnInit {
     }
   }
 
-  public addSector(event) {
+  public addSector(event: any) {
     this.formData.get('sectors').setValue(event.value);
   }
 
-  public addTechnology(event) {
+  public addTechnology(event: any) {
     this.formData.get('technologies').setValue(event.value);
   }
 
