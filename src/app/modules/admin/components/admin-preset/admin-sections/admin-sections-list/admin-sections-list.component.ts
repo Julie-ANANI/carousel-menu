@@ -13,7 +13,7 @@ export class AdminSectionsListComponent implements OnInit, OnDestroy {
   private _subscriptions: ISubscription;
   private _sections: Array<Section>;
   public selectedSectionIdToBeDeleted: string = null;
-  public selectedSectionToBeCloned: string = null;
+  public selectedSectionToBeCloned: Section = null;
   private _total: number;
   private _config = {
     fields: '',

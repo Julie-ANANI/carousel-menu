@@ -13,7 +13,7 @@ export class AdminQuestionsListComponent implements OnInit, OnDestroy {
   private _subscriptions: ISubscription;
   private _questions: Array<Question>;
   public selectedQuestionIdToBeDeleted: string = null;
-  public selectedQuestionToBeCloned: string = null;
+  public selectedQuestionToBeCloned: Question = null;
   private _total: number;
   private _config = {
     fields: '',

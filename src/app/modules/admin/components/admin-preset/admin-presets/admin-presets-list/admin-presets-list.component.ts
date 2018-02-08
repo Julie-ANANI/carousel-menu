@@ -14,7 +14,7 @@ export class AdminPresetsListComponent implements OnInit, OnDestroy {
   private _subscriptions: ISubscription;
   private _presets: Array<Preset>;
   public selectedPresetIdToBeDeleted: string = null;
-  public selectedPresetToBeCloned: string = null;
+  public selectedPresetToBeCloned: Preset = null;
   private _total: number;
   private _config = {
     fields: '',

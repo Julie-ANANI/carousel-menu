@@ -14,17 +14,17 @@ export interface InnovationSettings {
   };
   readonly market: {
     readonly sectors: Array<string>;
-    readonly comments: string;
+    comments: string;
   };
   readonly companies: {
     readonly include: Array<any>;
     exclude: Array<any>;
-    readonly description: string;
+    description: string;
   };
   readonly professionals: {
     readonly examples: string;
     exclude: Array<any>;
-    readonly description: string;
+    description: string;
   };
   keywords: Array<string>;
   comments: string;

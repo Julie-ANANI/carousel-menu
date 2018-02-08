@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EmailService } from '../../../../../services/email/email.service';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { Subscription } from 'rxjs/Subscription';
-
+import { Campaign } from '../../../../../models/campaign';
 
 @Component({
   selector: 'app-admin-batch-information',
@@ -14,7 +14,7 @@ export class AdminBatchInformationComponent implements OnInit, OnDestroy {
 
   private _batch: any = {};
   private _recipients: Array<any> = [];
-  private _campaign = {};
+  private _campaign: Campaign = null;
 
   private _subscriptions: Array<Subscription> = [];
 
