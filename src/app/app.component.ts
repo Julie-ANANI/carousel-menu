@@ -37,7 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this._appIsLoadingSubscription = this._loaderService.isLoading$.subscribe((isLoading: boolean) => {
       // Bug corrigé avec setTimeout : https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
-      setTimeout(_ => { this.displayLoader = isLoading; });
+      setTimeout((_: void) => { this.displayLoader = isLoading; });
     });
 
     if (this._authService.isAcceptingCookies) { // CNIL

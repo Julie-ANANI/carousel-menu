@@ -9,7 +9,7 @@ export interface InnovationSettings {
       readonly americaNord: boolean;
       readonly americaSud: boolean;
     };
-    exclude: Array<>;
+    exclude: Array<any>;
     readonly comments: string;
   };
   readonly market: {
@@ -17,13 +17,13 @@ export interface InnovationSettings {
     readonly comments: string;
   };
   readonly companies: {
-    readonly include: Array<>;
-    exclude: Array<>;
+    readonly include: Array<any>;
+    exclude: Array<any>;
     readonly description: string;
   };
   readonly professionals: {
     readonly examples: string;
-    exclude: Array<>;
+    exclude: Array<any>;
     readonly description: string;
   };
   keywords: Array<string>;
@@ -31,6 +31,6 @@ export interface InnovationSettings {
   readonly blacklist: {
     domains: Array<string>;
     emails: Array<string>;
-    readonly people: Array<>;
+    readonly people: Array<any>;
   };
 }
