@@ -38,6 +38,7 @@ export class Http extends AngularHttp {
     }
 
     return super.get(UriOrUrl, this._requestOptions(options))
+        .retry(2)
       .catch(this._onCatch)
       .do((res: Response) => {
         this._onSuccess(res);
@@ -165,6 +166,7 @@ export class Http extends AngularHttp {
 
   private _onError(res: Response): void {
     console.error(res);
+    this._loaderService.stopLoading();
     if (!environment.production) {
       this._notificationsService.error('ERROR.ERROR ' + res.status, res.toString());
     }
