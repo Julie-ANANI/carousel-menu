@@ -9,6 +9,7 @@ export interface Video {
   readonly thumbnail: string;
   readonly embeddableUrl: string;
   readonly public_id: string;
+  readonly url: string;
 }
 
 export interface Media {

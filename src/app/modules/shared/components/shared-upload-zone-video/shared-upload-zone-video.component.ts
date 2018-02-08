@@ -1,7 +1,8 @@
-import {Component, Output, OnInit, EventEmitter} from '@angular/core';
-import {Http, Response} from '../../../../services/http';
-import {videoDomainRegEx, videoIdRegEx} from '../../../../utils/regex';
-import {DomSanitizer} from '@angular/platform-browser';
+import { Component, Output, OnInit, EventEmitter } from '@angular/core';
+import { Http, Response } from '../../../../services/http';
+import { videoDomainRegEx, videoIdRegEx } from '../../../../utils/regex';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Video } from '../../../../models/media';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -31,33 +32,30 @@ export class SharedUploadZoneVideoComponent implements OnInit {
 
     if (videoProvider) {
       const videoKey = videoIdRegEx.exec(givenUrl)[1] || videoIdRegEx.exec(givenUrl)[2]; // ID de la vidéo chez le provider
+      let returnValue: Video;
       switch (videoProvider) {
         case 'vimeo': {
           const embeddableUrl = 'https://player.vimeo.com/video/' + videoKey + this._getUrlArgs();
-          const returnValue: any = {
+          returnValue = {
             url: givenUrl,
             public_id: videoKey,
             embeddableUrl: embeddableUrl,
             provider: 'vimeo',
-            name: ''
+            thumbnail: ''
           };
-          this.cbFn.emit(returnValue);
-        }
-          break;
+        } break;
         default: {
           const embeddableUrl = 'https://www.youtube.com/embed/' + videoKey + this._getUrlArgs();
-          this.cbFn.emit({
+          returnValue = {
             url: givenUrl,
             public_id: videoKey,
             embeddableUrl: embeddableUrl,
             provider: 'youtube',
             thumbnail: 'https://i.ytimg.com/vi/' + videoKey + '/hqdefault.jpg'
-          });
+          };
         }
       }
-    }
-    else {
-      return null;
+      this.cbFn.emit(returnValue);
     }
   }
 

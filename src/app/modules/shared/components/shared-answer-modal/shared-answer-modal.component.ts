@@ -3,10 +3,11 @@
  */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { InnovationService } from './../../../../services/innovation/innovation.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { AnswerService } from '../../../../services/answer/answer.service';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Answer } from '../../../../models/answer';
 
 @Component({
   selector: 'shared-answer-modal',
@@ -16,11 +17,11 @@ import {TranslateNotificationsService} from '../../../../services/notifications/
 
 export class SharedAnswerModalComponent implements OnInit {
 
-  private _modalAnswer: any;
+  private _modalAnswer: Answer;
   public editMode = false;
   public floor: any;
 
-  @Input() set modalAnswer(value: any) {
+  @Input() set modalAnswer(value: Answer) {
     this._modalAnswer = value;
   }
   @Input() public innoid: string;
@@ -37,7 +38,7 @@ export class SharedAnswerModalComponent implements OnInit {
   ngOnInit() {
     this.adminMode = this.adminMode && this._authService.adminLevel > 2;
     this.floor = Math.floor;
-    
+
     // On regarde si on a une question 'étoiles'
     const starQuestions = this.questions.filter(q => q.controlType === 'stars');
     if (starQuestions.length) {
@@ -66,44 +67,44 @@ export class SharedAnswerModalComponent implements OnInit {
           })
         });
       });
-      
-      
+
+
     }
   }
 
-  public updateCountry(event) {
+  public updateCountry(event: {value: Array<any>}) {
     this._modalAnswer.country = event.value[0];
   }
 
-  public changeStatus(status) {
-    this._answerService.changeStatus(this._modalAnswer._id, status).subscribe(data => {
+  public changeStatus(status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED') {
+    this._answerService.changeStatus(this._modalAnswer._id, status).subscribe((_: void) => {
       this._notificationsService.success('Mis à jour', 'Statut de la réponse bien mis à jour');
-    }), err => {
+    }, (err: string) => {
       this._notificationsService.success('ERROR.ERROR', err);
-    }
+    });
   }
 
-  updateProfileQuality(object) {
+  updateProfileQuality(object: {value: number}) {
     this._modalAnswer.profileQuality = object.value;
   }
 
-  updateAnswer(answer) {
+  updateAnswer(answer: Answer) {
     this._modalAnswer = answer;
   }
 
-  updateTags(object) {
+  updateTags(object: Array<string>) {
     this._modalAnswer.tags = object;
   }
 
   public save() {
     if (this._modalAnswer.professional.email) {
-      //Hack : les réponses anciennes n'ont pas de champ quizReference,
-      //mais il faut forcément une valeur pour sauvegarder la réponse
-      this._modalAnswer.originalAnswerReference = this._modalAnswer.originalAnswerReference || "oldQuiz";
-      this._modalAnswer.quizReference = this._modalAnswer.quizReference || "oldQuiz";
-      this._modalAnswer.id = this._modalAnswer._id;
+      // Hack : les réponses anciennes n'ont pas de champ quizReference,
+      // mais il faut forcément une valeur pour sauvegarder la réponse
+      // TODO: remove this hack
+      this._modalAnswer.originalAnswerReference = this._modalAnswer.originalAnswerReference || 'oldQuiz';
+      this._modalAnswer.quizReference = this._modalAnswer.quizReference || 'oldQuiz';
       const saveSubs = this._answerService
-        .save(this._modalAnswer.id, this._modalAnswer)
+        .save(this._modalAnswer._id, this._modalAnswer)
         .subscribe(data => {
           this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
         }, err => {
@@ -113,14 +114,17 @@ export class SharedAnswerModalComponent implements OnInit {
   }
 
   public buildImageUrl(country: any): string {
-    if (country && country.flag) return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
-    return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
+    if (country && country.flag) {
+      return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
+    } else {
+      return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
+    }
   }
 
-  public close() {
+  public close(): void {
     this.modalAnswerChange.emit(null);
   }
 
-  get lang(): any { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
-  get modalAnswer(): any { return this._modalAnswer; }
+  get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
+  get modalAnswer() { return this._modalAnswer; }
 }

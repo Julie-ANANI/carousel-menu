@@ -3,8 +3,8 @@
  */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-// import { Answer } from '../../../../models/answer';
-// import { Question } from '../../../../models/question';
+import { Answer } from '../../../../models/answer';
+import { Question } from '../../../../models/question';
 import * as _ from 'lodash';
 
 @Component({
@@ -15,8 +15,8 @@ import * as _ from 'lodash';
 
 export class SharedAnswerQuestionComponent implements OnInit {
 
-  @Input() public question: any;
-  @Input() public fullAnswer: any;
+  @Input() public question: Question;
+  @Input() public fullAnswer: Answer;
   @Input() public adminMode = false;
   @Output() fullAnswerChange = new EventEmitter <any>();
 
@@ -25,7 +25,7 @@ export class SharedAnswerQuestionComponent implements OnInit {
   ngOnInit() {
   }
 
-  updateQuality(object) {
+  updateQuality(object: {key: string, value: 0 | 1 | 2}) {
     this.fullAnswer.answers[object.key + 'Quality'] = object.value;
     this.fullAnswerChange.emit(this.fullAnswer);
   }
@@ -34,27 +34,31 @@ export class SharedAnswerQuestionComponent implements OnInit {
     return 'http://www.' + domain;
   }
 
-  optionLabel(identifier) {
+  optionLabel(identifier: string) {
     const option = _.find(this.question.options, (o: any) => o.identifier === identifier);
-    if (option && option.label) return option.label[this.lang];
+    if (option && option.label) {
+      return option.label[this.lang];
+    } else {
+      return undefined;
+    }
   }
 
-  checkOption(option) {
-    this.fullAnswer.answers[this.question.identifier][option.identifier] = !this.fullAnswer.answers[this.question.identifier][option.identifier]
+  checkOption(option: any) {
+    this.fullAnswer.answers[this.question.identifier][option.identifier] = !this.fullAnswer.answers[this.question.identifier][option.identifier];
     this.fullAnswerChange.emit(this.fullAnswer);
   }
 
-  selectOption(option) {
+  selectOption(option: any) {
     this.fullAnswer.answers[this.question.identifier] = option.identifier;
     this.fullAnswerChange.emit(this.fullAnswer);
   }
 
-  setAnswer(event) {
+  setAnswer(event: any) {
     this.fullAnswer.answers[this.question.identifier] = event.value;
   }
 
   addComment() {
-    this.fullAnswer.answers[this.question.identifier + 'Comment'] = " ";
+    this.fullAnswer.answers[this.question.identifier + 'Comment'] = '';
     this.fullAnswerChange.emit(this.fullAnswer);
   }
 
