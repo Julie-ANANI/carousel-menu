@@ -3,7 +3,7 @@ import { AuthService } from './services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import {TranslateNotificationsService} from './services/notifications/notifications.service';
 import { LoaderService } from './services/loader/loader.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/pairwise';
 
@@ -16,7 +16,7 @@ import 'rxjs/add/operator/pairwise';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  private _appIsLoadingSubscription: Subscription;
+  private ngUnsubscribe: Subject<any> = new Subject();
   public displayLoader = false;
 
   public notificationsOptions = {
@@ -35,13 +35,13 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     initTranslation(this._translateService);
 
-    this._appIsLoadingSubscription = this._loaderService.isLoading$.subscribe((isLoading: boolean) => {
+    this._loaderService.isLoading$.takeUntil(this.ngUnsubscribe).subscribe((isLoading: boolean) => {
       // Bug corrigé avec setTimeout : https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
       setTimeout((_: void) => { this.displayLoader = isLoading; });
     });
 
     if (this._authService.isAcceptingCookies) { // CNIL
-      this._authService.initializeSession().subscribe(
+      this._authService.initializeSession().takeUntil(this.ngUnsubscribe).subscribe(
         res => null,
         error => this._notificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
           clickToClose: false,
@@ -52,6 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._appIsLoadingSubscription.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

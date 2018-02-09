@@ -7,12 +7,14 @@ export class User extends Model {
   private _firstName: string;
   private _lastName: string;
   private _email: string;
+  private _emailVerified: boolean;
   private _phone: string;
   private _password: string;
   private _profilePicture: string;
   private _domain: string;
   private _isOperator: boolean;
   private _roles: string;
+  private _state: 'unconfirmed' | 'confirmed';
 
 
   constructor(user?: any) {
@@ -24,7 +26,7 @@ export class User extends Model {
   }
 
   set id(value: string) {
-    this._id = this._id || value;
+    this._id = value;
   }
 
   get name(): string {
@@ -62,6 +64,14 @@ export class User extends Model {
     if (email && emailRegEx.test(email)) {
       this._email = email;
     }
+  }
+
+  get emailVerified(): boolean {
+    return this._emailVerified;
+  }
+
+  set emailVerified(value: boolean) {
+    this._emailVerified = value;
   }
 
   get phone(): string {
@@ -122,5 +132,13 @@ export class User extends Model {
 
   set roles(value: string) {
     this._roles = value || 'user';
+  }
+
+  get state(): 'unconfirmed' | 'confirmed' {
+    return this._state || 'unconfirmed';
+  }
+
+  set state(value: 'unconfirmed' | 'confirmed') {
+    this._state = value;
   }
 }

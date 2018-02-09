@@ -11,18 +11,18 @@ export class TranslateNotificationsService {
   constructor(private _translateService: TranslateService,
               private _notificationsService: NotificationsService) { }
 
-    public error(title: string, message: string, config?: any) {
-      this._translateService.get(title).subscribe((translatedTitle: string) => {
-        this._translateService.get(message).subscribe((translatedMessage: string) => {
-          return this._notificationsService.error(translatedTitle, translatedMessage, config);
-        });
-      });
-    }
-    public success(title: string, message: string, config?: any) {
-      this._translateService.get(title).subscribe((translatedTitle: string) => {
-        this._translateService.get(message).subscribe((translatedMessage: string) => {
-          return this._notificationsService.success(translatedTitle, translatedMessage, config);
-        });
-      });
-    }
+  public error(title: string, message: string, config?: any) {
+    return this._notificationsService.error(
+      this._translateService.instant(title),
+      this._translateService.instant(message),
+      config);
+  }
+
+  public success(title: string, message: string, config?: any) {
+    return this._notificationsService.success(
+      this._translateService.instant(title),
+      this._translateService.instant(message),
+      config);
+  }
+
 }

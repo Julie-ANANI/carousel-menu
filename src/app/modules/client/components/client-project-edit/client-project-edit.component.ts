@@ -14,6 +14,8 @@ import { Media, Video } from '../../../../models/media';
 import { Innovation } from '../../../../models/innovation';
 import { InnovationSettings } from '../../../../models/innov-settings';
 import { InnovCard } from '../../../../models/innov-card';
+import { User } from '../../../../models/user.model';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
 
@@ -26,6 +28,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
 
   private _project: Innovation;
   public formData: FormGroup;
+  private ngUnsubscribe: Subject<any> = new Subject();
 
   /*
    * Ajout de collaborateurs
@@ -38,8 +41,6 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     invitationsToSend: [],
     invitationsToSendAgain: []
   };
-
-  private _subscriptions: Array<ISubscription> = [];
 
   /*
    * Gestion de l'affichage
@@ -79,20 +80,16 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
       this._addInnovationCardWithData(innovationCard);
     }
 
-    const formSubs = this.formData.valueChanges
+    this.formData.valueChanges
       .distinctUntilChanged()
+      .takeUntil(this.ngUnsubscribe)
       .subscribe(newVersion => {
         this.shouldSave = true;
       });
-    this._subscriptions.push(formSubs);
     PageScrollConfig.defaultDuration = 500;
   }
 
-  ngOnDestroy() {
-    this._subscriptions.forEach(subs => {
-      subs.unsubscribe();
-    });
-  }
+
 
   public updateSettings(event: InnovationSettings): void {
     this.formData.get('settings').setValue(event);
@@ -115,9 +112,10 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
    */
   public save(callback: () => void): void {
     if (this.canEdit) {
-      const saveSubs = this._innovationService
+      this._innovationService
         .save(this._project._id, this.formData.value)
-        .subscribe(data => {
+        .first()
+        .subscribe((data: Innovation) => {
         this.lastSavedDate = new Date(data.updated);
         this.shouldSave = false;
         if (callback) {
@@ -126,7 +124,6 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
       }, err => {
         this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
-      this._subscriptions.push(saveSubs);
     } else {
       this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', 'ERROR.CANT_EDIT');
     }
@@ -168,13 +165,13 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   public createInnovationCard(): void {
     if (this.canEdit) {
       if (this._project.innovationCards.length < 2 && this._project.innovationCards.length !== 0) {
-        const innoCardSubs = this._innovationService.createInnovationCard(this._project._id, {
+        this._innovationService.createInnovationCard(this._project._id, {
           lang: this._project.innovationCards[0].lang === 'en' ? 'fr' : 'en' // Pour l'instant il n'y a que deux langues
-        }).subscribe((data) => {
+        }).first()
+          .subscribe((data: InnovCard) => {
           this._addInnovationCardWithData(data);
           this._project.innovationCards.push(data);
         });
-        this._subscriptions.push(innoCardSubs);
       }
     }
   }
@@ -204,43 +201,46 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
 
   public submitProjectToValidation (): void {
     this.save(() => {
-      const saveSubs = this._innovationService.submitProjectToValidation(this._project._id).subscribe(data2 => {
+      this._innovationService.submitProjectToValidation(this._project._id).first().subscribe(data2 => {
         this._router.navigate(['../']);
         this._notificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
       });
-      this._subscriptions.push(saveSubs);
     });
   }
 
 
   public imageUploaded(media: Media): void {
     this._project.innovationCards[this.innovationCardEditingIndex].media.push(media);
-    const mediaSubs = this._innovationService
+    this._innovationService
       .addMediaToInnovationCard(this._project._id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
+      .first()
       .subscribe(res => {
         this._project = res;
     });
-    this._subscriptions.push(mediaSubs);
   }
 
   public newOnlineVideoToAdd (videoInfos: Video): void {
-    this._innovationService.addNewMediaVideoToInnovationCard(this._project._id, this._project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos).subscribe(res => {
+    this._innovationService.addNewMediaVideoToInnovationCard(this._project._id, this._project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
+      .first()
+      .subscribe(res => {
       this._project = res;
     });
   }
 
   public setMediaAsPrimary (media: Media): void {
-    const mediaSubs = this._innovationService.setPrincipalMediaOfInnovationCard(this._project._id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
+    this._innovationService.setPrincipalMediaOfInnovationCard(this._project._id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
+      .first()
+      .subscribe(res => {
       this._project = res;
     });
-    this._subscriptions.push(mediaSubs);
   }
 
   public deleteMedia (media: Media): void {
-    const mediaSubs = this._innovationService.deleteMediaOfInnovationCard(this._project._id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id).subscribe(res => {
+    this._innovationService.deleteMediaOfInnovationCard(this._project._id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
+      .first()
+      .subscribe(res => {
       this._project = res;
     });
-    this._subscriptions.push(mediaSubs);
   }
 
   /**
@@ -265,14 +265,14 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   }
 
   public validateProject (): void {
-    this._innovationService.validate(this._project._id).subscribe(data => {
+    this._innovationService.validate(this._project._id).first().subscribe(data => {
       this._notificationsService.success('Projet validé', 'Le projet a bien été validé');
       this._router.navigate(['/admin']);
     });
   }
 
   public askRevision (): void {
-    this._innovationService.askRevision(this._project._id).subscribe(data => {
+    this._innovationService.askRevision(this._project._id).first().subscribe(data => {
       this._notificationsService.success('Projet en révision', 'Le projet a été passé en status de révision, veuillez avertir le propriétaire des chagements à effectuer');
       this._router.navigate(['/admin']);
     });
@@ -280,7 +280,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
 
   public addCollaborators (): void {
     if (this.collaborators_emails !== '') {
-      this._innovationService.inviteCollaborators(this._project._id, this.collaborators_emails).subscribe(data => {
+      this._innovationService.inviteCollaborators(this._project._id, this.collaborators_emails).first().subscribe(data => {
         if (data.usersAdded.length || data.invitationsToSend.length || data.invitationsToSendAgain.length) {
           this.collaboratorsAddingProcess = data;
           this.collaboratorsAddingProcess.inviteUrl = this._innovationService.getInvitationUrl();
@@ -296,8 +296,8 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     }
   }
 
-  public removeCollaborator (collaborator: any): void {
-    this._innovationService.removeCollaborator(this._project._id, collaborator).subscribe(collaborators => {
+  public removeCollaborator (collaborator: User): void {
+    this._innovationService.removeCollaborator(this._project._id, collaborator).first().subscribe(collaborators => {
       this.project.collaborators = collaborators;
     });
   }
@@ -313,6 +313,11 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     if (!this.canDeactivate()) {
       $event.returnValue = 'You have unsaved changes. Please save as draft before leaving this page.'; // TODO translate
     }
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   get domSanitizer() { return this._domSanitizer; }

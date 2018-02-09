@@ -49,7 +49,7 @@ export class AdminDashboardComponent implements OnInit {
     this._titleService.setTitle('Admin Dashboard');
 
     if (this._authService.user.isOperator) {
-      this.operatorId = this._authService.user._id;
+      this.operatorId = this._authService.user.id;
     }
 
     this._dashboardService.getOperators().subscribe((operators) => this.operators = operators.result);

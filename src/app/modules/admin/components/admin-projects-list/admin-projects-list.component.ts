@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Subject } from 'rxjs/Subject';
 import { Innovation } from '../../../../models/innovation';
+import { User } from '../../../../models/user.model';
 
 @Component({
   selector: 'app-admin-projects-list',
@@ -13,7 +14,7 @@ import { Innovation } from '../../../../models/innovation';
 export class AdminProjectsListComponent implements OnInit, OnDestroy {
 
   @Input() status: string;
-  @Input() operators: any[];
+  @Input() operators: Array<User>;
   @Input() operatorId: string; // Filtrer les résultats pour un utilisateur en particulier
   @Input() refreshNeededEmitter: Subject<any>;
   private _projects: Array<Innovation> = [];
