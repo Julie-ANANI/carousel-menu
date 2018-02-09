@@ -79,4 +79,4 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-};
+}

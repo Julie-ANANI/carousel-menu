@@ -37,10 +37,12 @@ export class ClientMyProjectsComponent implements OnInit {
 
   loadProjects(config: any): void {
     this._config = config;
-    this._userService.getMyInnovations(this._config).subscribe(projects => {
-      this._projects = projects.result;
-      this._total = projects._metadata.totalCount;
-    });
+    this._userService.getMyInnovations(this._config)
+      .first()
+      .subscribe(projects => {
+        this._projects = projects.result;
+        this._total = projects._metadata.totalCount;
+      });
   }
 
   /**
@@ -49,6 +51,7 @@ export class ClientMyProjectsComponent implements OnInit {
   public removeProject(projectId: string): void {
     this._innovationService
       .remove(projectId)
+      .first()
       .subscribe(projectRemoved => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;

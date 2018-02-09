@@ -106,24 +106,26 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     if (config) {
       this._config = config;
     }
-    this._innovationService.getAll(this._config).subscribe(projects => {
-      this._projects = this._projects.concat(projects.result.map((project: Innovation) => {
-        if (!project.stats) {
-          project.stats = {
-            pros: 0,
-            answers: 0,
-            submittedAnswers: 0,
-            emailsOK: 0,
-            received: 0,
-            opened: 0,
-            clicked: 0
+    this._innovationService.getAll(this._config)
+      .first()
+      .subscribe(projects => {
+        this._projects = this._projects.concat(projects.result.map((project: Innovation) => {
+          if (!project.stats) {
+            project.stats = {
+              pros: 0,
+              answers: 0,
+              submittedAnswers: 0,
+              emailsOK: 0,
+              received: 0,
+              opened: 0,
+              clicked: 0
+            }
           }
-        }
-        return project;
-      }));
-      this._total = projects._metadata.totalCount;
-      this._config.offset += 5;
-    });
+          return project;
+        }));
+        this._total = projects._metadata.totalCount;
+        this._config.offset += 5;
+      });
   }
 
   /**
@@ -132,6 +134,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   public removeProject(projectId: string) {
     this._innovationService
       .remove(projectId)
+      .first()
       .subscribe(projectRemoved => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
@@ -179,21 +182,27 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   }
 
   public updateThanksState (project: Innovation) {
-    this._innovationService.save(project._id, {thanks: !project.thanks}).subscribe(data => {
-      project.thanks = data.thanks;
-    });
+    this._innovationService.save(project._id, {thanks: !project.thanks})
+      .first()
+      .subscribe(data => {
+        project.thanks = data.thanks;
+      });
   }
 
   public updateRestitutionState (project: Innovation) {
-    this._innovationService.save(project._id, {restitution: !project.restitution}).subscribe(data => {
-      project.restitution = data.restitution;
-    });
+    this._innovationService.save(project._id, {restitution: !project.restitution})
+      .first()
+      .subscribe(data => {
+        project.restitution = data.restitution;
+      });
   }
 
   public setOperator (operatorId: string, project: Innovation) {
-    this._innovationService.setOperator(project._id, operatorId).subscribe(data => {
-      this._notificationService.success('Opérateur affecté', 'OK');
-    });
+    this._innovationService.setOperator(project._id, operatorId)
+      .first()
+      .subscribe(data => {
+        this._notificationService.success('Opérateur affecté', 'OK');
+      });
   }
 
   public seeMore () {

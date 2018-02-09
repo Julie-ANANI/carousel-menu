@@ -13,7 +13,7 @@ import 'rxjs/add/operator/map';
 export class SharedUploadZoneVideoComponent implements OnInit {
 
   private _videoUrlInput: string;
-  private _videoParameters: string[];
+  private _videoParameters: Array<string>;
 
   @Output() public cbFn: EventEmitter<any> = new EventEmitter();
 

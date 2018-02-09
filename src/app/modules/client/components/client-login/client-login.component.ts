@@ -37,28 +37,30 @@ export class ClientLoginComponent implements OnInit {
   onSubmit() {
     if (this.formData.valid) {
       const user = new User(this.formData.value);
-      this._authService.login(user).subscribe(() => {
-        if (this._authService.isAuthenticated) {
-          // Get the redirect URL from our auth service
-          // If no redirect has been set, use the default
-          const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : '/';
+      this._authService.login(user)
+        .first()
+        .subscribe(() => {
+          if (this._authService.isAuthenticated) {
+            // Get the redirect URL from our auth service
+            // If no redirect has been set, use the default
+            const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : '/';
 
-          // Set our navigation extras object
-          // that passes on our global query params and fragment
-          const navigationExtras: NavigationExtras = {
-            preserveQueryParams: true,
-            preserveFragment: true
-          };
+            // Set our navigation extras object
+            // that passes on our global query params and fragment
+            const navigationExtras: NavigationExtras = {
+              preserveQueryParams: true,
+              preserveFragment: true
+            };
 
-          this._notificationsService.success('ERROR.LOGIN.WELCOME', 'ERROR.LOGIN.LOGGED_IN');
+            this._notificationsService.success('ERROR.LOGIN.WELCOME', 'ERROR.LOGIN.LOGGED_IN');
 
-          // Redirect the user
-          this._router.navigate([redirect], navigationExtras);
-        }
-      },
-      err => {
-        this._notificationsService.error('ERROR.ERROR', err.message);
-      });
+            // Redirect the user
+            this._router.navigate([redirect], navigationExtras);
+          }
+        },
+        err => {
+          this._notificationsService.error('ERROR.ERROR', err.message);
+        });
     }
     else {
       this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
@@ -68,6 +70,7 @@ export class ClientLoginComponent implements OnInit {
   public linkedInSignIn() {
     const domain = environment.domain;
     this._authService.linkedinLogin(domain)
+      .first()
       .subscribe(
         url => {
           window.location.href = url;
@@ -83,11 +86,13 @@ export class ClientLoginComponent implements OnInit {
       this._notificationsService.error('ERROR.LOGIN.EMPTY_EMAIL', 'ERROR.LOGIN.EMAIL_PLEASE');
     }
     else {
-      this._userService.changePassword(this.formData.get('email').value).subscribe(res => {
-        this._notificationsService.success('ERROR.LOGIN.EMAIL_SENT', 'ERROR.LOGIN.CHANGE_PASSWORD');
-      }, err => {
-        this._notificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_NOT_FOUND');
-      });
+      this._userService.changePassword(this.formData.get('email').value)
+        .first()
+        .subscribe(res => {
+          this._notificationsService.success('ERROR.LOGIN.EMAIL_SENT', 'ERROR.LOGIN.CHANGE_PASSWORD');
+        }, err => {
+          this._notificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_NOT_FOUND');
+        });
     }
   }
 

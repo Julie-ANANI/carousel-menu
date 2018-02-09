@@ -33,7 +33,7 @@ export class AdminQuestionsEditComponent implements OnInit {
   ngOnInit() {
     const subs = this._activatedRoute.params.subscribe(params => {
       const questionId = params['questionId'];
-      const subs = this._presetService.getQuestion(questionId).subscribe(question => {
+      this._presetService.getQuestion(questionId).first().subscribe(question => {
         this._question = question;
         this.formData = this._formBuilder.group({
           controlType: [this._question.controlType, Validators.required],
@@ -70,6 +70,7 @@ export class AdminQuestionsEditComponent implements OnInit {
   public save() {
     const saveSubs = this._presetService
       .saveQuestion(this._question._id, this.formData.value)
+      .first()
       .subscribe(data => {
         this._question = data;
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.QUESTION.UPDATED');

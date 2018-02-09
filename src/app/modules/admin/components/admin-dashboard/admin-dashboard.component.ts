@@ -3,8 +3,8 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { DashboardService } from '../../../../services/dashboard/dashboard.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { SearchService } from '../../../../services/search/search.service';
-import { Subject } from 'rxjs/Subject';
 import { User } from '../../../../models/user.model';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -52,9 +52,9 @@ export class AdminDashboardComponent implements OnInit {
       this.operatorId = this._authService.user.id;
     }
 
-    this._dashboardService.getOperators().subscribe((operators) => this.operators = operators.result);
+    this._dashboardService.getOperators().first().subscribe((operators) => this.operators = operators.result);
 
-    this._dashboardService.getOperatorData(this.operatorId).subscribe((operatorData) => this.operatorData = operatorData);
+    this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData) => this.operatorData = operatorData);
 
     this.getPeriodStats();
   }
@@ -63,11 +63,11 @@ export class AdminDashboardComponent implements OnInit {
     this.refreshNeededEmitter.next({
       operatorId: operatorId
     });
-    this._dashboardService.getOperatorData(this.operatorId).subscribe((operatorData) => this.operatorData = operatorData);
+    this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData) => this.operatorData = operatorData);
   }
 
   public getPeriodStats() {
-    this._searchService.getEmailStats(this.nbDaysOfStats).subscribe(stats => {
+    this._searchService.getEmailStats(this.nbDaysOfStats).first().subscribe(stats => {
       const totalMails = stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut;
       this.statistics.percentFoundEmails = totalMails ? Math.round(stats.total.found / totalMails * 100) : 'NA';
       this.statistics.percentFoundPros = 'NA';

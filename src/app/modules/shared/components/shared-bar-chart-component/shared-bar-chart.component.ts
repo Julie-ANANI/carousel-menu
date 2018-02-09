@@ -22,7 +22,7 @@ export class SharedBarChartComponent implements OnInit {
   constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
-    if(!this.stats) {
+    if (!this.stats) {
       this.stats = {};
       this.options.forEach((option: {identifier: string, label: any}) => {
         this.stats[option.identifier] = {

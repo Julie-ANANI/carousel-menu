@@ -48,15 +48,19 @@ export class ClientMyAccountComponent implements OnInit {
   }
 
   public changePassword() {
-    this._userService.changePassword().subscribe(res => {
-      this._router.navigate(['/reset-password/' + res.token])
-    });
+    this._userService.changePassword()
+      .first()
+      .subscribe(res => {
+        this._router.navigate(['/reset-password/' + res.token])
+      });
   }
 
   public onSubmit() {
     if (this.formData.valid) {
       const user = new User(this.formData.value);
-      this._userService.update(user).subscribe(
+      this._userService.update(user)
+        .first()
+        .subscribe(
         data => {
           this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
           this.formData.patchValue(data);
@@ -79,8 +83,8 @@ export class ClientMyAccountComponent implements OnInit {
   }
 
   public deleteAccount () {
-    this._userService.delete().subscribe((res) => {
-      this._authService.logout().subscribe(() => {
+    this._userService.delete().first().subscribe((res) => {
+      this._authService.logout().first().subscribe(() => {
         this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
         this._router.navigate(['/']);
       });

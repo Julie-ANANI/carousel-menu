@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ISubscription } from 'rxjs/Subscription';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../models/innov-settings';
@@ -14,13 +13,12 @@ import { Preset } from '../../../../../models/preset';
   templateUrl: 'admin-project-details.component.html',
   styleUrls: ['admin-project-details.component.scss']
 })
-export class AdminProjectsDetailsComponent implements OnInit, OnDestroy {
+export class AdminProjectsDetailsComponent implements OnInit {
 
   private _project: Innovation;
   private _preset: Array<Preset> = [];
   private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis', 'mail_config'];
   private _currentPage = 'settings';
-  private _subscriptions: Array<ISubscription> = [];
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _router: Router,
@@ -54,34 +52,28 @@ export class AdminProjectsDetailsComponent implements OnInit, OnDestroy {
   }
 
   public generateQuiz() {
-    const quizSubs = this._innovationService
+    this._innovationService
       .createQuiz(this._project._id)
+      .first()
       .subscribe(() => {
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , 'ERROR.QUIZ.CREATED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
       });
-    this._subscriptions.push(quizSubs);
   }
 
   /**
    * Sauvegarde
    */
   public save() {
-    const saveSubs = this._innovationService
+    this._innovationService
       .save(this._project._id, this._project)
+      .first()
       .subscribe(data => {
         this._project = data;
       }, err => {
         this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
-    this._subscriptions.push(saveSubs);
-  }
-
-  ngOnDestroy() {
-    this._subscriptions.forEach(subs => {
-      subs.unsubscribe();
-    });
   }
 
 

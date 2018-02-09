@@ -44,20 +44,22 @@ export class AdminSectionsEditComponent implements OnInit {
               private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    const subs = this._activatedRoute.params.subscribe(params => {
+    this._activatedRoute.params.subscribe(params => {
       const sectionId = params['sectionId'];
-      this._presetService.getSection(sectionId).subscribe(section => {
-        this._section = section;
-        this._addQuestionConfig.initialData = section.questions;
-        this.formData = this._formBuilder.group({
-          label: this._formBuilder.group({
-            fr: [section.label ? section.label.fr || '' : '', Validators.required],
-            en: [section.label ? section.label.en || '' : '', Validators.required]
-          }),
-          description: [section.description ? section.description : 'nothing', Validators.required],
-          questions: []
+      this._presetService.getSection(sectionId)
+        .first()
+        .subscribe(section => {
+          this._section = section;
+          this._addQuestionConfig.initialData = section.questions;
+          this.formData = this._formBuilder.group({
+            label: this._formBuilder.group({
+              fr: [section.label ? section.label.fr || '' : '', Validators.required],
+              en: [section.label ? section.label.en || '' : '', Validators.required]
+            }),
+            description: [section.description ? section.description : 'nothing', Validators.required],
+            questions: []
+          });
         });
-      });
     });
   }
 
@@ -68,6 +70,7 @@ export class AdminSectionsEditComponent implements OnInit {
   public save() {
     const saveSubs = this._presetService
       .saveSection(this._section._id, this.formData.value)
+      .first()
       .subscribe(data => {
         this._section = data;
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.SECTION.UPDATED');

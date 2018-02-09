@@ -1,34 +1,21 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { EmailQueueModel } from '../../../../../models/mail.queue.model';
 import { EmailService } from '../../../../../services/email/email.service';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-admin-email-queue',
   templateUrl: 'admin-emails-queue.component.html',
   styleUrls: ['admin-emails-queue.component.scss']
 })
-export class AdminEmailQueueComponent implements OnInit, OnDestroy {
+export class AdminEmailQueueComponent {
 
   @Input() queue: Array<EmailQueueModel>;
-
-  private subscriptions: Array<Subscription> = [];
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
               private _emailService: EmailService) { }
-
-  ngOnInit() {
-    console.log(this.queue);
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach((subs: Subscription) => {
-      subs.unsubscribe();
-    })
-  }
 
   public campaignName(transaction: any): string {
     return transaction.payload.metadata.campaign_id;
@@ -40,6 +27,7 @@ export class AdminEmailQueueComponent implements OnInit, OnDestroy {
 
   private _stopBatch(batch: any): void {
     this._emailService.stopBatch(batch._id)
+      .first()
       .subscribe((result) => {
         if (result && result.status === 200) {
           batch.status = 'CANCELED';

@@ -23,7 +23,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
   private _chartValues: any;
   private _conclusionId: string;
   private _innoid: string;
-  private _optionsArray: any[];
+  private _optionsArray: Array<any>;
 
   @Input() set showDetails(value: boolean) {
     this._showDetails = value;
@@ -74,7 +74,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
     }
   }
 
-  public seeAnswer(event: any) {
+  public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
   }
 
@@ -90,6 +90,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
       conclusion: event['content']
     };
     this._innovationService.updateSynthesis(this.innoid, savedObject)
+      .first()
       .subscribe(data => {
         if (this.info.id === 'professionals') {
           this.info.conclusion = data.infographics.professionals.conclusion;

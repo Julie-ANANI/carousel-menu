@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ShareService } from '../../../../services/share/share.service';
+import { Innovation } from '../../../../models/innovation';
 
 @Component({
   selector: 'app-shared-project-description',
@@ -11,7 +12,7 @@ import { ShareService } from '../../../../services/share/share.service';
 })
 export class SharedProjectDescriptionComponent implements OnInit {
 
-  @Input() project: any;
+  @Input() project: Innovation;
   public idInnovationCard = 0;
   private _onEditingPage = false;
 
@@ -26,8 +27,8 @@ export class SharedProjectDescriptionComponent implements OnInit {
 
     for (const innovationCard of this.project.innovationCards) {
       if (innovationCard) {
-        innovationCard.problem = innovationCard.problem.split('\n').join('<br>');
-        innovationCard.solution = innovationCard.solution.split('\n').join('<br>');
+        innovationCard.problem = innovationCard.problem.replace(/\n/g, '<br/>');
+        innovationCard.solution = innovationCard.solution.replace(/\n/g, '<br/>');
       }
     }
 
@@ -74,9 +75,9 @@ export class SharedProjectDescriptionComponent implements OnInit {
    */
   public dataBuilder(): any {
     return {
-      projectId: this.project.id,
-      innovationCardId: this.project.innovationCards[0].id,
-      title: this.project.innovationCards[0].title.slice(0, Math.min(20, this.project.innovationCards[0].title.length)) + "-" + "project" +"(" + (this.project.innovationCards[0].lang || 'en') +").pdf"
+      projectId: this.project._id,
+      innovationCardId: this.project.innovationCards[0]._id,
+      title: this.project.innovationCards[0].title.slice(0, Math.min(20, this.project.innovationCards[0].title.length)) + '-project(' + (this.project.innovationCards[0].lang || 'en') + ').pdf'
     }
   }
 

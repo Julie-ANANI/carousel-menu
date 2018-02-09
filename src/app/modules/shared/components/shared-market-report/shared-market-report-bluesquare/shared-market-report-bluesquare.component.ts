@@ -1,9 +1,7 @@
 /**
  * Created by bastien on 16/11/2017.
  */
-import { Component, OnInit, Input } from '@angular/core';
-import { InnovationService } from './../../../../../services/innovation/innovation.service';
-import * as _ from 'lodash';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'market-report-bluesquare',
@@ -11,7 +9,7 @@ import * as _ from 'lodash';
   styleUrls: ['shared-market-report-bluesquare.component.scss']
 })
 
-export class SharedMarketReportBluesquareComponent implements OnInit {
+export class SharedMarketReportBluesquareComponent {
 
   @Input() public numberFocus: number;
   @Input() public id: string;
@@ -20,6 +18,4 @@ export class SharedMarketReportBluesquareComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
 }

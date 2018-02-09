@@ -1,7 +1,7 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'clickable-worldmap',
@@ -9,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['shared-clickable-worldmap.component.scss']
 })
 
-export class SharedClickableWorldmapComponent implements OnInit {
+export class SharedClickableWorldmapComponent {
 
   @Input() public canEdit: boolean;
   @Output() public notifier = new EventEmitter<any>();
@@ -40,9 +40,6 @@ export class SharedClickableWorldmapComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-
-  }
   /**
    * Checks whether all the continents have been selected
    * @returns {boolean}

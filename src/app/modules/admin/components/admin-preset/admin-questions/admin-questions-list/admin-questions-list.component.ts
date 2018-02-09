@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
-import { ISubscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 import { Question } from '../../../../../../models/question';
 
@@ -8,9 +7,8 @@ import { Question } from '../../../../../../models/question';
   templateUrl: './admin-questions-list.component.html',
   styleUrls: ['./admin-questions-list.component.scss']
 })
-export class AdminQuestionsListComponent implements OnInit, OnDestroy {
+export class AdminQuestionsListComponent implements OnInit {
 
-  private _subscriptions: ISubscription;
   private _questions: Array<Question>;
   public selectedQuestionIdToBeDeleted: string = null;
   public selectedQuestionToBeCloned: Question = null;
@@ -32,18 +30,14 @@ export class AdminQuestionsListComponent implements OnInit, OnDestroy {
     this.loadQuestions(this._config);
   }
 
-  ngOnDestroy() {
-    if (this._subscriptions) {
-      this._subscriptions.unsubscribe();
-    }
-  }
-
   loadQuestions(config: any): void {
     this._config = config;
-    this._presetService.getAllQuestions(this._config).subscribe(questions => {
-      this._questions = questions.result;
-      this._total = questions._metadata.totalCount;
-    });
+    this._presetService.getAllQuestions(this._config)
+      .first()
+      .subscribe(questions => {
+        this._questions = questions.result;
+        this._total = questions._metadata.totalCount;
+      });
   }
 
   private _getQuestionIndex(questionId: string): number {
@@ -60,6 +54,7 @@ export class AdminQuestionsListComponent implements OnInit, OnDestroy {
   public removeQuestion(questionId: string) {
     this._presetService
       .removeQuestion(questionId)
+      .first()
       .subscribe(questionRemoved => {
         this._questions.splice(this._getQuestionIndex(questionId), 1);
         this.selectedQuestionIdToBeDeleted = null;
@@ -68,9 +63,11 @@ export class AdminQuestionsListComponent implements OnInit, OnDestroy {
 
   public cloneQuestion(clonedQuestion: Question) {
     delete clonedQuestion._id;
-    this._subscriptions = this._presetService.createQuestion(clonedQuestion).subscribe(question => {
-      this._router.navigate(['/admin/questions/' + question._id])
-    });
+    this._presetService.createQuestion(clonedQuestion)
+      .first()
+      .subscribe(question => {
+        this._router.navigate(['/admin/questions/' + question._id])
+      });
   }
 
   set config(value: any) { this._config = value; }

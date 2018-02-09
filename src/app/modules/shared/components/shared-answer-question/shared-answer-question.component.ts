@@ -1,7 +1,7 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../models/answer';
 import { Question } from '../../../../models/question';
@@ -13,7 +13,7 @@ import * as _ from 'lodash';
   styleUrls: ['shared-answer-question.component.scss']
 })
 
-export class SharedAnswerQuestionComponent implements OnInit {
+export class SharedAnswerQuestionComponent  {
 
   @Input() public question: Question;
   @Input() public fullAnswer: Answer;
@@ -21,9 +21,6 @@ export class SharedAnswerQuestionComponent implements OnInit {
   @Output() fullAnswerChange = new EventEmitter <any>();
 
   constructor(private _translateService: TranslateService) { }
-
-  ngOnInit() {
-  }
 
   updateQuality(object: {key: string, value: 0 | 1 | 2}) {
     this.fullAnswer.answers[object.key + 'Quality'] = object.value;

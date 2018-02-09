@@ -7,8 +7,8 @@ export interface InnovCard {
   readonly media?: Array<Media>;
   readonly principalMediaIdx?: number;
   readonly summary?: string;
-  readonly problem?: string;
-  readonly solution?: string;
+  problem?: string;
+  solution?: string;
   readonly advantages?: Array<string>;
   readonly principal?: boolean;
 }

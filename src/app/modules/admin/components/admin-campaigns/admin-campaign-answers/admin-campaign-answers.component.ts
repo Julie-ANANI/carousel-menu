@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { Answer } from '../../../../../models/answer';
+import { Campaign } from '../../../../../models/campaign';
 import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 
@@ -13,7 +14,7 @@ import { Section } from '../../../../../models/section';
 })
 export class AdminCampaignAnswersComponent implements OnInit {
 
-  private _campaign: any;
+  private _campaign: Campaign;
   private _answers: Array<Answer> = [];
   private _validatedAnswers: Array<Answer> = [];
   private _submittedAnswers: Array<Answer> = [];
@@ -42,7 +43,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   }
 
   loadAnswers(): void {
-    this._campaignService.getAnswers(this._campaign._id).subscribe(result => {
+    this._campaignService.getAnswers(this._campaign._id).first().subscribe(result => {
       this._answers = result.answers.localAnswers;
       this._total = this._answers.length + result.answers.draftAnswers.length;
       this._validatedAnswers = this.filterByStatus('VALIDATED');

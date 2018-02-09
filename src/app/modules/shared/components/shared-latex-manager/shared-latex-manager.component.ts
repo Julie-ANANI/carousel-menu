@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { LatexService } from '../../../../services/latex/latex.service';
@@ -11,7 +11,7 @@ import * as FileSaver from 'file-saver';
 })
 
 
-export class SharedLatexManagerComponent implements OnInit {
+export class SharedLatexManagerComponent {
 
   @Input() model: {lang: string, jobType: string, labels: string, pdfDataseedFunction: any};
 
@@ -24,9 +24,6 @@ export class SharedLatexManagerComponent implements OnInit {
   constructor(private _innovationService: InnovationService,
               private _latexService: LatexService,
               private _notificationsService: TranslateNotificationsService) {  }
-
-  ngOnInit() {
-  }
 
   /**
    * Accessor to compiling status
@@ -127,6 +124,7 @@ export class SharedLatexManagerComponent implements OnInit {
   private _generateSynthesis() {
     this._compiling = true;
     this._innovationService.exportSynthesis(this.model.pdfDataseedFunction.projectId, this.model.lang)
+      .first()
       .subscribe(exportServiceResp => {
         this._processResponse(exportServiceResp);
       }, error => {
@@ -142,6 +140,7 @@ export class SharedLatexManagerComponent implements OnInit {
     this._compiling = true;
     this._innovationService.exportPDF(this.model.pdfDataseedFunction.projectId,
       this.model.pdfDataseedFunction.innovationCardId, {lang:'en', force: true})
+      .first()
       .subscribe(exportServiceResp => {
         this._processResponse(exportServiceResp);
       }, error => {
@@ -157,6 +156,7 @@ export class SharedLatexManagerComponent implements OnInit {
   private _download(conf: any) {
     if (conf['jobId'] && conf['jobType']) {
       this._latexService.downloadJob(conf['jobId'], conf['jobType'])
+        .first()
         .subscribe(file => {
             FileSaver.saveAs(file, this._fileName || 'test.pdf');
             this._stopClock();
@@ -175,7 +175,7 @@ export class SharedLatexManagerComponent implements OnInit {
    */
   private _checkFunc(jobId: any) {
     if (this._recheck) {
-      this._latexService.checkJob(jobId).subscribe(
+      this._latexService.checkJob(jobId).first().subscribe(
         (result) => {
           if (result && result['status']) {
             try {

@@ -27,7 +27,9 @@ export class AdminSearchHistoryComponent implements OnInit {
   constructor(private _searchService: SearchService) {}
 
   ngOnInit(): void {
-    this._searchService.getHistory(this._config).subscribe(result => {
+    this._searchService.getHistory(this._config)
+      .first()
+      .subscribe(result => {
       this._requests = result.requests;
       if (result._metadata) {
         this._total = result._metadata.totalCount;

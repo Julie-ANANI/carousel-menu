@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
-import { ISubscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 import { Preset } from '../../../../../../models/preset';
 
@@ -9,9 +8,8 @@ import { Preset } from '../../../../../../models/preset';
   templateUrl: './admin-presets-list.component.html',
   styleUrls: ['./admin-presets-list.component.scss']
 })
-export class AdminPresetsListComponent implements OnInit, OnDestroy {
+export class AdminPresetsListComponent implements OnInit {
 
-  private _subscriptions: ISubscription;
   private _presets: Array<Preset>;
   public selectedPresetIdToBeDeleted: string = null;
   public selectedPresetToBeCloned: Preset = null;
@@ -33,18 +31,14 @@ export class AdminPresetsListComponent implements OnInit, OnDestroy {
     this.loadPresets(this._config);
   }
 
-  ngOnDestroy() {
-    if (this._subscriptions) {
-      this._subscriptions.unsubscribe();
-    }
-  }
-
   loadPresets(config: any): void {
     this._config = config;
-    this._presetService.getAll(this._config).subscribe(presets => {
-      this._presets = presets.result;
-      this._total = presets._metadata.totalCount;
-    });
+    this._presetService.getAll(this._config)
+      .first()
+      .subscribe(presets => {
+        this._presets = presets.result;
+        this._total = presets._metadata.totalCount;
+      });
   }
 
   private _getPresetIndex(presetId: string): number {
@@ -61,6 +55,7 @@ export class AdminPresetsListComponent implements OnInit, OnDestroy {
   public removePreset(presetId: string) {
     this._presetService
       .remove(presetId)
+      .first()
       .subscribe(presetRemoved => {
         this._presets.splice(this._getPresetIndex(presetId), 1);
         this.selectedPresetIdToBeDeleted = null;
@@ -69,7 +64,7 @@ export class AdminPresetsListComponent implements OnInit, OnDestroy {
 
   public clonePreset(clonedPreset: Preset) {
     delete clonedPreset._id;
-    this._subscriptions = this._presetService.create(clonedPreset).subscribe(preset => {
+    this._presetService.create(clonedPreset).first().subscribe(preset => {
       this._router.navigate(['/admin/presets/' + preset._id])
     });
   }

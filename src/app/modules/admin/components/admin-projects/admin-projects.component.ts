@@ -35,10 +35,12 @@ export class AdminProjectsComponent implements OnInit {
 
   loadProjects(config: any): void {
     this._config = config;
-    this._innovationService.getAll(this._config).subscribe(projects => {
-      this._projects = projects.result;
-      this._total = projects._metadata.totalCount;
-    });
+    this._innovationService.getAll(this._config)
+      .first()
+      .subscribe(projects => {
+        this._projects = projects.result;
+        this._total = projects._metadata.totalCount;
+      });
   }
 
   /**
@@ -47,6 +49,7 @@ export class AdminProjectsComponent implements OnInit {
   public removeProject(projectId: string) {
     this._innovationService
       .remove(projectId)
+      .first()
       .subscribe(projectRemoved => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;

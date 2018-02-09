@@ -3,7 +3,6 @@
  */
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { PageScrollConfig } from 'ng2-page-scroll';
@@ -58,10 +57,12 @@ export class SharedMarketReportComponent implements OnInit {
 
   public recalculateSynthesis(): any {
     this._calculating = true;
-    this._innovationService.recalculateSynthesis(this._innoid).subscribe(synthesis => {
-      this._calculating = false;
-      this._infographics = synthesis.infographics;
-    });
+    this._innovationService.recalculateSynthesis(this._innoid)
+      .first()
+      .subscribe(synthesis => {
+        this._calculating = false;
+        this._infographics = synthesis.infographics;
+      });
   }
 
   /**

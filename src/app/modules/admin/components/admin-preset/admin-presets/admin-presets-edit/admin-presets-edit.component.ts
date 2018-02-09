@@ -45,12 +45,14 @@ export class AdminPresetsEditComponent implements OnInit {
   ngOnInit() {
     this._activatedRoute.params.subscribe(params => {
       const presetId = params['presetId'];
-      this._presetService.get(presetId).subscribe(preset => {
-        this._preset = preset;
-        this._addSectionConfig.initialData = preset.sections || [];
-        this.formData = this._formBuilder.group({
-          sections: []
-        });
+      this._presetService.get(presetId)
+        .first()
+        .subscribe(preset => {
+          this._preset = preset;
+          this._addSectionConfig.initialData = preset.sections || [];
+          this.formData = this._formBuilder.group({
+            sections: []
+          });
       });
     });
   }
@@ -62,6 +64,7 @@ export class AdminPresetsEditComponent implements OnInit {
   public save() {
     const saveSubs = this._presetService
       .save(this._preset._id, this.formData.value)
+      .first()
       .subscribe(data => {
         this._preset = data;
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.PRESET.UPDATED');

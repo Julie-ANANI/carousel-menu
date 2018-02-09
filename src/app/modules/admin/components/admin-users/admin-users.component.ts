@@ -38,10 +38,12 @@ export class AdminUsersComponent implements OnInit {
 
   loadUsers(config: any): void {
     this._config = config;
-    this._userService.getAll(this._config).subscribe(users => {
-      this._users = users.result;
-      this._total = users._metadata.totalCount;
-    });
+    this._userService.getAll(this._config)
+      .first()
+      .subscribe(users => {
+        this._users = users.result;
+        this._total = users._metadata.totalCount;
+      });
   }
 
   inviteUser () {
@@ -57,9 +59,11 @@ export class AdminUsersComponent implements OnInit {
   }
 
   loadInnovations(userId: string): void {
-    this._userService.getInnovations(userId).subscribe(innovations => {
-      console.log(innovations.innovations);
-    });
+    this._userService.getInnovations(userId)
+      .first()
+      .subscribe(innovations => {
+        console.log(innovations.innovations);
+      });
   }
 
   set config(value: any) { this._config = value; }

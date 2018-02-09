@@ -8,6 +8,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Answer } from '../../../../models/answer';
+import { Question } from '../../../../models/question';
 
 @Component({
   selector: 'shared-answer-modal',
@@ -25,7 +26,7 @@ export class SharedAnswerModalComponent implements OnInit {
     this._modalAnswer = value;
   }
   @Input() public innoid: string;
-  @Input() public questions: any[];
+  @Input() public questions: Array<Question>;
   @Input() public adminMode: boolean;
   @Output() modalAnswerChange = new EventEmitter<any>();
 
@@ -43,8 +44,9 @@ export class SharedAnswerModalComponent implements OnInit {
     const starQuestions = this.questions.filter(q => q.controlType === 'stars');
     if (starQuestions.length) {
       // Si question 'étoiles', on récupère les advantages
-      this._innovationService.getInnovationCardByLanguage(this.innoid, 'en').subscribe(cardEn => {
-        this._innovationService.getInnovationCardByLanguage(this.innoid, 'fr').subscribe(cardFr => {
+      // TODO: merge the 2 following subscribers in only one
+      this._innovationService.getInnovationCardByLanguage(this.innoid, 'en').first().subscribe(cardEn => {
+        this._innovationService.getInnovationCardByLanguage(this.innoid, 'fr').first().subscribe(cardFr => {
           // puis on les assigne aux questions stars
           starQuestions.forEach(question => {
             question.options = [];
@@ -77,11 +79,13 @@ export class SharedAnswerModalComponent implements OnInit {
   }
 
   public changeStatus(status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED') {
-    this._answerService.changeStatus(this._modalAnswer._id, status).subscribe((_: void) => {
-      this._notificationsService.success('Mis à jour', 'Statut de la réponse bien mis à jour');
-    }, (err: string) => {
-      this._notificationsService.success('ERROR.ERROR', err);
-    });
+    this._answerService.changeStatus(this._modalAnswer._id, status)
+      .first()
+      .subscribe((_: void) => {
+        this._notificationsService.success('Mis à jour', 'Statut de la réponse bien mis à jour');
+      }, (err: string) => {
+        this._notificationsService.success('ERROR.ERROR', err);
+      });
   }
 
   updateProfileQuality(object: {value: number}) {
@@ -105,6 +109,7 @@ export class SharedAnswerModalComponent implements OnInit {
       this._modalAnswer.quizReference = this._modalAnswer.quizReference || 'oldQuiz';
       const saveSubs = this._answerService
         .save(this._modalAnswer._id, this._modalAnswer)
+        .first()
         .subscribe(data => {
           this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
         }, err => {

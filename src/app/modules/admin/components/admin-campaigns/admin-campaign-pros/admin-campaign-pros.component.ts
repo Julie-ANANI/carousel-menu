@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { Professional } from '../../../../../models/professional';
+import { Campaign } from '../../../../../models/campaign';
 
 @Component({
   selector: 'app-admin-campaign-pros',
@@ -11,7 +12,7 @@ import { Professional } from '../../../../../models/professional';
 })
 export class AdminCampaignProsComponent implements OnInit {
 
-  private _campaign: any;
+  private _campaign: Campaign;
   private _pros: Array<Professional> = [];
   private _total = 0;
   private _config = {

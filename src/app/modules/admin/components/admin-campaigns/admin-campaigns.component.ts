@@ -30,6 +30,7 @@ export class AdminCampaignsComponent implements OnInit {
   ngOnInit() {
     this._innovation =  this._activatedRoute.snapshot.data['innovation'];
     this._innovationService.campaigns(this._innovation._id)
+      .first()
       .subscribe(campaigns => {
           this._campaigns = campaigns.result;
         },
@@ -61,7 +62,7 @@ export class AdminCampaignsComponent implements OnInit {
       this._newCampaign.settings.clonedInfo = true;
     }
 
-    this._campaignService.create(this._newCampaign).subscribe((c) => {
+    this._campaignService.create(this._newCampaign).first().subscribe((c) => {
       this._notificationsService.success('SUCCESS', 'SUCCESS');
       this.campaigns.push(c);
     }, error => {
@@ -75,10 +76,11 @@ export class AdminCampaignsComponent implements OnInit {
 
   public updateStats(campaign: Campaign) {
     this._campaignService.updateStats(campaign._id)
-        .subscribe(stats => {
-          campaign.stats = stats;
-        }, error => {
-          this._notificationsService.error('ERROR', error.message);
-        });
+      .first()
+      .subscribe(stats => {
+        campaign.stats = stats;
+      }, error => {
+        this._notificationsService.error('ERROR', error.message);
+      });
 };
 }

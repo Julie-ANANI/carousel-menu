@@ -8,7 +8,6 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ComponentCanDeactivate } from '../../../../pending-changes-guard.service';
 import { Observable } from 'rxjs/Observable';
-import { ISubscription } from 'rxjs/Subscription';
 import { PageScrollConfig } from 'ng2-page-scroll';
 import { Media, Video } from '../../../../models/media';
 import { Innovation } from '../../../../models/innovation';
@@ -46,9 +45,6 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
    * Gestion de l'affichage
    */
   public innovationCardEditingIndex = 0; // Index de l'innovationCard que l'on édite (système d'onglets)
-  public displayCountriesToExcludeSection = false;
-  public displayCompanyToExcludeSection = false;
-  public displayPersonsToExcludeSection = false;
 
   /*
    * Gestion de la sauvegarde

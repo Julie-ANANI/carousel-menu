@@ -41,10 +41,11 @@ export class AdminUserDetailsComponent implements OnInit {
     this._activatedRoute.params.subscribe(params => {
       const userId = params['userId'];
       this._userService.get(userId)
-        .subscribe(user=>{
+        .first()
+        .subscribe((user) => {
           this._userBasicData = user;
           this.formData.patchValue(user);
-        }, error=>{
+        }, error => {
           console.error(error);
         });
     });
@@ -69,14 +70,16 @@ export class AdminUserDetailsComponent implements OnInit {
       user.isOperator = this._userBasicData['isOperator'];
       user.id = this._userBasicData['id'];
       user.roles = this._userBasicData['roles'];
-      this._userService.updateOther(user).subscribe(
-        data => {
-          this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
-          this.formData.patchValue(data);
-        },
-        error => {
-          this._notificationsService.error('ERROR.ERROR', error.message);
-        });
+      this._userService.updateOther(user)
+        .first()
+        .subscribe(
+          data => {
+            this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
+            this.formData.patchValue(data);
+          },
+          error => {
+            this._notificationsService.error('ERROR.ERROR', error.message);
+          });
     }
     else {
       this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
@@ -115,9 +118,10 @@ export class AdminUserDetailsComponent implements OnInit {
 
   public deleteAccount () {
     this._userService.deleteUser(this._userBasicData['id'])
-        .subscribe((res) => {
-          this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
-          this._router.navigate(['/admin/users']);
+      .first()
+      .subscribe((res) => {
+        this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
+        this._router.navigate(['/admin/users']);
     });
   }
 

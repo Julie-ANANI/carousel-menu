@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { Answer } from '../../../../models/answer';
 
@@ -7,15 +7,12 @@ import { Answer } from '../../../../models/answer';
   templateUrl: './admin-answers-list.component.html',
   styleUrls: ['./admin-answers-list.component.scss']
 })
-export class AdminAnswersListComponent implements OnInit {
+export class AdminAnswersListComponent {
 
   @Input() answers: Array<Answer>;
   @Output() modalAnswerChange = new EventEmitter<any>();
 
   constructor(_campaignService: CampaignService) {}
-
-  ngOnInit(): void {
-  }
 
   public seeAnswer(event: any) {
     this.modalAnswerChange.emit(event);

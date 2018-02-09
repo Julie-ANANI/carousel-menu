@@ -28,9 +28,11 @@ export class ClientProjectNewComponent {
       name: this.formData.value.name
     };
 
-    this._innovationService.create(newProject).first().subscribe((project: Innovation) => {
-      this._router.navigate(['/projects/' + project._id + '/edit'])
-    });
+    this._innovationService.create(newProject)
+      .first()
+      .subscribe((project: Innovation) => {
+        this._router.navigate(['/projects/' + project._id + '/edit'])
+      });
 
   }
 }

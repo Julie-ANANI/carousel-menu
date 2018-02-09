@@ -16,7 +16,6 @@ export class SharedPricesComponent implements OnInit {
 
   @Input() public rawData: any;
 
-
   private host: any; // D3 object referebcing host dom object
   private svg: any; // SVG in which we will print our chart
   private margin: number; // Space between the svg borders and the actual chart graphic
