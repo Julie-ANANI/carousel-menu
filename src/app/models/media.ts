@@ -1,8 +1,4 @@
-interface Cloudinary {
-  readonly public_id: string;
-  readonly height: Number;
-  readonly width: Number;
-}
+import { Cloudinary } from './cloudinary';
 
 export interface Video {
   readonly provider: 'youtube' | 'vimeo';

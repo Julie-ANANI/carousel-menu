@@ -7,11 +7,10 @@
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noImplicitAny": true, //TODO: set to true
+    "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "./dist/out-tsc",
-    "declaration": false,
-
+    "declaration": true,
     "typeRoots": [
       "node_modules/@types"
     ],
