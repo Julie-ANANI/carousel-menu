@@ -47,15 +47,15 @@ export class SharedPricesComponent implements OnInit {
     const infographicsWidth = this.element.nativeElement.parentNode.offsetWidth;
     this.margin = 40;
     this.width = infographicsWidth;
-    this.ymax = this.data.length === 0 ? 0 : D3.max(this.data, function (d) { return d['count']; });
+    this.ymax = this.data.length === 0 ? 0 : D3.max(this.data, function (d:any) { return d['count']; });
     this.height = this.margin + (6 * this.ymax);
     // Trouve les valeurs minimums et maximums et les fait correspondre à la hauteur du graphique
     this.xScale = D3.scaleLinear().range([0, this.width - this.margin]); // Avant (v3) c'était d3.scale.linear()
     this.yScale = D3.scaleLinear().range([this.height - this.margin, 0]);
-    this.xScale.domain(D3.extent(this.data, function (d) { return d.value; })).nice();
-    this.yScale.domain(D3.extent(this.data, function (d) { return d.count; }));
+    this.xScale.domain(D3.extent(this.data, function (d: any) { return d.value; })).nice();
+    this.yScale.domain(D3.extent(this.data, function (d: any) { return d.count; }));
     this.xAxis = D3.axisBottom(this.xScale) // Avant (v3), c'étatit d3.svg.axis()
-      .tickFormat(function (d) {
+      .tickFormat(function (d: string) {
         return d + '€';
       });
   }
