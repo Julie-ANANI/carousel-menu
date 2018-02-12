@@ -1,17 +1,14 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../../../../../environments/environment';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ISubscription } from 'rxjs/Subscription';
 
 @Component({
   templateUrl: './admin-sections-new.component.html',
   styleUrls: ['./admin-sections-new.component.scss']
 })
-export class AdminSectionsNewComponent implements OnDestroy {
-
-  private _subscriptions: ISubscription;
+export class AdminSectionsNewComponent {
 
   public formData: FormGroup = this._formBuilder.group({
     name: ['', Validators.required]
@@ -21,11 +18,6 @@ export class AdminSectionsNewComponent implements OnDestroy {
               private _formBuilder: FormBuilder,
               private _presetService: PresetService) { }
 
-
-  ngOnDestroy() {
-    if (this._subscriptions) this._subscriptions.unsubscribe();
-  }
-
   public onSubmit({value, valid}: { value: any, valid: boolean }) {
     const newSection = {
       domain: environment.domain,
@@ -33,9 +25,11 @@ export class AdminSectionsNewComponent implements OnDestroy {
       controlType: value.controlType
     };
 
-    this._subscriptions = this._presetService.createSection(newSection).subscribe(section => {
-      this._router.navigate(['/admin/sections/' + section._id])
-    });
+    this._presetService.createSection(newSection)
+      .first()
+      .subscribe(section => {
+        this._router.navigate(['/admin/sections/' + section._id])
+      });
 
   }
 }

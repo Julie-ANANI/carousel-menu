@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
+import { Campaign } from '../../../../../models/campaign';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { CampaignService } from '../../../../../services/campaign/campaign.servi
 })
 export class AdminCampaignHistoryComponent implements OnInit {
 
-  private _campaign: any;
+  private _campaign: Campaign;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,
@@ -20,6 +21,6 @@ export class AdminCampaignHistoryComponent implements OnInit {
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.data['campaign'];
   }
-  
+
   get campaignId(): any { return this._campaign._id; }
 }

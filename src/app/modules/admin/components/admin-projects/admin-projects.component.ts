@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
-import { UserService } from '../../../../services/user/user.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Innovation } from '../../../../models/innovation';
 
 @Component({
   selector: 'app-admin-projects',
@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AdminProjectsComponent implements OnInit {
 
-  private _projects: [any];
+  private _projects: Array<Innovation>;
   public selectedProjectIdToBeDeleted: any = null;
   private _total: number;
   private _config = {
@@ -35,25 +35,28 @@ export class AdminProjectsComponent implements OnInit {
 
   loadProjects(config: any): void {
     this._config = config;
-    this._innovationService.getAll(this._config).subscribe(projects => {
-      this._projects = projects.result;
-      this._total = projects._metadata.totalCount;
-    });
+    this._innovationService.getAll(this._config)
+      .first()
+      .subscribe(projects => {
+        this._projects = projects.result;
+        this._total = projects._metadata.totalCount;
+      });
   }
 
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeProject(projectId) {
+  public removeProject(projectId: string) {
     this._innovationService
       .remove(projectId)
+      .first()
       .subscribe(projectRemoved => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
       });
   }
 
-  public getRelevantLink (project) { // routerLink : /projects/:project_id
+  public getRelevantLink (project: Innovation) { // routerLink : /projects/:project_id
     return 'project/' + project._id;
   }
 
@@ -65,7 +68,7 @@ export class AdminProjectsComponent implements OnInit {
     }
   }
 
-  public getPrincipalMedia(project): string {
+  public getPrincipalMedia(project: Innovation): string {
     if (project.principalMedia) {
       if (project.principalMedia.type === 'PHOTO') {
         return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + project.principalMedia.cloudinary.public_id;
@@ -78,23 +81,9 @@ export class AdminProjectsComponent implements OnInit {
     }
   }
 
-  set config(value: any) {
-    this._config = value;
-  }
-
-  get config(): any {
-    return this._config;
-  }
-
-  get total () {
-    return this._total;
-  }
-
-  get projects () {
-    return this._projects;
-  }
-
-  get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
-  }
+  set config(value: any) { this._config = value; }
+  get config() { return this._config; }
+  get total () { return this._total; }
+  get projects () { return this._projects; }
+  get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
 }

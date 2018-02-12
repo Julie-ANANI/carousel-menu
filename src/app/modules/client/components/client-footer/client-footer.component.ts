@@ -18,7 +18,7 @@ export class ClientFooterComponent implements OnInit {
   }
 
   public isMainDomain(): boolean {
-    return environment.domain === "umi";
+    return environment.domain === 'umi';
   }
 
   get companyName(): string {

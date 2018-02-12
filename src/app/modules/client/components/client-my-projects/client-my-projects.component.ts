@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { UserService } from '../../../../services/user/user.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { TranslateService } from '@ngx-translate/core';
+import { Innovation } from '../../../../models/innovation';
 
 @Component({
   selector: 'app-client-my-projects',
@@ -11,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ClientMyProjectsComponent implements OnInit {
 
-  private _projects: [any];
+  private _projects: Array<Innovation>;
   public selectedProjectIdToBeDeleted: any = null;
   private _total: number;
   private _config = {
@@ -36,25 +37,28 @@ export class ClientMyProjectsComponent implements OnInit {
 
   loadProjects(config: any): void {
     this._config = config;
-    this._userService.getMyInnovations(this._config).subscribe(projects => {
-      this._projects = projects.result;
-      this._total = projects._metadata.totalCount;
-    });
+    this._userService.getMyInnovations(this._config)
+      .first()
+      .subscribe(projects => {
+        this._projects = projects.result;
+        this._total = projects._metadata.totalCount;
+      });
   }
 
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeProject(projectId) {
+  public removeProject(projectId: string): void {
     this._innovationService
       .remove(projectId)
+      .first()
       .subscribe(projectRemoved => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
       });
   }
 
-  public getRelevantLink (project) { // routerLink : /projects/:project_id
+  public getRelevantLink(project: Innovation): string { // routerLink : /projects/:project_id
     const link = './' + project._id;
     switch (project.status) {
       case 'DONE':
@@ -75,7 +79,7 @@ export class ClientMyProjectsComponent implements OnInit {
     }
   }
 
-  public getPrincipalMedia(project): string {
+  public getPrincipalMedia(project: Innovation): string {
     if (project.principalMedia) {
       if (project.principalMedia.type === 'PHOTO') {
         return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + project.principalMedia.cloudinary.public_id;

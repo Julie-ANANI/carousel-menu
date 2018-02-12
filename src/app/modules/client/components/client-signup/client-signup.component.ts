@@ -51,6 +51,7 @@ export class ClientSignupComponent implements OnInit {
   public linkedInSignIn() {
     const domain = environment.domain;
     this._authService.linkedinLogin(domain)
+      .first()
       .subscribe(
         url => {
           window.location.href = url;
@@ -66,9 +67,10 @@ export class ClientSignupComponent implements OnInit {
       const user = new User(value);
       user.domain = environment.domain;
       this._userService.create(user)
+        .first()
         .subscribe(
           data => {
-            this._authService.login(user).subscribe(
+            this._authService.login(user).first().subscribe(
               res => {
                 this._location.back();
               },

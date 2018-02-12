@@ -22,9 +22,9 @@ export class SharedBarChartComponent implements OnInit {
   constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
-    if(!this.stats) {
+    if (!this.stats) {
       this.stats = {};
-      this.options.forEach(option => {
+      this.options.forEach((option: {identifier: string, label: any}) => {
         this.stats[option.identifier] = {
           percentage: 0,
           count: 0
@@ -36,5 +36,5 @@ export class SharedBarChartComponent implements OnInit {
   public barFill(percentage: number): string {
     return `${percentage}%`;
   }
-  get lang(): any { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
-};
+  get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
+}

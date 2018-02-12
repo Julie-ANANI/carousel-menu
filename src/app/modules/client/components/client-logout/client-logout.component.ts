@@ -18,6 +18,7 @@ export class ClientLogoutComponent implements OnInit {
   ngOnInit(): void {
     this._titleService.setTitle('LOG_OUT.TITLE');
     this._authService.logout()
+      .first()
       .subscribe(
         res => {
           this._notificationsService.success('ERROR.LOGIN.LOGOUT', 'ERROR.LOGIN.LOGOUT_TEXT');

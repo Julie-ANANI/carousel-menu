@@ -1,14 +1,14 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'sqPagination',
   templateUrl: './shared-pagination.component.html',
   styleUrls: ['./shared-pagination.component.scss']
 })
-export class SharedPaginationComponent implements OnInit {
+export class SharedPaginationComponent implements OnChanges {
   @Input() config: any;
   @Output() configChange = new EventEmitter <any>();
-  @Input() perPageValues: number[];
+  @Input() perPageValues: Array<number>;
   @Input() total: number;
 
   private _numPages: number;
@@ -17,9 +17,6 @@ export class SharedPaginationComponent implements OnInit {
   constructor() {
     this.perPageValues = this.perPageValues || [10, 20, 50, 100];
     this._currentPage = 1;
-  }
-
-  ngOnInit() {
   }
 
   ngOnChanges() {
@@ -33,7 +30,7 @@ export class SharedPaginationComponent implements OnInit {
   get currentPage(): number {
     return (this.config.offset / this.config.limit) + 1;
   }
-  
+
   goToPage(event: any): void {
     const page = parseInt((<HTMLInputElement> event.srcElement).value);
     this.config.offset = this.config.limit * (page - 1);

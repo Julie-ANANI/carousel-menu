@@ -1,25 +1,32 @@
-import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
-import {PresetService} from '../../../../../../services/preset/preset.service';
-import {AuthService} from '../../../../../../services/auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { PresetService } from '../../../../../../services/preset/preset.service';
+import { AuthService } from '../../../../../../services/auth/auth.service';
+import { Preset } from '../../../../../../models/preset';
+import { Section } from '../../../../../../models/section';
 
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
-import {DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-admin-presets-edit',
   templateUrl: './admin-presets-edit.component.html',
   styleUrls: ['./admin-presets-edit.component.scss']
 })
-export class AdminPresetsEditComponent implements OnInit, OnDestroy {
+export class AdminPresetsEditComponent implements OnInit {
 
-  private _preset: any;
+  private _preset: Preset;
   public formData: FormGroup;
-  private _addSectionConfig = {
+  private _addSectionConfig: {
+    placeholder: string,
+    canOrder: boolean,
+    initialData: Array<Section>,
+    type: string
+  } = {
     placeholder: 'PRESETS.PRESET.EDIT.SECTION_PLACEHOLDER',
     canOrder: true,
     initialData: [],
@@ -36,19 +43,18 @@ export class AdminPresetsEditComponent implements OnInit, OnDestroy {
               private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    const subs = this._activatedRoute.params.subscribe(params => {
+    this._activatedRoute.params.subscribe(params => {
       const presetId = params['presetId'];
-      const subs = this._presetService.get(presetId).subscribe(preset => {
-        this._preset = preset;
-        this._addSectionConfig.initialData = preset.sections || [];
-        this.formData = this._formBuilder.group({
-          sections: []
-        });
+      this._presetService.get(presetId)
+        .first()
+        .subscribe(preset => {
+          this._preset = preset;
+          this._addSectionConfig.initialData = preset.sections || [];
+          this.formData = this._formBuilder.group({
+            sections: []
+          });
       });
     });
-  }
-
-  ngOnDestroy() {
   }
 
   /**
@@ -57,7 +63,8 @@ export class AdminPresetsEditComponent implements OnInit, OnDestroy {
    */
   public save() {
     const saveSubs = this._presetService
-      .save(this._preset.id, this.formData.value)
+      .save(this._preset._id, this.formData.value)
+      .first()
       .subscribe(data => {
         this._preset = data;
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.PRESET.UPDATED');
@@ -66,14 +73,13 @@ export class AdminPresetsEditComponent implements OnInit, OnDestroy {
       });
   }
 
-  public addSection(event): void {
+  public addSection(event: any): void {
     this.formData.get('sections').setValue(event.value);
   }
 
   get addSectionConfig() { return this._addSectionConfig; }
-  get domSanitizer() { return this._domSanitizer; }
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
-  get preset(): any { return this._preset; }
+  get preset() { return this._preset; }
   get isAdmin(): boolean { return (this._authService.adminLevel & 3) === 3; }
 
 }

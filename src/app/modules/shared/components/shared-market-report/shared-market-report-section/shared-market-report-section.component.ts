@@ -2,9 +2,10 @@
  * Created by bastien on 16/11/2017.
  */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { InnovationService } from './../../../../../services/innovation/innovation.service';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Answer } from '../../../../../models/answer';
 import * as _ from 'lodash';
 
 @Component({
@@ -22,7 +23,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
   private _chartValues: any;
   private _conclusionId: string;
   private _innoid: string;
-  private _optionsArray: any[];
+  private _optionsArray: Array<any>;
 
   @Input() set showDetails(value: boolean) {
     this._showDetails = value;
@@ -31,7 +32,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
     this._readonly = value;
   }
   @Output() modalAnswerChange = new EventEmitter<any>();
-  @Input() public answers: any;
+  @Input() public answers: Answer;
   @Input() public info: any;
 
 
@@ -58,12 +59,13 @@ export class SharedMarketReportSectionComponent implements OnInit {
           },
           colors: []
         };
-        this.info.options.forEach(option => {
+        this.info.options.forEach((option: {identifier: string, label: {fr: string, en: string}}) => {
           this._chartValues.data[0].data.push(this.info.pieChart[option.identifier].count);
           this._chartValues.labels.fr.push(option.label.fr);
           this._chartValues.labels.en.push(option.label.en);
           this._chartValues.data[0].backgroundColor.push(this.info.pieChart[option.identifier].color);
         });
+        break;
       case 'scale':
         // Calcul du score max
         const max = _.maxBy(this.info.data, 'count') || {};
@@ -72,7 +74,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
     }
   }
 
-  public seeAnswer(event: any) {
+  public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
   }
 
@@ -80,7 +82,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
     this._showDetails = !this._showDetails;
   }
 
-  public keyupHandlerFunction(event) {
+  public keyupHandlerFunction(event: any) {
     // Saving
     this._isSaving = true;
     const savedObject = {};
@@ -88,6 +90,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
       conclusion: event['content']
     };
     this._innovationService.updateSynthesis(this.innoid, savedObject)
+      .first()
       .subscribe(data => {
         if (this.info.id === 'professionals') {
           this.info.conclusion = data.infographics.professionals.conclusion;
@@ -116,8 +119,11 @@ export class SharedMarketReportSectionComponent implements OnInit {
   }
 
   public getFlag(country: any): string {
-    if (country && country.flag) return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
-    return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
+    if (country && country.flag) {
+      return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
+    } else {
+      return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
+    }
   }
 
   get readonly(): boolean { return this._readonly; }

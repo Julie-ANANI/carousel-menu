@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
+import { Answer } from '../../../../../models/answer';
+import { Campaign } from '../../../../../models/campaign';
+import { Question } from '../../../../../models/question';
+import { Section } from '../../../../../models/section';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -10,18 +14,18 @@ import { CampaignService } from '../../../../../services/campaign/campaign.servi
 })
 export class AdminCampaignAnswersComponent implements OnInit {
 
-  private _campaign: any;
-  private _answers = [];
-  private _validatedAnswers = [];
-  private _submittedAnswers = [];
-  private _toCompleteAnswers = [];
-  private _draftAnswers = [];
-  private _rejectedAnswers = [];
+  private _campaign: Campaign;
+  private _answers: Array<Answer> = [];
+  private _validatedAnswers: Array<Answer> = [];
+  private _submittedAnswers: Array<Answer> = [];
+  private _toCompleteAnswers: Array<Answer> = [];
+  private _draftAnswers: Array<Answer> = [];
+  private _rejectedAnswers: Array<Answer> = [];
   private _total = 0;
-  private _questions = [];
+  private _questions: Array<Question> = [];
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
-  private _modalAnswer: any;
+  private _modalAnswer: Answer;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,
@@ -32,14 +36,14 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this.loadAnswers();
     this._modalAnswer = null;
     if (this._campaign.innovation.preset && Array.isArray(this._campaign.innovation.preset.sections)) {
-      this._campaign.innovation.preset.sections.forEach(section => {
+      this._campaign.innovation.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions);
       });
     }
   }
 
   loadAnswers(): void {
-    this._campaignService.getAnswers(this._campaign._id).subscribe(result => {
+    this._campaignService.getAnswers(this._campaign._id).first().subscribe(result => {
       this._answers = result.answers.localAnswers;
       this._total = this._answers.length + result.answers.draftAnswers.length;
       this._validatedAnswers = this.filterByStatus('VALIDATED');
@@ -50,22 +54,22 @@ export class AdminCampaignAnswersComponent implements OnInit {
     });
   }
 
-  public filterByStatus(status) {
+  public filterByStatus(status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED') {
     return this._answers.filter(answer => answer.status === status);
   }
 
-  public seeAnswer(answer: any) {
+  public seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
   }
 
-  get questions(): any[] { return this._questions; }
-  get modalAnswer(): any { return this._modalAnswer; }
-  set modalAnswer(modalAnswer: any) { this._modalAnswer = modalAnswer; }
-  get total(): number { return this._total; }
-  get campaign(): any { return this._campaign; }
-  get validatedAnswers(): any[] { return this._validatedAnswers; }
-  get submittedAnswers(): any[] { return this._submittedAnswers; }
-  get toCompleteAnswers(): any[] { return this._toCompleteAnswers; }
-  get draftAnswers(): any[] { return this._draftAnswers; }
-  get rejectedAnswers(): any[] { return this._rejectedAnswers; }
+  get questions() { return this._questions; }
+  get modalAnswer() { return this._modalAnswer; }
+  set modalAnswer(modalAnswer: Answer) { this._modalAnswer = modalAnswer; }
+  get total() { return this._total; }
+  get campaign() { return this._campaign; }
+  get validatedAnswers() { return this._validatedAnswers; }
+  get submittedAnswers() { return this._submittedAnswers; }
+  get toCompleteAnswers() { return this._toCompleteAnswers; }
+  get draftAnswers() { return this._draftAnswers; }
+  get rejectedAnswers() { return this._rejectedAnswers; }
 }

@@ -16,17 +16,16 @@ export class SharedPricesComponent implements OnInit {
 
   @Input() public rawData: any;
 
-
-  private host; // D3 object referebcing host dom object
-  private svg; // SVG in which we will print our chart
-  private margin; // Space between the svg borders and the actual chart graphic
-  private width; // Component width
-  private height; // Component height
-  private xScale; // D3 scale in X
-  private yScale; // D3 scale in Y
-  private xAxis; // D3 X Axis
-  private htmlElement; // Host HTMLElement
-  private ymax; // Max drawing height
+  private host: any; // D3 object referebcing host dom object
+  private svg: any; // SVG in which we will print our chart
+  private margin: number; // Space between the svg borders and the actual chart graphic
+  private width: number; // Component width
+  private height: number; // Component height
+  private xScale: any; // D3 scale in X
+  private yScale: any; // D3 scale in Y
+  private xAxis: any; // D3 X Axis
+  private htmlElement: HTMLElement; // Host HTMLElement
+  private ymax: number; // Max drawing height
 
   private data: Array<{count: number, value: number}>;
 
@@ -100,10 +99,10 @@ export class SharedPricesComponent implements OnInit {
       .enter()
       .append('image')
       .attr('xlink:href', 'https://res.cloudinary.com/umi/image/upload/app/coin.svg')
-      .attr('x', function (d) {
+      .attr('x', function (d: {count: number, value: number}) {
         return that.xScale(d.value) - 11 + 'px';
       })
-      .attr('y', function (d) {
+      .attr('y', function (d: {count: number, value: number}) {
         return that.yScale(d.count) - 6 + 'px';
       })
       .attr('width', 22)

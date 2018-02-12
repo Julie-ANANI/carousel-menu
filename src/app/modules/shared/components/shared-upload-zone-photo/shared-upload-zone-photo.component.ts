@@ -14,13 +14,14 @@ export class SharedUploadZonePhotoComponent implements OnInit {
   private _filters: Array<FilterFunction>;
   private _uploader: FileUploader;
   public hasBaseDropZoneOver = false;
-  // public hasAnotherDropZoneOver = false;
   public loading = false;
 
   @Input() public type: any;
   @Output() public cbFn: EventEmitter <any> = new EventEmitter();
-  @ViewChild('fileInput') fileInput;
+  @ViewChild('fileInput') fileInput: any;
 
+
+  constructor(private _notificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
     this._filters = Array<FilterFunction>();
@@ -61,33 +62,6 @@ export class SharedUploadZonePhotoComponent implements OnInit {
     }
   }
 
-  /*private _createFilter(type: string): any {
-    switch (type) {
-      case('images'):
-        const imagesFilters = ['gif', 'jpeg', 'jpg', 'png'];
-        for (const filterName of imagesFilters) {
-          const filt = {
-            name: filterName,
-            fn: (item: any): boolean => {
-              const fileExt = item.name.slice(item.name.lastIndexOf('.') + 1).toLowerCase();
-              // return !(this.allowedFileTypes.indexOf(fileExt) === -1);
-              return fileExt === filterName;
-            }
-          };
-          this._filters.push(filt);
-        }
-        break;
-      case('documents'):
-        break;
-      case('videos'):
-        break;
-      default:
-
-    }
-  }*/
-
-  constructor(private _notificationsService: TranslateNotificationsService) {  }
-
   get uploader() {
     return this._uploader;
   }
@@ -95,9 +69,5 @@ export class SharedUploadZonePhotoComponent implements OnInit {
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
   }
-
-  /*public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
-  }*/
 
 }

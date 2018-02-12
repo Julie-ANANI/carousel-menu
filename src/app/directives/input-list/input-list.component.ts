@@ -15,17 +15,13 @@ export class InputListComponent {
   @Input() adminMode = false;
 
   answer: string;
-  answerList: Array<any> = [];
+  answerList: Array<any>;
 
   @Input()
   set config(config: any) {
-    if(config) {
+    if (config) {
       this._placeholder = config.placeholder || '';
-      config.initialData.forEach(val =>{
-        if(this.answerList.findIndex(t=>{return t === val}) === -1) {
-          this.answerList.push(val);
-        }
-      });
+      this.answerList = config.initialData || [];
     }
   }
 
@@ -36,7 +32,7 @@ export class InputListComponent {
   }
 
   addProposition(val: string): void {
-    if(this.answerList.findIndex(t=>{return t === val}) === -1) {
+    if (this.answerList.findIndex(t => {return t === val}) === -1) {
       this.answerList.push(val);
       this.answer = '';
       this.update.emit({value: this.answerList});
@@ -48,7 +44,7 @@ export class InputListComponent {
     this.update.emit({value: this.answerList});
   }
 
-  thumbsUp(index) {
+  thumbsUp(index: number) {
     if (this.adminMode) {
       if (this.answerList[index].rating === 2) {
         this.answerList[index].rating = 1;
@@ -59,7 +55,7 @@ export class InputListComponent {
     }
   }
 
-  thumbsDown(index) {
+  thumbsDown(index: number) {
     if (this.adminMode) {
       if (this.answerList[index].rating === 0) {
         this.answerList[index].rating = 1;

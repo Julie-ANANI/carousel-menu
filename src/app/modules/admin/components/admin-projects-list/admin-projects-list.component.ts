@@ -3,6 +3,8 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Subject } from 'rxjs/Subject';
+import { Innovation } from '../../../../models/innovation';
+import { User } from '../../../../models/user.model';
 
 @Component({
   selector: 'app-admin-projects-list',
@@ -12,10 +14,10 @@ import { Subject } from 'rxjs/Subject';
 export class AdminProjectsListComponent implements OnInit, OnDestroy {
 
   @Input() status: string;
-  @Input() operators: any[];
+  @Input() operators: Array<User>;
   @Input() operatorId: string; // Filtrer les résultats pour un utilisateur en particulier
   @Input() refreshNeededEmitter: Subject<any>;
-  private _projects: any[] = [];
+  private _projects: Array<Innovation> = [];
   public selectedProjectIdToBeDeleted: any = null;
   private _total = 0;
   private _config: any;
@@ -43,7 +45,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  build () {
+  build (): void {
     this._projects = [];
     this._config = {
       fields: '',
@@ -104,46 +106,42 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     if (config) {
       this._config = config;
     }
-    this._innovationService.getAll(this._config).subscribe(projects => {
-      this._projects = this._projects.concat(projects.result.map(project => {
-        if (!project.stats) {
-          project.stats = {
-            pros: 0,
-            answers: 0,
-            submittedAnswers: 0,
-            emailsOK: 0,
-            received: 0,
-            opened: 0,
-            clicked: 0
+    this._innovationService.getAll(this._config)
+      .first()
+      .subscribe(projects => {
+        this._projects = this._projects.concat(projects.result.map((project: Innovation) => {
+          if (!project.stats) {
+            project.stats = {
+              pros: 0,
+              answers: 0,
+              submittedAnswers: 0,
+              emailsOK: 0,
+              received: 0,
+              opened: 0,
+              clicked: 0
+            }
           }
-        } else {
-          project.receivedRatio = this.ratio(project.stats.received, project.stats.emailsOK);
-          project.openedRatio = this.ratio(project.stats.opened, project.stats.received);
-          project.clickedRatio = this.ratio(project.stats.clicked, project.stats.opened);
-        }
-        if (project.launched) {
-          project.delai = this.getDelai(project.launched);
-        }
-        return project;
-      }));
-      this._total = projects._metadata.totalCount;
-      this._config.offset += 5;
-    });
+          return project;
+        }));
+        this._total = projects._metadata.totalCount;
+        this._config.offset += 5;
+      });
   }
 
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeProject(projectId) {
+  public removeProject(projectId: string) {
     this._innovationService
       .remove(projectId)
+      .first()
       .subscribe(projectRemoved => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
       });
   }
 
-  public getRelevantLink (project) { // routerLink : /projects/:project_id
+  public getRelevantLink (project: Innovation) { // routerLink : /projects/:project_id
     const link = 'projects/project/' + project._id;
     switch (project.status) {
       case 'DONE':
@@ -164,7 +162,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  public getPrincipalMedia(project): string {
+  public getPrincipalMedia(project: Innovation): string {
     if (project.principalMedia) {
       if (project.principalMedia.type === 'PHOTO') {
         return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + project.principalMedia.cloudinary.public_id;
@@ -177,52 +175,43 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  public getDelai (date) {
+  public getDelai (date: Date) {
     const delai = 8; // On se donne 8 jours à compter de la validation du projet
-    date = new Date(date);
-    const today: any = new Date();
-    return delai - Math.round((today - date) / (1000 * 60 * 60 * 24));
+    const today: Date = new Date();
+    return delai - Math.round((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
   }
 
-  public updateThanksState (project) {
-    this._innovationService.save(project._id, {thanks: !project.thanks}).subscribe(data => {
-      project.thanks = data.thanks;
-    });
+  public updateThanksState (project: Innovation) {
+    this._innovationService.save(project._id, {thanks: !project.thanks})
+      .first()
+      .subscribe(data => {
+        project.thanks = data.thanks;
+      });
   }
 
-  public updateRestitutionState (project) {
-    this._innovationService.save(project._id, {restitution: !project.restitution}).subscribe(data => {
-      project.restitution = data.restitution;
-    });
+  public updateRestitutionState (project: Innovation) {
+    this._innovationService.save(project._id, {restitution: !project.restitution})
+      .first()
+      .subscribe(data => {
+        project.restitution = data.restitution;
+      });
   }
 
-  public setOperator (operatorId, project) {
-    this._innovationService.setOperator(project._id, operatorId).subscribe(data => {
-      this._notificationService.success('Opérateur affecté', 'OK');
-    });
+  public setOperator (operatorId: string, project: Innovation) {
+    this._innovationService.setOperator(project._id, operatorId)
+      .first()
+      .subscribe(data => {
+        this._notificationService.success('Opérateur affecté', 'OK');
+      });
   }
 
   public seeMore () {
     this.loadProjects();
   }
 
-  set config(value: any) {
-    this._config = value;
-  }
-
-  get config(): any {
-    return this._config;
-  }
-
-  get total () {
-    return this._total;
-  }
-
-  get projects () {
-    return this._projects;
-  }
-
-  get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
-  }
+  set config(value: any) { this._config = value; }
+  get config() { return this._config; }
+  get total () { return this._total; }
+  get projects () { return this._projects; }
+  get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
 }

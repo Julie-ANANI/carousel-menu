@@ -1,7 +1,7 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'clickable-worldmap',
@@ -9,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['shared-clickable-worldmap.component.scss']
 })
 
-export class SharedClickableWorldmapComponent implements OnInit {
+export class SharedClickableWorldmapComponent {
 
   @Input() public canEdit: boolean;
   @Output() public notifier = new EventEmitter<any>();
@@ -40,9 +40,6 @@ export class SharedClickableWorldmapComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-
-  }
   /**
    * Checks whether all the continents have been selected
    * @returns {boolean}
@@ -50,7 +47,7 @@ export class SharedClickableWorldmapComponent implements OnInit {
   public areAllContinentChecked(): boolean {
     const keys = Object.keys(this._continents);
     let i = 0;
-    while(i < keys.length && this._continents[keys[i]]) {
+    while (i < keys.length && this._continents[keys[i]]) {
       i++;
     }
     return i === keys.length;
@@ -60,10 +57,10 @@ export class SharedClickableWorldmapComponent implements OnInit {
    * Selects/Unselects all the countries
    * @param $event the value of the checkbox
    */
-  public switchWorldCheckbox($event): void {
+  public switchWorldCheckbox($event: any): void {
     const worldCheckboxValue = $event.target.checked;
     const keys = Object.keys(this._continents);
-    keys.forEach(continent=>{
+    keys.forEach((continent) => {
       this._continents[continent] = worldCheckboxValue;
     });
     this.notifier.emit({continents: this._continents});
@@ -73,7 +70,7 @@ export class SharedClickableWorldmapComponent implements OnInit {
    * Processes the click over one continent
    * @param continent
    */
-  public clickOnContinent(continent): void {
+  public clickOnContinent(continent: string): void {
     this._continents[continent] = !this._continents[continent];
     this.notifier.emit({continents: this._continents});
   }
@@ -83,7 +80,7 @@ export class SharedClickableWorldmapComponent implements OnInit {
    * @param continent the continent to test
    * @returns {boolean}
    */
-  public getContinentSelectionStatus(continent): boolean {
+  public getContinentSelectionStatus(continent: string): boolean {
     return !!this._continents[continent];
   }
 
