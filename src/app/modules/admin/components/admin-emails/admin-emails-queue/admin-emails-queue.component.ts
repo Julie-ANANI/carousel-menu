@@ -15,6 +15,8 @@ export class AdminEmailQueueComponent implements OnInit, OnDestroy {
 
   private subscriptions = [];
 
+  private _campaignNameCache = {};
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
               private _emailService: EmailService) { }
@@ -30,7 +32,7 @@ export class AdminEmailQueueComponent implements OnInit, OnDestroy {
   }
 
   public campaignName(transaction: any): string {
-    return transaction.payload.metadata.campaign_id;
+    return transaction.payload.metadata.campaignName;
   }
 
   public batchSize(transaction: any): number {
