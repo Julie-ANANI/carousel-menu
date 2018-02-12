@@ -1,18 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-admin-search',
+  moduleId: module.id,
+  selector: 'app-admin-search-module',
   templateUrl: './admin-search.component.html',
   styleUrls: ['./admin-search.component.scss']
 })
-export class AdminSearchComponent {
 
-  private _total = 0;
-
-  constructor() { }
-
-  get total(): number {
-    return this._total;
-  }
-
-}
+export class AdminSearchComponent {}

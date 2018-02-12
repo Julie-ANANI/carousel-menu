@@ -3,7 +3,7 @@
  */
 export const SEARCH = {
   "NORESULT": "Pas de résultat :-(",
-  "PRO": "professionnel",
+  "PRO": "Professionnel",
   "SELECTED": "sélectionné",
   "COMPUTEMAILS": "Recalculer emails",
   "ADDTOCAMPAIGN": "Ajouter à une campagne",

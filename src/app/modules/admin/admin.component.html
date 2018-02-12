@@ -5,11 +5,11 @@
       <li *ngIf="canShow(1)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><a [routerLink]="'/admin'" title="">Dashboard</a></li>
       <li *ngIf="canShow(1)" routerLinkActive="active"><a [routerLink]="'/admin/users'" title="">{{ 'COMMON.USERS' | translate }}</a></li>
       <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/projects'" title="">{{ 'COMMON.PROJECTS' | translate }}</a></li>
-      <!-- TODO <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/searches'" title="">{{ 'COMMON.SEARCHES' | translate }}</a></li>-->
       <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/emails'" title="">Emails</a></li>
       <!-- TODO <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/index'" title="">Index</a></li>-->
       <!-- TODO <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/patents'" title="">{{ 'COMMON.PATENTS' | translate }}</a></li>-->
       <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/presets'" title="">{{ 'COMMON.PRESETS' | translate }}</a></li>
+      <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/search'" title="">{{ 'COMMON.SEARCH' | translate }}</a></li>
     </ul>
   </div>
 
