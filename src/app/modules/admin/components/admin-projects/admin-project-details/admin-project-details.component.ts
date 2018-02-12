@@ -80,14 +80,14 @@ export class AdminProjectsDetailsComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeProject(projectId: string) {
-    /*this._innovationService
+  /*public removeProject(projectId: string) {
+    this._innovationService
       .remove(projectId)
       .subscribe(projectRemoved => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
-      });*/
-  }
+      });
+  }*/
 
   public getPrincipalMedia(project: Innovation): string {
     if (project.principalMedia) {

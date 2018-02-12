@@ -25,7 +25,8 @@ export class SharedMarketReportPopoverComponent {
     }
   }
 
-  public seeAnswer(answer: Answer) {
+  public seeAnswer(event: Event, answer: Answer) {
+    event.preventDefault();
     this.modalAnswerChange.emit(answer);
   }
 

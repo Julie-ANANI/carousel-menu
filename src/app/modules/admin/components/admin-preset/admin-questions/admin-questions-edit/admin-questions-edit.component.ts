@@ -24,14 +24,12 @@ export class AdminQuestionsEditComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _presetService: PresetService,
               private _authService: AuthService,
-              private _domSanitizer: DomSanitizer,
               private _translateService: TranslateService,
-              private _router: Router,
               private _notificationsService: TranslateNotificationsService,
               private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    const subs = this._activatedRoute.params.subscribe(params => {
+    this._activatedRoute.params.subscribe(params => {
       const questionId = params['questionId'];
       this._presetService.getQuestion(questionId).first().subscribe(question => {
         this._question = question;
@@ -68,7 +66,7 @@ export class AdminQuestionsEditComponent implements OnInit {
    * @param callback
    */
   public save() {
-    const saveSubs = this._presetService
+    this._presetService
       .saveQuestion(this._question._id, this.formData.value)
       .first()
       .subscribe(data => {

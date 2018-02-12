@@ -59,7 +59,7 @@
     <button type="button" class="market-report-btn centered"
             *ngIf="info.id!='marketPotential'"
             [ngClass]="{'active': showDetails}"
-            (click)="toggleDetails()">
+            (click)="toggleDetails($event)">
       {{(showDetails ? 'MARKET_REPORT.BTN_DETAILS_CLOSE' : 'MARKET_REPORT.BTN_DETAILS_OPEN') | translate}}
       <i class="fa" aria-hidden="true"
          [ngClass]="{'fa-angle-up': showDetails, 'fa-angle-down': !showDetails}"></i>
@@ -89,7 +89,7 @@
           <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job}}</p>
           <p *ngIf="answer.professional && answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional ? answer.professional.company : ""}}</p>
 
-          <span (click)="seeAnswer(answer)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
+          <span (click)="seeAnswer(answer) && $event.preventDefault()" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
           <a href="mailto: {{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ""}}</a>
         </div>
       </div>

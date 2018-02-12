@@ -77,7 +77,8 @@ export class SharedMarketReportSectionComponent implements OnInit {
     this.modalAnswerChange.emit(event);
   }
 
-  public toggleDetails() {
+  public toggleDetails(event: Event) {
+    event.preventDefault();
     this._showDetails = !this._showDetails;
   }
 

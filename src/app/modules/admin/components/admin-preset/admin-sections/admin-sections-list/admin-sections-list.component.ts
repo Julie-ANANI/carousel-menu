@@ -55,7 +55,7 @@ export class AdminSectionsListComponent implements OnInit {
     this._presetService
       .removeSection(sectionId)
       .first()
-      .subscribe(sectionRemoved => {
+      .subscribe(_ => {
         this._sections.splice(this._getSectionIndex(sectionId), 1);
         this.selectedSectionIdToBeDeleted = null;
       });

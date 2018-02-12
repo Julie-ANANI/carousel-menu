@@ -109,7 +109,7 @@ export class Http extends AngularHttp {
 
   public download(UriOrUrl: string, options?: RequestOptionsArgs) {
     this._showLoader();
-    if(!options) {
+    if (!options) {
       options = new RequestOptions();
     }
     options.responseType = ResponseContentType.Blob;
@@ -158,11 +158,11 @@ export class Http extends AngularHttp {
     this._loaderService.stopLoading();
   }
 
-  private _onCatch(error: any, caught: Observable<any>): Observable<any> {
+  private _onCatch(error: any, _: Observable<any>): Observable<any> {
     return Observable.throw(error);
   }
 
-  private _onSuccess(res: Response): void { }
+  private _onSuccess(_: Response): void { }
 
   private _onError(res: Response): void {
     console.error(res);

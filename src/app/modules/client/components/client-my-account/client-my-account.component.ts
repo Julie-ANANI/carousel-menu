@@ -47,7 +47,8 @@ export class ClientMyAccountComponent implements OnInit {
     });
   }
 
-  public changePassword() {
+  public changePassword(event: Event) {
+    event.preventDefault();
     this._userService.changePassword()
       .first()
       .subscribe(res => {
@@ -82,7 +83,8 @@ export class ClientMyAccountComponent implements OnInit {
     this.formData.get('technologies')!.setValue(event.value);
   }
 
-  public deleteAccount () {
+  public deleteAccount (event: Event) {
+    event.preventDefault();
     this._userService.delete().first().subscribe(_ => {
       this._authService.logout().first().subscribe(() => {
         this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');

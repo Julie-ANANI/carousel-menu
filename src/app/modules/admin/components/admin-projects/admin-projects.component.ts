@@ -50,7 +50,7 @@ export class AdminProjectsComponent implements OnInit {
     this._innovationService
       .remove(projectId)
       .first()
-      .subscribe(projectRemoved => {
+      .subscribe(_ => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
       });

@@ -37,7 +37,7 @@ export class SharedUploadZonePhotoComponent implements OnInit {
     uo.headers = [{ name: 'api-token', value : 'umi-front-application,TXnKAVHh0xpiFlC8D01S3e8ZkD45VIDJ' } ];
     this._uploader.setOptions(uo);
 
-    this._uploader.onBeforeUploadItem = (item: FileItem): any => {
+    this._uploader.onBeforeUploadItem = (_: FileItem): void => {
       this.loading = true;
     };
 

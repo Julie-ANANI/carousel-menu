@@ -102,7 +102,7 @@ export function CreateTranslateLoader() {
 }
 
 export class TranslateUniversalLoader implements TranslateLoader {
-  public getTranslation(lang: string): Observable<any> {
+  public getTranslation(_: string): Observable<any> {
     return Observable.create((observer: any) => {
       observer.next();
       observer.complete();

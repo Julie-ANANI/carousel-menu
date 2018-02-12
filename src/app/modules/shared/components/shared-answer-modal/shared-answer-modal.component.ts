@@ -78,7 +78,8 @@ export class SharedAnswerModalComponent implements OnInit {
     this._modalAnswer.country = event.value[0];
   }
 
-  public changeStatus(status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED') {
+  public changeStatus(event: Event, status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED') {
+    event.preventDefault();
     this._answerService.changeStatus(this._modalAnswer._id, status)
       .first()
       .subscribe((_: void) => {
@@ -107,10 +108,10 @@ export class SharedAnswerModalComponent implements OnInit {
       // TODO: remove this hack
       this._modalAnswer.originalAnswerReference = this._modalAnswer.originalAnswerReference || 'oldQuiz';
       this._modalAnswer.quizReference = this._modalAnswer.quizReference || 'oldQuiz';
-      const saveSubs = this._answerService
+      this._answerService
         .save(this._modalAnswer._id, this._modalAnswer)
         .first()
-        .subscribe(data => {
+        .subscribe(_ => {
           this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
         }, err => {
           this._notificationsService.error('ERROR.ERROR', err);
@@ -126,7 +127,8 @@ export class SharedAnswerModalComponent implements OnInit {
     }
   }
 
-  public close(): void {
+  public close(event: Event): void {
+    event.preventDefault();
     this.modalAnswerChange.emit(null);
   }
 

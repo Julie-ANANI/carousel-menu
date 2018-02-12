@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { LatexService } from '../../../../services/latex/latex.service';
@@ -37,7 +37,8 @@ export class SharedLatexManagerComponent {
    * Process the view event
    * @param event
    */
-  public startJob(event: any): void {
+  public startJob(event: Event): void {
+    event.preventDefault();
     this._fileName = this.model.pdfDataseedFunction.title;
     if (!this.isCompiling()) {
       switch (this.model.jobType) {
