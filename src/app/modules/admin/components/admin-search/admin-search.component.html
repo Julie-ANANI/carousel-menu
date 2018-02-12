@@ -1,7 +1,19 @@
 <div class="container">
-  <div class="columns">
-    <div class="column col-11 col-mx-auto">
-      <h1>{{total}} {{ 'COMMON.SEARCHES' | translate }}</h1>
+  <ul class="tab tab-block">
+    <li class="tab-item"><a [routerLink]="'/admin/search/pros'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      {{ 'SEARCH.PRO' | translate }}
+    </a></li>
+    <li class="tab-item"><a [routerLink]="'/admin/search/mail'" routerLinkActive="active">
+      {{ 'COMMON.EMAIL' | translate }}
+    </a></li>
+    <li class="tab-item"><a [routerLink]="'/admin/search/history'" routerLinkActive="active">
+      {{ 'CAMPAIGNS.HISTORY' | translate }}
+    </a></li>
+  </ul>
+
+  <div class="tabs">
+    <div class="tab-content">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

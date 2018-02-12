@@ -1,3 +1,4 @@
+// Modules externes
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -6,11 +7,12 @@ import { HttpModule } from '@angular/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { FileUploadModule } from 'ng2-file-upload';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
-// import { FormErrorDirective } from '../../../../.toreview/dynamic-form-compozer/directives/form-error/form-error.directive';
-// import { DynamicFormComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form/dynamic-form.component';
-// import { DynamicFormQuestionComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-question/dynamic-form-question.component';
-// import { DynamicFormContentComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-content/dynamic-form-content.component';
-// import { DynamicFormHtmlComponent } from '../../../../.toreview/dynamic-form-compozer/components/dynamic-form-html/dynamic-form-html.component';
+import { ChartsModule } from 'ng2-charts';
+import { Ng2FileDropModule } from 'ng2-file-drop';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
+import { Ng2PageScrollModule } from 'ng2-page-scroll';
+
+//Components
 import { SharedNotFoundComponent } from './components/shared-not-found/shared-not-found.component';
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
@@ -31,25 +33,25 @@ import { SharedPricesComponent } from './components/shared-market-report/shared-
 import { SharedWorldMapComponent } from './components/shared-market-report/shared-world-map-component/shared-world-map.component';
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
 import { SharedFilterInputComponent } from './components/shared-filter-input/shared-filter-input.component';
-import { SqResetDirective } from '../../directives/smart-query/sqReset.directive';
 import { SharedModalComponent } from './components/shared-modal-component/shared-modal.component';
 import { SharedStarsComponent } from './components/shared-stars-component/shared-stars.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
 import { SharedRatingItemComponent } from './components/shared-rating-item/shared-rating-item.component';
 import { SharedTagItemComponent } from './components/shared-tag-item/shared-tag-item.component';
-import { ChartsModule } from 'ng2-charts';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
-import { Ng2FileDropModule } from 'ng2-file-drop';
-import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
-import { Ng2PageScrollModule } from 'ng2-page-scroll';
-
 import { SharedLatexManagerComponent } from './components/shared-latex-manager/shared-latex-manager.component';
-import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { SharedProjectSettingsComponent } from './components/shared-project-settings-component/shared-project-settings.component';
 import { SharedClickableWorldmapComponent } from './components/shared-clickable-worldmap-component/shared-clickable-worldmap.component';
+import { SharedSearchHistoryComponent } from './components/shared-search-history/shared-search-history.component';
+import { SharedSearchProsComponent } from './components/shared-search-pros/shared-search-pros.component';
+import { SharedSearchMailComponent } from './components/shared-search-mail/shared-search-mail.component';
+
+//Directives
+import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
+import { SqResetDirective } from '../../directives/smart-query/sqReset.directive';
 
 @NgModule({
   imports: [
@@ -71,12 +73,6 @@ import { AutocompleteInputComponent } from '../../directives/autocomplete-input/
     // FormErrorDirective,
     SqResetDirective,
     InputListComponent,
-
-    // Component
-    // DynamicFormComponent,
-    // DynamicFormQuestionComponent,
-    // DynamicFormContentComponent,
-    // DynamicFormHtmlComponent,
 
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
@@ -109,7 +105,10 @@ import { AutocompleteInputComponent } from '../../directives/autocomplete-input/
     SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
     SharedRatingItemComponent,
-    SharedTagItemComponent
+    SharedTagItemComponent,
+    SharedSearchHistoryComponent,
+    SharedSearchProsComponent,
+    SharedSearchMailComponent
   ],
   exports: [
     // Modules
@@ -148,7 +147,10 @@ import { AutocompleteInputComponent } from '../../directives/autocomplete-input/
     SharedAnswerModalComponent,
     SharedAnswerQuestionComponent,
     SharedRatingItemComponent,
-    SharedTagItemComponent
+    SharedTagItemComponent,
+    SharedSearchHistoryComponent,
+    SharedSearchProsComponent,
+    SharedSearchMailComponent
   ]
 })
 export class SharedModule { }

@@ -11,7 +11,6 @@ import { AdminCampaignsComponent } from './components/admin-campaigns/admin-camp
 import { AdminEmailsComponent } from './components/admin-emails/admin-emails.component';
 import { AdminIndexComponent } from './components/admin-index/admin-index.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
-import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 import { AdminEmailQueueComponent } from './components/admin-emails/admin-emails-queue/admin-emails-queue.component';
 import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
@@ -29,7 +28,7 @@ import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admi
 import { AdminCampaignSearchComponent } from './components/admin-campaigns/admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admin-campaign-answers/admin-campaign-answers.component';
 import { AdminAnswersListComponent } from './components/admin-answers-list/admin-answers-list.component';
-import { AdminSearchHistoryComponent } from './components/admin-search/admin-search-history/admin-search-history.component';
+import { AdminSearchModule } from './components/admin-search/admin-search.module';
 
 @NgModule({
   imports: [
@@ -38,6 +37,7 @@ import { AdminSearchHistoryComponent } from './components/admin-search/admin-sea
     AdminPresetsModule,
     AdminQuestionsModule,
     AdminSectionsModule,
+    AdminSearchModule,
     SharedModule,
     TranslateModule.forChild()
   ],
@@ -51,7 +51,6 @@ import { AdminSearchHistoryComponent } from './components/admin-search/admin-sea
     AdminEmailsComponent,
     AdminIndexComponent,
     AdminPatentsComponent,
-    AdminSearchComponent,
     AdminEmailQueueComponent,
     AdminBatchInformationComponent,
     AdminUserDetailsComponent,
@@ -64,8 +63,7 @@ import { AdminSearchHistoryComponent } from './components/admin-search/admin-sea
     AdminCampaignHistoryComponent,
     AdminCampaignSearchComponent,
     AdminCampaignAnswersComponent,
-    AdminAnswersListComponent,
-    AdminSearchHistoryComponent
+    AdminAnswersListComponent
   ]
 })
 export class AdminModule {
