@@ -13,8 +13,8 @@ export class SharedSearchHistoryComponent implements OnInit {
   @Input() mails: boolean;
 
   private _requests: Array<any> = [];
-  private _total = 0;
-  private _config = {
+  private _total: number = 0;
+  private _config: any = {
     fields: 'entity keywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata',
     limit: 10,
     offset: 0,
@@ -27,17 +27,32 @@ export class SharedSearchHistoryComponent implements OnInit {
   constructor(private _searchService: SearchService) {}
 
   ngOnInit(): void {
+    if (this.campaignId) {
+      this._config.campaign = this.campaignId;
+    }
+    if (this.mails) {
+      this.config.entity = 'MAIL_ADDRESS';
+    } else {
+      if (this.status) {
+        this.config.entity = 'PERSON';
+      } else {
+        this.config.motherRequest = 'null';
+      }
+    }
+    if (this.status) {
+      this.config.status = this.status;
+    }
     this._searchService.getHistory(this._config)
       .first()
       .subscribe(result => {
-      this._requests = result.requests;
-      if (result._metadata) {
-        this._total = result._metadata.totalCount;
-      }
-    });
+        this._requests = result.requests;
+        if (result._metadata) {
+          this._total = result._metadata.totalCount;
+        }
+      });
   }
 
-  public buildImageUrl(country: any): string {
+  public buildImageUrl(country: string): string {
     if (country) {
       return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
     } else {
