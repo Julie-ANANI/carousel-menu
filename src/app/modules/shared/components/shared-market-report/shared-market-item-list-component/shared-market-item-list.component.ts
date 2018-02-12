@@ -19,10 +19,10 @@ export class SharedMarketItemListComponent {
 
   constructor() { }
 
-  public getAnswers(commentsList: Array<any>): Array<any> {
+  public getAnswers(commentsList: Array<any>): Array<Answer> {
     if (this.answers) {
-      let answers = _.map(commentsList, comment => _.find(this.answers, (answer: any) => answer.id === comment.answerId));
-      return _.filter(answers, a => a);
+      const answers = _.map(commentsList, (comment: any) => _.find(this.answers, (answer: Answer) => answer._id === comment.answerId));
+      return _.filter(answers, (a: Answer) => a);
     } else {
       return [];
     }

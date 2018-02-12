@@ -23,7 +23,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
   private _chartValues: any;
   private _conclusionId: string;
   private _innoid: string;
-  private _optionsArray: Array<any>;
 
   @Input() set showDetails(value: boolean) {
     this._showDetails = value;
@@ -105,10 +104,10 @@ export class SharedMarketReportSectionComponent implements OnInit {
       });
   }
 
-  public getAnswers(commentsList: Array<any>): Array<any> {
+  public getAnswers(commentsList: Array<any>): Array<Answer> {
     if (this.answers) {
-      const answers = _.map(commentsList, comment => _.find(this.answers, (answer: any) => answer.id === comment.answerId));
-      return _.filter(answers, a => a);
+      const answers = _.map(commentsList, (comment: any) => _.find(this.answers, (answer: Answer) => answer._id === comment.answerId));
+      return _.filter(answers, (a: Answer) => a);
     } else {
       return [];
     }

@@ -79,7 +79,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     this.formData.valueChanges
       .distinctUntilChanged()
       .takeUntil(this.ngUnsubscribe)
-      .subscribe(newVersion => {
+      .subscribe(_ => {
         this.shouldSave = true;
       });
     PageScrollConfig.defaultDuration = 500;
@@ -197,7 +197,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
 
   public submitProjectToValidation (): void {
     this.save(() => {
-      this._innovationService.submitProjectToValidation(this._project._id).first().subscribe(data2 => {
+      this._innovationService.submitProjectToValidation(this._project._id).first().subscribe(_ => {
         this._router.navigate(['../']);
         this._notificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
       });
@@ -210,7 +210,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     this._innovationService
       .addMediaToInnovationCard(this._project._id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
       .first()
-      .subscribe(res => {
+      .subscribe((res: Innovation) => {
         this._project = res;
     });
   }
@@ -226,17 +226,17 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   public setMediaAsPrimary (media: Media): void {
     this._innovationService.setPrincipalMediaOfInnovationCard(this._project._id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
       .first()
-      .subscribe(res => {
-      this._project = res;
-    });
+      .subscribe((res: Innovation) => {
+        this._project = res;
+      });
   }
 
   public deleteMedia (media: Media): void {
     this._innovationService.deleteMediaOfInnovationCard(this._project._id, this._project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
       .first()
-      .subscribe(res => {
-      this._project = res;
-    });
+      .subscribe((res: Innovation) => {
+        this._project = res;
+      });
   }
 
   /**
@@ -261,14 +261,14 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   }
 
   public validateProject (): void {
-    this._innovationService.validate(this._project._id).first().subscribe(data => {
+    this._innovationService.validate(this._project._id).first().subscribe(_ => {
       this._notificationsService.success('Projet validé', 'Le projet a bien été validé');
       this._router.navigate(['/admin']);
     });
   }
 
   public askRevision (): void {
-    this._innovationService.askRevision(this._project._id).first().subscribe(data => {
+    this._innovationService.askRevision(this._project._id).first().subscribe(_ => {
       this._notificationsService.success('Projet en révision', 'Le projet a été passé en status de révision, veuillez avertir le propriétaire des chagements à effectuer');
       this._router.navigate(['/admin']);
     });
@@ -276,7 +276,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
 
   public addCollaborators (): void {
     if (this.collaborators_emails !== '') {
-      this._innovationService.inviteCollaborators(this._project._id, this.collaborators_emails).first().subscribe(data => {
+      this._innovationService.inviteCollaborators(this._project._id, this.collaborators_emails).first().subscribe((data: any) => {
         if (data.usersAdded.length || data.invitationsToSend.length || data.invitationsToSendAgain.length) {
           this.collaboratorsAddingProcess = data;
           this.collaboratorsAddingProcess.inviteUrl = this._innovationService.getInvitationUrl();
@@ -293,7 +293,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   }
 
   public removeCollaborator (collaborator: User): void {
-    this._innovationService.removeCollaborator(this._project._id, collaborator).first().subscribe(collaborators => {
+    this._innovationService.removeCollaborator(this._project._id, collaborator).first().subscribe((collaborators: Array<User>) => {
       this.project.collaborators = collaborators;
     });
   }

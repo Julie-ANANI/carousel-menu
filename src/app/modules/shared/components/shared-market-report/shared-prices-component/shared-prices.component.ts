@@ -16,7 +16,7 @@ export class SharedPricesComponent implements OnInit {
 
   @Input() public rawData: any;
 
-  private host: any; // D3 object referebcing host dom object
+  private host: any; // D3 object referencing host dom object
   private svg: any; // SVG in which we will print our chart
   private margin: number; // Space between the svg borders and the actual chart graphic
   private width: number; // Component width
@@ -63,7 +63,7 @@ export class SharedPricesComponent implements OnInit {
     // Init data
     this.data = [];
     const data = this.data;
-    _.map(this.rawData, function (n) {
+    _.map(this.rawData, function (n: any) {
       for (let i = 1; i <= n['count']; i++) {
         if (i < 50) {
           data.push({value: n['value'], count: i})

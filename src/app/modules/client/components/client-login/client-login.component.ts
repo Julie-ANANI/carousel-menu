@@ -82,15 +82,15 @@ export class ClientLoginComponent implements OnInit {
   }
 
   public changePassword() {
-    if (!this.formData.get('email').value) {
+    if (!this.formData.get('email')!.value) {
       this._notificationsService.error('ERROR.LOGIN.EMPTY_EMAIL', 'ERROR.LOGIN.EMAIL_PLEASE');
     }
     else {
-      this._userService.changePassword(this.formData.get('email').value)
+      this._userService.changePassword(this.formData.get('email')!.value)
         .first()
-        .subscribe(res => {
+        .subscribe(_ => {
           this._notificationsService.success('ERROR.LOGIN.EMAIL_SENT', 'ERROR.LOGIN.CHANGE_PASSWORD');
-        }, err => {
+        }, _ => {
           this._notificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_NOT_FOUND');
         });
     }

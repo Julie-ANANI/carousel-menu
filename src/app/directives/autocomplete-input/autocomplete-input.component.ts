@@ -24,14 +24,13 @@ export class AutocompleteInputComponent implements OnInit {
 
   companyName: FormControl = new FormControl();
   answerList: Array<{name: string, domain: string, flag: string; url:string, rating: number}> = [];
-  optionsList: Array<any> = [];// Observable<{name: string, domain: string, flag: string}[]>;
-  answer = "";
+  answer = '';
 
   /*
    * Component configuration
    */
-  private _placeholder = "";
-  private _autocompleteType = "";
+  private _placeholder = '';
+  private _autocompleteType = '';
   private _identifier: string;
   private _canOrder: boolean;
   ////////////////////////////////////////////////////////////////////

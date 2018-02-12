@@ -4,4 +4,5 @@ interface NodeModule {
   id: string;
 }
 
+declare module 'lodash';
 declare module '@umius/umi-session-verifications';

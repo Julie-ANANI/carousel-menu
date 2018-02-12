@@ -52,7 +52,7 @@ export class ClientMyProjectsComponent implements OnInit {
     this._innovationService
       .remove(projectId)
       .first()
-      .subscribe(projectRemoved => {
+      .subscribe(_ => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
       });
@@ -72,11 +72,7 @@ export class ClientMyProjectsComponent implements OnInit {
   }
 
   private _getProjectIndex(projectId: string): number {
-    for (const project of this._projects) {
-      if (projectId === project._id) {
-        return this._projects.indexOf(project);
-      }
-    }
+    return this._projects.findIndex((x) => x._id === projectId);
   }
 
   public getPrincipalMedia(project: Innovation): string {
