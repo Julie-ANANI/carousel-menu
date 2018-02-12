@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
-import { ISubscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
+import { Section } from '../../../../../../models/section';
 
 @Component({
   templateUrl: './admin-sections-list.component.html',
@@ -9,10 +9,9 @@ import { Router } from '@angular/router';
 })
 export class AdminSectionsListComponent implements OnInit {
 
-  private _subscriptions: ISubscription;
-  private _sections: [any];
-  public selectedSectionIdToBeDeleted: any = null;
-  public selectedSectionToBeCloned: any = null;
+  private _sections: Array<Section>;
+  public selectedSectionIdToBeDeleted: string = null;
+  public selectedSectionToBeCloned: Section = null;
   private _total: number;
   private _config = {
     fields: '',
@@ -31,16 +30,14 @@ export class AdminSectionsListComponent implements OnInit {
     this.loadSections(this._config);
   }
 
-  ngOnDestroy() {
-    if (this._subscriptions) this._subscriptions.unsubscribe();
-  }
-
   loadSections(config: any): void {
     this._config = config;
-    this._presetService.getAllSections(this._config).subscribe(sections => {
-      this._sections = sections.result;
-      this._total = sections._metadata.totalCount;
-    });
+    this._presetService.getAllSections(this._config)
+      .first()
+      .subscribe(sections => {
+        this._sections = sections.result;
+        this._total = sections._metadata.totalCount;
+      });
   }
 
   private _getSectionIndex(sectionId: string): number {
@@ -54,21 +51,24 @@ export class AdminSectionsListComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeSection(sectionId) {
+  public removeSection(sectionId: string) {
     this._presetService
       .removeSection(sectionId)
+      .first()
       .subscribe(sectionRemoved => {
         this._sections.splice(this._getSectionIndex(sectionId), 1);
         this.selectedSectionIdToBeDeleted = null;
       });
   }
 
-  public cloneSection(clonedSection) {
+  public cloneSection(clonedSection: Section) {
     delete clonedSection._id;
-    this._subscriptions = this._presetService.createSection(clonedSection).subscribe(section => {
-      this._router.navigate(['/admin/sections/' + section._id])
-    });
-  } 
+    this._presetService.createSection(clonedSection)
+      .first()
+      .subscribe(section => {
+        this._router.navigate(['/admin/sections/' + section._id])
+      });
+  }
 
   set config(value: any) { this._config = value; }
   get config(): any { return this._config; }

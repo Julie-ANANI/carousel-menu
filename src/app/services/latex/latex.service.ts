@@ -19,8 +19,8 @@ export class LatexService {
   }
 
   public downloadJob(jobId: string, jobType: string): Observable<any> {
-    //let requestOptions: RequestOptionsArgs;
-    //requestOptions.responseType = ResponseContentType.Blob;
+    // let requestOptions: RequestOptionsArgs;
+    // requestOptions.responseType = ResponseContentType.Blob;
     return this._http.download(`/latex/job?jobId=${jobId}&jobType=${jobType}`)
       .map((res: Response) => res.blob())
       .catch((error: Response) => {

@@ -48,18 +48,22 @@ export class ClientMyAccountComponent implements OnInit {
   }
 
   public changePassword() {
-    this._userService.changePassword().subscribe(res => {
-      this._router.navigate(['/reset-password/' + res.token])
-    });
+    this._userService.changePassword()
+      .first()
+      .subscribe(res => {
+        this._router.navigate(['/reset-password/' + res.token])
+      });
   }
 
-  public onSubmit(form) {
-    if (form.valid) {
-      const user = new User(form.value);
-      this._userService.update(user).subscribe(
+  public onSubmit() {
+    if (this.formData.valid) {
+      const user = new User(this.formData.value);
+      this._userService.update(user)
+        .first()
+        .subscribe(
         data => {
           this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
-          form.patchValue(data);
+          this.formData.patchValue(data);
         },
         error => {
           this._notificationsService.error('ERROR.ERROR', error.message);
@@ -70,17 +74,17 @@ export class ClientMyAccountComponent implements OnInit {
     }
   }
 
-  public addSector(event) {
-    this.formData.get('sectors').setValue(event.value);
+  public addSector(event: {value: Array<string>}) {
+    this.formData.get('sectors')!.setValue(event.value);
   }
 
-  public addTechnology(event) {
-    this.formData.get('technologies').setValue(event.value);
+  public addTechnology(event: {value: Array<string>}) {
+    this.formData.get('technologies')!.setValue(event.value);
   }
 
   public deleteAccount () {
-    this._userService.delete().subscribe((res) => {
-      this._authService.logout().subscribe(() => {
+    this._userService.delete().first().subscribe(_ => {
+      this._authService.logout().first().subscribe(() => {
         this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
         this._router.navigate(['/']);
       });

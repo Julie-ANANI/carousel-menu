@@ -3,6 +3,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { DashboardService } from '../../../../services/dashboard/dashboard.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { SearchService } from '../../../../services/search/search.service';
+import { User } from '../../../../models/user.model';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
@@ -12,17 +13,25 @@ import { Subject } from 'rxjs/Subject';
 })
 export class AdminDashboardComponent implements OnInit {
 
-  public operators = [];
+  public operators: Array<User> = [];
   public operatorId = '';
 
   public nbDaysOfStats = 1;
 
-  public operatorData = {
+  public operatorData: {
+    nbProjectsToValidate: number,
+    nbProjectsToTreat: number
+  } = {
     nbProjectsToValidate: null,
     nbProjectsToTreat: null
   };
 
-  public statistics = {
+  public statistics: {
+    percentFoundPros: number | 'NA',
+    percentFoundEmails: number | 'NA',
+    percentOkEmails: number | 'NA',
+    percentReceivedEmails: number | 'NA'
+  } = {
     percentFoundPros: null,
     percentFoundEmails: null,
     percentOkEmails: null,
@@ -40,30 +49,30 @@ export class AdminDashboardComponent implements OnInit {
     this._titleService.setTitle('Admin Dashboard');
 
     if (this._authService.user.isOperator) {
-      this.operatorId = this._authService.user._id;
+      this.operatorId = this._authService.user.id;
     }
 
-    this._dashboardService.getOperators().subscribe((operators) => this.operators = operators.result);
+    this._dashboardService.getOperators().first().subscribe((operators) => this.operators = operators.result);
 
-    this._dashboardService.getOperatorData(this.operatorId).subscribe((operatorData) => this.operatorData = operatorData);
+    this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData) => this.operatorData = operatorData);
 
     this.getPeriodStats();
   }
 
-  public newOperatorSelected(event) {
+  public newOperatorSelected(operatorId: string) {
     this.refreshNeededEmitter.next({
-      operatorId: event
+      operatorId: operatorId
     });
-    this._dashboardService.getOperatorData(this.operatorId).subscribe((operatorData) => this.operatorData = operatorData);
+    this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData) => this.operatorData = operatorData);
   }
 
   public getPeriodStats() {
-    this._searchService.getEmailStats(this.nbDaysOfStats).subscribe(stats => {
+    this._searchService.getEmailStats(this.nbDaysOfStats).first().subscribe(stats => {
       const totalMails = stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut;
       this.statistics.percentFoundEmails = totalMails ? Math.round(stats.total.found / totalMails * 100) : 'NA';
-      this.statistics.percentFoundPros = 'XX';
+      this.statistics.percentFoundPros = 'NA';
       this.statistics.percentOkEmails =  stats.total.found ? Math.round((stats.total.confidence['100'] || 0) / stats.total.found * 100) : 'NA';
-      this.statistics.percentReceivedEmails = 'XX';
+      this.statistics.percentReceivedEmails = 'NA';
     });
   }
 

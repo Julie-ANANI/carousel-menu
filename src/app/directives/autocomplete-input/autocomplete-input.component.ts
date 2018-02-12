@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'lodash';
 
@@ -23,14 +24,13 @@ export class AutocompleteInputComponent implements OnInit {
 
   companyName: FormControl = new FormControl();
   answerList: Array<{name: string, domain: string, flag: string; url:string, rating: number}> = [];
-  optionsList: Array<any> = [];// Observable<{name: string, domain: string, flag: string}[]>;
-  answer = "";
+  answer = '';
 
   /*
    * Component configuration
    */
-  private _placeholder = "";
-  private _autocompleteType = "";
+  private _placeholder = '';
+  private _autocompleteType = '';
   private _identifier: string;
   private _canOrder: boolean;
   ////////////////////////////////////////////////////////////////////
@@ -72,16 +72,16 @@ export class AutocompleteInputComponent implements OnInit {
 
   ngOnInit() {
     this.inputForm = this._fbuilder.group({
-      answer : "",
+      answer : '',
     });
   }
 
-  public suggestions(keyword: any) {
+  public suggestions(keyword: any): Observable<Array<{name: string, domain: string, flag: string}>> {
       const queryConf = {
         keyword: keyword,
         type: this._autocompleteType
       };
-      return this._autocompleteService.get(queryConf).catch(_=>[]);
+      return this._autocompleteService.get(queryConf);
   }
 
   public autocompleListFormatter = (data: any) : SafeHtml => {
@@ -129,7 +129,7 @@ export class AutocompleteInputComponent implements OnInit {
     this.update.emit({value: this.answerList});
   }
 
-  thumbsUp(index) {
+  thumbsUp(index: number) {
     if (this.adminMode) {
       if (this.answerList[index].rating === 2) {
         this.answerList[index].rating = 1;
@@ -140,7 +140,7 @@ export class AutocompleteInputComponent implements OnInit {
     }
   }
 
-  thumbsDown(index) {
+  thumbsDown(index: number) {
     if (this.adminMode) {
       if (this.answerList[index].rating === 0) {
         this.answerList[index].rating = 1;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 
@@ -7,12 +7,9 @@ import { environment } from '../../../../../environments/environment';
   templateUrl: './shared-header.component.html',
   styleUrls: ['./shared-header.component.scss']
 })
-export class SharedHeaderComponent implements OnInit {
+export class SharedHeaderComponent {
 
   constructor(private _authService: AuthService) {}
-
-  ngOnInit(): void {
-  }
 
   public logoName(): string {
     return `logo-${environment.domain || 'umi.us'}.png`;

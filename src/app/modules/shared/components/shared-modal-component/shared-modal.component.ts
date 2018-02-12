@@ -15,9 +15,9 @@ export class SharedModalComponent implements OnInit {
   private _active = false;
 
   ngOnInit() {
-    if (this.size != 'lg' && this.size !='md' && this.size !='sm') {
+    if (this.size !== 'lg' && this.size !== 'md' && this.size !== 'sm') {
       this.size = 'md';
-      console.log("Wrong modal size specified, medium has been used");
+      console.log('Wrong modal size specified, medium has been used');
     }
   }
 

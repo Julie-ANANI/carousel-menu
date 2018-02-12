@@ -4,6 +4,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../../../environments/environment';
+import { User } from '../../../../models/user.model';
 
 @Component({
   selector: 'app-client-welcome',
@@ -12,7 +13,7 @@ import { environment } from '../../../../../environments/environment';
 })
 export class ClientWelcomeComponent implements OnInit {
 
-  private _user = {};
+  private _user: User;
   public tokenEmail: string;
 
   constructor(private _authService: AuthService,
@@ -20,9 +21,9 @@ export class ClientWelcomeComponent implements OnInit {
               private _router: Router,
               private _translateService: TranslateService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this._user = this._authService.user;
-    if(!this._user) {
+    if (!this._user) {
       this._router.navigate(['/logout']);
     }
   }
@@ -30,6 +31,7 @@ export class ClientWelcomeComponent implements OnInit {
   public acceptTerms(): void {
     this._authService.user.state = 'confirmed';
     this._userService.activate(this._authService.user.state, this.tokenEmail)
+      .first()
       .subscribe(res => {
         if (res.emailVerified === true) {
           this._authService.emailVerified = true;

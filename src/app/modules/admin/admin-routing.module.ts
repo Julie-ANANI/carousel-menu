@@ -21,6 +21,7 @@ import { AdminPresetComponent } from './components/admin-preset/admin-preset.com
 import { presetsRoutes } from './components/admin-preset/admin-presets/admin-presets-routing.module';
 import { questionsRoutes } from './components/admin-preset/admin-questions/admin-questions-routing.module';
 import { sectionsRoutes } from './components/admin-preset/admin-sections/admin-sections-routing.module';
+import { searchRoutes } from './components/admin-search/admin-search-routing.module';
 
 const adminRoutes: Routes = [
   {
@@ -70,8 +71,9 @@ const adminRoutes: Routes = [
       },
       {
         path: 'search',
+        component: AdminSearchComponent,
         children: [
-          { path: '', component: AdminSearchComponent, pathMatch: 'full' }
+          ...searchRoutes
         ]
       },
       {

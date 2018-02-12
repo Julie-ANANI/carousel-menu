@@ -8,7 +8,7 @@ export class EmailService {
   constructor(private _http: Http) { }
 
   public stopBatch(batchId: string): Observable<any> {
-    return this._http.post( '/mail/queue/'+batchId, {newStatus: 'CANCELED'} )
+    return this._http.post( '/mail/queue/' + batchId, {newStatus: 'CANCELED'} )
       .map((res: Response) => {
         const response = res.json();
         return response;
@@ -17,7 +17,7 @@ export class EmailService {
   }
 
   public getBatch(batchId: string): Observable<any> {
-    return this._http.get( '/mail/queue/'+batchId )
+    return this._http.get( '/mail/queue/' + batchId )
       .map((res: Response) => {
         const response = res.json();
         return response;
@@ -26,14 +26,14 @@ export class EmailService {
   }
 
   public getQueue(params: any): Observable<any> {
-    let paramStr = Object.keys(params).map(key=>{
+    let paramStr = Object.keys(params).map(key => {
       return encodeURIComponent(key) + '=' +
         encodeURIComponent(params[key]);
     }).join('&');
-    if(paramStr.length) {
+    if (paramStr.length) {
       paramStr = '?' + paramStr;
     }
-    return this._http.get('/mail/queue'+paramStr)
+    return this._http.get('/mail/queue' + paramStr)
       .map((res: Response) => {
         const response = res.json();
         return response;

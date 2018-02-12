@@ -18,7 +18,7 @@ export class AuthService {
   private _confirmed = false;
   private _redirectUrl: string;
 
-  private _user: any;
+  private _user: User;
 
   constructor(private _http: Http,
               private _cookieService: CookieService) {
@@ -102,46 +102,18 @@ export class AuthService {
     this._cookieService.put('hasBeenAdmin', `${newValue}`);
   }
 
-  get isAuthenticated$(): Observable<boolean> {
-    return this._authenticatedSource.asObservable();
-  }
-
-  get isAuthenticated(): boolean {
-    return this._authenticated;
-  }
-
-  get isConfirmed(): boolean {
-    return this._confirmed;
-  }
-
-  get adminLevel(): number {
-    return this._admin;
-  }
-
-  get user (): any {
-    return this._user;
-  }
-
-  get userId (): string {
-    return this._user ? this._user.id : null;
-  }
-
+  get isAuthenticated$(): Observable<boolean> { return this._authenticatedSource.asObservable(); }
+  get isAuthenticated(): boolean { return this._authenticated; }
+  get isConfirmed(): boolean { return this._confirmed; }
+  get adminLevel(): number { return this._admin; }
+  get user () { return this._user; }
+  get userId (): string { return this._user ? this._user.id : ''; }
   get isAcceptingCookies(): boolean { // CNIL
     return true;
   }
-
-  get emailVerified(): boolean {
-    return this._user && this._user.emailVerified || false;
-  }
-
-  set emailVerified(value: boolean) {
-    this._user.emailVerified = value;
-  }
-
-  set isConfirmed(confirmed: boolean) {
-    this._confirmed = confirmed;
-  }
-
+  get emailVerified(): boolean { return this._user && this._user.emailVerified || false; }
+  set emailVerified(value: boolean) { this._user.emailVerified = value; }
+  set isConfirmed(confirmed: boolean) { this._confirmed = confirmed; }
   set redirectUrl (redirectUrl: string) {
     if (urlRegEx.test(redirectUrl)) {
       this._redirectUrl = redirectUrl;
