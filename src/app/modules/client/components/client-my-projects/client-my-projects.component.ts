@@ -48,11 +48,12 @@ export class ClientMyProjectsComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeProject(projectId: string): void {
+  public removeProject(event: Event, projectId: string): void {
+    event.preventDefault();
     this._innovationService
       .remove(projectId)
       .first()
-      .subscribe(projectRemoved => {
+      .subscribe(_ => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
       });
@@ -72,11 +73,7 @@ export class ClientMyProjectsComponent implements OnInit {
   }
 
   private _getProjectIndex(projectId: string): number {
-    for (const project of this._projects) {
-      if (projectId === project._id) {
-        return this._projects.indexOf(project);
-      }
-    }
+    return this._projects.findIndex((x) => x._id === projectId);
   }
 
   public getPrincipalMedia(project: Innovation): string {

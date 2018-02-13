@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
@@ -9,7 +9,6 @@ import { Question } from '../../../../../../models/question';
 
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   templateUrl: './admin-questions-edit.component.html',
@@ -24,14 +23,12 @@ export class AdminQuestionsEditComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _presetService: PresetService,
               private _authService: AuthService,
-              private _domSanitizer: DomSanitizer,
               private _translateService: TranslateService,
-              private _router: Router,
               private _notificationsService: TranslateNotificationsService,
               private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    const subs = this._activatedRoute.params.subscribe(params => {
+    this._activatedRoute.params.subscribe(params => {
       const questionId = params['questionId'];
       this._presetService.getQuestion(questionId).first().subscribe(question => {
         this._question = question;
@@ -67,8 +64,9 @@ export class AdminQuestionsEditComponent implements OnInit {
    * Sauvegarde
    * @param callback
    */
-  public save() {
-    const saveSubs = this._presetService
+  public save(event: Event) {
+    event.preventDefault();
+    this._presetService
       .saveQuestion(this._question._id, this.formData.value)
       .first()
       .subscribe(data => {
@@ -98,11 +96,13 @@ export class AdminQuestionsEditComponent implements OnInit {
     })
   }
 
-  addOption() {
+  addOption(event: Event): void {
+    event.preventDefault();
     this.options.push(this.buildOption());
   }
 
-  removeOption(index: number) {
+  removeOption(event: Event, index: number): void {
+    event.preventDefault();
     const tmp = this.options.controls.splice(index, 1);
     this.options.patchValue(tmp);
   }

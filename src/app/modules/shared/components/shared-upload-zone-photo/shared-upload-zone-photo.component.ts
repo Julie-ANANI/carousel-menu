@@ -21,11 +21,10 @@ export class SharedUploadZonePhotoComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
 
 
-  constructor(private _notificationsService: TranslateNotificationsService) {}
+  constructor(private notificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
     this._filters = Array<FilterFunction>();
-    // this._createFilter(this.type);
     this._uploader = new FileUploader({
       url: environment.apiUrl + '/media',
       autoUpload: true,
@@ -37,16 +36,16 @@ export class SharedUploadZonePhotoComponent implements OnInit {
     uo.headers = [{ name: 'api-token', value : 'umi-front-application,TXnKAVHh0xpiFlC8D01S3e8ZkD45VIDJ' } ];
     this._uploader.setOptions(uo);
 
-    this._uploader.onBeforeUploadItem = (item: FileItem): any => {
+    this._uploader.onBeforeUploadItem = (_: FileItem): void => {
       this.loading = true;
     };
 
-    this._uploader.onErrorItem = (item: FileItem, response: string, status: number) => {
-      this._notificationsService.error('ERROR.ERROR', response);
+    this._uploader.onErrorItem = (_item: FileItem, response: string, _status: number) => {
+      this.notificationsService.error('ERROR.ERROR', response);
       this.loading = false;
     };
 
-    this._uploader.onCompleteItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+    this._uploader.onCompleteItem = (_item: FileItem, response: string, status: number, _header: ParsedResponseHeaders) => {
       if (status !== 200) {
         console.error(response);
       } else {

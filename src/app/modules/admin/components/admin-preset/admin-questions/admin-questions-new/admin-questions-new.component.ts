@@ -20,7 +20,7 @@ export class AdminQuestionsNewComponent {
               private _formBuilder: FormBuilder,
               private _presetService: PresetService) { }
 
-  public onSubmit({value, valid}: { value: any, valid: boolean }) {
+  public onSubmit({value}: { value: any }) {
     const newQuestion = {
       domain: environment.domain,
       identifier: value.identifier,

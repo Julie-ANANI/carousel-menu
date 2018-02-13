@@ -20,11 +20,11 @@ export class ClientLogoutComponent implements OnInit {
     this._authService.logout()
       .first()
       .subscribe(
-        res => {
+        _ => {
           this._notificationsService.success('ERROR.LOGIN.LOGOUT', 'ERROR.LOGIN.LOGOUT_TEXT');
           this._location.back();
         },
-        error => {
+        _ => {
           this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
           this._location.back();
         });

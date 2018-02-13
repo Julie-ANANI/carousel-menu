@@ -5,7 +5,7 @@
       <h1>{{total}} {{ 'COMMON.USERS' | translate }}</h1>
 
 
-      <button class="btn btn-lg btn-primary" (click)="inviteUser()">{{ 'USERS.INVITE_USER' | translate }}</button>
+      <button class="btn btn-lg btn-primary" (click)="inviteUser($event)">{{ 'USERS.INVITE_USER' | translate }}</button>
 
       <!-- TODO
       <div class="invitation-pending" *ngIf="pending_invitations && pending_invitations.length > 0">
@@ -57,7 +57,7 @@
           <td>{{user.jobTitle}}</td>
           <td>{{user.domain}}</td>
           <td class="user-added">{{user.created | date : dateFormat}}</td>
-          <td class="user-project"><a class="c-hand" (click)="loadInnovations(user._id)">--</a></td>
+          <td class="user-project"><a class="c-hand" (click)="loadInnovations($event, user._id)">--</a></td>
           <td class="user-launched-study"><a href="#" title="">--</a></td>
         </tr>
 

@@ -5,70 +5,81 @@
   <p class="empty-title h5">{{ 'PRESETS.QUESTION.NONE.TITLE' | translate }}</p>
   <p class="empty-subtitle">{{ 'PRESETS.QUESTION.NONE.CONTENT' | translate }}</p>
   <div class="empty-action">
-    <button [routerLink]="'/admin/questions/new'" class="btn btn-lg btn-primary">{{ 'PRESETS.QUESTION.ADD' | translate }} <i class="icon icon-arrow-right"></i></button>
+    <button [routerLink]="'/admin/questions/new'" class="btn btn-lg btn-primary" (click)="$event.preventDefault()">
+      {{ 'PRESETS.QUESTION.ADD' | translate }} <i class="icon icon-arrow-right"></i>
+    </button>
   </div>
 </div>
 
 <div class="columns" *ngIf="questions && questions.length">
-  <button [routerLink]="'/admin/questions/new'" class="btn btn-lg btn-primary">{{ 'PRESETS.QUESTION.ADD' | translate }} <i class="icon icon-arrow-right"></i></button>
+  <button [routerLink]="'/admin/questions/new'" class="btn btn-lg btn-primary" (click)="$event.preventDefault()">
+    {{ 'PRESETS.QUESTION.ADD' | translate }} <i class="icon icon-arrow-right"></i>
+  </button>
   <table class="table questions" wt-responsive-table>
     <thead>
-    <tr>
-      <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'name'">{{ 'COMMON.NAME' | translate }}</sq-sort></th>
-      <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'controlType'">{{ 'COMMON.TYPE' | translate }}</sq-sort></th>
-      <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'updated'">{{ 'COMMON.UPDATED' | translate }}</sq-sort></th>
-      <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'created'">{{ 'COMMON.CREATED' | translate }}</sq-sort></th>
-      <th></th>
-      <th></th>
-    </tr>
+      <tr>
+        <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'name'">{{ 'COMMON.NAME' | translate }}</sq-sort></th>
+        <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'controlType'">{{ 'COMMON.TYPE' | translate }}</sq-sort></th>
+        <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'updated'">{{ 'COMMON.UPDATED' | translate }}</sq-sort></th>
+        <th><sq-sort [config]="config" (configChange)="loadQuestions($event)" [prop]="'created'">{{ 'COMMON.CREATED' | translate }}</sq-sort></th>
+        <th></th>
+        <th></th>
+      </tr>
     </thead>
     <tbody>
-
-    <tr *ngFor="let question of questions">
-      <td><a [routerLink]="['/admin/questions/' + question._id]">{{question.identifier}}</a></td>
-      <td>{{question.controlType}}</td>
-      <td>{{question.created | date : dateFormat}}</td>
-      <td>{{question.updated | date : dateFormat}}</td>
-      <td><button class="btn btn-primary" (click)="selectedQuestionToBeCloned=question"><i class="fa fa-copy"></i> {{ 'COMMON.CLONE' | translate }}</button></td>
-      <td><a class="delete c-hand" aria-label="Close" role="button" (click)="selectedQuestionIdToBeDeleted=question._id">
-        <i class="icon icon-delete"></i>
-      </a></td>
-    </tr>
+      <tr *ngFor="let question of questions">
+        <td><a [routerLink]="['/admin/questions/' + question._id]">{{question.identifier}}</a></td>
+        <td>{{question.controlType}}</td>
+        <td>{{question.created | date : dateFormat}}</td>
+        <td>{{question.updated | date : dateFormat}}</td>
+        <td>
+          <button class="btn btn-primary" (click)="(selectedQuestionToBeCloned = question) && $event.preventDefault()">
+            <i class="fa fa-copy"></i> {{ 'COMMON.CLONE' | translate }}
+          </button>
+        </td>
+        <td><a class="delete c-hand" aria-label="Close" role="button" (click)="(selectedQuestionIdToBeDeleted = question._id) && $event.preventDefault()">
+          <i class="icon icon-delete"></i>
+        </a></td>
+      </tr>
     </tbody>
     <tfoot>
-    <tr>
-      <td colspan="12">
-        <sqPagination [config]="config" (configChange)="loadQuestions($event)" [total]="total"></sqPagination>
-      </td>
-    </tr>
+      <tr>
+        <td colspan="12">
+          <sqPagination [config]="config" (configChange)="loadQuestions($event)" [total]="total"></sqPagination>
+        </td>
+      </tr>
     </tfoot>
   </table>
 </div>
 
 <!-- MODAL : Are you sure you want to delete this question ? -->
 <div class="modal" [ngClass]="{'active': selectedQuestionIdToBeDeleted}">
-  <div class="modal-overlay" (click)="selectedQuestionIdToBeDeleted = null"></div>
+  <div class="modal-overlay" (click)="(selectedQuestionIdToBeDeleted = null) && $event.preventDefault()"></div>
   <div class="modal-container">
     <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="selectedQuestionIdToBeDeleted = null"></button>
+      <button class="btn btn-clear float-right" (click)="(selectedQuestionIdToBeDeleted = null) && $event.preventDefault()"></button>
       <div class="modal-title h5">{{ 'PRESETS.QUESTION.DELETE_MODAL.TITLE' | translate }}</div>
     </div>
     <div class="modal-body">
       <div class="content">{{ 'PRESETS.QUESTION.DELETE_MODAL.CONTENT' | translate }}</div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-link" (click)="removeQuestion(selectedQuestionIdToBeDeleted)">{{ 'COMMON.DELETE' | translate }}</button>
-      <button class="btn btn-primary" (click)="selectedQuestionIdToBeDeleted = null">{{ 'COMMON.CANCEL' | translate }}</button>
+      <button class="btn btn-link" (click)="removeQuestion($event, selectedQuestionIdToBeDeleted)">
+        {{ 'COMMON.DELETE' | translate }}
+      </button>
+      <button class="btn btn-primary" (click)="(selectedQuestionIdToBeDeleted = null) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
     </div>
   </div>
 </div>
 
 <!-- MODAL : Nouveau nom de la question clônée ? -->
 <div class="modal" [ngClass]="{'active': selectedQuestionToBeCloned}">
-  <div class="modal-overlay" (click)="selectedQuestionToBeCloned = null"></div>
+  <div class="modal-overlay" (click)="(selectedQuestionToBeCloned = null) && $event.preventDefault()"></div>
   <div class="modal-container">
     <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="selectedQuestionToBeCloned = null"></button>
+      <button class="btn btn-clear float-right" (click)="(selectedQuestionToBeCloned = null) && $event.preventDefault()"></button>
       <div class="modal-title h5">{{ 'PRESETS.QUESTION.CLONE_MODAL.TITLE' | translate }}</div>
     </div>
     <div class="modal-body">
@@ -78,8 +89,11 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-link" [disabled]="!selectedQuestionToBeCloned || !selectedQuestionToBeCloned.identifier" (click)="cloneQuestion(selectedQuestionToBeCloned)">{{ 'COMMON.CLONE' | translate }}</button>
-      <button class="btn btn-primary" (click)="selectedQuestionToBeCloned = null">{{ 'COMMON.CANCEL' | translate }}</button>
+      <button class="btn btn-link" [disabled]="!selectedQuestionToBeCloned || !selectedQuestionToBeCloned.identifier"
+              (click)="cloneQuestion($event, selectedQuestionToBeCloned)">{{ 'COMMON.CLONE' | translate }}</button>
+      <button class="btn btn-primary" (click)="(selectedQuestionToBeCloned = null) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
     </div>
   </div>
 </div>

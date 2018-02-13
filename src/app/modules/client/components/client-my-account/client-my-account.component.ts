@@ -47,7 +47,8 @@ export class ClientMyAccountComponent implements OnInit {
     });
   }
 
-  public changePassword() {
+  public changePassword(event: Event) {
+    event.preventDefault();
     this._userService.changePassword()
       .first()
       .subscribe(res => {
@@ -75,15 +76,16 @@ export class ClientMyAccountComponent implements OnInit {
   }
 
   public addSector(event: {value: Array<string>}) {
-    this.formData.get('sectors').setValue(event.value);
+    this.formData.get('sectors')!.setValue(event.value);
   }
 
   public addTechnology(event: {value: Array<string>}) {
-    this.formData.get('technologies').setValue(event.value);
+    this.formData.get('technologies')!.setValue(event.value);
   }
 
-  public deleteAccount () {
-    this._userService.delete().first().subscribe((res) => {
+  public deleteAccount (event: Event) {
+    event.preventDefault();
+    this._userService.delete().first().subscribe(_ => {
       this._authService.logout().first().subscribe(() => {
         this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
         this._router.navigate(['/']);

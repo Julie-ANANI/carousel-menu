@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { Innovation } from '../../models/innovation';
+import { InnovCard } from '../../models/innov-card';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -7,27 +9,27 @@ export class ShareService {
 
   constructor() {}
 
-  private _getShareUrl (project: any): string {
+  private _getShareUrl (project: Innovation): string {
     return encodeURIComponent(`${environment.innovationUrl}/#/projects/${project._id}`);
   }
 
-  private _getTitle (project: any, lang: string): string {
-    const innovationCard = _.find(project.innovationCards, card => card['lang'] == lang);
+  private _getTitle (project: Innovation, lang: string): string {
+    const innovationCard = _.find(project.innovationCards, (card: InnovCard) => card['lang'] === lang);
     if (innovationCard) {
-      return encodeURIComponent(innovationCard['title']);
+      return encodeURIComponent(innovationCard['title'] || '');
     }
     return '';
   }
 
-  private _getSummary (project: any, lang: string): string {
-    const innovationCard = _.find(project.innovationCards, card => card['lang'] == lang);
+  private _getSummary (project: Innovation, lang: string): string {
+    const innovationCard = _.find(project.innovationCards, (card: InnovCard) => card['lang'] === lang);
     if (innovationCard) {
-      return encodeURIComponent(innovationCard['summary']);
+      return encodeURIComponent(innovationCard['summary'] || '');
     }
     return '';
   }
 
-  public linkedinProjectShareLink (project: any, lang: string): string {
+  public linkedinProjectShareLink (project: Innovation, lang: string): string {
     lang = lang || 'en';
     return 'http://www.linkedin.com/shareArticle' +
       '?mini=true' +
@@ -37,14 +39,14 @@ export class ShareService {
       '&source=' + 'UMI'; // En changeant, ne pas oublier de transformer en URL avec encodeURIComponent()
   }
 
-  public twitterProjectShareLink (project: any, lang: string): string {
+  public twitterProjectShareLink (project: Innovation, lang: string): string {
     lang = lang || 'en';
     const twitterAccount = 'uMotionIdeas';
     return 'http://twitter.com/home' +
       '?status=' + this._getTitle(project, lang) + '%20' + this._getShareUrl(project) + '%20%40' + twitterAccount;
   }
 
-  public facebookProjectShareLink (project: any): string {
+  public facebookProjectShareLink (project: Innovation): string {
     return 'https://www.facebook.com/dialog/feed' +
       '?app_id=' + '1172496952780763' +
       '&version=' + 'v2.4' +
@@ -52,7 +54,7 @@ export class ShareService {
       '&link=' + this._getShareUrl(project);
   }
 
-  public mailProjectShareLink (project: any, lang: string) {
+  public mailProjectShareLink (project: Innovation, lang: string) {
     lang = lang || 'en';
     return `mailto:?body=${this._getSummary(project, lang)}%0A${this._getShareUrl(project)}&subject=${this._getTitle(project, lang)}`
   }

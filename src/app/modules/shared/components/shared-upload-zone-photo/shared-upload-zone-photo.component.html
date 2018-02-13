@@ -5,10 +5,11 @@
   <div class="upload-button" ngClass="{error: errors.medias}">
 
     <div style="height:0;overflow:hidden">
-      <input type="file" ng2FileSelect [uploader]="uploader" id="fileInput" name="fileInput"  #fileInput />
+      <input type="file" ng2FileSelect [uploader]="uploader" id="fileInput" name="fileInput"  #fileInput
+        (click)="$event.preventDefault()" />
     </div>
 
-    <button class="btn btn-lg btn-primary" (click)="fileInput.click()" *ngIf="!loading">
+    <button class="btn btn-lg btn-primary" (click)="fileInput.click($event)" *ngIf="!loading">
       <i class="icon icon-upload"></i> {{ 'PROJECT_EDIT.MEDIA.UPLOAD' | translate }}
     </button>
 

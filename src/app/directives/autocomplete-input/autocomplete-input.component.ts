@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
-import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'lodash';
@@ -24,14 +24,13 @@ export class AutocompleteInputComponent implements OnInit {
 
   companyName: FormControl = new FormControl();
   answerList: Array<{name: string, domain: string, flag: string; url:string, rating: number}> = [];
-  optionsList: Array<any> = [];// Observable<{name: string, domain: string, flag: string}[]>;
-  answer = "";
+  answer = '';
 
   /*
    * Component configuration
    */
-  private _placeholder = "";
-  private _autocompleteType = "";
+  private _placeholder = '';
+  private _autocompleteType = '';
   private _identifier: string;
   private _canOrder: boolean;
   ////////////////////////////////////////////////////////////////////
@@ -90,6 +89,10 @@ export class AutocompleteInputComponent implements OnInit {
     return this._sanitizer.bypassSecurityTrustHtml(html);
   };
 
+  public canAdd(): boolean {
+    return !this.onlyOne || this.answerList.length == 0;
+  }
+
   addProposition(val: any): void {
     val = val ? val.get('answer').value : '';
     // Verify here if the value has the expected fields (name, logo and domain)
@@ -109,7 +112,8 @@ export class AutocompleteInputComponent implements OnInit {
     }
   }
 
-  up(i: number): void {
+  up(event: Event, i: number): void {
+    event.preventDefault();
     if (i !== 0) {
       const elem = this.answerList.splice(i, 1);
       this.answerList.splice(i - 1, 0, elem[0]);
@@ -117,7 +121,8 @@ export class AutocompleteInputComponent implements OnInit {
     }
   }
 
-  down(i: number): void {
+  down(event: Event, i: number): void {
+    event.preventDefault();
     if (i !== this.answerList.length - 1) {
       const elem = this.answerList.splice(i, 1);
       this.answerList.splice(i + 1, 0, elem[0]);
@@ -125,12 +130,14 @@ export class AutocompleteInputComponent implements OnInit {
     }
   }
 
-  rmProposition(i: number): void {
+  rmProposition(event: Event, i: number): void {
+    event.preventDefault();
     this.answerList.splice(i, 1);
     this.update.emit({value: this.answerList});
   }
 
-  thumbsUp(index: number) {
+  thumbsUp(event: Event, index: number): void {
+    event.preventDefault();
     if (this.adminMode) {
       if (this.answerList[index].rating === 2) {
         this.answerList[index].rating = 1;
@@ -141,7 +148,8 @@ export class AutocompleteInputComponent implements OnInit {
     }
   }
 
-  thumbsDown(index: number) {
+  thumbsDown(event: Event, index: number): void {
+    event.preventDefault();
     if (this.adminMode) {
       if (this.answerList[index].rating === 0) {
         this.answerList[index].rating = 1;
@@ -152,7 +160,8 @@ export class AutocompleteInputComponent implements OnInit {
     }
   }
 
-  updateItem() {
+  updateItem(event: Event): void {
+    event.preventDefault();
     this.update.emit({value: this.answerList});
   }
 }

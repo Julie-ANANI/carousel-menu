@@ -52,17 +52,19 @@ export class AdminPresetsListComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removePreset(presetId: string) {
+  public removePreset(event: Event, presetId: string) {
+    event.preventDefault();
     this._presetService
       .remove(presetId)
       .first()
-      .subscribe(presetRemoved => {
+      .subscribe(_ => {
         this._presets.splice(this._getPresetIndex(presetId), 1);
         this.selectedPresetIdToBeDeleted = null;
       });
   }
 
-  public clonePreset(clonedPreset: Preset) {
+  public clonePreset(event: Event, clonedPreset: Preset) {
+    event.preventDefault();
     delete clonedPreset._id;
     this._presetService.create(clonedPreset).first().subscribe(preset => {
       this._router.navigate(['/admin/presets/' + preset._id])

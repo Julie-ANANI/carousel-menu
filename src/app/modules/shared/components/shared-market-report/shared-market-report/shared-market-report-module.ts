@@ -2,7 +2,6 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { PageScrollConfig } from 'ng2-page-scroll';
@@ -11,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../models/answer';
 import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
+import { Innovation } from '../../../../../models/innovation';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -20,7 +20,7 @@ import { Section } from '../../../../../models/section';
 
 export class SharedMarketReportComponent implements OnInit {
 
-  @Input() public project: any;
+  @Input() public project: Innovation;
   @Input() public adminMode: boolean;
 
   private _questions: Array<Question> = [];
@@ -35,10 +35,8 @@ export class SharedMarketReportComponent implements OnInit {
 
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
-              private _route: ActivatedRoute,
               private _authService: AuthService,
-              private _notificationsService: TranslateNotificationsService
-  ) { }
+              private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._innoid = this.project._id;
@@ -55,7 +53,8 @@ export class SharedMarketReportComponent implements OnInit {
     PageScrollConfig.defaultDuration = 800;
   }
 
-  public recalculateSynthesis(): any {
+  public recalculateSynthesis(event: Event): void {
+    event.preventDefault();
     this._calculating = true;
     this._innovationService.recalculateSynthesis(this._innoid)
       .first()
@@ -86,7 +85,8 @@ export class SharedMarketReportComponent implements OnInit {
     };
   }
 
-  public toggleDetails(): void {
+  public toggleDetails(event: Event): void {
+    event.preventDefault();
     this._showDetails = !this._showDetails;
   }
 

@@ -1,6 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { EmailQueueModel } from '../../../../../models/mail.queue.model';
 import { EmailService } from '../../../../../services/email/email.service';
 
@@ -13,12 +11,10 @@ export class AdminEmailQueueComponent {
 
   @Input() queue: Array<EmailQueueModel>;
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _campaignService: CampaignService,
-              private _emailService: EmailService) { }
+  constructor(private _emailService: EmailService) { }
 
   public campaignName(transaction: any): string {
-    return transaction.payload.metadata.campaign_id;
+    return transaction.payload.metadata.campaignName;
   }
 
   public batchSize(transaction: any): number {
@@ -32,13 +28,13 @@ export class AdminEmailQueueComponent {
         if (result && result.status === 200) {
           batch.status = 'CANCELED';
         }
-        console.log(result);
       }, (error) => {
         console.error(error);
       })
   }
 
-  public changeStatus(transaction: any) {
+  public changeStatus(event: Event, transaction: any) {
+    event.preventDefault();
     if (transaction.status === 'PROCESSING') {
       this._stopBatch(transaction);
     }

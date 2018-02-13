@@ -23,7 +23,7 @@
         <strong *ngIf="answer.progress">{{answer.progress}}%</strong>
       </td>
       <td width="100">
-        <button class="btn btn-default" (click)="seeAnswer(answer)">
+        <button class="btn btn-default" (click)="seeAnswer($event, answer)">
           Show
         </button>
       </td>

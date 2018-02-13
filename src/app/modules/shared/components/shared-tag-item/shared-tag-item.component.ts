@@ -13,14 +13,14 @@ export class SharedTagItemComponent implements OnInit {
 
   private _displayTags = false;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     this.tags = this.tags || [];
   }
 
-  toggleTags() {
+  toggleTags(event: Event) {
+    event.preventDefault();
     this._displayTags = !this._displayTags;
   }
 

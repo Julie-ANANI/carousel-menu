@@ -28,7 +28,8 @@ export class ClientWelcomeComponent implements OnInit {
     }
   }
 
-  public acceptTerms(): void {
+  public acceptTerms(event: Event): void {
+    event.preventDefault();
     this._authService.user.state = 'confirmed';
     this._userService.activate(this._authService.user.state, this.tokenEmail)
       .first()

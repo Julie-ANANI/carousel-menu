@@ -46,11 +46,12 @@ export class AdminProjectsComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeProject(projectId: string) {
+  public removeProject(event: Event, projectId: string) {
+    event.preventDefault();
     this._innovationService
       .remove(projectId)
       .first()
-      .subscribe(projectRemoved => {
+      .subscribe(_ => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
       });

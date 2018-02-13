@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../models/innovation';
 
 @Component({
@@ -13,10 +11,7 @@ export class ClientProjectComponent implements OnInit {
 
   @Input() project: Innovation;
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _innovationService: InnovationService,
-              private _notificationsService: TranslateNotificationsService) { }
-
+  constructor(private _activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     if (!this.project) {

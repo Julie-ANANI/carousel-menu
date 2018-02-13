@@ -14,7 +14,6 @@ import { AdminPatentsComponent } from './components/admin-patents/admin-patents.
 import { AdminEmailQueueComponent } from './components/admin-emails/admin-emails-queue/admin-emails-queue.component';
 import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
-import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AdminProjectsListComponent } from './components/admin-projects-list/admin-projects-list.component';
 import { AdminProjectsDetailsComponent } from './components/admin-projects/admin-project-details/admin-project-details.component';
 import { AdminPresetComponent } from './components/admin-preset/admin-preset.component';
@@ -29,6 +28,7 @@ import { AdminCampaignSearchComponent } from './components/admin-campaigns/admin
 import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admin-campaign-answers/admin-campaign-answers.component';
 import { AdminAnswersListComponent } from './components/admin-answers-list/admin-answers-list.component';
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
+import { DateFormatPipe } from '../../pipes/DateFormatPipe';
 
 @NgModule({
   imports: [
@@ -63,7 +63,8 @@ import { AdminSearchModule } from './components/admin-search/admin-search.module
     AdminCampaignHistoryComponent,
     AdminCampaignSearchComponent,
     AdminCampaignAnswersComponent,
-    AdminAnswersListComponent
+    AdminAnswersListComponent,
+    DateFormatPipe
   ]
 })
 export class AdminModule {

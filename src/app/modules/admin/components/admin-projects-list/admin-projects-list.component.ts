@@ -131,11 +131,12 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeProject(projectId: string) {
+  public removeProject(event: Event, projectId: string) {
+    event.preventDefault();
     this._innovationService
       .remove(projectId)
       .first()
-      .subscribe(projectRemoved => {
+      .subscribe(_ => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
       });
@@ -178,10 +179,15 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   public getDelai (date: Date) {
     const delai = 8; // On se donne 8 jours à compter de la validation du projet
     const today: Date = new Date();
-    return delai - Math.round((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+    if(!date || !date.getTime) {
+      date = new Date(date);
+    }
+    let time = delai - Math.round((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+    return time;
   }
 
-  public updateThanksState (project: Innovation) {
+  public updateThanksState(event: Event, project: Innovation): void {
+    event.preventDefault();
     this._innovationService.save(project._id, {thanks: !project.thanks})
       .first()
       .subscribe(data => {
@@ -189,7 +195,8 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
       });
   }
 
-  public updateRestitutionState (project: Innovation) {
+  public updateRestitutionState(event: Event, project: Innovation): void {
+    event.preventDefault();
     this._innovationService.save(project._id, {restitution: !project.restitution})
       .first()
       .subscribe(data => {
@@ -200,12 +207,13 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   public setOperator (operatorId: string, project: Innovation) {
     this._innovationService.setOperator(project._id, operatorId)
       .first()
-      .subscribe(data => {
+      .subscribe(_ => {
         this._notificationService.success('Opérateur affecté', 'OK');
       });
   }
 
-  public seeMore () {
+  public seeMore (event: Event) {
+    event.preventDefault();
     this.loadProjects();
   }
 

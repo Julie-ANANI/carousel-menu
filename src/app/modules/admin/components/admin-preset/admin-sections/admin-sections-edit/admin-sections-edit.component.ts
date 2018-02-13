@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
@@ -39,7 +39,6 @@ export class AdminSectionsEditComponent implements OnInit {
               private _authService: AuthService,
               private _domSanitizer: DomSanitizer,
               private _translateService: TranslateService,
-              private _router: Router,
               private _notificationsService: TranslateNotificationsService,
               private _formBuilder: FormBuilder) {}
 
@@ -67,8 +66,9 @@ export class AdminSectionsEditComponent implements OnInit {
    * Sauvegarde
    * @param callback
    */
-  public save() {
-    const saveSubs = this._presetService
+  public save(event: Event) {
+    event.preventDefault();
+    this._presetService
       .saveSection(this._section._id, this.formData.value)
       .first()
       .subscribe(data => {

@@ -7,7 +7,7 @@ import { User } from '../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -48,7 +48,8 @@ export class ClientSignupComponent implements OnInit {
     });
   }
 
-  public linkedInSignIn() {
+  public linkedInSignIn(event: Event) {
+    event.preventDefault();
     const domain = environment.domain;
     this._authService.linkedinLogin(domain)
       .first()
@@ -62,16 +63,17 @@ export class ClientSignupComponent implements OnInit {
       );
   }
 
-  public onSubmit({ value, valid }: { value: User, valid: boolean }) {
-    if (valid) {
-      const user = new User(value);
+  public onSubmit(event: Event) {
+    event.preventDefault();
+    if (this.formData.valid) {
+      const user = new User(this.formData.value);
       user.domain = environment.domain;
       this._userService.create(user)
         .first()
         .subscribe(
-          data => {
+          _ => {
             this._authService.login(user).first().subscribe(
-              res => {
+              _ => {
                 this._location.back();
               },
               error => {

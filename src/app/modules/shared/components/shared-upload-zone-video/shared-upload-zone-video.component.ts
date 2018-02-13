@@ -1,7 +1,5 @@
 import { Component, Output, OnInit, EventEmitter } from '@angular/core';
-import { Http, Response } from '../../../../services/http';
 import { videoDomainRegEx, videoIdRegEx } from '../../../../utils/regex';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Video } from '../../../../models/media';
 import 'rxjs/add/operator/map';
 
@@ -17,14 +15,15 @@ export class SharedUploadZoneVideoComponent implements OnInit {
 
   @Output() public cbFn: EventEmitter<any> = new EventEmitter();
 
-  constructor(private _http: Http) {
+  constructor() {
   }
 
   ngOnInit() {
     this._videoParameters = ['showinfo=0', 'color=white', 'rel=0', 'autohide=1', 'playsinline=1', 'modestbranding=1', 'iv_load_policy=3'];
   }
 
-  addVideo() {
+  addVideo(event: Event): void {
+    event.preventDefault();
     const videoProvider = videoDomainRegEx.exec(this._videoUrlInput)[0]; // vimeo || youtube
     const givenUrl = this._videoUrlInput; // URL donnée par l'utilisateur
     this._videoUrlInput = ''; // On vide le formulaire

@@ -20,7 +20,7 @@ export class AdminPresetsNewComponent {
               private _formBuilder: FormBuilder,
               private _presetService: PresetService) { }
 
-  public onSubmit({value, valid}: { value: any, valid: boolean }) {
+  public onSubmit({value}: { value: any }) {
     const newPreset = {
       domain: environment.domain,
       name: value.name

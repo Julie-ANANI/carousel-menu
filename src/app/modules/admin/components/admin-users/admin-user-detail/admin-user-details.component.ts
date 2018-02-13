@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../../services/user/user.service';
-import { AuthService } from '../../../../../services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { User } from '../../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
@@ -21,14 +20,13 @@ export class AdminUserDetailsComponent implements OnInit {
   public formData: FormGroup;
   public accountDeletionAsked = false;
 
-  private _userBasicData = {};
+  private _userBasicData: any = {};
 
   // TODO : profile picture, reset password, description, location
 
   constructor(private _userService: UserService,
               private _translateService: TranslateService,
               private _notificationsService: TranslateNotificationsService,
-              private _authService: AuthService,
               private _formBuilder: FormBuilder,
               private _router: Router,
               private _activatedRoute: ActivatedRoute,
@@ -116,10 +114,11 @@ export class AdminUserDetailsComponent implements OnInit {
     this._userBasicData['isOperator'] = value;
   }
 
-  public deleteAccount () {
+  public deleteAccount(event: Event): void {
+    event.preventDefault();
     this._userService.deleteUser(this._userBasicData['id'])
       .first()
-      .subscribe((res) => {
+      .subscribe(_ => {
         this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
         this._router.navigate(['/admin/users']);
     });

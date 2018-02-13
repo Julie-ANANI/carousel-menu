@@ -42,8 +42,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     if (this._authService.isAcceptingCookies) { // CNIL
       this._authService.initializeSession().takeUntil(this.ngUnsubscribe).subscribe(
-        res => null,
-        error => this._notificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
+        _ => {},
+        _ => this._notificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
           clickToClose: false,
           timeOut: 0
         })

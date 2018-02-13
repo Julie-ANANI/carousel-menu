@@ -91,11 +91,11 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 })
 export class AppModule {
   constructor(private _translateService: TranslateService) {
-    _translateService.addLangs(['en', 'fr']);
-    _translateService.setDefaultLang('en');
+    this._translateService.addLangs(['en', 'fr']);
+    this._translateService.setDefaultLang('en');
 
-    const browserLang = _translateService.getBrowserLang();
-    _translateService.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+    const browserLang = this._translateService.getBrowserLang();
+    this._translateService.use(browserLang.match(/en|fr/) ? browserLang : 'en');
   }
 }
 
@@ -104,7 +104,7 @@ export function CreateTranslateLoader() {
 }
 
 export class TranslateUniversalLoader implements TranslateLoader {
-  public getTranslation(lang: string): Observable<any> {
+  public getTranslation(_: string): Observable<any> {
     return Observable.create((observer: any) => {
       observer.next();
       observer.complete();

@@ -51,17 +51,19 @@ export class AdminQuestionsListComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeQuestion(questionId: string) {
+  public removeQuestion(event: Event, questionId: string) {
+    event.preventDefault();
     this._presetService
       .removeQuestion(questionId)
       .first()
-      .subscribe(questionRemoved => {
+      .subscribe(_ => {
         this._questions.splice(this._getQuestionIndex(questionId), 1);
         this.selectedQuestionIdToBeDeleted = null;
       });
   }
 
-  public cloneQuestion(clonedQuestion: Question) {
+  public cloneQuestion(event: Event, clonedQuestion: Question) {
+    event.preventDefault();
     delete clonedQuestion._id;
     this._presetService.createQuestion(clonedQuestion)
       .first()

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { UserService } from '../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { AuthService } from '../../../../services/auth/auth.service';
@@ -25,12 +24,11 @@ export class AdminUsersComponent implements OnInit {
     }
   };
 
-  constructor(private _router: Router,
-              private _titleService: TranslateTitleService,
+  constructor(private _titleService: TranslateTitleService,
               private _userService: UserService,
               private _authService: AuthService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this._titleService.setTitle('USERS.TITLE');
     this._selfId = this._authService.userId;
     this.loadUsers(this._config);
@@ -46,7 +44,8 @@ export class AdminUsersComponent implements OnInit {
       });
   }
 
-  inviteUser () {
+  inviteUser(event: Event): void {
+    event.preventDefault();
     // TODO
   }
 
@@ -58,7 +57,8 @@ export class AdminUsersComponent implements OnInit {
     return id && id === this.selfId;
   }
 
-  loadInnovations(userId: string): void {
+  loadInnovations(event: Event, userId: string): void {
+    event.preventDefault();
     this._userService.getInnovations(userId)
       .first()
       .subscribe(innovations => {

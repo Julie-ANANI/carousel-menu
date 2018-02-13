@@ -40,7 +40,7 @@
               </span>
             </b>
           </p>
-          <button class="btn btn-primary" (click)="acceptTerms()" [disabled]="isAdmin && !tokenEmail">
+          <button class="btn btn-primary" (click)="acceptTerms($event)" [disabled]="isAdmin && !tokenEmail">
             {{ 'COMMON.ACCEPT' | translate }}
           </button>
         </div>

@@ -7,7 +7,7 @@
   <div class="admin-buttons">
     <button type="button" *ngIf="adminMode"
             class="btn btn-lg btn-primary"
-            (click)="recalculateSynthesis()"
+            (click)="recalculateSynthesis($event)"
             [disabled]="calculating"
             [ngClass]="{'loading': calculating, '': !calculating}"
     >
@@ -23,7 +23,7 @@
   ************************************************************** -->
 
   <div class="sidebar sidebarIsSticky" *ngIf="!adminMode">
-    <div (click)="toggleDetails()" class="toggle-sections">
+    <div (click)="toggleDetails($event)" class="toggle-sections">
       {{ (showDetails ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND') | translate}}
       <i class="fa float-right" aria-hidden="true"
          [ngClass]="{'fa-plus-square-o': !showDetails, 'fa-minus-square-o': showDetails}"></i>
