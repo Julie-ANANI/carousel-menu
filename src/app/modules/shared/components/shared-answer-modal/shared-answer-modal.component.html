@@ -95,7 +95,7 @@
               (click)="changeStatus($event, 'SUBMITTED')">
         <i class="fa fa-minus"></i> Invalider
       </button>
-      <button *ngIf="adminMode" class="btn btn-primary" (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>
+      <button *ngIf="adminMode" class="btn btn-primary" (click)="save($event)">{{ 'COMMON.SAVE' | translate }}</button>
       <button class="btn btn-default" (click)="close($event)">{{ 'MARKET_REPORT.POPUP.BACK' | translate }}</button>
     </div>
   </div>

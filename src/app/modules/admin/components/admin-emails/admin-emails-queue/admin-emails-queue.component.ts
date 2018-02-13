@@ -33,7 +33,8 @@ export class AdminEmailQueueComponent {
       })
   }
 
-  public changeStatus(transaction: any) {
+  public changeStatus(event: Event, transaction: any) {
+    event.preventDefault();
     if (transaction.status === 'PROCESSING') {
       this._stopBatch(transaction);
     }

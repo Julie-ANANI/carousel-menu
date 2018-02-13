@@ -19,7 +19,8 @@ export class SharedRatingItemComponent implements OnInit {
     this.rating = this.rating || 1;
   }
 
-  thumbsUp() {
+  thumbsUp(event: Event) {
+    event.preventDefault();
     if (this.adminMode) {
       if (this.rating === 2) {
         this.rating = 1;
@@ -30,7 +31,8 @@ export class SharedRatingItemComponent implements OnInit {
     }
   }
 
-  thumbsDown() {
+  thumbsDown(event: Event) {
+    event.preventDefault();
     if (this.adminMode) {
       if (this.rating === 0) {
         this.rating = 1;

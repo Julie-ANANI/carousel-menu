@@ -66,7 +66,8 @@ export class AdminSectionsEditComponent implements OnInit {
    * Sauvegarde
    * @param callback
    */
-  public save() {
+  public save(event: Event) {
+    event.preventDefault();
     this._presetService
       .saveSection(this._section._id, this.formData.value)
       .first()

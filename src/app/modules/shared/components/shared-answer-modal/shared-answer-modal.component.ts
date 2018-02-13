@@ -101,7 +101,8 @@ export class SharedAnswerModalComponent implements OnInit {
     this._modalAnswer.tags = object;
   }
 
-  public save() {
+  public save(event: Event) {
+    event.preventDefault();
     if (this._modalAnswer.professional.email) {
       // Hack : les réponses anciennes n'ont pas de champ quizReference,
       // mais il faut forcément une valeur pour sauvegarder la réponse

@@ -51,7 +51,8 @@ export class AdminQuestionsListComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeQuestion(questionId: string) {
+  public removeQuestion(event: Event, questionId: string) {
+    event.preventDefault();
     this._presetService
       .removeQuestion(questionId)
       .first()
@@ -61,7 +62,8 @@ export class AdminQuestionsListComponent implements OnInit {
       });
   }
 
-  public cloneQuestion(clonedQuestion: Question) {
+  public cloneQuestion(event: Event, clonedQuestion: Question) {
+    event.preventDefault();
     delete clonedQuestion._id;
     this._presetService.createQuestion(clonedQuestion)
       .first()

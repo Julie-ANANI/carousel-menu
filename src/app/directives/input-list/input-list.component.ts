@@ -44,7 +44,8 @@ export class InputListComponent {
     this.update.emit({value: this.answerList});
   }
 
-  thumbsUp(index: number) {
+  thumbsUp(event: Event, index: number): void {
+    event.preventDefault();
     if (this.adminMode) {
       if (this.answerList[index].rating === 2) {
         this.answerList[index].rating = 1;
@@ -55,7 +56,8 @@ export class InputListComponent {
     }
   }
 
-  thumbsDown(index: number) {
+  thumbsDown(event: Event, index: number): void {
+    event.preventDefault();
     if (this.adminMode) {
       if (this.answerList[index].rating === 0) {
         this.answerList[index].rating = 1;
@@ -66,7 +68,8 @@ export class InputListComponent {
     }
   }
 
-  updateItem() {
+  updateItem(event: Event): void {
+    event.preventDefault();
     this.update.emit({value: this.answerList});
   }
 

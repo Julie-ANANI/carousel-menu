@@ -22,7 +22,8 @@ export class SharedUploadZoneVideoComponent implements OnInit {
     this._videoParameters = ['showinfo=0', 'color=white', 'rel=0', 'autohide=1', 'playsinline=1', 'modestbranding=1', 'iv_load_policy=3'];
   }
 
-  addVideo() {
+  addVideo(event: Event): void {
+    event.preventDefault();
     const videoProvider = videoDomainRegEx.exec(this._videoUrlInput)[0]; // vimeo || youtube
     const givenUrl = this._videoUrlInput; // URL donnée par l'utilisateur
     this._videoUrlInput = ''; // On vide le formulaire

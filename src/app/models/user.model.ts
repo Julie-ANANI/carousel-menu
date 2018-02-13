@@ -97,7 +97,6 @@ export class User extends Model {
     return this._password;
   }
 
-
   set profilePicture(profilePicture: string) {
     if (profilePicture) {
       this._profilePicture = profilePicture;

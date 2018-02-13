@@ -7,7 +7,7 @@
   <div class="admin-buttons">
     <button type="button" *ngIf="adminMode"
             class="btn btn-lg btn-primary"
-            (click)="recalculateSynthesis()"
+            (click)="recalculateSynthesis($event)"
             [disabled]="calculating"
             [ngClass]="{'loading': calculating, '': !calculating}"
     >

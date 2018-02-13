@@ -2,7 +2,7 @@
   <i
     class="fa fa-tag tooltip"
     [ngClass]="{'active': tags.length > 0}"
-    (click)="toggleTags()"
+    (click)="toggleTags($event)"
     [attr.data-tooltip]="tags.toString()"
   ></i>
   <div *ngIf="displayTags">

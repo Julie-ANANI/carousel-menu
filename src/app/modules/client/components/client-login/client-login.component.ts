@@ -67,7 +67,8 @@ export class ClientLoginComponent implements OnInit {
     }
   }
 
-  public linkedInSignIn() {
+  public linkedInSignIn(event: Event) {
+    event.preventDefault();
     const domain = environment.domain;
     this._authService.linkedinLogin(domain)
       .first()
@@ -81,7 +82,8 @@ export class ClientLoginComponent implements OnInit {
       );
   }
 
-  public changePassword() {
+  public changePassword(event: Event) {
+    event.preventDefault();
     if (!this.formData.get('email')!.value) {
       this._notificationsService.error('ERROR.LOGIN.EMPTY_EMAIL', 'ERROR.LOGIN.EMAIL_PLEASE');
     }

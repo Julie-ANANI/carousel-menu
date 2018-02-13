@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { Answer } from '../../../../models/answer';
 
 @Component({
@@ -12,10 +11,11 @@ export class AdminAnswersListComponent {
   @Input() answers: Array<Answer>;
   @Output() modalAnswerChange = new EventEmitter<any>();
 
-  constructor(_campaignService: CampaignService) {}
+  constructor() {}
 
-  public seeAnswer(event: any) {
-    this.modalAnswerChange.emit(event);
+  public seeAnswer(event: Event, answer: Answer) {
+    event.preventDefault();
+    this.modalAnswerChange.emit(answer);
   }
 
   public buildImageUrl(country: any): string {

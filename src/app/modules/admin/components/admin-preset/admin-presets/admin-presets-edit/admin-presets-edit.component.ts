@@ -58,7 +58,8 @@ export class AdminPresetsEditComponent implements OnInit {
    * Sauvegarde
    * @param callback
    */
-  public save() {
+  public save(event: Event): void {
+    event.preventDefault();
     this._presetService
       .save(this._preset._id, this.formData.value)
       .first()

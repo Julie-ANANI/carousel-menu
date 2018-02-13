@@ -51,7 +51,8 @@ export class AdminSectionsListComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeSection(sectionId: string) {
+  public removeSection(event: Event, sectionId: string) {
+    event.preventDefault();
     this._presetService
       .removeSection(sectionId)
       .first()
@@ -61,7 +62,8 @@ export class AdminSectionsListComponent implements OnInit {
       });
   }
 
-  public cloneSection(clonedSection: Section) {
+  public cloneSection(event: Event, clonedSection: Section) {
+    event.preventDefault();
     delete clonedSection._id;
     this._presetService.createSection(clonedSection)
       .first()
