@@ -18,7 +18,7 @@ export class AdminSectionsNewComponent {
               private _formBuilder: FormBuilder,
               private _presetService: PresetService) { }
 
-  public onSubmit({value, valid}: { value: any, valid: boolean }) {
+  public onSubmit({value}: { value: any }) {
     const newSection = {
       domain: environment.domain,
       name: value.name,

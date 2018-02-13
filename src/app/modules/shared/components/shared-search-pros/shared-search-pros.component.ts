@@ -1,17 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SearchService } from '../../../../services/search/search.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-shared-search-pros',
   templateUrl: './shared-search-pros.component.html',
   styleUrls: ['./shared-search-pros.component.scss']
 })
-export class SharedSearchProsComponent implements OnInit {
-  
-  constructor(private _searchService: SearchService) {}
+export class SharedSearchProsComponent {
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
   public buildImageUrl(country: string): string {
     if (country) {

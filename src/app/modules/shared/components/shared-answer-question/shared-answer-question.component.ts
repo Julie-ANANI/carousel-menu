@@ -45,7 +45,8 @@ export class SharedAnswerQuestionComponent  {
     this.fullAnswerChange.emit(this.fullAnswer);
   }
 
-  selectOption(option: any) {
+  selectOption(event: Event, option: any) {
+    event.preventDefault();
     this.fullAnswer.answers[this.question.identifier] = option.identifier;
     this.fullAnswerChange.emit(this.fullAnswer);
   }
@@ -54,12 +55,14 @@ export class SharedAnswerQuestionComponent  {
     this.fullAnswer.answers[this.question.identifier] = event.value;
   }
 
-  addComment() {
+  addComment(event: Event) {
+    event.preventDefault();
     this.fullAnswer.answers[this.question.identifier + 'Comment'] = '';
     this.fullAnswerChange.emit(this.fullAnswer);
   }
 
-  deleteComment() {
+  deleteComment(event: Event) {
+    event.preventDefault();
     delete this.fullAnswer.answers[this.question.identifier + 'Comment'];
     this.fullAnswerChange.emit(this.fullAnswer);
   }

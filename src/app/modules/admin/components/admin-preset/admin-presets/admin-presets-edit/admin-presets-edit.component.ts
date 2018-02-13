@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
@@ -10,7 +10,6 @@ import { Section } from '../../../../../../models/section';
 
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-admin-presets-edit',
@@ -36,9 +35,7 @@ export class AdminPresetsEditComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _presetService: PresetService,
               private _authService: AuthService,
-              private _domSanitizer: DomSanitizer,
               private _translateService: TranslateService,
-              private _router: Router,
               private _notificationsService: TranslateNotificationsService,
               private _formBuilder: FormBuilder) {}
 
@@ -62,7 +59,7 @@ export class AdminPresetsEditComponent implements OnInit {
    * @param callback
    */
   public save() {
-    const saveSubs = this._presetService
+    this._presetService
       .save(this._preset._id, this.formData.value)
       .first()
       .subscribe(data => {

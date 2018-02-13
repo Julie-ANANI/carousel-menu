@@ -2,7 +2,6 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { PageScrollConfig } from 'ng2-page-scroll';
@@ -35,10 +34,8 @@ export class SharedMarketReportComponent implements OnInit {
 
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
-              private _route: ActivatedRoute,
               private _authService: AuthService,
-              private _notificationsService: TranslateNotificationsService
-  ) { }
+              private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._innoid = this.project._id;
@@ -86,7 +83,8 @@ export class SharedMarketReportComponent implements OnInit {
     };
   }
 
-  public toggleDetails(): void {
+  public toggleDetails(event: Event): void {
+    event.preventDefault();
     this._showDetails = !this._showDetails;
   }
 

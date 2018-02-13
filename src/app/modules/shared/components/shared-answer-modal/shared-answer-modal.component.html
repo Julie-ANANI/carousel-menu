@@ -1,5 +1,5 @@
 <div class="modal modal-lg active" *ngIf="modalAnswer">
-  <div class="modal-overlay" (click)="close()"></div>
+  <div class="modal-overlay" (click)="close($event)"></div>
   <div class="modal-container">
     <div class="modal-header">
       <h3 class="text-center" *ngIf="adminMode">
@@ -36,7 +36,7 @@
           <shared-tag-item *ngIf="adminMode" [big]="true" [prop]="profile" [tags]="modalAnswer.tags" (tagsChange)="updateTags($event)"></shared-tag-item>
           <label class="form-switch" for="toggleAdmin">
             <input type="checkbox" name="toggleAdmin" id="toggleAdmin"
-                   (change)="editMode = !editMode">
+                   (change)="(editMode = !editMode) && $event.preventDefault()">
             <i class="form-icon"></i>Edition  <i class="fa fa-pencil"></i>
           </label>
         </div>
@@ -77,26 +77,26 @@
     <div class="modal-footer">
       <button class="btn btn-error"
               *ngIf="adminMode && (modalAnswer.status === 'SUBMITTED' || modalAnswer.status === 'TO_COMPLETE')"
-              (click)="changeStatus('REJECTED')">
+              (click)="changeStatus($event, 'REJECTED')">
         <i class="fa fa-trash"></i> Rejeter
       </button>
       <button class="btn btn-warning"
               *ngIf="adminMode && (modalAnswer.status === 'SUBMITTED' || modalAnswer.status === 'TO_COMPLETE' || modalAnswer.status === 'REJECTED' || (modalAnswer.status === 'DRAFT' && modalAnswer.professional?.email))"
-              (click)="changeStatus('TO_COMPLETE')">
+              (click)="changeStatus($event, 'TO_COMPLETE')">
         <i class="fa fa-rocket"></i> À compléter
       </button>
       <button class="btn btn-success"
               *ngIf="adminMode && (modalAnswer.status !== 'VALIDATED' && modalAnswer.professional?.email)"
-              (click)="changeStatus('VALIDATED')">
+              (click)="changeStatus($event, 'VALIDATED')">
         <i class="fa fa-check"></i> Valider
       </button>
       <button class="btn btn-error"
               *ngIf="adminMode && (modalAnswer.status === 'VALIDATED' && modalAnswer.professional?.email)"
-              (click)="changeStatus('SUBMITTED')">
+              (click)="changeStatus($event, 'SUBMITTED')">
         <i class="fa fa-minus"></i> Invalider
       </button>
       <button *ngIf="adminMode" class="btn btn-primary" (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>
-      <button class="btn btn-default" (click)="close()">{{ 'MARKET_REPORT.POPUP.BACK' | translate }}</button>
+      <button class="btn btn-default" (click)="close($event)">{{ 'MARKET_REPORT.POPUP.BACK' | translate }}</button>
     </div>
   </div>
 </div>

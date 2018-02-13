@@ -1,7 +1,5 @@
 import { Component, Output, OnInit, EventEmitter } from '@angular/core';
-import { Http, Response } from '../../../../services/http';
 import { videoDomainRegEx, videoIdRegEx } from '../../../../utils/regex';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Video } from '../../../../models/media';
 import 'rxjs/add/operator/map';
 
@@ -17,7 +15,7 @@ export class SharedUploadZoneVideoComponent implements OnInit {
 
   @Output() public cbFn: EventEmitter<any> = new EventEmitter();
 
-  constructor(private _http: Http) {
+  constructor() {
   }
 
   ngOnInit() {

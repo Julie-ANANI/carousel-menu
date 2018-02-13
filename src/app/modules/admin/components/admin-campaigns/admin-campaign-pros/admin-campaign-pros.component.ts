@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { Professional } from '../../../../../models/professional';
 import { Campaign } from '../../../../../models/campaign';
@@ -26,7 +25,6 @@ export class AdminCampaignProsComponent implements OnInit {
   };
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _titleService: TranslateTitleService,
               private _campaignService: CampaignService) { }
 
   ngOnInit() {

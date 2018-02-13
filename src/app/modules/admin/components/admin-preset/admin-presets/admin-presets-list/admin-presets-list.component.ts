@@ -56,7 +56,7 @@ export class AdminPresetsListComponent implements OnInit {
     this._presetService
       .remove(presetId)
       .first()
-      .subscribe(presetRemoved => {
+      .subscribe(_ => {
         this._presets.splice(this._getPresetIndex(presetId), 1);
         this.selectedPresetIdToBeDeleted = null;
       });
