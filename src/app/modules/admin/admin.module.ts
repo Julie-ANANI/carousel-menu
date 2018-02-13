@@ -28,6 +28,7 @@ import { AdminCampaignSearchComponent } from './components/admin-campaigns/admin
 import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admin-campaign-answers/admin-campaign-answers.component';
 import { AdminAnswersListComponent } from './components/admin-answers-list/admin-answers-list.component';
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
+import { DateFormatPipe } from '../../pipes/DateFormatPipe';
 
 @NgModule({
   imports: [
@@ -62,7 +63,8 @@ import { AdminSearchModule } from './components/admin-search/admin-search.module
     AdminCampaignHistoryComponent,
     AdminCampaignSearchComponent,
     AdminCampaignAnswersComponent,
-    AdminAnswersListComponent
+    AdminAnswersListComponent,
+    DateFormatPipe
   ]
 })
 export class AdminModule {

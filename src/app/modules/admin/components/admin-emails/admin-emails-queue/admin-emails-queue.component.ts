@@ -14,7 +14,7 @@ export class AdminEmailQueueComponent {
   constructor(private _emailService: EmailService) { }
 
   public campaignName(transaction: any): string {
-    return transaction.payload.metadata.campaign_id;
+    return transaction.payload.metadata.campaignName;
   }
 
   public batchSize(transaction: any): number {
@@ -28,7 +28,6 @@ export class AdminEmailQueueComponent {
         if (result && result.status === 200) {
           batch.status = 'CANCELED';
         }
-        console.log(result);
       }, (error) => {
         console.error(error);
       })

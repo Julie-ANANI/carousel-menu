@@ -79,7 +79,7 @@
           [ngClass]="{
             'warning': getDelai(project.launched) <= 4 && getDelai(project.launched) > 0,
             'alert': getDelai(project.launched) <= 0
-          }">{{ getDelai(project.launched) }}j.</td> <!-- Délai -->
+          }">{{ getDelai(project.launched) | dateTransform}}</td> <!-- Délai -->
       <!-- Conclusions -->
       <td *ngIf="status==='DONE' && project.conclusions" class="project-conclusion">OK*</td>
       <td *ngIf="status==='DONE' && !project.conclusions" class="project-conclusion warning"><a [routerLink]=getRelevantLink(project) target="_blank" title="">TODO</a></td>
