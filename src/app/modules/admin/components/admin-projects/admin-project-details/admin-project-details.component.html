@@ -33,14 +33,14 @@
               <div>
                 <h4>Quiz management</h4>
                 <p *ngIf="!hasPreset()">To generate a quiz, you need to set a preset for the innovation.</p>
-                <button *ngIf="hasPreset()" class="btn btn-primary btn-lg" type="button" (click)="generateQuiz()">
+                <button *ngIf="hasPreset()" class="btn btn-primary btn-lg" type="button" (click)="generateQuiz($event)">
                   Générer le quiz
                 </button>
               </div>
 
               <hr>
               <div>
-                <button [ngClass]="notifClass()" class="btn btn-primary input-group-btn btn-lg" (click)="save()"
+                <button [ngClass]="notifClass()" class="btn btn-primary input-group-btn btn-lg" (click)="save($event)"
                         data-badge="&#f069;">
                   {{ 'COMMON.SAVE' | translate }}
                 </button>
