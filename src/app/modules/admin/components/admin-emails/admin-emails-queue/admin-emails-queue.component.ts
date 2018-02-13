@@ -13,8 +13,6 @@ export class AdminEmailQueueComponent {
 
   @Input() queue: Array<EmailQueueModel>;
 
-  private subscriptions = [];
-
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
               private _emailService: EmailService) { }

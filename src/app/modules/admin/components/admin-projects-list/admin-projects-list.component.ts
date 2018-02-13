@@ -178,6 +178,9 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   public getDelai (date: Date) {
     const delai = 8; // On se donne 8 jours à compter de la validation du projet
     const today: Date = new Date();
+    if(!date.getTime) {
+      date = new Date('1970');
+    }
     return delai - Math.round((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
   }
 
