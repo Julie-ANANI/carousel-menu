@@ -28,7 +28,6 @@ export class AdminEmailQueueComponent {
         if (result && result.status === 200) {
           batch.status = 'CANCELED';
         }
-        console.log(result);
       }, (error) => {
         console.error(error);
       })
