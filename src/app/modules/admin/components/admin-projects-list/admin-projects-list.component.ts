@@ -181,7 +181,8 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     if(!date.getTime) {
       date = new Date('1970');
     }
-    return delai - Math.round((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+    let time = delai - Math.round((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+    return time;
   }
 
   public updateThanksState (project: Innovation) {
