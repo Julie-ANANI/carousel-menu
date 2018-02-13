@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SearchService } from '../../../../../services/search/search.service';
-import { AuthService } from '../../../../../services/auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { Campaign } from '../../../../../models/campaign';
 
 @Component({
   selector: 'app-admin-search-results',
@@ -10,13 +9,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AdminSearchResultsComponent implements OnInit {
 
-  @Input() campaign: any;
+  @Input() campaign: Campaign;
 
   private _request: any;
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _searchService: SearchService,
-              private _authService: AuthService) {}
+  constructor(private _activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this._request = this._activatedRoute.snapshot.data['request'];

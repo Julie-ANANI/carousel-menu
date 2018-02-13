@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { AuthService } from '../../../../services/auth/auth.service';
-import * as _ from 'lodash';
+import { Campaign } from '../../../../models/campaign';
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -10,7 +10,7 @@ import * as _ from 'lodash';
 })
 export class SharedSearchProsComponent implements OnInit {
 
-  public _displaySettings: boolean = false;
+  public displaySettings = false;
   private _params: any = {
     keywords: '',
     websites: {
@@ -29,7 +29,7 @@ export class SharedSearchProsComponent implements OnInit {
     queued: false
   };
 
-  @Input() campaign: any;
+  @Input() campaign: Campaign;
 
   constructor(private _searchService: SearchService,
               private _authService: AuthService) {}
@@ -43,7 +43,8 @@ export class SharedSearchProsComponent implements OnInit {
     }
   }
 
-  public search(): void {
+  public search(event: Event): void {
+    event.preventDefault();
     const searchParams = this._params;
     searchParams.name = 'people';
     searchParams.user = this._authService.getUserInfo();
