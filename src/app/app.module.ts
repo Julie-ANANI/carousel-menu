@@ -30,6 +30,7 @@ import { PresetService } from './services/preset/preset.service';
 import { AnswerService } from './services/answer/answer.service';
 import { CampaignResolver } from './resolvers/campaign.resolver';
 import { InnovationResolver } from './resolvers/innovation.resolver';
+import { RequestResolver } from './resolvers/request.resolver';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 @NgModule({
@@ -83,7 +84,8 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
     TranslateNotificationsService,
     TranslateTitleService,
     CampaignResolver,
-    InnovationResolver
+    InnovationResolver,
+    RequestResolver
   ],
   bootstrap: [AppComponent]
 })
