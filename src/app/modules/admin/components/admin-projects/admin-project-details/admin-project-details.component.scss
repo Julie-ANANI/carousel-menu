@@ -35,3 +35,12 @@ $body-font-color-darker: #333333;
   }
 }
 
+.badge {
+  &[data-badge],
+  &:not([data-badge]) {
+    &::after {
+      background: #F00;
+    }
+  }
+}
+

@@ -89,6 +89,10 @@ export class AutocompleteInputComponent implements OnInit {
     return this._sanitizer.bypassSecurityTrustHtml(html);
   };
 
+  public canAdd(): boolean {
+    return !this.onlyOne || this.answerList.length == 0;
+  }
+
   addProposition(val: any): void {
     val = val ? val.get('answer').value : '';
     // Verify here if the value has the expected fields (name, logo and domain)

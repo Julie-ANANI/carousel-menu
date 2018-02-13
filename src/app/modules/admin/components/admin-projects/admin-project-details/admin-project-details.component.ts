@@ -19,6 +19,7 @@ export class AdminProjectsDetailsComponent implements OnInit {
   private _preset: Array<Preset> = [];
   private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis', 'mail_config'];
   private _currentPage = 'settings';
+  private _dirty: boolean = false;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _router: Router,
@@ -39,16 +40,21 @@ export class AdminProjectsDetailsComponent implements OnInit {
     return this._project.name || 'Untitled';
   }
 
-  set preset(value: Array<Preset>) { this._preset = value; }
+  set preset(value: Array<Preset>) {
+    this._preset = value;
+    this._dirty = true;
+  }
   get preset() { return this._preset; }
 
   public updatePreset(event: {value: Array<Preset>}) {
     this._preset = event.value;
     this._project.preset = this._preset[0];
+    this._dirty = true;
   }
 
   public updateSettings(value: InnovationSettings) {
     this._project.settings = value;
+    this._dirty = true;
   }
 
   public generateQuiz() {
@@ -56,6 +62,7 @@ export class AdminProjectsDetailsComponent implements OnInit {
       .createQuiz(this._project._id)
       .first()
       .subscribe(() => {
+        this._dirty = true;
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , 'ERROR.QUIZ.CREATED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
@@ -71,6 +78,7 @@ export class AdminProjectsDetailsComponent implements OnInit {
       .first()
       .subscribe(data => {
         this._project = data;
+        this._dirty = false;
       }, err => {
         this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
@@ -98,6 +106,18 @@ export class AdminProjectsDetailsComponent implements OnInit {
       }
     } else {
       return 'https://res.cloudinary.com/umi/image/upload/app/no-image.png';
+    }
+  }
+
+  public hasPreset(): boolean {
+    return !!this._preset.length;
+  }
+
+  public notifClass(): string {
+    if(this._dirty) {
+      return "btn btn-primary input-group-btn btn-lg badge";
+    } else {
+      return "btn btn-primary input-group-btn btn-lg";
     }
   }
 
