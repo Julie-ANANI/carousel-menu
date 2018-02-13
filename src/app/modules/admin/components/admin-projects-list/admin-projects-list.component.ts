@@ -131,7 +131,8 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeProject(projectId: string) {
+  public removeProject(event: Event, projectId: string) {
+    event.preventDefault();
     this._innovationService
       .remove(projectId)
       .first()
@@ -181,7 +182,8 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     return delai - Math.round((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
   }
 
-  public updateThanksState (project: Innovation) {
+  public updateThanksState(event: Event, project: Innovation): void {
+    event.preventDefault();
     this._innovationService.save(project._id, {thanks: !project.thanks})
       .first()
       .subscribe(data => {
@@ -189,7 +191,8 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
       });
   }
 
-  public updateRestitutionState (project: Innovation) {
+  public updateRestitutionState(event: Event, project: Innovation): void {
+    event.preventDefault();
     this._innovationService.save(project._id, {restitution: !project.restitution})
       .first()
       .subscribe(data => {
@@ -205,7 +208,8 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
       });
   }
 
-  public seeMore () {
+  public seeMore (event: Event) {
+    event.preventDefault();
     this.loadProjects();
   }
 

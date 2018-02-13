@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateTitleService } from '../../../../services/title/title.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
-import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { environment } from '../../../../../environments/environment';
 import { Campaign } from '../../../../models/campaign';
@@ -21,10 +19,8 @@ export class AdminCampaignsComponent implements OnInit {
   private _campaigns: Array<Campaign> = [];
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
-              private _titleService: TranslateTitleService,
               private _campaignService: CampaignService) { }
 
   ngOnInit() {
@@ -38,16 +34,13 @@ export class AdminCampaignsComponent implements OnInit {
       );
   }
 
-  public newCampaign(cloneInfo?: Campaign) {
+  public newCampaign(event: Event) {
+    event.preventDefault();
     let newTitle = undefined;
-    if (cloneInfo && cloneInfo.title) {
-      newTitle = cloneInfo.title;
+    if (this._innovation && this._innovation.name) {
+      newTitle = this._innovation.name;
     } else {
-      if (this._innovation && this._innovation.name) {
-        newTitle = this._innovation.name;
-      } else {
-        newTitle = 'Nouvelle campagne';
-      }
+      newTitle = 'Nouvelle campagne';
     }
 
     this._newCampaign = {
@@ -56,11 +49,6 @@ export class AdminCampaignsComponent implements OnInit {
       owner: this._innovation.owner.id,
       title: (this._campaigns.length + 1) + '. ' + newTitle
     };
-
-    if (cloneInfo && cloneInfo.settings) {
-      this._newCampaign.settings = cloneInfo.settings;
-      this._newCampaign.settings.clonedInfo = true;
-    }
 
     this._campaignService.create(this._newCampaign).first().subscribe((c) => {
       this._notificationsService.success('SUCCESS', 'SUCCESS');
@@ -74,7 +62,8 @@ export class AdminCampaignsComponent implements OnInit {
     return this._campaigns;
   }
 
-  public updateStats(campaign: Campaign) {
+  public updateStats(event: Event, campaign: Campaign) {
+    event.preventDefault();
     this._campaignService.updateStats(campaign._id)
       .first()
       .subscribe(stats => {

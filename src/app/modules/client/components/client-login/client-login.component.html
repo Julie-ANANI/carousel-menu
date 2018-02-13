@@ -10,12 +10,12 @@
             <a routerLink="/signup">{{ 'COMMON.SIGN_UP' | translate }}</a>
           </p>
           <p>
-            <a (click)="changePassword()" class="c-hand">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
+            <a (click)="changePassword($event)" class="c-hand">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
           </p>
         </div>
         <div class="column col-8 right">
           <div *ngIf="isMainDomain()">
-            <button class="btn btn-lg btn-primary btn-linkedin" (click)="linkedInSignIn()">{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
+            <button class="btn btn-lg btn-primary btn-linkedin" (click)="linkedInSignIn($event)">{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
             </button>
             <div class="divider text-center" [attr.data-content]="'COMMON.OR' | translate"></div>
           </div>

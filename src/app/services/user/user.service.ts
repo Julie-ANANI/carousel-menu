@@ -7,7 +7,7 @@ import { User } from '../../models/user.model';
 @Injectable()
 export class UserService {
 
-  private _selfUserSnapshot: any; // TODO
+  // private _selfUserSnapshot: any; // TODO
 
   constructor(private _http: Http) {}
 

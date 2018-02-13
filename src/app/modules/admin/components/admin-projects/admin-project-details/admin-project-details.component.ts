@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
@@ -42,16 +42,17 @@ export class AdminProjectsDetailsComponent implements OnInit {
   set preset(value: Array<Preset>) { this._preset = value; }
   get preset() { return this._preset; }
 
-  public updatePreset(event: {value: Array<Preset>}) {
+  public updatePreset(event: {value: Array<Preset>}): void {
     this._preset = event.value;
     this._project.preset = this._preset[0];
   }
 
-  public updateSettings(value: InnovationSettings) {
+  public updateSettings(value: InnovationSettings): void {
     this._project.settings = value;
   }
 
-  public generateQuiz() {
+  public generateQuiz(event: Event): void {
+    event.preventDefault();
     this._innovationService
       .createQuiz(this._project._id)
       .first()
@@ -65,7 +66,8 @@ export class AdminProjectsDetailsComponent implements OnInit {
   /**
    * Sauvegarde
    */
-  public save() {
+  public save(event: Event): void {
+    event.preventDefault();
     this._innovationService
       .save(this._project._id, this._project)
       .first()

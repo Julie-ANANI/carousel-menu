@@ -70,7 +70,8 @@ export class SharedClickableWorldmapComponent {
    * Processes the click over one continent
    * @param continent
    */
-  public clickOnContinent(continent: string): void {
+  public clickOnContinent(event: Event, continent: string): void {
+    event.preventDefault();
     this._continents[continent] = !this._continents[continent];
     this.notifier.emit({continents: this._continents});
   }

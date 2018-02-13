@@ -48,7 +48,8 @@ export class ClientMyProjectsComponent implements OnInit {
   /**
    * Suppression et mise à jour de la vue
    */
-  public removeProject(projectId: string): void {
+  public removeProject(event: Event, projectId: string): void {
+    event.preventDefault();
     this._innovationService
       .remove(projectId)
       .first()

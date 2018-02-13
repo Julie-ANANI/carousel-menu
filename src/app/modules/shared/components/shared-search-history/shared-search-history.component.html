@@ -60,13 +60,13 @@
           {{ 'SEARCH.HISTORY.DONE' | translate }}
         </div>
         <div class="loading" *ngIf="request.status === 'PROCESSING'">
-          <i class="fa fa-times" (click)="stopRequest(request)">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
+          <i class="fa fa-times">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
         </div>
         <div class="error" *ngIf="request.status === 'QUEUED'">
-          <span (click)="cancelRequest(request, true)"></span> {{ 'SEARCH.HISTORY.QUEUED' | translate }}
+          {{ 'SEARCH.HISTORY.QUEUED' | translate }}
         </div>
         <div class="error" *ngIf="request.status === 'CANCELED'">
-          <span (click)="cancelRequest(request, false)"></span> {{ 'SEARCH.HISTORY.CANCELED' | translate }}
+          {{ 'SEARCH.HISTORY.CANCELED' | translate }}
         </div>
       </td>
 

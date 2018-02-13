@@ -12,11 +12,14 @@
         </div>
         <div class="column col-8 right">
           <div *ngIf="isMainDomain()">
-            <button class="btn btn-lg btn-primary btn-linkedin" (click)="linkedInSignIn()">{{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
+            <button class="btn btn-lg btn-primary btn-linkedin" (click)="linkedInSignIn($event)">
+              {{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
             </button>
             <div class="divider text-center" [attr.data-content]="'COMMON.OR' | translate"></div>
           </div>
-          <button class="btn btn-lg btn-email" (click)="displayEmailForm = true">{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}</button>
+          <button class="btn btn-lg btn-email" (click)="(displayEmailForm = true) && $event.preventDefault()">
+            {{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}
+          </button>
         </div>
       </div>
     </div>
@@ -25,10 +28,10 @@
 
 
 <div class="modal" [ngClass]="{'active': displayEmailForm}">
-  <div class="modal-overlay" (click)="displayEmailForm = false"></div>
-  <form novalidate (ngSubmit)="onSubmit(formData)" [formGroup]="formData" class="modal-container signup-form">
+  <div class="modal-overlay" (click)="(displayEmailForm = false) && $event.preventDefault()"></div>
+  <form novalidate (ngSubmit)="onSubmit($event)" [formGroup]="formData" class="modal-container signup-form">
     <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="displayEmailForm = false"></button>
+      <button class="btn btn-clear float-right" (click)="(displayEmailForm = false) && $event.preventDefault()"></button>
       <h2 class="modal-title">{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}</h2>
     </div>
     <div class="modal-body">

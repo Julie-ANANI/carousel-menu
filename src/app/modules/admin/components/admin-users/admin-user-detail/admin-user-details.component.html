@@ -111,20 +111,24 @@
                     <hr>
                     <div class="input-group">
                         <label class="form-switch">
-                            <input type="checkbox" [checked]="isOperator" (change)="isOperator = !isOperator" [disabled]="!isAdmin()">
+                            <input type="checkbox" [checked]="isOperator" [disabled]="!isAdmin()"
+                                   (change)="(isOperator = !isOperator) && $event.preventDefault()">
                             <i class="form-icon"></i> Is an operator
                         </label>
                     </div>
                     <div class="input-group" *ngIf="!isAdmin()">
                         <label class="form-switch">
-                            <input type="checkbox" [checked]="domainAdmin" (change)="domainAdmin = !domainAdmin">
+                            <input type="checkbox" [checked]="domainAdmin"
+                                   (change)="(domainAdmin = !domainAdmin) && $event.preventDefault()">
                             <i class="form-icon"></i> Make this user a domain admin.
                         </label>
                     </div>
                 </div>
                 <hr>
-                <h3>Account setings</h3>
-                <a (click)="accountDeletionAsked = true;" class="btn-error"><i class="fa fa-trash"></i>&nbsp;Delete account</a>
+                <h3>Account settings</h3>
+                <a (click)="(accountDeletionAsked = true) && $event.preventDefault()" class="btn-error">
+                  <i class="fa fa-trash"></i>&nbsp;Delete account
+                </a>
             </div>
         </div>
         <div class="text-center">
@@ -138,20 +142,21 @@
 
 <!-- MODAL : Are you sure you want to delete your account ? -->
 <div class="modal" [ngClass]="{'active': accountDeletionAsked}">
-    <div class="modal-overlay" (click)="accountDeletionAsked = false"></div>
+    <div class="modal-overlay" (click)="(accountDeletionAsked = false) && $event.preventDefault()"></div>
     <div class="modal-container">
         <div class="modal-header">
-            <button class="btn btn-clear float-right" (click)="accountDeletionAsked = false"></button>
+            <button class="btn btn-clear float-right" (click)="(accountDeletionAsked = false) && $event.preventDefault()"></button>
             <div class="modal-title h5">{{ 'USER_ACCOUNT.DELETE_MODAL.TITLE' | translate }}</div>
         </div>
         <div class="modal-body">
             <div class="content">{{ 'USER_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}</div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-link" (click)="accountDeletionAsked = false; deleteAccount()">{{ 'COMMON.DELETE' |
+            <button class="btn btn-link" (click)="accountDeletionAsked = false; deleteAccount($event)">{{ 'COMMON.DELETE' |
                 translate }}
             </button>
-            <button class="btn btn-primary" (click)="accountDeletionAsked = false">{{ 'COMMON.CANCEL' | translate }}
+            <button class="btn btn-primary" (click)="(accountDeletionAsked = false) && $event.preventDefault()">
+              {{ 'COMMON.CANCEL' | translate }}
             </button>
         </div>
     </div>

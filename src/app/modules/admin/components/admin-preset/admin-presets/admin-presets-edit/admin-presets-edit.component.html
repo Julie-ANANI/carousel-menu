@@ -12,7 +12,7 @@
             <app-autocomplete-input (update)="addSection($event)"
                                     [config]="addSectionConfig"></app-autocomplete-input>
           </div>
-          <button type="submit" class="btn btn-primary centered" (click)="save()">{{ 'PRESETS.PRESET.EDIT.SAVE' | translate }}</button>
+          <button type="submit" class="btn btn-primary centered" (click)="save($event)">{{ 'PRESETS.PRESET.EDIT.SAVE' | translate }}</button>
         </form>
       </div>
     </div>

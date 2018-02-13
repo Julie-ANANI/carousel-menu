@@ -20,9 +20,9 @@
   <ul *ngFor="let a of answerList; index as i" class="answerList">
     <li *ngIf="!adminMode">
       <span [innerHTML]="a[identifier]"></span>
-      <i *ngIf="canOrder" class="fa fa-chevron-up c-hand" aria-label="Up" role="button" (click)="up(i)"></i>
-      <i *ngIf="canOrder" class="fa fa-chevron-down c-hand" aria-label="Down" role="button" (click)="down(i)"></i>
-      <a class="delete c-hand" aria-label="Close" role="button" (click)="rmProposition(i)">
+      <i *ngIf="canOrder" class="fa fa-chevron-up c-hand" aria-label="Up" role="button" (click)="up($event, i)"></i>
+      <i *ngIf="canOrder" class="fa fa-chevron-down c-hand" aria-label="Down" role="button" (click)="down($event, i)"></i>
+      <a class="delete c-hand" aria-label="Close" role="button" (click)="rmProposition($event, i)">
         <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
       </a>
     </li>
@@ -33,7 +33,7 @@
         <div class="popover-container">
           <div class="input-group">
             <input type="text" class="form-input" [(ngModel)]="a[identifier]" name="text"/>
-            <button class="btn btn-primary input-group-btn" type="submit" (click)="updateItem()">GO</button>
+            <button class="btn btn-primary input-group-btn" type="submit" (click)="updateItem($event)">GO</button>
           </div>
         </div>
       </div>
@@ -43,13 +43,13 @@
           Entrez un lien:
           <div class="input-group">
             <input type="text" class="form-input" [(ngModel)]="a.domain" name="domain"/>
-            <button class="btn btn-primary input-group-btn" type="submit" (click)="updateItem()">GO</button>
+            <button class="btn btn-primary input-group-btn" type="submit" (click)="updateItem($event)">GO</button>
           </div>
         </div>
       </div>
-      <i class="fa fa-thumbs-up" [ngClass]="{'active': a.rating === 2}" (click)="thumbsUp(i)"></i>
-      <i class="fa fa-thumbs-down" [ngClass]="{'active': a.rating === 0}" (click)="thumbsDown(i)"></i>
-      <a [routerLink]="" class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
+      <i class="fa fa-thumbs-up" [ngClass]="{'active': a.rating === 2}" (click)="thumbsUp($event, i)"></i>
+      <i class="fa fa-thumbs-down" [ngClass]="{'active': a.rating === 0}" (click)="thumbsDown($event, i)"></i>
+      <a [routerLink]="" class="delete" aria-label="Close" role="button" (click)="rmProposition($event, i)">
         <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
       </a>
     </li>

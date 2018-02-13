@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../models/answer';
 import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
+import { Innovation } from '../../../../../models/innovation';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -19,7 +20,7 @@ import { Section } from '../../../../../models/section';
 
 export class SharedMarketReportComponent implements OnInit {
 
-  @Input() public project: any;
+  @Input() public project: Innovation;
   @Input() public adminMode: boolean;
 
   private _questions: Array<Question> = [];
@@ -52,7 +53,8 @@ export class SharedMarketReportComponent implements OnInit {
     PageScrollConfig.defaultDuration = 800;
   }
 
-  public recalculateSynthesis(): any {
+  public recalculateSynthesis(event: Event): void {
+    event.preventDefault();
     this._calculating = true;
     this._innovationService.recalculateSynthesis(this._innoid)
       .first()

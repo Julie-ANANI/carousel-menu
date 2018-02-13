@@ -60,7 +60,9 @@
                           placeholder="">
             </div>
           </div>
-          <h3 *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')" class="form-group text-center">{{ "PRESETS.QUESTION.EDIT.CHOICES" | translate }}</h3>
+          <h3 *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')" class="form-group text-center">
+            {{ "PRESETS.QUESTION.EDIT.CHOICES" | translate }}
+          </h3>
           <div *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')" class="form-group text-center">
             <fieldset formArrayName="options">
               <div class="columns"
@@ -93,7 +95,7 @@
                   </label>
                 </div>
                 <div>
-                  <a class="delete c-hand" aria-label="Close" role="button" (click)="removeOption(i)">
+                  <a class="delete c-hand" aria-label="Close" role="button" (click)="removeOption($event, i)">
                     <i class="icon icon-delete"></i>
                   </a>
                 </div>
@@ -101,7 +103,7 @@
             </fieldset>
           </div>
           <button *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')"
-                  (click)="addOption()" class="btn btn-lg btn-primary" type="button">
+                  (click)="addOption($event)" class="btn btn-lg btn-primary" type="button">
             {{ 'PRESETS.QUESTION.EDIT.ADD' | translate }} <i class="icon icon-plus"></i>
           </button>
           <div class="form-group">
@@ -110,7 +112,9 @@
               <input type="checkbox" name="canComment" formControlName="canComment" id="canComment">
             </label>
           </div>
-          <button type="submit" class="btn btn-primary centered" (click)="save()">{{ 'PRESETS.QUESTION.EDIT.SAVE' | translate }}</button>
+          <button type="submit" class="btn btn-primary centered" (click)="save($event)">
+            {{ 'PRESETS.QUESTION.EDIT.SAVE' | translate }}
+          </button>
         </form>
       </div>
     </div>

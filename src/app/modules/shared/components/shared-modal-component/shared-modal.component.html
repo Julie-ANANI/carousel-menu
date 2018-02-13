@@ -1,4 +1,4 @@
-<span (click)="active=true">
+<span (click)="(active = true) && $event.preventDefault()">
   <ng-content select="[button]"></ng-content>
 </span>
 <div class="modal" [ngClass]="[active ? 'active': '', 'modal-'+size]">

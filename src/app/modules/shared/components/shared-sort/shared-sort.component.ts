@@ -13,7 +13,8 @@ export class SharedSortComponent {
   constructor() {
   }
 
-  public sort(): void {
+  public sort(event: Event): void {
+    event.preventDefault();
     const previousOrder = this.config.sort[this.prop] || 0;
     const newOrder = previousOrder === 1 ? -1 : previousOrder + 1;
     this.config.sort = {};

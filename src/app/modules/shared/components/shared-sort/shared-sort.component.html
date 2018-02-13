@@ -1,4 +1,4 @@
-<div (click)="sort()">
+<div (click)="sort($event)">
   <ng-content></ng-content>
   <i class="icon c-hand" [ngClass]="{'icon-arrow-down': order === -1, 'icon-arrow-up': order === 1, 'icon-resize-vert text-gray': order === 0}"></i>
 </div>
