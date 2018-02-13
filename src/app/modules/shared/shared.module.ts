@@ -47,7 +47,7 @@ import { SharedClickableWorldmapComponent } from './components/shared-clickable-
 import { SharedSearchHistoryComponent } from './components/shared-search-history/shared-search-history.component';
 import { SharedSearchProsComponent } from './components/shared-search-pros/shared-search-pros.component';
 import { SharedSearchMailComponent } from './components/shared-search-mail/shared-search-mail.component';
-import { SharedProjectEditComponent } from './components/share-project-edit/shared-project-edit.component';
+import { SharedProjectEditComponent } from './components/shared-project-edit/shared-project-edit.component';
 
 //Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
