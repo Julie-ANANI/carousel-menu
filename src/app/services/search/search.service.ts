@@ -11,6 +11,25 @@ export class SearchService {
   constructor(private _http: Http) {
   }
 
+  public search(params: any): Observable<any> {
+    return this._http.get('/search/search', {params: params})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public getRequest(requestId: string): Observable<any> {
+    const query = {
+      path: '/request/' + requestId,
+      params: {
+        fields: 'status, flag, mailRequest, request, entity, _id, keywords, country, language, campaign, profiles, automated'
+      }
+    };
+
+    return this._http.get('/search/get', {params:query})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public getEmailStats(daysCount: number): Observable<any> {
     const query = {
       params: {daysCount: daysCount},

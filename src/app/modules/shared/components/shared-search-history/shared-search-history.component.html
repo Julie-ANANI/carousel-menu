@@ -48,11 +48,11 @@
       </td>
 
       <td>
-        <small>{{request.elapsedTime}}</small>
+        <small>{{ request.elapsedTime | date:'m:ss' }}</small>
       </td>
 
       <td>
-        <small>{{request.created}}</small>
+        <small>{{request.created | date:'d/MM/yy à hh:mm:ss'}}</small>
       </td>
 
       <td class="stats">

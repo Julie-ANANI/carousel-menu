@@ -101,6 +101,13 @@ export class AuthService {
     this._admin = newValue;
     this._cookieService.put('hasBeenAdmin', `${newValue}`);
   }
+  
+  public getUserInfo(): any {
+    return {
+      name: this.user ? this.user.firstName + ' ' + this.user.lastName : '',
+      id: this.userId
+    }
+  }
 
   get isAuthenticated$(): Observable<boolean> { return this._authenticatedSource.asObservable(); }
   get isAuthenticated(): boolean { return this._authenticated; }
