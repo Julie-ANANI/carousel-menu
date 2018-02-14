@@ -42,7 +42,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     if (this.status) {
       this.config.status = this.status;
     }
-    this._searchService.getHistory(this._config)
+    this._searchService.getRequests(this._config)
       .first()
       .subscribe(result => {
         this._requests = result.requests;
@@ -51,6 +51,22 @@ export class SharedSearchHistoryComponent implements OnInit {
         }
       });
   }
+  
+  public getChildren (request: any) {
+    if (!request.loaded) {
+      this._searchService.getRequests({
+        'motherRequest': request._id,
+        'region': '',
+        'fields': 'entity keywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata'
+      })
+        .first()
+        .subscribe(children => {
+          request.request = children.requests;
+          request.loaded = true;
+        });
+    }
+    request.show = !request.show;
+  };
 
   public buildImageUrl(country: string): string {
     if (country) {
