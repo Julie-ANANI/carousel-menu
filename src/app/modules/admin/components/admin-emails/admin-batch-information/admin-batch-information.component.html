@@ -1,6 +1,6 @@
 <div>
   <div class="container">
-    <h3>Batch summary for campaign -- {{campaign.title || 'Untitled'}}</h3>
+    <h3>Batch summary for campaign -- {{campaign ? (campaign.title || 'Untitled') : 'Untitled'}}</h3>
     <div class="projects-stats">
       <div>Creation date:<span>{{batch.created | date: 'shortDate'}}</span></div>
       <div>Start date:<span>{{batch.startDate | date: 'short'}}</span></div>
