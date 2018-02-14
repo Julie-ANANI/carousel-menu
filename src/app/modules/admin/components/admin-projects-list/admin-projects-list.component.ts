@@ -206,11 +206,17 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   }
 
   public setOperator (operatorId: string, project: Innovation) {
-    this._innovationService.setOperator(project._id, operatorId)
-      .first()
-      .subscribe(_ => {
-        this._notificationService.success('Opérateur affecté', 'OK');
-      });
+    if(operatorId) {
+      this._innovationService.setOperator(project._id, operatorId)
+          .first()
+          .subscribe(_ => {
+            this._notificationService.success('Opérateur affecté', 'OK');
+          });
+    }
+  }
+
+  public disableOperatorsList(): boolean {
+    return this.operators.length === 0;
   }
 
   public seeMore (event: Event) {
