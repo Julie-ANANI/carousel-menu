@@ -1,7 +1,10 @@
+import {Router} from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Campaign } from '../../../../models/campaign';
+import { InnovationSettings } from '../../../../models/innov-settings';
+import { COUNTRIES } from './COUNTRIES'
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -32,7 +35,8 @@ export class SharedSearchProsComponent implements OnInit {
   @Input() campaign: Campaign;
 
   constructor(private _searchService: SearchService,
-              private _authService: AuthService) {}
+              private _authService: AuthService,
+              private _router: Router) {}
 
   ngOnInit(): void {
     if (this.campaign) {
@@ -40,7 +44,28 @@ export class SharedSearchProsComponent implements OnInit {
       this._params.smart = true;
       this._params.regions = true;
       this._params.queued = true;
+      this._params.count = 100;
+      if (this.campaign.innovation && this.campaign.innovation.settings && this.campaign.innovation.settings) {
+        this._params.countries = this.getTargetCountries(this.campaign.innovation.settings);
+      }
     }
+  }
+
+  public getTargetCountries(settings: InnovationSettings): Array<string> {
+    let countries: Array<string> = [];
+    if (settings && settings.geography) {
+      // On ajoute d'abord les pays appartenants aux continents sélectionnés
+      for (const continent in settings.geography.continentTarget) {
+        if (settings.geography.continentTarget[continent]) {
+          countries = countries.concat(COUNTRIES[continent]);
+        }
+      }
+      // Puis on enlève les pays exclus
+      if (settings.geography.exclude) {
+        countries = countries.filter((c: any) => settings.geography.exclude.map((c: any) => c.flag).indexOf(c) === -1);
+      }
+    }
+    return countries;
   }
 
   public search(event: Event): void {
@@ -50,7 +75,7 @@ export class SharedSearchProsComponent implements OnInit {
     searchParams.user = this._authService.getUserInfo();
     searchParams.websites = Object.keys(searchParams.websites).filter(key => searchParams.websites[key]).join(' ');
     this._searchService.search(searchParams).first().subscribe(result => {
-
+      this._router.navigateByUrl('/admin/search/results/' + result.id);
     });
   }
 
