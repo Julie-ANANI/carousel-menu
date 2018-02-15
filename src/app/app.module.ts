@@ -1,11 +1,21 @@
+// Modules externes
 import { NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { HttpModule, XHRBackend, RequestOptions } from '@angular/http';
 import { Http } from './services/http';
 import { httpFactory } from './factories/http.factory';
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 import { CookieService, CookieOptions } from 'angular2-cookie/core';
+import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs/Observable';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+
+// Modules/Components
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+// Services
 import { InnovationService } from './services/innovation/innovation.service';
 import { CampaignService } from './services/campaign/campaign.service';
 import { DashboardService } from './services/dashboard/dashboard.service';
@@ -14,10 +24,6 @@ import { TranslateNotificationsService } from './services/notifications/notifica
 import { TranslateTitleService } from './services/title/title.service';
 import { UserService } from './services/user/user.service';
 import { MediaService } from './services/media/media.service';
-import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs/Observable';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoaderService } from './services/loader/loader.service';
 import { ChartsModule } from 'ng2-charts';
 import { IndexService } from './services/index/index.service';
@@ -28,10 +34,12 @@ import { EmailService } from './services/email/email.service';
 import { SearchService } from './services/search/search.service';
 import { PresetService } from './services/preset/preset.service';
 import { AnswerService } from './services/answer/answer.service';
+import { ProfessionalsService } from './services/professionals/professionals.service';
+
+// Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
 import { InnovationResolver } from './resolvers/innovation.resolver';
 import { RequestResolver } from './resolvers/request.resolver';
-import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 @NgModule({
   declarations: [
@@ -75,6 +83,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
     SearchService,
     PresetService,
     AnswerService,
+    ProfessionalsService,
     {
       provide: Http,
       useFactory: httpFactory,
