@@ -48,6 +48,7 @@ import { SharedSearchHistoryComponent } from './components/shared-search-history
 import { SharedSearchProsComponent } from './components/shared-search-pros/shared-search-pros.component';
 import { SharedSearchMailComponent } from './components/shared-search-mail/shared-search-mail.component';
 import { SharedProjectEditComponent } from './components/shared-project-edit/shared-project-edit.component';
+import { SharedProsListComponent } from './components/shared-pros-list/shared-pros-list.component';
 
 //Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
@@ -110,7 +111,8 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
     SharedSearchMailComponent,
-    SharedProjectEditComponent
+    SharedProjectEditComponent,
+    SharedProsListComponent
   ],
   exports: [
     // Modules
@@ -153,7 +155,8 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
     SharedSearchMailComponent,
-    SharedProjectEditComponent
+    SharedProjectEditComponent,
+    SharedProsListComponent
   ]
 })
 export class SharedModule { }
