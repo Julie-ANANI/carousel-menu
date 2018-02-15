@@ -36,7 +36,10 @@
       <span class="title">{{ pro.firstName }} {{ pro.lastName }}</span>
     </td>
     <td>{{ pro.jobTitle }}</td>
-    <td>{{ pro.company }}</td>
+    <td>
+      <span *ngIf="requestId">{{ pro.company.name }}</span>
+      <span *ngIf="!requestId">{{ pro.company }}</span>
+    </td>
     <td>
       <span class="metas"><a [href]="'mailto:' + pro.email">{{ pro.email }}</a></span>
     </td>
