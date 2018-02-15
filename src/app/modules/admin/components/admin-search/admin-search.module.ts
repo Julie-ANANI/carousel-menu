@@ -6,6 +6,7 @@ import { AdminSearchComponent } from './admin-search.component';
 import { AdminSearchProsComponent } from './admin-search-pros/admin-search-pros.component';
 import { AdminSearchMailComponent } from './admin-search-mail/admin-search-mail.component';
 import { AdminSearchHistoryComponent } from './admin-search-history/admin-search-history.component';
+import { AdminSearchQueueComponent } from './admin-search-queue/admin-search-queue.component';
 import { AdminSearchResultsComponent } from './admin-search-results/admin-search-results.component';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { AdminSearchResultsComponent } from './admin-search-results/admin-search
     AdminSearchProsComponent,
     AdminSearchMailComponent,
     AdminSearchHistoryComponent,
+    AdminSearchQueueComponent,
     AdminSearchResultsComponent
   ],
   exports: [
