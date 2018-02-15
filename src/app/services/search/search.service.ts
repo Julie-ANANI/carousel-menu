@@ -30,6 +30,12 @@ export class SearchService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public getPros(config: any, requestId: string): Observable<any> {
+    return this._http.get('/search/queryRessourceAPI/request/' + requestId + '/person', {params:config})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public getEmailStats(daysCount: number): Observable<any> {
     const query = {
       params: {daysCount: daysCount},

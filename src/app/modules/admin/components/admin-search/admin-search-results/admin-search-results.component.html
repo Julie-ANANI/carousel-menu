@@ -1,42 +1,11 @@
 <div>
 
-  <!-- <h2 class="stats">
-    <i class="fa fa-envelope loading" *ngIf="flag==='EMAILS_SEARCHING'"></i>
-    <i class="fa fa-envelope success" *ngIf="flag==='EMAILS_FOUND'"></i>
-    <i class="fa fa-check-square-o success" *ngIf="flag==='PROS_ADDED'"></i>
-  </h2> -->
+  <h2 class="stats">
+    <i class="fa fa-envelope loading" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
+    <i class="fa fa-envelope success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
+    <i class="fa fa-check-square-o success" *ngIf="request.flag==='PROS_ADDED'"></i>
+    {{request.keywords[0].original}}
+  </h2>
 
-  <div class="table-responsive">
-    <table class="table table-striped table-condensed">
-      <thead>
-      <tr>
-        <th><a href="">{{ 'SEARCH.COUNTRY' | translate }}</a></th>
-        <th>{{ 'SEARCH.PERSON.FULLNAME' | translate }}</th>
-        <th>{{ 'SEARCH.PERSON.JOBTITLE' | translate }}</th>
-        <th>{{ 'SEARCH.COMPANY.COMPANY' | translate }}</th>
-        <th>{{ 'SEARCH.PERSON.EMAIL' | translate }}</th>
-        <th>{{ 'SEARCH.PERSON.CONFIDENCE' | translate }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let result of results">
-        <td class="text-center">
-          <img *ngIf="result.country" width="30" height="20" class="flag"
-               [src]="buildImageUrl(result.country.toUpperCase())">
-        </td>
-        <td>
-          <a [href]="result.profileUrl" target="_blank">
-            {{result.firstName}} {{result.lastName}}
-          </a>
-        </td>
-        <td>{{result.jobTitle}}</td>
-        <td>{{result.company.name}}</td>
-        <td>{{result.email}}</td>
-        <td>
-          <progress class="progress" [value]="result.emailConfidence || 0" max="100"></progress>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <app-shared-pros-list [config]="config" [requestId]="request._id"></app-shared-pros-list>
 </div>

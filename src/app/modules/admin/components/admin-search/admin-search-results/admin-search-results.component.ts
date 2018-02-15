@@ -9,15 +9,22 @@ import { Campaign } from '../../../../../models/campaign';
 })
 export class AdminSearchResultsComponent implements OnInit {
 
-  @Input() campaign: Campaign;
+  @Input() public campaign: Campaign;
 
   private _request: any;
+  public config: any = {
+    limit: 10,
+    offset: 0,
+    search: {},
+    sort: {
+      created: -1
+    },
+  };
 
   constructor(private _activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this._request = this._activatedRoute.snapshot.data['request'];
-    console.log(this._request);
   }
 
   public buildImageUrl(country: string): string {
@@ -28,5 +35,5 @@ export class AdminSearchResultsComponent implements OnInit {
     }
   }
 
-  get results() { return this._request.results.person; }
+  get request() { return this._request; }
 }

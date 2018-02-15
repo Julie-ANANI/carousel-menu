@@ -32,6 +32,7 @@
     <td>{{ pro.language }}</td>
     <td><img [src]="buildImageUrl(pro.country)" width="37" height="25"/></td>
     <td>
+      <a *ngIf="pro.profileUrl" [href]="pro.profileUrl" target="_blank"><i class="fa fa-linkedin"></i></a>
       <span class="title">{{ pro.firstName }} {{ pro.lastName }}</span>
     </td>
     <td>{{ pro.jobTitle }}</td>
@@ -39,7 +40,7 @@
     <td>
       <span class="metas"><a [href]="'mailto:' + pro.email">{{ pro.email }}</a></span>
     </td>
-    <td><progress class="progress" [value]="pro.emailConfidence" max="100"></progress></td>
+    <td><progress class="progress tooltip" [attr.data-tooltip]="pro.emailConfidence + '%'" [value]="pro.emailConfidence || 0" max="100"></progress></td>
   </tr>
   </tbody>
   <tfoot>
