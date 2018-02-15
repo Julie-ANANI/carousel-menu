@@ -179,7 +179,8 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   public getDelai (date: Date) {
     const delai = 8; // On se donne 8 jours à compter de la validation du projet
     const today: Date = new Date();
-    if(!date || !date.getTime) {
+    date = date || new Date('1970');
+    if(!date.getTime) {
       date = new Date(date);
     }
     let time = delai - Math.round((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
@@ -205,11 +206,17 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   }
 
   public setOperator (operatorId: string, project: Innovation) {
-    this._innovationService.setOperator(project._id, operatorId)
-      .first()
-      .subscribe(_ => {
-        this._notificationService.success('Opérateur affecté', 'OK');
-      });
+    if(operatorId) {
+      this._innovationService.setOperator(project._id, operatorId)
+          .first()
+          .subscribe(_ => {
+            this._notificationService.success('Opérateur affecté', 'OK');
+          });
+    }
+  }
+
+  public disableOperatorsList(): boolean {
+    return this.operators.length === 0;
   }
 
   public seeMore (event: Event) {
