@@ -45,6 +45,7 @@ export class SharedSearchProsComponent implements OnInit {
       this._params.regions = true;
       this._params.queued = true;
       this._params.count = 100;
+      this._params.campaign = this.campaign._id;
       if (this.campaign.innovation && this.campaign.innovation.settings && this.campaign.innovation.settings) {
         this._params.countries = this.getTargetCountries(this.campaign.innovation.settings);
       }
