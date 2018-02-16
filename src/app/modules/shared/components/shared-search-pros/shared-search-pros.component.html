@@ -1,42 +1,43 @@
 <div>
-  <div class="input-group">
-    <button class="btn btn-lg input-group-btn" (click)="(displaySettings = !displaySettings) && $event.preventDefault()">
-      <i class="fa fa-cogs"></i>
-    </button>
-    <input class="form-input form-control input-lg" [(ngModel)]="params.keywords">
-    <button class="btn btn-primary btn-lg input-group-btn" (click)="search($event)">
-      <i class="fa fa-search"></i>
-    </button>
-  </div>
-  <div *ngIf="displaySettings">
+  <h2>Recherche de professionels</h2>
+  <div class="column col-8 col-mx-auto">
+    <div class="input-group">
+      <button class="btn btn-lg input-group-btn" (click)="(displaySettings = !displaySettings) && $event.preventDefault()">
+        <i class="fa fa-cogs"></i>
+      </button>
+      <input class="form-input form-control input-lg" [(ngModel)]="params.keywords" placeholder="Recherche 'Google-like'">
+      <button class="btn btn-primary btn-lg input-group-btn" (click)="search($event)">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+    <div *ngIf="displaySettings">
       <label class="form-switch">
         <input type="checkbox" [(ngModel)]="params.smart">
         <i class="form-icon"></i> {{ 'SEARCH.SMART' | translate }}
       </label>
-    <label class="form-switch">
-      <input type="checkbox" [(ngModel)]="params.regions">
-      <i class="form-icon"></i> {{ 'SEARCH.REGIONS' | translate }}
-    </label>
-    <label class="form-switch">
-      <input type="checkbox" [(ngModel)]="params.queued">
-      <i class="form-icon"></i> {{ 'SEARCH.ADDTOQUEUE' | translate }}
-    </label>
-    <label class="form-switch">
-      <input type="checkbox" [(ngModel)]="params.automated">
-      <i class="form-icon"></i> {{ 'SEARCH.SEARCHMAILS' | translate }}
-    </label>
-    <label class="form-group">
-      {{ 'SEARCH.NUMBER' | translate }}
-      <select name="count" class="form-control" [(ngModel)]="params.count">
-        <option value="10">{{10}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-        <option value="20">{{20}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-        <option value="30">{{30}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-        <option value="40">{{40}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-        <option value="50">{{50}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-        <option value="100">{{100}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-      </select>
-    </label>
-    <div class="form-group">
+      <label class="form-switch">
+        <input type="checkbox" [(ngModel)]="params.regions">
+        <i class="form-icon"></i> {{ 'SEARCH.REGIONS' | translate }}
+      </label>
+      <label class="form-switch">
+        <input type="checkbox" [(ngModel)]="params.queued">
+        <i class="form-icon"></i> {{ 'SEARCH.ADDTOQUEUE' | translate }}
+      </label>
+      <label class="form-switch">
+        <input type="checkbox" [(ngModel)]="params.automated">
+        <i class="form-icon"></i> {{ 'SEARCH.SEARCHMAILS' | translate }}
+      </label>
+      <label class="form-group">
+        {{ 'SEARCH.NUMBER' | translate }}
+        <select name="count" class="form-control" [(ngModel)]="params.count">
+          <option value="10">{{10}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
+          <option value="20">{{20}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
+          <option value="30">{{30}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
+          <option value="40">{{40}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
+          <option value="50">{{50}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
+          <option value="100">{{100}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
+        </select>
+      </label>
       {{ 'SEARCH.ENGINE' | translate }}
       <label ng-class="{selected: params.indexSearch}">
         <input type="checkbox" name="indexSearch" value="indexSearch"

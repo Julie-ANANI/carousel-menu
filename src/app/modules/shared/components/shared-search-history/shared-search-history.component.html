@@ -1,4 +1,4 @@
-<div *ngIf="requests?.length">
+<div>
   <h2>
     {{total}} {{ 'SEARCH.HISTORY.SEARCHES' | translate }}
     <span *ngIf="status==='PROCESSING'"> en cours</span>
@@ -21,129 +21,132 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let request of requests">
-      <td>
-        <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON'"><i class="fa fa-users"></i></div>
-        <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON_BY_REGIONS'"><i class="fa fa-users"></i></div>
-        <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON_BY_COUNTRIES'"><i class="fa fa-globe"></i></div>
-        <div [ngClass]="request.entity" *ngIf="request.entity==='MAIL' || request.entity==='MAIL_ADDRESS'"><i class="fa fa-envelope"></i></div>
-        <div [ngClass]="request.entity" *ngIf="request.entity==='COMPANY'"><i class="fa fa-building"></i></div>
-      </td>
+    <ng-template ngFor let-request [ngForOf]="requests" [ngForTrackBy]="requestTrackBy">
+      <tr>
+        <td>
+          <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON' || request.entity==='PERSON_BY_REGIONS'"><i class="fa fa-users"></i></div>
+          <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON_BY_COUNTRIES'" (click)="getChildren(request)"><i class="fa fa-globe"></i></div>
+          <div [ngClass]="request.entity" *ngIf="request.entity==='MAIL' || request.entity==='MAIL_ADDRESS'"><i class="fa fa-envelope"></i></div>
+        </td>
 
-      <td>
-        <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && !campaign" href="">{{request.keywords[0].original}}</a>
-        <a *ngIf="mails" href="">{{request.keywords[0].original}}</a>
-        <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && campaign" href="">{{request.keywords[0].original}}</a>
-        <a *ngIf="request.entity==='COMPANY'" href="">{{request.keywords[0].original}}</a>
-        <a *ngIf="request.entity==='MAIL'" href="">{{request.keywords[0].original}}</a>
-        <small *ngIf="request.entity==='PERSON'">{{request.requests ? request.requests.person.length : 0}} résultats | {{request.metadata.user.name}}</small>
-        <small *ngIf="request.entity==='PERSON_BY_COUNTRIES'">{{request.totalrequests}} résultats | {{request.metadata.user.name}}</small>
-        <small *ngIf="request.entity==='PERSON_BY_REGIONS'">{{request.totalrequests}} résultats | {{request.metadata.user.name}}</small>
-        <small *ngIf="request.entity==='COMPANY'"> {{request.requests.company.length}} résultats | {{request.metadata.user.name}}</small>
-      </td>
+        <td>
+          <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS')" [routerLink]="'/admin/search/results/' + request._id">{{request.keywords[0].original}}</a>
+          <a *ngIf="mails" href="">{{request.keywords[0].original}}</a>
+          <a *ngIf="request.entity==='MAIL'" href="">{{request.keywords[0].original}}</a>
+          <br/>
+          <small *ngIf="request.entity==='PERSON'">{{request.requests ? request.requests.person.length : 0}} résultats | {{request.metadata.user.name}}</small>
+          <small *ngIf="request.entity==='PERSON_BY_COUNTRIES'">{{request.totalrequests}} résultats | {{request.metadata.user.name}}</small>
+          <small *ngIf="request.entity==='PERSON_BY_REGIONS'">{{request.totalrequests}} résultats | {{request.metadata.user.name}}</small>
+        </td>
 
-      <td class="text-center" *ngIf="!mails">
-        <img *ngIf="request.country" width="30" height="20" class="flag"
-             [src]="'/images/infographics/flags/' + request.country.toUpperCase() + '.png'">
-      </td>
+        <td class="text-center" *ngIf="!mails">
+          <img *ngIf="request.country" width="30" height="20" class="flag" [src]="buildImageUrl(request.country.toUpperCase())">
+        </td>
 
-      <td>
-        <small>{{ request.elapsedTime | date:'m:ss' }}</small>
-      </td>
+        <td>
+          <small>{{ request.elapsedTime | date:'m:ss' }}</small>
+        </td>
 
-      <td>
-        <small>{{request.created | date:'d/MM/yy à hh:mm:ss'}}</small>
-      </td>
+        <td>
+          <small>{{request.created | date:'d/MM/yy à hh:mm:ss'}}</small>
+        </td>
 
-      <td class="stats">
-        <div class="success" *ngIf="request.status === 'DONE'">
-          {{ 'SEARCH.HISTORY.DONE' | translate }}
-        </div>
-        <div class="loading" *ngIf="request.status === 'PROCESSING'">
-          <i class="fa fa-times">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
-        </div>
-        <div class="error" *ngIf="request.status === 'QUEUED'">
-          {{ 'SEARCH.HISTORY.QUEUED' | translate }}
-        </div>
-        <div class="error" *ngIf="request.status === 'CANCELED'">
-          {{ 'SEARCH.HISTORY.CANCELED' | translate }}
-        </div>
-      </td>
+        <td class="stats">
+          <div class="success" *ngIf="request.status === 'DONE'">
+            {{ 'SEARCH.HISTORY.DONE' | translate }}
+          </div>
+          <div class="loading" *ngIf="request.status === 'PROCESSING'">
+            <i class="fa fa-times">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
+          </div>
+          <div class="error" *ngIf="request.status === 'QUEUED'">
+            {{ 'SEARCH.HISTORY.QUEUED' | translate }}
+          </div>
+          <div class="error" *ngIf="request.status === 'CANCELED'">
+            {{ 'SEARCH.HISTORY.CANCELED' | translate }}
+          </div>
+        </td>
 
-      <td class="text-center">
-        {{request.cost.totalCost}} €
-      </td>
+        <td class="text-center">
+          {{request.cost.totalCost}} €
+        </td>
 
-      <td class="text-center stats">
-        <i class="fa fa-envelope error" *ngIf="request.flag==='EMAILS_QUEUED'"></i>
-        <i class="fa fa-envelope success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
-        <i class="fa fa-envelope loading" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
-        <i class="fa fa-check-square-o success" *ngIf="request.flag==='PROS_ADDED'"></i>
-      </td>
+        <td class="text-center stats">
+          <i class="fa fa-envelope error" *ngIf="request.flag==='EMAILS_QUEUED'"></i>
+          <i class="fa fa-envelope success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
+          <i class="fa fa-envelope loading" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
+          <i class="fa fa-check-square-o success" *ngIf="request.flag==='PROS_ADDED'"></i>
+        </td>
 
-      <td class="text-center" *ngIf="!mails">
-        <button class="btn btn-default btn-sm" *ngIf="!campaign && request.campaign" ui-sref="campaign-edit.search({campaignId:request.campaign})">
-          <i class="fa fa-eye"></i> Campagne
-        </button>
-      </td>
-    </tr><!--
-    <tr *ngIf="request.show && request.entity === 'PERSON_BY_COUNTRIES'"
-        ng-repeat="request in request.request track by $index">
-      <td>
-        <div class="PERSONSMALL"><i class="fa fa-user"></i></div>
-      </td>
-      <td>
-        <a ui-sref="search.professionnals({requestId:request._id})" *ngIf="!campaign" href="">{{request.keywords[0].original}}</a>
-        <a ui-sref="campaign-edit.search({campaignId:campaign.id, requestId:request._id})" *ngIf="campaign" href="">{{request.keywords[0].original}}</a>
-        <small *ngIf="request.entity==='PERSON'">{{request.requests.person.length}} résultats | {{request.metadata.user.name}}</small>
-        <small *ngIf="request.entity==='PERSON_BY_REGIONS'">{{request.totalrequests}} résultats | {{request.metadata.user.name}}</small>
-      </td>
+        <td class="text-center" *ngIf="!mails">
+          <button class="btn btn-default btn-sm" *ngIf="!campaign && request.campaign">
+            <a [routerLink]="'/admin/campaigns/campaign/' + request.campaign">
+              <i class="fa fa-eye"></i> Campagne
+            </a>
+          </button>
+        </td>
+      </tr>
+      <tr [hidden]="!request.show || request.entity != 'PERSON_BY_COUNTRIES'"
+          *ngFor="let childRequest of request.request">
+        <td>
+          <div class="PERSONSMALL"><i class="fa fa-user"></i></div>
+        </td>
+        <td>
+          <a *ngIf="(childRequest.entity==='PERSON' || childRequest.entity==='PERSON_BY_COUNTRIES' || childRequest.entity==='PERSON_BY_REGIONS')" [routerLink]="'/admin/search/results/' + childRequest._id">{{childRequest.keywords[0].original}}</a>
+          <a *ngIf="mails" href="">{{childRequest.keywords[0].original}}</a>
+          <a *ngIf="childRequest.entity==='MAIL'" href="">{{childRequest.keywords[0].original}}</a>
+          <br/>
+          <small *ngIf="childRequest.entity==='PERSON'">{{childRequest.childRequests ? childRequest.childRequests.person.length : 0}} résultats | {{childRequest.metadata.user.name}}</small>
+          <small *ngIf="childRequest.entity==='PERSON_BY_COUNTRIES'">{{childRequest.totalchildRequests}} résultats | {{childRequest.metadata.user.name}}</small>
+          <small *ngIf="childRequest.entity==='PERSON_BY_REGIONS'">{{childRequest.totalchildRequests}} résultats | {{childRequest.metadata.user.name}}</small>
+        </td>
 
-      <td class="text-center">
-        <img *ngIf="request.country" width="30" height="20" class="flag"
-             [src]="'/images/infographics/flags/' + request.country.toUpperCase() + '.png'">
-      </td>
+        <td class="text-center" *ngIf="!mails">
+          <img *ngIf="childRequest.country" width="30" height="20" class="flag" [src]="buildImageUrl(childRequest.country.toUpperCase())">
+        </td>
 
-      <td>
-        <small>{{elapsedTime(request)}}</small>
-      </td>
+        <td>
+          <small>{{ childRequest.elapsedTime | date:'m:ss' }}</small>
+        </td>
 
-      <td>
-        <small>{{request.created}}</small>
-      </td>
+        <td>
+          <small>{{childRequest.created | date:'d/MM/yy à hh:mm:ss'}}</small>
+        </td>
 
-      <td class="stats">
-        <div class="success" *ngIf="request.status === 'DONE'">
-          <span></span> {{ 'SEARCH.HISTORY.DONE' | translate }}
-        </div>
-        <div class="loading" *ngIf="request.status === 'PROCESSING'">
-          <i class="fa fa-times" (click)="stopRequest(request)"> {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
-        </div>
-        <div class="error" *ngIf="request.status === 'QUEUED'">
-          <span (click)="cancelRequest(request, true)"></span> {{ 'SEARCH.HISTORY.QUEUED' | translate }}
-        </div>
-        <div class="error" *ngIf="request.status === 'CANCELED'">
-          <span (click)="cancelRequest(request, false)"></span> {{ 'SEARCH.HISTORY.CANCELED' | translate }}
-        </div>
-      </td>
+        <td class="stats">
+          <div class="success" *ngIf="childRequest.status === 'DONE'">
+            {{ 'SEARCH.HISTORY.DONE' | translate }}
+          </div>
+          <div class="loading" *ngIf="childRequest.status === 'PROCESSING'">
+            <i class="fa fa-times">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
+          </div>
+          <div class="error" *ngIf="childRequest.status === 'QUEUED'">
+            {{ 'SEARCH.HISTORY.QUEUED' | translate }}
+          </div>
+          <div class="error" *ngIf="childRequest.status === 'CANCELED'">
+            {{ 'SEARCH.HISTORY.CANCELED' | translate }}
+          </div>
+        </td>
 
-      <td class="text-center">
-        {{request.cost.totalCost | number : 4}} €
-      </td>
+        <td class="text-center">
+          {{childRequest.cost.totalCost}} €
+        </td>
 
-      <td class="text-center stats">
-        <i class="fa fa-envelope error" *ngIf="request.flag==='EMAILS_QUEUED'"></i>
-        <i class="fa fa-envelope success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
-        <i class="fa fa-envelope loading" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
-        <i class="fa fa-check-square-o success" *ngIf="request.flag==='PROS_ADDED'"></i>
-      </td>
+        <td class="text-center stats">
+          <i class="fa fa-envelope error" *ngIf="childRequest.flag==='EMAILS_QUEUED'"></i>
+          <i class="fa fa-envelope success" *ngIf="childRequest.flag==='EMAILS_FOUND'"></i>
+          <i class="fa fa-envelope loading" *ngIf="childRequest.flag==='EMAILS_SEARCHING'"></i>
+          <i class="fa fa-check-square-o success" *ngIf="childRequest.flag==='PROS_ADDED'"></i>
+        </td>
 
-      <td class="text-center">
-        <button class="btn btn-default btn-sm" *ngIf="!campaign && request.campaign" ui-sref="campaign-edit.search({campaignId:request.campaign})">
-          <i class="fa fa-eye"></i> Campagne
-        </button>
-      </td>
-    </tr>-->
+        <td class="text-center" *ngIf="!mails">
+          <button class="btn btn-default btn-sm" *ngIf="!campaign && childRequest.campaign">
+            <a [routerLink]="'/admin/campaigns/campaign/' + childRequest.campaign">
+              <i class="fa fa-eye"></i> Campagne
+            </a>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
     </tbody>
   </table>
 </div>
