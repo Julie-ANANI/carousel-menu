@@ -15,7 +15,7 @@ export class AdminCampaignProsComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this._campaign = this._activatedRoute.snapshot.data['campaign'];
+    this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
     this._config = {
       fields: 'language firstName lastName company email emailConfidence country',
       limit: 10,
