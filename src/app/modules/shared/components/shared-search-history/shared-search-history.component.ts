@@ -12,6 +12,8 @@ export class SharedSearchHistoryComponent implements OnInit {
   @Input() status: string;
   @Input() mails: boolean;
 
+
+  private _paused: boolean = false;
   private _requests: Array<any> = [];
   private _total: number = 0;
   private _config: any = {
@@ -79,4 +81,5 @@ export class SharedSearchHistoryComponent implements OnInit {
   get requests(): Array<any> { return this._requests; }
   get total(): number { return this._total; }
   get config(): any { return this._config; }
+  get paused(): boolean { return this._paused; }
 }

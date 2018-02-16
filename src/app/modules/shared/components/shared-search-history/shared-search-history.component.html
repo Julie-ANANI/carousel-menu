@@ -21,7 +21,7 @@
     </tr>
     </thead>
     <tbody>
-    <ng-template ngFor let-request [ngForOf]="requests" [ngForTrackBy]="requestTrackBy">
+    <ng-template ngFor let-request [ngForOf]="requests">
       <tr>
         <td>
           <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON' || request.entity==='PERSON_BY_REGIONS'"><i class="fa fa-users"></i></div>
