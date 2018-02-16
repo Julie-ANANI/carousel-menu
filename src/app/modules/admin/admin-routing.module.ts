@@ -20,8 +20,10 @@ import { AdminCampaignDetailsComponent } from './components/admin-campaigns/admi
 import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admin-campaign-history/admin-campaign-history.component';
 import { AdminCampaignProsComponent } from './components/admin-campaigns/admin-campaign-pros/admin-campaign-pros.component';
 import { AdminCampaignSearchComponent } from './components/admin-campaigns/admin-campaign-search/admin-campaign-search.component';
+import { AdminCampaignSearchResultsComponent } from './components/admin-campaigns/admin-campaign-search-results/admin-campaign-search-results.component';
 import { CampaignResolver } from '../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
+import { RequestResolver } from '../../resolvers/request.resolver';
 import { AdminPresetComponent } from './components/admin-preset/admin-preset.component';
 import { presetsRoutes } from './components/admin-preset/admin-presets/admin-presets-routing.module';
 import { questionsRoutes } from './components/admin-preset/admin-questions/admin-questions-routing.module';
@@ -69,6 +71,7 @@ const adminRoutes: Routes = [
             { path: 'details', component: AdminCampaignDetailsComponent, pathMatch: 'full'},
             { path: 'pros', component: AdminCampaignProsComponent, pathMatch: 'full'},
             { path: 'search', component: AdminCampaignSearchComponent, pathMatch: 'full'},
+            { path: 'results/:requestId', component: AdminCampaignSearchResultsComponent, resolve: { request : RequestResolver }, pathMatch: 'full' },
             { path: 'history', component: AdminCampaignHistoryComponent, pathMatch: 'full'},
             { path: 'answers', component: AdminCampaignAnswersComponent, pathMatch: 'full'}
           ]}

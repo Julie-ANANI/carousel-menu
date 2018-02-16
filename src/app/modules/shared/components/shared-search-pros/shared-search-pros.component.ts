@@ -76,7 +76,10 @@ export class SharedSearchProsComponent implements OnInit {
     searchParams.user = this._authService.getUserInfo();
     searchParams.websites = Object.keys(searchParams.websites).filter(key => searchParams.websites[key]).join(' ');
     this._searchService.search(searchParams).first().subscribe(result => {
-      this._router.navigateByUrl('/admin/search/results/' + result.id);
+      if (this.campaign) {
+        
+      }
+      this._router.navigateByUrl('/admin/' + (this.campaign ? 'campaigns/campaign/' + this.campaign._id : 'search') +  '/results/' + result.id);
     });
   }
 

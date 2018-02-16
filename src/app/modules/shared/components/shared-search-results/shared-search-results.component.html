@@ -1,0 +1,11 @@
+<div>
+
+  <h2 class="stats">
+    <i class="fa fa-envelope loading" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
+    <i class="fa fa-envelope success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
+    <i class="fa fa-check-square-o success" *ngIf="request.flag==='PROS_ADDED'"></i>
+    {{request.keywords[0].original}}
+  </h2>
+
+  <app-shared-pros-list [config]="config" [requestId]="request._id"></app-shared-pros-list>
+</div>
