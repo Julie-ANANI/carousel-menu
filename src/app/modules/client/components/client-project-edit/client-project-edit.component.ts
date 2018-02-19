@@ -259,7 +259,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   public getModel (): any {
     return {
       lang: 'en',
-      jobType: 'innovationCard',
+      jobType: 'innovation',
       labels: 'EXPORT.INNOVATION.CARD',
       pdfDataseedFunction: this.dataBuilder()
     };
