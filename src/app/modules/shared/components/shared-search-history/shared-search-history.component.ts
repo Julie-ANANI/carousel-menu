@@ -12,6 +12,8 @@ export class SharedSearchHistoryComponent implements OnInit {
   @Input() status: string;
   @Input() mails: boolean;
 
+
+  private _paused: boolean = false;
   private _requests: Array<any> = [];
   private _total: number = 0;
   private _config: any = {
@@ -42,7 +44,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     if (this.status) {
       this.config.status = this.status;
     }
-    this._searchService.getHistory(this._config)
+    this._searchService.getRequests(this._config)
       .first()
       .subscribe(result => {
         this._requests = result.requests;
@@ -51,6 +53,22 @@ export class SharedSearchHistoryComponent implements OnInit {
         }
       });
   }
+  
+  public getChildren (request: any) {
+    if (!request.loaded) {
+      this._searchService.getRequests({
+        'motherRequest': request._id,
+        'region': '',
+        'fields': 'entity keywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata'
+      })
+        .first()
+        .subscribe(children => {
+          request.request = children.requests;
+          request.loaded = true;
+        });
+    }
+    request.show = !request.show;
+  };
 
   public buildImageUrl(country: string): string {
     if (country) {
@@ -63,4 +81,5 @@ export class SharedSearchHistoryComponent implements OnInit {
   get requests(): Array<any> { return this._requests; }
   get total(): number { return this._total; }
   get config(): any { return this._config; }
+  get paused(): boolean { return this._paused; }
 }

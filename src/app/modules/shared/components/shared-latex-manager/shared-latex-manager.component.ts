@@ -42,7 +42,7 @@ export class SharedLatexManagerComponent {
     this._fileName = this.model.pdfDataseedFunction.title;
     if (!this.isCompiling()) {
       switch (this.model.jobType) {
-        case('inventionCard'):
+        case('innovation'):
           this._generateInnovationCard();
           break;
         case('synthesis'):

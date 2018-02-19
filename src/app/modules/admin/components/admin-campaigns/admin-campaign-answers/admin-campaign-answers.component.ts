@@ -30,7 +30,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
               private _campaignService: CampaignService) { }
 
   ngOnInit() {
-    this._campaign = this._activatedRoute.snapshot.data['campaign'];
+    this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
     this.loadAnswers();
     this._modalAnswer = null;
     if (this._campaign.innovation.preset && Array.isArray(this._campaign.innovation.preset.sections)) {
