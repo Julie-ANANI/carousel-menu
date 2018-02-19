@@ -34,9 +34,9 @@
           <a *ngIf="mails" href="">{{request.keywords[0].original}}</a>
           <a *ngIf="request.entity==='MAIL'" href="">{{request.keywords[0].original}}</a>
           <br/>
-          <small *ngIf="request.entity==='PERSON'">{{request.requests ? request.requests.person.length : 0}} résultats | {{request.metadata.user.name}}</small>
-          <small *ngIf="request.entity==='PERSON_BY_COUNTRIES'">{{request.totalrequests}} résultats | {{request.metadata.user.name}}</small>
-          <small *ngIf="request.entity==='PERSON_BY_REGIONS'">{{request.totalrequests}} résultats | {{request.metadata.user.name}}</small>
+          <small *ngIf="request.entity==='PERSON'">{{request.results ? request.results.person.length : 0}} résultats | {{request.metadata.user.name}}</small>
+          <small *ngIf="request.entity==='PERSON_BY_COUNTRIES'">{{request.totalResults}} résultats | {{request.metadata.user.name}}</small>
+          <small *ngIf="request.entity==='PERSON_BY_REGIONS'">{{request.totalResults}} résultats | {{request.metadata.user.name}}</small>
         </td>
 
         <td class="text-center" *ngIf="!mails">
@@ -52,16 +52,16 @@
         </td>
 
         <td class="stats">
-          <div class="success" *ngIf="request.status === 'DONE'">
+          <div class="text-success" *ngIf="request.status === 'DONE'">
             {{ 'SEARCH.HISTORY.DONE' | translate }}
           </div>
-          <div class="loading" *ngIf="request.status === 'PROCESSING'">
+          <div class="text-warning" *ngIf="request.status === 'PROCESSING'">
             <i class="fa fa-times">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
           </div>
-          <div class="error" *ngIf="request.status === 'QUEUED'">
+          <div class="text-error" *ngIf="request.status === 'QUEUED'">
             {{ 'SEARCH.HISTORY.QUEUED' | translate }}
           </div>
-          <div class="error" *ngIf="request.status === 'CANCELED'">
+          <div class="text-error" *ngIf="request.status === 'CANCELED'">
             {{ 'SEARCH.HISTORY.CANCELED' | translate }}
           </div>
         </td>
@@ -71,10 +71,10 @@
         </td>
 
         <td class="text-center stats">
-          <i class="fa fa-envelope error" *ngIf="request.flag==='EMAILS_QUEUED'"></i>
-          <i class="fa fa-envelope success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
-          <i class="fa fa-envelope loading" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
-          <i class="fa fa-check-square-o success" *ngIf="request.flag==='PROS_ADDED'"></i>
+          <i class="fa fa-envelope text-error" *ngIf="request.flag==='EMAILS_QUEUED'"></i>
+          <i class="fa fa-envelope text-success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
+          <i class="fa fa-envelope text-warning" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
+          <i class="fa fa-check-square-o text-success" *ngIf="request.flag==='PROS_ADDED'"></i>
         </td>
 
         <td class="text-center" *ngIf="!mails">
@@ -95,9 +95,9 @@
           <a *ngIf="mails" href="">{{childRequest.keywords[0].original}}</a>
           <a *ngIf="childRequest.entity==='MAIL'" href="">{{childRequest.keywords[0].original}}</a>
           <br/>
-          <small *ngIf="childRequest.entity==='PERSON'">{{childRequest.childRequests ? childRequest.childRequests.person.length : 0}} résultats | {{childRequest.metadata.user.name}}</small>
-          <small *ngIf="childRequest.entity==='PERSON_BY_COUNTRIES'">{{childRequest.totalchildRequests}} résultats | {{childRequest.metadata.user.name}}</small>
-          <small *ngIf="childRequest.entity==='PERSON_BY_REGIONS'">{{childRequest.totalchildRequests}} résultats | {{childRequest.metadata.user.name}}</small>
+          <small *ngIf="childRequest.entity==='PERSON'">{{childRequest.results ? childRequest.results.person.length : 0}} résultats | {{childRequest.metadata.user.name}}</small>
+          <small *ngIf="childRequest.entity==='PERSON_BY_COUNTRIES'">{{childRequest.totalResults}} résultats | {{childRequest.metadata.user.name}}</small>
+          <small *ngIf="childRequest.entity==='PERSON_BY_REGIONS'">{{childRequest.totalResults}} résultats | {{childRequest.metadata.user.name}}</small>
         </td>
 
         <td class="text-center" *ngIf="!mails">
@@ -113,16 +113,16 @@
         </td>
 
         <td class="stats">
-          <div class="success" *ngIf="childRequest.status === 'DONE'">
+          <div class="text-success" *ngIf="childRequest.status === 'DONE'">
             {{ 'SEARCH.HISTORY.DONE' | translate }}
           </div>
-          <div class="loading" *ngIf="childRequest.status === 'PROCESSING'">
+          <div class="text-warning" *ngIf="childRequest.status === 'PROCESSING'">
             <i class="fa fa-times">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
           </div>
-          <div class="error" *ngIf="childRequest.status === 'QUEUED'">
+          <div class="text-error" *ngIf="childRequest.status === 'QUEUED'">
             {{ 'SEARCH.HISTORY.QUEUED' | translate }}
           </div>
-          <div class="error" *ngIf="childRequest.status === 'CANCELED'">
+          <div class="text-error" *ngIf="childRequest.status === 'CANCELED'">
             {{ 'SEARCH.HISTORY.CANCELED' | translate }}
           </div>
         </td>
@@ -132,10 +132,10 @@
         </td>
 
         <td class="text-center stats">
-          <i class="fa fa-envelope error" *ngIf="childRequest.flag==='EMAILS_QUEUED'"></i>
-          <i class="fa fa-envelope success" *ngIf="childRequest.flag==='EMAILS_FOUND'"></i>
-          <i class="fa fa-envelope loading" *ngIf="childRequest.flag==='EMAILS_SEARCHING'"></i>
-          <i class="fa fa-check-square-o success" *ngIf="childRequest.flag==='PROS_ADDED'"></i>
+          <i class="fa fa-envelope text-error" *ngIf="childRequest.flag==='EMAILS_QUEUED'"></i>
+          <i class="fa fa-envelope text-success" *ngIf="childRequest.flag==='EMAILS_FOUND'"></i>
+          <i class="fa fa-envelope text-warning" *ngIf="childRequest.flag==='EMAILS_SEARCHING'"></i>
+          <i class="fa fa-check-square-o text-success" *ngIf="childRequest.flag==='PROS_ADDED'"></i>
         </td>
 
         <td class="text-center" *ngIf="!mails">

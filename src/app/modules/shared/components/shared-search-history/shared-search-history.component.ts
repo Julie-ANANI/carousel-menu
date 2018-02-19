@@ -15,7 +15,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _requests: Array<any> = [];
   private _total: number = 0;
   private _config: any = {
-    fields: 'entity keywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata',
+    fields: 'entity keywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results',
     limit: 10,
     offset: 0,
     search: {},
@@ -57,7 +57,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       this._searchService.getRequests({
         'motherRequest': request._id,
         'region': '',
-        'fields': 'entity keywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata'
+        'fields': 'entity keywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results'
       })
         .first()
         .subscribe(children => {
