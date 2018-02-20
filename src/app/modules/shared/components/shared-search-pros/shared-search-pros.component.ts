@@ -68,6 +68,16 @@ export class SharedSearchProsComponent implements OnInit {
     }
     return countries;
   }
+  
+  public checkCountry(country: string) {
+    const index = this._params.countries.indexOf(country);
+    if (index > -1) {
+      this._params.countries.splice(index, 1);
+    } else {
+      this._params.countries.push(country);
+    }
+    console.log(this._params.countries);
+  }
 
   public search(event: Event): void {
     event.preventDefault();
@@ -76,9 +86,6 @@ export class SharedSearchProsComponent implements OnInit {
     searchParams.user = this._authService.getUserInfo();
     searchParams.websites = Object.keys(searchParams.websites).filter(key => searchParams.websites[key]).join(' ');
     this._searchService.search(searchParams).first().subscribe(result => {
-      if (this.campaign) {
-        
-      }
       this._router.navigateByUrl('/admin/' + (this.campaign ? 'campaigns/campaign/' + this.campaign._id : 'search') +  '/results/' + result.id);
     });
   }
@@ -91,6 +98,8 @@ export class SharedSearchProsComponent implements OnInit {
     }
   }
 
+  get countries(): any { return COUNTRIES; }
+  get continents(): any { return Object.keys(COUNTRIES); }
   get params(): any { return this._params; }
   set params(value: any) { this._params = value; }
 }
