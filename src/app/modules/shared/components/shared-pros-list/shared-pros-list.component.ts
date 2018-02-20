@@ -11,6 +11,7 @@ import { Professional } from '../../../../models/professional';
 export class SharedProsListComponent {
   
   private _config: any;
+  public smartSelect: any = null;
   
   @Input() public requestId: string;
   @Input() set config(value: any) {
@@ -44,6 +45,19 @@ export class SharedProsListComponent {
     } else {
       return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
     }
+  }
+
+  updateSelection(event: any) {
+    this.smartSelect = event;
+  }
+  
+  get nbSelected(): number {
+    if (this.smartSelect) {
+      return (this.smartSelect.limit + this.smartSelect.offset) > this.total ?
+        this.total - this.smartSelect.offset :
+        this.smartSelect.limit;
+    }
+    return this._pros ? this._pros.filter(p => p.isSelected).length : 0;
   }
   get total() { return this._total; }
   get pros() { return this._pros; }
