@@ -19,8 +19,8 @@ export class AdminAnswersListComponent {
   }
 
   public buildImageUrl(country: any): string {
-    if (country && country.notation) {
-      return `https://res.cloudinary.com/umi/image/upload/app/${country.notation}.png`;
+    if (country && country.flag) {
+      return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
     } else {
       return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
     }

@@ -1,5 +1,10 @@
 <h1>{{total}} {{ 'COMMON.PRESETS' | translate }}</h1>
 
+<button [routerLink]="'/admin/presets/new'" class="btn btn-lg btn-primary" (click)="$event.preventDefault()">
+  {{ 'PRESETS.PRESET.ADD' | translate }} <i class="icon icon-arrow-right"></i>
+</button>
+
+<label>{{ 'PRESETS.PRESET.FILTER' | translate }} : <input type="text" [(ngModel)]="pFilter" /></label>
 
 <div class="empty" *ngIf="presets && !presets.length">
   <p class="empty-title h5">{{ 'PRESETS.PRESET.NONE.TITLE' | translate }}</p>
@@ -12,9 +17,7 @@
 </div>
 
 <div class="columns" *ngIf="presets && presets.length">
-  <button [routerLink]="'/admin/presets/new'" class="btn btn-lg btn-primary" (click)="$event.preventDefault()">
-    {{ 'PRESETS.PRESET.ADD' | translate }} <i class="icon icon-arrow-right"></i>
-  </button>
+
   <table class="table presets" wt-responsive-table>
     <thead>
       <tr>
