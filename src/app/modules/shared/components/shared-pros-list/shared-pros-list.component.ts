@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { Professional } from '../../../../models/professional';
@@ -11,11 +11,13 @@ import { Professional } from '../../../../models/professional';
 export class SharedProsListComponent {
   
   private _config: any;
+  public smartSelect: any = null;
   
   @Input() public requestId: string;
   @Input() set config(value: any) {
     this.loadPros(value);
   }
+  @Output() selectedProsChange = new EventEmitter <any>();
 
   private _total: number = 0;
   private _pros: Array <Professional>;
@@ -44,6 +46,36 @@ export class SharedProsListComponent {
     } else {
       return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
     }
+  }
+  
+  selectPro(pro: Professional): void {
+    pro.isSelected = !pro.isSelected;
+    const prosSelected = this._pros.filter(p => p.isSelected);
+    this.selectedProsChange.emit({
+      total: this.nbSelected,
+      pros: prosSelected
+    });
+  }
+
+  updateSelection(event: any) {
+    this.smartSelect = event;
+    const config = this._config;
+    config.offset = this.smartSelect.offset;
+    config.limit = this.smartSelect.limit;
+    this.selectedProsChange.emit({
+      total: this.nbSelected,
+      pros: 'all',
+      query: config
+    });
+  }
+  
+  get nbSelected(): number {
+    if (this.smartSelect) {
+      return (this.smartSelect.limit + this.smartSelect.offset) > this.total ?
+        this.total - this.smartSelect.offset :
+        this.smartSelect.limit;
+    }
+    return this._pros ? this._pros.filter(p => p.isSelected).length : 0;
   }
   get total() { return this._total; }
   get pros() { return this._pros; }
