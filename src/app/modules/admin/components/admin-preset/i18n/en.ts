@@ -1,6 +1,7 @@
 export const PRESETS = {
   'PRESET': {
     'ADD_PRESET': 'Add a preset',
+    'FILTER': 'Search',
     'DELETE_MODAL': {
       'TITLE': 'Are you sure?',
       'CONTENT': 'Are you sure you want to definitively delete this preset ? It may be used for other projects !'
@@ -26,6 +27,7 @@ export const PRESETS = {
   },
   'SECTION': {
     'ADD_PRESET': 'Add a section',
+    'FILTER': 'Search',
     'DELETE_MODAL': {
       'TITLE': 'Are you sure?',
       'CONTENT': 'Are you sure you want to definitively delete this section ? It may be used for other projects !'
