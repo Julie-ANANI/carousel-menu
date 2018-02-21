@@ -24,17 +24,14 @@ export class SharedPricesComponent implements OnInit {
   private xScale: any; // D3 scale in X
   private yScale: any; // D3 scale in Y
   private xAxis: any; // D3 X Axis
-  private htmlElement: HTMLElement; // Host HTMLElement
   private ymax: number; // Max drawing height
 
   private data: Array<{count: number, value: number}>;
 
 
-  constructor(private element: ElementRef)  {
-  }
+  constructor(private element: ElementRef)  {}
 
   ngOnInit() {
-    this.htmlElement = this.element.nativeElement;
     this.host = D3.select(this.element.nativeElement);
     this.transformData();
     this.setup();

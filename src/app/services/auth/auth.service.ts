@@ -101,7 +101,7 @@ export class AuthService {
     this._admin = newValue;
     this._cookieService.put('hasBeenAdmin', `${newValue}`);
   }
-  
+
   public getUserInfo(): any {
     return {
       name: this.user ? this.user.firstName + ' ' + this.user.lastName : '',

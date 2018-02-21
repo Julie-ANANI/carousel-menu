@@ -17,4 +17,9 @@ export class AdminCampaignDetailsComponent implements OnInit {
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
   }
+
+  get campaign(): Campaign {
+    return this._campaign;
+  }
+
 }

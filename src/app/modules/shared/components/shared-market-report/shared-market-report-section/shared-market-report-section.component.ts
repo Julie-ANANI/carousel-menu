@@ -19,7 +19,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
   private _showDetails: boolean;
   private _readonly: boolean;
   private _maxCountScore: any;
-  private _isSaving = false;
   private _chartValues: any;
   private _conclusionId: string;
   private _innoid: string;
@@ -83,8 +82,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
   }
 
   public keyupHandlerFunction(event: any) {
-    // Saving
-    this._isSaving = true;
     const savedObject = {};
     savedObject[this.info.id] = {
       conclusion: event['content']
@@ -100,8 +97,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
             this.info.conclusion = data.infographics.questions[questionIndex].conclusion;
           }
         }
-        // Saved
-        this._isSaving = false;
       });
   }
 

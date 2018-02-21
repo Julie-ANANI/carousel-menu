@@ -18,7 +18,6 @@ export class AdminQuestionsEditComponent implements OnInit {
 
   private _question: Question;
   public formData: FormGroup;
-  private _options: FormArray;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _presetService: PresetService,
@@ -107,7 +106,6 @@ export class AdminQuestionsEditComponent implements OnInit {
     this.options.patchValue(tmp);
   }
 
-  set options(value: FormArray) { this._options = value; }
   get options(): FormArray { return this.formData.get('options') as FormArray; };
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
   get question() { return this._question; }

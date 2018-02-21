@@ -12,11 +12,9 @@ export class SharedPaginationComponent implements OnChanges {
   @Input() total: number;
 
   private _numPages: number;
-  private _currentPage: number;
 
   constructor() {
     this.perPageValues = this.perPageValues || [10, 20, 50, 100];
-    this._currentPage = 1;
   }
 
   ngOnChanges() {
