@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { Professional } from '../../../../models/professional';
@@ -17,6 +17,7 @@ export class SharedProsListComponent {
   @Input() set config(value: any) {
     this.loadPros(value);
   }
+  @Output() selectedProsChange = new EventEmitter <any>();
 
   private _total: number = 0;
   private _pros: Array <Professional>;
@@ -46,9 +47,26 @@ export class SharedProsListComponent {
       return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
     }
   }
+  
+  selectPro(pro: Professional): void {
+    pro.isSelected = !pro.isSelected;
+    const prosSelected = this._pros.filter(p => p.isSelected);
+    this.selectedProsChange.emit({
+      total: this.nbSelected,
+      pros: prosSelected
+    });
+  }
 
   updateSelection(event: any) {
     this.smartSelect = event;
+    const config = this._config;
+    config.offset = this.smartSelect.offset;
+    config.limit = this.smartSelect.limit;
+    this.selectedProsChange.emit({
+      total: this.nbSelected,
+      pros: 'all',
+      query: config
+    });
   }
   
   get nbSelected(): number {

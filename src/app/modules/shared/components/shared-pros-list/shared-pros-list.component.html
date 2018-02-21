@@ -28,7 +28,7 @@
   </thead>
   <tbody>
 
-  <tr *ngFor="let pro of pros" (click)="pro.isSelected = !pro.isSelected" [ngClass]="{'active': pro.isSelected}">
+  <tr *ngFor="let pro of pros" (click)="selectPro(pro)" [ngClass]="{'active': pro.isSelected}">
     <td> <input type="checkbox" [(ngModel)]="pro.isSelected"/></td>
     <td>{{ pro.language }}</td>
     <td><img [src]="buildImageUrl(pro.country)" width="37" height="25"/></td>
@@ -44,7 +44,7 @@
     <td>
       <span class="metas"><a [href]="'mailto:' + pro.email">{{ pro.email }}</a></span>
     </td>
-    <td><progress class="progress tooltip" [attr.data-tooltip]="pro.emailConfidence + '%'" [value]="pro.emailConfidence || 0" max="100"></progress></td>
+    <td><progress class="progress tooltip" [attr.data-tooltip]="pro.emailConfidence || 0 + '%'" [value]="pro.emailConfidence || 0" max="100"></progress></td>
   </tr>
   </tbody>
   <tfoot>
