@@ -1,5 +1,4 @@
 <div>
-
   <h2 class="stats">
     <i class="fa fa-envelope text-warning" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
     <i class="fa fa-envelope text-success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
@@ -7,6 +6,20 @@
     <img *ngIf="request.country" width="30" height="20" class="flag" [src]="buildImageUrl(request.country.toUpperCase())">
     {{request.keywords[0].original}}
   </h2>
+  <ul class="toolbar-fixed">
+    <li (click)="searchMails()">
+      <span class="fa fa-search"></span> {{ 'SEARCH.SEARCHMAILS' | translate }} ({{ this.totalSelected }})
+    </li>
 
-  <app-shared-pros-list [config]="config" [requestId]="request._id"></app-shared-pros-list>
+    <li (click)="addToCampaign()">
+      <i class="fa fa-external-link"></i>
+      <span *ngIf="!campaign">{{ 'SEARCH.ADDTOCAMPAIGN' | translate }} ({{ this.totalSelected }})</span>
+      <span *ngIf="campaign">{{ 'SEARCH.ADDTOCAMPAIGN2' | translate }} ({{ this.totalSelected }})</span>
+    </li>
+
+    <li (click)="exportProsCSV()">
+      <i class="fa fa-file-excel-o"></i> {{ 'SEARCH.EXPORT' | translate }} ({{ this.totalSelected }})
+    </li>
+  </ul>
+  <app-shared-pros-list [config]="config" [requestId]="request._id" (selectedProsChange)="updateSelection($event)"></app-shared-pros-list>
 </div>

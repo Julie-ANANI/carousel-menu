@@ -51,4 +51,10 @@ export class SearchService {
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public searchMails(config: any): Observable<any> {
+    return this._http.post('/search/searchMails', config)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
 }
