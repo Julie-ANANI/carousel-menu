@@ -39,25 +39,36 @@
         </select>
       </label>
       {{ 'SEARCH.ENGINE' | translate }}
-      <label ng-class="{selected: params.indexSearch}">
+      <label class="tooltip" data-tooltip="Index">
         <input type="checkbox" name="indexSearch" value="indexSearch"
                [(ngModel)]="params.indexSearch">
-        <b>[0]</b>
+        [0]
       </label>
-      <label ng-class="{selected: params.websites.linkedin}">
+      <label class="tooltip" data-tooltip="MinkedIn">
         <input type="checkbox" name="linkedin" value="linkedin"
                [(ngModel)]="params.websites.linkedin">
-        <b>[1]</b>
+        [1]
       </label>
-      <label ng-class="{selected: params.websites.viadeo}">
+      <label class="tooltip" data-tooltip="Viadeo">
         <input type="checkbox" name="viadeo" value="viadeo" [(ngModel)]="params.websites.viadeo">
-        <b>[2]</b>
+        [2]
       </label>
-      <label ng-class="{selected: params.websites.xing}">
+      <label class="tooltip" data-tooltip="Xing">
         <input type="checkbox" name="xing" value="xing"
                [(ngModel)]="params.websites.xing">
-        <b>[3]</b>
+        [3]
       </label>
+      <div>
+        <div *ngFor="let continent of continents">
+          <div class="continent">
+              <img *ngFor="let country of countries[continent]"
+                   width="35" height="25" class="flag"
+                   (click)="checkCountry(country)"
+                   [ngClass]="{'checked': params.countries.indexOf(country) > -1}"
+                   [src]="buildImageUrl(country)">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

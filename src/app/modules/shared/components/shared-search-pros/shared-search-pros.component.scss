@@ -1,0 +1,11 @@
+.flag {
+  margin: 2px 0;
+  border: 3px solid transparent;
+  opacity: 0.5;
+}
+
+.flag.checked {
+  border: 3px solid #FFFFFF;
+  opacity: 1;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+}

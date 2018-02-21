@@ -1,0 +1,43 @@
+.COMPANY,
+.MAIL,
+.MAIL_ADDRESS,
+.PERSON,
+.PERSON_BY_REGIONS,
+.PERSON_BY_COUNTRIES {
+  display: inline-block;
+  border-radius: 500px;
+  color: white;
+  width: 34px;
+  height: 34px;
+  font-size: 13px;
+  text-align: center;
+  padding-top: 7px;
+  padding-left: 2px;
+}
+
+.PERSONSMALL {
+  display: inline-block;
+  color: #515151;
+  padding: 4px 10px;
+  margin-left: 20px;
+  font-size: 17px;
+}
+
+.COMPANY {
+  background: #8B6F81;
+}
+
+.MAIL,
+.MAIL_ADDRESS {
+  background: #1D9DD5;
+}
+
+.PERSON,
+.PERSON_BY_REGIONS {
+  background: #515151;
+}
+
+.PERSON_BY_COUNTRIES {
+  background: #FF9000;
+  cursor: pointer;
+}
