@@ -15,7 +15,7 @@ import { Innovation } from '../../../../models/innovation';
 export class AdminCampaignsComponent implements OnInit {
 
   private _innovation: Innovation;
-  private _newCampaign: Campaign;
+  private _newCampaign: any;
   private _campaigns: Array<Campaign> = [];
 
   constructor(private _activatedRoute: ActivatedRoute,
