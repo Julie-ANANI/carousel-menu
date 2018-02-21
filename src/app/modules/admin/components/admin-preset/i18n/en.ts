@@ -58,6 +58,7 @@ export const PRESETS = {
   },
   'QUESTION': {
     'ADD_PRESET': 'Add a question',
+    'FILTER': 'Search',
     'DELETE_MODAL': {
       'TITLE': 'Are you sure?',
       'CONTENT': 'Are you sure you want to definitively delete this question ? It may be used for other projects !'

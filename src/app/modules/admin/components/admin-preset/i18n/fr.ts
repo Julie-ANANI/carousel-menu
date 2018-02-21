@@ -57,6 +57,7 @@ export const PRESETS = {
   },
   'QUESTION': {
     'ADD': 'Ajouter une question',
+    'FILTER': 'Rechercher',
     'DELETE_MODAL': {
       'TITLE': 'Êtes-vous sûr(e) ?',
       'CONTENT': 'Êtes-vous sûr(e) de vouloir définitivement supprimer cette question ? Elle est peut-être utilisée pour un autre projet !'
