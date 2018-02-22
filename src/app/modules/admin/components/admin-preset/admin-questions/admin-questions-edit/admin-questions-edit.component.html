@@ -68,10 +68,6 @@
               <div class="columns"
                    *ngFor="let item of options.controls; let i=index"
                    [formGroupName]="i">
-                <div>
-                  ID: <input type="text" class="form-control"
-                             [attr.identifier]="'id'+i" formControlName="identifier">
-                </div>
                 <div class="form-group text-center" formGroupName="label">
                   EN: <input class="form-input" id="'optionEn'+i" name="en" formControlName="en" type="text"
                              placeholder="">
@@ -83,7 +79,7 @@
                     Réponse Positive ?
                     <input type="checkbox" name="positive" formControlName="positive" id="positive">
                   </label>
-                  <label for="color" *ngIf="question.controlType === 'radio'">
+                  <label for="color" *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'">
                     Couleur d'affichage
                     <select class="form-select" id="color" name="color" formControlName="color">
                       <option [value]="'#ffffff'">...</option>
