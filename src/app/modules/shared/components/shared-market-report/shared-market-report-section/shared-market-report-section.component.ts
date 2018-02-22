@@ -59,8 +59,10 @@ export class SharedMarketReportSectionComponent implements OnInit {
         };
         this.info.options.forEach((option: {identifier: string, label: {fr: string, en: string}}) => {
           this._chartValues.data[0].data.push(this.info.pieChart[option.identifier].count);
-          this._chartValues.labels.fr.push(option.label.fr);
-          this._chartValues.labels.en.push(option.label.en);
+          if (option.label) {
+            this._chartValues.labels.fr.push(option.label.fr);
+            this._chartValues.labels.en.push(option.label.en);
+          }
           this._chartValues.data[0].backgroundColor.push(this.info.pieChart[option.identifier].color);
         });
         break;
