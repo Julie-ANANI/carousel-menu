@@ -1,3 +1,12 @@
 <h1>{{ 'CAMPAIGNS.DETAILS' | translate }}</h1>
 
 {{campaign.domain}}
+
+<div *ngIf="quizLinks.length > 0">
+  <h3>Quiz links :</h3>
+  <ul>
+    <li *ngFor="let url of quizLinks">
+      <a href="{{url}}">{{url}}</a>
+    </li>
+  </ul>
+</div>

@@ -3,5 +3,6 @@ export const environment = {
   apiUrl: 'https://appv3.umi.us/api',
   companyName: 'UMI',
   domain: 'umi',
-  innovationUrl: 'https://umicli.umi.us'
+  innovationUrl: 'https://umicli.umi.us',
+  quizUrl: 'https://quiz.umi.us'
 };
