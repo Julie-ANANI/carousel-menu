@@ -2,29 +2,29 @@
 <smart-select [ngClass]="{'text-success': smartSelect}" (selectChange)="updateSelection($event)" [select]="smartSelect || {offset: config.offset, limit: config.limit}"></smart-select>
 <table class="table pros" wt-responsive-table>
   <thead>
-  <tr>
-    <th></th>
-    <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'language'">{{ 'COMMON.LANGUAGE' | translate }}</sq-sort></th>
-    <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'country'">{{ 'COMMON.COUNTRY' | translate }}</sq-sort></th>
-    <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'firstName'" >{{ 'COMMON.NAME' | translate }}</sq-sort></th>
-    <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'jobTitle'">{{ 'COMMON.JOBTITLE' | translate }}</sq-sort></th>
-    <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'company'">{{ 'COMMON.COMPANY' | translate }}</sq-sort></th>
-    <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'email'">{{ 'COMMON.EMAIL' | translate }}</sq-sort></th>
-    <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'emailConfidence'">{{ 'CAMPAIGNS.EMAIL_CONFIDENCE' | translate }}</sq-sort></th>
-  </tr>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th>
-      <sqFilter [config]="config" (configChange)="loadPros($event)" prop="firstName"></sqFilter>
-      <sqFilter [config]="config" (configChange)="loadPros($event)" prop="lastName"></sqFilter>
-    </th>
-    <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="jobTitle"></sqFilter></th>
-    <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="company"></sqFilter></th>
-    <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="email"></sqFilter></th>
-    <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="emailConfidence"></sqFilter></th>
-  </tr>
+    <tr>
+      <th></th>
+      <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'language'">{{ 'COMMON.LANGUAGE' | translate }}</sq-sort></th>
+      <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'country'">{{ 'COMMON.COUNTRY' | translate }}</sq-sort></th>
+      <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'firstName'" >{{ 'COMMON.NAME' | translate }}</sq-sort></th>
+      <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'jobTitle'">{{ 'COMMON.JOBTITLE' | translate }}</sq-sort></th>
+      <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'company'">{{ 'COMMON.COMPANY' | translate }}</sq-sort></th>
+      <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'email'">{{ 'COMMON.EMAIL' | translate }}</sq-sort></th>
+      <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'emailConfidence'">{{ 'CAMPAIGNS.EMAIL_CONFIDENCE' | translate }}</sq-sort></th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>
+        <sqFilter [config]="config" (configChange)="loadPros($event)" prop="firstName"></sqFilter>
+        <sqFilter [config]="config" (configChange)="loadPros($event)" prop="lastName"></sqFilter>
+      </th>
+      <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="jobTitle"></sqFilter></th>
+      <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="company"></sqFilter></th>
+      <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="email"></sqFilter></th>
+      <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="emailConfidence"></sqFilter></th>
+    </tr>
   </thead>
   <tbody>
 
