@@ -35,6 +35,7 @@ import { SearchService } from './services/search/search.service';
 import { PresetService } from './services/preset/preset.service';
 import { AnswerService } from './services/answer/answer.service';
 import { ProfessionalsService } from './services/professionals/professionals.service';
+import { DownloadService } from './services/download/download.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -84,6 +85,7 @@ import { RequestResolver } from './resolvers/request.resolver';
     PresetService,
     AnswerService,
     ProfessionalsService,
+    DownloadService,
     {
       provide: Http,
       useFactory: httpFactory,
