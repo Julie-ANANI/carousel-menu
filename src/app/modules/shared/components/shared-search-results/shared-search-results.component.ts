@@ -45,8 +45,7 @@ export class SharedSearchResultsComponent implements OnInit {
   updateSelection(value: any) {
     this._selection = value;
   }
-
-  getSelection(): any {
+  searchMails() {
     const params: any = {
       user: this._authService.getUserInfo(),
       query: {
@@ -70,11 +69,6 @@ export class SharedSearchResultsComponent implements OnInit {
       //FIXME: pour différencier l'ancienne interface de la nouvelle, à supprimer quand on supprime la vieille interface
       params.query.newInterface = true;
     }
-    return params;
-  }
-
-  searchMails() {
-    const params = this.getSelection();
     if (this._request.country) {
       params.country = this._request.country;
     }
@@ -88,7 +82,20 @@ export class SharedSearchResultsComponent implements OnInit {
   }
 
   exportProsCSV() {
-    const params = this.getSelection();
+    const params: any = {
+      user: this._authService.getUserInfo(),
+      requestId: this._request._id
+    };
+    if (this._selection.pros != 'all') {
+      params.persons = this._selection.pros;
+    } else {
+      params.all = true;
+      params.requestId = this._request._id;
+      params.query = this._selection.query;
+      params.query.motherRequestId = this._request._id;
+      //FIXME: pour différencier l'ancienne interface de la nouvelle, à supprimer quand on supprime la vieille interface
+      params.query.newInterface = true;
+    }
 
     this._searchService.export(params.requestId, params).first().subscribe((result: any) => {
       this._downloadService.saveCsv(result.csv, this.request.keywords[0].original);
