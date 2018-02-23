@@ -57,4 +57,14 @@ export class SearchService {
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public export(requestId: string, config: any): Observable<any> {
+    const query = {
+      path: '/request/' + requestId + '/export/people',
+      data: config
+    };
+    return this._http.get('/search/export', {params: query})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
 }

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../models/campaign';
 import { SearchService } from '../../../../services/search/search.service';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { DownloadService } from '../../../../services/download/download.service';
 
 @Component({
   selector: 'app-shared-search-results',
@@ -26,7 +27,8 @@ export class SharedSearchResultsComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _authService: AuthService,
-              private _searchService: SearchService) {}
+              private _searchService: SearchService,
+              private _downloadService: DownloadService) {}
 
   ngOnInit(): void {
     this._request = this._activatedRoute.snapshot.data['request'];
@@ -44,7 +46,7 @@ export class SharedSearchResultsComponent implements OnInit {
     this._selection = value;
   }
 
-  searchMails() {
+  getSelection(): any {
     const params: any = {
       user: this._authService.getUserInfo(),
       query: {
@@ -52,7 +54,7 @@ export class SharedSearchResultsComponent implements OnInit {
       }
     };
     if (this._selection.pros != 'all') {
-      var prosWithoutEmail = this._selection.pros.map((person: any) => {
+      const prosWithoutEmail = this._selection.pros.map((person: any) => {
         return {
           id: person._id,
           requestId: this._request._id,
@@ -68,6 +70,11 @@ export class SharedSearchResultsComponent implements OnInit {
       //FIXME: pour différencier l'ancienne interface de la nouvelle, à supprimer quand on supprime la vieille interface
       params.query.newInterface = true;
     }
+    return params;
+  }
+
+  searchMails() {
+    const params = this.getSelection();
     if (this._request.country) {
       params.country = this._request.country;
     }
@@ -81,7 +88,11 @@ export class SharedSearchResultsComponent implements OnInit {
   }
 
   exportProsCSV() {
-    //TODO
+    const params = this.getSelection();
+
+    this._searchService.export(params.requestId, params).first().subscribe((result: any) => {
+      this._downloadService.saveCsv(result.csv, this.request.keywords[0].original);
+    });
   }
   get totalSelected () { return this._selection && this._selection.total || 0};
   get request() { return this._request; }
