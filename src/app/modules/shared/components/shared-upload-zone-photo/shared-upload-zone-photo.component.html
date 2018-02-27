@@ -5,8 +5,8 @@
   <div class="upload-button" ngClass="{error: errors.medias}">
 
     <div style="height:0;overflow:hidden">
-      <input type="file" ng2FileSelect [uploader]="uploader" id="fileInput" name="fileInput"  #fileInput
-        (click)="$event.preventDefault()" />
+      <!-- let $event propagate here -->
+      <input type="file" ng2FileSelect [uploader]="uploader" id="fileInput" name="fileInput"  #fileInput />
     </div>
 
     <button class="btn btn-lg btn-primary" (click)="fileInput.click($event)" *ngIf="!loading">

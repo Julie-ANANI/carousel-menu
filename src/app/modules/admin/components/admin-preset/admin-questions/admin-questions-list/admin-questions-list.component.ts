@@ -10,6 +10,7 @@ import { Question } from '../../../../../../models/question';
 export class AdminQuestionsListComponent implements OnInit {
 
   private _questions: Array<Question>;
+  public qFilter = '';
   public selectedQuestionIdToBeDeleted: string = null;
   public selectedQuestionToBeCloned: Question = null;
   private _total: number;
@@ -75,5 +76,11 @@ export class AdminQuestionsListComponent implements OnInit {
   set config(value: any) { this._config = value; }
   get config(): any { return this._config; }
   get total () { return this._total; }
-  get questions () { return this._questions; }
+  get questions () {
+    if (this.qFilter) {
+      return this._questions.filter((q) => q.identifier.indexOf(this.qFilter) !== -1);
+    } else {
+      return this._questions;
+    }
+  }
 }

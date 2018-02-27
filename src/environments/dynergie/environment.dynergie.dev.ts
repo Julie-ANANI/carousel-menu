@@ -3,5 +3,6 @@ export const environment = {
   apiUrl: 'https://dev.umi.us/api',
   companyName: 'Dynergie',
   domain: 'dynergie',
-  innovationUrl: 'https://dynergiecli-dev.umi.us'
+  innovationUrl: 'https://dynergiecli-dev.umi.us',
+  quizUrl: 'https://quizdev.umi.us'
 };

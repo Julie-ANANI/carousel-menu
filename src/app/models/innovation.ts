@@ -14,6 +14,7 @@ export interface Innovation {
   readonly principalMedia?: Media;
   readonly innovationCards?: Array<InnovCard>;
   preset?: Preset;
+  readonly quizId?: string;
   collaborators?: Array<User>;
   settings?: InnovationSettings;
   stats?: any;

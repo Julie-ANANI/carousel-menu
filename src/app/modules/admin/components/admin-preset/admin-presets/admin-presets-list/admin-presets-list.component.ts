@@ -11,6 +11,7 @@ import { Preset } from '../../../../../../models/preset';
 export class AdminPresetsListComponent implements OnInit {
 
   private _presets: Array<Preset>;
+  public pFilter = '';
   public selectedPresetIdToBeDeleted: string = null;
   public selectedPresetToBeCloned: Preset = null;
   private _total: number;
@@ -74,5 +75,11 @@ export class AdminPresetsListComponent implements OnInit {
   set config(value: any) { this._config = value; }
   get config(): any { return this._config; }
   get total () { return this._total; }
-  get presets () { return this._presets; }
+  get presets () {
+    if (this.pFilter) {
+      return this._presets.filter((p) => p.name.indexOf(this.pFilter) !== -1);
+    } else {
+      return this._presets;
+    }
+  }
 }

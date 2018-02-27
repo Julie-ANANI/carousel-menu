@@ -1,6 +1,7 @@
 export const PRESETS = {
   'PRESET': {
     'ADD': 'Ajouter une configuration',
+    'FILTER': 'Rechercher',
     'DELETE_MODAL': {
       'TITLE': 'Êtes-vous sûr(e) ?',
       'CONTENT': 'Êtes-vous sûr(e) de vouloir définitivement supprimer cette configuration ? Elle est peut-être utilisée pour un autre projet !'
@@ -25,6 +26,7 @@ export const PRESETS = {
   },
   'SECTION': {
     'ADD': 'Ajouter une section',
+    'FILTER': 'Rechercher',
     'DELETE_MODAL': {
       'TITLE': 'Êtes-vous sûr(e) ?',
       'CONTENT': 'Êtes-vous sûr(e) de vouloir définitivement supprimer cette section ? Elle est peut-être utilisée pour une autre configuration !'
@@ -57,6 +59,7 @@ export const PRESETS = {
   },
   'QUESTION': {
     'ADD': 'Ajouter une question',
+    'FILTER': 'Rechercher',
     'DELETE_MODAL': {
       'TITLE': 'Êtes-vous sûr(e) ?',
       'CONTENT': 'Êtes-vous sûr(e) de vouloir définitivement supprimer cette question ? Elle est peut-être utilisée pour un autre projet !'

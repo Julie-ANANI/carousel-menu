@@ -68,10 +68,6 @@
               <div class="columns"
                    *ngFor="let item of options.controls; let i=index"
                    [formGroupName]="i">
-                <div>
-                  ID: <input type="text" class="form-control"
-                             [attr.identifier]="'id'+i" formControlName="identifier">
-                </div>
                 <div class="form-group text-center" formGroupName="label">
                   EN: <input class="form-input" id="'optionEn'+i" name="en" formControlName="en" type="text"
                              placeholder="">

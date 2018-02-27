@@ -18,7 +18,6 @@ export class AdminQuestionsEditComponent implements OnInit {
 
   private _question: Question;
   public formData: FormGroup;
-  private _options: FormArray;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _presetService: PresetService,
@@ -80,11 +79,11 @@ export class AdminQuestionsEditComponent implements OnInit {
   buildOptions(options: Array<any>) {
     const optionsFormArray = this._formBuilder.array(options.length ?
       options.map(option => this.buildOption(option)) :
-      [this.buildOption()]);
+      [this.buildOption({identifier: '0'})]);
     this.formData.setControl('options', optionsFormArray);
   }
 
-  buildOption(option?: any) {
+  buildOption(option: {identifier: string, label?: any, positive?: boolean, color?: string}) {
     return this._formBuilder.group({
       identifier: [option && option.identifier || '', Validators.required],
       label: this._formBuilder.group({
@@ -92,13 +91,13 @@ export class AdminQuestionsEditComponent implements OnInit {
         en: [option && option.label ? option.label.en || '' : '', Validators.required]
       }),
       positive: [option ? option.positive : false],
-      color: [option ? option.color: '', Validators.required]
+      color: [option ? option.color : '', Validators.required]
     })
   }
 
   addOption(event: Event): void {
     event.preventDefault();
-    this.options.push(this.buildOption());
+    this.options.push(this.buildOption({identifier: this.options.length.toString()}));
   }
 
   removeOption(event: Event, index: number): void {
@@ -107,7 +106,6 @@ export class AdminQuestionsEditComponent implements OnInit {
     this.options.patchValue(tmp);
   }
 
-  set options(value: FormArray) { this._options = value; }
   get options(): FormArray { return this.formData.get('options') as FormArray; };
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
   get question() { return this._question; }

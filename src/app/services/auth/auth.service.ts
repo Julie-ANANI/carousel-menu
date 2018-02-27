@@ -101,7 +101,7 @@ export class AuthService {
     this._admin = newValue;
     this._cookieService.put('hasBeenAdmin', `${newValue}`);
   }
-  
+
   public getUserInfo(): any {
     return {
       name: this.user ? this.user.firstName + ' ' + this.user.lastName : '',
@@ -121,6 +121,7 @@ export class AuthService {
   get emailVerified(): boolean { return this._user && this._user.emailVerified || false; }
   set emailVerified(value: boolean) { this._user.emailVerified = value; }
   set isConfirmed(confirmed: boolean) { this._confirmed = confirmed; }
+  get redirectUrl() { return this._redirectUrl; }
   set redirectUrl (redirectUrl: string) {
     if (urlRegEx.test(redirectUrl)) {
       this._redirectUrl = redirectUrl;
