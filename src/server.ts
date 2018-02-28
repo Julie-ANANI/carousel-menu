@@ -4,6 +4,11 @@ import * as path from 'path';
 const PORT = 3080;
 const app = express();
 
+app.use('*', (req, res, next) => {
+  res.header("X-powered-by", "Blood, sweat, and tears");
+  next();
+});
+
 app.use(express.static(path.join(__dirname, '../dist')));
 
 app.get('/*', (req, res) => {
