@@ -19,7 +19,7 @@ export class AdminCampaignDetailsComponent implements OnInit {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
     if (this._campaign.innovation && this._campaign.innovation.quizId) {
       this._quizLinks = ['fr', 'en'].map((l) => {
-        return environment.quizUrl + '/' + this._campaign.innovation.quizId + '/' + this._campaign._id + '?lang=' + l;
+        return environment.quizUrl + '/quiz/' + this._campaign.innovation.quizId + '/' + this._campaign._id + '?lang=' + l;
       });
     }
   }

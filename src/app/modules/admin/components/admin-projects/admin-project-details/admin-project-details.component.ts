@@ -19,7 +19,7 @@ export class AdminProjectsDetailsComponent implements OnInit {
   private _preset: Array<Preset> = [];
   private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis', 'mail_config'];
   private _currentPage = 'settings';
-  private _dirty: boolean = false;
+  private _dirty = false;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _router: Router,
@@ -62,8 +62,8 @@ export class AdminProjectsDetailsComponent implements OnInit {
     this._innovationService
       .createQuiz(this._project._id)
       .first()
-      .subscribe(() => {
-        this._dirty = true;
+      .subscribe((p) => {
+        this._project = p;
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , 'ERROR.QUIZ.CREATED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
@@ -116,10 +116,10 @@ export class AdminProjectsDetailsComponent implements OnInit {
   }
 
   public notifClass(): string {
-    if(this._dirty) {
-      return "btn btn-primary input-group-btn btn-lg badge";
+    if (this._dirty) {
+      return 'btn btn-primary input-group-btn btn-lg badge';
     } else {
-      return "btn btn-primary input-group-btn btn-lg";
+      return 'btn btn-primary input-group-btn btn-lg';
     }
   }
 
