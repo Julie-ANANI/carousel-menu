@@ -7,6 +7,7 @@ export interface Campaign {
   readonly innovation: Innovation;
   readonly owner: string;
   readonly title: string;
+  name: string;
   stats?: any;
   settings?: CampaignSettings;
 }

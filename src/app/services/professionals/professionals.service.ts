@@ -40,4 +40,10 @@ export class ProfessionalsService {
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public addFromRequest(config: any): Observable<any> {
+    return this._http.post(`/professional/addFromRequest/${config.newCampaignId}/${config.newInnovationId}`, config)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
 }
