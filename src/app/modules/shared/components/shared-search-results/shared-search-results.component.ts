@@ -18,7 +18,7 @@ export class SharedSearchResultsComponent implements OnInit {
 
   private _request: any;
   private _selection: any;
-  private _chosenCampaign: Array<Campaign>;
+  private _chosenCampaign: Array<any>;
   public addToCampaignModal: boolean = false;
   public config: any = {
     limit: 10,
@@ -40,8 +40,12 @@ export class SharedSearchResultsComponent implements OnInit {
   ngOnInit(): void {
     this._request = this._activatedRoute.snapshot.data['request'];
     if (this.campaign) {
-      this.campaign.name = this.campaign.title;
-      this.chosenCampaign = [this.campaign];
+      const chosenCampaign = {
+        _id: this.campaign._id,
+        name: this.campaign.title,
+        innovation: this.campaign.innovation._id
+      };
+      this.chosenCampaign = [chosenCampaign];
     }
   }
 
@@ -141,6 +145,6 @@ export class SharedSearchResultsComponent implements OnInit {
   }
   get totalSelected () { return this._selection && this._selection.total || 0};
   get request() { return this._request; }
-  get chosenCampaign(): Array<Campaign> { return this._chosenCampaign; }
-  set chosenCampaign(value: Array<Campaign>) { this._chosenCampaign = value; }
+  get chosenCampaign(): Array<any> { return this._chosenCampaign; }
+  set chosenCampaign(value: Array<any>) { this._chosenCampaign = value; }
 }
