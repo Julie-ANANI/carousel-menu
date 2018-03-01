@@ -30,7 +30,10 @@
         </td>
 
         <td>
-          <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS')" [routerLink]="'/admin/search/results/' + request._id">{{request.keywords[0].original}}</a>
+          <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && !campaignId"
+            [routerLink]="'/admin/search/results/' + request._id">{{request.keywords[0].original}}</a>
+          <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && campaignId"
+             [routerLink]="'/admin/campaigns/campaign/' + campaignId + '/results/' + request._id">{{request.keywords[0].original}}</a>
           <a *ngIf="mails" href="">{{request.keywords[0].original}}</a>
           <a *ngIf="request.entity==='MAIL'" href="">{{request.keywords[0].original}}</a>
           <br/>
@@ -91,7 +94,10 @@
           <div class="PERSONSMALL"><i class="fa fa-user"></i></div>
         </td>
         <td>
-          <a *ngIf="(childRequest.entity==='PERSON' || childRequest.entity==='PERSON_BY_COUNTRIES' || childRequest.entity==='PERSON_BY_REGIONS')" [routerLink]="'/admin/search/results/' + childRequest._id">{{childRequest.keywords[0].original}}</a>
+          <a *ngIf="(childRequest.entity==='PERSON' || childRequest.entity==='PERSON_BY_COUNTRIES' || childRequest.entity==='PERSON_BY_REGIONS') && !campaignId"
+             [routerLink]="'/admin/search/results/' + childRequest._id">{{childRequest.keywords[0].original}}</a>
+          <a *ngIf="(childRequest.entity==='PERSON' || childRequest.entity==='PERSON_BY_COUNTRIES' || childRequest.entity==='PERSON_BY_REGIONS') && campaignId"
+             [routerLink]="'/admin/campaigns/campaign/' + campaignId + '/results/' + childRequest._id">{{childRequest.keywords[0].original}}</a>
           <a *ngIf="mails" href="">{{childRequest.keywords[0].original}}</a>
           <a *ngIf="childRequest.entity==='MAIL'" href="">{{childRequest.keywords[0].original}}</a>
           <br/>

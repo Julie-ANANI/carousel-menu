@@ -7,19 +7,44 @@
     {{request.keywords[0].original}}
   </h2>
   <ul class="toolbar-fixed">
-    <li (click)="searchMails()">
-      <span class="fa fa-search"></span> {{ 'SEARCH.SEARCHMAILS' | translate }} ({{ this.totalSelected }})
+    <li (click)="searchMails()" [attr.disabled]="totalSelected ? null : ''">
+      <span class="fa fa-search"></span> {{ 'SEARCH.SEARCHMAILS' | translate }} ({{ totalSelected }})
     </li>
 
-    <li (click)="addToCampaign()">
-      <i class="fa fa-external-link"></i>
-      <span *ngIf="!campaign">{{ 'SEARCH.ADDTOCAMPAIGN' | translate }} ({{ this.totalSelected }})</span>
-      <span *ngIf="campaign">{{ 'SEARCH.ADDTOCAMPAIGN2' | translate }} ({{ this.totalSelected }})</span>
+    <li (click)="(addToCampaignModal = true) && $event.preventDefault()" [attr.disabled]="totalSelected ? null : ''">
+      <i class="fa fa-external-link"></i>{{ 'SEARCH.ADDTOCAMPAIGN' | translate }} ({{ totalSelected }})
     </li>
 
-    <li (click)="exportProsCSV()">
-      <i class="fa fa-file-excel-o"></i> {{ 'SEARCH.EXPORT' | translate }} ({{ this.totalSelected }})
+    <li (click)="exportProsCSV()" [attr.disabled]="totalSelected ? null : ''">
+      <i class="fa fa-file-excel-o"></i> {{ 'SEARCH.EXPORT' | translate }} ({{ totalSelected }})
     </li>
   </ul>
   <app-shared-pros-list [config]="config" [requestId]="request._id" (selectedProsChange)="updateSelection($event)"></app-shared-pros-list>
+</div>
+
+<!-- MODAL : Ajout de pros à une campagne -->
+<div class="modal" [ngClass]="{'active': addToCampaignModal}">
+  <div class="modal-overlay" (click)="(addToCampaignModal = false) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(addToCampaignModal = false) && $event.preventDefault()"></button>
+      <div class="modal-title h5">{{ 'SEARCH.CAMPAIGN.TITLE' | translate }}</div>
+      <small><strong>{{totalSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
+    </div>
+    <div class="modal-body foo">
+      <app-autocomplete-input
+        (update)="updateCampaign($event)"
+        [onlyOne]="true"
+        [config]="{placeholder: 'campagne', initialData: chosenCampaign, type: 'campaign'}"></app-autocomplete-input>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="(addToCampaignModal = false) && $event.preventDefault()">{{ 'COMMON.CANCEL' | translate }}</button>
+      <button type="submit" class="btn btn-primary" (click)="addToCampaign(chosenCampaign)" [disabled]="!chosenCampaign.length">
+        {{ 'SEARCH.ADD' | translate }}
+      </button>
+      <button type="submit" class="btn btn-primary" (click)="addToCampaign(chosenCampaign, true)" [disabled]="!chosenCampaign.length">
+        {{ 'SEARCH.CAMPAIGN.ADDANDSEE' | translate }}
+      </button>
+    </div>
+  </div>
 </div>

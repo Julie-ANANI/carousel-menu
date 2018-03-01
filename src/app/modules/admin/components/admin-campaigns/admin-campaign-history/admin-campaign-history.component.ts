@@ -18,5 +18,5 @@ export class AdminCampaignHistoryComponent implements OnInit {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
   }
 
-  get campaignId(): any { return this._campaign._id; }
+  get campaignId(): string { return this._campaign._id; }
 }

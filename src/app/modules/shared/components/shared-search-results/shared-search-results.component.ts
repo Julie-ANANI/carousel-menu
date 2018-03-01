@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Campaign } from '../../../../models/campaign';
 import { SearchService } from '../../../../services/search/search.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { DownloadService } from '../../../../services/download/download.service';
+import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-shared-search-results',
@@ -16,6 +18,8 @@ export class SharedSearchResultsComponent implements OnInit {
 
   private _request: any;
   private _selection: any;
+  private _chosenCampaign: Array<any>;
+  public addToCampaignModal: boolean = false;
   public config: any = {
     limit: 10,
     offset: 0,
@@ -25,13 +29,24 @@ export class SharedSearchResultsComponent implements OnInit {
     },
   };
 
-  constructor(private _activatedRoute: ActivatedRoute,
+  constructor(private _router: Router,
+              private _activatedRoute: ActivatedRoute,
               private _authService: AuthService,
               private _searchService: SearchService,
-              private _downloadService: DownloadService) {}
+              private _downloadService: DownloadService,
+              private _notificationsService: TranslateNotificationsService,
+              private _professionalsService: ProfessionalsService) {}
 
   ngOnInit(): void {
     this._request = this._activatedRoute.snapshot.data['request'];
+    if (this.campaign) {
+      const chosenCampaign = {
+        _id: this.campaign._id,
+        name: this.campaign.title,
+        innovation: this.campaign.innovation._id
+      };
+      this.chosenCampaign = [chosenCampaign];
+    }
   }
 
   public buildImageUrl(country: string): string {
@@ -77,8 +92,35 @@ export class SharedSearchResultsComponent implements OnInit {
     });
   }
 
-  addToCampaign() {
-    //TODO
+  updateCampaign(event: any) {
+    this._chosenCampaign = event.value;
+  }
+
+  addToCampaign(campaigns: Array<Campaign>, goToCampaign?: boolean) {
+    this.addToCampaignModal = false;
+    const campaign = campaigns[0];
+    const params: any = {
+      newCampaignId: campaign._id,
+      newInnovationId: campaign.innovation,
+      requestId: this._request._id,
+      keywords: this._request.keywords[0].original
+    };
+    if (this._selection.pros != 'all') {
+      const prosWithEmail = this._selection.pros.filter((p: any) => p.email);
+      params.professionals = prosWithEmail;
+    } else {
+      params.all = true;
+      params.query = this._selection.query;
+      params.query.motherRequestId = this._request._id;
+      //FIXME: pour différencier l'ancienne interface de la nouvelle, à supprimer quand on supprime la vieille interface
+      params.query.newInterface = true;
+    }
+    this._professionalsService.addFromRequest(params).first().subscribe(result => {
+      this._notificationsService.success('Déplacement des pros', `${result.nbProfessionalsMoved} pros ont été déplacés`);
+      if (goToCampaign) {
+        this._router.navigate([`/admin/campaigns/campaign/${campaign._id}/pros`]);
+      }
+    });
   }
 
   exportProsCSV() {
@@ -103,4 +145,6 @@ export class SharedSearchResultsComponent implements OnInit {
   }
   get totalSelected () { return this._selection && this._selection.total || 0};
   get request() { return this._request; }
+  get chosenCampaign(): Array<any> { return this._chosenCampaign; }
+  set chosenCampaign(value: Array<any>) { this._chosenCampaign = value; }
 }
