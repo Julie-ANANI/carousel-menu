@@ -13,14 +13,18 @@ import { MediaService } from '../../../../services/media/media.service';
 
 export class SharedMarketReportExampleComponent implements OnInit {
 
-  private myTemplate: any = "";
+  private _myTemplate: any = "";
 
   constructor(private _mediaService: MediaService) {  }
 
   ngOnInit() {
     this._mediaService.sample().subscribe(page=>{
-      this.myTemplate = page.text();
+      this._myTemplate = page.text();
     });
+  }
+
+  get myTemplate(): string {
+    return this._myTemplate;
   }
 
 };
