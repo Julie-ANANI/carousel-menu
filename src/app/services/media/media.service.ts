@@ -22,4 +22,8 @@ export class MediaService {
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error));
   }
+
+  public sample(): Observable<any> {
+    return this._http.get('/sample' );
+  }
 }

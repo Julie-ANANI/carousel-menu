@@ -36,6 +36,7 @@
     "angular2-datatable": "^0.6.0",
     "angular2-fontawesome": "^0.9.3",
     "angular2-notifications": "^0.7.8",
+    "body-parser": "^1.18.2",
     "chart.js": "^2.7.1",
     "chartjs": "^0.3.24",
     "copy-webpack-plugin": "^4.4.1",

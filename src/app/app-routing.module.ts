@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
 import { NonAuthGuard } from './non-auth-guard.service';
 import { AuthGuard } from './auth-guard.service';
+import { AdminAuthGuard } from './admin-auth-guard.service';
 import { PendingChangesGuard } from './pending-changes-guard.service';
 
 const appRoutes: Routes = [
@@ -29,7 +30,8 @@ const appRoutes: Routes = [
     // Guards :
     AuthGuard,
     NonAuthGuard,
-    PendingChangesGuard
+    PendingChangesGuard,
+    AdminAuthGuard
   ]
 })
 export class AppRoutingModule { }
