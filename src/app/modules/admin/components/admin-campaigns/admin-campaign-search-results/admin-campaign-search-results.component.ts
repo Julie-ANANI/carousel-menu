@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Campaign } from '../../../../../models/campaign';
 
 @Component({
   selector: 'app-admin-campaign-search-results',
@@ -6,8 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-campaign-search-results.component.scss']
 })
 export class AdminCampaignSearchResultsComponent implements OnInit {
-  constructor() {}
+  
+  private _campaign: Campaign;
 
-  ngOnInit(): void {
+  constructor(private _activatedRoute: ActivatedRoute) { }
+
+  ngOnInit() {
+    this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
   }
+
+  get campaign(): Campaign { return this._campaign; }
 }
