@@ -14,12 +14,13 @@ const appRoutes: Routes = [
   {
     path: '',
     loadChildren: './modules/client/client.module#ClientModule'
-  }
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes) // TODO {useHash: true} annule le fonctionnement des ancres
   ],
   exports: [
     RouterModule

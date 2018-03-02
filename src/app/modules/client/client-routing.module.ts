@@ -105,7 +105,7 @@ const clientRoutes: Routes = [
       {
         path: 'sample',
         children: [
-          { path: '', component: SharedMarketReportExampleComponent, pathMatch: 'full', canActivate: [AdminAuthGuard] }
+          { path: '', component: SharedMarketReportExampleComponent, canActivate: [AdminAuthGuard] }
         ]
       },
       {
