@@ -9,11 +9,19 @@ app.use('*', (req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, '../dist')));
+const dist_path = path.join(__dirname, '../dist');
+
+app.use(express.static(dist_path));
+
+app.get('*', (req, res) => {
+    res.sendFile(dist_path + '/index.html');
+});
+
+/*app.use(express.static(path.join(__dirname, '../dist')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '..', 'dist', 'index.html'));
-});
+});*/
 
 app.get('*', function(req, res){
     res.redirect('/');
