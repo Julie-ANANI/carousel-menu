@@ -155,4 +155,11 @@
     </ng-template>
     </tbody>
   </table>
+  <tfoot>
+  <tr>
+    <td colspan="12">
+      <sqPagination [config]="config" (configChange)="loadHistory($event)" [total]="total"></sqPagination>
+    </td>
+  </tr>
+  </tfoot>
 </div>
