@@ -51,6 +51,8 @@ import { SharedProjectEditComponent } from './components/shared-project-edit/sha
 import { SharedProsListComponent } from './components/shared-pros-list/shared-pros-list.component';
 import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
+import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
+import { DomSanitizerPipe } from './../../pipes/DomSanitizer';
 
 //Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
@@ -116,7 +118,9 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     SharedProjectEditComponent,
     SharedProsListComponent,
     SharedSearchResultsComponent,
-    SharedSmartSelectInputComponent
+    SharedSmartSelectInputComponent,
+    SharedMarketReportExampleComponent,
+    DomSanitizerPipe
   ],
   exports: [
     // Modules

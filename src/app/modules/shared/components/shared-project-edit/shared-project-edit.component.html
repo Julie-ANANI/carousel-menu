@@ -341,20 +341,20 @@
                     {{ 'PROJECT_EDIT.SUBMIT.DESCRIPTION.LINE2' | translate }}
                   </p>
                 </div>
-              </div>
-
-              <div *ngIf="isAdmin && project.status === 'SUBMITTED'">
               </div> -->
 
-              <div class="project-submit">
-                <h3 class="text-center">Validation du projet</h3>
-                <button class="btn btn-xxl btn-primary centered" (click)="validateProject()">
-                  Valider
-                </button>
-                <button class="btn btn-xxl btn-error centered" (click)="askRevision()">
-                  Demander une révision
-                </button>
+              <div *ngIf="isAdmin && project.status === 'SUBMITTED'">
+                <div class="project-submit">
+                  <h3 class="text-center">Validation du projet</h3>
+                  <button class="btn btn-xxl btn-primary centered" (click)="validateProject()">
+                    Valider
+                  </button>
+                  <button class="btn btn-xxl btn-error centered" (click)="askRevision()">
+                    Demander une révision
+                  </button>
+                </div>
               </div>
+
             </div>
           </div>
         </form>

@@ -10,7 +10,7 @@ import { AdminIndexComponent } from './components/admin-index/admin-index.compon
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminSearchComponent } from './components/admin-search/admin-search.component';
 import { AdminComponent } from './admin.component';
-import { AdminAuthGuard } from './admin-auth-guard.service';
+import { AdminAuthGuard } from '../../admin-auth-guard.service';
 import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';

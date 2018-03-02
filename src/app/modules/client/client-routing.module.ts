@@ -21,11 +21,13 @@ import { InnovationResolver } from '../../resolvers/innovation.resolver';
 
 /* Shared */
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
+import { SharedMarketReportExampleComponent } from './../shared/components/shared-market-report-example/shared-market-report-example.component';
 
 /* Guards */
 import { NonAuthGuard } from '../../non-auth-guard.service';
 import { AuthGuard } from '../../auth-guard.service';
 import { PendingChangesGuard } from '../../pending-changes-guard.service';
+import { AdminAuthGuard } from '../../admin-auth-guard.service';
 
 const clientRoutes: Routes = [
   {
@@ -98,6 +100,12 @@ const clientRoutes: Routes = [
               { path: '2', component: ClientProjectEditExample2Component }
             ]
           }
+        ]
+      },
+      {
+        path: 'sample',
+        children: [
+          { path: '', component: SharedMarketReportExampleComponent, pathMatch: 'full', canActivate: [AdminAuthGuard] }
         ]
       },
       {
