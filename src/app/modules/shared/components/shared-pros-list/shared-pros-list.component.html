@@ -8,7 +8,8 @@
       <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'country'">{{ 'COMMON.COUNTRY' | translate }}</sq-sort></th>
       <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'firstName'" >{{ 'COMMON.NAME' | translate }}</sq-sort></th>
       <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'jobTitle'">{{ 'COMMON.JOBTITLE' | translate }}</sq-sort></th>
-      <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'company'">{{ 'COMMON.COMPANY' | translate }}</sq-sort></th>
+      <th *ngIf="requestId"><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'company.name'">{{ 'COMMON.COMPANY' | translate }}</sq-sort></th>
+      <th *ngIf="!requestId"><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'company'">{{ 'COMMON.COMPANY' | translate }}</sq-sort></th>
       <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'email'">{{ 'COMMON.EMAIL' | translate }}</sq-sort></th>
       <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'emailConfidence'">{{ 'CAMPAIGNS.EMAIL_CONFIDENCE' | translate }}</sq-sort></th>
     </tr>
@@ -21,7 +22,8 @@
         <sqFilter [config]="config" (configChange)="loadPros($event)" prop="lastName"></sqFilter>
       </th>
       <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="jobTitle"></sqFilter></th>
-      <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="company"></sqFilter></th>
+      <th *ngIf="!requestId"><sqFilter [config]="config" (configChange)="loadPros($event)" prop="company"></sqFilter></th>
+      <th *ngIf="requestId"><sqFilter [config]="config" (configChange)="loadPros($event)" prop="company.name"></sqFilter></th>
       <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="email"></sqFilter></th>
       <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="emailConfidence"></sqFilter></th>
     </tr>
