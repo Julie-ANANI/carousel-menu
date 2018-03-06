@@ -6,7 +6,7 @@
   </section>
   <section class="navbar-section" *ngIf="authService.isAuthenticated">
     <a routerLink="/" class="navbar-brand mr-2">
-      <img src="{{'https://res.cloudinary.com/umi/image/upload/app/'+logoName()}}" alt="Logo UMI" height="30">
+      <img class="logo" src="{{'https://res.cloudinary.com/umi/image/upload/app/'+logoName()}}" alt="Logo UMI" height="30">
     </a>
   </section>
 
@@ -19,6 +19,7 @@
   <!-- Connecté -->
   <section class="navbar-section" *ngIf="authService.isAuthenticated">
     <!--<a href="http://help.umi.us" target="_blank" class="btn btn-link">{{ 'COMMON.HELP' | translate }}</a>-->
+    <a [routerLink]="'/sample'" routerLinkActive="active" class="btn btn-link" *ngIf="authService.adminLevel > 0">Example</a>
     <a [routerLink]="'/projects'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
     <a [routerLink]="'/account'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
     <a [routerLink]="'/admin'" routerLinkActive="active" class="btn btn-link" *ngIf="authService.adminLevel > 0 && authService.emailVerified === true">{{ 'COMMON.ADMIN' | translate }}</a>

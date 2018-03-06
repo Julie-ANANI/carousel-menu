@@ -46,6 +46,8 @@ export class SharedSearchResultsComponent implements OnInit {
         innovation: this.campaign.innovation._id
       };
       this.chosenCampaign = [chosenCampaign];
+    } else {
+      this.chosenCampaign = [];
     }
   }
 

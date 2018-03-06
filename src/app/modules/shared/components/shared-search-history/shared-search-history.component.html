@@ -4,8 +4,8 @@
     <span *ngIf="status==='PROCESSING'"> en cours</span>
     <span *ngIf="status==='QUEUED'"> en attente</span>
   </h2>
-  <h4 *ngIf="paused" class="error">Module en pause</h4>
-  <h4 *ngIf="!paused" class="success">Module en fonctionnement</h4>
+  <h4 *ngIf="paused" class="text-error">Module en pause</h4>
+  <h4 *ngIf="!paused" class="text-success">Module en fonctionnement</h4>
   <table class="table">
     <thead>
     <tr>
@@ -155,4 +155,11 @@
     </ng-template>
     </tbody>
   </table>
+  <tfoot>
+  <tr>
+    <td colspan="12">
+      <sqPagination [config]="config" (configChange)="loadHistory()" [total]="total"></sqPagination>
+    </td>
+  </tr>
+  </tfoot>
 </div>

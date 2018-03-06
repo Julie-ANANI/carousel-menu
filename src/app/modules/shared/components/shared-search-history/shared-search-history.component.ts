@@ -44,16 +44,21 @@ export class SharedSearchHistoryComponent implements OnInit {
     if (this.status) {
       this.config.status = this.status;
     }
+    this.loadHistory();
+  }
+
+  public loadHistory() {
     this._searchService.getRequests(this._config)
       .first()
       .subscribe(result => {
         this._requests = result.requests;
+        this._paused = result._metadata.paused;
         if (result._metadata) {
           this._total = result._metadata.totalCount;
         }
       });
   }
-  
+
   public getChildren (request: any) {
     if (!request.loaded) {
       this._searchService.getRequests({

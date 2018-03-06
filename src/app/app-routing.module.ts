@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
 import { NonAuthGuard } from './non-auth-guard.service';
 import { AuthGuard } from './auth-guard.service';
+import { AdminAuthGuard } from './admin-auth-guard.service';
 import { PendingChangesGuard } from './pending-changes-guard.service';
 
 const appRoutes: Routes = [
@@ -13,12 +14,13 @@ const appRoutes: Routes = [
   {
     path: '',
     loadChildren: './modules/client/client.module#ClientModule'
-  }
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, {useHash: true}) // TODO {useHash: true} annule le fonctionnement des ancres
+    RouterModule.forRoot(appRoutes) // TODO {useHash: true} annule le fonctionnement des ancres
   ],
   exports: [
     RouterModule
@@ -29,7 +31,8 @@ const appRoutes: Routes = [
     // Guards :
     AuthGuard,
     NonAuthGuard,
-    PendingChangesGuard
+    PendingChangesGuard,
+    AdminAuthGuard
   ]
 })
 export class AppRoutingModule { }
