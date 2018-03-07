@@ -20,7 +20,10 @@
             {{modalAnswer.professional?.firstName}} {{modalAnswer.professional?.lastName}}
             <shared-rating-item [adminMode]="adminMode" [big]="true" [prop]="profile" [rating]="modalAnswer.profileQuality" (ratingChange)="updateProfileQuality($event)"></shared-rating-item>
           </h3>
-          <h6>{{modalAnswer.job}}</h6>
+          <h6 *ngIf="modalAnswer.professional?.jobTitle">
+            <i class="fa fa-address-card" aria-hidden="true"></i>
+            {{modalAnswer.professional.jobTitle}}
+          </h6>
           <h6 *ngIf="modalAnswer.professional?.company">
             <i class="fa fa-building-o" aria-hidden="true"></i>
             {{modalAnswer.professional?.company}}
