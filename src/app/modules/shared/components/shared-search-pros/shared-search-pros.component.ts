@@ -76,7 +76,6 @@ export class SharedSearchProsComponent implements OnInit {
     } else {
       this._params.countries.push(country);
     }
-    console.log(this._params.countries);
   }
 
   public search(event: Event): void {
