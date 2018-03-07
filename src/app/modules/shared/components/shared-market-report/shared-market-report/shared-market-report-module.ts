@@ -98,6 +98,10 @@ export class SharedMarketReportComponent implements OnInit {
     return !!this._infographics;
 
   }
+
+  public isQuestionHidden(question: any): boolean{
+    return question && !!question.hidden;
+  }
   get questions(): Array<Question> { return this._questions; }
   set questions(value: Array<Question>) { this._questions = value; }
   get modalAnswer(): Answer { return this._modalAnswer; }

@@ -35,7 +35,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
       height: 250,
       statusbar: false,
       menubar: false,
-      skin_url: 'assets/skins/lightgray', // Voir .angular-cli.json (apps > assets) : on importe les fichiers depuis le module (node_modules) "tinymce"
+      skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json (apps > assets) : on importe les fichiers depuis le module (node_modules) "tinymce"
       setup: (editor: any) => {
         this.editor = editor;
         editor.on('Blur', () => {
