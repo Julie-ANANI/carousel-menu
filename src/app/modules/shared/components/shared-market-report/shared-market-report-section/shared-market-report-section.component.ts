@@ -40,7 +40,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
 
   ngOnInit() {
     this._route.params.subscribe(params => {
-      this.innoid = params['innovationId'];
+      this._innoid = params['projectId'];
     });
     this.conclusionId = `${this.info.id}Conclusion`;
 

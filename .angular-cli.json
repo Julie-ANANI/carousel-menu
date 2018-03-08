@@ -23,7 +23,7 @@
         {
           "glob": "**/*",
           "input": "../node_modules/tinymce/skins",
-          "output": "./assets/skins"
+          "output": "assets/skins"
         }
       ],
       "scripts": [
