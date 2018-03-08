@@ -1,0 +1,26 @@
+.toolbar {
+  background: #0B90C6;
+  padding: 25px 0;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+
+  .block {
+    border-left: 1px solid rgba(255, 255, 255, 0.6);
+    text-align: center;
+    display: flex;
+  }
+
+  .block:first-child {
+    border-left: 0;
+  }
+
+  .block strong {
+    display: block;
+    font-size: 30px;
+  }
+
+  .block span {
+    display: block;
+  }
+}
