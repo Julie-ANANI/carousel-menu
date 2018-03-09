@@ -44,7 +44,7 @@
                [(ngModel)]="params.indexSearch">
         [0]
       </label>
-      <label class="tooltip" data-tooltip="MinkedIn">
+      <label class="tooltip" data-tooltip="LinkedIn">
         <input type="checkbox" name="linkedin" value="linkedin"
                [(ngModel)]="params.websites.linkedin">
         [1]
@@ -60,6 +60,7 @@
       </label>
       <div>
         <div *ngFor="let continent of continents">
+          <!-- TODO: checkbox pour sélectionner/désélectionner tous les pays du continent -->
           <div class="continent">
               <img *ngFor="let country of countries[continent]"
                    width="35" height="25" class="flag"

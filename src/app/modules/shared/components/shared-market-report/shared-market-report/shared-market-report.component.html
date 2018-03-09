@@ -36,7 +36,7 @@
         </a>
       </li>
       <li *ngFor="let question of infographics.questions">
-        <a pageScroll [href]="'#' + question.id">
+        <a pageScroll [href]="'#' + question.id" [hidden]="!!question.hidden">
           {{ question.title[lang] }}
           <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
         </a>
@@ -64,7 +64,8 @@
           [answers]="infographics.answers"
           [showDetails]="showDetails"
           [readonly]="!adminMode"
-          (modalAnswerChange)="seeAnswer($event)">
+          (modalAnswerChange)="seeAnswer($event)"
+          [hidden]="isQuestionHidden(question)">
         </market-report-section>
       </div>
     </div>

@@ -90,7 +90,7 @@ export class SharedSearchResultsComponent implements OnInit {
       params.country = this._request.country;
     }
     this._searchService.searchMails(params).first().subscribe(result => {
-      console.log(result);
+      this._notificationsService.success('Recherche lancée', `La recherche de mails a été lancée`);
     });
   }
 

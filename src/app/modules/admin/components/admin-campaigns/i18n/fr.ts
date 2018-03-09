@@ -6,6 +6,7 @@ export const CAMPAIGNS = {
   'HISTORY': 'Historique',
   'SEARCH': 'Recherche',
   'PROS': 'Pros',
+  'MAILS': 'Emails',
   'ANSWERS': 'Réponses',
   'EMAIL_CONFIDENCE': 'Indice de confiance',
   'VALIDATED': 'Réponses validées',

@@ -9,12 +9,12 @@
           </button>
           <ul class="menu">
             <li *ngIf="translate.currentLang !== 'fr'">
-              <a (click)="(displayLangChoices=false) && translate.use('fr') && $event.preventDefault()">
+              <a (click)="translate.use('fr') && $event.preventDefault() && (displayLangChoices=false)">
                 {{ 'COMMON.LANG.FR' | translate }}
               </a>
             </li>
             <li *ngIf="translate.currentLang !== 'en'">
-              <a (click)="(displayLangChoices=false) && translate.use('en') && $event.preventDefault()">
+              <a (click)="translate.use('en') && $event.preventDefault() && (displayLangChoices=false)">
                 {{ 'COMMON.LANG.EN' | translate }}
               </a>
             </li>

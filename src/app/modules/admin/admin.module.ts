@@ -27,6 +27,7 @@ import { AdminProjectsListComponent } from './components/admin-projects-list/adm
 import { AdminProjectsDetailsComponent } from './components/admin-projects/admin-project-details/admin-project-details.component';
 import { AdminPresetComponent } from './components/admin-preset/admin-preset.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
+import { AdminCampaignMailsComponent } from './components/admin-campaigns/admin-campaign-mails/admin-campaign-mails.component';
 import { AdminCampaignDetailsComponent } from './components/admin-campaigns/admin-campaign-details/admin-campaign-details.component';
 import { AdminCampaignProsComponent } from './components/admin-campaigns/admin-campaign-pros/admin-campaign-pros.component';
 import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admin-campaign-history/admin-campaign-history.component';
@@ -66,6 +67,7 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminProjectsDetailsComponent,
     AdminPresetComponent,
     AdminCampaignComponent,
+    AdminCampaignMailsComponent,
     AdminCampaignDetailsComponent,
     AdminCampaignProsComponent,
     AdminCampaignHistoryComponent,
