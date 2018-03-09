@@ -71,5 +71,5 @@ export class AdminCampaignsComponent implements OnInit {
       }, error => {
         this._notificationsService.error('ERROR', error.message);
       });
-};
+  };
 }
