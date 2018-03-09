@@ -15,6 +15,7 @@ import { AdminBatchInformationComponent } from './components/admin-emails/admin-
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
+import { AdminCampaignMailsComponent } from './components/admin-campaigns/admin-campaign-mails/admin-campaign-mails.component';
 import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admin-campaign-answers/admin-campaign-answers.component';
 import { AdminCampaignDetailsComponent } from './components/admin-campaigns/admin-campaign-details/admin-campaign-details.component';
 import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admin-campaign-history/admin-campaign-history.component';
@@ -73,6 +74,7 @@ const adminRoutes: Routes = [
             { path: 'search', component: AdminCampaignSearchComponent, pathMatch: 'full'},
             { path: 'results/:requestId', component: AdminCampaignSearchResultsComponent, resolve: { request : RequestResolver }, pathMatch: 'full' },
             { path: 'history', component: AdminCampaignHistoryComponent, pathMatch: 'full'},
+            { path: 'mails', component: AdminCampaignMailsComponent, pathMatch: 'full'},
             { path: 'answers', component: AdminCampaignAnswersComponent, pathMatch: 'full'}
           ]}
         ]
