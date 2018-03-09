@@ -51,4 +51,10 @@ export class CampaignService {
         .map((res: Response) => res.json())
         .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public messagesStats(campaignId: string): Observable<any> {
+    return this._http.get(`/campaign/${campaignId}/messagesStats`)
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.text()));
+  }
 }

@@ -1,0 +1,21 @@
+.toolbar {
+  background: #0B90C6;
+  padding: 25px 0;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .block {
+    text-align: center;
+  }
+
+  .block strong {
+    display: block;
+    font-size: 30px;
+  }
+
+  .block span {
+    display: block;
+  }
+}
