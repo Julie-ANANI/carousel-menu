@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClientFooterComponent } from './client-footer.component';
+import { ClientFooterComponent } from './shared-footer.component';
 
 describe('ClientFooterComponent', () => {
   let component: ClientFooterComponent;

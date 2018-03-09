@@ -3,11 +3,11 @@ import { TranslateService, initTranslation } from '../../../../i18n/i18n';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
-  selector: 'app-client-footer',
-  templateUrl: './client-footer.component.html',
-  styleUrls: ['./client-footer.component.scss']
+  selector: 'app-shared-footer',
+  templateUrl: 'shared-footer.component.html',
+  styleUrls: ['shared-footer.component.scss']
 })
-export class ClientFooterComponent implements OnInit {
+export class SharedFooterComponent implements OnInit {
   private _companyName: string = environment.companyName;
   public displayLangChoices = false;
 
@@ -22,7 +22,7 @@ export class ClientFooterComponent implements OnInit {
   }
 
   get companyName(): string {
-    return this._companyName;
+    return `${this._companyName} ${this.isMainDomain() ? '' : ' by UMI'}`;
   }
 
   get translate (): TranslateService {

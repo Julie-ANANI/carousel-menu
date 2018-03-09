@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LocalStorageModule } from 'angular-2-local-storage'; // TODO utiliser le localStorage pour accélérer les chargements
 import { SharedModule } from '../shared/shared.module';
 import { ClientRoutingModule } from './client-routing.module';
-import { ClientFooterComponent } from './components/client-footer/client-footer.component';
+//import { ClientFooterComponent } from './components/client-footer/client-footer.component';
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
@@ -38,7 +38,7 @@ import { ClientWelcomeComponent } from './components/client-welcome/client-welco
   ],
   declarations: [
     ClientComponent,
-    ClientFooterComponent,
+    //ClientFooterComponent,
     ClientMyAccountComponent,
 
     ClientMyProjectsComponent,
