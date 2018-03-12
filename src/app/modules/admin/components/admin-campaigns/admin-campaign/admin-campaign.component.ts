@@ -63,6 +63,17 @@ export class AdminCampaignComponent implements OnInit {
           //Do nothing for now...
         }
       }
+    } else {
+      this.campaign.stats = {
+        nbPros: 0,
+        nbPros90: 0,
+        nbProsSent: 0,
+        nbProsOpened: 0,
+        nbProsClicked: 0,
+        nbStartedAnswers: 0,
+        nbSubmittedAnswers: 0,
+        nbValidatedAnswers: 0
+      }
     }
   }
 
