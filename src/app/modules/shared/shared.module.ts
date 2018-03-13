@@ -53,6 +53,7 @@ import { SharedSearchResultsComponent } from './components/shared-search-results
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
 import { DomSanitizerPipe } from './../../pipes/DomSanitizer';
+import { SharedFooterComponent } from './components/shared-footer/shared-footer.component';
 
 //Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
@@ -120,7 +121,8 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
     SharedMarketReportExampleComponent,
-    DomSanitizerPipe
+    DomSanitizerPipe,
+    SharedFooterComponent
   ],
   exports: [
     // Modules
@@ -166,7 +168,8 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     SharedProjectEditComponent,
     SharedProsListComponent,
     SharedSearchResultsComponent,
-    SharedSmartSelectInputComponent
+    SharedSmartSelectInputComponent,
+    SharedFooterComponent
   ]
 })
 export class SharedModule { }

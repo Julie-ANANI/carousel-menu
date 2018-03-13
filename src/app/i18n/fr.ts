@@ -1,7 +1,6 @@
 import { COMMON } from './common_fr';
 import { ERROR } from './error_fr';
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/fr';
-import { FOOTER } from '../modules/client/components/client-footer/i18n/fr';
 import { LOG_IN } from '../modules/client/components/client-login/i18n/fr';
 import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/fr';
 import { MY_PROJECTS } from '../modules/client/components/client-my-projects/i18n/fr';
@@ -11,6 +10,7 @@ import { RESET_PASSWORD } from '../modules/client/components/client-reset-passwo
 import { SIGN_UP } from '../modules/client/components/client-signup/i18n/fr';
 import { WELCOME } from '../modules/client/components/client-welcome/i18n/fr';
 import { HEADER } from '../modules/shared/components/shared-header/i18n/fr';
+import { FOOTER } from '../modules/shared/components/shared-footer/i18n/fr';
 import { EXPORT } from '../modules/shared/components/shared-latex-manager/i18n/fr';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
 import { PAGINATION } from '../modules/shared/components/shared-pagination/i18n/fr';
