@@ -57,4 +57,10 @@ export class CampaignService {
         .map((res: Response) => res.json())
         .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public createNewBatch(campaignId: string, batch: any): Observable<any> {
+    return this._http.post(`/campaign/${campaignId}/createNewBatch`, batch)
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.text()));
+  }
 }
