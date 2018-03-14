@@ -19,8 +19,10 @@ export class AdminCampaignMailsComponent implements OnInit {
   public secondMail: number = 0;
   public lastMail: number = 0;
   public batchModal: boolean = false;
-  public batch: any = {};
-  public dateformat: string = "le dd/MM/yyyy à hh:mm"
+  public newBatch: any = {};
+  public dateformat: string = "le dd/MM/yyyy à hh:mm";
+  public selectedBatchIdToBeDeleted: string = null;
+  public editDates: Array<any>;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService) { }
@@ -44,22 +46,68 @@ export class AdminCampaignMailsComponent implements OnInit {
       }
     });
 
-    this.batch = {
+    this.newBatch = {
       campaign: this._campaign._id,
       size: 0
     }
   }
 
   public createNewBatch() {
-    // On calcule la date d'envoi 'firstMail' à partir des inputs de la date et heure
-    this.batch.firstMail = new Date(this.batch.date);
-    const hours = parseInt(this.batch.time.split(':')[0]);
-    const minutes = parseInt(this.batch.time.split(':')[1]);
-    this.batch.firstMail.setHours(hours);
-    this.batch.firstMail.setMinutes(minutes);
-     this._campaignService.createNewBatch(this._campaign._id, this.batch).first().subscribe((batch: any) => {
+    this.newBatch.firstMail = this._computeDate(this.newBatch.date, this.newBatch.time);
+    this._campaignService.createNewBatch(this._campaign._id, this.newBatch).first().subscribe((batch: any) => {
       this.stats.batches.push(batch);
     });
+  }
+
+  public startEditing(batch: any) {
+    this.editDates = [
+      {
+        date: batch.firstMail.toString().slice(0, 10),
+        time: batch.firstMail.toString().slice(11, 16)
+      },
+      {
+        date: batch.secondMail.toString().slice(0, 10),
+        time: batch.secondMail.toString().slice(11, 16)
+      },
+      {
+        date: batch.thirdMail.toString().slice(0, 10),
+        time: batch.thirdMail.toString().slice(11, 16)
+      }
+    ];
+    this.stats.batches[this._getBatchIndex(batch._id)]['editing'] = true;
+
+  }
+
+  public updateBatch(batch: any) {
+    this.stats.batches[this._getBatchIndex(batch._id)]['editing'] = false;
+    this._campaignService.updateBatch(batch).first().subscribe((batch: any) => {
+      this.stats.batches[this._getBatchIndex(batch._id)] = batch;
+    });
+  }
+
+  public deleteBatch(batchId: string) {
+     this._campaignService.deleteBatch(batchId).first().subscribe(_ => {
+       this.stats.batches.splice(this._getBatchIndex(batchId), 1);
+       this.selectedBatchIdToBeDeleted = null;
+    });
+  }
+
+  private _getBatchIndex(batchId: string): number {
+    for (const batch of this.stats.batches) {
+      if (batchId === batch._id) {
+        return this.stats.batches.indexOf(batch);
+      }
+    }
+  }
+
+  private _computeDate(date: string, time: string) {
+    // Calcule d'une date d'envoi à partir des inputs de la date et heure
+    let computedDate = new Date(date);
+    const hours = parseInt(time.split(':')[0]);
+    const minutes = parseInt(time.split(':')[1]);
+    computedDate.setHours(hours);
+    computedDate.setMinutes(minutes);
+    return computedDate;
   }
 
   get campaign() { return this._campaign }
