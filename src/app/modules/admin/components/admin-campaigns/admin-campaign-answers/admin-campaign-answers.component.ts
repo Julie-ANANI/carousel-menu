@@ -5,6 +5,7 @@ import { Answer } from '../../../../../models/answer';
 import { Campaign } from '../../../../../models/campaign';
 import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -58,6 +59,16 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   public seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
+  }
+
+  public exportAnswers(event: Event) {
+    event.preventDefault();
+    const url = environment.apiUrl + '/campaign/' + this._campaign._id + '/exportAnswers';
+    window.open(url);
+  }
+
+  public importAnswers(event: Event) {
+    event.preventDefault();
   }
 
   get questions() { return this._questions; }
