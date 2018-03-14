@@ -41,7 +41,7 @@ export class SharedAnswerModalComponent implements OnInit {
     this.floor = Math.floor;
 
     // On regarde si on a une question 'étoiles'
-    const starQuestions = this.questions.filter(q => q.controlType === 'stars');
+    const starQuestions = this.questions.filter(q => q && q.controlType === 'stars');
     if (starQuestions.length) {
       // Si question 'étoiles', on récupère les advantages
       // TODO: merge the 2 following subscribers in only one

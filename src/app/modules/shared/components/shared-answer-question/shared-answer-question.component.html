@@ -85,7 +85,7 @@
     </div>
 
     <div *ngSwitchCase="'stars'">
-      <ul *ngIf="fullAnswer.answers[question.identifier]">
+      <ul *ngIf="question && fullAnswer.answers[question.identifier]">
         <li *ngFor="let advantage of question.options">
           {{advantage.label[lang]}}: {{ '★'.repeat(fullAnswer.answers[question.identifier][advantage.identifier]) }}
         </li>
