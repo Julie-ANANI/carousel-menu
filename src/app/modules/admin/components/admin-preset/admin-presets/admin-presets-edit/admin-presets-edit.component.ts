@@ -48,7 +48,7 @@ export class AdminPresetsEditComponent implements OnInit {
           this._preset = preset;
           this._addSectionConfig.initialData = preset.sections || [];
           this.formData = this._formBuilder.group({
-            sections: []
+            sections: [preset.sections || []]
           });
       });
     });

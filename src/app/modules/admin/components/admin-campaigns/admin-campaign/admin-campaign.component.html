@@ -12,7 +12,7 @@
 
   <div class="tabs">
     <div class="tab-content">
-      <div class="toolbar">
+      <div class="toolbar" *ngIf="campaign.stats">
         <div class="block">
           <i class="fa fa-refresh c-hand" (click)="updateStats()"></i>
         </div>

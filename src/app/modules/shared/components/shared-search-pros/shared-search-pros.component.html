@@ -59,10 +59,15 @@
         [3]
       </label>
       <div>
+        <div class="d-flex">
+          <div *ngFor="let group of groups; let i = index">
+            <input type="checkbox" [(ngModel)]="group.checked" (click)="selectGroup(i)"/> {{group.name}}
+          </div>
+        </div>
         <div *ngFor="let continent of continents">
-          <!-- TODO: checkbox pour sélectionner/désélectionner tous les pays du continent -->
+          <input type="checkbox" [(ngModel)]="continent.checked" (click)="selectContinent(continent)"/> {{continent.name}}
           <div class="continent">
-              <img *ngFor="let country of countries[continent]"
+              <img *ngFor="let country of countries[continent.key]"
                    width="35" height="25" class="flag"
                    (click)="checkCountry(country)"
                    [ngClass]="{'checked': params.countries.indexOf(country) > -1}"

@@ -2,6 +2,14 @@
 
 <h2>{{ total }} {{ 'CAMPAIGNS.ANSWERS' | translate }}</h2>
 
+<button class="btn btn-default" (click)="exportAnswers($event)">
+  {{ 'CAMPAIGNS.EXPORT-ANSWERS' | translate }}
+</button>
+
+<button class="btn btn-default" (click)="importAnswers($event)">
+  {{ 'CAMPAIGNS.IMPORT-ANSWERS' | translate }}
+</button>
+
 <div class="bg-success answers-header">
   <h5>{{validatedAnswers.length}} {{ 'CAMPAIGNS.VALIDATED' | translate }}</h5>
 </div>
