@@ -5,6 +5,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { Campaign } from '../../../../models/campaign';
 import { InnovationSettings } from '../../../../models/innov-settings';
 import { COUNTRIES } from './COUNTRIES'
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -14,6 +15,73 @@ import { COUNTRIES } from './COUNTRIES'
 export class SharedSearchProsComponent implements OnInit {
 
   public displaySettings = false;
+  public groups = [
+    {
+      name: 'G8',
+      checked: false,
+      countries: ['US', 'JP', 'DE', 'FR', 'UK', 'IT', 'CA', 'RU']
+    },
+    {
+      name: 'G20',
+      checked: false,
+      countries: ['US', 'JP', 'DE', 'FR', 'UK', 'IT', 'CA', 'RU', 'ZA', 'SA',
+        'AR', 'AU', 'BR', 'CN', 'KR', 'IN', 'ID', 'MX', 'TR']
+    },
+    {
+      name: 'G30',
+      checked: false,
+      countries: ['US', 'JP', 'DE', 'FR', 'UK', 'IT', 'CA', 'RU', 'ZA', 'SA', 'AR', 'AU', 'BR', 'CN',
+        'KR', 'IN', 'ID', 'MX', 'TR', 'PT', 'BE', 'IE', 'CH', 'SE', 'NO', 'PL', 'CZ', 'ES', 'NL']
+    },
+    {
+      name: 'EU1',
+      checked: false,
+      countries: ['FR', 'UK', 'DE', 'ES', 'IT', 'NL', 'CH', 'NO', 'SE', 'PL', 'BE']
+    },
+    {
+      name: 'EU2',
+      checked: false,
+      countries: ['FR', 'UK', 'DE', 'ES', 'IT', 'NL', 'CH', 'NO', 'SE', 'PL', 'BE', 'AT',
+        'DK', 'FI', 'GR', 'IE', 'PT', 'CZ', 'RO', 'UA', 'HU', 'SK', 'BY', 'HR']
+    }
+  ];
+  public continents = [
+    {
+      key: "europe",
+      name: "Europe",
+      checked: false
+    },
+    {
+      key: "russia",
+      name: "Russia",
+      checked: false
+    },
+    {
+      key: "americaNord",
+      name: "North America",
+      checked: false
+    },
+    {
+      key: "asia",
+      name: "Asia",
+      checked: false
+    },
+    {
+      key: "americaSud",
+      name: "South America",
+      checked: false
+    },
+    {
+      key: "africa",
+      name: "Africa",
+      checked: false
+    },
+    {
+      key: "oceania",
+      name: "Oceania",
+      checked: false
+    }
+  ];
   private _params: any = {
     keywords: '',
     websites: {
@@ -52,6 +120,22 @@ export class SharedSearchProsComponent implements OnInit {
     }
   }
 
+  public selectGroup(index: number) {
+    if (this.groups[index]['checked']) {
+      this._params.countries = _.difference(this._params.countries, this.groups[index]['countries']);
+    } else {
+      this._params.countries = _.union(this._params.countries, this.groups[index]['countries']);
+    }
+  }
+
+  public selectContinent(continent: any) {
+    if (continent.checked) {
+      this._params.countries = _.difference(this._params.countries, COUNTRIES[continent.key]);
+    } else {
+      this._params.countries = _.union(this._params.countries, COUNTRIES[continent.key]);
+    }
+  }
+
   public getTargetCountries(settings: InnovationSettings): Array<string> {
     let countries: Array<string> = [];
     if (settings && settings.geography) {
@@ -68,7 +152,7 @@ export class SharedSearchProsComponent implements OnInit {
     }
     return countries;
   }
-  
+
   public checkCountry(country: string) {
     const index = this._params.countries.indexOf(country);
     if (index > -1) {
@@ -98,7 +182,6 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
   get countries(): any { return COUNTRIES; }
-  get continents(): any { return Object.keys(COUNTRIES); }
   get params(): any { return this._params; }
   set params(value: any) { this._params = value; }
 }
