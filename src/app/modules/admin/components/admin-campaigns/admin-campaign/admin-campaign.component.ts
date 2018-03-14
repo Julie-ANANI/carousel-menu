@@ -31,7 +31,7 @@ export class AdminCampaignComponent implements OnInit {
       return Math.round(100 * value1 / value2);
     }
   };
-  
+
   public computeStats() {
     if (this._campaign.stats) {
       for (const key in this._campaign.stats) {
@@ -64,16 +64,7 @@ export class AdminCampaignComponent implements OnInit {
         }
       }
     } else {
-      this.campaign.stats = {
-        nbPros: 0,
-        nbPros90: 0,
-        nbProsSent: 0,
-        nbProsOpened: 0,
-        nbProsClicked: 0,
-        nbStartedAnswers: 0,
-        nbSubmittedAnswers: 0,
-        nbValidatedAnswers: 0
-      }
+      this.updateStats();
     }
   }
 
