@@ -8,6 +8,8 @@ export const CAMPAIGNS = {
   'PROS': 'Pros',
   'MAILS': 'Emails',
   'ANSWERS': 'Answers',
+  'EXPORT-ANSWERS': 'Export answers',
+  'IMPORT-ANSWERS': 'Import answers',
   'EMAIL_CONFIDENCE': 'Email confidence',
   'VALIDATED': 'Validated answers',
   'SUBMITTED': 'Submitted answers',
