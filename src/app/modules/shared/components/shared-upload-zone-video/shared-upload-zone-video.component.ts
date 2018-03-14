@@ -32,7 +32,6 @@ export class SharedUploadZoneVideoComponent implements OnInit {
 
     if (videoProvider) {
       const videoKey = videoIdRegEx.exec(givenUrl)[0]; //videoIdRegEx.exec(givenUrl)[1] || videoIdRegEx.exec(givenUrl)[2]; // ID de la vidéo chez le provider
-      console.log(videoIdRegEx.exec(givenUrl)); // ID de la vidéo chez le provider
       let returnValue: Video;
       switch (videoProvider) {
         case 'vimeo': {
