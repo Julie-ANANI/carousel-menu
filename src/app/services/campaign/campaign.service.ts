@@ -63,4 +63,16 @@ export class CampaignService {
         .map((res: Response) => res.json())
         .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public updateBatch(batch: any): Observable<any> {
+    return this._http.put(`/batch/${batch._id}`, batch)
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public deleteBatch(batchId: any): Observable<any> {
+    return this._http.delete(`/batch/${batchId}`)
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.text()));
+  }
 }
