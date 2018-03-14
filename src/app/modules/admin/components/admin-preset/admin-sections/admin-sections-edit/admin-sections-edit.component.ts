@@ -56,7 +56,7 @@ export class AdminSectionsEditComponent implements OnInit {
               en: [section.label ? section.label.en || '' : '', Validators.required]
             }),
             description: [section.description ? section.description : 'nothing', Validators.required],
-            questions: []
+            questions: [section.questions || []]
           });
         });
     });
