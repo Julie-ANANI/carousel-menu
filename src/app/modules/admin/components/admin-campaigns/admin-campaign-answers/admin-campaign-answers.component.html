@@ -6,9 +6,10 @@
   {{ 'CAMPAIGNS.EXPORT-ANSWERS' | translate }}
 </button>
 
-<button class="btn btn-default" (click)="importAnswers($event)">
-  {{ 'CAMPAIGNS.IMPORT-ANSWERS' | translate }}
-</button>
+<label>
+  <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
+  <span class="btn btn-default">{{ 'CAMPAIGNS.IMPORT-ANSWERS' | translate }}</span>
+</label>
 
 <div class="bg-success answers-header">
   <h5>{{validatedAnswers.length}} {{ 'CAMPAIGNS.VALIDATED' | translate }}</h5>

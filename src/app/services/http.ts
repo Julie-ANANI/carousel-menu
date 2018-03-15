@@ -50,7 +50,7 @@ export class Http extends AngularHttp {
       });
   }
 
-  public post(UriOrUrl: string, data?: object, options?: RequestOptionsArgs) {
+  public post(UriOrUrl: string, data?: any, options?: RequestOptionsArgs) {
     this._showLoader();
 
     if (UriOrUrl.indexOf('http') === -1) { // Si ce n'est pas une URL
@@ -120,6 +120,31 @@ export class Http extends AngularHttp {
     }
 
     return super.get(UriOrUrl, this._requestOptions(options))
+      .catch(this._onCatch)
+      .do((res: Response) => {
+        this._onSuccess(res);
+      }, (error: any) => {
+        this._onError(error);
+      })
+      .finally(() => {
+        this._onEnd();
+      });
+  }
+
+  public upload(UriOrUrl: string, file: File, options?: RequestOptionsArgs) {
+    this._showLoader();
+
+    if (UriOrUrl.indexOf('http') === -1) { // Si ce n'est pas une URL
+      UriOrUrl = this._getFullUrl(UriOrUrl);
+    }
+
+    let requestOptions = this._requestOptions(options);
+    requestOptions.headers.delete('Content-Type');
+
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+
+    return super.post(UriOrUrl, formData, requestOptions)
       .catch(this._onCatch)
       .do((res: Response) => {
         this._onSuccess(res);

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '../http';
 import { Observable } from 'rxjs/Observable';
-import {Answer} from '../../models/answer';
+import { Answer } from '../../models/answer';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class AnswerService {
@@ -42,6 +43,18 @@ export class AnswerService {
   public changeStatus(answerId: string, status: string): Observable<any> {
     return this._http.post(`/answer/${answerId}/changeStatus`, { newStatus: status })
       .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public exportAsCsv(campaignId: string): void {
+    const url = environment.apiUrl + '/campaign/' + campaignId + '/exportAnswers';
+    window.open(url);
+  }
+
+  public importAsCsv(campaignId: string, file: File): Observable<any> {
+    const url = environment.apiUrl + '/campaign/' + campaignId + '/importAnswers';
+    return this._http.upload(url, file)
+      .map((res: Response) => <string>res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 }
