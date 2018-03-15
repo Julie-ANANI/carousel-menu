@@ -24,13 +24,14 @@ export class SharedUploadZoneVideoComponent implements OnInit {
 
   addVideo(event: Event): void {
     event.preventDefault();
-    const videoProvider = videoDomainRegEx.exec(this._videoUrlInput)[0]; // vimeo || youtube
+    const videoProviderReg = videoDomainRegEx.exec(this._videoUrlInput);
+    const videoProvider = videoProviderReg ? videoProviderReg[0] : null; // vimeo || youtube
     const givenUrl = this._videoUrlInput; // URL donnée par l'utilisateur
     this._videoUrlInput = ''; // On vide le formulaire
 
 
     if (videoProvider) {
-      const videoKey = videoIdRegEx.exec(givenUrl)[1] || videoIdRegEx.exec(givenUrl)[2]; // ID de la vidéo chez le provider
+      const videoKey = videoIdRegEx.exec(givenUrl)[0]; //videoIdRegEx.exec(givenUrl)[1] || videoIdRegEx.exec(givenUrl)[2]; // ID de la vidéo chez le provider
       let returnValue: Video;
       switch (videoProvider) {
         case 'vimeo': {
@@ -55,6 +56,8 @@ export class SharedUploadZoneVideoComponent implements OnInit {
         }
       }
       this.cbFn.emit(returnValue);
+    } else {
+      console.error(`${givenUrl} is not a valid video input`);
     }
   }
 

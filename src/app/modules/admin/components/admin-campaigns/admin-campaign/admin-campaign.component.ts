@@ -31,7 +31,7 @@ export class AdminCampaignComponent implements OnInit {
       return Math.round(100 * value1 / value2);
     }
   };
-  
+
   public computeStats() {
     if (this._campaign.stats) {
       for (const key in this._campaign.stats) {
@@ -63,6 +63,8 @@ export class AdminCampaignComponent implements OnInit {
           //Do nothing for now...
         }
       }
+    } else {
+      this.updateStats();
     }
   }
 

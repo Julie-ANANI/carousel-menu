@@ -1,6 +1,126 @@
-<h3>{{ 'CAMPAIGNS.MAILS' | translate }}</h3>
+<div>
+  <div class="emailsStats">
+    <div>
+      <span class="number">{{ mailsToSend }}
+        <span class="badge" data-badge="0"><i class="fa fa-envelope"></i></span>
+      </span>
+      professionnels non contactés
+    </div>
+    <div>
+      <span class="number">{{ firstMail }}
+        <span class="badge" data-badge="1"><i class="fa fa-envelope"></i></span>
+      </span>
+      premiers mails envoyés
+    </div>
+    <div>
+      <span class="number">{{ secondMail }}
+        <span class="badge" data-badge="2"><i class="fa fa-envelope"></i></span>
+      </span>
+      mails de relance envoyés
+    </div>
+    <div>
+      <span class="number">{{ lastMail }}
+        <span class="badge" data-badge="3"><i class="fa fa-envelope"></i></span>
+      </span>
+      derniers mails envoyés
+    </div>
+  </div>
+  <!-- To be continued...
+  <div *ngIf="!stats.batches || !stats.batches.length">
+    Pas de batch d'emails programmé pour l'instant...
+  </div>
+  <button (click)="batchModal=true" class="btn btn-primary centered">
+    Programmer un nouveau batch de mails
+  </button>
+  <div class="card" *ngFor="let batch of stats.batches; let batchIndex = index">
+    <div class="card-header">
+      <div class="card-title h5">
+        Batch de {{ batch.size }} professionnels
+        <a class="c-hand" role="button" (click)="(selectedBatchIdToBeDeleted = batch._id) && $event.preventDefault()">
+          <i class="fa fa-trash"></i>
+        </a>
+        <a *ngIf="!batch.editing" class="c-hand" role="button" (click)="startEditing(batch) && $event.preventDefault()">
+          <i class="fa fa-pencil"></i>
+        </a>
+        <a *ngIf="batch.editing" class="c-hand" role="button" (click)="updateBatch(batch)">
+          <i class="fa fa-save"></i>
+        </a>
+        <a *ngIf="batch.editing" class="c-hand" role="button" (click)="(batch.editing = false) && $event.preventDefault()">
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+      <div class="card-subtitle text-gray">créé le {{ batch.created | date: dateformat }}</div>
+    </div>
+    <div class="card-body">
+      <div *ngFor="let step of ['firstMail', 'secondMail', 'thirdMail']; let i = index">
+        <div [ngClass]="batch.status > i ? 'text-success' : 'text-warning'" class="text-center">
+          <span class="badge" [attr.data-badge]="i + 1">
+            <i class="fa fa-envelope"></i>
+          </span>
+          <i class="fa fa-check" *ngIf="batch.status > i"></i>
+          <i class="fa fa-clock-o" *ngIf="batch.status <= i"></i>
+        </div>
+        <span *ngIf="!batch.editing">mail n°{{i + 1}} : {{ batch[step] | date: dateformat }}</span>
+        <div *ngIf="batch.editing">
+          <div class="form-group">
+            <input type="date" [(ngModel)]="editDates[i].date"/>
+          </div>
+          <div class="form-group">
+            <input type="time" [(ngModel)]="editDates[i].time"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+<!-- MODAL : Création de batch de mails -->
+<div class="modal" [ngClass]="{'active': batchModal}">
+  <div class="modal-overlay" (click)="(batchModal = false) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(batchModal = false) && $event.preventDefault()"></button>
+      <div class="modal-title h5">Programmer un nouveau batch de mails</div>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        Nombre de pros à contacter :
+        <input type="number" [(ngModel)]="newBatch.size"/>
+      </div>
+      <div class="form-group">
+        Jour d'envoi du premier mail :
+        <input type="date" [(ngModel)]="newBatch.date"/>
+      </div>
+      <div class="form-group">
+        Heure d'envoi du premier mail :
+        <input type="time" [(ngModel)]="newBatch.time"/>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="batchModal = false; createNewBatch()">Créer</button>
+      <button class="btn btn-link" (click)="(batchModal = false) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
 
-<p>Il y a {{ mailsToSend }} pros non contactés.</p>
-<p>Il y a {{ firstMail }} premier mails envoyés.</p>
-<p>Il y a {{ secondMail }} premières relances mails envoyées.</p>
-<p>Il y a {{ lastMail }} secondes relances mails envoyées.</p>
+<!-- MODAL : Suppression du batch -->
+<div class="modal" [ngClass]="{'active': selectedBatchIdToBeDeleted}">
+  <div class="modal-overlay" (click)="(selectedBatchIdToBeDeleted = null) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(selectedBatchIdToBeDeleted = null) && $event.preventDefault()"></button>
+      <div class="modal-title h5">Suppression d'un batch</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">Etes-vous bien sûr de vouloir supprimer ce magnifique batch ??</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="deleteBatch(selectedBatchIdToBeDeleted)">{{ 'COMMON.DELETE' | translate }}</button>
+      <button class="btn btn-primary" (click)="(selectedBatchIdToBeDeleted = null) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

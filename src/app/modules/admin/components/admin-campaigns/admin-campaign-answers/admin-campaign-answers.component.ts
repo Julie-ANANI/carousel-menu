@@ -39,7 +39,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._modalAnswer = null;
     if (this._campaign.innovation.preset && Array.isArray(this._campaign.innovation.preset.sections)) {
       this._campaign.innovation.preset.sections.forEach((section: Section) => {
-        this._questions = this._questions.concat(section.questions);
+        this._questions = this._questions.concat(section.questions || []);
       });
     }
   }
