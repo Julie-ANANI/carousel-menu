@@ -41,7 +41,7 @@
       <div class="content">{{ 'CAMPAIGNS.DELETE_MODAL.CONTENT' | translate }}</div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-link" (click)="deleteCampaign($event, campaign)">{{ 'COMMON.DELETE' | translate }}</button>
+      <button class="btn btn-link" (click)="deleteCampaign($event)">{{ 'COMMON.DELETE' | translate }}</button>
       <button class="btn btn-primary" (click)="(activateModal = !activateModal) && $event.preventDefault()">
         {{ 'COMMON.CANCEL' | translate }}
       </button>
