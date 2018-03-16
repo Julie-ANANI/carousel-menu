@@ -33,7 +33,7 @@
   <tr *ngFor="let pro of pros" (click)="selectPro(pro)" [ngClass]="{'active': pro.isSelected}">
     <td> <input type="checkbox" [(ngModel)]="pro.isSelected"/></td>
     <td>{{ pro.language }}</td>
-    <td><img [src]="buildImageUrl(pro.country)" width="37" height="25"/></td>
+    <td><shared-country-flag [country]="pro.country"></shared-country-flag></td>
     <td>
       <a *ngIf="pro.profileUrl" [href]="pro.profileUrl" target="_blank"><i class="fa fa-linkedin"></i></a>
       <span class="title">{{ pro.firstName }} {{ pro.lastName }}</span>

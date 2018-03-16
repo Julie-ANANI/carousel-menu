@@ -39,14 +39,6 @@ export class SharedProsListComponent {
       });
     }
   }
-
-  public buildImageUrl(country: string): string {
-    if (country) {
-      return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
-    } else {
-      return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
-    }
-  }
   
   selectPro(pro: Professional): void {
     pro.isSelected = !pro.isSelected;

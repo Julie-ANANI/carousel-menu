@@ -43,7 +43,7 @@
         </td>
 
         <td class="text-center" *ngIf="!mails">
-          <img *ngIf="request.country" width="30" height="20" class="flag" [src]="buildImageUrl(request.country.toUpperCase())">
+          <shared-country-flag *ngIf="request.country" [country]="request.country" [width]="30" [height]="20"></shared-country-flag>
         </td>
 
         <td>
@@ -107,7 +107,7 @@
         </td>
 
         <td class="text-center" *ngIf="!mails">
-          <img *ngIf="childRequest.country" width="30" height="20" class="flag" [src]="buildImageUrl(childRequest.country.toUpperCase())">
+          <shared-country-flag *ngIf="childRequest.country" [country]="childRequest.country" [width]="30" [height]="20"></shared-country-flag>
         </td>
 
         <td>

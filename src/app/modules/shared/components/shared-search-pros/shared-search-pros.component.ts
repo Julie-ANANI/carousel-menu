@@ -173,14 +173,6 @@ export class SharedSearchProsComponent implements OnInit {
     });
   }
 
-  public buildImageUrl(country: string): string {
-    if (country) {
-      return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
-    } else {
-      return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
-    }
-  }
-
   get countries(): any { return COUNTRIES; }
   get params(): any { return this._params; }
   set params(value: any) { this._params = value; }

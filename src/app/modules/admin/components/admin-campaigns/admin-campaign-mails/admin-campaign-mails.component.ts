@@ -60,18 +60,20 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public startEditing(batch: any) {
+    const getDate = (d: string) => d.toString().slice(0,10);
+    const getTime = (d: string) => (new Date(d)).toLocaleTimeString();
     this.editDates = [
       {
-        date: batch.firstMail.toString().slice(0, 10),
-        time: batch.firstMail.toString().slice(11, 16)
+        date: getDate(batch.firstMail),
+        time: getTime(batch.firstMail)
       },
       {
-        date: batch.secondMail.toString().slice(0, 10),
-        time: batch.secondMail.toString().slice(11, 16)
+        date: getDate(batch.secondMail),
+        time: getTime(batch.secondMail)
       },
       {
-        date: batch.thirdMail.toString().slice(0, 10),
-        time: batch.thirdMail.toString().slice(11, 16)
+        date: getDate(batch.thirdMail),
+        time: getTime(batch.thirdMail)
       }
     ];
     this.stats.batches[this._getBatchIndex(batch._id)]['editing'] = true;
@@ -80,6 +82,9 @@ export class AdminCampaignMailsComponent implements OnInit {
 
   public updateBatch(batch: any) {
     this.stats.batches[this._getBatchIndex(batch._id)]['editing'] = false;
+    batch.firstMail = this._computeDate(this.editDates[0].date, this.editDates[0].time);
+    batch.secondMail = this._computeDate(this.editDates[1].date, this.editDates[1].time);
+    batch.thirdMail = this._computeDate(this.editDates[2].date, this.editDates[2].time);
     this._campaignService.updateBatch(batch).first().subscribe((batch: any) => {
       this.stats.batches[this._getBatchIndex(batch._id)] = batch;
     });

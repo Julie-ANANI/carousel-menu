@@ -51,16 +51,18 @@
           </a><br>
           <a href="mailto: {{modalAnswer.professional?.email}}">{{modalAnswer.professional?.email}}</a><br>
           {{ 'MARKET_REPORT.POPUP.RECEIVED' | translate }} {{modalAnswer.date | date : dateFormat}} à {{modalAnswer.date | date:'HH:mm'}}<br>
-          <img *ngIf="modalAnswer.country" [src]="buildImageUrl(modalAnswer.country)" width="30" height="20">
-          {{(modalAnswer.country) ? modalAnswer.country.name : ""}}
-          <div class="popover popover-bottom">
-            <i class="fa fa-pencil"></i>
-            <div class="popover-container">
-              <div class="input-group">
-                <app-autocomplete-input
-                  (update)="updateCountry($event)" [onlyOne]="true"
-                  [config]="{placeholder: 'pays', initialData: modalAnswer.country ? [modalAnswer.country] : [], type: 'countries'}"
-                ></app-autocomplete-input>
+          <div class="d-flex">
+            <shared-country-flag [country]="modalAnswer.country" [width]="30" [height]="20"></shared-country-flag>
+            {{(modalAnswer.country) ? modalAnswer.country.name : ""}}
+            <div class="popover popover-bottom">
+              <i class="fa fa-pencil"></i>
+              <div class="popover-container">
+                <div class="input-group">
+                  <app-autocomplete-input
+                    (update)="updateCountry($event)" [onlyOne]="true"
+                    [config]="{placeholder: 'pays', initialData: modalAnswer.country ? [modalAnswer.country] : [], type: 'countries'}"
+                  ></app-autocomplete-input>
+                </div>
               </div>
             </div>
           </div>

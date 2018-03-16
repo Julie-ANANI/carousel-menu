@@ -75,14 +75,6 @@ export class SharedSearchHistoryComponent implements OnInit {
     request.show = !request.show;
   };
 
-  public buildImageUrl(country: string): string {
-    if (country) {
-      return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
-    } else {
-      return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
-    }
-  }
-
   get requests(): Array<any> { return this._requests; }
   get total(): number { return this._total; }
   get config(): any { return this._config; }
