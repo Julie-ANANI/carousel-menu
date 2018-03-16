@@ -13,7 +13,6 @@
     "noEmit": true,
     "noEmitHelpers": true,
     "noImplicitAny": true,
-    "noUnusedExpressions": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false, // TODO: set to true
     "outDir": "./dist/out-tsc",
