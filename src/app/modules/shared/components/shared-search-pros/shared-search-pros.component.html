@@ -67,11 +67,11 @@
         <div *ngFor="let continent of continents">
           <input type="checkbox" [(ngModel)]="continent.checked" (click)="selectContinent(continent)"/> {{continent.name}}
           <div class="continent">
-              <img *ngFor="let country of countries[continent.key]"
-                   width="35" height="25" class="flag"
+              <div *ngFor="let country of countries[continent.key]" class="flag"
                    (click)="checkCountry(country)"
-                   [ngClass]="{'checked': params.countries.indexOf(country) > -1}"
-                   [src]="buildImageUrl(country)">
+                   [ngClass]="{'checked': params.countries.indexOf(country) > -1}">
+                <shared-country-flag [country]="country"></shared-country-flag>
+              </div>
           </div>
         </div>
       </div>

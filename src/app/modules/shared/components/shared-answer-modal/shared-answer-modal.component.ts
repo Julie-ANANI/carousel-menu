@@ -120,14 +120,6 @@ export class SharedAnswerModalComponent implements OnInit {
     }
   }
 
-  public buildImageUrl(country: any): string {
-    if (country && country.flag) {
-      return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
-    } else {
-      return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
-    }
-  }
-
   public close(event: Event): void {
     event.preventDefault();
     this.modalAnswerChange.emit(null);
