@@ -12,7 +12,7 @@
         <small class="email">{{answer.professional?.email || '???'}}</small>
       </td>
       <td>
-        {{answer.professional.jobTitle || "???"}}
+        {{answer.professional?.jobTitle || "???"}}
       </td>
       <td width="20">
         <span class="follower" *ngIf="answer.follow">
