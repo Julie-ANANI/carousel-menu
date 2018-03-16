@@ -1,5 +1,5 @@
 <app-shared-header></app-shared-header>
-<div class="columns col-gapless">
+<div id="admin-component" class="columns col-gapless">
   <div class="column col-2 col-md-12 sidebar">
     <ul>
       <li *ngIf="canShow(1)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><a [routerLink]="'/admin'" title="">Dashboard</a></li>
