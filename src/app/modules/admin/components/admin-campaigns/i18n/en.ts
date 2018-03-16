@@ -15,5 +15,9 @@ export const CAMPAIGNS = {
   'SUBMITTED': 'Submitted answers',
   'TO_COMPLETE': 'Answers to complete',
   'DRAFTS': 'Draft answers',
-  'REJECTED': 'Rejected answers'
+  'REJECTED': 'Rejected answers',
+  'DELETE_MODAL': {
+    'TITLE': 'Are you sure?',
+    'CONTENT': 'Are you sure you want to definitively delete this campaign? It may contain professionals that will be removed from the innovation.'
+  }
 };

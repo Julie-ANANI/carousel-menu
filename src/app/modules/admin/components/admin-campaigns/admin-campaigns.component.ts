@@ -17,6 +17,8 @@ export class AdminCampaignsComponent implements OnInit {
   private _innovation: Innovation;
   private _newCampaign: any;
   private _campaigns: Array<Campaign> = [];
+  private _activateModal: boolean = false;
+  private _selectCampaign: any = null;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
@@ -25,13 +27,17 @@ export class AdminCampaignsComponent implements OnInit {
 
   ngOnInit() {
     this._innovation =  this._activatedRoute.snapshot.data['innovation'];
+    this.getCampaigns();
+  }
+
+  private getCampaigns() {
     this._innovationService.campaigns(this._innovation._id)
-      .first()
-      .subscribe(campaigns => {
-          this._campaigns = campaigns.result;
-        },
-        error => this._notificationsService.error('ERROR', error.message)
-      );
+        .first()
+        .subscribe(campaigns => {
+              this._campaigns = campaigns.result;
+            },
+            error => this._notificationsService.error('ERROR', error.message)
+        );
   }
 
   public newCampaign(event: Event) {
@@ -51,7 +57,7 @@ export class AdminCampaignsComponent implements OnInit {
     };
 
     this._campaignService.create(this._newCampaign).first().subscribe((c) => {
-      this._notificationsService.success('SUCCESS', 'SUCCESS');
+      this._notificationsService.success('Campaigns', 'The campaign has been created!');
       this.campaigns.push(c);
     }, error => {
       this._notificationsService.error('ERROR', error.message);
@@ -60,6 +66,14 @@ export class AdminCampaignsComponent implements OnInit {
 
   get campaigns(): Array<any> {
     return this._campaigns;
+  }
+
+  get activateModal(): boolean {
+    return this._activateModal;
+  }
+
+  set activateModal(value: boolean) {
+    this._activateModal = value;
   }
 
   public updateStats(event: Event, campaign: Campaign) {
@@ -72,4 +86,26 @@ export class AdminCampaignsComponent implements OnInit {
         this._notificationsService.error('ERROR', error.message);
       });
   };
+
+  public deleteCampaignModal(campaign: any) {
+    this._activateModal = true;
+    this._selectCampaign = campaign;
+  }
+
+  public deleteCampaign(event: Event) {
+    event.preventDefault();
+    this._activateModal = false;
+    if(this._selectCampaign) {
+      this._campaignService.remove(this._selectCampaign._id)
+          .first()
+          .subscribe(result => {
+            this._selectCampaign = null;
+            this.getCampaigns();
+            this._notificationsService.success('Campaigns', 'The campaign and its pros. have been removed.');
+          }, error => {
+            this._notificationsService.error('ERROR', error.message);
+            this._selectCampaign = null;
+          });
+    }
+  }
 }

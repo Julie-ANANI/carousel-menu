@@ -15,5 +15,9 @@ export const CAMPAIGNS = {
   'SUBMITTED': 'Réponses en attente de validation',
   'TO_COMPLETE': 'Réponses à compléter',
   'DRAFTS': 'Brouillons',
-  'REJECTED': 'Réponses rejetées'
+  'REJECTED': 'Réponses rejetées',
+  'DELETE_MODAL': {
+    'TITLE': 'Êtes-vous sûr(e) ?',
+    'CONTENT': 'Êtes-vous sûr(e) de vouloir définitivement supprimer cette campagne ? Elle peut contenir  des professionnels qui seront supprimés de l\'innovation !'
+  }
 };
