@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AnswerService } from '../../../../../services/answer/answer.service';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
-import { NotificationsService } from 'angular2-notifications/dist';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Answer } from '../../../../../models/answer';
 import { Campaign } from '../../../../../models/campaign';
 import { Question } from '../../../../../models/question';
@@ -31,7 +31,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
               private answerService: AnswerService,
-              private notificationService: NotificationsService) { }
+              private notificationService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
@@ -73,10 +73,10 @@ export class AdminCampaignAnswersComponent implements OnInit {
     event.preventDefault();
     this.answerService.importAsCsv(this._campaign._id, file)
       .subscribe((res) => {
-        console.log(res);
-        this.notificationService.success('SUCCESS', res);
+        this.notificationService.success('ERROR.SUCCESS', res.message);
+        this.loadAnswers();
       }, (err) => {
-        this.notificationService.error('ERROR', err);
+        this.notificationService.error('ERROR.ERROR', err.message);
       });
   }
 
