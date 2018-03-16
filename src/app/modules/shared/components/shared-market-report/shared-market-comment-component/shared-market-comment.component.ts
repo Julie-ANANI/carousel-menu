@@ -21,10 +21,6 @@ export class SharedMarketCommentComponent {
 
   constructor() { }
 
-  public buildImageUrl(country: string): string {
-    return `https://res.cloudinary.com/umi/image/upload/app/${country}.png`;
-  }
-
   public seeAnswer(event: any) {
     this.modalAnswerChange.emit(event);
   }

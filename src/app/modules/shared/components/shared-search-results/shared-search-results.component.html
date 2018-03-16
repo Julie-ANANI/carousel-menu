@@ -1,9 +1,9 @@
 <div>
-  <h2 class="stats">
+  <h2 class="d-flex">
     <i class="fa fa-envelope text-warning" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
     <i class="fa fa-envelope text-success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
     <i class="fa fa-check-square-o text-success" *ngIf="request.flag==='PROS_ADDED'"></i>
-    <img *ngIf="request.country" width="30" height="20" class="flag" [src]="buildImageUrl(request.country.toUpperCase())">
+    <shared-country-flag *ngIf="request.country" [country]="request.country" [width]="30" [height]="20"></shared-country-flag>
     {{request.keywords[0].original}}
   </h2>
   <ul class="toolbar-fixed">

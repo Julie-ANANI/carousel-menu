@@ -1,11 +1,16 @@
 .flag {
-  margin: 2px 0;
-  border: 3px solid transparent;
+  margin: 0;
+  border: 2px solid transparent;
   opacity: 0.5;
 }
 
 .flag.checked {
-  border: 3px solid #FFFFFF;
+  border: 2px solid #FFFFFF;
   opacity: 1;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+}
+
+.continent {
+  display: flex;
+  flex-wrap: wrap;
 }

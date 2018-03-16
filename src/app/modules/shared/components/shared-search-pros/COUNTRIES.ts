@@ -1,7 +1,7 @@
 export const COUNTRIES = {
   europe: ["AL", "AD", "AM", "AT", "BY", "BE", "BA", "BG", "HR", "CY", "CZ", "DK", "EE", "FO", "FI", "FR", "DE", "GR",
-    "HU", "IS", "IE", "IT", "LV", "LI", "LT", "LU", "MK", "MT", "MD", "NL", "NO", "PL", "PT", "RO", "CS", "SK", "SI",
-    "ES", "SE", "CH", "UA", "UK"],
+    "HU", "IS", "IE", "IT", "LV", "LI", "LT", "LU", "MK", "MT", "MD", "NL", "NO", "PL", "PT", "RO", "SK", "SI", "ES",
+    "SE", "CH", "UA", "UK"],
   russia: ["RU"],
   americaNord: ["CA", "US"],
   asia: ["AF", "AZ", "BH", "BD", "IO", "BT", "KH", "CN", "HK", "GE", "IN", "ID", "IR", "IQ", "IL", "JP", "JO", "KZ",

@@ -1,5 +1,6 @@
 export const ERROR = {
   'ERROR': 'Erreur',
+  'SUCCESS': 'Succès',
   'CANNOT_REACH': 'Le serveur ne répond pas.',
   'INVALID_FORM': 'Le formulaire est invalide.',
   'PAGE_NOT_FOUND': 'Page introuvable',

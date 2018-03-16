@@ -73,8 +73,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
     event.preventDefault();
     this.answerService.importAsCsv(this._campaign._id, file)
       .subscribe((res) => {
-        console.log(res);
-        this.notificationService.success('ERROR.ERROR', res);
+        this.notificationService.success('ERROR.SUCCESS', res.message);
+        this.loadAnswers();
       }, (err) => {
         this.notificationService.error('ERROR.ERROR', err.message);
       });

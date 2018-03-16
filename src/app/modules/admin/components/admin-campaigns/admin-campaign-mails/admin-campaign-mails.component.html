@@ -25,7 +25,7 @@
       derniers mails envoyés
     </div>
   </div>
-  <!-- To be continued...
+
   <div *ngIf="!stats.batches || !stats.batches.length">
     Pas de batch d'emails programmé pour l'instant...
   </div>
@@ -73,7 +73,7 @@
     </div>
   </div>
 </div>
--->
+
 <!-- MODAL : Création de batch de mails -->
 <div class="modal" [ngClass]="{'active': batchModal}">
   <div class="modal-overlay" (click)="(batchModal = false) && $event.preventDefault()"></div>

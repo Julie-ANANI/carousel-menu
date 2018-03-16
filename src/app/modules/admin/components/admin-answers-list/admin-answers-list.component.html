@@ -3,7 +3,7 @@
     <tbody>
     <tr *ngFor="let answer of answers">
       <td width="40">
-        <img [src]="buildImageUrl(answer.country)" width="37" height="25">
+        <shared-country-flag [country]="answer.country"></shared-country-flag>
       </td>
       <td>
         <strong>
@@ -12,7 +12,7 @@
         <small class="email">{{answer.professional?.email || '???'}}</small>
       </td>
       <td>
-        {{answer.professional.jobTitle || "???"}}
+        {{answer.professional?.jobTitle || "???"}}
       </td>
       <td width="20">
         <span class="follower" *ngIf="answer.follow">

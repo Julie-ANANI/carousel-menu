@@ -17,12 +17,4 @@ export class AdminAnswersListComponent {
     event.preventDefault();
     this.modalAnswerChange.emit(answer);
   }
-
-  public buildImageUrl(country: any): string {
-    if (country && country.flag) {
-      return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
-    } else {
-      return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
-    }
-  }
 }
