@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AnswerService } from '../../../../../services/answer/answer.service';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
+import { NotificationsService } from 'angular2-notifications/dist';
 import { Answer } from '../../../../../models/answer';
 import { Campaign } from '../../../../../models/campaign';
 import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
-import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -28,7 +29,9 @@ export class AdminCampaignAnswersComponent implements OnInit {
   private _modalAnswer: Answer;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _campaignService: CampaignService) { }
+              private _campaignService: CampaignService,
+              private answerService: AnswerService,
+              private notificationService: NotificationsService) { }
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
@@ -63,12 +66,18 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   public exportAnswers(event: Event) {
     event.preventDefault();
-    const url = environment.apiUrl + '/campaign/' + this._campaign._id + '/exportAnswers';
-    window.open(url);
+    this.answerService.exportAsCsv(this._campaign._id);
   }
 
-  public importAnswers(event: Event) {
+  public importAnswers(file: File, event: Event) {
     event.preventDefault();
+    this.answerService.importAsCsv(this._campaign._id, file)
+      .subscribe((res) => {
+        console.log(res);
+        this.notificationService.success('SUCCESS', res);
+      }, (err) => {
+        this.notificationService.error('ERROR', err);
+      });
   }
 
   get questions() { return this._questions; }
