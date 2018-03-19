@@ -82,7 +82,6 @@ export class AdminQuestionsEditComponent implements OnInit {
   }
 
   buildOption(index: number, option?: {label?: any, positive?: boolean, color?: string}) {
-    console.log(JSON.stringify(option));
     return this._formBuilder.group({
       identifier: [index, Validators.required],
       label: this._formBuilder.group({
