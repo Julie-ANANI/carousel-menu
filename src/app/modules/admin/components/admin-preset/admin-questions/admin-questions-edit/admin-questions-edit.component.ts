@@ -77,33 +77,31 @@ export class AdminQuestionsEditComponent implements OnInit {
   }
 
   buildOptions(options: Array<any>) {
-    const optionsFormArray = this._formBuilder.array(options.length ?
-      options.map(option => this.buildOption(option)) :
-      [this.buildOption({identifier: '0'})]);
+    const optionsFormArray = this._formBuilder.array(options.map((option, idx) => this.buildOption(idx, option)));
     this.formData.setControl('options', optionsFormArray);
   }
 
-  buildOption(option: {identifier: string, label?: any, positive?: boolean, color?: string}) {
+  buildOption(index: number, option?: {label?: any, positive?: boolean, color?: string}) {
     return this._formBuilder.group({
-      identifier: [option && option.identifier || '', Validators.required],
+      identifier: [index, Validators.required],
       label: this._formBuilder.group({
-        fr: [option && option.label ? option.label.fr || '' : '', Validators.required],
-        en: [option && option.label ? option.label.en || '' : '', Validators.required]
+        fr: [option && option.label ? option.label.fr : ''],
+        en: [option && option.label ? option.label.en : '']
       }),
       positive: [option ? option.positive : false],
-      color: [option ? option.color : '', Validators.required]
+      color: [option ? option.color : '']
     })
   }
 
   addOption(event: Event): void {
     event.preventDefault();
-    this.options.push(this.buildOption({identifier: this.options.length.toString()}));
+    this.options.push(this.buildOption(this.options.length));
   }
 
   removeOption(event: Event, index: number): void {
     event.preventDefault();
-    const tmp = this.options.controls.splice(index, 1);
-    this.options.patchValue(tmp);
+    this.options.controls.splice(index, 1);
+    this.buildOptions(this.options.getRawValue());
   }
 
   get options(): FormArray { return this.formData.get('options') as FormArray; };

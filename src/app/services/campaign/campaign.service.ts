@@ -22,6 +22,12 @@ export class CampaignService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public put(campaignObj: Campaign): Observable<Campaign> {
+    return this._http.put('/campaign/' + campaignObj._id, campaignObj)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public getAll(config: any): Observable<Array<Campaign>> {
     return this._http.get('/campaign/', {params: config})
       .map((res: Response) => res.json())
