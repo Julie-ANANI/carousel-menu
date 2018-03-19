@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
@@ -15,10 +16,12 @@ import { Innovation } from '../../../../models/innovation';
 export class AdminCampaignsComponent implements OnInit {
 
   private _innovation: Innovation;
+  private _form: FormGroup;
   private _newCampaign: any;
   private _campaigns: Array<Campaign> = [];
   private _activateModal: boolean = false;
   private _selectCampaign: any = null;
+  public editCampaignName: {[propName: string]: boolean} = {};
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
@@ -27,6 +30,9 @@ export class AdminCampaignsComponent implements OnInit {
 
   ngOnInit() {
     this._innovation =  this._activatedRoute.snapshot.data['innovation'];
+    this._form = new FormGroup({
+      title: new FormControl()
+    });
     this.getCampaigns();
   }
 
@@ -108,4 +114,18 @@ export class AdminCampaignsComponent implements OnInit {
           });
     }
   }
+
+  public onSubmit(campaign: Campaign, event: Event) {
+    event.preventDefault();
+    campaign.title = this._form.get('title').value;
+    this._campaignService.put(campaign).first()
+      .subscribe(result => {
+        this._notificationsService.success('ERROR.SUCCESS', 'ERROR.SUCCESS');
+      }, error => {
+        this._notificationsService.error('ERROR', error.message);
+        this._selectCampaign = null;
+      });
+  }
+
+  public get form() { return this._form; }
 }
