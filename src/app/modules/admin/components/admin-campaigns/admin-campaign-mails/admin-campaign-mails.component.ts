@@ -114,6 +114,12 @@ export class AdminCampaignMailsComponent implements OnInit {
     computedDate.setMinutes(minutes);
     return computedDate;
   }
+  
+  public sendTestEmails() {
+    this._campaignService.sendTestEmails(this._campaign._id).first().subscribe(_ => {
+      console.log("OK");
+    });
+  }
 
   get campaign() { return this._campaign }
   get quizLinks() {return this._quizLinks }

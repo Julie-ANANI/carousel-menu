@@ -75,4 +75,10 @@ export class CampaignService {
         .map((res: Response) => res.json())
         .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public sendTestEmails(campaignId: any): Observable<any> {
+    return this._http.post(`/campaign/${campaignId}/sendTestEmails`, {isTest: true})
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.text()));
+  }
 }

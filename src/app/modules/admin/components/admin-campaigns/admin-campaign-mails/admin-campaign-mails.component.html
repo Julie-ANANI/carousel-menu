@@ -25,13 +25,17 @@
       derniers mails envoyés
     </div>
   </div>
-
   <div *ngIf="!stats.batches || !stats.batches.length">
     Pas de batch d'emails programmé pour l'instant...
   </div>
-  <button (click)="batchModal=true" class="btn btn-primary centered">
-    Programmer un nouveau batch de mails
-  </button>
+  <div class="centered-buttons">
+    <button (click)="sendTestEmails()" class="btn btn-primary">
+      Envoyer les mails de test
+    </button>
+    <button (click)="batchModal=true" class="btn btn-primary">
+      Programmer un nouveau batch de mails
+    </button>
+  </div>
   <div class="card" *ngFor="let batch of stats.batches; let batchIndex = index">
     <div class="card-header">
       <div class="card-title h5">
