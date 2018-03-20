@@ -49,11 +49,12 @@ export class AdminCampaignMailsComponent implements OnInit {
     this.newBatch = {
       campaign: this._campaign._id,
       size: 0
-    }
+    };
   }
 
-  public createNewBatch() {
-    this.newBatch.firstMail = this._computeDate(this.newBatch.date, this.newBatch.time);
+  public createNewBatch(sendNow: boolean) {
+    this.newBatch.firstMail = sendNow ? Date.now() : this._computeDate(this.newBatch.date, this.newBatch.time);
+    this.newBatch.sendNow = sendNow;
     this._campaignService.createNewBatch(this._campaign._id, this.newBatch).first().subscribe((batch: any) => {
       this.stats.batches.push(batch);
     });
