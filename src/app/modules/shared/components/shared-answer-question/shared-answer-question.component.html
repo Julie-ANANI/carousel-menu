@@ -56,7 +56,7 @@
         <li
           *ngIf="fullAnswer.answers[question.identifier][option.identifier] === true || adminMode"
           [ngClass]="{'inactive': fullAnswer.answers[question.identifier][option.identifier] != true, 'c-hand': adminMode}"
-          (click)="checkOption($event, option)">
+          (click)="checkOption(option.identifier, $event)">
           {{ optionLabel(option.identifier) }}
         </li>
       </ul>
@@ -99,21 +99,29 @@
   </div>
 
   <!-- Comment part -->
-  <i
-    class="fa fa-comment"
-    *ngIf="adminMode && question.canComment && !fullAnswer.answers[question.identifier + 'Comment']"
-    (click)="addComment($event)"></i>
-  <blockquote *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && !adminMode">
-    <p>
-      {{fullAnswer.answers[question.identifier + 'Comment']}}
-      <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
-    </p>
-  </blockquote>
-  <form *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && adminMode">
-    <textarea class="form-input" [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']" name="comment"></textarea>
-    <button type="submit" (click)="fullAnswerChange.emit(fullAnswer) && $event.preventDefault()">OK</button>
-    <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
-    <i class="fa fa-trash" (click)="deleteComment($event)"></i>
-  </form>
+  <ng-container [ngSwitch]="adminMode">
+
+    <ng-container *ngSwitchCase="false">
+      <blockquote *ngIf="fullAnswer.answers[question.identifier + 'Comment']">
+        <p>
+          {{fullAnswer.answers[question.identifier + 'Comment']}}
+          <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+        </p>
+      </blockquote>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="true">
+      <i
+        class="fa fa-comment"
+        *ngIf="!commenting"
+        (click)="addComment($event)"></i>
+      <form *ngIf="commenting">
+        <textarea class="form-input" [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']" name="comment"></textarea>
+        <button type="submit" (click)="fullAnswerChange.emit(fullAnswer) && $event.preventDefault()">OK</button>
+        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+        <i class="fa fa-trash" (click)="deleteComment($event)"></i>
+      </form>
+    </ng-container>
+  </ng-container>
 
 </div>

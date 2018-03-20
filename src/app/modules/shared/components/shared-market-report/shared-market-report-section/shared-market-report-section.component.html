@@ -86,9 +86,9 @@
             <img src="https://res.cloudinary.com/umi/image/upload/c_scale,h_15/app/star.svg" alt="" width="15" height="15" *ngIf="answer.follow" attr.tooltip-placement="top" attr.tooltip="{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}">
           </p>
 
-          <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.professional?.jobTitle || ""}}</p>
-          <p *ngIf="answer.professional && answer.professional.company" class="user-company">
-            <i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional ? answer.professional.company : ""}}
+          <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job || answer.professional?.jobTitle || ''}}</p>
+          <p *ngIf="answer.company?.name && answer.professional?.company" class="user-company">
+            <i class="fa fa-building-o" aria-hidden="true"></i> {{answer.company?.name || answer.professional?.company || ''}}
           </p>
 
           <span (click)="seeAnswer(answer) && $event.preventDefault()" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>

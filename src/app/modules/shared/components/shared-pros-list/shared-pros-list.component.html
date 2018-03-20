@@ -38,8 +38,8 @@
 
       <ng-container *ngSwitchCase="true">
         <td><input type="checkbox" [(ngModel)]="pro.isSelected"/></td>
-        <td><input type="text" size="5" [(ngModel)]="pro.language"/></td>
-        <td><shared-country-flag [country]="pro.country"></shared-country-flag></td>
+        <td><input type="text" size="5" [(ngModel)]="pro.language" alt="language" placeholder="language"/></td>
+        <td><input type="text" size="5" [(ngModel)]="pro.country" alt="country" placeholder="country"/></td>
         <td>
           <input type="text" [(ngModel)]="pro.firstName" alt="firstName" placeholder="firstName"/>
           <input type="text" [(ngModel)]="pro.lastName" alt="lastName" placeholder="lastName"/>
