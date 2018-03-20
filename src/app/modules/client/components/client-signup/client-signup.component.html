@@ -29,93 +29,95 @@
 
 <div class="modal" [ngClass]="{'active': displayEmailForm}">
   <div class="modal-overlay" (click)="(displayEmailForm = false) && $event.preventDefault()"></div>
-  <form novalidate (ngSubmit)="onSubmit($event)" [formGroup]="formData" class="modal-container signup-form">
+  <div class="modal-container signup-form">
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="(displayEmailForm = false) && $event.preventDefault()"></button>
       <h2 class="modal-title">{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}</h2>
     </div>
-    <div class="modal-body">
-      <div class="content">
-        <div class="columns">
-          <div class="column col-6">
-            <label>
-              <span>{{ 'COMMON.FIRSTNAME' | translate }}</span>
-              <input type="text" placeholder="John" formControlName="firstName">
-            </label>
-            <div class="error"
-                 *ngIf="formData.get('firstName').hasError('required') && formData.get('firstName').touched">
-              {{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}
+    <form novalidate (ngSubmit)="onSubmit($event)" [formGroup]="formData">
+      <div class="modal-body">
+        <div class="content">
+          <div class="columns">
+            <div class="column col-6">
+              <label>
+                <span>{{ 'COMMON.FIRSTNAME' | translate }}</span>
+                <input type="text" placeholder="John" formControlName="firstName">
+              </label>
+              <div class="error"
+                   *ngIf="formData.get('firstName').hasError('required') && formData.get('firstName').touched">
+                {{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}
+              </div>
             </div>
-          </div>
 
-          <div class="column col-6">
-            <label>
-              <span>{{ 'COMMON.LASTNAME' | translate }}</span>
-              <input type="text" placeholder="Doe" formControlName="lastName">
-            </label>
-            <div class="error"
-                 *ngIf="formData.get('lastName').hasError('required') && formData.get('lastName').touched">
-              {{ 'COMMON.REQUIRED.LASTNAME' | translate }}
+            <div class="column col-6">
+              <label>
+                <span>{{ 'COMMON.LASTNAME' | translate }}</span>
+                <input type="text" placeholder="Doe" formControlName="lastName">
+              </label>
+              <div class="error"
+                   *ngIf="formData.get('lastName').hasError('required') && formData.get('lastName').touched">
+                {{ 'COMMON.REQUIRED.LASTNAME' | translate }}
+              </div>
             </div>
-          </div>
 
-          <div class="column col-6">
-            <label>
-              <span>{{ 'COMMON.COMPANY' | translate }}</span>
-              <input type="text" placeholder="{{domainCompanyName}}" formControlName="companyName">
-            </label>
-            <div class="error"
-                 *ngIf="formData.get('companyName').hasError('required') && formData.get('companyName').touched">
-              {{ 'COMMON.REQUIRED.COMPANY' | translate }}
+            <div class="column col-6">
+              <label>
+                <span>{{ 'COMMON.COMPANY' | translate }}</span>
+                <input type="text" placeholder="{{domainCompanyName}}" formControlName="companyName">
+              </label>
+              <div class="error"
+                   *ngIf="formData.get('companyName').hasError('required') && formData.get('companyName').touched">
+                {{ 'COMMON.REQUIRED.COMPANY' | translate }}
+              </div>
             </div>
-          </div>
 
-          <div class="column col-6">
-            <label>
-              <span>{{ 'COMMON.JOBTITLE' | translate }}</span>
-              <input type="text" [placeholder]="'SIGN_UP.EXAMPLE_JOBTITLE' | translate" formControlName="jobTitle">
-            </label>
-            <div class="error"
-                 *ngIf="formData.get('jobTitle').hasError('required') && formData.get('jobTitle').touched">
-              {{ 'COMMON.REQUIRED.JOBTITLE' | translate }}
+            <div class="column col-6">
+              <label>
+                <span>{{ 'COMMON.JOBTITLE' | translate }}</span>
+                <input type="text" [placeholder]="'SIGN_UP.EXAMPLE_JOBTITLE' | translate" formControlName="jobTitle">
+              </label>
+              <div class="error"
+                   *ngIf="formData.get('jobTitle').hasError('required') && formData.get('jobTitle').touched">
+                {{ 'COMMON.REQUIRED.JOBTITLE' | translate }}
+              </div>
             </div>
-          </div>
 
-          <div class="column col-6">
-            <label>
-              <span>{{ 'COMMON.EMAIL' | translate }}</span>
-              <input type="email" placeholder="john.doe@gmail.com" formControlName="email">
-            </label>
-            <div class="error"
-                 *ngIf="formData.get('email').hasError('required') && formData.get('email').touched">
-              {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+            <div class="column col-6">
+              <label>
+                <span>{{ 'COMMON.EMAIL' | translate }}</span>
+                <input type="email" placeholder="john.doe@gmail.com" formControlName="email">
+              </label>
+              <div class="error"
+                   *ngIf="formData.get('email').hasError('required') && formData.get('email').touched">
+                {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+              </div>
+              <div class="error"
+                   *ngIf="formData.get('email').hasError('email') && formData.get('email').touched">
+                {{ 'COMMON.INVALID.EMAIL' | translate }}
+              </div>
             </div>
-            <div class="error"
-                 *ngIf="formData.get('email').hasError('email') && formData.get('email').touched">
-              {{ 'COMMON.INVALID.EMAIL' | translate }}
-            </div>
-          </div>
 
-          <div class="column col-6">
-            <label>
-              <span>{{ 'COMMON.PASSWORD' | translate }}</span>
-              <input type="password" placeholder="••••••••••" formControlName="password">
-            </label>
-            <div class="error"
-                 *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
-              {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
-            </div>
-            <div class="error"
-                 *ngIf="formData.get('password').hasError('minlength') && formData.get('password').touched">
-              {{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}
+            <div class="column col-6">
+              <label>
+                <span>{{ 'COMMON.PASSWORD' | translate }}</span>
+                <input type="password" placeholder="••••••••••" formControlName="password">
+              </label>
+              <div class="error"
+                   *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
+                {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+              </div>
+              <div class="error"
+                   *ngIf="formData.get('password').hasError('minlength') && formData.get('password').touched">
+                {{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <p>{{'SIGN_UP.SIGNUP_MESSAGE' | translate}}</p>
-      <button type="submit" class="btn btn-primary submit-button" [disabled]="formData.invalid">{{ 'SIGN_UP.SIGN_UP_BTN' | translate }}</button>
-    </div>
-  </form>
+      <div class="modal-footer">
+        <p>{{'SIGN_UP.SIGNUP_MESSAGE' | translate}}</p>
+        <button type="submit" class="btn btn-primary submit-button" [disabled]="formData.invalid">{{ 'SIGN_UP.SIGN_UP_BTN' | translate }}</button>
+      </div>
+    </form>
+  </div>
 </div>
