@@ -75,6 +75,44 @@ export class SharedSearchHistoryComponent implements OnInit {
     request.show = !request.show;
   };
 
+  public stopRequest (requestId: string) {
+    this._searchService.stopRequest(requestId).first().subscribe(res => {
+      this._requests[this._getRequestIndex(requestId, this._requests)].status = 'DONE';
+    });
+  }
+
+  public stopChildRequest (requestId: string, motherRequestId: string) {
+    this._searchService.stopRequest(requestId).first().subscribe(res => {
+      const motherRequestIndex = this._getRequestIndex(motherRequestId, this._requests);
+      const childRequestIndex = this._getRequestIndex(requestId, this._requests[motherRequestIndex].request);
+      this._requests[motherRequestIndex].request[childRequestIndex].status = 'DONE';
+    });
+  }
+
+  public cancelRequest (requestId: string, cancel: boolean) {
+    const newStatus = cancel ? 'CANCELED' : 'QUEUED';
+    this._searchService.cancelRequest(requestId, cancel).first().subscribe(res => {
+      this._requests[this._getRequestIndex(requestId, this._requests)].status = newStatus;
+    });
+  }
+
+  public cancelChildRequest (requestId: string, motherRequestId: string, cancel: boolean) {
+    const newStatus = cancel ? 'CANCELED' : 'QUEUED';
+    this._searchService.cancelRequest(requestId, cancel).first().subscribe(res => {
+      const motherRequestIndex = this._getRequestIndex(motherRequestId, this._requests);
+      const childRequestIndex = this._getRequestIndex(requestId, this._requests[motherRequestIndex].request);
+      this._requests[motherRequestIndex].request[childRequestIndex].status = newStatus;
+    });
+  }
+
+  private _getRequestIndex(requestId: string, array: Array<any>): number {
+    for (const request of array) {
+      if (requestId === request._id) {
+        return array.indexOf(request);
+      }
+    }
+  }
+
   get requests(): Array<any> { return this._requests; }
   get total(): number { return this._total; }
   get config(): any { return this._config; }

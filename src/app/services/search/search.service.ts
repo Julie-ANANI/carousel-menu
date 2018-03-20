@@ -30,6 +30,18 @@ export class SearchService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public stopRequest(requestId: string): Observable<any> {
+    return this._http.get('/search/stop', {params: {id: requestId}})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public cancelRequest(requestId: string, cancel: boolean): Observable<any> {
+    return this._http.get('/search/cancel', {params: {id: requestId, cancel: cancel}})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public getPros(config: any, requestId: string): Observable<any> {
     return this._http.get('/search/queryRessourceAPI/request/' + requestId + '/person', {params:config})
       .map((res: Response) => res.json())
