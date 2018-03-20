@@ -56,7 +56,7 @@
         <li
           *ngIf="fullAnswer.answers[question.identifier][option.identifier] === true || adminMode"
           [ngClass]="{'inactive': fullAnswer.answers[question.identifier][option.identifier] != true, 'c-hand': adminMode}"
-          (click)="checkOption($event, option)">
+          (click)="checkOption(option.identifier, $event)">
           {{ optionLabel(option.identifier) }}
         </li>
       </ul>

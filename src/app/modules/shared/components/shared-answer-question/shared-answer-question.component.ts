@@ -46,8 +46,8 @@ export class SharedAnswerQuestionComponent implements OnInit {
     }
   }
 
-  checkOption(option: any) {
-    this.fullAnswer.answers[this.question.identifier][option.identifier] = !this.fullAnswer.answers[this.question.identifier][option.identifier];
+  checkOption(id: string, event: Event) {
+    this.fullAnswer.answers[this.question.identifier][id] = !this.fullAnswer.answers[this.question.identifier][id];
     this.fullAnswerChange.emit(this.fullAnswer);
   }
 
