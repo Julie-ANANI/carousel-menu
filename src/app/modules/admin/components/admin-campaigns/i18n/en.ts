@@ -11,6 +11,7 @@ export const CAMPAIGNS = {
   'EXPORT-ANSWERS': 'Export answers',
   'IMPORT-ANSWERS': 'Import answers',
   'EMAIL_CONFIDENCE': 'Email confidence',
+  'ACTIONS': 'Actions',
   'VALIDATED': 'Validated answers',
   'SUBMITTED': 'Submitted answers',
   'TO_COMPLETE': 'Answers to complete',
