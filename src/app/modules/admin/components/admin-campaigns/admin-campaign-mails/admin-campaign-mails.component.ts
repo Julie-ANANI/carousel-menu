@@ -20,7 +20,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   public lastMail: number = 0;
   public batchModal: boolean = false;
   public newBatch: any = {};
-  public dateformat: string = "le dd/MM/yyyy à hh:mm";
+  public dateformat: string = "le dd/MM/yyyy à HH:mm";
   public selectedBatchIdToBeDeleted: string = null;
   public editDates: Array<any>;
 
