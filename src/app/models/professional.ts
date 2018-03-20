@@ -1,5 +1,7 @@
 export interface Professional {
   readonly _id: string;
+  readonly firstName: string;
+  readonly lastName: string;
   readonly email: string;
-  isSelected: boolean;
+  readonly profileUrl: string;
 }

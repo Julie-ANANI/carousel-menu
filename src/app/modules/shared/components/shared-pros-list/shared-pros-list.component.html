@@ -12,6 +12,7 @@
       <th *ngIf="!requestId"><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'company'">{{ 'COMMON.COMPANY' | translate }}</sq-sort></th>
       <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'email'">{{ 'COMMON.EMAIL' | translate }}</sq-sort></th>
       <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'emailConfidence'">{{ 'CAMPAIGNS.EMAIL_CONFIDENCE' | translate }}</sq-sort></th>
+      <th>{{ 'CAMPAIGNS.ACTIONS' | translate }}</th>
     </tr>
     <tr>
       <th></th>
@@ -26,27 +27,68 @@
       <th *ngIf="requestId"><sqFilter [config]="config" (configChange)="loadPros($event)" prop="company.name"></sqFilter></th>
       <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="email"></sqFilter></th>
       <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="emailConfidence"></sqFilter></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
 
-  <tr *ngFor="let pro of pros" (click)="selectPro(pro)" [ngClass]="{'active': pro.isSelected}">
-    <td> <input type="checkbox" [(ngModel)]="pro.isSelected"/></td>
-    <td>{{ pro.language }}</td>
-    <td><shared-country-flag [country]="pro.country"></shared-country-flag></td>
-    <td>
-      <a *ngIf="pro.profileUrl" [href]="pro.profileUrl" target="_blank"><i class="fa fa-linkedin"></i></a>
-      <span class="title">{{ pro.firstName }} {{ pro.lastName }}</span>
-    </td>
-    <td>{{ pro.jobTitle }}</td>
-    <td>
-      <span *ngIf="requestId">{{ pro.company.name }}</span>
-      <span *ngIf="!requestId">{{ pro.company }}</span>
-    </td>
-    <td>
-      <span class="metas"><a [href]="'mailto:' + pro.email">{{ pro.email }}</a></span>
-    </td>
-    <td><progress class="progress tooltip" [attr.data-tooltip]="pro.emailConfidence || 0 + '%'" [value]="pro.emailConfidence || 0" max="100"></progress></td>
+  <tr *ngFor="let pro of pros" [ngClass]="{'active': pro.isSelected}">
+
+    <ng-container [ngSwitch]="editUser[pro._id]">
+
+      <ng-container *ngSwitchCase="true">
+        <td><input type="checkbox" [(ngModel)]="pro.isSelected"/></td>
+        <td><input type="text" size="5" [(ngModel)]="pro.language"/></td>
+        <td><shared-country-flag [country]="pro.country"></shared-country-flag></td>
+        <td>
+          <input type="text" [(ngModel)]="pro.firstName" alt="firstName" placeholder="firstName"/>
+          <input type="text" [(ngModel)]="pro.lastName" alt="lastName" placeholder="lastName"/>
+          <input type="text" [(ngModel)]="pro.profileUrl" alt="profileUrl" placeholder="profileUrl"/>
+        </td>
+        <td><input type="text" [(ngModel)]="pro.jobTitle" alt="jobTitle" placeholder="jobTitle"/></td>
+        <td>
+          <span *ngIf="requestId">
+            <input type="text" [(ngModel)]="pro.company.name" alt="Company" placeholder="Company"/>
+          </span>
+          <span *ngIf="!requestId">
+            <input type="text" [(ngModel)]="pro.company" alt="Company" placeholder="Company"/>
+          </span>
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="pro.email" alt="email" placeholder="email"/>
+        </td>
+        <td><progress class="progress tooltip" [attr.data-tooltip]="pro.emailConfidence || 0 + '%'" [value]="pro.emailConfidence || 0" max="100"></progress></td>
+        <td>
+          <button class="btn btn-action" (click)="editUser[pro._id] = false"><i class="fa fa-times"></i></button>
+          <button class="btn btn-action" (click)="updatePro(pro, $event)"><i class="fa fa-save"></i></button>
+        </td>
+      </ng-container>
+
+      <ng-container *ngSwitchDefault>
+        <ng-container (click)="selectPro(pro)">
+          <td><input type="checkbox" [(ngModel)]="pro.isSelected"/></td>
+          <td>{{ pro.language }}</td>
+          <td><shared-country-flag [country]="pro.country"></shared-country-flag></td>
+          <td>
+            <a *ngIf="pro.profileUrl" [href]="pro.profileUrl" target="_blank"><i class="fa fa-linkedin"></i></a>
+            <span class="title">{{ pro.firstName }} {{ pro.lastName }}</span>
+          </td>
+          <td>{{ pro.jobTitle }}</td>
+          <td>
+            <span *ngIf="requestId">{{ pro.company.name }}</span>
+            <span *ngIf="!requestId">{{ pro.company }}</span>
+          </td>
+          <td>
+            <span class="metas"><a [href]="'mailto:' + pro.email">{{ pro.email }}</a></span>
+          </td>
+          <td><progress class="progress tooltip" [attr.data-tooltip]="pro.emailConfidence || 0 + '%'" [value]="pro.emailConfidence || 0" max="100"></progress></td>
+        </ng-container>
+        <td>
+          <button class="btn btn-action" (click)="editUser[pro._id] = true"><i class="fa fa-edit"></i></button>
+        </td>
+      </ng-container>
+
+    </ng-container>
   </tr>
   </tbody>
   <tfoot>
