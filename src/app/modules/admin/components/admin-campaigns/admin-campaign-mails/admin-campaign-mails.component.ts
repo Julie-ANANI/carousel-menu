@@ -121,6 +121,7 @@ export class AdminCampaignMailsComponent implements OnInit {
     });
   }
 
+  get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""); }
   get campaign() { return this._campaign }
   get quizLinks() {return this._quizLinks }
   get stats() {return this._stats }

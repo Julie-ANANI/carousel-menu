@@ -28,11 +28,14 @@
   <div *ngIf="!stats.batches || !stats.batches.length">
     Pas de batch d'emails programmé pour l'instant...
   </div>
+  <p *ngIf="!quizGenerated" class="text-center text-error">
+    La quiz n'a pas été généré pour cette innovation, il doit y avoir un quiz avant de faire un envoi d'emails !
+  </p>
   <div class="centered-buttons">
     <button (click)="sendTestEmails()" class="btn btn-primary">
       Envoyer les mails de test
     </button>
-    <button (click)="batchModal=true" class="btn btn-primary">
+    <button (click)="batchModal=true" class="btn btn-primary" [disabled]="!quizGenerated">
       Programmer un nouveau batch de mails
     </button>
   </div>
