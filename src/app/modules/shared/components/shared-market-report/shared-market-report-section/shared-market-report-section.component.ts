@@ -115,14 +115,6 @@ export class SharedMarketReportSectionComponent implements OnInit {
     return `${Math.round(value / this._maxCountScore * 100)}%`;
   }
 
-  public getFlag(country: any): string {
-    if (country && country.flag) {
-      return `https://res.cloudinary.com/umi/image/upload/app/${country.flag}.png`;
-    } else {
-      return 'https://res.cloudinary.com/umi/image/upload/app/00.png';
-    }
-  }
-
   get readonly(): boolean { return this._readonly; }
   get showDetails(): boolean { return this._showDetails; }
   get innoid(): string { return this._innoid; }

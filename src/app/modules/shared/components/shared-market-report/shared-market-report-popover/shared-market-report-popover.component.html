@@ -6,7 +6,7 @@
 
         <div class="user-name">
           <div class="user-flag">
-            <shared-country-flag [country]="answer.country" [width]="23" [height]="16"></shared-country-flag>
+            <country-flag [country]="answer.country" [width]="23" [height]="16"></country-flag>
           </div>
           <a href="{{answer.professional.profileUrl}}" target="_blank" *ngIf="answer.professional.profileUrl">
             {{answer.professional.firstName}} {{answer.professional.lastName}}
@@ -20,7 +20,7 @@
         <p *ngIf="answer.professional && answer.professional.company" class="user-company"><i class="fa fa-building-o" aria-hidden="true"></i> {{answer.professional.company}}</p>
 
         <span (click)="seeAnswer($event, answer)" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
-        <a href="mailto: {{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ''}}</a>
+        <a href="mailto:{{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ''}}</a>
       </li>
     </ul>
   </div>

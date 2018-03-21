@@ -12,7 +12,7 @@ import { Ng2FileDropModule } from 'ng2-file-drop';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
-//Components
+// Components
 import { SharedNotFoundComponent } from './components/shared-not-found/shared-not-found.component';
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
@@ -52,14 +52,13 @@ import { SharedProsListComponent } from './components/shared-pros-list/shared-pr
 import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
-import { DomSanitizerPipe } from './../../pipes/DomSanitizer';
+import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
 import { SharedFooterComponent } from './components/shared-footer/shared-footer.component';
-import { SharedCountryFlagComponent } from './components/shared-country-flag/shared-country-flag.component';
 
-//Directives
+// Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
-import { SqResetDirective } from '../../directives/smart-query/sqReset.directive';
+import { CountryFlagComponent } from '../../directives/country-flag/country-flag.component';
 
 @NgModule({
   imports: [
@@ -79,7 +78,7 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
   declarations: [
     // Directives
     // FormErrorDirective,
-    SqResetDirective,
+    CountryFlagComponent,
     InputListComponent,
 
     SharedNotFoundComponent,
@@ -123,8 +122,7 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     SharedSmartSelectInputComponent,
     SharedMarketReportExampleComponent,
     DomSanitizerPipe,
-    SharedFooterComponent,
-    SharedCountryFlagComponent
+    SharedFooterComponent
   ],
   exports: [
     // Modules
@@ -135,16 +133,10 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     Ng2PageScrollModule,
 
     // Directives
-    // FormErrorDirective,
-    SqResetDirective,
+    CountryFlagComponent,
     InputListComponent,
 
     // Components
-    // DynamicFormComponent,
-    // DynamicFormQuestionComponent,
-    // DynamicFormContentComponent,
-    // DynamicFormHtmlComponent,
-
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
@@ -171,8 +163,7 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     SharedProsListComponent,
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
-    SharedFooterComponent,
-    SharedCountryFlagComponent
+    SharedFooterComponent
   ]
 })
 export class SharedModule { }

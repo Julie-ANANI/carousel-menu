@@ -73,8 +73,7 @@
       <!--======= Liste des pros =======-->
       <div *ngIf="info.id === 'professionals'" class="prosList">
         <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
-          <img [src]="getFlag(answer.country)"
-               alt="" width="37" height="25" class="user-flag">
+          <country-flag [country]="answer.country" [width]="37" [height]="25" class="user-flag"></country-flag>
 
           <p class="user-name" *ngIf="answer.professional && answer.professional.profileUrl">
             <a target="_blank">
@@ -92,7 +91,7 @@
           </p>
 
           <span (click)="seeAnswer(answer) && $event.preventDefault()" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
-          <a href="mailto: {{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ""}}</a>
+          <a href="mailto:{{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ""}}</a>
         </div>
       </div>
 
