@@ -16,8 +16,8 @@
     </tr>
     <tr>
       <th></th>
-      <th></th>
-      <th></th>
+      <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="language"></sqFilter></th>
+      <th><sqFilter [config]="config" (configChange)="loadPros($event)" prop="country"></sqFilter></th>
       <th>
         <sqFilter [config]="config" (configChange)="loadPros($event)" prop="firstName"></sqFilter>
         <sqFilter [config]="config" (configChange)="loadPros($event)" prop="lastName"></sqFilter>
