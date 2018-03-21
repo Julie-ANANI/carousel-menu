@@ -52,8 +52,11 @@ import { SharedProsListComponent } from './components/shared-pros-list/shared-pr
 import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
-import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
 import { SharedFooterComponent } from './components/shared-footer/shared-footer.component';
+
+// Pipes
+import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
+import { MultilingPipe } from '../../pipes/multiling.pipe';
 
 // Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
@@ -122,6 +125,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedSmartSelectInputComponent,
     SharedMarketReportExampleComponent,
     DomSanitizerPipe,
+    MultilingPipe,
     SharedFooterComponent
   ],
   exports: [

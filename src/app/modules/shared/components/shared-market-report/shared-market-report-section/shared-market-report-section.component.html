@@ -28,13 +28,6 @@
       </div>
     </div>
 
-    <!--======= Map du monde =======-->
-    <div class="bloc" *ngIf="info.id === 'professionals'">
-      <div class="map centered" width="684" height="339">
-        <world-map [countries]="info.data" [color]="'#0B90C6'"></world-map>
-      </div>
-    </div>
-
     <!--======= Scores =======-->
     <div class="bloc" *ngIf="info.controlType === 'scale'">
       <div class="column-graph flex-container">
@@ -69,31 +62,6 @@
                     SECTION DETAILS
     **************************************************-->
     <div class="bloc details" *ngIf="showDetails">
-
-      <!--======= Liste des pros =======-->
-      <div *ngIf="info.id === 'professionals'" class="prosList">
-        <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
-          <country-flag [country]="answer.country" [width]="37" [height]="25" class="user-flag"></country-flag>
-
-          <p class="user-name" *ngIf="answer.professional && answer.professional.profileUrl">
-            <a target="_blank">
-              {{answer.professional.firstName}} {{answer.professional.lastName}}
-            </a>
-          </p>
-          <p class="user-name" *ngIf="answer.professional && !answer.professional.profileUrl">
-            {{answer.professional.firstName}} {{answer.professional.lastName}}
-            <img src="https://res.cloudinary.com/umi/image/upload/c_scale,h_15/app/star.svg" alt="" width="15" height="15" *ngIf="answer.follow" attr.tooltip-placement="top" attr.tooltip="{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}">
-          </p>
-
-          <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job || answer.professional?.jobTitle || ''}}</p>
-          <p *ngIf="answer.company?.name && answer.professional?.company" class="user-company">
-            <i class="fa fa-building-o" aria-hidden="true"></i> {{answer.company?.name || answer.professional?.company || ''}}
-          </p>
-
-          <span (click)="seeAnswer(answer) && $event.preventDefault()" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
-          <a href="mailto:{{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ""}}</a>
-        </div>
-      </div>
 
       <!--======= Bar Chart =======-->
       <bar-chart
