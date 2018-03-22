@@ -55,14 +55,6 @@
   <div class="cssHack" *ngIf="adminMode"></div>
   <div class="flex-container">
     <div class="content">
-      <!-- La carte du monde et la liste des pros -->
-      <market-report-section
-        [info]="infographics.professionals"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!adminMode"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
 
       <!-- *********************************************************
             World Map and professionals cards
@@ -70,6 +62,12 @@
       <section id="professionals">
         <h2>{{ infographics.professionals.title[lang] }}</h2>
         <div class="white-frame">
+
+          <app-question-conclusion
+            [info]="infographics.professionals"
+            [innovationId]="project._id"
+          ></app-question-conclusion>
+
           <div class="bloc">
             <div class="map centered" width="684" height="339">
               <world-map [countries]="infographics.professionals.data" [color]="'#0B90C6'"></world-map>
