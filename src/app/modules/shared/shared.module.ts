@@ -17,7 +17,6 @@ import { SharedNotFoundComponent } from './components/shared-not-found/shared-no
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
 import { SharedLoaderComponent } from './components/shared-loader/shared-loader.component';
-import { SharedHeaderComponent } from './components/shared-header/shared-header.component';
 import { SharedMarketReportComponent } from './components/shared-market-report/shared-market-report/shared-market-report.component';
 import { SharedBarChartComponent } from './components/shared-bar-chart-component/shared-bar-chart.component';
 import { SharedMarketItemComponent } from './components/shared-market-report/shared-market-item-component/shared-market-item.component';
@@ -52,7 +51,6 @@ import { SharedProsListComponent } from './components/shared-pros-list/shared-pr
 import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
-import { SharedFooterComponent } from './components/shared-footer/shared-footer.component';
 import { QuestionConclusionComponent } from './components/shared-market-report/question-conclusion/question-conclusion.component';
 
 // Pipes
@@ -89,7 +87,6 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
-    SharedHeaderComponent,
     SharedMarketReportComponent,
     SharedBarChartComponent,
     SharedMarketItemComponent,
@@ -127,7 +124,6 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedMarketReportExampleComponent,
     DomSanitizerPipe,
     MultilingPipe,
-    SharedFooterComponent,
     QuestionConclusionComponent
   ],
   exports: [
@@ -147,7 +143,6 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
-    SharedHeaderComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedMarketReportComponent,
@@ -169,7 +164,6 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedProsListComponent,
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
-    SharedFooterComponent,
     QuestionConclusionComponent
   ]
 })

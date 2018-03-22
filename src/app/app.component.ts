@@ -12,7 +12,9 @@ import 'rxjs/add/operator/pairwise';
   styleUrls: ['./app.component.scss'],
   template: '<simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>' +
   '<progress class="progress" max="100" *ngIf="displayLoader"></progress>' +
-  '<router-outlet></router-outlet>'
+  '<app-header></app-header>' +
+  '<router-outlet></router-outlet>' +
+  '<app-footer></app-footer>'
 })
 export class AppComponent implements OnInit, OnDestroy {
 
