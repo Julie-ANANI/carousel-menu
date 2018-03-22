@@ -19,9 +19,19 @@
   <!-- Connecté -->
   <section class="navbar-section" *ngIf="authService.isAuthenticated">
     <!--<a href="http://help.umi.us" target="_blank" class="btn btn-link">{{ 'COMMON.HELP' | translate }}</a>-->
-    <a [routerLink]="'/sample'" routerLinkActive="active" class="btn btn-link" *ngIf="authService.adminLevel > 0">Example</a>
-    <a [routerLink]="'/projects'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
-    <a [routerLink]="'/account'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
-    <a [routerLink]="'/admin'" routerLinkActive="active" class="btn btn-link" *ngIf="authService.adminLevel > 0 && authService.emailVerified === true">{{ 'COMMON.ADMIN' | translate }}</a>
+    <a *ngIf="!backOffice && authService.adminLevel > 0" [routerLink]="'/sample'" routerLinkActive="active" class="btn btn-link">Example</a>
+    <a *ngIf="!backOffice" [routerLink]="'/projects'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
+    <a *ngIf="!backOffice" [routerLink]="'/account'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
+    <a *ngIf="!backOffice && canShow(1)" [routerLink]="'/admin'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.ADMIN' | translate }}</a>
+
+    <a class="btn btn-link" *ngIf="canShow(1) && backOffice" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="'/admin'" title="">Dashboard</a>
+    <a class="btn btn-link" *ngIf="canShow(1) && backOffice" routerLinkActive="active" [routerLink]="'/admin/users'" title="">{{ 'COMMON.USERS' | translate }}</a>
+    <a class="btn btn-link" *ngIf="canShow(3) && backOffice" routerLinkActive="active" [routerLink]="'/admin/projects'" title="">{{ 'COMMON.PROJECTS' | translate }}</a>
+    <a class="btn btn-link" *ngIf="canShow(3) && backOffice" routerLinkActive="active" [routerLink]="'/admin/emails'" title="">Emails</a>
+    <!-- TODO <a class="btn btn-link" *ngIf="canShow(3) && backOffice" routerLinkActive="active" [routerLink]="'/admin/index'" title="">Index</a>-->
+    <!-- TODO <a class="btn btn-link" *ngIf="canShow(3) && backOffice" routerLinkActive="active" [routerLink]="'/admin/patents'" title="">{{ 'COMMON.PATENTS' | translate }}</a>-->
+    <a class="btn btn-link" *ngIf="canShow(3) && backOffice" routerLinkActive="active" [routerLink]="'/admin/presets'" title="">{{ 'COMMON.PRESETS' | translate }}</a>
+    <a class="btn btn-link" *ngIf="canShow(3) && backOffice" routerLinkActive="active" [routerLink]="'/admin/search'" title="">{{ 'COMMON.SEARCH' | translate }}</a>
+    <a class="btn btn-link" *ngIf="canShow(3) && backOffice" routerLinkActive="active" [routerLink]="'/projects'" title="">{{ 'COMMON.CLIENT_SIDE' | translate }}</a>
   </section>
 </header>

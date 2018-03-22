@@ -93,6 +93,7 @@ export const COMMON = {
   'DISCOVER': 'Découvrir',
   'PRESET': 'Configuration',
   'PRESETS': 'Configurations',
+  'CLIENT_SIDE': 'Interface Client',
 
   'SORT': {
     'BY_NAME': 'Nom',
