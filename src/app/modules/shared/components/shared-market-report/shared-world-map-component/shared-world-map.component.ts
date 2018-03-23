@@ -1,7 +1,7 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Component, Input, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'world-map',
@@ -9,23 +9,24 @@ import { Component, OnInit, Input, ElementRef } from '@angular/core';
   styleUrls: ['shared-world-map.component.scss']
 })
 
-export class SharedWorldMapComponent implements OnInit {
+export class SharedWorldMapComponent {
 
-  @Input() public countries: any;
-  @Input() public color: any;
+  @Input() public color: string;
+  @Input() set countries(value: Array<string>) {
+    if (Array.isArray(value) && value.length > 0) {
+      value.forEach((country) => {
+        const country_elems = this._elem.nativeElement.getElementsByClassName(country);
+        if (country_elems && country_elems.length) {
+          Array.prototype.forEach.call(country_elems, (country_el: HTMLElement) => {
+            country_el.style.fill = this.color || 'orange';
+          });
+        } else {
+          console.log(`This country is nowhere to be found in the svg map ${country}`);
+        }
+      });
+    }
+  }
 
   constructor(private _elem: ElementRef) { }
 
-  ngOnInit() {
-      if (this.countries && this.countries.length > 0) {
-        for (let i = 0; i < this.countries.length; i++) {
-          if (this._elem.nativeElement.getElementsByClassName(this.countries[i].notation).length) {
-            this._elem.nativeElement.getElementsByClassName(this.countries[i].notation)[0].style.fill = this.color || 'orange';
-          } else {
-            console.log(`This country is nowhere to be found in the svg map ${this.countries[i].notation}`);
-          }
-        }
-      }
-  }
-
-};
+}
