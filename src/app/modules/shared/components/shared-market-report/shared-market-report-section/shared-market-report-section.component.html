@@ -2,38 +2,11 @@
   <h2>{{ info.title[lang] }}</h2>
 
   <div class="white-frame">
-    <div class="flex-container">
-      <!--======= Pie Chart =======-->
-      <market-report-piechart
-        *ngIf="info.controlType === 'radio'"
-        [pieChartData]="chartValues"
-        [percentage]="info.percentage"
-      ></market-report-piechart>
-      <!--======= ou Encadré Bleu =======-->
-      <market-report-bluesquare
-        *ngIf="info.controlType != 'radio'"
-        [numberFocus]="info.numberFocus"
-        [percentage]="info.percentage"
-        [subtitle]="info.subtitle ? info.subtitle[lang] : ''"
-        [id]="info.id"
-      ></market-report-bluesquare>
 
-      <!--======= Conclusion =======-->
-      <div class="umi-synthesis">
-        <p class="title">{{ info.label[lang] }}</p>
-        <text-zone [elementId]="conclusionId"
-                   [readonly]="readonly"
-                   [data]="info.conclusion || ''"
-                   (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
-      </div>
-    </div>
-
-    <!--======= Map du monde =======-->
-    <div class="bloc" *ngIf="info.id === 'professionals'">
-      <div class="map centered" width="684" height="339">
-        <world-map [countries]="info.data" [color]="'#0B90C6'"></world-map>
-      </div>
-    </div>
+    <app-question-conclusion
+      [info]="info"
+      [innovationId]="innoid"
+    ></app-question-conclusion>
 
     <!--======= Scores =======-->
     <div class="bloc" *ngIf="info.controlType === 'scale'">
@@ -69,32 +42,6 @@
                     SECTION DETAILS
     **************************************************-->
     <div class="bloc details" *ngIf="showDetails">
-
-      <!--======= Liste des pros =======-->
-      <div *ngIf="info.id === 'professionals'" class="prosList">
-        <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
-          <img [src]="getFlag(answer.country)"
-               alt="" width="37" height="25" class="user-flag">
-
-          <p class="user-name" *ngIf="answer.professional && answer.professional.profileUrl">
-            <a target="_blank">
-              {{answer.professional.firstName}} {{answer.professional.lastName}}
-            </a>
-          </p>
-          <p class="user-name" *ngIf="answer.professional && !answer.professional.profileUrl">
-            {{answer.professional.firstName}} {{answer.professional.lastName}}
-            <img src="https://res.cloudinary.com/umi/image/upload/c_scale,h_15/app/star.svg" alt="" width="15" height="15" *ngIf="answer.follow" attr.tooltip-placement="top" attr.tooltip="{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}">
-          </p>
-
-          <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job || answer.professional?.jobTitle || ''}}</p>
-          <p *ngIf="answer.company?.name && answer.professional?.company" class="user-company">
-            <i class="fa fa-building-o" aria-hidden="true"></i> {{answer.company?.name || answer.professional?.company || ''}}
-          </p>
-
-          <span (click)="seeAnswer(answer) && $event.preventDefault()" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
-          <a href="mailto: {{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ""}}</a>
-        </div>
-      </div>
 
       <!--======= Bar Chart =======-->
       <bar-chart

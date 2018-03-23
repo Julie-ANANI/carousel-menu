@@ -70,7 +70,7 @@
               <div *ngFor="let country of countries[continent.key]" class="flag"
                    (click)="checkCountry(country)"
                    [ngClass]="{'checked': params.countries.indexOf(country) > -1}">
-                <shared-country-flag [country]="country"></shared-country-flag>
+                <country-flag [country]="country"></country-flag>
               </div>
           </div>
         </div>

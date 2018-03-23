@@ -22,7 +22,7 @@
           </h3>
           <h6 *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle">
             <i class="fa fa-address-card" aria-hidden="true"></i>
-            {{modalAnswer.job || modalAnswer.professional?.firstName}}
+            {{modalAnswer.job || modalAnswer.professional?.jobTitle}}
           </h6>
           <h6 *ngIf="modalAnswer.company?.name || modalAnswer.professional?.company">
             <i class="fa fa-building-o" aria-hidden="true"></i>
@@ -54,7 +54,7 @@
           <a href="mailto: {{modalAnswer.professional?.email}}">{{modalAnswer.professional?.email}}</a><br>
           {{ 'MARKET_REPORT.POPUP.RECEIVED' | translate }} {{modalAnswer.date | date : dateFormat}} à {{modalAnswer.date | date:'HH:mm'}}<br>
           <div class="d-flex">
-            <shared-country-flag [country]="modalAnswer.country" [width]="30" [height]="20"></shared-country-flag>
+            <country-flag [country]="modalAnswer.country" [width]="30" [height]="20"></country-flag>
             {{(modalAnswer.country) ? modalAnswer.country.name : ""}}
             <div class="popover popover-bottom">
               <i class="fa fa-pencil"></i>

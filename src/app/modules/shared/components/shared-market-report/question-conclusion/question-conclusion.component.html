@@ -1,0 +1,29 @@
+<div class="flex-container">
+
+  <ng-container [ngSwitch]="info.controlType">
+    <!--======= Pie Chart =======-->
+    <market-report-piechart
+      *ngSwitchCase="'radio'"
+      [pieChartData]="chartValues"
+      [percentage]="info.percentage"
+    ></market-report-piechart>
+
+    <!--======= ou Encadré Bleu =======-->
+    <market-report-bluesquare
+      *ngSwitchDefault
+      [numberFocus]="info.numberFocus"
+      [percentage]="info.percentage"
+      [subtitle]="info.subtitle ? info.subtitle[lang] : ''"
+      [id]="info.id"
+    ></market-report-bluesquare>
+  </ng-container>
+
+  <!--======= Conclusion =======-->
+  <div class="umi-synthesis">
+    <p class="title">{{ info.label[lang] }}</p>
+    <text-zone [elementId]="conclusionId"
+               [readonly]="readonly"
+               [data]="info.conclusion || ''"
+               (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
+  </div>
+</div>

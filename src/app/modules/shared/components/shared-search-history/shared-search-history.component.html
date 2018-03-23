@@ -43,7 +43,7 @@
         </td>
 
         <td class="text-center" *ngIf="!mails">
-          <shared-country-flag *ngIf="request.country" [country]="request.country" [width]="30" [height]="20"></shared-country-flag>
+          <country-flag *ngIf="request.country" [country]="request.country" [width]="30" [height]="20"></country-flag>
         </td>
 
         <td>
@@ -107,7 +107,7 @@
         </td>
 
         <td class="text-center" *ngIf="!mails">
-          <shared-country-flag *ngIf="childRequest.country" [country]="childRequest.country" [width]="30" [height]="20"></shared-country-flag>
+          <country-flag *ngIf="childRequest.country" [country]="childRequest.country" [width]="30" [height]="20"></country-flag>
         </td>
 
         <td>

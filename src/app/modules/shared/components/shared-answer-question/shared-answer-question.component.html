@@ -87,7 +87,7 @@
     <ng-container *ngSwitchCase="'stars'">
       <ul *ngIf="question && fullAnswer.answers[question.identifier]">
         <li *ngFor="let advantage of question.options">
-          {{advantage.label[lang]}}: {{ '★'.repeat(fullAnswer.answers[question.identifier][advantage.identifier]) }}
+          {{advantage.label | multiling:lang}}: {{ '★'.repeat(fullAnswer.answers[question.identifier][advantage.identifier]) }}
         </li>
       </ul>
     </ng-container>

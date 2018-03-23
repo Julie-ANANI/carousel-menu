@@ -1,6 +1,10 @@
 <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
 <div class="market-report" *ngIf="canShow()">
 
+  <!-- *********************************************************
+        Header
+  ************************************************************** -->
+
   <h1 id="title">{{infographics.title}}</h1>
   <p class="subtitle">{{ 'MARKET_REPORT.TITLE' | translate }}</p>
 
@@ -44,18 +48,59 @@
     </ul>
   </div>
 
+  <!-- *********************************************************
+        Synthesis
+  ************************************************************** -->
+
   <div class="cssHack" *ngIf="adminMode"></div>
   <div class="flex-container">
-    <div class="sidebar" *ngIf="!adminMode"></div>
     <div class="content">
-      <!-- La carte du monde et la liste des pros -->
-      <market-report-section
-        [info]="infographics.professionals"
-        [answers]="infographics.answers"
-        [showDetails]="showDetails"
-        [readonly]="!adminMode"
-        (modalAnswerChange)="seeAnswer($event)">
-      </market-report-section>
+
+      <!-- *********************************************************
+            World Map and professionals cards
+      ************************************************************** -->
+      <section id="professionals">
+        <h2>{{ infographics.professionals.title[lang] }}</h2>
+        <div class="white-frame">
+
+          <app-question-conclusion
+            [info]="infographics.professionals"
+            [innovationId]="project._id"
+          ></app-question-conclusion>
+
+          <div class="bloc">
+            <div class="map centered" width="684" height="339">
+              <world-map [countries]="infographics.professionals.data" [color]="'#0B90C6'"></world-map>
+            </div>
+          </div>
+          <div class="bloc details">
+            <!--======= Liste des pros =======-->
+            <div class="prosList">
+              <div *ngFor="let answer of infographics.answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
+                <country-flag [country]="answer.country" [width]="37" [height]="25" class="user-flag"></country-flag>
+
+                <p class="user-name" *ngIf="answer.professional && answer.professional.profileUrl">
+                  <a [href]="answer.professional.profileUrl" target="_blank">
+                    {{answer.professional.firstName}} {{answer.professional.lastName}}
+                  </a>
+                </p>
+                <p class="user-name" *ngIf="answer.professional && !answer.professional.profileUrl">
+                  {{answer.professional.firstName}} {{answer.professional.lastName}}
+                  <img src="https://res.cloudinary.com/umi/image/upload/c_scale,h_15/app/star.svg" alt="" width="15" height="15" *ngIf="answer.follow" attr.tooltip-placement="top" attr.tooltip="{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}">
+                </p>
+
+                <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job || answer.professional?.jobTitle || ''}}</p>
+                <p *ngIf="answer.company?.name && answer.professional?.company" class="user-company">
+                  <i class="fa fa-building-o" aria-hidden="true"></i> {{answer.company?.name || answer.professional?.company || ''}}
+                </p>
+
+                <span (click)="seeAnswer(answer) && $event.preventDefault()" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
+                <a href="mailto:{{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ''}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- Les autres questions -->
       <div *ngFor="let question of infographics.questions">
