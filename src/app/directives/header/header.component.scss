@@ -4,6 +4,9 @@ $primary-color: #0db5ca;
 header {
   background: $dark-background;
   padding: 10px;
+  position: sticky;
+  top: 0px;
+  z-index: 9999;
 
   .navbar-brand {
     font-size: 0.8rem;
