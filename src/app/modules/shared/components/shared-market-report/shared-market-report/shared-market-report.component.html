@@ -25,93 +25,93 @@
   <!-- *********************************************************
         Sidebar
   ************************************************************** -->
-
-  <div class="sidebar sidebarIsSticky" *ngIf="!adminMode">
-    <div (click)="toggleDetails($event)" class="toggle-sections">
-      {{ (showDetails ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND') | translate}}
-      <i class="fa float-right" aria-hidden="true"
-         [ngClass]="{'fa-plus-square-o': !showDetails, 'fa-minus-square-o': showDetails}"></i>
+  <div class="d-flex">
+    <div class="sidebar sidebarIsSticky" *ngIf="!adminMode">
+      <div (click)="toggleDetails($event)" class="toggle-sections">
+        {{ (showDetails ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND') | translate}}
+        <i class="fa float-right" aria-hidden="true"
+           [ngClass]="{'fa-plus-square-o': !showDetails, 'fa-minus-square-o': showDetails}"></i>
+      </div>
+      <ul>
+        <li>
+          <a pageScroll href="#professionals">
+            {{ infographics.professionals.title[lang] }}
+            <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li *ngFor="let question of infographics.questions">
+          <a pageScroll [href]="'#' + question.id" [hidden]="!!question.hidden">
+            {{ question.title[lang] }}
+            <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+          </a>
+        </li>
+      </ul>
     </div>
-    <ul>
-      <li>
-        <a pageScroll href="#professionals">
-          {{ infographics.professionals.title[lang] }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li *ngFor="let question of infographics.questions">
-        <a pageScroll [href]="'#' + question.id" [hidden]="!!question.hidden">
-          {{ question.title[lang] }}
-          <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-        </a>
-      </li>
-    </ul>
-  </div>
 
-  <!-- *********************************************************
-        Synthesis
-  ************************************************************** -->
+    <!-- *********************************************************
+          Synthesis
+    ************************************************************** -->
 
-  <div class="cssHack" *ngIf="adminMode"></div>
-  <div class="flex-container">
-    <div class="content">
+    <div class="flex-container">
+      <div class="content">
 
-      <!-- *********************************************************
-            World Map and professionals cards
-      ************************************************************** -->
-      <section id="professionals">
-        <h2>{{ infographics.professionals.title[lang] }}</h2>
-        <div class="white-frame">
+        <!-- *********************************************************
+              World Map and professionals cards
+        ************************************************************** -->
+        <section id="professionals">
+          <h2>{{ infographics.professionals.title[lang] }}</h2>
+          <div class="white-frame">
 
-          <app-question-conclusion
-            [info]="infographics.professionals"
-            [innovationId]="project._id"
-          ></app-question-conclusion>
+            <app-question-conclusion
+              [info]="infographics.professionals"
+              [innovationId]="project._id"
+            ></app-question-conclusion>
 
-          <div class="bloc">
-            <div class="map centered" width="684" height="339">
-              <world-map [countries]="infographics.professionals.data" [color]="'#0B90C6'"></world-map>
+            <div class="bloc">
+              <div class="map centered" width="684" height="339">
+                <world-map [countries]="infographics.professionals.data" [color]="'#0B90C6'"></world-map>
+              </div>
             </div>
-          </div>
-          <div class="bloc details">
-            <!--======= Liste des pros =======-->
-            <div class="prosList">
-              <div *ngFor="let answer of infographics.answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
-                <country-flag [country]="answer.country" [width]="37" [height]="25" class="user-flag"></country-flag>
+            <div class="bloc details">
+              <!--======= Liste des pros =======-->
+              <div class="prosList">
+                <div *ngFor="let answer of infographics.answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
+                  <country-flag [country]="answer.country" [width]="37" [height]="25" class="user-flag"></country-flag>
 
-                <p class="user-name" *ngIf="answer.professional && answer.professional.profileUrl">
-                  <a [href]="answer.professional.profileUrl" target="_blank">
+                  <p class="user-name" *ngIf="answer.professional && answer.professional.profileUrl">
+                    <a [href]="answer.professional.profileUrl" target="_blank">
+                      {{answer.professional.firstName}} {{answer.professional.lastName}}
+                    </a>
+                  </p>
+                  <p class="user-name" *ngIf="answer.professional && !answer.professional.profileUrl">
                     {{answer.professional.firstName}} {{answer.professional.lastName}}
-                  </a>
-                </p>
-                <p class="user-name" *ngIf="answer.professional && !answer.professional.profileUrl">
-                  {{answer.professional.firstName}} {{answer.professional.lastName}}
-                  <img src="https://res.cloudinary.com/umi/image/upload/c_scale,h_15/app/star.svg" alt="" width="15" height="15" *ngIf="answer.follow" attr.tooltip-placement="top" attr.tooltip="{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}">
-                </p>
+                    <img src="https://res.cloudinary.com/umi/image/upload/c_scale,h_15/app/star.svg" alt="" width="15" height="15" *ngIf="answer.follow" attr.tooltip-placement="top" attr.tooltip="{{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}">
+                  </p>
 
-                <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job || answer.professional?.jobTitle || ''}}</p>
-                <p *ngIf="answer.company?.name && answer.professional?.company" class="user-company">
-                  <i class="fa fa-building-o" aria-hidden="true"></i> {{answer.company?.name || answer.professional?.company || ''}}
-                </p>
+                  <p class="user-job"><i class="fa fa-user" aria-hidden="true"></i> {{answer.job || answer.professional?.jobTitle || ''}}</p>
+                  <p *ngIf="answer.company?.name && answer.professional?.company" class="user-company">
+                    <i class="fa fa-building-o" aria-hidden="true"></i> {{answer.company?.name || answer.professional?.company || ''}}
+                  </p>
 
-                <span (click)="seeAnswer(answer) && $event.preventDefault()" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
-                <a href="mailto:{{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ''}}</a>
+                  <span (click)="seeAnswer(answer) && $event.preventDefault()" class="see-answer">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span><br>
+                  <a href="mailto:{{answer.professional ? answer.professional.email : ''}}">{{answer.professional ? answer.professional.email : ''}}</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Les autres questions -->
-      <div *ngFor="let question of infographics.questions">
-        <market-report-section
-          [info]="question"
-          [answers]="infographics.answers"
-          [showDetails]="showDetails"
-          [readonly]="!adminMode"
-          (modalAnswerChange)="seeAnswer($event)"
-          [hidden]="isQuestionHidden(question)">
-        </market-report-section>
+        <!-- Les autres questions -->
+        <div *ngFor="let question of infographics.questions">
+          <market-report-section
+            [info]="question"
+            [answers]="infographics.answers"
+            [showDetails]="showDetails"
+            [readonly]="!adminMode"
+            (modalAnswerChange)="seeAnswer($event)"
+            [hidden]="isQuestionHidden(question)">
+          </market-report-section>
+        </div>
       </div>
     </div>
   </div>
