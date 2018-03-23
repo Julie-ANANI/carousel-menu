@@ -9,8 +9,8 @@ import { NEW_PROJECT } from '../modules/client/components/client-project-new/i18
 import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/fr';
 import { SIGN_UP } from '../modules/client/components/client-signup/i18n/fr';
 import { WELCOME } from '../modules/client/components/client-welcome/i18n/fr';
-import { HEADER } from '../modules/shared/components/shared-header/i18n/fr';
-import { FOOTER } from '../modules/shared/components/shared-footer/i18n/fr';
+import { HEADER } from '../directives/header/i18n/fr';
+import { FOOTER } from '../directives/footer/i18n/fr';
 import { EXPORT } from '../modules/shared/components/shared-latex-manager/i18n/fr';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
 import { PAGINATION } from '../modules/shared/components/shared-pagination/i18n/fr';

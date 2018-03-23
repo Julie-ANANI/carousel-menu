@@ -12,11 +12,11 @@ import { Subject } from 'rxjs/Subject';
 export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   @Input() public info: any;
+  @Input() public readonly = true;
   @Input() public innovationId: string;
 
   private ngUnsubscribe: Subject<any> = new Subject();
   private _chartValues: any;
-  private _readonly: boolean;
   private _lang: string;
   private _conclusionId: string;
 
@@ -80,7 +80,6 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
       });
   }
 
-  public get readonly() { return this._readonly; }
   public get conclusionId() { return this._conclusionId; }
   public get lang() { return this._lang; }
   public get chartValues() { return this._chartValues; }

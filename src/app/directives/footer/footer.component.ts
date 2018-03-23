@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService, initTranslation } from '../../../../i18n/i18n';
-import { environment } from '../../../../../environments/environment';
+import { TranslateService, initTranslation } from '../../i18n/i18n';
+import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-shared-footer',
-  templateUrl: 'shared-footer.component.html',
-  styleUrls: ['shared-footer.component.scss']
+  selector: 'app-footer',
+  templateUrl: 'footer.component.html',
+  styleUrls: ['footer.component.scss']
 })
-export class SharedFooterComponent implements OnInit {
+export class FooterComponent implements OnInit {
   private _companyName: string = environment.companyName;
   public displayLangChoices = false;
 
