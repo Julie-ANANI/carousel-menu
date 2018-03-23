@@ -12,7 +12,6 @@ import 'rxjs/add/operator/pairwise';
   styleUrls: ['./app.component.scss'],
   template: '<simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>' +
   '<progress class="progress" max="100" *ngIf="displayLoader"></progress>' +
-  '<app-header></app-header>' +
   '<router-outlet></router-outlet>' +
   '<app-footer></app-footer>'
 })

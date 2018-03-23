@@ -61,6 +61,7 @@ import { MultilingPipe } from '../../pipes/multiling.pipe';
 import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
 import { CountryFlagComponent } from '../../directives/country-flag/country-flag.component';
+import { HeaderComponent } from '../../directives/header/header.component';
 
 @NgModule({
   imports: [
@@ -124,7 +125,8 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedMarketReportExampleComponent,
     DomSanitizerPipe,
     MultilingPipe,
-    QuestionConclusionComponent
+    QuestionConclusionComponent,
+    HeaderComponent
   ],
   exports: [
     // Modules
@@ -164,7 +166,8 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedProsListComponent,
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
-    QuestionConclusionComponent
+    QuestionConclusionComponent,
+    HeaderComponent
   ]
 })
 export class SharedModule { }
