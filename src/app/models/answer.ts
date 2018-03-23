@@ -7,7 +7,7 @@ export interface Answer {
   originalAnswerReference: string;
   tags: Array<string>;
   profileQuality: number;
-  country: any;
+  country: {flag: string, domain: string, name: string};
   readonly professional: Professional;
   readonly answers: any;
 }

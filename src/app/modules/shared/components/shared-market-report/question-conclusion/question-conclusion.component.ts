@@ -29,7 +29,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
     this.translateService.onLangChange
       .takeUntil(this.ngUnsubscribe)
       .subscribe((e: LangChangeEvent) => {
-        this._lang = e.lang;
+        this._lang = e.lang || 'en';
       });
     switch (this.info.controlType) {
       case 'radio':
