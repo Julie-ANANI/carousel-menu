@@ -1,17 +1,32 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EmailQueueModel } from '../../../../../models/mail.queue.model';
 import { EmailService } from '../../../../../services/email/email.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-admin-email-queue',
   templateUrl: 'admin-emails-queue.component.html',
   styleUrls: ['admin-emails-queue.component.scss']
 })
-export class AdminEmailQueueComponent {
+export class AdminEmailQueueComponent implements OnInit {
 
-  @Input() queue: Array<EmailQueueModel>;
+  private _queueList: {mailqueues: Array<EmailQueueModel>, _metadata: any} = {
+    mailqueues: [],
+    _metadata: {}
+  };
 
-  constructor(private _emailService: EmailService) { }
+  constructor(private _emailService: EmailService,
+              private _notificationsService: TranslateNotificationsService) { }
+
+  ngOnInit() {
+    this._emailService.getQueue({summarize: true})
+      .first()
+      .subscribe(queue => {
+          this._queueList = queue;
+        },
+        error => this._notificationsService.error('ERROR', error.message)
+      );
+  }
 
   public campaignName(transaction: any): string {
     return transaction.payload.metadata.campaignName;
@@ -40,4 +55,6 @@ export class AdminEmailQueueComponent {
     }
   }
 
+  get queueSize(): number { return this._queueList._metadata.totalCount || 0; }
+  get queue() { return this._queueList.mailqueues; }
 }

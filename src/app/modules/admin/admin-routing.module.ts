@@ -5,13 +5,12 @@ import { AdminUsersComponent } from './components/admin-users/admin-users.compon
 import { AdminProjectsDetailsComponent } from './components/admin-projects/admin-project-details/admin-project-details.component';
 import { AdminProjectsComponent } from './components/admin-projects/admin-projects.component';
 import { AdminCampaignsComponent } from './components/admin-campaigns/admin-campaigns.component';
-import { AdminEmailsComponent } from './components/admin-emails/admin-emails.component';
 import { AdminIndexComponent } from './components/admin-index/admin-index.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminSearchComponent } from './components/admin-search/admin-search.component';
+import { AdminEmailsComponent } from './components/admin-emails/admin-emails.component';
 import { AdminComponent } from './admin.component';
 import { AdminAuthGuard } from '../../admin-auth-guard.service';
-import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
@@ -30,6 +29,7 @@ import { presetsRoutes } from './components/admin-preset/admin-presets/admin-pre
 import { questionsRoutes } from './components/admin-preset/admin-questions/admin-questions-routing.module';
 import { sectionsRoutes } from './components/admin-preset/admin-sections/admin-sections-routing.module';
 import { searchRoutes } from './components/admin-search/admin-search-routing.module';
+import { emailsRoutes } from './components/admin-emails/admin-emails-routing.module';
 
 const adminRoutes: Routes = [
   {
@@ -88,9 +88,9 @@ const adminRoutes: Routes = [
       },
       {
         path: 'emails',
+        component: AdminEmailsComponent,
         children: [
-          { path: '', component: AdminEmailsComponent, pathMatch: 'full' },
-          { path: 'batch/:batchId', component: AdminBatchInformationComponent, pathMatch: 'full' }
+          ...emailsRoutes
         ]
       },
       {
