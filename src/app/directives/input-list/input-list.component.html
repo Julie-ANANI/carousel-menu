@@ -11,10 +11,7 @@
 
   <ul *ngFor="let a of answerList; index as i" class="answerList">
     <li *ngIf="!adminMode">
-      <span>{{a}}</span>
-      <a [routerLink]="" class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
-        <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
-      </a>
+      <span>{{a.text}}</span>
     </li>
     <li *ngIf="adminMode">
       <span>{{a.text}}</span>
@@ -23,16 +20,6 @@
         <div class="popover-container">
           <div class="input-group">
             <input type="text" class="form-input" [(ngModel)]="a.text" name="text"/>
-            <button class="btn btn-primary input-group-btn" type="submit" (click)="updateItem($event)">GO</button>
-          </div>
-        </div>
-      </div>
-      <div class="popover">
-        <i class="fa fa-link" [ngClass]="{'active': a.link && a.link.length > 0}"></i>
-        <div class="popover-container">
-          Entrez un lien:
-          <div class="input-group">
-            <input type="text" class="form-input" [(ngModel)]="a.link" name="link"/>
             <button class="btn btn-primary input-group-btn" type="submit" (click)="updateItem($event)">GO</button>
           </div>
         </div>
