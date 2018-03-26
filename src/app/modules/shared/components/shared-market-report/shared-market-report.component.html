@@ -109,16 +109,16 @@
         </section>
 
         <!-- Les autres questions -->
-        <div *ngFor="let question of infographics.questions">
+        <section *ngFor="let question of infographics.questions">
           <market-report-section
             [info]="question"
+            [question]="question"
             [answers]="infographics.answers"
             [showDetails]="showDetails"
             [readonly]="!adminMode"
-            (modalAnswerChange)="seeAnswer($event)"
-            [hidden]="isQuestionHidden(question)">
+            (modalAnswerChange)="seeAnswer($event)">
           </market-report-section>
-        </div>
+        </section>
       </div>
     </div>
   </div>

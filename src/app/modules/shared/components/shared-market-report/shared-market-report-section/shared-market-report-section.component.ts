@@ -5,6 +5,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../models/answer';
+import { Question } from '../../../../../models/question';
 import * as _ from 'lodash';
 
 @Component({
@@ -16,6 +17,7 @@ import * as _ from 'lodash';
 export class SharedMarketReportSectionComponent implements OnInit {
 
   private _showDetails: boolean;
+  private _answersWithComment: Array<Answer> = [];
   private _readonly: boolean;
   private _maxCountScore: number;
   private _innoid: string;
@@ -27,7 +29,8 @@ export class SharedMarketReportSectionComponent implements OnInit {
     this._readonly = value;
   }
   @Output() modalAnswerChange = new EventEmitter<any>();
-  @Input() public answers: Answer;
+  @Input() public answers: Array<Answer>;
+  @Input() public question: Question;
   @Input() public info: any;
 
 
@@ -39,12 +42,13 @@ export class SharedMarketReportSectionComponent implements OnInit {
       this._innoid = params['projectId'];
     });
 
+    this._answersWithComment = this.answers.filter((a) => a.answers[this.info.id + 'Comment']);
+
     switch (this.info.controlType) {
       case 'scale':
         // Calcul du score max
         const max = _.maxBy(this.info.data, 'count') || {};
         this._maxCountScore = max['count'] || 0;
-        break;
     }
   }
 
@@ -72,6 +76,7 @@ export class SharedMarketReportSectionComponent implements OnInit {
 
   get readonly(): boolean { return this._readonly; }
   get showDetails(): boolean { return this._showDetails; }
+  get answersWithComment(): Array<Answer> { return this._answersWithComment; }
   get innoid(): string { return this._innoid; }
   set innoid(value: string) { this._innoid = value; }
   get lang(): any { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }

@@ -1,4 +1,4 @@
-<section id={{info.id}}>
+<div id={{info.id}}>
   <h2>{{ info.title[lang] }}</h2>
 
   <div class="white-frame">
@@ -87,18 +87,14 @@
       </div>
 
       <!--======= Liste de commentaires =======-->
-      <div *ngIf="showDetails && info.comments && info.comments.length > 0">
-        <p class="title-question">{{info.comments.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
+      <div *ngIf="showDetails && answersWithComment.length > 0">
+        <p class="title-question">{{answersWithComment.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
         <ul class="comments">
-          <li *ngFor="let comment of info.comments"
-              [ngClass]="{'top-profil': comment.rating === 2}">
+          <li *ngFor="let answer of answersWithComment">
+              <!-- TODO : for <li> [ ngClass ]="{'top-profil': comment.rating === 2}"-->
             <market-comment
-              [job]="comment.job"
-              [country]="comment.flag"
-              [company]="comment.company"
-              [comment]="comment.comment"
-              [isNew]="false"
-              [answers]="getAnswers([comment])"
+              [comment]="answer.answers[info.id+'Comment']"
+              [answer]="answer"
               (modalAnswerChange)="seeAnswer($event)">
             </market-comment>
           </li>
@@ -106,4 +102,4 @@
       </div>
     </div>
   </div>
-</section>
+</div>

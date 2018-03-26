@@ -1,7 +1,8 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Answer } from '../../../../../models/answer';
 
 @Component({
   selector: 'market-comment',
@@ -9,20 +10,20 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['shared-market-comment.component.scss', '../shared-market-report.component.scss']
 })
 
-export class SharedMarketCommentComponent {
+export class SharedMarketCommentComponent implements OnInit {
 
-  @Input() public country: any;
-  @Input() public job: any;
-  @Input() public company: any;
-  @Input() public comment: any;
-  @Input() public isNew: any;
-  @Input() public answers: any;
+  @Input() public comment: string;
+  @Input() public answer: Answer;
   @Output() modalAnswerChange = new EventEmitter<any>();
 
   constructor() { }
+
+  ngOnInit() {
+    console.log(this.comment);
+  }
 
   public seeAnswer(event: any) {
     this.modalAnswerChange.emit(event);
   }
 
-};
+}
