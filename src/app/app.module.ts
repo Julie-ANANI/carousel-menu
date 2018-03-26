@@ -37,11 +37,14 @@ import { PresetService } from './services/preset/preset.service';
 import { AnswerService } from './services/answer/answer.service';
 import { ProfessionalsService } from './services/professionals/professionals.service';
 import { DownloadService } from './services/download/download.service';
+import { TemplatesService } from './services/templates/templates.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
 import { InnovationResolver } from './resolvers/innovation.resolver';
 import { RequestResolver } from './resolvers/request.resolver';
+import { ScenarioResolver } from './resolvers/scenario.resolver';
+import { SignatureResolver } from './resolvers/signature.resolver';
 
 @NgModule({
   declarations: [
@@ -88,6 +91,7 @@ import { RequestResolver } from './resolvers/request.resolver';
     AnswerService,
     ProfessionalsService,
     DownloadService,
+    TemplatesService,
     {
       provide: Http,
       useFactory: httpFactory,
@@ -98,7 +102,9 @@ import { RequestResolver } from './resolvers/request.resolver';
     TranslateTitleService,
     CampaignResolver,
     InnovationResolver,
-    RequestResolver
+    RequestResolver,
+    ScenarioResolver,
+    SignatureResolver
   ],
   bootstrap: [AppComponent]
 })
