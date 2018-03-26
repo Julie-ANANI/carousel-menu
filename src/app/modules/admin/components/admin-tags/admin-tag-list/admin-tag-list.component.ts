@@ -5,4 +5,9 @@ import { Component } from '@angular/core';
   templateUrl: 'admin-tag-list.component.html',
   styleUrls: ['admin-tag-list.component.scss']
 })
-export class AdminTagListComponent {}
+export class AdminTagListComponent {
+
+  constructor() {}
+
+  public createTag() {}
+}

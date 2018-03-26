@@ -21,8 +21,7 @@ import { AdminTagListComponent } from './admin-tag-list/admin-tag-list.component
         AdminTagListComponent
     ],
     exports: [
-        AdminTagsComponent,
-        AdminTagListComponent
+        AdminTagsComponent
     ]
 })
 

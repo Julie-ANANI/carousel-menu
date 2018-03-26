@@ -11,6 +11,7 @@ import { AdminQuestionsModule } from './components/admin-preset/admin-questions/
 import { AdminSectionsModule } from './components/admin-preset/admin-sections/admin-sections.module';
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
 import { AdminTagsComponent } from './components/admin-tags/admin-tags.component';
+import { AdminTagListComponent } from './components/admin-tags/admin-tag-list/admin-tag-list.component';
 
 //Components
 import { AdminComponent } from './admin.component';
@@ -77,7 +78,8 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminAnswersListComponent,
     AdminCampaignSearchResultsComponent,
     DateFormatPipe,
-    AdminTagsComponent
+    AdminTagsComponent,
+    AdminTagListComponent
   ]
 })
 export class AdminModule {
