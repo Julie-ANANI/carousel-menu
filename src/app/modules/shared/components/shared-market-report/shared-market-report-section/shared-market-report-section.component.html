@@ -91,10 +91,9 @@
         <p class="title-question">{{answersWithComment.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
         <ul class="comments">
           <li *ngFor="let answer of answersWithComment">
-              <!-- TODO : for <li> [ ngClass ]="{'top-profil': comment.rating === 2}"-->
             <market-comment
-              [comment]="answer.answers[info.id+'Comment']"
               [answer]="answer"
+              [commentId]="info.id+'Comment'"
               (modalAnswerChange)="seeAnswer($event)">
             </market-comment>
           </li>

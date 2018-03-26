@@ -1,7 +1,7 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../../models/answer';
 
 @Component({
@@ -10,17 +10,13 @@ import { Answer } from '../../../../../models/answer';
   styleUrls: ['shared-market-comment.component.scss', '../shared-market-report.component.scss']
 })
 
-export class SharedMarketCommentComponent implements OnInit {
+export class SharedMarketCommentComponent {
 
-  @Input() public comment: string;
   @Input() public answer: Answer;
+  @Input() public commentId: string;
   @Output() modalAnswerChange = new EventEmitter<any>();
 
   constructor() { }
-
-  ngOnInit() {
-    console.log(this.comment);
-  }
 
   public seeAnswer(event: any) {
     this.modalAnswerChange.emit(event);

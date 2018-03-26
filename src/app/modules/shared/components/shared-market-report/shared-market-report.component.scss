@@ -507,8 +507,7 @@ body.sample-infographic {
 }
 
 .professional-item.top-profil,
-ul.items > li.top-profil,
-ul.comments > li.top-profil {
+ul.items > li.top-profil {
   background: #16A085 !important;
 }
 
@@ -522,10 +521,6 @@ ul.comments > li.top-profil {
     cursor: pointer;
     color: #7cffe5 !important;
   }
-}
-
-.users-menu ul li.top-profil {
-  position: relative;
 }
 
 .professional-item.top-profil:before,
