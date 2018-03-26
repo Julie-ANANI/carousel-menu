@@ -2,16 +2,16 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, OnInit, Input } from '@angular/core';
-import { AuthService } from '../../../../../services/auth/auth.service';
-import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { PageScrollConfig } from 'ng2-page-scroll';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AnswerService } from '../../../../../services/answer/answer.service';
-import { Answer } from '../../../../../models/answer';
-import { Question } from '../../../../../models/question';
-import { Section } from '../../../../../models/section';
-import { Innovation } from '../../../../../models/innovation';
+import { AnswerService } from '../../../../services/answer/answer.service';
+import { Answer } from '../../../../models/answer';
+import { Question } from '../../../../models/question';
+import { Section } from '../../../../models/section';
+import { Innovation } from '../../../../models/innovation';
 
 @Component({
   selector: 'app-shared-market-report',
