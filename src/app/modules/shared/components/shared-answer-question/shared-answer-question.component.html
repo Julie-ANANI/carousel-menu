@@ -1,6 +1,6 @@
 <div>
   <strong class="question">{{ question.label[lang] }}</strong>
-  <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier]" class="answer">
+  <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier] || adminMode" class="answer">
 
     <ng-container *ngSwitchCase="'radio'">
       <p *ngIf="!adminMode">
@@ -25,14 +25,13 @@
           <a *ngIf="item.domain" [href]=link(item.domain) target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
         </span>
       </div>
-      <div *ngIf="adminMode">
-        <app-autocomplete-input
-          (update)="setAnswer($event)"
-          [canEdit]="true"
-          [config]="{placeholder: 'company', initialData: fullAnswer.answers[question.identifier] || [], type: 'company'}"
-          [adminMode]="adminMode">
-        </app-autocomplete-input>
-      </div>
+      <app-autocomplete-input
+        *ngIf="adminMode"
+        (update)="setAnswer($event)"
+        [canEdit]="true"
+        [config]="{placeholder: 'company', initialData: fullAnswer.answers[question.identifier] || [], type: 'company'}"
+        [adminMode]="adminMode">
+      </app-autocomplete-input>
     </ng-container>
 
     <ng-container *ngSwitchCase="'list'">
@@ -42,13 +41,12 @@
           <a *ngIf="item.link" [href]=item.link target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
         </span>
       </div>
-      <div *ngIf="adminMode">
-        <app-input-list
-          (update)="setAnswer($event)"
-          [config]="{ placeholder: '', initialData: fullAnswer.answers[question.identifier] }"
-          [adminMode]="adminMode">
-        </app-input-list>
-      </div>
+      <app-input-list
+        *ngIf="adminMode"
+        (update)="setAnswer($event)"
+        [config]="{ placeholder: '', initialData: fullAnswer.answers[question.identifier] }"
+        [adminMode]="adminMode">
+      </app-input-list>
     </ng-container>
 
     <ng-container *ngSwitchCase="'checkbox'">
