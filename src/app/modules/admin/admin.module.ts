@@ -11,6 +11,7 @@ import { AdminPresetsModule } from './components/admin-preset/admin-presets/admi
 import { AdminQuestionsModule } from './components/admin-preset/admin-questions/admin-questions.module';
 import { AdminSectionsModule } from './components/admin-preset/admin-sections/admin-sections.module';
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
+import { AdminEmailsModule } from './components/admin-emails/admin-emails.module';
 
 // Components
 import { AdminComponent } from './admin.component';
@@ -18,11 +19,8 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminProjectsComponent } from './components/admin-projects/admin-projects.component';
 import { AdminCampaignsComponent } from './components/admin-campaigns/admin-campaigns.component';
-import { AdminEmailsComponent } from './components/admin-emails/admin-emails.component';
 import { AdminIndexComponent } from './components/admin-index/admin-index.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
-import { AdminEmailQueueComponent } from './components/admin-emails/admin-emails-queue/admin-emails-queue.component';
-import { AdminBatchInformationComponent } from './components/admin-emails/admin-batch-information/admin-batch-information.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminProjectsListComponent } from './components/admin-projects-list/admin-projects-list.component';
 import { AdminProjectsDetailsComponent } from './components/admin-projects/admin-project-details/admin-project-details.component';
@@ -48,6 +46,7 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminQuestionsModule,
     AdminSectionsModule,
     AdminSearchModule,
+    AdminEmailsModule,
     SharedModule,
     SharedMarketReportModule,
     TranslateModule.forChild()
@@ -59,11 +58,8 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminUsersComponent,
     AdminProjectsComponent,
     AdminCampaignsComponent,
-    AdminEmailsComponent,
     AdminIndexComponent,
     AdminPatentsComponent,
-    AdminEmailQueueComponent,
-    AdminBatchInformationComponent,
     AdminUserDetailsComponent,
     AdminProjectsListComponent,
     AdminProjectsDetailsComponent,

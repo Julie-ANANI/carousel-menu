@@ -1,4 +1,5 @@
 <div>
+  <h1>{{queueSize}} registered queues</h1>
   <table class="table">
     <thead>
       <th width="250">Campaign name</th>
@@ -17,7 +18,7 @@
         <td>{{transaction.endDate}}</td>
         <td>{{batchSize(transaction)}}</td>
         <td><a (click)="changeStatus($event, transaction)">{{transaction.status}}</a></td>
-        <td><a class="btn btn-action" [routerLink]="['batch/'+transaction._id]"><i class="fa fa-info"></i></a></td>
+        <td><a class="btn btn-action" [routerLink]="['/admin/emails/batch/'+transaction._id]"><i class="fa fa-info"></i></a></td>
       </tr>
     </tbody>
   </table>
