@@ -6,7 +6,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'market-comment',
   templateUrl: 'shared-market-comment.component.html',
-  styleUrls: ['shared-market-comment.component.scss', '../shared-market-report/shared-market-report.component.scss']
+  styleUrls: ['shared-market-comment.component.scss', '../shared-market-report.component.scss']
 })
 
 export class SharedMarketCommentComponent {

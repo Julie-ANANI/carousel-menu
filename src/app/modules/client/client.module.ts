@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { LocalStorageModule } from 'angular-2-local-storage'; // TODO utiliser le localStorage pour accélérer les chargements
 import { SharedModule } from '../shared/shared.module';
+import { SharedMarketReportModule } from '../shared/components/shared-market-report/shared-market-report.module';
 import { ClientRoutingModule } from './client-routing.module';
-//import { ClientFooterComponent } from './components/client-footer/client-footer.component';
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
@@ -30,15 +29,11 @@ import { ClientWelcomeComponent } from './components/client-welcome/client-welco
     ClientRoutingModule,
     SharedModule,
     TranslateModule.forChild(),
-    LocalStorageModule.withConfig({
-      prefix: 'umi',
-      storageType: 'localStorage'
-    }),
-    SharedModule
+    SharedModule,
+    SharedMarketReportModule
   ],
   declarations: [
     ClientComponent,
-    //ClientFooterComponent,
     ClientMyAccountComponent,
 
     ClientMyProjectsComponent,
