@@ -4,6 +4,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '../http';
 import { Observable } from 'rxjs/Observable';
+import { Professional } from '../../models/professional';
 
 @Injectable()
 export class ProfessionalsService {
@@ -11,7 +12,7 @@ export class ProfessionalsService {
   constructor(private _http: Http) {
   }
 
-  public create(professionalObj: any): Observable<any> {
+  public create(professionalObj: Professional): Observable<any> {
     return this._http.post('/professional', professionalObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
@@ -35,7 +36,7 @@ export class ProfessionalsService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public save(professionalId: string, professionalObj: any): Observable<any> {
+  public save(professionalId: string, professionalObj: Professional): Observable<any> {
     return this._http.put('/professional/' + professionalId, professionalObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));

@@ -25,13 +25,20 @@
       derniers mails envoyés
     </div>
   </div>
-
   <div *ngIf="!stats.batches || !stats.batches.length">
     Pas de batch d'emails programmé pour l'instant...
   </div>
-  <button (click)="batchModal=true" class="btn btn-primary centered">
-    Programmer un nouveau batch de mails
-  </button>
+  <p *ngIf="!quizGenerated" class="text-center text-error">
+    La quiz n'a pas été généré pour cette innovation, il doit y avoir un quiz avant de faire un envoi d'emails !
+  </p>
+  <div class="centered-buttons">
+    <button (click)="sendTestEmails()" class="btn btn-primary">
+      Envoyer les mails de test
+    </button>
+    <button (click)="batchModal=true" class="btn btn-primary" [disabled]="!quizGenerated">
+      Programmer un nouveau batch de mails
+    </button>
+  </div>
   <div class="card" *ngFor="let batch of stats.batches; let batchIndex = index">
     <div class="card-header">
       <div class="card-title h5">
@@ -97,7 +104,12 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary" (click)="batchModal = false; createNewBatch()">Créer</button>
+      <button (click)="batchModal = false; createNewBatch(true)" class="btn btn-primary"
+              [disabled]="!newBatch.size || (newBatch.date && newBatch.time)">
+        Envoyer le batch immédiatement
+      </button>
+      <button class="btn btn-primary" (click)="batchModal = false; createNewBatch(false)"
+              [disabled]="!newBatch.size || !newBatch.date || !newBatch.time">Créer</button>
       <button class="btn btn-link" (click)="(batchModal = false) && $event.preventDefault()">
         {{ 'COMMON.CANCEL' | translate }}
       </button>

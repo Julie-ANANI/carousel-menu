@@ -20,7 +20,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   public lastMail: number = 0;
   public batchModal: boolean = false;
   public newBatch: any = {};
-  public dateformat: string = "le dd/MM/yyyy à hh:mm";
+  public dateformat: string = "le dd/MM/yyyy à HH:mm";
   public selectedBatchIdToBeDeleted: string = null;
   public editDates: Array<any>;
 
@@ -49,11 +49,12 @@ export class AdminCampaignMailsComponent implements OnInit {
     this.newBatch = {
       campaign: this._campaign._id,
       size: 0
-    }
+    };
   }
 
-  public createNewBatch() {
-    this.newBatch.firstMail = this._computeDate(this.newBatch.date, this.newBatch.time);
+  public createNewBatch(sendNow: boolean) {
+    this.newBatch.firstMail = sendNow ? Date.now() : this._computeDate(this.newBatch.date, this.newBatch.time);
+    this.newBatch.sendNow = sendNow;
     this._campaignService.createNewBatch(this._campaign._id, this.newBatch).first().subscribe((batch: any) => {
       this.stats.batches.push(batch);
     });
@@ -114,7 +115,14 @@ export class AdminCampaignMailsComponent implements OnInit {
     computedDate.setMinutes(minutes);
     return computedDate;
   }
+  
+  public sendTestEmails() {
+    this._campaignService.sendTestEmails(this._campaign._id).first().subscribe(_ => {
+      console.log("OK");
+    });
+  }
 
+  get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""); }
   get campaign() { return this._campaign }
   get quizLinks() {return this._quizLinks }
   get stats() {return this._stats }

@@ -1,7 +1,8 @@
 <div>
   <strong class="question">{{ question.label[lang] }}</strong>
   <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier]" class="answer">
-    <div *ngSwitchCase="'radio'">
+
+    <ng-container *ngSwitchCase="'radio'">
       <p *ngIf="!adminMode">
         {{ optionLabel(fullAnswer.answers[question.identifier]) }}
       </p>
@@ -14,10 +15,9 @@
           {{ optionLabel(option.identifier) }}
         </span>
       </p>
+    </ng-container>
 
-    </div>
-
-    <div *ngSwitchCase="'clearbit'">
+    <ng-container *ngSwitchCase="'clearbit'">
       <div *ngIf="!adminMode" class="list">
         <span class="chip" [ngClass]="{'topItem': item.rating === 2, 'badItem': item.rating === 0}" *ngFor="let item of fullAnswer.answers[question.identifier]">
           <img *ngIf="item.logo" [src]=item.logo width="20px" height="20px"/>
@@ -33,9 +33,9 @@
           [adminMode]="adminMode">
         </app-autocomplete-input>
       </div>
-    </div>
+    </ng-container>
 
-    <div *ngSwitchCase="'list'">
+    <ng-container *ngSwitchCase="'list'">
       <div *ngIf="!adminMode" class="list">
         <span class="chip" [ngClass]="{'topItem': item.rating === 2, 'badItem': item.rating === 0}" *ngFor="let item of fullAnswer.answers[question.identifier]">
           {{item.text}}
@@ -49,24 +49,24 @@
           [adminMode]="adminMode">
         </app-input-list>
       </div>
-    </div>
+    </ng-container>
 
-    <div *ngSwitchCase="'checkbox'">
+    <ng-container *ngSwitchCase="'checkbox'">
       <ul *ngFor="let option of question.options">
         <li
           *ngIf="fullAnswer.answers[question.identifier][option.identifier] === true || adminMode"
           [ngClass]="{'inactive': fullAnswer.answers[question.identifier][option.identifier] != true, 'c-hand': adminMode}"
-          (click)="checkOption($event, option)">
+          (click)="checkOption(option.identifier, $event)">
           {{ optionLabel(option.identifier) }}
         </li>
       </ul>
-    </div>
+    </ng-container>
 
-    <div *ngSwitchCase="'textbox'">
+    <ng-container *ngSwitchCase="'textbox'">
       <p>{{fullAnswer.answers[question.identifier]}}</p>
-    </div>
+    </ng-container>
 
-    <div *ngSwitchCase="'textarea'">
+    <ng-container *ngSwitchCase="'textarea'">
       <blockquote *ngIf="fullAnswer.answers[question.identifier] && !adminMode">
         <p>
           {{fullAnswer.answers[question.identifier]}}
@@ -78,36 +78,50 @@
         <button type="submit" (click)="fullAnswerChange.emit(fullAnswer) && $event.preventDefault()">OK</button>
         <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
       </form>
-    </div>
+    </ng-container>
 
-    <div *ngSwitchCase="'scale'">
+    <ng-container *ngSwitchCase="'scale'">
       <p>{{fullAnswer.answers[question.identifier]}}</p>
-    </div>
+    </ng-container>
 
-    <div *ngSwitchCase="'stars'">
+    <ng-container *ngSwitchCase="'stars'">
       <ul *ngIf="question && fullAnswer.answers[question.identifier]">
         <li *ngFor="let advantage of question.options">
           {{advantage.label[lang]}}: {{ '★'.repeat(fullAnswer.answers[question.identifier][advantage.identifier]) }}
         </li>
       </ul>
-    </div>
-    <p class="noanswer"  *ngIf="!fullAnswer.answers[question.identifier]">-</p>
-    <i
-      class="fa fa-comment"
-      *ngIf="adminMode && question.canComment && !fullAnswer.answers[question.identifier + 'Comment']"
-      (click)="addComment($event)"></i>
-    <blockquote *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && !adminMode">
-      <p>
-        {{fullAnswer.answers[question.identifier + 'Comment']}}
-        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
-      </p>
-    </blockquote>
-    <form *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && adminMode">
-      <textarea class="form-input" [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']" name="comment"></textarea>
-      <button type="submit" (click)="fullAnswerChange.emit(fullAnswer) && $event.preventDefault()">OK</button>
-      <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
-      <i class="fa fa-trash" *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && adminMode"
-         (click)="deleteComment($event)"></i>
-    </form>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+      <p class="noanswer">-</p>
+    </ng-container>
+
   </div>
+
+  <!-- Comment part -->
+  <ng-container [ngSwitch]="adminMode">
+
+    <ng-container *ngSwitchCase="false">
+      <blockquote *ngIf="fullAnswer.answers[question.identifier + 'Comment']">
+        <p>
+          {{fullAnswer.answers[question.identifier + 'Comment']}}
+          <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+        </p>
+      </blockquote>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="true">
+      <i
+        class="fa fa-comment"
+        *ngIf="!commenting"
+        (click)="addComment($event)"></i>
+      <form *ngIf="commenting">
+        <textarea class="form-input" [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']" name="comment"></textarea>
+        <button type="submit" (click)="fullAnswerChange.emit(fullAnswer) && $event.preventDefault()">OK</button>
+        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+        <i class="fa fa-trash" (click)="deleteComment($event)"></i>
+      </form>
+    </ng-container>
+  </ng-container>
+
 </div>

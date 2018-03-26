@@ -1,7 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { Professional } from '../../../../models/professional';
+
+export interface SelectedProfessional extends Professional {
+  isSelected: boolean;
+}
 
 @Component({
   selector: 'app-shared-pros-list',
@@ -9,22 +14,24 @@ import { Professional } from '../../../../models/professional';
   styleUrls: ['./shared-pros-list.component.scss']
 })
 export class SharedProsListComponent {
-  
+
   private _config: any;
   public smartSelect: any = null;
-  
+  public editUser: {[propString: string]: boolean} = {};
+
   @Input() public requestId: string;
   @Input() set config(value: any) {
     this.loadPros(value);
   }
   @Output() selectedProsChange = new EventEmitter <any>();
 
-  private _total: number = 0;
-  private _pros: Array <Professional>;
+  private _total = 0;
+  private _pros: Array <SelectedProfessional>;
 
   constructor(private _professionalService: ProfessionalsService,
+              private _notificationsService: TranslateNotificationsService,
               private _searchService: SearchService) { }
-  
+
   loadPros(config: any): void {
     this._config = config;
     if (this.requestId) {
@@ -39,13 +46,23 @@ export class SharedProsListComponent {
       });
     }
   }
-  
-  selectPro(pro: Professional): void {
+
+  selectPro(pro: SelectedProfessional): void {
     pro.isSelected = !pro.isSelected;
     const prosSelected = this._pros.filter(p => p.isSelected);
     this.selectedProsChange.emit({
       total: this.nbSelected,
       pros: prosSelected
+    });
+  }
+
+  updatePro(pro: Professional, event: Event): void {
+    event.preventDefault();
+    this.editUser[pro._id] = false;
+    this._professionalService.save(pro._id, pro).first().subscribe(res => {
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.SUCCESS');
+    }, err => {
+      this._notificationsService.error('ERROR', err.message);
     });
   }
 
@@ -60,7 +77,7 @@ export class SharedProsListComponent {
       query: config
     });
   }
-  
+
   get nbSelected(): number {
     if (this.smartSelect) {
       return (this.smartSelect.limit + this.smartSelect.offset) > this.total ?

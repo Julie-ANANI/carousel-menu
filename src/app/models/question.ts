@@ -3,5 +3,6 @@ export interface Question {
   readonly label: {fr: string, en: string};
   readonly identifier: string;
   readonly controlType: 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'textbox' | 'toggle';
+  readonly canComment: boolean;
   options?: Array<any>;
 }

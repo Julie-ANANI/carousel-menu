@@ -59,13 +59,13 @@
             {{ 'SEARCH.HISTORY.DONE' | translate }}
           </div>
           <div class="text-warning" *ngIf="request.status === 'PROCESSING'">
-            <i class="fa fa-times">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
+            <i class="fa fa-times" (click)="stopRequest(request._id)">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
           </div>
           <div class="text-error" *ngIf="request.status === 'QUEUED'">
-            {{ 'SEARCH.HISTORY.QUEUED' | translate }}
+            <span (click)="cancelRequest(request._id, true)">{{ 'SEARCH.HISTORY.QUEUED' | translate }}</span>
           </div>
           <div class="text-error" *ngIf="request.status === 'CANCELED'">
-            {{ 'SEARCH.HISTORY.CANCELED' | translate }}
+            <span (click)="cancelRequest(request._id, false)">{{ 'SEARCH.HISTORY.CANCELED' | translate }}</span>
           </div>
         </td>
 
@@ -123,13 +123,13 @@
             {{ 'SEARCH.HISTORY.DONE' | translate }}
           </div>
           <div class="text-warning" *ngIf="childRequest.status === 'PROCESSING'">
-            <i class="fa fa-times">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
+            <i class="fa fa-times" (click)="stopChildRequest(childRequest._id, request._id)">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
           </div>
           <div class="text-error" *ngIf="childRequest.status === 'QUEUED'">
-            {{ 'SEARCH.HISTORY.QUEUED' | translate }}
+            <span (click)="cancelChildRequest(childRequest._id, request._id, true)">{{ 'SEARCH.HISTORY.QUEUED' | translate }}</span>
           </div>
           <div class="text-error" *ngIf="childRequest.status === 'CANCELED'">
-            {{ 'SEARCH.HISTORY.CANCELED' | translate }}
+            <span (click)="cancelChildRequest(childRequest._id, request._id, false)">{{ 'SEARCH.HISTORY.CANCELED' | translate }}</span>
           </div>
         </td>
 
