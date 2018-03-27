@@ -1,4 +1,4 @@
-<div class="market-comment" [ngClass]="{'top-profil': answer.answers[commentId+'Quality'] === 2}">
+<div class="market-comment" [ngClass]="{'top-profil': answer.answers[questionId+'Quality'] === 2}">
 
   <div class="flex-container">
     <strong class="flex-container">
@@ -13,7 +13,7 @@
   </strong>
 
   <p class="comment-desc">
-    {{answer.answers[commentId]}}
+    {{answer.answers[questionId]}}
   </p>
 
 </div>

@@ -13,7 +13,7 @@ import { Answer } from '../../../../../models/answer';
 export class SharedMarketCommentComponent {
 
   @Input() public answer: Answer;
-  @Input() public commentId: string;
+  @Input() public questionId: string;
   @Output() modalAnswerChange = new EventEmitter<any>();
 
   constructor() { }
