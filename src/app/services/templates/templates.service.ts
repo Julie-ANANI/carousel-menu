@@ -62,8 +62,8 @@ export class TemplatesService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public saveSignature(signatureId: string, signatureObj: any): Observable<any> {
-    return this._http.put('/signature/' + signatureId, signatureObj)
+  public saveSignature(signatureObj: any): Observable<any> {
+    return this._http.put('/signature/' + signatureObj._id, signatureObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
