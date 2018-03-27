@@ -68,13 +68,15 @@
       <blockquote *ngIf="fullAnswer.answers[question.identifier] && !adminMode">
         <p>
           {{fullAnswer.answers[question.identifier]}}
-          <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+          <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+                              (ratingChange)="updateQuality($event)"></shared-rating-item>
         </p>
       </blockquote>
       <form *ngIf="adminMode">
         <textarea class="form-input" [(ngModel)]="fullAnswer.answers[question.identifier]" name="comment"></textarea>
         <button type="submit" (click)="fullAnswerChange.emit(fullAnswer) && $event.preventDefault()">OK</button>
-        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+                            (ratingChange)="updateQuality($event)"></shared-rating-item>
       </form>
     </ng-container>
 
@@ -103,7 +105,9 @@
       <blockquote *ngIf="fullAnswer.answers[question.identifier + 'Comment']">
         <p>
           {{fullAnswer.answers[question.identifier + 'Comment']}}
-          <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+          <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'"
+                              [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']"
+                              (ratingChange)="updateQuality($event)"></shared-rating-item>
         </p>
       </blockquote>
     </ng-container>
@@ -116,7 +120,9 @@
       <form *ngIf="commenting">
         <textarea class="form-input" [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']" name="comment"></textarea>
         <button type="submit" (click)="fullAnswerChange.emit(fullAnswer) && $event.preventDefault()">OK</button>
-        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'" [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']" (ratingChange)="updateQuality($event)"></shared-rating-item>
+        <shared-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'"
+                            [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']"
+                            (ratingChange)="updateQuality($event)"></shared-rating-item>
         <i class="fa fa-trash" (click)="deleteComment($event)"></i>
       </form>
     </ng-container>

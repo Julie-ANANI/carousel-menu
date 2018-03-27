@@ -42,7 +42,8 @@ export class SharedMarketReportSectionComponent implements OnInit {
       this._innoid = params['projectId'];
     });
 
-    this._answersWithComment = this.answers.filter((a) => a.answers[this.info.id + 'Comment']);
+    this._answersWithComment = this.answers
+      .filter((a) => (a.answers[this.info.id + 'Comment'] && a.answers[this.info.id + 'CommentQuality'] !== 0));
 
     switch (this.info.controlType) {
       case 'scale':
