@@ -25,7 +25,7 @@ export class AdminEditSignatureComponent implements OnInit {
   }
 
   public save(event: any) {
-    this._templatesService.saveSignature(this.signature).first().subscribe((answer: any) => {
+    this._templatesService.saveSignature(this._signature).first().subscribe(_ => {
       this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
     }, err => {
       this._notificationsService.error('ERROR', err);

@@ -32,8 +32,8 @@ export class TemplatesService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public save(templateId: string, templateObj: any): Observable<any> {
-    return this._http.put('/template/' + templateId, templateObj)
+  public save(templateObj: any): Observable<any> {
+    return this._http.put('/template/' + templateObj._id, templateObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
