@@ -95,7 +95,7 @@
     <ng-container *ngSwitchCase="'toggle'">
       <label class="form-switch">
         <input type="checkbox" name="toggle-input" [(ngModel)]="fullAnswer.answers[question.identifier]"
-               [ngModelOptions]="{standalone: true}">
+               [ngModelOptions]="{standalone: true}" [disabled]="!adminMode">
         <i class="form-icon" [ngClass]="{'active': fullAnswer.answers[question.identifier]}"></i>
       </label>
     </ng-container>
