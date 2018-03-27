@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { EmailSignature } from '../../../../../../models/email-signature';
@@ -13,9 +13,11 @@ export class AdminEditSignatureComponent implements OnInit {
 
   private _signature: EmailSignature;
   public editionMode: boolean = false;
+  public deleteModal: boolean = false;
 
   constructor(private _templatesService: TemplatesService,
               private _activatedRoute: ActivatedRoute,
+              private _router: Router,
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
@@ -28,6 +30,16 @@ export class AdminEditSignatureComponent implements OnInit {
     }, err => {
       this._notificationsService.error('ERROR', err);
     });
+  }
+  
+  /**
+   * Suppression et mise à jour de la vue
+   */
+  public removeSignature() {
+    event.preventDefault();
+    this._templatesService.removeSignature(this._signature._id).first().subscribe(_ => {
+        this._router.navigate(['/admin/emails/templates']);
+      });
   }
 
   get signature(): EmailSignature { return this._signature; }
