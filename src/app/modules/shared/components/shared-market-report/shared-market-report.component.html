@@ -72,7 +72,7 @@
 
             <div class="bloc">
               <div class="map centered" width="684" height="339">
-                <world-map [countries]="countries" [color]="'#0B90C6'"></world-map>
+                <app-world-map [countries]="countries" [color]="'#0B90C6'"></app-world-map>
               </div>
             </div>
             <div class="bloc details">
@@ -109,16 +109,16 @@
         </section>
 
         <!-- Les autres questions -->
-        <div *ngFor="let question of infographics.questions">
-          <market-report-section
+        <section *ngFor="let question of infographics.questions">
+          <app-question-section
             [info]="question"
+            [question]="question"
             [answers]="infographics.answers"
             [showDetails]="showDetails"
             [readonly]="!adminMode"
-            (modalAnswerChange)="seeAnswer($event)"
-            [hidden]="isQuestionHidden(question)">
-          </market-report-section>
-        </div>
+            (modalAnswerChange)="seeAnswer($event)">
+          </app-question-section>
+        </section>
       </div>
     </div>
   </div>

@@ -1,0 +1,19 @@
+<div class="professional-comment" [ngClass]="{'top-profil': answer.answers[questionId+'Quality'] === 2}">
+
+  <div class="flex-container">
+    <strong class="flex-container">
+      <country-flag *ngIf="answer.country?.flag" [country]="answer.country.flag"></country-flag>
+      &nbsp; {{answer.professional?.firstName}} {{answer.professional?.lastName}}
+    </strong>
+    <market-report-popover [answers]="[answer]" (modalAnswerChange)="seeAnswer($event)"></market-report-popover>
+  </div>
+
+  <strong>
+    {{answer.job}} - {{answer.company?.name}}
+  </strong>
+
+  <p class="comment-desc">
+    {{answer.answers[questionId]}}
+  </p>
+
+</div>

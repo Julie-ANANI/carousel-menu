@@ -2,42 +2,44 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { ChartsModule } from 'ng2-charts';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
+import { BluesquareComponent } from './components/bluesquare/bluesquare.component';
+import { PiechartComponent } from './components/piechart/piechart.component';
+import { PricesComponent } from './components/prices/prices.component';
 import { SharedMarketReportComponent } from './shared-market-report.component';
-import { QuestionConclusionComponent } from './question-conclusion/question-conclusion.component';
-import { SharedBarChartComponent } from './shared-bar-chart-component/shared-bar-chart.component';
-import { SharedMarketCommentComponent } from './shared-market-comment-component/shared-market-comment.component';
-import { SharedMarketItemComponent } from './shared-market-item-component/shared-market-item.component';
-import { SharedMarketItemListComponent } from './shared-market-item-list-component/shared-market-item-list.component';
-import { SharedMarketReportBluesquareComponent } from './shared-market-report-bluesquare/shared-market-report-bluesquare.component';
-import { SharedMarketReportPiechartComponent } from './shared-market-report-piechart/shared-market-report-piechart.component';
-import { SharedMarketReportPopoverComponent } from './shared-market-report-popover/shared-market-report-popover.component';
-import { SharedMarketReportSectionComponent } from './shared-market-report-section/shared-market-report-section.component';
-import { SharedPricesComponent } from './shared-prices-component/shared-prices.component';
-import { SharedWorldMapComponent } from './shared-world-map-component/shared-world-map.component';
-import { SharedStarsComponent } from './shared-stars-component/shared-stars.component';
+import { SharedMarketCommentComponent } from './components/professional-comment/professional-comment.component';
+import { QuestionConclusionComponent } from './components/question-conclusion/question-conclusion.component';
+import { QuestionSectionComponent } from './components/question-section/question-section.component';
+import { SharedMarketItemComponent } from './components/shared-market-item-component/shared-market-item.component';
+import { SharedMarketItemListComponent } from './components/shared-market-item-list-component/shared-market-item-list.component';
+import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
+import { StarsComponent } from './components/stars/stars.component';
+import { WorldMapComponent } from './components/world-map/world-map.component';
 import { SharedModule } from '../../shared.module';
+import { SharedAnswerModalModule } from '../shared-answer-modal/answer-modal.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ChartsModule,
     SharedModule,
+    SharedAnswerModalModule,
     TranslateModule.forChild()
   ],
   declarations: [
     SharedMarketReportComponent,
     QuestionConclusionComponent,
-    SharedBarChartComponent,
+    BarChartComponent,
     SharedMarketCommentComponent,
     SharedMarketItemComponent,
     SharedMarketItemListComponent,
-    SharedMarketReportBluesquareComponent,
-    SharedMarketReportPiechartComponent,
+    BluesquareComponent,
+    PiechartComponent,
     SharedMarketReportPopoverComponent,
-    SharedMarketReportSectionComponent,
-    SharedPricesComponent,
-    SharedStarsComponent,
-    SharedWorldMapComponent
+    QuestionSectionComponent,
+    PricesComponent,
+    StarsComponent,
+    WorldMapComponent
   ],
   exports: [
     SharedMarketReportComponent

@@ -1,9 +1,0 @@
-<div class="flex-container">
-  <strong class="comment-name">
-    <country-flag *ngIf="country" [country]="country"></country-flag>
-    {{job}} - <span>{{company}}</span>
-  </strong>
-  <span *ngIf="isNew" class="comment-new">new</span>
-  <market-report-popover [answers]="answers" (modalAnswerChange)="seeAnswer($event)"></market-report-popover>
-</div>
-<p class="comment-desc">{{comment}}</p>

@@ -7,10 +7,8 @@ import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
-
 import { ClientProjectComponent } from './components/client-project/client-project.component';
 import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
-
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
@@ -21,7 +19,6 @@ import { ClientProjectEditExample2Component } from './components/client-project-
 import { ClientProjectEditExample1Component } from './components/client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
-
 
 @NgModule({
   imports: [
@@ -35,11 +32,9 @@ import { ClientWelcomeComponent } from './components/client-welcome/client-welco
   declarations: [
     ClientComponent,
     ClientMyAccountComponent,
-
     ClientMyProjectsComponent,
     ClientProjectEditComponent,
     ClientProjectComponent,
-
     ClientDiscoverComponent,
     ClientWelcomeComponent,
     ClientLoginComponent,
@@ -50,7 +45,6 @@ import { ClientWelcomeComponent } from './components/client-welcome/client-welco
     ClientProjectEditExample2Component,
     ClientProjectEditExample1Component,
     ClientResetPasswordComponent
-
   ]
 })
 export class ClientModule {

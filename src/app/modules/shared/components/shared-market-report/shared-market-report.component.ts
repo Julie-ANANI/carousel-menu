@@ -2,7 +2,6 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, OnInit, Input } from '@angular/core';
-import { AuthService } from '../../../../services/auth/auth.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { PageScrollConfig } from 'ng2-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -38,7 +37,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
-              private _authService: AuthService,
               private _answerService: AnswerService,
               private _notificationsService: TranslateNotificationsService) { }
 
@@ -118,11 +116,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   public canShow(): boolean {
     return !!this._infographics;
-
-  }
-
-  public isQuestionHidden(question: any): boolean{
-    return question && !!question.hidden;
   }
 
   get answers(): Array<Answer> { return this._answers; }
@@ -138,5 +131,4 @@ export class SharedMarketReportComponent implements OnInit {
   set showDetails (value: boolean) { this._showDetails = value; }
   get showDetails (): boolean { return this._showDetails; }
   get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
-  get authService (): AuthService { return this._authService; }
 }

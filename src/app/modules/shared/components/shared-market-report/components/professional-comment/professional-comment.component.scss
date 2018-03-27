@@ -1,0 +1,13 @@
+div.professional-comment {
+  color: white;
+  padding: 17px 16px 13px 24px;
+
+  .flex-container {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+div.professional-comment.top-profil {
+  background: #16A085;
+}

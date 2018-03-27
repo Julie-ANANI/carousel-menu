@@ -1,0 +1,44 @@
+/* === Items list === */
+
+ul {
+  list-style: none;
+}
+
+ul.items {
+  li.top-profil {
+    background: #16A085 !important;
+  }
+
+  > li {
+    position: relative;
+    color: white;
+    padding: 8px 15px;
+    margin-bottom: 5px;
+    border-radius: 2px;
+
+    .flex-container {
+      align-items: flex-start;
+    }
+  }
+
+  > li:nth-child(even) {
+    background: #4FA9CE;
+  }
+
+  > li:nth-child(odd) {
+    background: #0B90C6;
+  }
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column {
+  flex: 1;
+}
+
+.column:first-child {
+  margin-right: 30px;
+}
