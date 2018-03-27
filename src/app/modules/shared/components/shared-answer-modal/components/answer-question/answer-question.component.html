@@ -1,6 +1,6 @@
 <div>
   <strong class="question">{{ question.label[lang] }}</strong>
-  <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier] || adminMode" class="answer">
+  <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier] !== undefined || adminMode" class="answer">
 
     <ng-container *ngSwitchCase="'radio'">
       <p *ngIf="!adminMode">
@@ -90,6 +90,14 @@
           {{advantage.label | multiling:lang}}: {{ '★'.repeat(fullAnswer.answers[question.identifier][advantage.identifier]) }}
         </li>
       </ul>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'toggle'">
+      <label class="form-switch">
+        <input type="checkbox" name="toggle-input" [(ngModel)]="fullAnswer.answers[question.identifier]"
+               [ngModelOptions]="{standalone: true}">
+        <i class="form-icon" [ngClass]="{'active': fullAnswer.answers[question.identifier]}"></i>
+      </label>
     </ng-container>
 
     <ng-container *ngSwitchDefault>
