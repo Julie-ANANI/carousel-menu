@@ -25,7 +25,7 @@ export class AnswerQuestionComponent implements OnInit {
   constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
-    this._commenting = !!this.fullAnswer.answers[this.question.identifier + 'Comment'];
+    this._commenting = !!(this.fullAnswer.answers && this.fullAnswer.answers[this.question.identifier + 'Comment']);
   }
 
   updateQuality(object: {key: string, value: 0 | 1 | 2}) {

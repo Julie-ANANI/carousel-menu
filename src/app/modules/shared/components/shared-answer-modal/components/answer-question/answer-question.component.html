@@ -1,6 +1,6 @@
 <div>
   <strong class="question">{{ question.label[lang] }}</strong>
-  <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers[question.identifier] !== undefined || adminMode" class="answer">
+  <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers && (fullAnswer.answers[question.identifier] !== undefined || adminMode)" class="answer">
 
     <ng-container *ngSwitchCase="'radio'">
       <p *ngIf="!adminMode">
@@ -110,7 +110,7 @@
   <ng-container [ngSwitch]="adminMode">
 
     <ng-container *ngSwitchCase="false">
-      <blockquote *ngIf="fullAnswer.answers[question.identifier + 'Comment']">
+      <blockquote *ngIf="fullAnswer.answers && fullAnswer.answers[question.identifier + 'Comment']">
         <p>
           {{fullAnswer.answers[question.identifier + 'Comment']}}
           <app-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'"
@@ -126,7 +126,8 @@
         *ngIf="!commenting"
         (click)="addComment($event)"></i>
       <form *ngIf="commenting">
-        <textarea class="form-input" [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']" name="comment"></textarea>
+        <textarea class="form-input" name="comment"
+                  [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']"></textarea>
         <button type="submit" (click)="fullAnswerChange.emit(fullAnswer) && $event.preventDefault()">OK</button>
         <app-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'"
                          [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']"
