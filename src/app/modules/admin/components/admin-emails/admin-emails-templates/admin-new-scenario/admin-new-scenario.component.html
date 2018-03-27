@@ -1,3 +1,57 @@
-<div class="columns">
-  Création de scénario
+<div>
+  <h1>Scénarios de mails</h1>
+  <div class="empty">
+    <div class="empty-action">
+      <button (click)="newScenarioName = 'scenario'" class="btn btn-lg btn-primary">
+        Créer un nouveau scénario <i class="icon icon-arrow-right"></i>
+      </button>
+      <button (click)="newSignatureName = 'signature'" class="btn btn-lg btn-primary">
+        Créer une nouvelle signature <i class="icon icon-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL : Création d'un nouveau scénario -->
+<div class="modal" [ngClass]="{'active': newScenarioName != null}">
+  <div class="modal-overlay" (click)="(newScenarioName = null) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-title h5">Créer un nouveau scénario</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        Choisissez un nom pour le nouveau scénario
+        <input class="form-input" type="text" [(ngModel)]="newScenarioName"/>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="createScenario()">Créer</button>
+      <button class="btn btn-link" (click)="(newScenarioName = null) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL : Création d'une nouvelle signature -->
+<div class="modal" [ngClass]="{'active': newSignatureName != null}">
+  <div class="modal-overlay" (click)="(newSignatureName = null) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-title h5">Créer une nouvelle signature</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        Choisissez un nom la nouvelle signature
+        <input class="form-input" type="text" [(ngModel)]="newSignatureName"/>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="createSignature()">Créer</button>
+      <button class="btn btn-link" (click)="(newSignatureName = null) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
 </div>
