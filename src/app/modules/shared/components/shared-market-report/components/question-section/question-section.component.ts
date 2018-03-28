@@ -44,7 +44,13 @@ export class QuestionSectionComponent implements OnInit {
 
     this._answersWithComment = this.answers
       .filter((a) => (a.answers[this.info.id + 'Comment'] && a.answers[this.info.id + 'CommentQuality'] !== 0))
-      .sort((a, b) => b.answers[this.info.id + 'CommentQuality'] - a.answers[this.info.id + 'CommentQuality']);
+      .sort((a, b) => {
+        if (b.answers[this.info.id + 'CommentQuality'] - a.answers[this.info.id + 'CommentQuality'] === 0) {
+          return b.answers[this.info.id + 'Comment'].length - a.answers[this.info.id + 'Comment'].length;
+        } else {
+          return b.answers[this.info.id + 'CommentQuality'] - a.answers[this.info.id + 'CommentQuality'];
+        }
+      });
 
     switch (this.info.controlType) {
       case 'scale':
