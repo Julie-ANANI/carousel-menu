@@ -15,6 +15,7 @@ import { SharedMarketItemListComponent } from './components/shared-market-item-l
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { StarsComponent } from './components/stars/stars.component';
 import { WorldMapComponent } from './components/world-map/world-map.component';
+import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
 import { SharedModule } from '../../shared.module';
 import { SharedAnswerModalModule } from '../shared-answer-modal/answer-modal.module';
 
@@ -22,6 +23,7 @@ import { SharedAnswerModalModule } from '../shared-answer-modal/answer-modal.mod
   imports: [
     CommonModule,
     ChartsModule,
+    MultilingModule,
     SharedModule,
     SharedAnswerModalModule,
     TranslateModule.forChild()

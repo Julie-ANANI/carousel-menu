@@ -5,19 +5,19 @@ import { SharedModule } from '../../shared.module';
 import { AnswerModalComponent } from './answer-modal.component';
 import { AnswerQuestionComponent } from './components/answer-question/answer-question.component';
 import { RatingItemComponent } from './components/rating-item/rating-item.component';
-import { MultilingPipe } from '../../../../pipes/multiling.pipe';
+import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    MultilingModule,
     SharedModule,
     TranslateModule.forChild()
   ],
   declarations: [
     AnswerModalComponent,
     AnswerQuestionComponent,
-    RatingItemComponent,
-    MultilingPipe
+    RatingItemComponent
   ],
   exports: [
     AnswerModalComponent

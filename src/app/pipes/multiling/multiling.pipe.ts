@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Multiling } from '../models/multiling';
+import { Multiling } from '../../models/multiling';
 
 @Pipe({
   name: 'multiling'
