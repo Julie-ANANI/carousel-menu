@@ -1,6 +1,8 @@
-<div>
-    <div>Espacio para crear tags</div>
-    <div>La lista
+<!--<div>
+    <div [hidden]="true">
+        <app-admin-tag-new></app-admin-tag-new>
+    </div>
+    <div [hidden]="false">La lista
         <table>
             <thead>
                 <th>Sel.</th>
@@ -13,10 +15,19 @@
             </thead>
             <tbody>
                 <tr>
+                    <td>Select??</td>
                     <td>CB</td>
-                    <td>test</td>
                     <td>Sector</td>
                     <td>Desc</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>Today</td>
+                </tr>
+                <tr *ngFor="let tag of tagList">
+                    <td><input type="checkbox"></td>
+                    <td>{{tag.label}}</td>
+                    <td>test</td>
+                    <td>{{tag.description}}</td>
                     <td>1</td>
                     <td>0</td>
                     <td>Today</td>
@@ -27,4 +38,96 @@
             </tfoot>
         </table>
     </div>
-</div>
+</div> -->
+
+
+<h3>{{total}} Tags / {{ nbSelected }} sélectionnés</h3>
+<!--<smart-select [ngClass]="{'text-success': smartSelect}" (selectChange)="updateSelection($event)" [select]="smartSelect || {offset: config.offset, limit: config.limit}"></smart-select>-->
+<table class="table pros" wt-responsive-table>
+    <thead>
+    <!--
+    <th>Sel.</th>
+    <th width="240">Tag name</th>
+    <th width="240">Tag type</th>??
+    <th width="480">Description</th>
+    <th width="240">Level</th>
+    <th width="120">Tagged objects</th>
+    <th width="120">Date</th>
+    -->
+    <tr>
+        <th></th>
+        <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'label'">Label</sq-sort></th>
+        <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'description'">Description</sq-sort></th>
+        <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'status'">Status</sq-sort></th>
+        <th><sq-sort [config]="config" (configChange)="loadPros($event)" [prop]="'attachments'" >Attachments</sq-sort></th>
+        <th>{{ 'CAMPAIGNS.ACTIONS' | translate }}</th>
+    </tr>
+    <tr>
+        <th>
+            <sqFilter [config]="config" (configChange)="loadPros($event)" prop="label"></sqFilter>
+        </th>
+        <th></th>
+        <th>
+            <sqFilter [config]="config" (configChange)="loadPros($event)" prop="status"></sqFilter>
+        </th>
+        <th>
+            <sqFilter [config]="config" (configChange)="loadPros($event)" prop="attachments"></sqFilter>
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let tag of tagList" [ngClass]="{'active': tag.isSelected}">
+
+        <ng-container [ngSwitch]="editUser[tag._id]">
+
+            <!--
+            <tr *ngFor="let tag of tagList">
+                <td><input type="checkbox"></td>
+                <td>{{tag.label}}</td>
+                <td>test</td>
+                <td>{{tag.description}}</td>
+                <td>1</td>
+                <td>0</td>
+                <td>Today</td>
+            </tr>
+            -->
+
+            <ng-container *ngSwitchCase="true">
+                <td><input type="checkbox" [(ngModel)]="tag.isSelected"/></td>
+                <td><input type="text" size="5" [(ngModel)]="tag.label" alt="label" placeholder="label"/></td>
+                <td><input type="text" size="5" [(ngModel)]="tag.description" alt="description" placeholder="description"/></td>
+                <td><input type="text" size="5" [(ngModel)]="tag.status" alt="status" placeholder="status"/></td>
+                <td>NA</td>
+                <td>
+                    <button class="btn btn-action" (click)="editUser[tag._id] = false"><i class="fa fa-times"></i></button>
+                    <button class="btn btn-action" (click)="updatePro(tag, $event)"><i class="fa fa-save"></i></button>
+                </td>
+            </ng-container>
+
+            <ng-container *ngSwitchDefault>
+                <ng-container (click)="selectPro(tag)">
+                    <td><input type="checkbox" [(ngModel)]="tag.isSelected"/></td>
+                    <td>{{ tag.label }}</td>
+                    <td>{{ tag.description }}</td>
+                    <td>{{ tag.status }}</td>
+                    <td>{{ tag.attachments.length || 0 }}</td>
+                </ng-container>
+                <td>
+                    <button class="btn btn-action" (click)="editUser[tag._id] = true"><i class="fa fa-edit"></i></button>
+                </td>
+            </ng-container>
+
+        </ng-container>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="12">
+            <sqPagination [config]="config" (configChange)="loadPros($event)" [total]="total"></sqPagination>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+

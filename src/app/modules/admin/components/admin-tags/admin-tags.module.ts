@@ -9,6 +9,7 @@ import { SharedModule } from '../../../shared/shared.module';
 
 import { AdminTagsComponent } from './admin-tags.component';
 import { AdminTagListComponent } from './admin-tag-list/admin-tag-list.component';
+import { AdminTagNewComponent } from './admin-tag-new/admin-tag-new.component';
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import { AdminTagListComponent } from './admin-tag-list/admin-tag-list.component
     ],
     declarations: [
         AdminTagsComponent,
-        AdminTagListComponent
+        AdminTagListComponent,
+        AdminTagNewComponent
     ],
     exports: [
         AdminTagsComponent
