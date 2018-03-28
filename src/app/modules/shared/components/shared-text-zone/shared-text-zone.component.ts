@@ -31,6 +31,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
     tinymce.init({
       selector: '#' + this.elementId,
       plugins: ['link', 'paste', 'table'],
+      default_link_target: '_blank',
       width: 700,
       height: 250,
       statusbar: false,
