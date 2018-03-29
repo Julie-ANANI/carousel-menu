@@ -84,6 +84,7 @@
     <ul *ngIf="info.controlType === 'textarea'" class="comments">
       <li *ngFor="let answer of answers">
         <market-comment
+          *ngIf="answer.answers && answer.answers[info.id]"
           [answer]="answer"
           [questionId]="info.id"
           (modalAnswerChange)="seeAnswer($event)">
