@@ -36,17 +36,6 @@ body.sample-infographic {
 
 .market-report {
 
-  .professional-item.top-profil {
-    position: relative;
-    p {
-      color: white !important;
-    }
-
-    a {
-      color: #7cffe5 !important;
-    }
-  }
-
   .flex-container {
     display: flex;
   }
@@ -251,45 +240,21 @@ body.sample-infographic {
   .professional-item {
     background: white;
     box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
-    padding: 25px 20px 20px 20px;
+    padding: 35px 20px 0 20px;
     width: 100%;
     max-width: 280px;
     margin-bottom: 20px;
+  }
 
-    .user-flag {
-      margin-right: 10px;
-      margin-bottom: 7px;
-      float: left;
-    }
-
-    .user-name {
-      position: relative;
-      top: -3px;
-      font-weight: bold;
-      font-size: 14px;
-      color: #4A4A4A;
-      line-height: 21px;
-      margin-bottom: 2px;
-    }
-
-    .user-job,
-    .user-company {
-      margin: 0;
-      opacity: 0.8;
-      font-weight: 600;
-      font-size: 13px;
-      color: #4A4A4A;
-      line-height: 21px;
-      clear: both;
-    }
+  .professional-item.top-profil {
+    position: relative;
+    color: white !important;
 
     a, .see-answer {
-      cursor: pointer;
-      color: #3498DB;
-      margin-right: 15px;
-      font-size: 13px;
+      color: #7cffe5 !important;
     }
   }
+
 }
 
 .prosList {
@@ -301,18 +266,6 @@ body.sample-infographic {
 .professional-item.top-profil,
 ul.items > li.top-profil {
   background: #16A085 !important;
-}
-
-.professional-item.top-profil {
-  position: relative;
-  p {
-    color: white !important;
-  }
-
-  a, .see-answer {
-    cursor: pointer;
-    color: #7cffe5 !important;
-  }
 }
 
 .professional-item.top-profil:before,

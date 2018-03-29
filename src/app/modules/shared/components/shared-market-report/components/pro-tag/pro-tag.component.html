@@ -1,0 +1,40 @@
+<div class="pro-tag">
+
+  <div class="user-name">
+    <div class="user-flag">
+      <country-flag [country]="answer.country" [width]="23" [height]="16"></country-flag>
+    </div>
+    <a [href]="answer.professional.profileUrl" target="_blank" *ngIf="answer.professional.profileUrl">
+      {{answer.professional.firstName}} {{answer.professional.lastName}}
+    </a>
+    <span *ngIf="!answer.professional.profileUrl">
+      {{answer.professional.firstName}} {{answer.professional.lastName}}
+    </span>
+  </div>
+
+  <p *ngIf="answer.job" class="user-job">
+    <i class="fa fa-user" aria-hidden="true"></i>
+    &nbsp;{{answer.job}}
+  </p>
+
+  <p *ngIf="answer.company && answer.company.name" class="user-company">
+    <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;
+    <a *ngIf="answer.company.domain" [href]="answer.company.domain" target="_blank">
+      {{answer.company.name}}
+    </a>
+    <ng-container *ngIf="!answer.company.domain">
+      {{answer.company.name}}
+    </ng-container>
+  </p>
+
+  <p *ngIf="answer.professional && answer.professional.email">
+    <a [href]="'mailto:'+answer.professional.email">
+      {{answer.professional ? answer.professional.email : ''}}
+    </a>
+  </p>
+
+  <p (click)="seeAnswer($event, answer)" class="see-answer">
+    <u>{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</u>
+  </p>
+
+</div>
