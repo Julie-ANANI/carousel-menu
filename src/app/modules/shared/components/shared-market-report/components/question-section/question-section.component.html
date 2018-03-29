@@ -80,11 +80,10 @@
       </div>
     </div>
 
-    <!--======= Texte =======-->
+    <!--======= textarea =======-->
     <ul *ngIf="info.controlType === 'textarea'" class="comments">
-      <li *ngFor="let answer of answers">
+      <li *ngFor="let answer of answersToShow">
         <market-comment
-          *ngIf="answer.answers && answer.answers[info.id]"
           [answer]="answer"
           [questionId]="info.id"
           (modalAnswerChange)="seeAnswer($event)">
@@ -92,6 +91,15 @@
       </li>
     </ul>
 
+    <!--======= toggle =======-->
+    <div *ngIf="info.controlType === 'toggle'" class="prosList">
+      <div *ngFor="let answer of answersToShow" class="white-frame professional-item">
+        <app-pro-tag
+          [answer]="answer"
+          (modalAnswerChange)="seeAnswer($event)">
+        </app-pro-tag>
+      </div>
+    </div>
 
     <!--************************************************
                      COMMENTS SECTION

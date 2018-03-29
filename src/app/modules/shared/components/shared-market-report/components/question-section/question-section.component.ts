@@ -18,6 +18,7 @@ export class QuestionSectionComponent implements OnInit {
 
   private _showDetails: boolean;
   private _answersWithComment: Array<Answer> = [];
+  private _answersToShow: Array<Answer> = [];
   private _readonly: boolean;
   private _maxCountScore: number;
   private _innoid: string;
@@ -41,6 +42,9 @@ export class QuestionSectionComponent implements OnInit {
     this._route.params.subscribe(params => {
       this._innoid = params['projectId'];
     });
+
+    this._answersToShow = this.answers
+      .filter((a) => (a.answers[this.info.id] && a.answers[this.info.id + 'Quality'] !== 0));
 
     this._answersWithComment = this.answers
       .filter((a) => (a.answers[this.info.id + 'Comment'] && a.answers[this.info.id + 'CommentQuality'] !== 0))
@@ -84,6 +88,7 @@ export class QuestionSectionComponent implements OnInit {
 
   get readonly(): boolean { return this._readonly; }
   get showDetails(): boolean { return this._showDetails; }
+  get answersToShow(): Array<Answer> { return this._answersToShow; }
   get answersWithComment(): Array<Answer> { return this._answersWithComment; }
   get innoid(): string { return this._innoid; }
   set innoid(value: string) { this._innoid = value; }

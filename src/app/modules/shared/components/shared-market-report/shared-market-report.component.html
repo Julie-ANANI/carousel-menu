@@ -26,7 +26,7 @@
         Sidebar
   ************************************************************** -->
   <div class="d-flex">
-    <div class="sidebar" *ngIf="!adminMode">
+    <div class="sidebar">
       <div class="sidebarIsSticky">
         <div (click)="toggleDetails($event)" class="toggle-sections">
           {{ (showDetails ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND') | translate}}
