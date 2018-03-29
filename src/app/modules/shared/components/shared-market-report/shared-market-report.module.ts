@@ -6,6 +6,7 @@ import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { BluesquareComponent } from './components/bluesquare/bluesquare.component';
 import { PiechartComponent } from './components/piechart/piechart.component';
 import { PricesComponent } from './components/prices/prices.component';
+import { ProfessionalTagComponent } from './components/pro-tag/pro-tag.component';
 import { SharedMarketReportComponent } from './shared-market-report.component';
 import { SharedMarketCommentComponent } from './components/professional-comment/professional-comment.component';
 import { QuestionConclusionComponent } from './components/question-conclusion/question-conclusion.component';
@@ -15,6 +16,7 @@ import { SharedMarketItemListComponent } from './components/shared-market-item-l
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { StarsComponent } from './components/stars/stars.component';
 import { WorldMapComponent } from './components/world-map/world-map.component';
+import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
 import { SharedModule } from '../../shared.module';
 import { SharedAnswerModalModule } from '../shared-answer-modal/answer-modal.module';
 
@@ -22,6 +24,7 @@ import { SharedAnswerModalModule } from '../shared-answer-modal/answer-modal.mod
   imports: [
     CommonModule,
     ChartsModule,
+    MultilingModule,
     SharedModule,
     SharedAnswerModalModule,
     TranslateModule.forChild()
@@ -30,6 +33,7 @@ import { SharedAnswerModalModule } from '../shared-answer-modal/answer-modal.mod
     SharedMarketReportComponent,
     QuestionConclusionComponent,
     BarChartComponent,
+    ProfessionalTagComponent,
     SharedMarketCommentComponent,
     SharedMarketItemComponent,
     SharedMarketItemListComponent,

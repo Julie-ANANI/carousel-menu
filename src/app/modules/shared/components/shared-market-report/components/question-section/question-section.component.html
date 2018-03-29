@@ -1,5 +1,5 @@
 <div id={{info.id}}>
-  <h2>{{ info.title[lang] }}</h2>
+  <h2>{{ info.title | multiling:lang }}</h2>
 
   <div class="white-frame">
 
@@ -80,9 +80,9 @@
       </div>
     </div>
 
-    <!--======= Texte =======-->
+    <!--======= textarea =======-->
     <ul *ngIf="info.controlType === 'textarea'" class="comments">
-      <li *ngFor="let answer of answers">
+      <li *ngFor="let answer of answersToShow">
         <market-comment
           [answer]="answer"
           [questionId]="info.id"
@@ -91,6 +91,15 @@
       </li>
     </ul>
 
+    <!--======= toggle =======-->
+    <div *ngIf="info.controlType === 'toggle'" class="prosList">
+      <div *ngFor="let answer of answersToShow" class="white-frame professional-item">
+        <app-pro-tag
+          [answer]="answer"
+          (modalAnswerChange)="seeAnswer($event)">
+        </app-pro-tag>
+      </div>
+    </div>
 
     <!--************************************************
                      COMMENTS SECTION
@@ -101,7 +110,7 @@
       <button type="button" class="market-report-btn centered"
               [ngClass]="{'active': showDetails}"
               (click)="toggleDetails($event)">
-        {{(showDetails ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN') | translate}}
+        {{(showDetails ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN') | translate:({length: answersWithComment.length})}}
         <i class="fa" aria-hidden="true"
            [ngClass]="showDetails ? 'fa-angle-up' : 'fa-angle-down'"></i>
       </button>
@@ -109,7 +118,6 @@
       <!-- ================= COMMENTS ==================-->
       <div class="bloc details" *ngIf="showDetails">
         <div *ngIf="showDetails">
-          <p class="title-question">{{answersWithComment.length}} {{ 'MARKET_REPORT.COMMENTS' | translate }}</p>
           <ul class="comments">
             <li *ngFor="let answer of answersWithComment">
               <market-comment

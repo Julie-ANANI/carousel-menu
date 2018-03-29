@@ -18,6 +18,7 @@ export class QuestionSectionComponent implements OnInit {
 
   private _showDetails: boolean;
   private _answersWithComment: Array<Answer> = [];
+  private _answersToShow: Array<Answer> = [];
   private _readonly: boolean;
   private _maxCountScore: number;
   private _innoid: string;
@@ -42,8 +43,18 @@ export class QuestionSectionComponent implements OnInit {
       this._innoid = params['projectId'];
     });
 
+    this._answersToShow = this.answers
+      .filter((a) => (a.answers[this.info.id] && a.answers[this.info.id + 'Quality'] !== 0));
+
     this._answersWithComment = this.answers
-      .filter((a) => (a.answers[this.info.id + 'Comment'] && a.answers[this.info.id + 'CommentQuality'] !== 0));
+      .filter((a) => (a.answers[this.info.id + 'Comment'] && a.answers[this.info.id + 'CommentQuality'] !== 0))
+      .sort((a, b) => {
+        if (b.answers[this.info.id + 'CommentQuality'] - a.answers[this.info.id + 'CommentQuality'] === 0) {
+          return b.answers[this.info.id + 'Comment'].length - a.answers[this.info.id + 'Comment'].length;
+        } else {
+          return b.answers[this.info.id + 'CommentQuality'] - a.answers[this.info.id + 'CommentQuality'];
+        }
+      });
 
     switch (this.info.controlType) {
       case 'scale':
@@ -77,6 +88,7 @@ export class QuestionSectionComponent implements OnInit {
 
   get readonly(): boolean { return this._readonly; }
   get showDetails(): boolean { return this._showDetails; }
+  get answersToShow(): Array<Answer> { return this._answersToShow; }
   get answersWithComment(): Array<Answer> { return this._answersWithComment; }
   get innoid(): string { return this._innoid; }
   set innoid(value: string) { this._innoid = value; }
