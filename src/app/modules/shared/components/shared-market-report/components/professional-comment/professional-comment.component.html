@@ -9,7 +9,7 @@
   </div>
 
   <strong>
-    {{answer.job}} - {{answer.company?.name}}
+    {{answer.job || answer.professional?.jobTitle}} - {{answer.company?.name || answer.professional?.company}}
   </strong>
 
   <p class="comment-desc">

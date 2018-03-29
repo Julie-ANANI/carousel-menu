@@ -12,22 +12,22 @@
     </span>
   </div>
 
-  <p *ngIf="answer.job" class="user-job">
+  <p *ngIf="answer.job || answer.professional?.jobTitle" class="user-job">
     <i class="fa fa-user" aria-hidden="true"></i>
-    &nbsp;{{answer.job}}
+    &nbsp;{{answer.job || answer.professional?.jobTitle}}
   </p>
 
-  <p *ngIf="answer.company && answer.company.name" class="user-company">
+  <p *ngIf="answer.company?.name || answer.professional?.company" class="user-company">
     <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;
-    <a *ngIf="answer.company.domain" [href]="answer.company.domain" target="_blank">
-      {{answer.company.name}}
+    <a *ngIf="answer.company?.domain" [href]="answer.company?.domain" target="_blank">
+      {{answer.company?.name || answer.professional?.company}}
     </a>
-    <ng-container *ngIf="!answer.company.domain">
-      {{answer.company.name}}
+    <ng-container *ngIf="!answer.company?.domain">
+      {{answer.company?.name || answer.professional?.company}}
     </ng-container>
   </p>
 
-  <p *ngIf="answer.professional && answer.professional.email">
+  <p *ngIf="answer.professional?.email">
     <a [href]="'mailto:'+answer.professional.email">
       {{answer.professional ? answer.professional.email : ''}}
     </a>
