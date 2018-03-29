@@ -16,6 +16,7 @@ import * as _ from 'lodash';
 
 export class QuestionSectionComponent implements OnInit {
 
+  private _domSectionId: string;
   private _showDetails: boolean;
   private _answersWithComment: Array<Answer> = [];
   private _answersToShow: Array<Answer> = [];
@@ -42,6 +43,8 @@ export class QuestionSectionComponent implements OnInit {
     this._route.params.subscribe(params => {
       this._innoid = params['projectId'];
     });
+
+    this._domSectionId = this.info.id.replace(/\s/g, '');
 
     this._answersToShow = this.answers
       .filter((a) => (a.answers[this.info.id] && a.answers[this.info.id + 'Quality'] !== 0));
@@ -87,6 +90,7 @@ export class QuestionSectionComponent implements OnInit {
   }
 
   get readonly(): boolean { return this._readonly; }
+  get domSectionId(): string { return this._domSectionId; }
   get showDetails(): boolean { return this._showDetails; }
   get answersToShow(): Array<Answer> { return this._answersToShow; }
   get answersWithComment(): Array<Answer> { return this._answersWithComment; }

@@ -47,6 +47,11 @@ export class SharedMarketReportComponent implements OnInit {
       this.project.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions);
       });
+      // remove spaces in questions identifiers.
+      this._questions = this._questions.map((q) => {
+        q.identifier = q.identifier.replace(/\s/g, '');
+        return q;
+      });
     }
     this._modalAnswer = null;
     this._innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {

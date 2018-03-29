@@ -40,9 +40,9 @@
               <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
             </a>
           </li>
-          <li *ngFor="let question of infographics.questions">
-            <a pageScroll [href]="'#' + question.id" [hidden]="!!question.hidden">
-              {{ question.title[lang] }}
+          <li *ngFor="let question of questions">
+            <a pageScroll [href]="'#' + question.identifier">
+              {{ question.title | multiling:lang }}
               <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
             </a>
           </li>
