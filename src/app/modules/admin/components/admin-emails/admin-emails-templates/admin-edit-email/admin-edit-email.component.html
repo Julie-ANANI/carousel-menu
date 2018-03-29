@@ -1,3 +1,26 @@
-<div class="columns">
-  Edition de mail
+<div class="card email">
+  <div class="card-header">
+    <div class="d-flex">
+      <div class="card-title h5">{{ email.subject }}</div>
+      <div class="chip">
+        <span class="avatar avatar-sm">{{ email.language.toUpperCase() }}</span>
+        {{ email.profile }}
+      </div>
+    </div>
+    <label class="form-switch" *ngIf="email.content != null">
+      <input type="checkbox" (change)="(editionMode = !editionMode) && $event.preventDefault()">
+      <i class="form-icon"></i>Edition  <i class="fa fa-pencil"></i>
+    </label>
+  </div>
+  <div class="card-body">
+    <p *ngIf="email.content != null">
+      {{ email.content }}
+    </p>
+    <p *ngIf="email.content == null">
+      Cet email n'existe pas pour le moment.
+      <button class="btn btn-primary" (click)="addEmail(email)">
+        Créer cet email
+      </button>
+    </p>
+  </div>
 </div>

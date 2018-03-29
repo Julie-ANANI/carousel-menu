@@ -20,24 +20,28 @@ export class AdminNewScenarioComponent {
     const emails: Array<EmailTemplate> = [
       {
         step: "FIRST",
+        language: 'en',
         profile: 'NEW',
         subject: 'first mail',
         content: 'content'
       },
       {
         step: "SECOND",
+        language: 'en',
         profile: 'NEW',
         subject: 'second mail',
         content: 'content'
       },
       {
         step: "THIRD",
+        language: 'en',
         profile: 'NEW',
         subject: 'last mail',
         content: 'content'
       },
       {
         step: "THANKS",
+        language: 'en',
         profile: 'NEW',
         subject: 'thanks',
         content: 'content'

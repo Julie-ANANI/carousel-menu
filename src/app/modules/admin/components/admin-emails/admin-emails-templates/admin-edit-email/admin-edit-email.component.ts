@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { EmailTemplate } from '../../../../../../models/email-template';
 
 @Component({
   selector: 'app-admin-edit-email',
@@ -6,6 +7,20 @@ import { Component } from '@angular/core';
   styleUrls: ['admin-edit-email.component.scss']
 })
 export class AdminEditEmail {
-  
+
+  @Input() email: EmailTemplate;
+
+  public editionMode: boolean = false;
+  public STEPS = {
+    FIRST: "Premier email",
+    SECOND: "Première relance",
+    THIRD: "Seconde relance",
+    THANKS: "Email de remerciement",
+  };
+
   constructor() { }
+  
+  public addEmail(email: EmailTemplate) {
+    console.log(email);
+  }
 }
