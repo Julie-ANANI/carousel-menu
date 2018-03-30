@@ -42,6 +42,7 @@ import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
 // Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
+import { AutocompleteSearchComponent } from '../../directives/autocomplete-search/autocomplete-search.component';
 import { CountryFlagComponent } from '../../directives/country-flag/country-flag.component';
 import { HeaderComponent } from '../../directives/header/header.component';
 
@@ -80,6 +81,7 @@ import { HeaderComponent } from '../../directives/header/header.component';
     SharedProjectSettingsComponent,
     SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
+    AutocompleteSearchComponent,
     SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
@@ -119,6 +121,7 @@ import { HeaderComponent } from '../../directives/header/header.component';
     SharedProjectSettingsComponent,
     SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
+    AutocompleteSearchComponent,
     SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,

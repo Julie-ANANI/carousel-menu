@@ -1,3 +1,30 @@
-<h2>Découvrir</h2>
+<!-- Container for Heading, Sub-heading and Search category  -->
+<div class="container">
 
-<p>Découvrez toutes les innovations ajoutées quotidiennement à la plateforme.</p>
+  <!-- 1. Row for page heading -->
+  <div class="columns">
+    <div class="column col-10 col-mx-auto">
+      <h1>{{ 'DISCOVER.TITLE' | translate }}</h1>
+    </div>
+  </div>
+
+  <!-- 2. Row for sub heading and search category  -->
+  <div class="columns">
+
+    <div class="column col-md-10 col-xl-5 col-6 col-mx-auto">
+      <div class="discover-description">
+        <p>{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</p>
+      </div>
+
+    </div>
+
+    <div class="column col-md-10 col-xl-3 col-2 col-mx-auto">
+      <app-autocomplete-search></app-autocomplete-search>
+    </div>
+
+  </div>
+
+</div>
+<!-- /Container for Heading, Sub-heading and Search category  -->
+
+

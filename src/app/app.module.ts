@@ -49,7 +49,7 @@ import { SignatureResolver } from './resolvers/signature.resolver';
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({
