@@ -31,23 +31,25 @@ export class BarChartComponent implements OnInit {
   constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
-    this._barsData = this.question.options.map((q: any) => {
-      // TODO: when getting real Question (not the one from infographic), change question.id to question.identifier
-      let answers = [];
-      if (this.question.controlType === 'checkbox') {
-        answers = this.answers.filter((a) => a.answers[this.question.id] && a.answers[this.question.id][q.identifier]);
-      } else {
-        answers = this.answers.filter((a) => a.answers[this.question.id] === q.identifier);
-      }
-      const percentage = `${((answers.length * 100) / this.answers.length) >> 0}%`;
-      return {
-        label: q.label,
-        answers: answers,
-        percentage: percentage,
-        color: q.color,
-        count: answers.length
-      }
-    });
+    if (Array.isArray(this.question.options)) {
+      this._barsData = this.question.options.map((q: any) => {
+        // TODO: when getting real Question (not the one from infographic), change question.id to question.identifier
+        let answers = [];
+        if (this.question.controlType === 'checkbox') {
+          answers = this.answers.filter((a) => a.answers[this.question.id] && a.answers[this.question.id][q.identifier]);
+        } else {
+          answers = this.answers.filter((a) => a.answers[this.question.id] === q.identifier);
+        }
+        const percentage = `${((answers.length * 100) / this.answers.length) >> 0}%`;
+        return {
+          label: q.label,
+          answers: answers,
+          percentage: percentage,
+          color: q.color,
+          count: answers.length
+        }
+      });
+    }
   }
 
   get barsData(): Array<BarData> { return this._barsData; }
