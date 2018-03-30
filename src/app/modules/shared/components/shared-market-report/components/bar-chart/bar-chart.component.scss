@@ -1,61 +1,78 @@
-/* === Horizontals bars === */
+.bar-chart-component {
+  /* === Horizontals bars === */
 
-.horizontal-bar {
-  position: relative;
-  border: 1px solid #D6D6D6;
-  width: 100%;
-  height: 38px;
-  margin-bottom: 13px;
-
-  .bar-number {
-    background: grey;
-    width: 38px;
+  .horizontal-bar {
+    position: relative;
+    border: 1px solid #D6D6D6;
+    width: 100%;
     height: 38px;
-    color: white;
-    text-align: center;
-    font-weight: bold;
-    font-size: 16px;
-    float: left;
-    padding-top: 7px;
+    margin-bottom: 13px;
+
+    .bar-number {
+      background: grey;
+      width: 38px;
+      height: 38px;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      float: left;
+      padding-top: 7px;
+    }
+
+    .bar-fill {
+      background-image: linear-gradient(-90deg, #edeeef 16%, #d7dee0 100%);
+      height: 38px;
+      padding-left: 38px;
+    }
+
+    .bar-name {
+      position: absolute;
+      top: 7px;
+      left: 50px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #3F3F3F;
+    }
+
+    .bar-stats {
+      position: absolute;
+      top: 7px;
+      right: 12px;
+      font-weight: 600;
+      font-size: 19px;
+      color: #3498DB;
+    }
   }
 
-  .bar-fill {
-    background-image: linear-gradient(-90deg, #edeeef 16%, #d7dee0 100%);
-    height: 38px;
+  /* === Pour les Bars qui n'ont pas de chiffres au début === */
+
+  #key-benefits .horizontal-bar .bar-name {
+    left: 20px;
   }
 
-  .bar-name {
-    position: absolute;
-    top: 7px;
-    left: 50px;
-    font-size: 15px;
-    font-weight: 600;
-    color: #3F3F3F;
+  #expression-of-interest .horizontal-bar .bar-name {
+    left: 20px;
   }
 
-  .bar-stats {
-    position: absolute;
-    top: 7px;
-    right: 12px;
-    font-weight: 600;
-    font-size: 19px;
-    color: #3498DB;
+  .average {
+    font-size: 22px;
+    color: #9B9B9B;
+    margin-top: 0;
+    margin-bottom: 30px;
   }
-}
 
-/* === Pour les Bars qui n'ont pas de chiffres au début === */
+  .prosList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
 
-#key-benefits .horizontal-bar .bar-name {
-  left: 20px;
-}
-
-#expression-of-interest .horizontal-bar .bar-name {
-  left: 20px;
-}
-
-.average {
-  font-size: 22px;
-  color: #9B9B9B;
-  margin-top: 0;
-  margin-bottom: 30px;
+  .white-frame {
+    background: white;
+    padding: 50px 50px 30px 50px;
+    margin: 10px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
+  }
 }

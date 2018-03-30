@@ -1,40 +1,62 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Answer } from '../../../../../../models/answer';
+import { Multiling } from '../../../../../../models/multiling';
+// import { Question } from '../../../../../../models/question';
+
+export interface BarData {
+  label: Multiling,
+  answers: Array<Answer>,
+  percentage: string,
+  color: string,
+  count: number
+}
 
 @Component({
-  selector: 'bar-chart',
+  selector: 'app-bar-chart',
   templateUrl: 'bar-chart.component.html',
   styleUrls: ['bar-chart.component.scss']
 })
-
 export class BarChartComponent implements OnInit {
 
-  @Input() public options: any;
-  @Input() public stats: any;
-  @Input() public number: any;
-  @Input() public displayCount: boolean;
+  @Input() public question: any;
+  @Input() public answers: Array<Answer>;
+  @Output() modalAnswerChange = new EventEmitter<any>();
 
-  public index = 0;
+  private _barsData: Array<BarData> = [];
+  public showAnswers: {[index: string]: string} = {};
 
   constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
-    if (!this.stats) {
-      this.stats = {};
-      this.options.forEach((option: {identifier: string, label: any}) => {
-        this.stats[option.identifier] = {
-          percentage: 0,
-          count: 0
+    if (Array.isArray(this.question.options)) {
+      this._barsData = this.question.options.map((q: any) => {
+        // TODO: when getting real Question (not the one from infographic), change question.id to question.identifier
+        let answers = [];
+        if (this.question.controlType === 'checkbox') {
+          answers = this.answers.filter((a) => a.answers[this.question.id] && a.answers[this.question.id][q.identifier]);
+        } else {
+          answers = this.answers.filter((a) => a.answers[this.question.id] === q.identifier);
         }
-      })
+        const percentage = `${((answers.length * 100) / this.answers.length) >> 0}%`;
+        return {
+          label: q.label,
+          answers: answers,
+          percentage: percentage,
+          color: q.color,
+          count: answers.length
+        }
+      });
     }
   }
 
-  public barFill(percentage: number): string {
-    return `${percentage}%`;
+  public seeAnswer(event: Answer) {
+    this.modalAnswerChange.emit(event);
   }
+
+  get barsData(): Array<BarData> { return this._barsData; }
   get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
 }
