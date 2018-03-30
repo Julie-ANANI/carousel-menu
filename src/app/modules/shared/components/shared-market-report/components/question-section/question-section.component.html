@@ -16,108 +16,118 @@
                          ANSWERS
     **************************************************-->
 
-    <!--======= Scores =======-->
-    <div class="bloc" *ngIf="info.controlType === 'scale'">
-      <div class="column-graph flex-container">
-        <div *ngFor="let score of info.data; let i = index"
-             class="vertical-bar number{{score.value}}">
-          <div class="bar-fill" [style.height]="getFillPerc(score.count)" *ngIf="score.count"></div>
-          <div class="bar-stats" *ngIf="score.count">{{score.count}}</div>
-          <div class="bar-picture" *ngIf="score.count"></div>
-          <div class="bar-score">{{score.value}}/10</div>
+    <!-- ========= SHOW ANSWERS BUTTON ==============-->
+    <button type="button" class="market-report-btn centered"
+            [ngClass]="{'active': showDetails}"
+            (click)="showDetails = !showDetails; $event.preventDefault()">
+      {{(showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate}}
+      <i class="fa" aria-hidden="true"
+         [ngClass]="showDetails ? 'fa-angle-up' : 'fa-angle-down'"></i>
+    </button>
+
+    <div *ngIf="showDetails" class="bloc">
+
+      <!--======= Scores =======-->
+      <div *ngIf="info.controlType === 'scale'">
+        <div class="column-graph flex-container">
+          <div *ngFor="let score of info.data; let i = index"
+               class="vertical-bar number{{score.value}}">
+            <div class="bar-fill" [style.height]="getFillPerc(score.count)" *ngIf="score.count"></div>
+            <div class="bar-stats" *ngIf="score.count">{{score.count}}</div>
+            <div class="bar-picture" *ngIf="score.count"></div>
+            <div class="bar-score">{{score.value}}/10</div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!--======= Prix =======-->
-    <div class="bloc" *ngIf="info.average && info.controlType === 'textbox'">
-      <app-prices [rawData]="info.data"></app-prices>
+      <!--======= Prix =======-->
+      <div *ngIf="info.average && info.controlType === 'textbox'">
+        <app-prices [rawData]="info.data"></app-prices>
 
-      <div class="average">Moyenne : {{info.average}}€</div>
-    </div>
+        <div class="average">Moyenne : {{info.average}}€</div>
+      </div>
 
-    <!--======= Bar Chart =======-->
-    <bar-chart
-      *ngIf="info.pieChart"
-      [stats]="info.pieChart"
-      [options]="info.options || []"
-      [number]="true"
-      [displayCount]="info.controlType === 'checkbox'">
-    </bar-chart>
+      <!--======= Bar Chart =======-->
+      <bar-chart
+        *ngIf="info.pieChart"
+        [stats]="info.pieChart"
+        [options]="info.options || []"
+        [number]="true"
+        [displayCount]="info.controlType === 'checkbox'">
+      </bar-chart>
 
-    <!--======= Avantages Clés =======-->
-    <div *ngIf="info.controlType === 'stars'">
-      <table>
-        <tr *ngFor="let advantage of info.options; let i = index">
-          <td>{{advantage.label[lang]}}</td>
-          <td>
-            <app-stars [note]="info?.data[advantage.identifier]?.average"
-                       [count]="info?.data[advantage.identifier]?.count"></app-stars>
-          </td>
-        </tr>
-      </table>
-    </div>
+      <!--======= Avantages Clés =======-->
+      <div *ngIf="info.controlType === 'stars'">
+        <table>
+          <tr *ngFor="let advantage of info.options; let i = index">
+            <td>{{advantage.label[lang]}}</td>
+            <td>
+              <app-stars [note]="info?.data[advantage.identifier]?.average"
+                         [count]="info?.data[advantage.identifier]?.count"></app-stars>
+            </td>
+          </tr>
+        </table>
+      </div>
 
-    <!--======= Liste d'items (applications, concurrents, partenaires potentiels) =======-->
-    <market-item-list
-      [answers]="answers"
-      [list]="info.data"
-      *ngIf="info.controlType === 'list' || info.controlType === 'clearbit'"
-      (modalAnswerChange)="seeAnswer($event)">
-    </market-item-list>
+      <!--======= Liste d'items (applications, concurrents, partenaires potentiels) =======-->
+      <market-item-list
+        [answers]="answers"
+        [list]="info.data"
+        *ngIf="info.controlType === 'list' || info.controlType === 'clearbit'"
+        (modalAnswerChange)="seeAnswer($event)">
+      </market-item-list>
 
-    <!--======= Marques d'intérêt =======-->
-    <div *ngIf="info.controlType === 'checkbox'">
-      <div *ngFor="let option of info.options">
-        <div *ngIf="info.data[option.identifier].length">
-          <p class="title-question">{{ option.label[lang]}}</p>
-          <market-item-list
-            [answers]="answers"
-            [list]="info.data[option.identifier]"
+      <!--======= Marques d'intérêt =======-->
+      <div *ngIf="info.controlType === 'checkbox'">
+        <div *ngFor="let option of info.options">
+          <div *ngIf="info.data[option.identifier].length">
+            <p class="title-question">{{ option.label[lang]}}</p>
+            <market-item-list
+              [answers]="answers"
+              [list]="info.data[option.identifier]"
+              (modalAnswerChange)="seeAnswer($event)">
+            </market-item-list>
+          </div>
+        </div>
+      </div>
+
+      <!--======= textarea =======-->
+      <ul *ngIf="info.controlType === 'textarea'" class="comments">
+        <li *ngFor="let answer of answersToShow">
+          <market-comment
+            [answer]="answer"
+            [questionId]="info.id"
             (modalAnswerChange)="seeAnswer($event)">
-          </market-item-list>
+          </market-comment>
+        </li>
+      </ul>
+
+      <!--======= toggle =======-->
+      <div *ngIf="info.controlType === 'toggle'" class="prosList">
+        <div *ngFor="let answer of answersToShow" class="white-frame professional-item">
+          <app-pro-tag
+            [answer]="answer"
+            (modalAnswerChange)="seeAnswer($event)">
+          </app-pro-tag>
         </div>
       </div>
-    </div>
 
-    <!--======= textarea =======-->
-    <ul *ngIf="info.controlType === 'textarea'" class="comments">
-      <li *ngFor="let answer of answersToShow">
-        <market-comment
-          [answer]="answer"
-          [questionId]="info.id"
-          (modalAnswerChange)="seeAnswer($event)">
-        </market-comment>
-      </li>
-    </ul>
+      <!--************************************************
+                       COMMENTS SECTION
+      **************************************************-->
+      <ng-container *ngIf="answersWithComment.length > 0">
 
-    <!--======= toggle =======-->
-    <div *ngIf="info.controlType === 'toggle'" class="prosList">
-      <div *ngFor="let answer of answersToShow" class="white-frame professional-item">
-        <app-pro-tag
-          [answer]="answer"
-          (modalAnswerChange)="seeAnswer($event)">
-        </app-pro-tag>
-      </div>
-    </div>
+        <!-- ========= SHOW COMMENTS BUTTON ==============-->
+        <button type="button" class="market-report-btn centered"
+                [ngClass]="{'active': showComments}"
+                (click)="showComments = !showComments; $event.preventDefault()">
+          {{(showComments ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN') | translate:({length: answersWithComment.length})}}
+          <i class="fa" aria-hidden="true"
+             [ngClass]="showComments ? 'fa-angle-up' : 'fa-angle-down'"></i>
+        </button>
 
-    <!--************************************************
-                     COMMENTS SECTION
-    **************************************************-->
-    <ng-container *ngIf="answersWithComment.length > 0">
-
-      <!-- ========= SHOW COMMENTS BUTTON ==============-->
-      <button type="button" class="market-report-btn centered"
-              [ngClass]="{'active': showDetails}"
-              (click)="toggleDetails($event)">
-        {{(showDetails ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN') | translate:({length: answersWithComment.length})}}
-        <i class="fa" aria-hidden="true"
-           [ngClass]="showDetails ? 'fa-angle-up' : 'fa-angle-down'"></i>
-      </button>
-
-      <!-- ================= COMMENTS ==================-->
-      <div class="bloc details" *ngIf="showDetails">
-        <div *ngIf="showDetails">
+        <!-- ================= COMMENTS ==================-->
+        <div class="bloc" *ngIf="showComments">
           <ul class="comments">
             <li *ngFor="let answer of answersWithComment">
               <market-comment
@@ -128,9 +138,10 @@
             </li>
           </ul>
         </div>
-      </div>
 
-    </ng-container>
+      </ng-container>
+
+    </div>
 
   </div>
 </div>

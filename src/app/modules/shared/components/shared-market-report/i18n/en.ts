@@ -10,6 +10,8 @@ export const MARKET_REPORT = {
   'SEE_ANSWERS': 'Show answer',
   'BTN_EDITION_MODE': 'Go to Edition mode',
   'BTN_VIEW_MODE': 'Go to view mode',
+  'BTN_ANSWERS_OPEN': 'Show answers.',
+  'BTN_ANSWERS_CLOSE': 'Hide answers.',
   'BTN_COMMENTS_OPEN': 'Show comments ({{length}})',
   'BTN_COMMENTS_CLOSE': 'Hide comments ({{length}})',
   'BTN_RECOMPUTE': 'Recompute infographics',

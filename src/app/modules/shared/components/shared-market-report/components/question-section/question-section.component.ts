@@ -17,6 +17,7 @@ import * as _ from 'lodash';
 export class QuestionSectionComponent implements OnInit {
 
   private _domSectionId: string;
+  private _showComments: boolean;
   private _showDetails: boolean;
   private _answersWithComment: Array<Answer> = [];
   private _answersToShow: Array<Answer> = [];
@@ -24,6 +25,9 @@ export class QuestionSectionComponent implements OnInit {
   private _maxCountScore: number;
   private _innoid: string;
 
+  @Input() set showComments(value: boolean) {
+    this._showComments = value;
+  }
   @Input() set showDetails(value: boolean) {
     this._showDetails = value;
   }
@@ -71,11 +75,6 @@ export class QuestionSectionComponent implements OnInit {
     this.modalAnswerChange.emit(event);
   }
 
-  public toggleDetails(event: Event) {
-    event.preventDefault();
-    this._showDetails = !this._showDetails;
-  }
-
   public getAnswers(commentsList: Array<any>): Array<Answer> {
     if (this.answers) {
       const answers = _.map(commentsList, (comment: any) => _.find(this.answers, (answer: Answer) => answer._id === comment.answerId));
@@ -91,6 +90,7 @@ export class QuestionSectionComponent implements OnInit {
 
   get readonly(): boolean { return this._readonly; }
   get domSectionId(): string { return this._domSectionId; }
+  get showComments(): boolean { return this._showComments; }
   get showDetails(): boolean { return this._showDetails; }
   get answersToShow(): Array<Answer> { return this._answersToShow; }
   get answersWithComment(): Array<Answer> { return this._answersWithComment; }

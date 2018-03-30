@@ -262,6 +262,7 @@ body.sample-infographic {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-top: 100px;
 }
 
 .professional-item.top-profil,
@@ -292,4 +293,38 @@ ul.items > li.top-profil {
   margin-right: 10px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
   margin-bottom: 70px;
+}
+
+.market-report-btn {
+  position: relative;
+  bottom: -53px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 3;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  border: 0;
+  color: #fff;
+  background-color: #3498DB;
+  padding: 0 50px;
+
+  .fa-angle-up,
+  .fa-angle-down {
+    font-size: 40px;
+    vertical-align: middle;
+  }
+
+  &:hover {
+    background: #FFA642;
+  }
+
+  &.active {
+    background-color: #747474;
+  }
 }
