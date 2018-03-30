@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { EmailTemplate } from '../../../../../../models/email-template';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 
 @Component({
@@ -16,7 +17,37 @@ export class AdminNewScenarioComponent {
               private _router: Router) { }
 
   public createScenario() {
-    this._templatesService.create({name: this._newScenarioName}).first().subscribe(newScenario => {
+    const emails: Array<EmailTemplate> = [
+      {
+        step: "FIRST",
+        language: 'en',
+        profile: 'NEW',
+        subject: 'first mail',
+        content: 'content'
+      },
+      {
+        step: "SECOND",
+        language: 'en',
+        profile: 'NEW',
+        subject: 'second mail',
+        content: 'content'
+      },
+      {
+        step: "THIRD",
+        language: 'en',
+        profile: 'NEW',
+        subject: 'last mail',
+        content: 'content'
+      },
+      {
+        step: "THANKS",
+        language: 'en',
+        profile: 'NEW',
+        subject: 'thanks',
+        content: 'content'
+      }
+    ];
+    this._templatesService.create({name: this._newScenarioName, emails: emails}).first().subscribe(newScenario => {
       this._router.navigate(['/admin/emails/templates/scenario/' + newScenario._id])
     });
   }

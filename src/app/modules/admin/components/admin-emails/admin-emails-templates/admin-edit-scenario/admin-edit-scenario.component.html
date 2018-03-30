@@ -1,3 +1,47 @@
 <div>
-  Edition de scénario
+  <h2>Scénario - {{ scenario.name }}</h2>
+  <div class="d-flex">
+    Langues :
+    <div *ngFor="let language of availableLanguages" class="form-group">
+      <label class="form-checkbox">
+        <input type="checkbox" [checked]="displayedLanguages.indexOf(language) > -1" (click)="checkLanguage(language)"/>
+        <i class="form-icon"></i> {{ language }}
+      </label>
+    </div>
+    Profils :
+    <div *ngFor="let profile of availableProfiles" class="form-group">
+      <label class="form-checkbox">
+        <input type="checkbox" [checked]="displayedProfiles.indexOf(profile) > -1" (click)="checkProfile(profile)"/>
+        <i class="form-icon"></i> {{ profile }}
+      </label>
+    </div>
+  </div>
+
+    <app-admin-edit-emails-step [emails]="first" [step]="'FIRST'" (emailsChange)="save($event, 'FIRST')"></app-admin-edit-emails-step>
+    <app-admin-edit-emails-step [emails]="second" [step]="'SECOND'" (emailsChange)="save($event, 'SECOND')"></app-admin-edit-emails-step>
+    <app-admin-edit-emails-step [emails]="third" [step]="'THIRD'" (emailsChange)="save($event, 'THIRD')"></app-admin-edit-emails-step>
+    <app-admin-edit-emails-step [emails]="thanks" [step]="'THANKS'" (emailsChange)="save($event, 'THANKS')"></app-admin-edit-emails-step>
+
+  <a (click)="deleteModal = true" class="text-error"><i class="fa fa-trash"></i> Supprimer le scénario</a>
+</div>
+
+
+<!-- MODAL : Suppression scénario ? -->
+<div class="modal" [ngClass]="{'active': deleteModal}">
+  <div class="modal-overlay" (click)="(deleteModal = null) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(deleteModal = null) && $event.preventDefault()"></button>
+      <div class="modal-title h5">Suppression du scénario</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">Etes-vous sûr de vouloir supprimer ce scénario ? Cette action est irréversible !</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="removeScenario()">{{ 'COMMON.DELETE' | translate }}</button>
+      <button class="btn btn-primary" (click)="(deleteModal = null) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
 </div>
