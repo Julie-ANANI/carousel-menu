@@ -10,8 +10,8 @@ export const MARKET_REPORT = {
   'SEE_ANSWERS': 'Show answer',
   'BTN_EDITION_MODE': 'Go to Edition mode',
   'BTN_VIEW_MODE': 'Go to view mode',
-  'BTN_ANSWERS_OPEN': 'Show answers.',
-  'BTN_ANSWERS_CLOSE': 'Hide answers.',
+  'BTN_ANSWERS_OPEN': 'Show answers',
+  'BTN_ANSWERS_CLOSE': 'Hide answers',
   'BTN_COMMENTS_OPEN': 'Show comments ({{length}})',
   'BTN_COMMENTS_CLOSE': 'Hide comments ({{length}})',
   'BTN_RECOMPUTE': 'Recompute infographics',
@@ -29,8 +29,6 @@ export const MARKET_REPORT = {
     'SIDEBAR': 'Professional',
     'TITLE': 'Professional',
     'NUMBER': 'Answers from professionals',
-    'FOLLOW_PLURAL': 'wishing to follow your innovation',
-    'FOLLOW': 'wishing to follow your innovation',
     'QUESTION': 'Origin of responses'
   },
   'MARKET_NEED': {

@@ -1,18 +1,18 @@
 <div class="big-blue-synthesis">
+
   <div class="total-score" *ngIf="id==='marketPotential'">
     <span>{{ numberFocus || 0 }}</span>/10
   </div>
+
   <div class="number-answers" *ngIf="id!='marketPotential'">
     <span>{{ numberFocus || 0 }}</span>
     {{ subtitle }}
   </div>
-  <hr *ngIf="id!='marketPotential'">
-  <div class="number-ratio" *ngIf="id!='professionals' && id!='marketPotential'">
-    <span>{{ percentage || 0 }}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-  </div>
-  <div class="number-follow-innovation" *ngIf="id==='professionals'">
-    <img src="https://res.cloudinary.com/umi/image/upload/app/star.svg" alt="" width="22" height="22" class="centered">
-    <span>{{ percentage || 0 }}%</span>
-    {{ 'MARKET_REPORT.PROFESSIONAL.FOLLOW_PLURAL' | translate }}
-  </div>
+
+  <ng-container *ngIf="id!='marketPotential' && id!='professionals'">
+    <hr>
+    <div class="number-ratio">
+      <span>{{ percentage || 0 }}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
+    </div>
+  </ng-container>
 </div>
