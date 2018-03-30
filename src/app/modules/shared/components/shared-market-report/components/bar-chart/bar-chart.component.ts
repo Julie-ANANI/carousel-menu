@@ -1,7 +1,7 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';
 import { Multiling } from '../../../../../../models/multiling';
@@ -24,6 +24,7 @@ export class BarChartComponent implements OnInit {
 
   @Input() public question: any;
   @Input() public answers: Array<Answer>;
+  @Output() modalAnswerChange = new EventEmitter<any>();
 
   private _barsData: Array<BarData> = [];
   public showAnswers: {[index: string]: string} = {};
@@ -50,6 +51,10 @@ export class BarChartComponent implements OnInit {
         }
       });
     }
+  }
+
+  public seeAnswer(event: Answer) {
+    this.modalAnswerChange.emit(event);
   }
 
   get barsData(): Array<BarData> { return this._barsData; }

@@ -50,7 +50,8 @@
       <!--======= Bar Chart =======-->
       <app-bar-chart *ngIf="info.controlType === 'checkbox' || info.controlType === 'radio'"
                      [answers]="answersToShow"
-                     [question]="question">
+                     [question]="question"
+                     (modalAnswerChange)="seeAnswer($event)">
       </app-bar-chart>
 
       <!--======= Avantages Clés =======-->
