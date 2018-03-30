@@ -49,7 +49,7 @@
     <div *ngIf="info.controlType === 'stars'">
       <table>
         <tr *ngFor="let advantage of info.options; let i = index">
-          <td>{{advantage.label[lang]}}</td>
+          <td>{{advantage.label | multiling:lang }}</td>
           <td>
             <app-stars [note]="info?.data[advantage.identifier]?.average"
                        [count]="info?.data[advantage.identifier]?.count"></app-stars>
