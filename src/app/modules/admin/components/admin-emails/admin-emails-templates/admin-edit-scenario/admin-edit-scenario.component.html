@@ -17,10 +17,10 @@
     </div>
   </div>
 
-    <app-admin-edit-emails-step [emails]="first" [step]="'FIRST'"></app-admin-edit-emails-step>
-    <app-admin-edit-emails-step [emails]="second" [step]="'SECOND'"></app-admin-edit-emails-step>
-    <app-admin-edit-emails-step [emails]="third" [step]="'THIRD'"></app-admin-edit-emails-step>
-    <app-admin-edit-emails-step [emails]="thanks" [step]="'THANKS'"></app-admin-edit-emails-step>
+    <app-admin-edit-emails-step [emails]="first" [step]="'FIRST'" (emailsChange)="save($event, 'FIRST')"></app-admin-edit-emails-step>
+    <app-admin-edit-emails-step [emails]="second" [step]="'SECOND'" (emailsChange)="save($event, 'SECOND')"></app-admin-edit-emails-step>
+    <app-admin-edit-emails-step [emails]="third" [step]="'THIRD'" (emailsChange)="save($event, 'THIRD')"></app-admin-edit-emails-step>
+    <app-admin-edit-emails-step [emails]="thanks" [step]="'THANKS'" (emailsChange)="save($event, 'THANKS')"></app-admin-edit-emails-step>
 
   <a (click)="deleteModal = true" class="text-error"><i class="fa fa-trash"></i> Supprimer le scénario</a>
 </div>

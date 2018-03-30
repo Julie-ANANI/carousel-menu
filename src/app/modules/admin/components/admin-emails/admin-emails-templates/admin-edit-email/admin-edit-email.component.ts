@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { EmailTemplate } from '../../../../../../models/email-template';
 
 @Component({
@@ -9,6 +9,7 @@ import { EmailTemplate } from '../../../../../../models/email-template';
 export class AdminEditEmail {
 
   @Input() email: EmailTemplate;
+  @Output() emailChange = new EventEmitter<any>();
 
   public editionMode: boolean = false;
   public STEPS = {
@@ -19,8 +20,12 @@ export class AdminEditEmail {
   };
 
   constructor() { }
-  
+
   public addEmail(email: EmailTemplate) {
     console.log(email);
+  }
+
+  public save() {
+    this.emailChange.emit(this.email);
   }
 }

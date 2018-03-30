@@ -1,7 +1,10 @@
 <div class="card email">
   <div class="card-header">
     <div class="d-flex">
-      <div class="card-title h5">{{ email.subject }}</div>
+      <div class="card-title h5" *ngIf="!editionMode">{{ email.subject }}</div>
+      <div class="card-title h5" *ngIf="editionMode">
+        <input type="text" [(ngModel)]="email.subject" name="subject" class="form-input"/>
+      </div>
       <div class="chip">
         <span class="avatar avatar-sm">{{ email.language.toUpperCase() }}</span>
         {{ email.profile }}
@@ -13,9 +16,15 @@
     </label>
   </div>
   <div class="card-body">
-    <p *ngIf="email.content != null">
-      {{ email.content }}
-    </p>
+    <div *ngIf="email.content != null">
+      <div *ngIf="!editionMode">
+        {{ email.content }}
+      </div>
+      <div *ngIf="editionMode">
+        <textarea type="text" [(ngModel)]="email.content" name="content" class="form-input"></textarea>
+        <button type="submit" class="btn btn-primary centered" (click)="save()">Sauvegarder</button>
+      </div>
+    </div>
     <p *ngIf="email.content == null">
       Cet email n'existe pas pour le moment.
       <button class="btn btn-primary" (click)="addEmail(email)">
