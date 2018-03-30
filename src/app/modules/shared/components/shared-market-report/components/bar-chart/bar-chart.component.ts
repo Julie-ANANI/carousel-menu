@@ -26,6 +26,7 @@ export class BarChartComponent implements OnInit {
   @Input() public answers: Array<Answer>;
 
   private _barsData: Array<BarData> = [];
+  public showAnswers: {[index: string]: string} = {};
 
   constructor(private _translateService: TranslateService) { }
 
