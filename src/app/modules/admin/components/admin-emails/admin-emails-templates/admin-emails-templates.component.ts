@@ -16,9 +16,17 @@ export class AdminEmailTemplatesComponent implements OnInit {
   constructor(private _templatesService: TemplatesService) {}
 
   ngOnInit() {
+    this.getScenarios();
+    this.getSignatures();
+  }
+  
+  public getScenarios() {
     this._templatesService.getAll({limit: 0}).first().subscribe((scenarios: any) => {
       this._scenarios = scenarios.result;
     });
+  }
+  
+  public getSignatures() {
     this._templatesService.getAllSignatures({limit: 0}).first().subscribe((signatures: any) => {
       this._signatures = signatures.result;
     });
