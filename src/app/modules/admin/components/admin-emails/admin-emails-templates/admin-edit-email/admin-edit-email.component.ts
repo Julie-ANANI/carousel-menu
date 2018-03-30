@@ -25,6 +25,10 @@ export class AdminEditEmail {
     console.log(email);
   }
 
+  public removeEmail() {
+    this.emailChange.emit(null);
+  }
+
   public save() {
     this.emailChange.emit(this.email);
   }

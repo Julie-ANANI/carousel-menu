@@ -35,8 +35,8 @@ export class AdminEditScenarioComponent implements OnInit {
   }
 
   public save(emails: Array<EmailTemplate>, step: string) {
-    //On supprime les anciens mails enregistrés
-    this._scenario.emails = this._scenario.emails.filter(e => e.step === step);
+    //On supprime les anciens mails enregistrés pour cette étape
+    this._scenario.emails = this._scenario.emails.filter(e => e.step != step);
     //Puis on ajoute les mails mis à jours
     this._scenario.emails = this._scenario.emails.concat(emails);
     this._templatesService.save(this._scenario).first().subscribe(_ => {

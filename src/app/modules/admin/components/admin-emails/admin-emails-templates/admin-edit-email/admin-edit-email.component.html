@@ -32,4 +32,7 @@
       </button>
     </p>
   </div>
+  <div class="card-footer" *ngIf="email.content != null">
+    <a (click)="removeEmail()" class="text-error"><i class="fa fa-trash"></i> {{ 'COMMON.DELETE' | translate }}</a>
+  </div>
 </div>

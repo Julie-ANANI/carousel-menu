@@ -22,7 +22,11 @@ export class AdminEditEmailsStep {
   constructor() { }
 
   emailChange(email: EmailTemplate, i: number) {
-    this.emails[i] = email;
+    if (email == null) {
+      this.emails.splice(i, 1);
+    } else {
+      this.emails[i] = email;
+    }
     this.emailsChange.emit(this.emails);
   }
   
