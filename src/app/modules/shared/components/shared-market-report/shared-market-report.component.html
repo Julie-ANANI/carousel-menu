@@ -40,9 +40,9 @@
               <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
             </a>
           </li>
-          <li *ngFor="let question of infographics.questions">
-            <a pageScroll [href]="'#' + question.id" [hidden]="!!question.hidden">
-              {{ question.title[lang] }}
+          <li *ngFor="let question of questions">
+            <a pageScroll [href]="'#' + question.identifier">
+              {{ question.title | multiling:lang }}
               <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
             </a>
           </li>
@@ -76,12 +76,20 @@
                 <app-world-map [countries]="countries" [color]="'#0B90C6'"></app-world-map>
               </div>
             </div>
-            <div class="bloc details">
+
+            <!-- ========= showListProfessional button ==============-->
+            <button type="button" class="market-report-btn centered"
+                    [ngClass]="{'active': showListProfessional}"
+                    (click)="showListProfessional = !showListProfessional; $event.preventDefault()">
+              {{(showListProfessional ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate}}
+              <i class="fa" aria-hidden="true"
+                 [ngClass]="showListProfessional ? 'fa-angle-up' : 'fa-angle-down'"></i>
+            </button>
+
+            <div *ngIf="showListProfessional" class="bloc details prosList">
               <!--======= Liste des pros =======-->
-              <div class="prosList">
-                <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
-                  <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
-                </div>
+              <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
+                <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
               </div>
             </div>
           </div>
@@ -93,6 +101,7 @@
             [info]="question"
             [question]="question"
             [answers]="infographics.answers"
+            [showComments]="showDetails"
             [showDetails]="showDetails"
             [readonly]="!adminMode"
             (modalAnswerChange)="seeAnswer($event)">

@@ -26,8 +26,9 @@ export class SharedMarketReportComponent implements OnInit {
   private _questions: Array<Question> = [];
   private _answers: Array<Answer> = [];
   private _countries: Array<string> = [];
+  private _showListProfessional: boolean = false;
   private _infographics: any;
-  private _showDetails = true;
+  private _showDetails = false;
   private _calculating = false;
   private _innoid: string;
 
@@ -46,6 +47,11 @@ export class SharedMarketReportComponent implements OnInit {
     if (this.project.preset && this.project.preset.sections) {
       this.project.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions);
+      });
+      // remove spaces in questions identifiers.
+      this._questions = this._questions.map((q) => {
+        q.identifier = q.identifier.replace(/\s/g, '');
+        return q;
       });
     }
     this._modalAnswer = null;
@@ -107,7 +113,9 @@ export class SharedMarketReportComponent implements OnInit {
 
   public toggleDetails(event: Event): void {
     event.preventDefault();
-    this._showDetails = !this._showDetails;
+    const value = !this._showDetails;
+    this._showDetails = value;
+    this._showListProfessional = value;
   }
 
   public seeAnswer(answer: Answer): void {
@@ -124,11 +132,12 @@ export class SharedMarketReportComponent implements OnInit {
   set questions(value: Array<Question>) { this._questions = value; }
   get modalAnswer(): Answer { return this._modalAnswer; }
   set modalAnswer(modalAnswer: Answer) { this._modalAnswer = modalAnswer; }
+  get showListProfessional(): boolean { return this._showListProfessional; }
+  set showListProfessional(val: boolean) { this._showListProfessional = val; }
   get innoid(): string { return this._innoid; }
   get infographics(): any { return this._infographics; }
   set calculating (value: boolean) { this._calculating = value; }
   get calculating (): boolean { return this._calculating; }
-  set showDetails (value: boolean) { this._showDetails = value; }
   get showDetails (): boolean { return this._showDetails; }
   get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
 }

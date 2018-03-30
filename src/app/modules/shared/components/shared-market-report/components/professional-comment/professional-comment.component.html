@@ -1,19 +1,25 @@
 <div class="professional-comment" [ngClass]="{'top-profil': answer.answers[questionId+'Quality'] === 2}">
 
   <div class="flex-container">
-    <strong class="flex-container">
+    <p class="flex-container">
+
       <country-flag *ngIf="answer.country?.flag" [country]="answer.country.flag"></country-flag>
       &nbsp; {{answer.professional?.firstName}} {{answer.professional?.lastName}}
-    </strong>
+
+      <ng-container *ngIf="answer.job || answer.professional?.jobTitle">
+        - {{answer.job || answer.professional?.jobTitle}}
+      </ng-container>
+
+      <ng-container *ngIf="answer.company?.name || answer.professional?.company">
+        - {{answer.company?.name || answer.professional?.company}}
+      </ng-container>
+    </p>
+
     <market-report-popover [answers]="[answer]" (modalAnswerChange)="seeAnswer($event)"></market-report-popover>
   </div>
 
-  <strong>
-    {{answer.job || answer.professional?.jobTitle}} - {{answer.company?.name || answer.professional?.company}}
-  </strong>
-
-  <p class="comment-desc">
+  <strong class="comment-desc">
     {{answer.answers[questionId]}}
-  </p>
+  </strong>
 
 </div>
