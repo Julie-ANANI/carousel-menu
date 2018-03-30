@@ -3,38 +3,52 @@
  */
 import { Component, OnInit, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Answer } from '../../../../../../models/answer';
+import { Multiling } from '../../../../../../models/multiling';
+// import { Question } from '../../../../../../models/question';
+
+export interface BarData {
+  label: Multiling,
+  answers: Array<Answer>,
+  percentage: string,
+  color: string,
+  count: number
+}
 
 @Component({
-  selector: 'bar-chart',
+  selector: 'app-bar-chart',
   templateUrl: 'bar-chart.component.html',
   styleUrls: ['bar-chart.component.scss']
 })
-
 export class BarChartComponent implements OnInit {
 
-  @Input() public options: any;
-  @Input() public stats: any;
-  @Input() public number: any;
-  @Input() public displayCount: boolean;
+  @Input() public question: any;
+  @Input() public answers: Array<Answer>;
 
-  public index = 0;
+  private _barsData: Array<BarData> = [];
 
   constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
-    if (!this.stats) {
-      this.stats = {};
-      this.options.forEach((option: {identifier: string, label: any}) => {
-        this.stats[option.identifier] = {
-          percentage: 0,
-          count: 0
-        }
-      })
-    }
+    this._barsData = this.question.options.map((q: any) => {
+      // TODO: when getting real Question (not the one from infographic), change question.id to question.identifier
+      let answers = [];
+      if (this.question.controlType === 'checkbox') {
+        answers = this.answers.filter((a) => a.answers[this.question.id] && a.answers[this.question.id][q.identifier]);
+      } else {
+        answers = this.answers.filter((a) => a.answers[this.question.id] === q.identifier);
+      }
+      const percentage = `${((answers.length * 100) / this.answers.length) >> 0}%`;
+      return {
+        label: q.label,
+        answers: answers,
+        percentage: percentage,
+        color: q.color,
+        count: answers.length
+      }
+    });
   }
 
-  public barFill(percentage: number): string {
-    return `${percentage}%`;
-  }
+  get barsData(): Array<BarData> { return this._barsData; }
   get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
 }

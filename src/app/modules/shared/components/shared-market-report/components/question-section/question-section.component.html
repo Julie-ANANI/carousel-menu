@@ -48,13 +48,10 @@
       </div>
 
       <!--======= Bar Chart =======-->
-      <bar-chart
-        *ngIf="info.pieChart"
-        [stats]="info.pieChart"
-        [options]="info.options || []"
-        [number]="true"
-        [displayCount]="info.controlType === 'checkbox'">
-      </bar-chart>
+      <app-bar-chart *ngIf="info.controlType === 'checkbox' || info.controlType === 'radio'"
+                     [answers]="answersToShow"
+                     [question]="question">
+      </app-bar-chart>
 
       <!--======= Avantages Clés =======-->
       <div *ngIf="info.controlType === 'stars'">
@@ -76,20 +73,6 @@
         *ngIf="info.controlType === 'list' || info.controlType === 'clearbit'"
         (modalAnswerChange)="seeAnswer($event)">
       </market-item-list>
-
-      <!--======= Marques d'intérêt =======-->
-      <div *ngIf="info.controlType === 'checkbox'">
-        <div *ngFor="let option of info.options">
-          <div *ngIf="info.data[option.identifier].length">
-            <p class="title-question">{{ option.label[lang]}}</p>
-            <market-item-list
-              [answers]="answers"
-              [list]="info.data[option.identifier]"
-              (modalAnswerChange)="seeAnswer($event)">
-            </market-item-list>
-          </div>
-        </div>
-      </div>
 
       <!--======= textarea =======-->
       <ul *ngIf="info.controlType === 'textarea'" class="comments">

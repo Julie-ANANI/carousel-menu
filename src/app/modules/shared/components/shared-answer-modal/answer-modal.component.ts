@@ -55,7 +55,7 @@ export class AnswerModalComponent implements OnInit {
             while (advantagesLeft) {
               if ((cardFr && cardFr.advantages && cardFr.advantages[i]) || (cardEn && cardEn.advantages && cardEn.advantages[i])) {
                 question.options.push({
-                  identifier: i,
+                  identifier: i.toString(),
                   label: {
                     fr: cardFr && cardFr.advantages && cardFr.advantages[i] ? cardFr.advantages[i]: '',
                     en: cardEn && cardEn.advantages && cardEn.advantages[i] ? cardEn.advantages[i]: ''
