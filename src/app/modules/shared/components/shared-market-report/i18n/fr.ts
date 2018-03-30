@@ -29,8 +29,6 @@ export const MARKET_REPORT = {
     'SIDEBAR': 'Professionnels',
     'TITLE': 'Les professionnels',
     'NUMBER': 'réponses de professionnels',
-    'FOLLOW_PLURAL': 'souhaitent suivre votre innovation',
-    'FOLLOW': 'souhaite suivre votre innovation',
     'QUESTION': 'Origine des réponses'
   },
   'MARKET_NEED': {
