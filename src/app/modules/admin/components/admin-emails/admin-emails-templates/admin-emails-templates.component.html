@@ -1,22 +1,24 @@
 <div class="columns">
   <div class="column col-3">
-    <div class="container">
-      <h3>Scénario de mails</h3>
-      <ul>
-        <li *ngFor="let scenario of scenarios">
-          <a [routerLink]="'/admin/emails/templates/scenario/' + scenario._id">
-            {{ scenario.name }}
-          </a>
-        </li>
-      </ul>
-      <h3>Signatures</h3>
-      <ul>
-        <li *ngFor="let signature of signatures">
-          <a [routerLink]="'/admin/emails/templates/signature/' + signature._id">
-            {{ signature.name }}
-          </a>
-        </li>
-      </ul>
+    <div id="templatesMenu">
+      <div class="container">
+        <h3>Scénario de mails</h3>
+        <ul>
+          <li *ngFor="let scenario of scenarios">
+            <a [routerLink]="'/admin/emails/templates/scenario/' + scenario._id">
+              {{ scenario.name }}
+            </a>
+          </li>
+        </ul>
+        <h3>Signatures</h3>
+        <ul>
+          <li *ngFor="let signature of signatures">
+            <a [routerLink]="'/admin/emails/templates/signature/' + signature._id">
+              {{ signature.name }}
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
   <div class="column col-9">
