@@ -68,6 +68,7 @@
               <div class="columns"
                    *ngFor="let item of options.controls; let i=index"
                    [formGroupName]="i">
+                <p>{{i}}&nbsp;</p>
                 <div class="form-group text-center" formGroupName="label">
                   EN: <input class="form-input" id="'optionEn'+i" name="en" formControlName="en" type="text"
                              placeholder="">
