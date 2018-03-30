@@ -21,8 +21,10 @@ export class AdminEditEmail {
 
   constructor() { }
 
-  public addEmail(email: EmailTemplate) {
-    console.log(email);
+  public addEmail() {
+    this.email.subject = this.email.step;
+    this.email.content = "TODO";
+    this.emailChange.emit(this.email);
   }
 
   public removeEmail() {

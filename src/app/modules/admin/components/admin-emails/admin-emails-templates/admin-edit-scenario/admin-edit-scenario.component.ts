@@ -16,7 +16,7 @@ export class AdminEditScenarioComponent implements OnInit {
   public deleteModal: boolean = false;
   public displayedLanguages: Array<string> = ['en'];
   public displayedProfiles: Array<string> = ['NEW'];
-  public availableLanguages: Array<string> = [];
+  public availableLanguages: Array<string> = ['en', 'fr'];
   public availableProfiles: Array<string> = ['NEW', 'AMBASSADOR'];
 
   constructor(private _templatesService: TemplatesService,
@@ -26,12 +26,14 @@ export class AdminEditScenarioComponent implements OnInit {
 
   ngOnInit() {
     this._scenario = this._activatedRoute.snapshot.data['scenario'];
+    /*
     this.availableLanguages = this._scenario.emails.reduce((languages, email) => {
       if (languages.indexOf(email.language) == -1) {
         languages.push(email.language);
       }
       return languages;
     }, []);
+    */
   }
 
   public save(emails: Array<EmailTemplate>, step: string) {
@@ -39,7 +41,8 @@ export class AdminEditScenarioComponent implements OnInit {
     this._scenario.emails = this._scenario.emails.filter(e => e.step != step);
     //Puis on ajoute les mails mis à jours
     this._scenario.emails = this._scenario.emails.concat(emails);
-    this._templatesService.save(this._scenario).first().subscribe(_ => {
+    this._templatesService.save(this._scenario).first().subscribe(updatedScenario => {
+      this._scenario = updatedScenario;
       this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
