@@ -1,5 +1,11 @@
 export const DISCOVER = {
   'TITLE': 'Discover',
   'PAGE_DESCRIPTION': 'Discover all the innovations added daily to the platform.',
-  'CATEGORIES': 'Categories'
+  'CATEGORIES': 'Categories',
+  'ELECTRONIC': 'Electronic',
+  'AGRICULTURE': 'Agriculture',
+  'AEROSPACE': 'Aerospace',
+  'COMPUTER': 'Computer',
+  'MATHEMATICS': 'Mathematics',
+  'SEARCH_CATEGORY': 'Category'
 };

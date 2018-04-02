@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
-
+import { FormControl } from '@angular/forms';
+import 'rxjs/Rx';
 
 @Component({
   selector: 'app-autocomplete-search',
@@ -8,13 +9,23 @@ import { Component, OnInit} from '@angular/core';
 })
 
 export class AutocompleteSearchComponent implements OnInit {
-  /*
-   * Component configuration
-  */
-  private _placeholder = '';
+
+  private searchInputField: FormControl; /* declare the FormControl as properties of our component. */
+
+  // private _placeholder = '';
 
   ngOnInit() {
-    this._placeholder = 'hello';
+
+    this.searchInputField = new FormControl(); // create the form control
+
+    this.searchInputField.valueChanges
+      .debounceTime(500) //
+      .distinctUntilChanged()
+      .subscribe(input => {
+         // this.userInput = input;
+        // pass this input to the service
+      })
+
   }
 
 }

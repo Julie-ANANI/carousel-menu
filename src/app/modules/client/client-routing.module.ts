@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ClientComponent } from './client.component';
 
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
+// import { ClientDiscoverDescriptionComponent } from './components/client-discover-description/client-discover-description.component';
 
 import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
 import { ClientProjectComponent } from './components/client-project/client-project.component';

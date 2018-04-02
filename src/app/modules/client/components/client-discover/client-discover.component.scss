@@ -1,33 +1,58 @@
+h1::after {
+  border-radius: 1px;
+}
+
 .discover-description {
   color: #878787;
   font-size:  1.1rem;
   line-height: 1.8rem;
-  padding-top: 0.4rem;
-  }
-
-.has-icon-right {
-
-  .form-input {
-    margin-bottom: 0px;
-    padding-right: 1.5rem;
-    padding-top: 1.2rem;
-    padding-bottom: 1.2rem;
-    border-radius: 5px;
-    color: #878787;
-    }
-
-  .form-icon {
-    right: 0.5rem;
-    margin: 0;
-    top: 51%;
-    }
+  margin-top: 12px;
+  margin-bottom: 5px;
 }
 
+h2 {
+  color: #0B90C6;
+  font-size: 1.6rem;
+  line-height: 2.15rem;
+  margin-top: 88px;
+}
 
+.card-title {
+  color: #333333;
+  font-size: 1.3rem;
+  line-height: 1.8rem;
+}
 
+.card-body {
+  color: #878787;
+  font-size: 1.1rem;
+  line-height: 1.8rem;
+}
 
+.card-footer {
 
- /* .column {
-    border: #0B90C6 solid 1px;
-  }*/
+  .btn {
+    border: none;
+    color: #acb3c2;
+    padding-top: 6px;
+  }
+
+  .btn:hover {
+    background-color: transparent;
+    color: #0B90C6;
+  }
+
+}
+
+@media(max-width: 840px) {
+
+  .margin-top {
+    margin-top: 30px;
+  }
+
+  .margin-bottom {
+    padding-top: 30px;
+  }
+}
+
 
