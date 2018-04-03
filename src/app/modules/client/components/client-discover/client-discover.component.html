@@ -1,106 +1,47 @@
-<!-- Container for Heading, Sub-heading and Search category  -->
 <div class="container">
-
-  <!-- 1. Row for page heading -->
   <div class="columns">
-    <div class="column col-11 col-lg-10 col-mx-auto">
+    <div class="column col-11 col-mx-auto">
+
+      <!-- Page Heading -->
       <h1>{{ 'DISCOVER.TITLE' | translate }}</h1>
-    </div>
-  </div>
-  <!-- /1. Row for page heading -->
+      <!-- /Page Heading -->
 
-  <!-- 2. Row for sub heading and search category  -->
-  <div class="columns">
-
-    <div class="column col-lg-10 col-xl-6 col-7 col-mx-auto">
-      <div class="discover-description">
-        <p>{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</p>
+      <!-- Page Description and Search Box -->
+      <div class="columns">
+        <div class="column col-md-12 col-8">
+          <p class="discover-description">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</p>
+        </div>
+        <div class="column col-md-12 col-4 margin-top">
+          <app-autocomplete-search></app-autocomplete-search>
+        </div>
       </div>
+      <!-- /Page Description and Search Box -->
+
+      <!-- Tag name -->
+      <h2 *ngFor="let tag of tag;">{{ 'DISCOVER.'+( tag.name | uppercase ) | translate }}</h2>
+      <!-- Tag name -->
+
+      <!-- Innovation Cards -->
+      <div class="columns">
+        <div class="column col-md-12 col-4 row-margin" *ngFor="let card of card">
+          <div class="card">
+            <div class="card-image">
+              <img src="https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg" class="img-responsive">
+            </div>
+            <div class="card-header">
+              <div class="card-title">{{ card.title  }}</div>
+              <div class="card-subtitle text-gray">{{ card.sub_title }}</div>
+            </div>
+            <div class="card-body">{{ card.body }}</div>
+            <div class="card-footer">
+              <p>Available in:  <span>En</span> </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Innovation Cards -->
+
 
     </div>
-
-    <div class="column col-lg-10 col-xl-4 col-3 col-mx-auto margin-top">
-      <app-autocomplete-search></app-autocomplete-search><!-- Auto complete search component to search the tag -->
-    </div>
-
   </div>
-  <!-- /2. Row for sub heading and search category  -->
-
 </div>
-<!-- /Container for Heading, Sub-heading and Search category  -->
-
-
-<!-- Container for Innovation  -->
-<div class="container" *ngFor="let tag of tag; let i=index;">
-
-  <!-- 1. Row for Tag heading -->
-  <div class="columns" *ngIf="i<5">
-    <div class="column col-11 col-lg-10 col-mx-auto">
-      <h2>{{ 'DISCOVER.'+( tag.name | uppercase ) | translate }}</h2>
-    </div>
-  </div>
-  <!-- /1. Row for Tag heading -->
-
-  <!-- 2. Row for card innovation  -->
-  <div class="columns" *ngIf="i<5">
-
-    <div class="column col-3 col-lg-10 col-mx-auto margin-bottom" *ngFor="let card of card">
-      <div class="card">
-        <div class="card-image">
-          <img src="https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg" class="img-responsive">
-        </div>
-        <div class="card-header">
-          <div class="card-title">{{ card.title  }}</div>
-          <div class="card-subtitle text-gray">{{ card.sub_title }}</div>
-        </div>
-        <div class="card-body">
-          {{ card.body }}
-        </div>
-        <div class="card-footer">
-          <p>Available in: <span>En</span> </p>
-        </div>
-      </div>
-    </div>
-
-    <!--<div class="column col-3 col-md-10 col-mx-auto padding-top">
-      <div class="card">
-        <div class="card-image">
-          <img src="https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg" class="img-responsive">
-        </div>
-        <div class="card-header">
-          <div class="card-title h5">WindCrete</div>
-          <div class="card-subtitle text-gray">Concrete floating platform for wind turbines</div>
-        </div>
-        <div class="card-body">
-          Monolythic concrete structure including both the spar buoy and the tower in a single member without any joint.
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-primary">Do</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="column col-3 col-md-10 col-mx-auto padding-top">
-      <div class="card">
-        <div class="card-image">
-          <img src="https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg" class="img-responsive">
-        </div>
-        <div class="card-header">
-          <div class="card-title h5">WindCrete</div>
-          <div class="card-subtitle text-gray">Concrete floating platform for wind turbines</div>
-        </div>
-        <div class="card-body">
-          Monolythic concrete structure including both the spar buoy and the tower in a single member without any joint.
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-primary">Do</button>
-        </div>
-      </div>
-    </div>-->
-
-  </div>
-  <!-- /2. Row for card innovation  -->
-
-</div>
-<!-- /Container for Innovation  -->
-

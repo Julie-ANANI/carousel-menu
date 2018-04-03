@@ -13,14 +13,44 @@ export const card = [
     'title': 'WindCrete',
     'sub_title': 'Concrete floating platform for wind turbines',
     'body': 'Monolythic concrete structure including both the spar buoy and the tower in a single member without any joint.'
+  },
+  {
+    'title': 'WindCrete',
+    'sub_title': 'Concrete floating platform for wind turbines',
+    'body': 'Monolythic concrete structure including both the spar buoy and the tower in a single member without any joint.'
+  },
+  {
+    'title': 'WindCrete',
+    'sub_title': 'Concrete floating platform for wind turbines',
+    'body': 'Monolythic concrete structure including both the spar buoy and the tower in a single member without any joint.'
+  },
+  {
+    'title': 'WindCrete',
+    'sub_title': 'Concrete floating platform for wind turbines',
+    'body': 'Monolythic concrete structure including both the spar buoy and the tower in a single member without any joint.'
+  },
+  {
+    'title': 'WindCrete',
+    'sub_title': 'Concrete floating platform for wind turbines',
+    'body': 'Monolythic concrete structure including both the spar buoy and the tower in a single member without any joint.'
+  },
+  {
+    'title': 'WindCrete',
+    'sub_title': 'Concrete floating platform for wind turbines',
+    'body': 'Monolythic concrete structure including both the spar buoy and the tower in a single member without any joint.'
+  },
+  {
+    'title': 'WindCrete',
+    'sub_title': 'Concrete floating platform for wind turbines',
+    'body': 'Monolythic concrete structure including both the spar buoy and the tower in a single member without any joint.'
   }
 ];
 
 export const tag = [
   {
     'name': 'Agriculture'
-  },
-  {
+  }
+ /* {
     'name': 'Aerospace'
   },
   {
@@ -31,7 +61,7 @@ export const tag = [
   },
   {
     'name': 'Mathematics'
-  }
+  }*/
 ]
 
 /*
