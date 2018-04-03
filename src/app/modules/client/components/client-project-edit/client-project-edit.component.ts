@@ -326,7 +326,7 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   }
 
   get domSanitizer() { return this._domSanitizer; }
-  get canEdit (): boolean { return this._project && (this._project.status === 'EDITING' || this.isAdmin); }
+  get canEdit (): boolean { return this._project && (this._project.status === 'EDITING'); }
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
   get project(): Innovation { return this._project; }
   get isAdmin(): boolean { return (this._authService.adminLevel & 3) === 3; }

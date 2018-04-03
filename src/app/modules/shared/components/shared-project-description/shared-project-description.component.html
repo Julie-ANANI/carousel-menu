@@ -20,25 +20,25 @@
               <button class="btn btn-lg btn-primary" *ngIf="false && project.owner && !isProjectOwner"><!-- TODO popup textarea de contact -->
                 {{ 'PROJECT.CONTACT_PROJECT_MANAGER' | translate}} <i class="icon icon-arrow-right"></i>
               </button>
-              <pdf-generator class="btn btn-lg btn-primary" [model]="getModel()" *ngIf="project.status !== 'EDITING'">
-              </pdf-generator>
+              <!--<pdf-generator class="btn btn-lg btn-primary" [model]="getModel()" *ngIf="project.status !== 'EDITING'">
+              </pdf-generator>-->
             </div>
-            <div class="column col-3 share">
+            <div class="column col-3 share" align="right">
               {{ 'PROJECT.SHARE.TITLE' | translate}}<br>
               <a [href]="shareService.linkedinProjectShareLink(project, lang)" target="_blank">
-                <img src="https://res.cloudinary.com/umi/image/upload/app/share-linkedin.png" width="52" height="52"
+                <img src="https://res.cloudinary.com/umi/image/upload/app/share-linkedin.png" width="36" height="36"
                 title="{{ 'PROJECT.SHARE.LINKEDIN' | translate}}">
               </a>
               <a [href]="shareService.twitterProjectShareLink(project, lang)" target="_blank">
-                <img src="https://res.cloudinary.com/umi/image/upload/app/share-twitter.png" width="52" height="52"
+                <img src="https://res.cloudinary.com/umi/image/upload/app/share-twitter.png" width="36" height="36"
                      title="{{ 'PROJECT.SHARE.TWITTER' | translate}}">
               </a>
               <a [href]="shareService.facebookProjectShareLink(project)" target="_blank">
-                <img src="https://res.cloudinary.com/umi/image/upload/app/share-facebook.png" width="52" height="52"
+                <img src="https://res.cloudinary.com/umi/image/upload/app/share-facebook.png" width="36" height="36"
                      title="{{ 'PROJECT.SHARE.FACEBOOK' | translate}}">
               </a>
               <a [href]="shareService.mailProjectShareLink(project, lang)" target="_blank">
-                <img src="https://res.cloudinary.com/umi/image/upload/v1512724745/share-mail_e8xztz.png" width="52" height="52"
+                <img src="https://res.cloudinary.com/umi/image/upload/v1512724745/share-mail_e8xztz.png" width="36" height="36"
                      title="{{ 'PROJECT.SHARE.MAIL' | translate}}">
               </a>
             </div>
@@ -70,7 +70,7 @@
         <div class="column col-10 col-mx-auto">
           <h2>{{ 'PROJECT.MARKET_BENEFITS' | translate }}</h2>
           <ul>
-            <li *ngFor="let advantage of project.innovationCards[idInnovationCard].advantages">{{ advantage }}</li>
+            <li *ngFor="let advantage of project.innovationCards[idInnovationCard].advantages">{{ advantage.text }}</li>
           </ul>
         </div>
       </div>
