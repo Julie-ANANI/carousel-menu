@@ -109,7 +109,7 @@ export class SharedProjectEditComponent implements OnInit, OnDestroy, ComponentC
    * @param callback
    */
   public save(callback: () => void): void {
-    if (this.canEdit) {
+    if (this.canEdit || this.isAdmin) {
       this._innovationService
         .save(this._project._id, this.formData.value)
         .first()
