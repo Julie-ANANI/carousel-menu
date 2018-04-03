@@ -66,7 +66,12 @@ export class SharedMarketReportComponent implements OnInit {
       .getInnovationValidAnswers(this._innoid)
       .first()
       .subscribe((results) => {
-        this._answers = results.answers;
+
+        this._answers = results.answers
+          .sort((a, b) => {
+            return b.profileQuality - a.profileQuality;
+          });
+
         this._countries = results.answers
           .reduce((acc, answer) => {
             if (acc.indexOf(answer.country.flag) === -1) {
@@ -74,6 +79,7 @@ export class SharedMarketReportComponent implements OnInit {
             }
             return acc;
           }, []);
+
       }, (error) => {
         this._notificationsService.error('ERROR.ERROR', error.message);
       });
