@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { card, tag } from './data';
-import {InnovationService} from '../../../../services/innovation/innovation.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
 
 @Component({
   selector: 'app-client-discover',

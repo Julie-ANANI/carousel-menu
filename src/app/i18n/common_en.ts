@@ -28,6 +28,7 @@ export const COMMON = {
   'REINVITE': 'Invite again',
   'I_FINISHED': 'I finished',
   'SYNTHESIS': 'Synthesis',
+  'SEARCHCATEGORY': 'Search category',
 
   'NAME': 'Name',
   'FIRSTNAME': 'Firstname',

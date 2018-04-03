@@ -12,8 +12,6 @@ export class AutocompleteSearchComponent implements OnInit {
 
   private searchInputField: FormControl; /* declare the FormControl as properties of our component. */
 
-  // private _placeholder = '';
-
   ngOnInit() {
 
     this.searchInputField = new FormControl(); // create the form control
@@ -24,8 +22,7 @@ export class AutocompleteSearchComponent implements OnInit {
       .subscribe(input => {
          // this.userInput = input;
         // pass this input to the service
-      })
-
+      });
   }
 
 }

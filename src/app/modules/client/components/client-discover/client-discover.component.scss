@@ -1,19 +1,17 @@
+.discover-section {
+  padding-bottom: 40px;
+}
+
 .discover-description {
   color: #878787;
   font-size:  1.1rem;
   line-height: 1.8rem;
-  margin-top: 12px;
+  margin-top: 5px;
   margin-bottom: 5px;
 }
 
-h2 {
-  color: #0B90C6;
-  font-size: 1.6rem;
-  line-height: 2.15rem;
-  margin-top: 88px;
-}
-
 .row-margin {
+  margin-top: 88px;
   margin-bottom: 15px;
 }
 
@@ -45,7 +43,7 @@ h2 {
 
 }
 
-@media(max-width: 960px) {
+@media(max-width: 840px) {
 
   .margin-top {
     margin-top: 30px;
