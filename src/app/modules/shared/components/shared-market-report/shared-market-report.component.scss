@@ -249,7 +249,7 @@ body.sample-infographic {
   .professional-item.top-profil {
     position: relative;
     color: white !important;
-
+    background: #16A085 !important;
     a {
       color: #7cffe5 !important;
     }
@@ -265,13 +265,7 @@ body.sample-infographic {
   margin-top: 100px;
 }
 
-.professional-item.top-profil,
-ul.items > li.top-profil {
-  background: #16A085 !important;
-}
-
-.professional-item.top-profil:before,
-.users-menu ul li.top-profil:before {
+.professional-item.top-profil:before {
   content: "Top Profil";
   display: inline-block;
   padding: 0 15px;

@@ -6,8 +6,10 @@ div.professional-comment {
     display: flex;
     justify-content: space-between;
   }
+
+  .fa-star {
+    color: #FEBE34;
+    margin-left: 15px;
+  }
 }
 
-div.professional-comment.top-profil {
-  background: #16A085;
-}
