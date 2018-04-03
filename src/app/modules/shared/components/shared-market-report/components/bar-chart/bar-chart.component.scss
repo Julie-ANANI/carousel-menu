@@ -67,12 +67,18 @@
     flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 10px;
+
+    .professional-item {
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .white-frame {
+      background: white;
+      padding: 50px 50px 30px 50px;
+      margin: 10px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
+    }
   }
 
-  .white-frame {
-    background: white;
-    padding: 50px 50px 30px 50px;
-    margin: 10px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
-  }
 }
