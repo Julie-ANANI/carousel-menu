@@ -23,7 +23,7 @@ export class AdminEditScenarioComponent implements OnInit {
     this._scenario = this._activatedRoute.snapshot.data['scenario'];
   }
 
-  public updateScenario(scenario: Array<EmailScenario>) {
+  public updateScenario(scenario: EmailScenario) {
     this._templatesService.save(scenario).first().subscribe(updatedScenario => {
       this._scenario = updatedScenario;
       this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");

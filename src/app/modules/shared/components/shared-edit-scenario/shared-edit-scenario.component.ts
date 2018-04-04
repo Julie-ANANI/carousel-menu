@@ -19,7 +19,6 @@ export class SharedEditScenarioComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.scenario)
     /*
     this.availableLanguages = this.scenario.emails.reduce((languages, email) => {
       if (languages.indexOf(email.language) == -1) {
