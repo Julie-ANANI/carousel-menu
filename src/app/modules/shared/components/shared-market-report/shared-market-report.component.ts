@@ -24,6 +24,7 @@ export class SharedMarketReportComponent implements OnInit {
   @Input() public adminMode: boolean;
 
   private _questions: Array<Question> = [];
+  private _cleaned_questions: Array<Question> = [];
   private _answers: Array<Answer> = [];
   private _countries: Array<string> = [];
   private _showListProfessional: boolean = false;
@@ -49,9 +50,12 @@ export class SharedMarketReportComponent implements OnInit {
         this._questions = this._questions.concat(section.questions);
       });
       // remove spaces in questions identifiers.
-      this._questions = this._questions.map((q) => {
-        q.identifier = q.identifier.replace(/\s/g, '');
-        return q;
+      this._cleaned_questions = this._questions.map((q) => {
+        let ret = JSON.parse(JSON.stringify(q));
+        // Please don't touch the parse(stringify()), this dereference q to avoid changing _questions list
+        // If changed, the answer modal won't have the good questions identifiers because _questions will be modified
+        ret.identifier = ret.identifier.replace(/\s/g, '');
+        return ret;
       });
     }
     this._modalAnswer = null;
@@ -66,7 +70,12 @@ export class SharedMarketReportComponent implements OnInit {
       .getInnovationValidAnswers(this._innoid)
       .first()
       .subscribe((results) => {
-        this._answers = results.answers;
+
+        this._answers = results.answers
+          .sort((a, b) => {
+            return b.profileQuality - a.profileQuality;
+          });
+
         this._countries = results.answers
           .reduce((acc, answer) => {
             if (acc.indexOf(answer.country.flag) === -1) {
@@ -74,6 +83,7 @@ export class SharedMarketReportComponent implements OnInit {
             }
             return acc;
           }, []);
+
       }, (error) => {
         this._notificationsService.error('ERROR.ERROR', error.message);
       });
@@ -128,8 +138,8 @@ export class SharedMarketReportComponent implements OnInit {
 
   get answers(): Array<Answer> { return this._answers; }
   get countries(): Array<string> { return this._countries; }
+  get cleaned_questions(): Array<Question> { return this._cleaned_questions; }
   get questions(): Array<Question> { return this._questions; }
-  set questions(value: Array<Question>) { this._questions = value; }
   get modalAnswer(): Answer { return this._modalAnswer; }
   set modalAnswer(modalAnswer: Answer) { this._modalAnswer = modalAnswer; }
   get showListProfessional(): boolean { return this._showListProfessional; }

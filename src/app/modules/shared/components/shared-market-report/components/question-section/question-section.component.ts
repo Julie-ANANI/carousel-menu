@@ -56,10 +56,10 @@ export class QuestionSectionComponent implements OnInit {
     this._answersWithComment = this.answers
       .filter((a) => (a.answers[this.info.id + 'Comment'] && a.answers[this.info.id + 'CommentQuality'] !== 0))
       .sort((a, b) => {
-        if (b.answers[this.info.id + 'CommentQuality'] - a.answers[this.info.id + 'CommentQuality'] === 0) {
+        if ((b.answers[this.info.id + 'CommentQuality'] || 1) - (a.answers[this.info.id + 'CommentQuality'] || 1) === 0) {
           return b.answers[this.info.id + 'Comment'].length - a.answers[this.info.id + 'Comment'].length;
         } else {
-          return b.answers[this.info.id + 'CommentQuality'] - a.answers[this.info.id + 'CommentQuality'];
+          return (b.answers[this.info.id + 'CommentQuality'] || 1) - (a.answers[this.info.id + 'CommentQuality'] || 1);
         }
       });
 
@@ -68,6 +68,18 @@ export class QuestionSectionComponent implements OnInit {
         // Calcul du score max
         const max = _.maxBy(this.info.data, 'count') || {};
         this._maxCountScore = max['count'] || 0;
+        break;
+      case 'textarea':
+        // sort textarea answers by quality and by length.
+        this._answersToShow = this._answersToShow
+          .sort((a, b) => {
+            if ((b.answers[this.info.id + 'Quality'] || 1) - (a.answers[this.info.id + 'Quality'] || 1) === 0) {
+              return b.answers[this.info.id].length - a.answers[this.info.id].length;
+            } else {
+              return (b.answers[this.info.id + 'Quality'] || 1) - (a.answers[this.info.id + 'Quality'] || 1);
+            }
+          });
+        break;
     }
   }
 

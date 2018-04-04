@@ -76,7 +76,7 @@
               <li><a pageScroll href="#submit"><span>3</span> {{ 'PROJECT_EDIT.STEP3' | translate }}</a> <i
                 class="icon icon-arrow-right"></i></li>
             </ul>
-            <button *ngIf="canEdit" class="btn btn-primary input-group-btn btn-lg" (click)="save()">
+            <button *ngIf="canEdit || isAdmin" class="btn btn-primary input-group-btn btn-lg" (click)="save()">
               {{ 'COMMON.SAVE_DRAFT' | translate }}
             </button>
             <p *ngIf="lastSavedDate" class="last-saved"> {{ 'COMMON.LAST_SAVED_AT' | translate }} {{ lastSavedDate |
