@@ -52,8 +52,9 @@
     <ng-container *ngSwitchCase="'checkbox'">
       <ul *ngFor="let option of question.options">
         <li
-          *ngIf="fullAnswer.answers[question.identifier][option.identifier] === true || adminMode"
-          [ngClass]="{'inactive': fullAnswer.answers[question.identifier][option.identifier] != true, 'c-hand': adminMode}"
+          *ngIf="(fullAnswer.answers[question.identifier] && fullAnswer.answers[question.identifier][option.identifier] === true) || adminMode"
+          [ngClass]="{'inactive': !fullAnswer.answers[question.identifier] || fullAnswer.answers[question.identifier][option.identifier] != true,
+                      'c-hand': adminMode}"
           (click)="checkOption(option.identifier, $event)">
           {{ optionLabel(option.identifier) }}
         </li>
@@ -85,7 +86,7 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="'stars'">
-      <ul *ngIf="question && fullAnswer.answers[question.identifier]">
+      <ul *ngIf="fullAnswer.answers[question.identifier]">
         <li *ngFor="let advantage of question.options">
           {{advantage.label | multiling:lang}}: {{ '★'.repeat(fullAnswer.answers[question.identifier][advantage.identifier]) }}
         </li>

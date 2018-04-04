@@ -47,6 +47,9 @@ export class AnswerQuestionComponent implements OnInit {
   }
 
   checkOption(id: string, event: Event) {
+    if (!this.fullAnswer.answers[this.question.identifier]) {
+      this.fullAnswer.answers[this.question.identifier] = {};
+    }
     this.fullAnswer.answers[this.question.identifier][id] = !this.fullAnswer.answers[this.question.identifier][id];
     this.fullAnswerChange.emit(this.fullAnswer);
   }
