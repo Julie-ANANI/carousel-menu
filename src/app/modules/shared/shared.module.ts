@@ -35,6 +35,9 @@ import { SharedProsListComponent } from './components/shared-pros-list/shared-pr
 import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
+import { SharedEditEmail } from './components/shared-edit-email/shared-edit-email.component';
+import { SharedEditEmailsStep } from './components/shared-edit-emails-step/shared-edit-emails-step.component';
+import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
 
 // Pipes
 import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
@@ -89,6 +92,9 @@ import { HeaderComponent } from '../../directives/header/header.component';
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
     SharedMarketReportExampleComponent,
+    SharedEditEmail,
+    SharedEditEmailsStep,
+    SharedEditScenarioComponent,
     DomSanitizerPipe,
     HeaderComponent
   ],
@@ -127,6 +133,9 @@ import { HeaderComponent } from '../../directives/header/header.component';
     SharedProsListComponent,
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
+    SharedEditEmail,
+    SharedEditEmailsStep,
+    SharedEditScenarioComponent,
     HeaderComponent
   ]
 })

@@ -1,27 +1,5 @@
 <div>
-  <h2>Scénario - {{ scenario.name }}</h2>
-  <div class="d-flex">
-    Langues :
-    <div *ngFor="let language of availableLanguages" class="form-group">
-      <label class="form-checkbox">
-        <input type="checkbox" [checked]="displayedLanguages.indexOf(language) > -1" (click)="checkLanguage(language)"/>
-        <i class="form-icon"></i> {{ language }}
-      </label>
-    </div>
-    Profils :
-    <div *ngFor="let profile of availableProfiles" class="form-group">
-      <label class="form-checkbox">
-        <input type="checkbox" [checked]="displayedProfiles.indexOf(profile) > -1" (click)="checkProfile(profile)"/>
-        <i class="form-icon"></i> {{ profile }}
-      </label>
-    </div>
-  </div>
-
-    <app-admin-edit-emails-step [emails]="first" [step]="'FIRST'" (emailsChange)="save($event, 'FIRST')"></app-admin-edit-emails-step>
-    <app-admin-edit-emails-step [emails]="second" [step]="'SECOND'" (emailsChange)="save($event, 'SECOND')"></app-admin-edit-emails-step>
-    <app-admin-edit-emails-step [emails]="third" [step]="'THIRD'" (emailsChange)="save($event, 'THIRD')"></app-admin-edit-emails-step>
-    <app-admin-edit-emails-step [emails]="thanks" [step]="'THANKS'" (emailsChange)="save($event, 'THANKS')"></app-admin-edit-emails-step>
-
+  <app-shared-edit-scenario [scenario]="scenario" (scenarioChange)="updateScenario($event)"></app-shared-edit-scenario>
   <a (click)="deleteModal = true" class="text-error"><i class="fa fa-trash"></i> Supprimer le scénario</a>
 </div>
 
