@@ -17,6 +17,7 @@ export const PRESETS = {
     'NEW': 'New preset',
     'GO': 'Create the preset',
     'GIVE_NAME': 'Give a name to the preset',
+    'DONT_USE_SPACES': 'Please don\'t use space character.',
     'UNIQUE_NAME': 'Be careful, this name must be different from the already existing configurations',
     'TAKEN_NAME': 'This name is already used, please choose another name',
     'EDIT': {
@@ -49,6 +50,7 @@ export const PRESETS = {
     'NEW': 'New section',
     'GO': 'Create the section',
     'GIVE_NAME': 'Give a name to the section',
+    'DONT_USE_SPACES': 'Please don\'t use space character.',
     'UNIQUE_NAME': 'Be careful, this name must be different from the already existing sections',
     'EDIT': {
       'SAVE': 'Save the section',
@@ -76,6 +78,7 @@ export const PRESETS = {
     'NEW': 'New question',
     'GO': 'Create the question',
     'GIVE_NAME': 'Give a name to the question',
+    'DONT_USE_SPACES': 'Please don\'t use space character.',
     'UNIQUE_NAME': 'Be careful, this name must be different from the already existing questions',
     'TYPE': {
       'CHOOSE': 'Choose the type of question',

@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../../../../../environments/environment';
 import { PresetService } from '../../../../../../services/preset/preset.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { noSpacesValidator } from '../../directives/no-spaces.validator';
 
 @Component({
   selector: 'app-admin-presets-new',
@@ -12,7 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AdminPresetsNewComponent {
 
   public formData: FormGroup = this._formBuilder.group({
-    name: ['', Validators.required]
+    name: ['', [Validators.required, noSpacesValidator()]]
   });
 
 
@@ -33,4 +34,6 @@ export class AdminPresetsNewComponent {
       });
 
   }
+
+  get name(): AbstractControl { return this.formData.get('name'); }
 }
