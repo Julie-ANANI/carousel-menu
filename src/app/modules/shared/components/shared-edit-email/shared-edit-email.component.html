@@ -1,0 +1,38 @@
+<div class="card email">
+  <div class="card-header">
+    <div class="d-flex">
+      <div class="card-title h5" *ngIf="!editionMode">{{ email.subject }}</div>
+      <div class="card-title h5" *ngIf="editionMode">
+        <input type="text" [(ngModel)]="email.subject" name="subject" class="form-input"/>
+      </div>
+      <div class="chip">
+        <span class="avatar avatar-sm">{{ email.language.toUpperCase() }}</span>
+        {{ email.profile }}
+      </div>
+    </div>
+    <label class="form-switch" *ngIf="email.content != null">
+      <input type="checkbox" (change)="(editionMode = !editionMode) && $event.preventDefault()">
+      <i class="form-icon"></i>Edition  <i class="fa fa-pencil"></i>
+    </label>
+  </div>
+  <div class="card-body">
+    <div *ngIf="email.content != null">
+      <div *ngIf="!editionMode">
+        {{ email.content }}
+      </div>
+      <div *ngIf="editionMode">
+        <textarea type="text" [(ngModel)]="email.content" name="content" class="form-input"></textarea>
+        <button type="submit" class="btn btn-primary centered" (click)="save()">Sauvegarder</button>
+      </div>
+    </div>
+    <p *ngIf="email.content == null">
+      Cet email n'existe pas pour le moment.
+      <button class="btn btn-primary" (click)="addEmail()">
+        Créer cet email
+      </button>
+    </p>
+  </div>
+  <div class="card-footer" *ngIf="email.content != null">
+    <a (click)="removeEmail()" class="text-error"><i class="fa fa-trash"></i> {{ 'COMMON.DELETE' | translate }}</a>
+  </div>
+</div>

@@ -12,6 +12,9 @@
   <ul *ngFor="let a of answerList; index as i" class="answerList">
     <li *ngIf="!adminMode">
       <span>{{a.text}}</span>
+      <a [routerLink]="" class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
+        <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
+      </a>
     </li>
     <li *ngIf="adminMode">
       <span>{{a.text}}</span>

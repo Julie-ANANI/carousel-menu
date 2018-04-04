@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 // Modules
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { SharedAnswerModalModule } from '../shared/components/shared-answer-modal/answer-modal.module';
 import { SharedMarketReportModule } from '../shared/components/shared-market-report/shared-market-report.module';
 import { AdminPresetsModule } from './components/admin-preset/admin-presets/admin-presets.module';
 import { AdminQuestionsModule } from './components/admin-preset/admin-questions/admin-questions.module';
@@ -27,6 +28,7 @@ import { AdminProjectsDetailsComponent } from './components/admin-projects/admin
 import { AdminPresetComponent } from './components/admin-preset/admin-preset.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
 import { AdminCampaignMailsComponent } from './components/admin-campaigns/admin-campaign-mails/admin-campaign-mails.component';
+import { AdminCampaignTemplatesComponent } from './components/admin-campaigns/admin-campaign-templates/admin-campaign-templates.component';
 import { AdminCampaignDetailsComponent } from './components/admin-campaigns/admin-campaign-details/admin-campaign-details.component';
 import { AdminCampaignProsComponent } from './components/admin-campaigns/admin-campaign-pros/admin-campaign-pros.component';
 import { AdminCampaignHistoryComponent } from './components/admin-campaigns/admin-campaign-history/admin-campaign-history.component';
@@ -48,6 +50,7 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminSearchModule,
     AdminEmailsModule,
     SharedModule,
+    SharedAnswerModalModule,
     SharedMarketReportModule,
     TranslateModule.forChild()
   ],
@@ -66,6 +69,7 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminPresetComponent,
     AdminCampaignComponent,
     AdminCampaignMailsComponent,
+    AdminCampaignTemplatesComponent,
     AdminCampaignDetailsComponent,
     AdminCampaignProsComponent,
     AdminCampaignHistoryComponent,

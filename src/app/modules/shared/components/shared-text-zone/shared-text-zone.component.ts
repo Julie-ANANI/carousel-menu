@@ -1,7 +1,7 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, OnDestroy, AfterViewInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, EventEmitter, Input, Output, OnInit } from '@angular/core';
 
 declare const tinymce: any;
 
@@ -11,8 +11,7 @@ declare const tinymce: any;
   styleUrls: ['shared-text-zone.component.scss']
 })
 
-export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
-
+export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit {
   @Input() readonly: boolean;
   @Input() data: string;
 
@@ -22,15 +21,21 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
 
   private _contentHash: number;
   private editor: any;
+  private _htmlId: string;
 
   constructor() {
     this._contentHash = 0;
   }
 
+  ngOnInit() {
+    this._htmlId = this.elementId.replace(/\s/g, '');
+  }
+
   ngAfterViewInit() {
     tinymce.init({
-      selector: '#' + this.elementId,
+      selector: '#' + this._htmlId,
       plugins: ['link', 'paste', 'table'],
+      default_link_target: '_blank',
       width: 700,
       height: 250,
       statusbar: false,
@@ -50,7 +55,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
         });
       },
     });
-    if(this.data && this.editor) {
+    if (this.data && this.editor) {
       this.editor.insertContent(this.data);
       this.contentHash();
     }
@@ -78,5 +83,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy {
       this._contentHash = this.hashString(content);
     }
   }
+
+  public get htmlId(): string { return this._htmlId; }
 
 }

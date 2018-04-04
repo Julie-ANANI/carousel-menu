@@ -185,8 +185,8 @@
                           </div>
 
                           <div>
-                            <label class="form-label">{{ 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.LABEL' | translate
-                              }}</label>
+                            <label class="form-label">
+                              {{ 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</label>
                             <div class="input-group">
                               <app-input-list (update)="addAdvantageToInventionCard($event, i)"
                                               [config]="getConfig('advantages')"></app-input-list>
@@ -318,9 +318,9 @@
                 </div>
               </div>
             </div>
-            <div>
+            <div *ngIf="canEdit">
               <h2 class="anchor" id="submit">3. {{ 'PROJECT_EDIT.STEP3' | translate }}</h2>
-              <div *ngIf="canEdit && project.status !== 'SUBMITTED'">
+              <div>
 
                 <form novalidate [formGroup]="formData" class="form-horizontal">
                   <div>
@@ -343,18 +343,18 @@
                   </p>
                 </div>
               </div>
-              <div *ngIf="isAdmin && project.status === 'SUBMITTED'">
-              </div>
+              <!--<div *ngIf="isAdmin && project.status === 'SUBMITTED'">
+                <div class="project-submit">
+                  <h3 class="text-center">Validation du projet</h3>
+                  <button class="btn btn-xxl btn-primary centered" (click)="validateProject($event)">
+                    Valider
+                  </button>
+                  <button class="btn btn-xxl btn-error centered" (click)="askRevision($event)">
+                    Demander une révision
+                  </button>
+                </div>
+              </div>-->
 
-              <div class="project-submit">
-                <h3 class="text-center">Validation du projet</h3>
-                <button class="btn btn-xxl btn-primary centered" (click)="validateProject($event)">
-                  Valider
-                </button>
-                <button class="btn btn-xxl btn-error centered" (click)="askRevision($event)">
-                  Demander une révision
-                </button>
-              </div>
             </div>
           </div>
         </form>

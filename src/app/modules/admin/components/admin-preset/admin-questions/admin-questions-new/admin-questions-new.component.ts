@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from '../../../../../../../environments/environment';
 import { PresetService } from '../../../../../../services/preset/preset.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { noSpacesValidator } from '../../directives/no-spaces.validator';
 
 @Component({
   templateUrl: './admin-questions-new.component.html',
@@ -11,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AdminQuestionsNewComponent {
 
   public formData: FormGroup = this._formBuilder.group({
-    identifier: ['', Validators.required],
+    identifier: ['', [Validators.required, noSpacesValidator()]],
     controlType: ['', Validators.required]
   });
 
@@ -34,4 +35,6 @@ export class AdminQuestionsNewComponent {
       });
 
   }
+
+  get identifier(): AbstractControl { return this.formData.get('identifier'); }
 }

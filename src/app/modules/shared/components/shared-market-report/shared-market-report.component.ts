@@ -2,7 +2,6 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, OnInit, Input } from '@angular/core';
-import { AuthService } from '../../../../services/auth/auth.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { PageScrollConfig } from 'ng2-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -25,10 +24,12 @@ export class SharedMarketReportComponent implements OnInit {
   @Input() public adminMode: boolean;
 
   private _questions: Array<Question> = [];
+  private _cleaned_questions: Array<Question> = [];
   private _answers: Array<Answer> = [];
   private _countries: Array<string> = [];
+  private _showListProfessional: boolean = false;
   private _infographics: any;
-  private _showDetails = true;
+  private _showDetails = false;
   private _calculating = false;
   private _innoid: string;
 
@@ -38,7 +39,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
-              private _authService: AuthService,
               private _answerService: AnswerService,
               private _notificationsService: TranslateNotificationsService) { }
 
@@ -48,6 +48,14 @@ export class SharedMarketReportComponent implements OnInit {
     if (this.project.preset && this.project.preset.sections) {
       this.project.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions);
+      });
+      // remove spaces in questions identifiers.
+      this._cleaned_questions = this._questions.map((q) => {
+        let ret = JSON.parse(JSON.stringify(q));
+        // Please don't touch the parse(stringify()), this dereference q to avoid changing _questions list
+        // If changed, the answer modal won't have the good questions identifiers because _questions will be modified
+        ret.identifier = ret.identifier.replace(/\s/g, '');
+        return ret;
       });
     }
     this._modalAnswer = null;
@@ -62,7 +70,12 @@ export class SharedMarketReportComponent implements OnInit {
       .getInnovationValidAnswers(this._innoid)
       .first()
       .subscribe((results) => {
-        this._answers = results.answers;
+
+        this._answers = results.answers
+          .sort((a, b) => {
+            return b.profileQuality - a.profileQuality;
+          });
+
         this._countries = results.answers
           .reduce((acc, answer) => {
             if (acc.indexOf(answer.country.flag) === -1) {
@@ -70,6 +83,7 @@ export class SharedMarketReportComponent implements OnInit {
             }
             return acc;
           }, []);
+
       }, (error) => {
         this._notificationsService.error('ERROR.ERROR', error.message);
       });
@@ -109,7 +123,9 @@ export class SharedMarketReportComponent implements OnInit {
 
   public toggleDetails(event: Event): void {
     event.preventDefault();
-    this._showDetails = !this._showDetails;
+    const value = !this._showDetails;
+    this._showDetails = value;
+    this._showListProfessional = value;
   }
 
   public seeAnswer(answer: Answer): void {
@@ -118,25 +134,20 @@ export class SharedMarketReportComponent implements OnInit {
 
   public canShow(): boolean {
     return !!this._infographics;
-
-  }
-
-  public isQuestionHidden(question: any): boolean{
-    return question && !!question.hidden;
   }
 
   get answers(): Array<Answer> { return this._answers; }
   get countries(): Array<string> { return this._countries; }
+  get cleaned_questions(): Array<Question> { return this._cleaned_questions; }
   get questions(): Array<Question> { return this._questions; }
-  set questions(value: Array<Question>) { this._questions = value; }
   get modalAnswer(): Answer { return this._modalAnswer; }
   set modalAnswer(modalAnswer: Answer) { this._modalAnswer = modalAnswer; }
+  get showListProfessional(): boolean { return this._showListProfessional; }
+  set showListProfessional(val: boolean) { this._showListProfessional = val; }
   get innoid(): string { return this._innoid; }
   get infographics(): any { return this._infographics; }
   set calculating (value: boolean) { this._calculating = value; }
   get calculating (): boolean { return this._calculating; }
-  set showDetails (value: boolean) { this._showDetails = value; }
   get showDetails (): boolean { return this._showDetails; }
   get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
-  get authService (): AuthService { return this._authService; }
 }

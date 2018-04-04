@@ -10,8 +10,10 @@ export const MARKET_REPORT = {
   'SEE_ANSWERS': 'Voir la réponse',
   'BTN_EDITION_MODE': 'Passer en mode édition',
   'BTN_VIEW_MODE': 'Passer en mode visualisation',
-  'BTN_DETAILS_OPEN': 'Voir les détails',
-  'BTN_DETAILS_CLOSE': 'Masquer les détails',
+  'BTN_ANSWERS_OPEN': 'Voir les réponses.',
+  'BTN_ANSWERS_CLOSE': 'Masquer les réponses.',
+  'BTN_COMMENTS_OPEN': 'Voir les commentaires ({{length}})',
+  'BTN_COMMENTS_CLOSE': 'Masquer les commentaires ({{length}})',
   'BTN_RECOMPUTE': 'Recalculer l\'infographie',
   'PEOPLE_VOTED': 'personnes ont voté',
   'GRADE': 'Note',
@@ -27,8 +29,6 @@ export const MARKET_REPORT = {
     'SIDEBAR': 'Professionnels',
     'TITLE': 'Les professionnels',
     'NUMBER': 'réponses de professionnels',
-    'FOLLOW_PLURAL': 'souhaitent suivre votre innovation',
-    'FOLLOW': 'souhaite suivre votre innovation',
     'QUESTION': 'Origine des réponses'
   },
   'MARKET_NEED': {

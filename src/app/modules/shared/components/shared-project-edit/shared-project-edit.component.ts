@@ -71,7 +71,7 @@ export class SharedProjectEditComponent implements OnInit, OnDestroy, ComponentC
 
     this.formData.patchValue(this._project);
 
-    if (!this.canEdit) {
+    if (!this.isAdmin && !this.canEdit) {
       this.formData.disable();
     }
     for (const innovationCard of this._project.innovationCards) {
@@ -109,7 +109,7 @@ export class SharedProjectEditComponent implements OnInit, OnDestroy, ComponentC
    * @param callback
    */
   public save(callback: () => void): void {
-    if (this.canEdit) {
+    if (this.canEdit || this.isAdmin) {
       this._innovationService
         .save(this._project._id, this.formData.value)
         .first()
@@ -148,14 +148,14 @@ export class SharedProjectEditComponent implements OnInit, OnDestroy, ComponentC
 
   private _newInnovationCardFormBuilderGroup (data: InnovCard): any {
     return this._formBuilder.group({
-      id: [{value: data._id, disabled: !this.canEdit}, Validators.required],
-      title: [{value: data.title, disabled: !this.canEdit}, Validators.required],
-      summary: [{value: data.summary, disabled: !this.canEdit}, Validators.required],
-      problem: [{value: data.problem, disabled: !this.canEdit}, Validators.required],
-      solution: [{value: data.solution, disabled: !this.canEdit}, Validators.required],
-      advantages: [{value: data.advantages, disabled: !this.canEdit}],
-      lang: [{value: data.lang, disabled: !this.canEdit}, Validators.required],
-      principal: [{value: data.principal, disabled: !this.canEdit}, Validators.required],
+      id: [{value: data._id, disabled: (!this.isAdmin && !this.canEdit)}, Validators.required],
+      title: [{value: data.title, disabled: (!this.isAdmin && !this.canEdit)}, Validators.required],
+      summary: [{value: data.summary, disabled: (!this.isAdmin && !this.canEdit)}, Validators.required],
+      problem: [{value: data.problem, disabled: (!this.isAdmin && !this.canEdit)}, Validators.required],
+      solution: [{value: data.solution, disabled: (!this.isAdmin && !this.canEdit)}, Validators.required],
+      advantages: [{value: data.advantages, disabled: (!this.isAdmin && !this.canEdit)}],
+      lang: [{value: data.lang, disabled: (!this.isAdmin && !this.canEdit)}, Validators.required],
+      principal: [{value: data.principal, disabled: (!this.isAdmin && !this.canEdit)}, Validators.required],
       // media: [{value: data.media, disabled: !this.canEdit}, Validators.required] // On ne les gère plus dans le reactive form
     });
   }
@@ -319,7 +319,7 @@ export class SharedProjectEditComponent implements OnInit, OnDestroy, ComponentC
   }
 
   get domSanitizer() { return this._domSanitizer; }
-  get canEdit (): boolean { return this._project && (this._project.status === 'EDITING' || this.isAdmin); }
+  get canEdit (): boolean { return this._project && (this._project.status === 'EDITING'); }
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
   get project(): Innovation { return this._project; }
   get isAdmin(): boolean { return (this._authService.adminLevel & 3) === 3; }

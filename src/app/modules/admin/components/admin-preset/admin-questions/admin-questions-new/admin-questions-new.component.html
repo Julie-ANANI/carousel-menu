@@ -8,8 +8,10 @@
         <div class="column col-7 col-mx-auto">
           <div class="form-group text-center">
             <label class="form-label h3" for="identifier">{{ "PRESETS.QUESTION.GIVE_NAME" | translate }}</label>
-            <input class="form-input" id="identifier" name="identifier" formControlName="identifier" type="text"
-                   placeholder="">
+            <input class="form-input" id="identifier" name="identifier" formControlName="identifier" type="text" placeholder="">
+            <div *ngIf="identifier.invalid && (identifier.dirty || identifier.touched)" class="form-group has-error">
+              <p class="form-input-hint">{{ 'PRESETS.QUESTION.DONT_USE_SPACES' | translate }}</p>
+            </div>
             {{ 'PRESETS.QUESTION.UNIQUE_NAME' | translate }}
           </div>
           <div class="form-group text-center">

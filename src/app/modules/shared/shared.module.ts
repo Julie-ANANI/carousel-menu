@@ -16,14 +16,11 @@ import { SharedNotFoundComponent } from './components/shared-not-found/shared-no
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
 import { SharedLoaderComponent } from './components/shared-loader/shared-loader.component';
-import { SharedAnswerModalComponent } from './components/shared-answer-modal/shared-answer-modal.component';
-import { SharedAnswerQuestionComponent } from './components/shared-answer-question/shared-answer-question.component';
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
 import { SharedFilterInputComponent } from './components/shared-filter-input/shared-filter-input.component';
 import { SharedModalComponent } from './components/shared-modal-component/shared-modal.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
-import { SharedRatingItemComponent } from './components/shared-rating-item/shared-rating-item.component';
 import { SharedTagItemComponent } from './components/shared-tag-item/shared-tag-item.component';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
@@ -38,10 +35,12 @@ import { SharedProsListComponent } from './components/shared-pros-list/shared-pr
 import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
+import { SharedEditEmail } from './components/shared-edit-email/shared-edit-email.component';
+import { SharedEditEmailsStep } from './components/shared-edit-emails-step/shared-edit-emails-step.component';
+import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
 
 // Pipes
 import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
-import { MultilingPipe } from '../../pipes/multiling.pipe';
 
 // Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
@@ -73,8 +72,6 @@ import { HeaderComponent } from '../../directives/header/header.component';
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
-    SharedAnswerModalComponent,
-    SharedAnswerQuestionComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedTextZoneComponent,
@@ -86,7 +83,6 @@ import { HeaderComponent } from '../../directives/header/header.component';
     SharedProjectSettingsComponent,
     SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
-    SharedRatingItemComponent,
     SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
@@ -96,8 +92,10 @@ import { HeaderComponent } from '../../directives/header/header.component';
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
     SharedMarketReportExampleComponent,
+    SharedEditEmail,
+    SharedEditEmailsStep,
+    SharedEditScenarioComponent,
     DomSanitizerPipe,
-    MultilingPipe,
     HeaderComponent
   ],
   exports: [
@@ -127,9 +125,6 @@ import { HeaderComponent } from '../../directives/header/header.component';
     SharedProjectSettingsComponent,
     SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
-    SharedAnswerModalComponent,
-    SharedAnswerQuestionComponent,
-    SharedRatingItemComponent,
     SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
@@ -138,6 +133,9 @@ import { HeaderComponent } from '../../directives/header/header.component';
     SharedProsListComponent,
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
+    SharedEditEmail,
+    SharedEditEmailsStep,
+    SharedEditScenarioComponent,
     HeaderComponent
   ]
 })

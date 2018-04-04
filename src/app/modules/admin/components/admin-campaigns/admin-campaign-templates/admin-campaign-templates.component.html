@@ -1,0 +1,48 @@
+<div class="container col-10 col-mx-auto">
+  <h2>Templates de mails</h2>
+  <button class="btn btn-primary" (click)="importModal = true">Importer un template de la bibliothèque</button>
+
+  <app-shared-edit-scenario [scenario]="scenario" (scenarioChange)="updateScenario($event)"></app-shared-edit-scenario>
+</div>
+
+
+<!-- MODAL : Import d'un template -->
+<div class="modal" [ngClass]="{'active': importModal}">
+  <div class="modal-overlay" (click)="(importModal = false) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(importModal = false) && $event.preventDefault()"></button>
+      <div class="modal-title h5">Import d'un template</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        Liste des templates existants :
+        <p *ngIf="!templates">
+          Il n'y a pas de template dans la bibliothèque
+        </p>
+        <table class="table" *ngIf="templates">
+          <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Nombre d'emails</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let template of templates">
+            <td>{{ template.name }}</td>
+            <td>{{ template.emails.length }}</td>
+            <td><button class="btn btn-primary" (click)="importTemplate(template)">Importer</button></td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="(importModal = false) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

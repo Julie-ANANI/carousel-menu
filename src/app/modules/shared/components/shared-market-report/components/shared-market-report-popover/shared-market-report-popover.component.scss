@@ -1,0 +1,31 @@
+.item-menu-sandwich {
+  cursor: pointer;
+  font-size: 22px;
+  opacity: 0.5;
+  align-self: auto;
+}
+
+.item-menu-sandwich:hover {
+  opacity: 1;
+}
+/* === Menu hover détails utilisateurs === */
+
+.users-menu {
+  background: white;
+  box-shadow: 1px 2px 4px 0 rgba(0,0,0,0.37);
+  max-width: 290px;
+  z-index: 3;
+
+  ul li {
+    border-bottom: 1px solid #E0E0E0;
+    padding: 20px 0 15px 0;
+    margin: 15px;
+    list-style: none;
+    color: #4A4A4A;
+
+    &:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+}

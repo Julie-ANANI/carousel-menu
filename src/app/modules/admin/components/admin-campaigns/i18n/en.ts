@@ -7,6 +7,7 @@ export const CAMPAIGNS = {
   'SEARCH': 'Search',
   'PROS': 'Pros',
   'MAILS': 'Emails',
+  'TEMPLATES': 'Templates',
   'ANSWERS': 'Answers',
   'EXPORT-ANSWERS': 'Export answers',
   'IMPORT-ANSWERS': 'Import answers',
