@@ -1,12 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { EmailTemplate } from '../../../../../../models/email-template';
+import { EmailTemplate } from '../../../../models/email-template';
 
 @Component({
-  selector: 'app-admin-edit-email',
-  templateUrl: 'admin-edit-email.component.html',
-  styleUrls: ['admin-edit-email.component.scss']
+  selector: 'app-shared-edit-email',
+  templateUrl: 'shared-edit-email.component.html',
+  styleUrls: ['shared-edit-email.component.scss']
 })
-export class AdminEditEmail {
+export class SharedEditEmail {
 
   @Input() email: EmailTemplate;
   @Output() emailChange = new EventEmitter<any>();

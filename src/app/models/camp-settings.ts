@@ -1,5 +1,7 @@
+import { EmailTemplate } from './email-template';
 export interface CampaignSettings {
   clonedInfo: boolean;
+  emails?: Array<EmailTemplate>,
   readonly emailTemplates: {
     readonly launching: {
       readonly en: {

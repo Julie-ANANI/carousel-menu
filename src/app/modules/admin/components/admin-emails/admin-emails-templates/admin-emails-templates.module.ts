@@ -4,8 +4,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '../../../../shared/shared.module';
 import { AdminEmailTemplatesComponent } from './admin-emails-templates.component';
 import { AdminNewScenarioComponent } from './admin-new-scenario/admin-new-scenario.component';
-import { AdminEditEmail } from './admin-edit-email/admin-edit-email.component';
-import { AdminEditEmailsStep } from './admin-edit-emails-step/admin-edit-emails-step.component';
 import { AdminEditScenarioComponent } from './admin-edit-scenario/admin-edit-scenario.component';
 import { AdminEditSignatureComponent } from './admin-edit-signature/admin-edit-signature.component';
 
@@ -18,8 +16,6 @@ import { AdminEditSignatureComponent } from './admin-edit-signature/admin-edit-s
   declarations: [
     AdminEmailTemplatesComponent,
     AdminNewScenarioComponent,
-    AdminEditEmail,
-    AdminEditEmailsStep,
     AdminEditScenarioComponent,
     AdminEditSignatureComponent
   ],

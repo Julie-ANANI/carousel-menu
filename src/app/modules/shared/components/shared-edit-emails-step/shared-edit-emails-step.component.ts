@@ -1,12 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { EmailTemplate } from '../../../../../../models/email-template';
+import { EmailTemplate } from '../../../../models/email-template';
 
 @Component({
-  selector: 'app-admin-edit-emails-step',
-  templateUrl: 'admin-edit-emails-step.component.html',
-  styleUrls: ['admin-edit-emails-step.component.scss']
+  selector: 'app-shared-edit-emails-step',
+  templateUrl: 'shared-edit-emails-step.component.html',
+  styleUrls: ['shared-edit-emails-step.component.scss']
 })
-export class AdminEditEmailsStep {
+export class SharedEditEmailsStep {
 
   @Input() emails: Array<EmailTemplate>;
   @Input() step: string;
