@@ -3,7 +3,7 @@
     <div class="d-flex">
       <div class="card-title h5" *ngIf="!editionMode">{{ email.subject }}</div>
       <div class="card-title h5" *ngIf="editionMode">
-        <input type="text" [(ngModel)]="email.subject" name="subject" class="form-input"/>
+        <div class="form-group d-flex">Objet: <input type="text" [(ngModel)]="email.subject" name="subject" class="form-input"/></div>
       </div>
       <div class="chip">
         <span class="avatar avatar-sm">{{ email.language.toUpperCase() }}</span>
@@ -18,6 +18,7 @@
   <div class="card-body">
     <div *ngIf="email.content != null">
       <div>
+        <h4 *ngIf="editionMode">Contenu</h4>
         <text-zone [elementId]="email.language + email.step + email.profile"
                    [readonly]="!editionMode"
                    [data]="email.content || ''"
