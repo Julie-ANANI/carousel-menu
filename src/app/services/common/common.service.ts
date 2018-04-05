@@ -9,14 +9,15 @@ export class CommonService {
    * range function (inspired from Python)
    * return an array with every numbers from 0 to x-1
    */
-  range(x: number): Array<number> {
-    function* numberGenerator(maxVal: number): IterableIterator<number> {
-      let currVal = 0;
+  range(min: number = 0, max: number = 10, step: number = 1): Array<number> {
+    function* numberGenerator(minVal: number, maxVal: number, stepVal: number): IterableIterator<number> {
+      let currVal = minVal;
       while (currVal < maxVal) {
-        yield currVal++;
+        yield currVal;
+        currVal += stepVal;
       }
     }
-    return [...Array.from(numberGenerator(x))];
+    return Array.from(numberGenerator(min, max, step));
   }
 }
 

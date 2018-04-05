@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';
 import { Question } from '../../../../../../models/question';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-question-section',
@@ -22,7 +21,6 @@ export class QuestionSectionComponent implements OnInit {
   private _answersWithComment: Array<Answer> = [];
   private _answersToShow: Array<Answer> = [];
   private _readonly: boolean;
-  private _maxCountScore: number;
   private _innoid: string;
 
   @Input() set showComments(value: boolean) {
@@ -64,11 +62,6 @@ export class QuestionSectionComponent implements OnInit {
       });
 
     switch (this.info.controlType) {
-      case 'scale':
-        // Calcul du score max
-        const max = _.maxBy(this.info.data, 'count') || {};
-        this._maxCountScore = max['count'] || 0;
-        break;
       case 'textarea':
         // sort textarea answers by quality and by length.
         this._answersToShow = this._answersToShow
@@ -87,19 +80,6 @@ export class QuestionSectionComponent implements OnInit {
     this.modalAnswerChange.emit(event);
   }
 
-  public getAnswers(commentsList: Array<any>): Array<Answer> {
-    if (this.answers) {
-      const answers = _.map(commentsList, (comment: any) => _.find(this.answers, (answer: Answer) => answer._id === comment.answerId));
-      return _.filter(answers, (a: Answer) => a);
-    } else {
-      return [];
-    }
-  }
-
-  public getFillPerc(value: number): string {
-    return `${Math.round(value / this._maxCountScore * 100)}%`;
-  }
-
   get readonly(): boolean { return this._readonly; }
   get domSectionId(): string { return this._domSectionId; }
   get showComments(): boolean { return this._showComments; }
@@ -107,6 +87,5 @@ export class QuestionSectionComponent implements OnInit {
   get answersToShow(): Array<Answer> { return this._answersToShow; }
   get answersWithComment(): Array<Answer> { return this._answersWithComment; }
   get innoid(): string { return this._innoid; }
-  set innoid(value: string) { this._innoid = value; }
-  get lang(): any { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
+  get lang(): string { return this._translateService.currentLang; }
 }

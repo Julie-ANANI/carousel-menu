@@ -1,11 +1,18 @@
-<div class="popover">
-  <div class="star-ratings-css">
-    <div class="top" [style.width]="percentage"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-    <div class="bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-  </div>
-  <div class="popover-container">
-    <span class="grade" *ngIf="note">{{ 'MARKET_REPORT.GRADE' | translate }} : <span class="grade-number">{{note}}</span></span>
-    <span class="grade" *ngIf="!note">{{ 'MARKET_REPORT.NO_GRADE' | translate }}</span>
-    <small *ngIf="count"><br> {{count}} {{ 'MARKET_REPORT.PEOPLE_VOTED' | translate }}</small>
-  </div>
-</div>
+<table class="stars-component">
+  <tr *ngFor="let note of notesData">
+    <td>{{note.label | multiling:lang}}</td>
+    <td>
+      <div class="star-ratings-css">
+        <div class="top" [style.width]="note.percentage"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <div class="bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+      <div class="popover-container">
+        <ng-container *ngIf="note.count">
+          <span class="grade">{{ 'MARKET_REPORT.GRADE' | translate }} : <span class="grade-number">{{note.percentage}}</span></span>
+          <small><br>{{note.count}} {{ 'MARKET_REPORT.PEOPLE_VOTED' | translate }}</small>
+        </ng-container>
+        <span class="grade" *ngIf="!note.count">{{ 'MARKET_REPORT.NO_GRADE' | translate }}</span>
+      </div>
+    </td>
+  </tr>
+</table>

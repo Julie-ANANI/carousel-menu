@@ -1,3 +1,4 @@
 export const HEADER = {
-  'START': 'Commencer'
+  'START': 'Commencer',
+  'EXAMPLE': 'Exemple'
 };

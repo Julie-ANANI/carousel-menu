@@ -7,13 +7,13 @@ import { Multiling } from '../../models/multiling';
 export class MultilingPipe implements PipeTransform {
 
   transform(value: Multiling, lang: string = 'en'): string {
-    if(value && value[lang]) {
-      return value[lang]['text'] ? value[lang]['text'] : value[lang];
+    if (value && value[lang]) {
+      return value[lang];
     } else if (value) {
       if (lang !== 'en' && value['en']) {
-        return value['en']['text'] ? value['en']['text'] : value['en'];
+        return value['en'];
       } else {
-        for (var a in value) return value[a]['text'] ? value[a]['text'] : value[a];
+        for (var a in value) return value[a];
       }
     } else {
       return '';
