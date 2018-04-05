@@ -7,6 +7,7 @@ import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
+import { ClientDiscoverDescriptionComponent } from './components/client-discover-description/client-discover-description.component';
 import { ClientProjectComponent } from './components/client-project/client-project.component';
 import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
 import { ClientLoginComponent } from './components/client-login/client-login.component';
@@ -36,6 +37,7 @@ import { ClientWelcomeComponent } from './components/client-welcome/client-welco
     ClientProjectEditComponent,
     ClientProjectComponent,
     ClientDiscoverComponent,
+    ClientDiscoverDescriptionComponent,
     ClientWelcomeComponent,
     ClientLoginComponent,
     ClientSignupComponent,

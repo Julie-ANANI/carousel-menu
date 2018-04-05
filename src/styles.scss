@@ -9,6 +9,8 @@ $primary-color: #3498DB !default;
 @import "../node_modules/spectre.css/src/spectre-icons.scss";
 @import "../node_modules/spectre.css/src/spectre-exp.scss";
 @import "print.scss";
+@import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
+
 
 
 * {
@@ -35,6 +37,7 @@ h1::after {
   height: 3px;
   margin-top: 30px;
   margin-bottom:56px;
+  border-radius: 5px;
 }
 
 h2 {
