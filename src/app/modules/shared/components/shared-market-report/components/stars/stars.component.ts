@@ -14,7 +14,6 @@ import { Multiling } from '../../../../../../models/multiling';
 
 export class StarsComponent implements OnInit {
 
-  @Input() public info: any;
   @Input() public answers: Array<Answer>;
   @Input() public question: any;
 
@@ -36,7 +35,7 @@ export class StarsComponent implements OnInit {
       Object.keys(answer.answers[this.question.id]).forEach((k) => {
         const idx = parseInt(k, 10);
         const vote = parseInt(answer.answers[this.question.id][k], 10);
-        if (idx && vote && idx < this._notesData.length && this._notesData[k]) {
+        if (idx !== NaN && vote && idx < this._notesData.length && this._notesData[k]) {
           this._notesData[k].count += 1;
           this._notesData[k].sum += vote;
         }
