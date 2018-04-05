@@ -34,4 +34,8 @@ export class SharedEditEmail {
   public save() {
     this.emailChange.emit(this.email);
   }
+  
+  public updateContent(event: any) {
+    this.email.content = event.content;
+  }
 }

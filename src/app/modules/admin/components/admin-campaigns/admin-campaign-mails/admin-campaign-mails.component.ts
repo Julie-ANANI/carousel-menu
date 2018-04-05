@@ -86,6 +86,7 @@ export class AdminCampaignMailsComponent implements OnInit {
     batch.firstMail = this._computeDate(this.editDates[0].date, this.editDates[0].time);
     batch.secondMail = this._computeDate(this.editDates[1].date, this.editDates[1].time);
     batch.thirdMail = this._computeDate(this.editDates[2].date, this.editDates[2].time);
+    delete batch.status;
     this._campaignService.updateBatch(batch).first().subscribe((batch: any) => {
       this.stats.batches[this._getBatchIndex(batch._id)] = batch;
     });
