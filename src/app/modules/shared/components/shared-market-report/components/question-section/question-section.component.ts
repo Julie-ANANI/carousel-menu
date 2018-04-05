@@ -87,6 +87,5 @@ export class QuestionSectionComponent implements OnInit {
   get answersToShow(): Array<Answer> { return this._answersToShow; }
   get answersWithComment(): Array<Answer> { return this._answersWithComment; }
   get innoid(): string { return this._innoid; }
-  set innoid(value: string) { this._innoid = value; }
-  get lang(): any { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
+  get lang(): string { return this._translateService.currentLang; }
 }

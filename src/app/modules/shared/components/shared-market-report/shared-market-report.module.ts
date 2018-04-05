@@ -5,7 +5,6 @@ import { ChartsModule } from 'ng2-charts';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { BluesquareComponent } from './components/bluesquare/bluesquare.component';
 import { PiechartComponent } from './components/piechart/piechart.component';
-import { PricesComponent } from './components/prices/prices.component';
 import { ProfessionalTagComponent } from './components/pro-tag/pro-tag.component';
 import { SharedMarketReportComponent } from './shared-market-report.component';
 import { SharedMarketCommentComponent } from './components/professional-comment/professional-comment.component';
@@ -47,7 +46,6 @@ import { CommonService } from '../../../../services/common/common.service';
     PiechartComponent,
     SharedMarketReportPopoverComponent,
     QuestionSectionComponent,
-    PricesComponent,
     StarsComponent,
     WorldMapComponent
   ],

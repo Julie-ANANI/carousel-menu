@@ -13,7 +13,7 @@
       *ngSwitchDefault
       [numberFocus]="info.numberFocus"
       [percentage]="info.percentage"
-      [subtitle]="info.subtitle ? info.subtitle[lang] : ''"
+      [subtitle]="info.subtitle | multiling:lang"
       [id]="info.id"
     ></market-report-bluesquare>
   </ng-container>

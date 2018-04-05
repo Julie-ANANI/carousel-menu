@@ -33,13 +33,6 @@
              [question]="info">
       </app-scale>
 
-      <!--======= Prix =======-->
-      <div *ngIf="info.average && question.controlType === 'textbox'">
-        <app-prices [rawData]="info.data"></app-prices>
-
-        <div class="average">Moyenne : {{info.average}}€</div>
-      </div>
-
       <!--======= Bar Chart =======-->
       <app-bar-chart *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'"
                      [answers]="answersToShow"
@@ -48,17 +41,11 @@
       </app-bar-chart>
 
       <!--======= Avantages Clés =======-->
-      <div *ngIf="question.controlType === 'stars'">
-        <table>
-          <tr *ngFor="let advantage of question.options; let i = index">
-            <td>{{advantage.label | multiling:lang}}</td>
-            <td>
-              <app-stars [note]="info?.data[advantage.identifier]?.average"
-                         [count]="info?.data[advantage.identifier]?.count"></app-stars>
-            </td>
-          </tr>
-        </table>
-      </div>
+      <app-stars *ngIf="question.controlType === 'stars'"
+                 [info]="info"
+                 [answers]="answersToShow"
+                 [question]="question">
+      </app-stars>
 
       <!--======= Liste d'items (applications, concurrents, partenaires potentiels) =======-->
       <market-item-list
