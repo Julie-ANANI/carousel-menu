@@ -19,7 +19,7 @@
   <!-- Connecté -->
   <section class="navbar-section" *ngIf="authService.isAuthenticated">
     <!--<a href="http://help.umi.us" target="_blank" class="btn btn-link">{{ 'COMMON.HELP' | translate }}</a>-->
-    <a *ngIf="!backOffice && authService.adminLevel > 0" [routerLink]="'/sample'" routerLinkActive="active" class="btn btn-link">Example</a>
+    <a *ngIf="!backOffice && authService.adminLevel > 0" [routerLink]="'/sample'" routerLinkActive="active" class="btn btn-link">{{ 'HEADER.EXAMPLE' | translate }}</a>
     <a *ngIf="!backOffice" [routerLink]="'/projects'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
     <a *ngIf="!backOffice" [routerLink]="'/account'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
     <a *ngIf="!backOffice && canShow(1)" [routerLink]="'/admin'" routerLinkActive="active" class="btn btn-link">{{ 'COMMON.ADMIN' | translate }}</a>
