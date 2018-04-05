@@ -1,43 +1,81 @@
 footer {
-  background: #FAFAFA;
-  height: 246px;
-  padding: 54px 0;
-  font-size: 0.7rem;
+  background-color: #262831;
+  min-height: 7rem;
+  color: white;
+  padding: 2rem 3rem;
+  transition: all 0.3s ease;
 
-  .dropdown {
-    li {
-      margin-top: 0;
+  .column {
+    width: 100%;
+  }
+
+  .lang {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .lang-button {
+    background-color: #FAFAFA;
+    color: #333333;
+    padding: 0.5rem 0.8rem;
+    height: 2.4rem;
+    border-radius: 0.25rem !important;
+    border-color: unset !important;
+  }
+
+  .icon-footer {
+    padding-left: 0.4rem;
+  }
+
+  .btn:focus {
+    box-shadow: none !important;
+  }
+
+  .btn-group .btn:first-child:not(:last-child) {
+    border-radius: 0.25rem;
+  }
+
+  .menu {
+    min-width: 7rem;
+    border-radius: 0.25rem;
+  }
+
+  ul li {
+    margin-top: 0;
+    padding: 0.3rem;
 
       a {
-        display: block;
+        color: #333333;
+      }
+
+      a:hover {
+        text-decoration: none;
         cursor: pointer;
-        min-width: 80px;
+        color: #3498DB;
       }
+  }
+
+  .info {
+    flex: 1;
+
+    a{
+      color: #3498DB;
     }
 
-    .menu {
-      min-width: 0;
-    }
-
-    .btn {
-      border-color: #878787;
-      color: #878787;
-
-      &:focus,
-      &:hover {
-        background: none;
-        border-color: #878787;
-      }
-
-      &:active,
-      &.active {
-        background: none;
-        border-color: darken(#878787, 5%);
-      }
+    a:hover {
+      color: #246a99;
     }
   }
 
-  .divider {
-    margin: 25px 0;
-  }
 }
+
+@media (min-width: 840px) {
+
+  .lang {
+    text-align: unset !important;
+    align-self: flex-start !important;
+    margin-bottom: 1rem !important;
+  }
+
+}
+
