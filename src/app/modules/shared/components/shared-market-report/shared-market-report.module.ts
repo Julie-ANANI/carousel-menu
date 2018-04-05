@@ -11,6 +11,7 @@ import { SharedMarketReportComponent } from './shared-market-report.component';
 import { SharedMarketCommentComponent } from './components/professional-comment/professional-comment.component';
 import { QuestionConclusionComponent } from './components/question-conclusion/question-conclusion.component';
 import { QuestionSectionComponent } from './components/question-section/question-section.component';
+import { ScaleComponent } from './components/scale/scale.component';
 import { SharedMarketItemComponent } from './components/shared-market-item-component/shared-market-item.component';
 import { SharedMarketItemListComponent } from './components/shared-market-item-list-component/shared-market-item-list.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
@@ -19,6 +20,7 @@ import { WorldMapComponent } from './components/world-map/world-map.component';
 import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
 import { SharedModule } from '../../shared.module';
 import { SharedAnswerModalModule } from '../shared-answer-modal/answer-modal.module';
+import { CommonService } from '../../../../services/common/common.service';
 
 @NgModule({
   imports: [
@@ -29,11 +31,15 @@ import { SharedAnswerModalModule } from '../shared-answer-modal/answer-modal.mod
     SharedAnswerModalModule,
     TranslateModule.forChild()
   ],
+  providers: [
+    CommonService
+  ],
   declarations: [
     SharedMarketReportComponent,
     QuestionConclusionComponent,
     BarChartComponent,
     ProfessionalTagComponent,
+    ScaleComponent,
     SharedMarketCommentComponent,
     SharedMarketItemComponent,
     SharedMarketItemListComponent,

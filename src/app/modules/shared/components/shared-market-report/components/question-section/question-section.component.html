@@ -1,5 +1,5 @@
 <div [id]=domSectionId>
-  <h2>{{ info.title | multiling:lang }}</h2>
+  <h2>{{ question.label | multiling:lang }}</h2>
 
   <div class="white-frame">
 
@@ -27,37 +27,30 @@
 
     <div *ngIf="showDetails" class="bloc">
 
-      <!--======= Scores =======-->
-      <div *ngIf="info.controlType === 'scale'">
-        <div class="column-graph flex-container">
-          <div *ngFor="let score of info.data; let i = index"
-               class="vertical-bar number{{score.value}}">
-            <div class="bar-fill" [style.height]="getFillPerc(score.count)" *ngIf="score.count"></div>
-            <div class="bar-stats" *ngIf="score.count">{{score.count}}</div>
-            <div class="bar-picture" *ngIf="score.count"></div>
-            <div class="bar-score">{{score.value}}/10</div>
-          </div>
-        </div>
-      </div>
+      <!--======= Scale =======-->
+      <app-scale *ngIf="question.controlType === 'scale'"
+             [answers]="answersToShow"
+             [question]="info">
+      </app-scale>
 
       <!--======= Prix =======-->
-      <div *ngIf="info.average && info.controlType === 'textbox'">
+      <div *ngIf="info.average && question.controlType === 'textbox'">
         <app-prices [rawData]="info.data"></app-prices>
 
         <div class="average">Moyenne : {{info.average}}€</div>
       </div>
 
       <!--======= Bar Chart =======-->
-      <app-bar-chart *ngIf="info.controlType === 'checkbox' || info.controlType === 'radio'"
+      <app-bar-chart *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'"
                      [answers]="answersToShow"
                      [question]="question"
                      (modalAnswerChange)="seeAnswer($event)">
       </app-bar-chart>
 
       <!--======= Avantages Clés =======-->
-      <div *ngIf="info.controlType === 'stars'">
+      <div *ngIf="question.controlType === 'stars'">
         <table>
-          <tr *ngFor="let advantage of info.options; let i = index">
+          <tr *ngFor="let advantage of question.options; let i = index">
             <td>{{advantage.label | multiling:lang}}</td>
             <td>
               <app-stars [note]="info?.data[advantage.identifier]?.average"
@@ -71,12 +64,12 @@
       <market-item-list
         [answers]="answers"
         [list]="info.data"
-        *ngIf="info.controlType === 'list' || info.controlType === 'clearbit'"
+        *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
         (modalAnswerChange)="seeAnswer($event)">
       </market-item-list>
 
       <!--======= textarea =======-->
-      <ul *ngIf="info.controlType === 'textarea'" class="comments">
+      <ul *ngIf="question.controlType === 'textarea'" class="comments">
         <li *ngFor="let answer of answersToShow">
           <market-comment
             [answer]="answer"
@@ -87,7 +80,7 @@
       </ul>
 
       <!--======= toggle =======-->
-      <div *ngIf="info.controlType === 'toggle'" class="prosList">
+      <div *ngIf="question.controlType === 'toggle'" class="prosList">
         <div *ngFor="let answer of answersToShow" class="white-frame professional-item">
           <app-pro-tag
             [answer]="answer"

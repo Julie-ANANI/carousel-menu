@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';
 import { Question } from '../../../../../../models/question';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-question-section',
@@ -22,7 +21,6 @@ export class QuestionSectionComponent implements OnInit {
   private _answersWithComment: Array<Answer> = [];
   private _answersToShow: Array<Answer> = [];
   private _readonly: boolean;
-  private _maxCountScore: number;
   private _innoid: string;
 
   @Input() set showComments(value: boolean) {
@@ -64,11 +62,6 @@ export class QuestionSectionComponent implements OnInit {
       });
 
     switch (this.info.controlType) {
-      case 'scale':
-        // Calcul du score max
-        const max = _.maxBy(this.info.data, 'count') || {};
-        this._maxCountScore = max['count'] || 0;
-        break;
       case 'textarea':
         // sort textarea answers by quality and by length.
         this._answersToShow = this._answersToShow
@@ -85,19 +78,6 @@ export class QuestionSectionComponent implements OnInit {
 
   public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
-  }
-
-  public getAnswers(commentsList: Array<any>): Array<Answer> {
-    if (this.answers) {
-      const answers = _.map(commentsList, (comment: any) => _.find(this.answers, (answer: Answer) => answer._id === comment.answerId));
-      return _.filter(answers, (a: Answer) => a);
-    } else {
-      return [];
-    }
-  }
-
-  public getFillPerc(value: number): string {
-    return `${Math.round(value / this._maxCountScore * 100)}%`;
   }
 
   get readonly(): boolean { return this._readonly; }
