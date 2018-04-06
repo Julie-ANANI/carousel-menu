@@ -20,7 +20,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.displayPropertyValue = false;
     this.backOffice = false;
-    console.log('first' + this.backOffice);
 
   }
 
@@ -46,11 +45,9 @@ export class HeaderComponent implements OnInit {
 
   set backOfficeValue(value: boolean) {
     this.backOffice = value;
-    console.log('set' + this.backOffice);
   }
 
   get backOfficeValue(): boolean {
-    console.log('get' + this.backOffice);
     return this.backOffice;
   }
 
