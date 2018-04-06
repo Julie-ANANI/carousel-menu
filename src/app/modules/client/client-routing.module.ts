@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ClientComponent } from './client.component';
 
+import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
+import { ClientDiscoverDescriptionComponent } from './components/client-discover-description/client-discover-description.component';
+
 import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
 import { ClientProjectComponent } from './components/client-project/client-project.component';
 import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
@@ -41,7 +44,7 @@ const clientRoutes: Routes = [
       },
       {
         path: 'welcome',
-        //canCativate: '',
+        /*canCativate: '',*/
         children: [
           { path: '', component: ClientWelcomeComponent, pathMatch: 'full' }
         ]
@@ -78,6 +81,14 @@ const clientRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
           { path: '', component: ClientMyAccountComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'discover',
+        canActivate: [AuthGuard],
+        children: [
+          { path: '', component: ClientDiscoverComponent, pathMatch: 'full' },
+          { path: ':discoverId', component: ClientDiscoverDescriptionComponent, pathMatch: 'full'}
         ]
       },
       {

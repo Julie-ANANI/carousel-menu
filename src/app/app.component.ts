@@ -10,10 +10,7 @@ import 'rxjs/add/operator/pairwise';
 @Component({
   selector: 'app-root',
   styleUrls: ['./app.component.scss'],
-  template: '<simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>' +
-  '<progress class="progress" max="100" *ngIf="displayLoader"></progress>' +
-  '<router-outlet></router-outlet>' +
-  '<app-footer></app-footer>'
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit, OnDestroy {
 
@@ -21,10 +18,14 @@ export class AppComponent implements OnInit, OnDestroy {
   public displayLoader = false;
 
   public notificationsOptions = {
-    position: ['top', 'right'],
+    position: ['bottom', 'right'],
     timeOut: 5000,
-    lastOnBottom: false,
+    lastOnBottom: true,
     maxStack: 4,
+    animate: 'scale',
+    pauseOnHover: false,
+    showProgressBar: false,
+    clickToClose: false,
     theClass: 'notification'
   };
 

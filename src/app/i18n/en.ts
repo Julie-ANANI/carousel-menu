@@ -1,6 +1,7 @@
 import { COMMON } from './common_en';
 import { ERROR } from './error_en';
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/en';
+import { DISCOVER } from '../modules/client/components/client-discover/i18n/en';
 import { LOG_IN } from '../modules/client/components/client-login/i18n/en';
 import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/en';
 import { MY_PROJECTS } from '../modules/client/components/client-my-projects/i18n/en';
@@ -26,6 +27,7 @@ export const en = {
   'MARKET_REPORT': MARKET_REPORT,
   'USERS': ADMIN_USERS,
   'FOOTER': FOOTER,
+  'DISCOVER': DISCOVER,
   'LOG_IN': LOG_IN,
   'MY_ACCOUNT': MY_ACCOUNT,
   'MY_PROJECTS': MY_PROJECTS,
