@@ -43,7 +43,7 @@
         <ul class="navbar-nav">
           <!-- <a href="http://help.umi.us" target="_blank" class="btn btn-link">{{ 'COMMON.HELP' | translate }}</a>-->
           <li class="nav-item" *ngIf="!backOffice && authService.adminLevel > 0">
-            <a (click)="toggleState()" [routerLink]="'/sample'" routerLinkActive="active" class="nav-link">Example</a>
+            <a (click)="toggleState()" [routerLink]="'/sample'" routerLinkActive="active" class="nav-link">{{ 'HEADER.EXAMPLE' | translate }}</a>
           </li>
           <li class="nav-item" *ngIf="!backOffice">
             <a [routerLink]="'/projects'" (click)="toggleState()" routerLinkActive="active" class="nav-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
@@ -52,7 +52,7 @@
             <a [routerLink]="'/account'" (click)="toggleState()" routerLinkActive="active" class="nav-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
           </li>
           <li class="nav-item" *ngIf="!backOffice && canShow(1)">
-            <a [routerLink]="'/admin'" (click)="toggleState()" routerLinkActive="active" class="nav-link">{{ 'COMMON.ADMIN' | translate }}</a>
+            <a [routerLink]="'/admin'" (click)="displayValue = !displayValue" routerLinkActive="active" class="nav-link">{{ 'COMMON.ADMIN' | translate }}</a>
           </li>
         </ul>
       </div>

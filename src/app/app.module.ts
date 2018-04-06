@@ -15,6 +15,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './directives/footer/footer.component';
+import { HeaderComponent } from './directives/header/header.component';
 
 // Services
 import { InnovationService } from './services/innovation/innovation.service';
@@ -50,6 +51,7 @@ import { SignatureResolver } from './resolvers/signature.resolver';
   declarations: [
     AppComponent,
     FooterComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule.withServerTransition({

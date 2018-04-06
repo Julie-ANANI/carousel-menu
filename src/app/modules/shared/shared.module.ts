@@ -47,7 +47,7 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
 import { AutocompleteSearchComponent } from '../../directives/autocomplete-search/autocomplete-search.component';
 import { CountryFlagComponent } from '../../directives/country-flag/country-flag.component';
-import { HeaderComponent } from '../../directives/header/header.component';
+//import { HeaderComponent } from '../../directives/header/header.component';
 
 @NgModule({
   imports: [
@@ -98,7 +98,7 @@ import { HeaderComponent } from '../../directives/header/header.component';
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
     DomSanitizerPipe,
-    HeaderComponent
+    //HeaderComponent
   ],
   exports: [
     // Modules
@@ -139,7 +139,7 @@ import { HeaderComponent } from '../../directives/header/header.component';
     SharedEditEmail,
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
-    HeaderComponent
+    //HeaderComponent
   ]
 })
 export class SharedModule { }
