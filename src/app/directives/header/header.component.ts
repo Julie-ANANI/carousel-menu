@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import { Location } from '@angular/common';
 import { AuthService } from '../../services/auth/auth.service';
 import { environment } from '../../../environments/environment';
 
@@ -9,11 +10,10 @@ import { environment } from '../../../environments/environment';
 })
 export class HeaderComponent implements OnInit {
 
-  @Input() backOffice: boolean;
-
   private _displayValue: boolean; // to toggle the value of collapse menu
 
-  constructor(private _authService: AuthService) {}
+  constructor(private _authService: AuthService,
+              private _location: Location) {}
 
   ngOnInit() {
     this._displayValue = false;
@@ -35,14 +35,16 @@ export class HeaderComponent implements OnInit {
     this._displayValue = !this._displayValue;
   }
 
-
-
   set displayValue(value: boolean) {
     this._displayValue = value;
   }
 
   get displayValue(): boolean {
     return this._displayValue;
+  }
+
+  get backOffice(): boolean {
+    return this._location.path().slice(0,6) === '/admin';
   }
 
 }
