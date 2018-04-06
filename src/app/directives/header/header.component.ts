@@ -35,4 +35,8 @@ export class HeaderComponent implements OnInit {
     this._displayValue = !this._displayValue;
   }
 
+  get displayValue(): boolean {
+    return this._displayValue;
+  }
+
 }

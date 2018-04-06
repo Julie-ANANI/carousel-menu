@@ -23,7 +23,7 @@
     <!-- /Collapse button -->
 
     <!-- Menu item -->
-    <div class="navbar-collapse" [ngStyle]="{'display': _displayValue ? 'block' : 'none' }">
+    <div class="navbar-collapse" [ngStyle]="{'display': displayValue ? 'block' : 'none' }">
 
       <!-- Non connecté -->
       <div *ngIf="!authService.isAuthenticated">

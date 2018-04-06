@@ -10,19 +10,27 @@ import 'rxjs/Rx';
 
 export class AutocompleteSearchComponent implements OnInit {
 
-  searchInputField: FormControl; /* declare the FormControl as properties of our component. */
+  private _searchInputField: FormControl; /* declare the FormControl as properties of our component. */
 
   ngOnInit() {
 
-    this.searchInputField = new FormControl(); // create the form control
+    this._searchInputField = new FormControl(); // create the form control
 
-    this.searchInputField.valueChanges
+    this._searchInputField.valueChanges
       .debounceTime(500) //
       .distinctUntilChanged()
       .subscribe(input => {
          // this.userInput = input;
         // pass this input to the service
       });
+  }
+
+  get searchInputField(): FormControl {
+    return this._searchInputField;
+  }
+
+  set searchInputField(value: FormControl) {
+    this._searchInputField = value;
   }
 
 }
