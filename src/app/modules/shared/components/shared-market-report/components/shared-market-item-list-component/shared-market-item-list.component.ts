@@ -27,7 +27,7 @@ export class SharedMarketItemListComponent implements OnInit {
     this.answers.forEach((answer) => {
       if (answer.answers[this.question.id] && Array.isArray(answer.answers[this.question.id])) {
         answer.answers[this.question.id].forEach((item: any) => {
-          const key = this.question.controlType !== 'clearbit' ? item : item.name;
+          const key = this.question.controlType !== 'clearbit' ? item.text : item.name;
           if (answerItems[key]) {
             answerItems[key].count += 1;
             answerItems[key].answers.push(answer);
