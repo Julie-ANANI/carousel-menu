@@ -1,5 +1,5 @@
 <div [id]=domSectionId>
-  <h2>{{ question.label | multiling:lang }}</h2>
+  <h2>{{ question.title | multiling:lang }}</h2>
 
   <div class="white-frame">
 
@@ -30,7 +30,7 @@
       <!--======= Scale =======-->
       <app-scale *ngIf="question.controlType === 'scale'"
              [answers]="answersToShow"
-             [question]="info">
+             [question]="question">
       </app-scale>
 
       <!--======= Bar Chart =======-->
@@ -58,7 +58,7 @@
         <li *ngFor="let answer of answersToShow">
           <market-comment
             [answer]="answer"
-            [questionId]="info.id"
+            [questionId]="question.identifier"
             (modalAnswerChange)="seeAnswer($event)">
           </market-comment>
         </li>
@@ -94,7 +94,7 @@
             <li *ngFor="let answer of answersWithComment">
               <market-comment
                 [answer]="answer"
-                [questionId]="info.id+'Comment'"
+                [questionId]="question.identifier+'Comment'"
                 (modalAnswerChange)="seeAnswer($event)">
               </market-comment>
             </li>

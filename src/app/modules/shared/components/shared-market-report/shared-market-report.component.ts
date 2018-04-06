@@ -27,9 +27,9 @@ export class SharedMarketReportComponent implements OnInit {
   private _cleaned_questions: Array<Question> = [];
   private _answers: Array<Answer> = [];
   private _countries: Array<string> = [];
-  private _showListProfessional: boolean = false;
+  private _showListProfessional = false;
   private _infographics: any;
-  private _showDetails = false;
+  private _showDetails = true;
   private _calculating = false;
   private _innoid: string;
 
@@ -134,6 +134,10 @@ export class SharedMarketReportComponent implements OnInit {
 
   public canShow(): boolean {
     return !!this._infographics;
+  }
+
+  public getInfo(question: Question) {
+    return this._infographics.questions.find((infoQ: any) => infoQ.id === question.identifier);
   }
 
   get answers(): Array<Answer> { return this._answers; }
