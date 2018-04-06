@@ -10,7 +10,7 @@ import 'rxjs/Rx';
 
 export class AutocompleteSearchComponent implements OnInit {
 
-  private searchInputField: FormControl; /* declare the FormControl as properties of our component. */
+  searchInputField: FormControl; /* declare the FormControl as properties of our component. */
 
   ngOnInit() {
 

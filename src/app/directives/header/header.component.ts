@@ -11,11 +11,12 @@ export class HeaderComponent implements OnInit {
 
   @Input() backOffice: boolean;
 
-  private _displayValue = false; // to toggle the value of collapse menu
+  private _displayValue: boolean; // to toggle the value of collapse menu
 
   constructor(private _authService: AuthService) {}
 
   ngOnInit() {
+    this._displayValue = false;
   }
 
   public logoName(): string {

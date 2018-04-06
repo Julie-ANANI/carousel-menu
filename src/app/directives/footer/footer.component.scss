@@ -2,16 +2,20 @@ footer {
   background-color: #262831;
   min-height: 7rem;
   color: white;
-  padding: 2rem 3rem;
-  transition: all 0.3s ease;
+  padding: 3rem 3rem;
 
-  .column {
-    width: 100%;
-  }
+  p {
+    margin-top: 0.7rem;
 
-  .lang {
-    text-align: center;
-    margin-bottom: 2.5rem;
+    a{
+      color: #3498DB;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: #246a99;
+    }
+
   }
 
   .lang-button {
@@ -38,6 +42,8 @@ footer {
   .menu {
     min-width: 7rem;
     border-radius: 0.25rem;
+    transition: all 0.3s ease;
+    text-align: left;
   }
 
   ul li {
@@ -55,27 +61,6 @@ footer {
       }
   }
 
-  .info {
-    flex: 1;
-
-    a{
-      color: #3498DB;
-    }
-
-    a:hover {
-      color: #246a99;
-    }
-  }
-
 }
 
-@media (min-width: 840px) {
-
-  .lang {
-    text-align: unset !important;
-    align-self: flex-start !important;
-    margin-bottom: 1rem !important;
-  }
-
-}
 

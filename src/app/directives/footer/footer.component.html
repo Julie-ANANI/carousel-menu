@@ -1,43 +1,49 @@
 <footer class="container">
   <div class="columns">
-    <div class="column col-11 col-md-11">
+    <div class="column col-12">
 
-      <!-- Translate block -->
-      <div class="lang">
-        <div class="dropdown" [ngClass]="{'active': displayLangChoices}">
-          <div class="btn-group">
-            <button class="btn lang-button dropdown-toggle" (click)="(displayLangChoices = !displayLangChoices) && $event.preventDefault()">
-              {{ 'COMMON.LANG.'+translate.currentLang.toUpperCase() | translate }}<span class="icon-footer"><i class="icon icon-arrow-down"></i></span>
-            </button>
-            <ul class="menu">
-              <li *ngIf="translate.currentLang !== 'fr'">
-                <a (click)="translate.use('fr') && $event.preventDefault() && (displayLangChoices=false)">
-                  {{ 'COMMON.LANG.FR' | translate }}
-                </a>
-              </li>
-              <li *ngIf="translate.currentLang !== 'en'">
-                <a (click)="translate.use('en') && $event.preventDefault() && (displayLangChoices=false)">
-                  {{ 'COMMON.LANG.EN' | translate }}
-                </a>
-              </li>
-            </ul>
+      <div class="columns">
 
+        <!-- Info block -->
+        <div class="column col-11 col-xl-12 col-mx-auto">
+          <p>© 2015 - {{ copyrightDate }}
+            &nbsp;
+            <strong>{{ companyName }}</strong>
+            &nbsp;|
+            <span *ngIf="isMainDomain()">
+            <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')">{{ 'FOOTER.LEGAL_NOTICE' | translate }}</a>
+          •
+          <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">{{ 'FOOTER.TERMS' | translate }}</a>
+          </span>
+          </p>
+        </div>
+        <!-- /Info block -->
+
+        <!-- Translate block -->
+        <div class="column col-1 col-xl-1 text-right">
+          <div class="dropdown" [ngClass]="{'active': displayLangChoices}">
+            <div class="btn-group">
+              <button class="btn lang-button dropdown-toggle" (click)="(displayLangChoices = !displayLangChoices) && $event.preventDefault()">
+                {{ 'COMMON.LANG.'+translate.currentLang.toUpperCase() | translate }}<span class="icon-footer"><i class="icon icon-arrow-down"></i></span>
+              </button>
+              <ul class="menu">
+                <li *ngIf="translate.currentLang !== 'fr'">
+                  <a (click)="translate.use('fr') && $event.preventDefault() && (displayLangChoices=false)">
+                    {{ 'COMMON.LANG.FR' | translate }}
+                  </a>
+                </li>
+                <li *ngIf="translate.currentLang !== 'en'">
+                  <a (click)="translate.use('en') && $event.preventDefault() && (displayLangChoices=false)">
+                    {{ 'COMMON.LANG.EN' | translate }}
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- /Translate block -->
+        <!-- /Translate block -->
 
-      <!-- Info block -->
-      <div class="info text-center">
-        <p>© 2015 - {{ copyrightDate }} </p>
-          <p><strong>{{ companyName }}</strong></p>
-        <div *ngIf="isMainDomain()">
-          <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')">{{ 'FOOTER.LEGAL_NOTICE' | translate }}</a>
-          |
-          <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">{{ 'FOOTER.TERMS' | translate }}</a>
-        </div>
       </div>
-      <!-- /Info block -->
 
     </div>
   </div>
