@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   apiUrl: 'https://appv3.umi.us/api',
-  companyName: 'UMI',
+  companyName: 'United Motion Ideas',
   domain: 'umi',
   innovationUrl: 'https://umicli.umi.us',
   quizUrl: 'https://quiz.umi.us'

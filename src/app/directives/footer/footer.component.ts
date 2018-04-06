@@ -22,7 +22,7 @@ export class FooterComponent implements OnInit {
   }
 
   get companyName(): string {
-    return `${this._companyName} ${this.isMainDomain() ? '' : ' by UMI'}`;
+    return `${this._companyName} ${this.isMainDomain() ? '' : ' by United Motion Ideas'}`;
   }
 
   get translate (): TranslateService {

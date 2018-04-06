@@ -1,0 +1,55 @@
+.discover-section {
+  padding-bottom: 40px;
+}
+
+.discover-description {
+  color: #878787;
+  font-size:  1.1rem;
+  line-height: 1.8rem;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.row-margin {
+  margin-top: 88px;
+  margin-bottom: 15px;
+}
+
+.card-title {
+  color: #333333;
+  font-size: 1.3rem;
+  line-height: 1.8rem;
+}
+
+.card-body {
+  color: #878787;
+  font-size: 1.1rem;
+  line-height: 1.8rem;
+}
+
+.card-footer {
+
+  span {
+    border: none;
+    color: #acb3c2;
+    padding-top: 6px;
+  }
+
+  span:hover {
+    background-color: transparent;
+    color: #0B90C6;
+    cursor: pointer;
+  }
+
+}
+
+@media(max-width: 840px) {
+
+  .margin-top {
+    margin-top: 30px;
+  }
+
+}
+
+
+
