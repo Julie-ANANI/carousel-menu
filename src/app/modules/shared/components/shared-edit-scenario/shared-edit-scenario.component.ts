@@ -14,7 +14,7 @@ export class SharedEditScenarioComponent implements OnInit {
   public displayedLanguages: Array<string> = ['en', 'fr'];
   public displayedProfiles: Array<string> = ['NEW'];
   public availableLanguages: Array<string> = ['en', 'fr'];
-  public availableProfiles: Array<string> = ['NEW', 'AMBASSADOR'];
+  public availableProfiles: Array<string> = ['NEW'];
 
   constructor() { }
 
@@ -62,7 +62,7 @@ export class SharedEditScenarioComponent implements OnInit {
         profile: profile,
         language: language,
         subject: "TODO",
-        content: null
+        content: "TODO"
       };
     return template;
   }

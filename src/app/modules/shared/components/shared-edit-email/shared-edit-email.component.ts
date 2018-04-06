@@ -20,7 +20,7 @@ export class SharedEditEmail {
   };
 
   constructor() { }
-
+/*
   public addEmail() {
     this.email.subject = this.email.step;
     this.email.content = "TODO";
@@ -30,7 +30,7 @@ export class SharedEditEmail {
   public removeEmail() {
     this.emailChange.emit(null);
   }
-
+*/
   public save() {
     this.emailChange.emit(this.email);
   }
