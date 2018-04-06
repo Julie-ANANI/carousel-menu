@@ -47,10 +47,9 @@
       </app-stars>
 
       <!--======= Liste d'items (applications, concurrents, partenaires potentiels) =======-->
-      <market-item-list
-        [answers]="answers"
-        [list]="info.data"
-        *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
+      <market-item-list *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
+        [answers]="answersToShow"
+        [question]="question"
         (modalAnswerChange)="seeAnswer($event)">
       </market-item-list>
 
