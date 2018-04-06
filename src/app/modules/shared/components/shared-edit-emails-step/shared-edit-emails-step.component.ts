@@ -30,5 +30,5 @@ export class SharedEditEmailsStep {
     this.emailsChange.emit(this.emails);
   }
   
-  get size(): number { return this.emails.filter(e => e.content != null).length}
+  get size(): number { return this.emails.filter(e => e.content != 'TODO' && e.subject != 'TODO').length}
 }

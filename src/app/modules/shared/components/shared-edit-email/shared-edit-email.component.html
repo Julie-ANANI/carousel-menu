@@ -16,25 +16,16 @@
     </label>
   </div>
   <div class="card-body">
-    <div *ngIf="email.content != null">
-      <div>
-        <h4 *ngIf="editionMode">Contenu</h4>
-        <text-zone [elementId]="email.language + email.step + email.profile"
-                   [readonly]="!editionMode"
-                   [data]="email.content || ''"
-                   (onEditorKeyup)="updateContent($event)"></text-zone>
-        <button *ngIf="editionMode" type="submit" class="btn btn-primary centered" (click)="save()">Sauvegarder</button>
-        <p *ngIf="editionMode">Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*</p>
-      </div>
-    </div>
-    <p *ngIf="email.content == null">
-      Cet email n'existe pas pour le moment.
-      <button class="btn btn-primary" (click)="addEmail()">
-        Créer cet email
-      </button>
-    </p>
+    <h4 *ngIf="editionMode">Contenu</h4>
+    <text-zone [elementId]="email.language + email.step + email.profile"
+               [readonly]="!editionMode"
+               [data]="email.content || ''"
+               (onEditorKeyup)="updateContent($event)"></text-zone>
+    <button *ngIf="editionMode" type="submit" class="btn btn-primary centered" (click)="save()">Sauvegarder</button>
+    <p *ngIf="editionMode">Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*</p>
   </div>
+  <!--
   <div class="card-footer" *ngIf="email.content != null">
     <a (click)="removeEmail()" class="text-error"><i class="fa fa-trash"></i> {{ 'COMMON.DELETE' | translate }}</a>
-  </div>
+  </div>-->
 </div>
