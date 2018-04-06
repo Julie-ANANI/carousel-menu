@@ -5,7 +5,7 @@ import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';
 import { Multiling } from '../../../../../../models/multiling';
-// import { Question } from '../../../../../../models/question';
+import { Question } from '../../../../../../models/question';
 
 export interface BarData {
   label: Multiling,
@@ -22,26 +22,33 @@ export interface BarData {
 })
 export class BarChartComponent implements OnInit {
 
-  @Input() public question: any;
-  @Input() public answers: Array<Answer>;
+  @Input() set answers(value: Array<Answer>) {
+    this._answers = value;
+    this.updateAnswersData();
+  }
+  @Input() public question: Question;
   @Output() modalAnswerChange = new EventEmitter<any>();
 
+  private _answers: Array<Answer>;
   private _barsData: Array<BarData> = [];
   public showAnswers: {[index: string]: string} = {};
 
   constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
-    if (Array.isArray(this.question.options)) {
-      this._barsData = this.question.options.map((q: any) => {
-        // TODO: when getting real Question (not the one from infographic), change question.id to question.identifier
+    this.updateAnswersData();
+  }
+
+  private updateAnswersData(): void {
+    if (this.question && this.question.identifier && Array.isArray(this.question.options)) {
+      this._barsData = this.question.options.map((q) => {
         let answers = [];
         if (this.question.controlType === 'checkbox') {
-          answers = this.answers.filter((a) => a.answers[this.question.id] && a.answers[this.question.id][q.identifier]);
+          answers = this._answers.filter((a) => a.answers[this.question.identifier] && a.answers[this.question.identifier][q.identifier]);
         } else {
-          answers = this.answers.filter((a) => a.answers[this.question.id] === q.identifier);
+          answers = this._answers.filter((a) => a.answers[this.question.identifier] === q.identifier);
         }
-        const percentage = `${((answers.length * 100) / this.answers.length) >> 0}%`;
+        const percentage = `${((answers.length * 100) / this._answers.length) >> 0}%`;
         return {
           label: q.label,
           answers: answers,

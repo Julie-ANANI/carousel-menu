@@ -96,11 +96,11 @@
         </section>
 
         <!-- Les autres questions -->
-        <section *ngFor="let question of infographics.questions">
+        <section *ngFor="let question of questions">
           <app-question-section
-            [info]="question"
+            [info]="getInfo(question)"
             [question]="question"
-            [answers]="infographics.answers"
+            [answers]="answers"
             [showComments]="showDetails"
             [showDetails]="showDetails"
             [readonly]="!adminMode"
