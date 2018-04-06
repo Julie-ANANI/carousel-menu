@@ -2,7 +2,6 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import * as _ from 'lodash';
 import { Answer } from '../../../../../../models/answer';
 
 @Component({
@@ -13,15 +12,42 @@ import { Answer } from '../../../../../../models/answer';
 
 export class SharedMarketItemListComponent implements OnInit {
 
-  @Input() public list: any;
   @Input() public answers: Array<Answer>;
+  @Input() public question: any;
   @Output() modalAnswerChange = new EventEmitter<any>();
+
+  private _listItems: Array<{rating: number, count: number, value: string, answers: Array<Answer>}>;
 
   constructor() { }
 
   ngOnInit() {
-    this.list = this.list
-      .sort((a: any, b: any) => {
+
+    const answerItems: {[value: string]: {rating: number, count: number, answers: Array<Answer>}} = {};
+
+    this.answers.forEach((answer) => {
+      if (answer.answers[this.question.id] && Array.isArray(answer.answers[this.question.id])) {
+        answer.answers[this.question.id].forEach((item: any) => {
+          const key = this.question.controlType !== 'clearbit' ? item.text : item.name;
+          if (answerItems[key]) {
+            answerItems[key].count += 1;
+            answerItems[key].answers.push(answer);
+          } else {
+            answerItems[key] = {rating: 1, count: 1, answers: [answer]};
+          }
+        });
+      }
+    });
+
+    this._listItems = Object.keys(answerItems)
+      .map((key) => {
+        return {
+          value: key,
+          rating: answerItems[key].rating,
+          count: answerItems[key].count,
+          answers: answerItems[key].answers,
+        }
+      })
+      .sort((a, b) => {
         if ((b.count || 1) - (a.count || 1) === 0) {
           return b.value.length - a.value.length;
         } else {
@@ -30,17 +56,10 @@ export class SharedMarketItemListComponent implements OnInit {
       });
   }
 
-  public getAnswers(commentsList: Array<any>): Array<Answer> {
-    if (this.answers) {
-      const answers = _.map(commentsList, (comment: any) => _.find(this.answers, (answer: Answer) => answer._id === comment.answerId));
-      return _.filter(answers, (a: Answer) => a);
-    } else {
-      return [];
-    }
-  }
-
   public seeAnswer(event: any) {
     this.modalAnswerChange.emit(event);
   }
+
+  get listItems() { return this._listItems; }
 
 }
