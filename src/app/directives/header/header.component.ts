@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { environment } from '../../../environments/environment';
 
@@ -9,14 +9,19 @@ import { environment } from '../../../environments/environment';
 })
 export class HeaderComponent implements OnInit {
 
-  @Input() backOffice: boolean;
+ // @Input() backOffice: boolean;
 
-  private _displayValue: boolean; // to toggle the value of collapse menu
+  private backOffice: boolean; // to toggle back office value
+
+  private displayPropertyValue: boolean; // to toggle the value of collapse menu
 
   constructor(private _authService: AuthService) {}
 
   ngOnInit() {
-    this._displayValue = false;
+    this.displayPropertyValue = false;
+    this.backOffice = false;
+    console.log('first' + this.backOffice);
+
   }
 
   public logoName(): string {
@@ -31,18 +36,22 @@ export class HeaderComponent implements OnInit {
     return this._authService;
   }
 
-  toggleState() {
-    this._displayValue = !this._displayValue;
-  }
-
-
-
   set displayValue(value: boolean) {
-    this._displayValue = value;
+    this.displayPropertyValue = value;
   }
 
   get displayValue(): boolean {
-    return this._displayValue;
+    return this.displayPropertyValue;
+  }
+
+  set backOfficeValue(value: boolean) {
+    this.backOffice = value;
+    console.log('set' + this.backOffice);
+  }
+
+  get backOfficeValue(): boolean {
+    console.log('get' + this.backOffice);
+    return this.backOffice;
   }
 
 }
