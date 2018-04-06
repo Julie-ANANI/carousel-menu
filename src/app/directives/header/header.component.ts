@@ -23,13 +23,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.displayPropertyValue = false;
     this.backValue = false;
-
-    if (this._location.path().slice(0, 6) === '/admin') {
-      this.backOfficeValue = true;
-    } else {
-      this.backOfficeValue = false;
-    }
-
+    this.backOfficeValue = this._location.path().slice(0, 6) === '/admin';
   }
 
   public logoName(): string {
