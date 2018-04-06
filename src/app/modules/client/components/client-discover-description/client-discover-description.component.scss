@@ -1,0 +1,222 @@
+$bg-color: #262831;
+$primary-color: #FFFFFF;
+$secondary-color: #878787;
+
+.description-header {
+  background: url('../../../../../assets/images/bg.png') repeat;
+  padding-top: 115px;
+  padding-bottom: 102px;
+  color: $primary-color;
+
+    h1 {
+      font-size: 2.5rem;
+      line-height: 3.4rem;
+      font-weight: normal;
+      margin-bottom: 15px;
+      margin-top: 0px;
+      color: $primary-color;
+    }
+
+    h1::after {
+      display: none;
+    }
+
+    .project-already-avai {
+      color: #A4A4A4;
+      font-size: 0.9rem;
+      line-height: 1.8rem;
+      font-weight: normal;
+      margin-bottom: 18.5px;
+
+      a {
+        border: none;
+        color: #acb3c2;
+        padding-top: 6px;
+      }
+
+      a:hover {
+        background-color: transparent;
+        color: #0B90C6;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+    }
+
+    .line-2 {
+      width: 125px;
+      border: 2px solid $primary-color;
+      border-radius: 5px;
+    }
+
+    .description-summary {
+      font-size: 1.3rem;
+      line-height: 2.2rem;
+      padding-top: 31.5px;
+
+        p {
+          margin-bottom: 64px;
+        }
+
+        .header-button {
+          background-color: #F79323;
+          color: $primary-color;
+          border-radius: 5px;
+          border-color: #F79323;
+          min-height: 50px;
+          padding: 10px 30px;
+          max-width: 323px;
+          transition: all 0.5s ease;
+
+          span {
+            font-size: 0.9rem;
+            line-height: 1.4rem;
+          }
+
+          .icon {
+            vertical-align: middle;
+          }
+
+        }
+
+        .header-button:hover {
+          background-color: #f8a84e;
+        }
+
+    }
+
+    .margin-top {
+      margin-top: 9px;
+    }
+
+    .project-share {
+      background-color: #325B78;
+      max-width: 336px;
+      padding: 26px 28px 39px 49px;
+      min-height: 220px;
+
+      .vous-aimez-le-projet {
+        max-width: 259px;
+
+        p {
+          font-size: 0.9rem;
+          line-height: 1.4rem;
+        }
+
+        .fab {
+          padding: 11.79px 11.82px;
+          border-radius: 3px;
+          cursor: pointer;
+          transition: all 0.5s ease;
+        }
+
+        .icon-linkedin {
+          background-color: #3076B0;
+        }
+
+        .icon-linkedin:hover {
+          background-color: $primary-color;
+          color: #3076B0;
+        }
+
+        .icon-twitter {
+          background-color: #48AAEB;
+        }
+
+        .icon-twitter:hover {
+          background-color: $primary-color;
+          color: #48AAEB;
+        }
+
+        .icon-facebook {
+          background-color: #4F65A1;
+          color: $primary-color;
+        }
+
+        .icon-facebook:hover {
+          background-color: $primary-color;
+          color: #4F65A1;
+        }
+
+        .icon-google {
+          background-color: #CC5441;
+          padding-right: 8px;
+          padding-left: 8px;
+        }
+
+        .icon-google:hover {
+          background-color: $primary-color;
+          color: #CC5441;
+        }
+
+      }
+
+    }
+
+}
+
+.section-heading {
+  color: #0B90C6;
+  font-size: 1.6rem;
+  line-height: 2.15rem;
+  padding-bottom: 26px;
+}
+
+
+.description-section-1 {
+  padding-top: 83px;
+  padding-bottom: 99px;
+
+  .margin-bottom {
+    margin-bottom: 30px;
+  }
+
+}
+
+.description-section-2 {
+  padding-top: 83px;
+  padding-bottom: 99px;
+  background-color: #FAFAFA;
+
+    ul li {
+      color: $secondary-color;
+      font-size: 1.3rem;
+      line-height: 2.55rem;
+    }
+
+}
+
+.description-section-3 {
+  padding-top: 83px;
+
+    .section-content {
+      color: $secondary-color;
+      font-size: 1.1rem;
+      line-height: 1.8rem;
+    }
+}
+
+
+
+@media (max-width: 960px) {
+
+  .margin-top {
+    margin-top: 68px !important;
+  }
+
+  .margin-top-icon {
+    margin-top: 10px !important;
+  }
+}
+
+@media (max-width: 426px) {
+
+  .description-summary .header-button {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+}
+
+
+
