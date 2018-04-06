@@ -24,7 +24,7 @@ export class StarsComponent implements OnInit {
   ngOnInit() {
     this._notesData = this.question.options.map((x: any) => {
       return {
-        label: Object.keys(x.label).reduce((acc, lbl) => {acc[lbl] = x.label[lbl].text; return acc; }, {}),
+        label: x.label,
         sum: 0,
         count: 0,
         percentage: '0%'

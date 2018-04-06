@@ -53,12 +53,13 @@ export class AnswerModalComponent implements OnInit {
             let i = 0;
             let advantagesLeft = true;
             while (advantagesLeft) {
-              if ((cardFr && cardFr.advantages && cardFr.advantages[i]) || (cardEn && cardEn.advantages && cardEn.advantages[i])) {
+              if ((cardFr && cardFr.advantages && cardFr.advantages[i] && cardFr.advantages[i].text)
+                || (cardEn && cardEn.advantages && cardEn.advantages[i] && cardEn.advantages[i].text)) {
                 question.options.push({
                   identifier: i.toString(),
                   label: {
-                    fr: cardFr && cardFr.advantages && cardFr.advantages[i] ? cardFr.advantages[i]: '',
-                    en: cardEn && cardEn.advantages && cardEn.advantages[i] ? cardEn.advantages[i]: ''
+                    fr: cardFr && cardFr.advantages && cardFr.advantages[i] ? cardFr.advantages[i].text : '',
+                    en: cardEn && cardEn.advantages && cardEn.advantages[i] ? cardEn.advantages[i].text : ''
                   }
                 });
                 i++;
