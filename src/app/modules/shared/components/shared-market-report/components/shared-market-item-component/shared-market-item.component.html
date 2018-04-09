@@ -1,8 +1,0 @@
-<strong class="item-name">
-  <span *ngIf="item.count > 1" class="item-occurrence">{{item.count}}x</span>
-  <img *ngIf="item.logo" src={{item.logo}} width="20px" height="20px"/>
-  {{item.value}}
-  <a *ngIf="item.url" href={{item.link}} target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
-</strong>
-<span *ngIf="isNew" class="item-new">new</span>
-<market-report-popover [answers]="answers" (modalAnswerChange)="seeAnswer($event)"></market-report-popover>
