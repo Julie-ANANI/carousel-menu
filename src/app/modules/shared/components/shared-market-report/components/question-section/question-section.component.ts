@@ -2,10 +2,10 @@
  * Created by bastien on 16/11/2017.
  */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';
 import { Question } from '../../../../../../models/question';
+import {Innovation} from '../../../../../../models/innovation';
 
 @Component({
   selector: 'app-question-section',
@@ -22,7 +22,6 @@ export class QuestionSectionComponent implements OnInit {
   private _answersWithComment: Array<Answer> = [];
   private _answersToShow: Array<Answer> = [];
   private _readonly: boolean;
-  private _innoid: string;
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
@@ -39,19 +38,14 @@ export class QuestionSectionComponent implements OnInit {
   }
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Input() public question: Question;
+  @Input() public innovation: Innovation;
   @Input() public info: any;
 
 
-  constructor(private _translateService: TranslateService,
-              private _route: ActivatedRoute) { }
+  constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
-    this._route.params.subscribe(params => {
-      this._innoid = params['projectId'];
-    });
-
     this._domSectionId = this.question.identifier.replace(/\s/g, '');
-
     this.updateAnswersData();
   }
 
@@ -97,6 +91,5 @@ export class QuestionSectionComponent implements OnInit {
   get showDetails(): boolean { return this._showDetails; }
   get answersToShow(): Array<Answer> { return this._answersToShow; }
   get answersWithComment(): Array<Answer> { return this._answersWithComment; }
-  get innoid(): string { return this._innoid; }
   get lang(): string { return this._translateService.currentLang; }
 }

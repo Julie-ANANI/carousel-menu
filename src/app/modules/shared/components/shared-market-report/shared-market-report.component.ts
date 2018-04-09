@@ -29,7 +29,7 @@ export class SharedMarketReportComponent implements OnInit {
   private _countries: Array<string> = [];
   private _showListProfessional = false;
   private _infographics: any;
-  private _showDetails = true;
+  private _showDetails = false;
   private _calculating = false;
   private _innoid: string;
 

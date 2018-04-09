@@ -6,12 +6,12 @@ import { Answer } from '../../../../../../models/answer';
 import { Question } from '../../../../../../models/question';
 
 @Component({
-  selector: 'market-item-list',
-  templateUrl: 'shared-market-item-list.component.html',
-  styleUrls: ['shared-market-item-list.component.scss']
+  selector: 'app-item-list',
+  templateUrl: 'item-list.component.html',
+  styleUrls: ['item-list.component.scss']
 })
 
-export class SharedMarketItemListComponent implements OnInit {
+export class ItemListComponent implements OnInit {
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
@@ -40,9 +40,14 @@ export class SharedMarketItemListComponent implements OnInit {
             const key = this.question.controlType !== 'clearbit' ? item.text : item.name;
             if (answerItems[key]) {
               answerItems[key].count += 1;
+              if (item.rating === 0 || item.rating === 2) { answerItems[key].rating = item.rating; }
               answerItems[key].answers.push(answer);
             } else {
-              answerItems[key] = {rating: 1, count: 1, answers: [answer]};
+              answerItems[key] = {
+                rating: item.rating || 1,
+                count: 1,
+                answers: [answer]
+              };
             }
           });
         }
@@ -57,17 +62,22 @@ export class SharedMarketItemListComponent implements OnInit {
             answers: answerItems[key].answers,
           }
         })
+        .filter((a) => (a.rating !== 0))
         .sort((a, b) => {
-          if ((b.count || 1) - (a.count || 1) === 0) {
-            return b.value.length - a.value.length;
+          if (b.rating - a.rating === 0) {
+            if ((b.count || 1) - (a.count || 1) === 0) {
+              return b.value.length - a.value.length;
+            } else {
+              return (b.count || 1) - (a.count || 1);
+            }
           } else {
-            return (b.count || 1) - (a.count || 1);
+            return b.rating - a.rating;
           }
         });
     }
   }
 
-  public seeAnswer(event: any) {
+  public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
   }
 

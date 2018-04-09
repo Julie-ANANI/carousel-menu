@@ -8,7 +8,7 @@
     **************************************************-->
     <app-question-conclusion
       [info]="info"
-      [innovationId]="innoid"
+      [innovationId]="innovation._id"
       [readonly]="readonly"
     ></app-question-conclusion>
 
@@ -17,7 +17,7 @@
     **************************************************-->
 
     <!-- ========= SHOW ANSWERS BUTTON ==============-->
-    <button type="button" class="market-report-btn centered"
+    <button type="button" class="market-report-btn show-answers-btn centered"
             [ngClass]="{'active': showDetails}"
             (click)="showDetails = !showDetails; $event.preventDefault()">
       {{(showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate}}
@@ -43,15 +43,16 @@
       <!--======= Avantages Clés =======-->
       <app-stars *ngIf="question.controlType === 'stars'"
                  [answers]="answersToShow"
+                 [innovation]="innovation"
                  [question]="question">
       </app-stars>
 
       <!--======= Liste d'items (applications, concurrents, partenaires potentiels) =======-->
-      <market-item-list *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
+      <app-item-list *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
         [answers]="answersToShow"
         [question]="question"
         (modalAnswerChange)="seeAnswer($event)">
-      </market-item-list>
+      </app-item-list>
 
       <!--======= textarea =======-->
       <ul *ngIf="question.controlType === 'textarea'" class="comments">
@@ -80,7 +81,7 @@
       <ng-container *ngIf="answersWithComment.length > 0">
 
         <!-- ========= SHOW COMMENTS BUTTON ==============-->
-        <button type="button" class="market-report-btn centered"
+        <button type="button" class="market-report-btn show-comments-btn centered"
                 [ngClass]="{'active': showComments}"
                 (click)="showComments = !showComments; $event.preventDefault()">
           {{(showComments ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN') | translate:({length: answersWithComment.length})}}
