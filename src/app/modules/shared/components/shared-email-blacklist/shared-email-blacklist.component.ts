@@ -23,8 +23,8 @@ export class SharedEmailBlacklistComponent implements OnInit {
 
   private _dataset: {blacklists: Array<any>, _metadata:any};
 
-  public searchConfiguration = "";
-  public addEmail = "";
+  private _searchConfiguration = "";
+  private _addressToBL = "";
 
   constructor( private _emailService: EmailService,
                private _translateService: TranslateService,
@@ -68,11 +68,11 @@ export class SharedEmailBlacklistComponent implements OnInit {
   }
 
   public addEntry() {
-    this._emailService.addToBlacklist({email:this.addEmail})
+    this._emailService.addToBlacklist({email:this.addressToBL})
         .subscribe(result=>{
-          this.addEmail = "";
+          this.addressToBL = "";
           this.resetSearch();
-          this._notificationsService.success("Blacklist", `The adsress ${this.addEmail} has been added successfully to the blacklist`);
+          this._notificationsService.success("Blacklist", `The address ${this.addressToBL} has been added successfully to the blacklist`);
         }, error=>{
           this._notificationsService.error("Error", error);
         });
@@ -80,7 +80,7 @@ export class SharedEmailBlacklistComponent implements OnInit {
 
   public canAdd(): boolean {
     const EMAIL_REGEXP = /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
-    return this.addEmail !== "" && !!this.addEmail.match(EMAIL_REGEXP);
+    return this.addressToBL !== "" && !!this.addressToBL.match(EMAIL_REGEXP);
   }
 
   get data(): Array<any> { return this._dataset.blacklists; };
@@ -88,4 +88,9 @@ export class SharedEmailBlacklistComponent implements OnInit {
   get config(): any { return this._config; };
   set config(value: any) { this._config = value; };
   get total(): number { return this._dataset._metadata.totalCount; };
+  get searchConfiguration(): string { return this._searchConfiguration; };
+  get addressToBL(): string { return this._addressToBL; };
+
+  set searchConfiguration(value: string) { this._searchConfiguration = value; };
+  set addressToBL(address: string ) { this._addressToBL = address; };
 }

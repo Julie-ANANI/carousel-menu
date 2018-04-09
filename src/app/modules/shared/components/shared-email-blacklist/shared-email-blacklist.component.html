@@ -1,17 +1,17 @@
 <div>
-  <h3>{{total}} E-mails blacklistés / {{ nbSelected }} sélectionnés</h3>
+  <h3>{{data.length}} out of {{total}} E-mails blacklistés</h3>
 
   <div class="columns">
     <div class="column col-4">
-      <label for="searchField">{{"SEARCH" || translate}}</label>
+      <label for="searchField">{{"SEARCH" | translate}}</label>
       <input type="text" id="searchField" [(ngModel)]="searchConfiguration">
       <button (click)="configureSearch()">Go!</button>
       <button (click)="resetSearch()">Reset</button>
     </div>
 
     <div class="column col-4">
-      <label for="addEntryField">{{"ADD" || translate}}</label>
-      <input type="text" id="addEntryField" [(ngModel)]="addEmail">
+      <label for="addEntryField">{{"ADD" | translate}}</label>
+      <input type="text" id="addEntryField" [(ngModel)]="addressToBL">
       <button (click)="addEntry()" [disabled]="!canAdd()">Add</button>
     </div>
 
