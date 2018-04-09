@@ -38,6 +38,7 @@ import { SharedMarketReportExampleComponent } from './components/shared-market-r
 import { SharedEditEmail } from './components/shared-edit-email/shared-edit-email.component';
 import { SharedEditEmailsStep } from './components/shared-edit-emails-step/shared-edit-emails-step.component';
 import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
+import { SharedEmailBlacklistComponent } from './components/shared-email-blacklist/shared-email-blacklist.component';
 
 // Pipes
 import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
@@ -98,7 +99,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
     DomSanitizerPipe,
-    //HeaderComponent
+    SharedEmailBlacklistComponent
   ],
   exports: [
     // Modules
@@ -139,7 +140,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedEditEmail,
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
-    //HeaderComponent
+    SharedEmailBlacklistComponent
   ]
 })
 export class SharedModule { }
