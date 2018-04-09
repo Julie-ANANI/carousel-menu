@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from './services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
-import {TranslateNotificationsService} from './services/notifications/notifications.service';
+import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { LoaderService } from './services/loader/loader.service';
 import { Subject } from 'rxjs/Subject';
 
@@ -12,10 +12,12 @@ import 'rxjs/add/operator/pairwise';
   styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html'
 })
+
 export class AppComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<any> = new Subject();
   public displayLoader = false;
+  public displayLoading: boolean;
 
   public notificationsOptions = {
     position: ['bottom', 'right'],
@@ -42,6 +44,14 @@ export class AppComponent implements OnInit, OnDestroy {
       setTimeout((_: void) => { this.displayLoader = isLoading; });
     });
 
+    this._loaderService.stopLoading();
+
+    this.displayLoading = true;
+
+    setTimeout (() => {
+      this.displayLoading = false;
+    }, 1000);
+
     if (this._authService.isAcceptingCookies) { // CNIL
       this._authService.initializeSession().takeUntil(this.ngUnsubscribe).subscribe(
         _ => {},
@@ -51,6 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
         })
       );
     }
+
   }
 
   ngOnDestroy() {
