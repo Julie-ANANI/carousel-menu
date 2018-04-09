@@ -8,7 +8,7 @@
     **************************************************-->
     <app-question-conclusion
       [info]="info"
-      [innovationId]="innoid"
+      [innovationId]="innovation._id"
       [readonly]="readonly"
     ></app-question-conclusion>
 
@@ -43,6 +43,7 @@
       <!--======= Avantages Clés =======-->
       <app-stars *ngIf="question.controlType === 'stars'"
                  [answers]="answersToShow"
+                 [innovation]="innovation"
                  [question]="question">
       </app-stars>
 
