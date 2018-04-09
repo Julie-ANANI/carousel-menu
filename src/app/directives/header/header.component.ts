@@ -13,9 +13,9 @@ export class HeaderComponent implements OnInit {
 
  // @Input() backOffice: boolean;
 
-  private backValue: boolean; // to toggle back office value
+  private backValue: boolean; // hold back office value
 
-  private displayPropertyValue: boolean; // to toggle the value of collapse menu
+  private displayPropertyValue: boolean; // hold the value of collapse menu
 
   constructor(private _authService: AuthService,
               private _location: Location) {}

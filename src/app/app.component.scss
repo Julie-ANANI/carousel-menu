@@ -1,3 +1,14 @@
+// height for header
+#app-header {
+  min-height: 3.9rem;
+}
+
+// Spaces around the main application components
+.app-content {
+  min-height: 100vh;
+  padding-bottom: 6rem;
+}
+
 .loader-overlay {
   position: absolute;
   width: 100%;
@@ -29,4 +40,12 @@
   .fas {
     color: #3498DB;
   }
+}
+
+@media (min-width: 840px) {
+
+  #app-header {
+    min-height: 4.2rem
+  }
+
 }

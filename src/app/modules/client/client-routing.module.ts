@@ -44,7 +44,7 @@ const clientRoutes: Routes = [
       },
       {
         path: 'welcome',
-        /*canCativate: '',*/
+        /*canActivate: '',*/
         children: [
           { path: '', component: ClientWelcomeComponent, pathMatch: 'full' }
         ]
