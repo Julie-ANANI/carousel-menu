@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
-import { AdminProjectsDetailsComponent } from './components/admin-projects/admin-project-details/admin-project-details.component';
+import { AdminProjectComponent } from './components/admin-project/admin-project.component';
 import { AdminProjectsComponent } from './components/admin-projects/admin-projects.component';
 import { AdminCampaignsComponent } from './components/admin-campaigns/admin-campaigns.component';
 import { AdminIndexComponent } from './components/admin-index/admin-index.component';
@@ -31,6 +31,7 @@ import { questionsRoutes } from './components/admin-preset/admin-questions/admin
 import { sectionsRoutes } from './components/admin-preset/admin-sections/admin-sections-routing.module';
 import { searchRoutes } from './components/admin-search/admin-search-routing.module';
 import { emailsRoutes } from './components/admin-emails/admin-emails-routing.module';
+import { projectRoutes } from './components/admin-project/admin-project-routing.module';
 
 const adminRoutes: Routes = [
   {
@@ -54,14 +55,12 @@ const adminRoutes: Routes = [
         path: 'projects',
         children: [
           { path: '', component: AdminProjectsComponent, pathMatch: 'full' },
-          { path: 'project/:projectId', resolve: { innovation : InnovationResolver }, children: [
-            { path: '', redirectTo: 'settings', pathMatch: 'full'},
-            { path: 'settings', component: AdminProjectsDetailsComponent, pathMatch: 'full'},
-            { path: 'cards', component: AdminProjectsDetailsComponent, pathMatch: 'full'},
-            { path: 'synthesis', component: AdminProjectsDetailsComponent, pathMatch: 'full'},
-            { path: 'campaigns', component: AdminProjectsDetailsComponent, pathMatch: 'full'},
-            { path: 'mail_config', component: AdminProjectsDetailsComponent, pathMatch: 'full'}
-          ]}
+          { path: 'project/:projectId',
+            resolve: { innovation : InnovationResolver },
+            component: AdminProjectComponent,
+            children: [
+              ...projectRoutes
+            ]}
         ]
       },
       {

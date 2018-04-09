@@ -13,6 +13,7 @@ import { AdminQuestionsModule } from './components/admin-preset/admin-questions/
 import { AdminSectionsModule } from './components/admin-preset/admin-sections/admin-sections.module';
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
 import { AdminEmailsModule } from './components/admin-emails/admin-emails.module';
+import { AdminProjectModule } from './components/admin-project/admin-project.module';
 
 // Components
 import { AdminComponent } from './admin.component';
@@ -24,7 +25,6 @@ import { AdminIndexComponent } from './components/admin-index/admin-index.compon
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminProjectsListComponent } from './components/admin-projects-list/admin-projects-list.component';
-import { AdminProjectsDetailsComponent } from './components/admin-projects/admin-project-details/admin-project-details.component';
 import { AdminPresetComponent } from './components/admin-preset/admin-preset.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
 import { AdminCampaignMailsComponent } from './components/admin-campaigns/admin-campaign-mails/admin-campaign-mails.component';
@@ -49,6 +49,7 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminSectionsModule,
     AdminSearchModule,
     AdminEmailsModule,
+    AdminProjectModule,
     SharedModule,
     SharedAnswerModalModule,
     SharedMarketReportModule,
@@ -65,7 +66,6 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminPatentsComponent,
     AdminUserDetailsComponent,
     AdminProjectsListComponent,
-    AdminProjectsDetailsComponent,
     AdminPresetComponent,
     AdminCampaignComponent,
     AdminCampaignMailsComponent,
