@@ -16,6 +16,7 @@ import { Question } from '../../../../../../models/question';
 export class QuestionSectionComponent implements OnInit {
 
   private _domSectionId: string;
+  private _answers: Array<Answer>;
   private _showComments: boolean;
   private _showDetails: boolean;
   private _answersWithComment: Array<Answer> = [];
@@ -23,6 +24,10 @@ export class QuestionSectionComponent implements OnInit {
   private _readonly: boolean;
   private _innoid: string;
 
+  @Input() set answers(value: Array<Answer>) {
+    this._answers = value;
+    this.updateAnswersData();
+  }
   @Input() set showComments(value: boolean) {
     this._showComments = value;
   }
@@ -33,7 +38,6 @@ export class QuestionSectionComponent implements OnInit {
     this._readonly = value;
   }
   @Output() modalAnswerChange = new EventEmitter<any>();
-  @Input() public answers: Array<Answer>;
   @Input() public question: Question;
   @Input() public info: any;
 
@@ -46,33 +50,39 @@ export class QuestionSectionComponent implements OnInit {
       this._innoid = params['projectId'];
     });
 
-    this._domSectionId = this.info.id.replace(/\s/g, '');
+    this._domSectionId = this.question.identifier.replace(/\s/g, '');
 
-    this._answersToShow = this.answers
-      .filter((a) => (a.answers[this.info.id] && a.answers[this.info.id + 'Quality'] !== 0));
+    this.updateAnswersData();
+  }
 
-    this._answersWithComment = this.answers
-      .filter((a) => (a.answers[this.info.id + 'Comment'] && a.answers[this.info.id + 'CommentQuality'] !== 0))
-      .sort((a, b) => {
-        if ((b.answers[this.info.id + 'CommentQuality'] || 1) - (a.answers[this.info.id + 'CommentQuality'] || 1) === 0) {
-          return b.answers[this.info.id + 'Comment'].length - a.answers[this.info.id + 'Comment'].length;
-        } else {
-          return (b.answers[this.info.id + 'CommentQuality'] || 1) - (a.answers[this.info.id + 'CommentQuality'] || 1);
-        }
-      });
+  private updateAnswersData() {
+    if (this.question && this.question.identifier) {
+      const id = this.question.identifier;
 
-    switch (this.info.controlType) {
-      case 'textarea':
-        // sort textarea answers by quality and by length.
+      this._answersToShow = this._answers
+        .filter((a) => (a.answers[id] && a.answers[id + 'Quality'] !== 0));
+
+      this._answersWithComment = this._answers
+        .filter((a) => (a.answers[id + 'Comment'] && a.answers[id + 'CommentQuality'] !== 0))
+        .sort((a, b) => {
+          if ((b.answers[id + 'CommentQuality'] || 1) - (a.answers[id + 'CommentQuality'] || 1) === 0) {
+            return b.answers[id + 'Comment'].length - a.answers[id + 'Comment'].length;
+          } else {
+            return (b.answers[id + 'CommentQuality'] || 1) - (a.answers[id + 'CommentQuality'] || 1);
+          }
+        });
+
+      // sort textarea answers by quality and by length.
+      if (this.question.controlType === 'textarea') {
         this._answersToShow = this._answersToShow
           .sort((a, b) => {
-            if ((b.answers[this.info.id + 'Quality'] || 1) - (a.answers[this.info.id + 'Quality'] || 1) === 0) {
-              return b.answers[this.info.id].length - a.answers[this.info.id].length;
+            if ((b.answers[id + 'Quality'] || 1) - (a.answers[id + 'Quality'] || 1) === 0) {
+              return b.answers[id].length - a.answers[id].length;
             } else {
-              return (b.answers[this.info.id + 'Quality'] || 1) - (a.answers[this.info.id + 'Quality'] || 1);
+              return (b.answers[id + 'Quality'] || 1) - (a.answers[id + 'Quality'] || 1);
             }
           });
-        break;
+      }
     }
   }
 
@@ -80,6 +90,7 @@ export class QuestionSectionComponent implements OnInit {
     this.modalAnswerChange.emit(event);
   }
 
+  get answers() { return this._answers; }
   get readonly(): boolean { return this._readonly; }
   get domSectionId(): string { return this._domSectionId; }
   get showComments(): boolean { return this._showComments; }

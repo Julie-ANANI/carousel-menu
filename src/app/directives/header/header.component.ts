@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
+
 export class HeaderComponent implements OnInit {
 
  // @Input() backOffice: boolean;
@@ -22,7 +23,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.displayPropertyValue = false;
     this.backValue = false;
-
+    this.backOfficeValue = this._location.path().slice(0, 6) === '/admin';
   }
 
   public logoName(): string {
@@ -53,8 +54,5 @@ export class HeaderComponent implements OnInit {
     return this.backValue;
   }
 
-  get backOffice(): boolean {
-    return this._location.path().slice(0, 6) === '/admin';
-  }
 
 }

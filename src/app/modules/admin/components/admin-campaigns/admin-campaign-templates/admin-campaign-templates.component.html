@@ -2,7 +2,7 @@
   <h2>Templates de mails</h2>
   <button class="btn btn-primary" (click)="importModal = true">Importer un template de la bibliothèque</button>
 
-  <app-shared-edit-scenario [scenario]="scenario" (scenarioChange)="updateScenario($event)"></app-shared-edit-scenario>
+  <app-shared-edit-scenario *ngIf="scenario.emails && scenario.emails.length" [scenario]="scenario" (scenarioChange)="updateScenario($event)"></app-shared-edit-scenario>
 </div>
 
 
