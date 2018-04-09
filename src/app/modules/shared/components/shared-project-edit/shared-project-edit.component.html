@@ -16,7 +16,7 @@
               </div>
             </div>
             <div class="column col-5 collaborators">
-              <button class="btn btn-bordered" (click)="displayAddCollaboratorsModal = true">
+              <button class="btn btn-bordered" (click)="(displayAddCollaboratorsModal = true) && $event.preventDefault()">
                 <i class="icon icon-plus"></i> {{ 'PROJECT_EDIT.ADD_COLLABORATORS' | translate }}
               </button>
               <div>
@@ -24,7 +24,7 @@
                       class="chip tooltip tooltip-bottom"
                       [attr.data-tooltip]="collaborator.email">
                   {{ collaborator.name }}
-                  <a (click)="removeCollaborator(collaborator)" class="btn btn-clear" aria-label="Close"
+                  <a (click)="removeCollaborator($event, collaborator)" class="btn btn-clear" aria-label="Close"
                      role="button"></a>
                 </span>
               </div>
@@ -32,27 +32,27 @@
           </div>
           <ul class="step">
             <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !project.reviewing }">
-              <a href="#" (click)="false">
+              <a [routerLink]="" (click)="$event.preventDefault()">
                 {{ 'COMMON.PROJECT_STATE.EDITING' | translate }}
               </a>
             </li>
             <li class="step-item" [ngClass]="{ 'active': project.status === 'SUBMITTED' }">
-              <a href="#" (click)="false">
+              <a [routerLink]="" (click)="$event.preventDefault()">
                 {{ 'COMMON.PROJECT_STATE.SUBMITTED' | translate }}
               </a>
             </li>
             <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !!project.reviewing }">
-              <a href="#" (click)="false">
+              <a [routerLink]="" (click)="$event.preventDefault()">
                 {{ 'COMMON.PROJECT_STATE.REVIEWING' | translate }}
               </a>
             </li>
             <li class="step-item" [ngClass]="{ 'active': project.status === 'EVALUATING' }">
-              <a href="#" (click)="false">
+              <a [routerLink]="" (click)="$event.preventDefault()">
                 {{ 'COMMON.PROJECT_STATE.EVALUATING' | translate }}
               </a>
             </li>
             <li class="step-item" [ngClass]="{ 'active': project.status === 'DONE' }">
-              <a href="#" (click)="false">
+              <a [routerLink]="" (click)="$event.preventDefault()">
                 {{ 'COMMON.PROJECT_STATE.DONE' | translate }}
               </a>
             </li>
@@ -76,7 +76,7 @@
               <li><a pageScroll href="#submit"><span>3</span> {{ 'PROJECT_EDIT.STEP3' | translate }}</a> <i
                 class="icon icon-arrow-right"></i></li>
             </ul>
-            <button *ngIf="canEdit || isAdmin" class="btn btn-primary input-group-btn btn-lg" (click)="save()">
+            <button *ngIf="canEdit" class="btn btn-primary input-group-btn btn-lg" (click)="save() && $event.preventDefault()">
               {{ 'COMMON.SAVE_DRAFT' | translate }}
             </button>
             <p *ngIf="lastSavedDate" class="last-saved"> {{ 'COMMON.LAST_SAVED_AT' | translate }} {{ lastSavedDate |
@@ -128,15 +128,15 @@
                       <ul formArrayName="innovationCards">
                         <li *ngFor="let innovationCard of formData.get('innovationCards').value; let i = index"
                             [ngClass]="{'active': innovationCardEditingIndex === i }">
-                          <div (click)="innovationCardEditingIndex = i">
+                          <div (click)="(innovationCardEditingIndex = i) && $event.preventDefault()">
                             {{ 'COMMON.LANG.'+innovationCard.lang | uppercase | translate }}
                           </div>
                           <span *ngIf="innovationCard.principal" class="c-auto">
                             {{ 'PROJECT_EDIT.DESCRIPTION.MAIN_LANG' | translate }}</span>
-                          <span *ngIf="!innovationCard.principal" (click)="setAsPrincipal(innovationCard.id)">{{ 'PROJECT_EDIT.DESCRIPTION.SET_AS_MAIN_LANG' | translate }} <i
+                          <span *ngIf="!innovationCard.principal" (click)="setAsPrincipal($event, innovationCard.id)">{{ 'PROJECT_EDIT.DESCRIPTION.SET_AS_MAIN_LANG' | translate }} <i
                             class="icon icon-arrow-right"></i></span>
                         </li>
-                        <li *ngIf="project.innovationCards.length < 2" (click)="createInnovationCard()">
+                        <li *ngIf="project.innovationCards.length < 2" (click)="createInnovationCard($event)">
                           {{ 'COMMON.ADD' | translate }} <i class="icon icon-plus"></i>
                         </li>
                       </ul>
@@ -206,12 +206,12 @@
                                   alt="" width="100" height="100">
                                 <div *ngIf="canEdit">
                                   <a class="delete c-hand" aria-label="Close" role="button"
-                                     (click)="deleteMedia(media)">
+                                     (click)="deleteMedia($event, media)">
                                     <img [src]="'https://res.cloudinary.com/umi/image/upload/app/delete.svg'" width="22"
                                          height="22">
                                   </a>
                                   <a class="primary c-hand" aria-label="Close" role="button"
-                                     (click)="setMediaAsPrimary(media)">
+                                     (click)="setMediaAsPrimary($event, media)">
                                     <img
                                       [src]="'https://res.cloudinary.com/umi/image/upload/app/'+ (project.innovationCards[innovationCardEditingIndex].principalMediaIdx === idx ? '' : 'empty-') + 'star.svg'"
                                       width="24" height="22">
@@ -273,7 +273,7 @@
               </div>
               <div class="column col-1"></div>
             </div>
-            <div  *ngIf="canEdit">
+            <div *ngIf="canEdit">
               <h2 class="anchor" id="submit">3. {{ 'PROJECT_EDIT.STEP3' | translate }}</h2>
               <div>
                 <form novalidate [formGroup]="formData" class="form-horizontal">
@@ -287,7 +287,7 @@
 
                 <div class="project-submit">
                   <h3 class="text-center">{{ 'PROJECT_EDIT.SUBMIT.TITLE' | translate }}</h3>
-                  <button class="btn btn-xxl btn-primary centered" (click)="submitProjectToValidation()">
+                  <button class="btn btn-xxl btn-primary centered" (click)="submitProjectToValidation($event)">
                     {{ 'PROJECT_EDIT.SUBMIT.BUTTON' | translate }}
                   </button>
 
@@ -314,7 +314,6 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </form>
@@ -326,10 +325,10 @@
 
 <!-- MODAL : Add collaborators FORM (STEP 1) -->
 <div class="modal" [ngClass]="{'active': displayAddCollaboratorsModal}">
-  <div class="modal-overlay" (click)="displayAddCollaboratorsModal = false"></div>
+  <div class="modal-overlay" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></div>
   <div class="modal-container">
     <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="displayAddCollaboratorsModal = false"></button>
+      <button class="btn btn-clear float-right" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></button>
       <div class="modal-title h5">{{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
     </div>
     <div class="modal-body">
@@ -337,9 +336,10 @@
       <input type="text" [(ngModel)]="collaborators_emails" placeholder="alan.turing@gmail.com, joan.clarke@gmail.com">
     </div>
     <div class="modal-footer">
-      <button class="btn btn-link" (click)="displayAddCollaboratorsModal = false">{{ 'COMMON.CANCEL' | translate }}
+      <button class="btn btn-link" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
       </button>
-      <button class="btn btn-primary" [disabled]="collaborators_emails === ''" (click)="addCollaborators()">{{
+      <button class="btn btn-primary" [disabled]="collaborators_emails === ''" (click)="addCollaborators($event)">{{
         'COMMON.ADD' | translate }}
       </button>
     </div>
@@ -349,10 +349,10 @@
 
 <!-- MODAL : Add collaborators (STEP 2) -->
 <div class="modal" [ngClass]="{'active': displayCollaboratorsAddingProcess}">
-  <div class="modal-overlay" (click)="displayCollaboratorsAddingProcess = false"></div>
+  <div class="modal-overlay" (click)="(displayCollaboratorsAddingProcess = false) && $event.preventDefault()"></div>
   <div class="modal-container">
     <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="displayCollaboratorsAddingProcess = false"></button>
+      <button class="btn btn-clear float-right" (click)="(displayCollaboratorsAddingProcess = false) && $event.preventDefault()"></button>
       <div class="modal-title h5">{{ 'PROJECT_EDIT.INVITE_COLLABORATORS_MODAL.TITLE' | translate }}</div>
     </div>
     <div class="modal-body">
@@ -389,7 +389,7 @@
     </div>
 
     <div class="modal-footer">
-      <button class="btn btn-primary" (click)="displayCollaboratorsAddingProcess = false">
+      <button class="btn btn-primary" (click)="(displayCollaboratorsAddingProcess = false) && $event.preventDefault()">
         {{ 'COMMON.I_FINISHED' | translate }}
       </button>
     </div>
