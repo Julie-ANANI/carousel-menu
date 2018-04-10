@@ -10,7 +10,7 @@
         <span
           *ngFor="let option of question.options"
           class="c-hand"
-          [ngClass]="{'inactive': option.identifier != fullAnswer.answers[question.identifier]}"
+          [ngClass]="{'inactive': option.identifier !== fullAnswer.answers[question.identifier]}"
           (click)="selectOption($event, option)">
           {{ optionLabel(option.identifier) }}
         </span>
@@ -44,7 +44,7 @@
       <app-input-list
         *ngIf="adminMode"
         (update)="setAnswer($event)"
-        [config]="{ placeholder: '', initialData: fullAnswer.answers[question.identifier] }"
+        [config]="{ placeholder: '', initialData: fullAnswer.answers[question.identifier] || [] }"
         [adminMode]="adminMode">
       </app-input-list>
     </ng-container>

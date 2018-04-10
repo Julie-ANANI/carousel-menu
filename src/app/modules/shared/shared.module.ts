@@ -38,6 +38,7 @@ import { SharedEditEmail } from './components/shared-edit-email/shared-edit-emai
 import { SharedEditEmailsStep } from './components/shared-edit-emails-step/shared-edit-emails-step.component';
 import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
 import { SharedProjectEditCardsComponent } from './components/shared-project-edit-cards-component/shared-project-edit-cards.component';
+import { SharedEmailBlacklistComponent } from './components/shared-email-blacklist/shared-email-blacklist.component';
 
 // Pipes
 import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
@@ -98,7 +99,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedEditScenarioComponent,
     SharedProjectEditCardsComponent,
     DomSanitizerPipe,
-    //HeaderComponent
+    SharedEmailBlacklistComponent
   ],
   exports: [
     // Modules
@@ -140,6 +141,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedEditScenarioComponent,
     SharedProjectEditCardsComponent
     //HeaderComponent
+    SharedEmailBlacklistComponent
   ]
 })
 export class SharedModule { }

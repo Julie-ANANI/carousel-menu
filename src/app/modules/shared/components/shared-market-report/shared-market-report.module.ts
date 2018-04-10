@@ -11,8 +11,7 @@ import { SharedMarketCommentComponent } from './components/professional-comment/
 import { QuestionConclusionComponent } from './components/question-conclusion/question-conclusion.component';
 import { QuestionSectionComponent } from './components/question-section/question-section.component';
 import { ScaleComponent } from './components/scale/scale.component';
-import { SharedMarketItemComponent } from './components/shared-market-item-component/shared-market-item.component';
-import { SharedMarketItemListComponent } from './components/shared-market-item-list-component/shared-market-item-list.component';
+import { ItemListComponent } from './components/item-list/item-list.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { StarsComponent } from './components/stars/stars.component';
 import { WorldMapComponent } from './components/world-map/world-map.component';
@@ -40,8 +39,7 @@ import { CommonService } from '../../../../services/common/common.service';
     ProfessionalTagComponent,
     ScaleComponent,
     SharedMarketCommentComponent,
-    SharedMarketItemComponent,
-    SharedMarketItemListComponent,
+    ItemListComponent,
     BluesquareComponent,
     PiechartComponent,
     SharedMarketReportPopoverComponent,

@@ -73,7 +73,6 @@ h2 {
 
 .market-report-btn {
   position: relative;
-  bottom: -53px;
   font-size: 16px;
   font-weight: bold;
   line-height: 3;
@@ -103,6 +102,14 @@ h2 {
   &.active {
     background-color: #747474;
   }
+}
+
+.show-answers-btn {
+  bottom: -53px;
+}
+
+.show-comments-btn {
+  bottom: -85px;
 }
 
 .download-pdf-btn {
