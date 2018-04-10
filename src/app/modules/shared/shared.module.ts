@@ -139,7 +139,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedEditEmail,
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
-    SharedProjectEditCardsComponent
+    SharedProjectEditCardsComponent,
     //HeaderComponent
     SharedEmailBlacklistComponent
   ]
