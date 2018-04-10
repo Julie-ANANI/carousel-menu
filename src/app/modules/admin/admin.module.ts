@@ -7,7 +7,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { SharedAnswerModalModule } from '../shared/components/shared-answer-modal/answer-modal.module';
-import { SharedMarketReportModule } from '../shared/components/shared-market-report/shared-market-report.module';
 import { AdminPresetsModule } from './components/admin-preset/admin-presets/admin-presets.module';
 import { AdminQuestionsModule } from './components/admin-preset/admin-questions/admin-questions.module';
 import { AdminSectionsModule } from './components/admin-preset/admin-sections/admin-sections.module';
@@ -52,7 +51,6 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminProjectModule,
     SharedModule,
     SharedAnswerModalModule,
-    SharedMarketReportModule,
     TranslateModule.forChild()
   ],
   declarations: [
