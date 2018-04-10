@@ -3,14 +3,14 @@
 
   <div class="columns">
     <div class="column col-4">
-      <label for="searchField">{{"SEARCH" | translate}}</label>
+      <label for="searchField">{{"BLACKLISTS.SEARCH" | translate}}</label>
       <input type="text" id="searchField" [(ngModel)]="searchConfiguration">
       <button (click)="configureSearch()">Go!</button>
       <button (click)="resetSearch()">Reset</button>
     </div>
 
     <div class="column col-4">
-      <label for="addEntryField">{{"ADD" | translate}}</label>
+      <label for="addEntryField">{{"BLACKLISTS.ADD" | translate}}</label>
       <input type="text" id="addEntryField" [(ngModel)]="addressToBL">
       <button (click)="addEntry()" [disabled]="!canAdd()">Add</button>
     </div>
@@ -27,16 +27,38 @@
         <th>Email</th>
         <th>Domain</th>
         <th>Creation date</th>
+        <th>Expiration date</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let datum of data" [ngClass]="{'active': datum.isSelected}">
-        <td><input type="checkbox" [(ngModel)]="datum.isSelected"/></td>
-        <td>{{datum.email}}</td>
-        <td>{{datum.domain}}</td>
-        <td>{{datum.created | date}}</td>
-        <td>ac</td>
+        <ng-container [ngSwitch]="editDatum[datum._id]">
+
+          <ng-container *ngSwitchCase="true">
+            <td></td>
+            <td><input type="text" size="25" [(ngModel)]="datum.email" alt="email" placeholder="email"/></td>
+            <td>{{datum.domain}}</td>
+            <td>{{datum.created | date}}</td>
+            <td><input type="date" size="20" [(ngModel)]="datum.expiration" alt="expiration" placeholder="expiration"/></td>
+            <td>
+              <button class="btn btn-action" (click)="editDatum[datum._id] = false"><i class="fa fa-times"></i></button>
+              <button class="btn btn-action" (click)="updateEntry(datum, $event)"><i class="fa fa-save"></i></button>
+            </td>
+          </ng-container>
+
+          <ng-container *ngSwitchDefault>
+            <td><input type="checkbox" [(ngModel)]="datum.isSelected"/></td>
+            <td>{{datum.email}}</td>
+            <td>{{datum.domain}}</td>
+            <td>{{datum.created | date}}</td>
+            <td>{{datum.expiration | date}}</td>
+            <td>
+              <button class="btn btn-action" (click)="editDatum[datum._id] = true"><i class="fa fa-edit"></i></button>
+            </td>
+          </ng-container>
+
+        </ng-container>
       </tr>
     </tbody>
     <tfoot>
