@@ -10,6 +10,7 @@ import { AnswerService } from '../../../../services/answer/answer.service';
 import { Answer } from '../../../../models/answer';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
+import { Infographics } from '../../../../models/infographics';
 import { Innovation } from '../../../../models/innovation';
 
 @Component({
@@ -28,7 +29,7 @@ export class SharedMarketReportComponent implements OnInit {
   private _answers: Array<Answer> = [];
   private _countries: Array<string> = [];
   private _showListProfessional = false;
-  private _infographics: any;
+  private _infographics: Infographics;
   private _showDetails = false;
   private _calculating = false;
   private _innoid: string;
@@ -107,7 +108,7 @@ export class SharedMarketReportComponent implements OnInit {
   public dataBuilder(lang: string): any {
     return {
       projectId: this._innoid,
-      title: this._infographics.title.slice(0, Math.min(20, this._infographics.title.length)) + '-synthesis(' + lang + ').pdf'
+      title: this.project.name.slice(0, Math.min(20, this.project.name.length)) + '-synthesis(' + lang + ').pdf'
     }
   }
 
