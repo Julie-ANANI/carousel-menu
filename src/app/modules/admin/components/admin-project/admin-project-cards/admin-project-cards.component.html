@@ -1,3 +1,8 @@
 <div class="container">
-  Cards
+  <button [ngClass]="'btn btn-primary btn-lg' + (shouldSave ? ' badge' : '')" (click)="save($event)" data-badge="!">
+    {{ 'COMMON.SAVE_DRAFT' | translate }}
+  </button>
+  <p *ngIf="lastSavedDate" class="last-saved"> {{ 'COMMON.LAST_SAVED_AT' | translate }} {{ lastSavedDate |
+    date:'HH:mm:ss' }}</p>
+  <app-shared-project-edit-cards [project]="project" (cardsChange)="updateCards($event)" (projectChange)="updateProject($event)"></app-shared-project-edit-cards>
 </div>
