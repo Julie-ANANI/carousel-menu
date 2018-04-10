@@ -20,7 +20,8 @@ export class AdminProjectComponent implements OnInit {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._project = this._activatedRoute.snapshot.data['innovation'];
   }
-  
+
+  public get project(): Innovation { return this._project; }
   public get tabs(): Array<string> { return this._tabs; }
   public get baseUrl(): string { return `/admin/projects/project/${this._project._id}/`; }
 }
