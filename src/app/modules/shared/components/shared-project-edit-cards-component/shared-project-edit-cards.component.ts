@@ -186,27 +186,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       });
   }
 
-  /**
-   * Builds the data required to ask the API for a PDF
-   * @returns {{projectId, innovationCardId}}
-   */
-  public dataBuilder(): any {
-    return {
-      projectId: this.project._id,
-      innovationCardId: this.project.innovationCards[0]._id,
-      title: this.project.innovationCards[0].title.slice(0, Math.min(20, this.project.innovationCards[0].title.length)) + '-project(' + (this.project.innovationCards[0].lang || 'en') + ').pdf'
-    }
-  }
-
-  public getModel (): any {
-    return {
-      lang: 'en',
-      jobType: 'innovation',
-      labels: 'EXPORT.INNOVATION.CARD',
-      pdfDataseedFunction: this.dataBuilder()
-    };
-  }
-
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
