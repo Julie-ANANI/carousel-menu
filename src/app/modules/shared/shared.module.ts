@@ -30,7 +30,6 @@ import { SharedClickableWorldmapComponent } from './components/shared-clickable-
 import { SharedSearchHistoryComponent } from './components/shared-search-history/shared-search-history.component';
 import { SharedSearchProsComponent } from './components/shared-search-pros/shared-search-pros.component';
 import { SharedSearchMailComponent } from './components/shared-search-mail/shared-search-mail.component';
-import { SharedProjectEditComponent } from './components/shared-project-edit/shared-project-edit.component';
 import { SharedProsListComponent } from './components/shared-pros-list/shared-pros-list.component';
 import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
@@ -38,6 +37,7 @@ import { SharedMarketReportExampleComponent } from './components/shared-market-r
 import { SharedEditEmail } from './components/shared-edit-email/shared-edit-email.component';
 import { SharedEditEmailsStep } from './components/shared-edit-emails-step/shared-edit-emails-step.component';
 import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
+import { SharedProjectEditCardsComponent } from './components/shared-project-edit-cards-component/shared-project-edit-cards.component';
 import { SharedEmailBlacklistComponent } from './components/shared-email-blacklist/shared-email-blacklist.component';
 
 // Pipes
@@ -90,7 +90,6 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
     SharedSearchMailComponent,
-    SharedProjectEditComponent,
     SharedProsListComponent,
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
@@ -98,6 +97,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedEditEmail,
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
+    SharedProjectEditCardsComponent,
     DomSanitizerPipe,
     SharedEmailBlacklistComponent
   ],
@@ -133,13 +133,14 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
     SharedSearchMailComponent,
-    SharedProjectEditComponent,
     SharedProsListComponent,
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
     SharedEditEmail,
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
+    SharedProjectEditCardsComponent,
+    //HeaderComponent
     SharedEmailBlacklistComponent
   ]
 })

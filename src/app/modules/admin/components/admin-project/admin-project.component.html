@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="columns">
+    <div class="column col-10 col-mx-auto">
+
+      <h2>{{ this.project.name }}</h2>
+
+      <ul class="tab tab-block">
+        <li class="tab-item" *ngFor="let tab of tabs">
+          <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }">
+            {{ 'PROJECT.' + tab.toUpperCase() | translate }}
+          </a>
+        </li>
+      </ul>
+
+      <div class="tabs">
+        <div class="tab-content">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

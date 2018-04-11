@@ -59,4 +59,13 @@ export class EmailService {
           .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  public updateBlacklistEntry(entryId: string, data: any): Observable<any> {
+      return this._http.put('/mail/blacklist/'+entryId, data)
+          .map((res: Response) => {
+              const response = res.json();
+              return response;
+          })
+          .catch((error: Response) => Observable.throw(error.json()));
+  }
+
 }

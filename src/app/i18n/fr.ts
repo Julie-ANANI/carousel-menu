@@ -20,6 +20,7 @@ import { DASHBOARD } from '../modules/admin/components/admin-dashboard/i18n/fr';
 import { PRESETS } from '../modules/admin/components/admin-preset/i18n/fr';
 import { CAMPAIGNS } from '../modules/admin/components/admin-campaigns/i18n/fr';
 import { SEARCH } from '../modules/admin/components/admin-search/i18n/fr';
+import { BLACKLISTS } from '../modules/shared/components/shared-email-blacklist/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -43,5 +44,6 @@ export const fr = {
   'DASHBOARD': DASHBOARD,
   'PRESETS': PRESETS,
   'CAMPAIGNS': CAMPAIGNS,
-  'SEARCH': SEARCH
+  'SEARCH': SEARCH,
+  'BLACKLISTS': BLACKLISTS
 };
