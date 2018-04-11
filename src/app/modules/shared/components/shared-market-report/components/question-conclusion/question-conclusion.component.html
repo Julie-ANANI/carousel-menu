@@ -1,29 +1,28 @@
 <div class="flex-container">
 
-  <ng-container [ngSwitch]="info.controlType">
+  <ng-container [ngSwitch]="question.controlType">
     <!--======= Pie Chart =======-->
     <piechart
       *ngSwitchCase="'radio'"
       [pieChartData]="chartValues"
-      [percentage]="info.percentage"
+      [percentage]="stats.percentage"
     ></piechart>
 
     <!--======= ou Encadré Bleu =======-->
     <market-report-bluesquare
       *ngSwitchDefault
-      [numberFocus]="info.numberFocus"
-      [percentage]="info.percentage"
-      [subtitle]="info.subtitle | multiling:lang"
-      [id]="info.id"
+      [numberFocus]="stats.nbAnswers"
+      [percentage]="stats.percentage"
+      [subtitle]="question.subtitle | multiling:lang"
     ></market-report-bluesquare>
   </ng-container>
 
   <!--======= Conclusion =======-->
   <div class="umi-synthesis">
-    <h3 class="title">{{ info.label[lang] }}</h3>
-    <text-zone [elementId]="conclusionId"
+    <h3 class="title">{{ question.title | multiling:lang }}</h3>
+    <text-zone [elementId]="domSectionId"
                [readonly]="readonly"
-               [data]="info.conclusion || ''"
+               [data]="innovation?.marketReport[question.identifier]?.conclusion || ''"
                (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
   </div>
 </div>

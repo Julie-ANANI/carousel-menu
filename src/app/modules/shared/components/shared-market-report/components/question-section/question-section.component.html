@@ -7,9 +7,10 @@
                HEADER SECTION (UMI SYNTHESIS)
     **************************************************-->
     <app-question-conclusion
-      [info]="info"
-      [innovationId]="innovation._id"
+      [innovation]="innovation"
+      [question]="question"
       [readonly]="readonly"
+      [stats]="{nbAnswers: answersToShow.length, percentage: 0}"
     ></app-question-conclusion>
 
     <!--************************************************

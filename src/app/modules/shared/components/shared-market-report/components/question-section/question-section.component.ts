@@ -39,8 +39,6 @@ export class QuestionSectionComponent implements OnInit {
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Input() public question: Question;
   @Input() public innovation: Innovation;
-  @Input() public info: any;
-
 
   constructor(private _translateService: TranslateService) { }
 

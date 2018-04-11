@@ -2,7 +2,6 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, OnInit, Input } from '@angular/core';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { PageScrollConfig } from 'ng2-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,7 +9,6 @@ import { AnswerService } from '../../../../services/answer/answer.service';
 import { Answer } from '../../../../models/answer';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
-import { Infographics } from '../../../../models/infographics';
 import { Innovation } from '../../../../models/innovation';
 
 @Component({
@@ -29,7 +27,6 @@ export class SharedMarketReportComponent implements OnInit {
   private _answers: Array<Answer> = [];
   private _countries: Array<string> = [];
   private _showListProfessional = false;
-  private _infographics: Infographics;
   private _showDetails = false;
   private _calculating = false;
   private _innoid: string;
@@ -39,7 +36,6 @@ export class SharedMarketReportComponent implements OnInit {
   private _modalAnswer: Answer;
 
   constructor(private _translateService: TranslateService,
-              private _innovationService: InnovationService,
               private _answerService: AnswerService,
               private _notificationsService: TranslateNotificationsService) { }
 
@@ -60,9 +56,6 @@ export class SharedMarketReportComponent implements OnInit {
       });
     }
     this._modalAnswer = null;
-    this._innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
-      this._infographics = synthesis.infographics;
-    }, error => this._notificationsService.error('ERROR.ERROR', error.message));
     PageScrollConfig.defaultDuration = 800;
   }
 
@@ -87,17 +80,6 @@ export class SharedMarketReportComponent implements OnInit {
 
       }, (error) => {
         this._notificationsService.error('ERROR.ERROR', error.message);
-      });
-  }
-
-  public recalculateSynthesis(event: Event): void {
-    event.preventDefault();
-    this._calculating = true;
-    this._innovationService.recalculateSynthesis(this._innoid)
-      .first()
-      .subscribe(synthesis => {
-        this._calculating = false;
-        this._infographics = synthesis.infographics;
       });
   }
 
@@ -133,14 +115,6 @@ export class SharedMarketReportComponent implements OnInit {
     this._modalAnswer = answer;
   }
 
-  public canShow(): boolean {
-    return !!this._infographics;
-  }
-
-  public getInfo(question: Question) {
-    return this._infographics.questions.find((infoQ: any) => infoQ.id === question.identifier);
-  }
-
   get answers(): Array<Answer> { return this._answers; }
   get countries(): Array<string> { return this._countries; }
   get cleaned_questions(): Array<Question> { return this._cleaned_questions; }
@@ -150,7 +124,6 @@ export class SharedMarketReportComponent implements OnInit {
   get showListProfessional(): boolean { return this._showListProfessional; }
   set showListProfessional(val: boolean) { this._showListProfessional = val; }
   get innoid(): string { return this._innoid; }
-  get infographics(): any { return this._infographics; }
   set calculating (value: boolean) { this._calculating = value; }
   get calculating (): boolean { return this._calculating; }
   get showDetails (): boolean { return this._showDetails; }

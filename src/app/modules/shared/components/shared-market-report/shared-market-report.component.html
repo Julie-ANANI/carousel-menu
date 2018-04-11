@@ -1,5 +1,5 @@
 <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
-<div class="market-report" *ngIf="canShow()">
+<div class="market-report">
 
   <!-- *********************************************************
         Header
@@ -65,9 +65,10 @@
           <div class="white-frame">
 
           <app-question-conclusion
-            [info]="infographics.professionals"
-            [innovationId]="project._id"
+            [innovation]="project"
+            [question]="{identifier: 'professionals'}"
             [readonly]="!adminMode"
+            [stats]="{nbAnswers: answers.length, percentage: 0}"
           ></app-question-conclusion>
 
             <div class="bloc">
@@ -98,7 +99,6 @@
         <!-- Les autres questions -->
         <section *ngFor="let question of questions">
           <app-question-section
-            [info]="getInfo(question)"
             [innovation]="project"
             [question]="question"
             [answers]="answers"

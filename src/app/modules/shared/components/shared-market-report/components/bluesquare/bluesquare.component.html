@@ -1,18 +1,15 @@
 <div class="big-blue-synthesis">
 
-  <div class="total-score" *ngIf="id==='marketPotential'">
-    <span>{{ numberFocus || 0 }}</span>/10
-  </div>
-
-  <div class="number-answers" *ngIf="id!='marketPotential'">
+  <div class="number-answers">
     <span>{{ numberFocus || 0 }}</span>
     {{ subtitle }}
   </div>
 
-  <ng-container *ngIf="id!='marketPotential' && id!='professionals'">
+  <ng-container *ngIf="percentage">
     <hr>
     <div class="number-ratio">
       <span>{{ percentage || 0 }}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
     </div>
   </ng-container>
+
 </div>
