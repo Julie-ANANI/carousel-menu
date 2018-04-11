@@ -7,7 +7,7 @@
 
   @page {
     size: A4 portrait;
-    margin: 2cm;
+    margin: 2cm 1.5cm;
   }
 
   /* =========================================================================
@@ -19,7 +19,14 @@
   .admin-buttons,
   .tab,
   footer,
-  .column > h2 {
+  .column > h2,
+  .column.col-10.col-mx-auto > h1,
+  .sidebar,
+  #app-header,
+  .see-answer,
+  .market-report-btn,
+  .item-menu-sandwich,
+  h2 {
     display: none !important;
   }
 
@@ -30,45 +37,27 @@
 
   .market-report {
 
-    .flex-container {
-      width: 99.5%;
-    }
-
-    .content {
-      width: 100%;
-    }
-
-    ul, img {
-      page-break-inside: avoid;
-    }
-
     h1 {
-      font-size: 55px !important;
-      color: #333 !important;
+      margin-bottom: 80px;
     }
 
-    h2 {
-      page-break-before: always;
-      color: #333 !important;
-      margin-left: 0 !important;
+    .big-blue-synthesis,
+    .big-synthesis {
+      padding: 5px 15px 25px 15px !important;
+      margin-right: 20px !important;
+      margin-bottom: 20px !important;
+      min-width: 200px !important;
+      max-width: 200px !important;
     }
 
-    .see-answer,
-    .market-report-btn,
-    .item-menu-sandwich {
-      display: none !important;
+    .umi-synthesis .title {
+      color: #0c90c6 !important;
+      font-size: 25px !important;
     }
 
-    #professionals .professional-item {
-      box-shadow: none !important;
-      padding: 10px !important;
-      max-width: 230px !important;
-      border: 1px solid #333;
+    .bar-chart-component .horizontal-bar {
       page-break-inside: avoid;
-    }
-
-    .title-question {
-      margin-top: 60px !important;
+      width: 99% !important;
     }
 
     .white-frame {
@@ -77,18 +66,128 @@
       box-shadow: none !important;
     }
 
-    ul.items > li,
-    ul.comments > li {
-      list-style: disc;
-      padding: 0 !important;
-      background: transparent !important;
-      color: #333 !important;
+    section {
+      page-break-before: always;
     }
 
-    .bloc.details {
-      margin-top: 30px !important;
+    .desc {
+      color: #333 !important;
+      line-height: 20px !important;
+
+      p {
+        margin: 0 0 0.3rem;
+      }
+    }
+
+    ul.comments {
+      padding: 0;
+      margin: 0;
+
+      li {
+        page-break-inside: avoid;
+      }
+    }
+
+    .items > div {
+        page-break-inside: avoid;
+        color: #333 !important;
+        background: transparent !important;
+        padding: 5px 0 !important;
+        border-radius: 0 !important;
+        width: 50% !important;
+        margin-bottom: 0 !important;
+    }
+
+    .items > div:before {
+      content: "-";
+      float: left;
+    }
+
+    ul.comments > li{
+      page-break-inside: avoid;
+      color: #333 !important;
+      background: transparent !important;
+      padding: 5px 0 !important;
+      border-radius: 0 !important;
+      margin-bottom: 0 !important;
+
+      .professional-comment {
+        color: #333 !important;
+        padding: 8px 0 0 0 !important;
+
+        & > div > p {
+          font-weight: 600;
+          margin: 0;
+        }
+
+        .comment-desc {
+          font-weight: normal;
+        }
+      }
+    }
+
+    .bloc {
+      margin-top: 0 !important;
+      margin-bottom: 30px;
     }
 
   }
+
+  /*
+    .market-report {
+
+      .flex-container {
+        width: 99.5%;
+      }
+
+      .content {
+        width: 100%;
+      }
+
+      ul, img {
+        page-break-inside: avoid;
+      }
+
+      h1 {
+        font-size: 55px !important;
+        color: #333 !important;
+        //display: none !important;
+      }
+
+
+
+      .see-answer,
+      .market-report-btn,
+      .item-menu-sandwich {
+        display: none !important;
+      }
+
+      #professionals .professional-item {
+        box-shadow: none !important;
+        padding: 10px !important;
+        max-width: 230px !important;
+        border: 1px solid #333;
+        page-break-inside: avoid;
+      }
+
+      .title-question {
+        margin-top: 60px !important;
+      }
+
+
+
+      ul.items > li,
+      ul.comments > li {
+        list-style: disc;
+        padding: 0 !important;
+        background: transparent !important;
+        color: #333 !important;
+      }
+
+      .bloc.details {
+        margin-top: 30px !important;
+      }
+
+    }*/
 
 }
