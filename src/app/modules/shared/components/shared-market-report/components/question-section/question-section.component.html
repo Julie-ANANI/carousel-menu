@@ -8,9 +8,10 @@
     **************************************************-->
     <app-question-conclusion
       [innovation]="innovation"
+      [pieChart]="pieChart"
       [question]="question"
       [readonly]="readonly"
-      [stats]="{nbAnswers: answersToShow.length, percentage: 0}"
+      [stats]="stats"
     ></app-question-conclusion>
 
     <!--************************************************
@@ -38,6 +39,7 @@
       <app-bar-chart *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'"
                      [answers]="answersToShow"
                      [question]="question"
+                     (updatePieChart)="updatePieChart($event)"
                      (modalAnswerChange)="seeAnswer($event)">
       </app-bar-chart>
 
@@ -52,6 +54,7 @@
       <app-item-list *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
         [answers]="answersToShow"
         [question]="question"
+        (updateNumberOfItems)="updateNumberOfItems($event)"
         (modalAnswerChange)="seeAnswer($event)">
       </app-item-list>
 

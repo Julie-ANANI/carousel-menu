@@ -28,6 +28,7 @@ export class BarChartComponent implements OnInit {
   }
   @Input() public question: Question;
   @Output() modalAnswerChange = new EventEmitter<any>();
+  @Output() updatePieChart = new EventEmitter<any>();
 
   private _answers: Array<Answer>;
   private _barsData: Array<BarData> = [];
@@ -41,11 +42,12 @@ export class BarChartComponent implements OnInit {
 
   private updateAnswersData(): void {
     if (this.question && this.question.identifier && Array.isArray(this.question.options)) {
+
       this._barsData = this.question.options.map((q) => {
-        let answers = [];
+        let answers: Array<Answer> = [];
         if (this.question.controlType === 'checkbox') {
           answers = this._answers.filter((a) => a.answers[this.question.identifier] && a.answers[this.question.identifier][q.identifier]);
-        } else {
+        } else if (this.question.controlType === 'radio')  {
           answers = this._answers.filter((a) => a.answers[this.question.identifier] === q.identifier);
         }
         const percentage = `${((answers.length * 100) / this._answers.length) >> 0}%`;
@@ -57,6 +59,17 @@ export class BarChartComponent implements OnInit {
           count: answers.length
         }
       });
+
+      if (this.question.controlType === 'radio') {
+        const pieChartData: {data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}} = {data: [], colors: [], labels: {fr: [], en: []}};
+        this._barsData.forEach((barData) => {
+          pieChartData.data.push(barData.count);
+          pieChartData.colors.push(barData.color);
+          pieChartData.labels.fr.push(barData.label.fr);
+          pieChartData.labels.en.push(barData.label.en);
+        });
+        this.updatePieChart.emit(pieChartData);
+      }
     }
   }
 

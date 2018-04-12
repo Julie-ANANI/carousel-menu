@@ -19,6 +19,7 @@ export class ItemListComponent implements OnInit {
   }
   @Input() public question: Question;
   @Output() modalAnswerChange = new EventEmitter<any>();
+  @Output() updateNumberOfItems = new EventEmitter<number>();
 
   private _answers: Array<Answer>;
   private _listItems: Array<{rating: number, count: number, value: string, answers: Array<Answer>}>;
@@ -74,6 +75,8 @@ export class ItemListComponent implements OnInit {
             return b.rating - a.rating;
           }
         });
+
+      this.updateNumberOfItems.emit(this._listItems.length);
     }
   }
 

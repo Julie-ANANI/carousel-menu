@@ -14,6 +14,7 @@ import { Subject } from 'rxjs/Subject';
 export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
   @Input() public readonly = true;
+  @Input() public pieChart: any;
   @Input() public innovation: Innovation;
   @Input() public question: Question;
   @Input() public stats: {nbAnswers: number, percentage: number};
@@ -39,21 +40,6 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
       .subscribe((e: LangChangeEvent) => {
         this._lang = e.lang || 'en';
       });
-
-    switch (this.question.controlType) {
-      case 'radio':
-        this._chartValues = {
-          data: [{
-            data: [],
-            backgroundColor: []
-          }],
-          labels: {
-            fr: [],
-            en: []
-          },
-          colors: []
-        };
-    }
   }
 
   ngOnDestroy() {
