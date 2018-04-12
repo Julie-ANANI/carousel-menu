@@ -8,11 +8,11 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 
 
 @Component({
-  selector: 'app-admin-tag-list',
-  templateUrl: 'admin-tag-list.component.html',
-  styleUrls: ['admin-tag-list.component.scss']
+  selector: 'app-admin-tag-attachment-list',
+  templateUrl: 'admin-tag-attachment-list.component.html',
+  styleUrls: ['admin-tag-attachment-list.component.scss']
 })
-export class AdminTagListComponent implements OnInit{
+export class AdminTagAttachmentsListComponent implements OnInit{
 
   private _dataset: {result: Array<Tag>, _metadata:any};
 

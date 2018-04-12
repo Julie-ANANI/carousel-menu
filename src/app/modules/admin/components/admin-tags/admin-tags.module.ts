@@ -10,6 +10,8 @@ import { SharedModule } from '../../../shared/shared.module';
 import { AdminTagsComponent } from './admin-tags.component';
 import { AdminTagListComponent } from './admin-tag-list/admin-tag-list.component';
 import { AdminTagNewComponent } from './admin-tag-new/admin-tag-new.component';
+import { AdminTagAttachmentsListComponent } from './admin-tag-attachment-list/admin-tag-attachment-list.component';
+import { AdminTagAttachmentsSubsetComponent } from './admin-tag-attachment-list/attachment-subset/admin-tag-attachment-subset.component';
 
 @NgModule({
     imports: [
@@ -20,11 +22,13 @@ import { AdminTagNewComponent } from './admin-tag-new/admin-tag-new.component';
     declarations: [
         AdminTagsComponent,
         AdminTagListComponent,
-        AdminTagNewComponent
+        AdminTagNewComponent,
+        AdminTagAttachmentsListComponent,
+        AdminTagAttachmentsSubsetComponent
     ],
     exports: [
         AdminTagsComponent
     ]
 })
 
-export class AdminSearchModule {}
+export class AdminTagsModule {}

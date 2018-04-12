@@ -1,31 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
-import { Tag } from '../../../../../models/tag';
-
-import { TagsService } from '../../../../../services/tags/tags.service';
+import { TagsService } from '../../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 
 
 @Component({
-  selector: 'app-admin-tag-attachment-list',
-  templateUrl: 'admin-tag-attachment-list.component.html',
-  styleUrls: ['admin-tag-attachment-list.component.scss']
+  selector: 'attachment-subset',
+  templateUrl: 'admin-tag-attachment-subset.component.html',
+  styleUrls: ['admin-tag-attachment-subset.component.scss']
 })
-export class AdminTagAttachmentsListComponent implements OnInit{
+export class AdminTagAttachmentsSubsetComponent implements OnInit{
 
-  private _dataset: {result: Array<Tag>, _metadata:any};
+  /**
+   * This is used to configure the query to puul the correct set of codes
+   */
+  @Input() public type: any;
+
+  private _dataset: {result: Array<any>, _metadata:any};
 
   private _config = {
     limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      label: -1
-    }
+    offset: 0
   };
-
-  public editDatum: {[propString: string]: boolean} = {};
 
   constructor(private _tagsService: TagsService,
               private _translateService: TranslateService,
@@ -39,30 +36,28 @@ export class AdminTagAttachmentsListComponent implements OnInit{
         totalCount: 0
       }
     };
-    this.loadData(null);
+    this.loadData();
     console.log(this._translateService);
     console.log(this._notificationsService);
   }
 
-  public loadData(config: any) {
-    this._config = config || this._config;
-    this._tagsService.getAll(config).subscribe(result=>{
+  public loadData() {
+    this._tagsService.getAttachments(this.type||'').subscribe(result=>{
       if(result) {
         this._dataset = result;
       }
+    }, error=>{
+      this._notificationsService.error('Attachments', "Error loading some attachments of type " + this.type);
+      console.error(error);
     });
   }
 
-  public updateEntry(datum: any, event: Event) {
-    event.preventDefault();
-    this.editDatum[datum._id] = false;
-    console.log("Updating... TBD");
-  }
 
-  public createTag() {}
-
-
-  get data(): Array<Tag> { return this._dataset.result; };
+  get data(): Array<any> {
+    const limit = this._config.limit || -1;
+    const start = this._config.offset || 0;
+    return this._dataset.result.slice(start, (start+limit));
+  };
   get metadata(): any { return this._dataset._metadata; };
   get config(): any { return this._config; };
   set config(value: any) { this._config = value; };

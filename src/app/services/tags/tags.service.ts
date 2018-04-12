@@ -10,31 +10,37 @@ export class TagsService {
   }
 
   public create(tagObj: Tag): Observable<Tag> {
-    return this._http.post('/tags', tagObj)
+    return this._http.post('/tags/entity', tagObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
   public get(id: string): Observable<Tag> {
-    return this._http.get('/tags/' + id)
+    return this._http.get('/tags/entity' + id)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
   public getAll(config: any): Observable<{result: Array<Tag>, _metadata: any}> {
-    return this._http.get('/tags/', {params: config})
+    return this._http.get('/tags/entity', {params: config})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public getAttachments(type: string): Observable<{result: Array<any>, _metadata: any}> {
+    return this._http.get('/tags/attachments' + (type ? '?type='+type : ''))
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public remove(tagId: string): Observable<any> {
-    return this._http.delete('/tags/' + tagId)
+    return this._http.delete('/tags/entity' + tagId)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
   public save(tagId: string, tagObj: Tag): Observable<Tag> {
-    return this._http.put('/tags/' + tagId, tagObj)
+    return this._http.put('/tags/entity' + tagId, tagObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

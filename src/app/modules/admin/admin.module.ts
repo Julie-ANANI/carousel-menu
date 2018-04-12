@@ -13,9 +13,7 @@ import { AdminQuestionsModule } from './components/admin-preset/admin-questions/
 import { AdminSectionsModule } from './components/admin-preset/admin-sections/admin-sections.module';
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
 import { AdminEmailsModule } from './components/admin-emails/admin-emails.module';
-import { AdminTagsComponent } from './components/admin-tags/admin-tags.component';
-import { AdminTagListComponent } from './components/admin-tags/admin-tag-list/admin-tag-list.component';
-import { AdminTagNewComponent } from './components/admin-tags/admin-tag-new/admin-tag-new.component';
+import { AdminTagsModule } from './components/admin-tags/admin-tags.module';
 
 // Components
 import { AdminComponent } from './admin.component';
@@ -52,6 +50,7 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminSectionsModule,
     AdminSearchModule,
     AdminEmailsModule,
+    AdminTagsModule,
     SharedModule,
     SharedAnswerModalModule,
     SharedMarketReportModule,
@@ -80,10 +79,7 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminCampaignAnswersComponent,
     AdminAnswersListComponent,
     AdminCampaignSearchResultsComponent,
-    DateFormatPipe,
-    AdminTagsComponent,
-    AdminTagListComponent,
-    AdminTagNewComponent
+    DateFormatPipe
   ]
 })
 export class AdminModule {

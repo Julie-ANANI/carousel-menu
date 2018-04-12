@@ -3,5 +3,22 @@
  */
 export const TAGS = {
   "ADD":"Add tag",
-  "LIST": "Tag list"
+  "LIST": "Tag list",
+  "ATTACHMENTS": "Attachment explorer",
+  "NEW": {
+    "NAME": {
+      "LABEL": "Tag name",
+      "PLACEHOLDER": ""
+    },
+    "DESCRIPTION": {
+      "LABEL": "Tag description",
+      "PLACEHOLDER": ""
+    },
+    "ATTACHMENTS": {
+      "LABEL": "Tag attachments",
+      "PLACEHOLDER": ""
+    },
+    "SUBMIT": "Create tag",
+    "CANCEL": "Cancel"
+  }
 };

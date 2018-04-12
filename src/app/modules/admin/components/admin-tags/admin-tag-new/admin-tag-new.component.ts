@@ -24,10 +24,16 @@ export class AdminTagNewComponent {
   } = {
     placeholder: 'Economic sector attachment',
     initialData: [],
-    type: 'isic',
+    type: 'threuters',
     identifier: 'text',
     canOrder: true
   };
+
+  private _codeTypes = [
+    {'name': 'ISIC', 'value': 'isic'},
+    {'name': 'NAICS', 'value': 'naiccs'},
+    {'name': 'Thomson Reuters', 'value': 'threuters'},
+  ];
 
   public formData: FormGroup = this._formBuilder.group({
     label: ['', Validators.required],
@@ -42,7 +48,6 @@ export class AdminTagNewComponent {
               private _notificationsService: TranslateNotificationsService) {}
 
   public onSubmit(event: any) {
-    console.log(event);
     this._tagsService.create(this.formData.value).subscribe(result=>{
       if(result) {
         this.result = result;
@@ -56,9 +61,15 @@ export class AdminTagNewComponent {
     });
   }
 
+  public onReset() {
+    console.log("Cancel");
+  }
+
   public addAttachment(event: any): void {
     this.formData.get('attachments').setValue(event.value);
   }
+
+  get codeTypes(): Array<any> { return this._codeTypes; }
 
   get addAttachmentConfig() { return this._addAttachmentConfig; }
 }

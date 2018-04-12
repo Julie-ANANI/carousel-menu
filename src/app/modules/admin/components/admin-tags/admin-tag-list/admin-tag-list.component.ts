@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Tag } from './../../../../../models/tag';
+import { Tag } from '../../../../../models/tag';
 
-import { TagsService } from './../../../../../services/tags/tags.service';
+import { TagsService } from '../../../../../services/tags/tags.service';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+
 
 @Component({
   selector: 'app-admin-tag-list',
@@ -10,6 +13,8 @@ import { TagsService } from './../../../../../services/tags/tags.service';
   styleUrls: ['admin-tag-list.component.scss']
 })
 export class AdminTagListComponent implements OnInit{
+
+  private _dataset: {result: Array<Tag>, _metadata:any};
 
   private _config = {
     limit: 10,
@@ -20,31 +25,43 @@ export class AdminTagListComponent implements OnInit{
     }
   };
 
-  public editUser: {[propString: string]: boolean} = {};
+  public editDatum: {[propString: string]: boolean} = {};
 
-  private _tagList: Array<Tag> = [];
-
-  constructor(private _tagsService: TagsService) {}
+  constructor(private _tagsService: TagsService,
+              private _translateService: TranslateService,
+              private _notificationsService: TranslateNotificationsService) {}
 
 
   ngOnInit(): void {
-    const config= {};
+    this._dataset = {
+      result: [],
+      _metadata: {
+        totalCount: 0
+      }
+    };
+    this.loadData(null);
+    console.log(this._translateService);
+    console.log(this._notificationsService);
+  }
+
+  public loadData(config: any) {
+    this._config = config || this._config;
     this._tagsService.getAll(config).subscribe(result=>{
       if(result) {
-        this.tagList = result.result;
+        this._dataset = result;
       }
-      console.log(result);
     });
   }
 
-  public createTag() {}
+  public updateEntry(datum: any, event: Event) {
+    event.preventDefault();
+    this.editDatum[datum._id] = false;
+    console.log("Updating... TBD");
+  }
 
-
-  get tagList(): Array<Tag> { return this._tagList; }
-
-  set tagList( list: Array<Tag> ) { this._tagList = list }
-
-  get total(): number {return 0;}
-  get nbSelected(): number {return 0;}
-  get config(): any { return this._config; }
+  get data(): Array<Tag> { return this._dataset.result; };
+  get metadata(): any { return this._dataset._metadata; };
+  get config(): any { return this._config; };
+  set config(value: any) { this._config = value; };
+  get total(): number { return this._dataset._metadata.totalCount; };
 }

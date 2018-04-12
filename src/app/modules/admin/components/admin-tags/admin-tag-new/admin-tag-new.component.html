@@ -4,23 +4,32 @@
             <div class="columns">
                 <div class="column col-8 col-mx-auto">
                     <div class="form-group text-left">
-                        <label class="form-label h4" for="name">Tag name</label>
+                        <label class="form-label h4" for="name">{{ 'TAGS.NEW.NAME.LABEL' | translate }}</label>
                         <input class="form-input" id="name" name="name" formControlName="label" type="text"
-                               placeholder="">
-                        {{ 'PRESETS.PRESET.UNIQUE_NAME' | translate }}
+                               placeholder="{{ 'TAGS.NEW.NAME.PLACEHOLDER' | translate }}">
 
+                        <label class="form-label h4" for="description">{{ 'TAGS.NEW.DESCRIPTION.LABEL' | translate }}</label>
                         <input class="form-input" id="description" name="description" formControlName="description" type="text"
                                placeholder="">
-                        Description
 
-                        <label class="form-label h4" for="name">Tag attachments</label>
-                        <app-autocomplete-input (update)="addAttachment($event)"
-                                                [config]="addAttachmentConfig"></app-autocomplete-input>
+                        <div>
+                            <!--<label class="form-label h4" for="atchtype">{{ 'TAGS.NEW.ATTACHMENTS.LABEL' | translate }}</label>
+                            <select id="atchtype" [(ngModel)]="selType">
+                                <option value="null">--</option>
+                                <option *ngFor="let ctype of codeTypes" [ngValue]="ctype.value">{{ctype.name}}</option>
+                            </select>-->
+                            <label class="form-label h4" for="attachments">{{ 'TAGS.NEW.ATTACHMENTS.LABEL' | translate }}</label>
+                            <app-autocomplete-input id="attachments"
+                                                    (update)="addAttachment($event)"
+                                                    [config]="addAttachmentConfig"></app-autocomplete-input>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-primary centered" [disabled]="formData.invalid">{{ 'PRESETS.PRESET.GO' | translate }}</button>
+            <div class="bblock">
+                <button type="submit" class="btn btn-primary centered" [disabled]="formData.invalid">{{ 'TAGS.NEW.SUBMIT' | translate }}</button>
+                <!--<button type="reset" class="btn btn-primary centered" (click)="onReset()">{{ 'TAGS.NEW.CANCEL' | translate }}</button>-->
+            </div>
 
         </form>
     </div>
