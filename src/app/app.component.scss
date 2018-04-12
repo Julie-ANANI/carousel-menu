@@ -14,5 +14,19 @@
   left: 0;
   width: 100%;
   margin: 0;
-  background-color: transparent;
+  background-color: #3498DB;
+}
+
+.wait {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  div {
+    flex: 1;
+  }
+  .fas {
+    color: #3498DB;
+  }
 }

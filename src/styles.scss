@@ -8,6 +8,9 @@ $primary-color: #3498DB !default;
 @import "../node_modules/spectre.css/src/spectre.scss";
 @import "../node_modules/spectre.css/src/spectre-icons.scss";
 @import "../node_modules/spectre.css/src/spectre-exp.scss";
+@import "print.scss";
+@import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
+
 
 
 * {
@@ -34,6 +37,7 @@ h1::after {
   height: 3px;
   margin-top: 30px;
   margin-bottom:56px;
+  border-radius: 5px;
 }
 
 h2 {
@@ -123,3 +127,30 @@ ul.list-filter {
   font-size: 12px;
   position: relative;
 }
+
+a {
+  transition: all 0.3s ease;
+}
+
+// height for header
+#app-header {
+  min-height: 3.9rem
+}
+
+// Spaces around the main application components
+.app-content {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+
+@media (min-width: 840px) {
+
+  #app-header {
+    min-height: 4.2rem
+  }
+
+}
+
+
+

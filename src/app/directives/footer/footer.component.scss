@@ -1,0 +1,66 @@
+footer {
+  background-color: #262831;
+  min-height: 7rem;
+  color: white;
+  padding: 3rem 3rem;
+
+  p {
+    margin-top: 0.7rem;
+
+    a{
+      color: #3498DB;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: #246a99;
+    }
+
+  }
+
+  .lang-button {
+    background-color: #FAFAFA;
+    color: #333333;
+    padding: 0.5rem 0.8rem;
+    height: 2.4rem;
+    border-radius: 0.25rem !important;
+    border-color: unset !important;
+  }
+
+  .icon-footer {
+    padding-left: 0.4rem;
+  }
+
+  .btn:focus {
+    box-shadow: none !important;
+  }
+
+  .btn-group .btn:first-child:not(:last-child) {
+    border-radius: 0.25rem;
+  }
+
+  .menu {
+    min-width: 7rem;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+    text-align: left;
+  }
+
+  ul li {
+    margin-top: 0;
+    padding: 0.3rem;
+
+      a {
+        color: #333333;
+      }
+
+      a:hover {
+        text-decoration: none;
+        cursor: pointer;
+        color: #3498DB;
+      }
+  }
+
+}
+
+

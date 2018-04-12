@@ -5,9 +5,9 @@ export const COMMON = {
   'UPDATE': 'Update',
   'EDIT': 'Edit',
   'DELETE': 'Delete',
-  'LOG_IN': 'Log in',
-  'SIGN_UP': 'Sign up',
-  'LOG_OUT': 'Log out',
+  'LOG_IN': 'Log In',
+  'SIGN_UP': 'Sign Up',
+  'LOG_OUT': 'Log Out',
   'CANCEL': 'Cancel',
   'ADD': 'Add',
   'ADDED': 'Added on',
@@ -29,6 +29,7 @@ export const COMMON = {
   'REINVITE': 'Invite again',
   'I_FINISHED': 'I finished',
   'SYNTHESIS': 'Synthesis',
+  'SEARCHCATEGORY': 'Search category',
 
   'NAME': 'Name',
   'FIRSTNAME': 'Firstname',
@@ -94,6 +95,7 @@ export const COMMON = {
   'DISCOVER': 'Discover',
   'PRESET': 'Preset',
   'PRESETS': 'Presets',
+  'CLIENT_SIDE': 'Client Side',
 
   'SORT': {
     'BY_NAME': 'By name',

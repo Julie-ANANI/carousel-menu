@@ -14,6 +14,8 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FooterComponent } from './directives/footer/footer.component';
+import { HeaderComponent } from './directives/header/header.component';
 
 // Services
 import { InnovationService } from './services/innovation/innovation.service';
@@ -37,15 +39,20 @@ import { AnswerService } from './services/answer/answer.service';
 import { ProfessionalsService } from './services/professionals/professionals.service';
 import { DownloadService } from './services/download/download.service';
 import { TagsService } from './services/tags/tags.service';
+import { TemplatesService } from './services/templates/templates.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
 import { InnovationResolver } from './resolvers/innovation.resolver';
 import { RequestResolver } from './resolvers/request.resolver';
+import { ScenarioResolver } from './resolvers/scenario.resolver';
+import { SignatureResolver } from './resolvers/signature.resolver';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FooterComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule.withServerTransition({
@@ -87,6 +94,7 @@ import { RequestResolver } from './resolvers/request.resolver';
     AnswerService,
     ProfessionalsService,
     DownloadService,
+    TemplatesService,
     {
       provide: Http,
       useFactory: httpFactory,
@@ -97,6 +105,9 @@ import { RequestResolver } from './resolvers/request.resolver';
     TranslateTitleService,
     CampaignResolver,
     InnovationResolver,
+    RequestResolver,
+    ScenarioResolver,
+    SignatureResolver,
     RequestResolver,
     TagsService
   ],

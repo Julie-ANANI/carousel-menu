@@ -29,6 +29,7 @@ export const COMMON = {
   'REINVITE': 'Inviter à nouveau',
   'I_FINISHED': 'J\'ai terminé',
   'SYNTHESIS': 'Synthèse',
+  'SEARCHCATEGORY': 'Recherche catégorie',
 
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
@@ -94,6 +95,7 @@ export const COMMON = {
   'DISCOVER': 'Découvrir',
   'PRESET': 'Configuration',
   'PRESETS': 'Configurations',
+  'CLIENT_SIDE': 'Interface Client',
 
   'SORT': {
     'BY_NAME': 'Nom',

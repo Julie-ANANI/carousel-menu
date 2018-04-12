@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from '../../../../../../../environments/environment';
 import { PresetService } from '../../../../../../services/preset/preset.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { noSpacesValidator } from '../../directives/no-spaces.validator';
 
 @Component({
   templateUrl: './admin-sections-new.component.html',
@@ -11,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AdminSectionsNewComponent {
 
   public formData: FormGroup = this._formBuilder.group({
-    name: ['', Validators.required]
+    name: ['', [Validators.required, noSpacesValidator()]]
   });
 
   constructor(private _router: Router,
@@ -32,4 +33,6 @@ export class AdminSectionsNewComponent {
       });
 
   }
+
+  get name(): AbstractControl { return this.formData.get('name'); }
 }

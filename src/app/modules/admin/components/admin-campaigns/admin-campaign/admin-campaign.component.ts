@@ -13,7 +13,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 export class AdminCampaignComponent implements OnInit {
 
   private _campaign: Campaign;
-  private _tabs = ['details', 'history', 'search', 'pros', 'answers', 'mails'];
+  private _tabs = ['details', 'history', 'search', 'pros', 'answers', 'mails', 'templates'];
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _notificationsService: TranslateNotificationsService,

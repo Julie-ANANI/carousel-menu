@@ -43,7 +43,7 @@
         </td>
 
         <td class="text-center" *ngIf="!mails">
-          <shared-country-flag *ngIf="request.country" [country]="request.country" [width]="30" [height]="20"></shared-country-flag>
+          <country-flag *ngIf="request.country" [country]="request.country" [width]="30" [height]="20"></country-flag>
         </td>
 
         <td>
@@ -58,14 +58,20 @@
           <div class="text-success" *ngIf="request.status === 'DONE'">
             {{ 'SEARCH.HISTORY.DONE' | translate }}
           </div>
-          <div class="text-warning" *ngIf="request.status === 'PROCESSING'">
-            <i class="fa fa-times" (click)="stopRequest(request._id)">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
+          <div class="text-warning" *ngIf="request.status === 'PROCESSING'" class="tooltip c-hand" data-tooltip="Arrêter">
+            <i class="fa fa-times" (click)="stopRequest(request._id)">
+              &nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}
+            </i>
           </div>
           <div class="text-error" *ngIf="request.status === 'QUEUED'">
-            <span (click)="cancelRequest(request._id, true)">{{ 'SEARCH.HISTORY.QUEUED' | translate }}</span>
+            <span (click)="cancelRequest(request._id, true)" class="tooltip c-hand" data-tooltip="Annuler">
+              {{ 'SEARCH.HISTORY.QUEUED' | translate }}
+            </span>
           </div>
           <div class="text-error" *ngIf="request.status === 'CANCELED'">
-            <span (click)="cancelRequest(request._id, false)">{{ 'SEARCH.HISTORY.CANCELED' | translate }}</span>
+            <span (click)="cancelRequest(request._id, false)" class="tooltip c-hand" data-tooltip="Mettre en attente">
+              {{ 'SEARCH.HISTORY.CANCELED' | translate }}
+            </span>
           </div>
         </td>
 
@@ -107,7 +113,7 @@
         </td>
 
         <td class="text-center" *ngIf="!mails">
-          <shared-country-flag *ngIf="childRequest.country" [country]="childRequest.country" [width]="30" [height]="20"></shared-country-flag>
+          <country-flag *ngIf="childRequest.country" [country]="childRequest.country" [width]="30" [height]="20"></country-flag>
         </td>
 
         <td>
@@ -122,14 +128,20 @@
           <div class="text-success" *ngIf="childRequest.status === 'DONE'">
             {{ 'SEARCH.HISTORY.DONE' | translate }}
           </div>
-          <div class="text-warning" *ngIf="childRequest.status === 'PROCESSING'">
-            <i class="fa fa-times" (click)="stopChildRequest(childRequest._id, request._id)">&nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}</i>
+          <div class="text-warning" *ngIf="childRequest.status === 'PROCESSING'" class="tooltip c-hand" data-tooltip="Arrêter">
+            <i class="fa fa-times" (click)="stopChildRequest(childRequest._id)">
+              &nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}
+            </i>
           </div>
           <div class="text-error" *ngIf="childRequest.status === 'QUEUED'">
-            <span (click)="cancelChildRequest(childRequest._id, request._id, true)">{{ 'SEARCH.HISTORY.QUEUED' | translate }}</span>
+            <span (click)="cancelChildRequest(childRequest._id, true)" class="tooltip c-hand" data-tooltip="Annuler">
+              {{ 'SEARCH.HISTORY.QUEUED' | translate }}
+            </span>
           </div>
           <div class="text-error" *ngIf="childRequest.status === 'CANCELED'">
-            <span (click)="cancelChildRequest(childRequest._id, request._id, false)">{{ 'SEARCH.HISTORY.CANCELED' | translate }}</span>
+            <span (click)="cancelChildRequest(childRequest._id, false)" class="tooltip c-hand" data-tooltip="Mettre en attente">
+              {{ 'SEARCH.HISTORY.CANCELED' | translate }}
+            </span>
           </div>
         </td>
 

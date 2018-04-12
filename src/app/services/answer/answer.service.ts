@@ -46,6 +46,12 @@ export class AnswerService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public getInnovationValidAnswers(innovationId: string): Observable<{answers: Array<Answer>}> {
+    return this._http.get('/innovation/' + innovationId + '/validAnswers')
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public exportAsCsv(campaignId: string): void {
     const url = environment.apiUrl + '/campaign/' + campaignId + '/exportAnswers';
     window.open(url);

@@ -17,6 +17,7 @@ export const PRESETS = {
     'NEW': 'Nouvelle configuration',
     'GO': 'Créer la configuration',
     'GIVE_NAME': 'Donnez un nom à la configuration',
+    'DONT_USE_SPACES': 'Merci de ne pas utiliser d\'espaces dans le nom.',
     'UNIQUE_NAME': 'Attention, ce nom ne doit pas être déjà utilisé dans les configurations existantes',
     'EDIT': {
       'SAVE': 'Sauvegarder la configuration',
@@ -48,6 +49,7 @@ export const PRESETS = {
     'NEW': 'Nouvelle section',
     'GO': 'Créer la section',
     'GIVE_NAME': 'Donnez un nom à la section',
+    'DONT_USE_SPACES': 'Merci de ne pas utiliser d\'espaces dans le nom.',
     'UNIQUE_NAME': 'Attention, ce nom ne doit pas être déjà utilisé dans les sections existantes',
     'EDIT': {
       'SAVE': 'Sauvegarder la section',
@@ -75,6 +77,7 @@ export const PRESETS = {
     'NEW': 'Nouvelle question',
     'GO': 'Créer la question',
     'GIVE_NAME': 'Donnez un nom à la question',
+    'DONT_USE_SPACES': 'Merci de ne pas utiliser d\'espaces dans le nom.',
     'UNIQUE_NAME': 'Attention, ce nom ne doit pas être déjà utilisé dans les questions existantes',
     'TAKEN_NAME': 'Ce nom est déjà utilisé, merci d\'en choisir un autre',
     'TYPE': {

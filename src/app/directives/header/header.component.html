@@ -1,0 +1,94 @@
+<nav class="navbar">
+
+  <!-- Logo -->
+  <div *ngIf="!authService.isAuthenticated">
+    <a href="https://www.umi.us" class="navbar-brand">
+      <img src="{{ 'https://res.cloudinary.com/umi/image/upload/app/'+logoName() }}" alt="Logo UMI" height="40">
+    </a>
+  </div>
+
+  <div *ngIf="authService.isAuthenticated">
+    <a routerLink="/" class="navbar-brand">
+      <img class="logo" src="{{ 'https://res.cloudinary.com/umi/image/upload/app/'+logoName() }}" alt="Logo UMI" height="40">
+    </a>
+  </div>
+  <!-- /Logo -->
+
+  <!-- Collapse button -->
+  <div class="navbar-toggler">
+    <span class="navbar-toggler-icon" (click)="displayValue = !displayValue"></span>
+  </div>
+  <!-- /Collapse button -->
+
+  <!-- Menu item -->
+  <div class="navbar-collapse" [ngStyle]="{'display': displayValue ? 'block' : 'none' }">
+
+    <!-- Non connecté -->
+    <div *ngIf="!authService.isAuthenticated">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a [routerLink]="'/login'" routerLinkActive="active" (click)="displayValue = !displayValue" class="nav-link">{{ 'COMMON.LOG_IN' | translate}}</a>
+        </li>
+        <li class="nav-item start-button">
+          <a [routerLink]="'/signup'" routerLinkActive="active" (click)="displayValue = !displayValue" class="nav-link">{{ 'HEADER.START' | translate}}</a>
+        </li>
+      </ul>
+    </div>
+    <!-- /Non connecté -->
+
+    <!-- Connecté Client -->
+    <div *ngIf="authService.isAuthenticated">
+      <ul class="navbar-nav">
+        <!-- <a href="http://help.umi.us" target="_blank" class="btn btn-link">{{ 'COMMON.HELP' | translate }}</a>-->
+        <li class="nav-item" *ngIf="!backOfficeValue && authService.adminLevel > 0">
+          <a (click)="displayValue = !displayValue" [routerLink]="'/sample'" routerLinkActive="active" class="nav-link">{{ 'HEADER.EXAMPLE' | translate }}</a>
+        </li>
+        <li class="nav-item" *ngIf="!backOfficeValue">
+          <a [routerLink]="'/projects'" (click)="displayValue = !displayValue" routerLinkActive="active" class="nav-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
+        </li>
+        <li class="nav-item" *ngIf="!backOfficeValue" >
+          <a [routerLink]="'/account'" (click)="displayValue = !displayValue" routerLinkActive="active" class="nav-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
+        </li>
+        <li class="nav-item" *ngIf="!backOfficeValue && canShow(1)">
+          <a [routerLink]="'/admin'" (click)="backOfficeValue = !backOfficeValue; displayValue = !displayValue" routerLinkActive="active" class="nav-link">{{ 'COMMON.ADMIN' | translate }}</a>
+        </li>
+      </ul>
+   </div>
+    <!-- /Connecté Client -->
+
+    <!-- Connecté Admin -->
+    <div *ngIf="authService.isAuthenticated && backOfficeValue">
+     <ul class="navbar-nav">
+        <li class="nav-item" *ngIf="canShow(1)">
+          <a class="nav-link" routerLinkActive="active" (click)="displayValue = !displayValue" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="'/admin'" title="">Dashboard</a>
+        </li>
+        <li class="nav-item" *ngIf="canShow(1)" >
+          <a class="nav-link" routerLinkActive="active" (click)="displayValue = !displayValue" [routerLink]="'/admin/users'" title="">{{ 'COMMON.USERS' | translate }}</a>
+        </li>
+        <li class="nav-item" *ngIf="canShow(3)">
+          <a class="nav-link" routerLinkActive="active" (click)="displayValue = !displayValue" [routerLink]="'/admin/projects'" title="">{{ 'COMMON.PROJECTS' | translate }}</a>
+        </li>
+        <li class="nav-item" *ngIf="canShow(3)">
+          <a class="nav-link" routerLinkActive="active" (click)="displayValue = !displayValue" [routerLink]="'/admin/emails'" title="">Emails</a>
+        </li>
+        <!-- TODO <a class="btn btn-link" *ngIf="canShow(3) && backOffice" routerLinkActive="active" [routerLink]="'/admin/index'" title="">Index</a>-->
+        <!-- TODO <a class="btn btn-link" *ngIf="canShow(3) && backOffice" routerLinkActive="active" [routerLink]="'/admin/patents'" title="">{{ 'COMMON.PATENTS' | translate }}</a>-->
+        <li class="nav-item" *ngIf="canShow(3)">
+          <a class="nav-link" routerLinkActive="active" (click)="displayValue = !displayValue" [routerLink]="'/admin/presets'" title="">{{ 'COMMON.PRESETS' | translate }}</a>
+        </li>
+        <li class="nav-item" *ngIf="canShow(3)" >
+          <a class="nav-link" routerLinkActive="active" (click)="displayValue = !displayValue" [routerLink]="'/admin/search'" title="">{{ 'COMMON.SEARCH' | translate }}</a>
+        </li>
+        <li class="nav-item" *ngIf="canShow(3)">
+          <a class="nav-link" routerLinkActive="active" (click)="backOfficeValue = !backOfficeValue; displayValue = !displayValue" [routerLink]="'/projects'" title="">{{ 'COMMON.CLIENT_SIDE' | translate }}</a>
+        </li>
+      </ul>
+    </div>
+    <!-- /Connecté Admin-->
+
+  </div>
+  <!-- /Menu item -->
+
+</nav>
+
+

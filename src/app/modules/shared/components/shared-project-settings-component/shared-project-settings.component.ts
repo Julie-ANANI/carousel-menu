@@ -4,6 +4,8 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { ShareService } from '../../../../services/share/share.service';
 import { InnovationSettings } from '../../../../models/innov-settings';
 
+import * as _ from 'lodash';
+
 @Component({
   selector: 'app-shared-project-settings',
   templateUrl: 'shared-project-settings.component.html',
@@ -67,15 +69,15 @@ export class SharedProjectSettingsComponent implements OnInit {
       },
       'domainBL': {
         placeholder: 'Ex. apple.com',
-        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.domains || [] : []
+        initialData: this.settings && this.settings.blacklist ? _.map(this.settings.blacklist.domains, (val:string)=>{return {text:val};}) : []
       },
       'emailBL': {
         placeholder: 'Ex. sjobs@apple.com',
-        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.emails || [] : []
+        initialData: this.settings && this.settings.blacklist ? _.map(this.settings.blacklist.emails, (val:string)=>{return {text:val};}) : []
       },
       'peopleBL': {
         placeholder: 'Ex. sjobs@apple.com',
-        initialData: this.settings && this.settings.blacklist ? this.settings.blacklist.people || [] : []
+        initialData: this.settings && this.settings.blacklist ? _.map(this.settings.blacklist.people, (val:string)=>{return {text:val};}) : []
       }
     };
     return _inputConfig[type] || {
@@ -184,12 +186,12 @@ export class SharedProjectSettingsComponent implements OnInit {
    ****************************************************************************/
 
   public addDomainToExclude(event: {value: Array<string>}): void {
-    this.settings.blacklist.domains = event.value;
+    this.settings.blacklist.domains = _.map(event.value, (val:any)=>{ return val['text']; });
     this.updateSettings();
   }
 
   public addEMailToExclude(event: {value: Array<string>}): void {
-    this.settings.blacklist.emails = event.value;
+    this.settings.blacklist.emails = _.map(event.value, (val:any)=>{ return val['text']; });
     this.updateSettings();
   }
 

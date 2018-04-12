@@ -1,0 +1,133 @@
+$dark-background: #262831;
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: .6rem 3rem;
+  background-color: $dark-background;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+}
+
+.navbar-brand {
+  display: inline-block;
+  padding-top: 0.3125rem;
+  margin-right: 1rem;
+  line-height: inherit;
+  white-space: nowrap;
+}
+
+.navbar-toggler {
+  padding: 0.3rem 0.6rem;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid rgba(255,255,255,.5);
+  border-radius: 0.25rem;
+}
+
+.navbar-toggler-icon{
+  display: inline-block;
+  width: 1.5em;
+  height: 1.3em;
+  vertical-align: middle;
+  content: "";
+  background: url('../../../assets/images/bars.png') no-repeat center center;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+
+.navbar-collapse {
+  flex-basis: 100%;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.collapse {
+  display: none;
+}
+
+.navbar-nav {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-left: 0;
+  margin-top: .5rem;
+  margin-bottom: 0;
+  list-style: none;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+.nav-item {
+  margin-top: 0;
+  padding: 0.8rem 1rem;
+}
+
+.nav-link {
+  display: inline-block;
+  color: rgba(255,255,255,.5);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.start-button {
+  background-color: #3498DB;
+  border-radius: .25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+    .nav-link {
+      color: #FFFFFF !important;
+    }
+}
+
+.start-button:hover {
+  background-color: #246a99;
+}
+
+a:hover {
+  color: #FFFFFF;
+}
+
+a:focus {
+  box-shadow: none !important;
+}
+
+.active {
+  color: #FFFFFF !important;
+}
+
+@media (min-width: 840px) {
+
+  .navbar-brand {
+    padding-bottom: 0.3125rem;
+  }
+
+  .navbar-nav {
+    margin-top: 0rem;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .navbar-toggler {
+   display: none;
+  }
+
+  .navbar-collapse {
+    display: flex!important;
+    flex-basis: auto;
+    flex-grow: unset;
+  }
+
+  .nav-item {
+    padding: 0.4rem 1rem;
+    margin-left: 1rem;
+  }
+
+}
+

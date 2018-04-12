@@ -1,22 +1,6 @@
-<app-shared-header></app-shared-header>
-<div id="admin-component" class="columns col-gapless">
-  <div class="column col-2 col-md-12 sidebar">
-    <ul>
-      <li *ngIf="canShow(1)" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><a [routerLink]="'/admin'" title="">Dashboard</a></li>
-      <li *ngIf="canShow(1)" routerLinkActive="active"><a [routerLink]="'/admin/users'" title="">{{ 'COMMON.USERS' | translate }}</a></li>
-      <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/projects'" title="">{{ 'COMMON.PROJECTS' | translate }}</a></li>
-      <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/emails'" title="">Emails</a></li>
-      <!-- TODO <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/index'" title="">Index</a></li>-->
-      <!-- TODO <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/patents'" title="">{{ 'COMMON.PATENTS' | translate }}</a></li>-->
-      <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/presets'" title="">{{ 'COMMON.PRESETS' | translate }}</a></li>
-      <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/search'" title="">{{ 'COMMON.SEARCH' | translate }}</a></li>
-      <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/tags'" title="">{{ 'COMMON.TAGS' | translate }}</a></li>
-    </ul>
-  </div>
-
-  <div class="column col-10 col-md-12">
-    <router-outlet></router-outlet>
-  </div>
+<!--<app-header [backOffice]="true"></app-header>-->
+<div>
+  <router-outlet></router-outlet>
 </div>
 
-<app-shared-footer></app-shared-footer>
+<!-- <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/tags'" title="">{{ 'COMMON.TAGS' | translate }}</a></li>-->

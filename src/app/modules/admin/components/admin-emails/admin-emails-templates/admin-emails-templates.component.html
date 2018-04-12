@@ -1,0 +1,29 @@
+<div class="columns">
+  <div class="column col-3">
+    <div id="templatesMenu">
+      <div class="container">
+        <h3>Scénario de mails <i class="fa fa-refresh c-hand" (click)="getScenarios()"></i></h3>
+        <ul>
+          <li *ngFor="let scenario of scenarios">
+            <a [routerLink]="'/admin/emails/templates/scenario/' + scenario._id">
+              {{ scenario.name }}
+            </a>
+          </li>
+        </ul>
+        <h3>Signatures <i class="fa fa-refresh c-hand" (click)="getSignatures()"></i></h3>
+        <ul>
+          <li *ngFor="let signature of signatures">
+            <a [routerLink]="'/admin/emails/templates/signature/' + signature._id">
+              {{ signature.name }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="column col-9">
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

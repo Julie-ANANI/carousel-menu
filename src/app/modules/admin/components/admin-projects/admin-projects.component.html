@@ -4,7 +4,7 @@
 
       <h1>{{total}} {{ 'COMMON.PROJECTS' | translate }}</h1>
 
-      <div class="columns" *ngIf="projects && projects.length">
+      <div class="columns">
 
         <ul class="list-filter">
           <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'name'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_NAME' | translate }}</button></sq-sort></li>

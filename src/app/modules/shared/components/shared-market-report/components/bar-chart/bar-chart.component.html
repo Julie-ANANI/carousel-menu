@@ -1,0 +1,30 @@
+<div class="bar-chart-component">
+
+  <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i">
+
+    <div class="horizontal-bar" (click)="showAnswers[i] = !showAnswers[i]">
+      <div class="bar-number" [ngStyle]="{'background': barData.color}">{{i+1}}</div>
+      <div class="bar-fill" [style.width]="barData.percentage"></div>
+      <div class="bar-name">{{barData.label | multiling:lang}}</div>
+      <div class="bar-stats tooltip" [ngSwitch]="question.controlType"
+           [attr.data-tooltip]="barData.count + ' ' + ('MARKET_REPORT.ANSWERS' | translate)">
+        <span *ngSwitchCase="'radio'">{{barData.percentage}}</span>
+        <span *ngSwitchCase="'checkbox'">{{barData.count}} {{'MARKET_REPORT.ANSWERS' | translate}}</span>
+        <i class="fa" aria-hidden="true" [ngClass]="showAnswers[i] ? 'fa-angle-up' : 'fa-angle-down'"></i>
+      </div>
+    </div>
+
+    <div *ngIf="showAnswers[i]">
+      <div class="prosList">
+        <div *ngFor="let answer of barData.answers" class="white-frame professional-item">
+          <app-pro-tag
+            [answer]="answer"
+            (modalAnswerChange)="seeAnswer($event)">
+          </app-pro-tag>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

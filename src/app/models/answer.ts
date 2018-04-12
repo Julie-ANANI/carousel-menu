@@ -1,4 +1,5 @@
 import { Professional } from './professional';
+import { Clearbit } from './clearbit';
 
 export interface Answer {
   readonly _id: string;
@@ -7,7 +8,9 @@ export interface Answer {
   originalAnswerReference: string;
   tags: Array<string>;
   profileQuality: number;
-  country: any;
+  country: {flag: string, domain: string, name: string};
+  job: string;
+  company: Clearbit;
   readonly professional: Professional;
   readonly answers: any;
 }

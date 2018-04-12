@@ -1,8 +1,19 @@
 <div class="container">
-  <div class="columns">
-    <div class="column col-11 col-mx-auto">
-      <h1>{{queueSize}} registered queues</h1>
-      <app-admin-email-queue [queue]="queue"></app-admin-email-queue>
+  <ul class="tab tab-block">
+    <li class="tab-item"><a [routerLink]="'/admin/emails/queue'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      File d'attente
+    </a></li>
+    <li class="tab-item"><a [routerLink]="'/admin/emails/templates'" routerLinkActive="active">
+      Templates mails
+    </a></li>
+    <li class="tab-item"><a [routerLink]="'/admin/emails/blacklist'" routerLinkActive="active">
+      Blacklist
+    </a></li>
+  </ul>
+
+  <div class="tabs">
+    <div class="tab-content">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

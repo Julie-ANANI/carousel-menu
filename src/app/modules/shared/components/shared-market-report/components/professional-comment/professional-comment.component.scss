@@ -1,0 +1,15 @@
+div.professional-comment {
+  color: white;
+  padding: 17px 16px 13px 24px;
+
+  .flex-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .fa-star {
+    color: #FEBE34;
+    margin-left: 15px;
+  }
+}
+

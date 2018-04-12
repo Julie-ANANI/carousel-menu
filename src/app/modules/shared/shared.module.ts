@@ -7,37 +7,20 @@ import { HttpModule } from '@angular/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { FileUploadModule } from 'ng2-file-upload';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
-import { ChartsModule } from 'ng2-charts';
 import { Ng2FileDropModule } from 'ng2-file-drop';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
-//Components
+// Components
 import { SharedNotFoundComponent } from './components/shared-not-found/shared-not-found.component';
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
 import { SharedLoaderComponent } from './components/shared-loader/shared-loader.component';
-import { SharedHeaderComponent } from './components/shared-header/shared-header.component';
-import { SharedMarketReportComponent } from './components/shared-market-report/shared-market-report/shared-market-report-module';
-import { SharedBarChartComponent } from './components/shared-bar-chart-component/shared-bar-chart.component';
-import { SharedMarketItemComponent } from './components/shared-market-report/shared-market-item-component/shared-market-item.component';
-import { SharedMarketItemListComponent } from './components/shared-market-report/shared-market-item-list-component/shared-market-item-list.component';
-import { SharedMarketReportSectionComponent } from './components/shared-market-report/shared-market-report-section/shared-market-report-section.component';
-import { SharedMarketReportPiechartComponent } from './components/shared-market-report/shared-market-report-piechart/shared-market-report-piechart.component';
-import { SharedMarketReportBluesquareComponent } from './components/shared-market-report/shared-market-report-bluesquare/shared-market-report-bluesquare.component';
-import { SharedMarketCommentComponent } from './components/shared-market-report/shared-market-comment-component/shared-market-comment.component';
-import { SharedMarketReportPopoverComponent } from './components/shared-market-report/shared-market-report-popover/shared-market-report-popover.component';
-import { SharedAnswerModalComponent } from './components/shared-answer-modal/shared-answer-modal.component';
-import { SharedAnswerQuestionComponent } from './components/shared-answer-question/shared-answer-question.component';
-import { SharedPricesComponent } from './components/shared-market-report/shared-prices-component/shared-prices.component';
-import { SharedWorldMapComponent } from './components/shared-market-report/shared-world-map-component/shared-world-map.component';
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
 import { SharedFilterInputComponent } from './components/shared-filter-input/shared-filter-input.component';
 import { SharedModalComponent } from './components/shared-modal-component/shared-modal.component';
-import { SharedStarsComponent } from './components/shared-stars-component/shared-stars.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
-import { SharedRatingItemComponent } from './components/shared-rating-item/shared-rating-item.component';
 import { SharedTagItemComponent } from './components/shared-tag-item/shared-tag-item.component';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
@@ -52,14 +35,20 @@ import { SharedProsListComponent } from './components/shared-pros-list/shared-pr
 import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
-import { DomSanitizerPipe } from './../../pipes/DomSanitizer';
-import { SharedFooterComponent } from './components/shared-footer/shared-footer.component';
-import { SharedCountryFlagComponent } from './components/shared-country-flag/shared-country-flag.component';
+import { SharedEditEmail } from './components/shared-edit-email/shared-edit-email.component';
+import { SharedEditEmailsStep } from './components/shared-edit-emails-step/shared-edit-emails-step.component';
+import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
+import { SharedEmailBlacklistComponent } from './components/shared-email-blacklist/shared-email-blacklist.component';
 
-//Directives
+// Pipes
+import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
+
+// Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
-import { SqResetDirective } from '../../directives/smart-query/sqReset.directive';
+import { AutocompleteSearchComponent } from '../../directives/autocomplete-search/autocomplete-search.component';
+import { CountryFlagComponent } from '../../directives/country-flag/country-flag.component';
+//import { HeaderComponent } from '../../directives/header/header.component';
 
 @NgModule({
   imports: [
@@ -69,7 +58,6 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     ReactiveFormsModule,
     RouterModule.forChild([]), // giving no routes but needed for all <a [routerLink]=''> uses
     TranslateModule.forChild(),
-    ChartsModule,
     FileUploadModule,
     Ng2FileDropModule,
     Angular2FontawesomeModule,
@@ -79,32 +67,17 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
   declarations: [
     // Directives
     // FormErrorDirective,
-    SqResetDirective,
+    CountryFlagComponent,
     InputListComponent,
 
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
-    SharedHeaderComponent,
-    SharedMarketReportComponent,
-    SharedBarChartComponent,
-    SharedMarketItemComponent,
-    SharedMarketCommentComponent,
-    SharedMarketReportPopoverComponent,
-    SharedAnswerModalComponent,
-    SharedAnswerQuestionComponent,
-    SharedMarketReportSectionComponent,
-    SharedMarketReportPiechartComponent,
-    SharedMarketItemListComponent,
-    SharedMarketReportBluesquareComponent,
-    SharedPricesComponent,
-    SharedWorldMapComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedTextZoneComponent,
     SharedModalComponent,
-    SharedStarsComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedVideoComponent,
@@ -112,7 +85,7 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     SharedProjectSettingsComponent,
     SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
-    SharedRatingItemComponent,
+    AutocompleteSearchComponent,
     SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
@@ -122,9 +95,11 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
     SharedMarketReportExampleComponent,
+    SharedEditEmail,
+    SharedEditEmailsStep,
+    SharedEditScenarioComponent,
     DomSanitizerPipe,
-    SharedFooterComponent,
-    SharedCountryFlagComponent
+    SharedEmailBlacklistComponent
   ],
   exports: [
     // Modules
@@ -135,24 +110,17 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     Ng2PageScrollModule,
 
     // Directives
-    // FormErrorDirective,
-    SqResetDirective,
+    CountryFlagComponent,
     InputListComponent,
 
     // Components
-    // DynamicFormComponent,
-    // DynamicFormQuestionComponent,
-    // DynamicFormContentComponent,
-    // DynamicFormHtmlComponent,
-
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
-    SharedHeaderComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
-    SharedMarketReportComponent,
+    SharedTextZoneComponent,
     SharedModalComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
@@ -160,9 +128,7 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     SharedProjectSettingsComponent,
     SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
-    SharedAnswerModalComponent,
-    SharedAnswerQuestionComponent,
-    SharedRatingItemComponent,
+    AutocompleteSearchComponent,
     SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
@@ -171,8 +137,10 @@ import { SqResetDirective } from '../../directives/smart-query/sqReset.directive
     SharedProsListComponent,
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
-    SharedFooterComponent,
-    SharedCountryFlagComponent
+    SharedEditEmail,
+    SharedEditEmailsStep,
+    SharedEditScenarioComponent,
+    SharedEmailBlacklistComponent
   ]
 })
 export class SharedModule { }

@@ -1,0 +1,54 @@
+<div>
+  <h2 *ngIf="!editionMode">Signature - {{ signature.name }} - {{ signature.language }}</h2>
+  <h2 *ngIf="editionMode">Edition de signature - {{ signature.name }} - {{ signature.language }}</h2>
+  <label class="form-switch" for="toggleAdmin">
+    <input type="checkbox" name="toggleAdmin" id="toggleAdmin"
+           (change)="(editionMode = !editionMode) && $event.preventDefault()">
+    <i class="form-icon"></i>Edition  <i class="fa fa-pencil"></i>
+  </label>
+  <div *ngIf="!editionMode">
+    Aperçu:
+    <div class="card">
+      <div [innerHTML]="signature.content"></div>
+    </div>
+  </div>
+  <form novalidate *ngIf="editionMode">
+    <div class="columns">
+      <div class="form-group column col-6">
+        <label>Nom</label>
+        <input type="text" [(ngModel)]="signature.name" name="name" class="form-input">
+      </div>
+      <div class="form-group column col-6">
+        <label>Langue</label>
+        <input type="text" [(ngModel)]="signature.language" name="language" class="form-input">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Contenu</label>
+      <textarea type="text" [(ngModel)]="signature.content" name="content" class="form-input"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary centered" (click)="save($event)">Sauvegarder</button>
+  </form>
+  <a (click)="deleteModal = true" class="text-error"><i class="fa fa-trash"></i> Supprimer la signature</a>
+</div>
+
+
+<!-- MODAL : Suppression signature ? -->
+<div class="modal" [ngClass]="{'active': deleteModal}">
+  <div class="modal-overlay" (click)="(deleteModal = null) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(deleteModal = null) && $event.preventDefault()"></button>
+      <div class="modal-title h5">Suppression de la signature</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">Etes-vous sûr de vouloir supprimer cette signature ? Cette action est irréversible !</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="removeSignature()">{{ 'COMMON.DELETE' | translate }}</button>
+      <button class="btn btn-primary" (click)="(deleteModal = null) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

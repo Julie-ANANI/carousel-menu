@@ -1,0 +1,19 @@
+<div *ngIf="displayLoading == true" class="wait">
+  <div>
+    <i class="fas fa-spinner fa-pulse fa-4x"></i>
+  </div>
+</div>
+
+
+<div *ngIf="displayLoading == false">
+  <div id="app-header">
+    <app-header></app-header>
+  </div>
+  <div class="app-content">
+    <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
+    <progress class="progress" max="100" *ngIf="displayLoader"></progress>
+      <router-outlet></router-outlet>
+  </div>
+    <app-footer></app-footer>
+</div>
+

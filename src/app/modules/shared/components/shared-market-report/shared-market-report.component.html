@@ -1,0 +1,114 @@
+<shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
+<div class="market-report" *ngIf="canShow()">
+
+  <!-- *********************************************************
+        Header
+  ************************************************************** -->
+
+  <h1 id="title">{{project.name}}</h1>
+  <p class="subtitle">{{ 'MARKET_REPORT.TITLE' | translate }}</p>
+
+  <div class="admin-buttons">
+    <button type="button" *ngIf="adminMode"
+            class="btn btn-lg btn-primary"
+            (click)="recalculateSynthesis($event)"
+            [disabled]="calculating"
+            [ngClass]="{'loading': calculating, '': !calculating}"
+    >
+      {{'MARKET_REPORT.BTN_RECOMPUTE' | translate}}
+      <i class="fa fa-refresh" aria-hidden="true"></i>
+    </button>
+    <!--<pdf-generator class="btn btn-lg btn-primary" [model]="getModel()" style="margin:10px;">
+    </pdf-generator>-->
+  </div>
+
+  <!-- *********************************************************
+        Sidebar
+  ************************************************************** -->
+  <div class="d-flex">
+    <div class="sidebar">
+      <div class="sidebarIsSticky">
+        <div (click)="toggleDetails($event)" class="toggle-sections">
+          {{ (showDetails ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND') | translate}}
+          <i class="fa float-right" aria-hidden="true"
+             [ngClass]="{'fa-plus-square-o': !showDetails, 'fa-minus-square-o': showDetails}"></i>
+        </div>
+        <ul>
+          <li>
+            <a pageScroll href="#professionals">
+              {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
+              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li *ngFor="let question of cleaned_questions">
+            <a pageScroll [href]="'#' + question.identifier">
+              {{ question.title | multiling:lang }}
+              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- *********************************************************
+          Synthesis
+    ************************************************************** -->
+
+    <div class="flex-container">
+      <div class="content">
+
+        <!-- *********************************************************
+              World Map and professionals cards
+        ************************************************************** -->
+        <section id="professionals">
+          <h2>{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
+          <div class="white-frame">
+
+          <app-question-conclusion
+            [info]="infographics.professionals"
+            [innovationId]="project._id"
+            [readonly]="!adminMode"
+          ></app-question-conclusion>
+
+            <div class="bloc">
+              <!--======= Carte du monde =======-->
+              <div class="map centered" width="684" height="339">
+                <app-world-map [countries]="countries" [color]="'#0B90C6'"></app-world-map>
+              </div>
+            </div>
+
+            <!-- ========= showListProfessional button ==============-->
+            <button type="button" class="market-report-btn centered"
+                    [ngClass]="{'active': showListProfessional}"
+                    (click)="showListProfessional = !showListProfessional; $event.preventDefault()">
+              {{(showListProfessional ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate}}
+              <i class="fa" aria-hidden="true"
+                 [ngClass]="showListProfessional ? 'fa-angle-up' : 'fa-angle-down'"></i>
+            </button>
+
+            <div *ngIf="showListProfessional" class="bloc details prosList">
+              <!--======= Liste des pros =======-->
+              <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
+                <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Les autres questions -->
+        <section *ngFor="let question of questions">
+          <app-question-section
+            [info]="getInfo(question)"
+            [innovation]="project"
+            [question]="question"
+            [answers]="answers"
+            [showComments]="showDetails"
+            [showDetails]="showDetails"
+            [readonly]="!adminMode"
+            (modalAnswerChange)="seeAnswer($event)">
+          </app-question-section>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
