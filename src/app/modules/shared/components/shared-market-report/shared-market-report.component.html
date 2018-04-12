@@ -5,8 +5,10 @@
         Header
   ************************************************************** -->
 
-  <h1 id="title">{{project.name}}</h1>
-  <p class="subtitle">{{ 'MARKET_REPORT.TITLE' | translate }}</p>
+  <div class="frontcover">
+    <h1 id="title">{{project.name}}</h1>
+    <p class="subtitle">{{ 'MARKET_REPORT.TITLE' | translate }}</p>
+  </div>
 
   <div class="admin-buttons">
     <button type="button" *ngIf="adminMode"
@@ -98,7 +100,7 @@
         <!-- Les autres questions -->
         <section *ngFor="let question of questions">
           <app-question-section
-            [info]="getInfo(question)"
+            [info]="getInfo(question) || {}"
             [innovation]="project"
             [question]="question"
             [answers]="answers"
@@ -111,4 +113,6 @@
       </div>
     </div>
   </div>
+
+  <div class="page-footer">UMI - contact@umi.us - www.umi.us</div>
 </div>
