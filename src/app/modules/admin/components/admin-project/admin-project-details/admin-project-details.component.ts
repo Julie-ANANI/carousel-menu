@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,16 +13,13 @@ import { Preset } from '../../../../../models/preset';
   templateUrl: 'admin-project-details.component.html',
   styleUrls: ['admin-project-details.component.scss']
 })
-export class AdminProjectsDetailsComponent implements OnInit {
+export class AdminProjectDetailsComponent implements OnInit {
 
   private _project: Innovation;
   private _preset: Array<Preset> = [];
-  private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis', 'mail_config'];
-  private _currentPage = 'settings';
   private _dirty = false;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _router: Router,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
@@ -30,9 +27,7 @@ export class AdminProjectsDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
-    this._project = this._activatedRoute.snapshot.data['innovation'];
-    const url = this._router.routerState.snapshot.url.split('/');
-    if (url && url[5]) { this._currentPage = url[5]; }
+    this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this._preset = this._project.preset ? [this._project.preset] : [];
   }
 
@@ -126,8 +121,5 @@ export class AdminProjectsDetailsComponent implements OnInit {
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
-  get baseUrl(): string { return `/admin/projects/project/${this._project._id}/`; }
-  get tabs(): Array<string> { return this._tabs; }
-  get currentPage() { return this._currentPage; }
   get project() { return this._project; }
 }

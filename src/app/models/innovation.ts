@@ -12,7 +12,7 @@ export interface Innovation {
   readonly domain?: string;
   readonly type?: 'insights' | 'apps' | 'leads';
   readonly principalMedia?: Media;
-  readonly innovationCards?: Array<InnovCard>;
+  innovationCards?: Array<InnovCard>;
   preset?: Preset;
   readonly quizId?: string;
   collaborators?: Array<User>;
