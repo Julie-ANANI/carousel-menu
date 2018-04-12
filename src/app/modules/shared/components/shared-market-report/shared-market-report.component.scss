@@ -36,6 +36,11 @@ body.sample-infographic {
 
 .market-report {
 
+  .frontcover .subtitle,
+  .frontcover img {
+      display: none;
+  }
+
   .flex-container {
     display: flex;
   }
