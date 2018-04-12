@@ -5,4 +5,19 @@
   <p *ngIf="lastSavedDate" class="last-saved"> {{ 'COMMON.LAST_SAVED_AT' | translate }} {{ lastSavedDate |
     date:'HH:mm:ss' }}</p>
   <app-shared-project-edit-cards [project]="project" (cardsChange)="updateCards($event)" (projectChange)="updateProject($event)"></app-shared-project-edit-cards>
+  <div *ngIf="project.status !== 'EDITING'">
+    <div class="project-submit">
+      <div *ngIf="project.status === 'SUBMITTED'">
+        <h3 class="text-center">Validation du projet</h3>
+        <button class="btn btn-xxl btn-primary centered" (click)="validateProject()">
+          Valider
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-xxl btn-error centered" (click)="askRevision()">
+          Demander une révision
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

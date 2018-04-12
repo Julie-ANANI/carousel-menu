@@ -45,6 +45,18 @@ export class AdminProjectCardsComponent implements OnInit {
   public updateProject(event: Innovation) {
     this._project = event;
   }
+  
+  public validateProject (): void {
+    this._innovationService.validate(this._project._id).first().subscribe(_ => {
+      this._notificationsService.success('Projet validé', 'Le projet a bien été validé');
+    });
+  }
+
+  public askRevision (): void {
+    this._innovationService.askRevision(this._project._id).first().subscribe(_ => {
+      this._notificationsService.success('Projet en révision', 'Le projet a été passé en status de révision, veuillez avertir le propriétaire des chagements à effectuer');
+    });
+  }
 
   get project() { return this._project; }
 }
