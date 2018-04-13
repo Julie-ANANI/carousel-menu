@@ -1,4 +1,4 @@
-<h3>{{total}} Attachments / {{ nbSelected }} sélectionnés</h3>
+<h3>{{total}} Attachments</h3>
 
 <table class="table pros" wt-responsive-table>
     <thead>
@@ -29,7 +29,7 @@
     <tfoot>
     <tr>
         <td colspan="12">
-            <sqPagination [config]="config" (configChange)="loadData($event)" [total]="total"></sqPagination>
+            <sqPagination [config]="config" (configChange)="loadData()" [total]="total"></sqPagination>
         </td>
     </tr>
     </tfoot>

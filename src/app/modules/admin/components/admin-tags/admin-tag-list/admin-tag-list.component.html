@@ -1,47 +1,4 @@
-<!--<div>
-    <div [hidden]="true">
-        <app-admin-tag-new></app-admin-tag-new>
-    </div>
-    <div [hidden]="false">La lista
-        <table>
-            <thead>
-                <th>Sel.</th>
-                <th width="240">Tag name</th>
-                <th width="240">Tag type</th>
-                <th width="480">Description</th>
-                <th width="240">Level</th>
-                <th width="120">Tagged objects</th>
-                <th width="120">Date</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Select??</td>
-                    <td>CB</td>
-                    <td>Sector</td>
-                    <td>Desc</td>
-                    <td>1</td>
-                    <td>0</td>
-                    <td>Today</td>
-                </tr>
-                <tr *ngFor="let tag of tagList">
-                    <td><input type="checkbox"></td>
-                    <td>{{tag.label}}</td>
-                    <td>test</td>
-                    <td>{{tag.description}}</td>
-                    <td>1</td>
-                    <td>0</td>
-                    <td>Today</td>
-                </tr>
-            </tbody>
-            <tfoot>
-            pagination
-            </tfoot>
-        </table>
-    </div>
-</div> -->
-
-
-<h3>{{total}} Tags / {{ nbSelected }} sélectionnés</h3>
+<h3>{{total}} Tags</h3>
 
 <div [hidden]="false">
     <app-admin-tag-new></app-admin-tag-new>
