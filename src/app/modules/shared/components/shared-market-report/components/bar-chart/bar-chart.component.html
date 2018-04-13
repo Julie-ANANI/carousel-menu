@@ -16,7 +16,7 @@
 
     <div *ngIf="showAnswers[i]">
       <div class="prosList">
-        <div *ngFor="let answer of barData.answers" class="white-frame professional-item">
+        <div *ngFor="let answer of barData.answers" class="professional-item">
           <app-pro-tag
             [answer]="answer"
             (modalAnswerChange)="seeAnswer($event)">
