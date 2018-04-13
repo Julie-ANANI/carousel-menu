@@ -2,7 +2,7 @@
  * Created by bastien on 31/01/2018.
  */
 export const TAGS = {
-  "ADD":"Add tag",
+  "ADD":"Add a tag",
   "LIST": "Tag list",
   "ATTACHMENTS": "Attachment explorer",
   "NEW": {

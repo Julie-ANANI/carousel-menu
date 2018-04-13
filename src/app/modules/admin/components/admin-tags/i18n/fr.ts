@@ -1,5 +1,5 @@
 export const TAGS = {
-  "ADD":"Ajouter tag",
+  "ADD":"Ajouter un tag",
   "LIST": "Liste des tags",
   "ATTACHMENTS": "Explorateur d'attachments",
   "NEW": {

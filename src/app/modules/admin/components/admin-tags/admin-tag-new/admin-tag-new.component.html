@@ -1,4 +1,8 @@
-<div class="container">
+<div [hidden]="showForm">
+    <button (click)="showForm = !showForm" class="btn btn-primary centered">{{ 'TAGS.ADD' | translate }}
+    <i class="fa fa-plus"></i></button>
+</div>
+<div class="container" [hidden]="!showForm">
     <div class="columns">
         <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit(formData)" class="column col-10 col-mx-auto">
             <div class="columns">

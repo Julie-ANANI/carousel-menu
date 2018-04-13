@@ -29,6 +29,8 @@ export class AdminTagNewComponent {
     canOrder: true
   };
 
+  private _showForm: boolean = false;
+
   private _codeTypes = [
     {'name': 'ISIC', 'value': 'isic'},
     {'name': 'NAICS', 'value': 'naiccs'},
@@ -59,7 +61,10 @@ export class AdminTagNewComponent {
       error = JSON.parse(error);
       this._notificationsService.error('ERROR.ERROR', error.message);
     });
+    this._showForm = false;
   }
+
+
 
   public onReset() {
     console.log("Cancel");
@@ -72,4 +77,7 @@ export class AdminTagNewComponent {
   get codeTypes(): Array<any> { return this._codeTypes; }
 
   get addAttachmentConfig() { return this._addAttachmentConfig; }
+
+  get showForm(): boolean { return this._showForm; }
+  set showForm(value: boolean) { this._showForm = value; }
 }

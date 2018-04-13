@@ -13,7 +13,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 export class AdminTagAttachmentsSubsetComponent implements OnInit{
 
   /**
-   * This is used to configure the query to puul the correct set of codes
+   * This is used to configure the query to pull the correct set of codes
    */
   @Input() public type: any;
 
@@ -22,6 +22,11 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
   private _config = {
     limit: 10,
     offset: 0
+  };
+
+  private _filter = {
+    text: "",
+    notation: ""
   };
 
   constructor(private _tagsService: TagsService,
@@ -54,12 +59,15 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
 
 
   get data(): Array<any> {
-    const limit = this._config.limit || -1;
-    const start = this._config.offset || 0;
-    return this._dataset.result.slice(start, (start+limit));
+    /*const limit = this._config.limit || this._dataset.result.length;
+    const start = this._config.offset || 0;*/
+    return this._dataset.result;//.slice(start, (start+limit));
   };
   get metadata(): any { return this._dataset._metadata; };
   get config(): any { return this._config; };
   set config(value: any) { this._config = value; };
   get total(): number { return this._dataset._metadata.totalCount; };
+  get filter(): any { return this._filter; }
+
+  set filter(value: any) { this._filter = value; }
 }
