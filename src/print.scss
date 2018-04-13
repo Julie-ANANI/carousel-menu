@@ -174,7 +174,7 @@
 
     country-flag img {
       position: relative;
-      top: 5px;
+      top: 4px;
     }
 
     ul.comments > li{
@@ -192,14 +192,16 @@
         & > div > p {
           font-weight: 600;
           margin: 0;
+          font-size: 12px !important;
         }
 
         .comment-desc {
           font-weight: normal;
-          margin-left: 45px;
+          margin-left: 44px;
           display: block;
-          top: -8px;
+          top: -10px;
           position: relative;
+          font-size: 12px !important;
         }
       }
     }
