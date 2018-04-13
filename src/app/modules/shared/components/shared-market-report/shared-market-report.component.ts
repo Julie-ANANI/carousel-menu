@@ -12,6 +12,7 @@ import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
 import { Infographics } from '../../../../models/infographics';
 import { Innovation } from '../../../../models/innovation';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -33,6 +34,7 @@ export class SharedMarketReportComponent implements OnInit {
   private _showDetails = true;
   private _calculating = false;
   private _innoid: string;
+  public today: Number;
 
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
@@ -44,6 +46,7 @@ export class SharedMarketReportComponent implements OnInit {
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
+    this.today = Date.now();
     this._innoid = this.project._id;
     this.loadAnswers();
     if (this.project.preset && this.project.preset.sections) {
@@ -139,6 +142,10 @@ export class SharedMarketReportComponent implements OnInit {
 
   public getInfo(question: Question) {
     return this._infographics.questions.find((infoQ: any) => infoQ.id === question.identifier);
+  }
+
+  public get logoName(): string {
+    return `logo-${ environment.domain || 'umi.us'}.png`;
   }
 
   get answers(): Array<Answer> { return this._answers; }
