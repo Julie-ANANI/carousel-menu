@@ -22,6 +22,7 @@ export const COMMON = {
   'ACCEPT': 'Accept',
   'FILTER': 'Filter',
   'SEARCH': 'Search',
+  'TAGS': 'Tags',
   'SEARCHES': 'Searches',
   'PATENTS': 'Patents',
   'INVITE': 'Invite',

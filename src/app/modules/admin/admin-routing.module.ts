@@ -26,6 +26,9 @@ import { CampaignResolver } from '../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { RequestResolver } from '../../resolvers/request.resolver';
 import { AdminPresetComponent } from './components/admin-preset/admin-preset.component';
+import { AdminTagsComponent } from './components/admin-tags/admin-tags.component';
+
+import { tagsRoutes } from './components/admin-tags/admin-tags-routing.module';
 import { presetsRoutes } from './components/admin-preset/admin-presets/admin-presets-routing.module';
 import { questionsRoutes } from './components/admin-preset/admin-questions/admin-questions-routing.module';
 import { sectionsRoutes } from './components/admin-preset/admin-sections/admin-sections-routing.module';
@@ -125,6 +128,13 @@ const adminRoutes: Routes = [
         component: AdminPresetComponent,
         children: [
           ...sectionsRoutes
+        ]
+      },
+      {
+        path: 'tags',
+        component: AdminTagsComponent,
+        children: [
+          ...tagsRoutes
         ]
       },
       { path: '**', component: SharedNotFoundComponent }

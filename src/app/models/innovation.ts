@@ -13,6 +13,7 @@ export interface Innovation {
   readonly type?: 'insights' | 'apps' | 'leads';
   readonly principalMedia?: Media;
   innovationCards?: Array<InnovCard>;
+  tags?: Array<any>;
   preset?: Preset;
   readonly quizId?: string;
   collaborators?: Array<User>;
