@@ -42,6 +42,8 @@ import { SharedEmailBlacklistComponent } from './components/shared-email-blackli
 
 // Pipes
 import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
+import { FilterPipe } from '../../pipes/TableFilterPipe';
+import { LimitsPipe } from '../../pipes/TableLimitsPipe';
 
 // Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
@@ -99,6 +101,8 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedEditScenarioComponent,
     SharedProjectEditCardsComponent,
     DomSanitizerPipe,
+    FilterPipe,
+    LimitsPipe,
     SharedEmailBlacklistComponent
   ],
   exports: [
@@ -140,8 +144,9 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
     SharedProjectEditCardsComponent,
-    //HeaderComponent
-    SharedEmailBlacklistComponent
+    SharedEmailBlacklistComponent,
+    FilterPipe,
+    LimitsPipe
   ]
 })
 export class SharedModule { }

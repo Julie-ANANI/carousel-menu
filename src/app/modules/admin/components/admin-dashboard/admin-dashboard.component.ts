@@ -48,7 +48,7 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit(): void {
     this._titleService.setTitle('Admin Dashboard');
 
-    if (this._authService.user.isOperator) {
+    if (this._authService.user && this._authService.user.isOperator) {
       this.operatorId = this._authService.user.id;
     }
 
