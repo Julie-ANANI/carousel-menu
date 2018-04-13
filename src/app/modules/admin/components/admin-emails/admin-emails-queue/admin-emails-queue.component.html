@@ -3,11 +3,11 @@
   <table class="table">
     <thead>
       <th width="250">Campaign name</th>
-      <th width="190">Creation date</th>
-      <th width="190">Start date</th>
-      <th width="190">End date</th>
-      <th width="80">Batch size</th>
-      <th width="100">Status</th>
+      <th width="190"><sq-sort [config]="config" (configChange)="loadQueue($event)" [prop]="'created'">Creation date</sq-sort></th>
+      <th width="190"><sq-sort [config]="config" (configChange)="loadQueue($event)" [prop]="'startDate'">Start date</sq-sort></th>
+      <th width="190"><sq-sort [config]="config" (configChange)="loadQueue($event)" [prop]="'endDate'">End date</sq-sort></th>
+      <th width="80"><sq-sort [config]="config" (configChange)="loadQueue($event)" [prop]="'payload.queueSize'">Batch size</sq-sort></th>
+      <th width="100"><sq-sort [config]="config" (configChange)="loadQueue($event)" [prop]="'status'">Status</sq-sort></th>
       <th width="60">Information</th>
     </thead>
     <tbody>
@@ -21,6 +21,11 @@
         <td><a class="btn btn-action" [routerLink]="['/admin/emails/batch/'+transaction._id]"><i class="fa fa-info"></i></a></td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <sqPagination [config]="config" (configChange)="loadQueue($event)" [total]="queueSize" [propertyName]="'admin-queue'"></sqPagination>
+      </tr>
+    </tfoot>
   </table>
   <div >
   </div>

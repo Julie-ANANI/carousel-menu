@@ -14,18 +14,21 @@ export class AdminEmailQueueComponent implements OnInit {
     mailqueues: [],
     _metadata: {}
   };
+  private _config = {
+    fields: '',
+    limit: 10,
+    offset: 0,
+    search: {},
+    sort: {
+      created: -1
+    }
+  };
 
   constructor(private _emailService: EmailService,
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    this._emailService.getQueue({summarize: true})
-      .first()
-      .subscribe(queue => {
-          this._queueList = queue;
-        },
-        error => this._notificationsService.error('ERROR', error.message)
-      );
+    this.loadQueue();
   }
 
   public campaignName(transaction: any): string {
@@ -34,6 +37,16 @@ export class AdminEmailQueueComponent implements OnInit {
 
   public batchSize(transaction: any): number {
     return transaction.payload.queueSize || 0;
+  }
+
+  public loadQueue(): void {
+    this._emailService.getQueue(this._config)
+      .first()
+      .subscribe(queue => {
+          this._queueList = queue;
+        },
+        error => this._notificationsService.error('ERROR', error.message)
+      );
   }
 
   private _stopBatch(batch: any): void {
@@ -55,6 +68,8 @@ export class AdminEmailQueueComponent implements OnInit {
     }
   }
 
+  set config(value: any) { this._config = value; }
+  get config() { return this._config; }
   get queueSize(): number { return this._queueList._metadata.totalCount || 0; }
   get queue() { return this._queueList.mailqueues; }
 }
