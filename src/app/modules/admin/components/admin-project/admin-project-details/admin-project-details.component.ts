@@ -30,7 +30,9 @@ export class AdminProjectDetailsComponent implements OnInit {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this._preset = this._project.preset ? [this._project.preset] : [];
-    this._tags = this._project.tags ? this._project.tags : [];
+    this._tags = this._project.tags.map(tag=>{
+      return {name: tag.label, _id: tag.id}
+    });
   }
 
   get innovationTitle(): string {
