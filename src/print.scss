@@ -157,6 +157,10 @@
       }
     }
 
+    .items {
+      page-break-before: always;
+    }
+
     .items > div {
         page-break-inside: avoid;
         color: #333 !important;
@@ -193,6 +197,7 @@
           font-weight: 600;
           margin: 0;
           font-size: 12px !important;
+          text-overflow: ellipsis;
         }
 
         .comment-desc {
@@ -207,7 +212,19 @@
     }
 
     .world-map .map {
-      height: 250px !important;
+      height: 220px !important;
+      page-break-inside: avoid;
+    }
+
+    .professional-item {
+      page-break-inside: avoid;
+      box-shadow: none !important;
+      margin-bottom: 0 !important;
+      color: #333 !important;
+
+      .pro-tag {
+        page-break-inside: avoid;
+      }
     }
 
     .bloc {

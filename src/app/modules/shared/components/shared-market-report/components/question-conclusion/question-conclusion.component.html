@@ -20,7 +20,7 @@
 
   <!--======= Conclusion =======-->
   <div class="umi-synthesis">
-    <h3 class="title">{{ info.label[lang] }}</h3>
+    <h3 class="title">{{ info.label | multiling:lang }}</h3>
     <text-zone [elementId]="conclusionId"
                [readonly]="readonly"
                [data]="info.conclusion || ''"
