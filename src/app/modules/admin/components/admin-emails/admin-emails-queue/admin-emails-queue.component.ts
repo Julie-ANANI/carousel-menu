@@ -28,7 +28,7 @@ export class AdminEmailQueueComponent implements OnInit {
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    this.loadQueue();
+    this.loadQueue(this._config);
   }
 
   public campaignName(transaction: any): string {
@@ -39,7 +39,8 @@ export class AdminEmailQueueComponent implements OnInit {
     return transaction.payload.queueSize || 0;
   }
 
-  public loadQueue(): void {
+  public loadQueue(config: any): void {
+    this._config = config;
     this._emailService.getQueue(this._config)
       .first()
       .subscribe(queue => {
