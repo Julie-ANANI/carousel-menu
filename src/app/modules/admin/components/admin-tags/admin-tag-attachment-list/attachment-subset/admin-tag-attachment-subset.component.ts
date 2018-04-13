@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { TagsService } from '../../../../../../services/tags/tags.service';
-import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 
 
@@ -30,7 +29,6 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
   };
 
   constructor(private _tagsService: TagsService,
-              private _translateService: TranslateService,
               private _notificationsService: TranslateNotificationsService) {}
 
 
@@ -42,8 +40,6 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
       }
     };
     this.loadData();
-    console.log(this._translateService);
-    console.log(this._notificationsService);
   }
 
   public loadData() {
@@ -58,11 +54,7 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
   }
 
 
-  get data(): Array<any> {
-    /*const limit = this._config.limit || this._dataset.result.length;
-    const start = this._config.offset || 0;*/
-    return this._dataset.result;//.slice(start, (start+limit));
-  };
+  get data(): Array<any> { return this._dataset.result; };
   get metadata(): any { return this._dataset._metadata; };
   get config(): any { return this._config; };
   set config(value: any) { this._config = value; };
