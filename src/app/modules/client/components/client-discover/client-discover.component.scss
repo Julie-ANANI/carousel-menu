@@ -1,67 +1,83 @@
-.discover-section {
-  padding-top: 6rem;
+//import
+@import '../../../../../style/client-styles';
 
-  h1 {
-    margin-top: 0;
+// Text color
+$card-title-color: #333333 !default;
+$card-body-color: #878787 !default;
+
+.hero-container {
+
+  h1::after {
+    display: none !important;
   }
 
-  .discover-description {
-    color: #878787;
-    font-size:  1.1rem;
-    line-height: 1.8rem;
-    margin-top: 0.3rem;
-    margin-bottom: 0.3rem;
+  .padding-top {
+    padding-top: 8px;
   }
 
-  .search-margin-top {
-    margin-top: 1.5rem;
-  }
+}
+
+.section-container {
+  padding-top: 50px;
 
   .row-padding {
-    padding-top: 6rem;
+    padding-bottom: 16px;
+  }
 
-    .column {
-      padding-bottom: 1rem;
+  .card {
+
+    .card-image {
+      height: 200px;
+      width: 100%;
+      cursor: pointer;
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+
     }
+
+    .card-header {
+      min-height: 100px;
+      cursor: pointer;
+
+      .card-title {
+        color: $card-title-color;
+        font-size: 1.1rem;
+      }
+
+    }
+
+    .card-body {
+      min-height: 180px;
+      padding-bottom: 10px;
+      color: $card-body-color;
+      font-size: 0.9rem;
+      text-align: justify;
+    }
+
+    .card-footer {
+
+      span {
+        border: none;
+        color: $primary-color;
+        padding-top: 6px;
+      }
+
+      span:hover {
+        background-color: transparent;
+        color: $hover-color;
+        cursor: pointer;
+      }
+
+    }
+
   }
 
 }
 
-.card-title {
-  color: #333333;
-  font-size: 1.3rem;
-  line-height: 1.8rem;
-}
 
-.card-body {
-  color: #878787;
-  font-size: 1.1rem;
-  line-height: 1.8rem;
-}
-
-.card-footer {
-
-  span {
-    border: none;
-    color: #acb3c2;
-    padding-top: 6px;
-  }
-
-  span:hover {
-    background-color: transparent;
-    color: #0B90C6;
-    cursor: pointer;
-  }
-
-}
-
-@media(min-width: 840px) {
-
-  .search-margin-top {
-    margin-top: 0 !important;
-  }
-
-}
 
 
 

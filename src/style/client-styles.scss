@@ -1,0 +1,67 @@
+$font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
+
+$font-size: 16px !default;
+$line-height: 1.4;
+
+$primary-color: #3498DB !default;
+$hover-color: #246a99 !default;
+
+//Text color
+$title-color: #333333 !default;
+$subtitle-color: #878787;
+
+
+
+/********************************** Hero Styles ***************************************/
+
+//Hero container
+
+.hero-container {
+  padding: 50px 0;
+  margin: 0;
+}
+
+.hero-title {
+  padding: 0 0 25px 0;
+  color: $title-color;
+  font-weight: 300;
+  font-size: 2.6rem;
+  margin: 0;
+}
+
+.hero-subtitle {
+  color: $subtitle-color;
+  font-size:  1.1rem;
+  padding: 16px 0;
+  margin: 0;
+}
+
+.hero-description {
+
+}
+
+// HR Styles
+
+.hero-hr {
+  width: 125px;
+  border: 2px solid $primary-color;
+  border-radius: .25rem;
+  margin-bottom: 16px;
+}
+
+
+/********************************** End Hero Styles ***************************************/
+
+
+
+/********************************** Section Styles ***************************************/
+
+//Section container
+
+.section-container {
+  padding: 25px 0;
+}
+
+/********************************** End Section Styles ***************************************/
+
+

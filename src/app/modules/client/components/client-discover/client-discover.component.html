@@ -1,42 +1,70 @@
-<div class="container discover-section">
+<div class="container">
   <div class="columns">
     <div class="column col-11 col-mx-auto">
 
-      <!-- Page Heading -->
-      <h1>{{ 'DISCOVER.TITLE' | translate }}</h1>
-      <!-- /Page Heading -->
+      <!-- Hero container -->
+      <div class="hero-container">
 
-      <!-- Page Description and Search Box -->
-      <div class="columns">
-        <div class="column col-md-12 col-8">
-          <p class="discover-description">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</p>
+        <!-- Page Heading -->
+        <h1 class="hero-title">{{ 'DISCOVER.TITLE' | translate }}</h1>
+        <hr class="hero-hr" align="left">
+        <!-- /Page Heading -->
+
+        <!-- Page Description and Search Box -->
+        <div class="columns">
+          <div class="column col-md-12 col-8">
+            <p class="hero-subtitle">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</p>
+          </div>
+          <div class="column col-md-12 col-4 padding-top">
+            <app-autocomplete-search></app-autocomplete-search>
+          </div>
         </div>
-        <div class="column col-md-12 col-4 search-margin-top">
-          <app-autocomplete-search></app-autocomplete-search>
-        </div>
+        <!-- /Page Description and Search Box -->
+
       </div>
-      <!-- /Page Description and Search Box -->
+      <!-- /Hero container -->
 
-      <!-- Innovation Cards -->
-      <div class="columns row-padding">
-        <div class="column col-md-12 col-4">
-          <div class="card">
-            <div class="card-image">
-              <img src="https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg" class="img-responsive">
-            </div>
-            <div class="card-header">
-              <div class="card-title"> {{ innovationCardTitle }}
+      <!-- Section container -->
+      <div class="section-container">
+
+        <!-- Innovation Cards -->
+        <div class="columns">
+          <div class="column col-sm-12 col-xl-6 col-4 row-padding" *ngFor="let innovation of innovationCard">
+            <div class="card">
+              <div class="card-image">
+                <img
+                  *ngIf="innovation.media[0] ; else nomedia"
+                  [src]= "innovation.media[0].url" alt="Innovation Media">
+                <ng-template #nomedia>
+                  <img
+                    [src]= "" alt="Innovation Media">
+                </ng-template>
               </div>
-              <div class="card-subtitle text-gray"></div>
-            </div>
-            <div class="card-body"></div>
-            <div class="card-footer">
-              <p>Available in:  <span>En</span> </p>
+              <div class="card-header">
+                <div class="card-title">{{ innovation.title }}</div>
+                <div class="card-subtitle text-gray"> </div>
+              </div>
+              <div class="card-body"> {{ innovation.summary }}</div>
+              <div class="card-footer">
+                <p>View in:
+                  <!-- Innovation present in both language -->
+                  <span *ngIf="innovationLang === 'fr'; else default">
+                    <span> {{ innovation.lang | uppercase }}</span>
+                    <span> {{ 'FR'}}</span>
+                  </span>
+                  <!-- Innovation present in one language -->
+                  <ng-template #default>
+                    <span> {{ innovation.lang | uppercase }}</span>
+                  </ng-template>
+                </p>
+              </div>
             </div>
           </div>
         </div>
+        <!-- /Innovation Cards -->
+
       </div>
-      <!-- /Innovation Cards -->
+      <!-- /Section container -->
 
     </div>
   </div>
