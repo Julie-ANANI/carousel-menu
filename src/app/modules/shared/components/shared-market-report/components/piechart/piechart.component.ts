@@ -1,9 +1,9 @@
 /**
  * Created by bastien on 16/11/2017.
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Multiling } from '../../../../../../models/multiling';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'piechart',
@@ -11,23 +11,37 @@ import { Multiling } from '../../../../../../models/multiling';
   styleUrls: ['piechart.component.scss']
 })
 
-export class PiechartComponent {
+export class PiechartComponent implements OnInit, OnDestroy {
 
   @Input() set pieChart(value: any) {
-    this._datasets = [{data: value.data || [], backgroundColor: value.colors || []}];
-    this._colors = value.colors || [];
-    this._labels = value.labels.fr || [];
+    this._colors = [{backgroundColor: value.colors || []}];
+    this._labels = value.labels || {};
+    this._datasets = [{data: value.data || []}];
   }
   @Input() public percentage: number;
 
-  private _datasets: Array<{data: Array<number>, backgroundColor: Array<string>}>;
-  private _colors: Array<string>;
-  private _labels: Multiling;
+  private _datasets: Array<{data: Array<number>}>;
+  private _colors: Array<{backgroundColor: Array<string>}>;
+  private _labels: {[prop: string]: Array<string>};
+  private _lang: string;
+  private ngUnsubscribe: Subject<any> = new Subject();
 
-  constructor(private _translateService: TranslateService) { }
+  constructor(private translateService: TranslateService) { }
+
+  ngOnInit() {
+    this._lang = this.translateService.currentLang || 'en';
+    this.translateService.onLangChange.takeUntil(this.ngUnsubscribe).subscribe((e) => {
+      this._lang = e.lang;
+    });
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 
   get datasets() { return this._datasets; }
   get colors() { return this._colors; }
-  get labels(): any { return this._labels; }
-  get lang(): string { return this._translateService.currentLang || 'en'; }
+  get labels() { return this._labels; }
+  get lang(): string { return this._lang; }
 }
