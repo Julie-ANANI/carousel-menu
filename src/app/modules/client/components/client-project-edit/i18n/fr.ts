@@ -24,7 +24,9 @@ export const PROJECT_EDIT = {
     'GEOGRAPHY': 'Périmètre géographique',
     'ENTIRE_WORLD': 'Monde entier',
     'SPECIFY_COUNTRIES_TO_EXCLUDE': 'Indiquer des pays à exclure',
-    'NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER': 'Ex: France'
+    'NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER': 'Ex: France',
+    'SPECIFIC_REQUEST': 'Demande spécifique',
+    'SPECIFIC_REQUEST_PLACEHOLDER': 'Cibler en priorité les USA, l\'UE, la Corée, le Japon et la Chine'
   },
   'MARKET': {
     'LABEL': 'Secteurs d’activité',

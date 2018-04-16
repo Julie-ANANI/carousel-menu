@@ -24,7 +24,9 @@ export const PROJECT_EDIT = {
     'GEOGRAPHY': 'Geographical area',
     'ENTIRE_WORLD': 'Entire world',
     'SPECIFY_COUNTRIES_TO_EXCLUDE': 'Specify countries to exclude',
-    'NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER': 'Ex: France'
+    'NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER': 'Ex: France',
+    'SPECIFIC_REQUEST': 'Specific request',
+    'SPECIFIC_REQUEST_PLACEHOLDER': 'Primary focus on US, EU, Korea, Japan, China'
   },
   'MARKET': {
     'LABEL': 'Market sector',

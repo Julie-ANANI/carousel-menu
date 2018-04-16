@@ -8,15 +8,25 @@
       <clickable-worldmap (notifier)="continentModificationDrain($event)"
                           [initialConfiguration]="continentTarget"
                           [canEdit]="true"></clickable-worldmap>
-      <a (click)="(displayCountriesToExcludeSection = !displayCountriesToExcludeSection) && $event.preventDefault()" class="c-hand">
+      <p><a (click)="(displayCountriesToExcludeSection = !displayCountriesToExcludeSection) && $event.preventDefault()" class="c-hand">
         {{ 'PROJECT_EDIT.TARGETING.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
         <i class="icon icon-arrow-right"></i>
-      </a>
+      </a></p>
 
       <div *ngIf="displayCountriesToExcludeSection">
         <app-autocomplete-input (update)="addCountryToExclude($event)"
                                 [canEdit]="true"
                                 [config]="getConfig('countries')"></app-autocomplete-input>
+      </div>
+      <p><a (click)="(displayCountriesCommentSection = !displayCountriesCommentSection) && $event.preventDefault()" class="c-hand">
+        {{ 'PROJECT_EDIT.TARGETING.SPECIFIC_REQUEST' | translate }}
+        <i class="icon icon-arrow-right"></i>
+      </a></p>
+
+      <div *ngIf="displayCountriesCommentSection">
+        <textarea class="form-input" id="countries-comments"
+                  [attr.placeholder]="'PROJECT_EDIT.TARGETING.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
+                  rows="5" [(ngModel)]="settings.geography.comments" (change)="updateSettings()"></textarea>
       </div>
     </div>
   </div>

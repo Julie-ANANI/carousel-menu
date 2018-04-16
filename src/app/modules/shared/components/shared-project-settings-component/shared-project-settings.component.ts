@@ -18,6 +18,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   @Output() settingsChange = new EventEmitter<any>();
 
   private _displayCountriesToExcludeSection = false;
+  private _displayCountriesCommentSection = false;
   private _displayCompanyToExcludeSection = false;
   private _displayPersonsToExcludeSection = false;
   private _displayKeywordsSection = false;
@@ -31,6 +32,7 @@ export class SharedProjectSettingsComponent implements OnInit {
     this.adminMode = this.adminMode && this._authService.adminLevel >= 1;
     if (this.settings) {
       this._displayCountriesToExcludeSection = this.settings.geography && this.settings.geography.exclude && this.settings.geography.exclude.length > 0;
+      this._displayCountriesCommentSection = this.settings.geography && this.settings.geography.comments && this.settings.geography.comments.length > 0;
       this._displayCompanyToExcludeSection = this.settings.companies && this.settings.companies.exclude && this.settings.companies.exclude.length > 0;
       this._displayPersonsToExcludeSection = this.settings.professionals && this.settings.professionals.exclude && this.settings.professionals.exclude.length > 0;
       this._displayKeywordsSection = this.settings.keywords.length > 0;
@@ -119,6 +121,14 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   set displayCountriesToExcludeSection(value: boolean) {
     this._displayCountriesToExcludeSection = value;
+  }
+
+  get displayCountriesCommentSection(): boolean {
+    return this._displayCountriesCommentSection;
+  }
+
+  set displayCountriesCommentSection(value: boolean) {
+    this._displayCountriesCommentSection = value;
   }
 
   /****************************************************************************
