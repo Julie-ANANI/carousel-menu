@@ -56,13 +56,21 @@
                   [attr.placeholder]="'PROJECT_EDIT.COMPANIES.PLACEHOLDER' | translate"
                   rows="5" [(ngModel)]="settings.companies.description" (change)="updateSettings()"></textarea>
 
-      <a (click)="(displayCompanyToExcludeSection = !displayCompanyToExcludeSection) && $event.preventDefault()" class="c-hand">
-        {{'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
+      <p><a (click)="(displayCompanyToExcludeSection = !displayCompanyToExcludeSection) && $event.preventDefault()" class="c-hand text-error">
+        {{'PROJECT_EDIT.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a></p>
 
       <div *ngIf="displayCompanyToExcludeSection">
         <app-autocomplete-input (update)="addCompanyToExclude($event)"
                                 [canEdit]="true"
                                 [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
+      </div>
+      <p><a (click)="(displayCompanyToIncludeSection = !displayCompanyToIncludeSection) && $event.preventDefault()" class="c-hand text-success">
+        {{'PROJECT_EDIT.COMPANIES.TO_INCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a></p>
+
+      <div *ngIf="displayCompanyToIncludeSection">
+        <app-autocomplete-input (update)="addCompanyToInclude($event)"
+                                [canEdit]="true"
+                                [config]="getConfig('includedCompanies')"></app-autocomplete-input>
       </div>
     </div>
   </div>

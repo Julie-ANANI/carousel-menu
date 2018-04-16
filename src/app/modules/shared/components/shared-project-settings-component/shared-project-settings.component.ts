@@ -20,6 +20,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   private _displayCountriesToExcludeSection = false;
   private _displayCountriesCommentSection = false;
   private _displayCompanyToExcludeSection = false;
+  private _displayCompanyToIncludeSection = false;
   private _displayPersonsToExcludeSection = false;
   private _displayKeywordsSection = false;
 
@@ -34,6 +35,7 @@ export class SharedProjectSettingsComponent implements OnInit {
       this._displayCountriesToExcludeSection = this.settings.geography && this.settings.geography.exclude && this.settings.geography.exclude.length > 0;
       this._displayCountriesCommentSection = this.settings.geography && this.settings.geography.comments && this.settings.geography.comments.length > 0;
       this._displayCompanyToExcludeSection = this.settings.companies && this.settings.companies.exclude && this.settings.companies.exclude.length > 0;
+      this._displayCompanyToIncludeSection = this.settings.companies && this.settings.companies.include && this.settings.companies.include.length > 0;
       this._displayPersonsToExcludeSection = this.settings.professionals && this.settings.professionals.exclude && this.settings.professionals.exclude.length > 0;
       this._displayKeywordsSection = this.settings.keywords.length > 0;
     }
@@ -63,6 +65,11 @@ export class SharedProjectSettingsComponent implements OnInit {
       'excludedCompanies': {
         placeholder: 'PROJECT_EDIT.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
         initialData: this.settings && this.settings.companies ? this.settings.companies.exclude || [] : [],
+        type: 'company'
+      },
+      'includedCompanies': {
+        placeholder: 'PROJECT_EDIT.COMPANIES.NEW_COMPANY_TO_INCLUDE_PLACEHOLDER',
+        initialData: this.settings && this.settings.companies ? this.settings.companies.include || [] : [],
         type: 'company'
       },
       'keywords': {
@@ -146,6 +153,19 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   set displayCompanyToExcludeSection(value: boolean) {
     this._displayCompanyToExcludeSection = value;
+  }
+
+  public addCompanyToInclude(event: {value: Array<string>}): void {
+    this.settings.companies.include = event.value;
+    this.updateSettings();
+  }
+
+  get displayCompanyToIncludeSection(): boolean {
+    return this._displayCompanyToIncludeSection;
+  }
+
+  set displayCompanyToIncludeSection(value: boolean) {
+    this._displayCompanyToIncludeSection = value;
   }
 
   /****************************************************************************

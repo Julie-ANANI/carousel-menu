@@ -42,7 +42,9 @@ export const PROJECT_EDIT = {
     'LABEL': 'Types d’entreprises',
     'PLACEHOLDER': 'Ex : Les équipementiers et constructeurs automobiles, et les sociétés de transport',
     'TO_EXCLUDE': 'Indiquer des entreprises à ne pas contacter',
-    'NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER': 'Ex : Google'
+    'NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER': 'Ex : Google',
+    'TO_INCLUDE': 'Indiquer des entreprises à contacter',
+    'NEW_COMPANY_TO_INCLUDE_PLACEHOLDER': 'Ex : Google'
   },
   'OTHER': {
     'LABEL': 'Compléments / Mots-clefs',

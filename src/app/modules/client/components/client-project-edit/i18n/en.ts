@@ -42,7 +42,9 @@ export const PROJECT_EDIT = {
     'LABEL': 'Companies types',
     'PLACEHOLDER': 'Fabricants industriels de composants, distributeurs, éditeurs de logiciels... Ex : IBM, Intel',
     'TO_EXCLUDE': 'Specify companies you don\'t want to contact',
-    'NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER': 'Ex : Google'
+    'NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER': 'Ex : Google',
+    'TO_INCLUDE': 'Specify companies you want to contact',
+    'NEW_COMPANY_TO_INCLUDE_PLACEHOLDER': 'Ex : Google'
   },
   'OTHER': {
     'LABEL': 'Anything else? / Keywords',
