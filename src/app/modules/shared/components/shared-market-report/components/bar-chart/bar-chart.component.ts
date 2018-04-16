@@ -12,7 +12,8 @@ export interface BarData {
   answers: Array<Answer>,
   percentage: string,
   color: string,
-  count: number
+  count: number,
+  positive: boolean
 }
 
 @Component({
@@ -56,18 +57,28 @@ export class BarChartComponent implements OnInit {
           answers: answers,
           percentage: percentage,
           color: q.color,
-          count: answers.length
+          count: answers.length,
+          positive: q.positive
         }
       });
 
       if (this.question.controlType === 'radio') {
-        const pieChartData: {data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}} = {data: [], colors: [], labels: {fr: [], en: []}};
+        let positiveAnswersCount = 0;
+        const pieChartData: {data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number} = {
+          data: [],
+          colors: [],
+          labels: {fr: [], en: []}
+        };
         this._barsData.forEach((barData) => {
+          if (barData.positive) {
+            positiveAnswersCount += barData.count;
+          }
           pieChartData.data.push(barData.count);
           pieChartData.colors.push(barData.color);
           pieChartData.labels.fr.push(barData.label.fr);
           pieChartData.labels.en.push(barData.label.en);
         });
+        pieChartData.percentage = Math.round((positiveAnswersCount * 100) / this._answers.length);
         this.updatePieChart.emit(pieChartData);
       }
     }

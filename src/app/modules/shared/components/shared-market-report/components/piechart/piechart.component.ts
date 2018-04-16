@@ -17,13 +17,14 @@ export class PiechartComponent implements OnInit, OnDestroy {
     this._colors = [{backgroundColor: value.colors || []}];
     this._labels = value.labels || {};
     this._datasets = [{data: value.data || []}];
+    this._percentage = value.percentage;
   }
-  @Input() public percentage: number;
 
   private _datasets: Array<{data: Array<number>}>;
   private _colors: Array<{backgroundColor: Array<string>}>;
   private _labels: {[prop: string]: Array<string>};
   private _lang: string;
+  private _percentage: number;
   private ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private translateService: TranslateService) { }
@@ -43,5 +44,6 @@ export class PiechartComponent implements OnInit, OnDestroy {
   get datasets() { return this._datasets; }
   get colors() { return this._colors; }
   get labels() { return this._labels; }
-  get lang(): string { return this._lang; }
+  get lang() { return this._lang; }
+  get percentage() { return this._percentage; }
 }
