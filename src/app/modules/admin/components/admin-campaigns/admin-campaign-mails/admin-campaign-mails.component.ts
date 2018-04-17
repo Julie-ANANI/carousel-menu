@@ -18,6 +18,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   public firstMail: number = 0;
   public secondMail: number = 0;
   public lastMail: number = 0;
+  public testModal: boolean = false;
   public batchModal: boolean = false;
   public newBatch: any = {};
   public dateformat: string = "le dd/MM/yyyy à HH:mm";
@@ -117,8 +118,8 @@ export class AdminCampaignMailsComponent implements OnInit {
     return computedDate;
   }
   
-  public sendTestEmails() {
-    this._campaignService.sendTestEmails(this._campaign._id).first().subscribe(_ => {
+  public sendTestEmails(batchStatus: number) {
+    this._campaignService.sendTestEmails(this._campaign._id, batchStatus).first().subscribe(_ => {
       console.log("OK");
     });
   }
