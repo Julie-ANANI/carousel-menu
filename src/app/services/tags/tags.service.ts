@@ -34,13 +34,13 @@ export class TagsService {
   }
 
   public remove(tagId: string): Observable<any> {
-    return this._http.delete('/tags/entity' + tagId)
+    return this._http.delete('/tags/entity/' + tagId)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
   public save(tagId: string, tagObj: Tag): Observable<Tag> {
-    return this._http.put('/tags/entity' + tagId, tagObj)
+    return this._http.put('/tags/entity/' + tagId, tagObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

@@ -26,7 +26,7 @@ export class AdminTagNewComponent {
     initialData: [],
     type: 'threuters',
     identifier: 'text',
-    canOrder: true
+    canOrder: false
   };
 
   private _showForm: boolean = false;

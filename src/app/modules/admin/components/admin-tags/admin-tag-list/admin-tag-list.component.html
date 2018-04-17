@@ -27,7 +27,11 @@
                 <td><input type="text" size="25" [(ngModel)]="datum.label" alt="label" placeholder="label"/></td>
                 <td><input type="text" size="45" [(ngModel)]="datum.description" alt="description" placeholder="description"/></td>
                 <td>{{ datum.status }}</td>
-                <td><input type="select" size="5" [(ngModel)]="datum.attachments" alt="status" placeholder="status"/></td>
+                <td>
+                    <app-autocomplete-input id="attachments"
+                                            (update)="addAttachment($event, datum)"
+                                            [config]="buildAttachmentsListConfig(datum.attachments)"></app-autocomplete-input>
+                </td>
                 <td>{{ datum.created | date}}</td>
                 <td>
                     <button class="btn btn-action" (click)="editDatum[datum._id] = false"><i class="fa fa-times"></i></button>

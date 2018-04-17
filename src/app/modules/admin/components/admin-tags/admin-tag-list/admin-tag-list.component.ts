@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Tag } from '../../../../../models/tag';
+import { TagAttachment } from '../../../../../models/tag-attachment';
 
 import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,6 +24,20 @@ export class AdminTagListComponent implements OnInit{
     sort: {
       label: -1
     }
+  };
+
+  private _addAttachmentConfig: {
+    placeholder: string,
+    initialData: Array<TagAttachment>,
+    type: string,
+    identifier: string,
+    canOrder: boolean
+  } = {
+    placeholder: 'Economic sector attachment',
+    initialData: [],
+    type: 'threuters',
+    identifier: 'text',
+    canOrder: false
   };
 
   public editDatum: {[propString: string]: boolean} = {};
@@ -55,8 +70,27 @@ export class AdminTagListComponent implements OnInit{
 
   public updateEntry(datum: any, event: Event) {
     event.preventDefault();
+    this._tagsService.save(datum._id, datum)
+        .subscribe(result=>{
+          if(result) {
+            this._notificationsService.success("Tag update", `The tag ${result.label} has been updated.`);
+          } else {
+            this._notificationsService.error('ERROR.ERROR', "Empty response from server");
+          }
+        }, error=>{
+          error = JSON.parse(error);
+          this._notificationsService.error('ERROR.ERROR', error.message);
+        });
     this.editDatum[datum._id] = false;
-    console.log("Updating... TBD");
+  }
+
+  public buildAttachmentsListConfig( initialData: Array<any>): any {
+    this._addAttachmentConfig.initialData = initialData || [];
+    return this._addAttachmentConfig;
+  }
+
+  public addAttachment(event: any, datum: any) {
+    datum.attachments = event.value;
   }
 
   get data(): Array<Tag> { return this._dataset.result; };
