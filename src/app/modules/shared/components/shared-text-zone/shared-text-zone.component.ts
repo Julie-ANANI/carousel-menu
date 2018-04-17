@@ -90,5 +90,6 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   }
 
   public get htmlId(): string { return this._htmlId; }
+  public get text(): string { return this._data; }
 
 }
