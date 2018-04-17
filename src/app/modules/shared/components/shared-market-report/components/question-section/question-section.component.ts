@@ -42,6 +42,8 @@ export class QuestionSectionComponent implements OnInit {
   @Input() public question: Question;
   @Input() public innovation: Innovation;
 
+  @Input() public infographic: any;
+
   constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {

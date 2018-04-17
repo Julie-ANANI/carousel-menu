@@ -19,9 +19,12 @@
   <!--======= Conclusion =======-->
   <div class="umi-synthesis">
     <h3 class="title">{{ question.title | multiling:lang }}</h3>
+    <p *ngIf="!readonly && (!innovation?.marketReport[question.identifier]?.conclusion) && infographic?.conclusion">
+      <b>PLEASE UPDATE DATA</b>
+    </p>
     <text-zone [elementId]="domSectionId"
                [readonly]="readonly"
-               [data]="innovation?.marketReport[question.identifier]?.conclusion || ''"
+               [data]="innovation?.marketReport[question.identifier]?.conclusion || infographic?.conclusion"
                (onEditorKeyup)="keyupHandlerFunction($event)"></text-zone>
   </div>
 </div>

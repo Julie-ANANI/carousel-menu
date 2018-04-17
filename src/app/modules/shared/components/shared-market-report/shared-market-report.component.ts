@@ -10,6 +10,7 @@ import { Answer } from '../../../../models/answer';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
 import { Innovation } from '../../../../models/innovation';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -31,16 +32,24 @@ export class SharedMarketReportComponent implements OnInit {
   private _calculating = false;
   private _innoid: string;
 
+  private _infographics: any; // TODO remove infographics once conclusions have been migrated to Innovation
+
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer;
 
   constructor(private _translateService: TranslateService,
               private _answerService: AnswerService,
+              private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._innoid = this.project._id;
+
+    this._innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
+      this._infographics = synthesis.infographics;
+      }, error => this._notificationsService.error('ERROR.ERROR', error.message));
+
     this.loadAnswers();
     if (this.project.preset && this.project.preset.sections) {
       this.project.preset.sections.forEach((section: Section) => {
@@ -113,6 +122,15 @@ export class SharedMarketReportComponent implements OnInit {
 
   public seeAnswer(answer: Answer): void {
     this._modalAnswer = answer;
+  }
+
+  // TODO: remove once conclusions have been copied
+  public getInfo(question: Question) {
+    if (this._infographics) {
+      return this._infographics.questions.find((infoQ: any) => infoQ.id === question.identifier);
+    } else {
+      return null;
+    }
   }
 
   get answers(): Array<Answer> { return this._answers; }

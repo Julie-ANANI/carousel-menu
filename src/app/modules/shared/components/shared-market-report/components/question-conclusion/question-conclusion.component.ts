@@ -18,6 +18,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
   @Input() public innovation: Innovation;
   @Input() public question: Question;
   @Input() public stats: {nbAnswers: number, percentage: number};
+  @Input() public infographic: any;
 
   private ngUnsubscribe: Subject<any> = new Subject();
   private _domSectionId: string;

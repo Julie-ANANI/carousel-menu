@@ -1,8 +1,8 @@
 <div>
-  <div [hidden]="readonly">
+  <div *ngIf="!readonly">
     <textarea id="{{htmlId}}"></textarea>
   </div>
-  <div [hidden]="!readonly">
+  <div *ngIf="readonly">
     <p class="desc" [innerHTML]="data"></p>
   </div>
 </div>

@@ -99,6 +99,7 @@
         <!-- Les autres questions -->
         <section *ngFor="let question of questions">
           <app-question-section
+            [infographic]="getInfo(question)"
             [innovation]="project"
             [question]="question"
             [answers]="answers"
