@@ -5,22 +5,22 @@
 $card-title-color: #333333 !default;
 $card-body-color: #878787 !default;
 
-.hero-container {
+.hero-light-container {
 
   h1::after {
     display: none !important;
   }
 
-  .padding-top {
+  #padding-top {
     padding-top: 8px;
   }
 
 }
 
 .section-container {
-  padding-top: 50px;
+  padding-bottom: 34px;
 
-  .row-padding {
+  #row-padding {
     padding-bottom: 16px;
   }
 
@@ -36,6 +36,10 @@ $card-body-color: #878787 !default;
         width: 100%;
       }
 
+    }
+
+    .card-image:focus {
+      outline: none !important;
     }
 
     .card-header {
@@ -69,6 +73,15 @@ $card-body-color: #878787 !default;
         background-color: transparent;
         color: $hover-color;
         cursor: pointer;
+      }
+
+      #lang-divider {
+        color: $card-body-color;
+      }
+
+      #lang-divider:hover {
+        color: $card-body-color;
+        cursor: default;
       }
 
     }

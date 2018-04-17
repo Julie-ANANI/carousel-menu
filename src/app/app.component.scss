@@ -1,12 +1,17 @@
+#body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
 // height for header
 #app-header {
   min-height: 3.9rem;
 }
 
 // Spaces around the main application components
-.app-content {
-  min-height: 100vh;
-  padding-bottom: 6rem;
+#main {
+  flex: 1 0 auto;
 }
 
 .loader-overlay {
@@ -28,7 +33,7 @@
   background-color: #3498DB;
 }
 
-.wait {
+#wait {
   height: 100vh;
   display: flex;
   align-items: center;

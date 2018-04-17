@@ -1,9 +1,9 @@
-<div class="container">
+<div class="container main-container">
   <div class="columns">
     <div class="column col-11 col-mx-auto">
 
       <!-- Hero container -->
-      <div class="hero-container">
+      <div class="hero-light-container">
 
         <!-- Page Heading -->
         <h1 class="hero-title">{{ 'DISCOVER.TITLE' | translate }}</h1>
@@ -15,7 +15,7 @@
           <div class="column col-md-12 col-8">
             <p class="hero-subtitle">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</p>
           </div>
-          <div class="column col-md-12 col-4 padding-top">
+          <div class="column col-md-12 col-4" id="padding-top">
             <app-autocomplete-search></app-autocomplete-search>
           </div>
         </div>
@@ -29,15 +29,15 @@
 
         <!-- Innovation Cards -->
         <div class="columns">
-          <div class="column col-sm-12 col-xl-6 col-4 row-padding" *ngFor="let innovation of innovationCard">
+          <div class="column col-sm-12 col-xl-6 col-4" id="row-padding" *ngFor="let innovation of innovationCard">
             <div class="card">
-              <div class="card-image">
+              <div class="card-image" [routerLink]="innovation._id">
                 <img
                   *ngIf="innovation.media[0] ; else nomedia"
-                  [src]= "innovation.media[0].url" alt="Innovation Media">
+                  [src]= "innovation.media[0].url" alt="Media">
                 <ng-template #nomedia>
                   <img
-                    [src]= "" alt="Innovation Media">
+                    [src]= "" alt="Media">
                 </ng-template>
               </div>
               <div class="card-header">
@@ -50,6 +50,7 @@
                   <!-- Innovation present in both language -->
                   <span *ngIf="innovationLang === 'fr'; else default">
                     <span> {{ innovation.lang | uppercase }}</span>
+                    <span id="lang-divider">|</span>
                     <span> {{ 'FR'}}</span>
                   </span>
                   <!-- Innovation present in one language -->

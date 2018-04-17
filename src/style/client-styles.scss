@@ -7,14 +7,65 @@ $primary-color: #3498DB !default;
 $hover-color: #246a99 !default;
 
 //Text color
-$title-color: #333333 !default;
-$subtitle-color: #878787;
+$hero-title: #333333 !default;
+$hero-subtitle: #878787;
+$hero-description: #A4A4A4;
+$para-color: #878787;
+$section-title: #0B90C6;
+$section-description: #878787;
+
+
+
+//Page Main Container
+
+.main-container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+// Button Default Style
+
+.button {
+  background-color: $primary-color;
+  color: white;
+  border-radius: 5px;
+  border-color: $primary-color;
+  min-height: 50px;
+  padding: 10px 30px;
+  transition: all 0.5s ease;
+  font-size: 0.8rem;
+  line-height: 1.4rem;
+}
+
+// Paragraph Default Style
+
+.para {
+  font-size: 0.9rem;
+  color: $para-color;
+  padding: 16px 0;
+  margin: 0;
+}
+
+// Font Awesome Icon Default Style
+
+
+// Padding Remove
+
+.padding-lr-rm {
+  padding-left: 0;
+  padding-right: 0;
+}
 
 
 
 /********************************** Hero Styles ***************************************/
 
 //Hero container
+
+.hero-light-container {
+  padding: 50px 0 25px 0;
+  margin: 0;
+}
 
 .hero-container {
   padding: 50px 0;
@@ -23,21 +74,24 @@ $subtitle-color: #878787;
 
 .hero-title {
   padding: 0 0 25px 0;
-  color: $title-color;
+  color: $hero-title;
   font-weight: 300;
   font-size: 2.6rem;
   margin: 0;
 }
 
 .hero-subtitle {
-  color: $subtitle-color;
+  color: $hero-subtitle;
   font-size:  1.1rem;
   padding: 16px 0;
   margin: 0;
 }
 
 .hero-description {
-
+  font-size: 0.9rem;
+  color: $hero-description;
+  padding: 16px 0;
+  margin: 0;
 }
 
 // HR Styles
@@ -59,7 +113,25 @@ $subtitle-color: #878787;
 //Section container
 
 .section-container {
-  padding: 25px 0;
+  padding: 50px 0;
+  margin: 0;
+}
+
+.section-title {
+  padding: 0 0 25px 0;
+  color: $section-title;
+  font-weight: normal;
+  font-size: 1.6rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.section-description {
+  padding: 0 0 25px 0;
+  color: $section-description;
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 /********************************** End Section Styles ***************************************/

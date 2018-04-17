@@ -50,8 +50,10 @@ export class ClientDiscoverComponent implements OnInit {
   loadAllInnovations(config: any): void  {
     this._config = config;
     this._innovationService.getAll(this._config).subscribe(innovations => {
+
       this.innovations = innovations.result;
       this.totalInnovations = innovations._metadata.totalCount;
+
       this.innovations.forEach((items) => {
         if (items.innovationCards.length === 2) {
           // english innovation
@@ -65,15 +67,15 @@ export class ClientDiscoverComponent implements OnInit {
           this.getInnovationCard(this.innovationCardId);
         }
       })
+
     });
+
   }
 
   getInnovationCard(id: any) {
     this._innovationService.getInnovationCard(id).subscribe(result => {
       this.innovationCards.push(result);
     });
-
-    // console.log('first' + this.innovationCards);
   }
 
   set innovationCard(value: Array<any>) {

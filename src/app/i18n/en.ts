@@ -2,6 +2,7 @@ import { COMMON } from './common_en';
 import { ERROR } from './error_en';
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/en';
 import { DISCOVER } from '../modules/client/components/client-discover/i18n/en';
+import { DISCOVERDESCRIPTION } from '../modules/client/components/client-discover-description/i18n/en';
 import { LOG_IN } from '../modules/client/components/client-login/i18n/en';
 import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/en';
 import { MY_PROJECTS } from '../modules/client/components/client-my-projects/i18n/en';
@@ -21,6 +22,7 @@ import { PRESETS } from '../modules/admin/components/admin-preset/i18n/en';
 import { CAMPAIGNS } from '../modules/admin/components/admin-campaigns/i18n/en';
 import { SEARCH } from '../modules/admin/components/admin-search/i18n/en';
 
+
 export const en = {
   'COMMON': COMMON,
   'ERROR': ERROR,
@@ -28,6 +30,7 @@ export const en = {
   'USERS': ADMIN_USERS,
   'FOOTER': FOOTER,
   'DISCOVER': DISCOVER,
+  'DISCOVERDESCRIPTION': DISCOVERDESCRIPTION,
   'LOG_IN': LOG_IN,
   'MY_ACCOUNT': MY_ACCOUNT,
   'MY_PROJECTS': MY_PROJECTS,
