@@ -64,6 +64,14 @@
 
   ul.comments {
 
+    li {
+      list-style: none;
+      .flex-container {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
     > li {
       position: relative;
       margin-bottom: 15px;
