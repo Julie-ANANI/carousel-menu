@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { InnovationService } from '../../../../services/innovation/innovation.service';
+
 import { InnovCard } from '../../../../models/innov-card';
 
 @Component({

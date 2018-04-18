@@ -38,35 +38,30 @@ $card-body-color: #878787 !default;
 
     }
 
-    .card-image:focus {
-      outline: none !important;
-    }
-
     .card-header {
-      min-height: 100px;
+      height: 95px;
       cursor: pointer;
 
       .card-title {
         color: $card-title-color;
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
 
     }
 
     .card-body {
-      min-height: 180px;
-      padding-bottom: 10px;
+      height: 208px;
       color: $card-body-color;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       text-align: justify;
     }
 
     .card-footer {
+      height: 56px;
 
       span {
         border: none;
         color: $primary-color;
-        padding-top: 6px;
       }
 
       span:hover {
@@ -86,6 +81,22 @@ $card-body-color: #878787 !default;
 
     }
 
+  }
+
+}
+
+*:focus{
+  outline: none !important;
+}
+
+@media (max-width: 960px) {
+
+  .card-header {
+    height: 107px !important;
+  }
+
+  .card-body {
+    height: 260px !important;
   }
 
 }

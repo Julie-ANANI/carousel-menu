@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 // Services
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
-
+import { LangChangeEvent, TranslateService} from '@ngx-translate/core';
 
 // Models
 import { Innovation } from '../../../../models/innovation';
@@ -15,13 +15,13 @@ import { InnovCard } from '../../../../models/innov-card';
   styleUrls: ['./client-discover.component.scss']
 })
 
-export class ClientDiscoverComponent implements OnInit {
+export class ClientDiscoverComponent implements OnInit{
 
   private innovations: Array<Innovation>;
-  private innovationCards: InnovCard[] = [];
-  private innovationLang: string;
+  private innovationCards: InnovCard[];
   private totalInnovations: number;
-  private innovationCardId: object;
+  private innovationCardId: any;
+  private defaultLang: string;
 
   private _config = {
     fields: '',
@@ -29,7 +29,7 @@ export class ClientDiscoverComponent implements OnInit {
     offset: 0,
     search: {
       isPublic: 1,
-      status: 'DONE'
+      status: 'DONE',
     },
     sort: {
       created: -1
@@ -37,44 +37,54 @@ export class ClientDiscoverComponent implements OnInit {
   };
 
   constructor(private _titleService: TranslateTitleService,
-              private _innovationService: InnovationService) {
+              private _innovationService: InnovationService,
+              private _translateService: TranslateService) {
   }
 
   ngOnInit(): void {
-    /*this._titleService.setTitle('Découvrez nos dernières innovations'); TODO translate*/
+
     this._titleService.setTitle('DISCOVER.TITLE');
-    /*this._innovationTag = 'DISCOVER.' + tag.name;*/
+
+    this.innovationCards = [];
+
+    this.defaultLang = this._translateService.currentLang;
+
     this.loadAllInnovations(this._config);
-  }
 
-  loadAllInnovations(config: any): void  {
-    this._config = config;
-    this._innovationService.getAll(this._config).subscribe(innovations => {
+    this._translateService.onLangChange.subscribe((event: LangChangeEvent) => {
 
-      this.innovations = innovations.result;
-      this.totalInnovations = innovations._metadata.totalCount;
-
-      this.innovations.forEach((items) => {
-        if (items.innovationCards.length === 2) {
-          // english innovation
-          this.innovationCardId = items.innovationCards[1];
-          this.innovationLang = 'fr';
-          this.getInnovationCard(this.innovationCardId);
-        } else {
-          // only innovation present
-          this.innovationCardId = items.innovationCards[0];
-          this.innovationLang = items.innovationCards[0].lang;
-          this.getInnovationCard(this.innovationCardId);
-        }
-      })
+      if (this.defaultLang !== this._translateService.currentLang) {
+        this.ngOnInit();
+      }
 
     });
 
   }
 
+  loadAllInnovations(config: any): void  {
+    this._config = config;
+    this._innovationService.getAll(this._config).subscribe(innovations => {
+      this.innovations = innovations.result;
+      this.totalInnovations = innovations._metadata.totalCount;
+
+      this.innovations.forEach((items) => {
+        let index = items.innovationCards.findIndex(card => card.lang === this.defaultLang);
+
+        // we do not have the innovation in the default language
+        if ( index === -1 ) {
+          index = items.innovationCards.findIndex(card => card.lang === 'en'); // default language index
+        }
+
+        this.innovationCardId = items.innovationCards[index]._id;
+        this.getInnovationCard(this.innovationCardId);
+
+      })
+    });
+  }
+
   getInnovationCard(id: any) {
     this._innovationService.getInnovationCard(id).subscribe(result => {
-      this.innovationCards.push(result);
+       this.innovationCards.push(result);
     });
   }
 
@@ -85,6 +95,7 @@ export class ClientDiscoverComponent implements OnInit {
   get innovationCard(): Array<any> {
     return this.innovationCards;
   }
+
 }
 
 

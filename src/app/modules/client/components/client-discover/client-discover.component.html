@@ -29,7 +29,7 @@
 
         <!-- Innovation Cards -->
         <div class="columns">
-          <div class="column col-sm-12 col-xl-6 col-4" id="row-padding" *ngFor="let innovation of innovationCard">
+          <div class="column col-sm-12 col-xl-6 col-4" id="row-padding" *ngFor="let innovation of innovationCards">
             <div class="card">
               <div class="card-image" [routerLink]="innovation._id">
                 <img
@@ -41,22 +41,13 @@
                 </ng-template>
               </div>
               <div class="card-header">
-                <div class="card-title">{{ innovation.title }}</div>
+                <div class="card-title" [routerLink]="innovation._id">{{ innovation.title }}</div>
                 <div class="card-subtitle text-gray"> </div>
               </div>
               <div class="card-body"> {{ innovation.summary }}</div>
               <div class="card-footer">
                 <p>View in:
-                  <!-- Innovation present in both language -->
-                  <span *ngIf="innovationLang === 'fr'; else default">
-                    <span> {{ innovation.lang | uppercase }}</span>
-                    <span id="lang-divider">|</span>
-                    <span> {{ 'FR'}}</span>
-                  </span>
-                  <!-- Innovation present in one language -->
-                  <ng-template #default>
-                    <span> {{ innovation.lang | uppercase }}</span>
-                  </ng-template>
+                    <span [routerLink]="innovation._id"> {{ innovation.lang | uppercase }}</span>
                 </p>
               </div>
             </div>
