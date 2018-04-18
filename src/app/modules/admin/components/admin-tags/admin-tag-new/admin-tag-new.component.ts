@@ -1,4 +1,4 @@
-import { Component, Output } from '@angular/core';
+import { Component, Output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
@@ -64,12 +64,6 @@ export class AdminTagNewComponent {
     this._showForm = false;
   }
 
-
-
-  public onReset() {
-    console.log("Cancel");
-  }
-
   public addAttachment(event: any): void {
     this.formData.get('attachments').setValue(event.value);
   }
@@ -79,5 +73,12 @@ export class AdminTagNewComponent {
   get addAttachmentConfig() { return this._addAttachmentConfig; }
 
   get showForm(): boolean { return this._showForm; }
+
+  @Input()
   set showForm(value: boolean) { this._showForm = value; }
+
+  @Input()
+  set attachmentInitialData( data: Array<TagAttachment>) {
+    this._addAttachmentConfig.initialData = data;
+  }
 }

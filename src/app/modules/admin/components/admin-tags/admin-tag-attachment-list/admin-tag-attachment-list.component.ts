@@ -39,6 +39,10 @@ export class AdminTagAttachmentsListComponent implements OnInit{
     console.log(this._notificationsService);
   }
 
+  public createTag(data: any) {
+    console.log(data);
+  }
+
   get data(): Array<Tag> { return this._dataset.result; };
   get metadata(): any { return this._dataset._metadata; };
   get config(): any { return this._config; };

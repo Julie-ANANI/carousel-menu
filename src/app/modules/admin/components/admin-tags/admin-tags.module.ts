@@ -12,6 +12,7 @@ import { AdminTagListComponent } from './admin-tag-list/admin-tag-list.component
 import { AdminTagNewComponent } from './admin-tag-new/admin-tag-new.component';
 import { AdminTagAttachmentsListComponent } from './admin-tag-attachment-list/admin-tag-attachment-list.component';
 import { AdminTagAttachmentsSubsetComponent } from './admin-tag-attachment-list/attachment-subset/admin-tag-attachment-subset.component';
+import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/admin-tag-new-modal.component';
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import { AdminTagAttachmentsSubsetComponent } from './admin-tag-attachment-list/
         AdminTagListComponent,
         AdminTagNewComponent,
         AdminTagAttachmentsListComponent,
-        AdminTagAttachmentsSubsetComponent
+        AdminTagAttachmentsSubsetComponent,
+        AdminTagNewModalComponent
     ],
     exports: [
         AdminTagsComponent

@@ -16,6 +16,8 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
    */
   @Input() public type: any;
 
+  @Input() public selectFn: any;
+
   private _dataset: {result: Array<any>, _metadata:any};
 
   private _config = {
@@ -27,6 +29,8 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
     text: "",
     notation: ""
   };
+
+  private _activeNTM: boolean = false;
 
   constructor(private _tagsService: TagsService,
               private _notificationsService: TranslateNotificationsService) {}
@@ -53,9 +57,20 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
     });
   }
 
+  public selectDatum(datum: any) {
+    datum.isSelected = !(!!datum.isSelected);
+  }
+  public createTagFromCodes() {
+    this._activeNTM = true;
+  }
 
+  get selected(): Array<any> {
+    return this._dataset.result.filter(datum => !!datum.isSelected);
+  }
+
+
+  get activeNTM(): boolean { return this._activeNTM; }
   get data(): Array<any> { return this._dataset.result; };
-  get metadata(): any { return this._dataset._metadata; };
   get config(): any { return this._config; };
   set config(value: any) { this._config = value; };
   get total(): number { return this._dataset._metadata.totalCount; };
