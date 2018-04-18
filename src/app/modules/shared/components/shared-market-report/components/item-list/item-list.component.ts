@@ -41,11 +41,11 @@ export class ItemListComponent implements OnInit {
             const key = this.question.controlType !== 'clearbit' ? item.text : item.name;
             if (answerItems[key]) {
               answerItems[key].count += 1;
-              if (item.rating === 0 || item.rating === 2) { answerItems[key].rating = item.rating; }
+              if (Number.isInteger(item.rating) && item.rating !== 1) { answerItems[key].rating = item.rating; }
               answerItems[key].answers.push(answer);
             } else {
               answerItems[key] = {
-                rating: item.rating || 1,
+                rating: Number.isInteger(item.rating) ? item.rating : 1,
                 count: 1,
                 answers: [answer]
               };
