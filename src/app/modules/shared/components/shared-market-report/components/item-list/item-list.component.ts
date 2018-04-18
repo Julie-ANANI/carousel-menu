@@ -18,11 +18,16 @@ export class ItemListComponent implements OnInit {
     this.updateAnswersData();
   }
   @Input() public question: Question;
+  @Input() set showDetails(value: boolean) {
+    this._details = value;
+  }
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Output() updateNumberOfItems = new EventEmitter<number>();
 
   private _answers: Array<Answer>;
-  private _listItems: Array<{rating: number, count: number, value: string, answers: Array<Answer>}>;
+  private _details: boolean;
+  private _listItems: Array<{rating: number, count: number, value: string, domain: string, logo: string, answers: Array<Answer>}>;
+  private _maxToShow = 6;
 
   constructor() { }
 
@@ -33,7 +38,7 @@ export class ItemListComponent implements OnInit {
   private updateAnswersData(): void {
     if (this.question && this.question.identifier) {
 
-      const answerItems: {[value: string]: {rating: number, count: number, answers: Array<Answer>}} = {};
+      const answerItems: {[value: string]: {rating: number, count: number, domain: string, logo: string, answers: Array<Answer>}} = {};
 
       this._answers.forEach((answer) => {
         if (answer.answers[this.question.identifier] && Array.isArray(answer.answers[this.question.identifier])) {
@@ -47,6 +52,8 @@ export class ItemListComponent implements OnInit {
               answerItems[key] = {
                 rating: Number.isInteger(item.rating) ? item.rating : 1,
                 count: 1,
+                domain: item.domain ? `http://${item.domain}` : null,
+                logo: item.logo,
                 answers: [answer]
               };
             }
@@ -60,6 +67,8 @@ export class ItemListComponent implements OnInit {
             value: key,
             rating: answerItems[key].rating,
             count: answerItems[key].count,
+            domain: answerItems[key].domain,
+            logo: answerItems[key].logo,
             answers: answerItems[key].answers,
           }
         })
@@ -85,5 +94,7 @@ export class ItemListComponent implements OnInit {
   }
 
   get listItems() { return this._listItems; }
+  get details() { return this._details; }
+  get maxToShow() { return this._maxToShow; }
 
 }
