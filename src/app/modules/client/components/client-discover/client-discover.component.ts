@@ -52,11 +52,9 @@ export class ClientDiscoverComponent implements OnInit{
     this.loadAllInnovations(this._config);
 
     this._translateService.onLangChange.subscribe((event: LangChangeEvent) => {
-
       if (this.defaultLang !== this._translateService.currentLang) {
         this.ngOnInit();
       }
-
     });
 
   }

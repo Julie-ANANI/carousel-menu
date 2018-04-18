@@ -88,7 +88,7 @@ const clientRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
           { path: '', component: ClientDiscoverComponent, pathMatch: 'full' },
-          { path: ':id', component: ClientDiscoverDescriptionComponent, pathMatch: 'full'}
+          { path: ':id/:lang', component: ClientDiscoverDescriptionComponent, pathMatch: 'full'}
         ]
       },
       {
