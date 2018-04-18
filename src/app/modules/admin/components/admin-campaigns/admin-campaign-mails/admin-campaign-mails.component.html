@@ -32,7 +32,7 @@
     La quiz n'a pas été généré pour cette innovation, il doit y avoir un quiz avant de faire un envoi d'emails !
   </p>
   <div class="centered-buttons">
-    <button (click)="sendTestEmails()" class="btn btn-primary">
+    <button (click)="testModal=true" class="btn btn-primary">
       Envoyer les mails de test
     </button>
     <button (click)="batchModal=true" class="btn btn-primary" [disabled]="!quizGenerated">
@@ -137,3 +137,31 @@
     </div>
   </div>
 </div>
+
+<!-- MODAL : Suppression du batch -->
+<div class="modal" [ngClass]="{'active': testModal}">
+  <div class="modal-overlay" (click)="(testModal = null) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(testModal = null) && $event.preventDefault()"></button>
+      <div class="modal-title h5">Envoi des emails de test</div>
+    </div>
+    <div class="modal-body email-buttons">
+      <button (click)="sendTestEmails(1)" class="btn btn-primary">
+        Envoyer le premier mail à Karine
+      </button>
+      <button (click)="sendTestEmails(2)" class="btn btn-primary">
+        Envoyer la première relance à Karine
+      </button>
+      <button (click)="sendTestEmails(3)" class="btn btn-primary">
+        Envoyer la deuxième relance à Karine
+      </button>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="(testModal = null) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+

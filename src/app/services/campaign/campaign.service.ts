@@ -76,14 +76,14 @@ export class CampaignService {
         .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public deleteBatch(batchId: any): Observable<any> {
+  public deleteBatch(batchId: string): Observable<any> {
     return this._http.delete(`/batch/${batchId}`)
         .map((res: Response) => res.json())
         .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public sendTestEmails(campaignId: any): Observable<any> {
-    return this._http.post(`/campaign/${campaignId}/sendTestEmails`, {isTest: true})
+  public sendTestEmails(campaignId: string, batchStatus: number): Observable<any> {
+    return this._http.post(`/campaign/${campaignId}/sendTestEmailsNew`, {batchStatus: batchStatus})
         .map((res: Response) => res.json())
         .catch((error: Response) => Observable.throw(error.text()));
   }
