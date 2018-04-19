@@ -31,10 +31,18 @@
                 <div id="share-container">
                   <div id="share-data">
                     <p class="para">{{ 'DISCOVERDESCRIPTION.SHARE' | translate }}</p>
-                    <i class="fab fa-linkedin fa-2x" id="icon-linkedIn"></i>&nbsp;
-                    <i class="fab fa-twitter fa-2x" id="icon-twitter"></i>&nbsp;
-                    <i class="fab fa-facebook-f fa-2x" id="icon-facebook"></i>&nbsp;
-                    <i class="fab fa-google-plus-g fa-2x" id="icon-google"></i>
+                      <a [href]="linkedInUrl" target="_blank">
+                        <i class="fab fa-linkedin fa-2x" id="icon-linkedIn"></i>
+                      </a>&nbsp;
+                      <a [href]="twitterUrl" target="_blank">
+                        <i class="fab fa-twitter fa-2x" id="icon-twitter"></i>
+                      </a>&nbsp;
+                      <a [href]="facebookUrl" target="_blank">
+                        <i class="fab fa-facebook-f fa-2x" id="icon-facebook"></i>
+                      </a>&nbsp;
+                      <a [href]="googlePlusUrl" target="_blank">
+                        <i class="fab fa-google-plus-g fa-2x" id="icon-google"></i>
+                      </a>
                   </div>
                 </div>
               </div>

@@ -10,7 +10,7 @@ export class ShareService {
   constructor() {}
 
   private _getShareUrl (project: Innovation): string {
-    return encodeURIComponent(`${environment.innovationUrl}/#/projects/${project._id}`);
+    return encodeURIComponent(`${environment.innovationUrl}/projects/${project._id}`);
   }
 
   private _getTitle (project: Innovation, lang: string): string {
@@ -31,12 +31,12 @@ export class ShareService {
 
   public linkedinProjectShareLink (project: Innovation, lang: string): string {
     lang = lang || 'en';
-    return 'http://www.linkedin.com/shareArticle' +
+    return encodeURI('http://www.linkedin.com/shareArticle' +
       '?mini=true' +
       '&url=' + this._getShareUrl(project) +
       '&title=' + this._getTitle(project, lang) +
       '&summary=' + this._getSummary(project, lang) +
-      '&source=' + 'UMI'; // En changeant, ne pas oublier de transformer en URL avec encodeURIComponent()
+      '&source=' + 'UMI'); // En changeant, ne pas oublier de transformer en URL avec encodeURIComponent()
   }
 
   public twitterProjectShareLink (project: Innovation, lang: string): string {
@@ -49,9 +49,14 @@ export class ShareService {
   public facebookProjectShareLink (project: Innovation): string {
     return 'https://www.facebook.com/dialog/feed' +
       '?app_id=' + '1172496952780763' +
-      '&version=' + 'v2.4' +
+      '&version=' + 'v2.12' +
       'display=popup' +
       '&link=' + this._getShareUrl(project);
+  }
+
+  public googleProjectShareLink (project: Innovation, lang: string): string {
+    lang = lang || 'en';
+    return encodeURI('https://plus.google.com/share?url=' + this._getShareUrl(project) + '&text=' + this._getSummary(project, lang));
   }
 
   public mailProjectShareLink (project: Innovation, lang: string) {
