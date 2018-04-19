@@ -15,13 +15,13 @@ import { InnovCard } from '../../../../models/innov-card';
   styleUrls: ['./client-discover.component.scss']
 })
 
-export class ClientDiscoverComponent implements OnInit{
+export class ClientDiscoverComponent implements OnInit {
 
   private innovations: Array<Innovation>;
   private innovationCards: InnovCard[];
   private totalInnovations: number;
   private innovationCardId: any;
-  private defaultLang: string;
+  private userDefaultLang: string;
 
   private _config = {
     fields: '',
@@ -47,12 +47,12 @@ export class ClientDiscoverComponent implements OnInit{
 
     this.innovationCards = [];
 
-    this.defaultLang = this._translateService.currentLang;
+    this.userDefaultLang = this._translateService.currentLang;
 
     this.loadAllInnovations(this._config);
 
     this._translateService.onLangChange.subscribe((event: LangChangeEvent) => {
-      if (this.defaultLang !== this._translateService.currentLang) {
+      if (this.userDefaultLang !== this._translateService.currentLang) {
         this.ngOnInit();
       }
     });
@@ -66,7 +66,7 @@ export class ClientDiscoverComponent implements OnInit{
       this.totalInnovations = innovations._metadata.totalCount;
 
       this.innovations.forEach((items) => {
-        let index = items.innovationCards.findIndex(card => card.lang === this.defaultLang);
+        let index = items.innovationCards.findIndex(card => card.lang === this.userDefaultLang);
 
         // we do not have the innovation in the default language
         if ( index === -1 ) {

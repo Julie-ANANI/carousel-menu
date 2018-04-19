@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 
 import { InnovCard } from '../../../../models/innov-card';
+// import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-client-discover-description',
@@ -14,19 +15,22 @@ import { InnovCard } from '../../../../models/innov-card';
 export class ClientDiscoverDescriptionComponent implements OnInit {
 
   private _innovationCard: InnovCard[] = [];
+  // private quizURL: string;
 
   constructor(private _innovationService: InnovationService,
-              private _activatedRoute: ActivatedRoute) {
+              private _activatedRoute: ActivatedRoute)
+  {
+
                 this._activatedRoute.params.subscribe(params => {
-                this.loadInnovation(params['id']);
+                this.loadInnovation(params['id'], params['lang']);
                 });
   }
 
   ngOnInit() {}
 
-  loadInnovation(id: any) {
-    this._innovationService.getInnovationCard(id).subscribe(result => {
-      this._innovationCard.push(result);
+  loadInnovation(id: any, lang: any) {
+    this._innovationService.getInnovationCardByLanguage(id, lang).subscribe(response => {
+     this._innovationCard.push(response);
     });
   }
 
