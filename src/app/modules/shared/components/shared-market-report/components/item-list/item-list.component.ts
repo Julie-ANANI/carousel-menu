@@ -3,6 +3,7 @@
  */
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../../../models/answer';
+import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 
 @Component({
@@ -17,10 +18,14 @@ export class ItemListComponent implements OnInit {
     this._answers = value;
     this.updateAnswersData();
   }
+  @Input() public infographic: any;
+  @Input() public innovation: Innovation;
   @Input() public question: Question;
+  @Input() public readonly: boolean;
   @Input() set showDetails(value: boolean) {
     this._details = value;
   }
+  @Input() public stats: any;
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Output() updateNumberOfItems = new EventEmitter<number>();
 

@@ -23,7 +23,6 @@ export class QuestionSectionComponent implements OnInit {
   private _answersToShow: Array<Answer> = [];
   private _readonly: boolean;
   private _stats: {nbAnswers?: number, percentage?: number};
-  private _pieChart: any = {data: [], colors: [], labels: {}};
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
@@ -85,19 +84,12 @@ export class QuestionSectionComponent implements OnInit {
               }
             });
           break;
-        case 'clearbit':
-        case 'list':
-
       }
     }
   }
 
   public updateNumberOfItems(event: number): void {
     this._stats.nbAnswers = event;
-  }
-
-  public updatePieChart(event: any): void {
-    this._pieChart = event;
   }
 
   public seeAnswer(event: Answer) {
@@ -112,6 +104,5 @@ export class QuestionSectionComponent implements OnInit {
   get answersToShow(): Array<Answer> { return this._answersToShow; }
   get answersWithComment(): Array<Answer> { return this._answersWithComment; }
   get stats() { return this._stats; }
-  get pieChart() { return this._pieChart; }
   get lang(): string { return this._translateService.currentLang; }
 }

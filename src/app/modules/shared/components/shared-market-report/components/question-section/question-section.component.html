@@ -4,33 +4,28 @@
   <div class="white-frame">
 
     <!--************************************************
-               HEADER SECTION (UMI SYNTHESIS)
-    **************************************************-->
-    <app-question-conclusion
-      [infographic]="infographic"
-      [innovation]="innovation"
-      [pieChart]="pieChart"
-      [question]="question"
-      [readonly]="readonly"
-      [stats]="stats"
-    ></app-question-conclusion>
-
-    <!--************************************************
                          ANSWERS
     **************************************************-->
 
     <!--======= Bar Chart =======-->
     <app-bar-chart *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'"
                    [answers]="answersToShow"
+                   [infographic]="infographic"
+                   [innovation]="innovation"
                    [question]="question"
-                   (updatePieChart)="updatePieChart($event)"
+                   [readonly]="readonly"
+                   [stats]="stats"
                    (modalAnswerChange)="seeAnswer($event)">
     </app-bar-chart>
 
     <!--======= Liste d'items (applications, concurrents, partenaires potentiels) =======-->
     <app-item-list *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
                    [answers]="answersToShow"
+                   [infographic]="infographic"
+                   [innovation]="innovation"
                    [question]="question"
+                   [readonly]="readonly"
+                   [stats]="stats"
                    [showDetails]="showDetails"
                    (updateNumberOfItems)="updateNumberOfItems($event)"
                    (modalAnswerChange)="seeAnswer($event)">

@@ -20,7 +20,7 @@
   <div class="umi-synthesis">
     <h3 class="title">{{ question.title | multiling:lang }}</h3>
     <p *ngIf="!readonly && (!innovation?.marketReport[question.identifier]?.conclusion) && infographic?.conclusion">
-      <b>PLEASE UPDATE DATA</b>
+      <b style="color: red">PLEASE UPDATE DATA</b>
     </p>
     <text-zone [elementId]="domSectionId"
                [readonly]="readonly"

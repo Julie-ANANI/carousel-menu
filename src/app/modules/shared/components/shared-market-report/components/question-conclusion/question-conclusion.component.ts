@@ -31,7 +31,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._domSectionId = `${this.question.identifier.replace(/\\s/g, '')}-conclusion`;
 
-    if (!this.innovation.marketReport) {
+    if (this.innovation && !this.innovation.marketReport) {
       this.innovation.marketReport = {};
     }
 

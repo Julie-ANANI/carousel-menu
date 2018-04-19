@@ -54,7 +54,7 @@ export class ShareService {
       '&link=' + this._getShareUrl(project);
   }
 
-  public mailProjectShareLink (project: Innovation, lang: string) {
+  public mailProjectShareLink (project: Innovation, lang: string): string {
     lang = lang || 'en';
     return `mailto:?body=${this._getSummary(project, lang)}%0A${this._getShareUrl(project)}&subject=${this._getTitle(project, lang)}`
   }

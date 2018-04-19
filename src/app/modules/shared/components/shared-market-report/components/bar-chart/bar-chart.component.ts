@@ -4,6 +4,7 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';
+import { Innovation } from '../../../../../../models/innovation';
 import { Multiling } from '../../../../../../models/multiling';
 import { Question } from '../../../../../../models/question';
 
@@ -27,12 +28,17 @@ export class BarChartComponent implements OnInit {
     this._answers = value;
     this.updateAnswersData();
   }
+  @Input() public infographic: any;
+  @Input() public innovation: Innovation;
   @Input() public question: Question;
+  @Input() public readonly: boolean;
+  @Input() public stats: any;
+
   @Output() modalAnswerChange = new EventEmitter<any>();
-  @Output() updatePieChart = new EventEmitter<any>();
 
   private _answers: Array<Answer>;
   private _barsData: Array<BarData> = [];
+  private _pieChart: {data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number};
   public showAnswers: {[index: string]: string} = {};
 
   constructor(private _translateService: TranslateService) { }
@@ -79,7 +85,7 @@ export class BarChartComponent implements OnInit {
           pieChartData.labels.en.push(barData.label.en);
         });
         pieChartData.percentage = Math.round((positiveAnswersCount * 100) / this._answers.length);
-        this.updatePieChart.emit(pieChartData);
+        this._pieChart = pieChartData;
       }
     }
   }
@@ -90,4 +96,5 @@ export class BarChartComponent implements OnInit {
 
   get barsData(): Array<BarData> { return this._barsData; }
   get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
+  get pieChart() { return this._pieChart; }
 }
