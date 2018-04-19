@@ -8,4 +8,7 @@ export const DASHBOARD = {
     'DONE': 'Terminé',
     'EVALUATING_DONE': 'Terminé'
   },
+  'STATS': {
+    "ALL_OPERATORS": "Tous opérateurs"
+  }
 };

@@ -7,5 +7,8 @@ export const DASHBOARD = {
 
     'DONE': 'Completed',
     'EVALUATING_DONE': 'Completed'
+  },
+  'STATS': {
+    "ALL_OPERATORS": "All operators"
   }
 };
