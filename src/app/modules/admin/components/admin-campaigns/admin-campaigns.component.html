@@ -32,7 +32,7 @@
       <td class="text-center">{{campaign.stats ? campaign.stats['campaign']['nbProfessionals']||0 : 0}}</td>
       <td class="text-center">{{campaign.stats ? ((campaign.stats['campaign']['nbValidatedResp']||0)+(campaign.stats['campaign']['nbToValidateResp']||0)) : 0}}</td>
       <td>{{campaign.status}}</td>
-      <td><button class="btn btn-primary" (click)="updateStats($event, campaign)"><i class="fa fa-repeat"></i>&nbsp;Update stats</button></td>
+      <td><button class="btn btn-primary" (click)="updateStats($event, campaign)"><i class="fas fa-sync"></i>&nbsp;Update stats</button></td>
       <td><button class="btn btn-primary" disabled><i class="fa fa-copy"></i>&nbsp;Clone</button></td>
       <td><button class="btn btn-danger" (click)="deleteCampaignModal(campaign)"><i class="fa fa-trash"></i>&nbsp;Delete</button></td>
     </tr>

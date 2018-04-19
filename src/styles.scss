@@ -9,7 +9,11 @@ $primary-color: #3498DB !default;
 @import "../node_modules/spectre.css/src/spectre-icons.scss";
 @import "../node_modules/spectre.css/src/spectre-exp.scss";
 @import "print.scss";
-@import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
+//@import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
+@import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-regular.css";
+@import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css";
+@import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css";
+@import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
 
 
 * {
