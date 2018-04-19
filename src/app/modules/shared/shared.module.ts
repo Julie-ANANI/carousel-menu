@@ -50,7 +50,6 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
 import { AutocompleteSearchComponent } from '../../directives/autocomplete-search/autocomplete-search.component';
 import { CountryFlagComponent } from '../../directives/country-flag/country-flag.component';
-//import { HeaderComponent } from '../../directives/header/header.component';
 
 @NgModule({
   imports: [
