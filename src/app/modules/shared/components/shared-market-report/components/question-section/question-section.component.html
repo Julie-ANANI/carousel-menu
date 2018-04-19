@@ -4,6 +4,20 @@
   <div class="white-frame">
 
     <!--************************************************
+                 HEADER SECTION (UMI SYNTHESIS)
+      **************************************************-->
+
+    <app-question-conclusion
+      *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'
+              && question.controlType !== 'list' && question.controlType !== 'clearbit'"
+      [infographic]="infographic"
+      [innovation]="innovation"
+      [question]="question"
+      [readonly]="readonly"
+      [stats]="stats"
+    ></app-question-conclusion>
+
+    <!--************************************************
                          ANSWERS
     **************************************************-->
 
