@@ -7,6 +7,7 @@ import { User } from './user.model';
 export interface Innovation {
   readonly _id?: string;
   readonly owner?: User;
+  readonly campaigns?: Array<any>;
   readonly status?: 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
   readonly name?: string;
   readonly domain?: string;
