@@ -28,12 +28,12 @@
               </button>
               <ul class="menu">
                 <li *ngIf="translate.currentLang !== 'fr'">
-                  <a (click)="translate.use('fr') && $event.preventDefault() && (displayLangChoices=false)">
+                  <a (click)="propagateTranslation('fr') && $event.preventDefault() && (displayLangChoices=false)">
                     {{ 'COMMON.LANG.FR' | translate }}
                   </a>
-                </li>
+                </li>s
                 <li *ngIf="translate.currentLang !== 'en'">
-                  <a (click)="translate.use('en') && $event.preventDefault() && (displayLangChoices=false)">
+                  <a (click)="propagateTranslation('en') && $event.preventDefault() && (displayLangChoices=false)">
                     {{ 'COMMON.LANG.EN' | translate }}
                   </a>
                 </li>
