@@ -1,41 +1,62 @@
-<div class="container discover-section">
+<div class="container main-container">
   <div class="columns">
     <div class="column col-11 col-mx-auto">
 
-      <!-- Page Heading -->
-      <h1>{{ 'DISCOVER.TITLE' | translate }}</h1>
-      <!-- /Page Heading -->
+      <!-- Hero container -->
+      <div class="hero-light-container">
 
-      <!-- Page Description and Search Box -->
-      <div class="columns">
-        <div class="column col-md-12 col-8">
-          <p class="discover-description">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</p>
+        <!-- Page Heading -->
+        <h1 class="hero-title">{{ 'DISCOVER.TITLE' | translate }}</h1>
+        <hr class="hero-hr" align="left">
+        <!-- /Page Heading -->
+
+        <!-- Page Description and Search Box -->
+        <div class="columns">
+          <div class="column col-md-12 col-8">
+            <p class="hero-subtitle">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</p>
+          </div>
+          <div class="column col-md-12 col-4" id="padding-top">
+            <app-autocomplete-search></app-autocomplete-search>
+          </div>
         </div>
-        <div class="column col-md-12 col-4 margin-top">
-          <app-autocomplete-search></app-autocomplete-search>
-        </div>
+        <!-- /Page Description and Search Box -->
+
       </div>
-      <!-- /Page Description and Search Box -->
+      <!-- /Hero container -->
 
-      <!-- Innovation Cards -->
-      <div class="columns">
-        <div class="column col-md-12 col-4 row-margin" *ngFor="let card of card">
-          <div class="card">
-            <div class="card-image">
-              <img src="https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg" class="img-responsive">
-            </div>
-            <div class="card-header">
-              <div class="card-title">{{ card.title  }}</div>
-              <div class="card-subtitle text-gray">{{ card.sub_title }}</div>
-            </div>
-            <div class="card-body">{{ card.body }}</div>
-            <div class="card-footer">
-              <p>Available in:  <span>En</span> </p>
+      <!-- Section container -->
+      <div class="section-container">
+
+        <!-- Innovation Cards -->
+        <div class="columns">
+          <div class="column col-sm-12 col-xl-6 col-4" id="row-padding" *ngFor="let innovationCard of innovationCards">
+            <div class="card">
+              <div class="card-image" [routerLink]="[ innovationCard.innovation_reference, innovationCard.lang ]">
+                <img
+                  *ngIf="innovationCard.media[0] ; else nomedia"
+                  [src]= "innovationCard.media[0].url" alt="Media">
+                <ng-template #nomedia>
+                  <img
+                    [src]= "" alt="Media">
+                </ng-template>
+              </div>
+              <div class="card-header">
+                <div class="card-title" [routerLink]="[ innovationCard.innovation_reference, innovationCard.lang ]">{{ innovationCard.title }}</div>
+                <div class="card-subtitle text-gray"> </div>
+              </div>
+              <div class="card-body"> {{ innovationCard.summary }}</div>
+              <div class="card-footer">
+                <p>View in:
+                    <span [routerLink]="[ innovationCard.innovation_reference, innovationCard.lang ]"> {{ innovationCard.lang | uppercase }}</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
+        <!-- /Innovation Cards -->
+
       </div>
-      <!-- /Innovation Cards -->
+      <!-- /Section container -->
 
     </div>
   </div>

@@ -7,13 +7,22 @@
         <!-- Info block -->
         <div class="column col-11 col-xl-12 col-mx-auto">
           <p>© 2015 - {{ copyrightDate }}
-            &nbsp;
             <strong>{{ companyName }}</strong>
-            &nbsp;|
+            •
             <span *ngIf="isMainDomain()">
-            <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')">{{ 'FOOTER.LEGAL_NOTICE' | translate }}</a>
+            <a
+              target="_blank"
+              [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')"
+            >
+              {{ 'FOOTER.LEGAL_NOTICE' | translate }}
+            </a>
           •
-          <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">{{ 'FOOTER.TERMS' | translate }}</a>
+          <a
+            target="_blank"
+            [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')"
+          >
+            {{ 'FOOTER.TERMS' | translate }}
+          </a>
           </span>
           </p>
         </div>
@@ -23,17 +32,27 @@
         <div class="column col-1 col-xl-1 text-right">
           <div class="dropdown" [ngClass]="{'active': displayLangChoices}">
             <div class="btn-group">
-              <button class="btn lang-button dropdown-toggle" (click)="(displayLangChoices = !displayLangChoices) && $event.preventDefault()">
-                {{ 'COMMON.LANG.'+translate.currentLang.toUpperCase() | translate }}<span class="icon-footer"><i class="icon icon-arrow-down"></i></span>
+              <button
+                class="btn lang-button dropdown-toggle"
+                (click)="(displayLangChoices = !displayLangChoices) && $event.preventDefault()"
+              >
+                {{ 'COMMON.LANG.'+translate.currentLang.toUpperCase() | translate }}
+                <span class="icon-footer">
+                  <i class="icon icon-arrow-down"></i>
+                </span>
               </button>
               <ul class="menu">
                 <li *ngIf="translate.currentLang !== 'fr'">
-                  <a (click)="translate.use('fr') && $event.preventDefault() && (displayLangChoices=false)">
+                  <a
+                    (click)="translate.use('fr') && $event.preventDefault() && (displayLangChoices=false)"
+                  >
                     {{ 'COMMON.LANG.FR' | translate }}
                   </a>
                 </li>
                 <li *ngIf="translate.currentLang !== 'en'">
-                  <a (click)="translate.use('en') && $event.preventDefault() && (displayLangChoices=false)">
+                  <a
+                    (click)="translate.use('en') && $event.preventDefault() && (displayLangChoices=false)"
+                  >
                     {{ 'COMMON.LANG.EN' | translate }}
                   </a>
                 </li>
