@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 
 import { InnovCard } from '../../../../models/innov-card';
+
 import { environment } from '../../../../../environments/environment';
 
 @Component({
@@ -13,13 +14,6 @@ import { environment } from '../../../../../environments/environment';
 })
 
 export class ClientDiscoverDescriptionComponent implements OnInit {
-  get innovationCard(): InnovCard[] {
-    return this._innovationCard;
-  }
-
-  set innovationCard(value: InnovCard[]) {
-    this._innovationCard = value;
-  }
 
   private _innovationCard: InnovCard[] = [];
   private quizURL: string;
@@ -39,14 +33,17 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
     this._innovationService.get(id).subscribe( response => {
 
       this.quizURL = environment.quizUrl + '/quiz/' + response.quizId + '/' + response.campaigns[0].id + '?lang=' + lang;
-      this._innovationCard.push(response.innovationCards[0]);
+
+      const innovationCardIndex = response.innovationCards.findIndex( card => card.lang === lang);
+
+      this._innovationCard.push(response.innovationCards[innovationCardIndex]);
 
     });
 
-   /* this._innovationService.getInnovationCardByLanguage(id, lang).subscribe(response => {
-     this._innovationCard.push(response);
-    }); */
+  }
 
+  get innovationCard(): InnovCard[] {
+    return this._innovationCard;
   }
 
 }
