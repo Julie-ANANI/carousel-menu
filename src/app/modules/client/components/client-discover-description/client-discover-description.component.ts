@@ -24,6 +24,7 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
   private twitterUrl: string;
   private facebookUrl: string;
   private googlePlusUrl: string;
+  private quizButtonDisplay: string
 
   constructor(private _innovationService: InnovationService,
               private _activatedRoute: ActivatedRoute,
@@ -40,6 +41,10 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
   loadInnovation(id: any, lang: any) {
 
     this._innovationService.get(id).subscribe( response => {
+
+      if (response.quizId === '') {
+        this.quizButtonDisplay = 'none';
+      }
 
       this.quizUrl = environment.quizUrl + '/quiz/' + response.quizId + '/' + response.campaigns[0].id + '?lang=' + lang;
 

@@ -28,7 +28,6 @@ $header-text-color: #FFFFFF;
 
   .button-container {
     padding-top: 52px;
-    padding-bottom: 30px;
 
     .button {
       background-color: #F79323;
@@ -75,6 +74,8 @@ $header-text-color: #FFFFFF;
     }
 
     #icon-linkedIn {
+      padding-left: 13.5px;
+      padding-right: 13.5px;
       background-color: #0077B5;
     }
 
@@ -176,6 +177,14 @@ $header-text-color: #FFFFFF;
       padding-left: 35px !important;
     }
 
+  }
+
+}
+
+@media (max-width: 1280px) {
+
+  #padding-top-share {
+    padding-top: 30px !important;
   }
 
 }

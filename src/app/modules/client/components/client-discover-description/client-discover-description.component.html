@@ -18,8 +18,8 @@
               <!-- Summary and Button -->
               <div class="column col-xl-12 col-lg-12 col-9 col-mx-auto">
                 <h3 class="hero-subtitle">{{ innovation.summary }}</h3>
-                <div class="button-container">
-                  <a class="btn button" [href]="quizURL" target="_blank">
+                <div class="button-container" [ngStyle]="{ 'display': quizButtonDisplay }">
+                  <a class="btn button" [href]="quizUrl" target="_blank">
                     <span>{{ 'DISCOVERDESCRIPTION.OPINION' | translate }} <i class="icon icon-message"></i></span>
                   </a>
                 </div>
@@ -27,7 +27,7 @@
               <!-- /Summary and Button -->
 
               <!-- Share -->
-              <div class="column col-xs-12 col-sm-10 col-md-7 col-lg-5 col-xl-4 col-3 padding-lr-rm">
+              <div class="column col-xs-12 col-sm-10 col-md-7 col-lg-5 col-xl-4 col-3 padding-lr-rm" id="padding-top-share">
                 <div id="share-container">
                   <div id="share-data">
                     <p class="para">{{ 'DISCOVERDESCRIPTION.SHARE' | translate }}</p>
