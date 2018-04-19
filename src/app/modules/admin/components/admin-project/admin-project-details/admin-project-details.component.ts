@@ -17,6 +17,7 @@ export class AdminProjectDetailsComponent implements OnInit {
 
   private _project: Innovation;
   private _preset: Array<Preset> = [];
+  private _tags: Array<any> = [];
   private _dirty = false;
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -29,10 +30,22 @@ export class AdminProjectDetailsComponent implements OnInit {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this._preset = this._project.preset ? [this._project.preset] : [];
+    this._tags = this._project.tags.map(tag=>{
+      return {name: tag.label, _id: tag.id}
+    });
   }
 
   get innovationTitle(): string {
     return this._project.name || 'Untitled';
+  }
+
+  set tags(value: Array<any>) {
+    this._tags = value;
+    this._dirty = true;
+  }
+
+  get tags(): Array<any> {
+    return this._tags;
   }
 
   set preset(value: Array<Preset>) {
@@ -40,6 +53,12 @@ export class AdminProjectDetailsComponent implements OnInit {
     this._dirty = true;
   }
   get preset() { return this._preset; }
+
+  public updateTags(event: {value: Array<any>}): void {
+    this._tags = event.value;
+    this._project.tags = this._tags;
+    this._dirty = true;
+  }
 
   public updatePreset(event: {value: Array<Preset>}): void {
     this._preset = event.value;

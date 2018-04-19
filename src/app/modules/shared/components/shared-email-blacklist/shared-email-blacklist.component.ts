@@ -30,7 +30,7 @@ export class SharedEmailBlacklistComponent implements OnInit {
 
   constructor( private _emailService: EmailService,
                private _translateService: TranslateService,
-               private _notificationsService: TranslateNotificationsService,) { }
+               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._dataset = {

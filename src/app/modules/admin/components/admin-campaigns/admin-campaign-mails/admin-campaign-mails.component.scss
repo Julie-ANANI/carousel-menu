@@ -26,3 +26,12 @@
   display: flex;
   justify-content: space-around;
 }
+
+.email-buttons {
+  display: flex;
+  flex-direction: column;
+
+  .btn {
+    margin: 15px;
+  }
+}

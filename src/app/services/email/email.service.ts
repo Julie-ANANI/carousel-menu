@@ -26,14 +26,7 @@ export class EmailService {
   }
 
   public getQueue(params: any): Observable<any> {
-    let paramStr = Object.keys(params).map(key => {
-      return encodeURIComponent(key) + '=' +
-        encodeURIComponent(params[key]);
-    }).join('&');
-    if (paramStr.length) {
-      paramStr = '?' + paramStr;
-    }
-    return this._http.get('/mail/queue' + paramStr)
+    return this._http.get('/mail/queue', {params: params})
       .map((res: Response) => {
         const response = res.json();
         return response;

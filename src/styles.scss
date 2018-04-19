@@ -12,7 +12,6 @@ $primary-color: #3498DB !default;
 @import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
 
 
-
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -132,25 +131,7 @@ a {
   transition: all 0.3s ease;
 }
 
-// height for header
-#app-header {
-  min-height: 3.9rem
-}
 
-// Spaces around the main application components
-.app-content {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-
-@media (min-width: 840px) {
-
-  #app-header {
-    min-height: 4.2rem
-  }
-
-}
 
 
 

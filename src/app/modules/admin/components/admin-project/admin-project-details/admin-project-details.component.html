@@ -6,6 +6,14 @@
     <h3>Administration</h3>
 
     <div>
+      <h4>Tags management</h4>
+      <app-autocomplete-input
+          (update)="updateTags($event)"
+          [onlyOne]="false"
+          [config]="{placeholder: 'tags', initialData: tags || [], type: 'tags'}">
+      </app-autocomplete-input>
+
+
       <h4>Presets management</h4>
       <app-autocomplete-input
         (update)="updatePreset($event)"

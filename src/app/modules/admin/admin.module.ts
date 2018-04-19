@@ -12,6 +12,7 @@ import { AdminQuestionsModule } from './components/admin-preset/admin-questions/
 import { AdminSectionsModule } from './components/admin-preset/admin-sections/admin-sections.module';
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
 import { AdminEmailsModule } from './components/admin-emails/admin-emails.module';
+import { AdminTagsModule } from './components/admin-tags/admin-tags.module';
 import { AdminProjectModule } from './components/admin-project/admin-project.module';
 
 // Components
@@ -48,6 +49,7 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminSectionsModule,
     AdminSearchModule,
     AdminEmailsModule,
+    AdminTagsModule,
     AdminProjectModule,
     SharedModule,
     SharedAnswerModalModule,

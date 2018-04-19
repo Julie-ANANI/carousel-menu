@@ -38,6 +38,7 @@ import { PresetService } from './services/preset/preset.service';
 import { AnswerService } from './services/answer/answer.service';
 import { ProfessionalsService } from './services/professionals/professionals.service';
 import { DownloadService } from './services/download/download.service';
+import { TagsService } from './services/tags/tags.service';
 import { TemplatesService } from './services/templates/templates.service';
 
 // Resolvers
@@ -106,7 +107,9 @@ import { SignatureResolver } from './resolvers/signature.resolver';
     InnovationResolver,
     RequestResolver,
     ScenarioResolver,
-    SignatureResolver
+    SignatureResolver,
+    RequestResolver,
+    TagsService
   ],
   bootstrap: [AppComponent]
 })
