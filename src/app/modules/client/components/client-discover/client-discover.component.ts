@@ -18,7 +18,7 @@ import { InnovCard } from '../../../../models/innov-card';
 export class ClientDiscoverComponent implements OnInit {
 
   private innovations: Array<Innovation>;
-  private innovationCards: InnovCard[];
+  private _innovationCards: InnovCard[];
   private totalInnovations: number;
   private innovationCardId: any;
   private userDefaultLang: string;
@@ -45,7 +45,7 @@ export class ClientDiscoverComponent implements OnInit {
 
     this._titleService.setTitle('DISCOVER.TITLE');
 
-    this.innovationCards = [];
+    this._innovationCards = [];
 
     this.userDefaultLang = this._translateService.currentLang;
 
@@ -82,16 +82,16 @@ export class ClientDiscoverComponent implements OnInit {
 
   getInnovationCard(id: any) {
     this._innovationService.getInnovationCard(id).subscribe(result => {
-       this.innovationCards.push(result);
+       this._innovationCards.push(result);
     });
   }
 
-  set innovationCard(value: Array<any>) {
-    this.innovationCards = value;
+  get innovationCards(): InnovCard[] {
+    return this._innovationCards;
   }
 
-  get innovationCard(): Array<any> {
-    return this.innovationCards;
+  set innovationCards(value: InnovCard[]) {
+    this._innovationCards = value;
   }
 
 }
