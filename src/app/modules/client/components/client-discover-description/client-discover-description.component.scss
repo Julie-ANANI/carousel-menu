@@ -1,222 +1,191 @@
-$bg-color: #262831;
-$primary-color: #FFFFFF;
-$secondary-color: #878787;
+//import
+@import '../../../../../style/client-styles';
 
-.description-header {
+$white-color: #FFFFFF;
+
+// Text color
+$header-text-color: #FFFFFF;
+
+.hero-container {
   background: url('../../../../../assets/images/bg.png') repeat;
-  padding-top: 115px;
-  padding-bottom: 102px;
-  color: $primary-color;
 
-    h1 {
-      font-size: 2.5rem;
-      line-height: 3.4rem;
-      font-weight: normal;
-      margin-bottom: 15px;
-      margin-top: 0px;
-      color: $primary-color;
-    }
+  h1::after {
+    display: none;
+  }
 
-    h1::after {
-      display: none;
-    }
+  .hero-title {
+    color: $header-text-color;
+  }
 
-    .project-already-avai {
-      color: #A4A4A4;
-      font-size: 0.9rem;
-      line-height: 1.8rem;
-      font-weight: normal;
-      margin-bottom: 18.5px;
+  .hero-hr {
+    border-color: $header-text-color;
+  }
 
-      a {
-        border: none;
-        color: #acb3c2;
-        padding-top: 6px;
-      }
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: $header-text-color;
+  }
 
-      a:hover {
-        background-color: transparent;
-        color: #0B90C6;
-        cursor: pointer;
-        text-decoration: none;
+  .button-container {
+    padding-top: 52px;
+
+    .button {
+      background-color: #F79323;
+      border-color: #F79323;
+      color: $white-color;
+
+      span i {
+        margin-left: 0.25rem;
       }
 
     }
 
-    .line-2 {
-      width: 125px;
-      border: 2px solid $primary-color;
-      border-radius: 5px;
+    .button:hover {
+      background-color: #c5751c;
+      border-color: #c5751c;
     }
 
-    .description-summary {
-      font-size: 1.3rem;
-      line-height: 2.2rem;
-      padding-top: 31.5px;
+  }
 
-        p {
-          margin-bottom: 64px;
-        }
+  #share-container {
+    background-color: #325B78;
+    max-width: 336px;
+    padding: 13px 18px 18px 24px;
+    min-height: 220px;
+    color: $white-color;
+    margin-left: 10px;
 
-        .header-button {
-          background-color: #F79323;
-          color: $primary-color;
-          border-radius: 5px;
-          border-color: #F79323;
-          min-height: 50px;
-          padding: 10px 30px;
-          max-width: 323px;
-          transition: all 0.5s ease;
+    #share-data {
 
-          span {
-            font-size: 0.9rem;
-            line-height: 1.4rem;
-          }
-
-          .icon {
-            vertical-align: middle;
-          }
-
-        }
-
-        .header-button:hover {
-          background-color: #f8a84e;
-        }
-
+    .para {
+      color: $white-color;
     }
 
-    .margin-top {
-      margin-top: 9px;
+    .fab {
+      padding: 11.79px 11.82px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.5s ease;
     }
 
-    .project-share {
-      background-color: #325B78;
-      max-width: 336px;
-      padding: 26px 28px 39px 49px;
-      min-height: 220px;
+    a {
+      color: #FFFFFF;
+      text-decoration: none;
+    }
 
-      .vous-aimez-le-projet {
-        max-width: 259px;
+    #icon-linkedIn {
+      padding-left: 13.5px;
+      padding-right: 13.5px;
+      background-color: #0077B5;
+    }
 
-        p {
-          font-size: 0.9rem;
-          line-height: 1.4rem;
-        }
+    #icon-linkedIn:hover {
+      background-color: $white-color;
+      color: #0077B5;
+    }
 
-        .fab {
-          padding: 11.79px 11.82px;
-          border-radius: 3px;
-          cursor: pointer;
-          transition: all 0.5s ease;
-        }
+    #icon-twitter {
+      background-color: #48AAEB;
+    }
 
-        .icon-linkedin {
-          background-color: #3076B0;
-        }
+    #icon-twitter:hover {
+      background-color: $white-color;
+      color: #48AAEB;
+    }
 
-        .icon-linkedin:hover {
-          background-color: $primary-color;
-          color: #3076B0;
-        }
+    #icon-facebook {
+      padding-left: 18px;
+      padding-right: 18px;
+      background-color: #4F65A1;
+      color: $white-color;
+    }
 
-        .icon-twitter {
-          background-color: #48AAEB;
-        }
+    #icon-facebook:hover {
+      background-color: $white-color;
+      color: #4F65A1;
+    }
 
-        .icon-twitter:hover {
-          background-color: $primary-color;
-          color: #48AAEB;
-        }
+    #icon-google {
+      background-color: #CC5441;
+      padding-right: 8px;
+      padding-left: 8px;
+    }
 
-        .icon-facebook {
-          background-color: #4F65A1;
-          color: $primary-color;
-        }
-
-        .icon-facebook:hover {
-          background-color: $primary-color;
-          color: #4F65A1;
-        }
-
-        .icon-google {
-          background-color: #CC5441;
-          padding-right: 8px;
-          padding-left: 8px;
-        }
-
-        .icon-google:hover {
-          background-color: $primary-color;
-          color: #CC5441;
-        }
-
-      }
+    #icon-google:hover {
+      background-color: $white-color;
+      color: #CC5441;
+    }
 
     }
 
-}
-
-.section-heading {
-  color: #0B90C6;
-  font-size: 1.6rem;
-  line-height: 2.15rem;
-  padding-bottom: 26px;
-}
-
-
-.description-section-1 {
-  padding-top: 83px;
-  padding-bottom: 99px;
-
-  .margin-bottom {
-    margin-bottom: 30px;
   }
 
 }
 
-.description-section-2 {
-  padding-top: 83px;
-  padding-bottom: 99px;
-  background-color: #FAFAFA;
+#gallery-section {
+  padding-bottom: 25px;
 
-    ul li {
-      color: $secondary-color;
-      font-size: 1.3rem;
-      line-height: 2.55rem;
-    }
+  #padding-bottom {
+    padding-bottom: 25px;
+  }
 
 }
 
-.description-section-3 {
-  padding-top: 83px;
+#advantages-section{
+  background-color: #ececec;
 
-    .section-content {
-      color: $secondary-color;
-      font-size: 1.1rem;
-      line-height: 1.8rem;
-    }
+  ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  li {
+    color: $para-color;
+    font-size: 1.3rem;
+  }
+
 }
 
+#solution-section {
+  padding-bottom: 25px;
 
-
-@media (max-width: 960px) {
-
-  .margin-top {
-    margin-top: 68px !important;
-  }
-
-  .margin-top-icon {
-    margin-top: 10px !important;
-  }
 }
 
 @media (max-width: 426px) {
 
-  .description-summary .header-button {
+  .button {
     padding-left: 10px !important;
     padding-right: 10px !important;
   }
 
+  #share-container {
+    padding: 7px 9px 9px 16px !important;
+    max-width: 300px !important;
+  }
+
 }
 
+@media (min-width: 960px) {
 
+  #solution-section {
+
+    #col-padding-right {
+      padding-right: 35px !important;
+    }
+
+    #col-padding-left {
+      padding-left: 35px !important;
+    }
+
+  }
+
+}
+
+@media (max-width: 1280px) {
+
+  #padding-top-share {
+    padding-top: 30px !important;
+  }
+
+}
 

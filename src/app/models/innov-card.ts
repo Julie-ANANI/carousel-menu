@@ -2,6 +2,7 @@ import { Media } from './media';
 
 export interface InnovCard {
   readonly _id?: string;
+  readonly innovation_reference?: string;
   readonly title?: string;
   readonly lang: string;
   readonly media?: Array<Media>;

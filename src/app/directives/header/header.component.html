@@ -16,7 +16,11 @@
 
   <!-- Collapse button -->
   <div class="navbar-toggler">
-    <span class="navbar-toggler-icon" (click)="displayValue = !displayValue"></span>
+    <span
+      class="navbar-toggler-icon"
+      (click)="displayValue = !displayValue"
+    >
+    </span>
   </div>
   <!-- /Collapse button -->
 
@@ -27,10 +31,24 @@
     <div *ngIf="!authService.isAuthenticated">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a [routerLink]="'/login'" routerLinkActive="active" (click)="displayValue = !displayValue" class="nav-link">{{ 'COMMON.LOG_IN' | translate}}</a>
+          <a
+            [routerLink]="'/login'"
+            routerLinkActive="active"
+            (click)="displayValue = !displayValue"
+            class="nav-link"
+          >
+            {{ 'COMMON.LOG_IN' | translate}}
+          </a>
         </li>
         <li class="nav-item start-button">
-          <a [routerLink]="'/signup'" routerLinkActive="active" (click)="displayValue = !displayValue" class="nav-link">{{ 'HEADER.START' | translate}}</a>
+          <a
+            [routerLink]="'/signup'"
+            routerLinkActive="active"
+            (click)="displayValue = !displayValue"
+            class="nav-link"
+          >
+            {{ 'HEADER.START' | translate}}
+          </a>
         </li>
       </ul>
     </div>
@@ -41,16 +59,54 @@
       <ul class="navbar-nav">
         <!-- <a href="http://help.umi.us" target="_blank" class="btn btn-link">{{ 'COMMON.HELP' | translate }}</a>-->
         <li class="nav-item" *ngIf="!backOfficeValue && authService.adminLevel > 0">
-          <a (click)="displayValue = !displayValue" [routerLink]="'/sample'" routerLinkActive="active" class="nav-link">{{ 'HEADER.EXAMPLE' | translate }}</a>
+          <a
+            (click)="displayValue = !displayValue"
+            [routerLink]="'/sample'"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            {{ 'HEADER.EXAMPLE' | translate }}
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!backOfficeValue && authService.adminLevel > 0">
+          <a
+            (click)="displayValue = !displayValue"
+            [routerLink]="'/discover'"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            {{ 'COMMON.DISCOVER' | translate }}
+          </a>
         </li>
         <li class="nav-item" *ngIf="!backOfficeValue">
-          <a [routerLink]="'/projects'" (click)="displayValue = !displayValue" routerLinkActive="active" class="nav-link">{{ 'COMMON.MY_PROJECTS' | translate }}</a>
+          <a
+            [routerLink]="'/projects'"
+            (click)="displayValue = !displayValue"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            {{ 'COMMON.MY_PROJECTS' | translate }}
+          </a>
         </li>
         <li class="nav-item" *ngIf="!backOfficeValue" >
-          <a [routerLink]="'/account'" (click)="displayValue = !displayValue" routerLinkActive="active" class="nav-link">{{ 'COMMON.MY_ACCOUNT' | translate }}</a>
+          <a
+            [routerLink]="'/account'"
+            (click)="displayValue = !displayValue"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            {{ 'COMMON.MY_ACCOUNT' | translate }}
+          </a>
         </li>
         <li class="nav-item" *ngIf="!backOfficeValue && canShow(1)">
-          <a [routerLink]="'/admin'" (click)="backOfficeValue = !backOfficeValue; displayValue = !displayValue" routerLinkActive="active" class="nav-link">{{ 'COMMON.ADMIN' | translate }}</a>
+          <a
+            [routerLink]="'/admin'"
+            (click)="backOfficeValue = !backOfficeValue; displayValue = !displayValue"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            {{ 'COMMON.ADMIN' | translate }}
+          </a>
         </li>
       </ul>
    </div>
@@ -60,27 +116,85 @@
     <div *ngIf="authService.isAuthenticated && backOfficeValue">
      <ul class="navbar-nav">
         <li class="nav-item" *ngIf="canShow(1)">
-          <a class="nav-link" routerLinkActive="active" (click)="displayValue = !displayValue" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="'/admin'" title="">Dashboard</a>
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            (click)="displayValue = !displayValue"
+            [routerLinkActiveOptions]="{ exact: true }"
+            [routerLink]="'/admin'"
+            title=""
+          >
+            Dashboard
+          </a>
         </li>
         <li class="nav-item" *ngIf="canShow(1)" >
-          <a class="nav-link" routerLinkActive="active" (click)="displayValue = !displayValue" [routerLink]="'/admin/users'" title="">{{ 'COMMON.USERS' | translate }}</a>
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            (click)="displayValue = !displayValue"
+            [routerLink]="'/admin/users'"
+            title=""
+          >
+            {{ 'COMMON.USERS' | translate }}
+          </a>
         </li>
         <li class="nav-item" *ngIf="canShow(3)">
-          <a class="nav-link" routerLinkActive="active" (click)="displayValue = !displayValue" [routerLink]="'/admin/projects'" title="">{{ 'COMMON.PROJECTS' | translate }}</a>
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            (click)="displayValue = !displayValue"
+            [routerLink]="'/admin/projects'"
+            title=""
+          >
+            {{ 'COMMON.PROJECTS' | translate }}
+          </a>
         </li>
         <li class="nav-item" *ngIf="canShow(3)">
-          <a class="nav-link" routerLinkActive="active" (click)="displayValue = !displayValue" [routerLink]="'/admin/emails'" title="">Emails</a>
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            (click)="displayValue = !displayValue"
+            [routerLink]="'/admin/emails'"
+            title=""
+          >
+            Emails
+          </a>
         </li>
         <!-- TODO <a class="btn btn-link" *ngIf="canShow(3) && backOffice" routerLinkActive="active" [routerLink]="'/admin/index'" title="">Index</a>-->
         <!-- TODO <a class="btn btn-link" *ngIf="canShow(3) && backOffice" routerLinkActive="active" [routerLink]="'/admin/patents'" title="">{{ 'COMMON.PATENTS' | translate }}</a>-->
-        <li class="nav-item" *ngIf="canShow(3)">
-          <a class="nav-link" routerLinkActive="active" (click)="displayValue = !displayValue" [routerLink]="'/admin/presets'" title="">{{ 'COMMON.PRESETS' | translate }}</a>
+
+       <li class="nav-item" *ngIf="canShow(3)">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            (click)="displayValue = !displayValue"
+            [routerLink]="'/admin/presets'"
+            title=""
+          >
+            {{ 'COMMON.PRESETS' | translate }}
+          </a>
         </li>
         <li class="nav-item" *ngIf="canShow(3)" >
-          <a class="nav-link" routerLinkActive="active" (click)="displayValue = !displayValue" [routerLink]="'/admin/search'" title="">{{ 'COMMON.SEARCH' | translate }}</a>
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            (click)="displayValue = !displayValue"
+            [routerLink]="'/admin/search'"
+            title=""
+          >
+            {{ 'COMMON.SEARCH' | translate }}
+          </a>
         </li>
         <li class="nav-item" *ngIf="canShow(3)">
-          <a class="nav-link" routerLinkActive="active" (click)="backOfficeValue = !backOfficeValue; displayValue = !displayValue" [routerLink]="'/projects'" title="">{{ 'COMMON.CLIENT_SIDE' | translate }}</a>
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            (click)="backOfficeValue = !backOfficeValue; displayValue = !displayValue"
+            [routerLink]="'/projects'"
+            title=""
+          >
+            {{ 'COMMON.CLIENT_SIDE' | translate }}
+          </a>
         </li>
       </ul>
     </div>

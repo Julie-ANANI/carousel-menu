@@ -40,4 +40,5 @@ export class FooterComponent implements OnInit {
   get copyrightDate (): string {
     return (new Date()).getFullYear().toString();
   }
+
 }

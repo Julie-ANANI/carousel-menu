@@ -110,7 +110,7 @@
               <br>
               <a (click)="changePassword($event)" class="c-hand">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</a> -
               <a (click)="(accountDeletionAsked = true) && $event.preventDefault()" class="c-hand text-error">{{ 'MY_ACCOUNT.DELETE' | translate }}</a> -
-              <a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}</a>
+              <a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}&nbsp;<i class="fas fa-sign-out-alt"></i></a>
             </p>
         </div>
       </form>
