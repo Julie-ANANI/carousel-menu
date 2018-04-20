@@ -44,38 +44,6 @@
       }
     },
     {
-      "name": "vendor1",
-      "root": "src",
-      "outDir": "./dist",
-      "index": "index.html",
-      "main": "main.ts",
-      "polyfills": "polyfills.ts",
-      "test": "test.ts",
-      "tsconfig": "tsconfig.app.json",
-      "testTsconfig": "tsconfig.spec.json",
-      "prefix": "app",
-      "styles": [
-        "styles.vendor1.scss"
-      ],
-      "assets": [
-        {
-          "glob": "**/*",
-          "input": "../node_modules/tinymce/skins",
-          "output": "./assets/skins"
-        }
-      ],
-      "scripts": [
-        "../node_modules/jquery/dist/jquery.js",
-        "../node_modules/hammerjs/hammer.js",
-        "https://canvasjs.com/assets/script/canvasjs.min.js"
-      ],
-      "environmentSource": "environments/environment.ts",
-      "environments": {
-        "vendor1.local": "environments/vendor1/environment.vendor1.local.ts",
-        "vendor1.dev": "environments/vendor1/environment.vendor1.dev.ts"
-      }
-    },
-    {
       "name": "dynergie",
       "root": "src",
       "outDir": "./dist",
