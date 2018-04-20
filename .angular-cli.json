@@ -17,7 +17,7 @@
       "prefix": "app",
       "styles": [
         "styles.scss",
-        "../node_modules/font-awesome/css/font-awesome.css"
+        "style/client-styles.scss"
       ],
       "assets": [
         {
@@ -87,8 +87,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.dynergie.scss",
-        "../node_modules/font-awesome/css/font-awesome.css"
+        "styles.dynergie.scss"
       ],
       "assets": [
         {
@@ -126,8 +125,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.inomer.scss",
-        "../node_modules/font-awesome/css/font-awesome.css"
+        "styles.inomer.scss"
       ],
       "assets": [
         {

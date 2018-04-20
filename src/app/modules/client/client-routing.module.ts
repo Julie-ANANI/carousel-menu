@@ -44,7 +44,7 @@ const clientRoutes: Routes = [
       },
       {
         path: 'welcome',
-        /*canCativate: '',*/
+        /*canActivate: '',*/
         children: [
           { path: '', component: ClientWelcomeComponent, pathMatch: 'full' }
         ]
@@ -88,7 +88,7 @@ const clientRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
           { path: '', component: ClientDiscoverComponent, pathMatch: 'full' },
-          { path: ':discoverId', component: ClientDiscoverDescriptionComponent, pathMatch: 'full'}
+          { path: ':id/:lang', component: ClientDiscoverDescriptionComponent, pathMatch: 'full'}
         ]
       },
       {

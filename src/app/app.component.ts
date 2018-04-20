@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public displayLoading: boolean;
 
   public notificationsOptions = {
-    position: ['bottom', 'right'],
+    position: ['top', 'right'],
     timeOut: 5000,
     lastOnBottom: true,
     maxStack: 4,
