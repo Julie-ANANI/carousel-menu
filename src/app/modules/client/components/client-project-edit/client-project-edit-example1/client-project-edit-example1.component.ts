@@ -66,13 +66,13 @@ export class ClientProjectEditExample1Component implements OnInit {
             chaque application.',
           'title': 'Terre de culture',
           'advantages': [
-            'Terre vivante, déjà cultivée, dont la qualité est garantie',
-            'Absence de pesticides ou d\'espèces végétales envahissantes',
-            'Caractéristiques spécifiquement adaptées à l\'usage de végétalisation souhaité',
-            'Coût compétitif par rapport à la terre végétale classique provenant des espaces agricoles',
-            'Impact environnemental positif et intégré dans une démarche d\'économie circulaire',
-            'Disponible en vrac en toute quantité : de quelques kilogrammes à plusieurs centaines de tonnes',
-            'Proximité d\'approvisionnement sur le territoire national'
+            { text: 'Terre vivante, déjà cultivée, dont la qualité est garantie' },
+            { text: 'Absence de pesticides ou d\'espèces végétales envahissantes' },
+            { text: 'Caractéristiques spécifiquement adaptées à l\'usage de végétalisation souhaité' },
+            { text: 'Coût compétitif par rapport à la terre végétale classique provenant des espaces agricoles' },
+            { text: 'Impact environnemental positif et intégré dans une démarche d\'économie circulaire' },
+            { text: 'Disponible en vrac en toute quantité : de quelques kilogrammes à plusieurs centaines de tonnes' },
+            { text: 'Proximité d\'approvisionnement sur le territoire national ' }
           ],
           'media': [
             {
@@ -124,13 +124,13 @@ export class ClientProjectEditExample1Component implements OnInit {
             to provide high-quality earth that is active and specifically adapted to each application.',
           'title': 'Cultivable soil',
           'advantages': [
-            'Living, pre-cultivated soil',
-            'No pesticides or invasive plant species',
-            'Characteristics specifically adapted to the desired planting use',
-            'Competitive price in comparison to standard topsoil',
-            'Positive environmental impact integrated into a circular economy approach',
-            'Available loose in any quantity: from several kilograms to hundreds of tons',
-            'Locally supplied around the country'
+            { text: 'Living, pre-cultivated soil' },
+            { text: 'No pesticides or invasive plant species' },
+            { text: 'Characteristics specifically adapted to the desired planting use' },
+            { text: 'Competitive price in comparison to standard topsoil' },
+            { text: 'Positive environmental impact integrated into a circular economy approach' },
+            { text: 'Available loose in any quantity: from several kilograms to hundreds of tons' },
+            { text: 'Locally supplied around the country' }
           ],
           'media': [
             {

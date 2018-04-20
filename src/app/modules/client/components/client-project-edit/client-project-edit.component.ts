@@ -13,6 +13,7 @@ import { Innovation } from '../../../../models/innovation';
 import { InnovationSettings } from '../../../../models/innov-settings';
 import { User } from '../../../../models/user.model';
 import { Subject } from 'rxjs/Subject';
+import { environment } from '../../../../../environments/environment';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
 
@@ -26,6 +27,8 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   private _project: Innovation;
   public formData: FormGroup;
   private ngUnsubscribe: Subject<any> = new Subject();
+
+  private _companyName: string = environment.companyShortName;
 
   /*
    * Ajout de collaborateurs
@@ -230,5 +233,9 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
   get project(): Innovation { return this._project; }
   get isAdmin(): boolean { return (this._authService.adminLevel & 3) === 3; }
+
+  get companyName(){
+    return (this._companyName||'umi').toLocaleUpperCase();
+  }
 
 }

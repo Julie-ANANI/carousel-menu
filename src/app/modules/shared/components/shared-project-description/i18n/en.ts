@@ -1,5 +1,5 @@
 export const PROJECT = {
-  'PATENTED': 'Protected by patent',
+  'PATENTED': 'Patent protected',
   'CONTACT_PROJECT_MANAGER': 'Contact the project manager',
   'SOLUTION': 'Solution',
   'ISSUE': 'Issue',
