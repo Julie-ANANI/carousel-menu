@@ -234,7 +234,7 @@
       <button class="btn btn-link" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()">
         {{ 'COMMON.CANCEL' | translate }}
       </button>
-      <button class="btn btn-primary" [disabled]="collaborators_emails === ''" (click)="addCollaborators($event)">{{
+      <button class="btn btn-primary" [disabled]="!validCollaboratorsList()" (click)="addCollaborators($event)">{{
         'COMMON.ADD' | translate }}
       </button>
     </div>
@@ -248,45 +248,45 @@
   <div class="modal-container">
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="(displayCollaboratorsAddingProcess = false) && $event.preventDefault()"></button>
-      <div class="modal-title h5">{{ 'PROJECT_EDIT.INVITE_COLLABORATORS_MODAL.TITLE' | translate }}</div>
+      <div class="modal-title h5">{{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
     </div>
     <div class="modal-body">
       <div class="content">
         <p *ngIf="collaboratorsAddingProcess.usersAdded.length">
-          {{ collaboratorsAddingProcess.usersAdded.length }} collaborateur(s) a/ont été ajouté(s).
+          {{ collaboratorsAddingProcess.usersAdded.length }} {{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.USERS_ADDED' | translate }}.
         </p>
 
-        <p *ngIf="collaboratorsAddingProcess.invitationsToSend.length">
-          {{ collaboratorsAddingProcess.invitationsToSend.length }} adresse(s) e-mail(s) ne correspond(ent)
-          à aucun compte dans notre application. Pour les/l'ajouter comme collabora-teur-trice-s à ce projet,
-          vous devez leur/lui envoyer une invitation en cliquant sur le bouton "{{ 'COMMON.INVITE' | translate }}"
-          ci-dessous :
-          <br>
-          <a class="btn btn-primary"
-             [href]="'mailto:' + collaboratorsAddingProcess.invitationsToSend.join(',') + '?body=' + collaboratorsAddingProcess.inviteUrl">
-            {{ 'COMMON.INVITE' | translate }}
-          </a>
-        </p>
+        <div *ngIf="collaboratorsAddingProcess.invitationsToSend.length">
+          <p >
+            {{ collaboratorsAddingProcess.invitationsToSend.length }} {{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.TO_SEND_EMAIL' | translate }}
+          </p>
+          <p align="center">
+            <a class="btn btn-primary"
+               [href]="'mailto:' + collaboratorsAddingProcess.invitationsToSend.join(',') + '?body=' + collaboratorsAddingProcess.inviteUrl">
+              {{ 'COMMON.INVITE' | translate }}
+            </a>
+          </p>
+        </div>
 
-        <p *ngIf="collaboratorsAddingProcess.invitationsToSendAgain.length">
-          {{ collaboratorsAddingProcess.invitationsToSendAgain.length }} adresse(s) e-mail(s) ne correspond(ent)
-          à aucun compte dans notre application et ont peut-être déjà reçu une invitation de vôtre part.
-          Pour les/l'ajouter comme collabora-teur-trice-s à ce projet,
-          vous devez leur/lui envoyer une invitation en cliquant sur le bouton "{{ 'COMMON.REINVITE' | translate }}"
-          ci-dessous :
-          <br>
-          <a class="btn btn-primary"
-             [href]="'mailto:' + collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + collaboratorsAddingProcess.inviteUrl">
-            {{ 'COMMON.REINVITE' | translate }}
-          </a>
-        </p>
+        <div *ngIf="collaboratorsAddingProcess.invitationsToSendAgain.length">
+          <p>
+            {{ collaboratorsAddingProcess.invitationsToSendAgain.length }} {{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.TO_RESEND_EMAIL' | translate }}"
+          </p>
+          <p align="center">
+            <a class="btn btn-primary"
+               [href]="'mailto:' + collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + collaboratorsAddingProcess.inviteUrl">
+              {{ 'COMMON.REINVITE' | translate }}
+            </a>
+          </p>
+        </div>
+
       </div>
     </div>
 
     <div class="modal-footer">
-      <button class="btn btn-primary" (click)="(displayCollaboratorsAddingProcess = false) && $event.preventDefault()">
+      <!--<button class="btn btn-primary" (click)="(displayCollaboratorsAddingProcess = false) && $event.preventDefault()">
         {{ 'COMMON.I_FINISHED' | translate }}
-      </button>
+      </button>-->
     </div>
 
     <div class="modal-footer">

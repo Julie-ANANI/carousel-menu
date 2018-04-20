@@ -8,6 +8,8 @@ export const environment = {
   apiUrl: '',
   companyName: '',
   companyShortName: '',
+  companyURL: '',
+  logoURL: '',
   domain: '',
   innovationUrl: '',
   quizUrl: ''

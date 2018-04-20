@@ -13,6 +13,7 @@ import { Innovation } from '../../../../models/innovation';
 import { InnovationSettings } from '../../../../models/innov-settings';
 import { User } from '../../../../models/user.model';
 import { Subject } from 'rxjs/Subject';
+import { emailRegEx } from '../../../../utils/regex';
 import { environment } from '../../../../../environments/environment';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
@@ -182,6 +183,17 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
       this._notificationsService.success('Projet en révision', 'Le projet a été passé en status de révision, veuillez avertir le propriétaire des chagements à effectuer');
       this._router.navigate(['/admin']);
     });
+  }
+
+  public validCollaboratorsList(): boolean {
+    let validCount = 0;
+    const split = this.collaborators_emails.split(/[\s,;:]/g).filter(val=>val !== '');
+    split.forEach(mail=>{
+      if(mail.match(emailRegEx)) {
+        validCount++;
+      }
+    });
+    return validCount > 0 && validCount === split.length;
   }
 
   public addCollaborators (event: Event): void {

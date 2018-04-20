@@ -27,7 +27,8 @@ export class HeaderComponent implements OnInit {
   }
 
   public logoName(): string {
-    return `logo-${ environment.domain || 'umi.us'}.png`;
+    //return `logo-${ environment.domain || 'umi.us'}.png`;
+    return environment.logoURL;
   }
 
   public canShow(reqLevel: number): boolean {
