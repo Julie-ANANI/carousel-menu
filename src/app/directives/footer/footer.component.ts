@@ -17,7 +17,6 @@ export class FooterComponent implements OnInit {
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-    console.log(this._cookieService);
   }
 
   public isMainDomain(): boolean {

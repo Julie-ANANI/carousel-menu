@@ -50,7 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     setTimeout (() => {
       this.displayLoading = false;
-    }, 1000);
+    }, 500);
 
     if (this._authService.isAcceptingCookies) { // CNIL
       this._authService.initializeSession().takeUntil(this.ngUnsubscribe).subscribe(

@@ -15,6 +15,8 @@ export class User extends Model {
   private _isOperator: boolean;
   private _roles: string;
   private _state: 'unconfirmed' | 'confirmed';
+  private _companyName: string;
+  private _jobTitle: string;
 
 
   constructor(user?: any) {
@@ -140,4 +142,9 @@ export class User extends Model {
   set state(value: 'unconfirmed' | 'confirmed') {
     this._state = value;
   }
+
+  get companyName(): string { return this._companyName; }
+  set companyName(value: string) { this._companyName = value; }
+  get jobTitle(): string { return this._jobTitle; }
+  set jobTitle(value: string) { this._jobTitle = value; }
 }
