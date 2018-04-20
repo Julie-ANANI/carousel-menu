@@ -50,6 +50,7 @@ export class BarChartComponent implements OnInit {
   private updateAnswersData(): void {
     if (this.question && this.question.identifier && Array.isArray(this.question.options)) {
 
+      // Calcul bar Data
       this._barsData = this.question.options.map((q) => {
         let answers: Array<Answer> = [];
         if (this.question.controlType === 'checkbox') {
@@ -57,17 +58,25 @@ export class BarChartComponent implements OnInit {
         } else if (this.question.controlType === 'radio')  {
           answers = this._answers.filter((a) => a.answers[this.question.identifier] === q.identifier);
         }
-        const percentage = `${((answers.length * 100) / this._answers.length) >> 0}%`;
         return {
           label: q.label,
           answers: answers,
-          percentage: percentage,
+          percentage: '0%',
           color: q.color,
           count: answers.length,
           positive: q.positive
         }
       });
 
+      // Then calcul percentages
+      const maxAnswersCount = this._barsData.reduce((acc, bd) => {
+        return (acc < bd.count) ? bd.count : acc;
+      }, 0);
+      this._barsData.forEach((bd) => {
+        bd.percentage = `${((bd.count * 100) / maxAnswersCount) >> 0}%`;
+      });
+
+      // If we have a radio question, we should also calculate the pieChart data.
       if (this.question.controlType === 'radio') {
         let positiveAnswersCount = 0;
         const pieChartData: {data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number} = {
