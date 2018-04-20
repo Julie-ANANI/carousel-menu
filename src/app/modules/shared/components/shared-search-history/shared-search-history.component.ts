@@ -16,6 +16,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _paused: boolean = false;
   private _requests: Array<any> = [];
   private _total: number = 0;
+  private _googleQuota: number = 30000;
   private _config: any = {
     fields: 'entity keywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results',
     limit: 10,
@@ -29,6 +30,8 @@ export class SharedSearchHistoryComponent implements OnInit {
   constructor(private _searchService: SearchService) {}
 
   ngOnInit(): void {
+    // On récupère le quota Google
+    this.getGoogleQuota();
     if (this.campaignId) {
       this._config.campaign = this.campaignId;
     }
@@ -57,6 +60,12 @@ export class SharedSearchHistoryComponent implements OnInit {
           this._total = result._metadata.totalCount;
         }
       });
+  }
+
+  public getGoogleQuota() {
+    this._searchService.dailyStats().first().subscribe(result => {
+      this._googleQuota = 30000 - result.hours.slice(10).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0)
+    });
   }
 
   public getChildren (request: any) {
@@ -115,6 +124,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   get requests(): Array<any> { return this._requests; }
   get total(): number { return this._total; }
+  get googleQuota(): number { return this._googleQuota; }
   get config(): any { return this._config; }
   get paused(): boolean { return this._paused; }
 }

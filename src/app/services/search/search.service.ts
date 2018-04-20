@@ -58,6 +58,12 @@ export class SearchService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public dailyStats(): Observable<any> {
+    return this._http.get('/search/get', {params: {path: '/stats/day'}})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public getRequests(config: any): Observable<any> {
     return this._http.get('/search/queryRessourceAPI/request', {params: config})
       .map((res: Response) => res.json())
