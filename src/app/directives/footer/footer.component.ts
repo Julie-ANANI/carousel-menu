@@ -24,8 +24,8 @@ export class FooterComponent implements OnInit {
   }
 
   public propagateTranslation(lang: string) {
-    this._cookieService.put('user_lang', lang||'en');
-    this.translate.use(lang||'en');
+    this._cookieService.put('user_lang', lang || 'en');
+    this.translate.use(lang || 'en');
   }
 
   get companyName(): string {
