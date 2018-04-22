@@ -27,10 +27,7 @@ export class ClientDiscoverComponent implements OnInit {
     fields: '',
     limit: 0,
     offset: 0,
-    search: {
-      isPublic: 1,
-      status: 'DONE',
-    },
+    search: '',
     sort: {
       created: -1
     }
@@ -95,6 +92,3 @@ export class ClientDiscoverComponent implements OnInit {
   }
 
 }
-
-
-

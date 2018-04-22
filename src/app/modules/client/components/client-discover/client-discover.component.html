@@ -44,7 +44,7 @@
                 <div class="card-title" [routerLink]="[ innovationCard.innovation_reference, innovationCard.lang ]">{{ innovationCard.title }}</div>
                 <div class="card-subtitle text-gray"> </div>
               </div>
-              <div class="card-body"> {{ innovationCard.summary }}</div>
+              <div class="card-body"> {{ innovationCard.summary | DiscoverSummaryPipe }}</div>
               <div class="card-footer">
                 <p>View in:
                     <span [routerLink]="[ innovationCard.innovation_reference, innovationCard.lang ]"> {{ innovationCard.lang | uppercase }}</span>

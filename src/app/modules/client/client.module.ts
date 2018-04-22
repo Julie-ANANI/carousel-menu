@@ -20,6 +20,7 @@ import { ClientProjectEditExample2Component } from './components/client-project-
 import { ClientProjectEditExample1Component } from './components/client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
+import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { ClientWelcomeComponent } from './components/client-welcome/client-welco
     ClientProjectSynthesisComponent,
     ClientProjectEditExample2Component,
     ClientProjectEditExample1Component,
-    ClientResetPasswordComponent
+    ClientResetPasswordComponent,
+    DiscoverSummaryPipe
   ]
 })
 export class ClientModule {

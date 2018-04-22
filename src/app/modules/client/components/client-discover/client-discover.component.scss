@@ -39,7 +39,6 @@ $card-body-color: #878787 !default;
     }
 
     .card-header {
-      height: 95px;
       cursor: pointer;
 
       .card-title {
@@ -50,7 +49,6 @@ $card-body-color: #878787 !default;
     }
 
     .card-body {
-      height: 120px;
       color: $card-body-color;
       font-size: 0.8rem;
       text-align: justify;
@@ -89,14 +87,26 @@ $card-body-color: #878787 !default;
   outline: none !important;
 }
 
-@media (max-width: 960px) {
+@media (min-width: 767px) and (max-width: 960px) {
 
   .card-header {
     height: 107px !important;
   }
 
   .card-body {
-    height: 260px !important;
+    height: 160px !important;
+  }
+
+}
+
+@media (min-width: 961px) {
+
+  .card-header {
+    height: 75px !important;
+  }
+
+  .card-body {
+    height: 120px !important;
   }
 
 }
