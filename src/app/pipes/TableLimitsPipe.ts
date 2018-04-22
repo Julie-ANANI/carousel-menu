@@ -17,12 +17,12 @@ export class LimitsPipe implements PipeTransform {
             return items;
         }
 
-        let start = (field === 'offset') ? (value||0) : 0;
-        let limit = (field === 'limit') ? (value||items.length) : items.length;
+        let start = (field === 'offset') ? (value || 0) : 0;
+        let limit = (field === 'limit') ? (value || items.length) : items.length;
 
 
 
-        return items.slice(start, (start+limit));
+        return items.slice(start, (start + limit));
     }
 
 }

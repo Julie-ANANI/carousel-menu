@@ -121,7 +121,7 @@ export class AppModule {
 
     const user_lang = this._cookieService.get('user_lang');
     let browserLang = user_lang || this._translateService.getBrowserLang();
-    if(!browserLang.match(/en|fr/)) {
+    if (!browserLang.match(/en|fr/)) {
       browserLang = 'en';
     }
 

@@ -75,7 +75,7 @@
         <div class="column col-11 col-mx-auto">
           <h2 class="section-title">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
           <ul>
-            <li *ngFor="let advantage of innovation.advantages;">{{ advantage.text | lowercase }}</li>
+            <li *ngFor="let advantage of innovation.advantages;">{{ advantage.text[0] | uppercase }}{{advantage.text|slice:1}}</li>
           </ul>
         </div>
       </div>

@@ -24,7 +24,7 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
   private twitterUrl: string;
   private facebookUrl: string;
   private googlePlusUrl: string;
-  private quizButtonDisplay: string
+  private quizButtonDisplay: string;
 
   constructor(private _innovationService: InnovationService,
               private _activatedRoute: ActivatedRoute,
