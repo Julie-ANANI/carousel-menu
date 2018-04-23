@@ -2,7 +2,6 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, OnInit, Input } from '@angular/core';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { PageScrollConfig } from 'ng2-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,9 +9,9 @@ import { AnswerService } from '../../../../services/answer/answer.service';
 import { Answer } from '../../../../models/answer';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
-import { Infographics } from '../../../../models/infographics';
 import { Innovation } from '../../../../models/innovation';
-import {environment} from '../../../../../environments/environment';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -29,25 +28,31 @@ export class SharedMarketReportComponent implements OnInit {
   private _cleaned_questions: Array<Question> = [];
   private _answers: Array<Answer> = [];
   private _countries: Array<string> = [];
-  private _showListProfessional = true;
-  private _infographics: Infographics;
-  private _showDetails = true;
+  private _showListProfessional = false;
+  private _showDetails = false;
   private _calculating = false;
   private _innoid: string;
   public today: Number;
+
+  private _infographics: any; // TODO remove infographics once conclusions have been migrated to Innovation
 
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer;
 
   constructor(private _translateService: TranslateService,
-              private _innovationService: InnovationService,
               private _answerService: AnswerService,
+              private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this.today = Date.now();
     this._innoid = this.project._id;
+
+    this._innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
+      this._infographics = synthesis.infographics;
+      }, error => this._notificationsService.error('ERROR.ERROR', error.message));
+
     this.loadAnswers();
     if (this.project.preset && this.project.preset.sections) {
       this.project.preset.sections.forEach((section: Section) => {
@@ -55,7 +60,7 @@ export class SharedMarketReportComponent implements OnInit {
       });
       // remove spaces in questions identifiers.
       this._cleaned_questions = this._questions.map((q) => {
-        let ret = JSON.parse(JSON.stringify(q));
+        const ret = JSON.parse(JSON.stringify(q));
         // Please don't touch the parse(stringify()), this dereference q to avoid changing _questions list
         // If changed, the answer modal won't have the good questions identifiers because _questions will be modified
         ret.identifier = ret.identifier.replace(/\s/g, '');
@@ -63,9 +68,6 @@ export class SharedMarketReportComponent implements OnInit {
       });
     }
     this._modalAnswer = null;
-    this._innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
-      this._infographics = synthesis.infographics;
-    }, error => this._notificationsService.error('ERROR.ERROR', error.message));
     PageScrollConfig.defaultDuration = 800;
   }
 
@@ -93,17 +95,6 @@ export class SharedMarketReportComponent implements OnInit {
       });
   }
 
-  public recalculateSynthesis(event: Event): void {
-    event.preventDefault();
-    this._calculating = true;
-    this._innovationService.recalculateSynthesis(this._innoid)
-      .first()
-      .subscribe(synthesis => {
-        this._calculating = false;
-        this._infographics = synthesis.infographics;
-      });
-  }
-
   /**
    * Builds the data required to ask the API for a PDF
    * @returns {{projectId, innovationCardId}}
@@ -115,6 +106,7 @@ export class SharedMarketReportComponent implements OnInit {
     }
   }
 
+  /*
   public getModel (): any {
     const lang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
     return {
@@ -124,6 +116,7 @@ export class SharedMarketReportComponent implements OnInit {
       pdfDataseedFunction: this.dataBuilder(lang)
     };
   }
+  */
 
   public toggleDetails(event: Event): void {
     event.preventDefault();
@@ -136,12 +129,13 @@ export class SharedMarketReportComponent implements OnInit {
     this._modalAnswer = answer;
   }
 
-  public canShow(): boolean {
-    return !!this._infographics;
-  }
-
+  // TODO: remove once conclusions have been copied
   public getInfo(question: Question) {
-    return this._infographics.questions.find((infoQ: any) => infoQ.id === question.identifier);
+    if (this._infographics) {
+      return this._infographics.questions.find((infoQ: any) => infoQ.id === question.identifier);
+    } else {
+      return null;
+    }
   }
 
   public get logoName(): string {
@@ -157,7 +151,6 @@ export class SharedMarketReportComponent implements OnInit {
   get showListProfessional(): boolean { return this._showListProfessional; }
   set showListProfessional(val: boolean) { this._showListProfessional = val; }
   get innoid(): string { return this._innoid; }
-  get infographics(): any { return this._infographics; }
   set calculating (value: boolean) { this._calculating = value; }
   get calculating (): boolean { return this._calculating; }
   get showDetails (): boolean { return this._showDetails; }

@@ -59,7 +59,7 @@ export class ShareService {
     return encodeURI('https://plus.google.com/share?url=' + this._getShareUrl(project) + '&text=' + this._getSummary(project, lang));
   }
 
-  public mailProjectShareLink (project: Innovation, lang: string) {
+  public mailProjectShareLink (project: Innovation, lang: string): string {
     lang = lang || 'en';
     return `mailto:?body=${this._getSummary(project, lang)}%0A${this._getShareUrl(project)}&subject=${this._getTitle(project, lang)}`
   }

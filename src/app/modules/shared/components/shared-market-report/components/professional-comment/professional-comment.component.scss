@@ -2,6 +2,10 @@ div.professional-comment {
   color: white;
   padding: 17px 16px 13px 24px;
 
+  p {
+    margin-bottom: 0;
+  }
+
   .flex-container {
     display: flex;
     justify-content: space-between;

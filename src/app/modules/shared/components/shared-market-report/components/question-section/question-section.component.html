@@ -4,20 +4,51 @@
   <div class="white-frame">
 
     <!--************************************************
-               HEADER SECTION (UMI SYNTHESIS)
-    **************************************************-->
+                 HEADER SECTION (UMI SYNTHESIS)
+      **************************************************-->
+
     <app-question-conclusion
-      [info]="info"
-      [innovationId]="innovation._id"
+      *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'
+              && question.controlType !== 'list' && question.controlType !== 'clearbit'"
+      [infographic]="infographic"
+      [innovation]="innovation"
+      [question]="question"
       [readonly]="readonly"
+      [stats]="stats"
     ></app-question-conclusion>
 
     <!--************************************************
                          ANSWERS
     **************************************************-->
 
+    <!--======= Bar Chart =======-->
+    <app-bar-chart *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'"
+                   [answers]="answersToShow"
+                   [infographic]="infographic"
+                   [innovation]="innovation"
+                   [question]="question"
+                   [readonly]="readonly"
+                   [stats]="stats"
+                   (modalAnswerChange)="seeAnswer($event)">
+    </app-bar-chart>
+
+    <!--======= Liste d'items (applications, concurrents, partenaires potentiels) =======-->
+    <app-item-list *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
+                   [answers]="answersToShow"
+                   [infographic]="infographic"
+                   [innovation]="innovation"
+                   [question]="question"
+                   [readonly]="readonly"
+                   [stats]="stats"
+                   [showDetails]="showDetails"
+                   (updateNumberOfItems)="updateNumberOfItems($event)"
+                   (modalAnswerChange)="seeAnswer($event)">
+    </app-item-list>
+
     <!-- ========= SHOW ANSWERS BUTTON ==============-->
-    <button type="button" class="market-report-btn show-answers-btn centered"
+    <button type="button" class="market-report-btn centered"
+            *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'
+                   && question.controlType !== 'list' && question.controlType !== 'clearbit'"
             [ngClass]="{'active': showDetails}"
             (click)="showDetails = !showDetails; $event.preventDefault()">
       {{(showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate}}
@@ -25,7 +56,8 @@
          [ngClass]="showDetails ? 'fa-angle-up' : 'fa-angle-down'"></i>
     </button>
 
-    <div *ngIf="showDetails" class="bloc">
+    <div *ngIf="showDetails && question.controlType !== 'checkbox' && question.controlType !== 'radio'
+                && question.controlType !== 'list' && question.controlType !== 'clearbit'" class="bloc">
 
       <!--======= Scale =======-->
       <app-scale *ngIf="question.controlType === 'scale'"
@@ -33,26 +65,12 @@
              [question]="question">
       </app-scale>
 
-      <!--======= Bar Chart =======-->
-      <app-bar-chart *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'"
-                     [answers]="answersToShow"
-                     [question]="question"
-                     (modalAnswerChange)="seeAnswer($event)">
-      </app-bar-chart>
-
       <!--======= Avantages Clés =======-->
       <app-stars *ngIf="question.controlType === 'stars'"
                  [answers]="answersToShow"
                  [innovation]="innovation"
                  [question]="question">
       </app-stars>
-
-      <!--======= Liste d'items (applications, concurrents, partenaires potentiels) =======-->
-      <app-item-list *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
-        [answers]="answersToShow"
-        [question]="question"
-        (modalAnswerChange)="seeAnswer($event)">
-      </app-item-list>
 
       <!--======= textarea =======-->
       <ul *ngIf="question.controlType === 'textarea'" class="comments">
@@ -75,36 +93,38 @@
         </div>
       </div>
 
-      <!--************************************************
-                       COMMENTS SECTION
-      **************************************************-->
-      <ng-container *ngIf="answersWithComment.length > 0">
-
-        <!-- ========= SHOW COMMENTS BUTTON ==============-->
-        <button type="button" class="market-report-btn show-comments-btn centered"
-                [ngClass]="{'active': showComments}"
-                (click)="showComments = !showComments; $event.preventDefault()">
-          {{(showComments ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN') | translate:({length: answersWithComment.length})}}
-          <i class="fa" aria-hidden="true"
-             [ngClass]="showComments ? 'fa-angle-up' : 'fa-angle-down'"></i>
-        </button>
-
-        <!-- ================= COMMENTS ==================-->
-        <div class="bloc" *ngIf="showComments">
-          <ul class="comments">
-            <li *ngFor="let answer of answersWithComment">
-              <market-comment
-                [answer]="answer"
-                [questionId]="question.identifier+'Comment'"
-                (modalAnswerChange)="seeAnswer($event)">
-              </market-comment>
-            </li>
-          </ul>
-        </div>
-
-      </ng-container>
-
     </div>
+
+    <!--************************************************
+                 COMMENTS SECTION
+      **************************************************-->
+    <ng-container *ngIf="((showDetails && question.controlType !== 'checkbox' && question.controlType !== 'radio')
+                          || question.controlType === 'list' || question.controlType === 'clearbit')
+                         && answersWithComment.length > 0">
+
+      <!-- ========= SHOW COMMENTS BUTTON ==============-->
+      <button type="button" class="market-report-btn centered"
+              [ngClass]="{'active': showComments}"
+              (click)="showComments = !showComments; $event.preventDefault()">
+        {{(showComments ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN') | translate:({length: answersWithComment.length})}}
+        <i class="fa" aria-hidden="true"
+           [ngClass]="showComments ? 'fa-angle-up' : 'fa-angle-down'"></i>
+      </button>
+
+      <!-- ================= COMMENTS ==================-->
+      <div class="bloc" *ngIf="showComments">
+        <ul class="comments">
+          <li *ngFor="let answer of answersWithComment">
+            <market-comment
+              [answer]="answer"
+              [questionId]="question.identifier+'Comment'"
+              (modalAnswerChange)="seeAnswer($event)">
+            </market-comment>
+          </li>
+        </ul>
+      </div>
+
+    </ng-container>
 
   </div>
 </div>

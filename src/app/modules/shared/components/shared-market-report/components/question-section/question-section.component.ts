@@ -22,6 +22,7 @@ export class QuestionSectionComponent implements OnInit {
   private _answersWithComment: Array<Answer> = [];
   private _answersToShow: Array<Answer> = [];
   private _readonly: boolean;
+  private _stats: {nbAnswers?: number, percentage?: number};
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
@@ -39,8 +40,8 @@ export class QuestionSectionComponent implements OnInit {
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Input() public question: Question;
   @Input() public innovation: Innovation;
-  @Input() public info: any;
 
+  @Input() public infographic: any;
 
   constructor(private _translateService: TranslateService) { }
 
@@ -66,18 +67,29 @@ export class QuestionSectionComponent implements OnInit {
           }
         });
 
-      // sort textarea answers by quality and by length.
-      if (this.question.controlType === 'textarea') {
-        this._answersToShow = this._answersToShow
-          .sort((a, b) => {
-            if ((b.answers[id + 'Quality'] || 1) - (a.answers[id + 'Quality'] || 1) === 0) {
-              return b.answers[id].length - a.answers[id].length;
-            } else {
-              return (b.answers[id + 'Quality'] || 1) - (a.answers[id + 'Quality'] || 1);
-            }
-          });
+      this._stats = {
+        nbAnswers: this._answersToShow.length,
+        percentage: Math.round((this._answersToShow.length * 100) / this.answers.length)
+      };
+
+      switch (this.question.controlType) {
+        case 'textarea':
+        // sort textarea answers by quality and by length.
+          this._answersToShow = this._answersToShow
+            .sort((a, b) => {
+              if ((b.answers[id + 'Quality'] || 1) - (a.answers[id + 'Quality'] || 1) === 0) {
+                return b.answers[id].length - a.answers[id].length;
+              } else {
+                return (b.answers[id + 'Quality'] || 1) - (a.answers[id + 'Quality'] || 1);
+              }
+            });
+          break;
       }
     }
+  }
+
+  public updateNumberOfItems(event: number): void {
+    this._stats.nbAnswers = event;
   }
 
   public seeAnswer(event: Answer) {
@@ -91,5 +103,6 @@ export class QuestionSectionComponent implements OnInit {
   get showDetails(): boolean { return this._showDetails; }
   get answersToShow(): Array<Answer> { return this._answersToShow; }
   get answersWithComment(): Array<Answer> { return this._answersWithComment; }
+  get stats() { return this._stats; }
   get lang(): string { return this._translateService.currentLang; }
 }

@@ -3,6 +3,7 @@
  */
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../../../models/answer';
+import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 
 @Component({
@@ -17,11 +18,21 @@ export class ItemListComponent implements OnInit {
     this._answers = value;
     this.updateAnswersData();
   }
+  @Input() public infographic: any;
+  @Input() public innovation: Innovation;
   @Input() public question: Question;
+  @Input() public readonly: boolean;
+  @Input() set showDetails(value: boolean) {
+    this._details = value;
+  }
+  @Input() public stats: any;
   @Output() modalAnswerChange = new EventEmitter<any>();
+  @Output() updateNumberOfItems = new EventEmitter<number>();
 
   private _answers: Array<Answer>;
-  private _listItems: Array<{rating: number, count: number, value: string, answers: Array<Answer>}>;
+  private _details: boolean;
+  private _listItems: Array<{rating: number, count: number, value: string, domain: string, logo: string, answers: Array<Answer>}>;
+  private _maxToShow = 6;
 
   constructor() { }
 
@@ -32,7 +43,7 @@ export class ItemListComponent implements OnInit {
   private updateAnswersData(): void {
     if (this.question && this.question.identifier) {
 
-      const answerItems: {[value: string]: {rating: number, count: number, answers: Array<Answer>}} = {};
+      const answerItems: {[value: string]: {rating: number, count: number, domain: string, logo: string, answers: Array<Answer>}} = {};
 
       this._answers.forEach((answer) => {
         if (answer.answers[this.question.identifier] && Array.isArray(answer.answers[this.question.identifier])) {
@@ -40,12 +51,14 @@ export class ItemListComponent implements OnInit {
             const key = this.question.controlType !== 'clearbit' ? item.text : item.name;
             if (answerItems[key]) {
               answerItems[key].count += 1;
-              if (item.rating === 0 || item.rating === 2) { answerItems[key].rating = item.rating; }
+              if (Number.isInteger(item.rating) && item.rating !== 1) { answerItems[key].rating = item.rating; }
               answerItems[key].answers.push(answer);
             } else {
               answerItems[key] = {
-                rating: item.rating || 1,
+                rating: Number.isInteger(item.rating) ? item.rating : 1,
                 count: 1,
+                domain: item.domain ? `http://${item.domain}` : null,
+                logo: item.logo,
                 answers: [answer]
               };
             }
@@ -59,6 +72,8 @@ export class ItemListComponent implements OnInit {
             value: key,
             rating: answerItems[key].rating,
             count: answerItems[key].count,
+            domain: answerItems[key].domain,
+            logo: answerItems[key].logo,
             answers: answerItems[key].answers,
           }
         })
@@ -74,6 +89,8 @@ export class ItemListComponent implements OnInit {
             return b.rating - a.rating;
           }
         });
+
+      this.updateNumberOfItems.emit(this._listItems.length);
     }
   }
 
@@ -82,5 +99,7 @@ export class ItemListComponent implements OnInit {
   }
 
   get listItems() { return this._listItems; }
+  get details() { return this._details; }
+  get maxToShow() { return this._maxToShow; }
 
 }

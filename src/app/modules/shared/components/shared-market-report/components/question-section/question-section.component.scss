@@ -88,6 +88,7 @@ h2 {
   color: #fff;
   background-color: #3498DB;
   padding: 0 50px;
+  bottom: -53px;
 
   .fa-angle-up,
   .fa-angle-down {
@@ -102,14 +103,6 @@ h2 {
   &.active {
     background-color: #747474;
   }
-}
-
-.show-answers-btn {
-  bottom: -53px;
-}
-
-.show-comments-btn {
-  bottom: -85px;
 }
 
 .download-pdf-btn {
