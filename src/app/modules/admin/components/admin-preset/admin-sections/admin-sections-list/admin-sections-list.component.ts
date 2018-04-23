@@ -10,7 +10,6 @@ import { Section } from '../../../../../../models/section';
 export class AdminSectionsListComponent implements OnInit {
 
   private _sections: Array<Section>;
-  public sFilter = '';
   public selectedSectionIdToBeDeleted: string = null;
   public selectedSectionToBeCloned: Section = null;
   private _total: number;
@@ -76,11 +75,5 @@ export class AdminSectionsListComponent implements OnInit {
   set config(value: any) { this._config = value; }
   get config(): any { return this._config; }
   get total () { return this._total; }
-  get sections () {
-    if (this.sFilter) {
-      return this._sections.filter((s) => s.name.indexOf(this.sFilter) !== -1);
-    } else {
-      return this._sections;
-    }
-  }
+  get sections () { return this._sections; }
 }
