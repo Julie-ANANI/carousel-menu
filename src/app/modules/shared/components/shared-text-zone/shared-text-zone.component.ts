@@ -16,7 +16,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   @Input() set data(value: string) {
     this._data = value;
     if (this.editor) {
-      this.editor.insertContent(this._data);
+      this.editor.setContent(this._data);
       this.contentHash();
     }
   }
@@ -61,7 +61,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
       },
     });
     if (this._data && this.editor) {
-      this.editor.insertContent(this._data);
+      this.editor.setContent(this._data);
       this.contentHash();
     }
   }
