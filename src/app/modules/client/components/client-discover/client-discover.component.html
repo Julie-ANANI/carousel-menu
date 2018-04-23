@@ -16,7 +16,11 @@
             <p class="hero-subtitle">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</p>
           </div>
           <div class="column col-md-12 col-4" id="padding-top">
-            <app-autocomplete-search></app-autocomplete-search>
+            <app-search-input
+              (searchInputEmit)="onSearchValue($event)"
+              (discoverValueEmit)="onValueSelected($event)"
+              [suggestions]="suggestionInnov">
+            </app-search-input>
           </div>
         </div>
         <!-- /Page Description and Search Box -->

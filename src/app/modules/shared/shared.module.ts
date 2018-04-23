@@ -48,7 +48,7 @@ import { LimitsPipe } from '../../pipes/TableLimitsPipe';
 // Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
-import { AutocompleteSearchComponent } from '../../directives/autocomplete-search/autocomplete-search.component';
+import { SearchInputComponent } from '../../directives/search-input/search-input.component';
 import { CountryFlagComponent } from '../../directives/country-flag/country-flag.component';
 
 @NgModule({
@@ -70,7 +70,6 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     // FormErrorDirective,
     CountryFlagComponent,
     InputListComponent,
-
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
@@ -86,7 +85,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedProjectSettingsComponent,
     SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
-    AutocompleteSearchComponent,
+    SearchInputComponent,
     SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
@@ -131,7 +130,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     SharedProjectSettingsComponent,
     SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
-    AutocompleteSearchComponent,
+    SearchInputComponent,
     SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,

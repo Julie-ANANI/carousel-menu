@@ -18,7 +18,7 @@ export class DiscoverSummaryPipe implements PipeTransform {
           return value.slice(0, index + 1);
         }
         else {
-          return value.slice(0, this.defaultSummaryLength) + '..';
+          return value.slice(0, this.defaultSummaryLength) + '...';
         }
 
       }
