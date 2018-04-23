@@ -11,6 +11,7 @@ import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
 import { Innovation } from '../../../../models/innovation';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -59,7 +60,7 @@ export class SharedMarketReportComponent implements OnInit {
       });
       // remove spaces in questions identifiers.
       this._cleaned_questions = this._questions.map((q) => {
-        let ret = JSON.parse(JSON.stringify(q));
+        const ret = JSON.parse(JSON.stringify(q));
         // Please don't touch the parse(stringify()), this dereference q to avoid changing _questions list
         // If changed, the answer modal won't have the good questions identifiers because _questions will be modified
         ret.identifier = ret.identifier.replace(/\s/g, '');
@@ -105,6 +106,7 @@ export class SharedMarketReportComponent implements OnInit {
     }
   }
 
+  /*
   public getModel (): any {
     const lang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
     return {
@@ -114,6 +116,7 @@ export class SharedMarketReportComponent implements OnInit {
       pdfDataseedFunction: this.dataBuilder(lang)
     };
   }
+  */
 
   public toggleDetails(event: Event): void {
     event.preventDefault();
