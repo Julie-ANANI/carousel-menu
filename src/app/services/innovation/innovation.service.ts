@@ -7,6 +7,7 @@ import { Innovation } from '../../models/innovation';
 import { InnovCard } from '../../models/innov-card';
 import { User } from '../../models/user.model';
 import { Video } from '../../models/media';
+import {QuestionReport} from "../../models/market-report";
 
 @Injectable()
 export class InnovationService {
@@ -92,12 +93,6 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public getInnovationSythesis(innovationId: string): Observable<any> {
-    return this._http.get('/innovation/' + innovationId + '/synthesis')
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
-  }
-
   public remove(innovationId: string): Observable<any> {
     return this._http.delete('/innovation/' + innovationId)
       .map((res: Response) => res.json())
@@ -110,8 +105,14 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public updateSynthesis(innovationId: string, data: any): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/synthesis', { payload: data })
+  public updateMarketReport(innovationId: string, data: QuestionReport): Observable<any> {
+    return this._http.put('/innovation/' + innovationId + '/marketReport', { payload: data })
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public getInnovationSythesis(innovationId: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/synthesis')
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

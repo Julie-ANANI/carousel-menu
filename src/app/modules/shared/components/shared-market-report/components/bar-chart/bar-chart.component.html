@@ -1,3 +1,12 @@
+<app-question-conclusion
+  [infographic]="infographic"
+  [innovation]="innovation"
+  [pieChart]="pieChart"
+  [question]="question"
+  [readonly]="readonly"
+  [stats]="stats"
+></app-question-conclusion>
+
 <div class="bar-chart-component">
 
   <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i">
@@ -14,16 +23,16 @@
       </div>
     </div>
 
-    <div *ngIf="showAnswers[i]">
-      <div class="prosList">
-        <div *ngFor="let answer of barData.answers" class="professional-item">
-          <app-pro-tag
-            [answer]="answer"
-            (modalAnswerChange)="seeAnswer($event)">
-          </app-pro-tag>
-        </div>
-      </div>
-    </div>
+    <!--======= textarea =======-->
+    <ul *ngIf="showAnswers[i]" class="comments">
+      <li *ngFor="let answer of barData.answers">
+        <market-comment
+          [answer]="answer"
+          [questionId]="question.identifier+'Comment'"
+          (modalAnswerChange)="seeAnswer($event)">
+        </market-comment>
+      </li>
+    </ul>
 
   </div>
 

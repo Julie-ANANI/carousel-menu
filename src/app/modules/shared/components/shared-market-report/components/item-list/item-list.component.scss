@@ -1,53 +1,60 @@
-/* === Items list === */
-div.items {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.items {
 
-  .top-profil {
-    background: #16A085 !important;
-  }
+  /* === Items list === */
+  div.items-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-  > div {
-    color: white;
-    background: #0B90C6;
-    padding: 8px 15px;
-    border-radius: 2px;
-    width: 49%;
-    margin-bottom: 5px;
-
-    .flex-container {
-      align-items: flex-start;
-    }
-  }
-
-  /* === Horizontals bars === */
-  .market-item {
-    flex: 1;
-    margin-left: 10px;
-    font-weight: 600;
-
-    a {
-      color: rgba(255, 255, 255, 0.8);
+    .top-profil {
+      background: #16A085 !important;
     }
 
-    a:hover, a:focus {
-      color: white
+    > div {
+      color: white;
+      background: #0B90C6;
+      padding: 8px 15px;
+      border-radius: 2px;
+      width: 49%;
+      margin-bottom: 5px;
+
+      .flex-container {
+        align-items: flex-start;
+      }
     }
 
-    .item-occurrence {
+    /* === Horizontals bars === */
+    .market-item {
+      flex: 1;
+      margin-left: 10px;
       font-weight: 600;
-      font-size: 14px;
-      color: #0878A5;
-      padding: 0 4px;
-      border-radius: 500px;
-      background: rgba(255, 255, 255, 0.8);
+
+      a {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      a:hover, a:focus {
+        color: white
+      }
+
+      .item-occurrence {
+        font-weight: 600;
+        font-size: 14px;
+        color: #0878A5;
+        padding: 0 4px;
+        border-radius: 500px;
+        background: rgba(255, 255, 255, 0.8);
+      }
     }
+
   }
 
-}
+  .flex-container {
+    display: flex;
+    justify-content: space-between;
+  }
 
-.flex-container {
-  display: flex;
-  justify-content: space-between;
+  .clickable-url {
+    cursor: pointer;
+  }
 }

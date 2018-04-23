@@ -1,5 +1,6 @@
 import { InnovationSettings } from './innov-settings';
 import { InnovCard } from './innov-card';
+import { QuestionReport } from './market-report';
 import { Media } from './media';
 import { Preset } from './preset';
 import { User } from './user.model';
@@ -17,6 +18,7 @@ export interface Innovation {
   tags?: Array<any>;
   preset?: Preset;
   readonly quizId?: string;
+  marketReport?: {[prop: string]: QuestionReport};
   collaborators?: Array<User>;
   settings?: InnovationSettings;
   stats?: any;

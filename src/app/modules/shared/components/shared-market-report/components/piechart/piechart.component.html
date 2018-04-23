@@ -3,9 +3,9 @@
     class="chart chart-pie"
     baseChart
     [chartType]="'pie'"
+    [datasets]="datasets"
+    [labels]="labels | multiling:lang"
     [legend]="false"
-    [datasets]="data"
-    [labels]="labels[lang]"
     [colors]="colors">
   </canvas>
   <div class="number-ratio">

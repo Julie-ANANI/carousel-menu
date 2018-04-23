@@ -1,8 +1,9 @@
 /**
  * Created by bastien on 16/11/2017.
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'piechart',
@@ -10,15 +11,39 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['piechart.component.scss']
 })
 
-export class PiechartComponent {
+export class PiechartComponent implements OnInit, OnDestroy {
 
-  @Input() public pieChartData: any;
-  @Input() public percentage: number;
+  @Input() set pieChart(value: any) {
+    this._colors = [{backgroundColor: value.colors || []}];
+    this._labels = value.labels || {};
+    this._datasets = [{data: value.data || []}];
+    this._percentage = value.percentage;
+  }
 
-  constructor(private _translateService: TranslateService) { }
+  private _datasets: Array<{data: Array<number>}>;
+  private _colors: Array<{backgroundColor: Array<string>}>;
+  private _labels: {[prop: string]: Array<string>};
+  private _lang: string;
+  private _percentage: number;
+  private ngUnsubscribe: Subject<any> = new Subject();
 
-  get data(): Array<string> { return this.pieChartData.data; }
-  get colors(): Array<string> { return this.pieChartData.data[0].backgroundColor; }
-  get labels(): any { return this.pieChartData.labels; }
-  get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
+  constructor(private translateService: TranslateService) { }
+
+  ngOnInit() {
+    this._lang = this.translateService.currentLang || 'en';
+    this.translateService.onLangChange.takeUntil(this.ngUnsubscribe).subscribe((e) => {
+      this._lang = e.lang;
+    });
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+  get datasets() { return this._datasets; }
+  get colors() { return this._colors; }
+  get labels() { return this._labels; }
+  get lang() { return this._lang; }
+  get percentage() { return this._percentage; }
 }

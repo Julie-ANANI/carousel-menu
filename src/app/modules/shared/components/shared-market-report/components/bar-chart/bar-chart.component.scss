@@ -62,27 +62,34 @@
     margin-bottom: 30px;
   }
 
-  .prosList {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 10px;
+  ul.comments {
 
-    .professional-item {
-      background: white;
-      box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
-      padding: 35px 20px 0 20px;
-      width: 100%;
-      max-width: 280px;
-      margin-bottom: 20px;
+    li {
+      list-style: none;
+      .flex-container {
+        display: flex;
+        justify-content: space-between;
+      }
     }
 
-    .white-frame {
-      background: white;
-      padding: 50px 50px 30px 50px;
-      margin: 10px;
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
+    > li {
+      position: relative;
+      margin-bottom: 15px;
+      border-radius: 2px;
+
     }
+
+    > li:nth-child(even) {
+      background: #4FA9CE;
+    }
+
+    > li:nth-child(odd) {
+      background: #0B90C6;
+    }
+  }
+
+  ul.comments > li .flex-container {
+    align-items: center !important;
   }
 
 }

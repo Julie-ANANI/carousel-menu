@@ -13,13 +13,18 @@ declare const tinymce: any;
 
 export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit {
   @Input() readonly: boolean;
-  @Input() data: string;
-
-
+  @Input() set data(value: string) {
+    this._data = value;
+    if (this.editor) {
+      this.editor.insertContent(this._data);
+      this.contentHash();
+    }
+  }
   @Input() elementId: String;
   @Output() onEditorKeyup = new EventEmitter<any>();
 
   private _contentHash: number;
+  private _data: string;
   private editor: any;
   private _htmlId: string;
 
@@ -55,8 +60,8 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
         });
       },
     });
-    if (this.data && this.editor) {
-      this.editor.insertContent(this.data);
+    if (this._data && this.editor) {
+      this.editor.insertContent(this._data);
       this.contentHash();
     }
   }
@@ -85,5 +90,6 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   }
 
   public get htmlId(): string { return this._htmlId; }
+  public get text(): string { return this._data; }
 
 }
