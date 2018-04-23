@@ -7,6 +7,9 @@ export const environment = {
   production: false,
   apiUrl: '',
   companyName: '',
+  companyShortName: '',
+  companyURL: '',
+  logoURL: '',
   domain: '',
   innovationUrl: '',
   quizUrl: ''

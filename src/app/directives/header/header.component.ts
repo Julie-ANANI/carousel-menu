@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthService } from '../../services/auth/auth.service';
 import { environment } from '../../../environments/environment';
@@ -13,9 +13,9 @@ export class HeaderComponent implements OnInit {
 
  // @Input() backOffice: boolean;
 
-  private backValue: boolean; // to toggle back office value
+  private backValue: boolean; // hold back office value
 
-  private displayPropertyValue: boolean; // to toggle the value of collapse menu
+  private displayPropertyValue: boolean; // hold the value of collapse menu
 
   constructor(private _authService: AuthService,
               private _location: Location) {}
@@ -27,11 +27,12 @@ export class HeaderComponent implements OnInit {
   }
 
   public logoName(): string {
-    return `logo-${ environment.domain || 'umi.us'}.png`;
+    //return `logo-${ environment.domain || 'umi.us'}.png`;
+    return environment.logoURL;
   }
 
   public canShow(reqLevel: number): boolean {
-    return reqLevel && (this._authService.adminLevel & reqLevel) === reqLevel;
+    return reqLevel && ( this._authService.adminLevel & reqLevel) === reqLevel;
   }
 
   get authService (): AuthService {

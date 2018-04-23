@@ -1,0 +1,153 @@
+<div *ngIf="project">
+  <form novalidate [formGroup]="formData" class="form-horizontal">
+    <div class="columns">
+      <div class="column col-4">
+        <div class="language-choice">
+          <p>{{ 'PROJECT_EDIT.DESCRIPTION.LANGUAGE_CHOICE' | translate }} :</p>
+          <ul formArrayName="innovationCards">
+            <li *ngFor="let innovationCard of formData.get('innovationCards').value; let i = index"
+                [ngClass]="{'active': innovationCardEditingIndex === i }">
+              <div (click)="(innovationCardEditingIndex = i) && $event.preventDefault()">
+                {{ 'COMMON.LANG.'+innovationCard.lang | uppercase | translate }}
+              </div>
+                          <span *ngIf="innovationCard.principal" class="c-auto">
+                            {{ 'PROJECT_EDIT.DESCRIPTION.MAIN_LANG' | translate }}</span>
+                          <span *ngIf="!innovationCard.principal" (click)="setAsPrincipal($event, innovationCard.id)">{{ 'PROJECT_EDIT.DESCRIPTION.SET_AS_MAIN_LANG' | translate }} <i
+                            class="icon icon-arrow-right"></i></span>
+            </li>
+            <li *ngIf="project.innovationCards.length < 2" (click)="createInnovationCard($event)">
+              {{ 'COMMON.ADD' | translate }} <i class="icon icon-plus"></i>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="column col-8">
+        <div formArrayName="innovationCards">
+          <div *ngFor="let item of formData.get('innovationCards').controls; let i = index"
+               [formGroup]="item">
+            <div *ngIf="innovationCardEditingIndex === i">
+              <div>
+                <label class="form-label" for="innovation-title">
+                  {{ 'PROJECT_EDIT.DESCRIPTION.TITLE.LABEL' | translate }}</label>
+                <input class="form-input input-lg" type="text" id="innovation-title"
+                       [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
+                       formControlName="title">
+              </div>
+
+              <div>
+                <label class="form-label" for="innovation-summary">
+                  {{ 'PROJECT_EDIT.DESCRIPTION.SUMMARY.LABEL' | translate }}</label>
+                            <textarea class="form-input" id="innovation-summary"
+                                      [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
+                                      rows="6" formControlName="summary"></textarea>
+              </div>
+
+              <div>
+                <label class="form-label" for="innovation-problem">
+                  {{ 'PROJECT_EDIT.DESCRIPTION.PROBLEM.LABEL' | translate }}</label>
+                            <textarea class="form-input" id="innovation-problem"
+                                      [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
+                                      rows="20" formControlName="problem"></textarea>
+              </div>
+
+              <div>
+                <label class="form-label" for="innovation-solution">
+                  {{ 'PROJECT_EDIT.DESCRIPTION.SOLUTION.LABEL' | translate }}</label>
+                            <textarea class="form-input" id="innovation-solution"
+                                      [attr.placeholder]="'PROJECT_EDIT.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
+                                      rows="20"
+                                      formControlName="solution"></textarea>
+              </div>
+
+              <div>
+                <label class="form-label">
+                  {{ 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</label>
+                <div class="input-group">
+                  <app-input-list (update)="addAdvantageToInventionCard($event, i)"
+                                  [config]="getConfig('advantages')"></app-input-list>
+                </div>
+              </div>
+
+              <div>
+                <label class="form-label">{{ 'PROJECT_EDIT.MEDIA.ADD' | translate }}</label>
+                <div class="medias"
+                     *ngIf="project.innovationCards[innovationCardEditingIndex].media?.length > 0">
+                  <div class="media"
+                       *ngFor="let media of project.innovationCards[innovationCardEditingIndex].media; let idx = index">
+                    <iframe width="200" height="100"
+                            [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+                            *ngIf="media.type==='VIDEO'">
+                    </iframe>
+
+                    <img
+                      [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,w_100/' + media.cloudinary.public_id"
+                      *ngIf="media.type==='PHOTO'"
+                      alt="" width="100" height="100">
+                    <div *ngIf="canEdit">
+                      <a class="delete c-hand" aria-label="Close" role="button"
+                         (click)="deleteMedia($event, media)">
+                        <img [src]="'https://res.cloudinary.com/umi/image/upload/app/delete.svg'" width="22"
+                             height="22">
+                      </a>
+                      <a class="primary c-hand" aria-label="Close" role="button"
+                         (click)="setMediaAsPrimary($event, media)">
+                        <img
+                          [src]="'https://res.cloudinary.com/umi/image/upload/app/'+ (project.innovationCards[innovationCardEditingIndex].principalMediaIdx === idx ? '' : 'empty-') + 'star.svg'"
+                          width="24" height="22">
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <app-shared-upload-zone-photo
+                  *ngIf="canEdit"
+                  (cbFn)="imageUploaded($event)">
+                </app-shared-upload-zone-photo>
+
+
+                <app-shared-upload-zone-video
+                  (cbFn)="newOnlineVideoToAdd($event)">
+                  *ngIf="canEdit">
+                </app-shared-upload-zone-video>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column col-12">
+        <div class="divider"></div>
+      </div>
+      <div class="column col-4"></div>
+      <div class="column col-8">
+        <div>
+          <label class="form-label">{{ 'PROJECT_EDIT.WHAT_STAGE' | translate }}</label>
+          <label class="form-radio">
+            <input type="radio" name="projectStatus" formControlName="projectStatus" [value]="0">
+            <i class="form-icon"></i> {{ 'COMMON.PROJECT_STATUS.0' | translate }}
+
+          </label>
+          <label class="form-radio">
+            <input type="radio" name="projectStatus" formControlName="projectStatus" [value]="1">
+            <i class="form-icon"></i> {{ 'COMMON.PROJECT_STATUS.1' | translate }}
+          </label>
+          <label class="form-radio">
+            <input type="radio" name="projectStatus" formControlName="projectStatus" [value]="2">
+            <i class="form-icon"></i> {{ 'COMMON.PROJECT_STATUS.2' | translate }}
+          </label>
+        </div>
+
+        <div>
+          <label class="form-label">{{ 'PROJECT_EDIT.IS_PATENTED' | translate }}</label>
+          <label class="form-radio">
+            <input type="radio" name="patented" formControlName="patented" [value]="false">
+            <i class="form-icon"></i> {{ 'COMMON.NO' | translate }}
+          </label>
+          <label class="form-radio">
+            <input type="radio" name="patented" formControlName="patented" [value]="true">
+            <i class="form-icon"></i> {{ 'COMMON.YES' | translate }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -24,7 +24,9 @@ export const PROJECT_EDIT = {
     'GEOGRAPHY': 'Périmètre géographique',
     'ENTIRE_WORLD': 'Monde entier',
     'SPECIFY_COUNTRIES_TO_EXCLUDE': 'Indiquer des pays à exclure',
-    'NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER': 'Ex: France'
+    'NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER': 'Ex: France',
+    'SPECIFIC_REQUEST': 'Demande spécifique',
+    'SPECIFIC_REQUEST_PLACEHOLDER': 'Cibler en priorité les USA, l\'UE, la Corée, le Japon et la Chine'
   },
   'MARKET': {
     'LABEL': 'Secteurs d’activité',
@@ -40,7 +42,9 @@ export const PROJECT_EDIT = {
     'LABEL': 'Types d’entreprises',
     'PLACEHOLDER': 'Ex : Les équipementiers et constructeurs automobiles, et les sociétés de transport',
     'TO_EXCLUDE': 'Indiquer des entreprises à ne pas contacter',
-    'NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER': 'Ex : Google'
+    'NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER': 'Ex : Google',
+    'TO_INCLUDE': 'Indiquer des entreprises à contacter',
+    'NEW_COMPANY_TO_INCLUDE_PLACEHOLDER': 'Ex : Google'
   },
   'OTHER': {
     'LABEL': 'Compléments / Mots-clefs',
@@ -108,7 +112,10 @@ export const PROJECT_EDIT = {
   },
   'ADD_COLLABORATORS_MODAL': {
     'TITLE': 'Ajout de collaborateurs à ce projet',
-    'CONTENT': 'Veuillez écrire les adresses e-mail des collaborateurs dont vous souhaitez que nous autorisions l\'accès à la gestion de votre projet ci-dessous :'
+    'CONTENT': 'Veuillez écrire les adresses e-mail des collaborateurs dont vous souhaitez que nous autorisions l\'accès à la gestion de votre projet ci-dessous :',
+    'USERS_ADDED': 'collaborateur(s) a/ont été ajouté(s)',
+    'TO_SEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application. Pour les/l\'ajouter comme collabora-teur-trice-s à ce projet, vous devez leur/lui envoyer une invitation en cliquant sur le bouton ci-dessous :',
+    'TO_RESEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application et ont peut-être déjà reçu une invitation de vôtre part. Pour les/l\'ajouter comme collabora-teur-trice-s à ce projet, vous devez leur/lui envoyer une invitation en cliquant sur le bouton'
   },
   'INVITE_COLLABORATORS_MODAL': {
     'TITLE': 'Ajout de collaborateurs à ce projet'

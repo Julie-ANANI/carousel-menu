@@ -31,6 +31,7 @@ export class SharedMarketReportComponent implements OnInit {
   private _showDetails = false;
   private _calculating = false;
   private _innoid: string;
+  public today: Number;
 
   private _infographics: any; // TODO remove infographics once conclusions have been migrated to Innovation
 
@@ -44,6 +45,7 @@ export class SharedMarketReportComponent implements OnInit {
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
+    this.today = Date.now();
     this._innoid = this.project._id;
 
     this._innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
@@ -131,6 +133,10 @@ export class SharedMarketReportComponent implements OnInit {
     } else {
       return null;
     }
+  }
+
+  public get logoName(): string {
+    return `logo-${ environment.domain || 'umi.us'}.png`;
   }
 
   get answers(): Array<Answer> { return this._answers; }

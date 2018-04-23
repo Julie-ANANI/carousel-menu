@@ -26,14 +26,7 @@ export class EmailService {
   }
 
   public getQueue(params: any): Observable<any> {
-    let paramStr = Object.keys(params).map(key => {
-      return encodeURIComponent(key) + '=' +
-        encodeURIComponent(params[key]);
-    }).join('&');
-    if (paramStr.length) {
-      paramStr = '?' + paramStr;
-    }
-    return this._http.get('/mail/queue' + paramStr)
+    return this._http.get('/mail/queue', {params: params})
       .map((res: Response) => {
         const response = res.json();
         return response;
@@ -52,6 +45,15 @@ export class EmailService {
 
   public addToBlacklist(config: any): Observable<any> {
       return this._http.post('/mail/blacklist', config)
+          .map((res: Response) => {
+              const response = res.json();
+              return response;
+          })
+          .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+  public updateBlacklistEntry(entryId: string, data: any): Observable<any> {
+      return this._http.put('/mail/blacklist/'+entryId, data)
           .map((res: Response) => {
               const response = res.json();
               return response;

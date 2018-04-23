@@ -54,12 +54,12 @@ export class ClientProjectEditExample2Component implements OnInit {
             UV et à l\'humidité.',
           'title': 'Peinture routière luminescente',
           'advantages': [
-            'Amélioration de la sécurité et du confort des usagers de la route',
-            'Beaucoup plus durable et résistante que les premières peintures luminescentes développées',
-            'Adaptée à l\'arrivée des véhicules autonomes',
-            'Gains en consommation d\'énergie et installation d\'éclairage',
-            'Solution environnementale',
-            'Technologie protégée'
+            { text: 'Amélioration de la sécurité et du confort des usagers de la route' },
+            { text: 'Beaucoup plus durable et résistante que les premières peintures luminescentes développées' },
+            { text: 'Adaptée à l\'arrivée des véhicules autonomes' },
+            { text: 'Gains en consommation d\'énergie et installation d\'éclairage' },
+            { text: 'Solution environnementale' },
+            { text: 'Technologie protégée' }
           ],
           'media': [
             {
@@ -99,12 +99,12 @@ export class ClientProjectEditExample2Component implements OnInit {
             etc.) using new luminescent paint technology resistant to UV and damp conditions.',
           'title': 'Luminescent road paint',
           'advantages': [
-            'Improves safety and comfort for road users',
-            'Much more durable and resistant than earlier luminescent paints that have been developed',
-            'Designed to be suitable for the imminent arrival of autonomous vehicles',
-            'Reduces energy consumption and the need to install lighting',
-            'An environmentally-friendly solution',
-            'Proprietary technology'
+            { text: 'Improves safety and comfort for road users' },
+            { text: 'Much more durable and resistant than earlier luminescent paints that have been developed' },
+            { text: 'Designed to be suitable for the imminent arrival of autonomous vehicles' },
+            { text: 'Reduces energy consumption and the need to install lighting' },
+            { text: 'An environmentally-friendly solution' },
+            { text: 'Proprietary technology' }
           ],
           'media': [
             {

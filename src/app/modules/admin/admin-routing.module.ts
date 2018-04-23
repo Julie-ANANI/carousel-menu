@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
-import { AdminProjectsDetailsComponent } from './components/admin-projects/admin-project-details/admin-project-details.component';
+import { AdminProjectComponent } from './components/admin-project/admin-project.component';
 import { AdminProjectsComponent } from './components/admin-projects/admin-projects.component';
 import { AdminCampaignsComponent } from './components/admin-campaigns/admin-campaigns.component';
 import { AdminIndexComponent } from './components/admin-index/admin-index.component';
@@ -26,11 +26,15 @@ import { CampaignResolver } from '../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { RequestResolver } from '../../resolvers/request.resolver';
 import { AdminPresetComponent } from './components/admin-preset/admin-preset.component';
+import { AdminTagsComponent } from './components/admin-tags/admin-tags.component';
+
+import { tagsRoutes } from './components/admin-tags/admin-tags-routing.module';
 import { presetsRoutes } from './components/admin-preset/admin-presets/admin-presets-routing.module';
 import { questionsRoutes } from './components/admin-preset/admin-questions/admin-questions-routing.module';
 import { sectionsRoutes } from './components/admin-preset/admin-sections/admin-sections-routing.module';
 import { searchRoutes } from './components/admin-search/admin-search-routing.module';
 import { emailsRoutes } from './components/admin-emails/admin-emails-routing.module';
+import { projectRoutes } from './components/admin-project/admin-project-routing.module';
 
 const adminRoutes: Routes = [
   {
@@ -54,14 +58,12 @@ const adminRoutes: Routes = [
         path: 'projects',
         children: [
           { path: '', component: AdminProjectsComponent, pathMatch: 'full' },
-          { path: 'project/:projectId', resolve: { innovation : InnovationResolver }, children: [
-            { path: '', redirectTo: 'settings', pathMatch: 'full'},
-            { path: 'settings', component: AdminProjectsDetailsComponent, pathMatch: 'full'},
-            { path: 'cards', component: AdminProjectsDetailsComponent, pathMatch: 'full'},
-            { path: 'synthesis', component: AdminProjectsDetailsComponent, pathMatch: 'full'},
-            { path: 'campaigns', component: AdminProjectsDetailsComponent, pathMatch: 'full'},
-            { path: 'mail_config', component: AdminProjectsDetailsComponent, pathMatch: 'full'}
-          ]}
+          { path: 'project/:projectId',
+            resolve: { innovation : InnovationResolver },
+            component: AdminProjectComponent,
+            children: [
+              ...projectRoutes
+            ]}
         ]
       },
       {
@@ -126,6 +128,13 @@ const adminRoutes: Routes = [
         component: AdminPresetComponent,
         children: [
           ...sectionsRoutes
+        ]
+      },
+      {
+        path: 'tags',
+        component: AdminTagsComponent,
+        children: [
+          ...tagsRoutes
         ]
       },
       { path: '**', component: SharedNotFoundComponent }

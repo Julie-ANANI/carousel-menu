@@ -17,7 +17,7 @@ export interface InnovationSettings {
     comments: string;
   };
   readonly companies: {
-    readonly include: Array<any>;
+    include: Array<any>;
     exclude: Array<any>;
     description: string;
   };

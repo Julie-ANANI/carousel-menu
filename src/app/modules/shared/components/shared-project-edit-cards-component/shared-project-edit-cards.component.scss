@@ -1,0 +1,52 @@
+$body-font-color-darker: #333333;
+$primary-color: #3498DB;
+
+
+.language-choice ul {
+  margin: 0;
+
+  li {
+    font-size: 1rem;
+    color: $body-font-color-darker;
+    list-style: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+
+    span {
+      font-size: 0.7rem;
+      display: block;
+      color: #878787;
+    }
+
+    i {
+      font-size: 0.8rem;
+    }
+  }
+
+  li.active {
+    color: $primary-color;
+  }
+
+}
+
+.medias {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .media {
+    display: flex;
+    background-color: #258cd1;
+    margin-bottom: 15px;
+    border: 2px solid #d7d7d7;
+
+    div {
+      padding: 8px 12px;
+
+      a {
+        display: block;
+        padding-bottom: 4px;
+      }
+    }
+  }
+}

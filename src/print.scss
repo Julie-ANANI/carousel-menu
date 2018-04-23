@@ -5,21 +5,78 @@
     print-color-adjust: exact;
   }
 
-  @page {
-    size: A4 portrait;
-    margin: 2cm;
+  body {
+    font-size: 14px;
   }
+
+  @page {
+    size: A4 landscape;
+    margin: 1.5cm 1.5cm;
+  }
+
+  /*
+  @page:first {
+    size: 5.5in 8.5in;
+    margin: 0;
+  }
+
+  @page:right{
+    @bottom-left {
+      content: "My book";
+      font-size: 40px;
+      color: #333;
+    }
+  }
+
+  @page:right{
+    @bottom-right {
+      content: "Page " counter(page) " of " counter(pages);
+    }
+  }
+
+  @page :right {
+    @top-right {
+      content: string(doctitle);
+      margin: 30pt 0 10pt 0;
+      font-size: 8pt;
+    }
+  }
+
+  .frontcover {
+    page: cover;
+    width: 100%;
+    height: 100%;
+  }
+*/
+
+  .page-footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+
+  .page-footer:after {
+    //counter-increment: page;
+    //content: counter(page);
+  }
+
 
   /* =========================================================================
     Market report
     ========================================================================== */
 
   .navbar,
-  .subtitle,
   .admin-buttons,
   .tab,
   footer,
-  .column > h2 {
+  .column > h2,
+  .column.col-10.col-mx-auto > h1,
+  .sidebar,
+  #app-header,
+  .see-answer,
+  .market-report-btn,
+  .item-menu-sandwich,
+  .bar-stats i{
     display: none !important;
   }
 
@@ -30,45 +87,45 @@
 
   .market-report {
 
-    .flex-container {
-      width: 99.5%;
-    }
+    .frontcover {
+      margin-top: 150px;
+      page-break-after: always;
 
-    .content {
-      width: 100%;
-    }
+      img {
+        display: block !important;
+        margin-bottom: 30px;
+      }
 
-    ul, img {
-      page-break-inside: avoid;
-    }
-
-    h1 {
-      font-size: 55px !important;
-      color: #333 !important;
+      .subtitle {
+        display: block !important;
+        margin-bottom: 80px;
+      }
     }
 
     h2 {
-      page-break-before: always;
-      color: #333 !important;
       margin-left: 0 !important;
+      font-size: 32px !important;
+      margin-bottom: 20px !important;
     }
 
-    .see-answer,
-    .market-report-btn,
-    .item-menu-sandwich {
-      display: none !important;
+    .big-blue-synthesis,
+    .big-synthesis {
+      padding: 5px 15px 25px 15px !important;
+      margin-right: 20px !important;
+      margin-bottom: 20px !important;
+      min-width: 200px !important;
+      max-width: 200px !important;
     }
 
-    #professionals .professional-item {
-      box-shadow: none !important;
-      padding: 10px !important;
-      max-width: 230px !important;
-      border: 1px solid #333;
+    .umi-synthesis .title {
+      string-set: doctitle content();
+      color: #0c90c6 !important;
+      font-size: 25px !important;
+    }
+
+    .bar-chart-component .horizontal-bar {
       page-break-inside: avoid;
-    }
-
-    .title-question {
-      margin-top: 60px !important;
+      width: 99% !important;
     }
 
     .white-frame {
@@ -77,18 +134,115 @@
       box-shadow: none !important;
     }
 
-    ul.items > li,
-    ul.comments > li {
-      list-style: disc;
-      padding: 0 !important;
-      background: transparent !important;
-      color: #333 !important;
+    section {
+      page-break-before: always;
     }
 
-    .bloc.details {
-      margin-top: 30px !important;
+    .desc {
+      color: #333 !important;
+      line-height: 20px !important;
+
+      p {
+        margin: 0 0 0.3rem;
+      }
+    }
+
+    ul.comments {
+      padding: 0;
+      margin: 0;
+      page-break-before: always;
+
+      li {
+        page-break-inside: avoid;
+      }
+    }
+
+    .items {
+      page-break-before: always;
+    }
+
+    .items > div {
+        page-break-inside: avoid;
+        color: #333 !important;
+        background: transparent !important;
+        padding: 5px 0 !important;
+        border-radius: 0 !important;
+        width: 50% !important;
+        margin-bottom: 0 !important;
+    }
+
+    .items > div:before {
+      content: "-";
+      float: left;
+    }
+
+    country-flag img {
+      position: relative;
+      top: 4px;
+    }
+
+    ul.comments > li{
+      page-break-inside: avoid;
+      color: #333 !important;
+      background: transparent !important;
+      padding: 0 0 !important;
+      border-radius: 0 !important;
+      margin-bottom: 0 !important;
+
+      .professional-comment {
+        color: #333 !important;
+        padding: 8px 0 0 0 !important;
+
+        & > div > p {
+          font-weight: 600;
+          margin: 0;
+          font-size: 12px !important;
+          text-overflow: ellipsis;
+        }
+
+        .comment-desc {
+          font-weight: normal;
+          margin-left: 44px;
+          display: block;
+          top: -10px;
+          position: relative;
+          font-size: 12px !important;
+        }
+      }
+    }
+
+    .world-map .map {
+      height: 220px !important;
+      page-break-inside: avoid;
+    }
+
+    .professional-item {
+      page-break-inside: avoid;
+      box-shadow: none !important;
+      margin-bottom: 0 !important;
+      color: #333 !important;
+
+      .pro-tag {
+        page-break-inside: avoid;
+      }
+    }
+
+    .bloc {
+      margin-top: 0 !important;
+      margin-bottom: 30px;
+    }
+
+    .scale-component {
+      page-break-inside: avoid;
+    }
+
+    .scale-component .vertical-bar {
+      height: 250px !important;
+    }
+
+    .big-blue-synthesis .total-score {
+      padding: 0 !important;
     }
 
   }
-
 }

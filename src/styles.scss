@@ -9,8 +9,11 @@ $primary-color: #3498DB !default;
 @import "../node_modules/spectre.css/src/spectre-icons.scss";
 @import "../node_modules/spectre.css/src/spectre-exp.scss";
 @import "print.scss";
-@import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
-
+//@import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
+@import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-regular.css";
+@import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css";
+@import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css";
+@import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
 
 
 * {
@@ -26,7 +29,7 @@ h1 {
   font-size: 2.6rem;
   color: $body-font-color-darker;
   letter-spacing: 0;
-  margin-top: 110px;
+  //margin-top: 110px;
 }
 
 h1::after {
@@ -45,7 +48,7 @@ h2 {
   font-size: 1.5rem;
   color: $body-font-color-darker;
   letter-spacing: 0;
-  margin-top: 60px;
+  //margin-top: 60px;
   margin-bottom: 40px;
 }
 
@@ -132,25 +135,7 @@ a {
   transition: all 0.3s ease;
 }
 
-// height for header
-#app-header {
-  min-height: 3.9rem
-}
 
-// Spaces around the main application components
-.app-content {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-
-@media (min-width: 840px) {
-
-  #app-header {
-    min-height: 4.2rem
-  }
-
-}
 
 
 

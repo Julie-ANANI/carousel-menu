@@ -1,28 +1,28 @@
 <div [ngClass]="{'project-preparation': status==='PREPARING', 'project-launched': status==='EVALUATING', 'project-completed': status==='DONE'}" *ngIf="projects.length">
-  <div class="title-section" *ngIf="status==='PREPARING'"><span>{{total}}</span> projets en préparation</div>
-  <div class="title-section" *ngIf="status==='EVALUATING'"><span>{{total}}</span> projets lancés</div>
-  <div class="title-section" *ngIf="status==='DONE'"><span>{{total}}</span> projets terminés</div>
-  <div class="title-section" *ngIf="status==='WITHOUT_OPERATOR'"><span>{{total}}</span> projets à attribuer</div>
+  <div class="title-section" *ngIf="status==='PREPARING'"><span>{{total}}</span> {{ "PROJECT_LIST.IN_PREPARATION" | translate }}</div>
+  <div class="title-section" *ngIf="status==='EVALUATING'"><span>{{total}}</span> {{ "PROJECT_LIST.LAUNCHED" | translate }}</div>
+  <div class="title-section" *ngIf="status==='DONE'"><span>{{total}}</span> {{ "PROJECT_LIST.FINISHED" | translate }}</div>
+  <div class="title-section" *ngIf="status==='WITHOUT_OPERATOR'"><span>{{total}}</span> {{ "PROJECT_LIST.TO_ASSIGN" | translate }}</div>
 
   <table class="table">
     <thead>
     <tr>
       <th width="80"></th>
-      <th>Nom</th>
-      <th *ngIf="status==='PREPARING'" width="90" class="text-center">Tagging</th>
-      <th *ngIf="status==='PREPARING' || status==='EVALUATING'" width="90" class="text-center">Pros</th>
-      <th *ngIf="status==='PREPARING' || status==='EVALUATING'" width="100" class="text-center">Emails OK</th>
-      <th *ngIf="status==='PREPARING'" width="90" class="text-center">Statut <i class="icon icon-arrow-down"></i></th>
-      <th *ngIf="status==='EVALUATING'" width="70" class="text-center">Reçus</th>
-      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Ouverts</th>
-      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Cliqués</th>
-      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">À traiter</th>
-      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">Délai <i class="icon icon-arrow-down"></i></th>
-      <th *ngIf="status==='DONE'" width="120" class="text-center">Conclusions <!--<i class="icon icon-arrow-down"></i>--></th>
-      <th *ngIf="status==='DONE'" width="100" class="text-center">Restitution</th>
-      <th *ngIf="status==='DONE'" width="130" class="text-center">Remerciement</th>
-      <th *ngIf="status==='EVALUATING' || status==='DONE'" width="90" class="text-center">Réponses</th>
-      <th *ngIf="status==='WITHOUT_OPERATOR'" width="120" class="text-center">Opérateur</th>
+      <th>{{ "PROJECT_LIST.TITLE" | translate }}</th>
+      <th *ngIf="status==='PREPARING'" width="90" class="text-center">{{ "PROJECT_LIST.TAGGING" | translate }}</th>
+      <th *ngIf="status==='PREPARING' || status==='EVALUATING'" width="90" class="text-center">{{ "PROJECT_LIST.PROFESSIONALS" | translate }}</th>
+      <th *ngIf="status==='PREPARING' || status==='EVALUATING'" width="100" class="text-center">{{ "PROJECT_LIST.EMAILS_OK" | translate }}</th>
+      <th *ngIf="status==='PREPARING'" width="90" class="text-center">{{ "PROJECT_LIST.STATUS" | translate }}<i class="icon icon-arrow-down"></i></th>
+      <th *ngIf="status==='EVALUATING'" width="70" class="text-center">{{ "PROJECT_LIST.RECEIVED" | translate }}</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">{{ "PROJECT_LIST.OPENED" | translate }}</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">{{ "PROJECT_LIST.CLICKED" | translate }}</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">{{ "PROJECT_LIST.TO_TACKLE" | translate }}</th>
+      <th *ngIf="status==='EVALUATING'" width="80" class="text-center">{{ "PROJECT_LIST.DELAY" | translate }} <i class="icon icon-arrow-down"></i></th>
+      <th *ngIf="status==='DONE'" width="120" class="text-center">{{ "PROJECT_LIST.CONCLUSIONS" | translate }} <!--<i class="icon icon-arrow-down"></i>--></th>
+      <th *ngIf="status==='DONE'" width="100" class="text-center">{{ "PROJECT_LIST.DELIVERED" | translate }}</th>
+      <th *ngIf="status==='DONE'" width="130" class="text-center">{{ "PROJECT_LIST.THANKS" | translate }}</th>
+      <th *ngIf="status==='EVALUATING' || status==='DONE'" width="90" class="text-center">{{ "PROJECT_LIST.ANSWERS" | translate }}</th>
+      <th *ngIf="status==='WITHOUT_OPERATOR'" width="120" class="text-center">{{ "PROJECT_LIST.OPERATOR" | translate }}</th>
     </tr>
     </thead>
     <tbody>
@@ -101,7 +101,7 @@
                 class="form-select"
                 [(ngModel)]="project.operator"
                 (ngModelChange)="setOperator($event, project)">
-          <option [ngValue]="undefined" *ngIf="!project.operator">Aucun</option>
+          <option [ngValue]="undefined" *ngIf="!project.operator">{{ "PROJECT_LIST.NONE" | translate }}</option>
           <option *ngFor="let operator of operators" [ngValue]="operator._id">
             {{ operator.firstName + ' ' + operator.lastName }}
           </option>
@@ -117,7 +117,7 @@
   </table>
 
   <div class="see-all text-right" *ngIf="projects.length < total">
-    <a class="c-hand" (click)="seeMore($event)" title="">Voir plus</a>
+    <a class="c-hand" (click)="seeMore($event)" title="">{{"PROJECT_LIST.SEE_MORE" | translate }}</a>
     <i class="icon icon-arrow-down"></i>
   </div>
 </div>

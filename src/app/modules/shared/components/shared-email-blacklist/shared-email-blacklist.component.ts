@@ -26,9 +26,11 @@ export class SharedEmailBlacklistComponent implements OnInit {
   private _searchConfiguration = "";
   private _addressToBL = "";
 
+  public editDatum: {[propString: string]: boolean} = {};
+
   constructor( private _emailService: EmailService,
                private _translateService: TranslateService,
-               private _notificationsService: TranslateNotificationsService,) { }
+               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._dataset = {
@@ -73,6 +75,18 @@ export class SharedEmailBlacklistComponent implements OnInit {
           this.addressToBL = "";
           this.resetSearch();
           this._notificationsService.success("Blacklist", `The address ${this.addressToBL} has been added successfully to the blacklist`);
+        }, error=>{
+          this._notificationsService.error("Error", error);
+        });
+  }
+
+  public updateEntry(datum: any, event: Event) {
+    event.preventDefault();
+    this.editDatum[datum._id] = false;
+    this._emailService.updateBlacklistEntry(datum._id, datum)
+        .subscribe(result=>{
+          this.resetSearch();
+          this._notificationsService.success("Blacklist", `The address ${this.addressToBL} has been updated`);
         }, error=>{
           this._notificationsService.error("Error", error);
         });

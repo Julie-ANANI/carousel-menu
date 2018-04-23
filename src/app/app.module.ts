@@ -38,6 +38,7 @@ import { PresetService } from './services/preset/preset.service';
 import { AnswerService } from './services/answer/answer.service';
 import { ProfessionalsService } from './services/professionals/professionals.service';
 import { DownloadService } from './services/download/download.service';
+import { TagsService } from './services/tags/tags.service';
 import { TemplatesService } from './services/templates/templates.service';
 
 // Resolvers
@@ -106,17 +107,26 @@ import { SignatureResolver } from './resolvers/signature.resolver';
     InnovationResolver,
     RequestResolver,
     ScenarioResolver,
-    SignatureResolver
+    SignatureResolver,
+    RequestResolver,
+    TagsService
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private _translateService: TranslateService) {
+  constructor(private _translateService: TranslateService,
+              private _cookieService: CookieService) {
     this._translateService.addLangs(['en', 'fr']);
     this._translateService.setDefaultLang('en');
 
-    const browserLang = this._translateService.getBrowserLang();
-    this._translateService.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+    const user_lang = this._cookieService.get('user_lang');
+    let browserLang = user_lang || this._translateService.getBrowserLang();
+    if(!browserLang.match(/en|fr/)) {
+      browserLang = 'en';
+    }
+
+    this._cookieService.put('user_lang', browserLang);
+    this._translateService.use(browserLang);
   }
 }
 

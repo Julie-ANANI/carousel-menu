@@ -1,55 +1,107 @@
-.discover-section {
-  padding-bottom: 40px;
-}
+//import
+@import '../../../../../style/client-styles';
 
-.discover-description {
-  color: #878787;
-  font-size:  1.1rem;
-  line-height: 1.8rem;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
+// Text color
+$card-title-color: #333333 !default;
+$card-body-color: #878787 !default;
 
-.row-margin {
-  margin-top: 88px;
-  margin-bottom: 15px;
-}
+.hero-light-container {
 
-.card-title {
-  color: #333333;
-  font-size: 1.3rem;
-  line-height: 1.8rem;
-}
-
-.card-body {
-  color: #878787;
-  font-size: 1.1rem;
-  line-height: 1.8rem;
-}
-
-.card-footer {
-
-  span {
-    border: none;
-    color: #acb3c2;
-    padding-top: 6px;
+  h1::after {
+    display: none !important;
   }
 
-  span:hover {
-    background-color: transparent;
-    color: #0B90C6;
-    cursor: pointer;
+  #padding-top {
+    padding-top: 8px;
   }
 
 }
 
-@media(max-width: 840px) {
+.section-container {
+  padding-bottom: 34px;
 
-  .margin-top {
-    margin-top: 30px;
+  #row-padding {
+    padding-bottom: 16px;
+  }
+
+  .card {
+
+    .card-image {
+      height: 200px;
+      width: 100%;
+      cursor: pointer;
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+
+    }
+
+    .card-header {
+      height: 95px;
+      cursor: pointer;
+
+      .card-title {
+        color: $card-title-color;
+        font-size: 1rem;
+      }
+
+    }
+
+    .card-body {
+      height: 208px;
+      color: $card-body-color;
+      font-size: 0.8rem;
+      text-align: justify;
+    }
+
+    .card-footer {
+      height: 56px;
+
+      span {
+        border: none;
+        color: $primary-color;
+      }
+
+      span:hover {
+        background-color: transparent;
+        color: $hover-color;
+        cursor: pointer;
+      }
+
+      #lang-divider {
+        color: $card-body-color;
+      }
+
+      #lang-divider:hover {
+        color: $card-body-color;
+        cursor: default;
+      }
+
+    }
+
   }
 
 }
+
+*:focus{
+  outline: none !important;
+}
+
+@media (max-width: 960px) {
+
+  .card-header {
+    height: 107px !important;
+  }
+
+  .card-body {
+    height: 260px !important;
+  }
+
+}
+
+
 
 
 
