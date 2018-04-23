@@ -28,7 +28,7 @@ export class SharedPaginationComponent implements OnChanges, OnInit {
       //Dès l'initialisation, on regarde si l'utilisateur a déjà des préférences concernant la pagination,
       //Et on met à jour si c'est le cas
       this.config.limit = localStorage.getItem(`${this.propertyName}-limit`) || this.config.limit;
-      this.config.offset = sessionStorage.getItem(`${this.propertyName}-offset`) || this.config.offset;
+      //this.config.offset = sessionStorage.getItem(`${this.propertyName}-offset`) || this.config.offset;
     }
     this._numPages = Math.ceil(this.total / this.perPage);
     this._update();
@@ -45,7 +45,7 @@ export class SharedPaginationComponent implements OnChanges, OnInit {
   private _update() {
     if (this.propertyName) {
       localStorage.setItem(`${this.propertyName}-limit`, this.config.limit);
-      sessionStorage.setItem(`${this.propertyName}-offset`, this.config.offset);
+      //sessionStorage.setItem(`${this.propertyName}-offset`, this.config.offset);
     }
     this.configChange.emit(this.config);
   }
