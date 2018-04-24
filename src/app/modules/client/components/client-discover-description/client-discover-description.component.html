@@ -60,10 +60,12 @@
         <div class="column col-11 col-mx-auto">
           <div class="columns">
             <div class="column col-sm-12 col-md-6 col-lg-4 col-3" id="padding-bottom" *ngFor="let media of innovation.media">
+              <a [href]="media.url" target="_blank">
                 <img [src]="media.url"
-                     class="img-responsive"
-                     [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate"
-                >
+                       class="img-responsive"
+                       [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate"
+                  >
+              </a>
             </div>
           </div>
         </div>
