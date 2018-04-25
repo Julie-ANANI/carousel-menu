@@ -1,4 +1,4 @@
-export const PROJECT_EDIT = {
+export const EDIT = {
   'HOW': 'Comment lancer l’étude de mon projet ?',
   'ADD_COLLABORATORS': 'Ajouter des collaborateurs',
   'STEP1': 'Définissez votre marché cible',

@@ -3,8 +3,8 @@ import { Routes } from '@angular/router';
 import { ClientProjectComponent } from './client-project.component';
 import { ExplorationProjectComponent } from './components/exploration/exploration.component';
 import { SetupProjectComponent } from './components/setup/setup.component';
-import { ClientProjectEditExample1Component } from '../client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
-import { ClientProjectEditExample2Component } from '../client-project-edit/client-project-edit-example2/client-project-edit-example2.component';
+import { ProjectEditExample1Component } from './components/project-edit-example1/project-edit-example1.component';
+import { ProjectEditExample2Component } from './components/project-edit-example2/project-edit-example2.component';
 import { InnovationResolver } from '../../../../resolvers/innovation.resolver';
 import { AuthGuard } from '../../../../auth-guard.service';
 
@@ -29,8 +29,8 @@ export const clientProjectRoutes: Routes = [
   {
     path: 'example',
     children: [
-      { path: '1', component: ClientProjectEditExample1Component },
-      { path: '2', component: ClientProjectEditExample2Component }
+      { path: '1', component: ProjectEditExample1Component },
+      { path: '2', component: ProjectEditExample2Component }
     ]
   }
 ];

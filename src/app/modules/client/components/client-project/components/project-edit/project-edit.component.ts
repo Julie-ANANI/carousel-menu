@@ -3,27 +3,27 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { AuthService } from '../../../../services/auth/auth.service';
-import { ComponentCanDeactivate } from '../../../../pending-changes-guard.service';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { AuthService } from '../../../../../../services/auth/auth.service';
+import { ComponentCanDeactivate } from '../../../../../../pending-changes-guard.service';
 import { Observable } from 'rxjs/Observable';
 import { PageScrollConfig } from 'ng2-page-scroll';
-import { Innovation } from '../../../../models/innovation';
-import { InnovationSettings } from '../../../../models/innov-settings';
-import { User } from '../../../../models/user.model';
+import { Innovation } from '../../../../../../models/innovation';
+import { InnovationSettings } from '../../../../../../models/innov-settings';
+import { User } from '../../../../../../models/user.model';
 import { Subject } from 'rxjs/Subject';
-import { emailRegEx } from '../../../../utils/regex';
-import { environment } from '../../../../../environments/environment';
+import { emailRegEx } from '../../../../../../utils/regex';
+import { environment } from '../../../../../../../environments/environment';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
 
 @Component({
-  selector: 'app-client-project-edit',
-  templateUrl: './client-project-edit.component.html',
-  styleUrls: ['./client-project-edit.component.scss']
+  selector: 'app-project-edit',
+  templateUrl: 'project-edit.component.html',
+  styleUrls: ['project-edit.component.scss']
 })
-export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
+export class ProjectEditComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
 
   private _project: Innovation;
   public formData: FormGroup;
