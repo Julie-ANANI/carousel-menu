@@ -29,7 +29,7 @@
     <li *ngIf="adminMode">
       <span [innerHTML]="a[identifier]"></span>
       <div class="popover">
-        <i class="fa fa-pencil"></i>
+        <i class="fas fa-pencil-alt"></i>
         <div class="popover-container">
           <div class="input-group">
             <input type="text" class="form-input" [(ngModel)]="a[identifier]" name="text"/>
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="popover">
-        <i class="fa fa-link" [ngClass]="{'active': a.domain && a.domain.length > 0}"></i>
+        <i class="fas fa-link" [ngClass]="{'active': a.domain && a.domain.length > 0}"></i>
         <div class="popover-container">
           Entrez un lien:
           <div class="input-group">
@@ -47,8 +47,8 @@
           </div>
         </div>
       </div>
-      <i class="fa fa-thumbs-up" [ngClass]="{'active': a.rating === 2}" (click)="thumbsUp($event, i)"></i>
-      <i class="fa fa-thumbs-down" [ngClass]="{'active': a.rating === 0}" (click)="thumbsDown($event, i)"></i>
+      <i class="fas fa-thumbs-up" [ngClass]="{'active': a.rating === 2}" (click)="thumbsUp($event, i)"></i>
+      <i class="fas fa-thumbs-down" [ngClass]="{'active': a.rating === 0}" (click)="thumbsDown($event, i)"></i>
       <a [routerLink]="" class="delete" aria-label="Close" role="button" (click)="rmProposition($event, i)">
         <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
       </a>

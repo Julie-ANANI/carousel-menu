@@ -37,7 +37,7 @@
         <td>{{question.updated | date : dateFormat}}</td>
         <td>
           <button class="btn btn-primary" (click)="(selectedQuestionToBeCloned = question) && $event.preventDefault()">
-            <i class="fa fa-copy"></i> {{ 'COMMON.CLONE' | translate }}
+            <i class="far fa-copy"></i> {{ 'COMMON.CLONE' | translate }}
           </button>
         </td>
         <td><a class="delete c-hand" aria-label="Close" role="button" (click)="(selectedQuestionIdToBeDeleted = question._id) && $event.preventDefault()">

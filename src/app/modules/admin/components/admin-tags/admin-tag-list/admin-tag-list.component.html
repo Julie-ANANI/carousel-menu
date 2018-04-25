@@ -34,8 +34,8 @@
                 </td>
                 <td>{{ datum.created | date}}</td>
                 <td>
-                    <button class="btn btn-action" (click)="editDatum[datum._id] = false"><i class="fa fa-times"></i></button>
-                    <button class="btn btn-action" (click)="updateEntry(datum, $event)"><i class="fa fa-save"></i></button>
+                    <button class="btn btn-action" (click)="editDatum[datum._id] = false"><i class="fas fa-times"></i></button>
+                    <button class="btn btn-action" (click)="updateEntry(datum, $event)"><i class="far fa-save"></i></button>
                 </td>
             </ng-container>
 
@@ -49,7 +49,7 @@
                     <td>{{ datum.created | date }}</td>
                 </ng-container>
                 <td>
-                    <button class="btn btn-action" (click)="editDatum[datum._id] = true"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-action" (click)="editDatum[datum._id] = true"><i class="fas fa-edit"></i></button>
                 </td>
             </ng-container>
 

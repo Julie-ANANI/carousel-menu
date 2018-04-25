@@ -13,12 +13,12 @@
   </div>
 
   <p *ngIf="answer.job || answer.professional?.jobTitle" class="user-job">
-    <i class="fa fa-user" aria-hidden="true"></i>
+    <i class="fas fa-user" aria-hidden="true"></i>
     &nbsp;{{answer.job || answer.professional?.jobTitle}}
   </p>
 
   <p *ngIf="answer.company?.name || answer.professional?.company" class="user-company">
-    <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;
+    <i class="fas fa-building" aria-hidden="true"></i>&nbsp;
     <a *ngIf="answer.company?.domain" [href]="answer.company?.domain" target="_blank">
       {{answer.company?.name || answer.professional?.company}}
     </a>

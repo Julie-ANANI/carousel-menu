@@ -19,7 +19,7 @@
            [attr.data-tooltip]="barData.count + ' ' + ('MARKET_REPORT.ANSWERS' | translate)">
         <span *ngSwitchCase="'radio'">{{barData.percentage}}</span>
         <span *ngSwitchCase="'checkbox'">{{barData.count}} {{'MARKET_REPORT.ANSWERS' | translate}}</span>
-        <i class="fa" aria-hidden="true" [ngClass]="showAnswers[i] ? 'fa-angle-up' : 'fa-angle-down'"></i>
+        <i class="fas" aria-hidden="true" [ngClass]="showAnswers[i] ? 'fa-angle-up' : 'fa-angle-down'"></i>
       </div>
     </div>
 

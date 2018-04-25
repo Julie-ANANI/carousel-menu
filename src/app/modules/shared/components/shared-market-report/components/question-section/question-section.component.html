@@ -52,7 +52,7 @@
             [ngClass]="{'active': showDetails}"
             (click)="showDetails = !showDetails; $event.preventDefault()">
       {{(showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate}}
-      <i class="fa" aria-hidden="true"
+      <i class="fas" aria-hidden="true"
          [ngClass]="showDetails ? 'fa-angle-up' : 'fa-angle-down'"></i>
     </button>
 
@@ -107,7 +107,7 @@
               [ngClass]="{'active': showComments}"
               (click)="showComments = !showComments; $event.preventDefault()">
         {{(showComments ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN') | translate:({length: answersWithComment.length})}}
-        <i class="fa" aria-hidden="true"
+        <i class="fas" aria-hidden="true"
            [ngClass]="showComments ? 'fa-angle-up' : 'fa-angle-down'"></i>
       </button>
 

@@ -2,25 +2,25 @@
   <div class="emailsStats">
     <div>
       <span class="number">{{ mailsToSend }}
-        <span class="badge" data-badge="0"><i class="fa fa-envelope"></i></span>
+        <span class="badge" data-badge="0"><i class="far fa-envelope"></i></span>
       </span>
       professionnels non contactés
     </div>
     <div>
       <span class="number">{{ firstMail }}
-        <span class="badge" data-badge="1"><i class="fa fa-envelope"></i></span>
+        <span class="badge" data-badge="1"><i class="far fa-envelope"></i></span>
       </span>
       premiers mails envoyés
     </div>
     <div>
       <span class="number">{{ secondMail }}
-        <span class="badge" data-badge="2"><i class="fa fa-envelope"></i></span>
+        <span class="badge" data-badge="2"><i class="far fa-envelope"></i></span>
       </span>
       mails de relance envoyés
     </div>
     <div>
       <span class="number">{{ lastMail }}
-        <span class="badge" data-badge="3"><i class="fa fa-envelope"></i></span>
+        <span class="badge" data-badge="3"><i class="far fa-envelope"></i></span>
       </span>
       derniers mails envoyés
     </div>
@@ -44,16 +44,16 @@
       <div class="card-title h5">
         Batch de {{ batch.size }} professionnels
         <a class="c-hand" role="button" (click)="(selectedBatchIdToBeDeleted = batch._id) && $event.preventDefault()">
-          <i class="fa fa-trash"></i>
+          <i class="fas fa-trash"></i>
         </a>
         <a *ngIf="!batch.editing" class="c-hand" role="button" (click)="startEditing(batch) && $event.preventDefault()">
-          <i class="fa fa-pencil"></i>
+          <i class="fas fa-pencil"></i>
         </a>
         <a *ngIf="batch.editing" class="c-hand" role="button" (click)="updateBatch(batch)">
-          <i class="fa fa-save"></i>
+          <i class="far fa-save"></i>
         </a>
         <a *ngIf="batch.editing" class="c-hand" role="button" (click)="(batch.editing = false) && $event.preventDefault()">
-          <i class="fa fa-times"></i>
+          <i class="fas fa-times"></i>
         </a>
       </div>
       <div class="card-subtitle text-gray">créé le {{ batch.created | date: dateformat }}</div>
@@ -62,10 +62,10 @@
       <div *ngFor="let step of ['firstMail', 'secondMail', 'thirdMail']; let i = index">
         <div [ngClass]="batch.status > i ? 'text-success' : 'text-warning'" class="text-center">
           <span class="badge" [attr.data-badge]="i + 1">
-            <i class="fa fa-envelope"></i>
+            <i class="far fa-envelope"></i>
           </span>
-          <i class="fa fa-check" *ngIf="batch.status > i"></i>
-          <i class="fa fa-clock-o" *ngIf="batch.status <= i"></i>
+          <i class="fas fa-check" *ngIf="batch.status > i"></i>
+          <i class="far fa-clock" *ngIf="batch.status <= i"></i>
         </div>
         <span *ngIf="!batch.editing">mail n°{{i + 1}} : {{ batch[step] | date: dateformat }}</span>
         <div *ngIf="batch.editing">

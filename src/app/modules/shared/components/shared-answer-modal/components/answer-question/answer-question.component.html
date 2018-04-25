@@ -22,7 +22,7 @@
         <span class="chip" [ngClass]="{'topItem': item.rating === 2, 'badItem': item.rating === 0}" *ngFor="let item of fullAnswer.answers[question.identifier]">
           <img *ngIf="item.logo" [src]=item.logo width="20px" height="20px"/>
           {{item.name}}
-          <a *ngIf="item.domain" [href]=link(item.domain) target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
+          <a *ngIf="item.domain" [href]=link(item.domain) target="_blank"><i class="fas fa-link" aria-hidden="true"></i></a>
         </span>
       </div>
       <app-autocomplete-input
@@ -38,7 +38,7 @@
       <div *ngIf="!adminMode" class="list">
         <span class="chip" [ngClass]="{'topItem': item.rating === 2, 'badItem': item.rating === 0}" *ngFor="let item of fullAnswer.answers[question.identifier]">
           {{item.text}}
-          <a *ngIf="item.link" [href]=item.link target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
+          <a *ngIf="item.link" [href]=item.link target="_blank"><i class="fas fa-link" aria-hidden="true"></i></a>
         </span>
       </div>
       <app-input-list
@@ -133,7 +133,7 @@
         <app-rating-item [adminMode]="adminMode" [prop]="question.identifier + 'Comment'"
                          [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']"
                          (ratingChange)="updateQuality($event)"></app-rating-item>
-        <i class="fa fa-trash" (click)="deleteComment($event)"></i>
+        <i class="fas fa-trash" (click)="deleteComment($event)"></i>
       </form>
     </ng-container>
   </ng-container>

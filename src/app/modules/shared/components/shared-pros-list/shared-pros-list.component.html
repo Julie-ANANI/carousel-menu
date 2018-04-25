@@ -59,8 +59,8 @@
         </td>
         <td><progress class="progress tooltip" [attr.data-tooltip]="pro.emailConfidence || 0 + '%'" [value]="pro.emailConfidence || 0" max="100"></progress></td>
         <td>
-          <button class="btn btn-action" (click)="editUser[pro._id] = false"><i class="fa fa-times"></i></button>
-          <button class="btn btn-action" (click)="updatePro(pro, $event)"><i class="fa fa-save"></i></button>
+          <button class="btn btn-action" (click)="editUser[pro._id] = false"><i class="fas fa-times"></i></button>
+          <button class="btn btn-action" (click)="updatePro(pro, $event)"><i class="fas fa-save"></i></button>
         </td>
       </ng-container>
 
@@ -70,7 +70,7 @@
           <td>{{ pro.language }}</td>
           <td><country-flag [country]="pro.country"></country-flag></td>
           <td>
-            <a *ngIf="pro.profileUrl" [href]="pro.profileUrl" target="_blank"><i class="fa fa-linkedin"></i></a>
+            <a *ngIf="pro.profileUrl" [href]="pro.profileUrl" target="_blank"><i class="fab fa-linkedin"></i></a>
             <span class="title">{{ pro.firstName }} {{ pro.lastName }}</span>
           </td>
           <td>{{ pro.jobTitle }}</td>
@@ -84,7 +84,7 @@
           <td><progress class="progress tooltip" [attr.data-tooltip]="pro.emailConfidence || 0 + '%'" [value]="pro.emailConfidence || 0" max="100"></progress></td>
         </ng-container>
         <td>
-          <button class="btn btn-action" (click)="editUser[pro._id] = true"><i class="fa fa-edit"></i></button>
+          <button class="btn btn-action" (click)="editUser[pro._id] = true"><i class="fas fa-edit"></i></button>
         </td>
       </ng-container>
 

@@ -29,9 +29,9 @@
     <ng-template ngFor let-request [ngForOf]="requests">
       <tr>
         <td>
-          <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON' || request.entity==='PERSON_BY_REGIONS'"><i class="fa fa-users"></i></div>
-          <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON_BY_COUNTRIES'" (click)="getChildren(request)"><i class="fa fa-globe"></i></div>
-          <div [ngClass]="request.entity" *ngIf="request.entity==='MAIL' || request.entity==='MAIL_ADDRESS'"><i class="fa fa-envelope"></i></div>
+          <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON' || request.entity==='PERSON_BY_REGIONS'"><i class="fas fa-users"></i></div>
+          <div [ngClass]="request.entity" *ngIf="request.entity==='PERSON_BY_COUNTRIES'" (click)="getChildren(request)"><i class="fas fa-globe"></i></div>
+          <div [ngClass]="request.entity" *ngIf="request.entity==='MAIL' || request.entity==='MAIL_ADDRESS'"><i class="fas fa-envelope"></i></div>
         </td>
 
         <td>
@@ -64,7 +64,7 @@
             {{ 'SEARCH.HISTORY.DONE' | translate }}
           </div>
           <div class="text-warning" *ngIf="request.status === 'PROCESSING'" class="tooltip c-hand" data-tooltip="Arrêter">
-            <i class="fa fa-times" (click)="stopRequest(request._id)">
+            <i class="fas fa-times" (click)="stopRequest(request._id)">
               &nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}
             </i>
           </div>
@@ -85,16 +85,16 @@
         </td>
 
         <td class="text-center stats">
-          <i class="fa fa-envelope text-error" *ngIf="request.flag==='EMAILS_QUEUED'"></i>
-          <i class="fa fa-envelope text-success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
-          <i class="fa fa-envelope text-warning" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
-          <i class="fa fa-check-square-o text-success" *ngIf="request.flag==='PROS_ADDED'"></i>
+          <i class="fas fa-envelope text-error" *ngIf="request.flag==='EMAILS_QUEUED'"></i>
+          <i class="fas fa-envelope text-success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
+          <i class="fas fa-envelope text-warning" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
+          <i class="fas fa-check-square-o text-success" *ngIf="request.flag==='PROS_ADDED'"></i>
         </td>
 
         <td class="text-center" *ngIf="!mails">
           <button class="btn btn-default btn-sm" *ngIf="!campaign && request.campaign">
             <a [routerLink]="'/admin/campaigns/campaign/' + request.campaign">
-              <i class="fa fa-eye"></i> Campagne
+              <i class="fas fa-eye"></i> Campagne
             </a>
           </button>
         </td>
@@ -102,7 +102,7 @@
       <tr [hidden]="!request.show || request.entity != 'PERSON_BY_COUNTRIES'"
           *ngFor="let childRequest of request.request">
         <td>
-          <div class="PERSONSMALL"><i class="fa fa-user"></i></div>
+          <div class="PERSONSMALL"><i class="fas fa-user"></i></div>
         </td>
         <td>
           <a *ngIf="(childRequest.entity==='PERSON' || childRequest.entity==='PERSON_BY_COUNTRIES' || childRequest.entity==='PERSON_BY_REGIONS') && !campaignId"
@@ -134,7 +134,7 @@
             {{ 'SEARCH.HISTORY.DONE' | translate }}
           </div>
           <div class="text-warning" *ngIf="childRequest.status === 'PROCESSING'" class="tooltip c-hand" data-tooltip="Arrêter">
-            <i class="fa fa-times" (click)="stopChildRequest(childRequest._id)">
+            <i class="fas fa-times" (click)="stopChildRequest(childRequest._id)">
               &nbsp; {{ 'SEARCH.HISTORY.PROCESSING' | translate }}
             </i>
           </div>
@@ -155,16 +155,16 @@
         </td>
 
         <td class="text-center stats">
-          <i class="fa fa-envelope text-error" *ngIf="childRequest.flag==='EMAILS_QUEUED'"></i>
-          <i class="fa fa-envelope text-success" *ngIf="childRequest.flag==='EMAILS_FOUND'"></i>
-          <i class="fa fa-envelope text-warning" *ngIf="childRequest.flag==='EMAILS_SEARCHING'"></i>
-          <i class="fa fa-check-square-o text-success" *ngIf="childRequest.flag==='PROS_ADDED'"></i>
+          <i class="fas fa-envelope text-error" *ngIf="childRequest.flag==='EMAILS_QUEUED'"></i>
+          <i class="fas fa-envelope text-success" *ngIf="childRequest.flag==='EMAILS_FOUND'"></i>
+          <i class="fas fa-envelope text-warning" *ngIf="childRequest.flag==='EMAILS_SEARCHING'"></i>
+          <i class="fas fa-check-square-o text-success" *ngIf="childRequest.flag==='PROS_ADDED'"></i>
         </td>
 
         <td class="text-center" *ngIf="!mails">
           <button class="btn btn-default btn-sm" *ngIf="!campaign && childRequest.campaign">
             <a [routerLink]="'/admin/campaigns/campaign/' + childRequest.campaign">
-              <i class="fa fa-eye"></i> Campagne
+              <i class="fas fa-eye"></i> Campagne
             </a>
           </button>
         </td>

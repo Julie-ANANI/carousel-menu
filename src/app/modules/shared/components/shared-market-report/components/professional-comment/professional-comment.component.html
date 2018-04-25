@@ -14,7 +14,7 @@
         - {{answer.company?.name || answer.professional?.company}}
       </ng-container>
 
-      <i class="fa fa-star" *ngIf="answer.answers[questionId+'Quality'] === 2" aria-hidden="true"></i>
+      <i class="fas fa-star" *ngIf="answer.answers[questionId+'Quality'] === 2" aria-hidden="true"></i>
     </p>
 
     <market-report-popover [answers]="[answer]" (modalAnswerChange)="seeAnswer($event)"></market-report-popover>

@@ -19,7 +19,7 @@
             [ngClass]="{'loading': calculating, '': !calculating}"
     >
       {{'MARKET_REPORT.BTN_RECOMPUTE' | translate}}
-      <i class="fa fa-refresh" aria-hidden="true"></i>
+      <i class="fas fa-sync" aria-hidden="true"></i>
     </button>
     <!--<pdf-generator class="btn btn-lg btn-primary" [model]="getModel()" style="margin:10px;">
     </pdf-generator>-->
@@ -33,7 +33,7 @@
       <div class="sidebarIsSticky">
         <div (click)="toggleDetails($event)" class="toggle-sections">
           {{ (showDetails ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND') | translate}}
-          <i class="fa float-right" aria-hidden="true"
+          <i class="fas fa-angle-right" aria-hidden="true"
              [ngClass]="{'fa-plus-square-o': !showDetails, 'fa-minus-square-o': showDetails}"></i>
         </div>
         <ul>
@@ -46,7 +46,7 @@
           <li *ngFor="let question of cleaned_questions">
             <a pageScroll [href]="'#' + question.identifier">
               {{ question.title | multiling:lang }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+              <i class="fas fa-angle-right float-right" aria-hidden="true"></i>
             </a>
           </li>
         </ul>
@@ -86,7 +86,7 @@
                     [ngClass]="{'active': showListProfessional}"
                     (click)="showListProfessional = !showListProfessional; $event.preventDefault()">
               {{(showListProfessional ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate}}
-              <i class="fa" aria-hidden="true"
+              <i class="fas" aria-hidden="true"
                  [ngClass]="showListProfessional ? 'fa-angle-up' : 'fa-angle-down'"></i>
             </button>
 

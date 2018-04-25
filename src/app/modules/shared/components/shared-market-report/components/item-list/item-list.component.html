@@ -16,7 +16,7 @@
           <span *ngIf="item.count > 1" class="item-occurrence">{{item.count}}x</span>
           <img *ngIf="item.logo" src={{item.logo}} width="20px" height="20px"/>
           {{item.value}}
-          <a *ngIf="item.domain" [href]="item.domain" target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
+          <a *ngIf="item.domain" [href]="item.domain" target="_blank"><i class="fas fa-link" aria-hidden="true"></i></a>
         </strong>
         <market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></market-report-popover>
       </div>

@@ -12,7 +12,7 @@
     </div>
     <label class="form-switch" *ngIf="email.content != null">
       <input type="checkbox" (change)="(editionMode = !editionMode) && $event.preventDefault()">
-      <i class="form-icon"></i>Edition  <i class="fa fa-pencil"></i>
+      <i class="form-icon"></i>Edition  <i class="fas fa-pencil"></i>
     </label>
   </div>
   <div class="card-body">
@@ -26,6 +26,6 @@
   </div>
   <!--
   <div class="card-footer" *ngIf="email.content != null">
-    <a (click)="removeEmail()" class="text-error"><i class="fa fa-trash"></i> {{ 'COMMON.DELETE' | translate }}</a>
+    <a (click)="removeEmail()" class="text-error"><i class="fas fa-trash"></i> {{ 'COMMON.DELETE' | translate }}</a>
   </div>-->
 </div>

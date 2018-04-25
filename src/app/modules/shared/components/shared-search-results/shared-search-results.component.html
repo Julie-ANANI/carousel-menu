@@ -1,22 +1,22 @@
 <div>
   <h2 class="d-flex">
-    <i class="fa fa-envelope text-warning" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
-    <i class="fa fa-envelope text-success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
-    <i class="fa fa-check-square-o text-success" *ngIf="request.flag==='PROS_ADDED'"></i>
+    <i class="fas fa-envelope text-warning" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
+    <i class="fas fa-envelope text-success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
+    <i class="fas fa-check-square text-success" *ngIf="request.flag==='PROS_ADDED'"></i>
     <country-flag *ngIf="request.country" [country]="request.country" [width]="30" [height]="20"></country-flag>
     {{request.keywords[0].original}}
   </h2>
   <ul class="toolbar-fixed">
     <li (click)="searchMails()" [attr.disabled]="totalSelected ? null : ''">
-      <span class="fa fa-search"></span> {{ 'SEARCH.SEARCHMAILS' | translate }} ({{ totalSelected }})
+      <span class="fas fa-search"></span> {{ 'SEARCH.SEARCHMAILS' | translate }} ({{ totalSelected }})
     </li>
 
     <li (click)="(addToCampaignModal = true) && $event.preventDefault()" [attr.disabled]="totalSelected ? null : ''">
-      <i class="fa fa-external-link"></i>{{ 'SEARCH.ADDTOCAMPAIGN' | translate }} ({{ totalSelected }})
+      <i class="fas fa-external-link"></i>{{ 'SEARCH.ADDTOCAMPAIGN' | translate }} ({{ totalSelected }})
     </li>
 
     <li (click)="exportProsCSV()" [attr.disabled]="totalSelected ? null : ''">
-      <i class="fa fa-file-excel-o"></i> {{ 'SEARCH.EXPORT' | translate }} ({{ totalSelected }})
+      <i class="fas fa-file-excel"></i> {{ 'SEARCH.EXPORT' | translate }} ({{ totalSelected }})
     </li>
   </ul>
   <app-shared-pros-list [config]="config" [requestId]="request._id" (selectedProsChange)="updateSelection($event)"></app-shared-pros-list>

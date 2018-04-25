@@ -19,12 +19,12 @@
     <tr *ngFor="let campaign of campaigns">
       <td>
         <button class="btn btn-action" (click)="editCampaignName[campaign._id] = !editCampaignName[campaign._id]">
-          <i class="fa" [ngClass]="editCampaignName[campaign._id]?'fa-times':'fa-edit'"></i>
+          <i class="fas" [ngClass]="editCampaignName[campaign._id]?'fa-times':'fa-edit'"></i>
         </button>
         <ng-container [ngSwitch]="editCampaignName[campaign._id]">
           <form *ngSwitchCase="true" (ngSubmit)="onSubmit(campaign, $event); editCampaignName[campaign._id] = false" [formGroup]="form">
             <input type="text" id="title" formControlName="title" [value]="campaign.title">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Save</button>
+            <button type="submit" class="btn btn-primary"><i class="far fa-save"></i>&nbsp;Save</button>
           </form>
           <a *ngSwitchDefault [routerLink]="'/admin/campaigns/campaign/' + campaign._id + '/answers'">{{campaign.title}}</a>
         </ng-container>
@@ -33,8 +33,8 @@
       <td class="text-center">{{campaign.stats ? ((campaign.stats['campaign']['nbValidatedResp']||0)+(campaign.stats['campaign']['nbToValidateResp']||0)) : 0}}</td>
       <td>{{campaign.status}}</td>
       <td><button class="btn btn-primary" (click)="updateStats($event, campaign)"><i class="fas fa-sync"></i>&nbsp;Update stats</button></td>
-      <td><button class="btn btn-primary" disabled><i class="fa fa-copy"></i>&nbsp;Clone</button></td>
-      <td><button class="btn btn-danger" (click)="deleteCampaignModal(campaign)"><i class="fa fa-trash"></i>&nbsp;Delete</button></td>
+      <td><button class="btn btn-primary" disabled><i class="far fa-copy"></i>&nbsp;Clone</button></td>
+      <td><button class="btn btn-danger" (click)="deleteCampaignModal(campaign)"><i class="fas fa-trash"></i>&nbsp;Delete</button></td>
     </tr>
     </tbody>
   </table>
