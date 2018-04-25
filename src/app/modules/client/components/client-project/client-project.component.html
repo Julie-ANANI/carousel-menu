@@ -1,3 +1,175 @@
 <app-shared-loader *ngIf="!project"></app-shared-loader>
 
-<app-shared-project-description [project]="project" *ngIf="project"></app-shared-project-description>
+<div *ngIf="project">
+  <div class="project-header">
+    <div class="container section-container">
+      <div class="columns">
+        <div class="column col-10 col-mx-auto">
+          <div class="columns">
+            <div class="column col-7">
+              <h1>{{ project.name }}</h1>
+              <div class="metas">
+                {{ project.owner.name }}
+                / {{ project.owner.companyName }}
+                • {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
+                • {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
+              </div>
+            </div>
+            <div class="column col-5 collaborators">
+              <button class="btn btn-bordered" (click)="(displayAddCollaboratorsModal = true) && $event.preventDefault()">
+                <i class="icon icon-plus"></i> {{ 'PROJECT_EDIT.ADD_COLLABORATORS' | translate }}
+              </button>
+              <div>
+                <span *ngFor="let collaborator of project.collaborators"
+                      class="chip tooltip tooltip-bottom"
+                      [attr.data-tooltip]="collaborator.email">
+                  {{ collaborator.name }}
+                  <a (click)="removeCollaborator($event, collaborator)" class="btn btn-clear" aria-label="Close"
+                     role="button"></a>
+                </span>
+              </div>
+            </div>
+          </div>
+          <ul class="step">
+            <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !project.reviewing }">
+              <span>
+                {{ 'COMMON.PROJECT_STATE.EDITING' | translate }}
+              </span>
+            </li>
+            <li class="step-item" [ngClass]="{ 'active': project.status === 'SUBMITTED' }">
+              <span>
+                {{ 'COMMON.PROJECT_STATE.SUBMITTED' | translate }}
+              </span>
+            </li>
+            <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !!project.reviewing }">
+              <span>
+                {{ 'COMMON.PROJECT_STATE.REVIEWING' | translate }}
+              </span>
+            </li>
+            <li class="step-item" [ngClass]="{ 'active': project.status === 'EVALUATING' }">
+              <span>
+                {{ 'COMMON.PROJECT_STATE.EVALUATING' | translate }}
+              </span>
+            </li>
+            <li class="step-item" [ngClass]="{ 'active': project.status === 'DONE' }">
+              <span>
+                {{ 'COMMON.PROJECT_STATE.DONE' | translate }}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL : Add collaborators FORM (STEP 1) -->
+<div class="modal" [ngClass]="{'active': displayAddCollaboratorsModal}">
+  <div class="modal-overlay" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></button>
+      <div class="modal-title h5">{{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">{{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.CONTENT' | translate }}</div>
+      <input type="text" [(ngModel)]="collaborators_emails" placeholder="alan.turing@gmail.com, joan.clarke@gmail.com">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+      <button class="btn btn-primary" [disabled]="!validCollaboratorsList()" (click)="addCollaborators($event)">{{
+        'COMMON.ADD' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL : Add collaborators (STEP 2) -->
+<div class="modal" [ngClass]="{'active': displayCollaboratorsAddingProcess}">
+  <div class="modal-overlay" (click)="(displayCollaboratorsAddingProcess = false) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(displayCollaboratorsAddingProcess = false) && $event.preventDefault()"></button>
+      <div class="modal-title h5">{{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        <p *ngIf="collaboratorsAddingProcess.usersAdded.length">
+          {{ collaboratorsAddingProcess.usersAdded.length }} {{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.USERS_ADDED' | translate }}.
+        </p>
+
+        <div *ngIf="collaboratorsAddingProcess.invitationsToSend.length">
+          <p >
+            {{ collaboratorsAddingProcess.invitationsToSend.length }} {{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.TO_SEND_EMAIL' | translate }}
+          </p>
+          <p align="center">
+            <a class="btn btn-primary"
+               [href]="'mailto:' + collaboratorsAddingProcess.invitationsToSend.join(',') + '?body=' + collaboratorsAddingProcess.inviteUrl">
+              {{ 'COMMON.INVITE' | translate }}
+            </a>
+          </p>
+        </div>
+
+        <div *ngIf="collaboratorsAddingProcess.invitationsToSendAgain.length">
+          <p>
+            {{ collaboratorsAddingProcess.invitationsToSendAgain.length }} {{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.TO_RESEND_EMAIL' | translate }}"
+          </p>
+          <p align="center">
+            <a class="btn btn-primary"
+               [href]="'mailto:' + collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + collaboratorsAddingProcess.inviteUrl">
+              {{ 'COMMON.REINVITE' | translate }}
+            </a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="project" class="container">
+  <div class="columns">
+    <div class="column col-10 col-mx-auto">
+
+      <ul class="tab tab-block">
+        <li class="tab-item">
+          <a [routerLink]="['setup']" [ngClass]="{'active': currentPage == 'setup'}">
+            {{ 'PROJECT_MODULE.SETUP' | translate }}
+          </a>
+        </li>
+        <li class="tab-item">
+          <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage == 'exploration'}">
+            {{ 'PROJECT_MODULE.EXPLORATION' | translate }}
+          </a>
+        </li>
+        <li class="tab-item">
+          <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage == 'synthesis'}">
+            {{ 'PROJECT_MODULE.SYNTHESIS' | translate }}
+          </a>
+        </li>
+      </ul>
+
+      <div class="tabs">
+        <div class="tab-content" *ngIf="currentPage === 'setup'">
+          <app-shared-project-description [project]="project" *ngIf="project"></app-shared-project-description>
+        </div>
+
+        <div class="tab-content" *ngIf="currentPage === 'exploration'">
+          <app-shared-project-description [project]="project" *ngIf="project"></app-shared-project-description>
+        </div>
+
+        <div class="tab-content" *ngIf="currentPage === 'synthesis'">
+          <app-shared-project-description [project]="project" *ngIf="project"></app-shared-project-description>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
