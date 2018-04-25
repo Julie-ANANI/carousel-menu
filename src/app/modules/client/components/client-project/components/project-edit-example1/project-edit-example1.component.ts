@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-client-project-edit-example1',
+  selector: 'app-project-edit-example1',
   template: '<app-shared-project-description [project]="project"></app-shared-project-description>'
 })
-export class ClientProjectEditExample1Component implements OnInit {
+export class ProjectEditExample1Component implements OnInit {
 
   public project: any;
 

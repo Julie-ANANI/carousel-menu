@@ -13,11 +13,8 @@ import { ClientMyProjectsComponent } from './components/client-my-projects/clien
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
-import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
 import { ClientProjectNewComponent } from './components/client-project-new/client-project-new.component';
 import { ClientProjectSynthesisComponent } from './components/client-project-synthesis/client-project-synthesis.component';
-import { ClientProjectEditExample2Component } from './components/client-project-edit/client-project-edit-example2/client-project-edit-example2.component';
-import { ClientProjectEditExample1Component } from './components/client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
@@ -36,7 +33,6 @@ import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
     ClientComponent,
     ClientMyAccountComponent,
     ClientMyProjectsComponent,
-    ClientProjectEditComponent,
     ClientDiscoverComponent,
     ClientDiscoverDescriptionComponent,
     ClientWelcomeComponent,
@@ -45,8 +41,6 @@ import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
     ClientLogoutComponent,
     ClientProjectNewComponent,
     ClientProjectSynthesisComponent,
-    ClientProjectEditExample2Component,
-    ClientProjectEditExample1Component,
     ClientResetPasswordComponent,
     DiscoverSummaryPipe
   ]
