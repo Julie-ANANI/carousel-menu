@@ -11,7 +11,8 @@ import { Question } from '../../../../../../models/question';
 export interface BarData {
   label: Multiling,
   answers: Array<Answer>,
-  percentage: string,
+  absolutePercentage: string,
+  relativePercentage: string,
   color: string,
   count: number,
   positive: boolean
@@ -61,7 +62,8 @@ export class BarChartComponent implements OnInit {
         return {
           label: q.label,
           answers: answers,
-          percentage: '0%',
+          absolutePercentage: '0%',
+          relativePercentage: '0%',
           color: q.color,
           count: answers.length,
           positive: q.positive
@@ -73,7 +75,8 @@ export class BarChartComponent implements OnInit {
         return (acc < bd.count) ? bd.count : acc;
       }, 0);
       this._barsData.forEach((bd) => {
-        bd.percentage = `${((bd.count * 100) / maxAnswersCount) >> 0}%`;
+        bd.absolutePercentage = `${((bd.count * 100) / this._answers.length) >> 0}%`;
+        bd.relativePercentage = `${((bd.count * 100) / maxAnswersCount) >> 0}%`;
       });
 
       // If we have a radio question, we should also calculate the pieChart data.
