@@ -1,8 +1,9 @@
 <div>
-  <div *ngIf="!readonly">
+  <!-- Il faut utiliser [hidden] avec *ngIf l'editeur tinymce n'est pas instancié -->
+  <div [hidden]="readonly">
     <textarea id="{{htmlId}}"></textarea>
   </div>
-  <div *ngIf="readonly">
+  <div [hidden]="!readonly">
     <p class="desc" [innerHTML]="text"></p>
   </div>
 </div>
