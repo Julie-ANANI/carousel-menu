@@ -44,11 +44,6 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
   };
 
   /*
-   * Gestion de l'affichage
-   */
-  public innovationCardEditingIndex = 0; // Index de l'innovationCard que l'on édite (système d'onglets)
-
-  /*
    * Gestion de la sauvegarde
    */
   public shouldSave = false; // To prevent leaving page

@@ -1,0 +1,26 @@
+$dark-bg: #262831;
+
+.project-header {
+  background: $dark-bg;
+  color: white;
+  padding-bottom: 84px;
+
+  h1 {
+    color: white;
+    margin-top: 50px;
+  }
+
+  h1::after {
+    display: none;
+  }
+
+  .metas {
+    font-size: 0.8rem;
+    color: #878787;
+    line-height: 36px;
+  }
+
+  ul.step {
+    margin-top: 60px;
+  }
+}

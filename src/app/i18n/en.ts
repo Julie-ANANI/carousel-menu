@@ -24,7 +24,7 @@ import { SEARCH } from '../modules/admin/components/admin-search/i18n/en';
 import { BLACKLISTS } from '../modules/shared/components/shared-email-blacklist/i18n/en';
 import { TAGS } from '../modules/admin/components/admin-tags/i18n/en';
 import { PROJECT_LIST } from '../modules/admin/components/admin-projects-list/i18n/en';
-
+import { PROJECT_MODULE } from '../modules/client/components/client-project/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
@@ -52,5 +52,6 @@ export const en = {
   'SEARCH': SEARCH,
   'BLACKLISTS': BLACKLISTS,
   'TAGS': TAGS,
-  'PROJECT_LIST': PROJECT_LIST
+  'PROJECT_LIST': PROJECT_LIST,
+  'PROJECT_MODULE': PROJECT_MODULE
 };
