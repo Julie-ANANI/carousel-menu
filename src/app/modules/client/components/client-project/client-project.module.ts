@@ -34,6 +34,6 @@ import { SurveyComponent } from './components/setup/components/survey/survey.com
   exports: [
     ClientProjectComponent
   ]
-})
+});
 
 export class ClientProjectModule {}
