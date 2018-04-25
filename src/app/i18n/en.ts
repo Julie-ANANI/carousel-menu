@@ -6,7 +6,6 @@ import { DISCOVERDESCRIPTION } from '../modules/client/components/client-discove
 import { LOG_IN } from '../modules/client/components/client-login/i18n/en';
 import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/en';
 import { MY_PROJECTS } from '../modules/client/components/client-my-projects/i18n/en';
-import { PROJECT_EDIT } from '../modules/client/components/client-project-edit/i18n/en';
 import { NEW_PROJECT } from '../modules/client/components/client-project-new/i18n/en';
 import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/en';
 import { SIGN_UP } from '../modules/client/components/client-signup/i18n/en';
@@ -37,7 +36,6 @@ export const en = {
   'LOG_IN': LOG_IN,
   'MY_ACCOUNT': MY_ACCOUNT,
   'MY_PROJECTS': MY_PROJECTS,
-  'PROJECT_EDIT': PROJECT_EDIT,
   'NEW_PROJECT': NEW_PROJECT,
   'RESET_PASSWORD': RESET_PASSWORD,
   'SIGN_UP': SIGN_UP,
