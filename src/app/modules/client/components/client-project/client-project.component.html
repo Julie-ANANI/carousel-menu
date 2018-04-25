@@ -139,32 +139,32 @@
       <ul class="tab tab-block">
         <li class="tab-item">
           <a [routerLink]="['setup']" [ngClass]="{'active': currentPage == 'setup'}">
-            {{ 'PROJECT_MODULE.SETUP' | translate }}
+            {{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
           </a>
         </li>
         <li class="tab-item">
           <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage == 'exploration'}">
-            {{ 'PROJECT_MODULE.EXPLORATION' | translate }}
+            {{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
           </a>
         </li>
         <li class="tab-item">
           <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage == 'synthesis'}">
-            {{ 'PROJECT_MODULE.SYNTHESIS' | translate }}
+            {{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
           </a>
         </li>
       </ul>
 
       <div class="tabs">
         <div class="tab-content" *ngIf="currentPage === 'setup'">
-          <app-shared-project-description [project]="project" *ngIf="project"></app-shared-project-description>
+          <app-client-setup-project [project]="project"></app-client-setup-project>
         </div>
 
         <div class="tab-content" *ngIf="currentPage === 'exploration'">
-          <app-shared-project-description [project]="project" *ngIf="project"></app-shared-project-description>
+          <app-client-exploration-project [project]="project"></app-client-exploration-project>
         </div>
 
         <div class="tab-content" *ngIf="currentPage === 'synthesis'">
-          <app-shared-project-description [project]="project" *ngIf="project"></app-shared-project-description>
+          <app-shared-market-report [project]="project"></app-shared-market-report>
         </div>
       </div>
     </div>

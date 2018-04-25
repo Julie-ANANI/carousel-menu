@@ -7,11 +7,6 @@ import { ClientDiscoverComponent } from './components/client-discover/client-dis
 import { ClientDiscoverDescriptionComponent } from './components/client-discover-description/client-discover-description.component';
 
 import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
-import { ClientProjectComponent } from './components/client-project/client-project.component';
-import { ClientProjectEditComponent } from './components/client-project-edit/client-project-edit.component';
-import { ClientProjectEditExample1Component } from './components/client-project-edit/client-project-edit-example1/client-project-edit-example1.component';
-import { ClientProjectEditExample2Component } from './components/client-project-edit/client-project-edit-example2/client-project-edit-example2.component';
-import { ClientProjectSynthesisComponent } from './components/client-project-synthesis/client-project-synthesis.component';
 import { ClientProjectNewComponent } from './components/client-project-new/client-project-new.component';
 
 import { ClientLoginComponent } from './components/client-login/client-login.component';
@@ -20,16 +15,17 @@ import { ClientSignupComponent } from './components/client-signup/client-signup.
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
-import { InnovationResolver } from '../../resolvers/innovation.resolver';
 
 /* Shared */
 import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
-import { SharedMarketReportExampleComponent } from './../shared/components/shared-market-report-example/shared-market-report-example.component';
+import { SharedMarketReportExampleComponent } from '../shared/components/shared-market-report-example/shared-market-report-example.component';
+
+/* SubModules */
+import { clientProjectRoutes } from './components/client-project/client-project-routing.module';
 
 /* Guards */
 import { NonAuthGuard } from '../../non-auth-guard.service';
 import { AuthGuard } from '../../auth-guard.service';
-import { PendingChangesGuard } from '../../pending-changes-guard.service';
 import { AdminAuthGuard } from '../../admin-auth-guard.service';
 
 const clientRoutes: Routes = [
@@ -96,21 +92,7 @@ const clientRoutes: Routes = [
         children: [
           { path: '', component: ClientMyProjectsComponent, pathMatch: 'full', canActivate: [AuthGuard] },
           { path: 'new', component: ClientProjectNewComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-          {
-            path: ':projectId', resolve: { innovation : InnovationResolver },
-            children: [
-              { path: '', component: ClientProjectComponent},
-              { path: 'edit', component: ClientProjectEditComponent, canActivate: [AuthGuard], canDeactivate: [PendingChangesGuard] },
-              { path: 'synthesis', component: ClientProjectSynthesisComponent, canActivate: [AuthGuard] }
-            ]
-          },
-          {
-            path: 'example',
-            children: [
-              { path: '1',    component: ClientProjectEditExample1Component },
-              { path: '2', component: ClientProjectEditExample2Component }
-            ]
-          }
+          ...clientProjectRoutes
         ]
       },
       {
