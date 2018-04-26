@@ -4,23 +4,28 @@
 .main-container {
   background-color: #f2f2f2;
   padding-top: 25px;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: #808080;
 
-  #lang-section {
+  .lang-section {
 
-    #lang-button {
+    .lang-button {
       background-color: #FAFAFA;
       color: #333333;
       padding: 0.4rem 0.7rem;
       height: 2.4rem;
       border-radius: 0.25rem !important;
-      border-color: #AEA9B5;
+      border-color: #333333;
       font-size: 0.7rem;
     }
 
+    .icon-global {
+      padding-right: 0.1rem;
+      font-size: 0.6rem;
+    }
+
     .icon-footer {
-      padding-left: 0.4rem;
+      padding-left: 0.7rem;
     }
 
     .btn:focus {
@@ -56,18 +61,19 @@
 
   }
 
-  #footer-hr {
+  .footer-hr {
     margin-top: 35px;
     margin-bottom: 20px;
     border: .5px solid #AEA9B5;
     border-radius: .25rem;
   }
 
-  #information-section {
+  .information-section {
     padding-top: 10px;
 
     a{
       color: $primary-color;
+      text-decoration: none;
     }
 
     a:hover {
@@ -78,4 +84,10 @@
 
 }
 
+@media (max-width: 600px) {
 
+  .text-right {
+    text-align: left!important;
+  }
+
+}
