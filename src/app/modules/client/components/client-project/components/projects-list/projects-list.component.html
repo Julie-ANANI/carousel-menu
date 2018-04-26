@@ -6,8 +6,8 @@
 
       <div class="columns" *ngIf="projects && (projects.length || config.search.name)">
         <div class="column col-2">
-          <button [routerLink]="'/projects/new'" (click)="$event.preventDefault()" class="btn btn-lg btn-primary">
-            {{ 'MY_PROJECTS.ADD_PROJECT' | translate }} <i class="icon icon-arrow-right"></i>
+          <button [routerLink]="'/project/new'" (click)="$event.preventDefault()" class="btn btn-lg btn-primary">
+            {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }} <i class="icon icon-arrow-right"></i>
           </button>
         </div>
 
@@ -27,11 +27,11 @@
         <div class="empty-icon">
           <i class="icon icon-plus"></i>
         </div>
-        <p class="empty-title h5">{{ 'MY_PROJECTS.NO_PROJECT.TITLE' | translate }}</p>
-        <p class="empty-subtitle">{{ 'MY_PROJECTS.NO_PROJECT.CONTENT' | translate }}</p>
+        <p class="empty-title h5">{{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}</p>
+        <p class="empty-subtitle">{{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT' | translate }}</p>
         <div class="empty-action">
-          <button [routerLink]="'/projects/new'" (click)="$event.preventDefault()" class="btn btn-lg btn-primary">
-            {{ 'MY_PROJECTS.ADD_PROJECT' | translate }} <i class="icon icon-arrow-right"></i>
+          <button [routerLink]="'/project/new'" (click)="$event.preventDefault()" class="btn btn-lg btn-primary">
+            {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }} <i class="icon icon-arrow-right"></i>
           </button>
         </div>
       </div>
@@ -45,7 +45,7 @@
         <div class="description">
           <div class="title">
             <a [routerLink]="getRelevantLink(project)">
-              {{ project.name || ('MY_PROJECTS.UNTITLED' | translate) }}
+              {{ project.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}
             </a>
           </div>
           <div class="metas">{{ project.owner.firstName }} {{ project.owner.lastName }}<span *ngIf="project.owner.companyName"> / {{ project.owner.companyName }}</span>
@@ -89,10 +89,10 @@
   <div class="modal-container">
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="(selectedProjectIdToBeDeleted = null) && $event.preventDefault()"></button>
-      <div class="modal-title h5">{{ 'MY_PROJECTS.DELETE_PROJECT_MODAL.TITLE' | translate }}</div>
+      <div class="modal-title h5">{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.TITLE' | translate }}</div>
     </div>
     <div class="modal-body">
-      <div class="content">{{ 'MY_PROJECTS.DELETE_PROJECT_MODAL.CONTENT' | translate }}</div>
+      <div class="content">{{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}</div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-link" (click)="removeProject($event, selectedProjectIdToBeDeleted)">
