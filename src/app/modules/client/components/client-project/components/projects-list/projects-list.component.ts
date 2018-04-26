@@ -59,17 +59,20 @@ export class ProjectsListComponent implements OnInit {
       });
   }
 
-  public getRelevantLink(project: Innovation): string { // routerLink : /project/:project_id
-    const link = './' + project._id;
+  public getRelevantLink(project: Innovation): Array<string> { // routerLink : /project/:project_id
+    const link = ['/project', project._id];
     switch (project.status) {
       case 'DONE':
       case 'EVALUATING':
-        return link + '/synthesis';
+        link.push('synthesis');
+        break;
       case 'SUBMITTED':
-        return link;
+        link.push('exploration');
+        break;
       default:
-        return link + '/setup';
+        link.push('setup');
     }
+    return link;
   }
 
   private _getProjectIndex(projectId: string): number {
