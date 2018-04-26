@@ -44,6 +44,7 @@
       <app-input-list
         *ngIf="adminMode"
         (update)="setAnswer($event)"
+        [canEdit]="true"
         [config]="{ placeholder: '', initialData: fullAnswer.answers[question.identifier] || [] }"
         [adminMode]="adminMode">
       </app-input-list>

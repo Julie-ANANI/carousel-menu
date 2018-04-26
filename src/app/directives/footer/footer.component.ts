@@ -8,15 +8,17 @@ import { environment } from '../../../environments/environment';
   templateUrl: 'footer.component.html',
   styleUrls: ['footer.component.scss']
 })
+
 export class FooterComponent implements OnInit {
   private _companyName: string = environment.companyName;
-  public displayLangChoices = false;
+  displayLangChoices: boolean;
 
   constructor (private _translateService: TranslateService,
                private _cookieService: CookieService) {}
 
   ngOnInit(): void {
     initTranslation(this._translateService);
+    this.displayLangChoices = false;
   }
 
   public isMainDomain(): boolean {

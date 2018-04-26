@@ -3,14 +3,13 @@
     <div class="column col-12 col-mx-auto">
 
       <!-- Translate Section -->
-      <div class="column col-11 col-mx-auto" [ngClass]="{'active': displayLangChoices}" id="lang-section">
-        <div class="dropdown">
+      <div class="column col-11 col-mx-auto lang-section">
+        <div class="dropdown" (click)="(displayLangChoices = !displayLangChoices)" [ngClass]="{'active': displayLangChoices}">
           <div class="btn-group">
-            <button
-              class="btn dropdown-toggle"
-              id="lang-button"
-              (click)="(displayLangChoices = !displayLangChoices) && $event.preventDefault()"
-            >
+            <button class="btn dropdown-toggle lang-button">
+              <span class="icon-global">
+                <i class="fas fa-globe"></i>
+              </span>
               {{ 'COMMON.LANG.'+translate.currentLang.toUpperCase() | translate }}
               <span class="icon-footer">
                   <i class="icon icon-arrow-down"></i>
@@ -19,14 +18,14 @@
             <ul class="menu">
               <li *ngIf="translate.currentLang !== 'fr'">
                 <a
-                  (click)="propagateTranslation('fr') && $event.preventDefault() && (displayLangChoices=false)"
+                  (click)="propagateTranslation('fr') && $event.preventDefault() && (displayLangChoices = false)"
                 >
                   {{ 'COMMON.LANG.FR' | translate }}
                 </a>
               </li>
               <li *ngIf="translate.currentLang !== 'en'">
                 <a
-                  (click)="propagateTranslation('en') && $event.preventDefault() && (displayLangChoices=false)"
+                  (click)="propagateTranslation('en') && $event.preventDefault() && (displayLangChoices = false)"
                 >
                   {{ 'COMMON.LANG.EN' | translate }}
                 </a>
@@ -39,23 +38,29 @@
 
       <!-- Hr Section -->
       <div class="column col-11 col-mx-auto">
-        <hr id="footer-hr"/>
+        <hr class="footer-hr"/>
       </div>
       <!-- /Hr Section -->
 
       <!-- Info Section -->
-      <div class="column col-11 col-mx-auto" id="information-section">
-        <p>
-          © 2015 - {{ copyrightDate }} {{ companyName }}
-          •
-          <span *ngIf="isMainDomain()">
+      <div class="column col-11 col-mx-auto information-section">
+        <div class="columns">
+
+          <div class="column col-6 col-sm-12 col-mx-auto">
+            <p>
+              {{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}
+            </p>
+          </div>
+
+          <div class="column col-6 col-sm-12 col-mx-auto text-right">
+            <p>
+              <span *ngIf="isMainDomain()">
             <a
               [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')"
-               target="_blank"
+              target="_blank"
             >
               {{ 'FOOTER.LEGAL_NOTICE' | translate }}
-            </a>
-          •
+            </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a
               target="_blank"
               [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')"
@@ -63,7 +68,11 @@
               {{ 'FOOTER.TERMS' | translate }}
             </a>
           </span>
-        </p>
+            </p>
+          </div>
+
+        </div>
+
       </div>
       <!-- /Info Section -->
 
