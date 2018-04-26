@@ -30,7 +30,7 @@ import { SharedMarketReportExampleComponent } from './../shared/components/share
 import { NonAuthGuard } from '../../non-auth-guard.service';
 import { AuthGuard } from '../../auth-guard.service';
 import { PendingChangesGuard } from '../../pending-changes-guard.service';
-import { AdminAuthGuard } from '../../admin-auth-guard.service';
+//import { AdminAuthGuard } from '../../admin-auth-guard.service';
 
 const clientRoutes: Routes = [
   {
@@ -116,7 +116,7 @@ const clientRoutes: Routes = [
       {
         path: 'sample',
         children: [
-          { path: '', component: SharedMarketReportExampleComponent, canActivate: [AdminAuthGuard] }
+          { path: '', component: SharedMarketReportExampleComponent, canActivate: [NonAuthGuard] }
         ]
       },
       {
