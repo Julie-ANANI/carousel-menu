@@ -5,9 +5,6 @@ import { ClientComponent } from './client.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 import { ClientDiscoverDescriptionComponent } from './components/client-discover-description/client-discover-description.component';
 
-import { ClientMyProjectsComponent } from './components/client-my-projects/client-my-projects.component';
-import { ClientProjectNewComponent } from './components/client-project-new/client-project-new.component';
-
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
@@ -86,19 +83,12 @@ const clientRoutes: Routes = [
         ]
       },
       {
-        path: 'projects',
-        children: [
-          { path: '', component: ClientMyProjectsComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-          { path: 'new', component: ClientProjectNewComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-          ...clientProjectRoutes
-        ]
-      },
-      {
         path: 'sample',
         children: [
           { path: '', component: SharedMarketReportExampleComponent, canActivate: [NonAuthGuard] }
         ]
       },
+      ...clientProjectRoutes,
       {
         path: '**',
         component: SharedNotFoundComponent

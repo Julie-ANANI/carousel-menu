@@ -5,9 +5,11 @@ import { SharedMarketReportModule } from '../../../shared/components/shared-mark
 import { SharedModule } from '../../../shared/shared.module';
 import { ClientProjectComponent } from './client-project.component';
 import { ExplorationProjectComponent } from './components/exploration/exploration.component';
+import { NewProjectComponent } from './components/new-project/new-project.component';
 import { ProjectEditComponent } from './components/project-edit/project-edit.component';
 import { ProjectEditExample1Component } from './components/project-edit-example1/project-edit-example1.component';
 import { ProjectEditExample2Component } from './components/project-edit-example2/project-edit-example2.component';
+import { ProjectsListComponent } from './components/projects-list/projects-list.component';
 import { SetupProjectComponent } from './components/setup/setup.component';
 
 @NgModule({
@@ -20,9 +22,11 @@ import { SetupProjectComponent } from './components/setup/setup.component';
   declarations: [
     ClientProjectComponent,
     ExplorationProjectComponent,
+    NewProjectComponent,
     ProjectEditComponent,
     ProjectEditExample1Component,
     ProjectEditExample2Component,
+    ProjectsListComponent,
     SetupProjectComponent
   ],
   exports: [
