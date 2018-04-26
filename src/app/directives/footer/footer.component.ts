@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 
 export class FooterComponent implements OnInit {
   private _companyName: string = environment.companyName;
-  private displayLangChoices: boolean;
+  displayLangChoices: boolean;
 
   constructor (private _translateService: TranslateService,
                private _cookieService: CookieService) {}
