@@ -1,4 +1,4 @@
-export const MY_PROJECTS = {
+export const PROJECTS_LIST = {
   'TITLE': 'My projects',
   'ADD_PROJECT': 'Add a project',
   'DELETE_PROJECT_MODAL': {

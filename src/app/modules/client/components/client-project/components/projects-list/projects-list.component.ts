@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateTitleService } from '../../../../services/title/title.service';
-import { UserService } from '../../../../services/user/user.service';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { Innovation } from '../../../../models/innovation';
+import { TranslateTitleService } from '../../../../../../services/title/title.service';
+import { UserService } from '../../../../../../services/user/user.service';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { Innovation } from '../../../../../../models/innovation';
 
 @Component({
-  selector: 'app-client-my-projects',
-  templateUrl: './client-my-projects.component.html',
-  styleUrls: ['./client-my-projects.component.scss']
+  selector: 'app-projects-list',
+  templateUrl: 'projects-list.component.html',
+  styleUrls: ['projects-list.component.scss']
 })
-export class ClientMyProjectsComponent implements OnInit {
+export class ProjectsListComponent implements OnInit {
 
   private _projects: Array<Innovation>;
   public selectedProjectIdToBeDeleted: any = null;
@@ -31,7 +31,7 @@ export class ClientMyProjectsComponent implements OnInit {
               private _titleService: TranslateTitleService) {}
 
   ngOnInit(): void {
-    this._titleService.setTitle('MY_PROJECTS.TITLE');
+    this._titleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
     this.loadProjects(this._config);
   }
 
@@ -59,7 +59,7 @@ export class ClientMyProjectsComponent implements OnInit {
       });
   }
 
-  public getRelevantLink(project: Innovation): string { // routerLink : /projects/:project_id
+  public getRelevantLink(project: Innovation): string { // routerLink : /project/:project_id
     const link = './' + project._id;
     switch (project.status) {
       case 'DONE':
@@ -68,7 +68,7 @@ export class ClientMyProjectsComponent implements OnInit {
       case 'SUBMITTED':
         return link;
       default:
-        return link + '/edit';
+        return link + '/setup';
     }
   }
 
