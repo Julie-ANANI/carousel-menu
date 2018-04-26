@@ -29,21 +29,12 @@ import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
   declarations: [
     ClientComponent,
     ClientMyAccountComponent,
-<<<<<<< HEAD
-=======
-    ClientMyProjectsComponent,
->>>>>>> Move project edition into project module.
     ClientDiscoverComponent,
     ClientDiscoverDescriptionComponent,
     ClientWelcomeComponent,
     ClientLoginComponent,
     ClientSignupComponent,
     ClientLogoutComponent,
-<<<<<<< HEAD
-=======
-    ClientProjectNewComponent,
-    ClientProjectSynthesisComponent,
->>>>>>> Move project edition into project module.
     ClientResetPasswordComponent,
     DiscoverSummaryPipe
   ]
