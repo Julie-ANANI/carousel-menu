@@ -154,5 +154,6 @@ export class SharedMarketReportComponent implements OnInit {
   set calculating (value: boolean) { this._calculating = value; }
   get calculating (): boolean { return this._calculating; }
   get showDetails (): boolean { return this._showDetails; }
+  get infographics () { return this._infographics; }
   get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
 }
