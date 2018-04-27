@@ -11,6 +11,7 @@ import { ProjectEditExample1Component } from './components/project-edit-example1
 import { ProjectEditExample2Component } from './components/project-edit-example2/project-edit-example2.component';
 import { ProjectsListComponent } from './components/projects-list/projects-list.component';
 import { SetupProjectComponent } from './components/setup/setup.component';
+import { SurveyComponent } from './components/setup/components/survey/survey.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { SetupProjectComponent } from './components/setup/setup.component';
     ProjectEditExample1Component,
     ProjectEditExample2Component,
     ProjectsListComponent,
-    SetupProjectComponent
+    SetupProjectComponent,
+    SurveyComponent
   ],
   exports: [
     ClientProjectComponent
