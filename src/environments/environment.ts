@@ -12,6 +12,7 @@ export const environment = {
   logoURL: '',
   domain: '',
   innovationUrl: '',
-  quizUrl: ''
+  quizUrl: '',
+  background: ''
 };
 

@@ -20,14 +20,14 @@ export class AppComponent implements OnInit, OnDestroy {
   public displayLoading: boolean;
 
   public notificationsOptions = {
-    position: ['top', 'right'],
-    timeOut: 5000,
+    position: ['bottom', 'right'],
+    timeOut: 7000,
     lastOnBottom: true,
     maxStack: 4,
-    animate: 'scale',
+    animate: 'fromRight',
     pauseOnHover: false,
-    showProgressBar: false,
-    clickToClose: false,
+    showProgressBar: true,
+    clickToClose: true,
     theClass: 'notification'
   };
 
@@ -68,4 +68,5 @@ export class AppComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
+
 }

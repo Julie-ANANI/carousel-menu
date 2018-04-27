@@ -1,11 +1,11 @@
-export const ERROR = {  //TODO: repasser sur les trads des erreurs ! (traduit par Bastien en précipitation)
+export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit par Bastien en précipitation)
   'ERROR': 'Error',
   'SUCCESS': 'Success',
   'CANNOT_REACH': 'Cannot reach server',
   'INVALID_FORM': 'There is an error in your form.',
   'PAGE_NOT_FOUND': 'Page not found',
   'LOGIN': {
-    'WELCOME': 'Welcome back !',
+    'WELCOME': 'Welcome back!',
     'LOGGED_IN': 'You are now logged in.',
     'EMPTY_EMAIL': 'Empty email',
     'EMAIL_PLEASE': 'Please enter your email.',

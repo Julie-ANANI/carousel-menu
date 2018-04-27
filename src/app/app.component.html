@@ -1,23 +1,24 @@
-<div *ngIf="displayLoading == true" id="wait">
+<div *ngIf="displayLoading == true" class="wait">
   <div>
     <i class="fas fa-spinner fa-pulse fa-4x"></i>
   </div>
 </div>
 
+<div *ngIf="displayLoading == false" class="body">
 
-<div *ngIf="displayLoading == false" id="body">
+    <div *ngIf="_authService.isAuthenticated">
+      <app-header></app-header>
+    </div>
 
-  <div id="app-header">
-    <app-header></app-header>
-  </div>
-
-  <div id="main">
-    <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
-    <progress class="progress" max="100" *ngIf="displayLoader"></progress>
+    <div class="main">
+      <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
+      <progress class="progress" max="100" *ngIf="displayLoader"></progress>
       <router-outlet></router-outlet>
-  </div>
+    </div>
 
-  <app-footer></app-footer>
+    <div *ngIf="_authService.isAuthenticated">
+      <app-footer></app-footer>
+    </div>
 
 </div>
 

@@ -131,10 +131,62 @@ ul.list-filter {
 }
 
 a {
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
+}
+
+/********************************** Form Input Styles ***************************************/
+
+// Default Form Input
+
+.default-form-input {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  color: #333333;
+}
+
+.default-form-input:focus {
+  box-shadow: none !important;
+  border-color: #246a99 !important;
+}
+
+.ng-touched .ng-invalid {
+  border: 0.5px solid #e85600 !important;
+}
+
+/********************************** /Form Input Styles ***************************************/
+
+
+/********************************** Buttons Styles ***************************************/
+
+// Default Button
+
+.default-button {
+  background-color: $primary-color;
+  color: white;
+  border-radius: 5px;
+  border-color: $primary-color;
+  min-height: 50px;
+  padding: 12px 30px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  transition: all 0.5s ease;
 }
 
 
+/********************************** /Buttons Styles ***************************************/
 
+@media (max-width: 320px) {
+
+  .default-form-input {
+    max-width: 250px !important;
+  }
+
+  .default-button {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+}
 
 

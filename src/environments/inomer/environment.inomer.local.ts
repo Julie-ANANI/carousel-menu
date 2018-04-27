@@ -7,5 +7,6 @@ export const environment = {
   innovationUrl: 'http://localhost:4200',
   quizUrl: 'http://localhost:4200',
   companyURL: 'imr.inomer.fr',
-  logoURL: 'https://res.cloudinary.com/umi/image/upload/logo-inomer.png'
+  logoURL: 'https://res.cloudinary.com/umi/image/upload/logo-inomer.png',
+  background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg'
 };
