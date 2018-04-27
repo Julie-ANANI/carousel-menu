@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../../models/innovation';
 
 @Component({
@@ -6,12 +6,19 @@ import { Innovation } from '../../../../../../models/innovation';
   templateUrl: 'setup.component.html',
   styleUrls: ['setup.component.scss']
 })
-export class SetupProjectComponent {
+export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
 
-  constructor() {
+  private _currentTab: string;
+
+  constructor() {}
+
+  ngOnInit() {
+    this._currentTab = 'pitch';
   }
 
+  get currentTab() { return this._currentTab; }
+  set currentTab(value: string) { this._currentTab = value; }
 
 }

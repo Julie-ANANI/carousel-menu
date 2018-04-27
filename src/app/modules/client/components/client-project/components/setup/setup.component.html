@@ -1,4 +1,42 @@
 <div class="setup-project">
+
   <h1>{{'PROJECT_MODULE.SETUP.TITLE' | translate}}</h1>
+
   <button class="btn btn-primary">{{'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate}}</button>
+
+  <ul class="tab tab-block">
+    <li class="tab-item">
+      <button class="btn btn-link" [ngClass]="{'active': currentTab == 'pitch'}"
+              (click)="currentTab = 'pitch'">
+        {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
+      </button>
+    </li>
+    <li class="tab-item">
+      <button class="btn btn-link" [ngClass]="{'active': currentTab == 'targeting'}"
+              (click)="currentTab = 'targeting'">
+        {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
+      </button>
+    </li>
+    <li class="tab-item">
+      <button class="btn btn-link" [ngClass]="{'active': currentTab == 'survey'}"
+              (click)="currentTab = 'survey'">
+        {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
+      </button>
+    </li>
+  </ul>
+
+  <div class="tabs">
+    <div class="tab-content" *ngIf="currentTab === 'pitch'">
+      pitch
+    </div>
+
+    <div class="tab-content" *ngIf="currentTab === 'targeting'">
+      targeting
+    </div>
+
+    <div class="tab-content" *ngIf="currentTab === 'survey'">
+      survey
+    </div>
+  </div>
+
 </div>
