@@ -51,28 +51,27 @@
         {{ 'PROJECT_MODULE.NEW_PROJECT.CREATE' | translate }}
       </button>
 
-      <div class="columns">
-        <div class="column col-4">
-          <div class="tip">
-            <img src="https://res.cloudinary.com/umi/image/upload/app/picto-download.svg" width="56" height="">
-            <h3>{{ 'PROJECT_MODULE.NEW_PROJECT.DOWNLOAD' | translate }}</h3>
+          <div class="form-group text-center">
+            <label class="form-label h3" for="name">2. {{ "PROJECT_MODULE.NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</label>
+            <input class="form-input" id="name" name="name" formControlName="name" type="text"
+                   placeholder="">
           </div>
-        </div>
 
-        <div class="column col-4">
-          <div class="tip">
-            <img src="https://res.cloudinary.com/umi/image/upload/app/picto-lock.svg" width="56" height="">
-            <h3>{{ 'PROJECT_MODULE.NEW_PROJECT.PRIVATE' | translate }}</h3>
+          <h3 class="text-center">3. {{'PROJECT_MODULE.NEW_PROJECT.INNOVATION_TYPE_LABEL' | translate }}</h3>
+          <div class="form-group text-center type-choice">
+            <label class="form-radio">
+              <input type="radio" value="insights" name="type" formControlName="type">
+              <i class="form-icon"></i> GetInsights
+            </label>
+            <label class="form-radio">
+              <input type="radio" value="apps" name="type" formControlName="type">
+              <i class="form-icon"></i> GetApps
+            </label>
+            <label class="form-radio">
+              <input type="radio" value="leads" name="type" formControlName="type">
+              <i class="form-icon"></i> GetLeads
+            </label>
           </div>
-        </div>
-
-        <div class="column col-4">
-          <div class="tip">
-            <img src="https://res.cloudinary.com/umi/image/upload/app/picto-blind.svg" width="56" height="">
-            <h3>{{ 'PROJECT_MODULE.NEW_PROJECT.ANONYMOUS' | translate }}</h3>
-          </div>
-        </div>
-      </div>
 
     </form>
   </div>
