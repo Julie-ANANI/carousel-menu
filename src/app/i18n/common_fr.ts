@@ -45,13 +45,13 @@ export const COMMON = {
   'COUNTRY': 'Pays',
 
   'REQUIRED': {
-    'FIRSTNAME': 'Le prénom est requis',
-    'LASTNAME': 'Le nom est requis',
-    'EMAIL': 'L\'adresse email est requise',
-    'PHONE': 'Le numéro de téléphone est requis',
-    'PASSWORD': 'Le mot de passe est requis',
-    'COMPANY': 'Le nom de l\'entreprise est requis',
-    'JOBTITLE': 'Le poste est requis',
+    'FIRSTNAME': 'Le prénom est requis.',
+    'LASTNAME': 'Le nom est requis.',
+    'EMAIL': 'L\'adresse email est requise.',
+    'PHONE': 'Le numéro de téléphone est requis.',
+    'PASSWORD': 'Le mot de passe est requis.',
+    'COMPANY': 'Le nom de l\'entreprise est requis.',
+    'JOBTITLE': 'Le poste est requis.',
   },
 
   'PROJECT_STATE': {
@@ -69,8 +69,8 @@ export const COMMON = {
   },
 
   'INVALID': {
-    'EMAIL': 'L\'email est invalide',
-    'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court'
+    'EMAIL': 'L\'email est invalide.',
+    'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court.'
   },
 
   'LINKS': 'Liens',
