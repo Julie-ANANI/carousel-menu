@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public notificationsOptions = {
     position: ['bottom', 'right'],
-    timeOut: 5000,
+    timeOut: 7000,
     lastOnBottom: true,
     maxStack: 4,
     animate: 'fromRight',
