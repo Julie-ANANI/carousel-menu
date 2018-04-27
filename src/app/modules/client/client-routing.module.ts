@@ -116,7 +116,7 @@ const clientRoutes: Routes = [
       {
         path: 'sample',
         children: [
-          { path: '', component: SharedMarketReportExampleComponent, canActivate: [NonAuthGuard] }
+          { path: '', component: SharedMarketReportExampleComponent }
         ]
       },
       {
