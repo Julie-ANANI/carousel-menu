@@ -6,5 +6,8 @@ export const NEW_PROJECT = {
   'FORM_NOT_VALID': 'Please answer to all questions',
   'CREATE': 'Create my project',
   'COMPANY_NAME_LABEL': 'Give a name to your project',
-  'INNOVATION_TYPE_LABEL': 'Choose your offer'
+  'INNOVATION_TYPE_LABEL': 'Choose your offer',
+  'DOWNLOAD': 'Download your project anytime',
+  'ANONYMOUS': 'Remain anonymous',
+  'PRIVATE': 'Nothing will be published at this stage'
 };
