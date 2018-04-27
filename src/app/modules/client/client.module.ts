@@ -12,7 +12,6 @@ import { ClientDiscoverDescriptionComponent } from './components/client-discover
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
-import { ClientProjectSynthesisComponent } from './components/client-project-synthesis/client-project-synthesis.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
@@ -36,7 +35,6 @@ import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
     ClientLoginComponent,
     ClientSignupComponent,
     ClientLogoutComponent,
-    ClientProjectSynthesisComponent,
     ClientResetPasswordComponent,
     DiscoverSummaryPipe
   ]
