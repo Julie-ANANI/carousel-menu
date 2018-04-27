@@ -17,7 +17,7 @@
             </div>
             <div class="column col-5 collaborators">
               <button class="btn btn-bordered" (click)="(displayAddCollaboratorsModal = true) && $event.preventDefault()">
-                <i class="icon icon-plus"></i> {{ 'PROJECT_EDIT.ADD_COLLABORATORS' | translate }}
+                <i class="icon icon-plus"></i> {{ 'PROJECT_MODULE.EDIT.ADD_COLLABORATORS' | translate }}
               </button>
               <div>
                 <span *ngFor="let collaborator of project.collaborators"
