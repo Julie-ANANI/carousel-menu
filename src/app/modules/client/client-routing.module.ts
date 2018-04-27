@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ClientComponent } from './client.component';
-
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
 import { ClientDiscoverDescriptionComponent } from './components/client-discover-description/client-discover-description.component';
 
@@ -30,7 +29,7 @@ import { SharedMarketReportExampleComponent } from './../shared/components/share
 import { NonAuthGuard } from '../../non-auth-guard.service';
 import { AuthGuard } from '../../auth-guard.service';
 import { PendingChangesGuard } from '../../pending-changes-guard.service';
-//import { AdminAuthGuard } from '../../admin-auth-guard.service';
+// import { AdminAuthGuard } from '../../admin-auth-guard.service';
 
 const clientRoutes: Routes = [
   {
