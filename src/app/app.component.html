@@ -7,8 +7,8 @@
 
 <div *ngIf="displayLoading == false" class="body">
 
-    <div class="app-header" *ngIf="_authService.isAuthenticated">
-      <app-header></app-header>
+    <div *ngIf="_authService.isAuthenticated">
+      <app-header class="app-header"></app-header>
     </div>
 
     <div class="main">
