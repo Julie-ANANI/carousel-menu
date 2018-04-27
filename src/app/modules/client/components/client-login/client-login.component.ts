@@ -30,8 +30,9 @@ export class ClientLoginComponent implements OnInit {
 
     this.formData = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.minLength(this.passwordMinLength)]]
+      password: ['', [Validators.required, Validators.minLength(this.passwordMinLength)]]
     });
+
   }
 
   onSubmit() {
@@ -105,4 +106,13 @@ export class ClientLoginComponent implements OnInit {
   public isMainDomain(): boolean {
     return environment.domain === 'umi';
   }
+
+  public logoName(): string {
+    return environment.logoURL;
+  }
+
+  public backgroundImage(): string {
+    return environment.background;
+  }
+
 }
