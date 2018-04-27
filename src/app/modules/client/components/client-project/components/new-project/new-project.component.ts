@@ -14,7 +14,8 @@ export class NewProjectComponent {
 
   public formData: FormGroup = this._formBuilder.group({
     choosenLang: [null, Validators.required],
-    name: ['', Validators.required]
+    name: [null, Validators.required],
+    type: [null, Validators.required],
   });
 
   constructor(private _router: Router,
@@ -25,7 +26,8 @@ export class NewProjectComponent {
     const newProject = {
       domain: environment.domain,
       lang: this.formData.value.choosenLang,
-      name: this.formData.value.name
+      name: this.formData.value.name,
+      type: this.formData.value.type
     };
 
     this._innovationService.create(newProject)
