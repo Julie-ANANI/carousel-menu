@@ -143,6 +143,7 @@ a {
   border-left: none;
   border-right: none;
   color: #333333;
+  height: 45px;
 }
 
 .default-form-input:focus {
@@ -152,6 +153,19 @@ a {
 
 .ng-touched .ng-invalid {
   border: 0.5px solid #e85600 !important;
+}
+
+// Error Display Styles
+
+.has-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 0.25rem;
+  padding: 15px 12px;
+  font-size: 0.7rem;
+  text-align: left;
+  line-height: 1.4;
 }
 
 /********************************** /Form Input Styles ***************************************/
@@ -173,13 +187,17 @@ a {
   transition: all 0.5s ease;
 }
 
-
 /********************************** /Buttons Styles ***************************************/
 
 @media (max-width: 320px) {
 
   .default-form-input {
     max-width: 250px !important;
+  }
+
+  .has-error {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
   }
 
   .default-button {
