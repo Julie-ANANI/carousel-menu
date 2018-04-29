@@ -68,6 +68,16 @@
 
       }
 
+      .error-container {
+        display: flex;
+        justify-content: center;
+
+        .has-error {
+          width: 300px;
+        }
+
+      }
+
     }
 
     .submit-container {
@@ -87,6 +97,12 @@
           background-color: #e5a100;
           border-color: #e5a100;
           color: #FFFFFF;
+        }
+
+        .default-button:disabled {
+          background-color: #FFFFFF;
+          color: #FFB300;
+          border-color: #FFB300;
         }
 
       }
@@ -163,6 +179,14 @@
   .bot-container {
     padding-top: 10px!important;
     padding-bottom: 35px!important;
+  }
+
+}
+
+@media (max-width: 320px) {
+
+  .has-error {
+    width: 250px !important;
   }
 
 }
