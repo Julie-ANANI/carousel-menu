@@ -189,6 +189,47 @@ a {
 
 /********************************** /Buttons Styles ***************************************/
 
+/********************************** Simple Notification Styles ***************************************/
+
+.simple-notification {
+  border: 1px solid transparent !important;
+  border-radius: 5px !important;
+  word-wrap: break-word !important;
+}
+
+.simple-notification-wrapper {
+  z-index: 9999 !important;
+}
+
+.simple-notification .sn-title {
+  font-size: 20px !important;
+  line-height: 1.4 !important;
+  padding-right: 0 !important;
+  font-weight: bold;
+  padding-bottom: 8px !important;
+}
+
+.simple-notification .sn-content {
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+  padding-right: 0 !important;
+  padding-bottom: 10px !important;
+}
+
+.simple-notification.success {
+  background-color: #d4edda !important;
+  color: #155724 !important;
+  border-color: #d4edda !important;
+}
+
+.simple-notification.error {
+  background-color: #f8d7da !important;
+  color: #721c24 !important;
+  border-color: #f8d7da !important;
+}
+
+/********************************** /Simple Notification Styles ***************************************/
+
 @media (max-width: 320px) {
 
   .default-form-input {
