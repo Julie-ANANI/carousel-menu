@@ -1,6 +1,9 @@
 $body-font-color-darker: #333333;
 $primary-color: #3498DB;
 
+div.ng-invalid {
+  border: 0 !important;
+}
 
 .language-choice ul {
   margin: 0;

@@ -26,6 +26,10 @@ export class SetupProjectComponent implements OnInit {
     this.project.settings = value;
   }
 
+  public updateInnovation(value: Innovation): void {
+    this.project = value;
+  }
+
   public saveProject(event: Event): void {
     event.preventDefault();
     this.innovationService
@@ -33,7 +37,7 @@ export class SetupProjectComponent implements OnInit {
       .first()
       .subscribe(data => {
         this.project = data;
-        this.notificationService.error('ERROR.PROJECT.SUBMITTED', '');
+        this.notificationService.success('ERROR.PROJECT.SUBMITTED', '');
       }, err => {
         this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
