@@ -45,7 +45,8 @@
 
                 <!-- Email -->
                 <div class="input-container">
-                  <input class="form-input default-form-input" formControlName="email" type="email" placeholder="Email address">
+                  <input class="form-input default-form-input" formControlName="email" type="email"
+                         [attr.placeholder]= "'COMMON.EMAIL' | translate ">
                 </div>
                 <div class="error-container" *ngIf="formData.get('email').touched && formData.get('email').invalid">
                   <div class="has-error">
@@ -61,7 +62,8 @@
 
                 <!-- Password -->
                 <div class="input-container">
-                  <input class="form-input default-form-input" formControlName="password" type="password" placeholder="Password">
+                  <input class="form-input default-form-input" formControlName="password" type="password"
+                         [attr.placeholder]= "'COMMON.PASSWORD' | translate ">
                 </div>
                 <div class="error-container" *ngIf="formData.get('password').touched && formData.get('password').invalid">
                   <div class="has-error">
