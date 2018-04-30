@@ -12,6 +12,7 @@ import { ProjectEditExample2Component } from './components/project-edit-example2
 import { ProjectsListComponent } from './components/projects-list/projects-list.component';
 import { SetupProjectComponent } from './components/setup/setup.component';
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
+import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { SurveyComponent } from './components/setup/components/survey/survey.com
     ProjectEditExample2Component,
     ProjectsListComponent,
     SetupProjectComponent,
-    SurveyComponent
+    SurveyComponent,
+    TargetingComponent
   ],
   exports: [
     ClientProjectComponent
