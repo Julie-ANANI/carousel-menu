@@ -1,3 +1,10 @@
 <div class="survey">
-  Survey component (TODO)
+
+  <p *ngIf="!project.quizId">{{'PROJECT_MODULE.SETUP.SURVEY.NOQUIZ' | translate}}</p>
+
+  <ng-container *ngIf="project.quizId">
+    <p>{{'PROJECT_MODULE.SETUP.SURVEY.DONTSHAREQUIZ' | translate}}</p>
+    <a href="{{url}}">{{url}}</a>
+  </ng-container>
+
 </div>
