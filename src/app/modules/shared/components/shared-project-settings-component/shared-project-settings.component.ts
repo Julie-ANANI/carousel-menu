@@ -54,26 +54,26 @@ export class SharedProjectSettingsComponent implements OnInit {
   public getConfig(type: string): any {
     const _inputConfig = {
       'countries': {
-        placeholder: 'PROJECT_EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
+        placeholder: 'PROJECT_MODULE.EDIT.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
         initialData: this.settings && this.settings.geography ? this.settings.geography.exclude || [] : [],
         type: 'countries'
       },
       'excludedPeople': {
-        placeholder: 'PROJECT_EDIT.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
+        placeholder: 'PROJECT_MODULE.EDIT.PROFESSIONALS.NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER',
         initialData: this.settings && this.settings.professionals ? this.settings.professionals.exclude || [] : []
       },
       'excludedCompanies': {
-        placeholder: 'PROJECT_EDIT.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
+        placeholder: 'PROJECT_MODULE.EDIT.COMPANIES.NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER',
         initialData: this.settings && this.settings.companies ? this.settings.companies.exclude || [] : [],
         type: 'company'
       },
       'includedCompanies': {
-        placeholder: 'PROJECT_EDIT.COMPANIES.NEW_COMPANY_TO_INCLUDE_PLACEHOLDER',
+        placeholder: 'PROJECT_MODULE.EDIT.COMPANIES.NEW_COMPANY_TO_INCLUDE_PLACEHOLDER',
         initialData: this.settings && this.settings.companies ? this.settings.companies.include || [] : [],
         type: 'company'
       },
       'keywords': {
-        placeholder: 'PROJECT_EDIT.KEYWORDS.PLACEHOLDER',
+        placeholder: 'PROJECT_MODULE.EDIT.KEYWORDS.PLACEHOLDER',
         initialData: this.settings ? this.settings.keywords || [] : []
       },
       'domainBL': {
