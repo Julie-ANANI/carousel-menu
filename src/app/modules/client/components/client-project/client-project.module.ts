@@ -11,6 +11,7 @@ import { ProjectEditExample1Component } from './components/project-edit-example1
 import { ProjectEditExample2Component } from './components/project-edit-example2/project-edit-example2.component';
 import { ProjectsListComponent } from './components/projects-list/projects-list.component';
 import { SetupProjectComponent } from './components/setup/setup.component';
+import { PitchComponent } from './components/setup/components/pitch/pitch.component';
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
 
@@ -30,6 +31,7 @@ import { TargetingComponent } from './components/setup/components/targeting/targ
     ProjectEditExample2Component,
     ProjectsListComponent,
     SetupProjectComponent,
+    PitchComponent,
     SurveyComponent,
     TargetingComponent
   ],

@@ -80,7 +80,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   public getConfig(type: string): any {
     const _inputConfig = {
       'advantages': {
-        placeholder: 'PROJECT_EDIT.DESCRIPTION.ADVANTAGES.INPUT',
+        placeholder: 'PROJECT_MODULE.EDIT.DESCRIPTION.ADVANTAGES.INPUT',
         initialData: this.formData.get('innovationCards').value[this.innovationCardEditingIndex]['advantages']
       }
     };
