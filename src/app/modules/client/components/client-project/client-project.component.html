@@ -17,7 +17,7 @@
             </div>
             <div class="column col-5 collaborators">
               <button class="btn btn-bordered" (click)="(displayAddCollaboratorsModal = true) && $event.preventDefault()">
-                <i class="icon icon-plus"></i> {{ 'PROJECT_MODULE.EDIT.ADD_COLLABORATORS' | translate }}
+                <i class="icon icon-plus"></i> {{ 'PROJECT_MODULE.ADD_COLLABORATORS' | translate }}
               </button>
               <div>
                 <span *ngFor="let collaborator of project.collaborators"
@@ -70,10 +70,10 @@
   <div class="modal-container">
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></button>
-      <div class="modal-title h5">{{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
+      <div class="modal-title h5">{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
     </div>
     <div class="modal-body">
-      <div class="content">{{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.CONTENT' | translate }}</div>
+      <div class="content">{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.CONTENT' | translate }}</div>
       <input type="text" [(ngModel)]="collaborators_emails" placeholder="alan.turing@gmail.com, joan.clarke@gmail.com">
     </div>
     <div class="modal-footer">
@@ -94,17 +94,17 @@
   <div class="modal-container">
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="(displayCollaboratorsAddingProcess = false) && $event.preventDefault()"></button>
-      <div class="modal-title h5">{{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
+      <div class="modal-title h5">{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
     </div>
     <div class="modal-body">
       <div class="content">
         <p *ngIf="collaboratorsAddingProcess.usersAdded.length">
-          {{ collaboratorsAddingProcess.usersAdded.length }} {{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.USERS_ADDED' | translate }}.
+          {{ collaboratorsAddingProcess.usersAdded.length }} {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.USERS_ADDED' | translate }}.
         </p>
 
         <div *ngIf="collaboratorsAddingProcess.invitationsToSend.length">
           <p >
-            {{ collaboratorsAddingProcess.invitationsToSend.length }} {{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.TO_SEND_EMAIL' | translate }}
+            {{ collaboratorsAddingProcess.invitationsToSend.length }} {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TO_SEND_EMAIL' | translate }}
           </p>
           <p align="center">
             <a class="btn btn-primary"
@@ -116,7 +116,7 @@
 
         <div *ngIf="collaboratorsAddingProcess.invitationsToSendAgain.length">
           <p>
-            {{ collaboratorsAddingProcess.invitationsToSendAgain.length }} {{ 'PROJECT_EDIT.ADD_COLLABORATORS_MODAL.TO_RESEND_EMAIL' | translate }}"
+            {{ collaboratorsAddingProcess.invitationsToSendAgain.length }} {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TO_RESEND_EMAIL' | translate }}"
           </p>
           <p align="center">
             <a class="btn btn-primary"
