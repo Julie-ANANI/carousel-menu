@@ -1,6 +1,6 @@
-import { PITCH } from '../components/pitch/i18n/en';
-import { SURVEY } from '../components/survey/i18n/en';
-import { TARGETING } from '../components/targeting/i18n/en';
+import { PITCH } from '../components/pitch/i18n/fr';
+import { SURVEY } from '../components/survey/i18n/fr';
+import { TARGETING } from '../components/targeting/i18n/fr';
 
 export const SETUP = {
   'TITLE': 'All infos about your project',
