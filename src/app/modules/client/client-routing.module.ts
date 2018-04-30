@@ -20,8 +20,9 @@ import { SharedMarketReportExampleComponent } from '../shared/components/shared-
 import { clientProjectRoutes } from './components/client-project/client-project-routing.module';
 
 /* Guards */
-import { NonAuthGuard } from '../../non-auth-guard.service';
+import { AdminAuthGuard } from '../../admin-auth-guard.service';
 import { AuthGuard } from '../../auth-guard.service';
+import { NonAuthGuard } from '../../non-auth-guard.service';
 
 const clientRoutes: Routes = [
   {
