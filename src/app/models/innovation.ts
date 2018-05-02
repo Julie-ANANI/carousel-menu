@@ -27,5 +27,6 @@ export interface Innovation {
   readonly projectStatus?: number;
   readonly patented?: boolean;
   readonly launched?: Date;
+  readonly created?: Date;
   readonly updated?: Date;
 }

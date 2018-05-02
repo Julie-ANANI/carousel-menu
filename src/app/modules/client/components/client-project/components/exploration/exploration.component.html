@@ -6,6 +6,20 @@
     {{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}
   </a>
 
+  <h2>{{'PROJECT_MODULE.EXPLORATION.STATUS_TITLE' | translate}}</h2>
+  <ul>
+    <li>
+      {{'PROJECT_MODULE.EXPLORATION.STATUS.STARTED' | translate}} :
+      {{this.project.created | date}}
+    </li>
+    <li>
+      {{'PROJECT_MODULE.EXPLORATION.STATUS.LAUNCHED' | translate}} :
+      {{this.project.launched | date}}
+    </li>
+  </ul>
+
+  <h2>{{'PROJECT_MODULE.EXPLORATION.ANALYTICS_TITLE' | translate}}</h2>
+
   <h2>{{'PROJECT_MODULE.EXPLORATION.CLICKMAP_TITLE' | translate}}</h2>
   <div class="map centered" width="684" height="339">
     <app-world-map [countries]="countries" [color]="'#0B90C6'"></app-world-map>
