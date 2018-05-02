@@ -1,6 +1,11 @@
+<shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="project._id" [adminMode]="false" [questions]="questions"></shared-answer-modal>
+
 <div class="market-exploration">
   <h1>{{'PROJECT_MODULE.EXPLORATION.TITLE' | translate}}</h1>
   <a class="btn btn-primary" href="{{contactUrl}}">
     {{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}
   </a>
+
+  <h2>{{'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate}}</h2>
+  <app-answers-list [answers]="answers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
 </div>

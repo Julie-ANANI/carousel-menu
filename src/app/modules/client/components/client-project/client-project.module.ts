@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedModule } from '../../../shared/shared.module';
+import { SharedAnswerModalModule } from '../../../shared/components/shared-answer-modal/answer-modal.module';
+import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { ClientProjectComponent } from './client-project.component';
 import { ExplorationProjectComponent } from './components/exploration/exploration.component';
 import { NewProjectComponent } from './components/new-project/new-project.component';
@@ -17,8 +18,9 @@ import { TargetingComponent } from './components/setup/components/targeting/targ
 @NgModule({
   imports: [
     CommonModule,
-    SharedMarketReportModule,
     SharedModule,
+    SharedAnswerModalModule,
+    SharedMarketReportModule,
     TranslateModule.forChild()
   ],
   declarations: [
