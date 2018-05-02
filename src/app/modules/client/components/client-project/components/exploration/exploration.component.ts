@@ -2,10 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Answer } from '../../../../../../models/answer';
+import { Clearbit } from '../../../../../../models/clearbit';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
-import {Clearbit} from "../../../../../../models/clearbit";
 
 @Component({
   selector: 'app-client-exploration-project',
@@ -19,6 +19,7 @@ export class ExplorationProjectComponent implements OnInit {
   private _contactUrl: string;
   private _answers: Array<Answer>;
   private _companies: Array<Clearbit>;
+  private _countries: Array<string>;
   private _questions: Array<Question>;
   private _modalAnswer: Answer;
 
@@ -37,6 +38,13 @@ export class ExplorationProjectComponent implements OnInit {
             // this is here to remove duplicate
             return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
           });
+        this._countries = results.answers
+          .reduce((acc, answer) => {
+            if (acc.indexOf(answer.country.flag) === -1) {
+              acc.push(answer.country.flag);
+            }
+            return acc;
+          }, []);
       }, (error) => {
         this.notificationService.error('ERROR.ERROR', error.message);
       });
@@ -54,6 +62,7 @@ export class ExplorationProjectComponent implements OnInit {
 
   get answers() { return this._answers; }
   get companies() { return this._companies; }
+  get countries() { return this._countries; }
   get contactUrl() { return this._contactUrl; }
   get modalAnswer() { return this._modalAnswer; }
   set modalAnswer(modalAnswer: Answer) { this._modalAnswer = modalAnswer; }
