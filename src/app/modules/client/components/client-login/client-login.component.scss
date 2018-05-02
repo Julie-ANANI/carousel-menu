@@ -6,6 +6,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
 
   .logo-container {
     padding-bottom: 50px;
@@ -184,7 +186,7 @@
 @media (min-width: 768px) {
 
   .main-container {
-    height: 100vh !important;
+    min-height: 100vh !important;
   }
 }
 
