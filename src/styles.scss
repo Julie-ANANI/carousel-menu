@@ -230,7 +230,7 @@ a {
   background-color: $form-switch-icon;
 }
 
-.form-switch .form-icon:checked  {
+.form-switch .input:checked+.form-icon  {
   border-color: $success;
   background-color: $success;
 }
