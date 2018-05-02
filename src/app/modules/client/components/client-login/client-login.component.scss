@@ -57,15 +57,14 @@
     .credential-container {
       padding-bottom: 35px;
 
-      .input-container {
+      .form-group {
         display: flex;
         justify-content: center;
-        padding-top: 15px;
+        margin-bottom: 20px;
+      }
 
-        .default-form-input {
-          max-width: 300px;
-        }
-
+      .default-form-input {
+        max-width: 300px;
       }
 
       .error-container {
@@ -74,6 +73,8 @@
 
         .has-error {
           width: 300px;
+          margin-top: 0;
+          margin-bottom: 20px;
         }
 
       }

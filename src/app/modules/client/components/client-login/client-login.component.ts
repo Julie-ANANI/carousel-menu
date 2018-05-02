@@ -30,7 +30,7 @@ export class ClientLoginComponent implements OnInit {
 
     this.formData = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(this.passwordMinLength)]]
+      password: ['', [Validators.required]]
     });
 
   }
