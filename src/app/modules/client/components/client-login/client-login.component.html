@@ -44,7 +44,7 @@
               <div class="credential-container">
 
                 <!-- Email -->
-                <div class="input-container">
+                <div class="form-group">
                   <input class="form-input default-form-input" formControlName="email" type="email" placeholder="Email address">
                 </div>
                 <div class="error-container" *ngIf="formData.get('email').touched && formData.get('email').invalid">
@@ -60,17 +60,14 @@
                 <!-- /Email -->
 
                 <!-- Password -->
-                <div class="input-container">
+                <div class="form-group">
                   <input class="form-input default-form-input" formControlName="password" type="password" placeholder="Password">
                 </div>
                 <div class="error-container" *ngIf="formData.get('password').touched && formData.get('password').invalid">
                   <div class="has-error">
-                    <span *ngIf="formData.get('password').hasError('required')">
-                    {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
-                  </span>
-                    <span *ngIf="formData.get('password').hasError('minlength')">
-                    {{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}
-                  </span>
+                      <span *ngIf="formData.get('password').hasError('required')">
+                      {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+                      </span>
                   </div>
                 </div>
                 <!-- /Password -->
