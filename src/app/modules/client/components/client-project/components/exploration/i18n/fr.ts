@@ -9,5 +9,12 @@ export const EXPLORATION = {
   'STATUS': {
     'STARTED': 'Started',
     'LAUNCHED': 'Launched'
+  },
+  'ANALYTICS': {
+    'PROFESSIONALS': 'Professionals',
+    'PROFESSIONALS_REACHED': 'Reached',
+    'EMAILS_OPENED': 'Emails opened',
+    'CLICKS': 'Visits',
+    'ANSWERS': 'Validated answers'
   }
 };
