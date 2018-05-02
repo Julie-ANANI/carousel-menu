@@ -30,19 +30,25 @@ $primary: #3498DB;
 $primary-hover: #246a99;
 $primary-dark: #333333;
 
+//Text color
+$text: #878787;
+$text-link: #ffb300;
+$text-link-hover: #ffc100;
+
+//Button
+$default-button: #ffb300;
+$default-button-hover: #ffc100;
+$default-button-disabled: #dbdbdb;
+
 // Form color
 $form-input: #333333;
 $form-switch-icon: #9B9B9B;
 
 //Success color
-$success: #155724;
-$success-background: #d4edda;
-$success-border: #c3e6cb;
+$success: #2ecc71;
 
 // Error color
-$error: #721c24;
-$error-background: #f8d7da;
-$error-border: #f5c6cb;
+$error: #ea5858;
 
 /********************************** /Color ***************************************/
 
@@ -160,6 +166,34 @@ a {
   transition: all 0.5s ease;
 }
 
+
+/********************************** Text Styles ***************************************/
+
+.text {
+  color: $text;
+}
+
+.para {
+  font-size: 0.9rem;
+  color: $text;
+  padding: 16px 0;
+  margin: 0;
+}
+
+.text-link {
+  color: $text-link;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: .7rem;
+}
+
+.text-link:hover {
+  color: $text-link-hover;
+}
+
+/********************************** /Text Styles ***************************************/
+
+
 /********************************** Form Input Styles ***************************************/
 
 // Default form input
@@ -196,17 +230,21 @@ a {
   background-color: $form-switch-icon;
 }
 
+.form-switch .form-icon:checked  {
+  border-color: $success;
+  background-color: $success;
+}
+
 .form-switch input:focus+.form-icon {
   border-color: $form-switch-icon;
   box-shadow: none !important;
 }
 
-
 // Error style
 .has-error {
-  color: $error;
-  background-color: $error-background;
-  border: 1px solid $error-border;
+  color: white;
+  background-color: $error;
+  border: 1px solid $error;
   border-radius: 5px;
   margin-top: 15px;
   padding: 15px 12px;
@@ -222,14 +260,26 @@ a {
 // Default button
 
 .default-button {
-  background-color: $primary;
+  background-color: $default-button;
   color: white;
   border-radius: 5px;
-  border-color: $primary;
+  border-color: $default-button;
   min-height: 50px;
   padding: 12px 30px;
   font-size: 0.8rem;
   transition: all 0.5s ease;
+}
+
+.default-button:hover {
+  background-color: $default-button-hover;
+  border-color: $default-button-hover;
+  color: white;
+}
+
+.default-button:disabled {
+  background-color: $default-button-disabled;
+  border-color: $default-button-disabled;
+  color: #a9a9a9;
 }
 
 /********************************** /Buttons Styles ***************************************/
@@ -263,15 +313,15 @@ a {
 }
 
 .simple-notification.success {
-  background-color: $success-background !important;
-  color: $success !important;
-  border-color: $success-border !important;
+  background-color: $success !important;
+  color: white !important;
+  border-color: $success !important;
 }
 
 .simple-notification.error {
-  background-color: $error-background !important;
-  color: $error !important;
-  border-color: $error-background !important;
+  background-color: $error !important;
+  color: white !important;
+  border-color: $error !important;
 }
 
 /********************************** /Simple Notification Styles ***************************************/

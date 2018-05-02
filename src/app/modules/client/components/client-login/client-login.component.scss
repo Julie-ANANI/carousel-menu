@@ -26,8 +26,8 @@
       padding-bottom: 45px;
 
       .default-button {
-        background-color: #1680B9;
-        border-color: #1680B9;
+        background-color: #0f5981;
+        border-color: #0f5981;
 
         span i {
           margin-right: 36px;
@@ -37,15 +37,15 @@
       }
 
       .default-button:hover {
-        background-color: #0f5981;
-        border-color: #0f5981;
+        background-color: #1680B9;
+        border-color: #1680B9;
         color: #FFFFFF;
       }
 
     }
 
     .or-container {
-      color: #6D6D6D;
+      color: #878787;
       padding-bottom: 45px;
 
       span::before {
@@ -54,7 +54,7 @@
         vertical-align: middle;
         width: 130px;
         height: 1px;
-        background: #6D6D6D;
+        background: #878787;
       }
 
       span::after {
@@ -63,7 +63,7 @@
         vertical-align: middle;
         width: 130px;
         height: 1px;
-        background: #6D6D6D;
+        background: #878787;
       }
 
     }
@@ -102,37 +102,8 @@
         padding-bottom: 10px;
 
         .default-button {
-          background-color: #FFB300;
-          border-color: #FFB300;
           padding-left: 35px;
           padding-right: 35px;
-        }
-
-        .default-button:hover {
-          background-color: #e5a100;
-          border-color: #e5a100;
-          color: #FFFFFF;
-        }
-
-        .default-button:disabled {
-          background-color: #FFFFFF;
-          color: #FFB300;
-          border-color: #FFB300;
-        }
-
-      }
-
-      .forget-link {
-
-        .forget-password {
-          color: #FFB300;
-          cursor: pointer;
-          text-decoration: underline;
-          font-size: .7rem;
-        }
-
-        .forget-password:hover {
-          color: #e5a100;
         }
 
       }
@@ -143,13 +114,7 @@
 
       .create-link {
         margin-left: 5px;
-        color: #FFB300;
-        cursor: pointer;
-        text-decoration: underline;
-      }
-
-      .create-link:hover {
-        color: #e5a100;
+        font-size: 0.8rem;
       }
 
     }
