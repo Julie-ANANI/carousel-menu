@@ -1,16 +1,25 @@
-#body {
+.wait {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  div {
+    flex: 1;
+  }
+  .fas {
+    color: #3498DB;
+  }
+}
+
+.body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
 }
 
-// height for header
-#app-header {
-  min-height: 3.9rem;
-}
-
 // Spaces around the main application components
-#main {
+.main {
   flex: 1 0 auto;
 }
 
@@ -33,24 +42,3 @@
   background-color: #3498DB;
 }
 
-#wait {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  text-align: center;
-
-  div {
-    flex: 1;
-  }
-  .fas {
-    color: #3498DB;
-  }
-}
-
-@media (min-width: 840px) {
-
-  #app-header {
-    min-height: 4.2rem
-  }
-
-}

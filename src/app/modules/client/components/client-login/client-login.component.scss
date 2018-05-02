@@ -1,41 +1,233 @@
-.left, .right {
-  padding: 30px;
-}
+.main-container {
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-.left {
-  border-right: solid 1px #e0e0e0;
-}
-
-.btn-linkedin  {
-  width: 100%;
-}
-
-.divider {
-  margin: 30px 0;
-}
-
-label {
-  span {
-    display: block;
+  .logo-container {
+    padding-bottom: 50px;
   }
-  input {
-    border: none;
-    border-bottom: solid 1px #333;
-    width: 100%;
-    padding: 5px 10px;
-    margin-bottom: 30px;
-    transition-duration: .5s;
 
-    &:hover, &:focus {
-      border-bottom: solid 1px #3498DB;
+  .sign-in-container {
+    background-color: #FFFFFF;
+    border-radius: 0.25rem;
+    padding-top: 51px;
+    padding-bottom: 51px;
+    flex: 1;
+
+    .bot-container {
+      padding-top: 120px;
+    }
+
+    .button-container {
+      padding-bottom: 45px;
+
+      .default-button {
+        background-color: #1680B9;
+        border-color: #1680B9;
+
+        span i {
+          margin-right: 36px;
+          font-size: 1.1rem;
+        }
+
+      }
+
+      .default-button:hover {
+        background-color: #0f5981;
+        border-color: #0f5981;
+        color: #FFFFFF;
+      }
+
+    }
+
+    .or-container {
+      color: #6D6D6D;
+      padding-bottom: 45px;
+
+      span::before {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        width: 130px;
+        height: 1px;
+        background: #6D6D6D;
+      }
+
+      span::after {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        width: 130px;
+        height: 1px;
+        background: #6D6D6D;
+      }
+
+    }
+
+    .credential-container {
+      padding-bottom: 25px;
+
+      .form-group {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .default-form-input {
+        max-width: 300px;
+      }
+
+      .error-container {
+        display: flex;
+        justify-content: center;
+
+        .has-error {
+          width: 300px;
+          margin-top: 0;
+          margin-bottom: 20px;
+        }
+
+      }
+
+    }
+
+    .submit-container {
+      padding-bottom: 45px;
+
+      .login-button {
+        padding-bottom: 10px;
+
+        .default-button {
+          background-color: #FFB300;
+          border-color: #FFB300;
+          padding-left: 35px;
+          padding-right: 35px;
+        }
+
+        .default-button:hover {
+          background-color: #e5a100;
+          border-color: #e5a100;
+          color: #FFFFFF;
+        }
+
+        .default-button:disabled {
+          background-color: #FFFFFF;
+          color: #FFB300;
+          border-color: #FFB300;
+        }
+
+      }
+
+      .forget-link {
+
+        .forget-password {
+          color: #FFB300;
+          cursor: pointer;
+          text-decoration: underline;
+          font-size: .7rem;
+        }
+
+        .forget-password:hover {
+          color: #e5a100;
+        }
+
+      }
+
+    }
+
+    .create-container {
+
+      .create-link {
+        margin-left: 5px;
+        color: #FFB300;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      .create-link:hover {
+        color: #e5a100;
+      }
+
+    }
+
+  }
+
+}
+
+@media (max-width: 320px) {
+
+  .default-button {
+    span i {
+      margin-right: 16px !important;
     }
   }
+
+  .or-container {
+    span::before {
+      width: 108px !important;
+    }
+    span::after {
+      width: 108px !important;
+    }
+  }
+
+  .submit-container {
+    .default-button {
+      padding-left: 30px !important;
+      padding-right: 30px !important;
+    }
+  }
+
 }
 
-.forgot {
-  margin-left: 50px;
+@media (max-width: 601px) {
+
+  .main-container {
+    padding-bottom: 50px !important;
+  }
+
+  .logo-container {
+    padding-top: 50px !important;
+  }
+
+  .bot-container {
+    padding-top: 10px!important;
+    padding-bottom: 35px!important;
+  }
+
 }
 
-.error {
-  color: red;
+@media (max-width: 320px) {
+
+  .has-error {
+    width: 250px !important;
+  }
+
 }
+
+@media (min-width: 768px) and (max-width: 872px) {
+
+  .sign-in-container {
+    width: 660px !important;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .main-container {
+    height: 100vh !important;
+  }
+}
+
+@media (min-width: 873px) {
+
+  .sign-in-container {
+    width: 800px !important;
+  }
+
+}
+

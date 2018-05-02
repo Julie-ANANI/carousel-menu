@@ -15,10 +15,36 @@ $primary-color: #3498DB !default;
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
 
 
-* {
+body {
+  font-size: 16px;
+  line-height: 1.4;
+  font-family: "Open Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/********************************** Color ***************************************/
+
+// Default color
+$primary: #3498DB;
+$primary-hover: #246a99;
+$primary-dark: #333333;
+
+// Form color
+$form-input: #333333;
+$form-switch-icon: #9B9B9B;
+
+//Success color
+$success: #155724;
+$success-background: #d4edda;
+$success-border: #c3e6cb;
+
+// Error color
+$error: #721c24;
+$error-background: #f8d7da;
+$error-border: #f5c6cb;
+
+/********************************** /Color ***************************************/
 
 
 /* Typographie */
@@ -131,10 +157,144 @@ ul.list-filter {
 }
 
 a {
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
+}
+
+/********************************** Form Input Styles ***************************************/
+
+// Default form input
+
+.default-form-input {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  color: $form-input;
+  font-size: 0.7rem;
+  padding-left: 6px;
+  height: 45px;
+  border-radius: 3px;
+}
+
+.default-form-input:focus {
+  box-shadow: none !important;
+  border-color: $primary-hover !important;
+}
+
+.default-form-input.ng-touched.ng-invalid{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-color: $error !important;
+}
+
+.form-switch {
+  color: $primary-dark;
+}
+
+.form-switch .form-icon  {
+  border-color: $form-switch-icon;
+  background-color: $form-switch-icon;
+}
+
+.form-switch input:focus+.form-icon {
+  border-color: $form-switch-icon;
+  box-shadow: none !important;
 }
 
 
+// Error style
+.has-error {
+  color: $error;
+  background-color: $error-background;
+  border: 1px solid $error-border;
+  border-radius: 5px;
+  margin-top: 15px;
+  padding: 15px 12px;
+  font-size: 0.7rem;
+  text-align: left;
+}
+
+/********************************** /Form Input Styles ***************************************/
 
 
+/********************************** Buttons Styles ***************************************/
 
+// Default button
+
+.default-button {
+  background-color: $primary;
+  color: white;
+  border-radius: 5px;
+  border-color: $primary;
+  min-height: 50px;
+  padding: 12px 30px;
+  font-size: 0.8rem;
+  transition: all 0.5s ease;
+}
+
+/********************************** /Buttons Styles ***************************************/
+
+
+/********************************** Simple Notification Styles ***************************************/
+
+.simple-notification {
+  border: 1px solid transparent !important;
+  border-radius: 5px !important;
+  word-wrap: break-word !important;
+}
+
+.simple-notification-wrapper {
+  z-index: 9999 !important;
+}
+
+.simple-notification .sn-title {
+  font-size: 20px !important;
+  line-height: 1.4 !important;
+  padding-right: 0 !important;
+  font-weight: bold;
+  padding-bottom: 8px !important;
+}
+
+.simple-notification .sn-content {
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+  padding-right: 0 !important;
+  padding-bottom: 10px !important;
+}
+
+.simple-notification.success {
+  background-color: $success-background !important;
+  color: $success !important;
+  border-color: $success-border !important;
+}
+
+.simple-notification.error {
+  background-color: $error-background !important;
+  color: $error !important;
+  border-color: $error-background !important;
+}
+
+/********************************** /Simple Notification Styles ***************************************/
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: 320px) {
+
+  .default-form-input {
+    max-width: 250px !important;
+  }
+
+  .has-error {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .default-button {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+}
+
+/********************************** /Media ***************************************/

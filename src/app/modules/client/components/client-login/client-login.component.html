@@ -1,70 +1,122 @@
-<div class="container section-container">
+<div class="container main-container" [ngStyle]="{ 'background-image': 'url(' + backgroundImage() + ')'}">
   <div class="columns">
-    <div class="column col-7 col-xl-10 col-md-11 col-mx-auto">
-      <h1>{{ 'LOG_IN.LOG_IN_TO_CONTINUE' | translate }}</h1>
+    <div class="column col-12 col-mx-auto">
 
-      <div class="columns">
-        <div class="column col-4 left">
-          <p>
-            {{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}
-            <a routerLink="/signup">{{ 'COMMON.SIGN_UP' | translate }}</a>
-          </p>
-          <p>
-            <a (click)="changePassword($event)" class="c-hand">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
-          </p>
-        </div>
-        <div class="column col-8 right">
-          <div *ngIf="isMainDomain()">
-            <button class="btn btn-lg btn-primary btn-linkedin" (click)="linkedInSignIn($event)">{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
-            </button>
-            <div class="divider text-center" [attr.data-content]="'COMMON.OR' | translate"></div>
+      <!-- Logo -->
+      <div class="logo-container text-center">
+        <img src="{{ logoName() }}" alt="Logo" height="35px" class="logo">
+      </div>
+      <!-- /Logo -->
+
+      <!-- Main container -->
+      <div class="column col-sm-11 col-11 col-mx-auto sign-in-container">
+        <div class="columns text-center col-gapless">
+
+          <!-- Bot -->
+          <div class="column col-sm-12 col-5 col-mx-auto text-center">
+            <div class="bot-container">
+              <img src="https://res.cloudinary.com/umi/image/upload/v1524752357/app/default-images/login-bot.svg" alt="Bot">
+            </div>
           </div>
+          <!-- /Bot -->
 
-          <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData" class="columns">
+          <!-- Information -->
+          <div class="column col-sm-12 col-7 col-mx-auto">
 
-            <div class="column col-12">
-              <label>
-                <span>{{ 'COMMON.EMAIL' | translate }}</span>
-                <input type="email" placeholder="john.doe@gmail.com" formControlName="email">
-              </label>
+            <!-- LinkedIn -->
+            <div class="button-container" *ngIf="isMainDomain()">
+              <a class="btn default-button" (click)="linkedInSignIn($event)">
+                <span><i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}</span>
+              </a>
+            </div>
+            <!-- /LinkedIn -->
 
-              <!--<div class="error"
-                   *ngIf="formData.get('email').hasError('required') && formData.get('email').touched">
-                {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+            <!-- Or -->
+            <div class="or-container text-center">
+              <span> {{ 'COMMON.OR' | translate }} </span>
+            </div>
+            <!-- /Or -->
+
+            <!-- Form -->
+            <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData">
+
+              <!-- User details -->
+              <div class="credential-container">
+
+                <!-- Email -->
+                <div class="form-group">
+                  <input
+                    class="form-input default-form-input"
+                    formControlName="email"
+                    type="email"
+                    [attr.placeholder]="'COMMON.EMAIL' | translate ">
+                </div>
+                <div class="error-container" *ngIf="formData.get('email').touched && formData.get('email').invalid">
+                  <div class="has-error">
+                    <span *ngIf="formData.get('email').hasError('required')">
+                      {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+                    </span>
+                    <span *ngIf="formData.get('email').hasError('email')">
+                      {{ 'COMMON.INVALID.EMAIL' | translate }}
+                    </span>
+                  </div>
+                </div>
+                <!-- /Email -->
+
+                <!-- Password -->
+                <div class="form-group">
+                  <input
+                    class="form-input default-form-input"
+                    formControlName="password"
+                    type="password"
+                    [attr.placeholder]="'COMMON.PASSWORD' | translate ">
+                </div>
+                <div class="error-container" *ngIf="formData.get('password').touched && formData.get('password').invalid">
+                  <div class="has-error">
+                      <span *ngIf="formData.get('password').hasError('required')">
+                      {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+                      </span>
+                  </div>
+                </div>
+                <!-- /Password -->
+
               </div>
+              <!-- /User details -->
 
-              <div class="error"
-                   *ngIf="formData.get('email').hasError('email') && formData.get('email').touched">
-                {{ 'COMMON.INVALID.EMAIL' | translate }}
-              </div>-->
-            </div>
-
-            <div class="column col-12">
-              <label>
-                <span>{{ 'COMMON.PASSWORD' | translate }}</span>
-                <input type="password" placeholder="••••••••••" formControlName="password">
-              </label>
-
-              <!--<div class="error"
-                   *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
-                {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+              <!-- Login button and forget password -->
+              <div class="submit-container">
+                <div class="login-button">
+                  <button class="btn default-button" type="submit" [disabled]="formData.invalid">
+                    {{ 'LOG_IN.LOG_IN_BTN' | translate }}
+                  </button>
+                </div>
+                <div class="forget-link">
+                  <a class="forget-password" (click)="changePassword($event)">
+                    {{ 'LOG_IN.FORGOT_PASSWORD' | translate }}
+                  </a>
+                </div>
               </div>
+              <!-- /Login button and forget password -->
 
-              <div class="error"
-                   *ngIf="formData.get('password').hasError('minlength') && formData.get('password').touched">
-                {{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}
-              </div>-->
-            </div>
+              <!-- Sign up -->
+              <div class="create-container">
+                <span>{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}
+                  <a class="create-link" routerLink="/signup">{{ 'COMMON.SIGN_UP' | translate }}</a>
+                </span>
+              </div>
+              <!-- /Sign up -->
 
-            <div class="column col-12">
-              <button class="btn btn-lg" type="submit" [disabled]="formData.invalid">{{ 'LOG_IN.LOG_IN_BTN' | translate }}
-              </button>
-            </div>
-          </form>
+            </form>
+            <!-- /Form -->
+
+          </div>
+          <!-- /Information -->
+
         </div>
       </div>
+      <!-- /Main container -->
+
     </div>
   </div>
 </div>
-
 

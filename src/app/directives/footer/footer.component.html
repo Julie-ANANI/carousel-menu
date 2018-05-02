@@ -4,9 +4,9 @@
 
       <!-- Translate Section -->
       <div class="column col-11 col-mx-auto lang-section">
-        <div class="dropdown" (click)="(displayLangChoices = !displayLangChoices)" [ngClass]="{'active': displayLangChoices}">
+        <div class="dropdown" [ngClass]="{'active': displayLangChoices}">
           <div class="btn-group">
-            <button class="btn dropdown-toggle lang-button">
+            <button class="btn dropdown-toggle lang-button" (click)="(displayLangChoices = !displayLangChoices)">
               <span class="icon-global">
                 <i class="fas fa-globe"></i>
               </span>
@@ -15,17 +15,17 @@
                   <i class="icon icon-arrow-down"></i>
                 </span>
             </button>
-            <ul class="menu">
+            <ul class="menu" (click)="(displayLangChoices = false)">
               <li *ngIf="translate.currentLang !== 'fr'">
                 <a
-                  (click)="propagateTranslation('fr') && $event.preventDefault() && (displayLangChoices = false)"
+                  (click)="propagateTranslation('fr') && $event.preventDefault()"
                 >
                   {{ 'COMMON.LANG.FR' | translate }}
                 </a>
               </li>
               <li *ngIf="translate.currentLang !== 'en'">
                 <a
-                  (click)="propagateTranslation('en') && $event.preventDefault() && (displayLangChoices = false)"
+                  (click)="propagateTranslation('en') && $event.preventDefault()"
                 >
                   {{ 'COMMON.LANG.EN' | translate }}
                 </a>

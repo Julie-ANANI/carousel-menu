@@ -6,5 +6,6 @@ export const environment = {
   domain: 'vendor1',
   quizUrl: 'https://quizdev.umi.us',
   companyURL: 'imr.inomer.fr',
-  logoURL: 'https://res.cloudinary.com/umi/image/upload/logo-inomer.png'
+  logoURL: 'https://res.cloudinary.com/umi/image/upload/logo-inomer.png',
+  background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg'
 };
