@@ -14,10 +14,10 @@ import { ScaleComponent } from './components/scale/scale.component';
 import { ItemListComponent } from './components/item-list/item-list.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { StarsComponent } from './components/stars/stars.component';
-import { WorldMapComponent } from './components/world-map/world-map.component';
 import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
 import { SharedModule } from '../../shared.module';
 import { SharedAnswerModalModule } from '../shared-answer-modal/answer-modal.module';
+import { SharedWorldMapModule } from '../world-map/world-map.module';
 import { CommonService } from '../../../../services/common/common.service';
 
 @NgModule({
@@ -27,6 +27,7 @@ import { CommonService } from '../../../../services/common/common.service';
     MultilingModule,
     SharedModule,
     SharedAnswerModalModule,
+    SharedWorldMapModule,
     TranslateModule.forChild()
   ],
   providers: [
@@ -44,8 +45,7 @@ import { CommonService } from '../../../../services/common/common.service';
     PiechartComponent,
     SharedMarketReportPopoverComponent,
     QuestionSectionComponent,
-    StarsComponent,
-    WorldMapComponent
+    StarsComponent
   ],
   exports: [
     SharedMarketReportComponent
