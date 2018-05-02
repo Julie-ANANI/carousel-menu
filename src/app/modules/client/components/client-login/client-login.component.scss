@@ -46,10 +46,24 @@
 
     .or-container {
       color: #6D6D6D;
-      padding-bottom: 30px;
+      padding-bottom: 25px;
 
-      img {
-        width: 300px;
+      span::before {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        width: 130px;
+        height: 1px;
+        background: #6D6D6D;
+      }
+
+      span::after {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        width: 130px;
+        height: 1px;
+        background: #6D6D6D;
       }
 
     }
@@ -153,8 +167,11 @@
   }
 
   .or-container {
-    img {
-      width: 250px !important;
+    span::before {
+      width: 108px !important;
+    }
+    span::after {
+      width: 108px !important;
     }
   }
 
