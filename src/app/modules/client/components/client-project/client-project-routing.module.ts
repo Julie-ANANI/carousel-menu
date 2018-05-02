@@ -5,6 +5,7 @@ import { SetupProjectComponent } from './components/setup/setup.component';
 import { ProjectEditExample1Component } from './components/project-edit-example1/project-edit-example1.component';
 import { ProjectEditExample2Component } from './components/project-edit-example2/project-edit-example2.component';
 import { ProjectsListComponent } from './components/projects-list/projects-list.component';
+import { SharedMarketReportComponent } from '../../../shared/components/shared-market-report/shared-market-report.component';
 import { InnovationResolver } from '../../../../resolvers/innovation.resolver';
 import { AuthGuard } from '../../../../auth-guard.service';
 
@@ -32,7 +33,7 @@ export const clientProjectRoutes: any = [
             path: 'exploration', component: ExplorationProjectComponent, canActivate: [AuthGuard], pathMatch: 'full'
           },
           {
-            path: 'synthesis', component: SetupProjectComponent, canActivate: [AuthGuard], pathMatch: 'full'
+            path: 'synthesis', component: SharedMarketReportComponent, canActivate: [AuthGuard], pathMatch: 'full'
           }
         ]
       },
