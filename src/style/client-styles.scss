@@ -1,3 +1,6 @@
+$primary-color: #3498DB !default;
+$hover-color: #246a99 !default;
+
 //Text color
 $hero-title: #333333 !default;
 $hero-subtitle: #878787;
@@ -16,10 +19,10 @@ $section-description: #878787;
 // Button Default Style
 
 .button {
-  background-color: $primary;
+  background-color: $primary-color;
   color: white;
   border-radius: 5px;
-  border-color: $primary;
+  border-color: $primary-color;
   min-height: 50px;
   padding: 10px 30px;
   transition: all 0.5s ease;
@@ -88,7 +91,7 @@ $section-description: #878787;
 
 .hero-hr {
   width: 125px;
-  border: 2px solid $primary;
+  border: 2px solid $primary-color;
   border-radius: .25rem;
   margin-bottom: 16px;
 }
