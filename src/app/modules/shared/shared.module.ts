@@ -12,6 +12,7 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
 // Components
+import { SharedAnswersListComponent } from './components/shared-answers-list/shared-answers-list.component';
 import { SharedNotFoundComponent } from './components/shared-not-found/shared-not-found.component';
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
@@ -70,6 +71,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     // FormErrorDirective,
     CountryFlagComponent,
     InputListComponent,
+    SharedAnswersListComponent,
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
@@ -117,6 +119,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
 
     // Components
     SharedNotFoundComponent,
+    SharedAnswersListComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
