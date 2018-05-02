@@ -5,6 +5,7 @@ import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
+import {Clearbit} from "../../../../../../models/clearbit";
 
 @Component({
   selector: 'app-client-exploration-project',
@@ -17,6 +18,7 @@ export class ExplorationProjectComponent implements OnInit {
 
   private _contactUrl: string;
   private _answers: Array<Answer>;
+  private _companies: Array<Clearbit>;
   private _questions: Array<Question>;
   private _modalAnswer: Answer;
 
@@ -29,6 +31,12 @@ export class ExplorationProjectComponent implements OnInit {
       .first()
       .subscribe((results) => {
         this._answers = results.answers;
+        this._companies = results.answers
+          .map((answer) => answer.company || {name: answer.professional.company})
+          .filter(function(item, pos, self) {
+            // this is here to remove duplicate
+            return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
+          });
       }, (error) => {
         this.notificationService.error('ERROR.ERROR', error.message);
       });
@@ -45,6 +53,7 @@ export class ExplorationProjectComponent implements OnInit {
   }
 
   get answers() { return this._answers; }
+  get companies() { return this._companies; }
   get contactUrl() { return this._contactUrl; }
   get modalAnswer() { return this._modalAnswer; }
   set modalAnswer(modalAnswer: Answer) { this._modalAnswer = modalAnswer; }
