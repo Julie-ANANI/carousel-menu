@@ -167,6 +167,10 @@ a {
   transition: all 0.5s ease;
 }
 
+a:focus {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
 
 /********************************** Text Styles ***************************************/
 
@@ -183,7 +187,7 @@ a {
   margin: 0;
 }
 
-.text-link {
+.text-link, .text-link:active, .text-link:visited {
   color: $text-link;
   padding: 16px 0;
   margin: 0;
@@ -193,6 +197,12 @@ a {
 
 .text-link:hover {
   color: $text-link-hover;
+}
+
+.text-link:focus {
+  color: $text-link;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
 }
 
 /********************************** /Text Styles ***************************************/
@@ -236,12 +246,12 @@ a {
 
 .form-switch .form-icon  {
   border-color: $form-switch-icon;
-  background-color: $form-switch-icon;
+  background: $form-switch-icon;
 }
 
 .form-switch .input:checked+.form-icon  {
   border-color: $success;
-  background-color: $success;
+  background: $success;
 }
 
 .form-switch input:focus+.form-icon {
@@ -252,7 +262,7 @@ a {
 // Error style
 .has-error {
   color: white;
-  background-color: $error;
+  background: $error;
   border: 1px solid $error;
   border-radius: 5px;
   margin-top: 15px;
@@ -269,7 +279,7 @@ a {
 // Default button
 
 .default-button {
-  background-color: $default-button;
+  background: $default-button;
   color: white;
   border-radius: 5px;
   border-color: $default-button;
@@ -280,13 +290,19 @@ a {
 }
 
 .default-button:hover {
-  background-color: $default-button-hover;
+  background: $default-button-hover;
   border-color: $default-button;
   color: white;
 }
 
+.default-button:focus {
+  box-shadow: none !important;
+  background: $default-button;
+  border-color: $default-button;
+}
+
 .default-button:disabled {
-  background-color: $default-button-disabled;
+  background: $default-button-disabled;
   border-color: $default-button-disabled;
   color: #a9a9a9;
 }
