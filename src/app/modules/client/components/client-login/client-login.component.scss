@@ -6,6 +6,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
 
   .logo-container {
     padding-bottom: 50px;
@@ -19,15 +21,15 @@
     flex: 1;
 
     .bot-container {
-      padding-top: 120px;
+      padding-top: 125px;
     }
 
     .button-container {
       padding-bottom: 45px;
 
       .default-button {
-        background-color: #0f5981;
-        border-color: #0f5981;
+        background-color: #1680B9;
+        border-color: #1680B9;
 
         span i {
           margin-right: 36px;
@@ -37,8 +39,8 @@
       }
 
       .default-button:hover {
-        background-color: #1680B9;
-        border-color: #1680B9;
+        background-color: #4499c7;
+        border-color: #4499c7;
         color: #FFFFFF;
       }
 
@@ -151,14 +153,6 @@
 
 @media (max-width: 601px) {
 
-  .main-container {
-    padding-bottom: 50px !important;
-  }
-
-  .logo-container {
-    padding-top: 50px !important;
-  }
-
   .bot-container {
     padding-top: 10px!important;
     padding-bottom: 35px!important;
@@ -166,26 +160,21 @@
 
 }
 
-@media (max-width: 320px) {
-
-  .has-error {
-    width: 250px !important;
-  }
-
-}
 
 @media (min-width: 768px) and (max-width: 872px) {
 
   .sign-in-container {
     width: 660px !important;
   }
+
 }
 
 @media (min-width: 768px) {
 
   .main-container {
-    height: 100vh !important;
+    min-height: 100vh !important;
   }
+
 }
 
 @media (min-width: 873px) {
