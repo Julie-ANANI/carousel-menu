@@ -33,15 +33,16 @@ $primary-dark: #333333;
 //Text color
 $text: #878787;
 $text-link: #ffb300;
-$text-link-hover: #ffc100;
+$text-link-hover: lighten($text-link, 15%);
 
 //Button
 $default-button: #ffb300;
-$default-button-hover: #ffc100;
+$default-button-hover: lighten($default-button, 15%);
 $default-button-disabled: #dbdbdb;
 
 // Form color
 $form-input: #333333;
+$form-label: #97A4B1;
 $form-switch-icon: #9B9B9B;
 
 //Success color
@@ -170,7 +171,9 @@ a {
 /********************************** Text Styles ***************************************/
 
 .text {
-  color: $text;
+  color: $primary-dark;
+  padding: 16px 0;
+  margin: 0;
 }
 
 .para {
@@ -182,9 +185,10 @@ a {
 
 .text-link {
   color: $text-link;
+  padding: 16px 0;
+  margin: 0;
   cursor: pointer;
   text-decoration: underline;
-  font-size: .7rem;
 }
 
 .text-link:hover {
@@ -219,6 +223,11 @@ a {
   border-left: none;
   border-right: none;
   border-color: $error !important;
+}
+
+.form-label {
+  color: $form-label;
+  padding-left: 5px;
 }
 
 .form-switch {
@@ -272,7 +281,7 @@ a {
 
 .default-button:hover {
   background-color: $default-button-hover;
-  border-color: $default-button-hover;
+  border-color: $default-button;
   color: white;
 }
 
