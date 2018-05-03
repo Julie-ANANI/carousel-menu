@@ -27,8 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
     animate: 'fromRight',
     pauseOnHover: false,
     showProgressBar: true,
-    clickToClose: true,
-    theClass: 'notification'
+    clickToClose: true
   };
 
   constructor(private _translateService: TranslateService,

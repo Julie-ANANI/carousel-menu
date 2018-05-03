@@ -33,7 +33,7 @@
 
             <!-- Or -->
             <div class="or-container text-center">
-              <img src="https://res.cloudinary.com/umi/image/upload/v1524671119/app/default-images/or.png" alt="or">
+              <span> {{ 'COMMON.OR' | translate }} </span>
             </div>
             <!-- /Or -->
 
@@ -44,31 +44,40 @@
               <div class="credential-container">
 
                 <!-- Email -->
-                <div class="input-container">
-                  <input class="form-input default-form-input" formControlName="email" type="email" placeholder="Email address">
+                <div class="form-group">
+                  <input
+                    class="form-input default-form-input"
+                    formControlName="email"
+                    type="email"
+                    [attr.placeholder]="'COMMON.EMAIL' | translate ">
                 </div>
-                <span class="form-input-hint" *ngIf="formData.get('email').touched">
-                  <span *ngIf="formData.get('email').hasError('required')">
-                    {{ 'COMMON.REQUIRED.EMAIL' | translate }}
-                  </span>
-                  <span *ngIf="formData.get('email').hasError('email')">
-                    {{ 'COMMON.INVALID.EMAIL' | translate }}
-                  </span>
-                </span>
+                <div class="error-container" *ngIf="formData.get('email').touched && formData.get('email').invalid">
+                  <div class="has-error">
+                    <span *ngIf="formData.get('email').hasError('required')">
+                      {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+                    </span>
+                    <span *ngIf="formData.get('email').hasError('email')">
+                      {{ 'COMMON.INVALID.EMAIL' | translate }}
+                    </span>
+                  </div>
+                </div>
                 <!-- /Email -->
 
                 <!-- Password -->
-                <div class="input-container">
-                  <input class="form-input default-form-input" formControlName="password" type="password" placeholder="Password">
+                <div class="form-group">
+                  <input
+                    class="form-input default-form-input"
+                    formControlName="password"
+                    type="password"
+                    [attr.placeholder]="'COMMON.PASSWORD' | translate ">
                 </div>
-                <span class="form-input-hint" *ngIf="formData.get('password').touched">
-                  <span *ngIf="formData.get('password').hasError('required')">
-                    {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
-                  </span>
-                  <span *ngIf="formData.get('password').hasError('minlength')">
-                    {{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}
-                  </span>
-                </span>
+                <div class="error-container" *ngIf="formData.get('password').touched && formData.get('password').invalid">
+                  <div class="has-error">
+                      <span *ngIf="formData.get('password').hasError('required')">
+                      {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+                      </span>
+                  </div>
+                </div>
                 <!-- /Password -->
 
               </div>
@@ -82,7 +91,7 @@
                   </button>
                 </div>
                 <div class="forget-link">
-                  <a class="forget-password" (click)="changePassword($event)">
+                  <a class="text-link" (click)="changePassword($event)">
                     {{ 'LOG_IN.FORGOT_PASSWORD' | translate }}
                   </a>
                 </div>
@@ -91,8 +100,8 @@
 
               <!-- Sign up -->
               <div class="create-container">
-                <span>{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}
-                  <a class="create-link" routerLink="/signup">{{ 'COMMON.SIGN_UP' | translate }}</a>
+                <span class="text">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}
+                  <a class="create-link text-link" routerLink="/signup">{{ 'COMMON.SIGN_UP' | translate }}</a>
                 </span>
               </div>
               <!-- /Sign up -->
