@@ -1,5 +1,5 @@
 <div>
-  <strong class="question">{{ question.label[lang] }}</strong>
+  <strong class="question">{{ question.label | multiling:lang }}</strong>
   <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers && (fullAnswer.answers[question.identifier] !== undefined || adminMode)" class="answer">
 
     <ng-container *ngSwitchCase="'radio'">
