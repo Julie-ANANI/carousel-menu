@@ -23,6 +23,13 @@
   flex: 1;
 }
 
+.heading {
+  padding-bottom: 45px;
+  font-size: 1.35rem;
+  font-weight: 600;
+  padding-left: 30px;
+}
+
 .button-container {
   padding-bottom: 45px;
 
@@ -45,7 +52,6 @@
   }
 
 }
-
 
 .or-container {
   color: #878787;
@@ -79,10 +85,16 @@
   text-decoration: underline;
 }
 
+/********************************** Media ***************************************/
+
 @media (max-width: 320px) {
 
   .sign-up-container {
     width: 300px !important;
+  }
+
+  .heading {
+    padding-left: 10px !important;
   }
 
 }
@@ -117,6 +129,10 @@
 
   .sign-up-container {
     width: 460px !important;
+  }
+
+  .heading {
+    padding-left: 60px !important;
   }
 
 }

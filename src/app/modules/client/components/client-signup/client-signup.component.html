@@ -11,6 +11,10 @@
       <!-- Main container -->
       <div class="column col-11 col-mx-auto sign-up-container text-center">
 
+        <div class="text heading text-left">
+          {{ 'SIGN_UP.SIGN_UP' | translate }}
+        </div>
+
         <!-- LinkedIn -->
         <div class="button-container" *ngIf="isMainDomain()">
           <a class="btn default-button" (click)="linkedInSignIn($event)">
