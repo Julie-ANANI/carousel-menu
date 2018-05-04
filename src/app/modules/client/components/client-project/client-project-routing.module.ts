@@ -1,5 +1,6 @@
 import { ClientProjectComponent } from './client-project.component';
 import { ExplorationProjectComponent } from './components/exploration/exploration.component';
+import { HistoryProjectComponent } from './components/history/history.component';
 import { NewProjectComponent } from './components/new-project/new-project.component';
 import { SetupProjectComponent } from './components/setup/setup.component';
 import { ProjectEditExample1Component } from './components/project-edit-example1/project-edit-example1.component';
@@ -34,6 +35,9 @@ export const clientProjectRoutes: any = [
           },
           {
             path: 'synthesis', component: SharedMarketReportComponent, canActivate: [AuthGuard], pathMatch: 'full'
+          },
+          {
+            path: 'history', component: HistoryProjectComponent, canActivate: [AuthGuard], pathMatch: 'full'
           }
         ]
       },

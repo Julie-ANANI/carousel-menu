@@ -7,6 +7,7 @@ import { SharedMarketReportModule } from '../../../shared/components/shared-mark
 import { SharedWorldMapModule } from '../../../shared/components/world-map/world-map.module';
 import { ClientProjectComponent } from './client-project.component';
 import { ExplorationProjectComponent } from './components/exploration/exploration.component';
+import { HistoryProjectComponent } from './components/history/history.component';
 import { NewProjectComponent } from './components/new-project/new-project.component';
 import { ProjectEditExample1Component } from './components/project-edit-example1/project-edit-example1.component';
 import { ProjectEditExample2Component } from './components/project-edit-example2/project-edit-example2.component';
@@ -28,6 +29,7 @@ import { TargetingComponent } from './components/setup/components/targeting/targ
   declarations: [
     ClientProjectComponent,
     ExplorationProjectComponent,
+    HistoryProjectComponent,
     NewProjectComponent,
     ProjectEditExample1Component,
     ProjectEditExample2Component,

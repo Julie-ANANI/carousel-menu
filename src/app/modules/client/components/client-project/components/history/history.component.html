@@ -1,0 +1,15 @@
+<shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="project._id" [adminMode]="isAdmin" [questions]="questions"></shared-answer-modal>
+
+<div class="history">
+  <h1>{{'PROJECT_MODULE.HISTORY.TITLE' | translate}}</h1>
+
+  <ul>
+    <li *ngFor="let event of events">
+      {{('PROJECT_MODULE.HISTORY.EVENT.' + event.type) | translate}} : {{event.date | date}}
+      <a class="nav-link" *ngIf="event.type === 'NEWANSWER'" (click)="modalAnswer = event.data">
+        ({{event.data.professional.firstName + ' ' + event.data.professional.lastName}})
+      </a>
+    </li>
+  </ul>
+
+</div>
