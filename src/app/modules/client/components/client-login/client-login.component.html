@@ -91,7 +91,7 @@
                   </button>
                 </div>
                 <div class="forget-link">
-                  <a class="forget-password" (click)="changePassword($event)">
+                  <a class="text-link" (click)="changePassword($event)">
                     {{ 'LOG_IN.FORGOT_PASSWORD' | translate }}
                   </a>
                 </div>
@@ -100,8 +100,8 @@
 
               <!-- Sign up -->
               <div class="create-container">
-                <span>{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}
-                  <a class="create-link" routerLink="/signup">{{ 'COMMON.SIGN_UP' | translate }}</a>
+                <span class="text">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}
+                  <a class="create-link text-link" routerLink="/signup">{{ 'COMMON.SIGN_UP' | translate }}</a>
                 </span>
               </div>
               <!-- /Sign up -->

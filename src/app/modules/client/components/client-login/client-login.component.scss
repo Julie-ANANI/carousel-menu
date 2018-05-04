@@ -6,27 +6,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
 
   .logo-container {
     padding-bottom: 50px;
   }
 
   .sign-in-container {
-    background-color: #FFFFFF;
+    background: #FFFFFF;
     border-radius: 0.25rem;
     padding-top: 51px;
     padding-bottom: 51px;
     flex: 1;
 
     .bot-container {
-      padding-top: 120px;
+      padding-top: 125px;
     }
 
     .button-container {
       padding-bottom: 45px;
 
       .default-button {
-        background-color: #1680B9;
+        background: #1680B9;
         border-color: #1680B9;
 
         span i {
@@ -37,15 +39,15 @@
       }
 
       .default-button:hover {
-        background-color: #0f5981;
-        border-color: #0f5981;
+        background: lighten(#1680B9, 15%);
+        border-color: #1680B9;
         color: #FFFFFF;
       }
 
     }
 
     .or-container {
-      color: #6D6D6D;
+      color: #878787;
       padding-bottom: 45px;
 
       span::before {
@@ -54,7 +56,7 @@
         vertical-align: middle;
         width: 130px;
         height: 1px;
-        background: #6D6D6D;
+        background: #878787;
       }
 
       span::after {
@@ -63,7 +65,7 @@
         vertical-align: middle;
         width: 130px;
         height: 1px;
-        background: #6D6D6D;
+        background: #878787;
       }
 
     }
@@ -102,37 +104,8 @@
         padding-bottom: 10px;
 
         .default-button {
-          background-color: #FFB300;
-          border-color: #FFB300;
           padding-left: 35px;
           padding-right: 35px;
-        }
-
-        .default-button:hover {
-          background-color: #e5a100;
-          border-color: #e5a100;
-          color: #FFFFFF;
-        }
-
-        .default-button:disabled {
-          background-color: #FFFFFF;
-          color: #FFB300;
-          border-color: #FFB300;
-        }
-
-      }
-
-      .forget-link {
-
-        .forget-password {
-          color: #FFB300;
-          cursor: pointer;
-          text-decoration: underline;
-          font-size: .7rem;
-        }
-
-        .forget-password:hover {
-          color: #e5a100;
         }
 
       }
@@ -143,19 +116,17 @@
 
       .create-link {
         margin-left: 5px;
-        color: #FFB300;
-        cursor: pointer;
-        text-decoration: underline;
-      }
-
-      .create-link:hover {
-        color: #e5a100;
+        font-size: 0.8rem;
       }
 
     }
 
   }
 
+}
+
+.text-link {
+  text-decoration: underline;
 }
 
 @media (max-width: 320px) {
@@ -186,14 +157,6 @@
 
 @media (max-width: 601px) {
 
-  .main-container {
-    padding-bottom: 50px !important;
-  }
-
-  .logo-container {
-    padding-top: 50px !important;
-  }
-
   .bot-container {
     padding-top: 10px!important;
     padding-bottom: 35px!important;
@@ -201,26 +164,21 @@
 
 }
 
-@media (max-width: 320px) {
-
-  .has-error {
-    width: 250px !important;
-  }
-
-}
 
 @media (min-width: 768px) and (max-width: 872px) {
 
   .sign-in-container {
     width: 660px !important;
   }
+
 }
 
 @media (min-width: 768px) {
 
   .main-container {
-    height: 100vh !important;
+    min-height: 100vh !important;
   }
+
 }
 
 @media (min-width: 873px) {
