@@ -43,6 +43,7 @@ export const COMMON = {
   'TYPE': 'Type',
   'DOMAIN': 'Domain',
   'COUNTRY': 'Pays',
+  'TERMS': 'J\'accepte les termes et conditions d\'utilisation.',
 
   'REQUIRED': {
     'FIRSTNAME': 'Le prénom est requis.',
@@ -52,6 +53,13 @@ export const COMMON = {
     'PASSWORD': 'Le mot de passe est requis.',
     'COMPANY': 'Le nom de l\'entreprise est requis.',
     'JOBTITLE': 'Le poste est requis.',
+    'MESSAGE': 'Tous les champs sont obligatoires',
+    'ACCEPT': 'Veuillez accepter les termes et conditions.',
+    'COUNTRY': 'Le pays est requis.'
+  },
+
+  'BUTTON': {
+    'SIGN_UP': 'S\'inscrire',
   },
 
   'PROJECT_STATE': {

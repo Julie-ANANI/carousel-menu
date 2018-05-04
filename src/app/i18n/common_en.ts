@@ -32,8 +32,8 @@ export const COMMON = {
   'SEARCHINNOVATION': 'Search innovation',
 
   'NAME': 'Name',
-  'FIRSTNAME': 'Firstname',
-  'LASTNAME': 'Lastname',
+  'FIRSTNAME': 'First name',
+  'LASTNAME': 'Last name',
   'EMAIL': 'Email address',
   'PHONE': 'Phone',
   'PASSWORD': 'Password',
@@ -43,15 +43,23 @@ export const COMMON = {
   'TYPE': 'Type',
   'DOMAIN': 'Domain',
   'COUNTRY': 'Country',
+  'TERMS': 'I accept the terms and conditions of use.',
 
   'REQUIRED': {
-    'FIRSTNAME': 'Firstname is required.',
-    'LASTNAME': 'Lastname is required.',
-    'EMAIL': 'Email is required.',
+    'FIRSTNAME': 'First name is required.',
+    'LASTNAME': 'Last name is required.',
+    'EMAIL': 'Email address is required.',
     'PHONE': 'Phone is required.',
     'PASSWORD': 'Password is required.',
     'COMPANY': 'Company is required.',
     'JOBTITLE': 'Job title is required.',
+    'MESSAGE': 'All fields are mandatory',
+    'ACCEPT': 'Please accept the terms and conditions.',
+    'COUNTRY': 'Country is required.'
+  },
+
+  'BUTTON': {
+    'SIGN_UP': 'Sign up',
   },
 
   'PROJECT_STATE': {
