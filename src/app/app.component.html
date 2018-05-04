@@ -8,50 +8,22 @@
 
 <div *ngIf="displayLoading === false" class="body">
 
-  <!-- Client is authenticated -->
+  <!-- Showing when client is authenticated -->
   <div *ngIf="_authService.isAuthenticated">
-
     <app-header></app-header>
+  </div>
 
-    <div class="main">
-      <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
-      <progress class="progress" max="100" *ngIf="displayLoader"></progress>
-      <router-outlet></router-outlet>
-    </div>
+  <div class="main">
+    <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
+    <progress class="progress" max="100" *ngIf="displayLoader"></progress>
+    <router-outlet></router-outlet>
+  </div>
 
+  <!-- Showing when client is authenticated -->
+  <div *ngIf="_authService.isAuthenticated">
     <app-footer></app-footer>
-
-  </div>
-
-  <!-- Client is not authenticated -->
-  <div *ngIf="!_authService.isAuthenticated">
-
-    <div class="main">
-      <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
-      <progress class="progress" max="100" *ngIf="displayLoader"></progress>
-      <router-outlet></router-outlet>
-    </div>
-
   </div>
 
 </div>
 
-<!--
-<div *ngIf="displayLoading === false" class="body">
 
-    <div *ngIf="_authService.isAuthenticated">
-      <app-header></app-header>
-    </div>
-
-    <div class="main">
-      <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
-      <progress class="progress" max="100" *ngIf="displayLoader"></progress>
-      <router-outlet></router-outlet>
-    </div>
-
-    <div *ngIf="_authService.isAuthenticated">
-      <app-footer></app-footer>
-    </div>
-
-</div>
--->
