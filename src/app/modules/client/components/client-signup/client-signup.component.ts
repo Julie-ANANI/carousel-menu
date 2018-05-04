@@ -15,6 +15,7 @@ import 'rxjs/add/operator/filter';
   templateUrl: './client-signup.component.html',
   styleUrls: ['./client-signup.component.scss']
 })
+
 export class ClientSignupComponent implements OnInit {
 
   public displayEmailForm = false;
@@ -98,4 +99,15 @@ export class ClientSignupComponent implements OnInit {
   public isMainDomain(): boolean {
     return environment.domain === 'umi';
   }
+
+  // getting the company logo.
+  public logoName(): string {
+    return environment.logoURL;
+  }
+
+  // getting the background image.
+  public backgroundImage(): string {
+    return environment.background;
+  }
+
 }
