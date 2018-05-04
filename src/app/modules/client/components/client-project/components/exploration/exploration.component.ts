@@ -57,12 +57,20 @@ export class ExplorationProjectComponent implements OnInit {
       .first()
       .subscribe((results) => {
         if (results && Array.isArray(results.result)) {
-          results.result.forEach((campaign) => {
-            this._campaignsStats.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
-            this._campaignsStats.nbProsSent += (campaign.stats.mail.totalPros || 0);
-            this._campaignsStats.nbProsOpened += (campaign.stats.mail.statuses.opened || 0);
-            this._campaignsStats.nbProsClicked += (campaign.stats.mail.statuses.clicked || 0);
-          });
+          this._campaignsStats = results.result
+            .reduce(function(acc, campaign) {
+              if (campaign.stats) {
+                if (campaign.stats.campaign) {
+                  acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
+                }
+                if (campaign.stats.mail) {
+                  acc.nbProsSent += (campaign.stats.mail.totalPros || 0);
+                  acc.nbProsOpened += (campaign.stats.mail.statuses.opened || 0);
+                  acc.nbProsClicked += (campaign.stats.mail.statuses.clicked || 0);
+                }
+              }
+              return acc;
+            }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0});
         }
       }, (error) => {
         this.notificationService.error('ERROR.ERROR', error.message);
