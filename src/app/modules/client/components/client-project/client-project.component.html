@@ -152,6 +152,11 @@
             {{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
           </a>
         </li>
+        <li class="tab-item">
+          <a [routerLink]="['history']" [ngClass]="{'active': currentPage == 'history'}">
+            {{ 'PROJECT_MODULE.HISTORY_TAB' | translate }}
+          </a>
+        </li>
       </ul>
 
       <div class="tabs">
@@ -165,6 +170,10 @@
 
         <div class="tab-content" *ngIf="currentPage === 'synthesis'">
           <app-shared-market-report [project]="project"></app-shared-market-report>
+        </div>
+
+        <div class="tab-content" *ngIf="currentPage === 'history'">
+          <app-client-history-project [project]="project"></app-client-history-project>
         </div>
       </div>
     </div>
