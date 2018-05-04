@@ -6,9 +6,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  height: 100vh;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  min-height: 100vh;
 }
 
 .logo-container {
@@ -29,6 +29,7 @@
   .default-button {
     background: #1680B9;
     border-color: #1680B9;
+    padding-top: 12px;
 
     span i {
       margin-right: 25px;
@@ -100,6 +101,14 @@
     span::after {
       width: 108px !important;
     }
+  }
+
+}
+
+@media (min-width: 321px) and (max-width: 767px) {
+
+  .sign-up-container {
+    width: 350px !important;
   }
 
 }
