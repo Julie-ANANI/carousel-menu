@@ -342,7 +342,7 @@ a:focus {
   border-radius: 5px;
   border-color: $button-color;
   min-height: 50px;
-  padding: 12px 30px;
+  padding: 11px 30px;
   font-size: 14px;
   font-weight: 600;
   transition: all 0.5s ease;
@@ -448,7 +448,7 @@ a:focus {
 
 /********************************** Media ***************************************/
 
-@media (max-width: 320px) {
+@media (max-width: 360px) {
 
   .form-input-default {
     max-width: 250px !important;
