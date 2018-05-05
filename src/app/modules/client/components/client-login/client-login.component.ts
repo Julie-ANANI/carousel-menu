@@ -13,10 +13,11 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   templateUrl: './client-login.component.html',
   styleUrls: ['./client-login.component.scss']
 })
+
 export class ClientLoginComponent implements OnInit {
 
   public formData: FormGroup;
-  public passwordMinLength = 5;
+  // public passwordMinLength = 5;
 
   constructor(private _authService: AuthService,
               private _userService: UserService,
@@ -66,6 +67,7 @@ export class ClientLoginComponent implements OnInit {
     else {
       this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
+
   }
 
   public linkedInSignIn(event: Event) {
@@ -81,10 +83,12 @@ export class ClientLoginComponent implements OnInit {
           this._notificationsService.error('ERROR.ERROR', error.message);
         }
       );
+
   }
 
   public changePassword(event: Event) {
     event.preventDefault();
+
     if (!this.formData.get('email')!.value) {
       this._notificationsService.error('ERROR.LOGIN.EMPTY_EMAIL', 'ERROR.LOGIN.EMAIL_PLEASE');
     }
@@ -97,6 +101,7 @@ export class ClientLoginComponent implements OnInit {
           this._notificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_NOT_FOUND');
         });
     }
+
   }
 
   get authService (): AuthService {
@@ -107,10 +112,12 @@ export class ClientLoginComponent implements OnInit {
     return environment.domain === 'umi';
   }
 
+  // getting the logo of the company
   public logoName(): string {
     return environment.logoURL;
   }
 
+  // getting the background of the company
   public backgroundImage(): string {
     return environment.background;
   }

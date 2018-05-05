@@ -197,19 +197,18 @@ a:focus {
 }
 
 .simple-notification.success {
-  background: $validation-element !important;
-  color: white !important;
-  border-color: $validation-element !important;
+  background: #d4edda !important;
+  color: #155724 !important;
+  border-color: #c3e6cb !important;
 }
 
 .simple-notification.error {
-  background: $alert-element !important;
-  color: white !important;
-  border-color: $alert-element !important;
+  background: #f8d7da !important;
+  color: #721c24 !important;
+  border-color: #f5c6cb !important;
 }
 
 /********************************** /Simple Notification Styles ***************************************/
-
 
 /********************************** Text Styles ***************************************/
 
@@ -228,13 +227,12 @@ a:focus {
 
 .text-link, .text-link:active, .text-link:visited {
   color: $primary-element;
-  padding: 16px 0;
-  margin: 0;
   cursor: pointer;
 }
 
 .text-link:hover {
   color: lighten($primary-element, 15%);
+  text-decoration: none;
 }
 
 .text-link:focus {
@@ -244,7 +242,6 @@ a:focus {
 }
 
 /********************************** /Text Styles ***************************************/
-
 
 /********************************** Form Input Styles ***************************************/
 
@@ -335,7 +332,6 @@ a:focus {
 
 /********************************** /Form Input Styles ***************************************/
 
-
 /********************************** Buttons Styles ***************************************/
 
 // Primary button
@@ -346,16 +342,22 @@ a:focus {
   border-radius: 5px;
   border-color: $button-color;
   min-height: 50px;
-  padding: 14px 30px;
+  padding: 12px 30px;
   font-size: 14px;
   font-weight: 600;
   transition: all 0.5s ease;
+
+    i {
+      margin-right: 36px;
+      font-size: 1.1rem;
+    }
+
 }
 
 .primary-button:hover, .primary-button:active {
   color: white;
   background: lighten($button-color, 15%);
-  border-color: $button-color;
+  border-color: lighten($button-color, 15%);
 }
 
 .primary-button:disabled {
@@ -379,16 +381,22 @@ a:focus {
   border-radius: 5px;
   border: 2px solid $button-color;
   min-height: 50px;
-  padding: 14px 30px;
+  padding: 12px 30px;
   font-size: 14px;
   font-weight: 600;
   transition: all 0.5s ease;
+
+    i {
+      margin-right: 36px;
+      font-size: 1.1rem;
+    }
+
 }
 
 .secondary-button:hover, .secondary-button:active {
   background: white;
   color: lighten($button-color, 15%);
-  border-color: $button-color;
+  border-color: lighten($button-color, 15%);
 }
 
 .secondary-button:disabled {
@@ -410,16 +418,22 @@ a:focus {
   border-radius: 5px;
   border: 2px solid $alert-element;
   min-height: 50px;
-  padding: 14px 30px;
+  padding: 12px 30px;
   font-size: 14px;
   font-weight: 600;
   transition: all 0.5s ease;
+
+    i {
+      margin-right: 36px;
+      font-size: 1.1rem;
+    }
+
 }
 
 .secondary-button-alert:hover, .secondary-button-alert:active {
   background: white;
   color: lighten($alert-element, 15%);
-  border-color: $alert-element;
+  border-color: lighten($alert-element, 15%);
 }
 
 .secondary-button-alert:focus {
@@ -429,26 +443,24 @@ a:focus {
   color: $alert-element;
 }
 
-/********************************** /Buttons Styles ***************************************/
 
+/********************************** /Buttons Styles ***************************************/
 
 /********************************** Media ***************************************/
 
 @media (max-width: 320px) {
 
-  .default-form-input {
+  .form-input-default {
     max-width: 250px !important;
   }
 
-  .has-error {
-    padding-left: 8px !important;
-    padding-right: 8px !important;
-    width: 250px !important;
-  }
-
-  .default-button {
+  .primary-button, .secondary-button, .secondary-button-alert {
     padding-left: 15px !important;
     padding-right: 15px !important;
+
+    i {
+      margin-right: 16px !important;
+    }
   }
 
 }

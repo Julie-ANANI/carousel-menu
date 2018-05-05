@@ -6,8 +6,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-height: 100vh;
 
   .logo-container {
     padding-bottom: 50px;
@@ -26,113 +27,70 @@
 
     .button-container {
       padding-bottom: 45px;
-
-      .default-button {
+      .primary-button {
         background: #1680B9;
         border-color: #1680B9;
-        padding-top: 12px;
-
-        span i {
-          margin-right: 36px;
-          font-size: 1.1rem;
-        }
-
       }
-
-      .default-button:hover {
+      .primary-button:hover {
         background: lighten(#1680B9, 15%);
-        border-color: #1680B9;
+        border-color: lighten(#1680B9, 15%);
         color: #FFFFFF;
       }
-
     }
 
     .or-container {
-      color: #878787;
+      color: #97A4B1;
       padding-bottom: 45px;
-
       span::before {
         content: '';
         display: inline-block;
         vertical-align: middle;
         width: 130px;
         height: 1px;
-        background: #878787;
+        background: #97A4B1;
       }
-
       span::after {
         content: '';
         display: inline-block;
         vertical-align: middle;
         width: 130px;
         height: 1px;
-        background: #878787;
+        background: #97A4B1;
       }
-
     }
 
     .credential-container {
       padding-bottom: 25px;
-
       .form-group {
         display: flex;
         justify-content: center;
         margin-bottom: 20px;
       }
-
-      .default-form-input {
+      .form-input-default {
         max-width: 300px;
       }
-
-      .error-container {
-        display: flex;
-        justify-content: center;
-
-        .has-error {
-          width: 300px;
-          margin-top: 0;
-          margin-bottom: 20px;
-        }
-
+      .form-error {
+        margin-bottom: 20px;
       }
-
     }
 
     .submit-container {
       padding-bottom: 45px;
-
       .login-button {
         padding-bottom: 10px;
-
-        .default-button {
-          padding-left: 35px;
-          padding-right: 35px;
-        }
-
       }
-
-    }
-
-    .create-container {
-
-      .create-link {
-        margin-left: 5px;
-        font-size: 0.8rem;
+      .text-link {
+        font-size: 14px;
       }
-
     }
 
   }
 
 }
 
-@media (max-width: 320px) {
+/********************************** Media ***************************************/
 
-  .default-button {
-    span i {
-      margin-right: 16px !important;
-    }
-  }
+@media (max-width: 320px) {
 
   .or-container {
     span::before {
@@ -144,13 +102,14 @@
   }
 
   .submit-container {
-    .default-button {
+    .primary-button {
       padding-left: 30px !important;
       padding-right: 30px !important;
     }
   }
 
 }
+
 
 @media (max-width: 601px) {
 
@@ -161,24 +120,15 @@
 
 }
 
-
-@media (min-width: 768px) and (max-width: 872px) {
+@media (min-width: 601px) and (max-width: 840px) {
 
   .sign-in-container {
-    width: 660px !important;
+    width: 580px !important;;
   }
 
 }
 
-@media (min-width: 768px) {
-
-  .main-container {
-    min-height: 100vh !important;
-  }
-
-}
-
-@media (min-width: 873px) {
+@media (min-width: 841px) {
 
   .sign-in-container {
     width: 800px !important;
