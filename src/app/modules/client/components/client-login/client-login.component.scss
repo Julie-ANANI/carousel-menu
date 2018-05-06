@@ -6,9 +6,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  min-height: 100vh;
+  padding-top: 40px;
+  padding-bottom: 40px;
 
   .logo-container {
     padding-bottom: 50px;
@@ -124,6 +123,14 @@
 
   .sign-in-container {
     width: 580px !important;;
+  }
+
+}
+
+@media (min-width: 768px) {
+
+  .main-container {
+    min-height: 100vh !important;
   }
 
 }

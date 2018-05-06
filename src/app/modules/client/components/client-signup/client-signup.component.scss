@@ -6,14 +6,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   min-height: 100vh;
 
   .logo-container {
     padding-bottom: 50px;
   }
-
 
   .sign-up-container {
     background: #FFFFFF;
@@ -71,9 +70,10 @@
   .signup-button {
     padding-bottom: 29px;
     .button-signup {
-      padding: 13px 15px;
+      padding: 13px 20px;
       i {
         vertical-align: bottom;
+        margin-right: 20px;
       }
       .far {
         font-weight: unset;
@@ -133,12 +133,12 @@
     padding-left: 60px !important;
   }
 
-  .signup-button {
+/*  .signup-button {
     .button-signup {
       padding-left: 30px !important;
       padding-right: 30px !important;
     }
-  }
+  } */
 
 
 }
