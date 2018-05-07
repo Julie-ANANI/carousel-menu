@@ -47,8 +47,6 @@ $header-background: #4F5D6B;
 $button-color: #ffb300;
 $button-disabled-color: #dbdbdb;
 
-/********************************** /Color ***************************************/
-
 
 /* Typographie */
 
@@ -208,8 +206,6 @@ a:focus {
   border-color: #f5c6cb !important;
 }
 
-/********************************** /Simple Notification Styles ***************************************/
-
 /********************************** Text Styles ***************************************/
 
 .text {
@@ -241,9 +237,8 @@ a:focus {
   -webkit-box-shadow: none !important;
 }
 
-/********************************** /Text Styles ***************************************/
-
 /********************************** Form Input Styles ***************************************/
+
 
 // Form label
 
@@ -253,7 +248,7 @@ a:focus {
   font-weight: 600;
 }
 
-.form-label:active {
+.form-label-active {
   color: $primary-element;
   font-size: 14px;
   font-weight: 600;
@@ -265,7 +260,6 @@ a:focus {
   font-weight: 600;
 }
 
-
 // Form input
 
 .form-input-default {
@@ -275,6 +269,7 @@ a:focus {
   border-bottom-color: $meta-element;
   font-size: 14px;
   color: #484848;
+  padding: 12px 4px;
 }
 
 .form-input-default:focus {
@@ -299,7 +294,7 @@ a:focus {
 .form-error {
   color: $alert-element;
   font-size: 12px;
-  padding: 4px 12px;
+  padding: 4px 0px;
 }
 
 // Form slide button
@@ -329,9 +324,46 @@ a:focus {
   border-color: #D1D1D1;
 }
 
+// Form switch group padding
 
-/********************************** /Form Input Styles ***************************************/
+.form-switch-padding {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
 
+// Form suggestion list
+
+.form-suggestion {
+  border-right: .25rem;
+  box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  z-index: 2;
+
+  li {
+    padding: 8px;
+    transition: all .35s ease-in-out;
+    cursor: pointer;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-radius: 5px;
+    a{
+      color: #333333;
+      transition: all .35s ease-in-out;
+      text-decoration: none;
+    }
+  }
+
+  li:hover {
+    background:  $secondary-element;
+    border-color: $secondary-element;
+    a {
+      color: white;
+    }
+  }
+
+}
 /********************************** Buttons Styles ***************************************/
 
 // Primary button
@@ -443,9 +475,6 @@ a:focus {
   color: $alert-element;
 }
 
-
-/********************************** /Buttons Styles ***************************************/
-
 /********************************** Media ***************************************/
 
 @media (max-width: 360px) {
@@ -465,4 +494,3 @@ a:focus {
 
 }
 
-/********************************** /Media ***************************************/
