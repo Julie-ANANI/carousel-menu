@@ -1,11 +1,8 @@
-//import
-@import '../../../style/client-styles';
-
 .main-container {
-  background-color: #f2f2f2;
+  background: #f2f2f2;
   padding-top: 25px;
   font-size: 0.65rem;
-  color: #808080;
+  color: #333333;
 
   .lang-section {
 
@@ -54,7 +51,7 @@
       a:hover {
         text-decoration: none;
         cursor: pointer;
-        color: $hover-color;
+        color: #0B90C6;
       }
 
     }
@@ -64,25 +61,23 @@
   .footer-hr {
     margin-top: 35px;
     margin-bottom: 20px;
-    border: .5px solid #AEA9B5;
+    border: .5px solid #333333;
     border-radius: .25rem;
   }
 
   .information-section {
     padding-top: 10px;
+    transition: all 0.35s ease-in-out;
 
     a{
-      color: $primary-color;
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: $hover-color;
+      color: #333333;
     }
 
   }
 
 }
+
+/********************************** Media ***************************************/
 
 @media (max-width: 600px) {
 

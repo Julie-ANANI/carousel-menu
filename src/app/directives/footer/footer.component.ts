@@ -21,7 +21,7 @@ export class FooterComponent implements OnInit {
     this.displayLangChoices = false;
   }
 
-  public isMainDomain(): boolean {
+  public checkIsMainDomain(): boolean {
     return environment.domain === 'umi';
   }
 
@@ -31,14 +31,14 @@ export class FooterComponent implements OnInit {
   }
 
   get companyName(): string {
-    return `${this._companyName} ${this.isMainDomain() ? '' : ' by United Motion Ideas'}`;
+    return `${this._companyName} ${this.checkIsMainDomain() ? '' : ' by United Motion Ideas'}`;
   }
 
-  get translate (): TranslateService {
+  get translate(): TranslateService {
     return this._translateService;
   }
 
-  get copyrightDate (): string {
+  get copyrightDate(): string {
     return (new Date()).getFullYear().toString();
   }
 

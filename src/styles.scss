@@ -228,7 +228,6 @@ a:focus {
 
 .text-link:hover {
   color: lighten($primary-element, 15%);
-  text-decoration: none;
 }
 
 .text-link:focus {
@@ -354,19 +353,23 @@ a:focus {
     margin-top: 2px;
     margin-bottom: 2px;
     border-radius: 5px;
+
     a{
       color: #333333;
       transition: all .35s ease-in-out;
       text-decoration: none;
     }
+
   }
 
   li:hover {
     background:  $secondary-element;
     border-color: $secondary-element;
+
     a {
       color: white;
     }
+
   }
 
 }
@@ -385,10 +388,10 @@ a:focus {
   font-weight: 600;
   transition: all 0.5s ease-in-out;
 
-    i {
-      margin-right: 36px;
-      font-size: 1.1rem;
-    }
+  i {
+    margin-right: 36px;
+    font-size: 1.1rem;
+  }
 
 }
 
@@ -426,10 +429,10 @@ a:focus {
   font-weight: 600;
   transition: all 0.5s ease-in-out;
 
-    i {
-      margin-right: 36px;
-      font-size: 1.1rem;
-    }
+  i {
+    margin-right: 36px;
+    font-size: 1.1rem;
+  }
 
 }
 
@@ -465,10 +468,10 @@ a:focus {
   font-weight: 600;
   transition: all 0.5s ease-in-out;
 
-    i {
-      margin-right: 36px;
-      font-size: 1.1rem;
-    }
+  i {
+    margin-right: 36px;
+    font-size: 1.1rem;
+  }
 
 }
 
@@ -500,6 +503,7 @@ a:focus {
     i {
       margin-right: 16px !important;
     }
+
   }
 
 }
