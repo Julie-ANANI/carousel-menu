@@ -39,6 +39,7 @@ export class ClientLoginComponent implements OnInit {
   onSubmit() {
     if (this.formData.valid) {
       const user = new User(this.formData.value);
+
       this._authService.login(user)
         .first()
         .subscribe(() => {
@@ -72,7 +73,9 @@ export class ClientLoginComponent implements OnInit {
 
   public linkedInSignIn(event: Event) {
     event.preventDefault();
+
     const domain = environment.domain;
+
     this._authService.linkedinLogin(domain)
       .first()
       .subscribe(
@@ -86,7 +89,7 @@ export class ClientLoginComponent implements OnInit {
 
   }
 
-  public changePassword(event: Event) {
+  public onChangePassword(event: Event) {
     event.preventDefault();
 
     if (!this.formData.get('email')!.value) {
@@ -104,21 +107,21 @@ export class ClientLoginComponent implements OnInit {
 
   }
 
-  get authService (): AuthService {
+  get authService(): AuthService {
     return this._authService;
   }
 
-  public isMainDomain(): boolean {
+  public checkIsMainDomain(): boolean {
     return environment.domain === 'umi';
   }
 
   // getting the logo of the company
-  public logoName(): string {
+  public getLogo(): string {
     return environment.logoURL;
   }
 
-  // getting the background of the company
-  public backgroundImage(): string {
+  // getting the background image of the company
+  public getBackgroundImage(): string {
     return environment.background;
   }
 
