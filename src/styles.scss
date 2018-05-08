@@ -246,6 +246,7 @@ a:focus {
   color: $meta-element;
   font-size: 16px;
   font-weight: 600;
+  padding-left: 2px;
 }
 
 .form-label-active {
@@ -324,7 +325,13 @@ a:focus {
   border-color: #D1D1D1;
 }
 
-// Form switch group padding
+// Form switch
+
+.form-switch {
+  padding-left: 2rem;
+  padding-right: 0.2rem;
+  line-height: 1.4;
+}
 
 .form-switch-padding {
   padding-top: 20px;
@@ -334,8 +341,7 @@ a:focus {
 // Form suggestion list
 
 .form-suggestion {
-  border-right: .25rem;
-  box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   margin: 0;
   padding: 4px;
   list-style: none;
@@ -396,6 +402,8 @@ a:focus {
   background: $button-disabled-color;
   border-color: $button-disabled-color;
   color: #a9a9a9;
+  pointer-events: auto;
+  cursor: not-allowed;
 }
 
 .primary-button:focus {
@@ -435,6 +443,8 @@ a:focus {
   border-color: $button-disabled-color;
   color: #a9a9a9;
   background: white;
+  pointer-events: auto;
+  cursor: not-allowed;
 }
 
 .secondary-button:focus {
@@ -480,7 +490,7 @@ a:focus {
 @media (max-width: 360px) {
 
   .form-input-default {
-    max-width: 250px !important;
+    max-width: 290px !important;
   }
 
   .primary-button, .secondary-button, .secondary-button-alert {
@@ -490,6 +500,14 @@ a:focus {
     i {
       margin-right: 16px !important;
     }
+  }
+
+}
+
+@media (max-width: 320px) {
+
+  .form-input-default {
+    max-width: 250px !important;
   }
 
 }

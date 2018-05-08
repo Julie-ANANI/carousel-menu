@@ -53,7 +53,7 @@ export const COMMON = {
     'PASSWORD': 'Password is required.',
     'COMPANY': 'Company is required.',
     'JOBTITLE': 'Job title is required.',
-    'MESSAGE': 'All fields are mandatory',
+    'MESSAGE': 'All fields are mandatory.',
     'ACCEPT': 'Please accept the terms and conditions.',
     'COUNTRY': 'Country is required.'
   },
