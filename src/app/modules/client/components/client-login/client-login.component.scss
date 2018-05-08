@@ -26,20 +26,24 @@
 
     .button-container {
       padding-bottom: 45px;
+
       .primary-button {
         background: #1680B9;
         border-color: #1680B9;
       }
+
       .primary-button:hover {
         background: lighten(#1680B9, 15%);
         border-color: lighten(#1680B9, 15%);
         color: #FFFFFF;
       }
+
     }
 
     .or-container {
       color: #97A4B1;
       padding-bottom: 45px;
+
       span::before {
         content: '';
         display: inline-block;
@@ -48,6 +52,7 @@
         height: 1px;
         background: #97A4B1;
       }
+
       span::after {
         content: '';
         display: inline-block;
@@ -56,31 +61,39 @@
         height: 1px;
         background: #97A4B1;
       }
+
     }
 
     .credential-container {
       padding-bottom: 25px;
+
       .form-group {
         display: flex;
         justify-content: center;
         margin-bottom: 20px;
       }
+
       .form-input-default {
         max-width: 300px;
       }
+
       .form-error {
         margin-bottom: 20px;
       }
+
     }
 
     .submit-container {
       padding-bottom: 29px;
+
       .login-button {
         padding-bottom: 10px;
       }
+
       .text-link {
         font-size: 14px;
       }
+
     }
 
   }
@@ -92,19 +105,24 @@
 @media (max-width: 360px) {
 
   .or-container {
+
     span::before {
       width: 108px !important;
     }
+
     span::after {
       width: 108px !important;
     }
+
   }
 
   .submit-container {
+
     .primary-button {
       padding-left: 30px !important;
       padding-right: 30px !important;
     }
+
   }
 
 }
