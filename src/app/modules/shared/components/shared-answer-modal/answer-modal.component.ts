@@ -24,6 +24,9 @@ export class AnswerModalComponent implements OnInit {
 
   @Input() set modalAnswer(value: Answer) {
     this._modalAnswer = value;
+    if (this._modalAnswer && !this._modalAnswer.company) {
+      this._modalAnswer.company = {};
+    }
   }
   @Input() public innoid: string;
   @Input() public questions: Array<Question>;
