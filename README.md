@@ -8,7 +8,7 @@ Il utilise Angular Universal pour calculer un pré-rendu qui sera restitué au c
 
 Lancer `ng serve --env=local --port 3080` pour lancer le serveur web de développement. 
 
-Se rendre sur `http://localhost:4200/`.
+Se rendre sur `http://localhost:3080/`.
 
 L'application va automatiquement se recharger si une modification est faite sur son code source.
 
