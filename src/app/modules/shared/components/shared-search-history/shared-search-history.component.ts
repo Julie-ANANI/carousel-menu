@@ -64,7 +64,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   public getGoogleQuota() {
     this._searchService.dailyStats().first().subscribe(result => {
-      this._googleQuota = 30000 - result.hours.slice(10).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0)
+      this._googleQuota = 30000 - result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0)
     });
   }
 
