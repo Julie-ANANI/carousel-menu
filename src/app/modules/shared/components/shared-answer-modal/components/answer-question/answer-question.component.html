@@ -14,6 +14,9 @@
           (click)="selectOption($event, option)">
           {{ optionLabel(option.identifier) }}
         </span>
+        <app-rating-item [adminMode]="adminMode" [prop]="question.identifier"
+                         [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+                         (ratingChange)="updateQuality($event)"></app-rating-item>
       </p>
     </ng-container>
 
@@ -55,15 +58,25 @@
         <li
           *ngIf="(fullAnswer.answers[question.identifier] && fullAnswer.answers[question.identifier][option.identifier] === true) || adminMode"
           [ngClass]="{'inactive': !fullAnswer.answers[question.identifier] || fullAnswer.answers[question.identifier][option.identifier] != true,
-                      'c-hand': adminMode}"
-          (click)="checkOption(option.identifier, $event)">
-          {{ optionLabel(option.identifier) }}
+                      'c-hand': adminMode}">
+          <span (click)="checkOption(option.identifier, $event)">
+            {{optionLabel(option.identifier)}}
+          </span>
+          <app-rating-item *ngIf="fullAnswer.answers[question.identifier] && fullAnswer.answers[question.identifier][option.identifier] == true"
+                           [adminMode]="adminMode" [prop]="question.identifier"
+                           [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+                           (ratingChange)="updateQuality($event)"></app-rating-item>
         </li>
       </ul>
     </ng-container>
 
     <ng-container *ngSwitchCase="'textbox'">
-      <p>{{fullAnswer.answers[question.identifier]}}</p>
+      <p>
+        {{fullAnswer.answers[question.identifier]}}
+        <app-rating-item [adminMode]="adminMode" [prop]="question.identifier"
+                         [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+                         (ratingChange)="updateQuality($event)"></app-rating-item>
+      </p>
     </ng-container>
 
     <ng-container *ngSwitchCase="'textarea'">
@@ -83,7 +96,9 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="'scale'">
-      <p>{{fullAnswer.answers[question.identifier]}}</p>
+      <p>
+        {{fullAnswer.answers[question.identifier]}}
+      </p>
     </ng-container>
 
     <ng-container *ngSwitchCase="'stars'">
