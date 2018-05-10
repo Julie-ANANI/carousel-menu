@@ -7,7 +7,7 @@ import { Innovation } from '../../models/innovation';
 import { InnovCard } from '../../models/innov-card';
 import { User } from '../../models/user.model';
 import { Video } from '../../models/media';
-import {QuestionReport} from "../../models/market-report";
+import { QuestionReport } from '../../models/market-report';
 
 @Injectable()
 export class InnovationService {
