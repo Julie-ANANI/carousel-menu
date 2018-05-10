@@ -73,6 +73,10 @@
       color: #333333;
     }
 
+    .break-text {
+      display: none;
+    }
+
   }
 
 }
@@ -83,6 +87,14 @@
 
   .text-right {
     text-align: left!important;
+  }
+
+}
+
+@media (max-width: 360px) {
+
+  .information-section .break-text {
+    display: block !important;
   }
 
 }
