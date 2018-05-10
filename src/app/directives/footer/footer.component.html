@@ -4,7 +4,7 @@
 
       <!-- Translate Section -->
       <div class="column col-11 col-mx-auto lang-section">
-        <div class="dropdown" [ngClass]="{'active': displayLangChoices}">
+        <div class="dropdown" [ngClass]="{ 'active': displayLangChoices }">
           <div class="btn-group">
             <button class="btn dropdown-toggle lang-button" (click)="(displayLangChoices = !displayLangChoices)">
               <span class="icon-global"><i class="fas fa-globe"></i></span>
@@ -50,7 +50,8 @@
                 </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a
                   target="_blank"
-                  [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">
+                  [href]="'https://www.umi.us' +
+                  (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">
                   {{ 'FOOTER.TERMS' | translate }}
                 </a>
               </span>
