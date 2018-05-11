@@ -1,10 +1,12 @@
-<div class="container main-container" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')'}">
+<div class="container main-container" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
   <div class="columns">
     <div class="column col-12 col-mx-auto">
 
       <!-- Logo -->
       <div class="logo-container text-center">
-        <img src="{{ getLogo() }}" alt="Logo" height="35px" class="logo">
+        <a href="https://www.umi.us">
+          <img src="{{ getLogo() }}" alt="UMI" height="35px" class="logo">
+        </a>
       </div>
 
       <!-- Main container -->
@@ -79,7 +81,7 @@
                     {{ 'LOG_IN.LOG_IN_BTN' | translate }}
                   </button>
                 </div>
-                  <a class="text-link" (click)="onChangePassword($event)">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
+                  <a class="text-link" (click)="changePassword($event)">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
               </div>
 
               <!-- Sign up -->

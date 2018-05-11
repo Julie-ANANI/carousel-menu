@@ -17,14 +17,14 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 export class ClientLoginComponent implements OnInit {
 
   public formData: FormGroup;
-  // public passwordMinLength = 5;
 
   constructor(private _authService: AuthService,
               private _userService: UserService,
               private _router: Router,
               private _formBuilder: FormBuilder,
               private _titleService: TranslateTitleService,
-              private _notificationsService: TranslateNotificationsService) { }
+              private _notificationsService: TranslateNotificationsService) {
+  }
 
   ngOnInit(): void {
     this._titleService.setTitle('LOG_IN.TITLE');
@@ -89,7 +89,7 @@ export class ClientLoginComponent implements OnInit {
 
   }
 
-  public onChangePassword(event: Event) {
+  public changePassword(event: Event) {
     event.preventDefault();
 
     if (!this.formData.get('email')!.value) {
