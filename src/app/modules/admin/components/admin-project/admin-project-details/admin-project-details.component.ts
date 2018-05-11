@@ -16,7 +16,6 @@ import { Preset } from '../../../../../models/preset';
 export class AdminProjectDetailsComponent implements OnInit {
 
   private _project: Innovation;
-  private _preset: Array<Preset> = [];
   private _tags: Array<any> = [];
   private _dirty = false;
 
@@ -29,14 +28,9 @@ export class AdminProjectDetailsComponent implements OnInit {
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
-    this._preset = this._project.preset ? [this._project.preset] : [];
-    this._tags = this._project.tags.map(tag=>{
+    this._tags = this._project.tags.map(tag => {
       return {name: tag.label, _id: tag.id}
     });
-  }
-
-  get innovationTitle(): string {
-    return this._project.name || 'Untitled';
   }
 
   set tags(value: Array<any>) {
@@ -48,12 +42,6 @@ export class AdminProjectDetailsComponent implements OnInit {
     return this._tags;
   }
 
-  set preset(value: Array<Preset>) {
-    this._preset = value;
-    this._dirty = true;
-  }
-  get preset() { return this._preset; }
-
   public updateTags(event: {value: Array<any>}): void {
     this._tags = event.value;
     this._project.tags = this._tags;
@@ -61,8 +49,7 @@ export class AdminProjectDetailsComponent implements OnInit {
   }
 
   public updatePreset(event: {value: Array<Preset>}): void {
-    this._preset = event.value;
-    this._project.preset = this._preset[0];
+    this._project.preset = event.value[0];
     this._dirty = true;
   }
 
@@ -126,7 +113,8 @@ export class AdminProjectDetailsComponent implements OnInit {
   }
 
   public hasPreset(): boolean {
-    return !!this._preset.length;
+    const p = this._project.preset;
+    return (p && p.constructor === Object && Object.keys(p).length > 0);
   }
 
   public notifClass(): string {
@@ -141,4 +129,5 @@ export class AdminProjectDetailsComponent implements OnInit {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
   get project() { return this._project; }
+  get dirty() { return this._dirty; }
 }
