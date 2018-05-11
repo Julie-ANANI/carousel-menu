@@ -4,7 +4,6 @@ import { TranslateService, initTranslation } from './i18n/i18n';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { LoaderService } from './services/loader/loader.service';
 import { Subject } from 'rxjs/Subject';
-
 import 'rxjs/add/operator/pairwise';
 
 @Component({
@@ -17,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<any> = new Subject();
   public displayLoader = false;
-  public displayLoading: boolean;
+  private _displayLoading = true; // to show spinner.
 
   public notificationsOptions = {
     position: ['bottom', 'right'],
@@ -33,23 +32,23 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private _translateService: TranslateService,
               private _authService: AuthService,
               private _loaderService: LoaderService,
-              private _notificationsService: TranslateNotificationsService) {}
+              private _notificationsService: TranslateNotificationsService) {
+  }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
 
     this._loaderService.isLoading$.takeUntil(this.ngUnsubscribe).subscribe((isLoading: boolean) => {
-      // Bug corrigé avec setTimeout : https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
-      setTimeout((_: void) => { this.displayLoader = isLoading; });
+      // Bug corrigé avec setTimeout :
+      // https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
+      setTimeout((_: void) => { this.displayLoader = isLoading; } );
     });
 
     this._loaderService.stopLoading();
 
-    this.displayLoading = true;
-
     setTimeout (() => {
-      this.displayLoading = false;
-    }, 500);
+      this._displayLoading = false;
+    }, 800);
 
     if (this._authService.isAcceptingCookies) { // CNIL
       this._authService.initializeSession().takeUntil(this.ngUnsubscribe).subscribe(
@@ -61,6 +60,10 @@ export class AppComponent implements OnInit, OnDestroy {
       );
     }
 
+  }
+
+  get displayLoading(): boolean {
+    return this._displayLoading;
   }
 
   ngOnDestroy() {
