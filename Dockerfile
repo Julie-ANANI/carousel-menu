@@ -8,6 +8,7 @@ RUN apt-get clean && \
 
 RUN npm install -g @angular/cli@1.7.4
 RUN npm install -g typings
+#RUN npm rebuild node-sass --force
 
 WORKDIR /var/web
 ADD package.json package.json

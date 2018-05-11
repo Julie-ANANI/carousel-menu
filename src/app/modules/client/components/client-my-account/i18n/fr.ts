@@ -4,7 +4,8 @@ export const MY_ACCOUNT = {
   'DELETE': 'Supprimer mon compte',
   'DELETE_MODAL': {
     'TITLE': 'Êtes-vous sûr(e) de vouloir supprimer votre compte ?',
-    'CONTENT': 'Toutes vos données personnelles seront définitivement supprimées.'
+    'CONTENT': 'Cest triste de vous voir partir. Néanmoins, toutes vos données personnelles seront ' +
+    'définitivement supprimées.'
   },
   'SECTORS': 'Secteurs d\'activité',
   'TECHNOLOGIES': 'Technologies',
