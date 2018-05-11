@@ -1,16 +1,17 @@
-<div class="container main-container" [ngStyle]="{ 'background-image': 'url(' + backgroundImage() + ')'}">
+<div class="container main-container" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
   <div class="columns">
     <div class="column col-12 col-mx-auto">
 
       <!-- Logo -->
       <div class="logo-container text-center">
-        <img src="{{ logoName() }}" alt="Logo" height="35px" class="logo">
+        <a href="https://www.umi.us">
+          <img src="{{ getLogo() }}" alt="UMI" height="35px" class="logo">
+        </a>
       </div>
-      <!-- /Logo -->
 
       <!-- Main container -->
-      <div class="column col-sm-11 col-11 col-mx-auto sign-in-container">
-        <div class="columns text-center col-gapless">
+      <div class="column col-xs-11 col-sm-11 col-11 col-mx-auto sign-in-container">
+        <div class="columns text-center">
 
           <!-- Bot -->
           <div class="column col-sm-12 col-5 col-mx-auto text-center">
@@ -18,24 +19,21 @@
               <img src="https://res.cloudinary.com/umi/image/upload/v1524752357/app/default-images/login-bot.svg" alt="Bot">
             </div>
           </div>
-          <!-- /Bot -->
 
           <!-- Information -->
           <div class="column col-sm-12 col-7 col-mx-auto">
 
             <!-- LinkedIn -->
-            <div class="button-container" *ngIf="isMainDomain()">
-              <a class="btn default-button" (click)="linkedInSignIn($event)">
+            <div class="button-container" *ngIf="checkIsMainDomain()">
+              <a class="btn primary-button" (click)="linkedInSignIn($event)">
                 <span><i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}</span>
               </a>
             </div>
-            <!-- /LinkedIn -->
 
             <!-- Or -->
             <div class="or-container text-center">
               <span> {{ 'COMMON.OR' | translate }} </span>
             </div>
-            <!-- /Or -->
 
             <!-- Form -->
             <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData">
@@ -46,77 +44,60 @@
                 <!-- Email -->
                 <div class="form-group">
                   <input
-                    class="form-input default-form-input"
+                    class="form-input form-input-default"
                     formControlName="email"
                     type="email"
                     [attr.placeholder]="'COMMON.EMAIL' | translate ">
                 </div>
-                <div class="error-container" *ngIf="formData.get('email').touched && formData.get('email').invalid">
-                  <div class="has-error">
-                    <span *ngIf="formData.get('email').hasError('required')">
-                      {{ 'COMMON.REQUIRED.EMAIL' | translate }}
-                    </span>
-                    <span *ngIf="formData.get('email').hasError('email')">
+                <div class="form-error" *ngIf="formData.get('email').touched && formData.get('email').invalid">
+                  <span *ngIf="formData.get('email').hasError('required')">
+                    {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+                  </span>
+                  <span *ngIf="formData.get('email').hasError('email')">
                       {{ 'COMMON.INVALID.EMAIL' | translate }}
-                    </span>
-                  </div>
+                  </span>
                 </div>
-                <!-- /Email -->
 
                 <!-- Password -->
                 <div class="form-group">
                   <input
-                    class="form-input default-form-input"
+                    class="form-input form-input-default"
                     formControlName="password"
                     type="password"
                     [attr.placeholder]="'COMMON.PASSWORD' | translate ">
                 </div>
-                <div class="error-container" *ngIf="formData.get('password').touched && formData.get('password').invalid">
-                  <div class="has-error">
-                      <span *ngIf="formData.get('password').hasError('required')">
-                      {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
-                      </span>
-                  </div>
+                <div class="form-error" *ngIf="formData.get('password').touched && formData.get('password').invalid">
+                  <span *ngIf="formData.get('password').hasError('required')">
+                  {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+                  </span>
                 </div>
-                <!-- /Password -->
 
               </div>
-              <!-- /User details -->
 
               <!-- Login button and forget password -->
               <div class="submit-container">
                 <div class="login-button">
-                  <button class="btn default-button" type="submit" [disabled]="formData.invalid">
+                  <button class="btn primary-button" type="submit" [disabled]="formData.invalid">
                     {{ 'LOG_IN.LOG_IN_BTN' | translate }}
                   </button>
                 </div>
-                <div class="forget-link">
-                  <a class="text-link" (click)="changePassword($event)">
-                    {{ 'LOG_IN.FORGOT_PASSWORD' | translate }}
-                  </a>
-                </div>
+                  <a class="text-link" (click)="changePassword($event)">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
               </div>
-              <!-- /Login button and forget password -->
 
               <!-- Sign up -->
               <div class="create-container">
-                <span class="text">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}
-                  <a class="create-link text-link" routerLink="/signup">{{ 'COMMON.SIGN_UP' | translate }}</a>
-                </span>
+                <p class="text">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}
+                  <a class="text-link" routerLink="/signup">{{ 'COMMON.SIGN_UP' | translate }}</a>
+                </p>
               </div>
-              <!-- /Sign up -->
 
             </form>
-            <!-- /Form -->
 
           </div>
-          <!-- /Information -->
 
         </div>
       </div>
-      <!-- /Main container -->
 
     </div>
   </div>
 </div>
-

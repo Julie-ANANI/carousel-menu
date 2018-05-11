@@ -10,18 +10,20 @@ import { environment } from '../../../environments/environment';
 })
 
 export class FooterComponent implements OnInit {
+
   private _companyName: string = environment.companyName;
-  displayLangChoices: boolean;
+  private _displayLangChoices: boolean; // to toggle the lang button
 
   constructor (private _translateService: TranslateService,
-               private _cookieService: CookieService) {}
+               private _cookieService: CookieService) {
+  }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
-    this.displayLangChoices = false;
+    this._displayLangChoices = false;
   }
 
-  public isMainDomain(): boolean {
+  public checkIsMainDomain(): boolean {
     return environment.domain === 'umi';
   }
 
@@ -31,15 +33,23 @@ export class FooterComponent implements OnInit {
   }
 
   get companyName(): string {
-    return `${this._companyName} ${this.isMainDomain() ? '' : ' by United Motion Ideas'}`;
+    return `${ this._companyName } ${ this.checkIsMainDomain() ? '' : ' by United Motion Ideas' }`;
   }
 
-  get translate (): TranslateService {
+  get translate(): TranslateService {
     return this._translateService;
   }
 
-  get copyrightDate (): string {
+  get copyrightDate(): string {
     return (new Date()).getFullYear().toString();
+  }
+
+  set displayLangChoices(value: boolean) {
+    this._displayLangChoices = value;
+  }
+
+  get displayLangChoices(): boolean {
+    return this._displayLangChoices;
   }
 
 }
