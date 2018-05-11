@@ -64,8 +64,7 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     Ng2FileDropModule,
     Angular2FontawesomeModule,
     Ng2PageScrollModule,
-    Ng2AutoCompleteModule,
-    SidebarModule
+    Ng2AutoCompleteModule
   ],
   declarations: [
     // Directives
