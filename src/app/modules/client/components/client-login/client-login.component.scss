@@ -14,7 +14,7 @@
   }
 
   .sign-in-container {
-    background-color: #FFFFFF;
+    background: #FFFFFF;
     border-radius: 0.25rem;
     padding-top: 51px;
     padding-bottom: 51px;
@@ -28,7 +28,7 @@
       padding-bottom: 45px;
 
       .default-button {
-        background-color: #1680B9;
+        background: #1680B9;
         border-color: #1680B9;
 
         span i {
@@ -39,8 +39,8 @@
       }
 
       .default-button:hover {
-        background-color: #4499c7;
-        border-color: #4499c7;
+        background: lighten(#1680B9, 15%);
+        border-color: #1680B9;
         color: #FFFFFF;
       }
 
@@ -123,6 +123,10 @@
 
   }
 
+}
+
+.text-link {
+  text-decoration: underline;
 }
 
 @media (max-width: 320px) {

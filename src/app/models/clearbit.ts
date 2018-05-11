@@ -1,5 +1,5 @@
 export interface Clearbit {
-  name: string;
+  name?: string;
   domain?: string;
   logo?: string;
 }
