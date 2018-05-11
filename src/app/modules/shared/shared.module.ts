@@ -50,6 +50,7 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
 import { SearchInputComponent } from '../../directives/search-input/search-input.component';
 import { CountryFlagComponent } from '../../directives/country-flag/country-flag.component';
+import { SidebarModule } from './components/shared-sidebar/sidebar.module';
 
 @NgModule({
   imports: [
@@ -63,7 +64,8 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     Ng2FileDropModule,
     Angular2FontawesomeModule,
     Ng2PageScrollModule,
-    Ng2AutoCompleteModule
+    Ng2AutoCompleteModule,
+    SidebarModule
   ],
   declarations: [
     // Directives
@@ -110,6 +112,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     RouterModule,
     Ng2FileDropModule,
     Ng2PageScrollModule,
+    SidebarModule,
 
     // Directives
     CountryFlagComponent,
@@ -147,4 +150,5 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
     LimitsPipe
   ]
 })
-export class SharedModule { }
+
+export class SharedModule {}
