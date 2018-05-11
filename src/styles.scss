@@ -23,6 +23,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+*:focus {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
 /********************************** Color ***************************************/
 
 // Elements color
@@ -157,16 +162,6 @@ ul.list-filter {
   position: relative;
 }
 
-a {
-  transition: all 0.5s ease-in-out;
-}
-
-a:focus {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-}
-
-
 /********************************** Simple Notification Styles ***************************************/
 
 .simple-notification {
@@ -232,8 +227,6 @@ a:focus {
 
 .text-link:focus {
   color: $primary-element;
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
 }
 
 /********************************** Form Input Styles ***************************************/
@@ -273,7 +266,6 @@ a:focus {
 }
 
 .form-input-default:focus {
-  box-shadow: none !important;
   border-color: $primary-element !important;
 }
 
@@ -320,8 +312,9 @@ a:focus {
 }
 
 .form-switch input:focus + .form-icon {
-  box-shadow: none !important;
   border-color: #D1D1D1;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
 }
 
 // Form switch
@@ -373,6 +366,7 @@ a:focus {
   }
 
 }
+
 /********************************** Buttons Styles ***************************************/
 
 // Primary button
@@ -405,12 +399,9 @@ a:focus {
   background: $button-disabled-color;
   border-color: $button-disabled-color;
   color: #a9a9a9;
-  pointer-events: auto;
-  cursor: not-allowed;
 }
 
 .primary-button:focus {
-  box-shadow: none !important;
   background: $button-color;
   border-color: $button-color;
   color: white;
@@ -446,14 +437,11 @@ a:focus {
   border-color: $button-disabled-color;
   color: #a9a9a9;
   background: white;
-  pointer-events: auto;
-  cursor: not-allowed;
 }
 
 .secondary-button:focus {
   background: white;
   color: $button-color;
-  box-shadow: none !important;
   border-color: $button-color;
 }
 
@@ -483,7 +471,6 @@ a:focus {
 
 .secondary-button-alert:focus {
   background: white;
-  box-shadow: none !important;
   border-color: $alert-element;
   color: $alert-element;
 }
