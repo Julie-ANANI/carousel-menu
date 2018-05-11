@@ -10,7 +10,7 @@ import 'rxjs/Rx';
 
 export class SearchInputComponent implements OnInit {
 
-  searchField: FormControl; /* declare the FormControl as properties of our component. */
+  searchField: FormControl; /* declare the FormControl as properties of our components. */
   @Output() searchInputEmit = new EventEmitter<any>(); // general output event emitter
   @Input() suggestions: any; // general suggestion
   displaySuggestion = true;

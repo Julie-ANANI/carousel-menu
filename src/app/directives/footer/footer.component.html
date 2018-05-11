@@ -4,29 +4,21 @@
 
       <!-- Translate Section -->
       <div class="column col-11 col-mx-auto lang-section">
-        <div class="dropdown" [ngClass]="{'active': displayLangChoices}">
+        <div class="dropdown" [ngClass]="{ 'active': displayLangChoices }">
           <div class="btn-group">
             <button class="btn dropdown-toggle lang-button" (click)="(displayLangChoices = !displayLangChoices)">
-              <span class="icon-global">
-                <i class="fas fa-globe"></i>
-              </span>
+              <span class="icon-global"><i class="fas fa-globe"></i></span>
               {{ 'COMMON.LANG.'+translate.currentLang.toUpperCase() | translate }}
-              <span class="icon-footer">
-                  <i class="icon icon-arrow-down"></i>
-                </span>
+              <span class="icon-footer"><i class="icon icon-arrow-down"></i></span>
             </button>
             <ul class="menu" (click)="(displayLangChoices = false)">
               <li *ngIf="translate.currentLang !== 'fr'">
-                <a
-                  (click)="propagateTranslation('fr') && $event.preventDefault()"
-                >
+                <a (click)="propagateTranslation('fr') && $event.preventDefault()">
                   {{ 'COMMON.LANG.FR' | translate }}
                 </a>
               </li>
               <li *ngIf="translate.currentLang !== 'en'">
-                <a
-                  (click)="propagateTranslation('en') && $event.preventDefault()"
-                >
+                <a (click)="propagateTranslation('en') && $event.preventDefault()">
                   {{ 'COMMON.LANG.EN' | translate }}
                 </a>
               </li>
@@ -34,47 +26,44 @@
           </div>
         </div>
       </div>
-      <!-- /Translate Section -->
 
       <!-- Hr Section -->
       <div class="column col-11 col-mx-auto">
         <hr class="footer-hr"/>
       </div>
-      <!-- /Hr Section -->
 
       <!-- Info Section -->
       <div class="column col-11 col-mx-auto information-section">
         <div class="columns">
 
           <div class="column col-6 col-sm-12 col-mx-auto">
-            <p>
-              {{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}
-            </p>
+            <p>{{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}</p>
           </div>
 
           <div class="column col-6 col-sm-12 col-mx-auto text-right">
             <p>
-              <span *ngIf="isMainDomain()">
-            <a
-              [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')"
-              target="_blank"
-            >
-              {{ 'FOOTER.LEGAL_NOTICE' | translate }}
-            </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a
-              target="_blank"
-              [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')"
-            >
-              {{ 'FOOTER.TERMS' | translate }}
-            </a>
-          </span>
+              <span *ngIf="checkIsMainDomain()">
+                <a
+                  [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')"
+                   target="_blank">
+                  {{ 'FOOTER.LEGAL_NOTICE' | translate }}
+                </a> &nbsp;&nbsp;
+                <div class="break-text">
+                  <br>
+                </div>
+                <a
+                  target="_blank"
+                  [href]="'https://www.umi.us' +
+                  (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">
+                  {{ 'FOOTER.TERMS' | translate }}
+                </a>
+              </span>
             </p>
           </div>
 
         </div>
 
       </div>
-      <!-- /Info Section -->
 
     </div>
   </div>

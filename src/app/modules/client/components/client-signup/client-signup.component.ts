@@ -1,35 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { UserService } from '../../../../services/user/user.service';
-import { AuthService } from '../../../../services/auth/auth.service';
-import { environment } from '../../../../../environments/environment';
-import { User } from '../../../../models/user.model';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { TranslateTitleService } from '../../../../services/title/title.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/filter';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { environment } from '../../../../../environments/environment';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateTitleService } from '../../../../services/title/title.service';
+import { UserFormSidebarService } from '../../../shared/components/shared-sidebar/services/user-form-sidebar.service';
+import { UserService } from '../../../../services/user/user.service';
+import { User } from '../../../../models/user.model';
+
 
 @Component({
   selector: 'app-client-signup',
   templateUrl: './client-signup.component.html',
   styleUrls: ['./client-signup.component.scss']
 })
-export class ClientSignupComponent implements OnInit {
 
-  public displayEmailForm = false;
+export class ClientSignupComponent implements OnInit {
   public isInvitation = false;
 
-  public formData: FormGroup;
-  public passwordMinLength = 8;
-
-  constructor(private _userService: UserService,
-              private _formBuilder: FormBuilder,
+  constructor(
               private _authService: AuthService,
-              private _activatedRoute: ActivatedRoute,
+              private _userService: UserService,
               private _location: Location,
+              private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,
-              private _notificationsService: TranslateNotificationsService) { }
+              private _notificationsService: TranslateNotificationsService,
+              private _userFormSidebarService: UserFormSidebarService)
+  { }
 
   ngOnInit(): void {
     this._titleService.setTitle('COMMON.SIGN_UP');
@@ -38,14 +38,13 @@ export class ClientSignupComponent implements OnInit {
       this.isInvitation = params['invitation'] && params['invitation'] === 'true';
     });
 
-    this.formData = this._formBuilder.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      companyName: ['', [Validators.required]],
-      jobTitle: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(this.passwordMinLength)]]
+    // Listening to the form values from child.
+    this._userFormSidebarService.getFormValue().subscribe((res: FormGroup) => {
+      if (res !== null) {
+        this.onSubmit(res);
+      }
     });
+
   }
 
   public linkedInSignIn(event: Event) {
@@ -63,10 +62,9 @@ export class ClientSignupComponent implements OnInit {
       );
   }
 
-  public onSubmit(event: Event) {
-    event.preventDefault();
-    if (this.formData.valid) {
-      const user = new User(this.formData.value);
+  public onSubmit(res: FormGroup) {
+    if (res.valid) {
+      const user = new User(res.value);
       user.domain = environment.domain;
       this._userService.create(user)
         .first()
@@ -95,7 +93,24 @@ export class ClientSignupComponent implements OnInit {
     return environment.companyName;
   }
 
-  public isMainDomain(): boolean {
+  public checkIsMainDomain(): boolean {
     return environment.domain === 'umi';
   }
+
+  // getting the company logo.
+  public getLogo(): string {
+    return environment.logoURL;
+  }
+
+  // getting the background image.
+  public backgroundImage(): string {
+    return environment.background;
+  }
+
+  // Sending values to the child component "UserForm Sidebar"
+  onSignUpClick(event: Event) {
+    event.preventDefault();
+    this._userFormSidebarService.setTemplateValues('active', 'COMMON.SIGN_UP', 'Sign Up');
+  }
+
 }

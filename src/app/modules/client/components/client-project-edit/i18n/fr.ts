@@ -14,11 +14,11 @@ export const PROJECT_EDIT = {
     }
   },
   'PRESET': {
-    'LABEL':'Type de projet',
+    'LABEL': 'Type de projet',
     'PLACEHOLDER': '',
-    'TYPE1':'Application discovery',
-    'TYPE2':'Market potential evaluation',
-    'TYPE3':'Business leads'
+    'TYPE1': 'Application discovery',
+    'TYPE2': 'Market potential evaluation',
+    'TYPE3': 'Business leads'
   },
   'TARGETING': {
     'GEOGRAPHY': 'Périmètre géographique',
@@ -34,7 +34,8 @@ export const PROJECT_EDIT = {
   },
   'PROFESSIONALS': {
     'LABEL': 'Profils des professionnels',
-    'PLACEHOLDER': 'Ex : Ingénieur R&D sur les matériaux isolants, responsable business development\nEx : John Doe chez IBM http://www.linkedin.com/in/johndoe',
+    'PLACEHOLDER': 'Ex : Ingénieur R&D sur les matériaux isolants, responsable business development' +
+    '\nEx : John Doe chez IBM http://www.linkedin.com/in/johndoe',
     'TO_EXCLUDE': 'Indiquer des personnes à exclure',
     'NEW_PROFESSIONAL_TO_EXCLUDE_PLACEHOLDER': 'Ex : John Doe (http://www.linkedin.com/in/johndoe)'
   },
@@ -48,7 +49,8 @@ export const PROJECT_EDIT = {
   },
   'OTHER': {
     'LABEL': 'Compléments / Mots-clefs',
-    'PLACEHOLDER': 'ANDRH, norme antibruit EN352-1, Ansys Maxwell est un logiciel concurrent…\nEx : Computational fluid dynamics, LEED Building, Moteur brushless'
+    'PLACEHOLDER': 'ANDRH, norme antibruit EN352-1, Ansys Maxwell est un logiciel concurrent…' +
+    '\nEx : Computational fluid dynamics, LEED Building, Moteur brushless'
   },
   'KEYWORDS': {
     'LABEL': 'Mots-clefs',
@@ -112,10 +114,15 @@ export const PROJECT_EDIT = {
   },
   'ADD_COLLABORATORS_MODAL': {
     'TITLE': 'Ajout de collaborateurs à ce projet',
-    'CONTENT': 'Veuillez écrire les adresses e-mail des collaborateurs dont vous souhaitez que nous autorisions l\'accès à la gestion de votre projet ci-dessous :',
+    'CONTENT': 'Veuillez écrire les adresses e-mail des collaborateurs dont vous souhaitez que nous autorisions ' +
+    'l\'accès à la gestion de votre projet ci-dessous :',
     'USERS_ADDED': 'collaborateur(s) a/ont été ajouté(s)',
-    'TO_SEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application. Pour les/l\'ajouter comme collabora-teur-trice-s à ce projet, vous devez leur/lui envoyer une invitation en cliquant sur le bouton ci-dessous :',
-    'TO_RESEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application et ont peut-être déjà reçu une invitation de vôtre part. Pour les/l\'ajouter comme collabora-teur-trice-s à ce projet, vous devez leur/lui envoyer une invitation en cliquant sur le bouton'
+    'TO_SEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application. ' +
+    'Pour les/l\'ajouter comme collabora-teur-trice-s à ce projet, vous devez leur/lui envoyer une ' +
+    'invitation en cliquant sur le bouton ci-dessous :',
+    'TO_RESEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application ' +
+    'et ont peut-être déjà reçu une invitation de vôtre part. Pour les/l\'ajouter comme collabora-teur-trice-s ' +
+    'à ce projet, vous devez leur/lui envoyer une invitation en cliquant sur le bouton'
   },
   'INVITE_COLLABORATORS_MODAL': {
     'TITLE': 'Ajout de collaborateurs à ce projet'
