@@ -1,7 +1,6 @@
 $body-font-color-darker: #333333 !default;
 $body-font-color: #878787 !default;
 $base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
-$font-size: 16px !default;
 $primary-color: #3498DB !default;
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
@@ -99,7 +98,6 @@ h3, .h3 {
 .form-input {
   border: 0.05rem solid #E0E0E0;
   border-radius: 3px;
-  font-size: 0.8rem;
   padding: 0.6rem 0.7rem;
   margin-bottom: 8px;
   color: $body-font-color-darker;
@@ -113,7 +111,6 @@ h3, .h3 {
 }
 
 .form-radio {
-  font-size: 0.9rem;
   color: $body-font-color-darker;
 }
 
@@ -236,20 +233,20 @@ ul.list-filter {
 
 .form-label-default {
   color: $meta-element;
-  font-size: 16px;
+  font-size: 0.8rem;
   font-weight: 600;
   padding-left: 2px;
 }
 
 .form-label-active {
   color: $primary-element;
-  font-size: 14px;
+  font-size: 0.7rem;
   font-weight: 600;
 }
 
 .form-label-error {
   color: $alert-element;
-  font-size: 14px;
+  font-size: 0.7rem;
   font-weight: 600;
 }
 
@@ -260,7 +257,7 @@ ul.list-filter {
   border-left: none;
   border-top: none;
   border-bottom-color: $meta-element;
-  font-size: 14px;
+  font-size: 0.7rem;
   color: #484848;
   padding: 12px 4px;
 }
@@ -285,8 +282,8 @@ ul.list-filter {
 
 .form-error {
   color: $alert-element;
-  font-size: 12px;
-  padding: 4px 0px;
+  font-size: 0.6rem;
+  padding: 4px 0;
 }
 
 // Form slide button
@@ -378,7 +375,7 @@ ul.list-filter {
   border-color: $button-color;
   min-height: 50px;
   padding: 11px 30px;
-  font-size: 14px;
+  font-size: 0.7rem;
   font-weight: 600;
   transition: all 0.5s ease-in-out;
 
@@ -416,7 +413,7 @@ ul.list-filter {
   border: 2px solid $button-color;
   min-height: 50px;
   padding: 12px 30px;
-  font-size: 14px;
+  font-size: 0.7rem;
   font-weight: 600;
   transition: all 0.5s ease-in-out;
 
@@ -452,7 +449,7 @@ ul.list-filter {
   border: 2px solid $alert-element;
   min-height: 50px;
   padding: 12px 30px;
-  font-size: 14px;
+  font-size: 0.7rem;
   font-weight: 600;
   transition: all 0.5s ease-in-out;
 
