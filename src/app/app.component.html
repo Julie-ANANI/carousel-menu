@@ -7,7 +7,7 @@
 </div>
 
 <!-- Showing when client is authenticated -->
-<div *ngIf="displayLoading === false && _authService.isAuthenticated" class="body">
+<div *ngIf="displayLoading === false && authService.isAuthenticated" class="body">
 
   <app-header></app-header>
 
@@ -22,7 +22,7 @@
 </div>
 
 <!-- Showing when client is not authenticated -->
-<div *ngIf="displayLoading === false && !_authService.isAuthenticated" class="body">
+<div *ngIf="displayLoading === false && !authService.isAuthenticated" class="body">
 
   <div class="main">
     <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>

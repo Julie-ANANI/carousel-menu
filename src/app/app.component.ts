@@ -66,6 +66,10 @@ export class AppComponent implements OnInit, OnDestroy {
     return this._displayLoading;
   }
 
+  get authService(): AuthService {
+    return this._authService;
+  }
+
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
