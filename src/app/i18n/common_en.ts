@@ -30,6 +30,7 @@ export const COMMON = {
   'I_FINISHED': 'I finished',
   'SYNTHESIS': 'Synthesis',
   'SEARCHINNOVATION': 'Search innovation',
+  'LOADING': 'Loading',
 
   'NAME': 'Name',
   'FIRSTNAME': 'First name',
