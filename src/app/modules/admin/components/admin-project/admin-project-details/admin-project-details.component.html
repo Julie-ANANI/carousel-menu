@@ -18,14 +18,14 @@
       <app-autocomplete-input
         (update)="updatePreset($event)"
         [onlyOne]="true"
-        [config]="{placeholder: 'preset', initialData: preset || [], type: 'preset'}">
+        [config]="{placeholder: 'preset', initialData: hasPreset() ? [project.preset] : [], type: 'preset'}">
       </app-autocomplete-input>
     </div>
 
     <div>
       <h4>Quiz management</h4>
       <p *ngIf="!hasPreset()">To generate a quiz, you need to set a preset for the innovation.</p>
-      <button *ngIf="hasPreset()" class="btn btn-primary btn-lg" type="button" (click)="generateQuiz($event)">
+      <button *ngIf="hasPreset()" type="button" class="btn btn-primary btn-lg" [ngClass]="{'disabled': dirty}" (click)="generateQuiz($event)">
         Générer le quiz
       </button>
     </div>

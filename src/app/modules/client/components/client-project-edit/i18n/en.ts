@@ -10,16 +10,16 @@ export const PROJECT_EDIT = {
     'BUTTON': 'Submit my project',
     'TITLE': 'Have you finished? Submit your project to us.',
     'DESCRIPTION': {
-      'LINE1': 'After you have submitted your project to us, we will validate it',
-      'LINE2': 'so it is prefectly ready to be published.'
+      'LINE1': 'After you have submitted your project to us, we will validate it.',
+      'LINE2': 'so it is perfectly ready to be published.'
     }
   },
   'PRESET': {
-    'LABEL':'Project type',
+    'LABEL': 'Project type',
     'PLACEHOLDER': '',
-    'TYPE1':'Application discovery',
-    'TYPE2':'Market potential evaluation',
-    'TYPE3':'Business leads'
+    'TYPE1': 'Application discovery',
+    'TYPE2': 'Market potential evaluation',
+    'TYPE3': 'Business leads'
   },
   'TARGETING': {
     'GEOGRAPHY': 'Geographical area',
@@ -41,7 +41,7 @@ export const PROJECT_EDIT = {
   },
   'COMPANIES': {
     'LABEL': 'Companies types',
-    'PLACEHOLDER': 'Industrial component manufacturers, consumer goods retail, software development studios... Ex: IBM, Intel',
+    'PLACEHOLDER': 'Industrial components manufacturers, consumer goods retail, software development studios... Ex: IBM, Intel',
     'TO_EXCLUDE': 'Specify companies you don\'t want to contact',
     'NEW_COMPANY_TO_EXCLUDE_PLACEHOLDER': 'Ex: Intel',
     'TO_INCLUDE': 'Specify companies you want to contact',
@@ -49,7 +49,9 @@ export const PROJECT_EDIT = {
   },
   'OTHER': {
     'LABEL': 'Anything else?',
-    'PLACEHOLDER': 'Acronyms like ANDRH, standards you want to check like ISO27001, precisions about a product: Ansys Maxwell is a competitor software...\nOr general terms, Ex: Computational fluid dynamics, LEED Building, Brushless mottors'
+    'PLACEHOLDER': 'Acronyms like ANDRH, standards you want to check like ISO27001, ' +
+    'precisions about a product: Ansys Maxwell is a competitor software...\nOr general terms, ' +
+    'Ex: Computational fluid dynamics, LEED Building, Brushless mottors'
   },
   'KEYWORDS': {
     'LABEL': 'Keywords',
@@ -65,15 +67,23 @@ export const PROJECT_EDIT = {
     },
     'SUMMARY': {
       'LABEL': 'Summarize your project in a short sentence',
-      'PLACEHOLDER': 'Your summary should provide a clear overview of the interest of your innovation (user benefits) as this will be the only information presented in the body of the email\nEx: this next-generation sensor uses an organic layer more sensitive to light than classic photodiode-based sensors.'
+      'PLACEHOLDER': 'Your summary should provide a clear overview of the interest of your innovation (user benefits) ' +
+      'as this will be the only information presented in the body of the email\nEx: this next-generation sensor uses an ' +
+      'organic layer more sensitive to light than classic photodiode-based sensors.'
     },
     'PROBLEM': {
       'LABEL': 'What problem or issue motivated the creation of this project?',
-      'PLACEHOLDER': 'Explain the origins of your project: Why did the company conceive of this idea? What need does it meet? What gap between existing solutions does it fill? What new functionality does it provide that didn’t previously exist, and why did this functionality not exist previously?\nEx: digital technology used in CCD and CMOS sensors limits their dynamics and sensitivity.'
+      'PLACEHOLDER': 'Explain the origins of your project: Why did the company conceive of this idea? What need does it meet? ' +
+      'What gap between existing solutions does it fill? What new functionality does it provide that didn’t previously exist, ' +
+      'and why did this functionality not exist previously?\nEx: digital technology used in CCD and CMOS sensors limits their ' +
+      'dynamics and sensitivity.'
     },
     'SOLUTION': {
       'LABEL': 'What solution does your project introduce?',
-      'PLACEHOLDER': 'Explain the principle/operation of your innovation in such a way that the targeted professionals can judge its relevance. Focus on the benefits in terms of uses for the target areas. Don’t be shy of including key figures that help to position your offering in relation an existing one: (e.g. “2 x lighter” / “25% longer lifespan”/ etc.)\nEx: replace the layer of silicium photodiodes by a photosensitive organic component having a sensitivity close to that of an eye.'
+      'PLACEHOLDER': 'Explain the principle/operation of your innovation in such a way that the targeted professionals can judge ' +
+      'its relevance. Focus on the benefits in terms of uses for the target areas. Don’t be shy of including key figures that help ' +
+      'to position your offering in relation an existing one: (e.g. “2 x lighter” / “25% longer lifespan”/ etc.)\nEx: replace the ' +
+      'layer of silicium photodiodes by a photosensitive organic components having a sensitivity close to that of an eye.'
     },
     'ADVANTAGES': {
       'LABEL': 'What advantages does your project provide to the market?',
@@ -100,10 +110,15 @@ export const PROJECT_EDIT = {
   },
   'ADD_COLLABORATORS_MODAL': {
     'TITLE': 'Add collaborators to this project',
-    'CONTENT': 'You can add here the e-mail addresses of the people you want to add as collaborators for your project. People who are already users of the platform will be added at once, otherwise they will receive an e-mail with an invitation to sign up.\nRemember: to accept the invitation, new users need to register using the same registration address.',
+    'CONTENT': 'You can add here the e-mail addresses of the people you want to add as collaborators for your project. ' +
+    'People who are already users of the platform will be added at once, otherwise they will receive an e-mail with an ' +
+    'invitation to sign up.\nRemember: to accept the invitation, new users need to register using the same registration address.',
     'USERS_ADDED': 'collaborator(s) has/have been added to the project',
-    'TO_SEND_EMAIL': 'or more e-mail addresses do not correspond to any of the existing users. To add them as collaborators for this project, you need to send them an invitation clicking in the button below:',
-    'TO_RESEND_EMAIL': 'or more e-mail addresses do not correspond to any of the existing users and they may have received already an invitation from you. To add them as collaborators for this project, you need to send them an invitation clicking in the button below:'
+    'TO_SEND_EMAIL': 'or more e-mail addresses do not correspond to any of the existing users. To add them as collaborators ' +
+    'for this project, you need to send them an invitation clicking in the button below:',
+    'TO_RESEND_EMAIL': 'or more e-mail addresses do not correspond to any of the existing users and they may have received ' +
+    'already an invitation from you. To add them as collaborators for this project, you need to send them an invitation ' +
+    'clicking in the button below:'
   },
   'INVITE_COLLABORATORS_MODAL': {
     'TITLE': 'Add collaborators to this project',

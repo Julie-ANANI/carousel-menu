@@ -23,7 +23,7 @@ export class AutocompleteInputComponent implements OnInit {
   @Input() adminMode = false;
 
   companyName: FormControl = new FormControl();
-  answerList: Array<{name: string, domain: string, flag: string; url:string, rating: number}> = [];
+  answerList: Array<{name: string, domain: string, flag: string; url: string, rating: number}> = [];
   answer = '';
 
   /*
@@ -47,6 +47,7 @@ export class AutocompleteInputComponent implements OnInit {
       this._placeholder = config.placeholder || '';
       this._autocompleteType = config.type || '';
       if (config.initialData && Array.isArray(config.initialData)) {
+        this.answerList = [];
         config.initialData.forEach(val => {
           if (this.answerList.findIndex(t => {
               return t === val

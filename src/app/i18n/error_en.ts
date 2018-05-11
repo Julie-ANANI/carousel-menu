@@ -12,7 +12,7 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'EMAIL_SENT': 'We sent you an email',
     'CHANGE_PASSWORD': 'To change your password, please click on the link we just sent you by email.',
     'EMAIL_NOT_FOUND': 'An error occurred : email not found.',
-    'LOGOUT': 'Log out',
+    'LOGOUT': 'Logout',
     'LOGOUT_TEXT': 'You have been logged out.',
   },
   'ACCOUNT': {

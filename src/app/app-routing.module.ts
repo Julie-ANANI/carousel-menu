@@ -35,4 +35,5 @@ const appRoutes: Routes = [
     AdminAuthGuard
   ]
 })
+
 export class AppRoutingModule { }

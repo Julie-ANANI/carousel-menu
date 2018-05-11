@@ -1,0 +1,68 @@
+// Color
+$header-background: #0B90C6;
+$mandatory-star: #721c24;
+
+.sidebar-wrapper {
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 8888;
+  position: fixed;
+  float: right;
+  right: 0;
+  box-shadow: 0 0 80px 0 rgba(0,0,0,0.5);
+  transition: all .5s ease-in-out;
+  overflow: auto;
+  overflow-x: hidden;
+  padding-left: 0;
+  padding-right: 0;
+  background: #FFFFFF;
+}
+
+.sidebar-header {
+  height: 74px;
+  background-color: $header-background;
+  color: white;
+  padding-top: 22px;
+  padding-bottom: 22px;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.icon-cross:hover {
+  cursor: pointer;
+}
+
+.sidebar-content {
+  padding-top: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.mand-star {
+  color: $mandatory-star;
+  padding-left: 2px;
+}
+
+/********************************** Media ***************************************/
+
+@media (min-width:350px) and (max-width: 420px){
+
+  .sidebar-wrapper {
+    width: 350px !important;
+  }
+
+}
+
+@media (max-width: 320px) {
+
+  .sidebar-wrapper {
+    width: 310px !important;
+  }
+
+}
+
+
+

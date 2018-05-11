@@ -1,7 +1,6 @@
 $body-font-color-darker: #333333 !default;
 $body-font-color: #878787 !default;
 $base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
-$font-size: 16px !default;
 $primary-color: #3498DB !default;
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
@@ -18,40 +17,39 @@ $primary-color: #3498DB !default;
 body {
   font-size: 16px;
   line-height: 1.4;
-  font-family: "Open Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Open Sans', sans-serif;;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+*:focus {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
 /********************************** Color ***************************************/
 
-// Default color
-$primary: #3498DB;
+// Elements color
+$primary-element: #FFB300;
+$secondary-element: #0B90C6;
+$meta-element: #97A4B1;
+$validation-element: #2ECC71;
+$alert-element: #EA5858;
+
 $primary-hover: #246a99;
 $primary-dark: #333333;
 
-//Text color
-$text: #878787;
-$text-link: #ffb300;
-$text-link-hover: lighten($text-link, 15%);
+// Text color
+$para-color: #5D5D5D;
+$title-color: #333333;
 
-//Button
-$default-button: #ffb300;
-$default-button-hover: lighten($default-button, 15%);
-$default-button-disabled: #dbdbdb;
+// Backgrounds
+$page-background: #333333;
+$header-background: #4F5D6B;
 
-// Form color
-$form-input: #333333;
-$form-label: #97A4B1;
-$form-switch-icon: #9B9B9B;
-
-//Success color
-$success: #2ecc71;
-
-// Error color
-$error: #ea5858;
-
-/********************************** /Color ***************************************/
+//Primary button
+$button-color: #ffb300;
+$button-disabled-color: #dbdbdb;
 
 
 /* Typographie */
@@ -100,7 +98,6 @@ h3, .h3 {
 .form-input {
   border: 0.05rem solid #E0E0E0;
   border-radius: 3px;
-  font-size: 0.8rem;
   padding: 0.6rem 0.7rem;
   margin-bottom: 8px;
   color: $body-font-color-darker;
@@ -114,7 +111,6 @@ h3, .h3 {
 }
 
 .form-radio {
-  font-size: 0.9rem;
   color: $body-font-color-darker;
 }
 
@@ -163,152 +159,6 @@ ul.list-filter {
   position: relative;
 }
 
-a {
-  transition: all 0.5s ease;
-}
-
-a:focus {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-}
-
-/********************************** Text Styles ***************************************/
-
-.text {
-  color: $primary-dark;
-  padding: 16px 0;
-  margin: 0;
-}
-
-.para {
-  font-size: 0.9rem;
-  color: $text;
-  padding: 16px 0;
-  margin: 0;
-}
-
-.text-link, .text-link:active, .text-link:visited {
-  color: $text-link;
-  padding: 16px 0;
-  margin: 0;
-  cursor: pointer;
-}
-
-.text-link:hover {
-  color: $text-link-hover;
-}
-
-.text-link:focus {
-  color: $text-link;
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-}
-
-/********************************** /Text Styles ***************************************/
-
-
-/********************************** Form Input Styles ***************************************/
-
-// Default form input
-
-.default-form-input {
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  color: $form-input;
-  font-size: 0.7rem;
-  padding-left: 6px;
-  height: 45px;
-  border-radius: 3px;
-}
-
-.default-form-input:focus {
-  box-shadow: none !important;
-  border-color: $primary-hover !important;
-}
-
-.default-form-input.ng-touched.ng-invalid{
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-color: $error !important;
-}
-
-.form-label {
-  color: $form-label;
-  padding-left: 5px;
-}
-
-.form-switch {
-  color: $primary-dark;
-}
-
-.form-switch .form-icon  {
-  border-color: $form-switch-icon;
-  background: $form-switch-icon;
-}
-
-.form-switch .input:checked+.form-icon  {
-  border-color: $success;
-  background: $success;
-}
-
-.form-switch input:focus+.form-icon {
-  border-color: $form-switch-icon;
-  box-shadow: none !important;
-}
-
-// Error style
-.has-error {
-  color: white;
-  background: $error;
-  border: 1px solid $error;
-  border-radius: 5px;
-  margin-top: 15px;
-  padding: 15px 12px;
-  font-size: 0.7rem;
-  text-align: left;
-}
-
-/********************************** /Form Input Styles ***************************************/
-
-
-/********************************** Buttons Styles ***************************************/
-
-// Default button
-
-.default-button {
-  background: $default-button;
-  color: white;
-  border-radius: 5px;
-  border-color: $default-button;
-  min-height: 50px;
-  padding: 14px 30px;
-  font-size: 0.8rem;
-  transition: all 0.5s ease;
-}
-
-.default-button:hover {
-  background: $default-button-hover;
-  border-color: $default-button;
-  color: white;
-}
-
-.default-button:focus {
-  box-shadow: none !important;
-  background: $default-button;
-  border-color: $default-button;
-}
-
-.default-button:disabled {
-  background: $default-button-disabled;
-  border-color: $default-button-disabled;
-  color: #a9a9a9;
-}
-
-/********************************** /Buttons Styles ***************************************/
-
-
 /********************************** Simple Notification Styles ***************************************/
 
 .simple-notification {
@@ -337,39 +187,316 @@ a:focus {
 }
 
 .simple-notification.success {
-  background-color: $success !important;
-  color: white !important;
-  border-color: $success !important;
+  background: #d4edda !important;
+  color: #155724 !important;
+  border-color: #c3e6cb !important;
 }
 
 .simple-notification.error {
-  background-color: $error !important;
-  color: white !important;
-  border-color: $error !important;
+  background: #f8d7da !important;
+  color: #721c24 !important;
+  border-color: #f5c6cb !important;
 }
 
-/********************************** /Simple Notification Styles ***************************************/
+/********************************** Text Styles ***************************************/
 
+.text {
+  color: $title-color;
+  padding: 16px 0;
+  margin: 0;
+}
+
+.para {
+  font-size: 0.9rem;
+  color: $para-color;
+  padding: 16px 0;
+  margin: 0;
+}
+
+.text-link, .text-link:active, .text-link:visited {
+  color: $primary-element;
+  cursor: pointer;
+}
+
+.text-link:hover {
+  color: lighten($primary-element, 15%);
+}
+
+.text-link:focus {
+  color: $primary-element;
+}
+
+/********************************** Form Input Styles ***************************************/
+
+
+// Form label
+
+.form-label-default {
+  color: $meta-element;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding-left: 2px;
+}
+
+.form-label-active {
+  color: $primary-element;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.form-label-error {
+  color: $alert-element;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+// Form input
+
+.form-input-default {
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  border-bottom-color: $meta-element;
+  font-size: 0.7rem;
+  color: #484848;
+  padding: 12px 4px;
+}
+
+.form-input-default:focus {
+  border-color: $primary-element !important;
+}
+
+.form-input-default:disabled {
+  background: #E7E7E7;
+  color: #666666;
+}
+
+.form-input-default.ng-touched.ng-invalid{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-color: $alert-element !important;
+}
+
+// Form error
+
+.form-error {
+  color: $alert-element;
+  font-size: 0.6rem;
+  padding: 4px 0;
+}
+
+// Form slide button
+
+.form-switch .form-icon::before {
+  background: #97A4B1;
+  border-color: #97A4B1;
+}
+
+.form-switch .form-icon  {
+  border: 1px solid #D1D1D1;
+  border-radius: 11.5px;
+  background-color: #FFFFFF;
+}
+
+.form-switch input:checked + .form-icon::before {
+  background: $validation-element;
+}
+
+.form-switch input:checked + .form-icon  {
+  border-color: rgba(46,204,113,0.45) !important;
+  background: rgba(46,204,113,0.45);
+}
+
+.form-switch input:focus + .form-icon {
+  border-color: #D1D1D1;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+// Form switch
+
+.form-switch {
+  padding-left: 2rem;
+  padding-right: 0.2rem;
+  line-height: 1.4;
+}
+
+.form-switch-padding {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+// Form suggestion list
+
+.form-suggestion {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  z-index: 2;
+
+  li {
+    padding: 8px;
+    transition: all .35s ease-in-out;
+    cursor: pointer;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-radius: 5px;
+
+    a{
+      color: #333333;
+      transition: all .35s ease-in-out;
+      text-decoration: none;
+    }
+
+  }
+
+  li:hover {
+    background:  $secondary-element;
+    border-color: $secondary-element;
+
+    a {
+      color: white;
+    }
+
+  }
+
+}
+
+/********************************** Buttons Styles ***************************************/
+
+// Primary button
+
+.primary-button {
+  background: $button-color;
+  color: white;
+  border-radius: 5px;
+  border-color: $button-color;
+  min-height: 50px;
+  padding: 11px 30px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  transition: all 0.5s ease-in-out;
+
+  i {
+    margin-right: 36px;
+    font-size: 1.1rem;
+  }
+
+}
+
+.primary-button:hover, .primary-button:active {
+  color: white;
+  background: lighten($button-color, 15%);
+  border-color: lighten($button-color, 15%);
+}
+
+.primary-button:disabled {
+  background: $button-disabled-color;
+  border-color: $button-disabled-color;
+  color: #a9a9a9;
+}
+
+.primary-button:focus {
+  background: $button-color;
+  border-color: $button-color;
+  color: white;
+}
+
+// Secondary button
+
+.secondary-button {
+  background: white;
+  color: $button-color;
+  border-radius: 5px;
+  border: 2px solid $button-color;
+  min-height: 50px;
+  padding: 12px 30px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  transition: all 0.5s ease-in-out;
+
+  i {
+    margin-right: 36px;
+    font-size: 1.1rem;
+  }
+
+}
+
+.secondary-button:hover, .secondary-button:active {
+  background: white;
+  color: lighten($button-color, 15%);
+  border-color: lighten($button-color, 15%);
+}
+
+.secondary-button:disabled {
+  border-color: $button-disabled-color;
+  color: #a9a9a9;
+  background: white;
+}
+
+.secondary-button:focus {
+  background: white;
+  color: $button-color;
+  border-color: $button-color;
+}
+
+.secondary-button-alert {
+  background: white;
+  color: $alert-element;
+  border-radius: 5px;
+  border: 2px solid $alert-element;
+  min-height: 50px;
+  padding: 12px 30px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  transition: all 0.5s ease-in-out;
+
+  i {
+    margin-right: 36px;
+    font-size: 1.1rem;
+  }
+
+}
+
+.secondary-button-alert:hover, .secondary-button-alert:active {
+  background: white;
+  color: lighten($alert-element, 15%);
+  border-color: lighten($alert-element, 15%);
+}
+
+.secondary-button-alert:focus {
+  background: white;
+  border-color: $alert-element;
+  color: $alert-element;
+}
 
 /********************************** Media ***************************************/
 
-@media (max-width: 320px) {
+@media (max-width: 360px) {
 
-  .default-form-input {
-    max-width: 250px !important;
+  .form-input-default {
+    max-width: 290px !important;
   }
 
-  .has-error {
-    padding-left: 8px !important;
-    padding-right: 8px !important;
-    width: 250px !important;
-  }
-
-  .default-button {
+  .primary-button, .secondary-button, .secondary-button-alert {
     padding-left: 15px !important;
     padding-right: 15px !important;
+
+    i {
+      margin-right: 16px !important;
+    }
+
   }
 
 }
 
-/********************************** /Media ***************************************/
+@media (max-width: 320px) {
+
+  .form-input-default {
+    max-width: 250px !important;
+  }
+
+}
+

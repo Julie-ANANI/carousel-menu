@@ -1,7 +1,8 @@
 <!-- Displaying the spinner for 500ms -->
-<div *ngIf="displayLoading === true" class="wait">
+<div *ngIf="displayLoading" class="wait">
   <div>
     <i class="fas fa-spinner fa-pulse fa-4x"></i>
+    <p class="text">{{ 'COMMON.LOADING' | translate }}</p>
   </div>
 </div>
 
@@ -9,9 +10,7 @@
 <div *ngIf="displayLoading === false" class="body">
 
   <!-- Showing when client is authenticated -->
-  <div *ngIf="_authService.isAuthenticated">
-    <app-header></app-header>
-  </div>
+  <app-header *ngIf="_authService.isAuthenticated"></app-header>
 
   <div class="main">
     <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
@@ -19,10 +18,10 @@
     <router-outlet></router-outlet>
   </div>
 
-  <!-- Showing when client is authenticated -->
-  <div *ngIf="_authService.isAuthenticated">
-    <app-footer></app-footer>
-  </div>
+  <!-- Showing when client is not authenticated -->
+  <app-footer *ngIf="_authService.isAuthenticated"></app-footer>
 
 </div>
+
+
 
