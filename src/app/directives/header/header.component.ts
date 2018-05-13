@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthService } from '../../services/auth/auth.service';
 import { environment } from '../../../environments/environment';
@@ -9,24 +9,24 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./header.component.scss']
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
- // @Input() backOffice: boolean;
-
-  private backValue: boolean; // hold back office value
-
-  private displayPropertyValue: boolean; // hold the value of collapse menu
+  private _backOfficeValue: boolean; // if true then display back office menu options.
+  private _displayMenuOptions: boolean; // on small devices if true then display menu options.
+  private _displayNavbar: boolean; // if true that means user is authenticated so display navbar.
 
   constructor(private _authService: AuthService,
-              private _location: Location) {}
-
-  ngOnInit() {
-    this.displayPropertyValue = false;
-    this.backValue = false;
-    this.backOfficeValue = this._location.path().slice(0, 6) === '/admin';
+              private _location: Location) {
   }
 
-  public logoName(): string {
+  ngOnInit() {
+    this._displayNavbar = this._authService.isAuthenticated;
+    this._displayMenuOptions = false;
+    this._backOfficeValue = false;
+    this._backOfficeValue = this._location.path().slice(0, 6) === '/admin';
+  }
+
+  public getLogo(): string {
     // return `logo-${ environment.domain || 'umi.us'}.png`;
     return environment.logoURL;
   }
@@ -35,25 +35,40 @@ export class HeaderComponent implements OnInit {
     return reqLevel && ( this._authService.adminLevel & reqLevel) === reqLevel;
   }
 
-  get authService (): AuthService {
+  get authService(): AuthService {
     return this._authService;
   }
 
-  set displayValue(value: boolean) {
-    this.displayPropertyValue = value;
-  }
-
-  get displayValue(): boolean {
-    return this.displayPropertyValue;
-  }
-
-  set backOfficeValue(value: boolean) {
-    this.backValue = value;
+  // to toggle the back office value.
+  toggleBackOfficeState() {
+    this._backOfficeValue = !this._backOfficeValue;
   }
 
   get backOfficeValue(): boolean {
-    return this.backValue;
+    return this._backOfficeValue;
   }
 
+  // to toggle the value of menu options display.
+  toggleMenuState() {
+    this._displayMenuOptions = !this._displayMenuOptions;
+  }
+
+  // set the menu display value false when click on link
+  onClickLink() {
+    this._displayMenuOptions = false;
+  }
+
+  get displayMenuOptions(): boolean {
+    return this._displayMenuOptions;
+  }
+
+  get displayNavbar(): boolean {
+    return this._displayNavbar;
+  }
+
+  ngOnDestroy(): void {
+    this._displayNavbar = false;
+    this._backOfficeValue = false;
+  }
 
 }
