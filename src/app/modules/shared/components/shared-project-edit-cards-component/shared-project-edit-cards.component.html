@@ -101,13 +101,14 @@
 
                 <app-shared-upload-zone-photo
                   *ngIf="canEdit"
+                  [uri]="'/innovation/'+project._id+'/innovationCard/'+item.value.id+'/media/image'"
                   (cbFn)="imageUploaded($event)">
                 </app-shared-upload-zone-photo>
 
 
                 <app-shared-upload-zone-video
+                  *ngIf="canEdit"
                   (cbFn)="newOnlineVideoToAdd($event)">
-                  *ngIf="canEdit">
                 </app-shared-upload-zone-video>
               </div>
             </div>
