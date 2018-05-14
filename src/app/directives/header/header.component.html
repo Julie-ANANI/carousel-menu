@@ -22,7 +22,7 @@
             <ul class="navbar-nav">
 
               <!-- Client example -->
-              <li class="navbar-item" *ngIf="!backOfficeValue && authService.adminLevel > 0">
+              <li class="navbar-item" *ngIf="!backOfficeValue">
                 <a
                   [routerLink]="'/sample'"
                   routerLinkActive="active"
