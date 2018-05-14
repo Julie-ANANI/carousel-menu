@@ -1,33 +1,3 @@
-$body-font-color-darker: #333333 !default;
-$body-font-color: #878787 !default;
-$base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
-$primary-color: #3498DB !default;
-
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
-@import "../node_modules/spectre.css/src/spectre.scss";
-@import "../node_modules/spectre.css/src/spectre-icons.scss";
-@import "../node_modules/spectre.css/src/spectre-exp.scss";
-@import "print.scss";
-@import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-regular.css";
-@import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css";
-@import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css";
-@import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
-
-
-body {
-  font-size: 16px;
-  line-height: 1.4;
-  font-family: 'Open Sans', sans-serif;;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-*:focus {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  outline: none !important;
-}
-
 /********************************** Color ***************************************/
 
 // Elements color
@@ -41,7 +11,7 @@ $primary-hover: #246a99;
 $primary-dark: #333333;
 
 // Text color
-$para-color: #5D5D5D;
+$para-color: #484848;
 $title-color: #333333;
 
 // Backgrounds
@@ -52,478 +22,137 @@ $header-background: #4F5D6B;
 $button-color: #ffb300;
 $button-disabled-color: #dbdbdb;
 
+$primary-color: #3498DB !default;
+$hover-color: #246a99 !default;
 
-/* Typographie */
+//Text color
+$hero-title: #333333 !default;
+$hero-subtitle: #878787;
+$hero-description: #A4A4A4;
+$section-title: #0B90C6;
+$section-description: #878787;
 
-h1 {
-  font-weight: 300;
-  font-size: 2.6rem;
-  color: $body-font-color-darker;
-  letter-spacing: 0;
-  //margin-top: 110px;
+//Page Main Container
+
+.main-container {
+  padding-left: 0;
+  padding-right: 0;
 }
 
-h1::after {
-  display: block;
-  content: '';
-  width: 124px;
-  background: $primary-color;
-  height: 3px;
-  margin-top: 30px;
-  margin-bottom:56px;
-  border-radius: 5px;
+// Headings
+
+.heading-1 {
+  color: $primary-dark;
+  font-size: 1.7rem;
+  font-weight: 600;
 }
 
-h2 {
-  font-weight: 400;
-  font-size: 1.5rem;
-  color: $body-font-color-darker;
-  letter-spacing: 0;
-  //margin-top: 60px;
-  margin-bottom: 40px;
+.heading-2 {
+  color: $primary-dark;
+  font-size: 1.35rem;
+  font-weight: 600;
 }
 
-h3, .h3 {
-  font-size: 1.1rem;
-  color: $body-font-color-darker;
-  letter-spacing: 0;
+.heading-3 {
+  color: $primary-dark;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
+// Paragraph
 
-/* Formulaires */
-
-.form-group:not(:last-child) {
-  margin-bottom: 40px;
-}
-
-.form-input {
-  border: 0.05rem solid #E0E0E0;
-  border-radius: 3px;
-  padding: 0.6rem 0.7rem;
-  margin-bottom: 8px;
-  color: $body-font-color-darker;
-}
-
-.btn.btn-xxl {
-  font-size: 1.6rem;
-  height: 4rem;
-  padding: 0.9rem 1rem;
-  width: 80%;
-}
-
-.form-radio {
-  color: $body-font-color-darker;
-}
-
-
-
-/* Barre de tri */
-
-ul.list-filter {
-  text-align: right;
-  margin: 0;
-
-  li {
-    display: inline-block;
-    margin-left: 20px;
-    a {
-      color: #878787;
-    }
-    a:hover {
-      color: $primary-color;
-      text-decoration: none;
-    }
-  }
-}
-
-
-/* On décale les notifications vers le bas pour ne pas qu'elles cachent le menu principal */
-.simple-notification-wrapper.top {
-  top: 80px !important;
-}
-
-.sq-sort-ascent:after {
-  transform: translate(-50%, -25%) rotate(45deg);
-  border: 0.1rem solid currentColor;
-  border-bottom: 0;
-  border-right: 0;
-  content: "";
-  height: .65em;
-  width: .65em;
-}
-
-.sq-sort-descent:after {
-  content: '\25BC';
-  margin-left: 5px;
-  top: 1px;
-  font-size: 12px;
-  position: relative;
-}
-
-/********************************** Simple Notification Styles ***************************************/
-
-.simple-notification {
-  border: 1px solid transparent !important;
-  border-radius: 5px !important;
-  word-wrap: break-word !important;
-}
-
-.simple-notification-wrapper {
-  z-index: 9999 !important;
-}
-
-.simple-notification .sn-title {
-  font-size: 20px !important;
-  line-height: 1.4 !important;
-  padding-right: 0 !important;
-  font-weight: bold;
-  padding-bottom: 8px !important;
-}
-
-.simple-notification .sn-content {
-  font-size: 16px !important;
-  line-height: 1.4 !important;
-  padding-right: 0 !important;
-  padding-bottom: 10px !important;
-}
-
-.simple-notification.success {
-  background: #d4edda !important;
-  color: #155724 !important;
-  border-color: #c3e6cb !important;
-}
-
-.simple-notification.error {
-  background: #f8d7da !important;
-  color: #721c24 !important;
-  border-color: #f5c6cb !important;
-}
-
-/********************************** Text Styles ***************************************/
-
-.text {
-  color: $title-color;
-  padding: 16px 0;
-  margin: 0;
-}
-
-.para {
+.c-para {
   font-size: 0.9rem;
   color: $para-color;
   padding: 16px 0;
   margin: 0;
 }
 
-.text-link, .text-link:active, .text-link:visited {
-  color: $primary-element;
-  cursor: pointer;
-}
+// Button Default Style
 
-.text-link:hover {
-  color: lighten($primary-element, 15%);
-}
-
-.text-link:focus {
-  color: $primary-element;
-}
-
-/********************************** Bot Input Styles ***************************************/
-
-.bot-info {
-  font-size: 1.2rem;
-  padding: 22px 25px;
-  border-radius: 25px;
-  font-weight: 500;
-  color: $primary-element;
-  border: 1px solid $primary-element;
-  background: $primary-element;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  z-index: 2;
-  position: relative;
-  width: 271px;
-  word-wrap: break-word;
-}
-
-/********************************** Form Input Styles ***************************************/
-
-
-// Form label
-
-.form-label-default {
-  color: $meta-element;
+.button {
+  background-color: $primary-color;
+  color: white;
+  border-radius: 5px;
+  border-color: $primary-color;
+  min-height: 50px;
+  padding: 10px 30px;
+  transition: all 0.5s ease;
   font-size: 0.8rem;
-  font-weight: 600;
-  padding-left: 2px;
+  line-height: 1.4rem;
 }
 
-.form-label-active {
-  color: $primary-element;
-  font-size: 0.7rem;
-  font-weight: 600;
+// Padding Remove
+
+.padding-lr-rm {
+  padding-left: 0;
+  padding-right: 0;
 }
 
-.form-label-error {
-  color: $alert-element;
-  font-size: 0.7rem;
-  font-weight: 600;
-}
+/********************************** Hero Styles ***************************************/
 
-// Form input
-
-.form-input-default {
-  border-right: none;
-  border-left: none;
-  border-top: none;
-  border-bottom-color: $meta-element;
-  font-size: 0.7rem;
-  color: #484848;
-  padding: 12px 4px;
-}
-
-.form-input-default:focus {
-  border-color: $primary-element !important;
-}
-
-.form-input-default:disabled {
-  background: #E7E7E7;
-  color: #666666;
-}
-
-.form-input-default.ng-touched.ng-invalid{
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-color: $alert-element !important;
-}
-
-// Form error
-
-.form-error {
-  color: $alert-element;
-  font-size: 0.6rem;
-  padding: 4px 0;
-}
-
-// Form slide button
-
-.form-switch .form-icon::before {
-  background: #97A4B1;
-  border-color: #97A4B1;
-}
-
-.form-switch .form-icon  {
-  border: 1px solid #D1D1D1;
-  border-radius: 11.5px;
-  background-color: #FFFFFF;
-}
-
-.form-switch input:checked + .form-icon::before {
-  background: $validation-element;
-}
-
-.form-switch input:checked + .form-icon  {
-  border-color: rgba(46,204,113,0.45) !important;
-  background: rgba(46,204,113,0.45);
-}
-
-.form-switch input:focus + .form-icon {
-  border-color: #D1D1D1;
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-}
-
-// Form switch
-
-.form-switch {
-  padding-left: 2rem;
-  padding-right: 0.2rem;
-  line-height: 1.4;
-}
-
-.form-switch-padding {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-// Form radio
-
-.form-radio input:checked + .form-icon {
-  border-color: rgba(46,204,113,0.45) !important;
-  background: rgba(46,204,113,0.45);
-}
-
-
-// Form suggestion list
-
-.form-suggestion {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+.hero-light-container {
+  padding: 50px 15px 25px 15px;
   margin: 0;
-  padding: 4px;
-  list-style: none;
-  z-index: 2;
-
-  li {
-    padding: 8px;
-    transition: all .35s ease-in-out;
-    cursor: pointer;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    border-radius: 5px;
-
-    a{
-      color: #333333;
-      transition: all .35s ease-in-out;
-      text-decoration: none;
-    }
-
-  }
-
-  li:hover {
-    background:  $secondary-element;
-    border-color: $secondary-element;
-
-    a {
-      color: white;
-    }
-
-  }
-
 }
 
-/********************************** Buttons Styles ***************************************/
-
-// Primary button
-
-.primary-button {
-  background: $button-color;
-  color: white;
-  border-radius: 5px;
-  border-color: $button-color;
-  min-height: 50px;
-  padding: 11px 30px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  transition: all 0.5s ease-in-out;
-
-  i {
-    margin-right: 36px;
-    font-size: 1.1rem;
-  }
-
+.hero-container {
+  padding: 50px 0;
+  margin: 0;
 }
 
-.primary-button:hover, .primary-button:active {
-  color: white;
-  background: lighten($button-color, 15%);
-  border-color: lighten($button-color, 15%);
+.hero-title {
+  padding: 0 0 25px 0;
+  color: $hero-title;
+  font-weight: 300;
+  font-size: 2.6rem;
+  margin: 0;
 }
 
-.primary-button:disabled {
-  background: $button-disabled-color;
-  border-color: $button-disabled-color;
-  color: #a9a9a9;
+.hero-subtitle {
+  color: $hero-subtitle;
+  font-size:  1.1rem;
+  padding: 16px 0;
+  margin: 0;
 }
 
-.primary-button:focus {
-  background: $button-color;
-  border-color: $button-color;
-  color: white;
+.hero-description {
+  font-size: 0.9rem;
+  color: $hero-description;
+  padding: 16px 0;
+  margin: 0;
 }
 
-// Secondary button
-
-.secondary-button {
-  background: white;
-  color: $button-color;
-  border-radius: 5px;
-  border: 2px solid $button-color;
-  min-height: 50px;
-  padding: 12px 30px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  transition: all 0.5s ease-in-out;
-
-  i {
-    margin-right: 36px;
-    font-size: 1.1rem;
-  }
-
+.hero-hr {
+  width: 125px;
+  border: 2px solid $primary-color;
+  border-radius: .25rem;
+  margin-bottom: 16px;
 }
 
-.secondary-button:hover, .secondary-button:active {
-  background: white;
-  color: lighten($button-color, 15%);
-  border-color: lighten($button-color, 15%);
+/********************************** Section Styles ***************************************/
+
+.section-container {
+  padding: 50px 15px;
+  margin: 0;
 }
 
-.secondary-button:disabled {
-  border-color: $button-disabled-color;
-  color: #a9a9a9;
-  background: white;
+.section-title {
+  padding: 0 0 25px 0;
+  color: $section-title;
+  font-weight: normal;
+  font-size: 1.6rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.secondary-button:focus {
-  background: white;
-  color: $button-color;
-  border-color: $button-color;
+.section-description {
+  padding: 0 0 25px 0;
+  color: $section-description;
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.secondary-button-alert {
-  background: white;
-  color: $alert-element;
-  border-radius: 5px;
-  border: 2px solid $alert-element;
-  min-height: 50px;
-  padding: 12px 30px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  transition: all 0.5s ease-in-out;
-
-  i {
-    margin-right: 36px;
-    font-size: 1.1rem;
-  }
-
-}
-
-.secondary-button-alert:hover, .secondary-button-alert:active {
-  background: white;
-  color: lighten($alert-element, 15%);
-  border-color: lighten($alert-element, 15%);
-}
-
-.secondary-button-alert:focus {
-  background: white;
-  border-color: $alert-element;
-  color: $alert-element;
-}
-
-/********************************** Media ***************************************/
-
-@media (max-width: 360px) {
-
-  .form-input-default {
-    max-width: 290px !important;
-  }
-
-  .primary-button, .secondary-button, .secondary-button-alert {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-
-    i {
-      margin-right: 16px !important;
-    }
-
-  }
-
-}
-
-@media (max-width: 320px) {
-
-  .form-input-default {
-    max-width: 250px !important;
-  }
-
-}
 
 
