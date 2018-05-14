@@ -6,7 +6,7 @@ ARG BUILD_ENV
 RUN apt-get clean && \
     apt-get update
 
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@1.7.4
 RUN npm install -g typings
 
 WORKDIR /var/web

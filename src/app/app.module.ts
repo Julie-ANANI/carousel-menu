@@ -113,6 +113,7 @@ import { SignatureResolver } from './resolvers/signature.resolver';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
   constructor(private _translateService: TranslateService,
               private _cookieService: CookieService) {

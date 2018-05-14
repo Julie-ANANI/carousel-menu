@@ -1,24 +1,27 @@
-<div *ngIf="displayLoading === true" class="wait">
+<!-- Displaying the spinner for 500ms -->
+<div *ngIf="displayLoading" class="wait">
   <div>
     <i class="fas fa-spinner fa-pulse fa-4x"></i>
+    <p class="text">{{ 'COMMON.LOADING' | translate }}</p>
   </div>
 </div>
 
+
 <div *ngIf="displayLoading === false" class="body">
 
-    <div *ngIf="_authService.isAuthenticated">
-      <app-header></app-header>
-    </div>
+  <!-- Showing when client is authenticated -->
+  <app-header *ngIf="_authService.isAuthenticated"></app-header>
 
-    <div class="main">
-      <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
-      <progress class="progress" max="100" *ngIf="displayLoader"></progress>
-      <router-outlet></router-outlet>
-    </div>
+  <div class="main">
+    <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
+    <progress class="progress" max="100" *ngIf="displayLoader"></progress>
+    <router-outlet></router-outlet>
+  </div>
 
-    <div *ngIf="_authService.isAuthenticated">
-      <app-footer></app-footer>
-    </div>
+  <!-- Showing when client is not authenticated -->
+  <app-footer *ngIf="_authService.isAuthenticated"></app-footer>
 
 </div>
+
+
 

@@ -1,19 +1,23 @@
 <div>
-  <strong class="question">{{ question.label[lang] }}</strong>
+  <strong class="question">{{ question.label | multiling:lang }}</strong>
   <div [ngSwitch]="question.controlType" *ngIf="fullAnswer.answers && (fullAnswer.answers[question.identifier] !== undefined || adminMode)" class="answer">
 
     <ng-container *ngSwitchCase="'radio'">
-      <p *ngIf="!adminMode">
-        {{ optionLabel(fullAnswer.answers[question.identifier]) }}
-      </p>
-      <p *ngIf="adminMode">
-        <span
-          *ngFor="let option of question.options"
-          class="c-hand"
-          [ngClass]="{'inactive': option.identifier !== fullAnswer.answers[question.identifier]}"
-          (click)="selectOption($event, option)">
-          {{ optionLabel(option.identifier) }}
-        </span>
+      <p>
+        <ng-container *ngIf="!adminMode">
+          {{ optionLabel(fullAnswer.answers[question.identifier]) }}
+        </ng-container>
+        <ng-container *ngIf="adminMode">
+          <span *ngFor="let option of question.options"
+            class="c-hand"
+            [ngClass]="{'inactive': option.identifier !== fullAnswer.answers[question.identifier]}"
+            (click)="selectOption($event, option)">
+            {{ optionLabel(option.identifier) }}
+          </span>
+        </ng-container>
+        <app-rating-item [adminMode]="adminMode" [prop]="question.identifier"
+                         [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+                         (ratingChange)="updateQuality($event)"></app-rating-item>
       </p>
     </ng-container>
 
@@ -55,15 +59,25 @@
         <li
           *ngIf="(fullAnswer.answers[question.identifier] && fullAnswer.answers[question.identifier][option.identifier] === true) || adminMode"
           [ngClass]="{'inactive': !fullAnswer.answers[question.identifier] || fullAnswer.answers[question.identifier][option.identifier] != true,
-                      'c-hand': adminMode}"
-          (click)="checkOption(option.identifier, $event)">
-          {{ optionLabel(option.identifier) }}
+                      'c-hand': adminMode}">
+          <span (click)="checkOption(option.identifier, $event)">
+            {{optionLabel(option.identifier)}}
+          </span>
+          <app-rating-item *ngIf="fullAnswer.answers[question.identifier] && fullAnswer.answers[question.identifier][option.identifier] == true"
+                           [adminMode]="adminMode" [prop]="question.identifier"
+                           [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+                           (ratingChange)="updateQuality($event)"></app-rating-item>
         </li>
       </ul>
     </ng-container>
 
     <ng-container *ngSwitchCase="'textbox'">
-      <p>{{fullAnswer.answers[question.identifier]}}</p>
+      <p>
+        {{fullAnswer.answers[question.identifier]}}
+        <app-rating-item [adminMode]="adminMode" [prop]="question.identifier"
+                         [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+                         (ratingChange)="updateQuality($event)"></app-rating-item>
+      </p>
     </ng-container>
 
     <ng-container *ngSwitchCase="'textarea'">
@@ -83,7 +97,9 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="'scale'">
-      <p>{{fullAnswer.answers[question.identifier]}}</p>
+      <p>
+        {{fullAnswer.answers[question.identifier]}}
+      </p>
     </ng-container>
 
     <ng-container *ngSwitchCase="'stars'">
