@@ -229,19 +229,15 @@ ul.list-filter {
 
 /********************************** Bot Input Styles ***************************************/
 
-.bot-info {
-  font-size: 1.2rem;
-  padding: 22px 25px;
+.bot-text {
+  padding: 15px;
   border-radius: 25px;
   font-weight: 500;
-  color: $primary-element;
+  color: white;
   border: 1px solid $primary-element;
   background: $primary-element;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  z-index: 2;
-  position: relative;
-  width: 271px;
-  word-wrap: break-word;
+  display: inline-block;
 }
 
 /********************************** Form Input Styles ***************************************/

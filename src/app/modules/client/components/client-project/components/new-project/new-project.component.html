@@ -1,4 +1,59 @@
-<div class="container section-container">
+<div class="section-container">
+  <div class="columns">
+    <div class="column col-11 col-mx-auto">
+
+      <!-- Section 1 -->
+      <div class="section-1 columns col-gapless">
+
+        <!-- Ques 1 and 2 column -->
+        <div class="column col-md-12 col-6 col-mx-auto ques-section">
+
+          <div class="ques-1">
+            <span class="num-rect">1</span><span class="c-para">{{ 'PROJECT_MODULE.NEW_PROJECT.DESCRIPTION.LINE1' | translate }}</span>
+            <div class="form-group label-con">
+              <label class="form-radio">
+                <input type="radio" name="choosenLang">
+                <i class="form-icon"></i> {{ 'COMMON.LANG.EN' | translate }}
+              </label>
+              <label class="form-radio">
+                <input type="radio" name="choosenLang" checked>
+                <i class="form-icon"></i> {{ 'COMMON.LANG.FR' | translate }}
+              </label>
+            </div>
+          </div>
+
+          <div class="ques-2">
+            <span class="num-rect">2</span><span class="c-para">{{ "PROJECT_MODULE.NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</span>
+            <div class="form-group label-con">
+              <input type="text" class="form-input form-input-default" name="name">
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Image column -->
+        <div class="column col-md-12 col-6 col-mx-auto image-section text-center">
+          <span class="bot-text">{{ "PROJECT_MODULE.NEW_PROJECT.BOT" | translate }}</span>
+          <div class="bot-image">
+            <img src="https://res.cloudinary.com/umi/image/upload/v1526304268/app/default-images/create_project_bot.svg" class="img-responsive">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Section 2 -->
+      <div class="ques-3">
+        <span class="num-rect">3</span><span class="c-para">{{ 'PROJECT_MODULE.NEW_PROJECT.INNOVATION_TYPE_LABEL' | translate }}</span>
+        <div class="form-group">
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--<div class="container section-container">
   <div class="columns">
     <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit()" class="column col-10 col-mx-auto">
 
@@ -76,4 +131,4 @@
 
     </form>
   </div>
-</div>
+</div>-->

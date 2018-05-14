@@ -9,5 +9,6 @@ export const NEW_PROJECT = {
   'INNOVATION_TYPE_LABEL': 'Choose your offer',
   'DOWNLOAD': 'Download your project anytime',
   'ANONYMOUS': 'Remain anonymous',
-  'PRIVATE': 'Nothing will be published at this stage'
+  'PRIVATE': 'Nothing will be published at this stage',
+  'BOT': 'Ready to begin a new project?'
 };
