@@ -88,34 +88,34 @@
           </div>
         </div>
 
-      <!-- Section 3 -->
-      <div class="general-info">
-        <div class="columns col-gapless text-center">
-          <div class="column col-sm-12 col-4 col-mx-auto padding-bottom">
-            <div [ngStyle]="{ 'padding-bottom': '20px' }">
-              <i class="fas fa-3x fa-cloud-download-alt"></i>
+        <!-- Section 3 -->
+        <div class="create text-center">
+          <button class="btn primary-button" type="submit" [disabled]="formData.invalid">{{ 'PROJECT_MODULE.NEW_PROJECT.CREATE' | translate }}</button>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="general-info">
+          <div class="columns col-gapless text-center">
+            <div class="column col-sm-12 col-4 col-mx-auto padding-bottom">
+              <div [ngStyle]="{ 'padding-bottom': '20px' }">
+                <i class="fas fa-3x fa-cloud-download-alt"></i>
+              </div>
+              <div class="c-heading-3">{{ 'PROJECT_MODULE.NEW_PROJECT.DOWNLOAD' | translate }}</div>
             </div>
-            <div class="c-heading-3">{{ 'PROJECT_MODULE.NEW_PROJECT.DOWNLOAD' | translate }}</div>
-          </div>
-          <div class="column col-sm-12 col-4 col-mx-auto padding-bottom">
-            <div [ngStyle]="{ 'padding-bottom': '20px' }">
-              <i class="fas fa-3x fa-lock"></i>
+            <div class="column col-sm-12 col-4 col-mx-auto padding-bottom">
+              <div [ngStyle]="{ 'padding-bottom': '20px' }">
+                <i class="fas fa-3x fa-lock"></i>
+              </div>
+              <div class="c-heading-3">{{ 'PROJECT_MODULE.NEW_PROJECT.ANONYMOUS' | translate }}</div>
             </div>
-            <div class="c-heading-3">{{ 'PROJECT_MODULE.NEW_PROJECT.ANONYMOUS' | translate }}</div>
-          </div>
-          <div class="column col-sm-12 col-4 col-mx-auto">
-            <div [ngStyle]="{ 'padding-bottom': '20px' }">
-              <i class="far fa-3x fa-eye-slash"></i>
+            <div class="column col-sm-12 col-4 col-mx-auto">
+              <div [ngStyle]="{ 'padding-bottom': '20px' }">
+                <i class="far fa-3x fa-eye-slash"></i>
+              </div>
+              <div class="c-heading-3">{{ 'PROJECT_MODULE.NEW_PROJECT.PRIVATE' | translate }}</div>
             </div>
-            <div class="c-heading-3">{{ 'PROJECT_MODULE.NEW_PROJECT.PRIVATE' | translate }}</div>
           </div>
         </div>
-      </div>
-
-      <!-- Section 4 -->
-      <div class="create text-center">
-        <button class="btn primary-button" type="submit" [disabled]="formData.invalid">{{ 'PROJECT_MODULE.NEW_PROJECT.CREATE' | translate }}</button>
-      </div>
 
       </form>
     </div>
