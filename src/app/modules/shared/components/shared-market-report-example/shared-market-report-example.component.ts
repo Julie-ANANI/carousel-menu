@@ -3,22 +3,21 @@
  */
 import { Component, OnInit } from '@angular/core';
 
-import { MediaService } from '../../../../services/media/media.service';
+import { Http } from '../../../../services/http';
 
 @Component({
-  selector: 'mr-example',
   templateUrl: 'shared-market-report-example.component.html',
   styleUrls: ['shared-market-report-example.component.scss']
 })
 
 export class SharedMarketReportExampleComponent implements OnInit {
 
-  private _myTemplate: any = "";
+  private _myTemplate = '';
 
-  constructor(private _mediaService: MediaService) {  }
+  constructor(private _http: Http) {  }
 
   ngOnInit() {
-    this._mediaService.sample().subscribe(page=>{
+    this._http.get('/sample' ).subscribe(page => {
       this._myTemplate = page.text();
     });
   }
@@ -27,4 +26,4 @@ export class SharedMarketReportExampleComponent implements OnInit {
     return this._myTemplate;
   }
 
-};
+}

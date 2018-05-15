@@ -14,7 +14,7 @@ export class SharedVideoComponent implements OnInit {
     constructor(private sanitizer: DomSanitizer) {}
 
     ngOnInit() {
-        // that way we avoid loading the iframe with the parent component.
+        // that way we avoid loading the iframe with the parent components.
         this.url = this.sanitizeUrl(this.media.video.embeddableUrl);
     }
 

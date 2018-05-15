@@ -40,7 +40,8 @@
       "environments": {
         "local": "environments/umi/environment.local.ts",
         "dev": "environments/umi/environment.dev.ts",
-        "prod": "environments/umi/environment.prod.ts"
+        "prod": "environments/umi/environment.prod.ts",
+        "demo": "environments/umi/environment.demo.ts"
       }
     },
     {

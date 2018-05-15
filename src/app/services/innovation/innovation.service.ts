@@ -7,7 +7,7 @@ import { Innovation } from '../../models/innovation';
 import { InnovCard } from '../../models/innov-card';
 import { User } from '../../models/user.model';
 import { Video } from '../../models/media';
-import {QuestionReport} from "../../models/market-report";
+import { QuestionReport } from '../../models/market-report';
 
 @Injectable()
 export class InnovationService {
@@ -47,12 +47,6 @@ export class InnovationService {
 
   public changePrincipalCard(innovationId: string, newPrincipalInnovationCardId: string): Observable<any> {
     return this._http.post('/innovation/' + innovationId + '/newPrincipalInnovationCard/' + newPrincipalInnovationCardId)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
-  }
-
-  public addMediaToInnovationCard(innovationId: string, innovationCardId: string, mediaId: string): Observable<Innovation> {
-    return this._http.post('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/' + mediaId)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

@@ -63,10 +63,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     });
   }
 
-  public updateProject() {
-    this.projectChange.emit(this.project);
-  }
-
   public updateCards() {
     this.cardsChange.emit(this.formData.value);
   }
@@ -127,7 +123,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   /**
    * Add an advantage to the invention card
-   * @param event the resulting value sent from the component directive
+   * @param event the resulting value sent from the components directive
    * @param cardIdx this is the index of the innovation card being edited.
    */
   public addAdvantageToInventionCard (event: {value: Array<string>}, cardIdx: number): void {
@@ -148,13 +144,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   public imageUploaded(media: Media): void {
     this.project.innovationCards[this.innovationCardEditingIndex].media.push(media);
-    this._innovationService
-      .addMediaToInnovationCard(this.project._id, this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
-      .first()
-      .subscribe((res: Innovation) => {
-        this.project = res;
-        this.projectChange.emit(this.project);
-      });
+    this.projectChange.emit(this.project);
   }
 
   public newOnlineVideoToAdd (videoInfos: Video): void {

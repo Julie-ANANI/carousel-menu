@@ -23,7 +23,6 @@ import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
     ClientRoutingModule,
     SharedModule,
     TranslateModule.forChild(),
-    SharedModule,
     SharedMarketReportModule
   ],
   declarations: [

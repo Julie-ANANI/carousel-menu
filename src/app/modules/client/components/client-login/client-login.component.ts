@@ -13,17 +13,18 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   templateUrl: './client-login.component.html',
   styleUrls: ['./client-login.component.scss']
 })
+
 export class ClientLoginComponent implements OnInit {
 
   public formData: FormGroup;
-  public passwordMinLength = 5;
 
   constructor(private _authService: AuthService,
               private _userService: UserService,
               private _router: Router,
               private _formBuilder: FormBuilder,
               private _titleService: TranslateTitleService,
-              private _notificationsService: TranslateNotificationsService) { }
+              private _notificationsService: TranslateNotificationsService) {
+  }
 
   ngOnInit(): void {
     this._titleService.setTitle('LOG_IN.TITLE');
@@ -38,6 +39,7 @@ export class ClientLoginComponent implements OnInit {
   onSubmit() {
     if (this.formData.valid) {
       const user = new User(this.formData.value);
+
       this._authService.login(user)
         .first()
         .subscribe(() => {
@@ -66,11 +68,14 @@ export class ClientLoginComponent implements OnInit {
     else {
       this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
+
   }
 
   public linkedInSignIn(event: Event) {
     event.preventDefault();
+
     const domain = environment.domain;
+
     this._authService.linkedinLogin(domain)
       .first()
       .subscribe(
@@ -81,10 +86,12 @@ export class ClientLoginComponent implements OnInit {
           this._notificationsService.error('ERROR.ERROR', error.message);
         }
       );
+
   }
 
   public changePassword(event: Event) {
     event.preventDefault();
+
     if (!this.formData.get('email')!.value) {
       this._notificationsService.error('ERROR.LOGIN.EMPTY_EMAIL', 'ERROR.LOGIN.EMAIL_PLEASE');
     }
@@ -97,21 +104,24 @@ export class ClientLoginComponent implements OnInit {
           this._notificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_NOT_FOUND');
         });
     }
+
   }
 
-  get authService (): AuthService {
+  get authService(): AuthService {
     return this._authService;
   }
 
-  public isMainDomain(): boolean {
+  public checkIsMainDomain(): boolean {
     return environment.domain === 'umi';
   }
 
-  public logoName(): string {
+  // getting the logo of the company
+  public getLogo(): string {
     return environment.logoURL;
   }
 
-  public backgroundImage(): string {
+  // getting the background image of the company
+  public getBackgroundImage(): string {
     return environment.background;
   }
 
