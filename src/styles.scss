@@ -230,14 +230,14 @@ ul.list-filter {
 /********************************** Bot Input Styles ***************************************/
 
 .bot-text {
-  padding: 15px;
-  border-radius: 25px;
-  font-weight: 500;
-  color: white;
-  border: 1px solid $primary-element;
-  background: $primary-element;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  padding: 20px 15px;
+  border-radius: 5px;
+  font-weight: lighter;
+  font-size: 1.35rem;
+  color: $primary-dark;
+  border: 1px solid #DADADA;
   display: inline-block;
+  width: 274px;
 }
 
 /********************************** Form Input Styles ***************************************/
@@ -345,7 +345,7 @@ ul.list-filter {
 
 .form-radio input:checked + .form-icon {
   border-color: rgba(46,204,113,0.45) !important;
-  background: rgba(46,204,113,0.45);
+  background: $validation-element;
 }
 
 
