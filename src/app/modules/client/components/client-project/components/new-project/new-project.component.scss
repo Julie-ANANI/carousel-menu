@@ -98,8 +98,19 @@
 
   }
 
-  .general-info {
+  .create {
     padding-top: 60px;
+
+    .primary-button {
+      font-size: 1.4rem;
+      padding: 30px 44px 34.5px;
+      height: 85.5px;
+    }
+
+  }
+
+  .general-info {
+    padding-top: 80px;
 
     .padding-bottom {
       padding-bottom: 40px;
@@ -111,17 +122,6 @@
       width: 221px;
       display: inline-block;
     }
-  }
-
-  .create {
-    padding-top: 80px;
-
-    .primary-button {
-      font-size: 1.4rem;
-      padding: 30px 44px 34.5px;
-      height: 85.5px;
-    }
-
   }
 
 }
@@ -229,7 +229,7 @@
 
     }
 
-    .general-info {
+    .create {
       padding-top: 41px !important;
     }
 
