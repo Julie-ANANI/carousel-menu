@@ -26,9 +26,6 @@ export class NewProjectComponent implements OnInit {
       type: [null, Validators.required],
     });
 
-    // setting default values
-    this._formData.get('choosenLang').patchValue('fr');
-    this._formData.get('type').patchValue('apps');
   }
 
   public onSubmit() {

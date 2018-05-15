@@ -40,10 +40,17 @@
       animation-name: zoomIn;
       animation-duration: 2s;
       animation-timing-function: ease-in-out;
+      z-index: 2;
+    }
+
+    .bot-trian {
+      padding-left: 150px;
+      animation-name: slideInDown;
+      animation-duration: 2s;
+      animation-timing-function: ease-in-out;
     }
 
     .bot-image {
-      padding-top: 15px;
 
       .img-responsive {
         display: inline-block;
@@ -64,15 +71,22 @@
 
     .disp label {
       margin-bottom: 20px;
+      display: flex;
+      justify-content: flex-end;
     }
 
     label input[type=radio] {
       display: none;
     }
 
+    .circle {
+      margin-top: -15px;
+      margin-left: 17px;
+    }
+
     .offers {
       padding: 36px 18px;
-      border: 5.4px solid #dddddd;
+      border: 4px solid #dddddd;
       border-radius: 3.14px;
       word-wrap: break-word;
       width: 328px;
@@ -91,9 +105,24 @@
 
     }
 
-    label input[type=radio]:checked + .offers{
+    .offers:hover {
+      transition: all 0.35s ease-in-out;
+      border-color: #FFB300;
+    }
+
+    label input[type=radio]:checked + .circle {
+      transition: all 0.35s ease-in-out;
       border-color: #2ECC71;
-      background: rgba(46,204,113,0.45);
+      background: #2ECC71;
+
+      i {
+        color: white;
+      }
+    }
+
+    label input[type=radio]:checked + .circle + .offers {
+      transition: all 0.35s ease-in-out;
+      border-color: #2ECC71;
     }
 
   }
@@ -133,6 +162,18 @@
   }
 
   50% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
 }
@@ -220,7 +261,7 @@
     }
 
     .ques-3 {
-      padding-top: 35px;
+      padding-top: 20px;
 
       .disp label {
         margin-right: 39px;

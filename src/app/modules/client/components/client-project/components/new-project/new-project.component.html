@@ -38,6 +38,8 @@
           <!-- Image column -->
           <div class="column col-md-12 col-6 col-mx-auto image-section text-center">
             <span class="bot-text">{{ "PROJECT_MODULE.NEW_PROJECT.BOT" | translate }}</span>
+            <br>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1526396724/app/default-images/triangle.svg" class="bot-trian">
             <div class="bot-image">
               <img src="https://res.cloudinary.com/umi/image/upload/v1526304268/app/default-images/create_project_bot.svg" class="img-responsive">
             </div>
@@ -52,8 +54,9 @@
             <!-- Apps -->
             <label for="apps">
               <input type="radio" value="apps" name="type" id="apps" formControlName="type">
+              <div class="circle"><i class="fas fa-check"></i></div>
               <div class="offers">
-              <img src="https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-apps.svg">
+                <img src="https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-apps.svg">
                 <ul>
                   <li>{{ 'PROJECT_MODULE.NEW_PROJECT.APPS.LINE1' | translate }}</li>
                   <li>{{ 'PROJECT_MODULE.NEW_PROJECT.APPS.LINE2' | translate }}</li>
@@ -64,6 +67,7 @@
             <!-- Insights -->
             <label for="insights">
               <input type="radio" value="insights" name="type" id="insights" formControlName="type">
+              <div class="circle"><i class="fas fa-check"></i></div>
               <div class="offers">
                 <img src="https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-insights.svg">
                 <ul>
@@ -76,6 +80,7 @@
             <!-- Leads -->
             <label for="leads">
               <input type="radio" value="leads" name="type" id="leads" formControlName="type">
+              <div class="circle"><i class="fas fa-check"></i></div>
               <div class="offers">
                 <img src="https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-leads.svg">
                 <ul>

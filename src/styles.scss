@@ -240,6 +240,25 @@ ul.list-filter {
   width: 274px;
 }
 
+
+.circle {
+  border-radius: 50%;
+  height: 35.89px;
+  width: 35.98px;
+  background-color: transparent;
+  display: inline-block;
+  position: absolute;
+  z-index: 2;
+
+  i {
+    color: transparent;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+  }
+
+}
+
 /********************************** Form Input Styles ***************************************/
 
 // Form label
