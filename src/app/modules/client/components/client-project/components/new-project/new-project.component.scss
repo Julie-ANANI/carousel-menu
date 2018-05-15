@@ -1,4 +1,4 @@
-.section-container {
+.c-section-container {
 
   .ques-section {
     order: 1;
@@ -29,7 +29,7 @@
   }
 
   .label-con {
-    padding-top: 15px;
+    padding-top: 30px;
   }
 
   .image-section {
@@ -37,16 +37,13 @@
     padding-bottom: 50px;
 
     .bot-text {
-      color: #2F274A;
-      border-color: #2F274A;
-      background: #70C6D8;
       animation-name: zoomIn;
-      animation-duration: 5s;
+      animation-duration: 2s;
       animation-timing-function: ease-in-out;
     }
 
     .bot-image {
-      padding-top: 10px;
+      padding-top: 15px;
 
       .img-responsive {
         display: inline-block;
@@ -57,7 +54,74 @@
   }
 
   .ques-3 {
-    padding-top: 50px;
+    padding-top: 45px;
+
+    .disp {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .disp label {
+      margin-bottom: 20px;
+    }
+
+    label input[type=radio] {
+      display: none;
+    }
+
+    .offers {
+      padding: 36px 18px;
+      border: 5.4px solid #dddddd;
+      border-radius: 3.14px;
+      word-wrap: break-word;
+      width: 350px;
+      cursor: pointer;
+      background: #FAFAFA;
+
+      ul {
+        margin-bottom: 0;
+
+        li {
+          font-size: 0.7rem;
+          color: #262831;
+        }
+
+      }
+
+    }
+
+    label input[type=radio]:checked + .offers{
+      border-color: #2ECC71;
+      background: rgba(46,204,113,0.45);
+    }
+
+  }
+
+  .general-info {
+    padding-top: 60px;
+
+    .padding-bottom {
+      padding-bottom: 40px;
+    }
+
+    .c-heading-3 {
+      font-size: 0.9rem;
+      font-weight: normal;
+      width: 221px;
+      display: inline-block;
+    }
+  }
+
+  .create {
+    padding-top: 80px;
+
+    .primary-button {
+      font-size: 1.4rem;
+      padding: 30px 44px 34.5px;
+      height: 85.5px;
+    }
+
   }
 
 }
@@ -75,27 +139,74 @@
 
 /********************************** Media ***************************************/
 
+@media (max-width: 320px) {
+
+  .offers {
+    width: 293px !important;
+  }
+
+  .create {
+
+    .primary-button {
+      padding: 7.5px 18px 8.5px !important;
+    }
+
+  }
+
+}
+
+@media (min-width: 321px) and (max-width: 360px) {
+
+  .offers {
+    width: 295px !important;
+  }
+
+  .create {
+
+    .primary-button {
+      padding: 15px 22px 17px !important;
+    }
+
+  }
+
+}
+
 @media (min-width: 768px) {
 
-  .label-con {
-    padding-left: 58px !important;
+  .disp label {
+    margin-right: 20px;
+  }
+
+  .offers {
+    width: 330px !important;
+  }
+
+  .create {
+
+    .primary-button {
+      padding-left: 89px !important;
+      padding-right: 89px !important;
+    }
+
+  }
+
+  .padding-bottom {
+    padding-bottom: 0 !important;
   }
 
 }
 
 @media (min-width: 840px) {
 
-  .section-container {
-    padding-top: 75px !important;
-    padding-bottom: 75px !important;
+  .c-section-container {
 
     .ques-section {
-      order: 0 !important;
+      order: 0;
 
       .ques-2 {
 
         .form-input-default {
-          width: 500px !important;
+          width: 500px;
         }
 
       }
@@ -103,24 +214,34 @@
     }
 
     .image-section {
-      order: 1 !important;
+      order: 1;
       padding-bottom: unset !important;
 
+    }
+
+    .ques-3 {
+      padding-top: 35px;
+
+      .disp label {
+        margin-right: 39px;
+        margin-bottom: 39px;
+      }
+
+    }
+
+    .general-info {
+      padding-top: 41px !important;
     }
 
   }
 
 }
 
-/*.tip {
-  text-align: center;
-  margin: 50px 0;
+@media (min-width: 1208px) {
+
+  .offers {
+    width: 323px !important;
+  }
+
 }
 
-.language-choice {
-  margin-bottom: 50px;
-}
-
-.btn-xxl {
-  margin-top: 70px;
-}*/

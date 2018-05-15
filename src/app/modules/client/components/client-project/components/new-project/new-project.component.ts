@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../../../../environments/environment';
@@ -10,24 +10,33 @@ import { Innovation } from '../../../../../../models/innovation';
   templateUrl: 'new-project.component.html',
   styleUrls: ['new-project.component.scss']
 })
-export class NewProjectComponent {
+export class NewProjectComponent implements OnInit {
 
-  public formData: FormGroup = this._formBuilder.group({
-    choosenLang: [null, Validators.required],
-    name: [null, Validators.required],
-    type: [null, Validators.required],
-  });
+  private _formData: FormGroup;
 
   constructor(private _router: Router,
               private _formBuilder: FormBuilder,
-              private _innovationService: InnovationService) { }
+              private _innovationService: InnovationService) {
+  }
+
+  ngOnInit(): void {
+    this._formData = this._formBuilder.group({
+      choosenLang: [null, Validators.required],
+      name: [null, Validators.required],
+      type: [null, Validators.required],
+    });
+
+    // setting default values
+    this._formData.get('choosenLang').patchValue('fr');
+    this._formData.get('type').patchValue('apps');
+  }
 
   public onSubmit() {
     const newProject = {
       domain: environment.domain,
-      lang: this.formData.value.choosenLang,
-      name: this.formData.value.name,
-      type: this.formData.value.type
+      lang: this._formData.value.choosenLang,
+      name: this._formData.value.name,
+      type: this._formData.value.type
     };
 
     this._innovationService.create(newProject)
@@ -37,4 +46,9 @@ export class NewProjectComponent {
       });
 
   }
+
+  get formData(): FormGroup {
+    return this._formData;
+  }
+
 }
