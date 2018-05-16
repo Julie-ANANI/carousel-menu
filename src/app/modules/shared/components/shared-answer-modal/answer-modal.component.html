@@ -19,7 +19,7 @@
         <div>
           <h3>
             {{modalAnswer.professional?.firstName}} {{modalAnswer.professional?.lastName}}
-            <app-rating-item [adminMode]="adminMode" [big]="true" [prop]="profile" [rating]="modalAnswer.profileQuality" (ratingChange)="updateProfileQuality($event)"></app-rating-item>
+            <app-rating-item [editMode]="editMode" [big]="true" [prop]="profile" [rating]="modalAnswer.profileQuality" (ratingChange)="updateProfileQuality($event)"></app-rating-item>
           </h3>
           <h6 *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle">
             <i class="far fa-address-card" aria-hidden="true"></i>
@@ -29,7 +29,7 @@
             <i class="far fa-building" aria-hidden="true"></i>
             {{modalAnswer.company?.name || modalAnswer.professional?.company}}
           </h6>
-          <div *ngIf="adminMode" class="popover popover-bottom">
+          <div *ngIf="editMode" class="popover popover-bottom">
             <i class="fas fa-edit"></i>
             <div class="popover-container">
               <label for="jobTitle">Job Title :</label>
@@ -46,7 +46,7 @@
           {{floor(modalAnswer.time_elapsed%60)}} sec.
           <br>
           <strong>IP : </strong>{{modalAnswer.ip}}<br>
-          <shared-tag-item *ngIf="adminMode" [big]="true" [prop]="profile" [tags]="modalAnswer.tags" (tagsChange)="updateTags($event)"></shared-tag-item>
+          <shared-tag-item *ngIf="editMode" [big]="true" [prop]="profile" [tags]="modalAnswer.tags" (tagsChange)="updateTags($event)"></shared-tag-item>
           <label class="form-switch" for="toggleAdmin">
             <input type="checkbox" name="toggleAdmin" id="toggleAdmin"
                    (change)="(editMode = !editMode) && $event.preventDefault()">
@@ -65,7 +65,7 @@
           <div class="d-flex">
             <country-flag [country]="modalAnswer.country" [width]="30" [height]="20"></country-flag>
             {{(modalAnswer.country) ? modalAnswer.country.name : ""}}
-            <div *ngIf="adminMode" class="popover popover-bottom">
+            <div *ngIf="editMode" class="popover popover-bottom">
               <i class="fas fa-edit"></i>
               <div class="popover-container">
                 <div class="input-group">
@@ -83,7 +83,7 @@
     <div class="modal-body">
       <div *ngFor="let question of questions">
         <app-answer-question
-          [adminMode]="editMode"
+          [editMode]="editMode"
           [question]="question"
           [fullAnswer]="modalAnswer"
           (fullAnswerChange)="updateAnswer($event)"

@@ -1,4 +1,4 @@
 <div class="rating-group" [ngClass]="{'big': big}">
-  <i *ngIf="adminMode || rating === 2" class="fa fa-thumbs-up" [ngClass]="{'active': rating === 2}" (click)="thumbsUp($event)"></i>
-  <i *ngIf="adminMode || rating === 0" class="fa fa-thumbs-down" [ngClass]="{'active': rating === 0}" (click)="thumbsDown($event)"></i>
+  <i *ngIf="editMode || rating === 2" class="fa fa-thumbs-up" [ngClass]="{'active': rating === 2}" (click)="thumbsUp($event)"></i>
+  <i *ngIf="editMode || rating === 0" class="fa fa-thumbs-down" [ngClass]="{'active': rating === 0}" (click)="thumbsDown($event)"></i>
 </div>
