@@ -22,6 +22,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+*:hover {
+  transition: all 0.35s ease-in-out !important;
+}
+
 *:focus {
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
@@ -235,23 +239,24 @@ ul.list-filter {
   font-weight: lighter;
   font-size: 1.35rem;
   color: $primary-dark;
-  border: 1px solid #DADADA;
+  border: 1px solid transparent;
   display: inline-block;
   width: 274px;
 }
 
+/********************************** Circle Styles ***************************************/
 
 .circle {
   border-radius: 50%;
   height: 35.89px;
   width: 35.98px;
-  background-color: transparent;
+  background-color: $primary-element;
   display: inline-block;
   position: absolute;
   z-index: 2;
 
   i {
-    color: transparent;
+    color: white;
     display: flex;
     justify-content: center;
     padding-top: 10px;
@@ -413,7 +418,7 @@ ul.list-filter {
   color: white;
   border-radius: 5px;
   border-color: $button-color;
-  min-height: 50px;
+  height: 50px;
   padding: 11px 30px;
   font-size: 0.7rem;
   font-weight: 600;
@@ -426,19 +431,37 @@ ul.list-filter {
 
 }
 
-.primary-button:hover, .primary-button:active {
+.primary-button-large {
+  background: $button-color;
+  color: white;
+  border-radius: 29px;
+  border-color: $button-color;
+  height: 70px;
+  padding: 11px 50px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.5s ease-in-out;
+
+  i {
+    margin-right: 36px;
+    font-size: 1.1rem;
+  }
+
+}
+
+.primary-button:hover, .primary-button-large:hover, .primary-button:active, .primary-button-large:active {
   color: white;
   background: lighten($button-color, 15%);
   border-color: lighten($button-color, 15%);
 }
 
-.primary-button:disabled {
+.primary-button:disabled, .primary-button-large:disabled {
   background: $button-disabled-color;
   border-color: $button-disabled-color;
   color: #a9a9a9;
 }
 
-.primary-button:focus {
+.primary-button:focus, .primary-button-large:focus {
   background: $button-color;
   border-color: $button-color;
   color: white;
@@ -451,7 +474,7 @@ ul.list-filter {
   color: $button-color;
   border-radius: 5px;
   border: 2px solid $button-color;
-  min-height: 50px;
+  height: 50px;
   padding: 12px 30px;
   font-size: 0.7rem;
   font-weight: 600;
@@ -487,7 +510,7 @@ ul.list-filter {
   color: $alert-element;
   border-radius: 5px;
   border: 2px solid $alert-element;
-  min-height: 50px;
+  height: 50px;
   padding: 12px 30px;
   font-size: 0.7rem;
   font-weight: 600;
