@@ -85,6 +85,7 @@
         </ng-container>
         <td>
           <button class="btn btn-action" (click)="editUser[pro._id] = true"><i class="fas fa-edit"></i></button>
+          <button *ngIf="campaign" class="btn btn-action" (click)="openQuizUri(pro, $event)"><i class="fas fa-file-alt"></i></button>
         </td>
       </ng-container>
 
