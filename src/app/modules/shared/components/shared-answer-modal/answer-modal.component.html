@@ -112,7 +112,7 @@
         <i class="fas fa-check"></i> {{'ANSWER_MODAL.VALID_ANSWER' | translate}}
       </button>
       <button class="btn btn-error"
-              *ngIf="adminMode && (modalAnswer.status === 'VALIDATED' && modalAnswer.professional?.email)"
+              *ngIf="(modalAnswer.status === 'VALIDATED' && modalAnswer.professional?.email)"
               (click)="changeStatus($event, 'SUBMITTED')">
         <i class="fas fa-minus"></i> {{'ANSWER_MODAL.INVALID_ANSWER' | translate}}
       </button>
