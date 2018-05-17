@@ -132,10 +132,10 @@
       <div class="content">{{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}</div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-link" (click)="(accountDeletionAsked = false) && deleteAccount($event)">
+      <button class="btn btn-link" (click)="(accountDeletionAsked = false); deleteAccount($event)">
         {{ 'COMMON.DELETE' | translate }}
       </button>
-      <button class="btn btn-primary" (click)="(accountDeletionAsked = false) && $event.preventDefault()">
+      <button class="btn btn-primary" (click)="(accountDeletionAsked = false); $event.preventDefault()">
         {{ 'COMMON.CANCEL' | translate }}
       </button>
     </div>

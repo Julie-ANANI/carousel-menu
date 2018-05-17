@@ -97,6 +97,22 @@ export class SharedEmailBlacklistComponent implements OnInit {
     return this.addressToBL !== "" && !!this.addressToBL.match(EMAIL_REGEXP);
   }
 
+  public reasonFormat(datum: any): string {
+    let result = "";
+    switch(datum.reason || "") {
+      case( "USER_SUPPRESSION" ):
+        result = "Deleted user";
+        break;
+      case("PROFESSIONAL_SUPPRESSION"):
+          result = "Deleted professional";
+        break;
+      case("MANUALLY_ADDED"):
+      default:
+        result = "Added by operator";
+    }
+    return result;
+  }
+
   get data(): Array<any> { return this._dataset.blacklists; };
   get metadata(): any { return this._dataset._metadata; };
   get config(): any { return this._config; };

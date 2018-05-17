@@ -10,7 +10,7 @@ export class RatingItemComponent {
     this._rating = Number.isInteger(value) ? value : 1;
   }
   @Input() big: string;
-  @Input() adminMode: boolean;
+  @Input() editMode: boolean;
   @Output() ratingChange = new EventEmitter <any>();
   @Input() prop: string;
 
@@ -20,7 +20,7 @@ export class RatingItemComponent {
 
   thumbsUp(event: Event) {
     event.preventDefault();
-    if (this.adminMode) {
+    if (this.editMode) {
       if (this._rating === 2) {
         this._rating = 1;
       } else {
@@ -32,7 +32,7 @@ export class RatingItemComponent {
 
   thumbsDown(event: Event) {
     event.preventDefault();
-    if (this.adminMode) {
+    if (this.editMode) {
       if (this._rating === 0) {
         this._rating = 1;
       } else {

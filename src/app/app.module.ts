@@ -25,7 +25,6 @@ import { WindowRefService } from './services/window-ref/window-ref.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { TranslateTitleService } from './services/title/title.service';
 import { UserService } from './services/user/user.service';
-import { MediaService } from './services/media/media.service';
 import { LoaderService } from './services/loader/loader.service';
 import { ChartsModule } from 'ng2-charts';
 import { IndexService } from './services/index/index.service';
@@ -81,7 +80,6 @@ import { SignatureResolver } from './resolvers/signature.resolver';
     UserService,
     InnovationService,
     CampaignService,
-    MediaService,
     LoaderService,
     WindowRefService,
     IndexService,

@@ -17,7 +17,7 @@ export class AnswerQuestionComponent implements OnInit {
 
   @Input() public question: Question;
   @Input() public fullAnswer: Answer;
-  @Input() public adminMode: boolean;
+  @Input() public editMode: boolean;
   @Output() fullAnswerChange = new EventEmitter <any>();
 
   _commenting: boolean;
