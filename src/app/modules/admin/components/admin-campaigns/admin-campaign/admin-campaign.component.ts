@@ -34,35 +34,17 @@ export class AdminCampaignComponent implements OnInit {
 
   public computeStats() {
     if (this._campaign.stats) {
-      for (const key in this._campaign.stats) {
-        switch(key) {
-          case('mail'):
-            this._campaign.stats['nbProsSent'] = this._campaign.stats[key]['totalPros'] || 0;
-            this._campaign.stats['nbProsOpened'] = this._campaign.stats[key]['statuses'] ? this._campaign.stats[key]['statuses']['opened'] || 0 : 0;
-            this._campaign.stats['nbProsClicked'] = this._campaign.stats[key]['statuses'] ? this._campaign.stats[key]['statuses']['clicked'] || 0 : 0;
-            break;
-          case('answers'):
-            this._campaign.stats['nbStartedAnswers'] = this._campaign.stats[key]['statusCount'] ? this._campaign.stats[key]['statusCount']['draft'] || 0 : 0;
-            break;
-          case('campaign'):
-            /*
-             nbProfessionals: 0,
-             nbEmails: 0,
-             nbFirstTierMails: 0,
-             nbSecondTierMails: 0,
-             elapsedTime: 0,
-             nbValidatedResp: 0,
-             nbToValidateResp: 0
-             */
-            this._campaign.stats['nbPros'] = this._campaign.stats[key]['nbProfessionals'] || 0;
-            this._campaign.stats['nbPros90'] = this._campaign.stats[key]['nbFirstTierMails'] || 0;
-            this._campaign.stats['nbValidatedAnswers'] = this._campaign.stats[key]['nbValidatedResp'] || 0;
-            this._campaign.stats['nbSubmittedAnswers'] = this._campaign.stats[key]['nbToValidateResp'] || 0;
-            break;
-          default:
-          //Do nothing for now...
-        }
-      }
+      // Mail
+      this._campaign.stats['nbProsSent'] = this._campaign.stats['mail'] ? this._campaign.stats['mail']['totalPros'] || 0 : 0;
+      this._campaign.stats['nbProsOpened'] = this._campaign.stats['mail'] && this._campaign.stats['mail']['statuses'] ? this._campaign.stats['mail']['statuses']['opened'] || 0 : 0;
+      this._campaign.stats['nbProsClicked'] = this._campaign.stats['mail'] && this._campaign.stats['mail']['statuses'] ? this._campaign.stats['mail']['statuses']['clicked'] || 0 : 0;
+      // Answers
+      this._campaign.stats['nbStartedAnswers'] = this._campaign.stats['answers'] && this._campaign.stats['answers']['statusCount'] ? this._campaign.stats['answers']['statusCount']['draft'] || 0 : 0;
+      // Campaign
+      this._campaign.stats['nbPros'] = this._campaign.stats['campaign'] ? this._campaign.stats['campaign']['nbProfessionals'] || 0 : 0;
+      this._campaign.stats['nbPros90'] = this._campaign.stats['campaign'] ? this._campaign.stats['campaign']['nbFirstTierMails'] || 0 : 0;
+      this._campaign.stats['nbValidatedAnswers'] = this._campaign.stats['campaign'] ? this._campaign.stats['campaign']['nbValidatedResp'] || 0 : 0;
+      this._campaign.stats['nbSubmittedAnswers'] = this._campaign.stats['campaign'] ? this._campaign.stats['campaign']['nbToValidateResp'] || 0 : 0;
     } else {
       this.updateStats();
     }
