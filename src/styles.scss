@@ -14,12 +14,40 @@ $primary-color: #3498DB !default;
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
 
 
+/********************************** Default Styles ***************************************/
+
 body {
   font-size: 16px;
   line-height: 1.4;
   font-family: 'Open Sans', sans-serif;;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.main-container {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.hero-container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin: 0;
+}
+
+.hero-light-container {
+  padding-top: 50px;
+  padding-bottom: 25px;
+  margin: 0;
+}
+
+.section-container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin: 0;
 }
 
 *:hover {
@@ -67,16 +95,6 @@ h1 {
   //margin-top: 110px;
 }
 
-h1::after {
-  display: block;
-  content: '';
-  width: 124px;
-  background: $primary-color;
-  height: 3px;
-  margin-top: 30px;
-  margin-bottom:56px;
-  border-radius: 5px;
-}
 
 h2 {
   font-weight: 400;
@@ -224,6 +242,7 @@ ul.list-filter {
 }
 
 .text-link:hover {
+  text-decoration: underline;
   color: lighten($primary-element, 15%);
 }
 
@@ -242,6 +261,9 @@ ul.list-filter {
   border: 1px solid transparent;
   display: inline-block;
   width: 274px;
+  text-align: center;
+  vertical-align: middle;
+
 }
 
 /********************************** Circle Styles ***************************************/
@@ -250,7 +272,7 @@ ul.list-filter {
   border-radius: 50%;
   height: 35.89px;
   width: 35.98px;
-  background-color: $primary-element;
+  background: $primary-element;
   display: inline-block;
   position: absolute;
   z-index: 2;
@@ -260,6 +282,52 @@ ul.list-filter {
     display: flex;
     justify-content: center;
     padding-top: 10px;
+  }
+
+}
+
+/********************************** Tab Styles ***************************************/
+
+.tabs {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin-top: 0;
+    flex: 1 0 auto;
+    margin-right: 15px;
+
+    a {
+      color: white;
+      font-size: 0.9rem;
+      text-align: center;
+      display: block;
+      text-decoration: none;
+      padding: 15px 12px;
+      background: #747D88;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+
+      i {
+        margin-right: 10px;
+      }
+
+    }
+
+    a:hover {
+      background: $primary-element;
+    }
+
+  }
+
+  li:last-child {
+    margin-right: 0;
   }
 
 }
@@ -290,13 +358,17 @@ ul.list-filter {
 // Form input
 
 .form-input-default {
-  border-right: none;
-  border-left: none;
-  border-top: none;
-  border-bottom-color: $meta-element;
-  font-size: 0.7rem;
+  border: 1px solid $meta-element;
+  font-size: 0.8rem;
   color: #484848;
-  padding: 12px 4px;
+  border-radius: 5px;
+  display: block;
+  width: 100%;
+  outline: none;
+  height: 36px;
+  position: relative;
+  background: white none;
+  padding: 24px 12px;
 }
 
 .form-input-default:focus {
@@ -309,9 +381,6 @@ ul.list-filter {
 }
 
 .form-input-default.ng-touched.ng-invalid{
-  border-top: none;
-  border-left: none;
-  border-right: none;
   border-color: $alert-element !important;
 }
 
@@ -433,20 +502,24 @@ ul.list-filter {
 
 .primary-button-large {
   background: $button-color;
+  display: inline-block;
   color: white;
-  border-radius: 29px;
-  border-color: $button-color;
+  border-radius: 100px;
+  padding-left: 84px;
+  padding-right: 84px;
+  vertical-align: middle;
   height: 70px;
-  padding: 11px 50px;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
   font-size: 1.2rem;
   font-weight: 600;
+  white-space: nowrap;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  line-height: 20px;
   transition: all 0.5s ease-in-out;
-
-  i {
-    margin-right: 36px;
-    font-size: 1.1rem;
-  }
-
 }
 
 .primary-button:hover, .primary-button-large:hover, .primary-button:active, .primary-button-large:active {
@@ -537,11 +610,31 @@ ul.list-filter {
 
 /********************************** Media ***************************************/
 
-@media (max-width: 360px) {
+@media (max-width: 600px) {
 
-  .form-input-default {
-    max-width: 290px !important;
+  .tabs {
+
+    li {
+      flex-basis: 100% !important;
+      margin-left: 0 !important;
+
+      a {
+        border-radius: 5px;
+      }
+
+    }
+
   }
+
+  // Buttons
+  .primary-button-large {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+}
+
+@media (max-width: 360px) {
 
   .primary-button, .secondary-button, .secondary-button-alert {
     padding-left: 15px !important;
@@ -557,8 +650,13 @@ ul.list-filter {
 
 @media (max-width: 320px) {
 
+}
+
+@media (min-width: 768px) {
+
+  //Form input
   .form-input-default {
-    max-width: 250px !important;
+    width: 500px;
   }
 
 }

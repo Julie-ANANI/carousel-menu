@@ -1,5 +1,87 @@
 <app-shared-loader *ngIf="!project"></app-shared-loader>
 
+<div class="main-container" *ngIf="project">
+  <div class="columns">
+    <div class="column col-12">
+
+      <!-- Header -->
+      <div class="hero-light-container">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+
+          <!-- Name -->
+          <h1 class="hero-title">{{ project.name[0] | uppercase }}{{ project.name | slice:1 }}</h1>
+
+          <!-- Info -->
+          <div class="info-container">
+            <img [src]="imgType">
+            <span class="text">
+              {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
+              &nbsp;•&nbsp;
+              {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
+              &nbsp;•&nbsp;
+              {{ project.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }} <span class="text-link">{{ 'COMMON.EDIT' | translate | lowercase}}</span>
+            </span>
+          </div>
+
+          <!-- Tabs -->
+          <div class="tab-container">
+            <ul class="tabs">
+              <li>
+                <a [routerLink]="['setup']" [ngClass]="{'active': currentPage == 'setup'}">
+                  <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage == 'exploration'}">
+                  <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage == 'synthesis'}">
+                  <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="['history']" [ngClass]="{'active': currentPage == 'history'}">
+                  <i class="fas fa-history"></i>{{ 'PROJECT_MODULE.HISTORY_TAB' | translate }}
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Sections -->
+      <div class="column col-xs-12 col-11 col-mx-auto">
+
+        <!-- Setup page -->
+        <div *ngIf="currentPage === 'setup'">
+          <app-client-setup-project [project]="project"></app-client-setup-project>
+        </div>
+
+        <!-- Exploration page -->
+        <div *ngIf="currentPage === 'exploration'">
+          <app-client-exploration-project [project]="project"></app-client-exploration-project>
+        </div>
+
+        <!-- Synthesis page -->
+        <div *ngIf="currentPage === 'synthesis'">
+          <app-shared-market-report [project]="project"></app-shared-market-report>
+        </div>
+
+        <!-- History page -->
+        <div *ngIf="currentPage === 'history'">
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--<app-shared-loader *ngIf="!project"></app-shared-loader>
+
 <div *ngIf="project">
   <div class="project-header">
     <div class="container section-container">
@@ -65,7 +147,7 @@
 
 
 <!-- MODAL : Add collaborators FORM (STEP 1) -->
-<div class="modal" [ngClass]="{'active': displayAddCollaboratorsModal}">
+<!--<div class="modal" [ngClass]="{'active': displayAddCollaboratorsModal}">
   <div class="modal-overlay" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></div>
   <div class="modal-container">
     <div class="modal-header">
@@ -89,7 +171,7 @@
 
 
 <!-- MODAL : Add collaborators (STEP 2) -->
-<div class="modal" [ngClass]="{'active': displayCollaboratorsAddingProcess}">
+<!--<div class="modal" [ngClass]="{'active': displayCollaboratorsAddingProcess}">
   <div class="modal-overlay" (click)="(displayCollaboratorsAddingProcess = false) && $event.preventDefault()"></div>
   <div class="modal-container">
     <div class="modal-header">
@@ -178,7 +260,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
 
 
 

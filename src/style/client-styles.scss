@@ -32,13 +32,6 @@ $hero-description: #A4A4A4;
 $section-title: #0B90C6;
 $section-description: #878787;
 
-//Page Main Container
-
-.main-container {
-  padding-left: 0;
-  padding-right: 0;
-}
-
 // Headings
 
 .c-heading-1 {
@@ -91,21 +84,11 @@ $section-description: #878787;
 
 /********************************** Hero Styles ***************************************/
 
-.hero-light-container {
-  padding: 50px 15px 25px 15px;
-  margin: 0;
-}
-
-.hero-container {
-  padding: 50px 0;
-  margin: 0;
-}
-
 .hero-title {
-  padding: 0 0 25px 0;
+  padding: 0 0 20px 0;
   color: $hero-title;
-  font-weight: 300;
-  font-size: 2.6rem;
+  font-size: 1.7rem;
+  font-weight: 600;
   margin: 0;
 }
 
@@ -132,21 +115,11 @@ $section-description: #878787;
 
 /********************************** Section Styles ***************************************/
 
-.section-container {
-  padding: 50px 15px;
-  margin: 0;
-}
-
-.c-section-container {
-  padding: 50px 8px;
-  margin: 0;
-}
-
 .section-title {
   padding: 0 0 25px 0;
-  color: $section-title;
-  font-weight: normal;
-  font-size: 1.6rem;
+  color: $primary-dark;
+  font-size: 1.35rem;
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 0;
 }

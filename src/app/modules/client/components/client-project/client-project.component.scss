@@ -1,4 +1,49 @@
-$dark-bg: #262831;
+.main-container {
+
+  .hero-light-container {
+    background-color: #4F5D6B;
+    padding-bottom: 0;
+
+    .hero-title {
+      color: white;
+    }
+
+    .info-container {
+
+      img {
+        vertical-align: middle;
+        margin-bottom: 5px;
+      }
+
+      .text {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-left: 15px;
+        color: #97A4B1;
+        font-weight: 600;
+      }
+
+    }
+
+    .tab-container {
+      padding-top: 35px;
+    }
+
+  }
+
+  .active {
+    background: white;
+    color: #333333;
+  }
+
+}
+
+
+/********************************** Media ***************************************/
+
+
+
+/*$dark-bg: #262831;
 
 .project-header {
   background: $dark-bg;
@@ -23,4 +68,4 @@ $dark-bg: #262831;
   ul.step {
     margin-top: 60px;
   }
-}
+}*/
