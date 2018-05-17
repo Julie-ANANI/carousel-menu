@@ -30,4 +30,5 @@ export class AdminCampaignProsComponent implements OnInit {
 
   set config(value: any) { this._config = value; }
   get config() { return this._config; }
+  get campaign() { return this._campaign; }
 }

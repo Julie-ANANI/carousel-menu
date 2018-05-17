@@ -51,12 +51,6 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public addMediaToInnovationCard(innovationId: string, innovationCardId: string, mediaId: string): Observable<Innovation> {
-    return this._http.post('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/' + mediaId)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
-  }
-
   public addNewMediaVideoToInnovationCard(innovationId: string, innovationCardId: string, videoInfos: Video): Observable<Innovation> {
     return this._http.post('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/video', videoInfos)
       .map((res: Response) => res.json())

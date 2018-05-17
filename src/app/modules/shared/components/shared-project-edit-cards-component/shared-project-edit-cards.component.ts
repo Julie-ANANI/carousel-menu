@@ -63,10 +63,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     });
   }
 
-  public updateProject() {
-    this.projectChange.emit(this.project);
-  }
-
   public updateCards() {
     this.cardsChange.emit(this.formData.value);
   }
@@ -148,13 +144,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   public imageUploaded(media: Media): void {
     this.project.innovationCards[this.innovationCardEditingIndex].media.push(media);
-    this._innovationService
-      .addMediaToInnovationCard(this.project._id, this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
-      .first()
-      .subscribe((res: Innovation) => {
-        this.project = res;
-        this.projectChange.emit(this.project);
-      });
+    this.projectChange.emit(this.project);
   }
 
   public newOnlineVideoToAdd (videoInfos: Video): void {

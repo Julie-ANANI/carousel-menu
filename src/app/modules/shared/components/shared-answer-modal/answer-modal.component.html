@@ -12,14 +12,19 @@
               }">
           {{ modalAnswer.status?.toLowerCase() }}
         </span>
-        Réponse <span *ngIf="modalAnswer.status != 'VALIDATED'">non </span>validée
+        <span *ngIf="modalAnswer.status !== 'VALIDATED'">
+          {{'ANSWER_MODAL.UNVALIDATED_ANSWER' | translate}}
+        </span>
+        <span *ngIf="modalAnswer.status === 'VALIDATED'">
+          {{'ANSWER_MODAL.VALIDATED_ANSWER' | translate}}
+        </span>
       </h3>
       <div class="flex">
 
         <div>
           <h3>
             {{modalAnswer.professional?.firstName}} {{modalAnswer.professional?.lastName}}
-            <app-rating-item [adminMode]="adminMode" [big]="true" [prop]="profile" [rating]="modalAnswer.profileQuality" (ratingChange)="updateProfileQuality($event)"></app-rating-item>
+            <app-rating-item [editMode]="editMode" [big]="true" [prop]="profile" [rating]="modalAnswer.profileQuality" (ratingChange)="updateProfileQuality($event)"></app-rating-item>
           </h3>
           <h6 *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle">
             <i class="far fa-address-card" aria-hidden="true"></i>
@@ -29,28 +34,28 @@
             <i class="far fa-building" aria-hidden="true"></i>
             {{modalAnswer.company?.name || modalAnswer.professional?.company}}
           </h6>
-          <div *ngIf="adminMode" class="popover popover-bottom">
+          <div *ngIf="editMode" class="popover popover-bottom">
             <i class="fas fa-edit"></i>
             <div class="popover-container">
-              <label for="jobTitle">Job Title :</label>
+              <label for="jobTitle">{{'ANSWER_MODAL.JOB' | translate}}:</label>
               <input type="text" [(ngModel)]="modalAnswer.job" id="jobTitle" alt="Job Title" placeholder="Job Title"/>
-              <label for="companyName">Company :</label>
+              <label for="companyName">{{'ANSWER_MODAL.COMPANY' | translate}}:</label>
               <input type="text" [(ngModel)]="modalAnswer.company.name" id="companyName" alt="Company Name" placeholder="Company Name"/>
             </div>
           </div>
         </div>
 
         <div *ngIf="adminMode">
-          <strong>Time spent : </strong>
+          <strong>{{'ANSWER_MODAL.TIME_SPENT' | translate}} : </strong>
           {{floor(modalAnswer.time_elapsed/60)}} min.
           {{floor(modalAnswer.time_elapsed%60)}} sec.
           <br>
           <strong>IP : </strong>{{modalAnswer.ip}}<br>
-          <shared-tag-item *ngIf="adminMode" [big]="true" [prop]="profile" [tags]="modalAnswer.tags" (tagsChange)="updateTags($event)"></shared-tag-item>
+          <shared-tag-item *ngIf="editMode" [big]="true" [prop]="profile" [tags]="modalAnswer.tags" (tagsChange)="updateTags($event)"></shared-tag-item>
           <label class="form-switch" for="toggleAdmin">
             <input type="checkbox" name="toggleAdmin" id="toggleAdmin"
                    (change)="(editMode = !editMode) && $event.preventDefault()">
-            <i class="form-icon"></i>Edition  <i class="fas fa-pencil"></i>
+            <i class="form-icon"></i>{{'ANSWER_MODAL.EDIT' | translate}}&nbsp;<i class="fas fa-pencil"></i>
           </label>
         </div>
 
@@ -61,11 +66,11 @@
             {{ 'MARKET_REPORT.POPUP.PROFIL' | translate }}
           </a><br>
           <a href="mailto:{{modalAnswer.professional?.email}}">{{modalAnswer.professional?.email}}</a><br>
-          {{ 'MARKET_REPORT.POPUP.RECEIVED' | translate }} {{modalAnswer.date | date : dateFormat}} à {{modalAnswer.date | date:'HH:mm'}}<br>
+          {{ 'MARKET_REPORT.POPUP.RECEIVED' | translate }} {{modalAnswer.date | date : dateFormat}} - {{modalAnswer.date | date:'HH:mm'}}<br>
           <div class="d-flex">
             <country-flag [country]="modalAnswer.country" [width]="30" [height]="20"></country-flag>
             {{(modalAnswer.country) ? modalAnswer.country.name : ""}}
-            <div *ngIf="adminMode" class="popover popover-bottom">
+            <div *ngIf="editMode" class="popover popover-bottom">
               <i class="fas fa-edit"></i>
               <div class="popover-container">
                 <div class="input-group">
@@ -83,7 +88,7 @@
     <div class="modal-body">
       <div *ngFor="let question of questions">
         <app-answer-question
-          [adminMode]="editMode"
+          [editMode]="editMode"
           [question]="question"
           [fullAnswer]="modalAnswer"
           (fullAnswerChange)="updateAnswer($event)"
@@ -94,22 +99,22 @@
       <button class="btn btn-error"
               *ngIf="adminMode && (modalAnswer.status === 'SUBMITTED' || modalAnswer.status === 'TO_COMPLETE')"
               (click)="changeStatus($event, 'REJECTED')">
-        <i class="fas fa-trash"></i> Rejeter
+        <i class="fas fa-trash"></i> {{'ANSWER_MODAL.REJECT_ANSWER' | translate}}
       </button>
       <button class="btn btn-warning"
               *ngIf="adminMode && (modalAnswer.status === 'SUBMITTED' || modalAnswer.status === 'TO_COMPLETE' || modalAnswer.status === 'REJECTED' || (modalAnswer.status === 'DRAFT' && modalAnswer.professional?.email))"
               (click)="changeStatus($event, 'TO_COMPLETE')">
-        <i class="fas fa-rocket"></i> À compléter
+        <i class="fas fa-rocket"></i> {{'ANSWER_MODAL.UNCOMPLETE_ANSWER' | translate}}
       </button>
       <button class="btn btn-success"
               *ngIf="adminMode && (modalAnswer.status !== 'VALIDATED' && modalAnswer.professional?.email)"
               (click)="changeStatus($event, 'VALIDATED')">
-        <i class="fas fa-check"></i> Valider
+        <i class="fas fa-check"></i> {{'ANSWER_MODAL.VALID_ANSWER' | translate}}
       </button>
       <button class="btn btn-error"
-              *ngIf="adminMode && (modalAnswer.status === 'VALIDATED' && modalAnswer.professional?.email)"
+              *ngIf="(modalAnswer.status === 'VALIDATED' && modalAnswer.professional?.email)"
               (click)="changeStatus($event, 'SUBMITTED')">
-        <i class="fas fa-minus"></i> Invalider
+        <i class="fas fa-minus"></i> {{'ANSWER_MODAL.INVALID_ANSWER' | translate}}
       </button>
       <button *ngIf="adminMode" class="btn btn-primary" (click)="save($event)">{{ 'COMMON.SAVE' | translate }}</button>
       <button class="btn btn-default" (click)="close($event)">{{ 'MARKET_REPORT.POPUP.BACK' | translate }}</button>

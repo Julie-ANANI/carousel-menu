@@ -16,17 +16,16 @@ export class SharedUploadZonePhotoComponent implements OnInit {
   public hasBaseDropZoneOver = false;
   public loading = false;
 
-  @Input() public type: any;
+  @Input() uri: string;
   @Output() public cbFn: EventEmitter <any> = new EventEmitter();
   @ViewChild('fileInput') fileInput: any;
-
 
   constructor(private notificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
     this._filters = Array<FilterFunction>();
     this._uploader = new FileUploader({
-      url: environment.apiUrl + '/media',
+      url: environment.apiUrl + this.uri,
       autoUpload: true,
       filters: this._filters,
       // maxFileSize: 1024 * 1024,

@@ -18,12 +18,14 @@ import { WorldMapComponent } from './components/world-map/world-map.component';
 import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
 import { SharedModule } from '../../shared.module';
 import { SharedAnswerModalModule } from '../shared-answer-modal/answer-modal.module';
+import { EllipsisModule } from '../../../../pipes/ellipsis/ellipsis.module';
 import { CommonService } from '../../../../services/common/common.service';
 
 @NgModule({
   imports: [
     CommonModule,
     ChartsModule,
+    EllipsisModule,
     MultilingModule,
     SharedModule,
     SharedAnswerModalModule,

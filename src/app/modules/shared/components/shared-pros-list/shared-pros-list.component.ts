@@ -1,8 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchService } from '../../../../services/search/search.service';
+import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
+import { environment } from '../../../../../environments/environment';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -20,6 +23,7 @@ export class SharedProsListComponent {
   public editUser: {[propString: string]: boolean} = {};
 
   @Input() public requestId: string;
+  @Input() public campaign: Campaign;
   @Input() set config(value: any) {
     this.loadPros(value);
   }
@@ -30,6 +34,7 @@ export class SharedProsListComponent {
 
   constructor(private _professionalService: ProfessionalsService,
               private _notificationsService: TranslateNotificationsService,
+              private _translateService: TranslateService,
               private _searchService: SearchService) { }
 
   loadPros(config: any): void {
@@ -76,6 +81,13 @@ export class SharedProsListComponent {
       pros: 'all',
       query: config
     });
+  }
+
+  openQuizUri(pro: Professional, event: Event): void {
+    event.preventDefault();
+    const baseUri = environment.quizUrl + '/quiz/' + this.campaign.innovation.quizId + '/' + this.campaign._id;
+    const parameters = '?pro=' + pro._id + '&lang=' + this._translateService.currentLang;
+    window.open(baseUri + parameters);
   }
 
   get nbSelected(): number {

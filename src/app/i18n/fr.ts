@@ -13,6 +13,7 @@ import { SIGN_UP } from '../modules/client/components/client-signup/i18n/fr';
 import { WELCOME } from '../modules/client/components/client-welcome/i18n/fr';
 import { HEADER } from '../directives/header/i18n/fr';
 import { FOOTER } from '../directives/footer/i18n/fr';
+import { ANSWER_MODAL } from '../modules/shared/components/shared-answer-modal/i18n/fr';
 import { EXPORT } from '../modules/shared/components/shared-latex-manager/i18n/fr';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
 import { PAGINATION } from '../modules/shared/components/shared-pagination/i18n/fr';
@@ -31,6 +32,7 @@ export const fr = {
   'MARKET_REPORT': MARKET_REPORT,
   'USERS': ADMIN_USERS,
   'FOOTER': FOOTER,
+  'ANSWER_MODAL': ANSWER_MODAL,
   'DISCOVER': DISCOVER,
   'DISCOVERDESCRIPTION': DISCOVERDESCRIPTION,
   'LOG_IN': LOG_IN,
