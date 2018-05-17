@@ -1,18 +1,31 @@
-/**
- * Created by juandavidcruzgomez on 11/09/2017.
- */
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'clickable-worldmap',
-  templateUrl: 'shared-clickable-worldmap.component.html',
-  styleUrls: ['shared-clickable-worldmap.component.scss']
+  selector: 'app-worldmap',
+  templateUrl: 'shared-worldmap.component.html',
+  styleUrls: ['shared-worldmap.component.scss']
 })
 
-export class SharedClickableWorldmapComponent {
+export class SharedWorldmapComponent {
 
   @Input() public canEdit: boolean;
-  @Output() public notifier = new EventEmitter<any>();
+  @Input() public width = '800px';
+  @Input() public countriesColor: string;
+
+  @Input() set countries(value: Array<string>) {
+    if (Array.isArray(value) && value.length > 0) {
+      value.forEach((country) => {
+        const country_elems = this._elem.nativeElement.getElementsByClassName(country);
+        if (country_elems && country_elems.length) {
+          Array.prototype.forEach.call(country_elems, (country_el: HTMLElement) => {
+            country_el.style.fill = this.countriesColor || 'orange';
+          });
+        } else {
+          console.log(`This country is nowhere to be found in the svg map ${country}`);
+        }
+      });
+    }
+  }
 
   @Input()
   set initialConfiguration(initialConfiguration: any) {
@@ -27,6 +40,8 @@ export class SharedClickableWorldmapComponent {
         };
   }
 
+  @Output() public notifier = new EventEmitter<any>();
+
   private _continents = {
     africa: false,
     americaNord: false,
@@ -38,7 +53,7 @@ export class SharedClickableWorldmapComponent {
   };
 
 
-  constructor() { }
+  constructor(private _elem: ElementRef) { }
 
   /**
    * Checks whether all the continents have been selected

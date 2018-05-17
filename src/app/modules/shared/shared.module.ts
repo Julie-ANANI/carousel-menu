@@ -26,7 +26,6 @@ import { SharedTextZoneComponent } from './components/shared-text-zone/shared-te
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
 import { SharedLatexManagerComponent } from './components/shared-latex-manager/shared-latex-manager.component';
 import { SharedProjectSettingsComponent } from './components/shared-project-settings-component/shared-project-settings.component';
-import { SharedClickableWorldmapComponent } from './components/shared-clickable-worldmap-component/shared-clickable-worldmap.component';
 import { SharedSearchHistoryComponent } from './components/shared-search-history/shared-search-history.component';
 import { SharedSearchProsComponent } from './components/shared-search-pros/shared-search-pros.component';
 import { SharedSearchMailComponent } from './components/shared-search-mail/shared-search-mail.component';
@@ -50,6 +49,9 @@ import { InputListComponent } from '../../directives/input-list/input-list.compo
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
 import { SearchInputComponent } from '../../directives/search-input/search-input.component';
 import { CountryFlagComponent } from '../../directives/country-flag/country-flag.component';
+
+// Internal Modules
+import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
 
 @NgModule({
@@ -64,7 +66,8 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     Ng2FileDropModule,
     Angular2FontawesomeModule,
     Ng2PageScrollModule,
-    Ng2AutoCompleteModule
+    Ng2AutoCompleteModule,
+    SharedWorldmapModule
   ],
   declarations: [
     // Directives
@@ -84,7 +87,6 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedVideoComponent,
     SharedSortComponent,
     SharedProjectSettingsComponent,
-    SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
     SearchInputComponent,
     SharedTagItemComponent,
@@ -130,7 +132,6 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedLatexManagerComponent,
     SharedSortComponent,
     SharedProjectSettingsComponent,
-    SharedClickableWorldmapComponent,
     AutocompleteInputComponent,
     SearchInputComponent,
     SharedTagItemComponent,
