@@ -5,9 +5,10 @@
       <label class="form-label">{{ 'PROJECT_EDIT.TARGETING.GEOGRAPHY' | translate }}</label>
     </div>
     <div class="col-8">
-      <clickable-worldmap (notifier)="continentModificationDrain($event)"
-                          [initialConfiguration]="continentTarget"
-                          [canEdit]="true"></clickable-worldmap>
+      <app-worldmap (updateContinent)="continentModificationDrain($event)"
+                    [initialConfiguration]="continentTarget"
+                    [width]="'400px'"
+                    [canEdit]="true"></app-worldmap>
       <p><a (click)="(displayCountriesToExcludeSection = !displayCountriesToExcludeSection) && $event.preventDefault()" class="c-hand">
         {{ 'PROJECT_EDIT.TARGETING.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
         <i class="icon icon-arrow-right"></i>

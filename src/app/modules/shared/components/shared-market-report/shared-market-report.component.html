@@ -80,7 +80,12 @@
             <div class="bloc">
               <!--======= Carte du monde =======-->
               <div class="map centered" width="684" height="339">
-                <app-world-map [countries]="countries" [color]="'#0B90C6'"></app-world-map>
+                <app-worldmap (updateCountries)="filterByCountries($event)"
+                              [countries]="countries"
+                              [countriesColor]="'#0B90C6'"
+                              [initialConfiguration]="{africa: true, americaNord: true, americaSud: true, asia: true, europe: true, oceania: true, russia: true}"
+                              [width]="'800px'">
+                </app-worldmap>
               </div>
             </div>
 
@@ -95,7 +100,7 @@
 
             <div *ngIf="showListProfessional" class="bloc details prosList">
               <!--======= Liste des pros =======-->
-              <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
+              <div *ngFor="let answer of filteredAnswers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
                 <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
               </div>
             </div>
@@ -108,7 +113,7 @@
             [infographic]="getInfo(question)"
             [innovation]="project"
             [question]="question"
-            [answers]="answers"
+            [answers]="filteredAnswers"
             [showComments]="showDetails"
             [showDetails]="showDetails"
             [readonly]="!adminMode"

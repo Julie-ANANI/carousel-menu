@@ -27,6 +27,7 @@ export class SharedMarketReportComponent implements OnInit {
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
   private _answers: Array<Answer> = [];
+  private _filteredAnswers: Array<Answer> = [];
   private _countries: Array<string> = [];
   private _showListProfessional = false;
   private _showDetails = false;
@@ -82,6 +83,8 @@ export class SharedMarketReportComponent implements OnInit {
             return b.profileQuality - a.profileQuality;
           });
 
+        this._filteredAnswers = this._answers;
+
         this._countries = results.answers
           .reduce((acc, answer) => {
             if (acc.indexOf(answer.country.flag) === -1) {
@@ -129,6 +132,13 @@ export class SharedMarketReportComponent implements OnInit {
     this._modalAnswer = answer;
   }
 
+  public filterByCountries(countriesToShow: Array<string>): void {
+    this._filteredAnswers = this.answers.filter((answer) => {
+      const country = answer.country.flag || answer.professional.country;
+      return countriesToShow.some((c) => c === country);
+    });
+  }
+
   // TODO: remove once conclusions have been copied
   public getInfo(question: Question) {
     if (this._infographics) {
@@ -143,6 +153,7 @@ export class SharedMarketReportComponent implements OnInit {
   }
 
   get answers(): Array<Answer> { return this._answers; }
+  get filteredAnswers(): Array<Answer> { return this._filteredAnswers; }
   get countries(): Array<string> { return this._countries; }
   get cleaned_questions(): Array<Question> { return this._cleaned_questions; }
   get questions(): Array<Question> { return this._questions; }
