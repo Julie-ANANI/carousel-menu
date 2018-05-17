@@ -61,4 +61,14 @@ export class EmailService {
           .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  public getRawMessages(config: any): Observable<any> {
+      return this._http.get('/mail/blacklist', {params: config})
+          .map((res: Response) => {
+              const response = res.json();
+              return response;
+          })
+          .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+
 }
