@@ -40,7 +40,8 @@ export class SharedWorldmapComponent {
         };
   }
 
-  @Output() public notifier = new EventEmitter<any>();
+  @Output() public updateContinent = new EventEmitter<any>();
+  @Output() public updateCountries = new EventEmitter<Array<string>>();
 
   private _continents = {
     africa: false,
@@ -78,7 +79,23 @@ export class SharedWorldmapComponent {
     keys.forEach((continent) => {
       this._continents[continent] = worldCheckboxValue;
     });
-    this.notifier.emit({continents: this._continents});
+    this.updateContinent.emit({continents: this._continents});
+  }
+
+  private getCountriesList(): Array<string> {
+    const countries_list: Array<string> = [];
+    Object.keys(this._continents).forEach((continent) => {
+      if (this._continents[continent]) {
+        const continent_elems = this._elem.nativeElement.getElementsByClassName(continent);
+        Array.prototype.forEach.call(continent_elems, (continent_el: HTMLElement) => {
+          const countries_elems = continent_el.getElementsByTagName('path');
+          Array.prototype.forEach.call(countries_elems, (country_el: HTMLElement) => {
+            countries_list.push(country_el.getAttribute('class'));
+          });
+        });
+      }
+    });
+    return countries_list;
   }
 
   /**
@@ -88,7 +105,8 @@ export class SharedWorldmapComponent {
   public clickOnContinent(event: Event, continent: string): void {
     event.preventDefault();
     this._continents[continent] = !this._continents[continent];
-    this.notifier.emit({continents: this._continents});
+    this.updateContinent.emit({continents: this._continents});
+    this.updateCountries.emit(this.getCountriesList());
   }
 
   /**
