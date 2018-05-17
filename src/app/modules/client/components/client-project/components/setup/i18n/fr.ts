@@ -3,13 +3,14 @@ import { SURVEY } from '../components/survey/i18n/fr';
 import { TARGETING } from '../components/targeting/i18n/fr';
 
 export const SETUP = {
-  'TITLE': 'All infos about your project',
-  'SAVE_PROJECT': 'Save project',
-  'SUBMIT_PROJECT': 'Submit project',
+  'TITLE': 'Toutes les infos sur votre projet',
+  'SAVE_PROJECT': 'Sauvegarder',
+  'SUBMIT_PROJECT': 'Soumettre',
   'PITCH_TAB': 'Pitch',
   'TARGETING_TAB': 'Targeting',
   'SURVEY_TAB': 'Survey',
   'PITCH': PITCH,
   'SURVEY': SURVEY,
-  'TARGETING': TARGETING
+  'TARGETING': TARGETING,
+  'PREVIEW': 'Aperçu'
 };

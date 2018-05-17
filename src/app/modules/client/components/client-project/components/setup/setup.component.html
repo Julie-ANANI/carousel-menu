@@ -1,9 +1,22 @@
 <div class="section-container">
   <div class="columns">
-    <div class="column col-12 col-mx-auto">
+    <div class="column col-xs-12 col-12 col-mx-auto">
 
-      <!-- Heading -->
-      <h1 class="section-title">{{'PROJECT_MODULE.SETUP.TITLE' | translate}}</h1>
+      <div class="columns col-gapless">
+        <!-- Heading -->
+        <div class="column col-md-12 col-6 col-mx-auto">
+          <h1 class="section-heading">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h1>
+        </div>
+        <!-- Buttons -->
+        <div class="column col-md-12 col-6 col-mx-auto function-button">
+          <div class="function-button">
+            <span><button class="secondary-button">{{ 'PROJECT_MODULE.SETUP.PREVIEW' | translate }}</button></span>
+            <span><button class="secondary-button">{{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}</button></span>
+            <span><button class="primary-button">{{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}</button></span>
+          </div>
+        </div>
+      </div>
+
 
     </div>
   </div>

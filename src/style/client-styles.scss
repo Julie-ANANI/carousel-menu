@@ -30,6 +30,7 @@ $hero-title: #333333 !default;
 $hero-subtitle: #878787;
 $hero-description: #A4A4A4;
 $section-title: #0B90C6;
+$section-heading: #0B90C6;
 $section-description: #878787;
 
 // Headings
@@ -52,7 +53,7 @@ $section-description: #878787;
   font-weight: 600;
 }
 
-// Paragraph
+// Paragraph and line
 
 .c-para {
   font-size: 0.9rem;
@@ -117,7 +118,16 @@ $section-description: #878787;
 
 .section-title {
   padding: 0 0 25px 0;
-  color: $primary-dark;
+  color: $section-title;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.section-heading {
+  padding: 0 0 25px 0;
+  color: $section-title;
   font-size: 1.35rem;
   font-weight: 600;
   margin-top: 0;

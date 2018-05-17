@@ -22,6 +22,7 @@ body {
   font-family: 'Open Sans', sans-serif;;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #333333;
 }
 
 .main-container {
@@ -74,6 +75,8 @@ $primary-dark: #333333;
 
 // Text color
 $para-color: #5D5D5D;
+$proj-info: #97A4B1;
+$ques-color: #333333;
 $title-color: #333333;
 
 // Backgrounds
@@ -229,6 +232,19 @@ ul.list-filter {
   margin: 0;
 }
 
+.project-info {
+  color: $proj-info;
+  font-weight: 600;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin: 0;
+}
+
+.ques {
+  font-size: 0.9rem;
+  color: $ques-color;
+}
+
 .para {
   font-size: 0.9rem;
   color: $para-color;
@@ -264,6 +280,20 @@ ul.list-filter {
   text-align: center;
   vertical-align: middle;
 
+}
+
+/********************************** Num Rect Styles ***************************************/
+
+.num-rect {
+  color: white;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-style: normal;
+  padding: 7px 15px;
+  background: #4F5D6B;
+  margin-right: 20px;
+  display: inline-block;
 }
 
 /********************************** Circle Styles ***************************************/
@@ -483,13 +513,22 @@ ul.list-filter {
 // Primary button
 
 .primary-button {
-  background: $button-color;
+  display: inline-block;
+  vertical-align: middle;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  text-align: center;
+  text-decoration: none;
+  line-height: 20px;
+  background: $button-color none;
+  border: 1px solid $button-color;
+  font-size: 0.7rem;
   color: white;
   border-radius: 5px;
-  border-color: $button-color;
   height: 50px;
   padding: 11px 30px;
-  font-size: 0.7rem;
   font-weight: 600;
   transition: all 0.5s ease-in-out;
 
@@ -543,21 +582,24 @@ ul.list-filter {
 // Secondary button
 
 .secondary-button {
-  background: white;
+  display: inline-block;
   color: $button-color;
+  vertical-align: middle;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  text-align: center;
+  text-decoration: none;
+  line-height: 20px;
+  background: white none;
   border-radius: 5px;
   border: 2px solid $button-color;
   height: 50px;
-  padding: 12px 30px;
+  padding: 11px 30px;
   font-size: 0.7rem;
   font-weight: 600;
   transition: all 0.5s ease-in-out;
-
-  i {
-    margin-right: 36px;
-    font-size: 1.1rem;
-  }
-
 }
 
 .secondary-button:hover, .secondary-button:active {
@@ -612,6 +654,8 @@ ul.list-filter {
 
 @media (max-width: 600px) {
 
+  // Tab
+
   .tabs {
 
     li {
@@ -627,6 +671,7 @@ ul.list-filter {
   }
 
   // Buttons
+
   .primary-button-large {
     padding-left: 45px;
     padding-right: 45px;
@@ -635,16 +680,6 @@ ul.list-filter {
 }
 
 @media (max-width: 360px) {
-
-  .primary-button, .secondary-button, .secondary-button-alert {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-
-    i {
-      margin-right: 16px !important;
-    }
-
-  }
 
 }
 

@@ -14,7 +14,7 @@
             <div class="column col-md-12 col-6 col-mx-auto ques-section">
 
               <div class="ques-1">
-                <span class="num-rect">1</span><span class="c-para">{{ 'PROJECT_MODULE.NEW_PROJECT.DESCRIPTION.LINE1' | translate }}</span>
+                <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.NEW_PROJECT.DESCRIPTION.LINE1' | translate }}</span>
                 <div class="form-group label-con">
                   <label class="form-radio">
                     <input type="radio" name="choosenLang" value="fr" formControlName="choosenLang">
@@ -28,7 +28,7 @@
               </div>
 
               <div class="ques-2">
-                <span class="num-rect">2</span><span class="c-para">{{ "PROJECT_MODULE.NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</span>
+                <span class="num-rect">2</span><span class="ques">{{ "PROJECT_MODULE.NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</span>
                 <div class="form-group label-con">
                   <input type="text" class="form-input-default" name="name" formControlName="name">
                   <div class="form-error" *ngIf="formData.get('name').hasError('required') && formData.get('name').touched">
@@ -53,7 +53,7 @@
 
           <!-- Section 2 -->
           <div class="ques-3">
-            <span class="num-rect">3</span><span class="c-para">{{ 'PROJECT_MODULE.NEW_PROJECT.INNOVATION_TYPE_LABEL' | translate }}</span>
+            <span class="num-rect">3</span><span class="ques">{{ 'PROJECT_MODULE.NEW_PROJECT.INNOVATION_TYPE_LABEL' | translate }}</span>
             <div class="form-group label-con disp">
               <!-- Apps -->
               <label for="apps">

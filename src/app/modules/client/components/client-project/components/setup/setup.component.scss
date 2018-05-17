@@ -1,2 +1,46 @@
-@import "../../client-project.component";
+.section-container {
+
+  .section-heading {
+    color: #333333;
+  }
+
+  .function-button {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    span {
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+  }
+
+}
+
+/********************************** Media ***************************************/
+
+
+@media (min-width: 600px) and (max-width: 839px) {
+
+}
+
+@media (min-width: 768px) {
+
+  .function-button {
+    justify-content: flex-end !important;
+
+    span {
+      margin-bottom: 0 !important;
+      margin-right: 0 !important;
+      margin-left: 10px;
+    }
+
+  }
+
+}
+
+@media (min-width: 840px) {
+
+}
 
