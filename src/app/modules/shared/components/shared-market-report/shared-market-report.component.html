@@ -52,6 +52,16 @@
             </a>
           </li>
         </ul>
+        <div *ngIf="objectKeys(filters).length">
+          <span>{{'MARKET_REPORT.FILTERS' | translate}}</span>
+          <ul>
+            <li *ngFor="let fKey of objectKeys(filters)">
+              <button class="btn btn-secondary btn-sm" (click)="deleteFilter(fKey, $event)">
+                {{filters[fKey].questionTitle | multiling:lang}} <i class="icon icon-cross"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -83,7 +93,7 @@
                 <app-worldmap (updateCountries)="filterByCountries($event)"
                               [countries]="countries"
                               [countriesColor]="'#0B90C6'"
-                              [initialConfiguration]="{africa: true, americaNord: true, americaSud: true, asia: true, europe: true, oceania: true, russia: true}"
+                              [initialConfiguration]="mapInitialConfiguration"
                               [width]="'800px'">
                 </app-worldmap>
               </div>

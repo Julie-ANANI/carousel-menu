@@ -2,6 +2,7 @@ export const MARKET_REPORT = {
   'TITLE': 'Exploring market potential',
   'COLLAPSE': 'Collapse',
   'EXPAND': 'Expand',
+  'FILTERS': 'Filters',
   'SYNTHESIS_FRAME': 'from professionals',
   'PIE_CHART': 'of responses are favorable',
   'COMMENTS': 'comments',

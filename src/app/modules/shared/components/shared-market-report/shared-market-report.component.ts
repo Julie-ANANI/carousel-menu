@@ -7,6 +7,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { Answer } from '../../../../models/answer';
+import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
 import { Innovation } from '../../../../models/innovation';
@@ -27,13 +28,16 @@ export class SharedMarketReportComponent implements OnInit {
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
   private _answers: Array<Answer> = [];
+  private _filters: {[questionId: string]: Filter} = {};
   private _filteredAnswers: Array<Answer> = [];
   private _countries: Array<string> = [];
   private _showListProfessional = false;
   private _showDetails = false;
-  private _calculating = false;
   private _innoid: string;
+
   public today: Number;
+  public objectKeys = Object.keys;
+  public mapInitialConfiguration: {[continent: string]: boolean};
 
   private _infographics: any; // TODO remove infographics once conclusions have been migrated to Innovation
 
@@ -49,6 +53,7 @@ export class SharedMarketReportComponent implements OnInit {
   ngOnInit() {
     this.today = Date.now();
     this._innoid = this.project._id;
+    this.resetMap();
 
     this._innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
       this._infographics = synthesis.infographics;
@@ -132,11 +137,52 @@ export class SharedMarketReportComponent implements OnInit {
     this._modalAnswer = answer;
   }
 
-  public filterByCountries(countriesToShow: Array<string>): void {
-    this._filteredAnswers = this.answers.filter((answer) => {
-      const country = answer.country.flag || answer.professional.country;
-      return countriesToShow.some((c) => c === country);
+  public filterAnswers(): void {
+    let filteredAnswers = this._answers;
+    Object.keys(this._filters).forEach((filterKey) => {
+      const filter = this._filters[filterKey];
+      if (filterKey === 'worldmap') {
+        filteredAnswers = filteredAnswers.filter((answer) => {
+          const country = answer.country.flag || answer.professional.country;
+          return filter.value.some((c: string) => c === country);
+        });
+      }
     });
+    this._filteredAnswers = filteredAnswers;
+  }
+
+  public resetMap() {
+    this.mapInitialConfiguration = {
+      africa: true,
+      americaNord: true,
+      americaSud: true,
+      asia: true,
+      europe: true,
+      oceania: true,
+      russia: true
+    };
+  }
+
+  public filterByCountries(event: {countries: Array<string>, allChecked: boolean}): void {
+    if (!event.allChecked) {
+      this._filters['worldmap'] = {
+        status: 'COUNTRIES',
+        value: event.countries,
+        questionTitle: {en: 'worldmap', fr: 'mappemonde'}
+      };
+    } else {
+      delete this._filters['worldmap'];
+    }
+    this.filterAnswers();
+  }
+
+  public deleteFilter(key: string, event: Event) {
+    event.preventDefault();
+    delete this._filters[key];
+    if (key === 'worldmap') {
+      this.resetMap();
+    }
+    this.filterAnswers();
   }
 
   // TODO: remove once conclusions have been copied
@@ -153,6 +199,7 @@ export class SharedMarketReportComponent implements OnInit {
   }
 
   get answers(): Array<Answer> { return this._answers; }
+  get filters() { return this._filters; }
   get filteredAnswers(): Array<Answer> { return this._filteredAnswers; }
   get countries(): Array<string> { return this._countries; }
   get cleaned_questions(): Array<Question> { return this._cleaned_questions; }
@@ -162,8 +209,6 @@ export class SharedMarketReportComponent implements OnInit {
   get showListProfessional(): boolean { return this._showListProfessional; }
   set showListProfessional(val: boolean) { this._showListProfessional = val; }
   get innoid(): string { return this._innoid; }
-  set calculating (value: boolean) { this._calculating = value; }
-  get calculating (): boolean { return this._calculating; }
   get showDetails (): boolean { return this._showDetails; }
   get infographics () { return this._infographics; }
   get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }

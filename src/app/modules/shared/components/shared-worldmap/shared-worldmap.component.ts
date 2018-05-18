@@ -41,7 +41,7 @@ export class SharedWorldmapComponent {
   }
 
   @Output() public updateContinent = new EventEmitter<any>();
-  @Output() public updateCountries = new EventEmitter<Array<string>>();
+  @Output() public updateCountries = new EventEmitter<{countries: Array<string>, allChecked: boolean}>();
 
   private _continents = {
     africa: false,
@@ -106,7 +106,7 @@ export class SharedWorldmapComponent {
     event.preventDefault();
     this._continents[continent] = !this._continents[continent];
     this.updateContinent.emit({continents: this._continents});
-    this.updateCountries.emit(this.getCountriesList());
+    this.updateCountries.emit({countries: this.getCountriesList(), allChecked: this.areAllContinentChecked()});
   }
 
   /**
