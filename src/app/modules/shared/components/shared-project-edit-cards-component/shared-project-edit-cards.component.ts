@@ -37,7 +37,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._buildForm();
+
     this.formData.patchValue(this.project);
+
+    console.log(this.formData.value);
 
     if (!this.canEdit) {
       this.formData.disable();

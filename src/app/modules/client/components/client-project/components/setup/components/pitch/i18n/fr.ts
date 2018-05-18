@@ -1,5 +1,6 @@
 export const PITCH = {
   'DESCRIPTION': {
+    'UPDATE_LANGUAGE': 'Actualiser la langue du projet',
     'LANGUAGE_CHOICE': 'Je décris mon projet en',
     'SET_AS_MAIN_LANG': 'Devenir langue principale',
     'MAIN_LANG': 'Langue principale',
