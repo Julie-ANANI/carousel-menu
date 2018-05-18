@@ -16,10 +16,10 @@ export const PROJECT_MODULE = {
     'TO_RESEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application et ont peut-être déjà reçu une invitation de vôtre part. Pour ' +
     'les/l\'ajouter comme collabora-teur-trice-s à ce projet, vous devez leur/lui envoyer une invitation en cliquant sur le bouton'
   },
-  'SETUP_TAB': 'Setup Project',
-  'EXPLORATION_TAB': 'Market Exploration',
-  'SYNTHESIS_TAB': 'Synthesis',
-  'HISTORY_TAB': 'History',
+  'SETUP_TAB': 'Projet d\'installation',
+  'EXPLORATION_TAB': 'Exploration du marché',
+  'SYNTHESIS_TAB': 'Synthèse',
+  'HISTORY_TAB': 'Histoire',
   'EXPLORATION': EXPLORATION,
   'HISTORY': HISTORY,
   'NEW_PROJECT': NEW_PROJECT,

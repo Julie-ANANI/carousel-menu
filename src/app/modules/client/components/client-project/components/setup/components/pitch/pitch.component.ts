@@ -6,6 +6,7 @@ import { Innovation } from '../../../../../../../../models/innovation';
   templateUrl: 'pitch.component.html',
   styleUrls: ['pitch.component.scss']
 })
+
 export class PitchComponent {
 
   @Input() project: Innovation;

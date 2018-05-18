@@ -10,6 +10,7 @@ import { Innovation } from '../../../../../../models/innovation';
   templateUrl: 'new-project.component.html',
   styleUrls: ['new-project.component.scss']
 })
+
 export class NewProjectComponent implements OnInit {
 
   private _formData: FormGroup;

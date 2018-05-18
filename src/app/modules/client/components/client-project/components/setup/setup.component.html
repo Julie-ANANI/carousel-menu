@@ -2,6 +2,7 @@
   <div class="columns">
     <div class="column col-xs-12 col-12 col-mx-auto">
 
+      <!-- Row 1 -->
       <div class="columns col-gapless">
         <!-- Heading -->
         <div class="column col-md-12 col-6 col-mx-auto">
@@ -10,11 +11,64 @@
         <!-- Buttons -->
         <div class="column col-md-12 col-6 col-mx-auto function-button">
           <div class="function-button">
-            <span><button class="secondary-button">{{ 'PROJECT_MODULE.SETUP.PREVIEW' | translate }}</button></span>
-            <span><button class="secondary-button">{{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}</button></span>
-            <span><button class="primary-button">{{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}</button></span>
+            <span>
+              <button class="primary-button ghost-button">
+                {{ 'PROJECT_MODULE.SETUP.PREVIEW' | translate }}
+              </button>
+            </span>
+            <span>
+              <button class="primary-button ghost-button" (click)="saveProject($event)">
+                {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
+              </button>
+            </span>
+            <span>
+              <button class="primary-button">
+                {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
+              </button>
+            </span>
           </div>
         </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="column col-12 col-mx-auto tabs-container">
+        <ul class="tabs">
+          <li>
+            <a [ngClass]="{'active': currentTab == 'pitch'}" (click)="currentTab = 'pitch'">
+              <i class="fas fa-check"></i>{{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
+            </a>
+          </li>
+          <li>
+            <a [ngClass]="{'active': currentTab == 'targeting'}" (click)="currentTab = 'targeting'">
+              <i class="fas fa-check"></i>{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
+            </a>
+          </li>
+          <li>
+            <a [ngClass]="{'active': currentTab == 'survey'}" (click)="currentTab = 'survey'">
+              <i class="fas fa-check"></i>{{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="column col-12 col-mx-auto">
+
+        <!-- Pitch -->
+        <div *ngIf="currentTab === 'pitch'">
+          <app-project-pitch [project]="project" (updateInnovation)="updateInnovation($event)"></app-project-pitch>
+        </div>
+
+        <!-- Targeting -->
+        <div *ngIf="currentTab === 'targeting'">
+          <app-project-targeting [project]="project" (newSettings)="updateSettings($event)"></app-project-targeting>
+        </div>
+
+        <!-- Survey -->
+        <div *ngIf="currentTab === 'survey'">
+          <app-project-survey [project]="project"></app-project-survey>
+        </div>
+
       </div>
 
 

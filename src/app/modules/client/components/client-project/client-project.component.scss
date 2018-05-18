@@ -23,6 +23,11 @@
 
     .tab-container {
       padding-top: 35px;
+
+      .tabs li a {
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+      }
     }
 
   }
@@ -36,6 +41,27 @@
 
 
 /********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  .tabs li a {
+    border-radius: 5px;
+  }
+
+}
+
+@media (min-width: 840px) {
+
+  .tabs li {
+    margin-right: 15px;
+  }
+
+  .tabs li:last-child {
+    margin-right: 0;
+  }
+
+}
+
 
 
 

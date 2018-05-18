@@ -313,7 +313,6 @@ ul.list-filter {
     justify-content: center;
     padding-top: 10px;
   }
-
 }
 
 /********************************** Tab Styles ***************************************/
@@ -329,7 +328,6 @@ ul.list-filter {
   li {
     margin-top: 0;
     flex: 1 0 auto;
-    margin-right: 15px;
 
     a {
       color: white;
@@ -339,25 +337,23 @@ ul.list-filter {
       text-decoration: none;
       padding: 15px 12px;
       background: #747D88;
-      border-top-right-radius: 5px;
-      border-top-left-radius: 5px;
       font-weight: 600;
       cursor: pointer;
 
       i {
         margin-right: 10px;
       }
-
     }
 
     a:hover {
       background: $primary-element;
     }
 
-  }
+    a:active {
+      color: white;
+      background: $primary-element;
+    }
 
-  li:last-child {
-    margin-right: 0;
   }
 
 }
@@ -493,7 +489,6 @@ ul.list-filter {
       transition: all .35s ease-in-out;
       text-decoration: none;
     }
-
   }
 
   li:hover {
@@ -503,9 +498,7 @@ ul.list-filter {
     a {
       color: white;
     }
-
   }
-
 }
 
 /********************************** Buttons Styles ***************************************/
@@ -536,85 +529,57 @@ ul.list-filter {
     margin-right: 36px;
     font-size: 1.1rem;
   }
-
 }
 
-.primary-button-large {
-  background: $button-color;
-  display: inline-block;
-  color: white;
-  border-radius: 100px;
-  padding-left: 84px;
-  padding-right: 84px;
-  vertical-align: middle;
-  height: 70px;
-  outline: none;
-  cursor: pointer;
-  user-select: none;
-  font-size: 1.2rem;
-  font-weight: 600;
-  white-space: nowrap;
-  border: none;
-  text-align: center;
-  text-decoration: none;
-  line-height: 20px;
-  transition: all 0.5s ease-in-out;
-}
-
-.primary-button:hover, .primary-button-large:hover, .primary-button:active, .primary-button-large:active {
+.primary-button:hover, .primary-button-large:active {
   color: white;
   background: lighten($button-color, 15%);
   border-color: lighten($button-color, 15%);
 }
 
-.primary-button:disabled, .primary-button-large:disabled {
+.primary-button:disabled {
   background: $button-disabled-color;
   border-color: $button-disabled-color;
   color: #a9a9a9;
 }
 
-.primary-button:focus, .primary-button-large:focus {
+.primary-button:focus {
   background: $button-color;
   border-color: $button-color;
   color: white;
 }
 
-// Secondary button
+// Large button
 
-.secondary-button {
-  display: inline-block;
-  color: $button-color;
-  vertical-align: middle;
-  outline: none;
-  cursor: pointer;
-  user-select: none;
-  white-space: nowrap;
-  text-align: center;
-  text-decoration: none;
-  line-height: 20px;
-  background: white none;
-  border-radius: 5px;
-  border: 2px solid $button-color;
-  height: 50px;
-  padding: 11px 30px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  transition: all 0.5s ease-in-out;
+.large-button {
+  border-radius: 100px;
+  padding-left: 84px;
+  padding-right: 84px;
+  height: 70px;
+  font-size: 1.2rem;
 }
 
-.secondary-button:hover, .secondary-button:active {
-  background: white;
+// Secondary or ghost button
+
+.ghost-button {
+  color: $button-color;
+  background: white none;
+  border-width: 2px;
+}
+
+.ghost-button:hover, .ghost-button:active {
+  background: #FFF9EB;
   color: lighten($button-color, 15%);
   border-color: lighten($button-color, 15%);
 }
 
-.secondary-button:disabled {
+.ghost-button:disabled {
   border-color: $button-disabled-color;
   color: #a9a9a9;
   background: white;
 }
 
-.secondary-button:focus {
+.ghost-button:focus {
   background: white;
   color: $button-color;
   border-color: $button-color;
@@ -635,7 +600,6 @@ ul.list-filter {
     margin-right: 36px;
     font-size: 1.1rem;
   }
-
 }
 
 .secondary-button-alert:hover, .secondary-button-alert:active {
@@ -655,24 +619,14 @@ ul.list-filter {
 @media (max-width: 600px) {
 
   // Tab
-
-  .tabs {
-
-    li {
+  .tabs li {
       flex-basis: 100% !important;
       margin-left: 0 !important;
-
-      a {
-        border-radius: 5px;
-      }
-
-    }
-
   }
 
   // Buttons
 
-  .primary-button-large {
+  .large-button {
     padding-left: 45px;
     padding-right: 45px;
   }

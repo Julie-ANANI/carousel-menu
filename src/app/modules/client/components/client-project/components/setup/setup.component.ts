@@ -9,6 +9,7 @@ import { InnovationSettings } from '../../../../../../models/innov-settings';
   templateUrl: 'setup.component.html',
   styleUrls: ['setup.component.scss']
 })
+
 export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
@@ -16,7 +17,8 @@ export class SetupProjectComponent implements OnInit {
   private _currentTab: string;
 
   constructor(private innovationService: InnovationService,
-              private notificationService: TranslateNotificationsService) {}
+              private notificationService: TranslateNotificationsService) {
+  }
 
   ngOnInit() {
     this._currentTab = 'pitch';
@@ -32,6 +34,7 @@ export class SetupProjectComponent implements OnInit {
 
   public saveProject(event: Event): void {
     event.preventDefault();
+
     this.innovationService
       .save(this.project._id, this.project)
       .first()
@@ -41,9 +44,15 @@ export class SetupProjectComponent implements OnInit {
       }, err => {
         this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
+
   }
 
-  get currentTab() { return this._currentTab; }
-  set currentTab(value: string) { this._currentTab = value; }
+  get currentTab() {
+    return this._currentTab;
+  }
+
+  set currentTab(value: string) {
+    this._currentTab = value;
+  }
 
 }
