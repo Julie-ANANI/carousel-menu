@@ -28,6 +28,7 @@
         border-top-right-radius: 5px;
         border-top-left-radius: 5px;
       }
+
     }
 
   }
@@ -50,7 +51,7 @@
 
 }
 
-@media (min-width: 840px) {
+@media (min-width: 768px) {
 
   .tabs li {
     margin-right: 15px;
@@ -61,6 +62,7 @@
   }
 
 }
+
 
 
 

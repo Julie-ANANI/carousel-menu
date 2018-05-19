@@ -13,7 +13,6 @@ import { InnovationSettings } from '../../../../../../models/innov-settings';
 export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
-
   private _currentTab: string;
 
   constructor(private innovationService: InnovationService,

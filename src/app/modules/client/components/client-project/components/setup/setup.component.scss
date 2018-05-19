@@ -13,31 +13,31 @@
       margin-right: 10px;
       margin-bottom: 10px;
     }
+
   }
 
   .tabs-container {
-    padding-top: 50px;
+    padding-top: 25px;
+    padding-bottom: 25px;
 
     .tabs li a {
       background-color: white;
       color: #4F5D6B;
       border-bottom: 3px solid #4F5D6B;
-
       i {
         color: transparent;
       }
     }
 
     .tabs li a:hover {
-      background-color: #FFF9EB;
       border-bottom-color: #FFB300;
     }
+
   }
 
   .active {
     color: #FFB300 !important;
     border-bottom-color: #FFB300 !important;
-
     i {
       transition: all 0.35s ease-in-out;
       color: #2ECC71 !important;
@@ -58,6 +58,7 @@
       margin-right: 0 !important;
       margin-left: 10px;
     }
+
   }
 
 }

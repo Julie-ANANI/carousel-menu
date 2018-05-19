@@ -77,7 +77,7 @@ $primary-dark: #333333;
 $para-color: #5D5D5D;
 $proj-info: #97A4B1;
 $ques-color: #333333;
-$title-color: #333333;
+$text-color: #333333;
 
 // Backgrounds
 $page-background: #333333;
@@ -227,7 +227,7 @@ ul.list-filter {
 /********************************** Text Styles ***************************************/
 
 .text {
-  color: $title-color;
+  color: $text-color;
   padding: 16px 0;
   margin: 0;
 }
@@ -306,7 +306,6 @@ ul.list-filter {
   display: inline-block;
   position: absolute;
   z-index: 2;
-
   i {
     color: white;
     display: flex;
@@ -324,11 +323,9 @@ ul.list-filter {
   flex-direction: row;
   margin: 0;
   padding: 0;
-
   li {
     margin-top: 0;
     flex: 1 0 auto;
-
     a {
       color: white;
       font-size: 0.9rem;
@@ -339,23 +336,18 @@ ul.list-filter {
       background: #747D88;
       font-weight: 600;
       cursor: pointer;
-
       i {
         margin-right: 10px;
       }
     }
-
     a:hover {
       background: $primary-element;
     }
-
     a:active {
       color: white;
       background: $primary-element;
     }
-
   }
-
 }
 
 /********************************** Form Input Styles ***************************************/
@@ -475,7 +467,6 @@ ul.list-filter {
   padding: 4px;
   list-style: none;
   z-index: 2;
-
   li {
     padding: 8px;
     transition: all .35s ease-in-out;
@@ -483,18 +474,15 @@ ul.list-filter {
     margin-top: 2px;
     margin-bottom: 2px;
     border-radius: 5px;
-
     a{
       color: #333333;
       transition: all .35s ease-in-out;
       text-decoration: none;
     }
   }
-
   li:hover {
     background:  $secondary-element;
     border-color: $secondary-element;
-
     a {
       color: white;
     }
@@ -524,14 +512,13 @@ ul.list-filter {
   padding: 11px 30px;
   font-weight: 600;
   transition: all 0.5s ease-in-out;
-
   i {
     margin-right: 36px;
     font-size: 1.1rem;
   }
 }
 
-.primary-button:hover, .primary-button-large:active {
+.primary-button:hover, .primary-button:active {
   color: white;
   background: lighten($button-color, 15%);
   border-color: lighten($button-color, 15%);
@@ -595,7 +582,6 @@ ul.list-filter {
   font-size: 0.7rem;
   font-weight: 600;
   transition: all 0.5s ease-in-out;
-
   i {
     margin-right: 36px;
     font-size: 1.1rem;
@@ -624,8 +610,7 @@ ul.list-filter {
       margin-left: 0 !important;
   }
 
-  // Buttons
-
+  // Button
   .large-button {
     padding-left: 45px;
     padding-right: 45px;
@@ -633,17 +618,9 @@ ul.list-filter {
 
 }
 
-@media (max-width: 360px) {
-
-}
-
-@media (max-width: 320px) {
-
-}
-
 @media (min-width: 768px) {
 
-  //Form input
+  // Form input
   .form-input-default {
     width: 500px;
   }

@@ -1,31 +1,33 @@
-<!--<div class="section-container" id="pitchCard" *ngIf="project">
+<div class="section-container" id="pitchCard" *ngIf="project">
   <div class="columns">
     <div class="column col-xs-12 col-12 col-mx-auto">
+
       <form novalidate [formGroup]="formData">
 
-      <!-- Row 1 -->
-   <!--   <div class="lang-container">
-        <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.UPDATE_LANGUAGE' | translate }}</span>
-        <div class="form-group pd-label">
-          <label class="form-radio">
-            <input type="radio">
-            <i class="form-icon"></i> {{ 'COMMON.LANG.FR' | translate }}
-            <span *ngIf=""></span>
-          </label>
-          <label class="form-radio">
-            <input type="radio">
-            <i class="form-icon"></i> {{ 'COMMON.LANG.EN' | translate }}
-          </label>
+        <!-- Row 1 -->
+        <div class="lang-container">
+          <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.UPDATE_LANGUAGE' | translate }}</span>
+          <div class="form-group pd-label">
+            <label class="form-radio">
+              <input type="radio" value="fr" name="choosenLang" formControlName="choosenLang">
+              <i class="form-icon"></i>{{ 'COMMON.LANG.FR' | translate }}
+            </label>
+            <label class="form-radio">
+              <input type="radio" value="en" name="choosenLang" formControlName="choosenLang">
+              <i class="form-icon"></i>{{ 'COMMON.LANG.EN' | translate }}
+            </label>
+          </div>
         </div>
-      </div>
 
 
       </form>
+
     </div>
   </div>
-</div>-->
+</div>
 
-<div *ngIf="project">
+<!--<div *ngIf="project">
+{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MAIN_LANG' | translateWithSpecificLanguage:formData.get('lang').value }}
   <form novalidate [formGroup]="formData" class="form-horizontal">
     <div class="columns">
       <div class="column col-4">

@@ -16,6 +16,7 @@ import 'rxjs/add/operator/debounceTime';
   templateUrl: 'shared-project-edit-cards.component.html',
   styleUrls: ['shared-project-edit-cards.component.scss']
 })
+
 export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Input() project: Innovation;
@@ -23,7 +24,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Output() cardsChange = new EventEmitter<any>();
   public formData: FormGroup;
   private ngUnsubscribe: Subject<any> = new Subject();
-
   /*
    * Gestion de l'affichage
    */
@@ -33,18 +33,21 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
               private _authService: AuthService,
               private _domSanitizer: DomSanitizer,
               private _translateService: TranslateService,
-              private _formBuilder: FormBuilder) {}
+              private _formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
     this._buildForm();
 
     this.formData.patchValue(this.project);
 
-    console.log(this.formData.value);
+    // checking the innovation values and setting them accordingly
+    this.setForm(this.project);
 
     if (!this.canEdit) {
       this.formData.disable();
     }
+
     for (const innovationCard of this.project.innovationCards) {
       this._addInnovationCardWithData(innovationCard);
     }
@@ -55,6 +58,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       .subscribe(_ => {
         this.updateCards();
       });
+
   }
 
 
@@ -62,8 +66,14 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.formData = this._formBuilder.group({
       patented: [undefined, Validators.required],
       projectStatus: [undefined, Validators.required],
+      choosenLang: [null, Validators.required],
       innovationCards: this._formBuilder.array([])
     });
+  }
+
+  public setForm(project: Innovation) {
+    // innovation default language
+    this.formData.get('choosenLang').setValue(this.project.innovationCards[0].lang);
   }
 
   public updateCards() {
