@@ -1,4 +1,51 @@
-.main-container {
+#login {
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding-top: 50px;
+  padding-bottom: 50px;
+
+  .logo-container {
+    padding-bottom: 50px;
+  }
+
+  .sign-in-container {
+    background-color: white;
+    border-radius: 5px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    .bot-image {
+      padding-bottom: 50px;
+    }
+
+    .bot-text {
+      background-color: #EF8065;
+      color: white;
+      width: 150px;
+      animation-name: fadeIn;
+      animation-duration: 3s;
+      animation-timing-function: ease-in-out;
+      z-index: 2;
+    }
+
+    .bot-trian {
+      padding-left: 100px;
+      animation-name: fadeIn;
+      animation-duration: 3s;
+      animation-timing-function: ease-in-out;
+      margin-top: -1px;
+    }
+
+  }
+
+}
+
+/* .main-container {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
@@ -102,6 +149,28 @@
 
 /********************************** Media ***************************************/
 
+@media (min-width: 768px) {
+
+  #login {
+    min-height: 100vh !important;
+
+    .bot-image {
+      padding-bottom: 0 !important;
+    }
+
+  }
+
+}
+
+@media (min-width: 841px) {
+
+  .sign-in-container {
+    width: 800px !important;
+  }
+
+}
+
+/*
 @media (max-width: 360px) {
 
   .or-container {
@@ -161,3 +230,4 @@
 
 }
 
+*/

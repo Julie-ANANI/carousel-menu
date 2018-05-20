@@ -1,47 +1,85 @@
-<div class="container main-container" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
+<div class="main-container" id="login" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
+  <div class="columns">
+    <div class="column col-12 col-mx-auto text-center">
+      <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData">
+
+        <!-- Logo -->
+        <div class="logo-container">
+          <a href="https://www.umi.us"><img src="{{ getLogo() }}" alt="UMI" height="35px"></a>
+        </div>
+
+        <!-- Sign in container -->
+        <div class="column col-xs-12 col-sm-11 col-md-11 col-mx-auto sign-in-container">
+          <div class="columns">
+
+            <!-- Bot image -->
+            <div class="column col-sm-12 col-5 col-mx-auto">
+              <span class="bot-text">{{ 'LOG_IN.HELLO' | translate }}</span>
+              <br>
+              <img src="https://res.cloudinary.com/umi/image/upload/v1526840593/app/default-images/login-trian.svg"
+                   class="bot-trian">
+              <div class="bot-image">
+                <img src="https://res.cloudinary.com/umi/image/upload/v1526839959/app/default-images/login-bot.svg" alt="Bot">
+              </div>
+            </div>
+
+            <!-- Information -->
+            <div class="column col-sm-12 col-7 col-mx-auto">
+              sqsq
+            </div>
+
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--<div class="container main-container" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
   <div class="columns">
     <div class="column col-12 col-mx-auto">
 
-      <!-- Logo -->
+      <!-- Logo
       <div class="logo-container text-center">
         <a href="https://www.umi.us">
           <img src="{{ getLogo() }}" alt="UMI" height="35px" class="logo">
         </a>
       </div>
 
-      <!-- Main container -->
+      <!-- Main container
       <div class="column col-xs-11 col-sm-11 col-11 col-mx-auto sign-in-container">
         <div class="columns text-center">
 
-          <!-- Bot -->
+          <!-- Bot
           <div class="column col-sm-12 col-5 col-mx-auto text-center">
             <div class="bot-container">
               <img src="https://res.cloudinary.com/umi/image/upload/v1524752357/app/default-images/login-bot.svg" alt="Bot">
             </div>
           </div>
 
-          <!-- Information -->
+          <!-- Information
           <div class="column col-sm-12 col-7 col-mx-auto">
 
-            <!-- LinkedIn -->
+            <!-- LinkedIn
             <div class="button-container" *ngIf="checkIsMainDomain()">
               <a class="btn primary-button" (click)="linkedInSignIn($event)">
                 <span><i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}</span>
               </a>
             </div>
 
-            <!-- Or -->
+            <!-- Or
             <div class="or-container text-center">
               <span> {{ 'COMMON.OR' | translate }} </span>
             </div>
 
-            <!-- Form -->
+            <!-- Form
             <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData">
 
-              <!-- User details -->
+              <!-- User details
               <div class="credential-container">
 
-                <!-- Email -->
+                <!-- Email
                 <div class="form-group">
                   <input
                     class="form-input form-input-default"
@@ -58,7 +96,7 @@
                   </span>
                 </div>
 
-                <!-- Password -->
+                <!-- Password
                 <div class="form-group">
                   <input
                     class="form-input form-input-default"
@@ -74,7 +112,7 @@
 
               </div>
 
-              <!-- Login button and forget password -->
+              <!-- Login button and forget password
               <div class="submit-container">
                 <div class="login-button">
                   <button class="btn primary-button" type="submit" [disabled]="formData.invalid">
@@ -84,7 +122,7 @@
                   <a class="text-link" (click)="changePassword($event)">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
               </div>
 
-              <!-- Sign up -->
+              <!-- Sign up
               <div class="create-container">
                 <p class="text">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}
                   <a class="text-link" routerLink="/signup">{{ 'COMMON.SIGN_UP' | translate }}</a>
@@ -100,4 +138,4 @@
 
     </div>
   </div>
-</div>
+</div>-->
