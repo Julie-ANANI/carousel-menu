@@ -4,7 +4,7 @@
     <p class="flex-container pro-header">
 
       <country-flag *ngIf="answer.country?.flag" [country]="answer.country.flag"></country-flag>
-      &nbsp; {{(answer.professional?.firstName + '' + answer.professional?.lastName) | ellipsis:30}}
+      &nbsp; {{(answer.professional?.firstName + ' ' + answer.professional?.lastName) | ellipsis:30}}
 
       <ng-container *ngIf="answer.job || answer.professional?.jobTitle">
         - {{(answer.job || answer.professional?.jobTitle) | ellipsis:22}}
