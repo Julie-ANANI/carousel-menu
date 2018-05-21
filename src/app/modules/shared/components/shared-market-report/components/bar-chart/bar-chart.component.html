@@ -11,16 +11,22 @@
 
   <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i">
 
-    <div class="horizontal-bar" (click)="showAnswers[i] = !showAnswers[i]">
-      <div class="bar-number" [ngStyle]="{'background': barData.color}">{{i+1}}</div>
-      <div class="bar-fill" [style.width]="barData.relativePercentage"></div>
-      <div class="bar-name">{{barData.label | multiling:lang}}</div>
-      <div class="bar-stats tooltip" [ngSwitch]="question.controlType"
-           [attr.data-tooltip]="barData.count + ' ' + ('MARKET_REPORT.ANSWERS' | translate)">
-        <span *ngSwitchCase="'radio'">{{barData.absolutePercentage}}</span>
-        <span *ngSwitchCase="'checkbox'">{{barData.count}} {{'MARKET_REPORT.ANSWERS' | translate}}</span>
-        <i class="fas" aria-hidden="true" [ngClass]="showAnswers[i] ? 'fa-angle-up' : 'fa-angle-down'"></i>
+    <div class="flex-container">
+      <div class="horizontal-bar" (click)="showAnswers[i] = !showAnswers[i]">
+        <div class="bar-number" [ngStyle]="{'background': barData.color}">{{i+1}}</div>
+        <div class="bar-fill" [style.width]="barData.relativePercentage"></div>
+        <div class="bar-name">{{barData.label | multiling:lang}}</div>
+        <div class="bar-stats tooltip" [ngSwitch]="question.controlType"
+             [attr.data-tooltip]="barData.count + ' ' + ('MARKET_REPORT.ANSWERS' | translate)">
+          <span *ngSwitchCase="'radio'">{{barData.absolutePercentage}}</span>
+          <span *ngSwitchCase="'checkbox'">{{barData.count}} {{'MARKET_REPORT.ANSWERS' | translate}}</span>
+          <i class="fas" aria-hidden="true" [ngClass]="showAnswers[i] ? 'fa-angle-up' : 'fa-angle-down'"></i>
+        </div>
       </div>
+      &nbsp;
+      <button class="btn btn-action circle" (click)="filterAnswer(barData, $event)">
+        <i class="fas fa-filter"></i>
+      </button>
     </div>
 
     <!--======= textarea =======-->

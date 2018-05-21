@@ -127,6 +127,7 @@
             [showComments]="showDetails"
             [showDetails]="showDetails"
             [readonly]="!adminMode"
+            (addFilter)="addFilter($event)"
             (modalAnswerChange)="seeAnswer($event)">
           </app-question-section>
         </section>

@@ -141,11 +141,25 @@ export class SharedMarketReportComponent implements OnInit {
     let filteredAnswers = this._answers;
     Object.keys(this._filters).forEach((filterKey) => {
       const filter = this._filters[filterKey];
-      if (filterKey === 'worldmap') {
-        filteredAnswers = filteredAnswers.filter((answer) => {
-          const country = answer.country.flag || answer.professional.country;
-          return filter.value.some((c: string) => c === country);
-        });
+      switch (filter.status) {
+        case 'COUNTRIES':
+          filteredAnswers = filteredAnswers.filter((answer) => {
+            const country = answer.country.flag || answer.professional.country;
+            return filter.value.some((c: string) => c === country);
+          });
+          break;
+        case 'CHECKBOX':
+          filteredAnswers = filteredAnswers.filter((answer) => {
+            return answer.answers[filter.questionId] && answer.answers[filter.questionId][filter.value];
+          });
+          break;
+        case 'RADIO':
+          filteredAnswers = filteredAnswers.filter((answer) => {
+            return answer.answers[filter.questionId] === filter.value;
+          });
+          break;
+        default:
+          console.log(`Unknown filter type: ${filter.status}.`);
       }
     });
     this._filteredAnswers = filteredAnswers;
@@ -173,6 +187,11 @@ export class SharedMarketReportComponent implements OnInit {
     } else {
       delete this._filters['worldmap'];
     }
+    this.filterAnswers();
+  }
+
+  public addFilter(event: Filter) {
+    this._filters[event.questionId] = event;
     this.filterAnswers();
   }
 

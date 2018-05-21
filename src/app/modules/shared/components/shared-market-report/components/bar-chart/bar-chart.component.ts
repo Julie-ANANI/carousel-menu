@@ -4,6 +4,7 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';
+import { Filter } from '../../models/filter';
 import { Innovation } from '../../../../../../models/innovation';
 import { Multiling } from '../../../../../../models/multiling';
 import { Question } from '../../../../../../models/question';
@@ -15,7 +16,8 @@ export interface BarData {
   relativePercentage: string,
   color: string,
   count: number,
-  positive: boolean
+  positive: boolean,
+  identifier: string
 }
 
 @Component({
@@ -36,6 +38,7 @@ export class BarChartComponent implements OnInit {
   @Input() public stats: any;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
+  @Output() addFilter = new EventEmitter<Filter>();
 
   private _answers: Array<Answer>;
   private _barsData: Array<BarData> = [];
@@ -66,7 +69,8 @@ export class BarChartComponent implements OnInit {
           relativePercentage: '0%',
           color: q.color,
           count: answers.length,
-          positive: q.positive
+          positive: q.positive,
+          identifier: q.identifier
         }
       });
 
@@ -100,6 +104,16 @@ export class BarChartComponent implements OnInit {
         this._pieChart = pieChartData;
       }
     }
+  }
+
+  public filterAnswer(data: BarData, event: Event) {
+    event.preventDefault();
+    this.addFilter.emit({
+      status: this.question.controlType === 'radio' ? 'RADIO' : 'CHECKBOX',
+      questionId: this.question.identifier,
+      questionTitle: this.question.title,
+      value: data.identifier
+    });
   }
 
   public seeAnswer(event: Answer) {
