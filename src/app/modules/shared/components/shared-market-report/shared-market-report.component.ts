@@ -142,15 +142,27 @@ export class SharedMarketReportComponent implements OnInit {
     Object.keys(this._filters).forEach((filterKey) => {
       const filter = this._filters[filterKey];
       switch (filter.status) {
+        case 'CHECKBOX':
+          filteredAnswers = filteredAnswers.filter((answer) => {
+            return answer.answers[filter.questionId] && answer.answers[filter.questionId][filter.value];
+          });
+          break;
+        case 'CLEARBIT':
+          filteredAnswers = filteredAnswers.filter((answer) => {
+            return Array.isArray(answer.answers[filter.questionId]) &&
+              answer.answers[filter.questionId].some((item: any) => item.name === filter.value);
+          });
+          break;
         case 'COUNTRIES':
           filteredAnswers = filteredAnswers.filter((answer) => {
             const country = answer.country.flag || answer.professional.country;
             return filter.value.some((c: string) => c === country);
           });
           break;
-        case 'CHECKBOX':
+        case 'LIST':
           filteredAnswers = filteredAnswers.filter((answer) => {
-            return answer.answers[filter.questionId] && answer.answers[filter.questionId][filter.value];
+            return Array.isArray(answer.answers[filter.questionId]) &&
+              answer.answers[filter.questionId].some((item: any) => item.text === filter.value);
           });
           break;
         case 'RADIO':

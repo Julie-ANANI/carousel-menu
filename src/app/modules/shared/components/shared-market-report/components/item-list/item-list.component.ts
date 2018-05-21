@@ -3,8 +3,18 @@
  */
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../../../models/answer';
+import { Filter } from '../../models/filter';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
+
+export interface Item {
+  rating: number,
+  count: number,
+  value: string,
+  domain: string,
+  logo: string,
+  answers: Array<Answer>
+}
 
 @Component({
   selector: 'app-item-list',
@@ -26,12 +36,13 @@ export class ItemListComponent implements OnInit {
     this._details = value;
   }
   @Input() public stats: any;
+  @Output() addFilter = new EventEmitter<Filter>();
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Output() updateNumberOfItems = new EventEmitter<number>();
 
   private _answers: Array<Answer>;
   private _details: boolean;
-  private _listItems: Array<{rating: number, count: number, value: string, domain: string, logo: string, answers: Array<Answer>}>;
+  private _listItems: Array<Item>;
   private _maxToShow = 6;
 
   constructor() { }
@@ -92,6 +103,16 @@ export class ItemListComponent implements OnInit {
 
       this.updateNumberOfItems.emit(this._listItems.length);
     }
+  }
+
+  public filterAnswer(item: Item, event: Event) {
+    event.preventDefault();
+    this.addFilter.emit({
+      status: this.question.controlType === 'clearbit' ? 'CLEARBIT' : 'LIST',
+      questionId: this.question.identifier,
+      questionTitle: this.question.title,
+      value: item.value
+    });
   }
 
   public seeAnswer(event: Answer) {
