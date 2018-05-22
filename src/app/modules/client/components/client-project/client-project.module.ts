@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '../../../shared/shared.module';
 import { SharedAnswerModalModule } from '../../../shared/components/shared-answer-modal/answer-modal.module';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
-import { SharedWorldMapModule } from '../../../shared/components/world-map/world-map.module';
+import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { ClientProjectComponent } from './client-project.component';
 import { ExplorationProjectComponent } from './components/exploration/exploration.component';
 import { HistoryProjectComponent } from './components/history/history.component';
@@ -23,7 +23,7 @@ import { TargetingComponent } from './components/setup/components/targeting/targ
     SharedModule,
     SharedAnswerModalModule,
     SharedMarketReportModule,
-    SharedWorldMapModule,
+    SharedWorldmapModule,
     TranslateModule.forChild()
   ],
   declarations: [

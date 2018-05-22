@@ -52,6 +52,16 @@
             </a>
           </li>
         </ul>
+        <div *ngIf="objectKeys(filters).length">
+          <span>{{'MARKET_REPORT.FILTERS' | translate}}</span>
+          <ul>
+            <li *ngFor="let fKey of objectKeys(filters)">
+              <button class="btn btn-secondary btn-sm" (click)="deleteFilter(fKey, $event)">
+                {{filters[fKey].questionTitle | multiling:lang}} <i class="icon icon-cross"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -80,7 +90,12 @@
             <div class="bloc">
               <!--======= Carte du monde =======-->
               <div class="map centered" width="684" height="339">
-                <app-world-map [countries]="countries" [color]="'#0B90C6'"></app-world-map>
+                <app-worldmap (updateCountries)="filterByCountries($event)"
+                              [countries]="countries"
+                              [countriesColor]="'#0B90C6'"
+                              [initialConfiguration]="mapInitialConfiguration"
+                              [width]="'800px'">
+                </app-worldmap>
               </div>
             </div>
 
@@ -95,7 +110,7 @@
 
             <div *ngIf="showListProfessional" class="bloc details prosList">
               <!--======= Liste des pros =======-->
-              <div *ngFor="let answer of answers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
+              <div *ngFor="let answer of filteredAnswers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
                 <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
               </div>
             </div>
@@ -108,10 +123,11 @@
             [infographic]="getInfo(question)"
             [innovation]="project"
             [question]="question"
-            [answers]="answers"
+            [answers]="filteredAnswers"
             [showComments]="showDetails"
             [showDetails]="showDetails"
             [readonly]="!adminMode"
+            (addFilter)="addFilter($event)"
             (modalAnswerChange)="seeAnswer($event)">
           </app-question-section>
         </section>

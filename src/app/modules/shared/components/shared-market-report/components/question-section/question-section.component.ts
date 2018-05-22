@@ -4,8 +4,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';
+import { Filter } from '../../models/filter';
 import { Question } from '../../../../../../models/question';
-import {Innovation} from '../../../../../../models/innovation';
+import { Innovation } from '../../../../../../models/innovation';
 
 @Component({
   selector: 'app-question-section',
@@ -37,6 +38,7 @@ export class QuestionSectionComponent implements OnInit {
   @Input() set readonly(value: boolean) {
     this._readonly = value;
   }
+  @Output() addFilter = new EventEmitter<any>();
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Input() public question: Question;
   @Input() public innovation: Innovation;
@@ -86,6 +88,10 @@ export class QuestionSectionComponent implements OnInit {
           break;
       }
     }
+  }
+
+  public addSomeFilter(event: Filter) {
+    this.addFilter.emit(event);
   }
 
   public updateNumberOfItems(event: number): void {

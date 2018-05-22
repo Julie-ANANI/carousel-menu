@@ -29,6 +29,7 @@
                    [question]="question"
                    [readonly]="readonly"
                    [stats]="stats"
+                   (addFilter)="addSomeFilter($event)"
                    (modalAnswerChange)="seeAnswer($event)">
     </app-bar-chart>
 
@@ -42,6 +43,7 @@
                    [stats]="stats"
                    [showDetails]="showDetails"
                    (updateNumberOfItems)="updateNumberOfItems($event)"
+                   (addFilter)="addSomeFilter($event)"
                    (modalAnswerChange)="seeAnswer($event)">
     </app-item-list>
 

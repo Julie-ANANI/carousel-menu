@@ -6,4 +6,5 @@ export interface Professional {
   readonly company: string;
   readonly email: string;
   readonly profileUrl: string;
+  readonly country: string;
 }

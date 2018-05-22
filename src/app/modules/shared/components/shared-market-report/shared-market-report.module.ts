@@ -17,7 +17,7 @@ import { StarsComponent } from './components/stars/stars.component';
 import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
 import { SharedModule } from '../../shared.module';
 import { SharedAnswerModalModule } from '../shared-answer-modal/answer-modal.module';
-import { SharedWorldMapModule } from '../world-map/world-map.module';
+import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { EllipsisModule } from '../../../../pipes/ellipsis/ellipsis.module';
 import { CommonService } from '../../../../services/common/common.service';
 
@@ -29,7 +29,7 @@ import { CommonService } from '../../../../services/common/common.service';
     MultilingModule,
     SharedModule,
     SharedAnswerModalModule,
-    SharedWorldMapModule,
+    SharedWorldmapModule,
     TranslateModule.forChild()
   ],
   providers: [
