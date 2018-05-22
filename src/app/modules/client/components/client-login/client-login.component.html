@@ -25,7 +25,41 @@
 
             <!-- Information -->
             <div class="column col-sm-12 col-7 col-mx-auto">
-              sqsq
+              <div class="form-group">
+                <input
+                  class="form-input form-input-default"
+                  formControlName="email"
+                  type="email"
+                  [attr.placeholder]="'COMMON.EMAIL' | translate ">
+              </div>
+              <div class="form-error" *ngIf="formData.get('email').touched && formData.get('email').invalid">
+                  <span *ngIf="formData.get('email').hasError('required')">
+                    {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+                  </span>
+                <span *ngIf="formData.get('email').hasError('email')">
+                      {{ 'COMMON.INVALID.EMAIL' | translate }}
+                  </span>
+              </div>
+              <div class="form-group">
+                <input
+                  class="form-input form-input-default"
+                  formControlName="password"
+                  type="password"
+                  [attr.placeholder]="'COMMON.PASSWORD' | translate ">
+              </div>
+              <div class="form-error" *ngIf="formData.get('password').touched && formData.get('password').invalid">
+                  <span *ngIf="formData.get('password').hasError('required')">
+                  {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+                  </span>
+              </div>
+              <div class="submit-container">
+                <div class="login-button">
+                  <button class="btn primary-button" type="submit" [disabled]="formData.invalid">
+                    {{ 'LOG_IN.LOG_IN_BTN' | translate }}
+                  </button>
+                </div>
+                <a class="text-link" (click)="changePassword($event)">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
+              </div>
             </div>
 
           </div>

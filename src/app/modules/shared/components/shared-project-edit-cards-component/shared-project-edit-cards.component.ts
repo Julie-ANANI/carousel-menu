@@ -22,7 +22,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Input() project: Innovation;
   @Output() projectChange = new EventEmitter<any>();
   @Output() cardsChange = new EventEmitter<any>();
-  public formData: FormGroup;
+  public innovationData: FormGroup; // Overall innovation
   private ngUnsubscribe: Subject<any> = new Subject();
   /*
    * Gestion de l'affichage
@@ -39,20 +39,17 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._buildForm();
 
-    this.formData.patchValue(this.project);
-
-    // checking the innovation values and setting them accordingly
-    this.setForm(this.project);
+    this.innovationData.patchValue(this.project);
 
     if (!this.canEdit) {
-      this.formData.disable();
+      this.innovationData.disable();
     }
 
     for (const innovationCard of this.project.innovationCards) {
       this._addInnovationCardWithData(innovationCard);
     }
 
-    this.formData.valueChanges
+    this.innovationData.valueChanges
       .distinctUntilChanged()
       .takeUntil(this.ngUnsubscribe)
       .subscribe(_ => {
@@ -63,21 +60,15 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
 
   private _buildForm(): void {
-    this.formData = this._formBuilder.group({
+    this.innovationData = this._formBuilder.group({
       patented: [undefined, Validators.required],
       projectStatus: [undefined, Validators.required],
-      choosenLang: [null, Validators.required],
       innovationCards: this._formBuilder.array([])
     });
   }
 
-  public setForm(project: Innovation) {
-    // innovation default language
-    this.formData.get('choosenLang').setValue(this.project.innovationCards[0].lang);
-  }
-
   public updateCards() {
-    this.cardsChange.emit(this.formData.value);
+    this.cardsChange.emit(this.innovationData.value);
   }
 
   /**
@@ -90,7 +81,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     const _inputConfig = {
       'advantages': {
         placeholder: 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.INPUT',
-        initialData: this.formData.get('innovationCards').value[this.innovationCardEditingIndex]['advantages']
+        initialData: this.innovationData.get('innovationCards').value[this.innovationCardEditingIndex]['advantages']
       }
     };
     return _inputConfig[type] || {
@@ -115,6 +106,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   public createInnovationCard(event: Event): void {
     event.preventDefault();
+
     if (this.canEdit) {
       if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
         this._innovationService.createInnovationCard(this.project._id, {
@@ -127,10 +119,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
           });
       }
     }
+
   }
 
   private _addInnovationCardWithData(innovationCardData: InnovCard): void {
-    const innovationCards = this.formData.controls['innovationCards'] as FormArray;
+    const innovationCards = this.innovationData.controls['innovationCards'] as FormArray;
     innovationCards.push(this._newInnovationCardFormBuilderGroup(innovationCardData));
   }
 
@@ -140,19 +133,23 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * @param cardIdx this is the index of the innovation card being edited.
    */
   public addAdvantageToInventionCard (event: {value: Array<string>}, cardIdx: number): void {
-    const card = this.formData.get('innovationCards').value[cardIdx] as FormGroup;
+    const card = this.innovationData.get('innovationCards').value[cardIdx] as FormGroup;
     card['advantages'] = event.value;
     this.updateCards();
   }
 
   public setAsPrincipal (event: Event, innovationCardId: string): void {
     event.preventDefault();
-    const innovationCards = this.formData.get('innovationCards').value;
+
+    const innovationCards = this.innovationData.get('innovationCards').value;
+
     for (const innovationCard of innovationCards) {
       innovationCard.principal = innovationCard.id === innovationCardId;
     }
-    this.formData.get('innovationCards').setValue(innovationCards);
+
+    this.innovationData.get('innovationCards').setValue(innovationCards);
     this.updateCards();
+
   }
 
   public imageUploaded(media: Media): void {

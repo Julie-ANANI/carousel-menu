@@ -1,13 +1,68 @@
 .videos-upload {
-  background: #FAFAFA;
-  border: 2px dashed #979797;
-  padding: 60px 30px 60px 30px;
+  border: 2px dashed #E0E0E0;
+  padding-left: 5px;
+  padding-right: 5px;
+  position: relative;
+  border-radius: 5px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
-  .logos-videos {
-    margin-top: 10px;
 
+  .logos {
+    padding-bottom: 12px;
     img {
-      margin: 0 5px;
+      margin-right: 10px;
     }
   }
+
+  .form-input-default.ng-touched.ng-invalid{
+    border-color: unset !important;
+  }
+
+  .primary-button {
+    margin-left: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    i {
+      vertical-align: bottom;
+      margin-right: 10px;
+      font-size: 1rem;
+    }
+  }
+
+  .para {
+    font-size: 0.8rem;
+    color: #333333;
+    padding: 12px 15px 0;
+  }
+
+}
+
+/********************************** Media ***************************************/
+
+@media (min-width: 600px) and (max-width: 840px) {
+
+  .form-input-default {
+    width: 372px !important;
+  }
+
+}
+
+@media (min-width: 841px) and (max-width: 1024px) {
+
+  .form-input-default {
+    width: 230px !important;
+  }
+
+}
+
+@media (min-width: 1025px) {
+
+  .form-input-default {
+    width: 318px !important;
+  }
+
 }

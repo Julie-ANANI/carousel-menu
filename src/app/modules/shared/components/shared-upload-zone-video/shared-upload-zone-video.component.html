@@ -1,23 +1,23 @@
 <div class="videos-upload text-center">
-  <p>{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.URL' | translate }}</p>
-  <div class="input-group">
-    <input type="text" class="form-input input-lg"
-           placeholder="Ex : https://www.youtube.com/watch?v=1c9V-Re5QJA"
-           [(ngModel)]="videoUrlInput">
-    <button class="btn btn-primary input-group-btn btn-lg"
-            (click)="videoUrlInput ? addVideo($event) : ''">
-      <i class="icon icon-plus"></i> {{ 'COMMON.ADD' | translate }}
-    </button>
-  </div>
-  <div class="logos-videos">
-    <img
-      [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_35/app/logo-youtube.png'"
-      width="" height="35">
-    <img
-      [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_31/app/logo-vimeo.png'"
-      width="" height="31">
+
+  <div class="logos">
+    <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_35/app/logo-youtube.png'" height="28">
+    <img [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_31/app/logo-vimeo.png'" height="24">
     <!--<img
       [src]="'https://res.cloudinary.com/umi/image/upload/c_scale,h_35/app/logo-dailymotion.png'"
       width="" height="35">-->
   </div>
+
+  <div class="input-group">
+    <input type="text" class="form-input-default"
+           placeholder="Ex : https://www.youtube.com/watch?v=1c9V-Re5QJA"
+           [(ngModel)]="videoUrlInput">
+    <button class="primary-button"
+            (click)="videoUrlInput ? addVideo($event) : ''">
+      <i class="fas fa-plus"></i> {{ 'COMMON.ADD' | translate }}
+    </button>
+  </div>
+
+  <p class="para">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.URL' | translate }}</p>
+
 </div>

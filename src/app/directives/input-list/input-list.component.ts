@@ -25,7 +25,8 @@ export class InputListComponent {
     }
   }
 
-  constructor() {}
+  constructor() {
+  }
 
   get placeholder(): string {
     return this._placeholder;

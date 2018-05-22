@@ -6,7 +6,7 @@ export const PITCH = {
     'MAIN_LANG': 'Langue principale',
     'TITLE': {
       'LABEL': 'Donnez un titre à votre projet',
-      'PLACEHOLDER': 'Ex : Peinture murale luminescente'
+      'PLACEHOLDER': 'Cela sera visible pour les autres.'
     },
     'SUMMARY': {
       'LABEL': 'Résumez votre projet en une courte phrase',
@@ -41,9 +41,9 @@ export const PITCH = {
   'WHAT_STAGE': 'À quel stade en est votre projet ?',
   'IS_PATENTED': 'Votre projet est-t-il protégé par un brevet ?',
   'MEDIA': {
-    'ADD': 'Ajoutez une ou plusieurs images pour illustrer votre projet.',
+    'ADD': 'Ajoutez une ou plusieurs images/vidéos pour illustrer votre projet',
     'UPLOAD': 'Télécharger des photos',
     'SLIDE': 'Vous pouvez également faire glisser les fichiers ici',
-    'URL': 'Indiquer ici l\'adresse de votre vidéo'
+    'URL': 'Coller ici l\'adresse de votre vidéo Youtube ou Vimeo'
   },
 };

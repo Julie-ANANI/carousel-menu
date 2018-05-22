@@ -266,6 +266,14 @@ ul.list-filter {
   color: $primary-element;
 }
 
+/********************************** Loading Styles ***************************************/
+
+.loading::after {
+  border-color: #FFB300;
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
 /********************************** Bot Input Styles ***************************************/
 
 .bot-text {
@@ -376,17 +384,21 @@ ul.list-filter {
 // Form input
 
 .form-input-default {
-  border: 1px solid $meta-element;
-  font-size: 0.8rem;
+  border: 1px solid #E0E0E0;
+  font-size: 0.7rem;
   color: #484848;
   border-radius: 5px;
   display: block;
   width: 100%;
   outline: none;
-  height: 36px;
+  min-height: 36px;
   position: relative;
   background: white none;
-  padding: 24px 12px;
+  padding: 12px 12px;
+}
+
+.form-input-default:placeholder-shown {
+  color: #AAB2BD;
 }
 
 .form-input-default:focus {
@@ -453,6 +465,10 @@ ul.list-filter {
 
 // Form radio
 
+.form-radio {
+  color: #484848;
+}
+
 .form-radio input:checked + .form-icon {
   border-color: rgba(46,204,113,0.45) !important;
   background: $validation-element;
@@ -513,7 +529,7 @@ ul.list-filter {
   font-weight: 600;
   transition: all 0.5s ease-in-out;
   i {
-    margin-right: 36px;
+    margin-right: 20px;
     font-size: 1.1rem;
   }
 }

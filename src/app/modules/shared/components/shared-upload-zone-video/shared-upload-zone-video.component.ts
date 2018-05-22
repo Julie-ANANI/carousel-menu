@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
   templateUrl: './shared-upload-zone-video.component.html',
   styleUrls: ['./shared-upload-zone-video.component.scss']
 })
+
 export class SharedUploadZoneVideoComponent implements OnInit {
 
   private _videoUrlInput: string;
@@ -24,15 +25,21 @@ export class SharedUploadZoneVideoComponent implements OnInit {
 
   addVideo(event: Event): void {
     event.preventDefault();
+
     const videoProviderReg = videoDomainRegEx.exec(this._videoUrlInput);
+
     const videoProvider = videoProviderReg ? videoProviderReg[0] : null; // vimeo || youtube
+
     const givenUrl = this._videoUrlInput; // URL donnée par l'utilisateur
+
     this._videoUrlInput = ''; // On vide le formulaire
 
 
     if (videoProvider) {
-      const videoKey = videoIdRegEx.exec(givenUrl)[0]; //videoIdRegEx.exec(givenUrl)[1] || videoIdRegEx.exec(givenUrl)[2]; // ID de la vidéo chez le provider
+      const videoKey = videoIdRegEx.exec(givenUrl)[0]; // videoIdRegEx.exec(givenUrl)[1] || videoIdRegEx.exec(givenUrl)[2]; // ID de la vidéo chez le provider
+
       let returnValue: Video;
+
       switch (videoProvider) {
         case 'vimeo': {
           const embeddableUrl = 'https://player.vimeo.com/video/' + videoKey + this._getUrlArgs();
@@ -59,15 +66,18 @@ export class SharedUploadZoneVideoComponent implements OnInit {
     } else {
       console.error(`${givenUrl} is not a valid video input`);
     }
+
   }
 
   private _getUrlArgs(): string { // Transform params to a string ?options=value&....
     let paramsString = '?';
+
     for (const parameters of this._videoParameters) {
       paramsString += parameters + '&';
     }
     paramsString = paramsString.slice(0, -1); // Remove last &
     return paramsString;
+
   }
 
   get videoUrlInput(): string {
@@ -77,4 +87,5 @@ export class SharedUploadZoneVideoComponent implements OnInit {
   set videoUrlInput(value: string) {
     this._videoUrlInput = value;
   }
+
 }

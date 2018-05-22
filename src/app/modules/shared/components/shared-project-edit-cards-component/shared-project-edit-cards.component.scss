@@ -2,11 +2,51 @@
   padding-top: 25px;
   padding-bottom: 25px;
 
+  .project-data {
+    padding-top: 50px;
+  }
+
   .pd-label {
     padding-top: 20px;
   }
 
+  .form-input-default.ng-touched.ng-invalid{
+    border-color: unset !important;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  .media-container {
+    padding-bottom: 25px;
+  }
+
+  .plus-container {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    i {
+      color: #4F5D6B;
+    }
+  }
+
 }
+
+/********************************** Media ***************************************/
+
+@media (min-width: 768px) {
+
+  // Form input
+  .form-input-default {
+    width: 662px;
+  }
+
+
+}
+
 
 
 /*$body-font-color-darker: #333333;
