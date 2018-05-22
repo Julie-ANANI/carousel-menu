@@ -28,6 +28,8 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'NOT_FOUND': 'Project not found',
     'UNFORBIDDEN': 'Unforbidden',
     'CANT_EDIT': 'You cannot edit this project.',
+    'SAVED': 'Project saved',
+    'SAVED_TEXT': 'Your project has been saved.',
     'SUBMITTED': 'Project submitted',
     'SUBMITTED_TEXT': 'Your project has been sent to validation.'
   },

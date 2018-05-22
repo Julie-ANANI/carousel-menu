@@ -28,6 +28,8 @@ export const ERROR = {
     'NOT_FOUND': 'Projet introuvable',
     'UNFORBIDDEN': 'Accès interdit',
     'CANT_EDIT': 'Vous ne pouvez pas éditer ce projet.',
+    'SAVED': 'Projet sauvegardé',
+    'SAVED_TEXT': 'Votre projet a été enregistré.',
     'SUBMITTED': 'Projet envoyé',
     'SUBMITTED_TEXT': 'Votre projet a été transmis pour la validation.'
   },

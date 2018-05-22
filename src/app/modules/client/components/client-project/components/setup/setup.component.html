@@ -3,31 +3,30 @@
     <div class="column col-xs-12 col-12 col-mx-auto">
 
       <!-- Row 1 -->
-      <div class="columns col-gapless">
+      <div class="row-1">
+
         <!-- Heading -->
-        <div class="column col-sm-12 col-md-5 col-6 col-ml-auto">
-          <h1 class="section-heading">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h1>
-        </div>
+        <h1 class="section-heading">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h1>
+
         <!-- Buttons -->
-        <div class="column col-sm-12 col-md-7 col-6 col-mr-auto function-button">
-          <div class="function-button">
-            <span>
-              <button class="primary-button ghost-button">
-                {{ 'PROJECT_MODULE.SETUP.PREVIEW' | translate }}
-              </button>
-            </span>
-            <span>
-              <button class="primary-button ghost-button" (click)="saveProject($event)">
-                {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
-              </button>
-            </span>
-            <span>
-              <button class="primary-button">
-                {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
-              </button>
-            </span>
-          </div>
+        <div class="function-button" *ngIf="currentTab === 'pitch' || currentTab === 'targeting'">
+          <span *ngIf="currentTab === 'pitch'">
+            <button class="primary-button ghost-button">
+              {{ 'PROJECT_MODULE.SETUP.PREVIEW' | translate }}
+            </button>
+          </span>
+          <span>
+            <button class="primary-button ghost-button" (click)="saveProject($event)">
+              {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
+            </button>
+          </span>
+          <span>
+            <button class="primary-button" (click)="submitProject($event)">
+              {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
+            </button>
+          </span>
         </div>
+
       </div>
 
       <!-- Row 2 -->

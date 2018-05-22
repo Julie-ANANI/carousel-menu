@@ -571,7 +571,7 @@ ul.list-filter {
 }
 
 .ghost-button:hover, .ghost-button:active {
-  background: #FFF9EB;
+  background: white none;
   color: lighten($button-color, 15%);
   border-color: lighten($button-color, 15%);
 }

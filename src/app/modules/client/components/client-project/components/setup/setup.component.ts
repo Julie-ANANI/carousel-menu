@@ -39,7 +39,21 @@ export class SetupProjectComponent implements OnInit {
       .first()
       .subscribe(data => {
         this.project = data;
-        this.notificationService.success('ERROR.PROJECT.SUBMITTED', '');
+        this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
+      }, err => {
+        this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+      });
+
+  }
+
+  public submitProject(event: Event): void {
+    event.preventDefault();
+
+    this.innovationService
+      .submitProjectToValidation(this.project._id)
+      .first()
+      .subscribe(data => {
+        this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
       }, err => {
         this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
