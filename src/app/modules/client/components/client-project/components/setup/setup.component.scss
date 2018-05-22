@@ -19,6 +19,33 @@
         margin-bottom: 10px;
       }
 
+      .save-project {
+
+        .primary-button {
+          border-color: #2ECC71;
+        }
+
+        .circle {
+          margin-top: -17px;
+          margin-left: -17px;
+          transition: all 0.35s ease-in-out;
+          background: #2ECC71;
+        }
+
+      }
+
+      .saved {
+
+        .primary-button {
+          border-color: #FFB300;
+        }
+
+        .circle {
+          display: none;
+        }
+
+      }
+
     }
 
   }

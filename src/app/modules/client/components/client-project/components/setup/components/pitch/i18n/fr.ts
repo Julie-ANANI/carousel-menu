@@ -46,4 +46,8 @@ export const PITCH = {
     'SLIDE': 'Vous pouvez également faire glisser les fichiers ici',
     'URL': 'Coller ici l\'adresse de votre vidéo Youtube ou Vimeo'
   },
+  'EXTERNAL_DIFFUSION': {
+    'A': 'Souhaitez-vous autoriser',
+    'B' : 'à diffuser votre projet auprès de sa communauté d\'ambassadeurs ?'
+  }
 };

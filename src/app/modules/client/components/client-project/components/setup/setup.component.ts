@@ -3,6 +3,7 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-client-setup-project',
@@ -13,14 +14,20 @@ import { InnovationSettings } from '../../../../../../models/innov-settings';
 export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
+  saveStatus: boolean;
+  private _saveButtonClass: string; // class to attach on the save button respect to the form status.
+
   private _currentTab: string;
 
   constructor(private innovationService: InnovationService,
-              private notificationService: TranslateNotificationsService) {
+              private notificationService: TranslateNotificationsService,
+              private _translateService: TranslateService) {
   }
 
   ngOnInit() {
     this._currentTab = 'pitch';
+    this.saveStatus = true;
+    this._saveButtonClass = 'save-project';
   }
 
   public updateSettings(value: InnovationSettings): void {
@@ -33,6 +40,9 @@ export class SetupProjectComponent implements OnInit {
 
   public saveProject(event: Event): void {
     event.preventDefault();
+
+    this.saveStatus = false;
+    this._saveButtonClass = 'saved';
 
     this.innovationService
       .save(this.project._id, this.project)
@@ -49,14 +59,35 @@ export class SetupProjectComponent implements OnInit {
   public submitProject(event: Event): void {
     event.preventDefault();
 
-    this.innovationService
-      .submitProjectToValidation(this.project._id)
-      .first()
-      .subscribe(data => {
-        this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
-      }, err => {
-        this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-      });
+    const currentLang = this._translateService.currentLang;
+
+    if (this.saveStatus) {
+      if (currentLang === 'fr') {
+        alert('Veuillez sauvegarder le projet avant de le soumettre.')
+      } else {
+        alert('Please save the project before submitting it.')
+      }
+    } else {
+      let confirmMessage = '';
+
+      if (currentLang === 'fr') {
+        confirmMessage = 'Êtes-vous vraiment sûr de vouloir envoyer votre projet pour validation ?'
+      } else {
+        confirmMessage = 'Are you really sure you want to send your project for validation?'
+      }
+
+      if (confirm(confirmMessage)) {
+        this.innovationService
+          .submitProjectToValidation(this.project._id)
+          .first()
+          .subscribe(data => {
+            this.project.status = 'SUBMITTED';
+            this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
+          }, err => {
+            this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+          });
+      }
+    }
 
   }
 
@@ -66,6 +97,10 @@ export class SetupProjectComponent implements OnInit {
 
   set currentTab(value: string) {
     this._currentTab = value;
+  }
+
+  get saveButtonClass(): string {
+    return this._saveButtonClass;
   }
 
 }

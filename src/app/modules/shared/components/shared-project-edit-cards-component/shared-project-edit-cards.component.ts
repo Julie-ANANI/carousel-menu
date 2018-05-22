@@ -10,6 +10,7 @@ import { InnovCard } from '../../../../models/innov-card';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-shared-project-edit-cards',
@@ -63,6 +64,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.innovationData = this._formBuilder.group({
       patented: [undefined, Validators.required],
       projectStatus: [undefined, Validators.required],
+      external_diffusion: [false, [Validators.required]],
       innovationCards: this._formBuilder.array([])
     });
   }
@@ -191,8 +193,24 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  get domSanitizer() { return this._domSanitizer; }
-  get canEdit (): boolean { return this.project && (this.project.status === 'EDITING' || this.isAdmin); }
-  get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
-  get isAdmin(): boolean { return (this._authService.adminLevel & 3) === 3; }
+  get domSanitizer() {
+    return this._domSanitizer;
+  }
+
+  get domainCompanyName(): string {
+    return environment.companyName;
+  }
+
+  get canEdit(): boolean {
+    return this.project && (this.project.status === 'EDITING' || this.isAdmin);
+  }
+
+  get dateFormat(): string {
+    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+  }
+
+  get isAdmin(): boolean {
+    return (this._authService.adminLevel & 3) === 3;
+  }
+
 }

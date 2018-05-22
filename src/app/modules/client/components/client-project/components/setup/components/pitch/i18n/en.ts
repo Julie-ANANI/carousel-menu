@@ -38,5 +38,9 @@ export const PITCH = {
     'UPLOAD': 'Upload pictures',
     'SLIDE': 'You can also drag the files here',
     'URL': 'Enter the address of your Youtube or Vimeo video here'
+  },
+  'EXTERNAL_DIFFUSION': {
+    'A': 'Would you like to authorize',
+    'B' : 'to diffuse your project to it\'s ambassadors community?'
   }
 };

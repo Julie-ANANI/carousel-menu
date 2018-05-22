@@ -164,6 +164,25 @@
           </div>
         </div>
 
+        <!-- Diffusion -->
+        <div class="project-data">
+          <span class="num-rect">10</span>
+          <span class="ques">
+            {{ 'PROJECT_MODULE.SETUP.PITCH.EXTERNAL_DIFFUSION.A' | translate }} {{domainCompanyName}} {{ 'PROJECT_MODULE.SETUP.PITCH.EXTERNAL_DIFFUSION.B' | translate }}
+          </span>
+          <div class="form-group pd-label">
+            <label class="form-radio">
+              <input type="radio" name="external_diffusion" formControlName="external_diffusion" [value]="false">
+              <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
+            </label>
+            <label class="form-radio">
+              <input type="radio" name="external_diffusion" formControlName="external_diffusion" [value]="true">
+              <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
+            </label>
+          </div>
+        </div>
+
+
       </form>
 
     </div>
