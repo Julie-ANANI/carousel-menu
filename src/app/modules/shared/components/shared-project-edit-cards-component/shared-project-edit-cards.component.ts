@@ -23,8 +23,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Input() project: Innovation;
   @Output() projectChange = new EventEmitter<any>();
   @Output() cardsChange = new EventEmitter<any>();
+
   public innovationData: FormGroup; // Overall innovation
   private ngUnsubscribe: Subject<any> = new Subject();
+  private _companyName: string = environment.companyShortName;
   /*
    * Gestion de l'affichage
    */
@@ -197,8 +199,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     return this._domSanitizer;
   }
 
-  get domainCompanyName(): string {
-    return environment.companyName;
+  get companyName(){
+    return (this._companyName || 'umi').toLocaleUpperCase();
   }
 
   get canEdit(): boolean {
