@@ -10,11 +10,6 @@
 
         <!-- Buttons -->
         <div class="function-button" *ngIf="currentTab === 'pitch' || currentTab === 'targeting'">
-          <span *ngIf="currentTab === 'pitch'">
-            <button class="primary-button ghost-button">
-              {{ 'PROJECT_MODULE.SETUP.PREVIEW' | translate }}
-            </button>
-          </span>
           <span [ngClass]="saveButtonClass">
             <div class="circle"><i class="fas fa-save"></i></div>
               <button class="primary-button ghost-button" (click)="saveProject($event)">

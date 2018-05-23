@@ -4,12 +4,27 @@
 
       <form novalidate [formGroup]="innovationData">
 
+        <!-- Describe -->
+        <div class="column col-sm-12 col-6 col-mx-auto">
+          <div class="describe-container">
+            <span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE_CHOICE' | translate }}</span>
+            <label for="innovationLang">
+              <input type="radio" id="innovationLang">
+              <div class="circle"><i class="fas fa-check"></i></div>
+              <div class="offers">
+                <img src="https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-apps.svg">
+              </div>
+            </label>
+          </div>
+        </div>
+
+
         <div formArrayName="innovationCards">
           <div *ngFor="let innovationItem of innovationData.get('innovationCards').controls; let i = index" [formGroup]="innovationItem">
             <div *ngIf="innovationCardEditingIndex === i">
 
               <!-- Lang -->
-              <div class="lang-container">
+              <div class="project-data">
                 <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.UPDATE_LANGUAGE' | translate }}</span>
                 <div class="form-group pd-label">
                   <label class="form-radio">
@@ -124,49 +139,9 @@
           </div>
         </div>
 
-        <div formArrayName="innovationCards">
-          <div *ngFor="let innovationItem of innovationData.get('innovationCards').controls; let i = index" [formGroup]="innovationItem">
-            <div *ngIf="innovationCardEditingIndex === i">
-
-              <div class="project-data">
-                <span class="num-rect">9</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.ADD' | translate }}</span>
-                <div class="pd-label">
-
-                  <div class="columns">
-                    <!-- Images -->
-                    <div class="column col-md-12 col-5 col-mx-auto">
-                      <app-shared-upload-zone-photo
-                        *ngIf="canEdit"
-                        [uri]="'/innovation/'+project._id+'/innovationCard/'+innovationItem.value.id+'/media/image'"
-                        (cbFn)="imageUploaded($event)">
-                      </app-shared-upload-zone-photo>
-                    </div>
-
-                    <!-- Plus icon -->
-                    <div class="column col-md-12 col-2 col-mx-auto plus-container">
-                      <span><i class="fas fa-2x fa-plus"></i></span>
-                    </div>
-
-                    <!-- Videos -->
-                    <div class="column col-md-12 col-5 col-mx-auto">
-                      <app-shared-upload-zone-video
-                        *ngIf="canEdit"
-                        (cbFn)="newOnlineVideoToAdd($event)">
-                      </app-shared-upload-zone-video>
-                    </div>
-                  </div>
-
-
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
         <!-- Diffusion -->
         <div class="project-data">
-          <span class="num-rect">10</span>
+          <span class="num-rect">9</span>
           <span class="ques">
             {{ 'PROJECT_MODULE.SETUP.PITCH.EXTERNAL_DIFFUSION.A' | translate }} {{companyName}} {{ 'PROJECT_MODULE.SETUP.PITCH.EXTERNAL_DIFFUSION.B' | translate }}
           </span>
@@ -182,6 +157,44 @@
           </div>
         </div>
 
+        <div formArrayName="innovationCards">
+          <div *ngFor="let innovationItem of innovationData.get('innovationCards').controls; let i = index" [formGroup]="innovationItem">
+            <div *ngIf="innovationCardEditingIndex === i">
+
+              <div class="project-data">
+                <span class="num-rect">10</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.ADD' | translate }}</span>
+                <div class="pd-label">
+
+                  <div class="columns">
+                    <!-- Images -->
+                    <div class="column col-xl-12 col-5 col-mx-auto">
+                      <app-shared-upload-zone-photo
+                        *ngIf="canEdit"
+                        [uri]="'/innovation/'+project._id+'/innovationCard/'+innovationItem.value.id+'/media/image'"
+                        (cbFn)="imageUploaded($event)">
+                      </app-shared-upload-zone-photo>
+                    </div>
+
+                    <!-- Plus icon -->
+                    <div class="column col-md-xl col-2 col-mx-auto plus-container">
+                      <span><i class="fas fa-2x fa-plus"></i></span>
+                    </div>
+
+                    <!-- Videos -->
+                    <div class="column col-xl-12 col-5 col-mx-auto">
+                      <app-shared-upload-zone-video
+                        *ngIf="canEdit"
+                        (cbFn)="newOnlineVideoToAdd($event)">
+                      </app-shared-upload-zone-video>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
 
       </form>
 

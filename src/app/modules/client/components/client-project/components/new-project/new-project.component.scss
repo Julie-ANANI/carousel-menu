@@ -113,7 +113,7 @@
     padding-top: 75px;
 
     .fas, .far{
-      color: #4F5D6B;
+      color: #97A4B1;;
     }
 
     .text {
@@ -145,10 +145,6 @@
 
 @media (min-width: 768px) {
 
-  .ques-3 {
-    padding-top: 0 !important;
-  }
-
   .selection-container label {
     margin-right: 20px;
   }
@@ -170,6 +166,10 @@
         padding-top: 72px;
       }
 
+    }
+
+    .ques-3 {
+      padding-top: 0 !important;
     }
 
     .image-section {

@@ -12,7 +12,8 @@
     .function-button {
       display: flex;
       flex-wrap: wrap;
-      justify-content: flex-start;
+      flex: 1 0 auto;
+      justify-content: center;
 
       span {
         margin-right: 10px;
@@ -23,6 +24,9 @@
 
         .primary-button {
           border-color: #2ECC71;
+          background-color: #FFF9EB;
+          color: #262831;
+          pointer-events: auto;
         }
 
         .circle {
@@ -34,14 +38,17 @@
 
       }
 
-      .saved {
+      .disabled {
 
         .primary-button {
-          border-color: #FFB300;
+          border-color: #dbdbdb;
+          color: #a9a9a9;
+          background: white;
+          pointer-events: none;
         }
 
         .circle {
-          display: none;
+          background: transparent;
         }
 
       }
@@ -50,27 +57,27 @@
 
   }
 
-
-
   .tabs-container {
     padding-top: 25px;
     padding-bottom: 25px;
 
     .tabs li {
+        border-bottom: 1px solid #CDCDCD;
 
-      a {
-        background-color: white;
-        color: #4F5D6B;
-        border-bottom: 3px solid #4F5D6B;
-        i {
-          color: transparent;
+        a {
+          background-color: white;
+          color: #4F5D6B;
+          border-bottom: 4px solid transparent;
+          font-weight: 500;
+          i {
+            display: none;
+          }
         }
+
+      li a:hover {
+        border-bottom-color: #FFB300;
       }
 
-    }
-
-    .tabs li a:hover {
-      border-bottom-color: #FFB300;
     }
 
   }
@@ -84,6 +91,28 @@
 
 /********************************** Media ***************************************/
 
+@media (min-width: 480px) {
+
+  .tabs {
+    border-bottom: 1px solid #CDCDCD;
+
+    li {
+      border-bottom: none !important;
+      flex: unset;
+
+      a {
+        border-bottom: 4px solid transparent;
+        margin-right: 25px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+    }
+
+  }
+
+}
+
 @media (min-width: 768px) {
 
   .row-1 {
@@ -91,7 +120,6 @@
 
     .function-button {
       justify-content: flex-end !important;
-      flex: 1 0 auto;
 
       span {
         margin-bottom: 0 !important;

@@ -15,8 +15,8 @@ export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
   saveStatus: boolean;
-  private _saveButtonClass: string; // class to attach on the save button respect to the form status.
 
+  private _saveButtonClass: string; // class to attach on the save button respect to the form status.
   private _currentTab: string;
 
   constructor(private innovationService: InnovationService,
@@ -42,7 +42,7 @@ export class SetupProjectComponent implements OnInit {
     event.preventDefault();
 
     this.saveStatus = false;
-    this._saveButtonClass = 'saved';
+    this._saveButtonClass = 'disabled';
 
     this.innovationService
       .save(this.project._id, this.project)

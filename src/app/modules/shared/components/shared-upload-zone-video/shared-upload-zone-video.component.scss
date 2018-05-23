@@ -43,26 +43,26 @@
 
 /********************************** Media ***************************************/
 
-@media (min-width: 600px) and (max-width: 840px) {
+@media (min-width: 360px) and (max-width: 480px) {
 
   .form-input-default {
-    width: 372px !important;
+    width: 212px !important;
   }
 
 }
 
-@media (min-width: 841px) and (max-width: 1024px) {
-
-  .form-input-default {
-    width: 230px !important;
-  }
-
-}
-
-@media (min-width: 1025px) {
+@media (min-width: 481px) and (max-width: 600px) {
 
   .form-input-default {
     width: 318px !important;
+  }
+
+}
+
+@media (min-width: 601px) {
+
+  .form-input-default {
+    width: 372px !important;
   }
 
 }

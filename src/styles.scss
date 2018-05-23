@@ -322,6 +322,60 @@ ul.list-filter {
   }
 }
 
+/********************************** Tooltip Styles ***************************************/
+
+.tooltips {
+  position: absolute;
+  display: inline-block;
+  height: 20.89px;
+  width: 20.98px;
+  background-color: #97A4B1;
+  border-radius: 50%;
+  z-index: 2;
+  i {
+    color: white;
+    display: flex;
+    justify-content: center;
+    padding-top: 4px;
+  }
+  .fas {
+    font-size: 11px;
+  }
+  .tooltip-text {
+    visibility: hidden;
+    width: 237px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #4F5D6B;
+    color: #fff;
+    justify-content: center;
+    text-align: center;
+    border-radius: 5px;
+    padding: 20px 15px;
+    font-size: 0.7rem;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    right: 127%;
+  }
+  .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 100%;
+    margin-top: -5px;
+    border: 5px solid transparent;
+    border-left-color: #4F5D6B;
+  }
+}
+
+.tooltips:hover .tooltip-text {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  visibility: visible;
+}
+
 /********************************** Tab Styles ***************************************/
 
 .tabs {
@@ -634,6 +688,22 @@ ul.list-filter {
 }
 
 @media (min-width: 768px) {
+
+  // Tooltip position right
+  .tooltips {
+    margin-left: 4px;
+    .tooltip-text {
+      left: 127%;
+    }
+    .tooltip-text::after {
+      right: 100%;
+      left: unset;
+      border-top-color: transparent;
+      border-right-color: #4F5D6B;
+      border-left-color: transparent;
+      border-bottom-color: transparent;
+    }
+  }
 
   // Form input
   .form-input-default {
