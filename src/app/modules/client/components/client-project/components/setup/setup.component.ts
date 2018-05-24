@@ -27,7 +27,7 @@ export class SetupProjectComponent implements OnInit {
   ngOnInit() {
     this._currentTab = 'pitch';
     this.saveStatus = true;
-    this._saveButtonClass = 'save-project';
+    this._saveButtonClass = 'disabled';
   }
 
   public updateSettings(value: InnovationSettings): void {
@@ -36,23 +36,17 @@ export class SetupProjectComponent implements OnInit {
 
   public updateInnovation(value: Innovation): void {
     this.project = value;
-    console.log(value);
+  }
+
+  public saveInnovation(value: boolean) {
+    this.saveStatus = value;
+    this._saveButtonClass = 'save-project';
   }
 
   public saveProject(event: Event): void {
     event.preventDefault();
 
-    this.innovationService
-      .save(this.project._id, this.project)
-      .first()
-      .subscribe(data => {
-        this.project = data;
-        this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
-      }, err => {
-        this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-      });
-
-    /*if (this.saveStatus) {
+   if (this.saveStatus) {
       this.innovationService
         .save(this.project._id, this.project)
         .first()
@@ -66,7 +60,7 @@ export class SetupProjectComponent implements OnInit {
       this.saveStatus = false;
       this._saveButtonClass = 'disabled';
 
-    }*/
+    }
 
   }
 

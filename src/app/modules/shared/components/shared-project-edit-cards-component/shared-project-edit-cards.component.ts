@@ -23,6 +23,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Input() project: Innovation;
   @Output() projectChange = new EventEmitter<any>();
   @Output() cardsChange = new EventEmitter<any>();
+  @Output() saveChanges = new EventEmitter<boolean>();
 
   public innovationData: FormGroup; // Overall innovation
   private ngUnsubscribe: Subject<any> = new Subject();
@@ -31,7 +32,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * Gestion de l'affichage
    */
   public innovationCardEditingIndex = 0; // Index de l'innovationCard que l'on édite (système d'onglets)
-  saveProject = false;
 
   constructor(private _innovationService: InnovationService,
               private _authService: AuthService,
@@ -45,8 +45,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     this.innovationData.patchValue(this.project);
 
-    console.log(this.innovationData);
-
     if (!this.canEdit) {
       this.innovationData.disable();
     }
@@ -59,8 +57,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       .distinctUntilChanged()
       .takeUntil(this.ngUnsubscribe)
       .subscribe(_ => {
+        this.saveChanges.emit(true);
         this.updateCards();
-        this.saveProject = true;
       });
 
   }
@@ -76,7 +74,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   public updateCards() {
-    this.cardsChange.emit(this.innovationData.value, this.saveProject);
+    this.cardsChange.emit(this.innovationData.value);
   }
 
   /**

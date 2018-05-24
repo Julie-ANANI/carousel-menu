@@ -50,7 +50,6 @@
       }
 
       .active {
-        transition: all 0.35s ease-in-out;
         border-color: #2ECC71 !important;
 
         .circle {
@@ -59,7 +58,6 @@
 
           i {
             color: white;
-
           }
 
         }

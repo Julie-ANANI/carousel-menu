@@ -9,20 +9,22 @@
           <div class="describe-container text-center">
             <span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE_CHOICE' | translate }}</span>
             <ul formArrayName="innovationCards" class="lang-container">
+
               <li
                 *ngFor="let innovationCard of innovationData.get('innovationCards').value; let i = index"
                 [ngClass]="{'active': innovationCardEditingIndex === i }"
                 (click)="(innovationCardEditingIndex = i) && $event.preventDefault()">
                 <div class="circle"><i class="fas fa-check"></i></div>
                 <span>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
-                {{innovationCardEditingIndex}}
               </li>
+
               <span *ngIf="project.innovationCards.length <= 1" class="para">{{ 'COMMON.OR' | translate }}</span>
                 <span *ngIf="project.innovationCards.length <= 1" class="text-link" (click)="createInnovationCard($event)">
                   {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROJECT_IN_OTHER_LANG' | translate }}
                   <span *ngIf="project.innovationCards[0].lang !== 'fr'">{{ 'COMMON.LANG.FR' | translate }}</span>
                   <span *ngIf="project.innovationCards[0].lang !== 'en'">{{ 'COMMON.LANG.EN' | translate }}</span>
               </span>
+
             </ul>
           </div>
         </div>
