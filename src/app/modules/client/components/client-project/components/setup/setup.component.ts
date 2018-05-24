@@ -36,6 +36,7 @@ export class SetupProjectComponent implements OnInit {
 
   public updateInnovation(value: Innovation): void {
     this.project = value;
+    console.log(value);
   }
 
   public saveProject(event: Event): void {
