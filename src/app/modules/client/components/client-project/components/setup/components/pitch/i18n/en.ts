@@ -4,6 +4,7 @@ export const PITCH = {
     'LANGUAGE_CHOICE': 'I describe my project in',
     'SET_AS_MAIN_LANG': 'Set as main language',
     'MAIN_LANG': 'Main language',
+    'PROJECT_IN_OTHER_LANG': 'Add your project in',
     'TITLE': {
       'LABEL': 'Give your project a title',
       'PLACEHOLDER': 'This will be visible to others.'

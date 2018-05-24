@@ -314,12 +314,14 @@ ul.list-filter {
   display: inline-block;
   position: absolute;
   z-index: 2;
+
   i {
     color: white;
     display: flex;
     justify-content: center;
     padding-top: 10px;
   }
+
 }
 
 /********************************** Tooltip Styles ***************************************/
@@ -327,26 +329,29 @@ ul.list-filter {
 .tooltips {
   position: absolute;
   display: inline-block;
-  height: 20.89px;
-  width: 20.98px;
+  height: 15px;
+  width: 15px;
   background-color: #97A4B1;
   border-radius: 50%;
   z-index: 2;
+
   i {
     color: white;
     display: flex;
     justify-content: center;
-    padding-top: 4px;
+    padding-top: 3px;
   }
+
   .fas {
-    font-size: 11px;
+    font-size: 8px;
   }
+
   .tooltip-text {
     visibility: hidden;
     width: 237px;
     display: flex;
     flex-wrap: wrap;
-    background-color: #4F5D6B;
+    background-color: #97A4B1;
     color: #fff;
     justify-content: center;
     text-align: center;
@@ -358,6 +363,7 @@ ul.list-filter {
     top: 0;
     right: 127%;
   }
+
   .tooltip-text::after {
     content: "";
     position: absolute;
@@ -365,8 +371,9 @@ ul.list-filter {
     left: 100%;
     margin-top: -5px;
     border: 5px solid transparent;
-    border-left-color: #4F5D6B;
+    border-left-color: #97A4B1;
   }
+
 }
 
 .tooltips:hover .tooltip-text {
@@ -385,9 +392,11 @@ ul.list-filter {
   flex-direction: row;
   margin: 0;
   padding: 0;
+
   li {
     margin-top: 0;
     flex: 1 0 auto;
+
     a {
       color: white;
       font-size: 0.9rem;
@@ -398,18 +407,24 @@ ul.list-filter {
       background: #747D88;
       font-weight: 600;
       cursor: pointer;
+
       i {
         margin-right: 10px;
       }
+
     }
+
     a:hover {
       background: $primary-element;
     }
+
     a:active {
       color: white;
       background: $primary-element;
     }
+
   }
+
 }
 
 /********************************** Form Input Styles ***************************************/
@@ -536,6 +551,7 @@ ul.list-filter {
   padding: 4px;
   list-style: none;
   z-index: 2;
+
   li {
     padding: 8px;
     transition: all .35s ease-in-out;
@@ -543,19 +559,25 @@ ul.list-filter {
     margin-top: 2px;
     margin-bottom: 2px;
     border-radius: 5px;
+
     a{
       color: #333333;
       transition: all .35s ease-in-out;
       text-decoration: none;
     }
+
   }
+
   li:hover {
     background:  $secondary-element;
     border-color: $secondary-element;
+
     a {
       color: white;
     }
+
   }
+
 }
 
 /********************************** Buttons Styles ***************************************/
@@ -581,10 +603,12 @@ ul.list-filter {
   padding: 11px 30px;
   font-weight: 600;
   transition: all 0.5s ease-in-out;
+
   i {
     margin-right: 20px;
     font-size: 1.1rem;
   }
+
 }
 
 .primary-button:hover, .primary-button:active {
@@ -651,10 +675,12 @@ ul.list-filter {
   font-size: 0.7rem;
   font-weight: 600;
   transition: all 0.5s ease-in-out;
+
   i {
     margin-right: 36px;
     font-size: 1.1rem;
   }
+
 }
 
 .secondary-button-alert:hover, .secondary-button-alert:active {
@@ -692,17 +718,20 @@ ul.list-filter {
   // Tooltip position right
   .tooltips {
     margin-left: 4px;
+
     .tooltip-text {
       left: 127%;
     }
+
     .tooltip-text::after {
       right: 100%;
       left: unset;
       border-top-color: transparent;
-      border-right-color: #4F5D6B;
+      border-right-color: #97A4B1;
       border-left-color: transparent;
       border-bottom-color: transparent;
     }
+
   }
 
   // Form input

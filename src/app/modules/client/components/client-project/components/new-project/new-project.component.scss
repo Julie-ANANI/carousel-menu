@@ -61,9 +61,11 @@
       margin-top: -15px;
       margin-left: 17px;
       background: transparent;
+
       i {
         color: transparent;
       }
+
     }
 
     .offers {
@@ -74,13 +76,17 @@
       width: 328px;
       cursor: pointer;
       background: #FAFAFA;
+
       ul {
         margin-bottom: 0;
+
         li {
           font-size: 0.7rem;
           color: #262831;
         }
+
       }
+
     }
 
     .offers:hover {
@@ -93,8 +99,10 @@
       transition: all 0.35s ease-in-out;
       border-color: #2ECC71;
       background: #2ECC71;
+
       i {
         color: white;
+
       }
     }
 

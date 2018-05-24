@@ -24,9 +24,12 @@
 
         .primary-button {
           border-color: #2ECC71;
-          background-color: #FFF9EB;
           color: #262831;
           pointer-events: auto;
+        }
+
+        .primary-button:hover {
+          background-color: #FFF9EB;
         }
 
         .circle {
@@ -43,12 +46,12 @@
         .primary-button {
           border-color: #dbdbdb;
           color: #a9a9a9;
-          background: white;
-          pointer-events: none;
+          background-color: #dbdbdb;
+          cursor: not-allowed;
         }
 
         .circle {
-          background: transparent;
+          display: none;
         }
 
       }
@@ -62,17 +65,19 @@
     padding-bottom: 25px;
 
     .tabs li {
-        border-bottom: 1px solid #CDCDCD;
+      border-bottom: 1px solid #CDCDCD;
 
-        a {
-          background-color: white;
-          color: #4F5D6B;
-          border-bottom: 4px solid transparent;
-          font-weight: 500;
-          i {
-            display: none;
-          }
+      a {
+        background-color: white;
+        color: #4F5D6B;
+        border-bottom: 4px solid transparent;
+        font-weight: 500;
+
+        i {
+          display: none;
         }
+
+      }
 
       li a:hover {
         border-bottom-color: #FFB300;
