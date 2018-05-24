@@ -23,6 +23,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Input() project: Innovation;
   @Output() projectChange = new EventEmitter<any>();
   @Output() cardsChange = new EventEmitter<any>();
+  @Output() saveChanges = new EventEmitter<boolean>();
 
   public innovationData: FormGroup; // Overall innovation
   private ngUnsubscribe: Subject<any> = new Subject();
@@ -114,6 +115,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     if (this.canEdit) {
+
+
+
       if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
         this._innovationService.createInnovationCard(this.project._id, {
           lang: this.project.innovationCards[0].lang === 'en' ? 'fr' : 'en' // Pour l'instant il n'y a que deux langues
@@ -126,6 +130,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
           });
       }
     }
+
+    window.location.reload();
 
   }
 
