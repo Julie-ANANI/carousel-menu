@@ -61,6 +61,23 @@ export class AdminCampaignMailsComponent implements OnInit {
     });
   }
 
+  public freeze(batch: any) {
+    this._campaignService.freeze(batch).first().subscribe();
+  }
+  public unfreeze(batch: any) {
+    this._campaignService.unfreeze(batch).first().subscribe();
+  }
+
+  public startAutoBatch() {
+    this._campaignService.startAutoBatch(this._campaign._id).first().subscribe((batch: Array<any>) => {
+      this.stats.batches = this.stats.batches.concat(batch);
+    });
+  }
+
+  public creerpro() {
+    this._campaignService.creerpro(this._campaign._id).first().subscribe();
+  }
+
   public startEditing(batch: any) {
     const getDate = (d: string) => d.toString().slice(0,10);
     const getTime = (d: string) => (new Date(d)).toLocaleTimeString();
@@ -117,11 +134,32 @@ export class AdminCampaignMailsComponent implements OnInit {
     computedDate.setMinutes(minutes);
     return computedDate;
   }
-  
+
   public sendTestEmails(batchStatus: number) {
     this._campaignService.sendTestEmails(this._campaign._id, batchStatus).first().subscribe(_ => {
       console.log("OK");
     });
+  }
+
+
+  get readyAutoBatch() {
+    return (
+      this.quizGenerated &&
+      this.innoReady &&
+      this.emailReady
+    );
+  }
+
+  get emailReady(): boolean {
+    return (
+      this._campaign.settings.emails.reduce(( prev, next) => (prev && next.modified), true)
+    )
+  }
+
+  get innoReady() {
+    return (
+      this._campaign.innovation.status === 'EVALUATING'
+    )
   }
 
   get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""); }

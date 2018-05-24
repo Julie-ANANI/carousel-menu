@@ -35,8 +35,19 @@
     <button (click)="testModal=true" class="btn btn-primary">
       Envoyer les mails de test
     </button>
-    <button (click)="batchModal=true" class="btn btn-primary" [disabled]="!quizGenerated">
+    <button (click)="batchModal=true" class="btn btn-primary" [disabled] = "!quizGenerated" >
       Programmer un nouveau batch de mails
+    </button>
+    <button (click)="startAutoBatch()" class="btn btn-primary" [disabled] = "!readyAutoBatch" >
+      AutoBatch ON/OFF
+    </button>
+    <ul>
+      <li *ngIf="!quizGenerated"> Quizz manquant </li>
+      <li *ngIf="!innoReady"> Fiche manquante </li>
+      <li *ngIf="!emailReady"> Email non-modifié </li>
+    </ul>
+    <button (click)="creerpro()" class="btn btn-primary">
+      CreerDesPros Alea + Autobatch si actif
     </button>
   </div>
   <div class="card" *ngFor="let batch of stats.batches; let batchIndex = index">
@@ -45,6 +56,12 @@
         Batch de {{ batch.size }} professionnels
         <a class="c-hand" role="button" (click)="(selectedBatchIdToBeDeleted = batch._id) && $event.preventDefault()">
           <i class="fas fa-trash"></i>
+        </a>
+        <a class="c-hand" role="button" (click)="freeze(batch)">
+          <i class="fa fa-cloud"> froze </i>
+        </a>
+        <a class="c-hand" role="button" (click)="unfreeze(batch)">
+          <i class="fa fa-cloud"> unfroze </i>
         </a>
         <a *ngIf="!batch.editing" class="c-hand" role="button" (click)="startEditing(batch) && $event.preventDefault()">
           <i class="fas fa-pencil"></i>
@@ -164,4 +181,3 @@
     </div>
   </div>
 </div>
-

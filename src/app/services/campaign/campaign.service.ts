@@ -70,6 +70,30 @@ export class CampaignService {
         .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public startAutoBatch(campaignId: string): Observable<any> {
+    return this._http.post(`/campaign/${campaignId}/startAutoBatch`)
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public creerpro(campaignId: string): Observable<any> {
+    return this._http.post(`/campaign/${campaignId}/creerPro`)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public freeze(batch: any): Observable<any> {
+    return this._http.post( `/batch/${batch._id}/freeze`)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public unfreeze(batch: any): Observable<any> {
+    return this._http.post( `/batch/${batch._id}/unfreeze`)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public updateBatch(batch: any): Observable<any> {
     return this._http.put(`/batch/${batch._id}`, batch)
         .map((res: Response) => res.json())

@@ -32,9 +32,10 @@ export class SharedEditEmail {
   }
 */
   public save() {
+    this.email.modified = true;
     this.emailChange.emit(this.email);
   }
-  
+
   public updateContent(event: any) {
     this.email.content = event.content;
   }
