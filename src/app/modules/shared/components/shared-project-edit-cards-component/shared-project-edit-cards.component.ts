@@ -30,9 +30,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   /*
    * Gestion de l'affichage
    */
-  public innovationCardEditingIndex: number; // Index de l'innovationCard que l'on édite (système d'onglets)
-  innovationCardLength: number; // length of the innovation items present in the innovation.
-  primaryLang: string;
+  public innovationCardEditingIndex = 0; // Index de l'innovationCard que l'on édite (système d'onglets)
 
   constructor(private _innovationService: InnovationService,
               private _authService: AuthService,
@@ -45,16 +43,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this._buildForm();
 
     this.innovationData.patchValue(this.project);
-
-    this.innovationCardLength = this.project.innovationCards.length;
-
-    if (this.innovationCardLength === 1) {
-      this.innovationCardEditingIndex = 0;
-      this.primaryLang = this.project.innovationCards[0].lang;
-      console.log(this.primaryLang);
-
-    }
-
 
     console.log(this.innovationData);
 
@@ -132,8 +120,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         }).first()
           .subscribe((data: InnovCard) => {
             this._addInnovationCardWithData(data);
-            this.project.innovationCards.push(data);
+           // this.project.innovationCards.push(data);
             this.updateCards();
+            console.log(data);
           });
       }
     }

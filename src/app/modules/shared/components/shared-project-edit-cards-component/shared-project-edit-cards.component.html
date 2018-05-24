@@ -4,75 +4,32 @@
 
       <form novalidate [formGroup]="innovationData">
 
+        <!-- Describe -->
+        <div class="column col-sm-12 col-md-8 col-6 col-mx-auto">
+          <div class="describe-container text-center">
+            <span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE_CHOICE' | translate }}</span>
+            <ul formArrayName="innovationCards" class="lang-container">
+              <li
+                *ngFor="let innovationCard of innovationData.get('innovationCards').value; let i = index"
+                [ngClass]="{'active': innovationCardEditingIndex === i }"
+                (click)="(innovationCardEditingIndex = i) && $event.preventDefault()">
+                <div class="circle"><i class="fas fa-check"></i></div>
+                <span>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
+                {{innovationCardEditingIndex}}
+              </li>
+              <span *ngIf="project.innovationCards.length <= 1" class="para">{{ 'COMMON.OR' | translate }}</span>
+                <span *ngIf="project.innovationCards.length <= 1" class="text-link" (click)="createInnovationCard($event)">
+                  {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROJECT_IN_OTHER_LANG' | translate }}
+                  <span *ngIf="project.innovationCards[0].lang !== 'fr'">{{ 'COMMON.LANG.FR' | translate }}</span>
+                  <span *ngIf="project.innovationCards[0].lang !== 'en'">{{ 'COMMON.LANG.EN' | translate }}</span>
+              </span>
+            </ul>
+          </div>
+        </div>
+
         <div formArrayName="innovationCards">
           <div *ngFor="let innovationItem of innovationData.get('innovationCards').controls; let i = index" [formGroup]="innovationItem">
-
-            <!-- Describe -->
-            <div class="column col-sm-12 col-md-8 col-6 col-mx-auto">
-              <div class="describe-container text-center">
-                <span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE_CHOICE' | translate }}</span>
-                <div class="pd-label" *ngIf="innovationCardLength === 1">
-                  <label for="lang">
-                    <input type="radio" [value]="primaryLang" id="lang" formControlName="lang" name="lang">
-                    <div class="circle"><i class="
-                      fas fa-check"></i></div>
-                    <div class="lang-selection">
-                      <span *ngIf="primaryLang === 'fr'">{{ 'COMMON.LANG.FR' | translate }}</span>
-                      <span *ngIf="primaryLang === 'en'">{{ 'COMMON.LANG.EN' | translate }}</span>
-                    </div>
-                  </label>
-                  <span [ngStyle]="{'color': '#97A4B1', 'font-size': '0.7rem', 'margin-right': '15px', 'margin-left': '15px' }"> {{ 'COMMON.OR' | translate }}</span>
-                  <span class="text-link">
-                    {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROJECT_IN_OTHER_LANG' | translate }}
-                    <span *ngIf="primaryLang !== 'fr'">{{ 'COMMON.LANG.FR' | translate }}</span>
-                    <span *ngIf="primaryLang !== 'en'">{{ 'COMMON.LANG.EN' | translate }}</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {{innovationCardEditingIndex}}
-
             <div *ngIf="innovationCardEditingIndex === i">
-
-              <!-- Describe
-              <div class="column col-sm-12 col-md-8 col-6 col-mx-auto">
-                <div class="describe-container text-center">
-                  <span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE_CHOICE' | translate }}</span>
-                  <div class="pd-label" *ngIf="innovationCardLength === 1">
-                    <label for="lang">
-                      <input type="radio" [value]="innovationItem.get('lang').value" id="lang" formControlName="lang" name="lang">
-                      <div class="circle"><i class="
-                      fas fa-check"></i></div>
-                      <div class="lang-selection">
-                        <span *ngIf="innovationItem.get('lang').value === 'fr'">{{ 'COMMON.LANG.FR' | translate }}</span>
-                        <span *ngIf="innovationItem.get('lang').value === 'en'">{{ 'COMMON.LANG.EN' | translate }}</span>
-                      </div>
-                    </label>
-                    <span [ngStyle]="{'color': '#97A4B1', 'font-size': '0.7rem', 'margin-right': '15px', 'margin-left': '15px' }"> {{ 'COMMON.OR' | translate }}</span>
-                    <span class="text-link">
-                      {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROJECT_IN_OTHER_LANG' | translate }}
-                      <span *ngIf="innovationItem.get('lang').value !== 'fr'">{{ 'COMMON.LANG.FR' | translate }}</span>
-                      <span *ngIf="innovationItem.get('lang').value !== 'en'">{{ 'COMMON.LANG.EN' | translate }}</span>
-                    </span>
-                  </div>
-                </div>
-              </div>-->
-
-              <!-- Lang
-              <div class="project-data">
-                <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.UPDATE_LANGUAGE' | translate }}</span>
-                <div class="form-group pd-label">
-                  <label class="form-radio">
-                    <input type="radio" value="fr" name="lang" formControlName="lang">
-                    <i class="form-icon"></i>{{ 'COMMON.LANG.FR' | translate }}
-                  </label>
-                  <label class="form-radio">
-                    <input type="radio" value="en" name="lang" formControlName="lang">
-                    <i class="form-icon"></i>{{ 'COMMON.LANG.EN' | translate }}
-                  </label>
-                </div>
-              </div>-->
 
               <!-- Title -->
               <div class="project-data">

@@ -8,52 +8,70 @@
     border-radius: 5px;
     flex-direction: column;
 
-    label input[type=radio] {
-      display: none;
-    }
+    .lang-container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      margin: 0;
 
-    .circle {
-      margin-top: -15px;
-      margin-left: -14px;
-      background: transparent;
+      li {
+        list-style: none;
+        border: 2px solid #dddddd;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        background: #FAFAFA;
+        font-size: 0.9em;
+        color: #262831;
+        padding: 12px 30px;
+        margin-top: 20px;
+        margin-left: 15px;
+        margin-right: 15px;
+      }
 
-      i {
-        color: transparent;
+      .circle {
+        margin-top: -31px;
+        margin-left: -44px;
+        background: transparent;
+
+        i {
+          color: transparent;
+          padding-top: 9px;
+        }
+
+      }
+
+      li:hover {
+        background-color: #FFF9EB;
+        border-color: #FFB300;
+      }
+
+      .active {
+        transition: all 0.35s ease-in-out;
+        border-color: #2ECC71 !important;
+
+        .circle {
+          border-color: #2ECC71;
+          background: #2ECC71;
+
+          i {
+            color: white;
+
+          }
+
+        }
+
       }
 
     }
 
-    .lang-selection {
-      border: 2px solid #dddddd;
-      border-radius: 5px;
-      text-align: center;
-      cursor: pointer;
-      background: #FAFAFA;
+    .para {
+      color: #97A4B1;
       font-size: 0.7rem;
-      color: #262831;
-      display: inline-block;
-      padding: 12px 30px;
-    }
-
-    .lang-selection:hover {
-      background-color: #FFF9EB;
-      border-color: #FFB300;
-    }
-
-    label input[type=radio]:checked + .circle {
-      transition: all 0.35s ease-in-out;
-      border-color: #2ECC71;
-      background: #2ECC71;
-
-      i {
-        color: white;
-
-      }
-    }
-
-    label input[type=radio]:checked + .circle + .lang-selection {
-      transition: all 0.35s ease-in-out;
-      border-color: #2ECC71;
+      padding: 20px 20px 20px 8px;
     }
 
   }
@@ -97,11 +115,33 @@
 
 @media (min-width: 768px) {
 
-  // Form input
-  .form-input-default {
-    width: 662px;
-  }
+  #pitchCard {
 
+    .describe-container {
+
+      .lang-container {
+        flex-direction: row !important;
+      }
+
+      .para {
+        padding-top: 32px;
+        padding-bottom: 16px;
+      }
+
+      .text-link {
+        padding-top: 20px;
+      }
+
+    }
+
+
+
+    // Form input
+    .form-input-default {
+      width: 662px;
+    }
+
+  }
 
 }
 
