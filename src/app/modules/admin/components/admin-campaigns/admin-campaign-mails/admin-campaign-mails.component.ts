@@ -61,19 +61,12 @@ export class AdminCampaignMailsComponent implements OnInit {
     });
   }
 
-  public freeze(batch: any) {
-    this._campaignService.freeze(batch).first().subscribe();
-  }
-  public unfreeze(batch: any) {
-    this._campaignService.unfreeze(batch).first().subscribe();
-  }
   public freezeStatus(batch: any) {
     this._campaignService.freezeStatus(batch).first().subscribe();
   }
 
   public startAutoBatch() {
     this._campaignService.startAutoBatch(this._campaign._id).first().subscribe((batch: Array<any>) => {
-      //renvoyer campaign modifiée au lieu d'un objet vide
       this.stats.batches = this.stats.batches.concat(batch);
     });
   }
