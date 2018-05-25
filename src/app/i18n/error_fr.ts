@@ -29,6 +29,8 @@ export const ERROR = {
     'UNFORBIDDEN': 'Accès interdit',
     'CANT_EDIT': 'Vous ne pouvez pas éditer ce projet.',
     'SAVED': 'Projet sauvegardé',
+    'DELETED': 'Projet supprimé',
+    'DELETED_TEXT': 'Votre projet a été supprimé avec succès dans la langue spécifiée.',
     'SAVED_TEXT': 'Votre projet a été enregistré.',
     'SUBMITTED': 'Projet envoyé',
     'SUBMITTED_TEXT': 'Votre projet a été transmis pour la validation.'

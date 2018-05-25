@@ -77,6 +77,8 @@ export const COMMON = {
     '2': 'Already available'
   },
 
+  'PROJECT_SAVE': 'Please save the project before submitting it.',
+
   'INVALID': {
     'EMAIL': 'Email is invalid.',
     'PASSWORD_TOO_SHORT': 'Password is too short.'

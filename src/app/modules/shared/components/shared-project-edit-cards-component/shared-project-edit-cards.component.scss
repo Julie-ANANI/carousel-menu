@@ -3,7 +3,7 @@
   padding-bottom: 25px;
 
   .describe-container {
-    border: 1px solid #E0E0E0;
+    border: 2px solid #E0E0E0;
     padding: 20px;
     border-radius: 5px;
     flex-direction: column;
@@ -27,7 +27,7 @@
         font-size: 0.9em;
         color: #262831;
         padding: 12px 30px;
-        margin-top: 20px;
+        margin-top: 30px;
         margin-left: 15px;
         margin-right: 15px;
       }
@@ -49,7 +49,7 @@
         border-color: #FFB300;
       }
 
-      .active {
+      li.active {
         border-color: #2ECC71 !important;
 
         .circle {
@@ -66,11 +66,33 @@
 
     }
 
-    .para {
-      color: #97A4B1;
-      font-size: 0.7rem;
-      padding: 20px 20px 20px 8px;
+    .create-innovation {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      flex-wrap: wrap;
+
+      .para {
+        color: #97A4B1;
+        font-size: 0.7rem;
+        padding-top: 0;
+        padding-bottom: 30px;
+      }
+
     }
+
+    .innov-progress {
+      padding-top: 30px;
+      display: inline-block;
+
+      .delete-link {
+        color: #EA5858;
+      }
+
+    }
+
 
   }
 
@@ -121,18 +143,20 @@
         flex-direction: row !important;
       }
 
-      .para {
-        padding-top: 32px;
-        padding-bottom: 16px;
-      }
+      .create-innovation {
+        margin-top: 30px;
+        flex-direction: row;
 
-      .text-link {
-        padding-top: 20px;
+        .para {
+          padding-top: unset;
+          padding-bottom: unset;
+          padding-left: 15px;
+          padding-right: 25px;
+        }
+
       }
 
     }
-
-
 
     // Form input
     .form-input-default {

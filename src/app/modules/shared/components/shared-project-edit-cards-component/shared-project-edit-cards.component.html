@@ -5,7 +5,7 @@
       <form novalidate [formGroup]="innovationData">
 
         <!-- Describe -->
-        <div class="column col-sm-12 col-md-8 col-6 col-mx-auto">
+        <div class="column col-sm-12 col-xl-10 col-6 col-mx-auto">
           <div class="describe-container text-center">
             <span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE_CHOICE' | translate }}</span>
             <ul formArrayName="innovationCards" class="lang-container">
@@ -13,19 +13,31 @@
               <li
                 *ngFor="let innovationCard of innovationData.get('innovationCards').value; let i = index"
                 [ngClass]="{'active': innovationCardEditingIndex === i }"
-                (click)="(innovationCardEditingIndex = i) && $event.preventDefault()">
+                (click)="(innovationCardEditingIndex = i) && $event.preventDefault(); setAsPrincipal(innovationCard.id)">
                 <div class="circle"><i class="fas fa-check"></i></div>
                 <span>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
               </li>
 
-              <span *ngIf="project.innovationCards.length <= 1" class="para">{{ 'COMMON.OR' | translate }}</span>
-                <span *ngIf="project.innovationCards.length <= 1" class="text-link" (click)="createInnovationCard($event)">
-                  {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROJECT_IN_OTHER_LANG' | translate }}
-                  <span *ngIf="project.innovationCards[0].lang !== 'fr'">{{ 'COMMON.LANG.FR' | translate }}</span>
-                  <span *ngIf="project.innovationCards[0].lang !== 'en'">{{ 'COMMON.LANG.EN' | translate }}</span>
+              <div *ngIf="project.innovationCards.length === 1" class="create-innovation">
+                <span class="para">{{ 'COMMON.OR' | translate }}</span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROJECT_IN_OTHER_LANG' | translate }}&nbsp;
+                <span class="text-link">
+                  <span *ngIf="primaryLanguage !== 'fr'" (click)="createInnovationCard($event, 'fr')">{{ 'COMMON.LANG.FR' | translate }}</span>
+                  <span *ngIf="primaryLanguage !== 'en'" (click)="createInnovationCard($event, 'en')">{{ 'COMMON.LANG.EN' | translate }}</span>
               </span>
+              </div>
 
             </ul>
+
+            <div class="innov-progress"  *ngFor="let innovationCard of innovationData.get('innovationCards').value; let i = index">
+              <div *ngIf="innovationCardEditingIndex === i">
+                <span class="text-link">Preview</span>&nbsp;
+                <span *ngIf="project.innovationCards.length > 1 ">
+                  <span [ngStyle]="{ 'color': '#97A4B1' }">/</span>&nbsp;
+                  <span class="text-link delete-link" (click)="deleteInnovCard(innovationCard.id)">Delete</span>
+                </span>
+              </div>
+            </div>
+
           </div>
         </div>
 

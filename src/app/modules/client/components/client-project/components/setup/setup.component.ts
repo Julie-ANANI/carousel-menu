@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
+
   saveStatus: boolean;
 
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
@@ -26,7 +27,7 @@ export class SetupProjectComponent implements OnInit {
 
   ngOnInit() {
     this._currentTab = 'pitch';
-    this.saveStatus = true;
+    this.saveStatus = false;
     this._saveButtonClass = 'disabled';
   }
 
@@ -46,21 +47,21 @@ export class SetupProjectComponent implements OnInit {
   public saveProject(event: Event): void {
     event.preventDefault();
 
-   if (this.saveStatus) {
-      this.innovationService
-        .save(this.project._id, this.project)
-        .first()
-        .subscribe(data => {
-          this.project = data;
-          this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
-        }, err => {
-          this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-        });
+     if (this.saveStatus) {
+        this.innovationService
+          .save(this.project._id, this.project)
+          .first()
+          .subscribe(data => {
+            this.project = data;
+            this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
+          }, err => {
+            this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+          });
 
-      this.saveStatus = false;
-      this._saveButtonClass = 'disabled';
+        this.saveStatus = false;
+        this._saveButtonClass = 'disabled';
 
-    }
+     }
 
   }
 
