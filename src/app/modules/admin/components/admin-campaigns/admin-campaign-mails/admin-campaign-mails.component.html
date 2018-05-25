@@ -38,12 +38,14 @@
     <button (click)="batchModal=true" class="btn btn-primary" [disabled] = "!quizGenerated" >
       Programmer un nouveau batch de mails
     </button>
-    <button (click)="startAutoBatch()" class="btn btn-primary" [disabled] = "!readyAutoBatch" >
-      AutoBatch ON/OFF
-    </button>
+    <label class="form-switch">
+      <input type="checkbox" (change)="startAutoBatch()" [ngModel]="campaign.autoBatch" [disabled] = "!readyAutoBatch" >
+      <i class="form-icon"></i>
+    </label>
     <ul>
       <li *ngIf="!quizGenerated"> Quizz manquant </li>
       <li *ngIf="!innoReady"> Fiche manquante </li>
+      <li *ngIf="!templateImported"> Template manquant</li>
       <li *ngIf="!emailReady"> Email non-modifié </li>
     </ul>
     <button (click)="creerpro()" class="btn btn-primary">
@@ -57,12 +59,11 @@
         <a class="c-hand" role="button" (click)="(selectedBatchIdToBeDeleted = batch._id) && $event.preventDefault()">
           <i class="fas fa-trash"></i>
         </a>
-        <a class="c-hand" role="button" (click)="freeze(batch)">
-          <i class="fa fa-cloud"> froze </i>
-        </a>
-        <a class="c-hand" role="button" (click)="unfreeze(batch)">
-          <i class="fa fa-cloud"> unfroze </i>
-        </a>
+        <label class="form-switch">
+          <input type="checkbox" (change)="freezeStatus(batch)" [ngModel]="batch.active" >
+          <i class="form-icon"></i>
+        </label>
+
         <a *ngIf="!batch.editing" class="c-hand" role="button" (click)="startEditing(batch) && $event.preventDefault()">
           <i class="fas fa-pencil"></i>
         </a>

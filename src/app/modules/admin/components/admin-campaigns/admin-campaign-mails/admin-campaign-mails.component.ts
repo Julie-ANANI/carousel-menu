@@ -67,9 +67,13 @@ export class AdminCampaignMailsComponent implements OnInit {
   public unfreeze(batch: any) {
     this._campaignService.unfreeze(batch).first().subscribe();
   }
+  public freezeStatus(batch: any) {
+    this._campaignService.freezeStatus(batch).first().subscribe();
+  }
 
   public startAutoBatch() {
     this._campaignService.startAutoBatch(this._campaign._id).first().subscribe((batch: Array<any>) => {
+      //renvoyer campaign modifiée au lieu d'un objet vide
       this.stats.batches = this.stats.batches.concat(batch);
     });
   }
@@ -146,20 +150,27 @@ export class AdminCampaignMailsComponent implements OnInit {
     return (
       this.quizGenerated &&
       this.innoReady &&
-      this.emailReady
+      this.emailReady &&
+      this.templateImported
     );
   }
 
   get emailReady(): boolean {
     return (
-      this._campaign.settings.emails.reduce(( prev, next) => (prev && next.modified), true)
-    )
+      this._campaign.settings.emails.reduce((prev, next) => (prev && next.modified), true)
+    );
+  }
+
+  get templateImported(): boolean {
+    return (
+      this._campaign.settings.emails.length !== 0
+    );
   }
 
   get innoReady() {
     return (
       this._campaign.innovation.status === 'EVALUATING'
-    )
+    );
   }
 
   get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""); }

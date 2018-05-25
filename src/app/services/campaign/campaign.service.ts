@@ -83,13 +83,19 @@ export class CampaignService {
   }
 
   public freeze(batch: any): Observable<any> {
-    return this._http.post( `/batch/${batch._id}/freeze`)
+    return this._http.get( `/batch/${batch._id}/freeze`)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
   public unfreeze(batch: any): Observable<any> {
-    return this._http.post( `/batch/${batch._id}/unfreeze`)
+    return this._http.get( `/batch/${batch._id}/unfreeze`)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public freezeStatus(batch: any): Observable<any> {
+    return this._http.get( `/batch/${batch._id}/freezeStatus`)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
