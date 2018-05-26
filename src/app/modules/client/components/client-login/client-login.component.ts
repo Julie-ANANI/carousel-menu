@@ -6,7 +6,7 @@ import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-client-login',
@@ -30,7 +30,7 @@ export class ClientLoginComponent implements OnInit {
     this._titleService.setTitle('LOG_IN.TITLE');
 
     this.formData = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
 
@@ -38,6 +38,7 @@ export class ClientLoginComponent implements OnInit {
 
   onSubmit() {
     if (this.formData.valid) {
+
       const user = new User(this.formData.value);
 
       this._authService.login(user)
@@ -56,17 +57,17 @@ export class ClientLoginComponent implements OnInit {
             };
 
             this._notificationsService.success('ERROR.LOGIN.WELCOME', 'ERROR.LOGIN.LOGGED_IN');
-
             // Redirect the user
             this._router.navigate([redirect], navigationExtras);
           }
         },
         err => {
-          this._notificationsService.error('ERROR.ERROR', err.message);
+          this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
         });
-    }
-    else {
-      this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
+    } else {
+      if (this.formData.untouched && this.formData.pristine) {
+        this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+      }
     }
 
   }
@@ -93,7 +94,7 @@ export class ClientLoginComponent implements OnInit {
     event.preventDefault();
 
     if (!this.formData.get('email')!.value) {
-      this._notificationsService.error('ERROR.LOGIN.EMPTY_EMAIL', 'ERROR.LOGIN.EMAIL_PLEASE');
+      this._notificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_PLEASE');
     }
     else {
       this._userService.changePassword(this.formData.get('email')!.value)

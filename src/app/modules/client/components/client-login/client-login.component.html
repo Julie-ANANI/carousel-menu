@@ -1,74 +1,182 @@
-<div class="main-container" id="login" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
+<div class="main-container" id="login">
   <div class="columns">
-    <div class="column col-12 col-mx-auto text-center">
-      <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData">
+    <div class="column col-12 col-mx-auto">
 
-        <!-- Logo -->
-        <div class="logo-container">
-          <a href="https://www.umi.us"><img src="{{ getLogo() }}" alt="UMI" height="35px"></a>
+      <div class="columns col-gapless">
+
+        <div class="column col-6 col-mx-auto img-container cover-image" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
         </div>
 
-        <!-- Sign in container -->
-        <div class="column col-xs-12 col-sm-11 col-md-11 col-mx-auto sign-in-container">
-          <div class="columns">
+        <div class="column col-sm-12 col-6 col-mx-auto login-container">
 
-            <!-- Bot image -->
-            <div class="column col-sm-12 col-5 col-mx-auto">
-              <span class="bot-text">{{ 'LOG_IN.HELLO' | translate }}</span>
-              <br>
-              <img src="https://res.cloudinary.com/umi/image/upload/v1526840593/app/default-images/login-trian.svg"
-                   class="bot-trian">
-              <div class="bot-image">
-                <img src="https://res.cloudinary.com/umi/image/upload/v1526839959/app/default-images/login-bot.svg" alt="Bot">
-              </div>
-            </div>
+          <!-- Logo -->
+          <div class="text-center">
+            <a href="https://www.umi.us"><img src="{{ getLogo() }}" alt="UMI" height="35px"></a>
+          </div>
 
-            <!-- Information -->
-            <div class="column col-sm-12 col-7 col-mx-auto">
-              <div class="form-group">
-                <input
-                  class="form-input form-input-default"
-                  formControlName="email"
-                  type="email"
-                  [attr.placeholder]="'COMMON.EMAIL' | translate ">
+          <div class="form-container">
+            <form novalidate (submit)="onSubmit()" [formGroup]="formData">
+
+              <!-- Bot -->
+              <div class="bot-container">
+                <span class="bot-text">{{ 'LOG_IN.HELLO' | translate }}</span>
+                <br>
+                <img src="https://res.cloudinary.com/umi/image/upload/v1526396724/app/default-images/triangle.svg" class="bot-trian">
+                <div>
+                  <img src="https://res.cloudinary.com/umi/image/upload/v1526839959/app/default-images/login-bot.svg" alt="Bot">
+                </div>
               </div>
-              <div class="form-error" *ngIf="formData.get('email').touched && formData.get('email').invalid">
-                  <span *ngIf="formData.get('email').hasError('required')">
+
+              <!-- LinkedIn -->
+              <div class="social-container text-center" *ngIf="checkIsMainDomain()">
+                <a class="primary-button" (click)="linkedInSignIn($event)">
+                  <span><i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}</span>
+                </a>
+              </div>
+
+              <!-- Or -->
+              <div class="or-container text-center">
+                <span> {{ 'COMMON.OR' | translate }} </span>
+              </div>
+
+              <!-- Credentials -->
+              <div class="credentials-container">
+
+                <div class="form-group">
+                  <label class="form-label-default">{{ 'COMMON.EMAIL' | translate }}</label>
+                  <input
+                    type="email"
+                    class="form-input-default"
+                    formControlName="email"
+                    placeholder="john@catco.com">
+                  <span
+                    class="form-error"
+                    *ngIf="formData.get('email').hasError('required') && formData.get('email').touched">
                     {{ 'COMMON.REQUIRED.EMAIL' | translate }}
                   </span>
-                <span *ngIf="formData.get('email').hasError('email')">
-                      {{ 'COMMON.INVALID.EMAIL' | translate }}
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label-default">{{ 'COMMON.PASSWORD' | translate }}</label>
+                  <input
+                    class="form-input-default"
+                    type="password"
+                    formControlName="password"
+                    [attr.placeholder]="'COMMON.PASSWORD_TEXT' | translate ">
+                  <span
+                    class="form-error"
+                    *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
+                    {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
                   </span>
+                </div>
+
               </div>
-              <div class="form-group">
-                <input
-                  class="form-input form-input-default"
-                  formControlName="password"
-                  type="password"
-                  [attr.placeholder]="'COMMON.PASSWORD' | translate ">
-              </div>
-              <div class="form-error" *ngIf="formData.get('password').touched && formData.get('password').invalid">
-                  <span *ngIf="formData.get('password').hasError('required')">
-                  {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
-                  </span>
-              </div>
-              <div class="submit-container">
+
+              <!-- Login button and forget password -->
+              <div class="submit-container text-center">
+
                 <div class="login-button">
-                  <button class="btn primary-button" type="submit" [disabled]="formData.invalid">
+                  <button
+                    class="primary-button"
+                    type="submit"
+                    [disabled]="formData.invalid && formData.touched">
                     {{ 'LOG_IN.LOG_IN_BTN' | translate }}
                   </button>
                 </div>
-                <a class="text-link" (click)="changePassword($event)">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
+
+                <span [ngStyle]="{ 'font-size': '0.7rem' }">{{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }}</span>
+                <a class="text-link" (click)="changePassword($event)">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</a>
+
               </div>
-            </div>
 
+            </form>
           </div>
-        </div>
 
-      </form>
-    </div>
-  </div>
-</div>
+          <!-- Sign up -->
+          <div class="create-container text-center">
+            <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '10px' }">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
+            <a class="primary-button ghost-button" routerLink="/signup">{{ 'LOG_IN.SIGN_UP' | translate }}</a>
+          </div>
+
+         </div>
+
+       </div>
+
+     </div>
+   </div>
+ </div>
+
+ <!--<div class="main-container" id="login" >
+   <div class="columns">
+     <div class="column col-12 col-mx-auto text-center">
+       <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData">
+
+         <!-- Logo
+         <div class="logo-container">
+           <a href="https://www.umi.us"><img src="{{ getLogo() }}" alt="UMI" height="35px"></a>
+         </div>
+
+         <!-- Sign in container
+         <div class="column col-xs-12 col-sm-11 col-md-11 col-mx-auto sign-in-container">
+           <div class="columns">
+
+             <!-- Bot image
+             <div class="column col-sm-12 col-5 col-mx-auto">
+               <span class="bot-text">{{ 'LOG_IN.HELLO' | translate }}</span>
+               <br>
+               <img src="https://res.cloudinary.com/umi/image/upload/v1526396724/app/default-images/triangle.svg"
+                    class="bot-trian">
+               <div class="bot-image">
+                 <img src="https://res.cloudinary.com/umi/image/upload/v1526839959/app/default-images/login-bot.svg" alt="Bot">
+               </div>
+             </div>
+
+             <!-- Information
+             <div class="column col-sm-12 col-7 col-mx-auto">
+               <div class="form-group">
+                 <input
+                   class="form-input form-input-default"
+                   formControlName="email"
+                   type="email"
+                   [attr.placeholder]="'COMMON.EMAIL' | translate ">
+               </div>
+               <div class="form-error" *ngIf="formData.get('email').touched && formData.get('email').invalid">
+                   <span *ngIf="formData.get('email').hasError('required')">
+                     {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+                   </span>
+                 <span *ngIf="formData.get('email').hasError('email')">
+                       {{ 'COMMON.INVALID.EMAIL' | translate }}
+                   </span>
+               </div>
+               <div class="form-group">
+                 <input
+                   class="form-input form-input-default"
+                   formControlName="password"
+                   type="password"
+                   [attr.placeholder]="'COMMON.PASSWORD' | translate ">
+               </div>
+               <div class="form-error" *ngIf="formData.get('password').touched && formData.get('password').invalid">
+                   <span *ngIf="formData.get('password').hasError('required')">
+                   {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+                   </span>
+               </div>
+               <div class="submit-container">
+                 <div class="login-button">
+                   <button class="btn primary-button" type="submit" [disabled]="formData.invalid">
+                     {{ 'LOG_IN.LOG_IN_BTN' | translate }}
+                   </button>
+                 </div>
+                 <a class="text-link" (click)="changePassword($event)">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
+               </div>
+             </div>
+
+           </div>
+         </div>
+
+       </form>
+     </div>
+   </div>
+ </div>-->
 
 <!--<div class="container main-container" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
   <div class="columns">

@@ -7,6 +7,6 @@ export const environment = {
   innovationUrl: 'http://localhost:4200',
   quizUrl: 'http://localhost:4200',
   companyURL: 'https://www.umi.us',
-  logoURL: 'https://res.cloudinary.com/umi/image/upload/v1524744845/app/companies-logo/logo-umi.svg',
-  background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg'
+  logoURL: 'http://res.cloudinary.com/umi/image/upload/v1527327671/app/companies-logo/logo-umi.svg',
+  background: 'http://res.cloudinary.com/umi/image/upload/v1527329281/app/default-images/sign-background.jpg'
 };
