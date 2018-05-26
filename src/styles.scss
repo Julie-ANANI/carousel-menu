@@ -265,7 +265,7 @@ ul.list-filter {
 
 .text-link:hover {
   text-decoration: underline;
-  color: lighten($primary-element, 15%);
+  color: $primary-element;
 }
 
 .text-link:focus {
@@ -283,14 +283,14 @@ ul.list-filter {
 /********************************** Bot Input Styles ***************************************/
 
 .bot-text {
-  padding: 20px 15px;
+  padding: 20px 11px;
   border-radius: 5px;
   font-weight: lighter;
-  font-size: 1.35rem;
   color: $primary-dark;
-  border: 1px solid transparent;
+  border: 1px solid #E0E0E0;
   display: inline-block;
-  width: 274px;
+  font-size: 0.9rem;
+  width: 213px;
   text-align: center;
   vertical-align: middle;
 
@@ -435,13 +435,18 @@ ul.list-filter {
 
 /********************************** Form Input Styles ***************************************/
 
+// Form group
+
+.form-group {
+  margin-bottom: 20px !important;
+}
+
 // Form label
 
 .form-label-default {
-  color: $meta-element;
+  color: $primary-dark;
   font-size: 0.8rem;
   font-weight: 600;
-  padding-left: 2px;
 }
 
 .form-label-active {
@@ -469,7 +474,7 @@ ul.list-filter {
   min-height: 36px;
   position: relative;
   background: white none;
-  padding: 12px 12px;
+  padding: 15px;
 }
 
 .form-input-default:placeholder-shown {
@@ -619,14 +624,16 @@ ul.list-filter {
 
 .primary-button:hover, .primary-button:active {
   color: white;
-  background: lighten($button-color, 15%);
-  border-color: lighten($button-color, 15%);
+  background: lighten($button-color, 10%);
+  border-color: lighten($button-color, 10%);
+  text-decoration: none;
 }
 
 .primary-button:disabled {
   background: $button-disabled-color;
   border-color: $button-disabled-color;
   color: #a9a9a9;
+  cursor: not-allowed;
 }
 
 .primary-button:focus {
@@ -655,8 +662,7 @@ ul.list-filter {
 
 .ghost-button:hover, .ghost-button:active {
   background: white none;
-  color: lighten($button-color, 15%);
-  border-color: lighten($button-color, 15%);
+  color: lighten($button-color, 10%);
 }
 
 .ghost-button:disabled {
@@ -680,8 +686,8 @@ ul.list-filter {
 
 .delete-button:hover, .delete-button:active {
   background: white;
-  color: lighten($alert-element, 15%);
-  border-color: lighten($alert-element, 15%);
+  color: lighten($alert-element, 10%);
+  border-color: lighten($alert-element, 10%);
 }
 
 .delete-button:focus {
