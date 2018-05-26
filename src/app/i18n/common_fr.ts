@@ -38,6 +38,7 @@ export const COMMON = {
   'EMAIL': 'Email adresse',
   'PHONE': 'Téléphone',
   'PASSWORD': 'Mot de passe',
+  'PASSWORD_TEXT': 'Tapez votre mot de passe',
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
   'COMPANY': 'Entreprise',
   'JOBTITLE': 'Poste',

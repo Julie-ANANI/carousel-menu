@@ -38,6 +38,7 @@ export const COMMON = {
   'EMAIL': 'Email address',
   'PHONE': 'Phone',
   'PASSWORD': 'Password',
+  'PASSWORD_TEXT': 'Enter your password',
   'PASSWORD_CONFIRM': 'Password confirmation',
   'COMPANY': 'Company',
   'JOBTITLE': 'Job title',
