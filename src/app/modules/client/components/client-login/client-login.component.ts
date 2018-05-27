@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
-import { UserService } from '../../../../services/user/user.service';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -19,7 +18,6 @@ export class ClientLoginComponent implements OnInit {
   private _formData: FormGroup;
 
   constructor(private _authService: AuthService,
-              private _userService: UserService,
               private _router: Router,
               private _formBuilder: FormBuilder,
               private _titleService: TranslateTitleService,
@@ -30,7 +28,7 @@ export class ClientLoginComponent implements OnInit {
     this._titleService.setTitle('LOG_IN.TITLE');
 
     this._formData = this._formBuilder.group({
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
 
@@ -89,7 +87,7 @@ export class ClientLoginComponent implements OnInit {
 
   }
 
-  public changePassword(event: Event) {
+  /*public changePassword(event: Event) {
     event.preventDefault();
 
     if (!this._formData.get('email')!.value) {
@@ -105,7 +103,7 @@ export class ClientLoginComponent implements OnInit {
         });
     }
 
-  }
+  }*/
 
   get authService(): AuthService {
     return this._authService;

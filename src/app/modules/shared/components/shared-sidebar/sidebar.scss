@@ -1,6 +1,6 @@
 // Color
 $header-background: #0B90C6;
-$mandatory-star: #721c24;
+$mandatory-star: #EA5858;
 
 .sidebar-wrapper {
   top: 0;
@@ -27,6 +27,9 @@ $mandatory-star: #721c24;
   padding-bottom: 22px;
   font-size: 1.05rem;
   font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .icon-cross:hover {
@@ -35,10 +38,7 @@ $mandatory-star: #721c24;
 
 .sidebar-content {
   padding-top: 30px;
-}
-
-.form-group {
-  margin-bottom: 20px;
+  padding-bottom: 30px;
 }
 
 .mand-star {
@@ -47,6 +47,14 @@ $mandatory-star: #721c24;
 }
 
 /********************************** Media ***************************************/
+
+@media (min-width:421px) and (max-width: 600px) {
+
+  .sidebar-wrapper {
+    width: 423px !important;
+  }
+
+}
 
 @media (min-width:350px) and (max-width: 420px){
 
@@ -63,6 +71,7 @@ $mandatory-star: #721c24;
   }
 
 }
+
 
 
 

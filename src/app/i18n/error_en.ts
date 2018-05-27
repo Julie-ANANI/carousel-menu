@@ -12,7 +12,6 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'EMPTY_EMAIL': 'Email field empty',
     'EMAIL_PLEASE': 'Please enter your email address in the provided field.',
     'EMAIL_SENT': 'Email sent',
-    'PASSWORD_CHANGE' : 'If there\'s an InVision account linked to this email address, we\'ll send over instructions to reset your password.',
     'CHANGE_PASSWORD': 'To change your password, please click on the link we have just sent you by email.',
     'EMAIL_NOT_FOUND': 'The entered email could not be found please check it and try again.',
     'LOGOUT': 'Logout',

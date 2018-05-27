@@ -23,6 +23,7 @@ import { BLACKLISTS } from '../modules/shared/components/shared-email-blacklist/
 import { TAGS } from '../modules/admin/components/admin-tags/i18n/fr';
 import { PROJECT_LIST } from '../modules/admin/components/admin-projects-list/i18n/fr';
 import { PROJECT_MODULE } from '../modules/client/components/client-project/i18n/fr';
+import { FORGET_PASSWORD } from '../modules/client/components/client-forget-password/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -37,6 +38,7 @@ export const fr = {
   'MY_ACCOUNT': MY_ACCOUNT,
   'RESET_PASSWORD': RESET_PASSWORD,
   'SIGN_UP': SIGN_UP,
+  'FORGET_PASSWORD': FORGET_PASSWORD,
   'WELCOME': WELCOME,
   'HEADER': HEADER,
   'EXPORT': EXPORT,

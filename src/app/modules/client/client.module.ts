@@ -15,6 +15,7 @@ import { ClientLogoutComponent } from './components/client-logout/client-logout.
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
+import { ClientForgetPasswordComponent } from './components/client-forget-password/client-forget-password.component';
 
 @NgModule({
   imports: [
@@ -35,8 +36,10 @@ import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
     ClientSignupComponent,
     ClientLogoutComponent,
     ClientResetPasswordComponent,
-    DiscoverSummaryPipe
+    DiscoverSummaryPipe,
+    ClientForgetPasswordComponent
   ]
 })
+
 export class ClientModule {
 }

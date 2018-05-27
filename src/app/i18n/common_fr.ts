@@ -38,14 +38,21 @@ export const COMMON = {
   'EMAIL': 'Email adresse',
   'PHONE': 'Téléphone',
   'PASSWORD': 'Mot de passe',
-  'PASSWORD_TEXT': 'Tapez votre mot de passe',
+  'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',
+  'PASSWORD_SIGNUP_PLACEHOLDER': '8+ caractères',
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
   'COMPANY': 'Entreprise',
+  'COMPANY_PLACEHOLDER': 'Entrez le nom de votre entreprise',
   'JOBTITLE': 'Poste',
+  'JOBTITLE_PLACEHOLDER': 'Entrez votre titre de poste',
   'TYPE': 'Type',
   'DOMAIN': 'Domain',
   'COUNTRY': 'Pays',
-  'TERMS': 'J\'accepte les termes et conditions d\'utilisation.',
+  'COUNTRY_PLACEHOLDER': 'Entrez votre pays',
+  'TERMS': {
+    'A': 'En cliquant sur "Continuer", j\'accepte',
+    'B': 'termes et conditions d\'utilisation.',
+  },
 
   'REQUIRED': {
     'FIRSTNAME': 'Le prénom est requis.',
@@ -61,7 +68,7 @@ export const COMMON = {
   },
 
   'BUTTON': {
-    'SIGN_UP': 'S\'inscrire',
+    'SIGN_UP': 'Continuer',
   },
 
   'PROJECT_STATE': {
@@ -79,7 +86,7 @@ export const COMMON = {
   },
 
   'INVALID': {
-    'EMAIL': 'L\'email est invalide.',
+    'EMAIL': 'S\'il vous plaît, mettez une adresse email valide',
     'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court.'
   },
 

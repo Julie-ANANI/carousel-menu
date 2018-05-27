@@ -50,8 +50,12 @@
                     placeholder="john@catco.com">
                   <span
                     class="form-error"
-                    *ngIf="formData.get('email').hasError('required') && formData.get('email').touched">
-                    {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+                    *ngIf="formData.get('email').touched">
+                    <span *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+                    <span
+                      *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">
+                      {{ 'COMMON.INVALID.EMAIL' | translate }}
+                    </span>
                   </span>
                 </div>
 
@@ -61,7 +65,7 @@
                     class="form-input-default"
                     type="password"
                     formControlName="password"
-                    [attr.placeholder]="'COMMON.PASSWORD_TEXT' | translate ">
+                    [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate ">
                   <span
                     class="form-error"
                     *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
@@ -84,7 +88,7 @@
                 </div>
 
                 <span [ngStyle]="{ 'font-size': '0.7rem' }">{{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }}</span>
-                <a class="text-link" (click)="changePassword($event)">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</a>
+                <a class="text-link" routerLink="/forget">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</a>
 
               </div>
 
