@@ -1,42 +1,108 @@
-<div class="container main-container" [ngStyle]="{ 'background-image': 'url(' + backgroundImage() + ')'}">
+<div class="main-container" id="signup">
   <div class="columns">
     <div class="column col-12 col-mx-auto">
 
-      <!-- Logo -->
+      <div class="columns col-gapless">
+
+        <div class="column col-6 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + backgroundImage() + ')'}"></div>
+
+        <div class="column col-xs-12 col-6 col-mx-auto signup-container">
+
+          <!-- Logo -->
+          <div class="text-center">
+            <a href="https://www.umi.us"><img src="{{ getLogo() }}" alt="UMI" height="35px"></a>
+          </div>
+
+          <div class="register-container">
+
+            <!-- Bot -->
+            <div class="bot-container">
+              <span class="bot-text">{{ 'SIGN_UP.SIGN_UP_HELLO' | translate }}</span>
+              <br>
+              <img src="https://res.cloudinary.com/umi/image/upload/v1526396724/app/default-images/triangle.svg" class="bot-trian">
+              <div>
+                <img src="https://res.cloudinary.com/umi/image/upload/v1526839959/app/default-images/login-bot.svg" alt="Bot">
+              </div>
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="social-container text-center" *ngIf="checkIsMainDomain()">
+              <a class="primary-button" (click)="linkedInSignUp($event)">
+                <span><i class="fab fa-1x fa-linkedin-in"></i>{{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}</span>
+              </a>
+            </div>
+
+            <!-- Or -->
+            <div class="or-container text-center">
+              <span>{{ 'COMMON.OR' | translate }}</span>
+            </div>
+
+            <!-- Sign up button -->
+            <div class="sign-container text-center">
+              <a class="primary-button" (click)="onSignUpClick($event)">
+                <span><i class="far fa-1x fa-envelope"></i>{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}</span>
+              </a>
+            </div>
+
+            <!-- Sign up sidebar -->
+            <app-user-form-sidebar></app-user-form-sidebar>
+
+          </div>
+
+          <!-- Sign in -->
+          <div class="signin-container text-center">
+            <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '10px' }">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
+            <a class="primary-button ghost-button" routerLink="/login">{{ 'COMMON.LOG_IN' | translate }}</a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!--<div class="container main-container" [ngStyle]="{ 'background-image': 'url(' + backgroundImage() + ')'}">
+  <div class="columns">
+    <div class="column col-12 col-mx-auto">
+
+      <!-- Logo
       <div class="logo-container text-center">
         <a href="https://www.umi.us">
           <img src="{{ getLogo() }}" alt="UMI" height="35px" class="logo">
         </a>
       </div>
 
-      <!-- Main container -->
+      <!-- Main container
       <div class="column col-xs-11 col-sm-11 col-11 col-mx-auto sign-up-container text-center">
 
         <h1 class="text heading text-left">{{ 'SIGN_UP.SIGN_UP' | translate }}</h1>
 
-        <!-- LinkedIn -->
+        <!-- LinkedIn
         <div class="button-container" *ngIf="checkIsMainDomain()">
           <a class="btn primary-button" (click)="linkedInSignIn($event)">
             <span><i class="fab fa-1x fa-linkedin-in"></i>{{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}</span>
           </a>
         </div>
 
-        <!-- Or -->
+        <!-- Or
         <div class="or-container text-center">
           <span> {{ 'COMMON.OR' | translate }} </span>
         </div>
 
-        <!-- Sign up button -->
+        <!-- Sign up button
         <div class="signup-button">
           <a class="btn primary-button button-signup" (click)="onSignUpClick($event)">
             <span><i class="far fa-1x fa-envelope"></i>{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}</span>
           </a>
         </div>
 
-        <!-- Sidebar for sign up -->
+        <!-- Sidebar for sign up
         <app-user-form-sidebar></app-user-form-sidebar>
 
-        <!-- Sign in -->
+        <!-- Sign in
           <p class="text">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}
             <a class="text-link" routerLink="/login">{{ 'COMMON.LOG_IN' | translate }}</a>
           </p>
@@ -45,5 +111,5 @@
 
     </div>
   </div>
-</div>
+</div>-->
 

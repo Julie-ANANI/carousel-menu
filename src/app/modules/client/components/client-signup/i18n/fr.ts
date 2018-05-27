@@ -7,5 +7,6 @@ export const SIGN_UP = {
   'SIGN_UP_EMAIL': 'Inscription avec l\'adresse email',
   'SIGN_UP': 'Inscrivez-vous',
   'EXAMPLE_JOBTITLE': 'Ingénieur en informatique',
-  'SIGNUP_MESSAGE': 'Tous les champs sont obligatoires'
+  'SIGNUP_MESSAGE': 'Tous les champs sont obligatoires',
+  'SIGN_UP_HELLO': 'Market Driven Decision tool for your Innovations'
 };

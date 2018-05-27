@@ -13,6 +13,7 @@ export const environment = {
   domain: '',
   innovationUrl: '',
   quizUrl: '',
-  background: ''
+  background: '',
+  signInBackground: ''
 };
 

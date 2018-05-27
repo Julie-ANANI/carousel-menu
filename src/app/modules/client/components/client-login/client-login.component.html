@@ -4,8 +4,7 @@
 
       <div class="columns col-gapless">
 
-        <div class="column col-6 col-mx-auto img-container cover-image" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
-        </div>
+        <div class="column col-6 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }"></div>
 
         <div class="column col-sm-12 col-6 col-mx-auto login-container">
 
@@ -80,7 +79,7 @@
                     class="primary-button"
                     type="submit"
                     [disabled]="formData.invalid && formData.touched">
-                    {{ 'LOG_IN.LOG_IN_BTN' | translate }}
+                    {{ 'COMMON.LOG_IN' | translate }}
                   </button>
                 </div>
 
@@ -105,78 +104,6 @@
      </div>
    </div>
  </div>
-
- <!--<div class="main-container" id="login" >
-   <div class="columns">
-     <div class="column col-12 col-mx-auto text-center">
-       <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData">
-
-         <!-- Logo
-         <div class="logo-container">
-           <a href="https://www.umi.us"><img src="{{ getLogo() }}" alt="UMI" height="35px"></a>
-         </div>
-
-         <!-- Sign in container
-         <div class="column col-xs-12 col-sm-11 col-md-11 col-mx-auto sign-in-container">
-           <div class="columns">
-
-             <!-- Bot image
-             <div class="column col-sm-12 col-5 col-mx-auto">
-               <span class="bot-text">{{ 'LOG_IN.HELLO' | translate }}</span>
-               <br>
-               <img src="https://res.cloudinary.com/umi/image/upload/v1526396724/app/default-images/triangle.svg"
-                    class="bot-trian">
-               <div class="bot-image">
-                 <img src="https://res.cloudinary.com/umi/image/upload/v1526839959/app/default-images/login-bot.svg" alt="Bot">
-               </div>
-             </div>
-
-             <!-- Information
-             <div class="column col-sm-12 col-7 col-mx-auto">
-               <div class="form-group">
-                 <input
-                   class="form-input form-input-default"
-                   formControlName="email"
-                   type="email"
-                   [attr.placeholder]="'COMMON.EMAIL' | translate ">
-               </div>
-               <div class="form-error" *ngIf="formData.get('email').touched && formData.get('email').invalid">
-                   <span *ngIf="formData.get('email').hasError('required')">
-                     {{ 'COMMON.REQUIRED.EMAIL' | translate }}
-                   </span>
-                 <span *ngIf="formData.get('email').hasError('email')">
-                       {{ 'COMMON.INVALID.EMAIL' | translate }}
-                   </span>
-               </div>
-               <div class="form-group">
-                 <input
-                   class="form-input form-input-default"
-                   formControlName="password"
-                   type="password"
-                   [attr.placeholder]="'COMMON.PASSWORD' | translate ">
-               </div>
-               <div class="form-error" *ngIf="formData.get('password').touched && formData.get('password').invalid">
-                   <span *ngIf="formData.get('password').hasError('required')">
-                   {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
-                   </span>
-               </div>
-               <div class="submit-container">
-                 <div class="login-button">
-                   <button class="btn primary-button" type="submit" [disabled]="formData.invalid">
-                     {{ 'LOG_IN.LOG_IN_BTN' | translate }}
-                   </button>
-                 </div>
-                 <a class="text-link" (click)="changePassword($event)">{{ 'LOG_IN.FORGOT_PASSWORD' | translate }}</a>
-               </div>
-             </div>
-
-           </div>
-         </div>
-
-       </form>
-     </div>
-   </div>
- </div>-->
 
 <!--<div class="container main-container" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
   <div class="columns">

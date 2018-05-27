@@ -19,17 +19,17 @@ import { User } from '../../../../models/user.model';
 })
 
 export class ClientSignupComponent implements OnInit {
+
   public isInvitation = false;
 
-  constructor(
-              private _authService: AuthService,
+  constructor(private _authService: AuthService,
               private _userService: UserService,
               private _location: Location,
               private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,
               private _notificationsService: TranslateNotificationsService,
-              private _userFormSidebarService: UserFormSidebarService)
-  { }
+              private _userFormSidebarService: UserFormSidebarService) {
+  }
 
   ngOnInit(): void {
     this._titleService.setTitle('COMMON.SIGN_UP');
@@ -47,7 +47,7 @@ export class ClientSignupComponent implements OnInit {
 
   }
 
-  public linkedInSignIn(event: Event) {
+  public linkedInSignUp(event: Event) {
     event.preventDefault();
     const domain = environment.domain;
     this._authService.linkedinLogin(domain)

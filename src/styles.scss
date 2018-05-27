@@ -645,7 +645,6 @@ ul.list-filter {
 // Large button
 
 .large-button {
-  border-radius: 100px;
   padding-left: 84px;
   padding-right: 84px;
   height: 70px;
@@ -661,14 +660,15 @@ ul.list-filter {
 }
 
 .ghost-button:hover, .ghost-button:active {
-  background: white none;
-  color: lighten($button-color, 10%);
+  // background: white none;
+  // color: lighten($button-color, 10%);
 }
 
 .ghost-button:disabled {
   border-color: $button-disabled-color;
   color: #a9a9a9;
   background: white;
+  cursor: not-allowed;
 }
 
 .ghost-button:focus {
