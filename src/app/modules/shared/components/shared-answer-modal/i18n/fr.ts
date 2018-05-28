@@ -8,5 +8,6 @@ export const ANSWER_MODAL = {
   'REJECT_ANSWER': 'Rejeter',
   'UNCOMPLETE_ANSWER': 'À compléter',
   'VALID_ANSWER': 'Valider',
+  'VALID_ANSWER_NO_MAIL': 'Valider sans mail merci',
   'INVALID_ANSWER': 'Invalider'
 };

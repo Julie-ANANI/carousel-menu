@@ -56,8 +56,27 @@ export class QuestionSectionComponent implements OnInit {
     if (this.question && this.question.identifier) {
       const id = this.question.identifier;
 
-      this._answersToShow = this._answers
-        .filter((a) => (a.answers[id] && a.answers[id + 'Quality'] !== 0));
+      this._answersToShow = this._answers.filter((a) => (a.answers[id]));
+      switch (this.question.controlType) {
+        case 'clearbit':
+          break;
+        case 'list':
+          break;
+        case 'textarea':
+          // sort textarea answers by quality and by length.
+          this._answersToShow = this._answersToShow
+            .filter((a) => (a.answers[id + 'Quality'] !== 0))
+            .sort((a, b) => {
+              if ((b.answers[id + 'Quality'] || 1) - (a.answers[id + 'Quality'] || 1) === 0) {
+                return b.answers[id].length - a.answers[id].length;
+              } else {
+                return (b.answers[id + 'Quality'] || 1) - (a.answers[id + 'Quality'] || 1);
+              }
+            });
+          break;
+        default:
+          this._answersToShow = this._answersToShow.filter((a) => (a.answers[id + 'Quality'] !== 0));
+      }
 
       this._answersWithComment = this._answers
         .filter((a) => (a.answers[id + 'Comment'] && a.answers[id + 'CommentQuality'] !== 0))
@@ -74,19 +93,6 @@ export class QuestionSectionComponent implements OnInit {
         percentage: Math.round((this._answersToShow.length * 100) / this.answers.length)
       };
 
-      switch (this.question.controlType) {
-        case 'textarea':
-        // sort textarea answers by quality and by length.
-          this._answersToShow = this._answersToShow
-            .sort((a, b) => {
-              if ((b.answers[id + 'Quality'] || 1) - (a.answers[id + 'Quality'] || 1) === 0) {
-                return b.answers[id].length - a.answers[id].length;
-              } else {
-                return (b.answers[id + 'Quality'] || 1) - (a.answers[id + 'Quality'] || 1);
-              }
-            });
-          break;
-      }
     }
   }
 

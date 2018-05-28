@@ -62,11 +62,13 @@ export class ItemListComponent implements OnInit {
             const key = this.question.controlType !== 'clearbit' ? item.text : item.name;
             if (answerItems[key]) {
               answerItems[key].count += 1;
-              if (Number.isInteger(item.rating) && item.rating !== 1) { answerItems[key].rating = item.rating; }
+              if (!isNaN(Number.parseInt(item.rating)) && Number.parseInt(item.rating) !== 1) {
+                answerItems[key].rating = item.rating;
+              }
               answerItems[key].answers.push(answer);
             } else {
               answerItems[key] = {
-                rating: Number.isInteger(item.rating) ? item.rating : 1,
+                rating: !isNaN(Number.parseInt(item.rating)) ? Number.parseInt(item.rating) : 1,
                 count: 1,
                 domain: item.domain ? `http://${item.domain}` : null,
                 logo: item.logo,
