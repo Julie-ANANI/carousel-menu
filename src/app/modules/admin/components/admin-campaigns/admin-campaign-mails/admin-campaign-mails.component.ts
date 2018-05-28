@@ -64,13 +64,11 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public freezeStatus(batch: any) {
-    this._campaignService.freezeStatus(batch).first().subscribe();
+    this._campaignService.freezeStatus(batch).first().subscribe(modifiedBatch => {
+      this.stats.batches[this._getBatchIndex(modifiedBatch._id)] = modifiedBatch;
+    });
   }
 
-
-  // Result :
-  // [0]
-  // [1] Batches
   public AutoBatch() {
     this._campaignService.AutoBatch(this._campaign._id).first().subscribe((result: Array<any>) => {
       if (result.length === 0) {
