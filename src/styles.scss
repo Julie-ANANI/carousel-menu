@@ -354,7 +354,7 @@ ul.list-filter {
 
   .tooltip-text {
     visibility: hidden;
-    width: 237px;
+    width: 190px;
     display: flex;
     flex-wrap: wrap;
     background-color: #97A4B1;
@@ -362,7 +362,7 @@ ul.list-filter {
     justify-content: center;
     text-align: center;
     border-radius: 5px;
-    padding: 10px 15px;
+    padding: 10px;
     font-size: 0.7rem;
     position: absolute;
     z-index: 3;
@@ -373,7 +373,7 @@ ul.list-filter {
   .tooltip-text::after {
     content: "";
     position: absolute;
-    top: 10px;
+    top: 7px;
     left: 100%;
     margin-top: -5px;
     border: 5px solid transparent;
@@ -466,7 +466,7 @@ ul.list-filter {
 .form-input-default {
   border: 1px solid #E0E0E0;
   font-size: 0.7rem;
-  color: #484848;
+  color: #262831 !important;
   border-radius: 5px;
   display: block;
   width: 100%;
@@ -475,11 +475,10 @@ ul.list-filter {
   position: relative;
   background: white none;
   padding: 15px;
-  margin-top: 8px;
 }
 
 .form-input-default:placeholder-shown {
-  color: #AAB2BD;
+  color: #AAB2BD !important;
 }
 
 .form-input-default:focus {
@@ -681,6 +680,8 @@ ul.list-filter {
   background: white none;
   border-width: 2px;
   border-color: $alert-element;
+  height: 41px;
+  padding: 8px 20px;
 }
 
 .delete-button:hover, .delete-button:active {

@@ -49,6 +49,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     this.innovationData.patchValue(this.project);
 
+    console.log(this.project);
+
     if (this.project.innovationCards.length < 2) {
       this._primaryLanguage = this.project.innovationCards[0].lang;
     }
@@ -197,6 +199,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       .first()
       .subscribe(res => {
         this.project = res;
+        console.log(res);
         this.projectChange.emit(this.project);
       });
   }
@@ -208,8 +211,22 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       .subscribe((res: Innovation) => {
         this.project = res;
         this.projectChange.emit(this.project);
+        console.log(res);
       });
   }
+
+  /*
+   public setMediaAsPrimary (event: Event, media: Media): void {
+    event.preventDefault();
+    console.log(media);
+    this._innovationService.setPrincipalMediaOfInnovationCard(this.project._id, this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
+      .first()
+      .subscribe((res: Innovation) => {
+        this.project = res;
+        this.projectChange.emit(this.project);
+      });
+  }
+   */
 
   public deleteMedia(event: Event, media: Media): void {
     event.preventDefault();

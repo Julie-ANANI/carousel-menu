@@ -5,7 +5,7 @@
       <form novalidate [formGroup]="innovationData">
 
         <!-- Describe -->
-        <div class="column col-sm-12 col-xl-10 col-6 col-mx-auto">
+        <div class="column col-sm-12 col-md-10 col-lg-8 col-xl-7 col-5 col-mx-auto">
           <div class="describe-container text-center">
             <span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE_CHOICE' | translate }}</span>
             <ul formArrayName="innovationCards" class="lang-container">
@@ -172,6 +172,64 @@
                 <span class="num-rect">9</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.ADD' | translate }}</span>
                 <div class="pd-label">
 
+                  <!-- Media display -->
+                  <div class="media-disp-container" *ngIf="project.innovationCards[innovationCardEditingIndex].media?.length > 0">
+
+                    <!-- <div class="para" *ngIf="project.principalMedia._id !== '' ">
+                      <span>Main media</span>
+                      <div class="tooltips"><i class="fas fa-info"></i>
+                        <span class="tooltip-text">{{ "PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME_PLACEHOLDER" | translate }}</span>
+                      </div>
+                    </div> -->
+
+                    <div class="columns col-gapless">
+
+                      <!-- Main media -->
+                      <div class="column col-md-12 col-lg-4 col-3 col-mx-auto">
+                        <div class="para">
+                          <span>Main media</span>
+                          <div class="tooltips"><i class="fas fa-info"></i>
+                            <span class="tooltip-text">{{ "" | translate }}</span>
+                          </div>
+                        </div>
+                        <div *ngIf="project.principalMedia.type === 'PHOTO' " class="principal-media">
+                          <img [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_146,w_220/' + project.principalMedia.cloudinary.public_id">
+                        </div>
+                        <div *ngIf="project.principalMedia.type === 'VIDEO' " class="principal-media">
+                          <iframe
+                            [src]="domSanitizer.bypassSecurityTrustResourceUrl(project.principalMedia.video.embeddableUrl)"
+                            width="220" height="146">
+                          </iframe>
+                        </div>
+                      </div>
+
+                      <!-- Secondary medias -->
+                      <div class="column col-md-12 col-lg-8 col-9 col-mx-auto">
+                        <p class="para">Secondary medias</p>
+                        <div *ngFor="let media of project.innovationCards[innovationCardEditingIndex].media; let idx = index" class="media-content">
+                          <img
+                            [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_146,w_220/' + media.cloudinary.public_id"
+                            *ngIf="media.type==='PHOTO'">
+                          <iframe
+                            [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+                            *ngIf="media.type==='VIDEO'"
+                            width="220" height="146">
+                          </iframe>
+                          <div class="func-button text-center">
+                        <span *ngIf="media._id !== project.principalMedia._id" [ngStyle]="{ 'color': '#97A4B1' }">
+                          <a class="text-link" (click)="setMediaAsPrimary($event, media)">Make it as main media</a>
+                          /
+                        </span>
+                            <a class="text-link delete-link" (click)="deleteMedia($event, media)">Delete</a>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <!-- Upload media -->
                   <div class="columns">
                     <!-- Images -->
                     <div class="column col-xl-12 col-5 col-mx-auto">
@@ -210,6 +268,12 @@
 </div>
 
 <!--<div *ngIf="project">
+
+<iframe
+                        [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+                        *ngIf="media.type==='VIDEO'"
+                        width="276" height="183">
+                      </iframe>
 {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MAIN_LANG' | translateWithSpecificLanguage:formData.get('lang').value }}
   <form novalidate [formGroup]="formData" class="form-horizontal">
     <div class="columns">
