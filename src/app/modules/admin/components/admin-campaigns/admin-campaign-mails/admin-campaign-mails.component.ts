@@ -66,9 +66,8 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public startAutoBatch() {
-    this._campaignService.startAutoBatch(this._campaign._id).first().subscribe((batch: Array<any>) => {
-      this.stats.batches = this.stats.batches.concat(batch);
-    });
+    this._campaignService.startAutoBatch(this._campaign._id).first().subscribe(
+    );
   }
 
   public creerpro() {

@@ -59,6 +59,7 @@
         <a class="c-hand" role="button" (click)="(selectedBatchIdToBeDeleted = batch._id) && $event.preventDefault()">
           <i class="fas fa-trash"></i>
         </a>
+
         <label class="form-switch">
           <input type="checkbox" (change)="freezeStatus(batch)" [ngModel]="batch.active" >
           <i class="form-icon"></i>
