@@ -14,6 +14,8 @@
       <input type="checkbox" (change)="(editionMode = !editionMode) && $event.preventDefault()">
       <i class="form-icon"></i>Edition  <i class="fas fa-pencil"></i>
     </label>
+    <i class="fas fa-check" *ngIf="email.modified"></i>
+    <i class="fas fa-times" *ngIf="!email.modified"></i>
   </div>
   <div class="card-body">
     <h4 *ngIf="editionMode">Contenu</h4>
