@@ -70,8 +70,8 @@ export class CampaignService {
         .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public startAutoBatch(campaignId: string): Observable<any> {
-    return this._http.post(`/campaign/${campaignId}/startAutoBatch`)
+  public AutoBatch(campaignId: string): Observable<any> {
+    return this._http.post(`/campaign/${campaignId}/AutoBatch`)
         .map((res: Response) => res.json())
         .catch((error: Response) => Observable.throw(error.text()));
   }

@@ -39,7 +39,7 @@
       Programmer un nouveau batch de mails
     </button>
     <label class="form-switch">
-      <input type="checkbox" (change)="startAutoBatch()" [ngModel]="campaign.autoBatch" [disabled] = "!readyAutoBatch" >
+      <input type="checkbox" (change)="AutoBatch()" [ngModel]="campaign.autoBatch" [disabled] = "!readyAutoBatch" >
       <i class="form-icon"></i>
     </label>
     <ul>
@@ -66,7 +66,7 @@
         </label>
 
         <a *ngIf="!batch.editing" class="c-hand" role="button" (click)="startEditing(batch) && $event.preventDefault()">
-          <i class="fas fa-pencil"></i>
+          <i class="fa fa-edit"></i>
         </a>
         <a *ngIf="batch.editing" class="c-hand" role="button" (click)="updateBatch(batch)">
           <i class="far fa-save"></i>

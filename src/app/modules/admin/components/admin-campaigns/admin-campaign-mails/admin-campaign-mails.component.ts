@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../models/campaign';
 import { environment } from '../../../../../../environments/environment';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-admin-campaign-mails',
@@ -26,7 +27,8 @@ export class AdminCampaignMailsComponent implements OnInit {
   public editDates: Array<any>;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _campaignService: CampaignService) { }
+              private _campaignService: CampaignService,
+              private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
@@ -65,9 +67,19 @@ export class AdminCampaignMailsComponent implements OnInit {
     this._campaignService.freezeStatus(batch).first().subscribe();
   }
 
-  public startAutoBatch() {
-    this._campaignService.startAutoBatch(this._campaign._id).first().subscribe(
-    );
+
+  // Result :
+  // [0]
+  // [1] Batches
+  public AutoBatch() {
+    this._campaignService.AutoBatch(this._campaign._id).first().subscribe((result: Array<any>) => {
+      if (result.length === 0) {
+        this._notificationsService.success('Autobatch OFF', 'No batch will be created');
+      } else {
+          this.stats.batches = result;
+          this._notificationsService.success('Autobatch ON', 'Every pro in campaign just get batched');
+      }
+    });
   }
 
   public creerpro() {
