@@ -79,7 +79,7 @@ export class AdminCampaignMailsComponent implements OnInit {
       }
     });
   }
-
+// DEBUG AUTOBATCH => Creation de pro a la volée
   public creerpro() {
     this._campaignService.creerpro(this._campaign._id).first().subscribe();
   }

@@ -76,6 +76,7 @@ export class CampaignService {
         .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  // DEBUG AUTOBATCH => Creation de pro a la volée
   public creerpro(campaignId: string): Observable<any> {
     return this._http.post(`/campaign/${campaignId}/creerPro`)
       .map((res: Response) => res.json())

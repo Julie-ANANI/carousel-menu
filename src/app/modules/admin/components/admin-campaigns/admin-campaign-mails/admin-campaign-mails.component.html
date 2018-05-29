@@ -35,7 +35,7 @@
     <button (click)="testModal=true" class="btn btn-primary">
       Envoyer les mails de test
     </button>
-    <button (click)="batchModal=true" class="btn btn-primary" [disabled] = "!quizGenerated" >
+    <button (click)="batchModal=true" class="btn btn-primary" [disabled] = "!readyAutoBatch" >
       Programmer un nouveau batch de mails
     </button>
     <label class="form-switch">
