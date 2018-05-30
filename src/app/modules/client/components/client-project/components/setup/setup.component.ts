@@ -15,7 +15,7 @@ export class SetupProjectComponent implements OnInit {
   @Input() project: Innovation;
   @Input() changesSaved: boolean;
 
-  saveChanges: boolean;
+  private _saveChanges: boolean;
 
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
   private _currentTab: string;
@@ -26,7 +26,7 @@ export class SetupProjectComponent implements OnInit {
 
   ngOnInit() {
     this._currentTab = 'pitch';
-    this.saveChanges = false;
+    this._saveChanges = false;
     this._saveButtonClass = 'disabled';
   }
 
@@ -41,7 +41,7 @@ export class SetupProjectComponent implements OnInit {
   public saveProject(event: Event): void {
     event.preventDefault();
 
-     if (this.saveChanges) {
+     if (this._saveChanges) {
         this.innovationService
           .save(this.project._id, this.project)
           .first()
@@ -53,6 +53,7 @@ export class SetupProjectComponent implements OnInit {
           });
 
         this.changesSaved = true;
+        this._saveChanges = false;
         this._saveButtonClass = 'disabled';
      }
 
@@ -61,21 +62,25 @@ export class SetupProjectComponent implements OnInit {
   public submitProject(event: Event): void {
     event.preventDefault();
 
-    this.innovationService
-      .submitProjectToValidation(this.project._id)
-      .first()
-      .subscribe(data => {
-        this.project.status = 'SUBMITTED';
-        this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
-      }, err => {
-        this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-      });
+    if (this._saveChanges) {
+      this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+    } else {
+      this.innovationService
+        .submitProjectToValidation(this.project._id)
+        .first()
+        .subscribe(data => {
+          this.project.status = 'SUBMITTED';
+          this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
+        }, err => {
+          this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+        });
+    }
 
   }
 
   // getting the save value from the child component.
   public saveInnovation(value: boolean) {
-    this.saveChanges = value;
+    this._saveChanges = value;
     this._saveButtonClass = 'save-project';
   }
 
@@ -90,5 +95,10 @@ export class SetupProjectComponent implements OnInit {
   get saveButtonClass(): string {
     return this._saveButtonClass;
   }
+
+  get saveChanges(): boolean {
+    return this._saveChanges;
+  }
+
 
 }

@@ -205,18 +205,11 @@
                   <!-- Media display -->
                   <div class="media-disp-container">
 
-                    <!-- <div class="para" *ngIf="project.principalMedia._id !== '' ">
-                      <span>Main media</span>
-                      <div class="tooltips"><i class="fas fa-info"></i>
-                        <span class="tooltip-text">{{ "PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME_PLACEHOLDER" | translate }}</span>
-                      </div>
-                    </div> -->
-
                     <div class="columns col-gapless">
 
                       <!-- Main media -->
                       <div class="column col-md-12 col-lg-4 col-3 col-mr-auto">
-                        <div>
+                        <div *ngIf="project.principalMedia !== undefined && project.principalMedia !== null">
                           <span class="para">Main media</span>
                           <div class="tooltips"><i class="fas fa-info"></i>
                             <span class="tooltip-text">{{ "" | translate }}</span>
@@ -241,7 +234,8 @@
 
 
                       <!-- Secondary medias -->
-                      <div class="column col-md-12 col-lg-8 col-9 col-mx-auto">
+                      <div *ngIf="innovationCard.media?.length > 0"
+                           class="column col-md-12 col-lg-8 col-9 col-mx-auto">
                         <p class="para">Secondary medias</p>
                         <div *ngFor="let media of innovationCard.media" class="media-content">
                           <img

@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -33,8 +33,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   public innovationData: FormGroup; // Overall innovation
   private _primaryLanguage: string;
-  inputPreValue = '';
-  inputCurrValue = '';
+  private _inputPreValue = '';
+  private _inputCurrValue = '';
   /*
    * Gestion de l'affichage
    */
@@ -133,8 +133,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
             lang
           }).first()
             .subscribe((data: InnovCard) => {
-             // this._addInnovationCardWithData(data);
-              // this.updateCards();
               window.location.reload();
             });
         }
@@ -187,11 +185,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   public setAsPrincipal (innovationCardId: string): void {
-
     this.innovationData.get('innovationCards').value.forEach((innovCard: any, index: number) => {
       this.innovationData.get('innovationCards').get([index]).get('principal').patchValue(innovCard._id === innovationCardId);
     });
-
   }
 
   public imageUploaded(media: Media): void {
@@ -215,8 +211,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       .subscribe((res: Innovation) => {
         this.project = res;
         this.projectChange.emit(this.project);
-        this.changesSaved = false;
-        this.saveChanges.emit(true);
       });
   }
 
@@ -241,8 +235,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       .subscribe((res: Innovation) => {
         this.project = res;
         this.projectChange.emit(this.project);
-        this.changesSaved = false;
-        this.saveChanges.emit(true);
       });
 
   }
@@ -251,16 +243,16 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     if (event.target['type'] === 'radio') {
       if (event.target['name'] === 'projectStatus') {
-        this.inputPreValue = this.innovationData.get('projectStatus').value;
+        this._inputPreValue = this.innovationData.get('projectStatus').value;
       } else if (event.target['name'] === 'patented') {
-        this.inputPreValue = this.innovationData.get('patented').value;
+        this._inputPreValue = this.innovationData.get('patented').value;
       } else {
-        this.inputPreValue = this.innovationData.get('external_diffusion').value;
+        this._inputPreValue = this.innovationData.get('external_diffusion').value;
       }
 
-      this.inputCurrValue = value;
+      this._inputCurrValue = value;
 
-      if (this.inputPreValue !== this.inputCurrValue) {
+      if (this._inputPreValue !== this._inputCurrValue) {
         this.changesSaved = false;
         this.saveChanges.emit(true);
       }
@@ -268,11 +260,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     } else {
 
       if (event.type === 'click') {
-        this.inputPreValue = value;
+        this._inputPreValue = value;
       } else if (event.type === 'blur') {
-        this.inputCurrValue = value;
+        this._inputCurrValue = value;
 
-        if (this.inputPreValue !== this.inputCurrValue) {
+        if (this._inputPreValue !== this._inputCurrValue) {
           this.changesSaved = false;
           this.saveChanges.emit(true);
         }
@@ -314,6 +306,14 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   get primaryLanguage(): string {
     return this._primaryLanguage;
+  }
+
+  get inputPreValue(): string {
+    return this._inputPreValue;
+  }
+
+  get inputCurrValue(): string {
+    return this._inputCurrValue;
   }
 
   get canEdit(): boolean {
