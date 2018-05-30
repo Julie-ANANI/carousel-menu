@@ -21,10 +21,31 @@ export class CommonService {
   }
 
   /*
-   * Object.assign() function but recursively
+   * Merge JS Objects (Object & Array) in functional style
+   * Does not modify objects (immutable) and merges arrays via concatenation.
    */
-  deepMerge(obj1: any, obj2: any): any {
-    return Object.assign(obj1, obj2);
+  deepMerge(...objects: Array<any>): any {
+    const isObject = (o: any) => o && typeof o === 'object';
+
+    return objects.reduce((acc, obj) => {
+      Object.keys(obj).forEach(key => {
+        const accVal = acc[key];
+        const objVal = obj[key];
+
+        if (Array.isArray(accVal) && Array.isArray(objVal)) {
+          acc[key] = accVal.concat(...objVal);
+        }
+        else if (isObject(accVal) && isObject(objVal)) {
+          acc[key] = this.deepMerge(accVal, objVal);
+        }
+        else {
+          acc[key] = objVal;
+        }
+      });
+
+      return acc;
+    }, {});
   }
+
 }
 
