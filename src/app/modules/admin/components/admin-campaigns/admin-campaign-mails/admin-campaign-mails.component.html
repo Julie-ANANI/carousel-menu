@@ -35,9 +35,24 @@
     <button (click)="testModal=true" class="btn btn-primary">
       Envoyer les mails de test
     </button>
-    <button (click)="batchModal=true" class="btn btn-primary" [disabled]="!quizGenerated">
+    <button (click)="batchModal=true" class="btn btn-primary" [disabled] = "!readyAutoBatch" >
       Programmer un nouveau batch de mails
     </button>
+    <label class="form-switch">
+      <input type="checkbox" (change)="AutoBatch()" [ngModel]="campaign.autoBatch" [disabled] = "!readyAutoBatch" >
+      <i class="form-icon"></i>
+    </label>
+    <ul>
+      <li *ngIf="!quizGenerated"> Quizz manquant </li>
+      <li *ngIf="!innoReady"> Fiche manquante </li>
+      <li *ngIf="!templateImported"> Template manquant</li>
+      <li *ngIf="!emailReady"> Email non-modifié </li>
+    </ul>
+    <!--
+    <button (click)="creerpro()" class="btn btn-primary">
+      CreerDesPros Alea + Autobatch si actif
+    </button>
+    -->
   </div>
   <div class="card" *ngFor="let batch of stats.batches; let batchIndex = index">
     <div class="card-header">
@@ -46,8 +61,14 @@
         <a class="c-hand" role="button" (click)="(selectedBatchIdToBeDeleted = batch._id) && $event.preventDefault()">
           <i class="fas fa-trash"></i>
         </a>
+
+        <label class="form-switch" style="float:right">
+          <input type="checkbox" (change)="freezeStatus(batch)" [ngModel]="batch.active" >
+          <i class="form-icon"></i>
+        </label>
+
         <a *ngIf="!batch.editing" class="c-hand" role="button" (click)="startEditing(batch) && $event.preventDefault()">
-          <i class="fas fa-pencil-alt"></i>
+          <i class="fa fa-edit"></i>
         </a>
         <a *ngIf="batch.editing" class="c-hand" role="button" (click)="updateBatch(batch)">
           <i class="far fa-save"></i>
@@ -164,4 +185,3 @@
     </div>
   </div>
 </div>
-

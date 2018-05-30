@@ -9,4 +9,5 @@ export interface Campaign {
   title: string;
   stats?: any;
   settings?: CampaignSettings;
+  autoBatch: Boolean;
 }

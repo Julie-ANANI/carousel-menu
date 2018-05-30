@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../models/campaign';
 import { environment } from '../../../../../../environments/environment';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-admin-campaign-mails',
@@ -26,7 +27,8 @@ export class AdminCampaignMailsComponent implements OnInit {
   public editDates: Array<any>;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _campaignService: CampaignService) { }
+              private _campaignService: CampaignService,
+              private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
@@ -59,6 +61,27 @@ export class AdminCampaignMailsComponent implements OnInit {
     this._campaignService.createNewBatch(this._campaign._id, this.newBatch).first().subscribe((batch: any) => {
       this.stats.batches.push(batch);
     });
+  }
+
+  public freezeStatus(batch: any) {
+    this._campaignService.freezeStatus(batch).first().subscribe(modifiedBatch => {
+      this.stats.batches[this._getBatchIndex(modifiedBatch._id)] = modifiedBatch;
+    });
+  }
+
+  public AutoBatch() {
+    this._campaignService.AutoBatch(this._campaign._id).first().subscribe((result: Array<any>) => {
+      if (result.length === 0) {
+        this._notificationsService.success('Autobatch OFF', 'No batch will be created');
+      } else {
+          this.stats.batches = result;
+          this._notificationsService.success('Autobatch ON', 'Every pro in campaign just get batched');
+      }
+    });
+  }
+// DEBUG AUTOBATCH => Creation de pro a la volée
+  public creerpro() {
+    this._campaignService.creerpro(this._campaign._id).first().subscribe();
   }
 
   public startEditing(batch: any) {
@@ -117,11 +140,39 @@ export class AdminCampaignMailsComponent implements OnInit {
     computedDate.setMinutes(minutes);
     return computedDate;
   }
-  
+
   public sendTestEmails(batchStatus: number) {
     this._campaignService.sendTestEmails(this._campaign._id, batchStatus).first().subscribe(_ => {
       console.log("OK");
     });
+  }
+
+
+  get readyAutoBatch() {
+    return (
+      this.quizGenerated &&
+      this.innoReady &&
+      this.emailReady &&
+      this.templateImported
+    );
+  }
+
+  get emailReady(): boolean {
+    return (
+      this._campaign.settings.emails.reduce((prev, next) => (prev && next.modified), true)
+    );
+  }
+
+  get templateImported(): boolean {
+    return (
+      this._campaign.settings.emails.length !== 0
+    );
+  }
+
+  get innoReady() {
+    return (
+      this._campaign.innovation.status === 'EVALUATING'
+    );
   }
 
   get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""); }

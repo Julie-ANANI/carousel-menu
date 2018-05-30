@@ -23,56 +23,64 @@ export class AdminNewScenarioComponent {
         language: 'en',
         profile: 'NEW',
         subject: 'first mail',
-        content: 'content'
+        content: 'content',
+        modified: false
       },
       {
         step: "SECOND",
         language: 'en',
         profile: 'NEW',
         subject: 'second mail',
-        content: 'content'
+        content: 'content',
+        modified: false
       },
       {
         step: "THIRD",
         language: 'en',
         profile: 'NEW',
         subject: 'last mail',
-        content: 'content'
+        content: 'content',
+        modified: false
       },
       {
         step: "THANKS",
         language: 'en',
         profile: 'NEW',
         subject: 'thanks',
-        content: 'content'
+        content: 'content',
+        modified: false
       },
       {
         step: "FIRST",
         language: 'fr',
         profile: 'NEW',
         subject: 'premier mail',
-        content: 'contenu'
+        content: 'contenu',
+        modified: false
       },
       {
         step: "SECOND",
         language: 'fr',
         profile: 'NEW',
         subject: 'deuxième mail',
-        content: 'contenu'
+        content: 'contenu',
+        modified: false
       },
       {
         step: "THIRD",
         language: 'fr',
         profile: 'NEW',
         subject: 'dernier mail',
-        content: 'contenu'
+        content: 'contenu',
+        modified: false
       },
       {
         step: "THANKS",
         language: 'fr',
         profile: 'NEW',
         subject: 'merci',
-        content: 'contenu'
+        content: 'contenu',
+        modified: false
       }
     ];
     this._templatesService.create({name: this._newScenarioName, emails: emails}).first().subscribe(newScenario => {
