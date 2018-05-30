@@ -109,7 +109,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         }).first()
           .subscribe((data: InnovCard) => {
             this._addInnovationCardWithData(data);
-            this.project.innovationCards.push(data);
+            //this.project.innovationCards.push(data);
             this.updateCards();
           });
       }
