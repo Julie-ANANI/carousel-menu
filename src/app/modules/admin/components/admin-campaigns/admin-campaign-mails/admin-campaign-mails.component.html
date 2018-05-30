@@ -48,9 +48,11 @@
       <li *ngIf="!templateImported"> Template manquant</li>
       <li *ngIf="!emailReady"> Email non-modifié </li>
     </ul>
+    <!--
     <button (click)="creerpro()" class="btn btn-primary">
       CreerDesPros Alea + Autobatch si actif
     </button>
+    -->
   </div>
   <div class="card" *ngFor="let batch of stats.batches; let batchIndex = index">
     <div class="card-header">
@@ -60,7 +62,7 @@
           <i class="fas fa-trash"></i>
         </a>
 
-        <label class="form-switch">
+        <label class="form-switch" style="float:right">
           <input type="checkbox" (change)="freezeStatus(batch)" [ngModel]="batch.active" >
           <i class="form-icon"></i>
         </label>
