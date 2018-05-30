@@ -1,6 +1,6 @@
-import {Router} from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Campaign } from '../../../../models/campaign';
 import { InnovationSettings } from '../../../../models/innov-settings';
@@ -82,31 +82,37 @@ export class SharedSearchProsComponent implements OnInit {
       checked: false
     }
   ];
-  private _params: any = {
-    keywords: '',
-    websites: {
-      linkedin: true,
-      viadeo: false,
-      kompass: false,
-      xing: false
-    },
-    count: '10',
-    country: '',
-    automated: false,
-    smart: false,
-    regions: false,
-    indexSearch: false,
-    countries: [],
-    queued: false
-  };
+  private _params: any;
 
   @Input() campaign: Campaign;
 
-  constructor(private _searchService: SearchService,
-              private _authService: AuthService,
-              private _router: Router) {}
+  constructor(private _notificationsService: TranslateNotificationsService,
+              private _searchService: SearchService,
+              private _authService: AuthService) {}
 
   ngOnInit(): void {
+    this._initParams();
+  }
+  
+  private _initParams() {
+    this._params = {
+      keywords: '',
+      websites: {
+        linkedin: true,
+        viadeo: false,
+        kompass: false,
+        xing: false
+      },
+      count: '10',
+      country: '',
+      automated: false,
+      smart: false,
+      regions: false,
+      indexSearch: false,
+      countries: [],
+      queued: false
+    };
+    
     if (this.campaign) {
       this._params.automated = true;
       this._params.smart = true;
@@ -169,7 +175,8 @@ export class SharedSearchProsComponent implements OnInit {
     searchParams.user = this._authService.getUserInfo();
     searchParams.websites = Object.keys(searchParams.websites).filter(key => searchParams.websites[key]).join(' ');
     this._searchService.search(searchParams).first().subscribe(result => {
-      this._router.navigateByUrl('/admin/' + (this.campaign ? 'campaigns/campaign/' + this.campaign._id : 'search') +  '/results/' + result.id);
+      this._initParams();
+      this._notificationsService.success("Requête ajoutée", "La requête a bien été ajoutée à la file d'attente");
     });
   }
 
