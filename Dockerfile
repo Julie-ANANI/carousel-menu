@@ -3,6 +3,8 @@ FROM node:6.10.2
 ARG APP_NAME
 ARG BUILD_ENV
 
+RUN echo 'Building the image using ${APP_NAME} and ${BUILD_ENV}'
+
 RUN apt-get clean && \
     apt-get update
 
@@ -19,7 +21,7 @@ ADD . .
 WORKDIR /var/web
 RUN npm install
 #RUN ng build --app=umi --environment=prod --aot
-RUN echo 'Building the image using '${APP_NAME}
+RUN echo 'Building the image using ${APP_NAME} and ${BUILD_ENV}'
 #RUN ng build --app=${APP_NAME} --environment=${BUILD_ENV} --prod --aot
 RUN ng build --app=umi --environment=dev --prod --aot
 RUN rm -f /var/web/.npmrc
