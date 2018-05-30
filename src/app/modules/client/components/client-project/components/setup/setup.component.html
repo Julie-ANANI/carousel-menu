@@ -51,7 +51,7 @@
 
         <!-- Pitch -->
         <div *ngIf="currentTab === 'pitch'">
-          <app-project-pitch [project]="project" (updateInnovation)="updateInnovation($event)" (saveChanges)="saveInnovation($event)"></app-project-pitch>
+          <app-project-pitch [project]="project" (updateInnovation)="updateInnovation($event)" [changesSaved]="changesSaved" (saveChanges)="saveInnovation($event)"></app-project-pitch>
         </div>
 
         <!-- Targeting -->

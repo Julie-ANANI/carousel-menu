@@ -7,13 +7,14 @@ export const PITCH = {
     'PROJECT_IN_OTHER_LANG': 'Ajoutez votre projet en',
     'TITLE': {
       'LABEL': 'Donnez un titre à votre projet',
-      'PLACEHOLDER': 'Cela sera visible pour les autres.'
+      'PLACEHOLDER': 'Entrez le titre de votre projet',
+      'ERROR': 'Le titre est requis.'
     },
     'SUMMARY': {
       'LABEL': 'Résumez votre projet en une courte phrase',
-      'PLACEHOLDER': 'Ex : Renforcement de la sécurité et du confort des usagers de la route en conditions de ' +
-      'visibilité dégradée (nuit, brouillard, pluie, neige, ...) grâce à une nouvelle peinture luminescente, ' +
-      'résistante aux UV et à l\'humidité.'
+      'PLACEHOLDER': 'Votre résumé doit fournir un aperçu clair de l\'intérêt de votre innovation (avantages pour l\'utilisateur)' +
+      ' car ce sera la seule information présentée dans le corps de l\'e-mail',
+      'ERROR': 'Le résumé est requis.'
     },
     'PROBLEM': {
       'LABEL': 'Quel problème / point de douleur adressez-vous ? (Domaine visé > Solutions existantes > Limites actuelles)',
@@ -22,7 +23,8 @@ export const PITCH = {
       'confort et la sécurité des usagers en conditions de visibilité dégradée et ne conviennent pas aux véhicules ' +
       'autonomes.\n\nDes peintures luminescentes ont déjà été développées mais elles ne sont pas suffisamment ' +
       'résistantes aux aggressions extérieures (météo, UV, température, passages répétés de véhicules...). Leur ' +
-      'tenue n\'est que de quelques semaines avant dégradation.'
+      'tenue n\'est que de quelques semaines avant dégradation.',
+      'ERROR': 'Un problème ou une question motivée est requis.'
     },
     'SOLUTION': {
       'LABEL': 'Quelle solution proposez-vous et quels en sont les bénéfices ? (Principe > Avantages > Usages)',
@@ -32,11 +34,13 @@ export const PITCH = {
       'dégradée.\n\nNotre formulation est beaucoup plus résistante aux UV et à l\'humidité (3 ans minimum)\n\nDe ' +
       'plus, cette peinture permet de s\'affranchir d\'éclairage dans certaines zones tout en maintenant un niveau ' +
       'de confort et de sécurité suffisant; ce qui entraîne d\'importants gains sur la consommation d\'énergie et ' +
-      'la simplicité d\'installation.'
+      'la simplicité d\'installation.',
+      'ERROR': 'La solution est requise'
     },
     'ADVANTAGES': {
       'LABEL': 'Quels avantages votre solution apporte-t-elle au marché ?',
-      'INPUT': 'Ex : Amélioration de la sécurité'
+      'INPUT': 'Ex : Amélioration de la sécurité',
+      'ERROR': 'L\'avantage est requis.'
     }
   },
   'WHAT_STAGE': 'À quel stade en est votre projet ?',

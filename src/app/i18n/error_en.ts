@@ -34,6 +34,7 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'DELETED': 'Project deleted',
     'DELETED_TEXT': 'Your project has been deleted successfully in the specified language.',
     'SAVED_TEXT': 'Your project has been saved.',
+    'SAVE_ERROR': 'Please save all your changes before proceeding.',
     'SUBMITTED': 'Project submitted',
     'SUBMITTED_TEXT': 'Your project has been sent to validation.'
   },

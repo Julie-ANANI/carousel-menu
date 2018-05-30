@@ -30,10 +30,15 @@
               <div class="ques-2">
                 <span class="num-rect">2</span><span class="ques">{{ "PROJECT_MODULE.NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</span>
                 <div class="tooltips"><i class="fas fa-info"></i>
-                  <span class="tooltip-text">{{ "PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME_PLACEHOLDER" | translate }}</span>
+                  <span class="tooltip-text">{{ "" | translate }}</span>
                 </div>
                 <div class="form-group" [ngStyle]="{ 'padding-top': '20px' }">
-                  <input type="text" class="form-input-default" name="name" formControlName="name">
+                  <input
+                    type="text"
+                    class="form-input-default"
+                    name="name"
+                    formControlName="name"
+                  [attr.placeholder]="'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME_PLACEHOLDER' | translate ">
                   <div class="form-error" *ngIf="formData.get('name').hasError('required') && formData.get('name').touched">
                     {{ 'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME' | translate }}
                   </div>

@@ -13,7 +13,7 @@
               <li
                 *ngFor="let innovationCard of innovationData.get('innovationCards').value; let i = index"
                 [ngClass]="{'active': innovationCardEditingIndex === i }"
-                (click)="(innovationCardEditingIndex = i) && $event.preventDefault(); setAsPrincipal(innovationCard.id)">
+                (click)="(innovationCardEditingIndex = i) && $event.preventDefault(); setAsPrincipal(innovationCard._id)">
                 <div class="circle"><i class="fas fa-check"></i></div>
                 <span>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
               </li>
@@ -33,7 +33,7 @@
                 <span class="text-link">Preview</span>&nbsp;
                 <span *ngIf="project.innovationCards.length > 1 ">
                   <span [ngStyle]="{ 'color': '#97A4B1' }">/</span>&nbsp;
-                  <span class="text-link delete-link" (click)="deleteInnovCard(innovationCard.id)">Delete</span>
+                  <span class="text-link delete-link" (click)="deleteInnovCard(innovationCard._id)">Delete</span>
                 </span>
               </div>
             </div>
@@ -55,7 +55,14 @@
                     class="form-input-default"
                     name="name"
                     formControlName="title"
-                    [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate">
+                    [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
+                    (click)="formProgress($event, innovationItem.get('title').value)"
+                    (blur)="formProgress($event, innovationItem.get('title').value)">
+                  <div class="form-error" *ngIf="innovationItem.get('title').touched && innovationItem.get('title').invalid">
+                    <span *ngIf="innovationItem.get('title').hasError('required')">
+                      {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.ERROR' | translate }}
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -67,8 +74,15 @@
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
                     rows="4"
                     class="form-input-default"
-                    formControlName="summary">
+                    formControlName="summary"
+                    (click)="formProgress($event, innovationItem.get('summary').value)"
+                    (blur)="formProgress($event, innovationItem.get('summary').value)">
                   </textarea>
+                  <div class="form-error" *ngIf="innovationItem.get('summary').touched && innovationItem.get('summary').invalid">
+                    <span *ngIf="innovationItem.get('summary').hasError('required')">
+                      {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.ERROR' | translate }}
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -81,22 +95,36 @@
                     rows="8"
                     id="innovation-problem"
                     class="form-input-default"
-                    formControlName="problem">
+                    formControlName="problem"
+                    (click)="formProgress($event, innovationItem.get('problem').value)"
+                    (blur)="formProgress($event, innovationItem.get('problem').value)">
                   </textarea>
+                  <div class="form-error" *ngIf="innovationItem.get('problem').touched && innovationItem.get('problem').invalid">
+                    <span *ngIf="innovationItem.get('problem').hasError('required')">
+                      {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.ERROR' | translate }}
+                    </span>
+                  </div>
                 </div>
               </div>
 
               <!-- Solution -->
               <div class="project-data">
-                <span class="num-rect">4</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.LABEL' | translate }}</span>
+                <span class="num-rect">4</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.LABEL' | translate }}</span>
                 <div class="form-group pd-label">
                   <textarea
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
                     rows="8"
                     id="innovation-solution"
                     class="form-input-default"
-                    formControlName="solution">
+                    formControlName="solution"
+                    (click)="formProgress($event, innovationItem.get('solution').value)"
+                    (blur)="formProgress($event, innovationItem.get('solution').value)">
                   </textarea>
+                  <div class="form-error" *ngIf="innovationItem.get('solution').touched && innovationItem.get('solution').invalid">
+                    <span *ngIf="innovationItem.get('solution').hasError('required')">
+                      {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.ERROR' | translate }}
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -104,7 +132,10 @@
               <div class="project-data">
                 <span class="num-rect">5</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</span>
                 <div class="input-list pd-label">
-                  <app-input-list (update)="addAdvantageToInventionCard($event, i)" [config]="getConfig('advantages')"></app-input-list>
+                  <app-input-list
+                    (update)="addAdvantageToInventionCard($event, i)"
+                    [config]="getConfig('advantages')">
+                  </app-input-list>
                 </div>
               </div>
 
@@ -117,15 +148,15 @@
           <span class="num-rect">6</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.WHAT_STAGE' | translate }}</span>
           <div class="form-group pd-label">
             <label class="form-radio">
-              <input type="radio" name="projectStatus" formControlName="projectStatus" [value]="0">
+              <input type="radio" name="projectStatus" formControlName="projectStatus" [value]="0" (click)="formProgress($event, 0)">
               <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.0' | translate }}
             </label>
             <label class="form-radio">
-              <input type="radio" name="projectStatus" formControlName="projectStatus" [value]="1">
+              <input type="radio" name="projectStatus" formControlName="projectStatus" [value]="1" (click)="formProgress($event, 1)">
               <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.1' | translate }}
             </label>
             <label class="form-radio">
-              <input type="radio" name="projectStatus" formControlName="projectStatus" [value]="2">
+              <input type="radio" name="projectStatus" formControlName="projectStatus" [value]="2" (click)="formProgress($event, 2)">
               <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.2' | translate }}
             </label>
           </div>
@@ -136,11 +167,11 @@
           <span class="num-rect">7</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.IS_PATENTED' | translate }}</span>
           <div class="form-group pd-label">
             <label class="form-radio">
-              <input type="radio" name="patented" formControlName="patented" [value]="false">
+              <input type="radio" name="patented" formControlName="patented" [value]="false" (click)="formProgress($event, false)">
               <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
             </label>
             <label class="form-radio">
-              <input type="radio" name="patented" formControlName="patented" [value]="true">
+              <input type="radio" name="patented" formControlName="patented" [value]="true" (click)="formProgress($event, true)">
               <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
             </label>
           </div>
@@ -154,26 +185,25 @@
           </span>
           <div class="form-group pd-label">
             <label class="form-radio">
-              <input type="radio" name="external_diffusion" formControlName="external_diffusion" [value]="false">
+              <input type="radio" name="external_diffusion" formControlName="external_diffusion" [value]="false" (click)="formProgress($event, false)">
               <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
             </label>
             <label class="form-radio">
-              <input type="radio" name="external_diffusion" formControlName="external_diffusion" [value]="true">
+              <input type="radio" name="external_diffusion" formControlName="external_diffusion" [value]="true" (click)="formProgress($event, true)">
               <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
             </label>
           </div>
         </div>
 
         <div formArrayName="innovationCards">
-          <div *ngFor="let innovationItem of innovationData.get('innovationCards').controls; let i = index" [formGroup]="innovationItem">
+          <div *ngFor="let innovationCard of project.innovationCards; let i = index;">
             <div *ngIf="innovationCardEditingIndex === i">
 
               <div class="project-data">
                 <span class="num-rect">9</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.ADD' | translate }}</span>
                 <div class="pd-label">
-
                   <!-- Media display -->
-                  <div class="media-disp-container" *ngIf="project.innovationCards[innovationCardEditingIndex].media?.length > 0">
+                  <div class="media-disp-container">
 
                     <!-- <div class="para" *ngIf="project.principalMedia._id !== '' ">
                       <span>Main media</span>
@@ -185,41 +215,49 @@
                     <div class="columns col-gapless">
 
                       <!-- Main media -->
-                      <div class="column col-md-12 col-lg-4 col-3 col-mx-auto">
-                        <div class="para">
-                          <span>Main media</span>
+                      <div class="column col-md-12 col-lg-4 col-3 col-mr-auto">
+                        <div>
+                          <span class="para">Main media</span>
                           <div class="tooltips"><i class="fas fa-info"></i>
                             <span class="tooltip-text">{{ "" | translate }}</span>
                           </div>
                         </div>
-                        <div *ngIf="project.principalMedia.type === 'PHOTO' " class="principal-media">
-                          <img [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_146,w_220/' + project.principalMedia.cloudinary.public_id">
-                        </div>
-                        <div *ngIf="project.principalMedia.type === 'VIDEO' " class="principal-media">
-                          <iframe
-                            [src]="domSanitizer.bypassSecurityTrustResourceUrl(project.principalMedia.video.embeddableUrl)"
-                            width="220" height="146">
-                          </iframe>
+                        <div>
+                          <div *ngIf="project.principalMedia?.type === 'PHOTO'" class="principal-media">
+                            <img
+                              [src]="project.principalMedia.url"
+                              [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+                              width="220" height="146"
+                              class="img-responsive">
+                          </div>
+                          <div *ngIf="project.principalMedia?.type === 'VIDEO'" class="principal-media">
+                            <iframe
+                              [src]="domSanitizer.bypassSecurityTrustResourceUrl(project.principalMedia.video.embeddableUrl)"
+                              width="220" height="146">
+                            </iframe>
+                          </div>
                         </div>
                       </div>
+
 
                       <!-- Secondary medias -->
                       <div class="column col-md-12 col-lg-8 col-9 col-mx-auto">
                         <p class="para">Secondary medias</p>
-                        <div *ngFor="let media of project.innovationCards[innovationCardEditingIndex].media; let idx = index" class="media-content">
+                        <div *ngFor="let media of innovationCard.media" class="media-content">
                           <img
+                            *ngIf="media?.type==='PHOTO'"
                             [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_146,w_220/' + media.cloudinary.public_id"
-                            *ngIf="media.type==='PHOTO'">
+                            [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
                           <iframe
+                            *ngIf="media?.type==='VIDEO'"
                             [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
-                            *ngIf="media.type==='VIDEO'"
                             width="220" height="146">
                           </iframe>
                           <div class="func-button text-center">
-                        <span *ngIf="media._id !== project.principalMedia._id" [ngStyle]="{ 'color': '#97A4B1' }">
-                          <a class="text-link" (click)="setMediaAsPrimary($event, media)">Make it as main media</a>
-                          /
-                        </span>
+                            <span *ngIf="media?._id !== project.principalMedia?._id" [ngStyle]="{ 'color': '#97A4B1' }">
+                              <a class="text-link" (click)="setMediaAsPrimary($event, media)">Make it as main media</a>
+                              /
+                            </span>
                             <a class="text-link delete-link" (click)="deleteMedia($event, media)">Delete</a>
                           </div>
                         </div>
@@ -235,7 +273,7 @@
                     <div class="column col-xl-12 col-5 col-mx-auto">
                       <app-shared-upload-zone-photo
                         *ngIf="canEdit"
-                        [uri]="'/innovation/'+project._id+'/innovationCard/'+innovationItem.value.id+'/media/image'"
+                        [uri]="'/innovation/'+project._id+'/innovationCard/'+innovationCard._id+'/media/image'"
                         (cbFn)="imageUploaded($event)">
                       </app-shared-upload-zone-photo>
                     </div>
@@ -288,7 +326,7 @@
               </div>
                           <span *ngIf="innovationCard.principal" class="c-auto">
                             {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MAIN_LANG' | translate }}</span>
-                          <span *ngIf="!innovationCard.principal" (click)="setAsPrincipal($event, innovationCard.id)">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SET_AS_MAIN_LANG' | translate }} <i
+                          <span *ngIf="!innovationCard.principal" (click)="setAsPrincipal($event, innovationCard._id)">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SET_AS_MAIN_LANG' | translate }} <i
                             class="icon icon-arrow-right"></i></span>
             </li>
             <li *ngIf="project.innovationCards.length < 2" (click)="createInnovationCard($event)">

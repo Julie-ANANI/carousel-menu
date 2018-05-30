@@ -4,7 +4,7 @@
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center center;
+    background-position: left top;
     min-height: 100vh;
   }
 
@@ -23,7 +23,7 @@
       display: inline-flex;
 
       .bot-container {
-        padding-top: 50px;
+        padding-top: 25px;
         text-align: center;
         display: none;
 
@@ -45,8 +45,11 @@
 
       }
 
+      .heading {
+        padding-top: 25px;
+      }
+
       .social-container {
-        padding-top: 50px;
 
         .primary-button {
           background: #1680B9;
@@ -64,7 +67,7 @@
 
       .or-container {
         color: #97A4B1;
-        padding-top: 50px;
+        padding-top: 25px;
 
         span::before {
           content: '';
@@ -92,7 +95,7 @@
       }
 
       .credentials-container {
-        padding-top: 40px;
+        padding-top: 20px;
 
         .form-input-default {
           width: 300px;
@@ -102,8 +105,8 @@
       }
 
       .submit-container {
-        padding-top: 30px;
-        padding-bottom: 45px;
+        padding-top: 20px;
+        padding-bottom: 25px;
 
         .login-button {
           padding-bottom: 14px;

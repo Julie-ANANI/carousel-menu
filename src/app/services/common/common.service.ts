@@ -19,5 +19,12 @@ export class CommonService {
     }
     return Array.from(numberGenerator(min, max, step));
   }
+
+  /*
+   * Object.assign() function but recursively
+   */
+  deepMerge(obj1: any, obj2: any): any {
+    return Object.assign(obj1, obj2);
+  }
 }
 

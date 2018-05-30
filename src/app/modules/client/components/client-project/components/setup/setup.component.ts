@@ -3,7 +3,6 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-client-setup-project',
@@ -14,20 +13,20 @@ import { TranslateService } from '@ngx-translate/core';
 export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
+  @Input() changesSaved: boolean;
 
-  saveStatus: boolean;
+  saveChanges: boolean;
 
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
   private _currentTab: string;
 
   constructor(private innovationService: InnovationService,
-              private notificationService: TranslateNotificationsService,
-              private _translateService: TranslateService) {
+              private notificationService: TranslateNotificationsService) {
   }
 
   ngOnInit() {
     this._currentTab = 'pitch';
-    this.saveStatus = false;
+    this.saveChanges = false;
     this._saveButtonClass = 'disabled';
   }
 
@@ -39,15 +38,10 @@ export class SetupProjectComponent implements OnInit {
     this.project = value;
   }
 
-  public saveInnovation(value: boolean) {
-    this.saveStatus = value;
-    this._saveButtonClass = 'save-project';
-  }
-
   public saveProject(event: Event): void {
     event.preventDefault();
 
-     if (this.saveStatus) {
+     if (this.saveChanges) {
         this.innovationService
           .save(this.project._id, this.project)
           .first()
@@ -58,9 +52,8 @@ export class SetupProjectComponent implements OnInit {
             this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
           });
 
-        this.saveStatus = false;
+        this.changesSaved = true;
         this._saveButtonClass = 'disabled';
-
      }
 
   }
@@ -68,36 +61,22 @@ export class SetupProjectComponent implements OnInit {
   public submitProject(event: Event): void {
     event.preventDefault();
 
-    const currentLang = this._translateService.currentLang;
+    this.innovationService
+      .submitProjectToValidation(this.project._id)
+      .first()
+      .subscribe(data => {
+        this.project.status = 'SUBMITTED';
+        this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
+      }, err => {
+        this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+      });
 
-    if (this.saveStatus) {
-      if (currentLang === 'fr') {
-        alert('Veuillez sauvegarder le projet avant de le soumettre.')
-      } else {
-        alert('Please save the project before submitting it.')
-      }
-    } else {
-      let confirmMessage = '';
+  }
 
-      if (currentLang === 'fr') {
-        confirmMessage = 'Êtes-vous vraiment sûr de vouloir envoyer votre projet pour validation ?'
-      } else {
-        confirmMessage = 'Are you really sure you want to send your project for validation?'
-      }
-
-      if (confirm(confirmMessage)) {
-        this.innovationService
-          .submitProjectToValidation(this.project._id)
-          .first()
-          .subscribe(data => {
-            this.project.status = 'SUBMITTED';
-            this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
-          }, err => {
-            this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-          });
-      }
-    }
-
+  // getting the save value from the child component.
+  public saveInnovation(value: boolean) {
+    this.saveChanges = value;
+    this._saveButtonClass = 'save-project';
   }
 
   get currentTab() {

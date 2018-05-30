@@ -4,9 +4,9 @@
 
       <div class="columns col-gapless">
 
-        <div class="column col-6 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + backgroundImage() + ')'}"></div>
+        <div class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + backgroundImage() + ')'}"></div>
 
-        <div class="column col-xs-12 col-6 col-mx-auto signup-container">
+        <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto signup-container">
 
           <!-- Logo -->
           <div class="text-center">
@@ -23,6 +23,11 @@
               <div>
                 <img src="https://res.cloudinary.com/umi/image/upload/v1526839959/app/default-images/login-bot.svg" alt="Bot">
               </div>
+            </div>
+
+            <!-- Heading -->
+            <div class="heading text-center">
+              <h2>{{ 'SIGN_UP.HEADING' | translate }}</h2>
             </div>
 
             <!-- LinkedIn -->

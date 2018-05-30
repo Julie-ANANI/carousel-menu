@@ -33,6 +33,7 @@ export const ERROR = {
     'DELETED': 'Projet supprimé',
     'DELETED_TEXT': 'Votre projet a été supprimé avec succès dans la langue spécifiée.',
     'SAVED_TEXT': 'Votre projet a été enregistré.',
+    'SAVE_ERROR': 'Veuillez sauvegarder toutes vos modifications avant de continuer.',
     'SUBMITTED': 'Projet envoyé',
     'SUBMITTED_TEXT': 'Votre projet a été transmis pour la validation.'
   },

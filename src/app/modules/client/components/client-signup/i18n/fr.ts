@@ -1,4 +1,5 @@
 export const SIGN_UP = {
+  'HEADING': 'S\'inscrire',
   'SIGN_UP_TO_CONTINUE': 'Inscrivez-vous pour continuer',
   'SIGN_UP_TO_JOIN_PROJECT': 'Inscrivez-vous pour rejoindre le projet',
   'HAVE_ACCOUNT': 'Vous avez déjà un compte ?',

@@ -87,6 +87,10 @@
       padding-top: 30px;
       display: inline-block;
 
+      .project-progress {
+        margin-right: 10px;
+      }
+
       .delete-link {
         color: #EA5858;
       }
@@ -106,10 +110,6 @@
 
   .form-group {
     margin-bottom: 0 !important;
-  }
-
-  .form-input-default.ng-touched.ng-invalid{
-    border-color: unset !important;
   }
 
   textarea {
@@ -144,6 +144,7 @@
 
     .principal-media {
       margin-bottom: 50px;
+      margin-top: 16px;
 
       img, iframe {
         box-shadow: 0 0 20px 0 rgba(0,0,0,0.5);

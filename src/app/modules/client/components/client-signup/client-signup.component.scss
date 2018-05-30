@@ -4,7 +4,7 @@
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center center;
+    background-position: left top;
     min-height: 100vh;
   }
 
@@ -46,8 +46,11 @@
 
       }
 
+      .heading {
+        padding-top: 25px;
+      }
+
       .social-container {
-        padding-top: 50px;
 
         .primary-button {
           background: #1680B9;
@@ -65,7 +68,7 @@
 
       .or-container {
         color: #97A4B1;
-        padding-top: 50px;
+        padding-top: 25px;
 
         span::before {
           content: '';
@@ -88,8 +91,8 @@
       }
 
       .sign-container {
-        padding-top: 50px;
-        padding-bottom: 50px;
+        padding-top: 25px;
+        padding-bottom: 25px;
 
         .primary-button {
           padding-top: 12px;

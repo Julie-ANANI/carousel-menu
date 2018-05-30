@@ -4,9 +4,10 @@
 
       <div class="columns col-gapless">
 
-        <div class="column col-6 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }"></div>
+        <div class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }"></div>
 
-        <div class="column col-sm-12 col-6 col-mx-auto login-container">
+
+        <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto login-container">
 
           <!-- Logo -->
           <div class="text-center">
@@ -24,6 +25,11 @@
                 <div>
                   <img src="https://res.cloudinary.com/umi/image/upload/v1526839959/app/default-images/login-bot.svg" alt="Bot">
                 </div>
+              </div>
+
+              <!-- Heading -->
+              <div class="heading text-center">
+                <h2>{{ 'LOG_IN.HEADING' | translate }}</h2>
               </div>
 
               <!-- LinkedIn -->
@@ -83,7 +89,7 @@
                     class="primary-button"
                     type="submit"
                     [disabled]="formData.invalid && formData.touched">
-                    {{ 'COMMON.LOG_IN' | translate }}
+                    {{ 'LOG_IN.LOG_IN_BTN' | translate }}
                   </button>
                 </div>
 
