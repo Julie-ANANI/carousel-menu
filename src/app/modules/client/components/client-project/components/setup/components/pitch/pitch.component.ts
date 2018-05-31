@@ -19,7 +19,7 @@ export class PitchComponent {
   constructor(private common: CommonService) {}
 
   public updateProject(value: Innovation): void {
-    const innovation = this.common.deepMerge(this.project, value);
+    const innovation = this.common.deepMerge('deepMerge', this.project, value);
     this.updateInnovation.emit(innovation);
   }
 

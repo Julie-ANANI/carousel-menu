@@ -24,7 +24,7 @@ export class CommonService {
    * Merge JS Objects (Object & Array) in functional style
    * Does not modify objects (immutable) and merges arrays via concatenation.
    */
-  deepMerge(...objects: Array<any>): any {
+  deepMerge(mergeArrayStrategy: 'rewrite' | 'concat' | 'deepMerge' = 'rewrite', ...objects: Array<any>): any {
     const isObject = (o: any) => o && typeof o === 'object';
 
     return objects.reduce((acc, obj) => {
@@ -33,7 +33,23 @@ export class CommonService {
         const objVal = obj[key];
 
         if (Array.isArray(accVal) && Array.isArray(objVal)) {
-          acc[key] = accVal.concat(...objVal);
+          switch (mergeArrayStrategy) {
+            case 'rewrite':
+              acc[key] = objVal;
+              break;
+            case 'concat':
+              acc[key] = accVal.concat(...objVal);
+              break;
+            case 'deepMerge':
+              acc[key] = [];
+              const maxSize = Math.max(accVal.length, objVal.length);
+              this.range(0, maxSize).forEach((i) => {
+                const a = i < accVal.length ? accVal[i] : undefined;
+                const b = i < objVal.length ? objVal[i] : undefined;
+                acc[key].push(this.deepMerge(a, b));
+              });
+              break;
+          }
         }
         else if (isObject(accVal) && isObject(objVal)) {
           acc[key] = this.deepMerge(accVal, objVal);
