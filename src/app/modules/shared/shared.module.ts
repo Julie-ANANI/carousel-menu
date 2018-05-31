@@ -19,7 +19,6 @@ import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-
 import { SharedLoaderComponent } from './components/shared-loader/shared-loader.component';
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
 import { SharedFilterInputComponent } from './components/shared-filter-input/shared-filter-input.component';
-import { SharedModalComponent } from './components/shared-modal-component/shared-modal.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
 import { SharedTagItemComponent } from './components/shared-tag-item/shared-tag-item.component';
@@ -83,7 +82,6 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedTextZoneComponent,
-    SharedModalComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedVideoComponent,
@@ -106,7 +104,7 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     DomSanitizerPipe,
     FilterPipe,
     LimitsPipe,
-    SharedEmailBlacklistComponent
+    SharedEmailBlacklistComponent,
   ],
   exports: [
     // Modules
@@ -130,7 +128,6 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedTextZoneComponent,
-    SharedModalComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedSortComponent,

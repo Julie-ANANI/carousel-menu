@@ -33,6 +33,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   public innovationData: FormGroup; // Overall innovation
   private _primaryLanguage: string;
+  private _primaryLength: number
+  private _displayDeleteButton = false;
   private _inputPreValue = '';
   private _inputCurrValue = '';
   /*
@@ -57,6 +59,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     if (this.project.innovationCards.length < 2) {
       this._primaryLanguage = this.project.innovationCards[0].lang;
+      this._primaryLength = this.project.innovationCards.length;
+    } else {
+      this._displayDeleteButton = true;
     }
 
     if (!this.canEdit) {
@@ -314,6 +319,14 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   get inputCurrValue(): string {
     return this._inputCurrValue;
+  }
+
+  get primaryLength(): number {
+    return this._primaryLength;
+  }
+
+  get displayDeleteButton(): boolean {
+    return this._displayDeleteButton;
   }
 
   get canEdit(): boolean {

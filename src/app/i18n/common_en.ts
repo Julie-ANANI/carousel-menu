@@ -5,6 +5,7 @@ export const COMMON = {
   'UPDATE': 'Update',
   'EDIT': 'Edit',
   'DELETE': 'Delete',
+  'SUBMIT': 'CONFIRM',
   'LOG_IN': 'Sign in',
   'SIGN_UP': 'Sign up',
   'LOG_OUT': 'Logout',

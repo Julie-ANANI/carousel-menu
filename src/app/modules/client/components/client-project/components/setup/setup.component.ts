@@ -72,6 +72,7 @@ export class SetupProjectComponent implements OnInit {
 
   public submitProject(event: Event) {
     event.preventDefault();
+    this.projectToBeSubmitted = false;
 
     this.innovationService.submitProjectToValidation(this.project._id)
       .first()

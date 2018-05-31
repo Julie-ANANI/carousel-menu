@@ -437,28 +437,52 @@ ul.list-filter {
 /********************************** Modal Styles ***************************************/
 
 .modal {
+  box-shadow: 0 0 24px 0 rgba(0,0,0,0.5);
 
   .modal-overlay {
-    background: #333333a1 !important;
+    background: rgba(51, 51, 51, 0.63)!important;
   }
 
   .modal-container {
-    border-radius: 5px;
+    padding: 0;
+    border-radius: 5px
+  }
+
+  .modal-header {
+    height: 74px;
+    background: #0B90C6;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 21px 26px;
   }
 
   .btn-clear {
     font-size: 1.1rem;
+    color: white;
+    line-height: 1.4;
   }
 
   .modal-title {
     font-weight: 600;
     font-size: 1.1rem;
+    color: white;
+    line-height: 1.4;
   }
 
-  .close-button {
+  .modal-body {
+    padding: 30px 26px;
+  }
+
+  .modal-footer {
+    padding: 0 26px 25px;
+    text-align: unset;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .cancel-button, .submit-button {
     height: 41px;
     padding: 8px 20px;
-    margin-left: 10px;
   }
 
 }
