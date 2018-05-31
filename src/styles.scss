@@ -433,6 +433,36 @@ ul.list-filter {
 
 }
 
+
+/********************************** Modal Styles ***************************************/
+
+.modal {
+
+  .modal-overlay {
+    background: #333333a1 !important;
+  }
+
+  .modal-container {
+    border-radius: 5px;
+  }
+
+  .btn-clear {
+    font-size: 1.1rem;
+  }
+
+  .modal-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .close-button {
+    height: 41px;
+    padding: 8px 20px;
+    margin-left: 10px;
+  }
+
+}
+
 /********************************** Form Input Styles ***************************************/
 
 // Form group
@@ -685,9 +715,12 @@ ul.list-filter {
 }
 
 .delete-button:hover, .delete-button:active {
-  background: white;
-  color: lighten($alert-element, 10%);
-  border-color: lighten($alert-element, 10%);
+  //background: white;
+  //color: lighten($alert-element, 10%);
+  //border-color: lighten($alert-element, 10%);
+  color: white;
+  background: $alert-element;
+  border-color: $alert-element;
 }
 
 .delete-button:focus {

@@ -5,6 +5,10 @@ export const PITCH = {
     'SET_AS_MAIN_LANG': 'Set as main language',
     'MAIN_LANG': 'Main language',
     'PROJECT_IN_OTHER_LANG': 'Add your project in',
+    'MODAL': {
+      'TITLE': 'Are you sure?',
+      'CONTENT': 'Are you sure you want to send your project to validation?'
+    },
     'TITLE': {
       'LABEL': 'Give your project a title',
       'PLACEHOLDER': 'Enter your project title',

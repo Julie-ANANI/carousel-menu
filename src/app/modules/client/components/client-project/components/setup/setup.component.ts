@@ -19,6 +19,7 @@ export class SetupProjectComponent implements OnInit {
 
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
   private _currentTab: string;
+  projectToBeSubmitted: boolean;
 
   constructor(private innovationService: InnovationService,
               private notificationService: TranslateNotificationsService) {
@@ -42,8 +43,7 @@ export class SetupProjectComponent implements OnInit {
     event.preventDefault();
 
      if (this._saveChanges) {
-        this.innovationService
-          .save(this.project._id, this.project)
+        this.innovationService.save(this.project._id, this.project)
           .first()
           .subscribe(data => {
             this.project = data;
@@ -59,22 +59,28 @@ export class SetupProjectComponent implements OnInit {
 
   }
 
-  public submitProject(event: Event): void {
+  public submitButton(event: Event): void {
     event.preventDefault();
 
     if (this._saveChanges) {
       this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     } else {
-      this.innovationService
-        .submitProjectToValidation(this.project._id)
-        .first()
-        .subscribe(data => {
-          this.project.status = 'SUBMITTED';
-          this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
-        }, err => {
-          this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-        });
+      this.projectToBeSubmitted = true; // open the modal to ask the confirmation.
     }
+
+  }
+
+  public submitProject(event: Event) {
+    event.preventDefault();
+
+    this.innovationService.submitProjectToValidation(this.project._id)
+      .first()
+      .subscribe(data => {
+        this.project.status = 'SUBMITTED';
+        this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
+      }, err => {
+        this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+      });
 
   }
 

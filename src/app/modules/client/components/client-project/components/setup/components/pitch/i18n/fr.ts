@@ -5,6 +5,10 @@ export const PITCH = {
     'SET_AS_MAIN_LANG': 'Devenir langue principale',
     'MAIN_LANG': 'Langue principale',
     'PROJECT_IN_OTHER_LANG': 'Ajoutez votre projet en',
+    'MODAL': {
+      'TITLE': 'Êtes-vous sûr(e) ?',
+      'CONTENT': 'Êtes-vous sûr(e) de vouloir envoyer votre projet à validation ?'
+    },
     'TITLE': {
       'LABEL': 'Donnez un titre à votre projet',
       'PLACEHOLDER': 'Entrez le titre de votre projet',
