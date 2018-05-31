@@ -26,10 +26,12 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   constructor(private _translateService: TranslateService,
               private _authService: AuthService,
-              public shareService: ShareService) { }
+              public shareService: ShareService) {
+  }
 
 
   ngOnInit() {
+    console.log(this.settings);
     this.adminMode = this.adminMode && this._authService.adminLevel >= 1;
     if (this.settings) {
       this._displayCountriesToExcludeSection = this.settings.geography && this.settings.geography.exclude && this.settings.geography.exclude.length > 0;

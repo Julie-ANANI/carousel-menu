@@ -18,4 +18,6 @@ export class TargetingComponent {
     this.newSettings.emit(value);
   }
 
+
+
 }

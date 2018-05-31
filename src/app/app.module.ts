@@ -46,6 +46,7 @@ import { InnovationResolver } from './resolvers/innovation.resolver';
 import { RequestResolver } from './resolvers/request.resolver';
 import { ScenarioResolver } from './resolvers/scenario.resolver';
 import { SignatureResolver } from './resolvers/signature.resolver';
+import {NavigationEnd, Router} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -115,7 +116,8 @@ import { SignatureResolver } from './resolvers/signature.resolver';
 export class AppModule {
 
   constructor(private _translateService: TranslateService,
-              private _cookieService: CookieService) {
+              private _cookieService: CookieService,
+              private _router: Router) {
     this._translateService.addLangs(['en', 'fr']);
     this._translateService.setDefaultLang('en');
 
@@ -127,6 +129,12 @@ export class AppModule {
 
     this._cookieService.put('user_lang', browserLang);
     this._translateService.use(browserLang);
+    this._router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+        return;
+      }
+      window.scrollTo(0, 0);
+    });
   }
 
 }

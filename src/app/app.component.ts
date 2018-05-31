@@ -46,6 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this._loaderService.stopLoading();
 
+
     setTimeout (() => {
       this._displayLoading = false;
     }, 800);

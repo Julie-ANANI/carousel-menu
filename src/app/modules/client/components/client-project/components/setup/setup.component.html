@@ -29,17 +29,17 @@
       <div class="column col-12 col-mx-auto tabs-container">
         <ul class="tabs">
           <li>
-            <a [ngClass]="{'active': currentTab == 'pitch'}" (click)="currentTab = 'pitch'">
+            <a [ngClass]="{'active': currentTab == 'pitch'}" (click)="settingTab($event, 'pitch')">
               <i class="fas fa-check"></i>{{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
             </a>
           </li>
           <li>
-            <a [ngClass]="{'active': currentTab == 'targeting'}" (click)="currentTab = 'targeting'">
+            <a [ngClass]="{'active': currentTab == 'targeting'}" (click)="settingTab($event, 'targeting')">
               <i class="fas fa-check"></i>{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
             </a>
           </li>
           <li>
-            <a [ngClass]="{'active': currentTab == 'survey'}" (click)="currentTab = 'survey'">
+            <a [ngClass]="{'active': currentTab == 'survey'}" (click)="settingTab($event, 'survey')">
               <i class="fas fa-check"></i>{{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
             </a>
           </li>
@@ -126,6 +126,11 @@
       </button>
     </li>
   </ul>
+
+
+   <a [ngClass]="{'active': currentTab == 'targeting'}" (click)="currentTab = 'targeting'">
+              <i class="fas fa-check"></i>{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
+            </a>
 
   <div class="tabs">
     <div class="tab-content" *ngIf="currentTab === 'pitch'">

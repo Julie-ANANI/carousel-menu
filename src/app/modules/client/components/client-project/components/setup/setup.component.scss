@@ -1,9 +1,11 @@
 #setup-project {
+  padding-top: 0;
 
   .row-1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    padding-top: 50px;
 
     .section-heading {
       color: #333333;
