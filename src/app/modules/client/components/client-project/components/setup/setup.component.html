@@ -51,7 +51,12 @@
 
         <!-- Pitch -->
         <div *ngIf="currentTab === 'pitch'">
-          <app-project-pitch [project]="project" (updateInnovation)="updateInnovation($event)" [changesSaved]="changesSaved" (saveChanges)="saveInnovation($event)"></app-project-pitch>
+          <app-project-pitch
+            [project]="project"
+            (updateInnovation)="updateInnovation($event)"
+            [changesSaved]="changesSaved"
+            (saveChanges)="saveInnovation($event)">
+          </app-project-pitch>
         </div>
 
         <!-- Targeting -->
@@ -84,10 +89,10 @@
       <div class="content">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.CONTENT' | translate }}</div>
     </div>
     <div class="modal-footer">
-      <button class="primary-button delete-button" (click)="submitProject($event)">
-        {{ 'COMMON.DELETE' | translate }}
+      <button class="primary-button submit-button" (click)="submitProject($event)">
+        {{ 'COMMON.SUBMIT' | translate }}
       </button>
-      <button class="primary-button ghost-button close-button" (click)="(projectToBeSubmitted = false) && $event.preventDefault()">
+      <button class="primary-button ghost-button cancel-button" (click)="(projectToBeSubmitted = false) && $event.preventDefault()">
         {{ 'COMMON.CANCEL' | translate }}
       </button>
     </div>

@@ -18,12 +18,12 @@
                 <span>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
               </li>
 
-              <div *ngIf="project.innovationCards.length === 1" class="create-innovation">
+              <div *ngIf="primaryLength === 1"  class="create-innovation">
                 <span class="para">{{ 'COMMON.OR' | translate }}</span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROJECT_IN_OTHER_LANG' | translate }}&nbsp;
                 <span class="text-link">
                   <span *ngIf="primaryLanguage !== 'fr'" (click)="createInnovationCard($event, 'fr')">{{ 'COMMON.LANG.FR' | translate }}</span>
                   <span *ngIf="primaryLanguage !== 'en'" (click)="createInnovationCard($event, 'en')">{{ 'COMMON.LANG.EN' | translate }}</span>
-              </span>
+                </span>
               </div>
 
             </ul>
@@ -31,7 +31,7 @@
             <div class="innov-progress"  *ngFor="let innovationCard of innovationData.get('innovationCards').value; let i = index">
               <div *ngIf="innovationCardEditingIndex === i">
                 <span class="text-link">Preview</span>&nbsp;
-                <span *ngIf="project.innovationCards.length > 1 ">
+                <span [ngStyle]="{'visibility': displayDeleteButton ? 'visible' : 'hidden' }">
                   <span [ngStyle]="{ 'color': '#97A4B1' }">/</span>&nbsp;
                   <span class="text-link delete-link" (click)="deleteInnovCard(innovationCard._id)">Delete</span>
                 </span>

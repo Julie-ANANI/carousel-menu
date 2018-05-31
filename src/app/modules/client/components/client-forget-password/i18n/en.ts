@@ -6,6 +6,7 @@ export const FORGET_PASSWORD = {
   'SIGN_IN_TEXT': 'Back to sign in',
   'SUCCESS_TEXT': {
     'A': 'If there\'s a',
-    'B': 'account linked to this email address, we\'ll send over instructions to reset your password.'
+    'B': 'account linked to this email address,',
+    'C': 'we\'ll send over instructions to reset your password.'
   }
 };

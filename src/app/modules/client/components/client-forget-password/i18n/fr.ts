@@ -6,6 +6,7 @@ export const FORGET_PASSWORD = {
   'SIGN_IN_TEXT': 'Retour pour vous connecter',
   'SUCCESS_TEXT': {
     'A': 'Si un compte',
-    'B': 'est associé à cette adresse e-mail, nous vous enverrons des instructions pour réinitialiser votre mot de passe.'
+    'B': 'est associé à cette adresse e-mail,',
+    'C': 'nous vous enverrons des instructions pour réinitialiser votre mot de passe.'
   }
 };
