@@ -15,10 +15,12 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
   private _campaign: Campaign;
   public importModal: boolean = false;
+
   private _scenario: EmailScenario = {
     name: '',
     emails: []
   };
+  private _availableScenarios: Array<EmailScenario> = [];
   private _templates: Array<EmailScenario> = [];
   private _config: any = {
     fields: '',
@@ -38,11 +40,26 @@ export class AdminCampaignTemplatesComponent implements OnInit {
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
     // this._scenario.name = this._campaign.title;
+   const scenariosnames = new Set<String>();
     if (this._campaign.settings && this._campaign.settings.emails) {
-      this._scenario.emails = this._campaign.settings.emails;
+       this._scenario.emails = this._campaign.settings.emails;
+      console.log(this._campaign.settings.emails.length);
+     this._campaign.settings.emails.forEach((x) => {
+        scenariosnames.add(x.name);
+      });
+
     }
     this._templatesService.getAll(this._config).first().subscribe(templates => {
       this._templates = templates.result;
+      this._availableScenarios = this._templates.filter( (x) => {
+        scenariosnames.has(x.name);
+      });
+      // Ici je n'ai que les noms dans les scenarios. il faut remplir les emails maintenant...
+      this._availableScenarios.forEach((scenar) => {
+        scenar.emails = this._campaign.settings.emails.filter(email => {
+          email.name === scenar.name;
+        });
+      });
     });
   }
 

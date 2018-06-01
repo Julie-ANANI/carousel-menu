@@ -1,0 +1,8 @@
+<div>
+  <!-- TODO: Bouton valider le choix par default. (selection des scenar dispo?) -->
+  <h2>Campagne : {{campaign._id}}</h2>
+  <div *ngFor="let scenario of availableScenarios">
+    <app-shared-edit-scenario *ngIf="scenario.emails && scenario.emails.length" [scenario]="scenario" (scenarioChange)="updateScenario($event)"></app-shared-edit-scenario>
+  </div>
+</div>
+
