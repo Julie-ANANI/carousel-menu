@@ -196,7 +196,7 @@
         </div>
 
         <div formArrayName="innovationCards">
-          <div *ngFor="let innovationCard of project.innovationCards; let i = index;">
+          <div *ngFor="let innovationItem of innovationData.get('innovationCards').controls; let i = index" [formGroup]="innovationItem">
             <div *ngIf="innovationCardEditingIndex === i">
 
               <div class="project-data">
@@ -234,21 +234,21 @@
 
 
                       <!-- Secondary medias -->
-                      <div *ngIf="innovationCard.media?.length > 0"
+                      <div *ngIf="innovationItem.get('media').value?.length > 0"
                            class="column col-md-12 col-lg-8 col-9 col-mx-auto">
                         <p class="para">Secondary medias</p>
-                        <div *ngFor="let media of innovationCard.media" class="media-content">
+                        <div *ngFor="let media of innovationItem.get('media').value" class="media-content">
                           <img
-                            *ngIf="media?.type==='PHOTO'"
+                            *ngIf="media.type==='PHOTO'"
                             [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_146,w_220/' + media.cloudinary.public_id"
                             [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
                           <iframe
-                            *ngIf="media?.type==='VIDEO'"
+                            *ngIf="media.type==='VIDEO'"
                             [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
                             width="220" height="146">
                           </iframe>
                           <div class="func-button text-center">
-                            <span *ngIf="media?._id !== project.principalMedia?._id" [ngStyle]="{ 'color': '#97A4B1' }">
+                            <span *ngIf="media._id !== project.principalMedia?._id" [ngStyle]="{ 'color': '#97A4B1' }">
                               <a class="text-link" (click)="setMediaAsPrimary($event, media)">Make it as main media</a>
                               /
                             </span>
@@ -267,8 +267,8 @@
                     <div class="column col-xl-12 col-5 col-mx-auto">
                       <app-shared-upload-zone-photo
                         *ngIf="canEdit"
-                        [uri]="'/innovation/'+project._id+'/innovationCard/'+innovationCard._id+'/media/image'"
-                        (cbFn)="imageUploaded($event)">
+                        [uri]="'/innovation/'+project._id+'/innovationCard/'+innovationItem.get('_id').value+'/media/image'"
+                        (cbFn)="imageUploaded($event, i)">
                       </app-shared-upload-zone-photo>
                     </div>
 

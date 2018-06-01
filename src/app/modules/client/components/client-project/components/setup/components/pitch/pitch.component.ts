@@ -1,6 +1,5 @@
 import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { Innovation } from '../../../../../../../../models/innovation';
-import { CommonService } from '../../../../../../../../services/common/common.service';
 
 @Component({
   selector: 'app-project-pitch',
@@ -16,10 +15,10 @@ export class PitchComponent {
   @Output() updateInnovation = new EventEmitter<Innovation>();
   @Output() saveChanges = new EventEmitter<boolean>();
 
-  constructor(private common: CommonService) {}
+  constructor() {}
 
   public updateProject(value: Innovation): void {
-    const innovation = this.common.deepMerge('deepMerge', this.project, value);
+    const innovation = Object.assign(this.project, value);
     this.updateInnovation.emit(innovation);
   }
 

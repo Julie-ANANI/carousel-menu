@@ -33,7 +33,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   public innovationData: FormGroup; // Overall innovation
   private _primaryLanguage: string;
-  private _primaryLength: number
+  private _primaryLength: number;
   private _displayDeleteButton = false;
   private _inputPreValue = '';
   private _inputCurrValue = '';
@@ -124,7 +124,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       advantages: [{value: data.advantages, disabled: !this.canEdit}],
       lang: [{value: data.lang, disabled: !this.canEdit}, Validators.required],
       principal: [{value: data.principal, disabled: !this.canEdit}, Validators.required],
-      // media: [{value: data.media, disabled: !this.canEdit}, Validators.required]
+      media: [{value: data.media, disabled: !this.canEdit}, Validators.required]
     });
   }
 
@@ -148,27 +148,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     }
 
   }
-
-  /*
-  public createInnovationCard(event: Event): void {
-    event.preventDefault();
-
-    if (this.canEdit) {
-      if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
-        this._innovationService.createInnovationCard(this.project._id, {
-          lang: this.project.innovationCards[0].lang === 'en' ? 'fr' : 'en' // Pour l'instant il n'y a que deux langues
-        }).first()
-          .subscribe((data: InnovCard) => {
-            this._addInnovationCardWithData(data);
-            this.project.innovationCards.push(data);
-            this.updateCards();
-          });
-      }
-      // window.location.reload();
-    }
-
-  }
-   */
 
 
   private _addInnovationCardWithData(innovationCardData: InnovCard): void {
@@ -195,9 +174,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     });
   }
 
-  public imageUploaded(media: Media): void {
-    this.project.innovationCards[this.innovationCardEditingIndex].media.push(media);
-    this.projectChange.emit(this.project);
+  public imageUploaded(media: Media, cardIdx: number): void {
+    const card = this.innovationData.get('innovationCards').value[cardIdx] as FormGroup;
+    card['media'].push(media);
+    // this.updateCards();
+    // this.projectChange.emit(this.project);
   }
 
   public newOnlineVideoToAdd (videoInfos: Video): void {
