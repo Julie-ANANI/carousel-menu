@@ -40,7 +40,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
     // this._scenario.name = this._campaign.title;
-   const scenariosnames = new Set<String>();
+    let scenariosnames = new Set<String>();
     if (this._campaign.settings && this._campaign.settings.emails) {
        this._scenario.emails = this._campaign.settings.emails;
       console.log(this._campaign.settings.emails.length);
@@ -49,22 +49,27 @@ export class AdminCampaignTemplatesComponent implements OnInit {
       });
 
     }
+    console.log(JSON.stringify(scenariosnames));
     this._templatesService.getAll(this._config).first().subscribe(templates => {
       this._templates = templates.result;
       this._availableScenarios = this._templates.filter( (x) => {
         scenariosnames.has(x.name);
       });
+      console.log(JSON.stringify(this._availableScenarios));
       // Ici je n'ai que les noms dans les scenarios. il faut remplir les emails maintenant...
       this._availableScenarios.forEach((scenar) => {
         scenar.emails = this._campaign.settings.emails.filter(email => {
           email.name === scenar.name;
         });
+
       });
+      //console.log(JSON.stringify(this._availableScenarios));
     });
   }
 
   public importTemplate(template: EmailScenario) {
     this._scenario.emails = template.emails;
+    this._scenario.name = template.name;
     this.importModal = false;
     this._saveTemplates();
   }
@@ -91,6 +96,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
   get config(): any { return this._config; }
   set config(value: any) { this._config = value; }
+  get availableScenarios(): Array<EmailScenario> {return this._availableScenarios}
   get scenario(): EmailScenario { return this._scenario; }
   set scenario(value: EmailScenario) { this._scenario = value; }
   get templates(): Array<EmailScenario> { return this._templates; }
