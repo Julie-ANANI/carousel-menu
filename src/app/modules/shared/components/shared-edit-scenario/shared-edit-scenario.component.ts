@@ -9,7 +9,7 @@ import { EmailTemplate } from '../../../../models/email-template';
 })
 export class SharedEditScenarioComponent implements OnInit {
 
-  @Input() scenario: EmailScenario;
+  @Input() scenario: Array<EmailScenario>;
   @Output() scenarioChange = new EventEmitter <EmailScenario>();
   public displayedLanguages: Array<string> = ['en', 'fr'];
   public displayedProfiles: Array<string> = ['NEW'];
