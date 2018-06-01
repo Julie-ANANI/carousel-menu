@@ -48,11 +48,10 @@
       <li *ngIf="!templateImported"> Template manquant</li>
       <li *ngIf="!emailReady"> Email non-modifié </li>
     </ul>
-    <!--
+
     <button (click)="creerpro()" class="btn btn-primary">
       CreerDesPros Alea + Autobatch si actif
     </button>
-    -->
   </div>
   <div class="card" *ngFor="let batch of stats.batches; let batchIndex = index">
     <div class="card-header">

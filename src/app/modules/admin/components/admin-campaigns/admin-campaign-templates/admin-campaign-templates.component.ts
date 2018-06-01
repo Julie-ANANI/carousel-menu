@@ -49,6 +49,8 @@ export class AdminCampaignTemplatesComponent implements OnInit {
       });
 
     }
+    // Ne pas passer par tout les scenar de la base (templates) =>
+    // Reconstruire les scenarios avec les emails importés de la campagne
     console.log(JSON.stringify(scenariosnames));
     this._templatesService.getAll(this._config).first().subscribe(templates => {
       this._templates = templates.result;
