@@ -24,7 +24,8 @@ export class AdminNewScenarioComponent {
         profile: 'NEW',
         subject: 'first mail',
         content: 'content',
-        modified: false
+        modified: false,
+        name: this._newScenarioName
       },
       {
         step: "SECOND",
@@ -32,7 +33,8 @@ export class AdminNewScenarioComponent {
         profile: 'NEW',
         subject: 'second mail',
         content: 'content',
-        modified: false
+        modified: false,
+        name: this._newScenarioName
       },
       {
         step: "THIRD",
@@ -40,7 +42,8 @@ export class AdminNewScenarioComponent {
         profile: 'NEW',
         subject: 'last mail',
         content: 'content',
-        modified: false
+        modified: false,
+        name: this._newScenarioName
       },
       {
         step: "THANKS",
@@ -48,7 +51,8 @@ export class AdminNewScenarioComponent {
         profile: 'NEW',
         subject: 'thanks',
         content: 'content',
-        modified: false
+        modified: false,
+        name: this._newScenarioName
       },
       {
         step: "FIRST",
@@ -56,7 +60,8 @@ export class AdminNewScenarioComponent {
         profile: 'NEW',
         subject: 'premier mail',
         content: 'contenu',
-        modified: false
+        modified: false,
+        name: this._newScenarioName
       },
       {
         step: "SECOND",
@@ -64,7 +69,9 @@ export class AdminNewScenarioComponent {
         profile: 'NEW',
         subject: 'deuxième mail',
         content: 'contenu',
-        modified: false
+        modified: false,
+        name: this._newScenarioName
+
       },
       {
         step: "THIRD",
@@ -72,7 +79,8 @@ export class AdminNewScenarioComponent {
         profile: 'NEW',
         subject: 'dernier mail',
         content: 'contenu',
-        modified: false
+        modified: false,
+        name: this._newScenarioName
       },
       {
         step: "THANKS",
@@ -80,7 +88,8 @@ export class AdminNewScenarioComponent {
         profile: 'NEW',
         subject: 'merci',
         content: 'contenu',
-        modified: false
+        modified: false,
+        name: this._newScenarioName
       }
     ];
     this._templatesService.create({name: this._newScenarioName, emails: emails}).first().subscribe(newScenario => {

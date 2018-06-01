@@ -9,4 +9,5 @@ export interface EmailTemplate {
   content: string;
   signature?: EmailSignature;
   modified: boolean;
+  name: string; // Nom du workflow. On doit l'inserer dans le back end sans changer la route.
 }

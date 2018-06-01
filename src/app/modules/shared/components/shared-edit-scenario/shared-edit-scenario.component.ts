@@ -15,6 +15,7 @@ export class SharedEditScenarioComponent implements OnInit {
   public displayedProfiles: Array<string> = ['NEW'];
   public availableLanguages: Array<string> = ['en', 'fr'];
   public availableProfiles: Array<string> = ['NEW'];
+  public availableScenario: Array<string>;
 
   constructor() { }
 
@@ -30,9 +31,9 @@ export class SharedEditScenarioComponent implements OnInit {
   }
 
   public save(emails: Array<EmailTemplate>, step: string) {
-    //On supprime les anciens mails enregistrés pour cette étape
+    // On supprime les anciens mails enregistrés pour cette étape
     this.scenario.emails = this.scenario.emails.filter(e => e.step != step);
-    //Puis on ajoute les mails mis à jours
+    // Puis on ajoute les mails mis à jours
     this.scenario.emails = this.scenario.emails.concat(emails).filter(e => e.content);
     this.scenarioChange.emit(this.scenario);
   }
@@ -63,7 +64,8 @@ export class SharedEditScenarioComponent implements OnInit {
         language: language,
         subject: "TODO",
         content: "TODO",
-        modified: false
+        modified: false,
+        name: this.scenario.name
       };
     return template;
   }

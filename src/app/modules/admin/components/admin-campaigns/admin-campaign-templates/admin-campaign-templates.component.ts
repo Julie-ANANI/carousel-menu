@@ -37,7 +37,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-    this._scenario.name = this._campaign.title;
+    // this._scenario.name = this._campaign.title;
     if (this._campaign.settings && this._campaign.settings.emails) {
       this._scenario.emails = this._campaign.settings.emails;
     }
@@ -51,14 +51,20 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     this.importModal = false;
     this._saveTemplates();
   }
-  
+
   public updateScenario(scenario: EmailScenario) {
     this._scenario = scenario;
     this._saveTemplates();
   }
 
   private _saveTemplates() {
+    // TODO : Si concat, mail non modifiable aprés import => Interface AVANT back
+    // this._campaign.settings.emails = this._campaign.settings.emails.concat(this._scenario.emails);
     this._campaign.settings.emails = this._scenario.emails;
+    this._campaign.settings.emails.forEach( (email) => {
+      email.name = this._scenario.name;
+    });
+    console.log(this._campaign.settings.emails);
     this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
       this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
     }, (err: any) => {
