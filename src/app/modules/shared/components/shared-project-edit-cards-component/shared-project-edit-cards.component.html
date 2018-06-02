@@ -239,17 +239,21 @@
                         <p class="para">Secondary medias</p>
                         <div *ngFor="let media of innovationItem.get('media').value" class="media-content">
                           <img
-                            *ngIf="media.type==='PHOTO'"
+                            *ngIf="media.type === 'PHOTO'"
                             [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_146,w_220/' + media.cloudinary.public_id"
                             [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
                           <iframe
-                            *ngIf="media.type==='VIDEO'"
+                            *ngIf="media.type === 'VIDEO'"
                             [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
                             width="220" height="146">
                           </iframe>
                           <div class="func-button text-center">
                             <span *ngIf="media._id !== project.principalMedia?._id" [ngStyle]="{ 'color': '#97A4B1' }">
-                              <a class="text-link" (click)="setMediaAsPrimary($event, media)">Make it as main media</a>
+                              <a
+                                class="text-link"
+                                (click)="setMediaAsPrimary($event, media, innovationItem.get('_id').value)">
+                                Make it as main media
+                              </a>
                               /
                             </span>
                             <a class="text-link delete-link" (click)="deleteMedia($event, media)">Delete</a>

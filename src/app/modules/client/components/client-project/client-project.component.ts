@@ -15,6 +15,7 @@ const DEFAULT_PAGE = 'setup';
 export class ClientProjectComponent implements OnInit {
 
   @Input() project: Innovation;
+
   private _imgType: string;
   private _currentPage: string;
   /*

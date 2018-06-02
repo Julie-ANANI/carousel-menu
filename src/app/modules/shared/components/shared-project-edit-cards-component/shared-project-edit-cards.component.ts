@@ -57,6 +57,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     this.innovationData.patchValue(this.project);
 
+    console.log(this.project);
+
     if (this.project.innovationCards.length < 2) {
       this._primaryLanguage = this.project.innovationCards[0].lang;
       this._primaryLength = this.project.innovationCards.length;
@@ -88,6 +90,42 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       external_diffusion: [false, [Validators.required]],
       innovationCards: this._formBuilder.array([])
     });
+
+  }
+
+  formProgress(event: Event, value: string) {
+
+    if (event.target['type'] === 'radio') {
+      if (event.target['name'] === 'projectStatus') {
+        this._inputPreValue = this.innovationData.get('projectStatus').value;
+      } else if (event.target['name'] === 'patented') {
+        this._inputPreValue = this.innovationData.get('patented').value;
+      } else {
+        this._inputPreValue = this.innovationData.get('external_diffusion').value;
+      }
+
+      this._inputCurrValue = value;
+
+      if (this._inputPreValue !== this._inputCurrValue) {
+        this.changesSaved = false;
+        this.saveChanges.emit(true);
+      }
+
+    } else {
+
+      if (event.type === 'click') {
+        this._inputPreValue = value;
+      } else if (event.type === 'blur') {
+        this._inputCurrValue = value;
+
+        if (this._inputPreValue !== this._inputCurrValue) {
+          this.changesSaved = false;
+          this.saveChanges.emit(true);
+        }
+
+      }
+
+    }
 
   }
 
@@ -170,7 +208,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   public setAsPrincipal (innovationCardId: string): void {
     this.innovationData.get('innovationCards').value.forEach((innovCard: any, index: number) => {
-      this.innovationData.get('innovationCards').get([index]).get('principal').patchValue(innovCard._id === innovationCardId);
+      this.innovationData.get('innovationCards').get([index]).get('principal')
+        .patchValue(innovCard._id === innovationCardId);
     });
   }
 
@@ -182,7 +221,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   public newOnlineVideoToAdd (videoInfos: Video): void {
-    this._innovationService.addNewMediaVideoToInnovationCard(this.project._id, this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
+    this._innovationService.addNewMediaVideoToInnovationCard(this.project._id,
+      this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
       .first()
       .subscribe(res => {
         this.project = res;
@@ -190,74 +230,26 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       });
   }
 
-  public setMediaAsPrimary (event: Event, media: Media): void {
+  public setMediaAsPrimary (event: Event, media: Media, innovCardId: string): void {
     event.preventDefault();
-    this._innovationService.setPrincipalMediaOfInnovationCard(this.project._id, this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
-      .first()
-      .subscribe((res: Innovation) => {
-        this.project = res;
-        this.projectChange.emit(this.project);
-      });
-  }
 
-  /*
-   public setMediaAsPrimary (event: Event, media: Media): void {
-    event.preventDefault();
-    console.log(media);
-    this._innovationService.setPrincipalMediaOfInnovationCard(this.project._id, this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
-      .first()
-      .subscribe((res: Innovation) => {
+    this._innovationService.setPrincipalMediaOfInnovationCard(this.project._id, innovCardId, media._id)
+      .first().subscribe((res: Innovation) => {
         this.project = res;
         this.projectChange.emit(this.project);
       });
   }
-   */
 
   public deleteMedia(event: Event, media: Media): void {
     event.preventDefault();
 
-    this._innovationService.deleteMediaOfInnovationCard(this.project._id, this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
+    this._innovationService.deleteMediaOfInnovationCard(this.project._id,
+      this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
       .first()
       .subscribe((res: Innovation) => {
         this.project = res;
         this.projectChange.emit(this.project);
       });
-
-  }
-
-  formProgress(event: Event, value: string) {
-
-    if (event.target['type'] === 'radio') {
-      if (event.target['name'] === 'projectStatus') {
-        this._inputPreValue = this.innovationData.get('projectStatus').value;
-      } else if (event.target['name'] === 'patented') {
-        this._inputPreValue = this.innovationData.get('patented').value;
-      } else {
-        this._inputPreValue = this.innovationData.get('external_diffusion').value;
-      }
-
-      this._inputCurrValue = value;
-
-      if (this._inputPreValue !== this._inputCurrValue) {
-        this.changesSaved = false;
-        this.saveChanges.emit(true);
-      }
-
-    } else {
-
-      if (event.type === 'click') {
-        this._inputPreValue = value;
-      } else if (event.type === 'blur') {
-        this._inputCurrValue = value;
-
-        if (this._inputPreValue !== this._inputCurrValue) {
-          this.changesSaved = false;
-          this.saveChanges.emit(true);
-        }
-
-      }
-
-    }
 
   }
 

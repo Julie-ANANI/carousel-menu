@@ -49,27 +49,26 @@ export class ClientSignupComponent implements OnInit {
 
   public linkedInSignUp(event: Event) {
     event.preventDefault();
+
     const domain = environment.domain;
-    this._authService.linkedinLogin(domain)
-      .first()
-      .subscribe(
-        url => {
+
+    this._authService.linkedinLogin(domain).first().subscribe(url => {
           window.location.href = url;
         },
         error => {
           this._notificationsService.error('ERROR.ERROR', error.message);
         }
       );
+
   }
 
   public onSubmit(res: FormGroup) {
     if (res.valid) {
       const user = new User(res.value);
+
       user.domain = environment.domain;
-      this._userService.create(user)
-        .first()
-        .subscribe(
-          _ => {
+
+      this._userService.create(user).first().subscribe(_ => {
             this._authService.login(user).first().subscribe(
               _ => {
                 this._location.back();
@@ -87,6 +86,7 @@ export class ClientSignupComponent implements OnInit {
     else {
       this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
+
   }
 
   get domainCompanyName(): string {

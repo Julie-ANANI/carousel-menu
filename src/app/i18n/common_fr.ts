@@ -94,7 +94,7 @@ export const COMMON = {
 
   'LINKS': 'Liens',
   'HELP': 'Aide',
-  'OR': 'ou',
+  'OR': 'Ou',
 
   'LANGUAGE': 'Langue',
   'LANG': {

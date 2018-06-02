@@ -33,7 +33,6 @@ export class SetupProjectComponent implements OnInit {
 
   public updateSettings(value: InnovationSettings): void {
     this.project.settings = value;
-    console.log('v' + value);
   }
 
   /*public updateSettings(value: InnovationSettings): void {
@@ -53,7 +52,6 @@ export class SetupProjectComponent implements OnInit {
           .first()
           .subscribe(data => {
             this.project = data;
-            console.log(this.project);
             this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
           }, err => {
             this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
@@ -104,7 +102,6 @@ export class SetupProjectComponent implements OnInit {
     if (this._saveChanges) {
       this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     } else {
-
       this._currentTab = value;
     }
 

@@ -337,19 +337,13 @@ ul.list-filter {
   display: inline-block;
   height: 15px;
   width: 15px;
-  background-color: #97A4B1;
+  background-color: white;
   border-radius: 50%;
   z-index: 2;
 
   i {
-    color: white;
     display: flex;
     justify-content: center;
-    padding-top: 3px;
-  }
-
-  .fas {
-    font-size: 8px;
   }
 
   .tooltip-text {
@@ -665,7 +659,7 @@ ul.list-filter {
   height: 50px;
   padding: 11px 30px;
   font-weight: 600;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.2s ease-in-out;
 
   i {
     margin-right: 20px;
@@ -674,11 +668,12 @@ ul.list-filter {
 
 }
 
-.primary-button:hover, .primary-button:active {
+.primary-button:hover {
   color: white;
-  background: lighten($button-color, 10%);
-  border-color: lighten($button-color, 10%);
+  background: $button-color;
+  border-color: $button-color;
   text-decoration: none;
+  box-shadow: 0 3px 15px 0 rgba(0,0,0,.25);
 }
 
 .primary-button:disabled {
@@ -686,6 +681,7 @@ ul.list-filter {
   border-color: $button-disabled-color;
   color: #a9a9a9;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .primary-button:focus {
@@ -721,6 +717,7 @@ ul.list-filter {
   color: #a9a9a9;
   background: white;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .ghost-button:focus {
@@ -738,46 +735,14 @@ ul.list-filter {
   padding: 8px 20px;
 }
 
-.delete-button:hover, .delete-button:active {
-  //background: white;
-  //color: lighten($alert-element, 10%);
-  //border-color: lighten($alert-element, 10%);
+.delete-button:hover {
   color: white;
   background: $alert-element;
   border-color: $alert-element;
+  box-shadow: 0 3px 15px 0 rgba(0,0,0,.25);
 }
 
 .delete-button:focus {
-  background: white;
-  border-color: $alert-element;
-  color: $alert-element;
-}
-
-.secondary-button-alert {
-  background: white;
-  color: $alert-element;
-  border-radius: 5px;
-  border: 2px solid $alert-element;
-  height: 50px;
-  padding: 12px 30px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  transition: all 0.5s ease-in-out;
-
-  i {
-    margin-right: 36px;
-    font-size: 1.1rem;
-  }
-
-}
-
-.secondary-button-alert:hover, .secondary-button-alert:active {
-  background: white;
-  color: lighten($alert-element, 15%);
-  border-color: lighten($alert-element, 15%);
-}
-
-.secondary-button-alert:focus {
   background: white;
   border-color: $alert-element;
   color: $alert-element;

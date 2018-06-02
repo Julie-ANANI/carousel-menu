@@ -87,24 +87,6 @@ export class ClientLoginComponent implements OnInit {
 
   }
 
-  /*public changePassword(event: Event) {
-    event.preventDefault();
-
-    if (!this._formData.get('email')!.value) {
-      this._notificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_PLEASE');
-    }
-    else {
-      this._userService.changePassword(this._formData.get('email')!.value)
-        .first()
-        .subscribe(_ => {
-          this._notificationsService.success('ERROR.LOGIN.EMAIL_SENT', 'ERROR.LOGIN.CHANGE_PASSWORD');
-        }, _ => {
-          this._notificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_NOT_FOUND');
-        });
-    }
-
-  }*/
-
   get authService(): AuthService {
     return this._authService;
   }
