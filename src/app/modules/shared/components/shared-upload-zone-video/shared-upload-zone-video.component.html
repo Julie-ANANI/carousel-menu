@@ -10,11 +10,11 @@
 
   <div class="input-group">
     <input type="text" class="form-input-default"
-           placeholder="Ex : https://www.youtube.com/watch?v=1c9V-Re5QJA"
+           placeholder="https://www.youtube.com/watch?v=1c9V-Re5QJA"
            [(ngModel)]="videoUrlInput">
     <button class="primary-button"
             (click)="videoUrlInput ? addVideo($event) : ''">
-      <i class="fas fa-plus"></i> {{ 'COMMON.ADD' | translate }}
+      {{ 'COMMON.ADD' | translate }}<i class="fas fa-angle-right"></i>
     </button>
   </div>
 

@@ -176,19 +176,31 @@
 
   }
 
-  .media-container {
-    padding-bottom: 25px;
-  }
-
-  .plus-container {
-    padding-top: 25px;
-    padding-bottom: 25px;
-    justify-content: center;
-    align-items: center;
+  .upload-container {
     display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: column;
 
-    i {
-      color: #97A4B1;
+    .image-upload-container {
+      flex: 1;
+    }
+
+    .or-container {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+
+      .para {
+        color: #97A4B1;
+        font-size: 0.7rem;
+        margin: 25px;
+      }
+
+    }
+
+    .video-upload-container {
+      flex: 1;
     }
 
   }
@@ -196,6 +208,14 @@
 }
 
 /********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  .tooltips {
+    display: none;
+  }
+
+}
 
 @media (min-width: 768px) {
 
@@ -225,6 +245,18 @@
     // Form input
     .form-input-default, .input-list {
       width: 662px;
+    }
+
+  }
+
+}
+
+@media (min-width: 1024px) {
+
+  #pitchCard {
+
+    .upload-container {
+      flex-direction: row;
     }
 
   }

@@ -57,10 +57,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     this.innovationData.patchValue(this.project);
 
-    console.log(this.project);
+    this._primaryLanguage = this.project.innovationCards[0].lang;
 
     if (this.project.innovationCards.length < 2) {
-      this._primaryLanguage = this.project.innovationCards[0].lang;
       this._primaryLength = this.project.innovationCards.length;
     } else {
       this._displayDeleteButton = true;
@@ -90,7 +89,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       external_diffusion: [false, [Validators.required]],
       innovationCards: this._formBuilder.array([])
     });
-
   }
 
   formProgress(event: Event, value: string) {
@@ -230,10 +228,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       });
   }
 
-  public setMediaAsPrimary (event: Event, media: Media, innovCardId: string): void {
+  public setMediaAsPrimary (event: Event, media: Media): void {
     event.preventDefault();
 
-    this._innovationService.setPrincipalMediaOfInnovationCard(this.project._id, innovCardId, media._id)
+    this._innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
+      this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
       .first().subscribe((res: Innovation) => {
         this.project = res;
         this.projectChange.emit(this.project);
@@ -245,8 +244,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     this._innovationService.deleteMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
-      .first()
-      .subscribe((res: Innovation) => {
+      .first().subscribe((res: Innovation) => {
         this.project = res;
         this.projectChange.emit(this.project);
       });

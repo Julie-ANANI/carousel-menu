@@ -12,7 +12,7 @@
 
 
   .logos {
-    padding-bottom: 12px;
+    padding-bottom: 25px;
     img {
       margin-right: 10px;
     }
@@ -27,18 +27,24 @@
     padding-left: 15px;
     padding-right: 15px;
     i {
-      vertical-align: bottom;
-      margin-right: 10px;
-      font-size: 1rem;
+      vertical-align: middle;
+      margin-right: 0;
+      margin-left: 10px;
+      font-size: 1.5rem;
     }
   }
 
   .para {
     font-size: 0.8rem;
     color: #333333;
-    padding: 12px 15px 0;
+    padding: 25px 15px 0;
   }
 
+}
+
+.videos-upload:hover {
+  border-color: #FFB300;
+  background-color: #FFF9EB;
 }
 
 /********************************** Media ***************************************/
