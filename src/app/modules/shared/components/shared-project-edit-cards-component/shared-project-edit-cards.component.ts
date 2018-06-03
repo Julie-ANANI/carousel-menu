@@ -131,6 +131,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.cardsChange.emit(this.innovationData.value);
   }
 
+  private _addInnovationCardWithData(innovationCardData: InnovCard): void {
+    const innovationCards = this.innovationData.controls['innovationCards'] as FormArray;
+    innovationCards.push(this._newInnovationCardFormBuilderGroup(innovationCardData));
+  }
+
   /**
    * This configuration tells the directive what text to use for the placeholder and if it exists,
    * the initial data to show.
@@ -183,12 +188,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     }
 
-  }
-
-
-  private _addInnovationCardWithData(innovationCardData: InnovCard): void {
-    const innovationCards = this.innovationData.controls['innovationCards'] as FormArray;
-    innovationCards.push(this._newInnovationCardFormBuilderGroup(innovationCardData));
   }
 
   /**

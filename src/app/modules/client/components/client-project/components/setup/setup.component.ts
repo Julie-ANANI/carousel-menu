@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit } from '@angular/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
@@ -41,7 +41,6 @@ export class SetupProjectComponent implements OnInit {
 
   public updateInnovation(value: Innovation): void {
     this.project = value;
-    console.log('rr' + this.project);
   }
 
   public saveProject(event: Event): void {

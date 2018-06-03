@@ -79,7 +79,8 @@ export class ClientProjectComponent implements OnInit {
     event.preventDefault();
 
     if (this.collaborators_emails !== '') {
-      this.innovationService.inviteCollaborators(this.project._id, this.collaborators_emails).first().subscribe((data: any) => {
+      this.innovationService.inviteCollaborators(this.project._id, this.collaborators_emails).first()
+        .subscribe((data: any) => {
         if (data.usersAdded.length || data.invitationsToSend.length || data.invitationsToSendAgain.length) {
           this.collaboratorsAddingProcess = data;
           this.collaboratorsAddingProcess.inviteUrl = this.innovationService.getInvitationUrl();
@@ -97,7 +98,7 @@ export class ClientProjectComponent implements OnInit {
 
   }
 
-  get currentPage() {
+  get currentPage(): string {
     return this._currentPage;
   }
 
