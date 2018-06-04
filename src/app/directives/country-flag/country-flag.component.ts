@@ -71,7 +71,7 @@ export class CountryFlagComponent implements OnInit {
     } else if (this.country && this.country.flag) {
       flag = this.country.flag.toUpperCase();
     }
-    this._url = `https://res.cloudinary.com/umi/image/upload/app/${flag}.png`;
+    this._url = `https://res.cloudinary.com/umi/image/upload/app/flags/${flag}.png`;
     this._name = this.names[flag] || 'Unknown';
   }
 
