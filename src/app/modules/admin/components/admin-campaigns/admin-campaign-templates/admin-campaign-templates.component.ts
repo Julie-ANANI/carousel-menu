@@ -42,7 +42,6 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
     let scenariosnames = new Set<string>();
     if (this._campaign.settings && this._campaign.settings.emails) {
-      // this._scenario.emails = this._campaign.settings.emails; //TODO : virer ça
        this._campaign.settings.emails.forEach((x) => {
         scenariosnames.add(x.name);
       });
@@ -50,16 +49,10 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     scenariosnames.forEach((name) => {
       let scenar = {} as EmailScenario;
       scenar.name = name;
-      scenar.emails = [];
-      this._availableScenarios.push(scenar);
-    });
-
-    this._campaign.settings.emails.forEach((x) => {
-      this._availableScenarios.forEach((y) => {
-        if (y.name === x.name) {
-          y.emails.push(x);
-        }
+      scenar.emails = this._campaign.settings.emails.filter(email => {
+        return email.name === name;
       });
+      this._availableScenarios.push(scenar);
     });
 
     this._templatesService.getAll(this._config).first().subscribe(templates => {
