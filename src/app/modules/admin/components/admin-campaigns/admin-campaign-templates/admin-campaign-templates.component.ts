@@ -5,6 +5,7 @@ import { EmailScenario } from '../../../../../models/email-scenario';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TemplatesService } from '../../../../../services/templates/templates.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+// import { EmailTemplate } from '../../../../../models/email-template';
 
 @Component({
   selector: 'app-admin-campaign-templates',
@@ -39,39 +40,39 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-    // this._scenario.name = this._campaign.title;
-    let scenariosnames = new Set<String>();
+    let scenariosnames = new Set<string>();
     if (this._campaign.settings && this._campaign.settings.emails) {
-       this._scenario.emails = this._campaign.settings.emails;
-      console.log(this._campaign.settings.emails.length);
-     this._campaign.settings.emails.forEach((x) => {
+      // this._scenario.emails = this._campaign.settings.emails; //TODO : virer ça
+       this._campaign.settings.emails.forEach((x) => {
         scenariosnames.add(x.name);
       });
-
     }
-    // Ne pas passer par tout les scenar de la base (templates) =>
-    // Reconstruire les scenarios avec les emails importés de la campagne
-    console.log(JSON.stringify(scenariosnames));
+    scenariosnames.forEach((name) => {
+      let scenar = {} as EmailScenario;
+      scenar.name = name;
+      scenar.emails = [];
+      this._availableScenarios.push(scenar);
+    });
+
+    this._campaign.settings.emails.forEach((x) => {
+      this._availableScenarios.forEach((y) => {
+        if (y.name === x.name) {
+          y.emails.push(x);
+        }
+      });
+    });
+
     this._templatesService.getAll(this._config).first().subscribe(templates => {
       this._templates = templates.result;
-      this._availableScenarios = this._templates.filter( (x) => {
-        scenariosnames.has(x.name);
-      });
-      console.log(JSON.stringify(this._availableScenarios));
-      // Ici je n'ai que les noms dans les scenarios. il faut remplir les emails maintenant...
-      this._availableScenarios.forEach((scenar) => {
-        scenar.emails = this._campaign.settings.emails.filter(email => {
-          email.name === scenar.name;
-        });
-
-      });
-      //console.log(JSON.stringify(this._availableScenarios));
     });
   }
 
   public importTemplate(template: EmailScenario) {
     this._scenario.emails = template.emails;
     this._scenario.name = template.name;
+    this._scenario.emails.forEach((x) => {
+      x.name = template.name;
+    });
     this.importModal = false;
     this._saveTemplates();
   }
@@ -82,12 +83,8 @@ export class AdminCampaignTemplatesComponent implements OnInit {
   }
 
   private _saveTemplates() {
-    // TODO : Si concat, mail non modifiable aprés import => Interface AVANT back
-    // this._campaign.settings.emails = this._campaign.settings.emails.concat(this._scenario.emails);
-    this._campaign.settings.emails = this._scenario.emails;
-    this._campaign.settings.emails.forEach( (email) => {
-      email.name = this._scenario.name;
-    });
+    this._campaign.settings.emails = this._campaign.settings.emails.concat(this._scenario.emails);
+
     console.log(this._campaign.settings.emails);
     this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
       this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");

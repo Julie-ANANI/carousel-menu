@@ -9,13 +9,13 @@ import { EmailTemplate } from '../../../../models/email-template';
 })
 export class SharedEditScenarioComponent implements OnInit {
 
-  @Input() scenario: Array<EmailScenario>;
+  @Input() scenario: EmailScenario;
   @Output() scenarioChange = new EventEmitter <EmailScenario>();
   public displayedLanguages: Array<string> = ['en', 'fr'];
   public displayedProfiles: Array<string> = ['NEW'];
   public availableLanguages: Array<string> = ['en', 'fr'];
   public availableProfiles: Array<string> = ['NEW'];
-  public availableScenario: Array<string>;
+  public availableScenario: Array<EmailScenario>;
 
   constructor() { }
 
