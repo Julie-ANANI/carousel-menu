@@ -24,6 +24,7 @@ export const clientProjectRoutes: any = [
       {
         path: ':projectId',
         resolve: { innovation : InnovationResolver },
+        runGuardsAndResolvers: 'always',
         component: ClientProjectComponent,
         children: [
           {
