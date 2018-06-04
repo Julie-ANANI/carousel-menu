@@ -58,7 +58,7 @@ export class ClientMyAccountComponent implements OnInit {
 
   public onSubmit() {
     if (this.formData.valid) {
-      const user = new User(this.formData.value);
+      const user: User = this.formData.value;
       this._userService.update(user)
         .first()
         .subscribe(

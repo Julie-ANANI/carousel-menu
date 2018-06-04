@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   public login(user: User): Observable<User> {
-    return this._http.post('/auth/login', user.toJSON())
+    return this._http.post('/auth/login', user)
       .map((res: Response) => {
         const response = res.json();
         this._setAuthenticatedTo(response.isAuthenticated);
@@ -114,7 +114,7 @@ export class AuthService {
   get isConfirmed(): boolean { return this._confirmed; }
   get adminLevel(): number { return this._admin; }
   get user () { return this._user; }
-  get userId (): string { return this._user ? this._user.id : ''; }
+  get userId (): string { return this._user ? this._user._id : ''; }
   get isAcceptingCookies(): boolean { // CNIL
     return true;
   }

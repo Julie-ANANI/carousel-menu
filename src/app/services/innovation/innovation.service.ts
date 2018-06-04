@@ -162,7 +162,7 @@ export class InnovationService {
 
 
   public removeCollaborator(innovationId: string, collaborator: User): Observable<any> {
-    return this._http.delete('/innovation/' + innovationId + '/collaborator/' + collaborator.id)
+    return this._http.delete('/innovation/' + innovationId + '/collaborator/' + collaborator._id)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

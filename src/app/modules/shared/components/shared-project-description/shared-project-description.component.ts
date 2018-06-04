@@ -58,7 +58,7 @@ export class SharedProjectDescriptionComponent implements OnInit {
   }
 
   get isProjectOwner (): boolean {
-    return this._authService.userId === this.project.owner.id;
+    return this._authService.userId === this.project.owner._id;
   }
 
   get isAdmin (): boolean {

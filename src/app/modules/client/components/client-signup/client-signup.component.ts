@@ -64,7 +64,7 @@ export class ClientSignupComponent implements OnInit {
 
   public onSubmit(res: FormGroup) {
     if (res.valid) {
-      const user = new User(res.value);
+      const user: User = res.value;
       user.domain = environment.domain;
       this._userService.create(user)
         .first()

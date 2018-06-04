@@ -58,7 +58,7 @@ export class AdminProjectCampaignsComponent implements OnInit {
     this._newCampaign = {
       domain: environment.domain,
       innovation: this._innovation._id,
-      owner: this._innovation.owner.id,
+      owner: this._innovation.owner._id,
       title: (this._campaigns.length + 1) + '. ' + newTitle
     };
 

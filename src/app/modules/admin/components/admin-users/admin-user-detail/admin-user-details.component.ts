@@ -20,7 +20,7 @@ export class AdminUserDetailsComponent implements OnInit {
   public formData: FormGroup;
   public accountDeletionAsked = false;
 
-  private _userBasicData: any = {};
+  private _userBasicData: User = {};
 
   // TODO : profile picture, reset password, description, location
 
@@ -63,10 +63,10 @@ export class AdminUserDetailsComponent implements OnInit {
 
   public onSubmit() {
     if (this.formData.valid) {
-      const user = new User(this.formData.value);
+      const user: User = this.formData.value;
       // Verify other configurations that aren't in the form (like the operator configuration and the id)
       user.isOperator = this._userBasicData['isOperator'];
-      user.id = this._userBasicData['id'];
+      user._id = this._userBasicData['_id'];
       user.roles = this._userBasicData['roles'];
       this._userService.updateOther(user)
         .first()
@@ -116,7 +116,7 @@ export class AdminUserDetailsComponent implements OnInit {
 
   public deleteAccount(event: Event): void {
     event.preventDefault();
-    this._userService.deleteUser(this._userBasicData['id'])
+    this._userService.deleteUser(this._userBasicData['_id'])
       .first()
       .subscribe(_ => {
         this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');

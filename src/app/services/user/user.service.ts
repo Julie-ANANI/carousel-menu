@@ -24,7 +24,7 @@ export class UserService {
   }
 
   public create(user: User): Observable<any> {
-    return this._http.post('/user', user.toJSON())
+    return this._http.post('/user', user)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }
@@ -42,13 +42,13 @@ export class UserService {
   }
 
   public update(user: User): Observable<any> {
-    return this._http.put('/user/me', user.toJSON())
+    return this._http.put('/user/me', user)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
   public updateOther(user: User): Observable<any> {
-    return this._http.put(`/user/${user.id}`, user.toJSON())
+    return this._http.put(`/user/${user._id}`, user)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }
