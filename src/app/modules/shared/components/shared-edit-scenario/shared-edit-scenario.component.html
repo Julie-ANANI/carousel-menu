@@ -30,15 +30,15 @@
   </div>
 
   <div id="collapseMails" [hidden]="isCollapsed" *ngIf="inCampaign"> <!-- Todo: Changer l'event.-->
-    <app-shared-edit-emails-step [emails]="first" [step]="'FIRST'" (emailsChange)="save($event, 'FIRST')"></app-shared-edit-emails-step>
-    <app-shared-edit-emails-step [emails]="second" [step]="'SECOND'" (emailsChange)="save($event, 'SECOND')"></app-shared-edit-emails-step>
-    <app-shared-edit-emails-step [emails]="third" [step]="'THIRD'" (emailsChange)="save($event, 'THIRD')"></app-shared-edit-emails-step>
-    <app-shared-edit-emails-step [emails]="thanks" [step]="'THANKS'" (emailsChange)="save($event, 'THANKS')"></app-shared-edit-emails-step>
+    <app-shared-edit-emails-step [emails]="first" [step]="'FIRST'" [inCampaign]="inCampaign" (emailsChange)="save($event, 'FIRST')"></app-shared-edit-emails-step>
+    <app-shared-edit-emails-step [emails]="second" [step]="'SECOND'" [inCampaign]="inCampaign" (emailsChange)="save($event, 'SECOND')"></app-shared-edit-emails-step>
+    <app-shared-edit-emails-step [emails]="third" [step]="'THIRD'" [inCampaign]="inCampaign" (emailsChange)="save($event, 'THIRD')"></app-shared-edit-emails-step>
+    <app-shared-edit-emails-step [emails]="thanks" [step]="'THANKS'" [inCampaign]="inCampaign" (emailsChange)="save($event, 'THANKS')"></app-shared-edit-emails-step>
   </div>
   <div *ngIf="!inCampaign">
-    <app-shared-edit-emails-step [emails]="first" [step]="'FIRST'" (emailsChange)="save($event, 'FIRST')"></app-shared-edit-emails-step>
-    <app-shared-edit-emails-step [emails]="second" [step]="'SECOND'" (emailsChange)="save($event, 'SECOND')"></app-shared-edit-emails-step>
-    <app-shared-edit-emails-step [emails]="third" [step]="'THIRD'" (emailsChange)="save($event, 'THIRD')"></app-shared-edit-emails-step>
-    <app-shared-edit-emails-step [emails]="thanks" [step]="'THANKS'" (emailsChange)="save($event, 'THANKS')"></app-shared-edit-emails-step>
+    <app-shared-edit-emails-step [emails]="first" [step]="'FIRST'" [inCampaign]="inCampaign" (emailsChange)="save($event, 'FIRST')"></app-shared-edit-emails-step>
+    <app-shared-edit-emails-step [emails]="second" [step]="'SECOND'" [inCampaign]="inCampaign" (emailsChange)="save($event, 'SECOND')"></app-shared-edit-emails-step>
+    <app-shared-edit-emails-step [emails]="third" [step]="'THIRD'" [inCampaign]="inCampaign" (emailsChange)="save($event, 'THIRD')"></app-shared-edit-emails-step>
+    <app-shared-edit-emails-step [emails]="thanks" [step]="'THANKS'" [inCampaign]="inCampaign" (emailsChange)="save($event, 'THANKS')"></app-shared-edit-emails-step>
   </div>
 </div>

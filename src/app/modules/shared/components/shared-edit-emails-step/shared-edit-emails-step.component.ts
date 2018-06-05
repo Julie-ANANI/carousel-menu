@@ -10,6 +10,7 @@ export class SharedEditEmailsStep {
 
   @Input() emails: Array<EmailTemplate>;
   @Input() step: string;
+  @Input() inCampaign: Boolean;
   @Output() emailsChange = new EventEmitter<any>();
 
   public STEPS = {
@@ -29,6 +30,6 @@ export class SharedEditEmailsStep {
     }
     this.emailsChange.emit(this.emails);
   }
-  
+
   get size(): number { return this.emails.filter(e => e.content != 'TODO' && e.subject != 'TODO').length}
 }

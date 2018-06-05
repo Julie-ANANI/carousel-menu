@@ -31,6 +31,9 @@ export class SharedEditScenarioComponent implements OnInit {
       return languages;
     }, []);
     */
+    this._isModified = this.scenario.emails.reduce((acc, current) => {
+      return (acc && current.modified);
+    }, true);
   }
 
   public save(emails: Array<EmailTemplate>, step: string) {

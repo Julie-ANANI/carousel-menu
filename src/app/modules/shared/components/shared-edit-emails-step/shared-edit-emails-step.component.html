@@ -1,6 +1,7 @@
 <div>
   <h3>{{ STEPS[step] }} - {{ size }} mails</h3>
   <app-shared-edit-email
+    [inCampaign]="inCampaign"
     *ngFor="let email of emails; let i = index"
     [email]="email"
     (emailChange)="emailChange($event, i)"

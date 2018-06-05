@@ -34,16 +34,21 @@ export class SharedEditTemplatesComponent implements OnInit {
     console.log("shared-edit-templates _updateAvailable")
     console.log(JSON.stringify(scenario));
     this._campaign.settings.emails = this._campaign.settings.emails.filter(mail => {
-      return mail.name === scenario.name;
+      return mail.name !== scenario.name;
+    });
+    this._availableScenarios = this._availableScenarios.filter((scenar) => {
+      return scenar.name !== scenario.name;
     });
     //INSERER
     this._campaign.settings.emails = this._campaign.settings.emails.concat(scenario.emails);
+    this._availableScenarios = this._availableScenarios.concat(scenario);
     this._saveTemplates();
   }
 
   private _saveTemplates() {
     console.log("shared-edit-templates _saveTemplates")
     console.log(this._campaign.settings.emails);
+
     this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
       this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
     }, (err: any) => {
