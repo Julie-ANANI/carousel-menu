@@ -1,5 +1,6 @@
 import { EmailTemplate } from './email-template';
 export interface CampaignSettings {
+  defaultWorkflow: string;
   clonedInfo: boolean;
   emails?: Array<EmailTemplate>,
   readonly emailTemplates: {

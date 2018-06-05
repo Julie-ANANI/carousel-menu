@@ -1,6 +1,15 @@
 <div>
-  <!-- TODO: Bouton valider le choix par default. (selection des scenar dispo?) -->
   <h2>Campagne : {{_campaign.title}}</h2>
+
+  <h3> Choix du Workflow par défault</h3>
+
+  <form >
+    <select class="form-select" id="workflow">
+      <option *ngFor="let scenario of _availableScenarios">{{scenario.name}}</option>
+    </select>
+  </form>
+
+
   <div *ngFor="let scenario of _availableScenarios">
     <app-shared-edit-scenario
       *ngIf="scenario.emails && scenario.emails.length"

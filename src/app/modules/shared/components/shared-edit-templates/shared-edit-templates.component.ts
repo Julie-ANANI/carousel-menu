@@ -51,6 +51,11 @@ export class SharedEditTemplatesComponent implements OnInit {
     });
   }
 
+  public changeDefaultWorkflow(scenario: EmailScenario) {
+    this._campaign.settings.defaultWorkflow = scenario.name;
+    this._saveTemplates();
+  }
+
   public removeScenario(scenario: EmailScenario) {
     this._campaign.settings.emails = this._campaign.settings.emails.filter(mail => {
       return mail.name !== scenario.name;
