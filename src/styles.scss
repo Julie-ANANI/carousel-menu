@@ -339,7 +339,7 @@ ul.list-filter {
   width: 15px;
   background-color: white;
   border-radius: 50%;
-  z-index: 2;
+  z-index: 10;
 
   i {
     display: flex;
@@ -359,7 +359,7 @@ ul.list-filter {
     padding: 10px;
     font-size: 0.7rem;
     position: absolute;
-    z-index: 3;
+    z-index: 10;
     top: 0;
     right: 127%;
   }
@@ -439,7 +439,9 @@ ul.list-filter {
 
   .modal-container {
     padding: 0;
-    border-radius: 5px
+    border-radius: 5px;
+    text-align: unset;
+    overflow: auto;
   }
 
   .modal-header {
@@ -471,10 +473,10 @@ ul.list-filter {
     padding: 0 26px 25px;
     text-align: unset;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 
-  .submit-button {
+  /*.submit-button {
     height: 41px;
     padding: 8px 20px;
     border-color: $validation-element;
@@ -487,14 +489,34 @@ ul.list-filter {
     background: $validation-element none;
     border-color: $validation-element;
     color: white;
+  }*/
+
+  .submit-button {
+    margin-left: 10px;
+    height: 41px;
+    padding: 8px 20px;
+  }
+
+  .submit-button:hover {
+    box-shadow: none;
+    background: lighten($primary-element, 10%);
   }
 
   .cancel-button {
+
+    color: lighten($meta-element, 10%);
+    background: white none;
     height: 41px;
     padding: 8px 20px;
-    color: $button-color;
-    background: white none;
     border-width: 2px;
+    border-color: lighten($meta-element, 10%);
+  }
+
+  .cancel-button:hover {
+    color: $meta-element;
+    background: white none;
+    border-color: $meta-element;
+    box-shadow: none;
   }
 
 }
