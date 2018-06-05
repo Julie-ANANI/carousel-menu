@@ -28,11 +28,9 @@ export class SharedEditTemplatesComponent implements OnInit {
   }
 
 
-  // Je sors l'array d'email du scenario et je le reinsere.
+  // Je sors l'array d'email de la camp et je le reinsere.
   public updateAvailableScenario(scenario: EmailScenario) {
     //RETIRER
-    console.log("shared-edit-templates _updateAvailable")
-    console.log(JSON.stringify(scenario));
     this._campaign.settings.emails = this._campaign.settings.emails.filter(mail => {
       return mail.name !== scenario.name;
     });
@@ -46,13 +44,21 @@ export class SharedEditTemplatesComponent implements OnInit {
   }
 
   private _saveTemplates() {
-    console.log("shared-edit-templates _saveTemplates")
-    console.log(this._campaign.settings.emails);
-
     this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
       this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
     });
   }
+
+  public removeScenario(scenario: EmailScenario) {
+    this._campaign.settings.emails = this._campaign.settings.emails.filter(mail => {
+      return mail.name !== scenario.name;
+    });
+    this._availableScenarios = this._availableScenarios.filter((scenar) => {
+      return scenar.name !== scenario.name;
+    });
+    this._saveTemplates();
+  }
+
 }

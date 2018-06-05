@@ -2,7 +2,13 @@
   <!-- TODO: Bouton valider le choix par default. (selection des scenar dispo?) -->
   <h2>Campagne : {{_campaign.title}}</h2>
   <div *ngFor="let scenario of _availableScenarios">
-    <app-shared-edit-scenario *ngIf="scenario.emails && scenario.emails.length" [scenario]="scenario" [inCampaign]="true" (scenarioChange)="updateAvailableScenario(scenario)"></app-shared-edit-scenario>
+    <app-shared-edit-scenario
+      *ngIf="scenario.emails && scenario.emails.length"
+      [scenario]="scenario"
+      [inCampaign]="true"
+      (scenarioChange)="updateAvailableScenario(scenario)"
+      (removeScenario)="removeScenario(scenario)"
+    ></app-shared-edit-scenario>
   </div>
 </div>
 

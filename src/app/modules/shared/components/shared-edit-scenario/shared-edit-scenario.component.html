@@ -1,32 +1,33 @@
 <div>
   <!-- TODO: Pour chaque scénar on fait ça. On doit avoir plusieurs scénarios en front et qu'un seul array en back. -->
-  <div>
-    <div class="d-flex">
-      <!-- BOUTON COLLAPSE -->
-      <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed" *ngIf="inCampaign"
-              [attr.aria-expanded]="!isCollapsed" aria-controls = "collapseMails">
-        <h2>{{scenario.name}} </h2>
-      </button>
-      <h2 *ngIf="!inCampaign"> {{scenario.name}} </h2>
+  <div class="d-flex">
+    <!-- BOUTON COLLAPSE -->
+    <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed" *ngIf="inCampaign"
+            [attr.aria-expanded]="!isCollapsed" aria-controls = "collapseMails">
+      <h2>{{scenario.name}} </h2>
+    </button>
+    <h2 *ngIf="!inCampaign"> {{scenario.name}} </h2>
     Langues :
-      <div *ngFor="let language of availableLanguages" class="form-group">
-        <label class="form-checkbox">
-          <input type="checkbox" [checked]="displayedLanguages.indexOf(language) > -1" (click)="checkLanguage(language)"/>
-          <i class="form-icon"></i> {{ language }}
-        </label>
-      </div>
-      Profils :
-      <div *ngFor="let profile of availableProfiles" class="form-group">
-        <label class="form-checkbox">
-          <input type="checkbox" [checked]="displayedProfiles.indexOf(profile) > -1" (click)="checkProfile(profile)"/>
-          <i class="form-icon"></i> {{ profile }}
-        </label>
-      </div>
+    <div *ngFor="let language of availableLanguages" class="form-group">
+      <label class="form-checkbox">
+        <input type="checkbox" [checked]="displayedLanguages.indexOf(language) > -1" (click)="checkLanguage(language)"/>
+        <i class="form-icon"></i> {{ language }}
+      </label>
+    </div>
+    Profils :
+    <div *ngFor="let profile of availableProfiles" class="form-group">
+      <label class="form-checkbox">
+        <input type="checkbox" [checked]="displayedProfiles.indexOf(profile) > -1" (click)="checkProfile(profile)"/>
+        <i class="form-icon"></i> {{ profile }}
+      </label>
     </div>
     <div *ngIf="inCampaign">
       <i class="fas fa-check" *ngIf="_isModified"></i>
       <i class="fas fa-times" *ngIf="!_isModified"></i>
     </div>
+    <button type="button" class="btn btn-outline-primary" (click)="removeMeFromCampaign()" *ngIf="inCampaign">
+      <i class="fa fa-trash"></i>
+    </button>
   </div>
 
   <div id="collapseMails" [hidden]="isCollapsed" *ngIf="inCampaign"> <!-- Todo: Changer l'event.-->

@@ -12,12 +12,14 @@ export class SharedEditScenarioComponent implements OnInit {
   @Input() scenario: EmailScenario;
   @Input() inCampaign: Boolean;
   @Output() scenarioChange = new EventEmitter <EmailScenario>();
+  @Output() removeScenario = new EventEmitter<any>();
+
   public displayedLanguages: Array<string> = ['en', 'fr'];
   public displayedProfiles: Array<string> = ['NEW'];
   public availableLanguages: Array<string> = ['en', 'fr'];
   public availableProfiles: Array<string> = ['NEW'];
   public availableScenario: Array<EmailScenario>;
-  public isCollapsed: Boolean;
+  public isCollapsed: Boolean = true;
   private _isModified: Boolean;
 
   constructor() { }
@@ -80,6 +82,10 @@ export class SharedEditScenarioComponent implements OnInit {
         name: this.scenario.name
       };
     return template;
+  }
+
+  public removeMeFromCampaign() {
+    this.removeScenario.emit(this.scenario);
   }
 
   public checkLanguage(language: string) {
