@@ -152,15 +152,8 @@ export class AdminCampaignMailsComponent implements OnInit {
     return (
       this.quizGenerated &&
       this.innoReady &&
-      this.emailReady &&
       this.templateImported &&
       this.defaultWorkflow
-    );
-  }
-
-  get emailReady(): boolean {
-    return (
-      this._campaign.settings.emails.reduce((prev, next) => (prev && next.modified), true)
     );
   }
 
