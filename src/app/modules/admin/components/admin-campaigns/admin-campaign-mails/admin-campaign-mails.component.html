@@ -45,8 +45,9 @@
     <ul>
       <li *ngIf="!quizGenerated"> Quizz manquant </li>
       <li *ngIf="!innoReady"> Fiche manquante </li>
-      <li *ngIf="!templateImported"> Template manquant</li>
-      <li *ngIf="!emailReady"> Email non-modifié </li>
+      <!-- <li *ngIf="!templateImported"> Template manquant</li>
+      <li *ngIf="!emailReady"> Email non-modifié </li> -->
+      <li *ngIf="!defaultWorkflow"> Template par défaut manquant</li>
     </ul>
 
     <button (click)="creerpro()" class="btn btn-primary">
