@@ -16,7 +16,6 @@ export class SetupProjectComponent implements OnInit {
   @Input() changesSaved: boolean;
 
   private _saveChanges: boolean;
-
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
   private _currentTab: string;
   projectToBeSubmitted: boolean;
@@ -34,10 +33,6 @@ export class SetupProjectComponent implements OnInit {
   public updateSettings(value: InnovationSettings): void {
     this.project.settings = value;
   }
-
-  /*public updateSettings(value: InnovationSettings): void {
-    this.project.settings = value;
-  }*/
 
   public updateInnovation(value: Innovation): void {
     this.project = value;

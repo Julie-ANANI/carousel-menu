@@ -89,11 +89,11 @@
       <div class="content">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.CONTENT' | translate }}</div>
     </div>
     <div class="modal-footer">
-      <button class="primary-button submit-button" (click)="submitProject($event)">
-        {{ 'COMMON.SUBMIT' | translate }}
-      </button>
       <button class="primary-button cancel-button" (click)="(projectToBeSubmitted = false) && $event.preventDefault()">
         {{ 'COMMON.CANCEL' | translate }}
+      </button>
+      <button class="primary-button submit-button" (click)="submitProject($event)">
+        {{ 'COMMON.SUBMIT' | translate }}
       </button>
     </div>
   </div>

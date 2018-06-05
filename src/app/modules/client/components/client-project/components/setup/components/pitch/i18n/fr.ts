@@ -6,7 +6,7 @@ export const PITCH = {
     'MAIN_LANG': 'Langue principale',
     'PROJECT_IN_OTHER_LANG': 'Ajoutez votre projet en',
     'MODAL': {
-      'TITLE': 'Êtes-vous sûr(e) ?',
+      'TITLE': 'Comité de confirmation',
       'CONTENT': 'Êtes-vous sûr(e) de vouloir envoyer votre projet à validation ?'
     },
     'TITLE': {
