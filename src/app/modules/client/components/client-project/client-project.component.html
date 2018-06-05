@@ -20,7 +20,11 @@
               {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
               &nbsp;•&nbsp;
               {{ project.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
-              <span class="text-link">{{ 'COMMON.EDIT' | translate | lowercase}}</span>
+              <span
+                class="text-link"
+                (click)="(displayAddCollaboratorsModal = true) && (showCollaboratorRequiredError = false) && (showCollaboratorInvalidError = false) && $event.preventDefault()">
+                {{ 'COMMON.EDIT' | translate | lowercase}}
+              </span>
             </span>
           </div>
 
@@ -81,7 +85,71 @@
   </div>
 </div>
 
+
+<!-- Add collaborators -->
+<div class="modal" [ngClass]="{'active': displayAddCollaboratorsModal}">
+  <div class="modal-overlay" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></button>
+      <div class="modal-title">{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        <input class="form-input-default" type="text" [(ngModel)]="collaborators_emails" [attr.placeholder]=" 'PROJECT_MODULE.ADD_COLLABORATORS_PLACEHOLDER' | translate ">
+        <button class="primary-button submit-button" (click)="addCollaborators($event)">{{ 'COMMON.ADD' | translate }}</button>
+      </div>
+      <span class="form-error">
+        <span [ngStyle]="{ 'display': showCollaboratorRequiredError ? 'block' : 'none', 'margin-top': '8px' }">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+        <span [ngStyle]="{ 'display': showCollaboratorInvalidError ? 'block' : 'none', 'margin-top': '8px' }">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+      </span>
+
+      <div *ngIf="collaboratorsInvited.length >= 1" class="collaborators-invitation-container">
+        <ul *ngFor="let collaborator of collaboratorsInvited; let i = index" class="collaborator">
+          <li class="invitation-detail"><span>Invited</span> {{ collaborator }}</li>
+          <button class="primary-button invite-button" (click)="reinviteCollaborator($event, collaborator)">Reinvite</button>
+        </ul>
+      </div>
+
+      <div *ngIf="project.collaborators.length >= 1" class="collaborators-added-container">
+        <ul *ngFor="let collaborator of project.collaborators" class="collaborator">
+          <li class="added-detail"><span>Added</span> {{ collaborator.name }}</li>
+          <button class="primary-button delete-button" (click)="removeCollaborator($event, collaborator)">Delete</button>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!--<app-shared-loader *ngIf="!project"></app-shared-loader>
+
+<div class="modal" [ngClass]="{'active': displayAddCollaboratorsModal}">
+  <div class="modal-overlay" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></button>
+      <div class="modal-title">{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label-default">{{ 'COMMON.EMAIL' | translate }}</label>
+        <input class="form-input-default" type="email" [(ngModel)]="collaborators_emails" placeholder="john@catco.com, smith@gmail.com">
+        <span class="form-error">
+          <span [ngStyle]="{ 'display': showCollaboratorRequiredError ? 'block' : 'none', 'margin-top': '8px' }">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+          <span [ngStyle]="{ 'display': showCollaboratorsInvalidError ? 'block' : 'none', 'margin-top': '8px' }">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+        </span>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="primary-button cancel-button" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+      <button class="primary-button submit-button" (click)="addCollaborators($event)">{{ 'COMMON.ADD' | translate }}</button>
+    </div>
+  </div>
+</div>
 
 <div *ngIf="project">
   <div class="project-header">

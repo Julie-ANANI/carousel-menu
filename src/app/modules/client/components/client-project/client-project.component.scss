@@ -6,6 +6,7 @@
 
     .hero-title {
       color: white;
+      padding-bottom: 20px;
     }
 
     .info-container {
@@ -40,8 +41,178 @@
 
 }
 
+.modal {
+
+  .text-link {
+    font-size: 0.75rem;
+  }
+
+  .para {
+    font-size: 0.6rem;
+    padding: 0;
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+
+    .form-input-default {
+      display: inline-flex;
+    }
+
+    .submit-button {
+      height: 50px;
+      padding: 10px 30px;
+    }
+
+    .submit-button:hover {
+      box-shadow: 0 3px 15px 0 rgba(0,0,0,.25);
+      background: #FFB300;
+    }
+
+  }
+
+  .collaborator {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .collaborators-invitation-container {
+    margin-top: 30px;
+
+    ul {
+      list-style: none;
+      margin-left: 0;
+      margin-top: 0;
+
+      .invitation-detail {
+        margin-top: 0;
+
+        span {
+          border-radius: 5px;
+          background: #EA9741;
+          color: white;
+          font-size: 0.65rem;
+          padding: 6px 15px;
+          margin-right: 10px;
+        }
+
+      }
+
+      .invite-button {
+        height: 35px;
+        color: #0B90C6;
+        background: white;
+        border-color: #0B90C6;
+        padding: 5px 20px;
+      }
+
+      .invite-button:hover {
+        color: white;
+        background: #0B90C6;
+        border-color: #0B90C6;
+      }
+
+    }
+
+    ul:last-child {
+      margin-bottom: 0;
+    }
+
+  }
+
+  .collaborators-added-container {
+    margin-top: 30px;
+
+    ul {
+      list-style: none;
+      margin-left: 0;
+      margin-top: 0;
+
+      .added-detail {
+        margin-top: 0;
+
+        span {
+          border-radius: 5px;
+          background: #2ECC71;
+          color: white;
+          font-size: 0.65rem;
+          padding: 6px 15px;
+          margin-right: 10px;
+        }
+
+      }
+
+      .delete-button {
+        height: 35px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background: transparent;
+        color: transparent;
+        border-color: transparent;
+      }
+
+    }
+
+    ul:hover {
+
+      .delete-button {
+        color: white;
+        background: #EA5858;
+        border-color: #EA5858;
+        box-shadow: 0 3px 15px 0 rgba(0,0,0,.25);
+      }
+
+    }
+
+    ul:last-child {
+      margin-bottom: 0;
+    }
+
+  }
+
+}
 
 /********************************** Media ***************************************/
+
+@media (max-width: 375px) {
+
+  .modal {
+
+    .content {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .submit-button {
+        margin-top: 15px;
+        margin-left: 0;
+      }
+
+    }
+
+    .collaborators-added-container, .collaborators-invitation-container {
+
+      .collaborator {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .delete-button, .invite-button {
+        margin-top: 15px;
+      }
+
+    }
+
+  }
+
+
+}
 
 @media (max-width: 600px) {
 
@@ -61,5 +232,16 @@
     margin-right: 0;
   }
 
+  .modal {
+
+    .content {
+      flex-direction: row;
+      flex-wrap: unset;
+    }
+
+  }
+
 }
+
+
 
