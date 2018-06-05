@@ -70,6 +70,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     this._saveTemplates();
   }
 
+  // Useless now, we want to update campaign setting lower. (shared-edit-templates)
   public updateScenario(scenario: EmailScenario) {
     this._scenario = scenario;
     this._saveTemplates();
@@ -77,7 +78,6 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
   private _saveTemplates() {
     this._campaign.settings.emails = this._campaign.settings.emails.concat(this._scenario.emails);
-
     console.log(this._campaign.settings.emails);
     this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
       this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");

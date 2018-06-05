@@ -10,12 +10,15 @@ import { EmailTemplate } from '../../../../models/email-template';
 export class SharedEditScenarioComponent implements OnInit {
 
   @Input() scenario: EmailScenario;
+  @Input() inCampaign: Boolean;
   @Output() scenarioChange = new EventEmitter <EmailScenario>();
   public displayedLanguages: Array<string> = ['en', 'fr'];
   public displayedProfiles: Array<string> = ['NEW'];
   public availableLanguages: Array<string> = ['en', 'fr'];
   public availableProfiles: Array<string> = ['NEW'];
   public availableScenario: Array<EmailScenario>;
+  public isCollapsed: Boolean;
+  private _isModified: Boolean;
 
   constructor() { }
 
@@ -35,6 +38,12 @@ export class SharedEditScenarioComponent implements OnInit {
     this.scenario.emails = this.scenario.emails.filter(e => e.step != step);
     // Puis on ajoute les mails mis à jours
     this.scenario.emails = this.scenario.emails.concat(emails).filter(e => e.content);
+
+    this._isModified = this.scenario.emails.reduce((acc, current) => {
+      return (acc && current.modified);
+    }, true);
+    console.log("shared-edit-scenario save")
+    console.log(this.scenario)
     this.scenarioChange.emit(this.scenario);
   }
 
