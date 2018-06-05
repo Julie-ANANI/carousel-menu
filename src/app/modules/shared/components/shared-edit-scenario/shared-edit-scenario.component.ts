@@ -87,7 +87,7 @@ export class SharedEditScenarioComponent implements OnInit {
   public removeMeFromCampaign() {
     this.removeScenario.emit(this.scenario);
   }
-
+/*
   public checkLanguage(language: string) {
     const index = this.displayedLanguages.indexOf(language);
     if (index === -1) {
@@ -105,7 +105,7 @@ export class SharedEditScenarioComponent implements OnInit {
       this.displayedProfiles.splice(index, 1);
     }
   }
-
+*/
   get first(): Array<EmailTemplate> { return this._getTemplates('FIRST'); }
   get second(): Array<EmailTemplate> { return this._getTemplates('SECOND'); }
   get third(): Array<EmailTemplate> { return this._getTemplates('THIRD'); }

@@ -9,16 +9,14 @@
             id = "workflow"
             name = "quelquechose"
             (ngModelChange) ="changeDefaultWorkflow($event)">
-      <!-- <option *ngIf="_campaign.settings.defaultWorkflow !== ''"> {{_campaign.settings.defaultWorkflow}}</option> -->
       <option *ngFor = "let scenario of _modifiedScenarios"
               [ngValue] = "scenario.name">
         {{scenario.name}}
       </option>
     </select>
   </form>
-
-
   <div *ngFor="let scenario of _availableScenarios">
+    <br>
     <app-shared-edit-scenario
       *ngIf="scenario.emails && scenario.emails.length"
       [scenario]="scenario"
