@@ -15,8 +15,9 @@ export class SharedEditTemplatesComponent implements OnInit {
 
   @Input() public ArgScenarios: Array<EmailScenario>;
   @Output() scenarioChange = new EventEmitter <Array<EmailScenario>>();
-  private _availableScenarios: Array<EmailScenario>;
+  private _availableScenarios: Array<EmailScenario>; // All scenarios available
   private _campaign: Campaign;
+  private _modifiedScenarios: Array<EmailScenario>;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _notificationsService: TranslateNotificationsService,
@@ -25,6 +26,7 @@ export class SharedEditTemplatesComponent implements OnInit {
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
     this._availableScenarios = this.ArgScenarios;
+    this.modifiedScenarios();
   }
 
 
@@ -45,14 +47,17 @@ export class SharedEditTemplatesComponent implements OnInit {
 
   private _saveTemplates() {
     this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
-      this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+      this.modifiedScenarios();
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
     });
   }
 
-  public changeDefaultWorkflow(scenario: EmailScenario) {
-    this._campaign.settings.defaultWorkflow = scenario.name;
+  public changeDefaultWorkflow(scenarioName: string) {
+   // scenario = scenario as EmailScenario;
+    console.log(scenarioName);
+    this._campaign.settings.defaultWorkflow = scenarioName;
     this._saveTemplates();
   }
 
@@ -63,7 +68,19 @@ export class SharedEditTemplatesComponent implements OnInit {
     this._availableScenarios = this._availableScenarios.filter((scenar) => {
       return scenar.name !== scenario.name;
     });
+
+    if (scenario.name === this._campaign.settings.defaultWorkflow) {
+      this._campaign.settings.defaultWorkflow = '';
+    }
+
     this._saveTemplates();
   }
 
+  public modifiedScenarios() {
+    this._modifiedScenarios = this._availableScenarios.filter((x) => {
+      return x.emails.reduce((acc, current) => {
+        return (acc && current.modified);
+      }, true);
+    });
+  }
 }

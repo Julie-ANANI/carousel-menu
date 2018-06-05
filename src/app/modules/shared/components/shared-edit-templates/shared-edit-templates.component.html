@@ -3,9 +3,17 @@
 
   <h3> Choix du Workflow par défault</h3>
 
-  <form >
-    <select class="form-select" id="workflow">
-      <option *ngFor="let scenario of _availableScenarios">{{scenario.name}}</option>
+  <form>
+    <select class = "form-select"
+            [(ngModel)] = "_campaign.settings.defaultWorkflow"
+            id = "workflow"
+            name = "quelquechose"
+            (ngModelChange) ="changeDefaultWorkflow($event)">
+      <!-- <option *ngIf="_campaign.settings.defaultWorkflow !== ''"> {{_campaign.settings.defaultWorkflow}}</option> -->
+      <option *ngFor = "let scenario of _modifiedScenarios"
+              [ngValue] = "scenario.name">
+        {{scenario.name}}
+      </option>
     </select>
   </form>
 
