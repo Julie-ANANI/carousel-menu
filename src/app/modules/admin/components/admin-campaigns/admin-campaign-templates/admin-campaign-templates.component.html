@@ -2,7 +2,34 @@
   <h2>Templates de mails</h2>
   <button class="btn btn-primary" (click)="importModal = true">Importer un template de la bibliothèque</button>
 
-  <app-admin-campaign-availablescenarios [availableScenarios]="availableScenarios"></app-admin-campaign-availablescenarios>
+  <div>
+    <h2>Campagne : {{campaign.title}}</h2>
+
+    <h3> Choix du Workflow par défault</h3>
+
+    <form>
+      <select class = "form-select"
+              [(ngModel)] = "campaign.settings.defaultWorkflow"
+              id = "workflow"
+              name = "quelquechose"
+              (ngModelChange) ="changeDefaultWorkflow($event)">
+        <option *ngFor = "let scenario of modifiedScenarios"
+                [ngValue] = "scenario.name">
+          {{scenario.name}}
+        </option>
+      </select>
+    </form>
+    <div *ngFor="let scenario of availableScenarios">
+      <br>
+      <app-shared-edit-scenario
+        *ngIf="scenario.emails && scenario.emails.length"
+        [scenario]="scenario"
+        [inCampaign]="true"
+        (scenarioChange)="updateAvailableScenario(scenario)"
+        (removeScenario)="removeScenario(scenario)"
+      ></app-shared-edit-scenario>
+    </div>
+  </div>
 </div>
 
 
