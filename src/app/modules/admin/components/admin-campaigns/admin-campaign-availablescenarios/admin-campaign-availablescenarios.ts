@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EmailScenario } from '../../../../../models/email-scenario';
-// import { EmailTemplate } from '../../../../models/email-template';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../models/campaign';
 import {CampaignService} from '../../../../../services/campaign/campaign.service';
@@ -17,6 +16,7 @@ export class AdminCampaignAvailablescenariosComponent implements OnInit {
   set availableScenarios(ArgScenarios: Array<EmailScenario>) {
     this._availableScenarios = ArgScenarios;
   }
+
   @Output() scenarioChange = new EventEmitter <Array<EmailScenario>>();
   private _availableScenarios: Array<EmailScenario>; // All scenarios available
   private _campaign: Campaign;
@@ -34,14 +34,14 @@ export class AdminCampaignAvailablescenariosComponent implements OnInit {
 
   // Je sors l'array d'email de la camp et je le reinsere.
   public updateAvailableScenario(scenario: EmailScenario) {
-    //RETIRER
+    // DROP
     this._campaign.settings.emails = this._campaign.settings.emails.filter(mail => {
       return mail.name !== scenario.name;
     });
     this._availableScenarios = this._availableScenarios.filter((scenar) => {
       return scenar.name !== scenario.name;
     });
-    //INSERER
+    // INSERT
     this._campaign.settings.emails = this._campaign.settings.emails.concat(scenario.emails);
     this._availableScenarios = this._availableScenarios.concat(scenario);
     this._saveTemplates();
