@@ -13,7 +13,10 @@ import { TranslateNotificationsService } from '../../../../services/notification
 })
 export class SharedEditTemplatesComponent implements OnInit {
 
-  @Input() ArgScenarios: Array<EmailScenario>;
+  @Input()
+  set availableScenarios(ArgScenarios: Array<EmailScenario>) {
+    this._availableScenarios = ArgScenarios;
+  }
   @Output() scenarioChange = new EventEmitter <Array<EmailScenario>>();
   private _availableScenarios: Array<EmailScenario>; // All scenarios available
   private _campaign: Campaign;
@@ -25,7 +28,6 @@ export class SharedEditTemplatesComponent implements OnInit {
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-    this._availableScenarios = this.ArgScenarios;
     this.generateModifiedScenarios();
   }
 
@@ -83,7 +85,6 @@ export class SharedEditTemplatesComponent implements OnInit {
       }, true);
     });
   }
-
 
   get availableScenarios(): Array<EmailScenario> { return this._availableScenarios };
   get campaign(): Campaign { return this._campaign };

@@ -73,7 +73,8 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     });
   }
 
-  private generateAvailableScenario(){
+  private generateAvailableScenario() {
+    this._availableScenarios = [];
     let scenariosnames = new Set<string>();
     if (this._campaign.settings && this._campaign.settings.emails) {
       this._campaign.settings.emails.forEach((x) => {
@@ -92,7 +93,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
   get config(): any { return this._config; }
   set config(value: any) { this._config = value; }
-  get availableScenarios(): Array<EmailScenario> {return this._availableScenarios}
+  get availableScenarios(): Array<EmailScenario> { return this._availableScenarios }
   get scenario(): EmailScenario { return this._scenario; }
   set scenario(value: EmailScenario) { this._scenario = value; }
   get templates(): Array<EmailScenario> { return this._templates; }
