@@ -174,15 +174,17 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     if (this.canEdit) {
+
+      if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
+        this._innovationService.createInnovationCard(this.project._id, {
+          lang: lang
+        }).first()
+          .subscribe((data: InnovCard) => {
+            window.location.reload();
+          });
+      }
+
       if (this.changesSaved) {
-        if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
-          this._innovationService.createInnovationCard(this.project._id, {
-            lang: lang
-          }).first()
-            .subscribe((data: InnovCard) => {
-              window.location.reload();
-            });
-        }
       } else {
         this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
@@ -264,9 +266,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   public deleteModal(innovID: string) {
 
     if (this.canEdit) {
+      this._deleteInnovId = innovID;
+      this._showDeleteModal = true;
+
       if (this.changesSaved) {
-        this._deleteInnovId = innovID;
-        this._showDeleteModal = true;
+
       } else {
         this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
