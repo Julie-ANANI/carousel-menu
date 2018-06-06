@@ -43,12 +43,9 @@ export class SharedEditScenarioComponent implements OnInit {
     this.scenario.emails = this.scenario.emails.filter(e => e.step != step);
     // Puis on ajoute les mails mis à jours
     this.scenario.emails = this.scenario.emails.concat(emails).filter(e => e.content);
-
     this._isModified = this.scenario.emails.reduce((acc, current) => {
       return (acc && current.modified);
     }, true);
-    console.log("shared-edit-scenario save")
-    console.log(this.scenario)
     this.scenarioChange.emit(this.scenario);
   }
 

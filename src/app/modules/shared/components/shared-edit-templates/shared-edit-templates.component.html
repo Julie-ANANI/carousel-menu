@@ -1,21 +1,21 @@
 <div>
-  <h2>Campagne : {{_campaign.title}}</h2>
+  <h2>Campagne : {{campaign.title}}</h2>
 
   <h3> Choix du Workflow par défault</h3>
 
   <form>
     <select class = "form-select"
-            [(ngModel)] = "_campaign.settings.defaultWorkflow"
+            [(ngModel)] = "campaign.settings.defaultWorkflow"
             id = "workflow"
             name = "quelquechose"
             (ngModelChange) ="changeDefaultWorkflow($event)">
-      <option *ngFor = "let scenario of _modifiedScenarios"
+      <option *ngFor = "let scenario of modifiedScenarios"
               [ngValue] = "scenario.name">
         {{scenario.name}}
       </option>
     </select>
   </form>
-  <div *ngFor="let scenario of _availableScenarios">
+  <div *ngFor="let scenario of availableScenarios">
     <br>
     <app-shared-edit-scenario
       *ngIf="scenario.emails && scenario.emails.length"

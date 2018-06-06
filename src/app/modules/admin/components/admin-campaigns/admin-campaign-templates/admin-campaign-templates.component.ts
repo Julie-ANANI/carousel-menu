@@ -40,21 +40,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-    let scenariosnames = new Set<string>();
-    if (this._campaign.settings && this._campaign.settings.emails) {
-       this._campaign.settings.emails.forEach((x) => {
-        scenariosnames.add(x.name);
-      });
-    }
-    scenariosnames.forEach((name) => {
-      let scenar = {} as EmailScenario;
-      scenar.name = name;
-      scenar.emails = this._campaign.settings.emails.filter(email => {
-        return email.name === name;
-      });
-      this._availableScenarios.push(scenar);
-    });
-
+    this.generateAvailableScenario();
     this._templatesService.getAll(this._config).first().subscribe(templates => {
       this._templates = templates.result;
     });
@@ -81,8 +67,26 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     console.log(this._campaign.settings.emails);
     this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
       this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
+      this.generateAvailableScenario();
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
+    });
+  }
+
+  private generateAvailableScenario(){
+    let scenariosnames = new Set<string>();
+    if (this._campaign.settings && this._campaign.settings.emails) {
+      this._campaign.settings.emails.forEach((x) => {
+        scenariosnames.add(x.name);
+      });
+    }
+    scenariosnames.forEach((name) => {
+      let scenar = {} as EmailScenario;
+      scenar.name = name;
+      scenar.emails = this._campaign.settings.emails.filter(email => {
+        return email.name === name;
+      });
+      this._availableScenarios.push(scenar);
     });
   }
 

@@ -13,7 +13,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 })
 export class SharedEditTemplatesComponent implements OnInit {
 
-  @Input() public ArgScenarios: Array<EmailScenario>;
+  @Input() ArgScenarios: Array<EmailScenario>;
   @Output() scenarioChange = new EventEmitter <Array<EmailScenario>>();
   private _availableScenarios: Array<EmailScenario>; // All scenarios available
   private _campaign: Campaign;
@@ -26,7 +26,7 @@ export class SharedEditTemplatesComponent implements OnInit {
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
     this._availableScenarios = this.ArgScenarios;
-    this.modifiedScenarios();
+    this.generateModifiedScenarios();
   }
 
 
@@ -48,7 +48,7 @@ export class SharedEditTemplatesComponent implements OnInit {
   private _saveTemplates() {
     this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-      this.modifiedScenarios();
+      this.generateModifiedScenarios();
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
     });
@@ -76,11 +76,16 @@ export class SharedEditTemplatesComponent implements OnInit {
     this._saveTemplates();
   }
 
-  public modifiedScenarios() {
+  public generateModifiedScenarios() {
     this._modifiedScenarios = this._availableScenarios.filter((x) => {
       return x.emails.reduce((acc, current) => {
         return (acc && current.modified);
       }, true);
     });
   }
+
+
+  get availableScenarios(): Array<EmailScenario> { return this._availableScenarios };
+  get campaign(): Campaign { return this._campaign };
+  get modifiedScenarios(): Array<EmailScenario> { return this._modifiedScenarios };
 }
