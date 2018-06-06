@@ -103,10 +103,16 @@
               (click)="changeStatus($event, 'REJECTED')">
         <i class="fas fa-trash"></i> {{'ANSWER_MODAL.REJECT_ANSWER' | translate}}
       </button>
+      <!-- TODO: on cache le bouton "à compléter", si personne ne s'est plaint d'ici le mois d'août, on supprime définitivement
       <button class="btn btn-warning"
               *ngIf="adminMode && (modalAnswer.status === 'SUBMITTED' || modalAnswer.status === 'TO_COMPLETE' || modalAnswer.status === 'REJECTED' || (modalAnswer.status === 'DRAFT' && modalAnswer.professional?.email))"
               (click)="changeStatus($event, 'TO_COMPLETE')">
         <i class="fas fa-rocket"></i> {{'ANSWER_MODAL.UNCOMPLETE_ANSWER' | translate}}
+      </button> -->
+      <button class="btn btn-success"
+              *ngIf="adminMode && (modalAnswer.status !== 'VALIDATED' && modalAnswer.professional?.email)"
+              (click)="changeStatus($event, 'VALIDATED_NO_MAIL')">
+        <i class="fas fa-check"></i> {{'ANSWER_MODAL.VALID_ANSWER_NO_MAIL' | translate}}
       </button>
       <button class="btn btn-success"
               *ngIf="adminMode && (modalAnswer.status !== 'VALIDATED' && modalAnswer.professional?.email)"

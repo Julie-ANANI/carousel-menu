@@ -176,7 +176,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       if (this.changesSaved) {
         if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
           this._innovationService.createInnovationCard(this.project._id, {
-            lang
+            lang: lang
           }).first()
             .subscribe((data: InnovCard) => {
               window.location.reload();

@@ -21,10 +21,13 @@
 </div>
 <app-answers-list [answers]="submittedAnswers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
 
+
+<!-- TODO: on cache la section "à compléter", si personne ne s'est plaint d'ici le mois d'août, on supprime définitivement
 <div class="bg-primary answers-header">
   <h5>{{toCompleteAnswers.length}} {{ 'CAMPAIGNS.TO_COMPLETE' | translate }}</h5>
 </div>
-<app-answers-list [answers]="toCompleteAnswers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
+<app-admin-answers-list [answers]="toCompleteAnswers" (modalAnswerChange)="seeAnswer($event)"></app-admin-answers-list>
+-->
 
 <div class="bg-dark answers-header">
   <h5>{{draftAnswers.length}} {{ 'CAMPAIGNS.DRAFTS' | translate }}</h5>

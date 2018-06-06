@@ -10,7 +10,7 @@ import { Campaign } from '../../../../../models/campaign';
 export class AdminCampaignProsComponent implements OnInit {
 
   private _campaign: Campaign;
-  private _config : any;
+  private _config: any;
 
   constructor(private _activatedRoute: ActivatedRoute) { }
 

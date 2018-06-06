@@ -79,6 +79,16 @@
                   {{ 'COMMON.USERS' | translate }}
                 </a>
               </li>
+              <!-- Back office professionals page -->
+              <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
+                <a
+                  routerLinkActive="active"
+                  [routerLink]="'/admin/professionals'"
+                  title=""
+                  (click)="onClickLink()">
+                  {{ 'COMMON.PROFESSIONALS' | translate }}
+                </a>
+              </li>
               <!-- Back office projects page -->
               <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
                 <a

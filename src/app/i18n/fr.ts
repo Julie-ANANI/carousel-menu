@@ -24,6 +24,7 @@ import { TAGS } from '../modules/admin/components/admin-tags/i18n/fr';
 import { PROJECT_LIST } from '../modules/admin/components/admin-projects-list/i18n/fr';
 import { PROJECT_MODULE } from '../modules/client/components/client-project/i18n/fr';
 import { FORGET_PASSWORD } from '../modules/client/components/client-forget-password/i18n/fr';
+import { PROFESSIONALS } from '../modules/admin/components/admin-professionals/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -51,5 +52,6 @@ export const fr = {
   'BLACKLISTS': BLACKLISTS,
   'TAGS': TAGS,
   'PROJECT_LIST': PROJECT_LIST,
-  'PROJECT_MODULE': PROJECT_MODULE
+  'PROJECT_MODULE': PROJECT_MODULE,
+  'PROFESSIONALS' : PROFESSIONALS
 };

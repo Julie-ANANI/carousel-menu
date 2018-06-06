@@ -62,7 +62,8 @@ export class SharedEditScenarioComponent implements OnInit {
         profile: profile,
         language: language,
         subject: "TODO",
-        content: "TODO"
+        content: "TODO",
+        modified: false
       };
     return template;
   }
