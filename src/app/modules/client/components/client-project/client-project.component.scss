@@ -62,14 +62,9 @@
       display: inline-flex;
     }
 
-    .submit-button {
-      height: 50px;
-      padding: 10px 30px;
-    }
-
-    .submit-button:hover {
-      box-shadow: 0 3px 15px 0 rgba(0,0,0,.25);
-      background: #FFB300;
+    .primary-button {
+      padding: 10px 20px;
+      margin-left: 10px;
     }
 
   }
@@ -93,30 +88,6 @@
 
       .invitation-detail {
         margin-top: 0;
-
-        span {
-          border-radius: 5px;
-          background: #EA9741;
-          color: white;
-          font-size: 0.65rem;
-          padding: 6px 15px;
-          margin-right: 10px;
-        }
-
-      }
-
-      .invite-button {
-        height: 35px;
-        color: #0B90C6;
-        background: white;
-        border-color: #0B90C6;
-        padding: 5px 20px;
-      }
-
-      .invite-button:hover {
-        color: white;
-        background: #0B90C6;
-        border-color: #0B90C6;
       }
 
     }
@@ -137,22 +108,9 @@
 
       .added-detail {
         margin-top: 0;
-
-        span {
-          border-radius: 5px;
-          background: #2ECC71;
-          color: white;
-          font-size: 0.65rem;
-          padding: 6px 15px;
-          margin-right: 10px;
-        }
-
       }
 
-      .delete-button {
-        height: 35px;
-        padding-top: 5px;
-        padding-bottom: 5px;
+      .ghost-delete-button {
         background: transparent;
         color: transparent;
         border-color: transparent;
@@ -162,7 +120,7 @@
 
     ul:hover {
 
-      .delete-button {
+      .ghost-delete-button {
         color: white;
         background: #EA5858;
         border-color: #EA5858;
@@ -189,7 +147,7 @@
       flex-direction: column;
       align-items: flex-start;
 
-      .submit-button {
+      .primary-button {
         margin-top: 15px;
         margin-left: 0;
       }
@@ -203,7 +161,7 @@
         align-items: flex-start;
       }
 
-      .delete-button, .invite-button {
+      .ghost-delete-button, .ghost-edit-button {
         margin-top: 15px;
       }
 
@@ -218,6 +176,16 @@
 
   .tabs li a {
     border-radius: 5px;
+  }
+
+  .modal {
+
+    .ghost-delete-button {
+      color: #EA5858 !important;
+      background: white !important;
+      border-color: #EA5858 !important;
+    }
+
   }
 
 }

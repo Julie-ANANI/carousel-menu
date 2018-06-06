@@ -38,7 +38,7 @@
                 <span class="text-link">Preview</span>&nbsp;
                 <span [ngStyle]="{'visibility': displayDeleteButton ? 'visible' : 'hidden' }">
                   <span [ngStyle]="{ 'color': '#97A4B1' }">/</span>&nbsp;
-                  <span class="text-link delete-link" (click)="deleteInnovCard(innovationCard._id)">Delete</span>
+                  <span class="text-link delete-link" (click)="deleteInnovCard(innovationCard._id, $event)">Delete</span>
                 </span>
               </div>
             </div>
@@ -276,11 +276,26 @@
                       <!-- Main media -->
                       <div class="column col-md-12 col-lg-4 col-3 col-mr-auto">
 
-                        <div>
+                        <div *ngIf="project.principalMedia !== null && project.principalMedia !== undefined">
 
                           <span class="para">Main media</span>
                           <div class="tooltips"><i class="far fa-question-circle"></i>
                             <span class="tooltip-text">{{ "" | translate }}</span>
+                          </div>
+
+                          <div *ngIf="project.principalMedia?.type === 'PHOTO'" class="principal-media">
+                            <img
+                              [src]="project.principalMedia.url"
+                              [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+                              width="220" height="146"
+                              class="img-responsive">
+                          </div>
+
+                          <div *ngIf="project.principalMedia?.type === 'VIDEO'" class="principal-media">
+                            <iframe
+                              [src]="domSanitizer.bypassSecurityTrustResourceUrl(project.principalMedia.video.embeddableUrl)"
+                              width="220" height="146">
+                            </iframe>
                           </div>
 
                         </div>
@@ -289,13 +304,11 @@
                         </div>
 
                       <!-- Secondary medias -->
-                      <div
-                        *ngIf="project.innovationCards[innovationCardEditingIndex].media?.length > 0"
-                        class="column col-md-12 col-lg-8 col-9 col-mx-auto">
+                      <div *ngIf="innovationItem.get('media').value?.length > 0" class="column col-md-12 col-lg-8 col-9 col-mx-auto">
 
                         <p class="para">Secondary medias</p>
 
-                        <div *ngFor="let media of project.innovationCards[innovationCardEditingIndex].media" class="media-content">
+                        <div *ngFor="let media of innovationItem.get('media').value" class="media-content">
 
                           <img
                             *ngIf="media.type === 'PHOTO'"
@@ -309,15 +322,11 @@
                           </iframe>
 
                           <div class="func-button text-center">
-                            <span
-                              *ngIf="media._id !== project.principalMedia?._id"
-                              [ngStyle]="{ 'color': '#97A4B1' }">
-                              <a class="text-link" (click)="setMediaAsPrimary($event, media)">
-                                Make it as main media
-                              </a>
+                            <span *ngIf="media._id !== project.principalMedia?._id && innovationCardEditingIndex === 0" [ngStyle]="{ 'color': '#97A4B1' }">
+                              <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">Make it as main media</a>
                               /
                             </span>
-                            <a class="text-link delete-link" (click)="deleteMedia($event, media)">Delete</a>
+                            <a class="text-link delete-link" (click)="deleteMedia($event, media, i)">Delete</a>
                           </div>
 
                         </div>

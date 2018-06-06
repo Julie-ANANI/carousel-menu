@@ -4,11 +4,13 @@
   padding-right: 5px;
   position: relative;
   border-radius: 5px;
-  height: 250px;
+  min-height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding-top: 25px;
+  padding-bottom: 25px;
 
 
   .logos {
@@ -26,12 +28,6 @@
     margin-left: 10px;
     padding-left: 15px;
     padding-right: 15px;
-    i {
-      vertical-align: middle;
-      margin-right: 0;
-      margin-left: 10px;
-      font-size: 1.5rem;
-    }
   }
 
   .para {
@@ -49,18 +45,20 @@
 
 /********************************** Media ***************************************/
 
-@media (min-width: 360px) and (max-width: 480px) {
+@media (max-width: 600px) {
 
-  .form-input-default {
-    width: 212px !important;
-  }
+  .input-group {
+    display: flex;
+    flex-direction: column;
 
-}
+    .form-input-default {
+      width: 78vw;
+    }
 
-@media (min-width: 481px) and (max-width: 600px) {
+    .primary-button {
+      margin: 15px auto 0;;
+    }
 
-  .form-input-default {
-    width: 318px !important;
   }
 
 }

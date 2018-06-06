@@ -61,7 +61,7 @@ export const COMMON = {
     'LASTNAME': 'Le nom est requis.',
     'EMAIL': 'L\'adresse email est requise.',
     'PHONE': 'Le numéro de téléphone est requis.',
-    'PASSWORD': 'Le mot de passe est requis.',
+    'PASSWORD': 'Le mot de passe e@st requis.',
     'COMPANY': 'Le nom de l\'entreprise est requis.',
     'JOBTITLE': 'Le poste est requis.',
     'MESSAGE': 'Tous les champs sont obligatoires',

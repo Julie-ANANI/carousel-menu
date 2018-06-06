@@ -34,21 +34,21 @@
 
             <!-- LinkedIn -->
             <div class="social-container text-center" *ngIf="checkIsMainDomain()">
-              <a class="primary-button" (click)="linkedInSignUp($event)">
-                <span><i class="fab fa-1x fa-linkedin-in"></i>{{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}</span>
-              </a>
+              <button class="primary-button" (click)="linkedInSignUp($event)">
+                <i class="fab fa-1x fa-linkedin-in"></i>{{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
+              </button>
             </div>
 
             <!-- Or -->
             <div class="or-container text-center">
-              <span> {{ 'COMMON.OR' | translate }} </span>
+              <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
             </div>
 
             <!-- Sign up button -->
             <div class="sign-container text-center">
-              <a class="primary-button" (click)="onSignUpClick($event)">
-                <span><i class="far fa-1x fa-envelope"></i>{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}</span>
-              </a>
+              <button class="primary-button" (click)="onSignUpClick($event)">
+                <i class="far fa-1x fa-envelope"></i>{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}
+              </button>
             </div>
 
             <!-- Sign up sidebar -->
@@ -59,7 +59,7 @@
           <!-- Sign in -->
           <div class="signin-container text-center">
             <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '10px' }">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
-            <a class="primary-button ghost-button" routerLink="/login">{{ 'COMMON.LOG_IN' | translate }}</a>
+            <button class="primary-button ghost-button sm-button" routerLink="/login">{{ 'COMMON.LOG_IN' | translate }}</button>
           </div>
 
         </div>

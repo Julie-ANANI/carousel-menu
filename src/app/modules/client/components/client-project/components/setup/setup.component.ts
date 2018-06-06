@@ -18,7 +18,7 @@ export class SetupProjectComponent implements OnInit {
   private _saveChanges: boolean;
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
   private _currentTab: string;
-  projectToBeSubmitted: boolean;
+  private _projectToBeSubmitted: boolean;
 
   constructor(private innovationService: InnovationService,
               private notificationService: TranslateNotificationsService) {
@@ -64,14 +64,14 @@ export class SetupProjectComponent implements OnInit {
     if (this._saveChanges) {
       this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     } else {
-      this.projectToBeSubmitted = true; // open the modal to ask the confirmation.
+      this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
     }
 
   }
 
   public submitProject(event: Event) {
     event.preventDefault();
-    this.projectToBeSubmitted = false;
+    this._projectToBeSubmitted = false;
 
     this.innovationService.submitProjectToValidation(this.project._id)
       .first()
@@ -101,6 +101,11 @@ export class SetupProjectComponent implements OnInit {
 
   }
 
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._projectToBeSubmitted = false;
+  }
+
   get currentTab() {
     return this._currentTab;
   }
@@ -117,5 +122,8 @@ export class SetupProjectComponent implements OnInit {
     return this._saveChanges;
   }
 
+  get projectToBeSubmitted(): boolean {
+    return this._projectToBeSubmitted;
+  }
 
 }

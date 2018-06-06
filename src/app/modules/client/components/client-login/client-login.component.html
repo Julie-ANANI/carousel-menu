@@ -4,7 +4,8 @@
 
       <div class="columns col-gapless">
 
-        <div class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }"></div>
+        <div class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
+        </div>
 
 
         <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto login-container">
@@ -34,14 +35,14 @@
 
               <!-- LinkedIn -->
               <div class="social-container text-center" *ngIf="checkIsMainDomain()">
-                <a class="primary-button" (click)="linkedInSignIn($event)">
-                  <span><i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}</span>
-                </a>
+                <button class="primary-button" (click)="linkedInSignIn($event)">
+                  <i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
+                </button>
               </div>
 
               <!-- Or -->
               <div class="or-container text-center">
-                <span> {{ 'COMMON.OR' | translate }} </span>
+                <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
               </div>
 
               <!-- Credentials -->
@@ -104,7 +105,7 @@
           <!-- Sign up -->
           <div class="create-container text-center">
             <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '10px' }">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
-            <a class="primary-button ghost-button" routerLink="/signup">{{ 'LOG_IN.SIGN_UP' | translate }}</a>
+            <button class="primary-button ghost-button sm-button" routerLink="/signup">{{ 'LOG_IN.SIGN_UP' | translate }}</button>
           </div>
 
          </div>

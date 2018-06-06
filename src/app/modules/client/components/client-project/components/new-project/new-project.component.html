@@ -38,7 +38,7 @@
                     class="form-input-default"
                     name="name"
                     formControlName="name"
-                  [attr.placeholder]="'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME_PLACEHOLDER' | translate ">
+                    [attr.placeholder]="'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME_PLACEHOLDER' | translate ">
                   <div class="form-error" *ngIf="formData.get('name').hasError('required') && formData.get('name').touched">
                     {{ 'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME' | translate }}
                   </div>
@@ -112,7 +112,7 @@
 
           <!-- Section 3 -->
           <div class="create text-center">
-            <button class="primary-button large-button" type="submit" [disabled]="formData.invalid">
+            <button class="primary-button lg-button" type="submit" [disabled]="formData.invalid">
               {{ 'PROJECT_MODULE.NEW_PROJECT.CREATE' | translate }}
             </button>
           </div>

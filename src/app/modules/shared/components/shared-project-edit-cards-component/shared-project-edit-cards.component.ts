@@ -30,6 +30,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
+  selectedLangFormDisplay = false;
 
   public innovationData: FormGroup; // Overall innovation
   private _primaryLanguage: string;
@@ -208,6 +209,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this.innovationData.get('innovationCards').get([index]).get('principal')
         .patchValue(innovCard._id === innovationCardId);
     });
+
   }
 
   public imageUploaded(media: Media, cardIdx: number): void {
@@ -220,8 +222,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   public newOnlineVideoToAdd (videoInfos: Video): void {
     this._innovationService.addNewMediaVideoToInnovationCard(this.project._id,
       this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
-      .first()
-      .subscribe(res => {
+      .first().subscribe(res => {
         this.project = res;
         this.projectChange.emit(this.project);
       });
@@ -238,19 +239,25 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       });
   }
 
-  public deleteMedia(event: Event, media: Media): void {
+  public deleteMedia(event: Event, media: Media, index: number): void {
     event.preventDefault();
+
+    this.innovationCardEditingIndex = index;
+
+    this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
 
     this._innovationService.deleteMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
       .first().subscribe((res: Innovation) => {
         this.project = res;
         this.projectChange.emit(this.project);
+        this.innovationData.patchValue(this.project);
       });
 
   }
 
-  public deleteInnovCard(innovId: string) {
+  public deleteInnovCard(innovId: string, event: Event) {
+    event.preventDefault();
 
     if (this.canEdit) {
       if (this.changesSaved) {

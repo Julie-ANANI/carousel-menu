@@ -22,12 +22,12 @@ export class ClientProjectComponent implements OnInit {
   /*
    * Ajout de collaborateurs
    */
-  public displayAddCollaboratorsModal = false;
-  showCollaboratorRequiredError = false;
-  showCollaboratorInvalidError = false;
+  private _displayAddCollaboratorsModal = false;
+  private _showCollaboratorRequiredError = false;
+  private _showCollaboratorInvalidError = false;
   public collaborators_emails = '';
-  collaboratorsInvited: Array<string> = [];
-  public collaboratorsAddingProcess: any = {
+  private _collaboratorsInvited: Array<string> = [];
+  private _collaboratorsAddingProcess: any = {
     usersAdded: [],
     invitationsToSend: [],
     invitationsToSendAgain: []
@@ -79,55 +79,47 @@ export class ClientProjectComponent implements OnInit {
 
   }*/
 
-  public removeCollaborator(event: Event, value: any) {
-    event.preventDefault();
-
-    this._innovationService.removeCollaborator(this.project._id, value).subscribe((data) => {
-      this.project.collaborators = data;
-      this._translateNotificationService.success('PROJECT_MODULE.COLLABORATOR_DELETED.TITLE', 'PROJECT_MODULE.COLLABORATOR_DELETED.CONTENT');
-    });
-
-  }
-
   public addCollaborators (event: Event): void {
     event.preventDefault();
 
+    console.log(this.collaborators_emails);
+
     if (this.collaborators_emails === '') {
-      this.showCollaboratorRequiredError = true;
-      this.showCollaboratorInvalidError = false;
+      this._showCollaboratorRequiredError = true;
+      this._showCollaboratorInvalidError = false;
     } else {
 
       if (this.collaborators_emails.match(emailRegEx)) {
-        this.showCollaboratorRequiredError = false;
-        this.showCollaboratorInvalidError = false;
+        this._showCollaboratorRequiredError = false;
+        this._showCollaboratorInvalidError = false;
 
         this._innovationService.inviteCollaborators(this.project._id, this.collaborators_emails).first()
           .subscribe((data: any) => {
 
             if (data.usersAdded.length || data.invitationsToSend.length || data.invitationsToSendAgain.length) {
-              this.collaboratorsAddingProcess = data;
-              this.collaboratorsAddingProcess.inviteUrl = this._innovationService.getInvitationUrl();
+              this._collaboratorsAddingProcess = data;
+              this._collaboratorsAddingProcess.inviteUrl = this._innovationService.getInvitationUrl();
 
               if (data.invitationsToSend.length) {
-                this.collaboratorsInvited.push(this.collaboratorsAddingProcess.invitationsToSend.toString());
-                window.location.href = 'mailto:' + this.collaboratorsAddingProcess.invitationsToSend.join(',') + '?body=' + this.collaboratorsAddingProcess.inviteUrl;
+                this._collaboratorsInvited.push(this._collaboratorsAddingProcess.invitationsToSend.toString());
+                window.location.href = 'mailto:' + this._collaboratorsAddingProcess.invitationsToSend.join(',') + '?body=' + this._collaboratorsAddingProcess.inviteUrl;
               }
 
               if (data.invitationsToSendAgain.length) {
 
-                if (this.collaboratorsInvited.length !== 0) {
+                if (this._collaboratorsInvited.length !== 0) {
 
-                  const index = this.collaboratorsInvited.indexOf(this.collaborators_emails.toString());
+                  const index = this._collaboratorsInvited.indexOf(this.collaborators_emails.toString());
 
                   if (index === -1) {
-                    this.collaboratorsInvited.push(this.collaboratorsAddingProcess.invitationsToSendAgain.toString());
+                    this._collaboratorsInvited.push(this._collaboratorsAddingProcess.invitationsToSendAgain.toString());
                   }
 
-                  window.location.href = 'mailto:' + this.collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this.collaboratorsAddingProcess.inviteUrl;
+                  window.location.href = 'mailto:' + this._collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this._collaboratorsAddingProcess.inviteUrl;
 
                 } else {
-                  this.collaboratorsInvited.push(this.collaboratorsAddingProcess.invitationsToSendAgain.toString());
-                  window.location.href = 'mailto:' + this.collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this.collaboratorsAddingProcess.inviteUrl;
+                  this._collaboratorsInvited.push(this._collaboratorsAddingProcess.invitationsToSendAgain.toString());
+                  window.location.href = 'mailto:' + this._collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this._collaboratorsAddingProcess.inviteUrl;
                 }
 
               }
@@ -143,8 +135,8 @@ export class ClientProjectComponent implements OnInit {
             this.collaborators_emails = '';
           });
       } else {
-        this.showCollaboratorRequiredError = false;
-        this.showCollaboratorInvalidError = true;
+        this._showCollaboratorRequiredError = false;
+        this._showCollaboratorInvalidError = true;
       }
 
     }
@@ -160,6 +152,30 @@ export class ClientProjectComponent implements OnInit {
 
   }
 
+  public removeCollaborator(event: Event, value: any) {
+    event.preventDefault();
+
+    this._innovationService.removeCollaborator(this.project._id, value).subscribe((data) => {
+      this.project.collaborators = data;
+      this._translateNotificationService.success('PROJECT_MODULE.COLLABORATOR_DELETED.TITLE', 'PROJECT_MODULE.COLLABORATOR_DELETED.CONTENT');
+    });
+
+  }
+
+  public editCollaborator(event: Event) {
+    event.preventDefault();
+
+    this._displayAddCollaboratorsModal = true;
+    this._showCollaboratorRequiredError = false;
+    this._showCollaboratorInvalidError = false;
+
+  }
+
+  public closeModal(event: Event) {
+    event.preventDefault();
+    this._displayAddCollaboratorsModal = false;
+  }
+
   get currentPage(): string {
     return this._currentPage;
   }
@@ -167,6 +183,27 @@ export class ClientProjectComponent implements OnInit {
   get imgType(): string {
     return this._imgType;
   }
+
+  get displayAddCollaboratorsModal(): boolean {
+    return this._displayAddCollaboratorsModal;
+  }
+
+  get showCollaboratorRequiredError(): boolean {
+    return this._showCollaboratorRequiredError;
+  }
+
+  get showCollaboratorInvalidError(): boolean {
+    return this._showCollaboratorInvalidError;
+  }
+
+  get collaboratorsInvited(): Array<string> {
+    return this._collaboratorsInvited;
+  }
+
+  get collaboratorsAddingProcess(): any {
+    return this._collaboratorsAddingProcess;
+  }
+
 
 }
 
