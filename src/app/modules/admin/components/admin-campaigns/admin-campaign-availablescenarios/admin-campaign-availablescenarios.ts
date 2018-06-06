@@ -1,17 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { EmailScenario } from '../../../../models/email-scenario';
+import { EmailScenario } from '../../../../../models/email-scenario';
 // import { EmailTemplate } from '../../../../models/email-template';
 import { ActivatedRoute } from '@angular/router';
-import { Campaign } from '../../../../models/campaign';
-import {CampaignService} from '../../../../services/campaign/campaign.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Campaign } from '../../../../../models/campaign';
+import {CampaignService} from '../../../../../services/campaign/campaign.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 
 @Component({
-  selector: 'app-shared-edit-templates',
-  templateUrl: 'shared-edit-templates.component.html',
-  styleUrls: ['shared-edit-templates.component.scss']
+  selector: 'app-admin-campaign-availablescenarios',
+  templateUrl: 'admin-campaign-availablescenarios.html',
+  styleUrls: ['admin-campaign-availablescenarios.scss']
 })
-export class SharedEditTemplatesComponent implements OnInit {
+export class AdminCampaignAvailablescenariosComponent implements OnInit {
 
   @Input()
   set availableScenarios(ArgScenarios: Array<EmailScenario>) {

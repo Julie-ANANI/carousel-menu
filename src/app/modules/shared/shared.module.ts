@@ -38,7 +38,6 @@ import { SharedEditEmailsStep } from './components/shared-edit-emails-step/share
 import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
 import { SharedProjectEditCardsComponent } from './components/shared-project-edit-cards-component/shared-project-edit-cards.component';
 import { SharedEmailBlacklistComponent } from './components/shared-email-blacklist/shared-email-blacklist.component';
-import { SharedEditTemplatesComponent } from './components/shared-edit-templates/shared-edit-templates.component';
 
 // Pipes
 import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
@@ -101,7 +100,6 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedEditEmail,
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
-    SharedEditTemplatesComponent,
     SharedProjectEditCardsComponent,
     DomSanitizerPipe,
     FilterPipe,
@@ -146,7 +144,6 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedEditEmail,
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
-    SharedEditTemplatesComponent,
     SharedProjectEditCardsComponent,
     SharedEmailBlacklistComponent,
     FilterPipe,
