@@ -20,6 +20,7 @@ export class SharedEditScenarioComponent implements OnInit {
   public availableProfiles: Array<string> = ['NEW'];
   public availableScenario: Array<EmailScenario>;
   public isCollapsed: Boolean = true;
+  public modalRemoveScenario: Boolean = false;
   private _isModified: Boolean;
 
   constructor() { }
@@ -79,6 +80,11 @@ export class SharedEditScenarioComponent implements OnInit {
         name: this.scenario.name
       };
     return template;
+  }
+
+
+  public areYouSureYouWantToRemoveMe() {
+    this.modalRemoveScenario = true;
   }
 
   public removeMeFromCampaign() {

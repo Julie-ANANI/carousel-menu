@@ -99,8 +99,6 @@ export class AdminCampaignTemplatesComponent implements OnInit {
   }
 
   public changeDefaultWorkflow(scenarioName: string) {
-    // scenario = scenario as EmailScenario;
-    console.log(scenarioName);
     this._campaign.settings.defaultWorkflow = scenarioName;
     this._saveTemplates();
   }
