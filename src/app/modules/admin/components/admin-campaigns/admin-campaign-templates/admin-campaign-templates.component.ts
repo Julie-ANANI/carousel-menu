@@ -67,7 +67,9 @@ export class AdminCampaignTemplatesComponent implements OnInit {
       return mail.name !== scenario.name;
     });
 
-    let index = this._availableScenarios.findIndex((x) => {
+    // on choppe l'index avant de l'enlever dans le but de le rajouter en bonne position
+    // (evite le deplacement incrompréhensible de l'element dans le DOM)
+    const index = this._availableScenarios.findIndex((x) => {
       return x.name === scenario.name;
     });
     this._availableScenarios = this._availableScenarios.filter((scenar) => {
@@ -117,7 +119,6 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
     this._saveTemplates();
   }
-
 
   private generateAvailableScenario() {
     this._availableScenarios = [];
