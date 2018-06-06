@@ -550,20 +550,6 @@ ul.list-filter {
     justify-content: flex-end;
   }
 
-  .confirm-button:hover {
-    border-color: lighten($primary-element, 10%);
-    background: lighten($primary-element, 10%);
-    color: white;
-    box-shadow: none;
-  }
-
-  .ghost-cancel-button:hover {
-    border-color: lighten($meta-element, 10%);
-    color: lighten($meta-element, 10%);
-    background: white;
-    box-shadow: none;
-  }
-
 }
 
 /********************************** Form Input Styles ***************************************/
@@ -749,10 +735,9 @@ ul.list-filter {
 
 .primary-button:hover {
   color: white;
-  background: $button-color;
-  border-color: $button-color;
+  background: lighten($primary-element, 10%);;
+  border-color: lighten($primary-element, 10%);;
   text-decoration: none;
-  box-shadow: 0 3px 15px 0 rgba(0,0,0,.25);
 }
 
 .primary-button:disabled {
@@ -760,7 +745,6 @@ ul.list-filter {
   border-color: $button-disabled-color;
   color: #a9a9a9;
   cursor: not-allowed;
-  box-shadow: none;
 }
 
 /********************************** Ghost Button Styles ***************************************/
@@ -771,27 +755,17 @@ ul.list-filter {
   border-width: 2px;
 }
 
+.ghost-button:hover {
+  color: lighten($primary-element, 10%);
+  background: white;
+  border-color: lighten($primary-element, 10%);
+}
+
 .ghost-button:disabled {
-  border-color: $button-disabled-color;
-  color: #a9a9a9;
+  border-color: lighten($button-disabled-color, 10%);
+  color: lighten(#a9a9a9, 10%);
   background: white;
   cursor: not-allowed;
-  box-shadow: none;
-}
-
-/********************************** Ghost Edit Button Styles ***************************************/
-
-.ghost-edit-button {
-  color: $secondary-element;
-  background: white none;
-  border-color: $secondary-element;
-  border-width: 2px;
-}
-
-.ghost-edit-button:hover {
-  color: white;
-  background: $secondary-element;
-  border-color: $secondary-element;
 }
 
 /********************************** Ghost Delete Button Styles ***************************************/
@@ -804,9 +778,9 @@ ul.list-filter {
 }
 
 .ghost-delete-button:hover {
-  color: white;
-  background: $alert-element;
-  border-color: $alert-element;
+  color: lighten($alert-element, 10%);
+  background: white;
+  border-color: lighten($alert-element, 10%);
 }
 
 /********************************** Ghost Cancel Button Styles ***************************************/
@@ -819,9 +793,9 @@ ul.list-filter {
 }
 
 .ghost-cancel-button:hover {
-  color: white;
-  background: $meta-element;
-  border-color: $meta-element;
+  color: lighten($meta-element, 10%);
+  background: white;
+  border-color: lighten($meta-element, 10%);
 }
 
 /********************************** Large Button Styles ***************************************/

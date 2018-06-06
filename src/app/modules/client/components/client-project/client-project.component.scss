@@ -111,9 +111,7 @@
       }
 
       .ghost-delete-button {
-        background: transparent;
-        color: transparent;
-        border-color: transparent;
+        visibility: hidden;
       }
 
     }
@@ -121,10 +119,7 @@
     ul:hover {
 
       .ghost-delete-button {
-        color: white;
-        background: #EA5858;
-        border-color: #EA5858;
-        box-shadow: 0 3px 15px 0 rgba(0,0,0,.25);
+        visibility: visible;
       }
 
     }
@@ -161,7 +156,7 @@
         align-items: flex-start;
       }
 
-      .ghost-delete-button, .ghost-edit-button {
+      .ghost-delete-button, .ghost-button {
         margin-top: 15px;
       }
 
@@ -181,9 +176,7 @@
   .modal {
 
     .ghost-delete-button {
-      color: #EA5858 !important;
-      background: white !important;
-      border-color: #EA5858 !important;
+      visibility: visible !important;
     }
 
   }

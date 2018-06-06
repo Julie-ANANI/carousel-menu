@@ -13,8 +13,8 @@ import { InnovationSettings } from '../../../../../../models/innov-settings';
 export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
-  @Input() changesSaved: boolean;
 
+  changesSaved: boolean;
   private _saveChanges: boolean;
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
   private _currentTab: string;
@@ -47,13 +47,12 @@ export class SetupProjectComponent implements OnInit {
           .subscribe(data => {
             this.project = data;
             this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
+            this.changesSaved = true;
+            this._saveChanges = false;
+            this._saveButtonClass = 'disabled';
           }, err => {
             this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
           });
-
-        this.changesSaved = true;
-        this._saveChanges = false;
-        this._saveButtonClass = 'disabled';
      }
 
   }

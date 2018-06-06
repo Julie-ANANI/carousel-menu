@@ -1,5 +1,6 @@
 export const PITCH = {
   'DESCRIPTION': {
+    'SUBMIT_BUTTON': 'Submit my project',
     'UPDATE_LANGUAGE': 'Update your project language',
     'LANGUAGE_CHOICE': 'I describe my project in',
     'SET_AS_MAIN_LANG': 'Set as main language',
@@ -8,6 +9,10 @@ export const PITCH = {
     'MODAL': {
       'TITLE': 'Confirmation Board',
       'CONTENT': 'Are you sure you want to send your project to validation?'
+    },
+    'MODAL_DELETE': {
+      'TITLE': 'Delete Board',
+      'CONTENT': 'Are you sure you want to delete your project in that language?'
     },
     'TITLE': {
       'LABEL': 'Give your project a title',
@@ -46,7 +51,7 @@ export const PITCH = {
     'ADD': 'Add one or  many images/videos to illustrate your project',
     'UPLOAD_PICTURE': 'Upload pictures',
     'UPLOAD_VIDEO': 'Upload videos',
-    'SLIDE': 'You can also drag the files here',
+    'SLIDE': 'drag the files here',
     'URL': 'Enter the address of your Youtube or Vimeo video here'
   },
   'EXTERNAL_DIFFUSION': {

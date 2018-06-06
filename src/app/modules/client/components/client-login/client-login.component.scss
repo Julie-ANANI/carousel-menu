@@ -56,6 +56,11 @@
           border-color: #1680B9;
         }
 
+        .primary-button:hover {
+          background: lighten(#1680B9, 10%);
+          border-color: lighten(#1680B9, 10%);
+        }
+
       }
 
       .or-container {
