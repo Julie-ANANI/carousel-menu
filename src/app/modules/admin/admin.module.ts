@@ -36,6 +36,7 @@ import { AdminCampaignSearchComponent } from './components/admin-campaigns/admin
 import { AdminCampaignAnswersComponent } from './components/admin-campaigns/admin-campaign-answers/admin-campaign-answers.component';
 import { AdminCampaignSearchResultsComponent } from './components/admin-campaigns/admin-campaign-search-results/admin-campaign-search-results.component';
 import { AdminAnswersListComponent } from './components/admin-answers-list/admin-answers-list.component';
+import { AdminProfessionalsComponent } from './components/admin-professionals/admin-professionals.component';
 
 // Pipes
 import { DateFormatPipe } from '../../pipes/DateFormatPipe';
@@ -77,6 +78,7 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminCampaignAnswersComponent,
     AdminAnswersListComponent,
     AdminCampaignSearchResultsComponent,
+    AdminProfessionalsComponent,
     DateFormatPipe
   ]
 })

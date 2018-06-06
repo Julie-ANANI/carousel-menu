@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
+import { AdminProfessionalsComponent } from './components/admin-professionals/admin-professionals.component';
 import { AdminProjectComponent } from './components/admin-project/admin-project.component';
 import { AdminProjectsComponent } from './components/admin-projects/admin-projects.component';
 import { AdminCampaignsComponent } from './components/admin-campaigns/admin-campaigns.component';
@@ -52,6 +53,12 @@ const adminRoutes: Routes = [
         children: [
           { path: '', component: AdminUsersComponent, pathMatch: 'full' },
           { path: 'user/:userId', component: AdminUserDetailsComponent, pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'professionals',
+        children: [
+          { path: '', component: AdminProfessionalsComponent, pathMatch: 'full' }
         ]
       },
       {

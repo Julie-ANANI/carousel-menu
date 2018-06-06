@@ -93,6 +93,7 @@ export const COMMON = {
   },
 
   'USERS': 'Users',
+  'PROFESSIONALS': 'Professionals',
   'HOME': 'Home',
   'ADMIN': 'Admin',
   'MY_PROJECT': 'My project',
