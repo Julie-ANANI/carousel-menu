@@ -115,6 +115,10 @@ export class ClientLoginComponent implements OnInit {
     return environment.domain === 'umi';
   }
 
+  public getCompanyUrl(): string {
+    return environment.companyURL || "";
+  }
+
   // getting the logo of the company
   public getLogo(): string {
     return environment.logoURL;

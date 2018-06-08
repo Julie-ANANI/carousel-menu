@@ -119,6 +119,43 @@
         "dev":   "environments/inomer/environment.inomer.dev.ts",
         "prod":  "environments/inomer/environment.inomer.prod.ts"
       }
+    },
+    {
+      "name": "multivalente",
+      "root": "src",
+      "outDir": "./dist",
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "styles.vendor1.scss"
+      ],
+      "assets": [
+        {
+          "glob": "**/*",
+          "input": "../node_modules/tinymce/skins",
+          "output": "./assets/skins"
+        }
+      ],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/hammerjs/hammer.js",
+        "../node_modules/chart.js/dist/Chart.min.js",
+        "../node_modules/tinymce/tinymce.min.js",
+        "../node_modules/tinymce/themes/modern/theme.min.js",
+        "../node_modules/tinymce/plugins/link/plugin.min.js",
+        "../node_modules/tinymce/plugins/paste/plugin.min.js",
+        "../node_modules/tinymce/plugins/table/plugin.min.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "local": "environments/multivalente/environment.multivalente.local.ts",
+        "prod":  "environments/multivalente/environment.multivalente.prod.ts"
+      }
     }
   ],
   "e2e": {

@@ -4,8 +4,8 @@
 
       <!-- Logo -->
       <div class="logo-container text-center">
-        <a href="https://www.umi.us">
-          <img src="{{ getLogo() }}" alt="UMI" height="35px" class="logo">
+        <a href="{{ getCompanyUrl() }}">
+          <img src="{{ getLogo() }}" alt="UMI" height="55px" class="logo">
         </a>
       </div>
 
@@ -31,7 +31,7 @@
             </div>
 
             <!-- Or -->
-            <div class="or-container text-center">
+            <div class="or-container text-center" *ngIf="checkIsMainDomain()">
               <span> {{ 'COMMON.OR' | translate }} </span>
             </div>
 
