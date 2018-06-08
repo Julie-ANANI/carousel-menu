@@ -21,5 +21,9 @@ export const CAMPAIGNS = {
   'DELETE_MODAL': {
     'TITLE': 'Êtes-vous sûr(e) ?',
     'CONTENT': 'Êtes-vous sûr(e) de vouloir définitivement supprimer cette campagne ? Elle peut contenir  des professionnels qui seront supprimés de l\'innovation !'
+  },
+  'SELECT_DEFAULT': {
+    'TITLE': 'Êtes-vous sûr(e) ?',
+    'CONTENT' : ` Certains batchs peuvent être en cours d'envoi, êtes vous certains de vouloir modifier le template de mails par default`
   }
 };

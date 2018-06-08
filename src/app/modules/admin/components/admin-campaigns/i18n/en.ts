@@ -21,5 +21,9 @@ export const CAMPAIGNS = {
   'DELETE_MODAL': {
     'TITLE': 'Are you sure?',
     'CONTENT': 'Are you sure you want to definitively delete this campaign? It may contain professionals that will be removed from the innovation.'
+  },
+  'SELECT_DEFAULT': {
+    'TITLE': 'Are you sure?',
+    'CONTENT' : `Some batches can be in process. Are you sure you want to change workflow ? It will change for every batch.`
   }
 };

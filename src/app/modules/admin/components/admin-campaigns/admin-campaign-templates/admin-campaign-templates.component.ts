@@ -16,6 +16,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
   private _campaign: Campaign;
   public importModal: boolean = false;
+  public modalSelectDefault: Array<any> = [false, ''];
 
   private _scenario: EmailScenario = {
     name: '',
@@ -53,7 +54,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     this._scenario.emails = template.emails;
     this._scenario.name = template.name;
     this._scenario.emails.forEach((x) => {
-      x.name = template.name;
+      x.nameWorkflow = template.name;
     });
     this.importModal = false;
     this._campaign.settings.emails = this._campaign.settings.emails.concat(this._scenario.emails);
@@ -64,7 +65,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
   public updateAvailableScenario(scenario: EmailScenario) {
     // DROP
     this._campaign.settings.emails = this._campaign.settings.emails.filter(mail => {
-      return mail.name !== scenario.name;
+      return mail.nameWorkflow !== scenario.name;
     });
 
     // on choppe l'index avant de l'enlever dans le but de le rajouter en bonne position
@@ -98,14 +99,15 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     });
   }
 
-  public changeDefaultWorkflow(scenarioName: string) {
-    this._campaign.settings.defaultWorkflow = scenarioName;
+  public changeDefaultWorkflow() {
+    this.modalSelectDefault[0] = !this.modalSelectDefault[0];
+    this._campaign.settings.defaultWorkflow = this.modalSelectDefault[1];
     this._saveTemplates();
   }
 
   public removeScenario(scenario: EmailScenario) {
     this._campaign.settings.emails = this._campaign.settings.emails.filter(mail => {
-      return mail.name !== scenario.name;
+      return mail.nameWorkflow !== scenario.name;
     });
     this._availableScenarios = this._availableScenarios.filter((scenar) => {
       return scenar.name !== scenario.name;
@@ -123,17 +125,25 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     let scenariosnames = new Set<string>();
     if (this._campaign.settings && this._campaign.settings.emails) {
       this._campaign.settings.emails.forEach((x) => {
-        scenariosnames.add(x.name);
+        scenariosnames.add(x.nameWorkflow);
       });
     }
     scenariosnames.forEach((name) => {
       let scenar = {} as EmailScenario;
       scenar.name = name;
       scenar.emails = this._campaign.settings.emails.filter(email => {
-        return email.name === name;
+        return email.nameWorkflow === name;
       });
       this._availableScenarios.push(scenar);
     });
+  }
+
+  public areYouSureYouWantToChange(scenarioname: string) {
+    this.modalSelectDefault[0] = true;
+  }
+  public resetDefaultWorkflow() {
+    this.modalSelectDefault[0] = !this.modalSelectDefault[0];
+    this.modalSelectDefault[1] = this._campaign.settings.defaultWorkflow;
   }
 
   get config(): any { return this._config; }
