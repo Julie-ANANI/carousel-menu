@@ -28,16 +28,16 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Output() cardsChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
 
+  public innovationData: FormGroup; // Overall innovation
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
-  private _showDeleteModal = false;
-  private _deleteInnovId = '';
-  public innovationData: FormGroup; // Overall innovation
   private _primaryLanguage: string;
   private _primaryLength: number;
   private _displayDeleteButton = false;
   private _inputPreValue = '';
   private _inputCurrValue = '';
+  private _showDeleteModal = false;
+  private _deleteInnovId = '';
   /*
    * Gestion de l'affichage
    */
@@ -174,17 +174,15 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     if (this.canEdit) {
-
-      if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
-        this._innovationService.createInnovationCard(this.project._id, {
-          lang: lang
-        }).first()
-          .subscribe((data: InnovCard) => {
-            window.location.reload();
-          });
-      }
-
       if (this.changesSaved) {
+        if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
+          this._innovationService.createInnovationCard(this.project._id, {
+            lang: lang
+          }).first()
+            .subscribe((data: InnovCard) => {
+              window.location.reload();
+            });
+        }
       } else {
         this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
@@ -242,6 +240,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       .first().subscribe((res: Innovation) => {
         this.project = res;
         this.projectChange.emit(this.project);
+        this.innovationData.patchValue(this.project);
       });
 
   }
@@ -266,11 +265,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   public deleteModal(innovID: string) {
 
     if (this.canEdit) {
-      this._deleteInnovId = innovID;
-      this._showDeleteModal = true;
-
       if (this.changesSaved) {
-
+        this._deleteInnovId = innovID;
+        this._showDeleteModal = true;
       } else {
         this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }

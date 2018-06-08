@@ -57,8 +57,8 @@ export const PITCH = {
   'IS_PATENTED': 'Votre projet est-t-il protégé par un brevet ?',
   'MEDIA': {
     'ADD': 'Ajoutez une ou plusieurs images/vidéos pour illustrer votre projet',
-    'UPLOAD_PICTURE': 'Télécharger des photos',
-    'UPLOAD_VIDEO': 'Télécharger des vidéos',
+    'UPLOAD_PICTURE': 'Télécharger la photo',
+    'UPLOAD_VIDEO': 'Télécharger la video',
     'SLIDE': 'faites glisser les fichiers ici',
     'URL': 'Coller ici l\'adresse de votre vidéo Youtube ou Vimeo'
   },

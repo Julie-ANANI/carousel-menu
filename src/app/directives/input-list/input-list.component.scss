@@ -4,12 +4,16 @@ $secondary-color: #2ECC71 !default;
 $dark-color: #333 !default;
 
 .primary-button {
-  margin-left: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
+  margin-left: 20px;
+  border-radius: 50%;
+  height: 44px;
+  padding-left: 13px;
+  padding-right: 13px;
+  margin-top: 3px;
 
   i {
     vertical-align: bottom;
+    margin-right: 0;
   }
 
 }

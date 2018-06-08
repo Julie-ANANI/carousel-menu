@@ -204,7 +204,6 @@ export class ClientProjectComponent implements OnInit {
     return this._collaboratorsAddingProcess;
   }
 
-
 }
 
 /*

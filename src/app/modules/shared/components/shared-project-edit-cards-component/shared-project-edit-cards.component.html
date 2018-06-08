@@ -50,7 +50,6 @@
           <div *ngFor="let innovationItem of innovationData.get('innovationCards').controls; let i = index" [formGroup]="innovationItem">
             <div *ngIf="innovationCardEditingIndex === i">
 
-              {{changesSaved}}
               <!-- Title -->
               <div class="project-data">
                 <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.LABEL' | translate }}</span>

@@ -14,7 +14,7 @@ export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
 
-  changesSaved: boolean;
+  private _changesSaved: boolean;
   private _saveChanges: boolean;
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
   private _currentTab: string;
@@ -27,6 +27,7 @@ export class SetupProjectComponent implements OnInit {
   ngOnInit() {
     this._currentTab = 'pitch';
     this._saveChanges = false;
+    this._changesSaved = false;
     this._saveButtonClass = 'disabled';
   }
 
@@ -47,7 +48,7 @@ export class SetupProjectComponent implements OnInit {
           .subscribe(data => {
             this.project = data;
             this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
-            this.changesSaved = true;
+            this._changesSaved = true;
             this._saveChanges = false;
             this._saveButtonClass = 'disabled';
           }, err => {
@@ -86,6 +87,7 @@ export class SetupProjectComponent implements OnInit {
   // getting the save value from the child component.
   public saveInnovation(value: boolean) {
     this._saveChanges = value;
+    this._changesSaved = false;
     this._saveButtonClass = 'save-project';
   }
 
@@ -95,6 +97,7 @@ export class SetupProjectComponent implements OnInit {
     if (this._saveChanges) {
       this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     } else {
+      console.log(this.project);
       this._currentTab = value;
     }
 
@@ -123,6 +126,10 @@ export class SetupProjectComponent implements OnInit {
 
   get projectToBeSubmitted(): boolean {
     return this._projectToBeSubmitted;
+  }
+
+  get changesSaved(): boolean {
+    return this._changesSaved;
   }
 
 }
