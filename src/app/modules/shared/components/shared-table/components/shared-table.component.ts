@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import {Table} from '../../../../models/table';
+import {Table} from '../interfaces/table';
 
 @Component({
   selector: 'app-shared-table',
@@ -33,12 +33,12 @@ export class SharedTableComponent {
 
   getFieldContent(set: object): any
   {
-    return JSON.parse(JSON.stringify(set));
-  }
-
-  getFieldType(data: any): string
-  {
-    return '';
+    return JSON.parse(JSON.stringify(set), (key, value) => {
+      if (typeof value === 'string') {
+        return value.toUpperCase();
+      }
+      return value;
+    });
   }
 
 }

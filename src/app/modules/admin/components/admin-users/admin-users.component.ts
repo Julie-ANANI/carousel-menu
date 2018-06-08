@@ -3,7 +3,7 @@ import { UserService } from '../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
-import { Table } from '../../../../models/table';
+import { Table } from '../../../shared/components/shared-table/interfaces/table';
 
 @Component({
   selector: 'app-admin-users',
@@ -39,12 +39,12 @@ export class AdminUsersComponent implements OnInit {
   {
     return {_content: this._users,
       _total: this._total,
-      _columns: ['COMPANY', 'JOB', 'CREATED', 'DOMAIN', 'PRENOM', 'NOM'],
-      _types: ['string', 'string', 'string', 'string', 'string', 'string']
+      _columns: ['COMPANY', 'JOB', 'CREATED', 'DOMAIN', 'PRENOM', 'NOM']
     };
   }
 
-  loadUsers(config: any): void{
+  loadUsers(config: any): void
+  {
     this._config = config;
     this._userService.getAll(this._config)
       .first()
