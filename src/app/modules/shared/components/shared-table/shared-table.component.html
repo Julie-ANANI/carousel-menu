@@ -1,0 +1,16 @@
+<table wt-responsive-table>
+  <thead>
+  <tr>
+    <th width="50"></th>
+    <th *ngFor="let column of getColumns()">{{column | translate }}</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let set of getFields()">
+      <td *ngFor="let data of getFieldContent(set)">
+          <span>Bonjour</span>
+      </td>
+  </tr>
+  </tbody>
+</table>
