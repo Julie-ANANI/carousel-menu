@@ -38,7 +38,6 @@ import { SharedEditEmailsStep } from './components/shared-edit-emails-step/share
 import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
 import { SharedProjectEditCardsComponent } from './components/shared-project-edit-cards-component/shared-project-edit-cards.component';
 import { SharedEmailBlacklistComponent } from './components/shared-email-blacklist/shared-email-blacklist.component';
-import { SharedTableComponent } from './components/shared-table/shared-table.component';
 
 // Pipes
 import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
@@ -54,6 +53,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
 // Internal Modules
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
+import { TableModule } from './components/shared-table/table.module';
 
 @NgModule({
   imports: [
@@ -98,7 +98,6 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
     SharedMarketReportExampleComponent,
-    SharedTableComponent,
     SharedEditEmail,
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
@@ -116,6 +115,7 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     Ng2FileDropModule,
     Ng2PageScrollModule,
     SidebarModule,
+    TableModule,
 
     // Directives
     CountryFlagComponent,
@@ -148,7 +148,6 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedEditScenarioComponent,
     SharedProjectEditCardsComponent,
     SharedEmailBlacklistComponent,
-    SharedTableComponent,
     FilterPipe,
     LimitsPipe
   ]
