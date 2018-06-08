@@ -2,8 +2,9 @@ export const ERROR = {
   'ERROR': 'Erreur',
   'SUCCESS': 'Succès',
   'CANNOT_REACH': 'Le serveur ne répond pas.',
+  'FORM_ERROR': 'Erreur de formulaire',
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',
-  'INVALID_FORM_DATA': 'Cette combinaison email / mot de passe n\'est pas valide.',
+  'INVALID_FORM_DATA': 'La combinaison e-mail / mot de passe n\'est pas valide.',
   'PAGE_NOT_FOUND': 'La page n\'a pas pu être trouvée.',
   'LOGIN': {
     'WELCOME': 'Bienvenue !',
@@ -26,16 +27,16 @@ export const ERROR = {
     'SAME_PASSWORD': 'Les deux mots de passe doivent être identiques.'
   },
   'PROJECT': {
-    'NOT_FOUND': 'Projet introuvable',
+    'NOT_FOUND': 'Introuvable',
     'UNFORBIDDEN': 'Accès interdit',
     'CANT_EDIT': 'Vous ne pouvez pas éditer ce projet.',
-    'SAVED': 'Projet sauvegardé',
-    'DELETED': 'Projet supprimé',
+    'SAVED': 'Sauvegardé',
+    'DELETED': 'Supprimé',
     'DELETED_TEXT': 'Votre projet a été supprimé avec succès dans la langue spécifiée.',
     'SAVED_TEXT': 'Votre projet a été enregistré.',
     'SAVE_ERROR': 'Veuillez sauvegarder toutes vos modifications avant de continuer.',
-    'SUBMITTED': 'Projet envoyé',
-    'SUBMITTED_TEXT': 'Votre projet a été transmis pour la validation.'
+    'SUBMITTED': 'Soumis',
+    'SUBMITTED_TEXT': 'Votre projet a été envoyé pour valider.'
   },
   'PRESET': {
     'UPDATED': 'Configuration bien mise à jour'

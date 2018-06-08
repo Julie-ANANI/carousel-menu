@@ -28,15 +28,16 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Output() cardsChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
 
+  public innovationData: FormGroup; // Overall innovation
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
-
-  public innovationData: FormGroup; // Overall innovation
   private _primaryLanguage: string;
   private _primaryLength: number;
   private _displayDeleteButton = false;
   private _inputPreValue = '';
   private _inputCurrValue = '';
+  private _showDeleteModal = false;
+  private _deleteInnovId = '';
   /*
    * Gestion de l'affichage
    */
@@ -105,7 +106,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this._inputCurrValue = value;
 
       if (this._inputPreValue !== this._inputCurrValue) {
-        this.changesSaved = false;
+        this.changesSaved = true;
         this.saveChanges.emit(true);
       }
 
@@ -208,6 +209,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this.innovationData.get('innovationCards').get([index]).get('principal')
         .patchValue(innovCard._id === innovationCardId);
     });
+
   }
 
   public imageUploaded(media: Media, cardIdx: number): void {
@@ -220,50 +222,73 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   public newOnlineVideoToAdd (videoInfos: Video): void {
     this._innovationService.addNewMediaVideoToInnovationCard(this.project._id,
       this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
-      .first()
-      .subscribe(res => {
+      .first().subscribe(res => {
         this.project = res;
         this.projectChange.emit(this.project);
       });
   }
 
-  public setMediaAsPrimary (event: Event, media: Media): void {
+  public setMediaAsPrimary (event: Event, media: Media, index: number): void {
     event.preventDefault();
+
+    this.innovationCardEditingIndex = index;
+
+    this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
 
     this._innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
       .first().subscribe((res: Innovation) => {
         this.project = res;
         this.projectChange.emit(this.project);
+        this.innovationData.patchValue(this.project);
       });
+
   }
 
-  public deleteMedia(event: Event, media: Media): void {
+  public deleteMedia(event: Event, media: Media, index: number): void {
     event.preventDefault();
+
+    this.innovationCardEditingIndex = index;
+
+    this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
 
     this._innovationService.deleteMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
       .first().subscribe((res: Innovation) => {
         this.project = res;
         this.projectChange.emit(this.project);
+        this.innovationData.patchValue(this.project);
       });
 
   }
 
-  public deleteInnovCard(innovId: string) {
+  public deleteModal(innovID: string) {
 
     if (this.canEdit) {
       if (this.changesSaved) {
-        this._innovationService.removeInnovationCard(this.project._id, innovId).subscribe((res) => {
-          window.location.reload();
-        }, err => {
-          this._translateNotificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-        });
+        this._deleteInnovId = innovID;
+        this._showDeleteModal = true;
       } else {
         this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
     }
 
+  }
+
+  public deleteInnov(event: Event) {
+    event.preventDefault();
+
+    this._innovationService.removeInnovationCard(this.project._id, this._deleteInnovId).subscribe((res) => {
+      window.location.reload();
+    }, err => {
+      this._translateNotificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+    });
+
+  }
+
+  public closeModal(event: Event) {
+    event.preventDefault();
+    this._showDeleteModal = false;
   }
 
   ngOnDestroy() {
@@ -297,6 +322,14 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   get displayDeleteButton(): boolean {
     return this._displayDeleteButton;
+  }
+
+  get showDeleteModal(): boolean {
+    return this._showDeleteModal;
+  }
+
+  get deleteInnovId(): string {
+    return this._deleteInnovId;
   }
 
   get canEdit(): boolean {

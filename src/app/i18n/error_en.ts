@@ -2,9 +2,9 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
   'ERROR': 'Error',
   'SUCCESS': 'Success',
   'CANNOT_REACH': 'Cannot reach to server.',
-  'FORM_ERROR': 'Error in form',
+  'FORM_ERROR': 'Form error',
   'INVALID_FORM': 'There are errors in your form please correct them and try again.',
-  'INVALID_FORM_DATA': 'That email / password combination is not valid.',
+  'INVALID_FORM_DATA': 'The email/password combination is not valid.',
   'PAGE_NOT_FOUND': 'Page could not be found.',
   'LOGIN': {
     'WELCOME': 'Welcome back!',
@@ -27,16 +27,16 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'SAME_PASSWORD': 'The passwords must be the same.'
   },
   'PROJECT': {
-    'NOT_FOUND': 'Project not found',
+    'NOT_FOUND': 'Not found',
     'UNFORBIDDEN': 'Unforbidden',
     'CANT_EDIT': 'You cannot edit this project.',
-    'SAVED': 'Project saved',
-    'DELETED': 'Project deleted',
+    'SAVED': 'Saved',
+    'DELETED': 'Deleted',
     'DELETED_TEXT': 'Your project has been deleted successfully in the specified language.',
     'SAVED_TEXT': 'Your project has been saved.',
     'SAVE_ERROR': 'Please save all your changes before proceeding.',
-    'SUBMITTED': 'Project submitted',
-    'SUBMITTED_TEXT': 'Your project has been sent to validation.'
+    'SUBMITTED': 'Submitted',
+    'SUBMITTED_TEXT': 'Your project has been sent to validate.'
   },
   'PRESET': {
     'UPDATED': 'The configuration has been updated'

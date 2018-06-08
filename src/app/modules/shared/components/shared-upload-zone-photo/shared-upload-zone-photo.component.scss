@@ -4,22 +4,13 @@
   padding-right: 5px;
   position: relative;
   border-radius: 5px;
-  height: 250px;
+  min-height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  .text {
-    color: #97A4B1;
-    padding-top: 17px;
-    padding-bottom: 0;
-    font-size: 0.6rem;
-  }
-
   .para {
-    font-size: 0.8rem;
-    color: #333333;
-    padding: 10px 15px 0;
+    font-size: 0.7rem;
   }
 
 }

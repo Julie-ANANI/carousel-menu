@@ -9,16 +9,24 @@ export const PROJECT_MODULE = {
   'ADD_COLLABORATORS_PLACEHOLDER': 'Ajouter un e-mail de collaborateur',
   'COLLABORATORS': 'collaborateurs',
   'COLLABORATOR_ADDED': {
-    'TITLE': 'Collaborateur ajouté',
+    'TITLE': 'Ajouté',
     'CONTENT': 'Le collaborateur a été ajouté avec succès au projet.'
   },
+  'COLLABORATOR_STATUS': {
+    'A': 'AJOUTÉE',
+    'B': 'INVITÉ'
+  },
 
+  'COLLABORATOR_MODAL_BUTTON': {
+    'DELETE': 'Supprimer',
+    'REINVITE': 'Réinventer'
+  },
   'COLLABORATOR_ALREADY_ADDED': {
     'TITLE': 'Déjà ajouté',
     'CONTENT': 'Le collaborateur a déjà été ajouté au projet.'
   },
   'COLLABORATOR_DELETED': {
-    'TITLE': 'Collaborateur supprimé',
+    'TITLE': 'Supprimé',
     'CONTENT': 'Le collaborateur a été supprimé avec succès du projet.'
   },
   'ADD_COLLABORATORS_MODAL': {

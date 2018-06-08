@@ -56,30 +56,15 @@
           border-color: #1680B9;
         }
 
+        .primary-button:hover {
+          background: lighten(#1680B9, 10%);
+          border-color: lighten(#1680B9, 10%);
+        }
+
       }
 
       .or-container {
-        color: #97A4B1;
         padding-top: 25px;
-
-        span::before {
-          content: '';
-          display: inline-block;
-          vertical-align: middle;
-          width: 130px;
-          height: 1px;
-          background: #97A4B1;
-        }
-
-        span::after {
-          content: '';
-          display: inline-block;
-          vertical-align: middle;
-          width: 130px;
-          height: 1px;
-          background: #97A4B1;
-        }
-
       }
 
       .passChange-container {
@@ -113,21 +98,23 @@
 
     }
 
-    .create-container {
-
-      .primary-button {
-        height: 45px;
-        padding-right: 15px;
-        padding-left: 15px;
-      }
-
-    }
-
   }
 
 }
 
 /********************************** Media ***************************************/
+
+@media (max-width: 320px) {
+
+  .create-container {
+
+    .primary-button {
+      margin-top: 10px;
+    }
+
+  }
+
+}
 
 @media (max-width: 600px) {
 

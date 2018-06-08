@@ -22,22 +22,25 @@
         margin-bottom: 10px;
       }
 
+      .circle {
+        margin-top: -15px;
+        margin-left: -13px;
+      }
+
       .save-project {
 
-        .primary-button {
+        .ghost-button {
           border-color: #2ECC71;
           color: #262831;
           pointer-events: auto;
         }
 
-        .primary-button:hover {
+        .ghost-button:hover {
           background-color: #FFF9EB;
           box-shadow: none;
         }
 
         .circle {
-          margin-top: -17px;
-          margin-left: -13px;
           background: #2ECC71;
           animation-name: fadeIn;
           animation-duration: .5s;
@@ -48,7 +51,7 @@
 
       .disabled {
 
-        .primary-button {
+        .ghost-button {
           border-color: #dbdbdb;
           color: #a9a9a9;
           background-color: #dbdbdb;
@@ -57,7 +60,7 @@
         }
 
         .circle {
-          display: none;
+          visibility: hidden;
         }
 
       }
@@ -99,8 +102,6 @@
   }
 
 }
-
-
 
 /********************************** Media ***************************************/
 

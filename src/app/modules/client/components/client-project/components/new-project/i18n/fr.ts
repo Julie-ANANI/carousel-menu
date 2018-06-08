@@ -1,13 +1,13 @@
 export const NEW_PROJECT = {
   'DESCRIPTION': {
-    'LINE1': 'Dans quelle langue souhaitez-vous démarrer votre projet ?',
+    'LINE1': 'Sélectionnez la langue dans laquelle vous souhaitez démarrer votre projet',
     'LINE2': 'Vous pourrez traduire votre projet dans l\'autre langue à tout moment.'
   },
   'FORM_NOT_VALID': 'Merci de répondre à toutes les questions',
   'CREATE': 'Créer mon projet',
   'COMPANY_NAME_LABEL': 'Donnez un nom à votre projet',
   'PROJECT_NAME_PLACEHOLDER': 'Entrez le nom de votre projet',
-  'INNOVATION_TYPE_LABEL': 'Choisissez votre offre',
+  'INNOVATION_TYPE_LABEL': 'Sélectionnez votre offre',
   'DOWNLOAD': 'Téléchargez votre projet à tout moment',
   'ANONYMOUS': 'Anonymat garanti',
   'PRIVATE': 'Rien n\'est publié à ce stade' ,

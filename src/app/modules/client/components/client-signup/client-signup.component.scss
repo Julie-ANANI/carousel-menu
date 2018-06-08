@@ -57,30 +57,15 @@
           border-color: #1680B9;
         }
 
+        .primary-button:hover {
+          background: lighten(#1680B9, 10%);
+          border-color: lighten(#1680B9, 10%);
+        }
+
       }
 
       .or-container {
-        color: #97A4B1;
         padding-top: 25px;
-
-        span::before {
-          content: '';
-          display: inline-block;
-          vertical-align: middle;
-          width: 130px;
-          height: 1px;
-          background: #97A4B1;
-        }
-
-        span::after {
-          content: '';
-          display: inline-block;
-          vertical-align: middle;
-          width: 130px;
-          height: 1px;
-          background: #97A4B1;
-        }
-
       }
 
       .sign-container {
@@ -88,8 +73,6 @@
         padding-bottom: 25px;
 
         .primary-button {
-          padding-top: 12px;
-          padding-bottom: 12px;
 
           i {
             vertical-align: bottom;
@@ -97,16 +80,6 @@
 
         }
 
-      }
-
-    }
-
-    .signin-container {
-
-      .primary-button {
-        height: 45px;
-        padding-left: 20px;
-        padding-right: 20px;
       }
 
     }

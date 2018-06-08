@@ -16,12 +16,12 @@ const DEFAULT_TAB = 'pitch';
 export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
-  @Input() changesSaved: boolean;
 
+  private _changesSaved: boolean;
   private _saveChanges: boolean;
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
   private _currentTab: string;
-  projectToBeSubmitted: boolean;
+  private _projectToBeSubmitted: boolean;
 
   constructor(private innovationService: InnovationService,
               private notificationService: TranslateNotificationsService,
@@ -32,6 +32,7 @@ export class SetupProjectComponent implements OnInit {
     const url = this.router.routerState.snapshot.url.split('/');
     this._currentTab = url ? url[4] || DEFAULT_TAB : DEFAULT_TAB;
     this._saveChanges = false;
+    this._changesSaved = false;
     this._saveButtonClass = 'disabled';
   }
 
@@ -52,13 +53,12 @@ export class SetupProjectComponent implements OnInit {
           .subscribe(data => {
             this.project = data;
             this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
+            this._changesSaved = true;
+            this._saveChanges = false;
+            this._saveButtonClass = 'disabled';
           }, err => {
             this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
           });
-
-        this.changesSaved = true;
-        this._saveChanges = false;
-        this._saveButtonClass = 'disabled';
      }
 
   }
@@ -69,14 +69,14 @@ export class SetupProjectComponent implements OnInit {
     if (this._saveChanges) {
       this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     } else {
-      this.projectToBeSubmitted = true; // open the modal to ask the confirmation.
+      this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
     }
 
   }
 
   public submitProject(event: Event) {
     event.preventDefault();
-    this.projectToBeSubmitted = false;
+    this._projectToBeSubmitted = false;
 
     this.innovationService.submitProjectToValidation(this.project._id)
       .first()
@@ -92,6 +92,7 @@ export class SetupProjectComponent implements OnInit {
   // getting the save value from the child component.
   public saveInnovation(value: boolean) {
     this._saveChanges = value;
+    this._changesSaved = false;
     this._saveButtonClass = 'save-project';
   }
 
@@ -101,9 +102,15 @@ export class SetupProjectComponent implements OnInit {
     if (this._saveChanges) {
       this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     } else {
+      console.log(this.project);
       this._currentTab = value;
     }
 
+  }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._projectToBeSubmitted = false;
   }
 
   get currentTab() {
@@ -122,5 +129,12 @@ export class SetupProjectComponent implements OnInit {
     return this._saveChanges;
   }
 
+  get projectToBeSubmitted(): boolean {
+    return this._projectToBeSubmitted;
+  }
+
+  get changesSaved(): boolean {
+    return this._changesSaved;
+  }
 
 }
