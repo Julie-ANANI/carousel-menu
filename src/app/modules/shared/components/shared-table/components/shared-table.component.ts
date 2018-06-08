@@ -21,24 +21,24 @@ export class SharedTableComponent {
     this._infos = value;
   }
 
+  getColumnsNames(): string[]
+  {
+    return this._infos._columnsNames;
+  }
+
   getColumns(): string[]
   {
     return this._infos._columns;
   }
 
-  getFields(): Array<object>
+  getFieldsKeys(): string[]
   {
-    return this._infos._content;
+    return Object.keys(this._infos._content);
   }
 
-  getFieldContent(set: object): any
+  getContentValue(fieldKey: string, columnKey: string)
   {
-    return JSON.parse(JSON.stringify(set), (key, value) => {
-      if (typeof value === 'string') {
-        return value.toUpperCase();
-      }
-      return value;
-    });
+    return this._infos._content[fieldKey][columnKey];
   }
 
 }

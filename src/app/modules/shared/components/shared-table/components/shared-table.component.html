@@ -2,14 +2,15 @@
   <thead>
   <tr>
     <th width="50"></th>
-    <th *ngFor="let column of getColumns()">{{column | translate }}</th>
+    <th *ngFor="let column of getColumnsNames()">{{column | translate }}</th>
   </tr>
   </thead>
   <tbody>
 
-  <tr *ngFor="let set of getFields()">
-      <td *ngFor="let data of getFieldContent(set)">
-          <span>{{data}}</span>
+  <tr *ngFor="let key of getFieldsKeys()">
+      <td width="50"></td>
+      <td *ngFor="let columnKey of getColumns()">
+          <span>{{getContentValue(key, columnKey)}}</span>
       </td>
   </tr>
   </tbody>
