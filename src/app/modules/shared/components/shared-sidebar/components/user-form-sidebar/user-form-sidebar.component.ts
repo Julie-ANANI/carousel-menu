@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { UserFormSidebarService } from '../../services/user-form-sidebar.service';
+import {environment} from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-user-form-sidebar',
@@ -26,6 +27,7 @@ import { UserFormSidebarService } from '../../services/user-form-sidebar.service
 export class UserFormSidebarComponent implements OnInit {
 
   private _userForm: FormGroup;
+  private _companyName: string = environment.companyShortName;
   private _countriesSuggestion: Array<string> = [];
   private _displayCountrySuggestion = false;
   private _title: string; // Sidebar heading
@@ -34,12 +36,12 @@ export class UserFormSidebarComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder,
               private _autoCompleteService: AutocompleteService,
-              private _userFormSidebarService: UserFormSidebarService)
-  {}
+              private _userFormSidebarService: UserFormSidebarService) {
+  }
 
 
   ngOnInit() {
-    this.state = 'inactive';
+    this._state = 'inactive';
 
     this._userForm = this._formBuilder.group( {
       firstName: ['', [Validators.required]],
@@ -48,15 +50,14 @@ export class UserFormSidebarComponent implements OnInit {
       jobTitle: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      country: ['', [Validators.required]],
-      terms: ['', [Validators.requiredTrue]]
+      country: ['', [Validators.required]]
     });
 
     // getting the template values sent by the parent component.
     this._userFormSidebarService.getTemplateValues().subscribe(res => {
       if (res !== null) {
-        this.state = res.animate;
-        this.title = res.title;
+        this._state = res.animate;
+        this._title = res.title;
         this.formType = res.type.toLowerCase();
       }
     });
@@ -64,17 +65,17 @@ export class UserFormSidebarComponent implements OnInit {
   }
 
   onSuggestCountries() {
-    this.userForm.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
-      this.displayCountrySuggestion = true;
-      this.countriesSuggestion = [];
+    this._userForm.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
+      this._displayCountrySuggestion = true;
+      this._countriesSuggestion = [];
       this._autoCompleteService.get({keyword: input, type: 'countries'}).subscribe(res => {
         if (res.length === 0) {
-          this.displayCountrySuggestion = false;
+          this._displayCountrySuggestion = false;
         } else {
           res.forEach((items) => {
             const valueIndex = this._countriesSuggestion.indexOf(items.name);
             if (valueIndex === -1) { // if not exist then push into the array.
-              this.countriesSuggestion.push(items.name);
+              this._countriesSuggestion.push(items.name);
             }
           })
         }
@@ -83,12 +84,12 @@ export class UserFormSidebarComponent implements OnInit {
   }
 
   onValueSelect(value: string) {
-    this.userForm.get('country').setValue(value);
-    this.displayCountrySuggestion = false;
+    this._userForm.get('country').setValue(value);
+    this._displayCountrySuggestion = false;
   }
 
   toggleState() {
-    this.state = 'inactive';
+    this._state = 'inactive';
   }
 
   onSubmit() {
@@ -130,6 +131,10 @@ export class UserFormSidebarComponent implements OnInit {
 
   get displayCountrySuggestion(): boolean {
     return this._displayCountrySuggestion;
+  }
+
+  get companyName(){
+    return (this._companyName || 'umi').toLocaleUpperCase();
   }
 
 }

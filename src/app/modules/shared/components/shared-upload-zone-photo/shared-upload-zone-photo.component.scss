@@ -1,37 +1,40 @@
 .upload-area {
-  background: #FAFAFA;
-  border: 2px dashed #979797;
-  padding: 60px 10px 60px 10px;
-  margin: 20px 0;
-
+  border: 2px dashed #E0E0E0;
+  padding-left: 5px;
+  padding-right: 5px;
   position: relative;
-  cursor: pointer;
-  height: 200px;
-  transition: all linear .2s;
+  border-radius: 5px;
+  min-height: 250px;
   display: flex;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
 
-  &:hover {
-    border: 2px dashed #74D537;
-
-    .upload-button {
-      color: #888;
-    }
+  .para {
+    font-size: 0.7rem;
   }
 
-  .upload-button {
-    margin: auto;
-    color: #BBB;
-    transition: .2s ease;
-  }
 }
 
-.text-center {
-  text-align: center;
+.upload-area:hover {
+  border-color: #FFB300;
+  background-color: #FFF9EB;
 }
 
-.my-drop-zone { border: dotted 3px lightgray; }
-.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
-.another-file-over-class { border: dotted 3px green; }
+.my-drop-zone {
+  transition: all 0.35s ease-in-out;
+  border-color: #FFB300;
+}
+
+.nv-file-over {
+  transition: all 0.35s ease-in-out;
+  border-color: #EA5858;
+} /* Default class applied to drop zones on over */
+
+.another-file-over-class {
+  transition: all 0.35s ease-in-out;
+  border-color: #2ECC71;
+}
+
+
 
 

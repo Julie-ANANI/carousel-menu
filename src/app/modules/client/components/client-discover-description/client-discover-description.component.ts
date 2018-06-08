@@ -7,7 +7,7 @@ import { ShareService } from '../../../../services/share/share.service';
 import { InnovCard } from '../../../../models/innov-card';
 
 import { environment } from '../../../../../environments/environment';
-import {Innovation} from '../../../../models/innovation';
+import { Innovation } from '../../../../models/innovation';
 
 @Component({
   selector: 'app-client-discover-description',
@@ -32,7 +32,6 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
   {
     this._activatedRoute.params.subscribe(params => {
       this.loadInnovation(params['id'], params['lang']);
-
     });
   }
 
@@ -50,7 +49,7 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
 
       this.innovation = response;
 
-      console.log(this.innovation);
+      // console.log(this.innovation);
 
       this.linkedInUrl = this._shareService.linkedinProjectShareLink(this.innovation, lang);
 

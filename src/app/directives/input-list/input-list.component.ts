@@ -8,6 +8,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 })
 
 export class InputListComponent {
+
   _placeholder: string;
 
   @Output() update = new EventEmitter<any>();

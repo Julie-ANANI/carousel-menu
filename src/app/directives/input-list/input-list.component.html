@@ -1,12 +1,14 @@
-<form #f="ngForm" novalidate
-      (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)" >
+<form #f="ngForm" novalidate (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)">
+
   <div class="input-group" *ngIf="canEdit">
-    <input type="text" class="form-input input-lg" name="answers" [(ngModel)]="answer" required
-           [attr.placeholder]="placeholder | translate" />
-    <button class="btn btn-primary btn-lg input-group-btn" translate>
-      COMMON.ADD
-      <i class="icon icon-arrow-right"></i>
-    </button>
+    <input
+      type="text"
+      class="form-input-default"
+      name="answers"
+      [(ngModel)]="answer"
+      required
+      [attr.placeholder]="placeholder | translate" />
+    <button class="primary-button" translate><span></span><i class="fas fa-plus"></i></button>
   </div>
 
   <ul *ngFor="let a of answerList; index as i" class="answerList">
@@ -22,8 +24,8 @@
         <i class="fas fa-pencil-alt"></i>
         <div class="popover-container">
           <div class="input-group">
-            <input type="text" class="form-input" [(ngModel)]="a.text" name="text"/>
-            <button class="btn btn-primary input-group-btn" type="submit" (click)="updateItem($event)">GO</button>
+            <input type="text" class="form-input-default" [(ngModel)]="a.text" name="text"/>
+            <button class="primary-button" type="submit" (click)="updateItem($event)">GO</button>
           </div>
         </div>
       </div>

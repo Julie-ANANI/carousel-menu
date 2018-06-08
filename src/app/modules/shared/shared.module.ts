@@ -12,13 +12,13 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
 // Components
+import { SharedAnswersListComponent } from './components/shared-answers-list/shared-answers-list.component';
 import { SharedNotFoundComponent } from './components/shared-not-found/shared-not-found.component';
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
 import { SharedLoaderComponent } from './components/shared-loader/shared-loader.component';
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
 import { SharedFilterInputComponent } from './components/shared-filter-input/shared-filter-input.component';
-import { SharedModalComponent } from './components/shared-modal-component/shared-modal.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
 import { SharedTagItemComponent } from './components/shared-tag-item/shared-tag-item.component';
@@ -75,6 +75,7 @@ import { TableModule } from './components/shared-table/table.module';
     // FormErrorDirective,
     CountryFlagComponent,
     InputListComponent,
+    SharedAnswersListComponent,
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
@@ -82,7 +83,6 @@ import { TableModule } from './components/shared-table/table.module';
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedTextZoneComponent,
-    SharedModalComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedVideoComponent,
@@ -105,7 +105,7 @@ import { TableModule } from './components/shared-table/table.module';
     DomSanitizerPipe,
     FilterPipe,
     LimitsPipe,
-    SharedEmailBlacklistComponent
+    SharedEmailBlacklistComponent,
   ],
   exports: [
     // Modules
@@ -123,13 +123,13 @@ import { TableModule } from './components/shared-table/table.module';
 
     // Components
     SharedNotFoundComponent,
+    SharedAnswersListComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedTextZoneComponent,
-    SharedModalComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedSortComponent,

@@ -1,6 +1,276 @@
-$body-font-color-darker: #333333;
+#pitchCard {
+  padding-top: 25px;
+  padding-bottom: 25px;
+
+  .describe-container {
+    padding: 20px;
+    border-radius: 5px;
+    flex-direction: row;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.5);
+
+    .lang-container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      margin: 0;
+
+      li {
+        list-style: none;
+        border: 2px solid #dddddd;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        background: #FAFAFA;
+        font-size: 0.9em;
+        color: #262831;
+        padding: 12px 30px;
+        margin-top: 30px;
+        margin-left: 15px;
+        margin-right: 15px;
+      }
+
+      .circle {
+        margin-top: -31px;
+        margin-left: -44px;
+        background: transparent;
+
+        i {
+          color: transparent;
+          padding-top: 9px;
+        }
+
+      }
+
+      li:hover {
+        background-color: #FFF9EB;
+        border-color: #FFB300;
+      }
+
+      li.active {
+        border-color: #2ECC71 !important;
+
+        .circle {
+          border-color: #2ECC71;
+          background: #2ECC71;
+
+          i {
+            color: white;
+          }
+
+        }
+
+      }
+
+    }
+
+    .create-innovation {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      flex-wrap: wrap;
+
+      .para {
+        color: #97A4B1;
+        font-size: 0.7rem;
+        padding-top: 0;
+        padding-bottom: 30px;
+      }
+
+    }
+
+    .innov-progress {
+      padding-top: 30px;
+      display: inline-block;
+
+      .project-progress {
+        margin-right: 10px;
+      }
+
+      .delete-link {
+        color: #EA5858;
+      }
+
+    }
+
+
+  }
+
+  .project-data {
+    padding-top: 50px;
+  }
+
+  .pd-label {
+    padding-top: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 0 !important;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  .media-disp-container {
+    padding-bottom: 20px;
+
+    .tooltips {
+
+      .tooltip-text {
+        left: 127%;
+      }
+
+      .tooltip-text::after {
+        right: 100%;
+        left: unset;
+        border-top-color: transparent;
+        border-right-color: #97A4B1;
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+      }
+
+    }
+
+    .para {
+      font-size: 0.7rem;
+      padding-top: 0;
+      color: #97A4B1;
+    }
+
+    .principal-media {
+      margin-bottom: 50px;
+      margin-top: 16px;
+
+      img, iframe {
+        box-shadow: 0 0 20px 0 rgba(0,0,0,0.5);
+        border-radius: 5px;
+      }
+
+    }
+
+    .media-content {
+      display: inline-block;
+      margin-right: 10px;
+
+      img, iframe {
+        border-radius: 5px;
+      }
+
+      .func-button {
+        padding-top: 10px;
+        padding-bottom: 16px;
+        font-size: 0.7rem;
+
+        .delete-link {
+          color: #EA5858;
+        }
+
+      }
+
+    }
+
+  }
+
+  .upload-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    .image-upload-container {
+      flex: 1;
+    }
+
+    .or-container {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+
+      .para {
+        color: #97A4B1;
+        font-size: 0.7rem;
+        margin: 25px;
+      }
+
+    }
+
+    .video-upload-container {
+      flex: 1;
+    }
+
+  }
+
+}
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  .tooltips {
+    display: none;
+  }
+
+}
+
+@media (min-width: 768px) {
+
+  #pitchCard {
+
+    .describe-container {
+
+      .lang-container {
+        flex-direction: row !important;
+      }
+
+      .create-innovation {
+        margin-top: 30px;
+        flex-direction: row;
+
+        .para {
+          padding-top: unset;
+          padding-bottom: unset;
+          padding-left: 15px;
+          padding-right: 25px;
+        }
+
+      }
+
+    }
+
+    // Form input
+    .form-input-default, .input-list {
+      width: 662px;
+    }
+
+  }
+
+}
+
+@media (min-width: 1280px) {
+
+  #pitchCard {
+
+    .upload-container {
+      flex-direction: row;
+    }
+
+  }
+
+}
+
+
+
+/*$body-font-color-darker: #333333;
 $primary-color: #3498DB;
 
+div.ng-invalid {
+  border: 0 !important;
+}
 
 .language-choice ul {
   margin: 0;
@@ -49,4 +319,4 @@ $primary-color: #3498DB;
       }
     }
   }
-}
+}*/

@@ -5,9 +5,6 @@ import { DISCOVER } from '../modules/client/components/client-discover/i18n/en';
 import { DISCOVERDESCRIPTION } from '../modules/client/components/client-discover-description/i18n/en';
 import { LOG_IN } from '../modules/client/components/client-login/i18n/en';
 import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/en';
-import { MY_PROJECTS } from '../modules/client/components/client-my-projects/i18n/en';
-import { PROJECT_EDIT } from '../modules/client/components/client-project-edit/i18n/en';
-import { NEW_PROJECT } from '../modules/client/components/client-project-new/i18n/en';
 import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/en';
 import { SIGN_UP } from '../modules/client/components/client-signup/i18n/en';
 import { WELCOME } from '../modules/client/components/client-welcome/i18n/en';
@@ -25,8 +22,9 @@ import { SEARCH } from '../modules/admin/components/admin-search/i18n/en';
 import { BLACKLISTS } from '../modules/shared/components/shared-email-blacklist/i18n/en';
 import { TAGS } from '../modules/admin/components/admin-tags/i18n/en';
 import { PROJECT_LIST } from '../modules/admin/components/admin-projects-list/i18n/en';
-import {PROFESSIONALS} from '../modules/admin/components/admin-professionals/i18n/en';
-
+import { PROJECT_MODULE } from '../modules/client/components/client-project/i18n/en';
+import { FORGET_PASSWORD } from '../modules/client/components/client-forget-password/i18n/en';
+import { PROFESSIONALS } from '../modules/admin/components/admin-professionals/i18n/en';
 
 export const en = {
   'COMMON': COMMON,
@@ -39,11 +37,9 @@ export const en = {
   'DISCOVERDESCRIPTION': DISCOVERDESCRIPTION,
   'LOG_IN': LOG_IN,
   'MY_ACCOUNT': MY_ACCOUNT,
-  'MY_PROJECTS': MY_PROJECTS,
-  'PROJECT_EDIT': PROJECT_EDIT,
-  'NEW_PROJECT': NEW_PROJECT,
   'RESET_PASSWORD': RESET_PASSWORD,
   'SIGN_UP': SIGN_UP,
+  'FORGET_PASSWORD': FORGET_PASSWORD,
   'WELCOME': WELCOME,
   'HEADER': HEADER,
   'EXPORT': EXPORT,
@@ -56,5 +52,6 @@ export const en = {
   'BLACKLISTS': BLACKLISTS,
   'TAGS': TAGS,
   'PROJECT_LIST': PROJECT_LIST,
+  'PROJECT_MODULE': PROJECT_MODULE,
   'PROFESSIONALS' : PROFESSIONALS
 };

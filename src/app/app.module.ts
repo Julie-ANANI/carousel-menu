@@ -113,6 +113,7 @@ import { SignatureResolver } from './resolvers/signature.resolver';
 })
 
 export class AppModule {
+
   constructor(private _translateService: TranslateService,
               private _cookieService: CookieService) {
     this._translateService.addLangs(['en', 'fr']);
@@ -127,6 +128,7 @@ export class AppModule {
     this._cookieService.put('user_lang', browserLang);
     this._translateService.use(browserLang);
   }
+
 }
 
 export function CreateTranslateLoader() {

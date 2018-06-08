@@ -24,6 +24,7 @@ export class SharedUploadZonePhotoComponent implements OnInit {
 
   ngOnInit() {
     this._filters = Array<FilterFunction>();
+
     this._uploader = new FileUploader({
       url: environment.apiUrl + this.uri,
       autoUpload: true,
@@ -31,8 +32,11 @@ export class SharedUploadZonePhotoComponent implements OnInit {
       // maxFileSize: 1024 * 1024,
       additionalParameter: {} // à transmettre au serveur au moment de la sauvegarde
     });
+
     const uo: FileUploaderOptions = {};
+
     uo.headers = [{ name: 'api-token', value : 'umi-front-application,TXnKAVHh0xpiFlC8D01S3e8ZkD45VIDJ' } ];
+
     this._uploader.setOptions(uo);
 
     this._uploader.onBeforeUploadItem = (_: FileItem): void => {
@@ -58,6 +62,7 @@ export class SharedUploadZonePhotoComponent implements OnInit {
         }
       }
     }
+
   }
 
   get uploader() {
