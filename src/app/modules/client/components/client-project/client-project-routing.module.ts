@@ -6,6 +6,9 @@ import { SetupProjectComponent } from './components/setup/setup.component';
 import { ProjectEditExample1Component } from './components/project-edit-example1/project-edit-example1.component';
 import { ProjectEditExample2Component } from './components/project-edit-example2/project-edit-example2.component';
 import { ProjectsListComponent } from './components/projects-list/projects-list.component';
+import { PitchComponent } from './components/setup/components/pitch/pitch.component';
+import { SurveyComponent } from './components/setup/components/survey/survey.component';
+import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
 import { SharedMarketReportComponent } from '../../../shared/components/shared-market-report/shared-market-report.component';
 import { InnovationResolver } from '../../../../resolvers/innovation.resolver';
 import { AuthGuard } from '../../../../auth-guard.service';
@@ -28,7 +31,19 @@ export const clientProjectRoutes: any = [
         component: ClientProjectComponent,
         children: [
           {
-            path: 'setup', component: SetupProjectComponent, canActivate: [AuthGuard], pathMatch: 'full'
+            path: 'setup',
+            component: SetupProjectComponent,
+            children: [
+              {
+                path: 'pitch', component: PitchComponent, canActivate: [AuthGuard], pathMatch: 'full'
+              },
+              {
+                path: 'survey', component: SurveyComponent, canActivate: [AuthGuard], pathMatch: 'full'
+              },
+              {
+                path: 'targeting', component: TargetingComponent, canActivate: [AuthGuard], pathMatch: 'full'
+              }
+            ]
             // canDeactivate: [PendingChangesGuard] TODO: uncomment
           },
           {

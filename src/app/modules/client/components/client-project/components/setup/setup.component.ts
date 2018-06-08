@@ -1,8 +1,11 @@
 import {Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
+
+const DEFAULT_TAB = 'pitch';
 
 @Component({
   selector: 'app-client-setup-project',
@@ -21,11 +24,13 @@ export class SetupProjectComponent implements OnInit {
   projectToBeSubmitted: boolean;
 
   constructor(private innovationService: InnovationService,
-              private notificationService: TranslateNotificationsService) {
+              private notificationService: TranslateNotificationsService,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this._currentTab = 'pitch';
+    const url = this.router.routerState.snapshot.url.split('/');
+    this._currentTab = url ? url[4] || DEFAULT_TAB : DEFAULT_TAB;
     this._saveChanges = false;
     this._saveButtonClass = 'disabled';
   }

@@ -29,17 +29,17 @@
       <div class="column col-12 col-mx-auto tabs-container">
         <ul class="tabs">
           <li>
-            <a [ngClass]="{'active': currentTab == 'pitch'}" (click)="settingTab($event, 'pitch')">
+            <a [routerLink]="['setup', 'pitch']" [ngClass]="{'active': currentTab == 'pitch'}">
               <i class="fas fa-check"></i>{{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
             </a>
           </li>
           <li>
-            <a [ngClass]="{'active': currentTab == 'targeting'}" (click)="settingTab($event, 'targeting')">
+            <a [routerLink]="['setup', 'targeting']" [ngClass]="{'active': currentTab == 'targeting'}">
               <i class="fas fa-check"></i>{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
             </a>
           </li>
           <li>
-            <a [ngClass]="{'active': currentTab == 'survey'}" (click)="settingTab($event, 'survey')">
+            <a [routerLink]="['setup', 'survey']" [ngClass]="{'active': currentTab == 'survey'}">
               <i class="fas fa-check"></i>{{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
             </a>
           </li>
@@ -63,7 +63,6 @@
         <div *ngIf="currentTab === 'targeting'">
           <app-project-targeting [project]="project" (newSettings)="updateSettings($event)"></app-project-targeting>
         </div>
-
         <!-- Survey -->
         <div *ngIf="currentTab === 'survey'">
           <app-project-survey [project]="project"></app-project-survey>
