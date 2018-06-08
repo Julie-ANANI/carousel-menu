@@ -35,7 +35,7 @@ export const clientProjectRoutes: any = [
             component: SetupProjectComponent,
             children: [
               {
-                path: 'pitch', component: PitchComponent, canActivate: [AuthGuard], pathMatch: 'full'
+                path: 'pitch', component: PitchComponent, canActivate: [AuthGuard], pathMatch: 'full',
               },
               {
                 path: 'survey', component: SurveyComponent, canActivate: [AuthGuard], pathMatch: 'full'

@@ -33,24 +33,24 @@ export class ClientProjectComponent implements OnInit {
     invitationsToSendAgain: []
   };
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _innovationService: InnovationService,
-              private _router: Router,
-              private _translateNotificationService: TranslateNotificationsService) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private innovationService: InnovationService,
+              private router: Router,
+              private translateNotificationsService: TranslateNotificationsService) {
     // override the route reuse strategy
-    this._router.routeReuseStrategy.shouldReuseRoute = function() {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
     };
 
   }
 
   ngOnInit() {
-    const url = this._router.routerState.snapshot.url.split('/');
+    const url = this.router.routerState.snapshot.url.split('/');
 
     this._currentPage = url ? url[3] || DEFAULT_PAGE : DEFAULT_PAGE;
 
     if (!this.project) {
-      this.project = this._activatedRoute.snapshot.data['innovation'];
+      this.project = this.activatedRoute.snapshot.data['innovation'];
     }
 
     // Getting the project type
@@ -93,12 +93,12 @@ export class ClientProjectComponent implements OnInit {
         this._showCollaboratorRequiredError = false;
         this._showCollaboratorInvalidError = false;
 
-        this._innovationService.inviteCollaborators(this.project._id, this.collaborators_emails).first()
+        this.innovationService.inviteCollaborators(this.project._id, this.collaborators_emails).first()
           .subscribe((data: any) => {
 
             if (data.usersAdded.length || data.invitationsToSend.length || data.invitationsToSendAgain.length) {
               this._collaboratorsAddingProcess = data;
-              this._collaboratorsAddingProcess.inviteUrl = this._innovationService.getInvitationUrl();
+              this._collaboratorsAddingProcess.inviteUrl = this.innovationService.getInvitationUrl();
 
               if (data.invitationsToSend.length) {
                 this._collaboratorsInvited.push(this._collaboratorsAddingProcess.invitationsToSend.toString());
@@ -126,11 +126,11 @@ export class ClientProjectComponent implements OnInit {
 
               if (data.usersAdded.length) {
                 this.project.collaborators = this.project.collaborators.concat(data.usersAdded);
-                this._translateNotificationService.success('PROJECT_MODULE.COLLABORATOR_ADDED.TITLE', 'PROJECT_MODULE.COLLABORATOR_ADDED.CONTENT');
+                this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_ADDED.TITLE', 'PROJECT_MODULE.COLLABORATOR_ADDED.CONTENT');
               }
 
             } else {
-              this._translateNotificationService.success('PROJECT_MODULE.COLLABORATOR_ALREADY_ADDED.TITLE', 'PROJECT_MODULE.COLLABORATOR_ALREADY_ADDED.CONTENT');
+              this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_ALREADY_ADDED.TITLE', 'PROJECT_MODULE.COLLABORATOR_ALREADY_ADDED.CONTENT');
             }
             this.collaborators_emails = '';
           });
@@ -146,8 +146,8 @@ export class ClientProjectComponent implements OnInit {
   public reinviteCollaborator(event: Event, email: string) {
     event.preventDefault();
 
-    this._innovationService.inviteCollaborators(this.project._id, email).first().subscribe((data) => {
-      window.location.href = 'mailto:' + data.invitationsToSendAgain.join(',') + '?body=' + this._innovationService.getInvitationUrl();
+    this.innovationService.inviteCollaborators(this.project._id, email).first().subscribe((data) => {
+      window.location.href = 'mailto:' + data.invitationsToSendAgain.join(',') + '?body=' + this.innovationService.getInvitationUrl();
     });
 
   }
@@ -155,9 +155,9 @@ export class ClientProjectComponent implements OnInit {
   public removeCollaborator(event: Event, value: any) {
     event.preventDefault();
 
-    this._innovationService.removeCollaborator(this.project._id, value).subscribe((data) => {
+    this.innovationService.removeCollaborator(this.project._id, value).subscribe((data) => {
       this.project.collaborators = data;
-      this._translateNotificationService.success('PROJECT_MODULE.COLLABORATOR_DELETED.TITLE', 'PROJECT_MODULE.COLLABORATOR_DELETED.CONTENT');
+      this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_DELETED.TITLE', 'PROJECT_MODULE.COLLABORATOR_DELETED.CONTENT');
     });
 
   }
