@@ -17,18 +17,18 @@ export class ClientForgetPasswordComponent implements OnInit {
   private _companyName: string = environment.companyShortName;
   private _emailSent: boolean;
 
-  constructor(private _titleService: TranslateTitleService,
-              private _formBuilder: FormBuilder,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _userService: UserService) {
+  constructor(private translateTitleService: TranslateTitleService,
+              private formBuilder: FormBuilder,
+              private translateNotificationsService: TranslateNotificationsService,
+              private userService: UserService) {
   }
 
   ngOnInit() {
-    this._titleService.setTitle('FORGET_PASSWORD.TITLE');
+    this.translateTitleService.setTitle('FORGET_PASSWORD.TITLE');
 
     this._emailSent = false;
 
-    this._formData = this._formBuilder.group({
+    this._formData = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]]
     });
 
@@ -36,14 +36,14 @@ export class ClientForgetPasswordComponent implements OnInit {
 
   onSubmit() {
     if (this._formData.valid) {
-      this._userService.changePassword(this._formData.get('email').value).first().subscribe(() => {
+      this.userService.changePassword(this._formData.get('email').value).first().subscribe(() => {
         this._emailSent = true;
       }, () => {
         this._emailSent = true;
       });
     } else {
       if (this._formData.untouched && this._formData.pristine) {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_PLEASE');
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_PLEASE');
       }
     }
 
@@ -57,7 +57,7 @@ export class ClientForgetPasswordComponent implements OnInit {
     } else if (this._formData.get('email').hasError('email')) {
       this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
     } else {
-      this._userService.changePassword(this._formData.get('email')!.value)
+      this.userService.changePassword(this._formData.get('email')!.value)
         .first()
         .subscribe(_ => {
           this._emailSent = true;

@@ -16,6 +16,7 @@
       flex-wrap: wrap;
       flex: 1 0 auto;
       justify-content: center;
+      flex-direction: column;
 
       span {
         margin-right: 10px;
@@ -134,6 +135,7 @@
 
     .function-button {
       justify-content: flex-end !important;
+      flex-direction: row !important;
 
       span {
         margin-bottom: 0 !important;

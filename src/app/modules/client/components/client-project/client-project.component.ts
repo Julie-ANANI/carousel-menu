@@ -79,10 +79,14 @@ export class ClientProjectComponent implements OnInit {
 
   }*/
 
-  public addCollaborators (event: Event): void {
-    event.preventDefault();
+  enterKeyPress(event: Event) {
+    if (event['keyCode'] === 13) {
+      this.addCollaborators(event);
+    }
+  }
 
-    console.log(this.collaborators_emails);
+  addCollaborators (event: Event): void {
+    event.preventDefault();
 
     if (this.collaborators_emails === '') {
       this._showCollaboratorRequiredError = true;
@@ -143,7 +147,7 @@ export class ClientProjectComponent implements OnInit {
 
   }
 
-  public reinviteCollaborator(event: Event, email: string) {
+  reinviteCollaborator(event: Event, email: string) {
     event.preventDefault();
 
     this.innovationService.inviteCollaborators(this.project._id, email).first().subscribe((data) => {
@@ -152,7 +156,7 @@ export class ClientProjectComponent implements OnInit {
 
   }
 
-  public removeCollaborator(event: Event, value: any) {
+  removeCollaborator(event: Event, value: any) {
     event.preventDefault();
 
     this.innovationService.removeCollaborator(this.project._id, value).subscribe((data) => {
@@ -162,7 +166,7 @@ export class ClientProjectComponent implements OnInit {
 
   }
 
-  public editCollaborator(event: Event) {
+  editCollaborator(event: Event) {
     event.preventDefault();
 
     this._displayAddCollaboratorsModal = true;
@@ -171,7 +175,7 @@ export class ClientProjectComponent implements OnInit {
 
   }
 
-  public closeModal(event: Event) {
+  closeModal(event: Event) {
     event.preventDefault();
     this._displayAddCollaboratorsModal = false;
   }

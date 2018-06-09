@@ -3,13 +3,57 @@
     <div class="column col-xs-12 col-12 col-mx-auto">
 
       <form novalidate [formGroup]="innovationData">
+        <div formArrayName="innovationCards">
 
         <!-- Describe -->
-        <div class="column col-sm-12 col-md-10 col-lg-8 col-xl-7 col-5 col-mx-auto">
-          <div class="describe-container text-center">
-            <span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE_CHOICE' | translate }}</span>
+          <div class="describe-container">
 
-            <ul formArrayName="innovationCards" class="lang-container">
+            <div class="ques">
+              {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE_CHOICE' | translate }}
+            </div>
+
+            <div class="lang-container">
+              <ul>
+                <li
+                  *ngFor="let innovationCard of innovationData.get('innovationCards').value; let i = index"
+                  [ngClass]="{'active': innovationCardEditingIndex === i }"
+                  (click)="(innovationCardEditingIndex = i) && $event.preventDefault(); setAsPrincipal(innovationCard._id)">
+                  <div class="circle"><i class="fas fa-check"></i></div>
+                  <span>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div *ngIf="primaryLength === 1"  class="create-innovation">
+              {{ 'COMMON.OR' | translate | lowercase }} {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROJECT_IN_OTHER_LANG' | translate }}
+              <span class="text-link">
+                  <span *ngIf="primaryLanguage !== 'fr'" (click)="createInnovationCard($event, 'fr')">
+                    {{ 'COMMON.LANG.FR' | translate }}
+                  </span>
+                  <span *ngIf="primaryLanguage !== 'en'" (click)="createInnovationCard($event, 'en')">
+                    {{ 'COMMON.LANG.EN' | translate }}
+                  </span>
+                </span>
+            </div>
+
+          </div>
+
+          <div class="text-center" [ngStyle]="{ 'margin-top': '25px' }">
+            <div *ngFor="let innovationCard of innovationData.get('innovationCards').value; let i = index" [ngStyle]="{ 'display': 'inline-block' }">
+              <div *ngIf="innovationCardEditingIndex === i" class="lang-action">
+                <span class="text-link preview-link">{{ 'COMMON.PREVIEW' | translate }}</span>&nbsp;
+                <span [ngStyle]="{'display': displayDeleteButton ? 'inline-block' : 'none' }">
+                  <span>/</span>&nbsp;
+                  <span class="text-link delete-link" (click)="deleteModal(innovationCard._id, innovationCard.lang)">{{ 'COMMON.DELETE' | translate }}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+        <!--
+        <ul formArrayName="innovationCards" class="lang-container">
 
               <li
                 *ngFor="let innovationCard of innovationData.get('innovationCards').value; let i = index"
@@ -42,11 +86,8 @@
                 </span>
               </div>
             </div>
+        -->
 
-          </div>
-        </div>
-
-        <div formArrayName="innovationCards">
           <div *ngFor="let innovationItem of innovationData.get('innovationCards').controls; let i = index" [formGroup]="innovationItem">
             <div *ngIf="innovationCardEditingIndex === i">
 
@@ -377,7 +418,11 @@
       <div class="modal-title">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.TITLE' | translate }}</div>
     </div>
     <div class="modal-body">
-      <div class="content">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.CONTENT' | translate }}</div>
+      <div class="content">
+        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.CONTENT.A' | translate }}
+        {{ 'COMMON.LANG.' + langDelete | uppercase | translate }}
+        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.CONTENT.B' | translate }}
+      </div>
     </div>
     <div class="modal-footer">
       <button class="primary-button ghost-delete-button sm-button" (click)="deleteInnov($event)">
@@ -388,6 +433,31 @@
 </div>
 
 <!--<div *ngIf="project">
+
+<div *ngIf="project.principalMedia !== null && project.principalMedia !== undefined">
+
+                          <span class="para">Main media</span>
+                          <div class="tooltips"><i class="far fa-question-circle"></i>
+                            <span class="tooltip-text">{{ "" | translate }}</span>
+                          </div>
+
+                          <div *ngIf="project.principalMedia?.type === 'PHOTO'" class="principal-media">
+                            <img
+                              [src]="project.principalMedia.url"
+                              [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+                              width="220" height="146"
+                              class="img-responsive">
+                          </div>
+
+                          <div *ngIf="project.principalMedia?.type === 'VIDEO'" class="principal-media">
+                            <iframe
+                              [src]="domSanitizer.bypassSecurityTrustResourceUrl(project.principalMedia.video.embeddableUrl)"
+                              width="220" height="146">
+                            </iframe>
+                          </div>
+
+                        </div>
+                      </div>
 
 <div *ngIf="project.principalMedia !== undefined && project.principalMedia !== null">
                           <span class="para">Main media</span>

@@ -4,8 +4,8 @@ import { TARGETING } from '../components/targeting/i18n/fr';
 
 export const SETUP = {
   'TITLE': 'Toutes les informations sur votre projet',
-  'SAVE_PROJECT': 'Sauvegarder',
-  'SUBMIT_PROJECT': 'Soumettre',
+  'SAVE_PROJECT': 'Sauvegarder le projet',
+  'SUBMIT_PROJECT': 'Soumettre le projet',
   'PITCH_TAB': 'Pitch',
   'TARGETING_TAB': 'Targeting',
   'SURVEY_TAB': 'Survey',

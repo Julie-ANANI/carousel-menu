@@ -38,23 +38,26 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   private _inputCurrValue = '';
   private _showDeleteModal = false;
   private _deleteInnovId = '';
+  private _langDelete = '';
   /*
    * Gestion de l'affichage
    */
   public innovationCardEditingIndex = 0; // Index de l'innovationCard que l'on édite (système d'onglets)
 
-  constructor(private _innovationService: InnovationService,
-              private _authService: AuthService,
-              private _domSanitizer: DomSanitizer,
-              private _translateService: TranslateService,
-              private _formBuilder: FormBuilder,
-              private _translateNotificationService: TranslateNotificationsService) {
+  constructor(private innovationService: InnovationService,
+              private authService: AuthService,
+              private domSanitizer1: DomSanitizer,
+              private translateService: TranslateService,
+              private formBuilder: FormBuilder,
+              private translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit() {
     this._buildForm();
 
     this.changesSaved = true;
+
+    console.log(this.project);
 
     this.innovationData.patchValue(this.project);
 
@@ -84,11 +87,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   private _buildForm(): void {
-    this.innovationData = this._formBuilder.group({
+    this.innovationData = this.formBuilder.group({
       patented: [undefined, Validators.required],
       projectStatus: [undefined, Validators.required],
       external_diffusion: [false, [Validators.required]],
-      innovationCards: this._formBuilder.array([])
+      innovationCards: this.formBuilder.array([])
     });
   }
 
@@ -128,7 +131,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   }
 
-  public updateCards() {
+  updateCards() {
     this.cardsChange.emit(this.innovationData.value);
   }
 
@@ -143,7 +146,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * @param type
    * @returns {any|{placeholder: string, initialData: string}}
    */
-  public getConfig(type: string): any {
+  getConfig(type: string): any {
     const _inputConfig = {
       'advantages': {
         placeholder: 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.INPUT',
@@ -157,7 +160,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   private _newInnovationCardFormBuilderGroup (data: InnovCard): any {
-    return this._formBuilder.group({
+    return this.formBuilder.group({
       _id: [{value: data._id , disabled: !this.canEdit}, Validators.required],
       title: [{value: data.title, disabled: !this.canEdit}, Validators.required],
       summary: [{value: data.summary, disabled: !this.canEdit}, Validators.required],
@@ -170,13 +173,13 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     });
   }
 
-  public createInnovationCard(event: Event, lang: string): void {
+  createInnovationCard(event: Event, lang: string): void {
     event.preventDefault();
 
     if (this.canEdit) {
       if (this.changesSaved) {
         if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
-          this._innovationService.createInnovationCard(this.project._id, {
+          this.innovationService.createInnovationCard(this.project._id, {
             lang: lang
           }).first()
             .subscribe((data: InnovCard) => {
@@ -184,7 +187,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
             });
         }
       } else {
-        this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
 
     }
@@ -196,7 +199,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * @param event the resulting value sent from the components directive
    * @param cardIdx this is the index of the innovation card being edited.
    */
-  public addAdvantageToInventionCard (event: {value: Array<string>}, cardIdx: number): void {
+  addAdvantageToInventionCard (event: {value: Array<string>}, cardIdx: number): void {
     const card = this.innovationData.get('innovationCards').value[cardIdx] as FormGroup;
     card['advantages'] = event.value;
     this.updateCards();
@@ -204,23 +207,35 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.saveChanges.emit(true);
   }
 
-  public setAsPrincipal (innovationCardId: string): void {
+  setAsPrincipal (innovationCardId: string): void {
     this.innovationData.get('innovationCards').value.forEach((innovCard: any, index: number) => {
       this.innovationData.get('innovationCards').get([index]).get('principal')
         .patchValue(innovCard._id === innovationCardId);
     });
-
+    this.updateCards();
   }
 
-  public imageUploaded(media: Media, cardIdx: number): void {
+  imageUploaded(media: Media, cardIdx: number): void {
     const card = this.innovationData.get('innovationCards').value[cardIdx] as FormGroup;
     card['media'].push(media);
     // this.updateCards();
     // this.projectChange.emit(this.project);
+    if (this.innovationCardEditingIndex === 0) {
+      if (this.project.principalMedia === null || this.project.principalMedia === undefined) {
+       this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id, this.project.innovationCards[0]._id, card['media'][0]._id).first().subscribe((res) => {
+         this.project = res;
+         this.projectChange.emit(this.project);
+         this.innovationData.patchValue(this.project);
+         this.updateCards();
+         this.saveChanges.emit(true);
+       });
+      }
+    }
+
   }
 
-  public newOnlineVideoToAdd (videoInfos: Video): void {
-    this._innovationService.addNewMediaVideoToInnovationCard(this.project._id,
+  newOnlineVideoToAdd (videoInfos: Video): void {
+    this.innovationService.addNewMediaVideoToInnovationCard(this.project._id,
       this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
       .first().subscribe(res => {
         this.project = res;
@@ -228,14 +243,33 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       });
   }
 
-  public setMediaAsPrimary (event: Event, media: Media, index: number): void {
+  setMediaAsPrimary (event: Event, media: Media, index: number): void {
     event.preventDefault();
 
     this.innovationCardEditingIndex = index;
 
     this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
 
-    this._innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
+    this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
+      this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
+      .first().subscribe((res: Innovation) => {
+        this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
+        this.project = res;
+        this.projectChange.emit(this.project);
+        this.innovationData.patchValue(this.project);
+        this.saveChanges.emit(true);
+      });
+
+  }
+
+  deleteMedia(event: Event, media: Media, index: number): void {
+    event.preventDefault();
+
+    this.innovationCardEditingIndex = index;
+
+    this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
+
+    this.innovationService.deleteMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
       .first().subscribe((res: Innovation) => {
         this.project = res;
@@ -245,48 +279,32 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   }
 
-  public deleteMedia(event: Event, media: Media, index: number): void {
-    event.preventDefault();
-
-    this.innovationCardEditingIndex = index;
-
-    this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
-
-    this._innovationService.deleteMediaOfInnovationCard(this.project._id,
-      this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
-      .first().subscribe((res: Innovation) => {
-        this.project = res;
-        this.projectChange.emit(this.project);
-        this.innovationData.patchValue(this.project);
-      });
-
-  }
-
-  public deleteModal(innovID: string) {
+  deleteModal(innovID: string, lang: string) {
 
     if (this.canEdit) {
       if (this.changesSaved) {
         this._deleteInnovId = innovID;
+        this._langDelete = lang;
         this._showDeleteModal = true;
       } else {
-        this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
     }
 
   }
 
-  public deleteInnov(event: Event) {
+  deleteInnov(event: Event) {
     event.preventDefault();
 
-    this._innovationService.removeInnovationCard(this.project._id, this._deleteInnovId).subscribe((res) => {
+    this.innovationService.removeInnovationCard(this.project._id, this._deleteInnovId).subscribe((res) => {
       window.location.reload();
     }, err => {
-      this._translateNotificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+      this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
     });
 
   }
 
-  public closeModal(event: Event) {
+  closeModal(event: Event) {
     event.preventDefault();
     this._showDeleteModal = false;
   }
@@ -297,7 +315,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   get domSanitizer() {
-    return this._domSanitizer;
+    return this.domSanitizer1;
   }
 
   get companyName(){
@@ -332,16 +350,20 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     return this._deleteInnovId;
   }
 
+  get langDelete(): string {
+    return this._langDelete;
+  }
+
   get canEdit(): boolean {
     return this.project && (this.project.status === 'EDITING' || this.isAdmin);
   }
 
   get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
   get isAdmin(): boolean {
-    return (this._authService.adminLevel & 3) === 3;
+    return (this.authService.adminLevel & 3) === 3;
   }
 
 }

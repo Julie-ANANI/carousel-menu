@@ -1,11 +1,11 @@
 export const PITCH = {
   'DESCRIPTION': {
-    'SUBMIT_BUTTON': 'Soumettre mon projet',
+    'SUBMIT_BUTTON': 'Soumettre',
     'UPDATE_LANGUAGE': 'Actualiser la langue du projet',
-    'LANGUAGE_CHOICE': 'Je décris mon projet en',
+    'LANGUAGE_CHOICE': 'Je décris mon projet en:',
     'SET_AS_MAIN_LANG': 'Devenir langue principale',
     'MAIN_LANG': 'Langue principale',
-    'PROJECT_IN_OTHER_LANG': 'Ajoutez votre projet en',
+    'PROJECT_IN_OTHER_LANG': 'ajouter un projet dans',
     'MODAL': {
       'TITLE': 'Comité de confirmation',
       'CONTENT': 'Êtes-vous sûr(e) de vouloir envoyer votre projet à validation ?'

@@ -98,7 +98,8 @@
           class="form-input-default"
           type="text"
           [(ngModel)]="collaborators_emails"
-          [attr.placeholder]=" 'PROJECT_MODULE.ADD_COLLABORATORS_PLACEHOLDER' | translate ">
+          [attr.placeholder]=" 'PROJECT_MODULE.ADD_COLLABORATORS_PLACEHOLDER' | translate "
+          (keyup)="enterKeyPress($event)">
         <button
           class="primary-button"
           (click)="addCollaborators($event)">

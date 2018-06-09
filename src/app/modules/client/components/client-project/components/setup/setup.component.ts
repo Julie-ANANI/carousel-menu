@@ -1,4 +1,4 @@
-import {Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -36,15 +36,15 @@ export class SetupProjectComponent implements OnInit {
     this._saveButtonClass = 'disabled';
   }
 
-  public updateSettings(value: InnovationSettings): void {
+  updateSettings(value: InnovationSettings): void {
     this.project.settings = value;
   }
 
-  public updateInnovation(value: Innovation): void {
+  updateInnovation(value: Innovation): void {
     this.project = value;
   }
 
-  public saveProject(event: Event): void {
+  saveProject(event: Event): void {
     event.preventDefault();
 
      if (this._saveChanges) {
@@ -63,7 +63,7 @@ export class SetupProjectComponent implements OnInit {
 
   }
 
-  public submitButton(event: Event): void {
+  submitButton(event: Event): void {
     event.preventDefault();
 
     if (this._saveChanges) {
@@ -74,7 +74,7 @@ export class SetupProjectComponent implements OnInit {
 
   }
 
-  public submitProject(event: Event) {
+  submitProject(event: Event) {
     event.preventDefault();
     this._projectToBeSubmitted = false;
 
@@ -90,7 +90,7 @@ export class SetupProjectComponent implements OnInit {
   }
 
   // getting the save value from the child component.
-  public saveInnovation(value: boolean) {
+  saveInnovation(value: boolean) {
     this._saveChanges = value;
     this._changesSaved = false;
     this._saveButtonClass = 'save-project';
