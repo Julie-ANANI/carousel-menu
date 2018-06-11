@@ -77,7 +77,7 @@ export class SharedEditScenarioComponent implements OnInit {
         subject: "TODO",
         content: "TODO",
         modified: false,
-        name: this.scenario.name
+        nameWorkflow: this.scenario.name
       };
     return template;
   }

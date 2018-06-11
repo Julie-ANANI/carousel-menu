@@ -25,7 +25,7 @@ export class AdminNewScenarioComponent {
         subject: 'first mail',
         content: 'content',
         modified: false,
-        name: this._newScenarioName
+        nameWorkflow: this._newScenarioName
       },
       {
         step: "SECOND",
@@ -34,7 +34,7 @@ export class AdminNewScenarioComponent {
         subject: 'second mail',
         content: 'content',
         modified: false,
-        name: this._newScenarioName
+        nameWorkflow: this._newScenarioName
       },
       {
         step: "THIRD",
@@ -43,7 +43,7 @@ export class AdminNewScenarioComponent {
         subject: 'last mail',
         content: 'content',
         modified: false,
-        name: this._newScenarioName
+        nameWorkflow: this._newScenarioName
       },
       {
         step: "THANKS",
@@ -52,7 +52,7 @@ export class AdminNewScenarioComponent {
         subject: 'thanks',
         content: 'content',
         modified: false,
-        name: this._newScenarioName
+        nameWorkflow: this._newScenarioName
       },
       {
         step: "FIRST",
@@ -61,7 +61,7 @@ export class AdminNewScenarioComponent {
         subject: 'premier mail',
         content: 'contenu',
         modified: false,
-        name: this._newScenarioName
+        nameWorkflow: this._newScenarioName
       },
       {
         step: "SECOND",
@@ -70,7 +70,7 @@ export class AdminNewScenarioComponent {
         subject: 'deuxième mail',
         content: 'contenu',
         modified: false,
-        name: this._newScenarioName
+        nameWorkflow: this._newScenarioName
 
       },
       {
@@ -80,7 +80,7 @@ export class AdminNewScenarioComponent {
         subject: 'dernier mail',
         content: 'contenu',
         modified: false,
-        name: this._newScenarioName
+        nameWorkflow: this._newScenarioName
       },
       {
         step: "THANKS",
@@ -89,7 +89,7 @@ export class AdminNewScenarioComponent {
         subject: 'merci',
         content: 'contenu',
         modified: false,
-        name: this._newScenarioName
+        nameWorkflow: this._newScenarioName
       }
     ];
     this._templatesService.create({name: this._newScenarioName, emails: emails}).first().subscribe(newScenario => {

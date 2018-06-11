@@ -1,0 +1,54 @@
+<!-- ABTESTING
+ 1 - switch => disabled si pas 2 scenario modfied dispo -> Active permet la saisie
+ 2 - Select A / Select B
+ 3 - Size A / Size B
+ 4 - Submit disabled si pas de champs correct
+
+ ça serait cool de pouvoir affficher le nombre de pros contactable
+
+ -->
+
+<div >
+  <label class="form-switch" style="" [disabled]="!(modifiedScenarios.length)">
+    <input type="checkbox" (change)="this.switchActivated = !this.switchActivated">
+    <i class="form-icon"></i>
+  </label>
+
+
+
+  <form class="form-horizontal" [form-group]="form" [disabled]="!this.switchActivated" >
+    <div class="form-group">
+      <select class = "form-select"
+              [(ngModel)] = "this.nameWorkflowA"
+              id = "workflowA"
+              name = "quelquechoseA">
+        <option *ngFor = "let scenario of modifiedScenarios"
+                [ngValue] = "scenario.name">
+          {{scenario.name}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <select class = "form-select"
+              [(ngModel)] = "this.nameWorkflowB"
+              id = "workflowB"
+              name = "quelquechoseB">
+        <option *ngFor = "let scenario of modifiedScenarios"
+                [ngValue] = "scenario.name">
+          {{scenario.name}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="number" id="sizeA" [(ngModel)]="this.sizeA"/>
+    </div>
+    <div class="form-group">
+      <input type="number" id="sizeB"  [(ngModel)] = "this.sizeB"/>
+    </div>
+    <!-- On click => envoi de données -->
+    <button type="submit" class="btn btn-primary" [disabled]="!form.valid">
+      Submit
+    </button>
+  </form>
+</div>
+
