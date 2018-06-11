@@ -10,6 +10,6 @@ export interface InnovCard {
   readonly summary?: string;
   problem?: string;
   solution?: string;
-  readonly advantages?: Array<{text: string}>;
+  advantages?: Array<{text: string}>;
   readonly principal?: boolean;
 }

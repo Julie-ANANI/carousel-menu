@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
@@ -28,7 +27,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Output() cardsChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
 
-  public innovationData: FormGroup; // Overall innovation
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
   private _primaryLanguage: string;
@@ -48,18 +46,14 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private domSanitizer1: DomSanitizer,
               private translateService: TranslateService,
-              private formBuilder: FormBuilder,
               private translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit() {
-    this._buildForm();
 
     this.changesSaved = true;
 
     console.log(this.project);
-
-    this.innovationData.patchValue(this.project);
 
     this._primaryLanguage = this.project.innovationCards[0].lang;
 
@@ -69,32 +63,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this._displayDeleteButton = true;
     }
 
-    if (!this.canEdit) {
-      this.innovationData.disable();
-    }
-
-    for (const innovationCard of this.project.innovationCards) {
-      this._addInnovationCardWithData(innovationCard);
-    }
-
-    this.innovationData.valueChanges
-      .distinctUntilChanged()
-      .takeUntil(this.ngUnsubscribe)
-      .subscribe(_ => {
-        this.updateCards();
-      });
-
   }
 
-  private _buildForm(): void {
-    this.innovationData = this.formBuilder.group({
-      patented: [undefined, Validators.required],
-      projectStatus: [undefined, Validators.required],
-      external_diffusion: [false, [Validators.required]],
-      innovationCards: this.formBuilder.array([])
-    });
-  }
-
+  /*
   formProgress(event: Event, value: string) {
 
     if (event.target['type'] === 'radio') {
@@ -130,15 +101,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     }
 
   }
-
-  updateCards() {
-    this.cardsChange.emit(this.innovationData.value);
-  }
-
-  private _addInnovationCardWithData(innovationCardData: InnovCard): void {
-    const innovationCards = this.innovationData.controls['innovationCards'] as FormArray;
-    innovationCards.push(this._newInnovationCardFormBuilderGroup(innovationCardData));
-  }
+  */
 
   /**
    * This configuration tells the directive what text to use for the placeholder and if it exists,
@@ -150,7 +113,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     const _inputConfig = {
       'advantages': {
         placeholder: 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.INPUT',
-        initialData: this.innovationData.get('innovationCards').value[this.innovationCardEditingIndex]['advantages']
+        initialData: this.project.innovationCards[this.innovationCardEditingIndex]['advantages']
       }
     };
     return _inputConfig[type] || {
@@ -159,19 +122,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       };
   }
 
-  private _newInnovationCardFormBuilderGroup (data: InnovCard): any {
-    return this.formBuilder.group({
-      _id: [{value: data._id , disabled: !this.canEdit}, Validators.required],
-      title: [{value: data.title, disabled: !this.canEdit}, Validators.required],
-      summary: [{value: data.summary, disabled: !this.canEdit}, Validators.required],
-      problem: [{value: data.problem, disabled: !this.canEdit}, Validators.required],
-      solution: [{value: data.solution, disabled: !this.canEdit}, Validators.required],
-      advantages: [{value: data.advantages, disabled: !this.canEdit}],
-      lang: [{value: data.lang, disabled: !this.canEdit}, Validators.required],
-      principal: [{value: data.principal, disabled: !this.canEdit}, Validators.required],
-      media: [{value: data.media, disabled: !this.canEdit}, Validators.required]
-    });
-  }
 
   createInnovationCard(event: Event, lang: string): void {
     event.preventDefault();
@@ -199,34 +149,26 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * @param event the resulting value sent from the components directive
    * @param cardIdx this is the index of the innovation card being edited.
    */
-  addAdvantageToInventionCard (event: {value: Array<string>}, cardIdx: number): void {
-    const card = this.innovationData.get('innovationCards').value[cardIdx] as FormGroup;
-    card['advantages'] = event.value;
-    this.updateCards();
+  addAdvantageToInventionCard (event: {value: Array<{text: string}>}, cardIdx: number): void {
+    this.project.innovationCards[cardIdx].advantages = event.value;
     this.changesSaved = false;
     this.saveChanges.emit(true);
   }
 
   setAsPrincipal (innovationCardId: string): void {
-    this.innovationData.get('innovationCards').value.forEach((innovCard: any, index: number) => {
-      this.innovationData.get('innovationCards').get([index]).get('principal')
-        .patchValue(innovCard._id === innovationCardId);
+    this.project.innovationCards.forEach((innovCard: any, index: number) => {
+      innovCard.principal = (innovCard._id === innovationCardId);
     });
-    this.updateCards();
   }
 
   imageUploaded(media: Media, cardIdx: number): void {
-    const card = this.innovationData.get('innovationCards').value[cardIdx] as FormGroup;
-    card['media'].push(media);
-    this.updateCards();
+    this.project.innovationCards[cardIdx].media.push(media);
     // this.projectChange.emit(this.project);
     if (this.innovationCardEditingIndex === 0) {
       if (this.project.principalMedia === null || this.project.principalMedia === undefined) {
-       this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id, this.project.innovationCards[0]._id, card['media'][0]._id).first().subscribe((res) => {
+       this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id, this.project.innovationCards[0]._id, media._id).first().subscribe((res) => {
          this.project = res;
          this.projectChange.emit(this.project);
-         this.innovationData.patchValue(this.project);
-         this.updateCards();
          this.saveChanges.emit(true);
        });
       }
@@ -257,8 +199,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         this.project = res;
         this.projectChange.emit(this.project);
         console.log(res);
-        this.updateCards();
-        this.innovationData.patchValue(this.project);
         this.saveChanges.emit(true);
       });
 
@@ -276,7 +216,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       .first().subscribe((res: Innovation) => {
         this.project = res;
         this.projectChange.emit(this.project);
-        this.innovationData.patchValue(this.project);
       });
 
   }
