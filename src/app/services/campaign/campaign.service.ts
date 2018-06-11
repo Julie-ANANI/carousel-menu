@@ -83,6 +83,16 @@ export class CampaignService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public startABtesting(campaignId: string,
+                        nameA: string,
+                        nameB: string,
+                        sizeA: number,
+                        sizeB: number): Observable<any> {
+    return this._http.post(`/campaign/${campaignId}/startAB`, { nameA, nameB, sizeA, sizeB })
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public freezeStatus(batch: any): Observable<any> {
     return this._http.get( `/batch/${batch._id}/freezeStatus`)
       .map((res: Response) => res.json())

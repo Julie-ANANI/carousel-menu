@@ -9,19 +9,23 @@
  -->
 
 <div >
-  <label class="form-switch" style="" [disabled]="!(modifiedScenarios.length)">
-    <input type="checkbox" (change)="this.switchActivated = !this.switchActivated">
+  <label class="form-switch" style="">
+    <input type="checkbox" [disabled]="!(modifiedScenarios.length)" (click)="statusSwitch()" >
     <i class="form-icon"></i>
   </label>
 
 
 
-  <form class="form-horizontal" [form-group]="form" [disabled]="!this.switchActivated" >
+  <form class="form-horizontal" [formGroup]="form" >
+
+
     <div class="form-group">
       <select class = "form-select"
-              [(ngModel)] = "this.nameWorkflowA"
+              [(ngModel)] = "nameWorkflowA"
               id = "workflowA"
-              name = "quelquechoseA">
+              name = "quelquechoseA"
+              formControlName="workflowA"
+              >
         <option *ngFor = "let scenario of modifiedScenarios"
                 [ngValue] = "scenario.name">
           {{scenario.name}}
@@ -30,9 +34,11 @@
     </div>
     <div class="form-group">
       <select class = "form-select"
-              [(ngModel)] = "this.nameWorkflowB"
+              [(ngModel)] = "nameWorkflowB"
               id = "workflowB"
-              name = "quelquechoseB">
+              name = "quelquechoseB"
+              formControlName="workflowB"
+              >
         <option *ngFor = "let scenario of modifiedScenarios"
                 [ngValue] = "scenario.name">
           {{scenario.name}}
@@ -40,15 +46,17 @@
       </select>
     </div>
     <div class="form-group">
-      <input type="number" id="sizeA" [(ngModel)]="this.sizeA"/>
+      <input type="number" id="sizeA" [(ngModel)]="sizeA" formControlName="sizeA" />
     </div>
     <div class="form-group">
-      <input type="number" id="sizeB"  [(ngModel)] = "this.sizeB"/>
+      <input type="number" id="sizeB"  [(ngModel)] = "sizeB" formControlName="sizeB" />
     </div>
     <!-- On click => envoi de données -->
-    <button type="submit" class="btn btn-primary" [disabled]="!form.valid">
+    <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="startABtesting()">
       Submit
     </button>
+
+
   </form>
 </div>
 

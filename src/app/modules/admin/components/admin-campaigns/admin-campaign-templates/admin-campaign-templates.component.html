@@ -2,7 +2,7 @@
   <h2>Templates de mails</h2>
   <button class="btn btn-primary" (click)="importModal = true">Importer un template de la bibliothèque</button>
   <div>
-    <app-admin-campaign-abtesting [_modifiedScenarios]="modifiedScenarios"></app-admin-campaign-abtesting>
+    <app-admin-campaign-abtesting [modifiedScenarios]="modifiedScenarios" [campaign]="campaign"></app-admin-campaign-abtesting>
   </div>
   <div>
     <h2>Campagne : {{campaign.title}}</h2>
