@@ -31,8 +31,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   private _primaryLanguage: string;
   private _primaryLength: number;
   private _displayDeleteButton = false;
-  private _inputPreValue = '';
-  private _inputCurrValue = '';
   private _showDeleteModal = false;
   private _deleteInnovId = '';
   private _langDelete = '';
@@ -64,43 +62,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   }
 
-  /*
-  formProgress(event: Event, value: string) {
-
-    if (event.target['type'] === 'radio') {
-      if (event.target['name'] === 'projectStatus') {
-        this._inputPreValue = this.innovationData.get('projectStatus').value;
-      } else if (event.target['name'] === 'patented') {
-        this._inputPreValue = this.innovationData.get('patented').value;
-      } else {
-        this._inputPreValue = this.innovationData.get('external_diffusion').value;
-      }
-
-      this._inputCurrValue = value;
-
-      if (this._inputPreValue !== this._inputCurrValue) {
-        this.changesSaved = true;
-        this.saveChanges.emit(true);
-      }
-
-    } else {
-
-      if (event.type === 'click') {
-        this._inputPreValue = value;
-      } else if (event.type === 'blur') {
-        this._inputCurrValue = value;
-
-        if (this._inputPreValue !== this._inputCurrValue) {
-          this.changesSaved = false;
-          this.saveChanges.emit(true);
-        }
-
-      }
-
-    }
-
+  notifyModelChanges(_event: any) {
+    this.changesSaved = false;
+    this.saveChanges.emit(true);
   }
-  */
 
   /**
    * This configuration tells the directive what text to use for the placeholder and if it exists,
@@ -130,10 +95,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
           this.innovationService.createInnovationCard(this.project._id, {
             lang: lang
-          }).first()
-            .subscribe((data: InnovCard) => {
-              window.location.reload();
-            });
+          }).first().subscribe((_data: InnovCard) => {});
         }
       } else {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
@@ -150,8 +112,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    */
   addAdvantageToInventionCard (event: {value: Array<{text: string}>}, cardIdx: number): void {
     this.project.innovationCards[cardIdx].advantages = event.value;
-    this.changesSaved = false;
-    this.saveChanges.emit(true);
+    this.notifyModelChanges(event.value);
   }
 
   setAsPrincipal (innovationCardId: string): void {
@@ -266,14 +227,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     return this._primaryLanguage;
   }
 
-  get inputPreValue(): string {
-    return this._inputPreValue;
-  }
-
-  get inputCurrValue(): string {
-    return this._inputCurrValue;
-  }
-
   get primaryLength(): number {
     return this._primaryLength;
   }
@@ -284,10 +237,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   get showDeleteModal(): boolean {
     return this._showDeleteModal;
-  }
-
-  get deleteInnovId(): string {
-    return this._deleteInnovId;
   }
 
   get langDelete(): string {

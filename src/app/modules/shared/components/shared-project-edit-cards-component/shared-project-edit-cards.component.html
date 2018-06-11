@@ -105,8 +105,7 @@
                     name="title"
                     [(ngModel)]="project.innovationCards[i].title"
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
-                    (click)="formProgress($event, innovationItem.title)"
-                    (blur)="formProgress($event, innovationItem.title)">
+                    (ngModelChange)="notifyModelChanges($event)">
                   <!-- <div class="form-error" *ngIf="innovationItem.title.touched && innovationItem.get('title').invalid">
                     <span *ngIf="innovationItem.get('title').hasError('required')">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.ERROR' | translate }}
@@ -128,8 +127,7 @@
                     class="form-input-default"
                     name="summary"
                     [(ngModel)]="project.innovationCards[i].summary"
-                    (click)="formProgress($event, innovationItem.summary)"
-                    (blur)="formProgress($event, innovationItem.summary)">
+                    (ngModelChange)="notifyModelChanges($event)">
                   </textarea>
                   <!-- <div class="form-error" *ngIf="innovationItem.get('summary').touched && innovationItem.get('summary').invalid">
                     <span *ngIf="innovationItem.get('summary').hasError('required')">
@@ -153,8 +151,7 @@
                     class="form-input-default"
                     name="problem"
                     [(ngModel)]="project.innovationCards[i].problem"
-                    (click)="formProgress($event, innovationItem.problem)"
-                    (blur)="formProgress($event, innovationItem.problem)">
+                    (ngModelChange)="notifyModelChanges($event)">
                   </textarea>
                   <!-- <div class="form-error" *ngIf="innovationItem.get('problem').touched && innovationItem.get('problem').invalid">
                     <span *ngIf="innovationItem.get('problem').hasError('required')">
@@ -178,8 +175,7 @@
                     class="form-input-default"
                     name="solution"
                     [(ngModel)]="project.innovationCards[i].solution"
-                    (click)="formProgress($event, innovationItem.solution)"
-                    (blur)="formProgress($event, innovationItem.solution)">
+                    (ngModelChange)="notifyModelChanges($event)">
                   </textarea>
                   <!-- <div class="form-error" *ngIf="innovationItem.get('solution').touched && innovationItem.get('solution').invalid">
                     <span *ngIf="innovationItem.get('solution').hasError('required')">
