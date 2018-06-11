@@ -3,6 +3,9 @@ FROM node:6.10.2
 #ARG APP_NAME
 #ARG ENV_NAME
 
+RUN echo ${APP_NAME}
+RUN echo "${ENV_NAME}"
+
 RUN : "${APP_NAME:?The name of the application needs to be set and non-empty.}"
 RUN : "${ENV_NAME:?The environment name needs to be set and non-empty.}"
 
