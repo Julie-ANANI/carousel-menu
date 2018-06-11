@@ -24,7 +24,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Input() changesSaved: boolean;
 
   @Output() projectChange = new EventEmitter<any>();
-  @Output() cardsChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
 
   private ngUnsubscribe: Subject<any> = new Subject();
