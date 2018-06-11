@@ -7,56 +7,69 @@
  ça serait cool de pouvoir affficher le nombre de pros contactable
 
  -->
-
-<div >
-  <label class="form-switch" style="">
-    <input type="checkbox" [disabled]="!(modifiedScenarios.length)" (click)="statusSwitch()" >
-    <i class="form-icon"></i>
-  </label>
+<div [ngSwitch]="campaign.settings.ABsettings.status">
 
 
 
-  <form class="form-horizontal" [formGroup]="form" >
+  <div *ngSwitchCase="0">
+    <label class="form-switch" style="">
+      <input type="checkbox" [disabled]="!(modifiedScenarios.length)" (click)="statusSwitch()" >
+      <i class="form-icon"></i>
+    </label>
 
 
-    <div class="form-group">
-      <select class = "form-select"
-              [(ngModel)] = "nameWorkflowA"
-              id = "workflowA"
-              name = "quelquechoseA"
-              formControlName="workflowA"
-              >
-        <option *ngFor = "let scenario of modifiedScenarios"
-                [ngValue] = "scenario.name">
-          {{scenario.name}}
-        </option>
-      </select>
-    </div>
-    <div class="form-group">
-      <select class = "form-select"
-              [(ngModel)] = "nameWorkflowB"
-              id = "workflowB"
-              name = "quelquechoseB"
-              formControlName="workflowB"
-              >
-        <option *ngFor = "let scenario of modifiedScenarios"
-                [ngValue] = "scenario.name">
-          {{scenario.name}}
-        </option>
-      </select>
-    </div>
-    <div class="form-group">
-      <input type="number" id="sizeA" [(ngModel)]="sizeA" formControlName="sizeA" />
-    </div>
-    <div class="form-group">
-      <input type="number" id="sizeB"  [(ngModel)] = "sizeB" formControlName="sizeB" />
-    </div>
-    <!-- On click => envoi de données -->
-    <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="startABtesting()">
-      Submit
-    </button>
+
+    <form class="form-horizontal" [formGroup]="form" >
 
 
-  </form>
+      <div class="form-group">
+        <select class = "form-select"
+                [(ngModel)] = "nameWorkflowA"
+                id = "workflowA"
+                name = "quelquechoseA"
+                formControlName="workflowA"
+                >
+          <option *ngFor = "let scenario of modifiedScenarios"
+                  [ngValue] = "scenario.name">
+            {{scenario.name}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select class = "form-select"
+                [(ngModel)] = "nameWorkflowB"
+                id = "workflowB"
+                name = "quelquechoseB"
+                formControlName="workflowB"
+                >
+          <option *ngFor = "let scenario of modifiedScenarios"
+                  [ngValue] = "scenario.name">
+            {{scenario.name}}
+          </option>
+        </select>
+      </div>
+      Nombre de pros max : {{campaign.stats.nbPros90}}
+      <div class="form-group">
+        <input type="number" id="sizeA" [(ngModel)]="sizeA" formControlName="sizeA" />
+      </div>
+      <div class="form-group">
+        <input type="number" id="sizeB"  [(ngModel)] = "sizeB" formControlName="sizeB" />
+      </div>
+      <!-- On click => envoi de données -->
+      <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="startABtesting()">
+        Submit
+      </button>
+
+
+    </form>
+  </div>
+
+
+  <!-- Affichage des stats + valider + nom des workflows -->
+  <div *ngSwitchCase="1">
+    1 - Stats + button valider
+  </div>
+  <div *ngSwitchCase="2">
+    2 - Stats
+  </div>
 </div>
-

@@ -36,10 +36,16 @@ export class AdminCampaignAbtestingComponent implements OnInit {
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
+    if (this._campaign.settings.ABsettings.nameWorkflowA) {
+      this._nameWorkflowA = this._campaign.settings.ABsettings.nameWorkflowA;
+    }
+    if ( this._campaign.settings.ABsettings.nameWorkflowB ) {
+      this._nameWorkflowA = this._campaign.settings.ABsettings.nameWorkflowB;
+    }
     this.form = this.formBuilder.group({
       workflowA: ['', [Validators.required]],
       workflowB: ['', [Validators.required]],
-      sizeA: ['', [Validators.required]], //TODO : sizeMax/MIn => nombre de pro qui est possible de batché
+      sizeA: ['', [Validators.required]], // TODO : sizeMax/MIn => nombre de pro qui est possible de batché
       sizeB: ['', [Validators.required]]
     });
     if (this.switchActivated) {
