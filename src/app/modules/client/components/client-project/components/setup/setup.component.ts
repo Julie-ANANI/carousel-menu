@@ -41,15 +41,18 @@ export class SetupProjectComponent implements OnInit {
   }
 
   updateInnovation(value: Innovation): void {
+    console.log('update');
     this.project = value;
+    console.log(this.project);
   }
 
   saveProject(event: Event): void {
     event.preventDefault();
 
      if (this._saveChanges) {
-        this.innovationService.save(this.project._id, this.project)
-          .first()
+       console.log('save');
+       console.log(this.project);
+        this.innovationService.save(this.project._id, this.project).first()
           .subscribe(data => {
             this.project = data;
             this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
@@ -102,7 +105,6 @@ export class SetupProjectComponent implements OnInit {
     if (this._saveChanges) {
       this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     } else {
-      console.log(this.project);
       this._currentTab = value;
     }
 

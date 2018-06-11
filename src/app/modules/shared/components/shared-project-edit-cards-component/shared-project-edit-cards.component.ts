@@ -218,7 +218,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   imageUploaded(media: Media, cardIdx: number): void {
     const card = this.innovationData.get('innovationCards').value[cardIdx] as FormGroup;
     card['media'].push(media);
-    // this.updateCards();
+    this.updateCards();
     // this.projectChange.emit(this.project);
     if (this.innovationCardEditingIndex === 0) {
       if (this.project.principalMedia === null || this.project.principalMedia === undefined) {
@@ -256,6 +256,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
         this.project = res;
         this.projectChange.emit(this.project);
+        console.log(res);
+        this.updateCards();
         this.innovationData.patchValue(this.project);
         this.saveChanges.emit(true);
       });
