@@ -2,8 +2,8 @@
   <div class="columns">
     <div class="column col-xs-12 col-12 col-mx-auto">
 
-      <form novalidate [formGroup]="innovationData">
-        <div formArrayName="innovationCards">
+      <form novalidate>
+        <div>
 
         <!-- Describe -->
           <div class="describe-container">
@@ -15,9 +15,9 @@
             <div class="lang-container">
               <ul>
                 <li
-                  *ngFor="let innovationCard of innovationData.get('innovationCards').value; let i = index"
+                  *ngFor="let innovationCard of project.innovationCards; let i = index"
                   [ngClass]="{'active': innovationCardEditingIndex === i }"
-                  (click)="(innovationCardEditingIndex = i) && $event.preventDefault(); setAsPrincipal(innovationCard._id)">
+                  (click)="(innovationCardEditingIndex = i) && $event.preventDefault()">
                   <div class="circle"><i class="fas fa-check"></i></div>
                   <span>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
                 </li>
@@ -39,7 +39,7 @@
           </div>
 
           <div class="text-center" [ngStyle]="{ 'margin-top': '25px' }">
-            <div *ngFor="let innovationCard of innovationData.get('innovationCards').value; let i = index" [ngStyle]="{ 'display': 'inline-block' }">
+            <div *ngFor="let innovationCard of project.innovationCards; let i = index" [ngStyle]="{ 'display': 'inline-block' }">
               <div *ngIf="innovationCardEditingIndex === i" class="lang-action">
                 <span class="text-link preview-link">{{ 'COMMON.PREVIEW' | translate }}</span>&nbsp;
                 <span [ngStyle]="{'display': displayDeleteButton ? 'inline-block' : 'none' }">
@@ -88,7 +88,7 @@
             </div>
         -->
 
-          <div *ngFor="let innovationItem of innovationData.get('innovationCards').controls; let i = index" [formGroup]="innovationItem">
+          <div *ngFor="let innovationItem of project.innovationCards; let i = index">
             <div *ngIf="innovationCardEditingIndex === i">
 
               <!-- Title -->
@@ -102,16 +102,16 @@
                     type="text"
                     id="innovation-title"
                     class="form-input-default"
-                    name="name"
-                    formControlName="title"
+                    name="title"
+                    [(ngModel)]="project.innovationCards[i].title"
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
-                    (click)="formProgress($event, innovationItem.get('title').value)"
-                    (blur)="formProgress($event, innovationItem.get('title').value)">
-                  <div class="form-error" *ngIf="innovationItem.get('title').touched && innovationItem.get('title').invalid">
+                    (click)="formProgress($event, innovationItem.title)"
+                    (blur)="formProgress($event, innovationItem.title)">
+                  <!-- <div class="form-error" *ngIf="innovationItem.title.touched && innovationItem.get('title').invalid">
                     <span *ngIf="innovationItem.get('title').hasError('required')">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.ERROR' | translate }}
                     </span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
@@ -126,15 +126,16 @@
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
                     rows="4"
                     class="form-input-default"
-                    formControlName="summary"
-                    (click)="formProgress($event, innovationItem.get('summary').value)"
-                    (blur)="formProgress($event, innovationItem.get('summary').value)">
+                    name="summary"
+                    [(ngModel)]="project.innovationCards[i].summary"
+                    (click)="formProgress($event, innovationItem.summary)"
+                    (blur)="formProgress($event, innovationItem.summary)">
                   </textarea>
-                  <div class="form-error" *ngIf="innovationItem.get('summary').touched && innovationItem.get('summary').invalid">
+                  <!-- <div class="form-error" *ngIf="innovationItem.get('summary').touched && innovationItem.get('summary').invalid">
                     <span *ngIf="innovationItem.get('summary').hasError('required')">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.ERROR' | translate }}
                     </span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
@@ -150,15 +151,16 @@
                     rows="8"
                     id="innovation-problem"
                     class="form-input-default"
-                    formControlName="problem"
-                    (click)="formProgress($event, innovationItem.get('problem').value)"
-                    (blur)="formProgress($event, innovationItem.get('problem').value)">
+                    name="problem"
+                    [(ngModel)]="project.innovationCards[i].problem"
+                    (click)="formProgress($event, innovationItem.problem)"
+                    (blur)="formProgress($event, innovationItem.problem)">
                   </textarea>
-                  <div class="form-error" *ngIf="innovationItem.get('problem').touched && innovationItem.get('problem').invalid">
+                  <!-- <div class="form-error" *ngIf="innovationItem.get('problem').touched && innovationItem.get('problem').invalid">
                     <span *ngIf="innovationItem.get('problem').hasError('required')">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.ERROR' | translate }}
                     </span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
@@ -174,15 +176,16 @@
                     rows="8"
                     id="innovation-solution"
                     class="form-input-default"
-                    formControlName="solution"
-                    (click)="formProgress($event, innovationItem.get('solution').value)"
-                    (blur)="formProgress($event, innovationItem.get('solution').value)">
+                    name="solution"
+                    [(ngModel)]="project.innovationCards[i].solution"
+                    (click)="formProgress($event, innovationItem.solution)"
+                    (blur)="formProgress($event, innovationItem.solution)">
                   </textarea>
-                  <div class="form-error" *ngIf="innovationItem.get('solution').touched && innovationItem.get('solution').invalid">
+                  <!-- <div class="form-error" *ngIf="innovationItem.get('solution').touched && innovationItem.get('solution').invalid">
                     <span *ngIf="innovationItem.get('solution').hasError('required')">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.ERROR' | translate }}
                     </span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
@@ -215,7 +218,7 @@
               <input
                 type="radio"
                 name="projectStatus"
-                formControlName="projectStatus"
+                [(ngModel)]="project.projectStatus"
                 [value]="0"
                 (click)="formProgress($event, 0)">
               <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.0' | translate }}
@@ -224,7 +227,7 @@
               <input
                 type="radio"
                 name="projectStatus"
-                formControlName="projectStatus"
+                [(ngModel)]="project.projectStatus"
                 [value]="1"
                 (click)="formProgress($event, 1)">
               <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.1' | translate }}
@@ -233,7 +236,7 @@
               <input
                 type="radio"
                 name="projectStatus"
-                formControlName="projectStatus"
+                [(ngModel)]="project.projectStatus"
                 [value]="2"
                 (click)="formProgress($event, 2)">
               <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.2' | translate }}
@@ -252,7 +255,7 @@
               <input
                 type="radio"
                 name="patented"
-                formControlName="patented"
+                [(ngModel)]="project.patented"
                 [value]="false"
                 (click)="formProgress($event, false)">
               <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
@@ -261,7 +264,7 @@
               <input
                 type="radio"
                 name="patented"
-                formControlName="patented"
+                [(ngModel)]="project.patented"
                 [value]="true"
                 (click)="formProgress($event, true)">
               <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
@@ -285,7 +288,7 @@
               <input
                 type="radio"
                 name="external_diffusion"
-                formControlName="external_diffusion"
+                [(ngModel)]="project.external_diffusion"
                 [value]="false"
                 (click)="formProgress($event, false)">
               <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
@@ -294,7 +297,7 @@
               <input
                 type="radio"
                 name="external_diffusion"
-                formControlName="external_diffusion"
+                [(ngModel)]="project.external_diffusion"
                 [value]="true"
                 (click)="formProgress($event, true)">
               <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
@@ -302,8 +305,8 @@
           </div>
         </div>
 
-        <div formArrayName="innovationCards">
-          <div *ngFor="let innovationItem of innovationData.get('innovationCards').controls; let i = index" [formGroup]="innovationItem">
+        <div>
+          <div *ngFor="let innovationItem of project.innovationCards; let i = index">
             <div *ngIf="innovationCardEditingIndex === i">
 
               <div class="project-data">
@@ -317,7 +320,7 @@
                       <!-- Main media -->
                       <div class="column col-md-12 col-lg-4 col-3 col-mr-auto">
 
-                        <div *ngIf="project.principalMedia !== null && project.principalMedia !== undefined">
+                        <div *ngIf="project.principalMedia">
 
                           <span class="para">Main media</span>
                           <div class="tooltips"><i class="far fa-question-circle"></i>
@@ -343,11 +346,11 @@
                       </div>
 
                       <!-- Secondary medias -->
-                      <div *ngIf="innovationItem.get('media').value?.length > 0" class="column col-md-12 col-lg-8 col-9 col-mx-auto">
+                      <div *ngIf="innovationItem.media?.length > 0" class="column col-md-12 col-lg-8 col-9 col-mx-auto">
 
                         <p class="para">Secondary medias</p>
 
-                        <div *ngFor="let media of innovationItem.get('media').value" class="media-content">
+                        <div *ngFor="let media of innovationItem.media" class="media-content">
 
                           <img
                             *ngIf="media.type === 'PHOTO'"
@@ -381,7 +384,7 @@
                     <div class="image-upload-container">
                       <app-shared-upload-zone-photo
                         *ngIf="canEdit"
-                        [uri]="'/innovation/'+project._id+'/innovationCard/'+innovationItem.get('_id').value+'/media/image'"
+                        [uri]="'/innovation/'+project._id+'/innovationCard/'+innovationItem._id+'/media/image'"
                         (cbFn)="imageUploaded($event, i)">
                       </app-shared-upload-zone-photo>
                     </div>
