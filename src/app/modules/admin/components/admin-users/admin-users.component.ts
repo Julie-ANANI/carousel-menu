@@ -38,10 +38,11 @@ export class AdminUsersComponent implements OnInit {
   getTableInfos(): Table
   {
     return {
+      _title: 'COMMON.USERS',
       _content: this._users,
       _total: this._total,
-      _columns: ['company', 'jobTitle', 'created', 'domain', 'firstName', 'lastName'],
-      _columnsNames: ['COMPANY', 'JOB', 'CREATED', 'DOMAIN', 'PRENOM', 'NOM']
+      _columns: ['firstName', 'lastName', 'jobTitle', 'companyName'],
+      _columnsNames: ['FIRSTNAME', 'LASTNAME', 'JOB', 'COMPANY']
     };
   }
 
