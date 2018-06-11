@@ -1,17 +1,20 @@
-<table wt-responsive-table>
+<h1>{{total}} {{ title | translate }}</h1>
+
+<table class="table" wt-responsive-table>
   <thead>
-  <tr>
-    <th width="50"></th>
-    <th *ngFor="let column of getColumnsNames()">{{column | translate }}</th>
-  </tr>
+    <tr>
+      <th width="50"><input type="checkbox" (change)="selectAll($event)"/></th>
+      <th *ngFor="let column of columnsNames">{{column | translate }}</th>
+    </tr>
   </thead>
   <tbody>
-
-  <tr *ngFor="let key of getFieldsKeys()">
-      <td width="50"></td>
-      <td *ngFor="let columnKey of getColumns()">
-          <span>{{getContentValue(key, columnKey)}}</span>
-      </td>
-  </tr>
+    <tr *ngFor="let key of getRowsKeys()" [ngClass]="{'active': isSelected(content[key])}">
+      <ng-container>
+        <td width="50"><input type="checkbox" (change)="selectRow(key)" [checked]="isSelected(content[key])"/></td>
+        <td *ngFor="let columnKey of columns">
+            <span>{{getContentValue(key, columnKey)}}</span>
+        </td>
+      </ng-container>
+    </tr>
   </tbody>
 </table>

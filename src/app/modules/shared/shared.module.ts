@@ -33,6 +33,7 @@ import { SharedProsListComponent } from './components/shared-pros-list/shared-pr
 import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
+import { SharedTableComponent } from './components/shared-table/components/shared-table.component';
 import { SharedEditEmail } from './components/shared-edit-email/shared-edit-email.component';
 import { SharedEditEmailsStep } from './components/shared-edit-emails-step/shared-edit-emails-step.component';
 import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
@@ -53,7 +54,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
 // Internal Modules
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
-import { TableModule } from './components/shared-table/table.module';
+// import { TableModule } from './components/shared-table/table.module';
 
 @NgModule({
   imports: [
@@ -98,6 +99,7 @@ import { TableModule } from './components/shared-table/table.module';
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
     SharedMarketReportExampleComponent,
+    SharedTableComponent,
     SharedEditEmail,
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
@@ -115,7 +117,7 @@ import { TableModule } from './components/shared-table/table.module';
     Ng2FileDropModule,
     Ng2PageScrollModule,
     SidebarModule,
-    TableModule,
+    // TableModule,
 
     // Directives
     CountryFlagComponent,
@@ -143,6 +145,7 @@ import { TableModule } from './components/shared-table/table.module';
     SharedProsListComponent,
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
+    SharedTableComponent,
     SharedEditEmail,
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
