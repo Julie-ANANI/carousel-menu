@@ -9,9 +9,11 @@ import { EmailScenario } from '../../../../../models/email-scenario';
 })
 export class AdminCampaignAbtestingComponent implements OnInit {
 
-  @Input() private _modifiedScenarios: Array<EmailScenario> ;
+  @Input() set modifiedScenarios(arg: Array<EmailScenario>) {
+    this._modifiedScenarios = arg;
+}
 
-
+  private _modifiedScenarios: Array<EmailScenario> ;
   private _nameWorkflowA: String = '';
   private _nameWorkflowB: String = '';
   private _sizeA: Number;
