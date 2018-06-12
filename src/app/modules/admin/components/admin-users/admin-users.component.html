@@ -10,5 +10,5 @@
       </div>
       -->
 
-      <app-shared-table [data]="getTableInfos()" [config]="config" (configChange)="loadUsers($event)"></app-shared-table>
+      <app-shared-table [data]="getTableInfos()" [config]="config" (configChange)="loadUsers($event)" (editRow)="editUser($event)"></app-shared-table>
 </div>
