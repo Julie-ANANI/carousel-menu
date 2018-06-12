@@ -4,6 +4,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
 import { Table } from '../../../shared/components/shared-table/interfaces/table';
+import {Types} from '../../../shared/components/shared-table/interfaces/types';
 
 @Component({
   selector: 'app-admin-users',
@@ -42,7 +43,8 @@ export class AdminUsersComponent implements OnInit {
       _content: this._users,
       _total: this._total,
       _columns: ['firstName', 'lastName', 'jobTitle', 'companyName'],
-      _columnsNames: ['FIRSTNAME', 'LASTNAME', 'JOB', 'COMPANY']
+      _columnsNames: ['FIRSTNAME', 'LASTNAME', 'JOB', 'COMPANY'],
+      _types: [Types.TEXT, Types.TEXT, Types.TEXT, Types.TEXT],
     };
   }
 

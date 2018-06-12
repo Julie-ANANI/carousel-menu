@@ -12,7 +12,27 @@
       <ng-container>
         <td width="50"><input type="checkbox" #s [checked]="isSelected(content[key])"/></td>
         <td *ngFor="let columnKey of columns">
-            <span>{{getContentValue(key, columnKey)}}</span>
+          <ng-container [ngSwitch]="getType(columns.indexOf(columnKey))">
+
+            <!-- Si le type de la colonne est TEXT -->
+            <span *ngSwitchDefault>{{getContentValue(key, columnKey)}}</span>
+
+            <!-- Si le type de la colonne est COUNTRY -->
+            <country-flag *ngSwitchCase="'COUNTRY'" [country]="getContentValue(key, columnKey)"></country-flag>
+
+            <!-- Si le type de la colonne est PICTURE -->
+            <div class="picture" *ngSwitchCase="'PICTURE'">
+                <img [src]="getContentValue(key, columnKey)" class="img-fit-cover">
+            </div>
+
+            <!-- Si le type de la colonne est PROGRESS -->
+            <progress class="progress tooltip"
+                      *ngSwitchCase="'PROGRESS'"
+                      [attr.data-tooltip]="getContentValue(key, columnKey) + '%'"
+                      [value]="getContentValue(key, columnKey)" max="100">
+            </progress>
+
+          </ng-container>
         </td>
       </ng-container>
     </tr>
