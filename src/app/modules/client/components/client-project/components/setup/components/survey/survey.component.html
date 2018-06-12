@@ -1,6 +1,15 @@
-<div class="survey">
+<div class="section-container" id="projectSurvey">
 
-  <p *ngIf="!project.quizId">{{'PROJECT_MODULE.SETUP.SURVEY.NOQUIZ' | translate}}</p>
+  <div *ngIf="!project.quizId">
+    <div class="bot-wrapper text-center">
+      <span class="bot-text">{{'PROJECT_MODULE.SETUP.SURVEY.NOQUIZ' | translate}}</span>
+      <br>
+      <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+      <div>
+        <img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot">
+      </div>
+    </div>
+  </div>
 
   <ng-container *ngIf="project.quizId">
     <p>{{'PROJECT_MODULE.SETUP.SURVEY.DONTSHAREQUIZ' | translate}}</p>

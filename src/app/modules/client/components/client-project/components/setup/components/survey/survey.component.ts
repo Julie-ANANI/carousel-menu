@@ -8,13 +8,15 @@ import { environment } from '../../../../../../../../../environments/environment
   templateUrl: 'survey.component.html',
   styleUrls: ['survey.component.scss']
 })
+
 export class SurveyComponent implements OnInit {
 
   @Input() project: Innovation;
 
   private _url: string;
 
-  constructor(private translateService: TranslateService) {}
+  constructor(private translateService: TranslateService) {
+  }
 
   ngOnInit() {
     if (this.project.quizId) {
@@ -22,6 +24,8 @@ export class SurveyComponent implements OnInit {
     }
   }
 
-  get url() { return this._url; }
+  get url() {
+    return this._url;
+  }
 
 }
