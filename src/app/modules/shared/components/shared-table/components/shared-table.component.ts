@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Table} from '../interfaces/table';
 import {Row} from '../interfaces/row';
+import {Types} from '../interfaces/types';
 
 @Component({
   selector: 'app-shared-table',
@@ -24,6 +25,7 @@ export class SharedTableComponent {
   private _total = 0;
   private _columns: string[] = [];
   private _columnsNames: string[] = [];
+  private _types: Types[];
   private _selectedRows = 0;
 
   private _config: any = null;
@@ -50,6 +52,7 @@ export class SharedTableComponent {
     this._total = value._total;
     this._columns = value._columns;
     this._columnsNames = value._columnsNames;
+    this._types = value._types;
   }
 
   loadConfig(value: any): void {
@@ -61,14 +64,16 @@ export class SharedTableComponent {
     this.configChange.emit(this._config);
   }
 
-  getRowsKeys(): string[]
-  {
+  getRowsKeys(): string[] {
     return Object.keys(this._content);
   }
 
-  getContentValue(rowKey: string, columnKey: string): any
-  {
+  getContentValue(rowKey: string, columnKey: string): any  {
     return this._content[rowKey]._content[columnKey];
+  }
+
+  getType(columnIndex: number): Types {
+    return this._types[columnIndex];
   }
 
   get title(): string {
@@ -93,6 +98,10 @@ export class SharedTableComponent {
 
   get config(): any {
     return this._config;
+  }
+
+  get types(): Types[] {
+    return this._types;
   }
 
   selectRow(key: string): void {
