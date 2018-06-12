@@ -3,10 +3,11 @@
 <table class="table" wt-responsive-table>
   <thead>
     <tr>
-      <th width="50" *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)"/></th>
-
       <!-- Si il n'y a aucunes lignes selectionnées -->
       <ng-container *ngIf="selectedRows==0">
+
+        <th width="50" *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)"/></th>
+
         <th *ngFor="let column of columnsNames">
           <sq-sort [config]="config"
                    (configChange)="changeConfig($event)"
@@ -17,6 +18,8 @@
       </ng-container>
 
       <ng-container *ngIf="selectedRows > 0">
+
+        <th width="50" *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)" [checked]="true"/></th>
 
         <th><span>{{selectedRows}} lignes selectionnée(s) </span></th>
 
