@@ -26,7 +26,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   private _displayPersonsToExcludeSection = false;
   private _displayKeywordsSection = false;
 
-  constructor(private _translateService: TranslateService,
+  constructor(private translateService: TranslateService,
               private _authService: AuthService,
               public shareService: ShareService) {
   }
@@ -47,7 +47,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   }
 
   get lang() {
-    return this._translateService.currentLang;
+    return this.translateService.currentLang;
   }
 
   /**
