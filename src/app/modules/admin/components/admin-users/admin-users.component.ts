@@ -40,8 +40,6 @@ export class AdminUsersComponent implements OnInit {
   {
     return {
       _title: 'COMMON.USERS',
-      _isSelectable: true,
-      _isEditable: true,
       _content: this._users,
       _total: this._total,
       _columns: ['firstName', 'lastName', 'jobTitle', 'companyName'],
@@ -85,6 +83,10 @@ export class AdminUsersComponent implements OnInit {
       .subscribe(innovations => {
         console.log(innovations.innovations);
       });
+  }
+
+  removeUsers(usersToRemove: User[]) {
+    console.log(usersToRemove);
   }
 
   set config(value: any) { this._config = value; }

@@ -22,9 +22,12 @@ export class SharedTableComponent {
 
   @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output() removeRows: EventEmitter<any[]> = new EventEmitter<any[]>();
+
   private _title = 'Résultats';
-  private _isSelectable = false;
-  private _isEditable = false;
+  private _isSelectable = true;
+  private _isEditable = true;
+  private _isDeletable = true;
   private _content: Row[] = [];
   private _total = 0;
   private _columns: string[] = [];
@@ -53,8 +56,9 @@ export class SharedTableComponent {
       }
     });
 
-    this._isSelectable = value._isSelectable || false;
-    this._isEditable = value._isEditable || false;
+    this._isSelectable = value._isSelectable || true;
+    this._isEditable = value._isEditable || true;
+    this._isDeletable = value._isDeletable || true;
     this._total = value._total;
     this._columns = value._columns;
     this._columnsNames = value._columnsNames || value._columns;
@@ -98,6 +102,10 @@ export class SharedTableComponent {
     return this._isEditable;
   }
 
+  get isDeletable(): boolean {
+    return this._isDeletable;
+  }
+
   get content(): Row[] {
     return this._content;
   }
@@ -126,10 +134,17 @@ export class SharedTableComponent {
     return this._selectedRows;
   }
 
+  removeSelectedRows() {
+    const rowsToDelete = this._content.filter(value => value._isSelected === true);
+    const contentToDelete: any[] = [];
+    rowsToDelete.forEach(value => contentToDelete.push(value._content));
+    this.removeRows.emit(contentToDelete);
+  }
+
   selectRow(key: string): void {
     if (this._isSelectable) {
       this._content[key]._isSelected = !(this._content[key]._isSelected);
-      this._selectedRows++;
+      this._content[key]._isSelected ? this._selectedRows++ : this._selectedRows--;
     }
   }
 
@@ -147,6 +162,7 @@ export class SharedTableComponent {
 
   selectAll(e: any): void  {
       this._content.forEach(value => { value._isSelected = e.srcElement.checked; });
+      e.srcElement.checked ? this._selectedRows = this._content.length : this._selectedRows = 0;
   }
 
 }
