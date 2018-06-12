@@ -45,7 +45,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     this.form = this.formBuilder.group({
       workflowA: ['', [Validators.required]],
       workflowB: ['', [Validators.required]],
-      sizeA: ['', [Validators.required]], // TODO : sizeMax/MIn => nombre de pro qui est possible de batché
+      sizeA: ['', [Validators.required]],
       sizeB: ['', [Validators.required]]
     });
     if (this.switchActivated) {
@@ -56,8 +56,21 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
   public startABtesting() {
-    this._campaignService.startABtesting(this.campaign._id, this.nameWorkflowA, this.nameWorkflowB, this.sizeA, this.sizeB).subscribe(obj => {
-      this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
+    if (this.sizeA + this.sizeB > this.campaign.stats.nbPros90) {
+      if (this.sizeA > this.sizeB) {
+        this.sizeA = this.campaign.stats.nbPros90 - this.sizeB
+      }
+      else {
+        this.sizeB = this.campaign.stats.nbPros90 - this.sizeA
+      }
+    }
+    this._campaignService.startABtesting(this.campaign._id, this.nameWorkflowA, this.nameWorkflowB, this.sizeA, this.sizeB)
+      .subscribe((obj: Array<any>) => {
+      if (obj.length === 0) {
+        this._notificationsService.error('ERROR', 'Not enough Pros in campaign');
+      } else {
+        this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
+      }
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
     });
