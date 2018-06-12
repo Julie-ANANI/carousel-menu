@@ -57,8 +57,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     this.changesSaved = true;
 
-    console.log(this.project);
-
     this.innovationData.patchValue(this.project);
 
     this._primaryLanguage = this.project.innovationCards[0].lang;
@@ -77,10 +75,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this._addInnovationCardWithData(innovationCard);
     }
 
-    this.innovationData.valueChanges
-      .distinctUntilChanged()
-      .takeUntil(this.ngUnsubscribe)
-      .subscribe(_ => {
+    this.innovationData.valueChanges.distinctUntilChanged().takeUntil(this.ngUnsubscribe).subscribe(_ => {
         this.updateCards();
       });
 
@@ -169,6 +164,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       advantages: [{value: data.advantages, disabled: !this.canEdit}],
       lang: [{value: data.lang, disabled: !this.canEdit}, Validators.required],
       principal: [{value: data.principal, disabled: !this.canEdit}, Validators.required],
+      principalMedia: [{value: data.principalMedia, disabled: !this.canEdit}, Validators.required],
       media: [{value: data.media, disabled: !this.canEdit}, Validators.required]
     });
   }
@@ -202,32 +198,30 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   addAdvantageToInventionCard (event: {value: Array<string>}, cardIdx: number): void {
     const card = this.innovationData.get('innovationCards').value[cardIdx] as FormGroup;
     card['advantages'] = event.value;
+
     this.updateCards();
+
     this.changesSaved = false;
     this.saveChanges.emit(true);
   }
 
   setAsPrincipal (innovationCardId: string): void {
     this.innovationData.get('innovationCards').value.forEach((innovCard: any, index: number) => {
-      this.innovationData.get('innovationCards').get([index]).get('principal')
-        .patchValue(innovCard._id === innovationCardId);
+      this.innovationData.get('innovationCards').get([index]).get('principal').patchValue(innovCard._id === innovationCardId);
+      this.updateCards();
     });
-    this.updateCards();
   }
 
   imageUploaded(media: Media, cardIdx: number): void {
     const card = this.innovationData.get('innovationCards').value[cardIdx] as FormGroup;
     card['media'].push(media);
+
     this.updateCards();
-    // this.projectChange.emit(this.project);
+
     if (this.innovationCardEditingIndex === 0) {
       if (this.project.principalMedia === null || this.project.principalMedia === undefined) {
        this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id, this.project.innovationCards[0]._id, card['media'][0]._id).first().subscribe((res) => {
-         this.project = res;
-         this.projectChange.emit(this.project);
-         this.innovationData.patchValue(this.project);
-         this.updateCards();
-         this.saveChanges.emit(true);
+         console.log(res);
        });
       }
     }
@@ -246,17 +240,16 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   setMediaAsPrimary (event: Event, media: Media, index: number): void {
     event.preventDefault();
 
-    this.innovationCardEditingIndex = index;
 
     this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
 
     this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
-      this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
+      this.project.innovationCards[index]._id, media._id)
       .first().subscribe((res: Innovation) => {
-        this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
-        this.project = res;
+        this.setAsPrincipal(this.project.innovationCards[index]._id);
+
+
         this.projectChange.emit(this.project);
-        console.log(res);
         this.updateCards();
         this.innovationData.patchValue(this.project);
         this.saveChanges.emit(true);
@@ -274,7 +267,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.innovationService.deleteMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
       .first().subscribe((res: Innovation) => {
-        this.project = res;
         this.projectChange.emit(this.project);
         this.innovationData.patchValue(this.project);
       });

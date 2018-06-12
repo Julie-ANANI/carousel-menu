@@ -315,26 +315,25 @@
                     <div class="columns col-gapless">
 
                       <!-- Main media -->
-                      <div class="column col-md-12 col-lg-4 col-3 col-mr-auto">
+                      <div  class="column col-md-12 col-lg-4 col-3 col-mr-auto">
 
-                        <div *ngIf="project.principalMedia !== null && project.principalMedia !== undefined">
-
+                        <div>
                           <span class="para">Main media</span>
                           <div class="tooltips"><i class="far fa-question-circle"></i>
                             <span class="tooltip-text">{{ "" | translate }}</span>
                           </div>
 
-                          <div *ngIf="project.principalMedia?.type === 'PHOTO'" class="principal-media">
+                          <div *ngIf="innovationItem.principalMedia?.type === 'PHOTO'" class="principal-media">
                             <img
-                              [src]="project.principalMedia.url"
+                              [src]="innovationItem.principalMedia.url"
                               [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
                               width="220" height="146"
                               class="img-responsive">
                           </div>
 
-                          <div *ngIf="project.principalMedia?.type === 'VIDEO'" class="principal-media">
+                          <div *ngIf="innovationItem.principalMedia?.type === 'VIDEO'" class="principal-media">
                             <iframe
-                              [src]="domSanitizer.bypassSecurityTrustResourceUrl(project.principalMedia.video.embeddableUrl)"
+                              [src]="domSanitizer.bypassSecurityTrustResourceUrl(innovationItem.principalMedia.video.embeddableUrl)"
                               width="220" height="146">
                             </iframe>
                           </div>
@@ -361,7 +360,7 @@
                           </iframe>
 
                           <div class="func-button text-center">
-                            <span *ngIf="media._id !== project.principalMedia?._id && innovationCardEditingIndex === 0" [ngStyle]="{ 'color': '#97A4B1' }">
+                            <span *ngIf="media._id !== project.principalMedia?._id" [ngStyle]="{ 'color': '#97A4B1' }">
                               <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">Make it as main media</a>
                               /
                             </span>

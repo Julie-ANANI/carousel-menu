@@ -672,12 +672,19 @@ ul.list-filter {
   background: $validation-element;
 }
 
+// Form textarea
+
+textarea {
+  resize: none;
+}
+
 /********************************** Form suggestion list Styles ***************************************/
 
 .form-suggestion {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   margin-top: 0 !important;
   margin-bottom: 0 !important;
+  margin-left: 0 !important;
   list-style: none;
   z-index: 2;
   background-color: white;
@@ -703,6 +710,41 @@ ul.list-filter {
   }
 
 }
+
+/********************************** Ng2 autocomplete list Styles ***************************************/
+
+.ng2-auto-complete-wrapper {
+  display: inline-flex;
+  flex: 1;
+  max-width: 595px;
+}
+
+.ng2-auto-complete > ul {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  list-style: none;
+  z-index: 2;
+  background-color: white;
+  border: none !important;
+}
+
+.ng2-auto-complete > ul li {
+  padding: 8px 10px !important;
+  transition: all .35s ease-in-out;
+  cursor: pointer;
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+  border-radius: 2px !important;
+  border-bottom: none !important;
+  color: #333333 !important;
+}
+
+.ng2-auto-complete > ul li:hover, .ng2-auto-complete > ul li.selected {
+  background:  #F2F2F2 !important;
+  border-color: #F2F2F2 !important;
+}
+
 
 /********************************** Primary Button Styles ***************************************/
 
@@ -835,6 +877,14 @@ ul.list-filter {
   .large-button {
     padding-left: 45px;
     padding-right: 45px;
+  }
+
+  @media (max-width: 600px) {
+
+    .tooltips {
+      display: none;
+    }
+
   }
 
 }

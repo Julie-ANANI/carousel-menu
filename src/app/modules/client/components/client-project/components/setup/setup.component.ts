@@ -38,12 +38,12 @@ export class SetupProjectComponent implements OnInit {
 
   updateSettings(value: InnovationSettings): void {
     this.project.settings = value;
+    this._saveChanges = true;
+    this._saveButtonClass = 'save-project';
   }
 
   updateInnovation(value: Innovation): void {
-    console.log('update');
     this.project = value;
-    console.log(this.project);
   }
 
   saveProject(event: Event): void {

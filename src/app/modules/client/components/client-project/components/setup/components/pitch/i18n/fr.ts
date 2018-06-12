@@ -8,12 +8,15 @@ export const PITCH = {
     'PROJECT_IN_OTHER_LANG': 'ajouter un projet dans',
     'MODAL': {
       'TITLE': 'Comité de confirmation',
-      'CONTENT': 'Êtes-vous sûr(e) de vouloir envoyer votre projet à validation ?'
+      'CONTENT': 'Voulez-vous envoyer votre projet à validation ?'
     },
 
     'MODAL_DELETE': {
       'TITLE': 'Supprimer le forum',
-      'CONTENT': 'Êtes-vous sûr(e) de vouloir supprimer votre projet dans cette langue ?'
+      'CONTENT': {
+        'A' : 'Voulez-vous supprimer votre projet en langue',
+        'B' : '?'
+      }
     },
     'TITLE': {
       'LABEL': 'Donnez un titre à votre projet',

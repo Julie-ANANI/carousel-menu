@@ -1,4 +1,44 @@
-$dark-bg: #262831;
+#projectSetting {
+  padding-top: 25px;
+  padding-bottom: 0;
+
+  .pd-ques {
+    padding-top: 20px;
+  }
+
+  .pd-para, .pd-input {
+    margin: 0;
+    padding-top: 20px;
+  }
+
+  .text-link {
+    font-size: 0.9rem;
+  }
+
+  .icon-arrow-right, .icon-arrow-down {
+    margin-left: 2px;
+    font-size: 14px;
+  }
+
+}
+
+/********************************** Media ***************************************/
+
+@media (min-width: 768px) {
+
+  #projectSetting {
+
+    // Form input
+    .form-input-default {
+      max-width: 662px;
+    }
+
+  }
+
+}
+
+
+/*$dark-bg: #262831;
 $second-color: #0B90C6;
 
 .project-header {
@@ -56,4 +96,4 @@ $second-color: #0B90C6;
 
 h3 {
   color: $second-color;
-}
+}*/
