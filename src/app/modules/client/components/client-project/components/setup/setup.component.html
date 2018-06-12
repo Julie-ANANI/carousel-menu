@@ -9,7 +9,7 @@
         <h1 class="section-heading">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h1>
 
         <!-- Buttons -->
-        <div class="function-button" *ngIf="currentTab === 'pitch' || currentTab === 'targeting'">
+        <div class="function-button">
           <span [ngClass]="saveButtonClass">
             <div class="circle"><i class="fas fa-save"></i></div>
               <button class="primary-button ghost-button" (click)="saveProject($event)">

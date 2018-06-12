@@ -88,7 +88,8 @@ export class AutocompleteInputComponent implements OnInit {
   }
 
   public autocompleListFormatter = (data: any) : SafeHtml => {
-    const html = `<span>${data[this._identifier]}</span>`;
+    const html = `<span>${data[this._identifier]}</span>
+                  <span>${data[this._identifier]}</span>`;
     return this.domSanitizer.bypassSecurityTrustHtml(html);
   };
 
