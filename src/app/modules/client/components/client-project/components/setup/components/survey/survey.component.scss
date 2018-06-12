@@ -1,24 +1,4 @@
 #projectSurvey {
   padding-top: 25px;
   padding-bottom: 0;
-
-  .bot-wrapper {
-
-    .bot-text {
-      animation-name: fadeIn;
-      animation-duration: 2s;
-      animation-timing-function: ease-in-out;
-      z-index: 2;
-    }
-
-    .bot-trian {
-      padding-left: 110px;
-      animation-name: fadeIn;
-      animation-duration: 2s;
-      animation-timing-function: ease-in-out;
-      margin-top: -1px;
-    }
-
-  }
-
 }

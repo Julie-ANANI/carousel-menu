@@ -18,14 +18,6 @@ path.clickable:not(.selected):hover,
   transition: unset !important;
 }
 
-g.selected:hover,
-path.selected:hover,
-.selected g:hover,
-.selected path:hover {
-  fill: #FFB300;
-  transition: unset !important;
-}
-
 .world-map {
   margin-top: 15px;
 }

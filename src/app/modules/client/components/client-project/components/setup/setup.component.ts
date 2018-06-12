@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Router} from '@angular/router';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
@@ -25,8 +25,7 @@ export class SetupProjectComponent implements OnInit {
 
   constructor(private innovationService: InnovationService,
               private notificationService: TranslateNotificationsService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute) {
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -35,7 +34,6 @@ export class SetupProjectComponent implements OnInit {
     this._saveChanges = false;
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
-    this.activatedRoute.
   }
 
   updateSettings(value: InnovationSettings): void {

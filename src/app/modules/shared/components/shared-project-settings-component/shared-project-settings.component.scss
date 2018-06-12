@@ -3,7 +3,7 @@
   padding-bottom: 0;
 
   .pd-ques {
-    padding-top: 20px;
+    padding-top: 40px;
   }
 
   .pd-para, .pd-input {
@@ -11,26 +11,40 @@
     padding-top: 20px;
   }
 
-  .text-link {
-    font-size: 0.9rem;
-  }
-
   .icon-arrow-right, .icon-arrow-down {
     margin-left: 2px;
-    font-size: 14px;
+    font-size: 13px;
+  }
+
+  .help-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
   }
 
 }
 
 /********************************** Media ***************************************/
 
-@media (min-width: 768px) {
+@media (max-width: 767px) {
 
   #projectSetting {
 
-    // Form input
-    .form-input-default {
-      max-width: 662px;
+    .help-wrapper {
+      display: none;
+    }
+
+  }
+
+}
+
+@media (min-width: 767px) and (max-width: 840px) {
+
+  #projectSetting {
+
+    .help-wrapper {
+      padding-top: 50px;
     }
 
   }

@@ -15,21 +15,6 @@
     order: 0;
     padding-bottom: 30px;
 
-    .bot-text {
-      animation-name: fadeIn;
-      animation-duration: 2s;
-      animation-timing-function: ease-in-out;
-      z-index: 2;
-    }
-
-    .bot-trian {
-      padding-left: 150px;
-      animation-name: fadeIn;
-      animation-duration: 2s;
-      animation-timing-function: ease-in-out;
-      margin-top: -1px;
-    }
-
     .bot-image .img-responsive {
       display: inline-block;
     }

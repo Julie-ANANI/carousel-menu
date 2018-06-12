@@ -25,6 +25,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   private _displayCompanyToIncludeSection = false;
   private _displayPersonsToExcludeSection = false;
   private _displayKeywordsSection = false;
+  private _displayCompanyCommentSection = false;
 
   constructor(private translateService: TranslateService,
               private _authService: AuthService,
@@ -36,10 +37,11 @@ export class SharedProjectSettingsComponent implements OnInit {
     this.adminMode = this.adminMode && this._authService.adminLevel >= 1;
 
     if (this.settings) {
-      this._displayCountriesToExcludeSection = this.settings.geography && this.settings.geography.exclude && this.settings.geography.exclude.length > 0;
+      // this._displayCountriesToExcludeSection = this.settings.geography && this.settings.geography.exclude && this.settings.geography.exclude.length > 0;
       this._displayCountriesCommentSection = this.settings.geography && this.settings.geography.comments && this.settings.geography.comments.length > 0;
-      this._displayCompanyToExcludeSection = this.settings.companies && this.settings.companies.exclude && this.settings.companies.exclude.length > 0;
-      this._displayCompanyToIncludeSection = this.settings.companies && this.settings.companies.include && this.settings.companies.include.length > 0;
+      this._displayCompanyCommentSection = this.settings.companies.description.length > 0;
+      // this._displayCompanyToExcludeSection = this.settings.companies && this.settings.companies.exclude && this.settings.companies.exclude.length > 0;
+      // this._displayCompanyToIncludeSection = this.settings.companies && this.settings.companies.include && this.settings.companies.include.length > 0;
       this._displayPersonsToExcludeSection = this.settings.professionals && this.settings.professionals.exclude && this.settings.professionals.exclude.length > 0;
       this._displayKeywordsSection = this.settings.keywords.length > 0;
     }
@@ -59,7 +61,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   public getConfig(type: string): any {
     const _inputConfig = {
       'countries': {
-        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
+        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
         initialData: this.settings && this.settings.geography ? this.settings.geography.exclude || [] : [],
         type: 'countries'
       },
@@ -171,6 +173,14 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   set displayCompanyToIncludeSection(value: boolean) {
     this._displayCompanyToIncludeSection = value;
+  }
+
+  set displayCompanyCommentSection(value: boolean) {
+    this._displayCompanyCommentSection = value;
+  }
+
+  get displayCompanyCommentSection(): boolean {
+    return this._displayCompanyCommentSection;
   }
 
   /****************************************************************************

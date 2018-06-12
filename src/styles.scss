@@ -314,6 +314,18 @@ ul.list-filter {
   text-align: center;
   vertical-align: middle;
   font-weight: lighter;
+  animation-name: fadeIn;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  z-index: 2;
+}
+
+.bot-trian {
+  padding-left: 150px;
+  animation-name: fadeIn;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  margin-top: -1px;
 }
 
 /********************************** Num Rect Styles ***************************************/
