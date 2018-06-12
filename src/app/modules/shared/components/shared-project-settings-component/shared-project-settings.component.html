@@ -18,41 +18,6 @@
 
       </div>
 
-        <!--<div class="columns">
-
-          &lt;!&ndash;<div class="column col-md-12 col-6">
-            <p class="pd-para">
-             <span class="text-link" (click)="(displayCountriesToExcludeSection = !displayCountriesToExcludeSection) && $event.preventDefault()">
-                {{ 'PROJECT_MODULE.SETUP.TARGETING.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
-                <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayCountriesToExcludeSection, 'icon-arrow-right' : !displayCountriesToExcludeSection  }"></i>
-              </span>
-            </p>
-
-          </div>&ndash;&gt;
-
-          &lt;!&ndash;<div class="column col-md-12 col-6">
-            <p class="pd-para">
-             <span class="text-link" (click)="(displayCountriesCommentSection = !displayCountriesCommentSection) && $event.preventDefault()">
-                {{ 'PROJECT_MODULE.SETUP.TARGETING.SPECIFIC_REQUEST' | translate }}
-                <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayCountriesCommentSection, 'icon-arrow-right' : !displayCountriesCommentSection  }"></i>
-              </span>
-            </p>
-            <div *ngIf="displayCountriesCommentSection" class="pd-input">
-              <textarea
-                class="form-input-default"
-                id="countries-comments"
-                [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
-                rows="5"
-                [(ngModel)]="settings.geography.comments"
-                (change)="updateSettings()">
-              </textarea>
-            </div>
-          </div>
-
-        </div>&ndash;&gt;
-
-      </div>-->
-
       <div class="columns">
 
         <!-- Question wrapper -->
@@ -267,3 +232,37 @@
                   [canEdit]="true"
                   [config]="getConfig('peopleBL')"></app-input-list>-->
 
+<!--<div class="columns">
+
+         &lt;!&ndash;<div class="column col-md-12 col-6">
+           <p class="pd-para">
+            <span class="text-link" (click)="(displayCountriesToExcludeSection = !displayCountriesToExcludeSection) && $event.preventDefault()">
+               {{ 'PROJECT_MODULE.SETUP.TARGETING.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
+               <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayCountriesToExcludeSection, 'icon-arrow-right' : !displayCountriesToExcludeSection  }"></i>
+             </span>
+           </p>
+
+         </div>&ndash;&gt;
+
+         &lt;!&ndash;<div class="column col-md-12 col-6">
+           <p class="pd-para">
+            <span class="text-link" (click)="(displayCountriesCommentSection = !displayCountriesCommentSection) && $event.preventDefault()">
+               {{ 'PROJECT_MODULE.SETUP.TARGETING.SPECIFIC_REQUEST' | translate }}
+               <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayCountriesCommentSection, 'icon-arrow-right' : !displayCountriesCommentSection  }"></i>
+             </span>
+           </p>
+           <div *ngIf="displayCountriesCommentSection" class="pd-input">
+             <textarea
+               class="form-input-default"
+               id="countries-comments"
+               [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
+               rows="5"
+               [(ngModel)]="settings.geography.comments"
+               (change)="updateSettings()">
+             </textarea>
+           </div>
+         </div>
+
+       </div>&ndash;&gt;
+
+     </div>-->

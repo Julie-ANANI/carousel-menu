@@ -132,6 +132,10 @@
 
   .row-1 {
     flex-wrap: unset !important;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 11;
 
     .function-button {
       justify-content: flex-end !important;
