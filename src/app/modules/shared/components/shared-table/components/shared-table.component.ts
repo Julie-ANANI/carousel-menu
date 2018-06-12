@@ -23,18 +23,21 @@ export class SharedTableComponent {
   @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
 
   private _title = 'Résultats';
+  private _isSelectable = false;
+  private _isEditable = false;
   private _content: Row[] = [];
   private _total = 0;
   private _columns: string[] = [];
   private _columnsNames: string[] = [];
   private _types: Types[];
+  private _selectedRows = 0;
 
   private _config: any = null;
 
   constructor() {}
 
   loadData(value: Table): void  {
-    this._title = value._title;
+    this._title = value._title || 'Résultats';
 
     // Si le tableau contient plus de ligne que la limit, on le vide
     // (c'est le cas lorsque l'on passe de 50 lignes par pages à 10 lignes par pages par exemple)
@@ -50,9 +53,11 @@ export class SharedTableComponent {
       }
     });
 
+    this._isSelectable = value._isSelectable || false;
+    this._isEditable = value._isEditable || false;
     this._total = value._total;
     this._columns = value._columns;
-    this._columnsNames = value._columnsNames;
+    this._columnsNames = value._columnsNames || value._columns;
     this._types = value._types;
   }
 
@@ -85,6 +90,14 @@ export class SharedTableComponent {
     return this._title;
   }
 
+  get isSelectable(): boolean {
+    return this._isSelectable;
+  }
+
+  get isEditable(): boolean {
+    return this._isEditable;
+  }
+
   get content(): Row[] {
     return this._content;
   }
@@ -109,8 +122,15 @@ export class SharedTableComponent {
     return this._types;
   }
 
+  get selectedRows(): number {
+    return this._selectedRows;
+  }
+
   selectRow(key: string): void {
-    this._content[key]._isSelected = !(this._content[key]._isSelected);
+    if (this._isSelectable) {
+      this._content[key]._isSelected = !(this._content[key]._isSelected);
+      this._selectedRows++;
+    }
   }
 
   hoverRow(key: string): void {

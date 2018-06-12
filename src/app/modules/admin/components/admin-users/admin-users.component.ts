@@ -40,6 +40,8 @@ export class AdminUsersComponent implements OnInit {
   {
     return {
       _title: 'COMMON.USERS',
+      _isSelectable: true,
+      _isEditable: true,
       _content: this._users,
       _total: this._total,
       _columns: ['firstName', 'lastName', 'jobTitle', 'companyName'],
