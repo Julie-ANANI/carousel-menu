@@ -5,8 +5,8 @@ export interface CampaignSettings {
   clonedInfo: boolean;
   emails?: Array<EmailTemplate>,
   ABsettings?: {
-    batchIdA: string,
-    batchIdB: string,
+    batchA: string,
+    batchB: string,
     status: number,
     nameWorkflowA: string,
     nameWorkflowB: string,

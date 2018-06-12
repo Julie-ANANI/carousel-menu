@@ -53,6 +53,10 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     } else {
       this.form.disable();
     }
+
+    if (this.campaign.settings.ABsettings.status > 0) {
+
+    }
   }
 
   public startABtesting() {
@@ -67,7 +71,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     this._campaignService.startABtesting(this.campaign._id, this.nameWorkflowA, this.nameWorkflowB, this.sizeA, this.sizeB)
       .subscribe((obj: Array<any>) => {
       if (obj.length === 0) {
-        this._notificationsService.error('ERROR', 'Not enough Pros in campaign');
+        this._notificationsService.error('ERROR.ERROR', 'Not enough Pros in campaign');
       } else {
         this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
       }
@@ -88,6 +92,19 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     } else {
       this.form.disable();
     }
+  }
+
+
+  public updateStatsBatch() {
+    console.log("oloasaoisja");
+    console.log(this.campaign.settings.ABsettings.batchA);
+    console.log(this.campaign.settings.ABsettings.batchB.toString());
+    this._campaignService.updateBatchStats(this.campaign.settings.ABsettings.batchA).subscribe((obj) => {
+
+    });
+    this._campaignService.updateBatchStats(this.campaign.settings.ABsettings.batchB).subscribe((obj) => {
+
+    });
   }
 
   get nameWorkflowA(): string { return this._nameWorkflowA };

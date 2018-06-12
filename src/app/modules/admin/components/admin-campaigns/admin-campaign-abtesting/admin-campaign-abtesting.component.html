@@ -7,70 +7,73 @@
  ça serait cool de pouvoir affficher le nombre de pros contactable
 
  -->
-<div *ngIf="(campaign.settings.stats.nbProsSent == 0) || (campaign.settings.ABsettings.status != 0) ">
-  <div [ngSwitch]="campaign.settings.ABsettings.status">
-    <div *ngSwitchCase="0">
-      <label class="form-switch" style="">
-        <input type="checkbox" [disabled]="!(modifiedScenarios.length)" (click)="statusSwitch()" >
-        <i class="form-icon"></i>
-      </label>
+<div *ngIf="(campaign.stats.nbProsSent == 0) || (campaign.settings.ABsettings.status != 0) ">
+  <div *ngIf="campaign.settings.ABsettings.status == 0">
+    <label class="form-switch" style="">
+      <input type="checkbox" [disabled]="!(modifiedScenarios.length)" (click)="statusSwitch()" >
+      <i class="form-icon"></i>
+    </label>
+    <form class="form-horizontal" [formGroup]="form" >
 
 
-
-      <form class="form-horizontal" [formGroup]="form" >
-
-
-        <div class="form-group">
-          <select class = "form-select"
-                  [(ngModel)] = "nameWorkflowA"
-                  id = "workflowA"
-                  name = "quelquechoseA"
-                  formControlName="workflowA"
-          >
-            <option *ngFor = "let scenario of modifiedScenarios"
-                    [ngValue] = "scenario.name">
-              {{scenario.name}}
-            </option>
-          </select>
-        </div>
-        <div class="form-group">
-          <select class = "form-select"
-                  [(ngModel)] = "nameWorkflowB"
-                  id = "workflowB"
-                  name = "quelquechoseB"
-                  formControlName="workflowB"
-          >
-            <option *ngFor = "let scenario of modifiedScenarios"
-                    [ngValue] = "scenario.name">
-              {{scenario.name}}
-            </option>
-          </select>
-        </div>
-        Nombre de pros max : {{campaign.stats.nbPros90}}
-        <div class="form-group">
-          <input type="number" id="sizeA" [(ngModel)]="sizeA" formControlName="sizeA" />
-        </div>
-        <div class="form-group">
-          <input type="number" id="sizeB"  [(ngModel)] = "sizeB" formControlName="sizeB" />
-        </div>
-        <!-- On click => envoi de données -->
-        <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="startABtesting()">
-          Submit
-        </button>
+      <div class="form-group">
+        <select class = "form-select"
+                [(ngModel)] = "nameWorkflowA"
+                id = "workflowA"
+                name = "quelquechoseA"
+                formControlName="workflowA"
+        >
+          <option *ngFor = "let scenario of modifiedScenarios"
+                  [ngValue] = "scenario.name">
+            {{scenario.name}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select class = "form-select"
+                [(ngModel)] = "nameWorkflowB"
+                id = "workflowB"
+                name = "quelquechoseB"
+                formControlName="workflowB"
+        >
+          <option *ngFor = "let scenario of modifiedScenarios"
+                  [ngValue] = "scenario.name">
+            {{scenario.name}}
+          </option>
+        </select>
+      </div>
+      Nombre de pros max : {{campaign.stats.nbPros90}}
+      <div class="form-group">
+        <input type="number" id="sizeA" [(ngModel)]="sizeA" formControlName="sizeA" />
+      </div>
+      <div class="form-group">
+        <input type="number" id="sizeB"  [(ngModel)] = "sizeB" formControlName="sizeB" />
+      </div>
+      <!-- On click => envoi de données -->
+      <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="startABtesting()">
+        Submit
+      </button>
 
 
-      </form>
-    </div>
+    </form>
+  </div>
 
 
-    <!-- Affichage des stats + valider + nom des workflows -->
-    <div *ngSwitchCase="1">
-      1 - Stats + button valider
-    </div>
+  <!-- Affichage des stats + valider + nom des workflows -->
+  <div *ngIf="campaign.settings.ABsettings.status == 1">
+    <label>
+      BATCH A :
+      OPENED :
 
-    <div *ngSwitchCase="2">
-      2 - Stats
-    </div>
+
+      <button class="btn btn-primary" (click)="updateStatsBatch()">
+        <i class="fas fa-sync"></i>
+      </button>
+    </label>
+  </div>
+
+  <div *ngIf="campaign.settings.ABsettings.status == 2">
+    2 - Stats
   </div>
 </div>
 
