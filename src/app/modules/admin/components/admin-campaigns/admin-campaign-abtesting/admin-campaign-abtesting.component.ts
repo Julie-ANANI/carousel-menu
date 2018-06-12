@@ -27,6 +27,9 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   private _sizeA: number;
   private _sizeB: number;
 
+  private _statsA: any;
+  private _statsB: any;
+
   form: FormGroup;
 
   public switchActivated: Boolean = false;
@@ -54,9 +57,9 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       this.form.disable();
     }
 
-    if (this.campaign.settings.ABsettings.status > 0) {
-
-    }
+   /* if (this.campaign.settings.ABsettings.status > 0) {
+      this.updateStatsBatch();
+    }*/
   }
 
   public startABtesting() {
@@ -96,14 +99,11 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
 
   public updateStatsBatch() {
-    console.log("oloasaoisja");
-    console.log(this.campaign.settings.ABsettings.batchA);
-    console.log(this.campaign.settings.ABsettings.batchB.toString());
-    this._campaignService.updateBatchStats(this.campaign.settings.ABsettings.batchA).subscribe((obj) => {
-
+    this._campaignService.updateBatchStats(this.campaign.settings.ABsettings.batchA).subscribe((obj: any) => {
+      this._statsA = obj;
     });
-    this._campaignService.updateBatchStats(this.campaign.settings.ABsettings.batchB).subscribe((obj) => {
-
+    this._campaignService.updateBatchStats(this.campaign.settings.ABsettings.batchB).subscribe((obj: any) => {
+      this._statsB = obj;
     });
   }
 
