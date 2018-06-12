@@ -28,9 +28,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
-  private _primaryLanguage: string;
-  private _primaryLength: number;
-  private _displayDeleteButton = false;
   private _showDeleteModal = false;
   private _deleteInnovCardId = '';
   private _langDelete = '';
@@ -47,19 +44,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.changesSaved = true;
-
     console.log(this.project);
-
-    this._primaryLanguage = this.project.innovationCards[0].lang;
-
-    if (this.project.innovationCards.length < 2) {
-      this._primaryLength = this.project.innovationCards.length;
-    } else {
-      this._displayDeleteButton = true;
-    }
-
   }
 
   notifyModelChanges(_event: any) {
@@ -97,6 +83,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
             lang: lang
           }).first().subscribe((data: InnovCard) => {
             this.project.innovationCards.push(data);
+            this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
             this.projectChange.emit(this.project);
           });
         }
@@ -198,7 +185,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   deleteInnovCard(event: Event) {
     event.preventDefault();
     this.innovationService.removeInnovationCard(this.project._id, this._deleteInnovCardId).subscribe((res) => {
-      this.project.innovationCards = this.project.innovationCards.filter((card) => card._id === this._deleteInnovCardId);
+      this.project.innovationCards = this.project.innovationCards.filter((card) => card._id !== this._deleteInnovCardId);
+      this.innovationCardEditingIndex -= 1;
       this._showDeleteModal = false;
     }, err => {
       this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
@@ -212,6 +200,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this._showDeleteModal = false;
   }
 
+  containsLanguage(lang: string): boolean {
+    return this.project.innovationCards.some((c) => c.lang === lang);
+  }
+
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
@@ -223,18 +215,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   get companyName(){
     return (this._companyName || 'umi').toLocaleUpperCase();
-  }
-
-  get primaryLanguage(): string {
-    return this._primaryLanguage;
-  }
-
-  get primaryLength(): number {
-    return this._primaryLength;
-  }
-
-  get displayDeleteButton(): boolean {
-    return this._displayDeleteButton;
   }
 
   get showDeleteModal(): boolean {

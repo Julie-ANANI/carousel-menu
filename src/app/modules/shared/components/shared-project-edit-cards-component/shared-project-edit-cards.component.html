@@ -23,13 +23,13 @@
               </ul>
             </div>
 
-            <div *ngIf="primaryLength === 1"  class="create-innovation">
+            <div *ngIf="project.innovationCards?.length < 2"  class="create-innovation">
               {{ 'COMMON.OR' | translate | lowercase }} {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROJECT_IN_OTHER_LANG' | translate }}
               <span class="text-link">
-                  <span *ngIf="primaryLanguage !== 'fr'" (click)="createInnovationCard($event, 'fr')">
+                  <span *ngIf="!containsLanguage('fr')" (click)="createInnovationCard($event, 'fr')">
                     {{ 'COMMON.LANG.FR' | translate }}
                   </span>
-                  <span *ngIf="primaryLanguage !== 'en'" (click)="createInnovationCard($event, 'en')">
+                  <span *ngIf="!containsLanguage('en')" (click)="createInnovationCard($event, 'en')">
                     {{ 'COMMON.LANG.EN' | translate }}
                   </span>
                 </span>
@@ -41,7 +41,7 @@
             <div *ngFor="let innovationCard of project.innovationCards; let i = index" [ngStyle]="{ 'display': 'inline-block' }">
               <div *ngIf="innovationCardEditingIndex === i" class="lang-action">
                 <span class="text-link preview-link">{{ 'COMMON.PREVIEW' | translate }}</span>&nbsp;
-                <span [ngStyle]="{'display': displayDeleteButton ? 'inline-block' : 'none' }">
+                <span [ngStyle]="{'display': (project.innovationCards?.length > 1) ? 'inline-block' : 'none' }">
                   <span>/</span>&nbsp;
                   <span class="text-link delete-link" (click)="deleteModal(innovationCard._id, innovationCard.lang)">{{ 'COMMON.DELETE' | translate }}</span>
                 </span>
