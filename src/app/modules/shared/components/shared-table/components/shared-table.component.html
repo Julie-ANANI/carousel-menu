@@ -4,17 +4,24 @@
   <thead>
     <tr>
       <th width="50"><input type="checkbox" (change)="selectAll($event)"/></th>
-      <th *ngFor="let column of columnsNames">{{column | translate }}</th>
+      <th *ngFor="let column of columnsNames"><sq-sort [config]="config" (configChange)="changeConfig($event)" [prop]="columns[columnsNames.indexOf(column)]">{{column | translate }}</sq-sort></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let key of getRowsKeys()" [ngClass]="{'active': isSelected(content[key])}">
+    <tr *ngFor="let key of getRowsKeys()" [ngClass]="{'active': isSelected(content[key])}" (click)="s.checked = !s.checked; selectRow(key)">
       <ng-container>
-        <td width="50"><input type="checkbox" (change)="selectRow(key)" [checked]="isSelected(content[key])"/></td>
+        <td width="50"><input type="checkbox" #s [checked]="isSelected(content[key])"/></td>
         <td *ngFor="let columnKey of columns">
             <span>{{getContentValue(key, columnKey)}}</span>
         </td>
       </ng-container>
     </tr>
   </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="12">
+      <sqPagination [config]="config" (configChange)="changeConfig($event)" [total]="total" [propertyName]="'shared-table'"></sqPagination>
+    </td>
+  </tr>
+  </tfoot>
 </table>
