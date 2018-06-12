@@ -8,14 +8,18 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let key of getRowsKeys()" [ngClass]="{'active': isSelected(content[key])}" (click)="s.checked = !s.checked; selectRow(key)">
+    <tr *ngFor="let key of getRowsKeys()"
+        [ngClass]="{'active': isSelected(content[key])}"
+        (click)="s.checked = !s.checked; selectRow(key)"
+        (mouseenter)="hoverRow(key)"
+        (mouseleave)="hoverRow(key)">
       <ng-container>
         <td width="50"><input type="checkbox" #s [checked]="isSelected(content[key])"/></td>
         <td *ngFor="let columnKey of columns">
           <ng-container [ngSwitch]="getType(columns.indexOf(columnKey))">
 
             <!-- Si le type de la colonne est TEXT -->
-            <span *ngSwitchDefault>{{getContentValue(key, columnKey)}}</span>
+            <span *ngSwitchDefault>{{getContentValue(key, columnKey) || ' - '}}</span>
 
             <!-- Si le type de la colonne est COUNTRY -->
             <country-flag *ngSwitchCase="'COUNTRY'" [country]="getContentValue(key, columnKey)"></country-flag>
@@ -33,6 +37,13 @@
             </progress>
 
           </ng-container>
+
+          <button class="btn btn-action"
+             *ngIf="isHover(content[key]) && columns.indexOf(columnKey) == 0"
+             (click)="edit(content[key])">
+            <i class="fas fa-info"></i>
+          </button>
+
         </td>
       </ng-container>
     </tr>

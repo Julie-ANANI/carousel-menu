@@ -3,8 +3,8 @@ import { UserService } from '../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
-import { Table } from '../../../shared/components/shared-table/interfaces/table';
-import {Types} from '../../../shared/components/shared-table/interfaces/types';
+import { Table } from '../../../shared/components/shared-table/models/table';
+import {Types} from '../../../shared/components/shared-table/models/types';
 
 @Component({
   selector: 'app-admin-users',
@@ -62,6 +62,10 @@ export class AdminUsersComponent implements OnInit {
   inviteUser(event: Event): void {
     event.preventDefault();
     // TODO
+  }
+
+  editUser(user: User) {
+    console.log(user);
   }
 
   get selfId(): string {

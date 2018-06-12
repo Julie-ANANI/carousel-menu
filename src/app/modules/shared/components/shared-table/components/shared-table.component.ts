@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Table} from '../interfaces/table';
-import {Row} from '../interfaces/row';
-import {Types} from '../interfaces/types';
+import {Table} from '../models/table';
+import {Row} from '../models/row';
+import {Types} from '../models/types';
 
 @Component({
   selector: 'app-shared-table',
@@ -20,13 +20,14 @@ export class SharedTableComponent {
 
   @Output() configChange: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
+
   private _title = 'Résultats';
   private _content: Row[] = [];
   private _total = 0;
   private _columns: string[] = [];
   private _columnsNames: string[] = [];
   private _types: Types[];
-  private _selectedRows = 0;
 
   private _config: any = null;
 
@@ -45,7 +46,7 @@ export class SharedTableComponent {
     // Si ce n'est pas le cas on insère une nouvelle Row dans content
     value._content.forEach(value1 => {
       if (!this._content.find(value2 => JSON.stringify(value2._content) === JSON.stringify(value1))) {
-        this._content.push({_isSelected: false, _content: value1})
+        this._content.push({_isHover: false, _isSelected: false, _content: value1})
       }
     });
 
@@ -62,6 +63,10 @@ export class SharedTableComponent {
   changeConfig(value: any): void {
     this._config = value;
     this.configChange.emit(this._config);
+  }
+
+  edit(row: Row) {
+    this.editRow.emit(row._content);
   }
 
   getRowsKeys(): string[] {
@@ -106,11 +111,18 @@ export class SharedTableComponent {
 
   selectRow(key: string): void {
     this._content[key]._isSelected = !(this._content[key]._isSelected);
-    this._selectedRows++;
+  }
+
+  hoverRow(key: string): void {
+    this._content[key]._isHover = !(this._content[key]._isHover);
   }
 
   isSelected(row: Row): boolean {
     return row._isSelected;
+  }
+
+  isHover(row: Row) {
+    return row._isHover;
   }
 
   selectAll(e: any): void  {
