@@ -32,7 +32,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   private _primaryLength: number;
   private _displayDeleteButton = false;
   private _showDeleteModal = false;
-  private _deleteInnovId = '';
+  private _deleteInnovCardId = '';
   private _langDelete = '';
   /*
    * Gestion de l'affichage
@@ -95,7 +95,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
           this.innovationService.createInnovationCard(this.project._id, {
             lang: lang
-          }).first().subscribe((_data: InnovCard) => {});
+          }).first().subscribe((data: InnovCard) => {
+            this.project.innovationCards.push(data);
+            this.projectChange.emit(this.project);
+          });
         }
       } else {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
@@ -180,27 +183,26 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   }
 
-  deleteModal(innovID: string, lang: string) {
-
+  deleteModal(innovcardID: string, lang: string) {
     if (this.canEdit) {
       if (this.changesSaved) {
-        this._deleteInnovId = innovID;
+        this._deleteInnovCardId = innovcardID;
         this._langDelete = lang;
         this._showDeleteModal = true;
       } else {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
     }
-
   }
 
-  deleteInnov(event: Event) {
+  deleteInnovCard(event: Event) {
     event.preventDefault();
-
-    this.innovationService.removeInnovationCard(this.project._id, this._deleteInnovId).subscribe((res) => {
-      window.location.reload();
+    this.innovationService.removeInnovationCard(this.project._id, this._deleteInnovCardId).subscribe((res) => {
+      this.project.innovationCards = this.project.innovationCards.filter((card) => card._id === this._deleteInnovCardId);
+      this._showDeleteModal = false;
     }, err => {
       this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+      this._showDeleteModal = false;
     });
 
   }
