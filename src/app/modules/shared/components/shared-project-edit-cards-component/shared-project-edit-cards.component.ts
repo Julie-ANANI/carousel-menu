@@ -116,7 +116,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   setAsPrincipal (innovationCardId: string): void {
-    this.project.innovationCards.forEach((innovCard: any, index: number) => {
+    this.project.innovationCards.forEach((innovCard: any) => {
       innovCard.principal = (innovCard._id === innovationCardId);
     });
   }

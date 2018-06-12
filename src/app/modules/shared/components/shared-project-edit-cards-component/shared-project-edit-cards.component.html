@@ -3,7 +3,6 @@
     <div class="column col-xs-12 col-12 col-mx-auto">
 
       <form novalidate>
-        <div>
 
         <!-- Describe -->
           <div class="describe-container">
@@ -201,7 +200,6 @@
 
             </div>
           </div>
-        </div>
 
         <!-- Stage -->
         <div class="project-data">
@@ -301,104 +299,102 @@
           </div>
         </div>
 
-        <div>
-          <div *ngFor="let innovationItem of project.innovationCards; let i = index">
-            <div *ngIf="innovationCardEditingIndex === i">
+        <div *ngFor="let innovationItem of project.innovationCards; let i = index">
+          <div *ngIf="innovationCardEditingIndex === i">
 
-              <div class="project-data">
-                <span class="num-rect">9</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.ADD' | translate }}</span>
-                <div class="pd-label">
+            <div class="project-data">
+              <span class="num-rect">9</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.ADD' | translate }}</span>
+              <div class="pd-label">
 
-                  <!-- Media display -->
-                  <div class="media-disp-container">
-                    <div class="columns col-gapless">
+                <!-- Media display -->
+                <div class="media-disp-container">
+                  <div class="columns col-gapless">
 
-                      <!-- Main media -->
-                      <div class="column col-md-12 col-lg-4 col-3 col-mr-auto">
+                    <!-- Main media -->
+                    <div class="column col-md-12 col-lg-4 col-3 col-mr-auto">
 
-                        <div *ngIf="project.principalMedia">
+                      <div *ngIf="project.principalMedia">
 
-                          <span class="para">Main media</span>
-                          <div class="tooltips"><i class="far fa-question-circle"></i>
-                            <span class="tooltip-text">{{ "" | translate }}</span>
-                          </div>
-
-                          <div *ngIf="project.principalMedia?.type === 'PHOTO'" class="principal-media">
-                            <img
-                              [src]="project.principalMedia.url"
-                              [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
-                              width="220" height="146"
-                              class="img-responsive">
-                          </div>
-
-                          <div *ngIf="project.principalMedia?.type === 'VIDEO'" class="principal-media">
-                            <iframe
-                              [src]="domSanitizer.bypassSecurityTrustResourceUrl(project.principalMedia.video.embeddableUrl)"
-                              width="220" height="146">
-                            </iframe>
-                          </div>
-
+                        <span class="para">Main media</span>
+                        <div class="tooltips"><i class="far fa-question-circle"></i>
+                          <span class="tooltip-text">{{ "" | translate }}</span>
                         </div>
-                      </div>
 
-                      <!-- Secondary medias -->
-                      <div *ngIf="innovationItem.media?.length > 0" class="column col-md-12 col-lg-8 col-9 col-mx-auto">
-
-                        <p class="para">Secondary medias</p>
-
-                        <div *ngFor="let media of innovationItem.media" class="media-content">
-
+                        <div *ngIf="project.principalMedia?.type === 'PHOTO'" class="principal-media">
                           <img
-                            *ngIf="media.type === 'PHOTO'"
-                            [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_146,w_220/' + media.cloudinary.public_id"
-                            [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
+                            [src]="project.principalMedia.url"
+                            [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+                            width="220" height="146"
+                            class="img-responsive">
+                        </div>
 
+                        <div *ngIf="project.principalMedia?.type === 'VIDEO'" class="principal-media">
                           <iframe
-                            *ngIf="media.type === 'VIDEO'"
-                            [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+                            [src]="domSanitizer.bypassSecurityTrustResourceUrl(project.principalMedia.video.embeddableUrl)"
                             width="220" height="146">
                           </iframe>
+                        </div>
 
-                          <div class="func-button text-center">
-                            <span *ngIf="media._id !== project.principalMedia?._id && innovationCardEditingIndex === 0" [ngStyle]="{ 'color': '#97A4B1' }">
-                              <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">Make it as main media</a>
-                              /
-                            </span>
-                            <a class="text-link delete-link" (click)="deleteMedia($event, media, i)">Delete</a>
-                          </div>
+                      </div>
+                    </div>
 
+                    <!-- Secondary medias -->
+                    <div *ngIf="innovationItem.media?.length > 0" class="column col-md-12 col-lg-8 col-9 col-mx-auto">
+
+                      <p class="para">Secondary medias</p>
+
+                      <div *ngFor="let media of innovationItem.media" class="media-content">
+
+                        <img
+                          *ngIf="media.type === 'PHOTO'"
+                          [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_146,w_220/' + media.cloudinary.public_id"
+                          [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
+
+                        <iframe
+                          *ngIf="media.type === 'VIDEO'"
+                          [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+                          width="220" height="146">
+                        </iframe>
+
+                        <div class="func-button text-center">
+                          <span *ngIf="media._id !== project.principalMedia?._id && innovationCardEditingIndex === 0" [ngStyle]="{ 'color': '#97A4B1' }">
+                            <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">Make it as main media</a>
+                            /
+                          </span>
+                          <a class="text-link delete-link" (click)="deleteMedia($event, media, i)">Delete</a>
                         </div>
 
                       </div>
 
                     </div>
+
+                  </div>
+                </div>
+
+                <!-- Uploading medias -->
+                <div class="upload-container">
+
+                  <div class="image-upload-container">
+                    <app-shared-upload-zone-photo
+                      *ngIf="canEdit"
+                      [uri]="'/innovation/'+project._id+'/innovationCard/'+innovationItem._id+'/media/image'"
+                      (cbFn)="imageUploaded($event, i)">
+                    </app-shared-upload-zone-photo>
                   </div>
 
-                  <!-- Uploading medias -->
-                  <div class="upload-container">
+                  <div class="or-container">
+                    <span class="para">{{ 'COMMON.OR' | translate }}</span>
+                  </div>
 
-                    <div class="image-upload-container">
-                      <app-shared-upload-zone-photo
-                        *ngIf="canEdit"
-                        [uri]="'/innovation/'+project._id+'/innovationCard/'+innovationItem._id+'/media/image'"
-                        (cbFn)="imageUploaded($event, i)">
-                      </app-shared-upload-zone-photo>
-                    </div>
-
-                    <div class="or-container">
-                      <span class="para">{{ 'COMMON.OR' | translate }}</span>
-                    </div>
-
-                    <div class="video-upload-container">
-                      <app-shared-upload-zone-video *ngIf="canEdit" (cbFn)="newOnlineVideoToAdd($event)"></app-shared-upload-zone-video>
-                    </div>
-
+                  <div class="video-upload-container">
+                    <app-shared-upload-zone-video *ngIf="canEdit" (cbFn)="newOnlineVideoToAdd($event)"></app-shared-upload-zone-video>
                   </div>
 
                 </div>
-              </div>
 
+              </div>
             </div>
+
           </div>
         </div>
 
