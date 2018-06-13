@@ -11,10 +11,12 @@ import * as _ from 'lodash';
   templateUrl: 'shared-project-settings.component.html',
   styleUrls: ['shared-project-settings.component.scss']
 })
+
 export class SharedProjectSettingsComponent implements OnInit {
 
   @Input() settings: InnovationSettings;
   @Input() adminMode: boolean;
+
   @Output() settingsChange = new EventEmitter<any>();
 
   private _displayCountriesToExcludeSection = false;
@@ -23,28 +25,31 @@ export class SharedProjectSettingsComponent implements OnInit {
   private _displayCompanyToIncludeSection = false;
   private _displayPersonsToExcludeSection = false;
   private _displayKeywordsSection = false;
+  private _displayCompanyCommentSection = false;
 
-  constructor(private _translateService: TranslateService,
+  constructor(private translateService: TranslateService,
               private _authService: AuthService,
               public shareService: ShareService) {
   }
 
 
   ngOnInit() {
-    console.log(this.settings);
     this.adminMode = this.adminMode && this._authService.adminLevel >= 1;
+
     if (this.settings) {
-      this._displayCountriesToExcludeSection = this.settings.geography && this.settings.geography.exclude && this.settings.geography.exclude.length > 0;
+      // this._displayCountriesToExcludeSection = this.settings.geography && this.settings.geography.exclude && this.settings.geography.exclude.length > 0;
       this._displayCountriesCommentSection = this.settings.geography && this.settings.geography.comments && this.settings.geography.comments.length > 0;
-      this._displayCompanyToExcludeSection = this.settings.companies && this.settings.companies.exclude && this.settings.companies.exclude.length > 0;
-      this._displayCompanyToIncludeSection = this.settings.companies && this.settings.companies.include && this.settings.companies.include.length > 0;
+      this._displayCompanyCommentSection = this.settings.companies.description.length > 0;
+      // this._displayCompanyToExcludeSection = this.settings.companies && this.settings.companies.exclude && this.settings.companies.exclude.length > 0;
+      // this._displayCompanyToIncludeSection = this.settings.companies && this.settings.companies.include && this.settings.companies.include.length > 0;
       this._displayPersonsToExcludeSection = this.settings.professionals && this.settings.professionals.exclude && this.settings.professionals.exclude.length > 0;
       this._displayKeywordsSection = this.settings.keywords.length > 0;
     }
+
   }
 
   get lang() {
-    return this._translateService.currentLang;
+    return this.translateService.currentLang;
   }
 
   /**
@@ -56,7 +61,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   public getConfig(type: string): any {
     const _inputConfig = {
       'countries': {
-        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
+        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER',
         initialData: this.settings && this.settings.geography ? this.settings.geography.exclude || [] : [],
         type: 'countries'
       },
@@ -79,16 +84,16 @@ export class SharedProjectSettingsComponent implements OnInit {
         initialData: this.settings ? this.settings.keywords || [] : []
       },
       'domainBL': {
-        placeholder: 'Ex. apple.com',
-        initialData: this.settings && this.settings.blacklist ? _.map(this.settings.blacklist.domains, (val:string)=>{return {text:val};}) : []
+        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.BLACKLIST.DOMAINS_PLACEHOLDER',
+        initialData: this.settings && this.settings.blacklist ? _.map(this.settings.blacklist.domains, (val: string) => {return {text: val}; }) : []
       },
       'emailBL': {
-        placeholder: 'Ex. sjobs@apple.com',
-        initialData: this.settings && this.settings.blacklist ? _.map(this.settings.blacklist.emails, (val:string)=>{return {text:val};}) : []
+        placeholder: 'PROJECT_MODULE.SETUP.TARGETING.BLACKLIST.EMAILS_PLACEHOLDER',
+        initialData: this.settings && this.settings.blacklist ? _.map(this.settings.blacklist.emails, (val: string) => {return {text: val}; }) : []
       },
       'peopleBL': {
         placeholder: 'Ex. sjobs@apple.com',
-        initialData: this.settings && this.settings.blacklist ? _.map(this.settings.blacklist.people, (val:string)=>{return {text:val};}) : []
+        initialData: this.settings && this.settings.blacklist ? _.map(this.settings.blacklist.people, (val: string) => {return {text: val}; }) : []
       }
     };
     return _inputConfig[type] || {
@@ -170,6 +175,14 @@ export class SharedProjectSettingsComponent implements OnInit {
     this._displayCompanyToIncludeSection = value;
   }
 
+  set displayCompanyCommentSection(value: boolean) {
+    this._displayCompanyCommentSection = value;
+  }
+
+  get displayCompanyCommentSection(): boolean {
+    return this._displayCompanyCommentSection;
+  }
+
   /****************************************************************************
    ****************************** Professionals *******************************
    ****************************************************************************/
@@ -192,7 +205,7 @@ export class SharedProjectSettingsComponent implements OnInit {
    ****************************************************************************/
 
   get comments(): string {
-    return this.settings ? this.settings.comments : "";
+    return this.settings ? this.settings.comments : '';
   }
 
   set comments(value: string) {
@@ -218,12 +231,12 @@ export class SharedProjectSettingsComponent implements OnInit {
    ****************************************************************************/
 
   public addDomainToExclude(event: {value: Array<string>}): void {
-    this.settings.blacklist.domains = _.map(event.value, (val:any)=>{ return val['text']; });
+    this.settings.blacklist.domains = _.map(event.value, (val: any) => { return val['text']; });
     this.updateSettings();
   }
 
   public addEMailToExclude(event: {value: Array<string>}): void {
-    this.settings.blacklist.emails = _.map(event.value, (val:any)=>{ return val['text']; });
+    this.settings.blacklist.emails = _.map(event.value, (val: any) => { return val['text']; });
     this.updateSettings();
   }
 
@@ -233,4 +246,5 @@ export class SharedProjectSettingsComponent implements OnInit {
   public updateSettings() {
     this.settingsChange.emit(this.settings);
   }
+
 }

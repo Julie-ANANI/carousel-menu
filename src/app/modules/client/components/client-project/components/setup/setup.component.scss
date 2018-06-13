@@ -1,6 +1,21 @@
 #setup-project {
   padding-top: 0;
 
+  .message-wrapper {
+    padding-top: 50px;
+
+    .message {
+      background-color: #2ECC71;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border-radius: 5px;
+    }
+
+  }
+
   .row-1 {
     display: flex;
     flex-wrap: wrap;
@@ -132,6 +147,10 @@
 
   .row-1 {
     flex-wrap: unset !important;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 11;
 
     .function-button {
       justify-content: flex-end !important;

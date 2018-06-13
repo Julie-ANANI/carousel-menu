@@ -8,12 +8,12 @@ export const PITCH = {
     'PROJECT_IN_OTHER_LANG': 'add project in',
     'MODAL': {
       'TITLE': 'Confirmation Board',
-      'CONTENT': 'Are you sure you want to send your project to validation?'
+      'CONTENT': 'Do you want to send your project to validation?'
     },
     'MODAL_DELETE': {
       'TITLE': 'Delete Board',
       'CONTENT': {
-        'A' : 'Are you sure you want to delete your project in ',
+        'A' : 'Do you want to delete your project in',
         'B' : 'language?'
       }
     },

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
@@ -16,6 +16,7 @@ const DEFAULT_TAB = 'pitch';
 export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
+  @Input() projectStatus: string;
 
   private _changesSaved: boolean;
   private _saveChanges: boolean;
@@ -34,24 +35,25 @@ export class SetupProjectComponent implements OnInit {
     this._saveChanges = false;
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
+
+    this.projectStatus = this.project.status;
+    console.log(this.projectStatus);
   }
 
   updateSettings(value: InnovationSettings): void {
     this.project.settings = value;
+    this._saveChanges = true;
+    this._saveButtonClass = 'save-project';
   }
 
   updateInnovation(value: Innovation): void {
-    console.log('update');
     this.project = value;
-    console.log(this.project);
   }
 
   saveProject(event: Event): void {
     event.preventDefault();
 
      if (this._saveChanges) {
-       console.log('save');
-       console.log(this.project);
         this.innovationService.save(this.project._id, this.project).first()
           .subscribe(data => {
             this.project = data;
@@ -84,8 +86,9 @@ export class SetupProjectComponent implements OnInit {
     this.innovationService.submitProjectToValidation(this.project._id)
       .first()
       .subscribe(data => {
-        this.project.status = 'SUBMITTED';
-        this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
+       this.projectStatus = this.project.status = 'SUBMITTED';
+       this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
+       this.router.navigate(['projects']);
       }, err => {
         this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });

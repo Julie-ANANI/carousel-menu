@@ -25,14 +25,10 @@ export const clientProjectRoutes: any = [
     children: [
       { path: 'new', component: NewProjectComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       {
-        path: ':projectId',
-        resolve: { innovation : InnovationResolver },
-        runGuardsAndResolvers: 'always',
-        component: ClientProjectComponent,
+        path: ':projectId', resolve: { innovation : InnovationResolver }, runGuardsAndResolvers: 'always', component: ClientProjectComponent,
         children: [
           {
-            path: 'setup',
-            component: SetupProjectComponent,
+            path: 'setup', component: SetupProjectComponent,
             children: [
               {
                 path: 'pitch', component: PitchComponent, canActivate: [AuthGuard], pathMatch: 'full'

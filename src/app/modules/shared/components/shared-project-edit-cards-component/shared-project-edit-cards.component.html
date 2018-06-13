@@ -306,14 +306,29 @@
               <span class="num-rect">9</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.ADD' | translate }}</span>
               <div class="pd-label">
 
-                <!-- Media display -->
-                <div class="media-disp-container">
-                  <div class="columns col-gapless">
+                      <!-- Main media -->
+                      <div class="column col-md-12 col-lg-4 col-3 col-mr-auto">
 
-                    <!-- Main media -->
-                    <div class="column col-md-12 col-lg-4 col-3 col-mr-auto">
+                        <div>
+                          <span class="para">Main media</span>
+                          <div class="tooltips"><i class="far fa-question-circle"></i>
+                            <span class="tooltip-text">{{ "" | translate }}</span>
+                          </div>
 
-                      <div *ngIf="project.principalMedia">
+                          <div *ngIf="innovationItem.principalMedia?.type === 'PHOTO'" class="principal-media">
+                            <img
+                              [src]="innovationItem.principalMedia.url"
+                              [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+                              width="220" height="146"
+                              class="img-responsive">
+                          </div>
+
+                          <div *ngIf="innovationItem.principalMedia?.type === 'VIDEO'" class="principal-media">
+                            <iframe
+                              [src]="domSanitizer.bypassSecurityTrustResourceUrl(innovationItem.principalMedia.video.embeddableUrl)"
+                              width="220" height="146">
+                            </iframe>
+                          </div>
 
                         <span class="para">Main media</span>
                         <div class="tooltips"><i class="far fa-question-circle"></i>
@@ -337,6 +352,13 @@
 
                       </div>
                     </div>
+                          <div class="func-button text-center">
+                            <span *ngIf="media._id !== project.principalMedia?._id" [ngStyle]="{ 'color': '#97A4B1' }">
+                              <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">Make it as main media</a>
+                              /
+                            </span>
+                            <a class="text-link delete-link" (click)="deleteMedia($event, media, i)">Delete</a>
+                          </div>
 
                     <!-- Secondary medias -->
                     <div *ngIf="innovationItem.media?.length > 0" class="column col-md-12 col-lg-8 col-9 col-mx-auto">

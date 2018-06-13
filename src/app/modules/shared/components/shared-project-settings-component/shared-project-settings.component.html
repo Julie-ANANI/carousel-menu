@@ -1,160 +1,268 @@
-<div>
-  <!-- GEOGRAPHY -->
-  <div class="form-group">
-    <div class="col-4">
-      <label class="form-label">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY' | translate }}</label>
-    </div>
-    <div class="col-8">
-      <app-worldmap (updateContinent)="continentModificationDrain($event)"
-                    [initialConfiguration]="continentTarget"
-                    [width]="'400px'"
-                    [canEdit]="true"></app-worldmap>
-      <p><a (click)="(displayCountriesToExcludeSection = !displayCountriesToExcludeSection) && $event.preventDefault()" class="c-hand">
-        {{ 'PROJECT_MODULE.SETUP.TARGETING.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
-        <i class="icon icon-arrow-right"></i>
-      </a></p>
+<div class="section-container" id="projectSetting">
+  <div class="columns">
+    <div class="column col-12">
 
-      <div *ngIf="displayCountriesToExcludeSection">
-        <app-autocomplete-input (update)="addCountryToExclude($event)"
-                                [canEdit]="true"
-                                [config]="getConfig('countries')"></app-autocomplete-input>
+      <!-- Geography -->
+      <div class="geography-wrapper">
+
+        <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.LABEL' | translate }}</span>
+
+        <div class="pd-input">
+          <app-worldmap
+            (updateContinent)="continentModificationDrain($event)"
+            [initialConfiguration]="continentTarget"
+            [width]="'400px'"
+            [canEdit]="true">
+          </app-worldmap>
+        </div>
+
       </div>
-      <p><a (click)="(displayCountriesCommentSection = !displayCountriesCommentSection) && $event.preventDefault()" class="c-hand">
-        {{ 'PROJECT_MODULE.SETUP.TARGETING.SPECIFIC_REQUEST' | translate }}
-        <i class="icon icon-arrow-right"></i>
-      </a></p>
 
-      <div *ngIf="displayCountriesCommentSection">
-        <textarea class="form-input" id="countries-comments"
-                  [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
-                  rows="5" [(ngModel)]="settings.geography.comments" (change)="updateSettings()"></textarea>
-      </div>
-    </div>
-  </div>
+      <div class="columns">
 
-  <!-- ACTIVITY SECTORS -->
-  <div class="form-group">
-    <div class="col-4">
-      <label class="form-label" >
-        {{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}
-      </label>
-    </div>
-    <div class="col-8">
-        <textarea class="form-input" id="innovation-sector"
-                  [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.MARKET.PLACEHOLDER' | translate"
-                  rows="5" [(ngModel)]="settings.market.comments" (change)="updateSettings()"></textarea>
-    </div>
-  </div>
+        <!-- Question wrapper -->
+        <div class="column col-md-12 col-6 ques-wrapper">
 
-  <!-- TYPES OF ENTERPRISES -->
-  <div class="form-group">
-    <div class="col-4">
-      <label class="form-label" for="innovation-companies">
-        {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.LABEL' | translate }}</label>
-    </div>
-    <div class="col-8">
-        <textarea class="form-input" id="innovation-companies"
-                  [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.PLACEHOLDER' | translate"
-                  rows="5" [(ngModel)]="settings.companies.description" (change)="updateSettings()"></textarea>
+          <!-- Geography input -->
+          <div class="pd-para">
+            <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</span>
+            <div class="pd-input">
+              <app-autocomplete-input
+                (update)="addCountryToExclude($event)"
+                [canEdit]="true"
+                [config]="getConfig('countries')">
+              </app-autocomplete-input>
+            </div>
+          </div>
 
-      <p><a (click)="(displayCompanyToExcludeSection = !displayCompanyToExcludeSection) && $event.preventDefault()" class="c-hand text-error">
-        {{'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a></p>
+          <p class="pd-para">
+             <span class="text-link" (click)="(displayCountriesCommentSection = !displayCountriesCommentSection) && $event.preventDefault()">
+                {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.COMMENT' | translate }}
+                <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayCountriesCommentSection, 'icon-arrow-right' : !displayCountriesCommentSection  }"></i>
+              </span>
+          </p>
+          <div *ngIf="displayCountriesCommentSection" class="pd-input">
+              <textarea
+                class="form-input-default"
+                id="countries-comments"
+                [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
+                rows="5"
+                [(ngModel)]="settings.geography.comments"
+                (change)="updateSettings()">
+              </textarea>
+          </div>
 
-      <div *ngIf="displayCompanyToExcludeSection">
-        <app-autocomplete-input (update)="addCompanyToExclude($event)"
-                                [canEdit]="true"
-                                [config]="getConfig('excludedCompanies')"></app-autocomplete-input>
-      </div>
-      <p><a (click)="(displayCompanyToIncludeSection = !displayCompanyToIncludeSection) && $event.preventDefault()" class="c-hand text-success">
-        {{'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a></p>
+          <!-- Activity sectors -->
+          <div class="activity-sector-wrapper pd-ques">
+            <span class="num-rect">2</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}</span>
+            <div class="pd-input">
+              <textarea
+                class="form-input-default"
+                id="innovation-sector"
+                [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.MARKET.PLACEHOLDER' | translate"
+                rows="5"
+                [(ngModel)]="settings.market.comments"
+                (change)="updateSettings()">
+              </textarea>
+            </div>
+          </div>
 
-      <div *ngIf="displayCompanyToIncludeSection">
-        <app-autocomplete-input (update)="addCompanyToInclude($event)"
-                                [canEdit]="true"
-                                [config]="getConfig('includedCompanies')"></app-autocomplete-input>
-      </div>
-    </div>
-  </div>
+          <!-- Types of enterprises -->
+          <div class="enterprises-wrapper pd-ques">
 
-  <!-- PROFESSIONALS PROFILES -->
-  <div class="form-group">
-    <div class="col-4">
-      <label class="form-label" for="innovation-pros">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate
-        }}</label>
-    </div>
-    <div class="col-8">
-      <textarea class="form-input" id="innovation-pros"
+            <span class="num-rect">3</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.LABEL' | translate }}</span>
+
+            <div class="pd-para">
+              <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}</span>
+              <div class="pd-input">
+                <app-autocomplete-input
+                  (update)="addCompanyToInclude($event)"
+                  [canEdit]="true"
+                  [config]="getConfig('includedCompanies')">
+                </app-autocomplete-input>
+              </div>
+            </div>
+
+            <div class="pd-para">
+              <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}</span>
+              <div class="pd-input">
+                <app-autocomplete-input
+                (update)="addCompanyToExclude($event)"
+                [canEdit]="true"
+                [config]="getConfig('excludedCompanies')">
+                </app-autocomplete-input>
+              </div>
+            </div>
+
+            <p class="pd-para">
+              <span class="text-link" (click)="(displayCompanyCommentSection = !displayCompanyCommentSection) && $event.preventDefault()">
+                {{'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.COMMENT' | translate }}
+                <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayCompanyCommentSection, 'icon-arrow-right' : !displayCompanyCommentSection  }"></i>
+              </span>
+            </p>
+            <div *ngIf="displayCompanyCommentSection" class="pd-input">
+              <textarea
+                class="form-input-default"
+                id="innovation-companies"
+                [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.PLACEHOLDER' | translate"
+                rows="5"
+                [(ngModel)]="settings.companies.description"
+                (change)="updateSettings()">
+              </textarea>
+            </div>
+
+          </div>
+
+          <!-- Professional profiles -->
+          <div class="professional-wrapper pd-ques">
+
+            <span class="num-rect">4</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate }}</span>
+
+            <div class="pd-input">
+              <textarea
+                class="form-input-default"
+                id="innovation-pros"
                 [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.PLACEHOLDER' | translate"
-                rows="5" [(ngModel)]="settings.professionals.description" (change)="updateSettings()"></textarea>
-      <a (click)="(displayPersonsToExcludeSection = !displayPersonsToExcludeSection) && $event.preventDefault()" class="c-hand">
-        {{'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }} <i class="icon icon-arrow-right"></i></a>
+                rows="5"
+                [(ngModel)]="settings.professionals.description"
+                (change)="updateSettings()">
+              </textarea>
+            </div>
 
-      <div *ngIf="displayPersonsToExcludeSection">
-        <app-input-list (update)="addPeopleToExclude($event)"
-                        [canEdit]="true"
-                        [config]="getConfig('excludedPeople')"></app-input-list>
+            <p class="pd-para">
+              <span class="text-link" (click)="(displayPersonsToExcludeSection = !displayPersonsToExcludeSection) && $event.preventDefault()">
+                {{'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}
+                <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayPersonsToExcludeSection, 'icon-arrow-right' : !displayPersonsToExcludeSection  }"></i>
+              </span>
+            </p>
+            <div *ngIf="displayPersonsToExcludeSection" class="pd-input">
+              <app-input-list
+                (update)="addPeopleToExclude($event)"
+                [canEdit]="true"
+                [config]="getConfig('excludedPeople')">
+              </app-input-list>
+            </div>
+
+          </div>
+
+          <!-- Keywords and other stuffs -->
+          <div class="comment-wrapper pd-ques">
+
+            <span class="num-rect">5</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</span>
+
+            <div class="pd-input">
+              <textarea
+                 class="form-input-default"
+                 id="other-comments"
+                 [(ngModel)]="comments"
+                 [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.OTHER.PLACEHOLDER' | translate"
+                 rows="5"
+                 [(ngModel)]="settings.comments"
+                 (change)="updateSettings()">
+              </textarea>
+            </div>
+
+            <div *ngIf="adminMode">
+              <p class="pd-para">
+                <span class="text-link" (click)="(displayKeywordsSection = !displayKeywordsSection) && $event.preventDefault()">
+                  {{ 'PROJECT_MODULE.SETUP.TARGETING.KEYWORDS.LABEL' | translate }}
+                  <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayKeywordsSection, 'icon-arrow-right' : !displayKeywordsSection  }"></i>
+                </span>
+              </p>
+              <div *ngIf="displayKeywordsSection" class="pd-input">
+                <app-input-list
+                  (update)="addKeywordToExclude($event)"
+                  [canEdit]="true"
+                  id="keywords"
+                  [config]="getConfig('keywords')">
+                </app-input-list>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Blacklist domains -->
+          <div *ngIf="adminMode" class="blacklist-domain-wrapper pd-ques">
+            <span class="num-rect">6</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.BLACKLIST.DOMAINS' | translate }}</span>
+            <div class="pd-input" [ngStyle]=" { 'padding-left': '0' }">
+              <app-input-list
+                (update)="addDomainToExclude($event)"
+                [canEdit]="true"
+                id="domain-to-exclude"
+                [config]="getConfig('domainBL')">
+              </app-input-list>
+            </div>
+          </div>
+
+          <!-- Blacklist emails -->
+          <div *ngIf="adminMode" class="blacklist-email-wrapper pd-ques">
+            <span class="num-rect">7</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.BLACKLIST.EMAILS' | translate }}</span>
+            <div class="pd-input" [ngStyle]=" { 'padding-left': '0' }">
+              <app-input-list
+                (update)="addEMailToExclude($event)"
+                [canEdit]="true"
+                id="emails-to-exclude"
+                [config]="getConfig('emailBL')">
+              </app-input-list>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Help wrapper -->
+        <div class="column col-6 help-wrapper">
+          <div class="bot-wrapper text-center">
+            <span class="bot-text">{{'PROJECT_MODULE.SETUP.SURVEY.NOQUIZ' | translate}}</span>
+            <br>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+            <div>
+              <img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot">
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- KEYWORDS AND OTHER STUFF -->
-  <div class="form-group">
-    <div class="col-4">
-      <label class="form-label" for="other-comments">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</label>
-    </div>
-    <div class="col-8">
-        <textarea class="form-input" id="other-comments"
-                  [(ngModel)]="comments"
-                  [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.OTHER.PLACEHOLDER' | translate"
-                  rows="5"  [(ngModel)]="settings.comments"(change)="updateSettings()"></textarea>
     </div>
   </div>
-  <div class="form-group" *ngIf="adminMode">
-    <div class="col-4">
-      <label class="form-label" for="keywords">Mots clés</label>
-    </div>
-    <div class="col-8">
-      <a (click)="(displayKeywordsSection = !displayKeywordsSection) && $event.preventDefault()" class="c-hand">{{
-        'PROJECT_MODULE.SETUP.TARGETING.KEYWORDS.LABEL' | translate }} <i class="icon icon-arrow-right"></i></a>
+</div>
 
-      <div *ngIf="displayKeywordsSection">
-        <app-input-list (update)="addKeywordToExclude($event)"
-                        [canEdit]="true"
-                        id="keywords"
-                        [config]="getConfig('keywords')"></app-input-list>
-      </div>
-    </div>
-  </div>
 
-  <!-- BLACKLIST -->
-  <div *ngIf="adminMode" class="form-group">
-    <div class="col-4">
-      <label class="form-label" for="domain-to-exclude">Blacklist domaines</label>
-    </div>
-    <div class="col-8">
-      Noms de domains à exclure
-      <app-input-list (update)="addDomainToExclude($event)"
-                      [canEdit]="true"
-                      id="domain-to-exclude"
-                      [config]="getConfig('domainBL')"></app-input-list>
-    </div>
-  </div>
-  <div *ngIf="adminMode" class="form-group">
-    <div class="col-4">
-      <label class="form-label" for="emails-to-exclude">Blacklist emails</label>
-    </div>
-    <div class="col-8">
-      E-mails à exclure
-      <app-input-list (update)="addEMailToExclude($event)"
-                      [canEdit]="true"
-                      id="emails-to-exclude"
-                      [config]="getConfig('emailBL')"></app-input-list>
-    </div>
-  </div>
-
-  <!--Personnes à exclure
+<!--Personnes à exclure
   <app-input-list (update)="addKeywordToExclude($event)"
                   [canEdit]="true"
                   [config]="getConfig('peopleBL')"></app-input-list>-->
 
-</div>
+<!--<div class="columns">
+
+         &lt;!&ndash;<div class="column col-md-12 col-6">
+           <p class="pd-para">
+            <span class="text-link" (click)="(displayCountriesToExcludeSection = !displayCountriesToExcludeSection) && $event.preventDefault()">
+               {{ 'PROJECT_MODULE.SETUP.TARGETING.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
+               <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayCountriesToExcludeSection, 'icon-arrow-right' : !displayCountriesToExcludeSection  }"></i>
+             </span>
+           </p>
+
+         </div>&ndash;&gt;
+
+         &lt;!&ndash;<div class="column col-md-12 col-6">
+           <p class="pd-para">
+            <span class="text-link" (click)="(displayCountriesCommentSection = !displayCountriesCommentSection) && $event.preventDefault()">
+               {{ 'PROJECT_MODULE.SETUP.TARGETING.SPECIFIC_REQUEST' | translate }}
+               <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayCountriesCommentSection, 'icon-arrow-right' : !displayCountriesCommentSection  }"></i>
+             </span>
+           </p>
+           <div *ngIf="displayCountriesCommentSection" class="pd-input">
+             <textarea
+               class="form-input-default"
+               id="countries-comments"
+               [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
+               rows="5"
+               [(ngModel)]="settings.geography.comments"
+               (change)="updateSettings()">
+             </textarea>
+           </div>
+         </div>
+
+       </div>&ndash;&gt;
+
+     </div>-->
