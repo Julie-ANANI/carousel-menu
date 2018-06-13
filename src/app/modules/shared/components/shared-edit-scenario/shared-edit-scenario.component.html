@@ -27,9 +27,11 @@
       <i class="fas fa-check" *ngIf="_isModified"></i>
       <i class="fas fa-times" *ngIf="!_isModified"></i>
     </div>
+    <!--
     <button type="button" class="btn btn-outline-primary" (click)="areYouSureYouWantToRemoveMe()" *ngIf="inCampaign">
       <i class="fa fa-trash"></i>
     </button>
+    -->
   </div>
 
   <div id="collapseMails" [hidden]="isCollapsed" *ngIf="inCampaign"> <!-- Todo: Changer l'event.-->
