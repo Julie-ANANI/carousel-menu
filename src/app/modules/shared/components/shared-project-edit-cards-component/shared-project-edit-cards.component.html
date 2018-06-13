@@ -213,8 +213,7 @@
                 type="radio"
                 name="projectStatus"
                 [(ngModel)]="project.projectStatus"
-                [value]="0"
-                (click)="formProgress($event, 0)">
+                [value]="0">
               <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.0' | translate }}
             </label>
             <label class="form-radio">
@@ -222,8 +221,7 @@
                 type="radio"
                 name="projectStatus"
                 [(ngModel)]="project.projectStatus"
-                [value]="1"
-                (click)="formProgress($event, 1)">
+                [value]="1">
               <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.1' | translate }}
             </label>
             <label class="form-radio">
@@ -231,8 +229,7 @@
                 type="radio"
                 name="projectStatus"
                 [(ngModel)]="project.projectStatus"
-                [value]="2"
-                (click)="formProgress($event, 2)">
+                [value]="2">
               <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.2' | translate }}
             </label>
           </div>
@@ -250,8 +247,7 @@
                 type="radio"
                 name="patented"
                 [(ngModel)]="project.patented"
-                [value]="false"
-                (click)="formProgress($event, false)">
+                [value]="false">
               <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
             </label>
             <label class="form-radio">
@@ -259,8 +255,7 @@
                 type="radio"
                 name="patented"
                 [(ngModel)]="project.patented"
-                [value]="true"
-                (click)="formProgress($event, true)">
+                [value]="true">
               <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
             </label>
           </div>
@@ -283,8 +278,7 @@
                 type="radio"
                 name="external_diffusion"
                 [(ngModel)]="project.external_diffusion"
-                [value]="false"
-                (click)="formProgress($event, false)">
+                [value]="false">
               <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
             </label>
             <label class="form-radio">
@@ -292,8 +286,7 @@
                 type="radio"
                 name="external_diffusion"
                 [(ngModel)]="project.external_diffusion"
-                [value]="true"
-                (click)="formProgress($event, true)">
+                [value]="true">
               <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
             </label>
           </div>
@@ -306,59 +299,37 @@
               <span class="num-rect">9</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.ADD' | translate }}</span>
               <div class="pd-label">
 
+                  <!-- Media display -->
+                  <div class="media-disp-container">
+                    <div class="columns col-gapless">
+
                       <!-- Main media -->
                       <div class="column col-md-12 col-lg-4 col-3 col-mr-auto">
 
                         <div>
-                          <span class="para">Main media</span>
-                          <div class="tooltips"><i class="far fa-question-circle"></i>
-                            <span class="tooltip-text">{{ "" | translate }}</span>
-                          </div>
-
-                          <div *ngIf="innovationItem.principalMedia?.type === 'PHOTO'" class="principal-media">
-                            <img
-                              [src]="innovationItem.principalMedia.url"
-                              [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
-                              width="220" height="146"
-                              class="img-responsive">
-                          </div>
-
-                          <div *ngIf="innovationItem.principalMedia?.type === 'VIDEO'" class="principal-media">
-                            <iframe
-                              [src]="domSanitizer.bypassSecurityTrustResourceUrl(innovationItem.principalMedia.video.embeddableUrl)"
-                              width="220" height="146">
-                            </iframe>
-                          </div>
 
                         <span class="para">Main media</span>
                         <div class="tooltips"><i class="far fa-question-circle"></i>
                           <span class="tooltip-text">{{ "" | translate }}</span>
                         </div>
 
-                        <div *ngIf="project.principalMedia?.type === 'PHOTO'" class="principal-media">
+                        <div *ngIf="innovationItem.principalMedia?.type === 'PHOTO'" class="principal-media">
                           <img
-                            [src]="project.principalMedia.url"
+                            [src]="innovationItem.principalMedia.url"
                             [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
                             width="220" height="146"
                             class="img-responsive">
                         </div>
 
-                        <div *ngIf="project.principalMedia?.type === 'VIDEO'" class="principal-media">
+                        <div *ngIf="innovationItem.principalMedia?.type === 'VIDEO'" class="principal-media">
                           <iframe
-                            [src]="domSanitizer.bypassSecurityTrustResourceUrl(project.principalMedia.video.embeddableUrl)"
+                            [src]="domSanitizer.bypassSecurityTrustResourceUrl(innovationItem.principalMedia.video.embeddableUrl)"
                             width="220" height="146">
                           </iframe>
                         </div>
 
                       </div>
                     </div>
-                          <div class="func-button text-center">
-                            <span *ngIf="media._id !== project.principalMedia?._id" [ngStyle]="{ 'color': '#97A4B1' }">
-                              <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">Make it as main media</a>
-                              /
-                            </span>
-                            <a class="text-link delete-link" (click)="deleteMedia($event, media, i)">Delete</a>
-                          </div>
 
                     <!-- Secondary medias -->
                     <div *ngIf="innovationItem.media?.length > 0" class="column col-md-12 col-lg-8 col-9 col-mx-auto">
@@ -379,19 +350,20 @@
                         </iframe>
 
                         <div class="func-button text-center">
-                          <span *ngIf="media._id !== project.principalMedia?._id && innovationCardEditingIndex === 0" [ngStyle]="{ 'color': '#97A4B1' }">
-                            <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">Make it as main media</a>
-                            /
-                          </span>
+                            <span *ngIf="media._id !== innovationItem.principalMedia?._id" [ngStyle]="{ 'color': '#97A4B1' }">
+                              <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">Make it as main media</a>
+                              /
+                            </span>
                           <a class="text-link delete-link" (click)="deleteMedia($event, media, i)">Delete</a>
                         </div>
 
                       </div>
-
                     </div>
-
+                    </div>
                   </div>
+
                 </div>
+              </div>
 
                 <!-- Uploading medias -->
                 <div class="upload-container">
@@ -411,14 +383,9 @@
                   <div class="video-upload-container">
                     <app-shared-upload-zone-video *ngIf="canEdit" (cbFn)="newOnlineVideoToAdd($event)"></app-shared-upload-zone-video>
                   </div>
-
                 </div>
-
-              </div>
             </div>
-
           </div>
-        </div>
 
       </form>
 

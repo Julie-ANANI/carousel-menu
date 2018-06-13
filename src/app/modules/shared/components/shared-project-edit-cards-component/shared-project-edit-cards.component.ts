@@ -70,7 +70,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     */
 
   }
-  
+
 /*
   private _buildForm(): void {
     this.innovationData = this.formBuilder.group({
@@ -171,17 +171,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   setMediaAsPrimary (event: Event, media: Media, index: number): void {
     event.preventDefault();
 
-
-    this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
-
     this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[index]._id, media._id)
       .first().subscribe((res: Innovation) => {
-        this.setAsPrincipal(this.project.innovationCards[index]._id);
-
-
+        this.project.innovationCards[index].principalMedia = media;
         this.projectChange.emit(this.project);
-        this.saveChanges.emit(true);
       });
 
   }
