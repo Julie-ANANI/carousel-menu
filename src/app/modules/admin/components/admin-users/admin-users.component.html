@@ -14,5 +14,7 @@
                         [config]="config"
                         (configChange)="loadUsers($event)"
                         (editRow)="editUser($event)"
-                        (removeRows)="removeUsers($event)"></app-shared-table>
+                        (removeRows)="removeUsers($event)"
+                        (performAction)="performActions($event)">
+      </app-shared-table>
 </div>

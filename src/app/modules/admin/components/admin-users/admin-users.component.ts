@@ -14,6 +14,7 @@ import {Types} from '../../../shared/components/shared-table/models/types';
 export class AdminUsersComponent implements OnInit {
 
   private _users: Array<User> = [];
+  private _actions: string[] = [];
   private _selfId = '';
   private _total = 0;
   private _config = {
@@ -33,6 +34,7 @@ export class AdminUsersComponent implements OnInit {
   ngOnInit() {
     this._titleService.setTitle('USERS.TITLE');
     this._selfId = this._authService.userId;
+    this._actions = ['Action1', 'Action2', 'Action3'];
     this.loadUsers(this._config);
   }
 
@@ -45,6 +47,7 @@ export class AdminUsersComponent implements OnInit {
       _columns: ['firstName', 'lastName', 'jobTitle', 'companyName'],
       _columnsNames: ['FIRSTNAME', 'LASTNAME', 'JOB', 'COMPANY'],
       _types: [Types.TEXT, Types.TEXT, Types.TEXT, Types.TEXT],
+      _actions: this._actions
     };
   }
 
@@ -87,6 +90,12 @@ export class AdminUsersComponent implements OnInit {
 
   removeUsers(usersToRemove: User[]) {
     console.log(usersToRemove);
+  }
+
+  performActions(action: any) {
+    this._actions.find(value => value === action._action)
+      ? console.log('Execution de l\'action ' + action._action + ' sur les lignes ' + JSON.stringify(action._rows, null, 2))
+      : console.log('l\'Action' + action + 'n\'existe pas !');
   }
 
   set config(value: any) { this._config = value; }
