@@ -27,9 +27,9 @@ export class SharedTableComponent {
   @Output() performAction: EventEmitter<any> = new EventEmitter<any>();
 
   private _title = 'Résultats';
-  private _isSelectable = true;
-  private _isEditable = true;
-  private _isDeletable = true;
+  private _isSelectable = false;
+  private _isEditable = false;
+  private _isDeletable = false;
   private _content: Row[] = [];
   private _total = 0;
   private _columns: string[] = [];
@@ -59,12 +59,28 @@ export class SharedTableComponent {
       }
     });
 
-    this._isSelectable = value._isSelectable || true;
-    this._isEditable = value._isEditable || true;
-    this._isDeletable = value._isDeletable || true;
+    this._isSelectable = value._isSelectable || false;
+    this._isEditable = value._isEditable || false;
+    this._isDeletable = value._isDeletable || false;
     this._total = value._total;
-    this._columns = value._columns;
-    this._columnsNames = value._columnsNames || value._columns;
+
+    // Si on a plus de 10 colonnes, on ne prends que les 10 premières
+    value._columns.length > 10
+      ? this._columns = value._columns.slice(0, 10)
+      : this._columns = value._columns;
+
+    // On regarde si il existe des noms pour les colonnes
+    // Si oui on les stocke (uniquement les 10 premiers champs (si il y en a plus que 10)
+    // Sinon on va afficher les noms des attributs en majuscule
+    if (value._columnsNames) {
+      value._columnsNames.length > 10
+        ? this._columnsNames = value._columnsNames.slice(0, 10)
+        : this._columnsNames = value._columnsNames
+    } else {
+      this._columnsNames = this._columns.map(value1 => {return value1.toUpperCase()});
+    }
+
+
     this._types = value._types;
     this._actions = value._actions || [];
   }
