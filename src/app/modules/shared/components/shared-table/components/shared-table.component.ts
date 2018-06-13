@@ -34,7 +34,7 @@ export class SharedTableComponent {
   private _total = 0;
   private _columns: string[] = [];
   private _columnsNames: string[] = [];
-  private _types: Types[];
+  private _types: Types[] = [];
   private _actions: string[] = [];
   private _selectedRows = 0;
 
@@ -80,8 +80,19 @@ export class SharedTableComponent {
       this._columnsNames = this._columns.map(value1 => {return value1.toUpperCase()});
     }
 
+    // On va chercher pour chaque string contenu dans value._types si il correspond à un attribut Types
+    // Si oui, on insère le type correspondant
+    // Si non, on insère un type TEXT
+    for (const type of value._types) {
+      let typeKey = 'TEXT';
+      for (const typesKey in Types) {
+        if (type === typesKey) {
+          typeKey = typesKey;
+        }
+      }
+      this._types.push(Types[typeKey]);
+    }
 
-    this._types = value._types;
     this._actions = value._actions || [];
   }
 

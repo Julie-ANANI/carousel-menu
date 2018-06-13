@@ -4,7 +4,6 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
 import { Table } from '../../../shared/components/shared-table/models/table';
-import {Types} from '../../../shared/components/shared-table/models/types';
 
 @Component({
   selector: 'app-admin-users',
@@ -49,7 +48,7 @@ export class AdminUsersComponent implements OnInit {
       _isDeletable: true,
       _columns: ['firstName', 'lastName', 'jobTitle', 'companyName'],
       _columnsNames: ['FIRSTNAME', 'LASTNAME', 'JOB', 'COMPANY'],
-      _types: [Types.TEXT, Types.TEXT, Types.TEXT, Types.TEXT],
+      _types: ['TEXT', 'TEXT', 'TEXTE', 'TEXT'],
       _actions: this._actions
     };
   }
