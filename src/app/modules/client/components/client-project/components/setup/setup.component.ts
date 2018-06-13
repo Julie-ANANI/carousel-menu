@@ -16,6 +16,7 @@ const DEFAULT_TAB = 'pitch';
 export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
+  @Input() projectStatus: string;
 
   private _changesSaved: boolean;
   private _saveChanges: boolean;
@@ -34,6 +35,9 @@ export class SetupProjectComponent implements OnInit {
     this._saveChanges = false;
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
+
+    this.projectStatus = this.project.status;
+    console.log(this.project);
   }
 
   updateSettings(value: InnovationSettings): void {
@@ -50,8 +54,6 @@ export class SetupProjectComponent implements OnInit {
     event.preventDefault();
 
      if (this._saveChanges) {
-       console.log('save');
-       console.log(this.project);
         this.innovationService.save(this.project._id, this.project).first()
           .subscribe(data => {
             this.project = data;
@@ -84,8 +86,9 @@ export class SetupProjectComponent implements OnInit {
     this.innovationService.submitProjectToValidation(this.project._id)
       .first()
       .subscribe(data => {
-        this.project.status = 'SUBMITTED';
-        this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
+       this.projectStatus = this.project.status = 'SUBMITTED';
+       this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
+       this.router.navigate(['projects']);
       }, err => {
         this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });

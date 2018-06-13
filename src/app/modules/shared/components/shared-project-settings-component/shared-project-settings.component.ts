@@ -16,6 +16,7 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   @Input() settings: InnovationSettings;
   @Input() adminMode: boolean;
+  @Input() projectStatus: string;
 
   @Output() settingsChange = new EventEmitter<any>();
 
@@ -45,6 +46,8 @@ export class SharedProjectSettingsComponent implements OnInit {
       this._displayPersonsToExcludeSection = this.settings.professionals && this.settings.professionals.exclude && this.settings.professionals.exclude.length > 0;
       this._displayKeywordsSection = this.settings.keywords.length > 0;
     }
+
+    console.log(this.projectStatus);
 
   }
 

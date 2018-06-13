@@ -61,7 +61,11 @@
 
         <!-- Targeting -->
         <div *ngIf="currentTab === 'targeting'">
-          <app-project-targeting [project]="project" (newSettings)="updateSettings($event)"></app-project-targeting>
+          <app-project-targeting
+            [project]="project"
+            (newSettings)="updateSettings($event)"
+            [projectStatus]="projectStatus">
+          </app-project-targeting>
         </div>
         <!-- Survey -->
         <div *ngIf="currentTab === 'survey'">

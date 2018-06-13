@@ -1,5 +1,6 @@
 <div class="targeting">
   <app-shared-project-settings
+    [projectStatus]="projectStatus"
     [settings]="project.settings"
     (settingsChange)="updateSettings($event)"
     [adminMode]="false">

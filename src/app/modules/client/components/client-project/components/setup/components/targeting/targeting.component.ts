@@ -7,9 +7,12 @@ import { InnovationSettings } from '../../../../../../../../models/innov-setting
   templateUrl: 'targeting.component.html',
   styleUrls: ['targeting.component.scss']
 })
+
 export class TargetingComponent {
 
   @Input() project: Innovation;
+  @Input() projectStatus: string;
+
   @Output() newSettings = new EventEmitter<InnovationSettings>();
 
   constructor() {}
