@@ -5,7 +5,7 @@ export interface InnovCard {
   readonly innovation_reference?: string;
   readonly title?: string;
   readonly lang: string;
-  readonly media?: Array<Media>;
+  media?: Array<Media>;
   principalMedia?: Media;
   readonly principalMediaIdx?: number;
   readonly summary?: string;

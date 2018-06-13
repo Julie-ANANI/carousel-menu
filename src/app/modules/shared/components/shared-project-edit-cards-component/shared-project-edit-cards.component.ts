@@ -150,9 +150,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     if (this.innovationCardEditingIndex === 0) {
       if (this.project.principalMedia === null || this.project.principalMedia === undefined) {
        this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id, this.project.innovationCards[0]._id, media._id).first().subscribe((res) => {
-         this.project = res;
          this.projectChange.emit(this.project);
-         this.saveChanges.emit(true);
        });
       }
     }
@@ -163,7 +161,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.innovationService.addNewMediaVideoToInnovationCard(this.project._id,
       this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
       .first().subscribe(res => {
-        this.project = res;
+        this.project.innovationCards[this.innovationCardEditingIndex].media.push(res);
         this.projectChange.emit(this.project);
       });
   }
@@ -185,11 +183,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     this.innovationCardEditingIndex = index;
 
-    this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
-
     this.innovationService.deleteMediaOfInnovationCard(this.project._id,
-      this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
-      .first().subscribe((res: Innovation) => {
+      this.project.innovationCards[index]._id, media._id)
+      .first().subscribe((_res: Innovation) => {
+        this.project.innovationCards[index].media = this.project.innovationCards[index].media.filter((m) => m._id !== media._id);
         this.projectChange.emit(this.project);
       });
 
