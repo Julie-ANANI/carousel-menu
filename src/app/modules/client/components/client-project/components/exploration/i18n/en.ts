@@ -1,5 +1,9 @@
 export const EXPLORATION = {
-  'TITLE': 'Collecting market insights',
+  'TITLE': {
+    'EDITING': 'Market insights of your project will be available soon',
+    'SUBMITTED': 'Collecting market insights of your project'
+  },
+
   'CONTACT_BUTTON': 'Contact us',
   'STATUS_TITLE': 'Status',
   'ANALYTICS_TITLE': 'Analytics',

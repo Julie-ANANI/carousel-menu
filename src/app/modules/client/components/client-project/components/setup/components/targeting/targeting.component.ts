@@ -11,7 +11,6 @@ import { InnovationSettings } from '../../../../../../../../models/innov-setting
 export class TargetingComponent {
 
   @Input() project: Innovation;
-  @Input() projectStatus: string;
 
   @Output() newSettings = new EventEmitter<InnovationSettings>();
 
