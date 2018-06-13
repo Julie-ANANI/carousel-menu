@@ -22,13 +22,25 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   private _campaign: Campaign;
 
   private _modifiedScenarios: Array<EmailScenario> ;
-  private _nameWorkflowA: string = '';
-  private _nameWorkflowB: string = '';
+  private _nameWorkflowA = '';
+  private _nameWorkflowB = '';
   private _sizeA: number;
   private _sizeB: number;
 
-  private _statsA: any;
-  private _statsB: any;
+  private _statsA: {
+    delivered: number,
+    opened: number,
+    clicked: number,
+    insights: number,
+    bounced: number
+  };
+  private _statsB: {
+    delivered: number,
+    opened: number,
+    clicked: number,
+    insights: number,
+    bounced: number
+  };
 
   form: FormGroup;
 
@@ -39,11 +51,22 @@ export class AdminCampaignAbtestingComponent implements OnInit {
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
+
+    const defAB = {
+      delivered: 0,
+      opened: 0,
+      clicked: 0,
+      insights: 0,
+      bounced: 0
+    };
+    this._statsA = defAB;
+    this._statsB = defAB;
+
     if (this._campaign.settings.ABsettings.nameWorkflowA) {
       this._nameWorkflowA = this._campaign.settings.ABsettings.nameWorkflowA;
     }
     if ( this._campaign.settings.ABsettings.nameWorkflowB ) {
-      this._nameWorkflowA = this._campaign.settings.ABsettings.nameWorkflowB;
+      this._nameWorkflowB = this._campaign.settings.ABsettings.nameWorkflowB;
     }
     this.form = this.formBuilder.group({
       workflowA: ['', [Validators.required]],
@@ -57,9 +80,9 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       this.form.disable();
     }
 
-   /* if (this.campaign.settings.ABsettings.status > 0) {
+    if (this.campaign.settings.ABsettings.status > 0) {
       this.updateStatsBatch();
-    }*/
+    }
   }
 
   public startABtesting() {
@@ -76,7 +99,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       if (obj.length === 0) {
         this._notificationsService.error('ERROR.ERROR', 'Not enough Pros in campaign');
       } else {
-        this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
+        this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
       }
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
@@ -100,10 +123,20 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   public updateStatsBatch() {
     this._campaignService.updateBatchStats(this.campaign.settings.ABsettings.batchA).subscribe((obj: any) => {
-      this._statsA = obj;
+      if (obj.length === 0) {
+        this._notificationsService.error('ERROR.ERROR', 'No event detected yet');
+      } else {
+        this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+        this._statsA = obj;
+      }
     });
     this._campaignService.updateBatchStats(this.campaign.settings.ABsettings.batchB).subscribe((obj: any) => {
-      this._statsB = obj;
+      if (obj.length === 0) {
+        this._notificationsService.error('ERROR.ERROR', 'No event detected yet');
+      } else {
+        this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+        this._statsB = obj;
+      }
     });
   }
 
@@ -113,6 +146,9 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   get sizeB(): number { return this._sizeB };
   get modifiedScenarios(): Array<EmailScenario> { return this._modifiedScenarios };
   get campaign(): Campaign { return this._campaign };
+  get statsA(): any { return this._statsA };
+  get statsB(): any { return this._statsB };
+  get deliveredA(): number {return this._statsA.delivered};
 
   set nameWorkflowA(arg: string) { this._nameWorkflowA = arg};
   set nameWorkflowB(arg: string) { this._nameWorkflowB = arg};

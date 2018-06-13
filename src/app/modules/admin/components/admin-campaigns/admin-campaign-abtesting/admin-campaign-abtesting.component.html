@@ -61,15 +61,22 @@
 
   <!-- Affichage des stats + valider + nom des workflows -->
   <div *ngIf="campaign.settings.ABsettings.status == 1">
-    <label>
-      BATCH A :
-      OPENED :
-
-
+    <br>
+      {{this.nameWorkflowA}}:
+      DELIVERED : {{this.statsA.delivered}}  -
+      OPENED : {{this.statsA.opened}}  -
+      CLICKED : {{this.statsA.clicked}}  -
+      INSIGHTS : {{this.statsA.insights}}  -
+<br>
+      {{this.nameWorkflowB}}:
+      DELIVERED : {{this.statsB.delivered}}  -
+      OPENED : {{this.statsB.opened}}  -
+      CLICKED : {{this.statsB.clicked}}  -
+      INSIGHTS : {{this.statsB.insights}}  -
+    <br>
       <button class="btn btn-primary" (click)="updateStatsBatch()">
         <i class="fas fa-sync"></i>
       </button>
-    </label>
   </div>
 
   <div *ngIf="campaign.settings.ABsettings.status == 2">
