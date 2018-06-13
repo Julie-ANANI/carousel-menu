@@ -24,6 +24,8 @@ export class SharedTableComponent {
 
   @Output() removeRows: EventEmitter<any[]> = new EventEmitter<any[]>();
 
+  @Output() performAction: EventEmitter<any> = new EventEmitter<any>();
+
   private _title = 'Résultats';
   private _isSelectable = true;
   private _isEditable = true;
@@ -33,6 +35,7 @@ export class SharedTableComponent {
   private _columns: string[] = [];
   private _columnsNames: string[] = [];
   private _types: Types[];
+  private _actions: string[] = [];
   private _selectedRows = 0;
 
   private _config: any = null;
@@ -63,6 +66,7 @@ export class SharedTableComponent {
     this._columns = value._columns;
     this._columnsNames = value._columnsNames || value._columns;
     this._types = value._types;
+    this._actions = value._actions || [];
   }
 
   loadConfig(value: any): void {
@@ -76,6 +80,10 @@ export class SharedTableComponent {
 
   edit(row: Row) {
     this.editRow.emit(row._content);
+  }
+
+  onActionClick(action: string) {
+    this.performAction.emit({_action: action, _rows: this.getSelectedRowsContent()});
   }
 
   getRowsKeys(): string[] {
@@ -130,15 +138,27 @@ export class SharedTableComponent {
     return this._types;
   }
 
+  get actions(): string[] {
+    return this._actions;
+  }
+
   get selectedRows(): number {
     return this._selectedRows;
   }
 
+  getSelectedRows(): Row[] {
+    return this._content.filter(value => value._isSelected === true);
+  }
+
+  getSelectedRowsContent(): any[] {
+    const content: any[] = [];
+    this.getSelectedRows().forEach(value => content.push(value._content));
+    return content;
+  }
+
   removeSelectedRows() {
-    const rowsToDelete = this._content.filter(value => value._isSelected === true);
-    const contentToDelete: any[] = [];
-    rowsToDelete.forEach(value => contentToDelete.push(value._content));
-    this.removeRows.emit(contentToDelete);
+
+    this.removeRows.emit(this.getSelectedRowsContent());
   }
 
   selectRow(key: string): void {

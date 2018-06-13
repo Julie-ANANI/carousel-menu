@@ -10,4 +10,5 @@ export interface Table {
   readonly _columns: string[];
   readonly _columnsNames?: string[];
   readonly _types: Types[];
+  readonly _actions?: string[];
 }
