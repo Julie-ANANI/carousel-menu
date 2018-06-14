@@ -60,7 +60,7 @@
     <div class="card-header">
       <div class="card-title h5">
         Batch de {{ batch.size }} professionnels
-        <a class="c-hand" role="button" [disabled]="removeOK(batch.status)"  (click)="(selectedBatchIdToBeDeleted = batch._id) && $event.preventDefault()">
+        <a class="c-hand" role="button" (click)="(removeOK(batch)) && $event.preventDefault()">
           <i class="fas fa-trash"></i>
         </a>
 
@@ -139,29 +139,29 @@
       </button>
     </div>
   </div>
-</div>
+</div>)
 
 <!-- MODAL : Suppression du batch -->
-<div class="modal" [ngClass]="{'active': selectedBatchIdToBeDeleted}">
-  <div class="modal-overlay" (click)="(selectedBatchIdToBeDeleted = null) && $event.preventDefault()"></div>
+<div class="modal" [ngClass]="{'active': selectedBatchToBeDeleted}"  >
+  <div class="modal-overlay" (click)="(selectedBatchToBeDeleted = null) && $event.preventDefault()"></div>
   <div class="modal-container">
     <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="(selectedBatchIdToBeDeleted = null) && $event.preventDefault()"></button>
+      <button class="btn btn-clear float-right" (click)="(selectedBatchToBeDeleted = null) && $event.preventDefault()"></button>
       <div class="modal-title h5">Suppression d'un batch</div>
     </div>
     <div class="modal-body">
       <div class="content">Etes-vous bien sûr de vouloir supprimer ce magnifique batch ??</div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-link" (click)="deleteBatch(selectedBatchIdToBeDeleted)">{{ 'COMMON.DELETE' | translate }}</button>
-      <button class="btn btn-primary" (click)="(selectedBatchIdToBeDeleted = null) && $event.preventDefault()">
+      <button class="btn btn-link" (click)="deleteBatch(selectedBatchToBeDeleted._id)">{{ 'COMMON.DELETE' | translate }}</button>
+      <button class="btn btn-primary" (click)="(selectedBatchToBeDeleted = null) && $event.preventDefault()">
         {{ 'COMMON.CANCEL' | translate }}
       </button>
     </div>
   </div>
 </div>
 
-<!-- MODAL : Suppression du batch -->
+
 <div class="modal" [ngClass]="{'active': testModal}">
   <div class="modal-overlay" (click)="(testModal = null) && $event.preventDefault()"></div>
   <div class="modal-container">

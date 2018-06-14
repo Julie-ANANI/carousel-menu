@@ -23,7 +23,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   public batchModal: boolean = false;
   public newBatch: any = {};
   public dateformat: string = "le dd/MM/yyyy à HH:mm";
-  public selectedBatchIdToBeDeleted: string = null;
+  public selectedBatchToBeDeleted: any = null;
   public editDates: Array<any>;
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -122,7 +122,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   public deleteBatch(batchId: string) {
      this._campaignService.deleteBatch(batchId).first().subscribe(_ => {
        this.stats.batches.splice(this._getBatchIndex(batchId), 1);
-       this.selectedBatchIdToBeDeleted = null;
+       this.selectedBatchToBeDeleted = null;
     });
   }
 
@@ -150,8 +150,10 @@ export class AdminCampaignMailsComponent implements OnInit {
     });
   }
 
-  public removeOK(batchstatus: number) {
-    return (batchstatus !== 0);
+  public removeOK(batch: any) {
+    if (batch.status === 0) {
+      this.selectedBatchToBeDeleted = batch;
+    }
   }
 
   get readyAutoBatch() {
@@ -178,9 +180,7 @@ export class AdminCampaignMailsComponent implements OnInit {
     );
   }
 
-  get statusAB() {
-    console.log(this._campaign.settings.ABsettings.status)
-    return this._campaign.settings.ABsettings.status }
+  get statusAB() { return this._campaign.settings.ABsettings.status }
   get defaultWorkflow() { return  this._campaign.settings.defaultWorkflow }
   get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""); }
   get campaign() { return this._campaign }
