@@ -60,7 +60,7 @@
     <div class="card-header">
       <div class="card-title h5">
         Batch de {{ batch.size }} professionnels
-        <a class="c-hand" role="button" (click)="(selectedBatchIdToBeDeleted = batch._id) && $event.preventDefault()">
+        <a class="c-hand" role="button" [disabled]="removeOK(batch.status)"  (click)="(selectedBatchIdToBeDeleted = batch._id) && $event.preventDefault()">
           <i class="fas fa-trash"></i>
         </a>
 

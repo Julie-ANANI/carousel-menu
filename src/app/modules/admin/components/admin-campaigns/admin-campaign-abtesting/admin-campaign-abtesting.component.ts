@@ -108,20 +108,17 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       }
     }
     this._campaignService.startABtesting(this.campaign._id, this.nameWorkflowA, this.nameWorkflowB, this.sizeA, this.sizeB)
-      .subscribe((obj: Array<any>) => {
-      if (obj.length === 0) {
+      .subscribe((campSettingsAB: any) => {
+      if (campSettingsAB.length === 0) {
         this._notificationsService.error('ERROR.ERROR', 'Not enough Pros in campaign');
       } else {
         this._status = 1;
         this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+        this._campaign.settings.ABsettings = campSettingsAB;
       }
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
     });
-  }
-
-  public stopABtesting() {
-
   }
 
   public statusSwitch() {
