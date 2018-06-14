@@ -39,6 +39,7 @@ export class ClientLoginComponent implements OnInit {
   onSubmit() {
     if (this.formData.valid) {
       const user = new User(this.formData.value);
+      user.domain = environment.domain;
 
       this._authService.login(user)
         .first()
@@ -113,6 +114,10 @@ export class ClientLoginComponent implements OnInit {
 
   public checkIsMainDomain(): boolean {
     return environment.domain === 'umi';
+  }
+
+  public getCompanyUrl(): string {
+    return environment.companyURL || "";
   }
 
   // getting the logo of the company
