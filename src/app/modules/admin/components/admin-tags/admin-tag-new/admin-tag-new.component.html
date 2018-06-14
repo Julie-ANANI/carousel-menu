@@ -6,15 +6,38 @@
     <div class="columns">
         <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit(formData)" class="column col-10 col-mx-auto">
             <div class="columns">
-                <div class="column col-8 col-mx-auto">
+                <div class="column col-10 col-mx-auto">
                     <div class="form-group text-left">
-                        <label class="form-label h4" for="name">{{ 'TAGS.NEW.NAME.LABEL' | translate }}</label>
-                        <input class="form-input" id="name" name="name" formControlName="label" type="text"
-                               placeholder="{{ 'TAGS.NEW.NAME.PLACEHOLDER' | translate }}">
 
-                        <label class="form-label h4" for="description">{{ 'TAGS.NEW.DESCRIPTION.LABEL' | translate }}</label>
-                        <input class="form-input" id="description" name="description" formControlName="description" type="text"
-                               placeholder="">
+                      <fieldset formGroupName="label">
+                        <legend class="form-label h4" for="name">{{ 'TAGS.NEW.NAME.LABEL' | translate }}</legend>
+                        <div class="columns">
+                          <div class="column col-6 col-mx-auto">
+                            <label for="name-en">En</label>
+                            <input class="form-input" id="name-en" formControlName="en" type="text"
+                                   placeholder="{{ 'TAGS.NEW.NAME.PLACEHOLDER' | translate }}">
+                          </div>
+                          <div class="column col-6 col-mx-auto">
+                            <label for="name-fr">Fr</label>
+                            <input class="form-input" id="name-fr" formControlName="fr" type="text"
+                                   placeholder="{{ 'TAGS.NEW.NAME.PLACEHOLDER' | translate }}">
+                          </div>
+                        </div>
+                      </fieldset>
+
+                      <fieldset formGroupName="description">
+                        <legend class="form-label h4" for="description">{{ 'TAGS.NEW.DESCRIPTION.LABEL' | translate }}</legend>
+                        <div class="columns">
+                          <div class="column col-6 col-mx-auto">
+                            <label for="description-en">En</label>
+                            <input class="form-input" id="description-en" formControlName="en" type="text">
+                          </div>
+                          <div class="column col-6 col-mx-auto">
+                            <label for="description-fr">Fr</label>
+                            <input class="form-input" id="description-fr" formControlName="fr" type="text">
+                          </div>
+                        </div>
+                      </fieldset>
 
                         <div>
                             <!--<label class="form-label h4" for="atchtype">{{ 'TAGS.NEW.ATTACHMENTS.LABEL' | translate }}</label>
