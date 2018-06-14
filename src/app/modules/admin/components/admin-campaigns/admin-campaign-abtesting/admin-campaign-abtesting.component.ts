@@ -118,10 +118,10 @@ export class AdminCampaignAbtestingComponent implements OnInit {
             this._campaign.settings.ABsettings = campSettingsAB;
           }
         }, (err: any) => {
-          this._notificationsService.error('ERROR', err);
+          this._notificationsService.error('ERROR.ERROR', err);
         });
     } else {
-      this._notificationsService.error('ERROR', 'Please, update stats of campaign or wait for pros. ')
+      this._notificationsService.error('ERROR.ERROR', 'Please, update stats of campaign or wait for pros. ')
     }
   }
 
