@@ -100,10 +100,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   public startABtesting() {
     if (this.campaign.stats.nbPros90 > 0) {
-      while (this.sizeA + this.sizeB > this.campaign.stats.nbPros90) {
-        console.log(this.sizeA);
-        console.log(this.sizeB);
-        console.log(this.campaign.stats.nbPros90);
+      if (this.sizeA + this.sizeB > this.campaign.stats.nbPros90) {
         if (this.sizeA > this.sizeB) {
           this.sizeA = this.campaign.stats.nbPros90 - this.sizeB
         }
