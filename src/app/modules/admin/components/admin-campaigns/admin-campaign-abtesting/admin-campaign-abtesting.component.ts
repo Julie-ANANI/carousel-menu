@@ -99,26 +99,33 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
 
   public startABtesting() {
-    if (this.sizeA + this.sizeB > this.campaign.stats.nbPros90) {
-      if (this.sizeA > this.sizeB) {
-        this.sizeA = this.campaign.stats.nbPros90 - this.sizeB
+    if (this.campaign.stats.nbPros90 > 0) {
+      while (this.sizeA + this.sizeB > this.campaign.stats.nbPros90) {
+        console.log(this.sizeA);
+        console.log(this.sizeB);
+        console.log(this.campaign.stats.nbPros90);
+        if (this.sizeA > this.sizeB) {
+          this.sizeA = this.campaign.stats.nbPros90 - this.sizeB
+        }
+        else {
+          this.sizeB = this.campaign.stats.nbPros90 - this.sizeA
+        }
       }
-      else {
-        this.sizeB = this.campaign.stats.nbPros90 - this.sizeA
-      }
+      this._campaignService.startABtesting(this.campaign._id, this.nameWorkflowA, this.nameWorkflowB, this.sizeA, this.sizeB)
+        .subscribe((campSettingsAB: any) => {
+          if (campSettingsAB.length === 0) {
+            this._notificationsService.error('ERROR.ERROR', 'Not enough Pros in campaign');
+          } else {
+            this._status = 1;
+            this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+            this._campaign.settings.ABsettings = campSettingsAB;
+          }
+        }, (err: any) => {
+          this._notificationsService.error('ERROR', err);
+        });
+    } else {
+      this._notificationsService.error('ERROR', 'Please, update stats of campaign or wait for pros. ')
     }
-    this._campaignService.startABtesting(this.campaign._id, this.nameWorkflowA, this.nameWorkflowB, this.sizeA, this.sizeB)
-      .subscribe((campSettingsAB: any) => {
-      if (campSettingsAB.length === 0) {
-        this._notificationsService.error('ERROR.ERROR', 'Not enough Pros in campaign');
-      } else {
-        this._status = 1;
-        this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-        this._campaign.settings.ABsettings = campSettingsAB;
-      }
-    }, (err: any) => {
-      this._notificationsService.error('ERROR', err);
-    });
   }
 
   public statusSwitch() {
