@@ -1,6 +1,6 @@
 <div class="section-container" id="setup-project">
   <div class="columns">
-    <div class="column col-xs-12 col-12 col-mx-auto">
+    <div class="column col-xs-12 col-12">
 
       <!-- Project under submitted status message -->
       <div *ngIf="project.status === 'SUBMITTED'" class="message-wrapper">
@@ -11,12 +11,12 @@
       <div class="row-1">
 
         <!-- Heading -->
-        <h1 class="section-heading">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h1>
+        <h5>{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h5>
 
         <!-- Buttons -->
         <div class="function-button">
           <span [ngClass]="saveButtonClass">
-            <div class="circle"><i class="fas fa-save"></i></div>
+            <div class="circle-check"><i class="fas fa-save"></i></div>
               <button class="btn btn-primary ghost-primary" (click)="saveProject($event)">
               {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
             </button>
@@ -31,7 +31,7 @@
       </div>
 
       <!-- Row 2 -->
-      <div class="column col-12 col-mx-auto tabs-container">
+      <div class="column col-12 tabs-container">
         <ul class="tabs">
           <li>
             <a [routerLink]="['setup', 'pitch']" [ngClass]="{'active': currentTab == 'pitch'}">
@@ -52,7 +52,7 @@
       </div>
 
       <!-- Row 3 -->
-      <div class="column col-12 col-mx-auto">
+      <div class="column col-12">
 
         <!-- Pitch -->
         <div *ngIf="currentTab === 'pitch'">
@@ -95,7 +95,7 @@
       <div class="content">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.CONTENT' | translate }}</div>
     </div>
     <div class="modal-footer">
-      <button class="btn sm-button" (click)="submitProject($event)">
+      <button class="btn btn-primary btn-sm" (click)="submitProject($event)">
         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUBMIT_BUTTON' | translate }}
       </button>
     </div>

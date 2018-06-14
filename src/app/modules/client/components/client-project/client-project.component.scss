@@ -4,9 +4,9 @@
     background-color: #4F5D6B;
     padding-bottom: 0;
 
-    .hero-title {
+    h1 {
       color: white;
-      padding-bottom: 20px;
+      margin-bottom: 20px;
     }
 
     .info-wrapper {
@@ -118,7 +118,7 @@
         margin-top: 0;
       }
 
-      .ghost-delete-button {
+      .ghost-delete {
         visibility: hidden;
       }
 
@@ -126,7 +126,7 @@
 
     ul:hover {
 
-      .ghost-delete-button {
+      .ghost-delete {
         visibility: visible;
       }
 

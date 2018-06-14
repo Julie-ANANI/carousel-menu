@@ -32,7 +32,7 @@
           padding: 12px 30px;
           margin: 0 30px 0 0;
 
-          .circle {
+          .circle-check {
             margin-top: -31px;
             margin-left: -44px;
             visibility: hidden;
@@ -52,7 +52,7 @@
         li.active {
           border-color: #2ECC71 !important;
 
-          .circle {
+          .circle-check {
             border-color: #2ECC71;
             background: #2ECC71;
             visibility: visible;

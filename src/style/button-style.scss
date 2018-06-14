@@ -107,6 +107,7 @@ $disabled-color: #DBDBDB;
   color: $primary-color !important;
   background-color: white !important;
   border-color: $primary-color !important;
+  border-width: 2px;
 }
 
 .ghost-primary:not(:disabled):hover, .ghost-primary:not(:disabled):focus, .ghost-primary:not(:disabled):active {
@@ -125,6 +126,7 @@ $disabled-color: #DBDBDB;
   color: $error-color !important;
   background-color: white !important;
   border-color: $error-color !important;
+  border-width: 2px;
 }
 
 .ghost-delete:not(:disabled):hover, .ghost-delete:not(:disabled):focus, .ghost-delete:not(:disabled):active {

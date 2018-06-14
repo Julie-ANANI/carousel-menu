@@ -35,9 +35,6 @@ export class SetupProjectComponent implements OnInit {
     this._saveChanges = false;
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
-
-    this.projectStatus = this.project.status;
-    console.log(this.projectStatus);
   }
 
   updateSettings(value: InnovationSettings): void {

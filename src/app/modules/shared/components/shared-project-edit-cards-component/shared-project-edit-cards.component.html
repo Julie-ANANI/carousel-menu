@@ -17,7 +17,7 @@
                   *ngFor="let innovationCard of project.innovationCards; let i = index"
                   [ngClass]="{'active': innovationCardEditingIndex === i }"
                   (click)="(innovationCardEditingIndex = i) && $event.preventDefault()">
-                  <div class="circle"><i class="fas fa-check"></i></div>
+                  <div class="circle-check"><i class="fas fa-check"></i></div>
                   <span>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
                 </li>
               </ul>

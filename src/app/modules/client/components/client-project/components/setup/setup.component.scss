@@ -22,8 +22,8 @@
     justify-content: space-between;
     padding-top: 50px;
 
-    .section-heading {
-      color: #333333;
+    h5 {
+      font-size: 1.35rem;
     }
 
     .function-button {
@@ -38,26 +38,31 @@
         margin-bottom: 10px;
       }
 
-      .circle {
+      .circle-check {
         margin-top: -15px;
         margin-left: -13px;
+
+        i {
+          color: white;
+        }
+
       }
 
       .save-project {
 
         .ghost-primary {
-          border-color: #2ECC71;
-          color: #262831;
+          border-color: #2ECC71 !important;
+          color: #262831 !important;
           pointer-events: auto;
         }
 
         .ghost-primary:hover {
-          background-color: #FFF9EB;
+          background-color: #FFF9EB !important;
           box-shadow: none;
         }
 
-        .circle {
-          background: #2ECC71;
+        .circle-check {
+          background: #2ECC71 !important;
           animation-name: fadeIn;
           animation-duration: .5s;
           animation-timing-function: ease-in-out;
@@ -68,14 +73,14 @@
       .disabled {
 
         .ghost-primary {
-          border-color: #dbdbdb;
-          color: #a9a9a9;
-          background-color: #dbdbdb;
+          border-color: #dbdbdb !important;
+          color: #a9a9a9 !important;
+          background-color: #dbdbdb !important;
           cursor: not-allowed;
           box-shadow: none;
         }
 
-        .circle {
+        .circle-check {
           visibility: hidden;
         }
 
