@@ -62,6 +62,11 @@ export class QuestionSectionComponent implements OnInit {
           break;
         case 'list':
           break;
+        case 'checkbox':
+          // We filter the answers with only falses items
+          this._answersToShow = this._answersToShow
+            .filter((a) => Object.keys(a.answers[id]).some((k) => a.answers[id][k]));
+          break;
         case 'textarea':
           // sort textarea answers by quality and by length.
           this._answersToShow = this._answersToShow
