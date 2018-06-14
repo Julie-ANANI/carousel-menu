@@ -1,4 +1,4 @@
-<div class="main-container" id="newProject">
+<div class="main-container" id="new-project">
   <div class="columns">
     <div class="column col-12">
 
@@ -11,7 +11,7 @@
           <div class="section-1 columns col-gapless">
 
             <!-- Ques 1 and 2 column -->
-            <div class="column col-md-12 col-6 col-mx-auto ques-section text-left">
+            <div class="column col-md-12 col-6 col-mx-auto ques-wrapper text-left">
 
               <div class="ques-1">
                 <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.NEW_PROJECT.DESCRIPTION.LINE1' | translate }}</span>
@@ -30,12 +30,12 @@
               <div class="ques-2">
                 <span class="num-rect">2</span><span class="ques">{{ "PROJECT_MODULE.NEW_PROJECT.COMPANY_NAME_LABEL" | translate }}</span>
                 <div class="tooltips"><i class="far fa-question-circle"></i>
-                  <span class="tooltip-text">{{ "" | translate }}</span>
+                  <span class="tooltips-text">{{ "" | translate }}</span>
                 </div>
-                <div class="form-group" [ngStyle]="{ 'padding-top': '20px' }">
+                <div class="form-group" [ngStyle]="{ 'padding-top': '12px' }">
                   <input
                     type="text"
-                    class="form-input-default"
+                    class="form-default"
                     name="name"
                     formControlName="name"
                     [attr.placeholder]="'PROJECT_MODULE.NEW_PROJECT.PROJECT_NAME_PLACEHOLDER' | translate ">
@@ -48,14 +48,12 @@
             </div>
 
             <!-- Image column -->
-            <div class="column col-md-12 col-6 col-mx-auto image-section text-center">
-              <span class="bot-text">{{ "PROJECT_MODULE.NEW_PROJECT.BOT" | translate }}</span>
+            <div class="column col-md-12 col-6 col-mx-auto image-wrapper text-center">
+              <span class="bot-rect">{{ "PROJECT_MODULE.NEW_PROJECT.BOT_TEXT" | translate }}</span>
               <br>
-              <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg"
-                   class="bot-trian">
+              <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
               <div class="bot-image">
-                <img src="https://res.cloudinary.com/umi/image/upload/v1527081824/app/default-images/create-project-bot.svg"
-                     class="img-responsive">
+                <img src="https://res.cloudinary.com/umi/image/upload/v1527081824/app/default-images/create-project-bot.svg" class="img-responsive">
               </div>
             </div>
 
@@ -64,12 +62,12 @@
           <!-- Section 2 -->
           <div class="ques-3">
             <span class="num-rect">3</span><span class="ques">{{ 'PROJECT_MODULE.NEW_PROJECT.INNOVATION_TYPE_LABEL' | translate }}</span>
-            <div class="form-group selection-container" [ngStyle]="{ 'padding-top': '20px' }">
+            <div class="form-group selection-wrapper" [ngStyle]="{ 'padding-top': '20px' }">
 
               <!-- Apps -->
               <label for="apps">
                 <input type="radio" value="apps" name="type" id="apps" formControlName="type">
-                <div class="circle"><i class="fas fa-check"></i></div>
+                <div class="circle-check"><i class="fas fa-check"></i></div>
                 <div class="offers">
                   <img src="https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-apps.svg">
                   <ul>
@@ -83,7 +81,7 @@
               <!-- Insights -->
               <label for="insights">
                 <input type="radio" value="insights" name="type" id="insights" formControlName="type">
-                <div class="circle"><i class="fas fa-check"></i></div>
+                <div class="circle-check"><i class="fas fa-check"></i></div>
                 <div class="offers">
                   <img src="https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-insights.svg">
                   <ul>
@@ -97,7 +95,7 @@
               <!-- Leads -->
               <label for="leads">
                 <input type="radio" value="leads" name="type" id="leads" formControlName="type">
-                <div class="circle"><i class="fas fa-check"></i></div>
+                <div class="circle-check"><i class="fas fa-check"></i></div>
                 <div class="offers">
                   <img src="https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-leads.svg">
                   <ul>
@@ -112,8 +110,8 @@
 
           <!-- Section 3 -->
           <div class="create text-center">
-            <button class="primary-button lg-button" type="submit" [disabled]="formData.invalid">
-              {{ 'PROJECT_MODULE.NEW_PROJECT.CREATE' | translate }}
+            <button class="btn btn-lg btn-primary" type="submit" [disabled]="formData.invalid">
+              {{ 'PROJECT_MODULE.NEW_PROJECT.BUTTON_TEXT' | translate }}
             </button>
           </div>
 

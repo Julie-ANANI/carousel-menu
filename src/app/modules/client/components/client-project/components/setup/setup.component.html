@@ -2,7 +2,7 @@
   <div class="columns">
     <div class="column col-xs-12 col-12 col-mx-auto">
 
-      <!-- Project status messages -->
+      <!-- Project under submitted status message -->
       <div *ngIf="project.status === 'SUBMITTED'" class="message-wrapper">
         <div class="message text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</div>
       </div>
@@ -17,12 +17,12 @@
         <div class="function-button">
           <span [ngClass]="saveButtonClass">
             <div class="circle"><i class="fas fa-save"></i></div>
-              <button class="primary-button ghost-button" (click)="saveProject($event)">
+              <button class="btn btn-primary ghost-primary" (click)="saveProject($event)">
               {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
             </button>
           </span>
           <span>
-            <button class="primary-button" (click)="submitButton($event)">
+            <button class="btn btn-primary" (click)="submitButton($event)">
               {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
             </button>
           </span>
@@ -95,7 +95,7 @@
       <div class="content">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL.CONTENT' | translate }}</div>
     </div>
     <div class="modal-footer">
-      <button class="primary-button sm-button" (click)="submitProject($event)">
+      <button class="btn sm-button" (click)="submitProject($event)">
         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUBMIT_BUTTON' | translate }}
       </button>
     </div>

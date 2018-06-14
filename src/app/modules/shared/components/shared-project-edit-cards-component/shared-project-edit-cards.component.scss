@@ -175,7 +175,7 @@
       flex: 1;
     }
 
-    .or-container {
+    .or-wrapper {
       display: inline-flex;
       justify-content: center;
       align-items: center;
@@ -220,7 +220,7 @@
     }
 
     // Form input
-    .form-input-default, .input-list {
+    .form-default, .input-list {
       width: 662px;
     }
 

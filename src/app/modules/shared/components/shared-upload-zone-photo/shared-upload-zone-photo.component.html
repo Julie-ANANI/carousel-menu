@@ -13,7 +13,7 @@
     </div>
 
     <div class="text-center" *ngIf="!loading">
-      <button class="primary-button" (click)="fileInput.click($event)" >
+      <button class="btn" (click)="fileInput.click($event)" >
         <i class="fas fa-upload"></i>{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.UPLOAD_PICTURE' | translate }}
       </button>
       <p class="para">{{ 'COMMON.OR' | translate | lowercase }} {{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.SLIDE' | translate }}</p>

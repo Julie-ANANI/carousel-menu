@@ -19,15 +19,15 @@
 
   }
 
-  .form-input-default {
+  .form-default {
     max-width: 450px;
   }
 
-  .form-input-default.ng-touched.ng-invalid{
+  .form-default.ng-touched.ng-invalid{
     border-color: unset !important;
   }
 
-  .primary-button {
+  .btn {
     margin-top: 20px;
   }
 

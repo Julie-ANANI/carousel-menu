@@ -3,7 +3,7 @@ $primary-color: #3498DB !default;
 $secondary-color: #2ECC71 !default;
 $dark-color: #333 !default;
 
-.primary-button {
+.btn {
   margin-left: 20px;
   border-radius: 50%;
   height: 44px;
@@ -18,7 +18,7 @@ $dark-color: #333 !default;
 
 }
 
-.form-input-default.ng-touched.ng-invalid{
+.form-default.ng-touched.ng-invalid{
   border-color: #E0E0E0 !important;
 }
 

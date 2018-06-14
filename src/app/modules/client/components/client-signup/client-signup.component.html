@@ -1,4 +1,4 @@
-<div class="main-container" id="signup">
+<div class="main-container" id="sign-up">
   <div class="columns">
     <div class="column col-12 col-mx-auto">
 
@@ -8,45 +8,35 @@
              [ngStyle]="{ 'background-image': 'url(' + backgroundImage() + ')'}">
         </div>
 
-        <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto signup-container">
+        <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto sign-up-wrapper">
 
           <!-- Logo -->
           <div class="text-center">
             <a href="https://www.umi.us"><img src="{{ getLogo() }}" alt="UMI" height="35px"></a>
           </div>
 
-          <div class="register-container">
-
-            <!-- Bot -->
-            <div class="bot-container">
-              <span class="bot-text">{{ 'SIGN_UP.SIGN_UP_HELLO' | translate }}</span>
-              <br>
-              <img src="https://res.cloudinary.com/umi/image/upload/v1526396724/app/default-images/triangle.svg" class="bot-trian">
-              <div>
-                <img src="https://res.cloudinary.com/umi/image/upload/v1526839959/app/default-images/login-bot.svg" alt="Bot">
-              </div>
-            </div>
+          <div class="register-wrapper">
 
             <!-- Heading -->
             <div class="heading text-center">
-              <h2>{{ 'SIGN_UP.HEADING' | translate }}</h2>
+              <h1>{{ 'SIGN_UP.HEADING' | translate }}</h1>
             </div>
 
             <!-- LinkedIn -->
-            <div class="social-container text-center" *ngIf="checkIsMainDomain()">
-              <button class="primary-button" (click)="linkedInSignUp($event)">
+            <div class="social-wrapper text-center" *ngIf="checkIsMainDomain()">
+              <button class="btn" (click)="linkedInSignUp($event)">
                 <i class="fab fa-1x fa-linkedin-in"></i>{{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
               </button>
             </div>
 
             <!-- Or -->
-            <div class="or-container text-center">
+            <div class="or-wrapper text-center">
               <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
             </div>
 
             <!-- Sign up button -->
-            <div class="sign-container text-center">
-              <button class="primary-button" (click)="onSignUpClick($event)">
+            <div class="sign-wrapper text-center">
+              <button class="btn btn-primary" (click)="onSignUpClick($event)">
                 <i class="far fa-1x fa-envelope"></i>{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}
               </button>
             </div>
@@ -57,9 +47,9 @@
           </div>
 
           <!-- Sign in -->
-          <div class="signin-container text-center">
+          <div class="signin-wrapper text-center">
             <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '10px' }">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
-            <button class="primary-button ghost-button sm-button" routerLink="/login">{{ 'COMMON.LOG_IN' | translate }}</button>
+            <button class="btn btn-sm ghost-primary" routerLink="/login">{{ 'COMMON.LOG_IN' | translate }}</button>
           </div>
 
         </div>

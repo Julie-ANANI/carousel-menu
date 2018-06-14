@@ -45,13 +45,13 @@
 
       .save-project {
 
-        .ghost-button {
+        .ghost-primary {
           border-color: #2ECC71;
           color: #262831;
           pointer-events: auto;
         }
 
-        .ghost-button:hover {
+        .ghost-primary:hover {
           background-color: #FFF9EB;
           box-shadow: none;
         }
@@ -67,7 +67,7 @@
 
       .disabled {
 
-        .ghost-button {
+        .ghost-primary {
           border-color: #dbdbdb;
           color: #a9a9a9;
           background-color: #dbdbdb;

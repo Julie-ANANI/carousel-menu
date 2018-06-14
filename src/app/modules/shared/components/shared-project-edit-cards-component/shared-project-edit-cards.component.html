@@ -100,7 +100,7 @@
                   <input
                     type="text"
                     id="innovation-title"
-                    class="form-input-default"
+                    class="form-default"
                     name="title"
                     [(ngModel)]="project.innovationCards[i].title"
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
@@ -123,7 +123,7 @@
                   <textarea
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
                     rows="4"
-                    class="form-input-default"
+                    class="form-default"
                     name="summary"
                     [(ngModel)]="project.innovationCards[i].summary"
                     (ngModelChange)="notifyModelChanges($event)">
@@ -147,7 +147,7 @@
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
                     rows="8"
                     id="innovation-problem"
-                    class="form-input-default"
+                    class="form-default"
                     name="problem"
                     [(ngModel)]="project.innovationCards[i].problem"
                     (ngModelChange)="notifyModelChanges($event)">
@@ -171,7 +171,7 @@
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
                     rows="8"
                     id="innovation-solution"
-                    class="form-input-default"
+                    class="form-default"
                     name="solution"
                     [(ngModel)]="project.innovationCards[i].solution"
                     (ngModelChange)="notifyModelChanges($event)">
@@ -376,7 +376,7 @@
                     </app-shared-upload-zone-photo>
                   </div>
 
-                  <div class="or-container">
+                  <div class="or-wrapper">
                     <span class="para">{{ 'COMMON.OR' | translate }}</span>
                   </div>
 
@@ -409,7 +409,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="primary-button ghost-delete-button sm-button" (click)="deleteInnovCard($event)">
+      <button class="btn ghost-delete-button sm-button" (click)="deleteInnovCard($event)">
         {{ 'COMMON.DELETE' | translate }}
       </button>
     </div>
