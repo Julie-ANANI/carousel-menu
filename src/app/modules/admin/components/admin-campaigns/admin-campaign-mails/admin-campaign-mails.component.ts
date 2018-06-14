@@ -156,7 +156,8 @@ export class AdminCampaignMailsComponent implements OnInit {
       this.quizGenerated &&
       this.innoReady &&
       this.templateImported &&
-      this.defaultWorkflow
+      this.defaultWorkflow &&
+      (this.statusAB !== 1)
     );
   }
 
@@ -172,7 +173,8 @@ export class AdminCampaignMailsComponent implements OnInit {
     );
   }
 
-  get defaultWorkflow() {return  this._campaign.settings.defaultWorkflow }
+  get statusAB() { return this._campaign.settings.ABsettings.status }
+  get defaultWorkflow() { return  this._campaign.settings.defaultWorkflow }
   get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""); }
   get campaign() { return this._campaign }
   get quizLinks() {return this._quizLinks }

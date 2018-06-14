@@ -8,7 +8,7 @@
 
  -->
 <div *ngIf="(campaign.stats.nbProsSent == 0) || (campaign.settings.ABsettings.status != 0) ">
-  <div *ngIf="campaign.settings.ABsettings.status == 0">
+  <div *ngIf="this.status == 0">
     <label class="form-switch" style="">
       <input type="checkbox" [disabled]="!(modifiedScenarios.length)" (click)="statusSwitch()" >
       <i class="form-icon"></i>
@@ -60,7 +60,7 @@
 
 
   <!-- Affichage des stats + valider + nom des workflows -->
-  <div *ngIf="campaign.settings.ABsettings.status == 1">
+  <div *ngIf="this.status == 1">
     <br>
       {{this.nameWorkflowA}}:
       DELIVERED : {{this.statsA.delivered}}  - &nbsp;
@@ -76,13 +76,33 @@
       INSIGHTS : {{this.statsB.insights}}  - &nbsp;
       BOUNCED : {{this.statsA.bounced}}  -
     <br>
-      <button class="btn btn-primary" (click)="updateStatsBatch()">
-        <i class="fas fa-sync"></i>
-      </button>
+    <button class="btn btn-primary" (click)="updateStatsBatch()">
+      <i class="fas fa-sync"></i>
+    </button>
+    <button class="btn btn-primary" (click)="validateABtesting()">
+      Valider
+    </button>
   </div>
 
-  <div *ngIf="campaign.settings.ABsettings.status == 2">
-    2 - Stats
+  <div *ngIf="this.status == 2">
+    <br>
+    {{this.nameWorkflowA}}:
+    DELIVERED : {{this.statsA.delivered}}  - &nbsp;
+    OPENED : {{this.statsA.opened}}  - &nbsp;
+    CLICKED : {{this.statsA.clicked}}  - &nbsp;
+    INSIGHTS : {{this.statsA.insights}}  - &nbsp;
+    BOUNCED : {{this.statsA.bounced}}  -
+    <br>
+    {{this.nameWorkflowB}}:
+    DELIVERED : {{this.statsB.delivered}}  - &nbsp;
+    OPENED : {{this.statsB.opened}}  - &nbsp;
+    CLICKED : {{this.statsB.clicked}}  - &nbsp;
+    INSIGHTS : {{this.statsB.insights}}  - &nbsp;
+    BOUNCED : {{this.statsA.bounced}}  -
+    <br>
+    <button class="btn btn-primary" (click)="updateStatsBatch()">
+      <i class="fas fa-sync"></i>
+    </button>
   </div>
 </div>
 

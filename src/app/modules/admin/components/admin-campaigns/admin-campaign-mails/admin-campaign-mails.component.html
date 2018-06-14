@@ -48,6 +48,8 @@
       <!-- <li *ngIf="!templateImported"> Template manquant</li>
       <li *ngIf="!emailReady"> Email non-modifié </li> -->
       <li *ngIf="!defaultWorkflow"> Template par défaut manquant</li>
+      <li *ngIf="statusAB == 0"> Vous n'avez pas utilisé le super A/B testing</li>
+      <li *ngIf="statusAB == 1"> Vous ne pouvez pas commencer si A/B testing non validé</li>
     </ul>
 
     <button (click)="creerpro()" class="btn btn-primary">
