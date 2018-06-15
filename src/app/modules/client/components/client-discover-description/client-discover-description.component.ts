@@ -28,8 +28,7 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
 
   constructor(private _innovationService: InnovationService,
               private _activatedRoute: ActivatedRoute,
-              private _shareService: ShareService)
-  {
+              private _shareService: ShareService) {
     this._activatedRoute.params.subscribe(params => {
       this.loadInnovation(params['id'], params['lang']);
     });
@@ -48,8 +47,6 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
       this.quizUrl = environment.quizUrl + '/quiz/' + response.quizId + '/' + response.campaigns[0].id + '?lang=' + lang;
 
       this.innovation = response;
-
-      // console.log(this.innovation);
 
       this.linkedInUrl = this._shareService.linkedinProjectShareLink(this.innovation, lang);
 

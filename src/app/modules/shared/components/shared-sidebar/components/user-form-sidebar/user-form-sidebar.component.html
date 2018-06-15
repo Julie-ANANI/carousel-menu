@@ -1,151 +1,143 @@
-<div class="main-container sidebar-wrapper" id="wrapper-sidebar" [@sidebarAnimate]="state">
+<div class="main-container" id="wrapper-sidebar" [@sidebarAnimate]="state">
   <div class="columns">
-    <div class="column col-12 col-mx-auto">
+    <div class="column col-12">
+      <div class="sidebar-overlay" (click)="toggleState()">
+        <div class="sidebar-wrapper">
 
-      <!-- Header -->
-      <div class="sidebar-header">
-        <div class="column col-11 col-mx-auto">
-          <div class="columns">
-            <div class="column col-6 col-mx-auto text-left">
-              {{ title | translate }}
+          <!-- Header -->
+          <div class="sidebar-header">
+            <div class="column col-11 col-mx-auto">
+              <div class="columns">
+                <div class="column col-6 col-mx-auto text-left">
+                  {{ title | translate }}
+                </div>
+                <div class="column col-6 col-mx-auto text-right">
+                  <i class="icon icon-cross" (click)="toggleState()"></i>
+                </div>
+              </div>
             </div>
-            <div class="column col-6 col-mx-auto text-right">
-              <i class="icon icon-cross" (click)="toggleState()"></i>
-            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="column col-11 col-mx-auto text-left sidebar-content">
+            <!-- Form -->
+            <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
+              <!-- First name -->
+              <div class="form-group">
+                <label class="form-label" for="firstName">{{ 'COMMON.FIRSTNAME' | translate }}</label>
+                <input
+                  class="form-default"
+                  formControlName="firstName"
+                  id="firstName"
+                  type="text"
+                  placeholder="John">
+                <div class="form-error" *ngIf="userForm.get('firstName').touched && userForm.get('firstName').invalid">
+                  <span *ngIf="userForm.get('firstName').hasError('required')">{{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}</span>
+                </div>
+              </div>
+              <!-- Last name -->
+              <div class="form-group">
+                <label class="form-label" for="firstName">{{ 'COMMON.LASTNAME' | translate }}</label>
+                <input
+                  class="form-default"
+                  formControlName="lastName"
+                  id="lastName"
+                  type="text"
+                  placeholder="Smith">
+                <div class="form-error" *ngIf="userForm.get('lastName').touched && userForm.get('lastName').invalid">
+                  <span *ngIf="userForm.get('lastName').hasError('required')">{{ 'COMMON.REQUIRED.LASTNAME' | translate }}</span>
+                </div>
+              </div>
+              <!-- Company -->
+              <div class="form-group">
+                <label class="form-label" for="company">{{ 'COMMON.COMPANY' | translate }}</label>
+                <input
+                  class="form-default"
+                  formControlName="company"
+                  id="company"
+                  type="text"
+                  [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
+                <div class="form-error" *ngIf="userForm.get('company').touched && userForm.get('company').invalid">
+                  <span *ngIf="userForm.get('company').hasError('required')">{{ 'COMMON.REQUIRED.COMPANY' | translate }}</span>
+                </div>
+              </div>
+              <!-- Job -->
+              <div class="form-group">
+                <label class="form-label-default" for="jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
+                <input
+                  class="form-default"
+                  formControlName="jobTitle"
+                  id="jobTitle"
+                  type="text"
+                  [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
+                <div class="form-error" *ngIf="userForm.get('jobTitle').touched && userForm.get('jobTitle').invalid">
+                  <span *ngIf="userForm.get('jobTitle').hasError('required')">{{ 'COMMON.REQUIRED.JOBTITLE' | translate }}</span>
+                </div>
+              </div>
+              <!-- Email -->
+              <div class="form-group">
+                <label class="form-label-default" for="email">{{ 'COMMON.EMAIL' | translate }}</label>
+                <input
+                  class="form-default"
+                  formControlName="email"
+                  id="email"
+                  type="email"
+                  placeholder="john@catco.com">
+                <div class="form-error" *ngIf="userForm.get('email').touched && userForm.get('email').invalid">
+                  <span *ngIf="userForm.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+                  <span *ngIf="userForm.get('email').hasError('email') && userForm.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+                </div>
+              </div>
+              <!-- Password -->
+              <div class="form-group">
+                <label class="form-label-default" for="password">{{ 'COMMON.PASSWORD' | translate }}</label>
+                <input
+                  class="form-default"
+                  formControlName="password"
+                  id="password"
+                  type="password"
+                  [attr.placeholder]="'COMMON.PASSWORD_SIGNUP_PLACEHOLDER' | translate">
+                <div class="form-error" *ngIf="userForm.get('password').touched && userForm.get('password').invalid">
+                  <span *ngIf="userForm.get('password').hasError('required')">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
+                  <span *ngIf="userForm.get('password').hasError('minlength')">{{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}</span>
+                </div>
+              </div>
+              <!-- Country -->
+              <div class="form-group">
+                <label class="form-label-default" for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
+                <input
+                  class="form-default"
+                  formControlName="country"
+                  id="country"
+                  type="text"
+                  [attr.placeholder]="'COMMON.COUNTRY_PLACEHOLDER' | translate"
+                  (click)="onSuggestCountries()">
+                <ul
+                  *ngIf="userForm.get('country').value"
+                  class="suggestion"
+                  [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
+                  <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onValueSelect(suggestion)">
+                    <a><span>{{ suggestion }}</span></a>
+                  </li>
+                </ul>
+                <div class="form-error" *ngIf="userForm.get('country').touched && userForm.get('country').invalid">
+                  <span *ngIf="userForm.get('country').hasError('required')">{{ 'COMMON.REQUIRED.COUNTRY' | translate }}</span>
+                </div>
+              </div>
+              <!-- Terms -->
+              <div class="terms-container text-center">
+                {{ 'COMMON.TERMS.A' | translate }} {{companyName}}{{'\'s'}}
+                <a href="https://www.umi.us/end-user-license-agreement/" target="_blank"><span class="text-link">{{ 'COMMON.TERMS.B' | translate }}</span></a>
+              </div>
+              <!-- Submit button -->
+              <div class="signup-button text-center">
+                <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid">{{'COMMON.BUTTON.SIGN_UP' | translate }}</button>
+              </div>
+            </form>
+
           </div>
         </div>
       </div>
-
-      <!-- Content -->
-      <div class="column col-11 col-mx-auto text-left sidebar-content">
-
-        <!-- Form -->
-        <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
-
-          <!-- First name -->
-          <div class="form-group">
-            <label class="form-label" for="firstName">{{ 'COMMON.FIRSTNAME' | translate }}</label>
-            <input
-              class="form-default"
-              formControlName="firstName"
-              id="firstName"
-              type="text"
-              placeholder="John">
-            <div class="form-error" *ngIf="userForm.get('firstName').touched && userForm.get('firstName').invalid">
-              <span *ngIf="userForm.get('firstName').hasError('required')">{{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}</span>
-            </div>
-          </div>
-
-          <!-- Last name -->
-          <div class="form-group">
-            <label class="form-label" for="firstName">{{ 'COMMON.LASTNAME' | translate }}</label>
-            <input
-              class="form-default"
-              formControlName="lastName"
-              id="lastName"
-              type="text"
-              placeholder="Smith">
-            <div class="form-error" *ngIf="userForm.get('lastName').touched && userForm.get('lastName').invalid">
-              <span *ngIf="userForm.get('lastName').hasError('required')">{{ 'COMMON.REQUIRED.LASTNAME' | translate }}</span>
-            </div>
-          </div>
-
-          <!-- Company -->
-          <div class="form-group">
-            <label class="form-label" for="company">{{ 'COMMON.COMPANY' | translate }}</label>
-            <input
-              class="form-default"
-              formControlName="company"
-              id="company"
-              type="text"
-              [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
-            <div class="form-error" *ngIf="userForm.get('company').touched && userForm.get('company').invalid">
-              <span *ngIf="userForm.get('company').hasError('required')">{{ 'COMMON.REQUIRED.COMPANY' | translate }}</span>
-            </div>
-          </div>
-
-          <!-- Job -->
-          <div class="form-group">
-            <label class="form-label-default" for="jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
-            <input
-              class="form-default"
-              formControlName="jobTitle"
-              id="jobTitle"
-              type="text"
-              [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
-            <div class="form-error" *ngIf="userForm.get('jobTitle').touched && userForm.get('jobTitle').invalid">
-              <span *ngIf="userForm.get('jobTitle').hasError('required')">{{ 'COMMON.REQUIRED.JOBTITLE' | translate }}</span>
-            </div>
-          </div>
-
-          <!-- Email -->
-          <div class="form-group">
-            <label class="form-label-default" for="email">{{ 'COMMON.EMAIL' | translate }}</label>
-            <input
-              class="form-default"
-              formControlName="email"
-              id="email"
-              type="email"
-              placeholder="john@catco.com">
-            <div class="form-error" *ngIf="userForm.get('email').touched && userForm.get('email').invalid">
-              <span *ngIf="userForm.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-              <span *ngIf="userForm.get('email').hasError('email') && userForm.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
-            </div>
-          </div>
-
-          <!-- Password -->
-          <div class="form-group">
-            <label class="form-label-default" for="password">{{ 'COMMON.PASSWORD' | translate }}</label>
-            <input
-              class="form-default"
-              formControlName="password"
-              id="password"
-              type="password"
-              [attr.placeholder]="'COMMON.PASSWORD_SIGNUP_PLACEHOLDER' | translate">
-            <div class="form-error" *ngIf="userForm.get('password').touched && userForm.get('password').invalid">
-              <span *ngIf="userForm.get('password').hasError('required')">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
-              <span *ngIf="userForm.get('password').hasError('minlength')">{{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}</span>
-            </div>
-          </div>
-
-          <!-- Country -->
-          <div class="form-group">
-            <label class="form-label-default" for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
-            <input
-              class="form-default"
-              formControlName="country"
-              id="country"
-              type="text"
-              [attr.placeholder]="'COMMON.COUNTRY_PLACEHOLDER' | translate"
-              (click)="onSuggestCountries()">
-            <ul
-              *ngIf="userForm.get('country').value"
-              class="suggestion"
-              [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
-              <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onValueSelect(suggestion)">
-                <a><span>{{ suggestion }}</span></a>
-              </li>
-            </ul>
-            <div class="form-error" *ngIf="userForm.get('country').touched && userForm.get('country').invalid">
-              <span *ngIf="userForm.get('country').hasError('required')">{{ 'COMMON.REQUIRED.COUNTRY' | translate }}</span>
-            </div>
-          </div>
-
-          <!-- Terms -->
-          <div class="terms-container text-center">
-            {{ 'COMMON.TERMS.A' | translate }} {{companyName}}{{'\'s'}}
-            <a href="https://www.umi.us/end-user-license-agreement/" target="_blank"><span class="text-link">{{ 'COMMON.TERMS.B' | translate }}</span></a>
-          </div>
-
-          <!-- Submit button -->
-          <div class="signup-button text-center">
-            <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid">{{'COMMON.BUTTON.SIGN_UP' | translate }}</button>
-          </div>
-
-        </form>
-
-      </div>
-
     </div>
   </div>
 </div>
