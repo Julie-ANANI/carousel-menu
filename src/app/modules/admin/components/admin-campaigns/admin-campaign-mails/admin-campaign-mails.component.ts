@@ -62,17 +62,18 @@ export class AdminCampaignMailsComponent implements OnInit {
   public createNewBatch(sendNow: boolean) {
     this.newBatch.firstMail = sendNow ? Date.now() : this._computeDate(this.dateMail, this.timeMail);
     this.newBatch.sendNow = sendNow;
-    this._campaignService.createNewBatch(this._campaign._id, this.newBatch).first().subscribe((batch: any) => {
+    this._campaignService.createNewBatch(this._campaign._id, this.newBatch).first().subscribe((batch: Batch) => {
       this.stats.batches.push(batch);
     });
   }
 
-  public freezeStatus(batch: any) {
+  public freezeStatus(batch: Batch) {
     this._campaignService.freezeStatus(batch).first().subscribe(modifiedBatch => {
       this.stats.batches[this._getBatchIndex(modifiedBatch._id)] = modifiedBatch;
     });
   }
 
+  // result won't be typed as batch everytime
   public AutoBatch() {
     this._campaignService.AutoBatch(this._campaign._id).first().subscribe((result: Array<any>) => {
       if (result.length === 0) {
@@ -91,7 +92,7 @@ export class AdminCampaignMailsComponent implements OnInit {
     this._campaignService.creerpro(this._campaign._id).first().subscribe();
   }
 
-  public startEditing(batch: any) {
+  public startEditing(batch: Batch) {
     const getDate = (d: string) => d.toString().slice(0,10);
     const getTime = (d: string) => (new Date(d)).toLocaleTimeString();
     this.editDates = [
@@ -112,13 +113,13 @@ export class AdminCampaignMailsComponent implements OnInit {
 
   }
 
-  public updateBatch(batch: any) {
+  public updateBatch(batch: Batch) {
     this.stats.batches[this._getBatchIndex(batch._id)]['editing'] = false;
     batch.firstMail = this._computeDate(this.editDates[0].date, this.editDates[0].time);
     batch.secondMail = this._computeDate(this.editDates[1].date, this.editDates[1].time);
     batch.thirdMail = this._computeDate(this.editDates[2].date, this.editDates[2].time);
     delete batch.status;
-    this._campaignService.updateBatch(batch).first().subscribe((Abatch: any) => {
+    this._campaignService.updateBatch(batch).first().subscribe((Abatch: Batch) => {
       this.stats.batches[this._getBatchIndex(Abatch._id)] = Abatch;
     });
   }
@@ -154,7 +155,7 @@ export class AdminCampaignMailsComponent implements OnInit {
     });
   }
 
-  public removeOK(batch: any) {
+  public removeOK(batch: Batch) {
     if (batch.status === 0) {
       this.selectedBatchToBeDeleted = batch;
     }

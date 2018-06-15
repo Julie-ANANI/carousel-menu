@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Answer } from '../../models/answer';
 import { Campaign } from '../../models/campaign';
 import { Professional } from '../../models/professional';
+import {Batch} from '../../models/batch';
 
 @Injectable()
 export class CampaignService {
@@ -64,7 +65,7 @@ export class CampaignService {
         .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public createNewBatch(campaignId: string, batch: any): Observable<any> {
+  public createNewBatch(campaignId: string, batch: Batch): Observable<any> {
     return this._http.post(`/campaign/${campaignId}/createNewBatch`, batch)
         .map((res: Response) => res.json())
         .catch((error: Response) => Observable.throw(error.text()));
@@ -93,7 +94,7 @@ export class CampaignService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public freezeStatus(batch: any): Observable<any> {
+  public freezeStatus(batch: Batch): Observable<any> {
     return this._http.get( `/batch/${batch._id}/freezeStatus`)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
@@ -105,7 +106,7 @@ export class CampaignService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public updateBatch(batch: any): Observable<any> {
+  public updateBatch(batch: Batch): Observable<any> {
     return this._http.put(`/batch/${batch._id}`, batch)
         .map((res: Response) => res.json())
         .catch((error: Response) => Observable.throw(error.text()));
