@@ -57,6 +57,9 @@ export class AdminCampaignTemplatesComponent implements OnInit {
       x.nameWorkflow = template.name;
     });
     this.importModal = false;
+    this._campaign.settings.emails = this._campaign.settings.emails.filter((x) => {
+      return (x.nameWorkflow !== this._scenario.name);
+    });
     this._campaign.settings.emails = this._campaign.settings.emails.concat(this._scenario.emails);
     this.generateAvailableScenario();
     this._saveTemplates();
