@@ -1,14 +1,12 @@
-<div class="section-container" id="projectSynthesis">
+<div class="section-container" id="project-synthesis">
   <div class="columns">
     <div class="column col-12">
 
       <!-- Project under editing status -->
       <div *ngIf="project.status === 'EDITING' ">
-
-        <h1 class="section-heading">{{ 'MARKET_REPORT.TITLE.EDITING' | translate }}</h1>
-
-        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '50px' }">
-          <span *ngIf="project.status === 'EDITING'" class="bot-text">
+        <h1>{{ 'MARKET_REPORT.TITLE.EDITING' | translate }}</h1>
+        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+          <span *ngIf="project.status === 'EDITING'" class="bot-rect">
             {{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.A' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.B' | translate }}</span>
             {{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.C' | translate }}
           </span>
@@ -16,21 +14,17 @@
           <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
           <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
         </div>
-
       </div>
 
       <!-- Project under submitted status -->
       <div *ngIf="project.status === 'SUBMITTED' ">
-
-        <h1 class="section-heading">{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
-
-        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '50px' }">
-          <span class="bot-text">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</span>
+        <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
+        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+          <span class="bot-rect">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</span>
           <br>
           <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
           <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
         </div>
-
       </div>
 
     </div>

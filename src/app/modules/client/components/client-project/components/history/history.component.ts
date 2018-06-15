@@ -3,14 +3,14 @@ import { AnswerService } from '../../../../../../services/answer/answer.service'
 import { AuthService } from '../../../../../../services/auth/auth.service';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
-import {Question} from "../../../../../../models/question";
+import {Question} from '../../../../../../models/question';
 
 @Component({
   selector: 'app-client-history-project',
   templateUrl: 'history.component.html',
   styleUrls: ['history.component.scss']
 })
-export class HistoryProjectComponent implements OnInit{
+export class HistoryProjectComponent implements OnInit {
 
   @Input() project: Innovation;
 
@@ -36,7 +36,7 @@ export class HistoryProjectComponent implements OnInit{
   }
 
   private getBaseEvents(): Array<{type: string, date: Date, data?: Answer}> {
-    let events: Array<{type: string, date: Date}> = [];
+    const events: Array<{type: string, date: Date}> = [];
     events.push({type: 'STARTED', date: this.project.created});
     if (this.project.launched) {
       events.push({type: 'LAUNCHED', date: this.project.launched})

@@ -1,4 +1,4 @@
-#projectSetting {
+#project-setting {
   padding-top: 25px;
   padding-bottom: 0;
 
@@ -29,7 +29,7 @@
 
 @media (max-width: 600px) {
 
-  #projectSetting {
+  #project-setting {
 
     .help-wrapper {
       display: none;
@@ -39,12 +39,12 @@
 
 }
 
-@media (min-width: 601px) and (max-width: 840px) {
+@media (max-width: 840px) {
 
-  #projectSetting {
+  #project-setting{
 
     .help-wrapper {
-      padding-top: 50px;
+      display: none;
     }
 
   }

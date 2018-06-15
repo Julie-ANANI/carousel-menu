@@ -1,10 +1,334 @@
-<div class="section-container" id="pitchCard" *ngIf="project">
+<div class="main-container" id="pitch-card" *ngIf="project">
+  <div class="columns">
+    <div class="column col-12">
+      <form novalidate>
+
+        <!-- Language choice -->
+        <div class="choice-wrapper">
+          <div class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE.HEADING' | translate }}</div>
+          <div class="lang">
+            <ul>
+              <li
+                *ngFor="let innovationCard of project.innovationCards; let i = index;"
+                [ngClass]="{'active': innovationCardEditingIndex === i }"
+                (click)="(innovationCardEditingIndex = i) && $event.preventDefault()">
+                <div class="circle-check"><i class="fas fa-check"></i></div>
+                <span>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
+              </li>
+              <span *ngIf="project.innovationCards?.length < 2" class="add-project">
+                {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE.ADD_PROJECT_LANGUAGE' | translate }}
+                <span class="text-link">
+                  <span *ngIf="!containsLanguage('fr')" (click)="createInnovationCard($event, 'fr')">
+                    {{ 'COMMON.LANG.FR' | translate }}
+                  </span>
+                  <span *ngIf="!containsLanguage('en')" (click)="createInnovationCard($event, 'en')">
+                    {{ 'COMMON.LANG.EN' | translate }}
+                  </span>
+                </span>
+              </span>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Lang action -->
+        <div class="action-wrapper text-center">
+          <div *ngFor="let innovationCard of project.innovationCards; let i = index;">
+            <span *ngIf="innovationCardEditingIndex === i">
+              <span class="text-link">{{ 'COMMON.PREVIEW' | translate }}</span>
+              <span *ngIf="project.innovationCards?.length > 1" class="separator">/</span>
+              <span
+                *ngIf="project.innovationCards?.length > 1"
+                (click)="deleteModal(innovationCard._id, innovationCard.lang)"
+                class="text-link delete-link">
+                {{ 'COMMON.DELETE' | translate }}
+              </span>
+            </span>
+          </div>
+        </div>
+
+
+        <div class="columns">
+
+          <!-- Ques -->
+          <div class="column col-md-12 col-6">
+
+            <div *ngFor="let innovationItem of project.innovationCards; let i = index">
+              <div *ngIf="innovationCardEditingIndex === i">
+                <!-- Project title -->
+                <div class="project-data">
+                  <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.LABEL' | translate }}</span>
+                  <div class="form-group pd-input">
+                    <input
+                      type="text"
+                      id="innovation-title"
+                      class="form-default"
+                      name="title"
+                      [(ngModel)]="project.innovationCards[i].title"
+                      [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
+                      (ngModelChange)="notifyModelChanges($event)">
+                  </div>
+                </div>
+                <!-- Summary -->
+                <div class="project-data">
+                  <span class="num-rect">2</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.LABEL' | translate }}</span>
+                  <div class="form-group pd-input">
+                    <textarea
+                      [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
+                      rows="5"
+                      class="form-default"
+                      name="summary"
+                      [(ngModel)]="project.innovationCards[i].summary"
+                      (ngModelChange)="notifyModelChanges($event)">
+                    </textarea>
+                  </div>
+                </div>
+                <!-- Problem -->
+                <div class="project-data">
+                  <span class="num-rect">3</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.LABEL' | translate }}</span>
+                  <div class="form-group pd-input">
+                    <textarea
+                      [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
+                      rows="8"
+                      id="innovation-problem"
+                      class="form-default"
+                      name="problem"
+                      [(ngModel)]="project.innovationCards[i].problem"
+                      (ngModelChange)="notifyModelChanges($event)">
+                    </textarea>
+                  </div>
+                </div>
+                <!-- Solution -->
+                <div class="project-data">
+                  <span class="num-rect">4</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.LABEL' | translate }}</span>
+                  <div class="form-group pd-input">
+                    <textarea
+                      [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
+                      rows="8"
+                      id="innovation-solution"
+                      class="form-default"
+                      name="solution"
+                      [(ngModel)]="project.innovationCards[i].solution"
+                      (ngModelChange)="notifyModelChanges($event)">
+                    </textarea>
+                  </div>
+                </div>
+                <!-- Advantages -->
+                <div class="project-data">
+                  <span class="num-rect">5</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</span>
+                  <div class="pd-input">
+                    <app-input-list
+                      (update)="addAdvantageToInventionCard($event, i)"
+                      [config]="getConfig('advantages')">
+                    </app-input-list>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project stage -->
+            <div class="project-data">
+              <span class="num-rect">6</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.STAGE' | translate }}</span>
+              <div class="form-group pd-input">
+                <label class="form-radio">
+                  <input
+                    type="radio"
+                    name="projectStatus"
+                    [(ngModel)]="project.projectStatus"
+                    [value]="0">
+                  <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.0' | translate }}
+                </label>
+                <label class="form-radio">
+                  <input
+                    type="radio"
+                    name="projectStatus"
+                    [(ngModel)]="project.projectStatus"
+                    [value]="1">
+                  <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.1' | translate }}
+                </label>
+                <label class="form-radio">
+                  <input
+                    type="radio"
+                    name="projectStatus"
+                    [(ngModel)]="project.projectStatus"
+                    [value]="2">
+                  <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.2' | translate }}
+                </label>
+              </div>
+            </div>
+
+            <!-- Project protected -->
+            <div class="project-data">
+              <span class="num-rect">7</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.PATENTED' | translate }}</span>
+              <div class="form-group pd-input">
+                <label class="form-radio">
+                  <input
+                    type="radio"
+                    name="patented"
+                    [(ngModel)]="project.patented"
+                    [value]="false">
+                  <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
+                </label>
+                <label class="form-radio">
+                  <input
+                    type="radio"
+                    name="patented"
+                    [(ngModel)]="project.patented"
+                    [value]="true">
+                  <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
+                </label>
+              </div>
+            </div>
+
+            <!-- Diffusion -->
+            <div class="project-data">
+              <span class="num-rect">8</span>
+              <span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.EXTERNAL_DIFFUSION.A' | translate }} {{companyName}} {{ 'PROJECT_MODULE.SETUP.PITCH.EXTERNAL_DIFFUSION.B' | translate }}</span>
+              <div class="form-group pd-input">
+                <label class="form-radio">
+                  <input
+                    type="radio"
+                    name="external_diffusion"
+                    [(ngModel)]="project.external_diffusion"
+                    [value]="false">
+                  <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
+                </label>
+                <label class="form-radio">
+                  <input
+                    type="radio"
+                    name="external_diffusion"
+                    [(ngModel)]="project.external_diffusion"
+                    [value]="true">
+                  <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Help -->
+          <div class="column col-6 help-wrapper">
+            <div class="bot-wrapper text-center">
+              <span class="bot-rect">We are working very hard. Something cool is comming soon...</span>
+              <br>
+              <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+              <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Project medias -->
+        <div *ngFor="let innovationItem of project.innovationCards; let i = index">
+          <div *ngIf="innovationCardEditingIndex === i">
+            <div class="project-data">
+              <span class="num-rect">9</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.LABEL' | translate }}</span>
+              <div class="pd-input">
+
+                <!-- Media display -->
+                <div *ngIf="innovationItem.media?.length > 0">
+                  <div class="columns col-gapless">
+
+                    <!-- Main media -->
+                    <div class="column col-md-12 col-lg-4 col-3 col-mr-auto" [ngStyle]="{ 'padding-bottom': '20px' }">
+                      <p class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.MAIN' | translate }}</p>
+                      <div *ngIf="innovationItem.principalMedia?.type === 'PHOTO'">
+                        <img
+                          [src]="innovationItem.principalMedia.url"
+                          [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+                          width="220" height="146">
+                      </div>
+                      <div *ngIf="innovationItem.principalMedia?.type === 'VIDEO'">
+                        <iframe
+                          [src]="domSanitizer.bypassSecurityTrustResourceUrl(innovationItem.principalMedia.video.embeddableUrl)"
+                          width="220" height="146">
+                        </iframe>
+                      </div>
+                    </div>
+
+                    <!-- Secondary medias -->
+                    <div class="column col-md-12 col-lg-8 col-9 col-mx-auto" [ngStyle]="{ 'padding-bottom': '20px' }">
+                      <p class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.SECONDARY' | translate }}</p>
+                      <div *ngFor="let media of innovationItem.media" class="media-content text-center">
+                        <img
+                          *ngIf="media.type === 'PHOTO'"
+                          [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_146,w_220/' + media.cloudinary.public_id"
+                          [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
+                        <iframe
+                          *ngIf="media.type === 'VIDEO'"
+                          [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+                          width="220" height="146">
+                        </iframe>
+                        <div class="media-action text-center">
+                            <span *ngIf="media._id !== innovationItem.principalMedia?._id" [ngStyle]="{ 'color': '#97A4B1' }">
+                              <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.MAKE_MAIN' | translate }}</a>
+                              /
+                            </span>
+                          <a class="text-link delete-link" (click)="deleteMedia($event, media, i)">{{ 'COMMON.DELETE' | translate }}</a>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- Uploading center -->
+                <div class="upload-wrapper">
+                  <div class="image-upload-wrapper">
+                    <app-shared-upload-zone-photo
+                      *ngIf="canEdit"
+                      [uri]="'/innovation/'+project._id+'/innovationCard/'+innovationItem._id+'/media/image'"
+                      (cbFn)="imageUploaded($event, i)">
+                    </app-shared-upload-zone-photo>
+                  </div>
+                  <div class="or-wrapper">
+                    <span class="para">{{ 'COMMON.OR' | translate }}</span>
+                  </div>
+                  <div class="video-upload-wrapper">
+                    <app-shared-upload-zone-video *ngIf="canEdit" (cbFn)="newOnlineVideoToAdd($event)"></app-shared-upload-zone-video>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal to ask user to sure about deleting the innov card the project -->
+<div class="modal" [ngClass]="{ 'active': showDeleteModal }">
+  <div class="modal-overlay" (click)="closeModal($event)"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+      <div class="modal-title">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.CONTENT.A' | translate }}
+        {{ 'COMMON.LANG.' + langDelete | uppercase | translate }}
+        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.CONTENT.B' | translate }}
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-sm ghost-delete" (click)="deleteInnovCard($event)">
+        {{ 'COMMON.DELETE' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!--<div class="section-container" id="pitchCard" *ngIf="project">
   <div class="columns">
     <div class="column col-xs-12 col-12 col-mx-auto">
 
       <form novalidate>
 
-        <!-- Describe -->
+        <!-- Describe -
           <div class="describe-container">
 
             <div class="ques">
@@ -85,12 +409,12 @@
                 </span>
               </div>
             </div>
-        -->
+
 
           <div *ngFor="let innovationItem of project.innovationCards; let i = index">
             <div *ngIf="innovationCardEditingIndex === i">
 
-              <!-- Title -->
+              <!-- Title
               <div class="project-data">
                 <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.LABEL' | translate }}</span>
                 <div class="tooltips"><i class="far fa-question-circle"></i>
@@ -109,11 +433,11 @@
                     <span *ngIf="innovationItem.get('title').hasError('required')">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.ERROR' | translate }}
                     </span>
-                  </div> -->
+                  </div> --
                 </div>
               </div>
 
-              <!-- Summary -->
+              <!-- Summary
               <div class="project-data">
                 <span class="num-rect">2</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.LABEL' | translate }}</span>
                 <div class="tooltips"><i class="far fa-question-circle"></i>
@@ -132,11 +456,11 @@
                     <span *ngIf="innovationItem.get('summary').hasError('required')">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.ERROR' | translate }}
                     </span>
-                  </div> -->
+                  </div> --
                 </div>
               </div>
 
-              <!-- Problem -->
+              <!-- Problem
               <div class="project-data">
                 <span class="num-rect">3</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.LABEL' | translate }}</span>
                 <div class="tooltips"><i class="far fa-question-circle"></i>
@@ -156,11 +480,11 @@
                     <span *ngIf="innovationItem.get('problem').hasError('required')">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.ERROR' | translate }}
                     </span>
-                  </div> -->
+                  </div> --
                 </div>
               </div>
 
-              <!-- Solution -->
+              <!-- Solution
               <div class="project-data">
                 <span class="num-rect">4</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.LABEL' | translate }}</span>
                 <div class="tooltips"><i class="far fa-question-circle"></i>
@@ -180,11 +504,11 @@
                     <span *ngIf="innovationItem.get('solution').hasError('required')">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.ERROR' | translate }}
                     </span>
-                  </div> -->
+                  </div> --
                 </div>
               </div>
 
-              <!-- Advantages -->
+              <!-- Advantages --
               <div class="project-data">
                 <span class="num-rect">5</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.LABEL' | translate }}</span>
                 <div class="tooltips"><i class="far fa-question-circle"></i>
@@ -201,7 +525,7 @@
             </div>
           </div>
 
-        <!-- Stage -->
+        <!-- Stage
         <div class="project-data">
           <span class="num-rect">6</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.WHAT_STAGE' | translate }}</span>
           <div class="tooltips"><i class="far fa-question-circle"></i>
@@ -235,7 +559,7 @@
           </div>
         </div>
 
-        <!-- Patent -->
+        <!-- Patent
         <div class="project-data">
           <span class="num-rect">7</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.IS_PATENTED' | translate }}</span>
           <div class="tooltips"><i class="far fa-question-circle"></i>
@@ -261,7 +585,7 @@
           </div>
         </div>
 
-        <!-- Diffusion -->
+        <!-- Diffusion
         <div class="project-data">
           <span class="num-rect">8</span>
           <span class="ques">
@@ -299,11 +623,11 @@
               <span class="num-rect">9</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.ADD' | translate }}</span>
               <div class="pd-label">
 
-                  <!-- Media display -->
+                  <!-- Media display
                   <div class="media-disp-container">
                     <div class="columns col-gapless">
 
-                      <!-- Main media -->
+                      <!-- Main media
                       <div class="column col-md-12 col-lg-4 col-3 col-mr-auto">
 
                         <div>
@@ -331,7 +655,7 @@
                       </div>
                     </div>
 
-                    <!-- Secondary medias -->
+                    <!-- Secondary medias
                     <div *ngIf="innovationItem.media?.length > 0" class="column col-md-12 col-lg-8 col-9 col-mx-auto">
 
                       <p class="para">Secondary medias</p>
@@ -365,7 +689,7 @@
                 </div>
               </div>
 
-                <!-- Uploading medias -->
+                <!-- Uploading medias
                 <div class="upload-container">
 
                   <div class="image-upload-container">
@@ -393,28 +717,7 @@
   </div>
 </div>
 
-<!-- Modal to ask user to sure about deleting the innov card the project -->
-<div class="modal" [ngClass]="{ 'active': showDeleteModal }">
-  <div class="modal-overlay" (click)="closeModal($event)"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-      <div class="modal-title">{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.TITLE' | translate }}</div>
-    </div>
-    <div class="modal-body">
-      <div class="content">
-        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.CONTENT.A' | translate }}
-        {{ 'COMMON.LANG.' + langDelete | uppercase | translate }}
-        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.MODAL_DELETE.CONTENT.B' | translate }}
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn ghost-delete-button sm-button" (click)="deleteInnovCard($event)">
-        {{ 'COMMON.DELETE' | translate }}
-      </button>
-    </div>
-  </div>
-</div>
+
 
 <!--<div *ngIf="project">
 

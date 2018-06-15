@@ -11,7 +11,7 @@
     placeholder="https://www.youtube.com/watch?v=1c9V-Re5QJA"
     [(ngModel)]="videoUrlInput">
 
-  <button class="btn" (click)="videoUrlInput ? addVideo($event) : ''">
+  <button class="btn btn-primary" (click)="videoUrlInput ? addVideo($event) : ''">
     <i class="fas fa-upload"></i>{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.UPLOAD_VIDEO' | translate }}
   </button>
 

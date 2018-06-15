@@ -21,6 +21,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     padding-top: 50px;
+    padding-bottom: 25px;
 
     h5 {
       font-size: 1.35rem;
@@ -91,7 +92,6 @@
   }
 
   .tabs-container {
-    padding-top: 25px;
     padding-bottom: 25px;
 
     .tabs li {
@@ -102,17 +102,16 @@
         color: #4F5D6B;
         border-bottom: 4px solid transparent;
         font-weight: 500;
-
-        i {
-          display: none;
-        }
-
       }
 
       li a:hover {
         border-bottom-color: #FFB300;
       }
 
+    }
+
+    .pitch-check, .targeting-check, .survey-check {
+      display: none;
     }
 
   }

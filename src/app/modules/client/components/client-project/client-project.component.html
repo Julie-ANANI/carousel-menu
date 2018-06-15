@@ -75,6 +75,13 @@
 
         <!-- History page -->
         <div *ngIf="currentPage === 'history'">
+          <!--<app-client-history-project [project]="project"></app-client-history-project>-->
+          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '75px', 'padding-bottom': '50px' }">
+            <span class="bot-rect" [ngStyle]="{ 'width': '300px' }">We are working very hard. For more information contact Marc!</span>
+            <br>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+          </div>
         </div>
 
       </div>

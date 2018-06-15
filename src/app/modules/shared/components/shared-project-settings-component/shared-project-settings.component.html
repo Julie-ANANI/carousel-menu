@@ -1,12 +1,10 @@
-<div class="section-container" id="projectSetting">
+<div class="section-container" id="project-setting">
   <div class="columns">
     <div class="column col-12">
 
       <!-- Geography -->
       <div class="geography-wrapper">
-
         <span class="num-rect">1</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.LABEL' | translate }}</span>
-
         <div class="pd-input">
           <app-worldmap
             (updateContinent)="continentModificationDrain($event)"
@@ -15,7 +13,6 @@
             [canEdit]="true">
           </app-worldmap>
         </div>
-
       </div>
 
       <div class="columns">
@@ -34,7 +31,6 @@
               </app-autocomplete-input>
             </div>
           </div>
-
           <p class="pd-para">
              <span class="text-link" (click)="(displayCountriesCommentSection = !displayCountriesCommentSection) && $event.preventDefault()">
                 {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.COMMENT' | translate }}
@@ -69,9 +65,7 @@
 
           <!-- Types of enterprises -->
           <div class="enterprises-wrapper pd-ques">
-
             <span class="num-rect">3</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.LABEL' | translate }}</span>
-
             <div class="pd-para">
               <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}</span>
               <div class="pd-input">
@@ -82,7 +76,6 @@
                 </app-autocomplete-input>
               </div>
             </div>
-
             <div class="pd-para">
               <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}</span>
               <div class="pd-input">
@@ -93,7 +86,6 @@
                 </app-autocomplete-input>
               </div>
             </div>
-
             <p class="pd-para">
               <span class="text-link" (click)="(displayCompanyCommentSection = !displayCompanyCommentSection) && $event.preventDefault()">
                 {{'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.COMMENT' | translate }}
@@ -110,14 +102,11 @@
                 (change)="updateSettings()">
               </textarea>
             </div>
-
           </div>
 
           <!-- Professional profiles -->
           <div class="professional-wrapper pd-ques">
-
             <span class="num-rect">4</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate }}</span>
-
             <div class="pd-input">
               <textarea
                 class="form-default"
@@ -128,7 +117,6 @@
                 (change)="updateSettings()">
               </textarea>
             </div>
-
             <p class="pd-para">
               <span class="text-link" (click)="(displayPersonsToExcludeSection = !displayPersonsToExcludeSection) && $event.preventDefault()">
                 {{'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}
@@ -142,14 +130,11 @@
                 [config]="getConfig('excludedPeople')">
               </app-input-list>
             </div>
-
           </div>
 
           <!-- Keywords and other stuffs -->
           <div class="comment-wrapper pd-ques">
-
             <span class="num-rect">5</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</span>
-
             <div class="pd-input">
               <textarea
                  class="form-default"
@@ -161,7 +146,6 @@
                  (change)="updateSettings()">
               </textarea>
             </div>
-
             <div *ngIf="adminMode">
               <p class="pd-para">
                 <span class="text-link" (click)="(displayKeywordsSection = !displayKeywordsSection) && $event.preventDefault()">
@@ -178,7 +162,6 @@
                 </app-input-list>
               </div>
             </div>
-
           </div>
 
           <!-- Blacklist domains -->
@@ -212,14 +195,13 @@
         <!-- Help wrapper -->
         <div class="column col-6 help-wrapper">
           <div class="bot-wrapper text-center">
-            <span class="bot-text">{{'PROJECT_MODULE.SETUP.SURVEY.NOQUIZ' | translate}}</span>
+            <span class="bot-rect">We are working very hard. Something cool is comming soon...</span>
             <br>
             <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-            <div>
-              <img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot">
-            </div>
+            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
           </div>
         </div>
+
       </div>
 
     </div>

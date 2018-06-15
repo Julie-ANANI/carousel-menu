@@ -45,42 +45,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.changesSaved = true;
-    /*
-    this.innovationData.patchValue(this.project);
-
-    this._primaryLanguage = this.project.innovationCards[0].lang;
-
-    if (this.project.innovationCards.length < 2) {
-      this._primaryLength = this.project.innovationCards.length;
-    } else {
-      this._displayDeleteButton = true;
-    }
-
-    if (!this.canEdit) {
-      this.innovationData.disable();
-    }
-
-    for (const innovationCard of this.project.innovationCards) {
-      this._addInnovationCardWithData(innovationCard);
-    }
-
-    this.innovationData.valueChanges.distinctUntilChanged().takeUntil(this.ngUnsubscribe).subscribe(_ => {
-        this.updateCards();
-      });
-    */
-
   }
-
-/*
-  private _buildForm(): void {
-    this.innovationData = this.formBuilder.group({
-      patented: [undefined, Validators.required],
-      projectStatus: [undefined, Validators.required],
-      external_diffusion: [false, [Validators.required]],
-      innovationCards: this.formBuilder.array([])
-    });
-  }
-  */
 
   notifyModelChanges(_event: any) {
     this.changesSaved = false;
