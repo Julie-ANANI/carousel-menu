@@ -4,6 +4,7 @@ import { Campaign } from '../../../../../models/campaign';
 import { environment } from '../../../../../../environments/environment';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import {Batch} from '../../../../../models/batch';
 
 @Component({
   selector: 'app-admin-campaign-mails',
@@ -21,10 +22,12 @@ export class AdminCampaignMailsComponent implements OnInit {
   public lastMail: number = 0;
   public testModal: boolean = false;
   public batchModal: boolean = false;
-  public newBatch: any = {};
+  public newBatch: Batch;
   public dateformat: string = "le dd/MM/yyyy à HH:mm";
   public selectedBatchToBeDeleted: any = null;
   public editDates: Array<any>;
+  public dateMail: string;
+  public timeMail: string;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
@@ -50,13 +53,14 @@ export class AdminCampaignMailsComponent implements OnInit {
     });
 
     this.newBatch = {
-      campaign: this._campaign._id,
-      size: 0
+      campaign: this._campaign,
+      size: 0,
+      active: true
     };
   }
 
   public createNewBatch(sendNow: boolean) {
-    this.newBatch.firstMail = sendNow ? Date.now() : this._computeDate(this.newBatch.date, this.newBatch.time);
+    this.newBatch.firstMail = sendNow ? Date.now() : this._computeDate(this.dateMail, this.timeMail);
     this.newBatch.sendNow = sendNow;
     this._campaignService.createNewBatch(this._campaign._id, this.newBatch).first().subscribe((batch: any) => {
       this.stats.batches.push(batch);
@@ -114,8 +118,8 @@ export class AdminCampaignMailsComponent implements OnInit {
     batch.secondMail = this._computeDate(this.editDates[1].date, this.editDates[1].time);
     batch.thirdMail = this._computeDate(this.editDates[2].date, this.editDates[2].time);
     delete batch.status;
-    this._campaignService.updateBatch(batch).first().subscribe((batch: any) => {
-      this.stats.batches[this._getBatchIndex(batch._id)] = batch;
+    this._campaignService.updateBatch(batch).first().subscribe((Abatch: any) => {
+      this.stats.batches[this._getBatchIndex(Abatch._id)] = Abatch;
     });
   }
 
