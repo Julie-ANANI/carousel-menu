@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/switchMap';
-import 'lodash';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
+import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
+import { MultilingPipe } from '../../pipes/multiling/multiling.pipe';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   moduleId: module.id,
@@ -21,6 +21,7 @@ export class AutocompleteInputComponent implements OnInit {
   @Input() canEdit = true;
   @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
   @Input() adminMode = false;
+  @Input() multiLangObjects = false;
 
   companyName: FormControl = new FormControl();
   answerList: Array<{name: string, domain: string, flag: string; url: string, rating: number}> = [];
@@ -37,7 +38,8 @@ export class AutocompleteInputComponent implements OnInit {
 
   constructor(private _fbuilder: FormBuilder,
               private _sanitizer: DomSanitizer,
-              private _autocompleteService: AutocompleteService) {}
+              private _autocompleteService: AutocompleteService,
+              private _translateService: TranslateService) {}
 
   @Input()
   set config(config: {placeholder: string, type: string, initialData: any, identifier: string, canOrder: boolean}) {
@@ -86,8 +88,14 @@ export class AutocompleteInputComponent implements OnInit {
   }
 
   public autocompleListFormatter = (data: any) : SafeHtml => {
-    let html = `<span>${data[this._identifier]}</span>`;
-    return this._sanitizer.bypassSecurityTrustHtml(html);
+    let text: string;
+    if (this.multiLangObjects) {
+      text = MultilingPipe.prototype.transform(data[this._identifier], this._translateService.currentLang);
+    } else {
+      text = data[this._identifier];
+    }
+    const content = `<span>${text}</span>`;
+    return this._sanitizer.bypassSecurityTrustHtml(content);
   };
 
   public canAdd(): boolean {

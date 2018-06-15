@@ -10,9 +10,9 @@
       <app-autocomplete-input
           (update)="updateTags($event)"
           [onlyOne]="false"
-          [config]="{placeholder: 'tags', initialData: tags || [], type: 'tags'}">
+          [config]="{placeholder: 'tags', initialData: tags || [], type: 'tags'}"
+          [multiLangObjects]="true">
       </app-autocomplete-input>
-
 
       <h4>Presets management</h4>
       <app-autocomplete-input
