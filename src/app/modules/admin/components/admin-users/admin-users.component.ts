@@ -14,6 +14,7 @@ export class AdminUsersComponent implements OnInit {
 
   private _users: Array<User> = [];
   private _actions: string[] = [];
+  private _tableInfos: Table = null;
   private _selfId = '';
   private _total = 0;
   private _config = {
@@ -37,20 +38,9 @@ export class AdminUsersComponent implements OnInit {
     this.loadUsers(this._config);
   }
 
-  getTableInfos(): Table
+  get tableInfos(): Table
   {
-    return {
-      _title: 'COMMON.USERS',
-      _content: this._users,
-      _total: this._total,
-      _isSelectable: true,
-      _isEditable: true,
-      _isDeletable: true,
-      _columns: ['firstName', 'lastName', 'jobTitle', 'companyName'],
-      _columnsNames: ['FIRSTNAME', 'LASTNAME', 'JOB', 'COMPANY'],
-      _types: ['TEXT', 'TEXT', 'TEXTE', 'TEXT'],
-      _actions: this._actions
-    };
+    return this._tableInfos;
   }
 
   loadUsers(config: any): void
@@ -61,6 +51,22 @@ export class AdminUsersComponent implements OnInit {
       .subscribe(users => {
         this._users = users.result;
         this._total = users._metadata.totalCount;
+
+        this._tableInfos = {
+          _selector: 'admin-user',
+          _title: 'COMMON.USERS',
+          _content: this._users,
+          _total: this._total,
+          _isSelectable: true,
+          _isEditable: true,
+          _isDeletable: true,
+          _columns: [
+            {_attr: 'firstName', _name: 'FIRSTNAME', _type: 'TEXT'},
+            {_attr: 'lastName', _name: 'LASTNAME', _type: 'TEXT'},
+            {_attr: 'jobTitle', _name: 'JOB', _type: 'TEXTE'},
+            {_attr: 'companyName', _name: 'COMPANY', _type: 'TEXT'}],
+          _actions: this._actions
+        };
       });
   }
 

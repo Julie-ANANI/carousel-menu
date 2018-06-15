@@ -10,7 +10,7 @@
       </div>
       -->
 
-      <app-shared-table [data]="getTableInfos()"
+      <app-shared-table [data]="tableInfos"
                         [config]="config"
                         (configChange)="loadUsers($event)"
                         (editRow)="editUser($event)"
