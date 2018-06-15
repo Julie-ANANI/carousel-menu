@@ -7,10 +7,8 @@
       <!-- Header -->
       <div class="hero-light-container">
         <div class="column col-xs-12 col-11 col-mx-auto">
-
           <!-- Name -->
           <h1>{{ project.name[0] | uppercase }}{{ project.name | slice:1 }}</h1>
-
           <!-- Info -->
           <div class="info-wrapper">
             <img [src]="imgType">
@@ -25,7 +23,6 @@
               </span>
             </span>
           </div>
-
           <!-- Tabs -->
           <div class="tab-container">
             <ul class="tabs">
@@ -51,28 +48,23 @@
               </li>
             </ul>
           </div>
-
         </div>
       </div>
 
       <!-- Sections -->
       <div class="column col-xs-12 col-11 col-mx-auto">
-
         <!-- Setup page -->
         <div *ngIf="currentPage === 'setup'">
           <app-client-setup-project [project]="project"></app-client-setup-project>
         </div>
-
         <!-- Exploration page -->
         <div *ngIf="currentPage === 'exploration'">
           <app-client-exploration-project [project]="project"></app-client-exploration-project>
         </div>
-
         <!-- Synthesis page -->
         <div *ngIf="currentPage === 'synthesis'">
           <app-shared-market-report [project]="project"></app-shared-market-report>
         </div>
-
         <!-- History page -->
         <div *ngIf="currentPage === 'history'">
           <!--<app-client-history-project [project]="project"></app-client-history-project>-->
@@ -83,7 +75,6 @@
             <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
           </div>
         </div>
-
       </div>
 
     </div>

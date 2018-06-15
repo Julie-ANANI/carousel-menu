@@ -10,6 +10,7 @@ import {Question} from '../../../../../../models/question';
   templateUrl: 'history.component.html',
   styleUrls: ['history.component.scss']
 })
+
 export class HistoryProjectComponent implements OnInit {
 
   @Input() project: Innovation;
