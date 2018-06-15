@@ -1,0 +1,9 @@
+<div class="input-group">
+  <select class="input-group-addon select-sm" (change)="changeCurrentProp($event)">
+    <option *ngFor="let propName of props" [value]="propName">{{getProp(propName)}}</option>
+  </select>
+  <input (keyup.enter)="filter($event)"
+         [placeholder]="'COMMON.FILTER' | translate"
+         [value]="config.search[currentProp] || ''" class="input-sm"/>
+</div>
+

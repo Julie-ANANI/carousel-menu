@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Table} from '../models/table';
 import {Row} from '../models/row';
 import {Types} from '../models/types';
+import {Column} from '../models/column';
 
 @Component({
   selector: 'app-shared-table',
@@ -26,74 +27,44 @@ export class SharedTableComponent {
 
   @Output() performAction: EventEmitter<any> = new EventEmitter<any>();
 
+  private _selector = '';
   private _title = 'Résultats';
   private _isSelectable = false;
   private _isEditable = false;
   private _isDeletable = false;
   private _content: Row[] = [];
   private _total = 0;
-  private _columns: string[] = [];
-  private _columnsNames: string[] = [];
-  private _types: Types[] = [];
+  private _columns: Column[] = [];
   private _actions: string[] = [];
-  private _selectedRows = 0;
+  private _columnsAttr: string[] = [];
 
   private _config: any = null;
 
   constructor() {}
 
   loadData(value: Table): void  {
-    this._title = value._title || 'Résultats';
+    if (value) {
+      this._title = value._title || 'Résultats';
 
-    // Si le tableau contient plus de ligne que la limit, on le vide
-    // (c'est le cas lorsque l'on passe de 50 lignes par pages à 10 lignes par pages par exemple)
-    if (this._content.length > this._config.limit) {
+      this._selector = value._selector;
+
       this._content = [];
+      value._content.forEach(value1 => this._content.push({_isHover: false, _isSelected: false, _content: value1}));
+
+      this._isSelectable = value._isSelectable || false;
+      this._isEditable = value._isEditable || false;
+      this._isDeletable = value._isDeletable || false;
+      this._total = value._total;
+
+      // Si on a plus de 10 colonnes, on ne prends que les 10 premières
+      value._columns.length > 10
+        ? this._columns = value._columns.slice(0, 10)
+        : this._columns = value._columns;
+
+      this._columnsAttr = this._columns.map(value1 => {return value1._attr});
+
+      this._actions = value._actions || [];
     }
-
-    // Pour chaque valeur qu'on souhaite insérer, on va chercher si elle n'est pas déjà dans le tableau content
-    // Si ce n'est pas le cas on insère une nouvelle Row dans content
-    value._content.forEach(value1 => {
-      if (!this._content.find(value2 => JSON.stringify(value2._content) === JSON.stringify(value1))) {
-        this._content.push({_isHover: false, _isSelected: false, _content: value1})
-      }
-    });
-
-    this._isSelectable = value._isSelectable || false;
-    this._isEditable = value._isEditable || false;
-    this._isDeletable = value._isDeletable || false;
-    this._total = value._total;
-
-    // Si on a plus de 10 colonnes, on ne prends que les 10 premières
-    value._columns.length > 10
-      ? this._columns = value._columns.slice(0, 10)
-      : this._columns = value._columns;
-
-    // On regarde si il existe des noms pour les colonnes
-    // Si oui on les stocke (uniquement les 10 premiers champs (si il y en a plus que 10)
-    // Sinon on va afficher les noms des attributs en majuscule
-    if (value._columnsNames) {
-      value._columnsNames.length > 10
-        ? this._columnsNames = value._columnsNames.slice(0, 10)
-        : this._columnsNames = value._columnsNames
-    } else {
-      this._columnsNames = this._columns.map(value1 => {return value1.toUpperCase()});
-    }
-
-    // On va chercher pour chaque string contenu dans value._types si il correspond à un attribut Types
-    // Si oui, on insère le type correspondant
-    // Si non, on insère un type TEXT
-    for (const type of value._types) {
-      let typeKey = 'TEXT';
-      for (const typesKey in Types) {
-        if (type === typesKey) {
-          typeKey = typesKey;
-        }
-      }
-      this._types.push(Types[typeKey]);
-    }
-
-    this._actions = value._actions || [];
   }
 
   loadConfig(value: any): void {
@@ -121,8 +92,26 @@ export class SharedTableComponent {
     return this._content[rowKey]._content[columnKey];
   }
 
-  getType(columnIndex: number): Types {
-    return this._types[columnIndex];
+  getType(column: Column): Types {
+    let typeKey = 'TEXT';
+    for (const typesKey in Types) {
+      if (column._type === typesKey) {
+        typeKey = typesKey;
+      }
+    }
+    return Types[typeKey];
+  }
+
+  getAttr(column: Column) {
+    return column._attr;
+  }
+
+  getName(column: Column) {
+    return column._name;
+  }
+
+  get selector(): string {
+    return this._selector;
   }
 
   get title(): string {
@@ -145,24 +134,20 @@ export class SharedTableComponent {
     return this._content;
   }
 
+  get columns(): Column[] {
+    return this._columns;
+  }
+
+  get columnsAttr(): string[] {
+    return this._columnsAttr;
+  }
+
   get total(): number {
     return this._total;
   }
 
-  get columns(): string[] {
-    return this._columns;
-  }
-
-  get columnsNames(): string[] {
-    return this._columnsNames;
-  }
-
   get config(): any {
     return this._config;
-  }
-
-  get types(): Types[] {
-    return this._types;
   }
 
   get actions(): string[] {
@@ -170,7 +155,7 @@ export class SharedTableComponent {
   }
 
   get selectedRows(): number {
-    return this._selectedRows;
+    return this.getSelectedRows().length;
   }
 
   getSelectedRows(): Row[] {
@@ -191,7 +176,6 @@ export class SharedTableComponent {
   selectRow(key: string): void {
     if (this._isSelectable) {
       this._content[key]._isSelected = !(this._content[key]._isSelected);
-      this._content[key]._isSelected ? this._selectedRows++ : this._selectedRows--;
     }
   }
 
@@ -209,7 +193,6 @@ export class SharedTableComponent {
 
   selectAll(e: any): void  {
       this._content.forEach(value => { value._isSelected = e.srcElement.checked; });
-      e.srcElement.checked ? this._selectedRows = this._content.length : this._selectedRows = 0;
   }
 
 }

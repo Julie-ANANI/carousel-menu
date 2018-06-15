@@ -19,6 +19,7 @@ import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-
 import { SharedLoaderComponent } from './components/shared-loader/shared-loader.component';
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
 import { SharedFilterInputComponent } from './components/shared-filter-input/shared-filter-input.component';
+import { SharedFilterMultiComponent} from './components/shared-filter-multi/shared-filter-multi.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
 import { SharedTagItemComponent } from './components/shared-tag-item/shared-tag-item.component';
@@ -83,6 +84,7 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedLoaderComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
+    SharedFilterMultiComponent,
     SharedTextZoneComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
@@ -131,6 +133,7 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedLoaderComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
+    SharedFilterMultiComponent,
     SharedTextZoneComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
