@@ -170,6 +170,38 @@ $disabled-color: #DBDBDB;
   padding: 5px 15px !important;
 }
 
+/*
+    Scroll to top button
+ */
+.btn-scroll {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: $primary-color;
+  box-shadow: 0 1px 10px rgba(0,0,0,.1), 0 2px 40px rgba(0,0,0,.2);
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 9999;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+
+  i {
+    font-size: 0.85rem;
+  }
+
+}
+
+.btn-scroll:hover {
+  background-color: lighten($primary-color, 10%);
+  cursor: pointer;
+}
+
 
 /*
     Media

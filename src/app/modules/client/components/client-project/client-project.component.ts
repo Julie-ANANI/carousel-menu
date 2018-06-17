@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, HostListener} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../models/innovation';
 import { emailRegEx } from '../../../../utils/regex';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 const DEFAULT_PAGE = 'setup';
 
@@ -19,6 +19,7 @@ export class ClientProjectComponent implements OnInit {
 
   private _imgType: string;
   private _currentPage: string;
+  private _scrollButton = false;
   /*
    * Ajout de collaborateurs
    */
@@ -64,20 +65,22 @@ export class ClientProjectComponent implements OnInit {
 
   }
 
-  /*public validCollaboratorsList(): boolean {
-    let validCount = 0;
 
-    const split = this.collaborators_emails.split(/[\s,;:]/g).filter(val => val !== '');
 
-    split.forEach(mail => {
-      if (mail.match(emailRegEx)) {
-        validCount++;
-      }
-    });
+    /*public validCollaboratorsList(): boolean {
+      let validCount = 0;
 
-    return validCount > 0 && validCount === split.length;
+      const split = this.collaborators_emails.split(/[\s,;:]/g).filter(val => val !== '');
 
-  }*/
+      split.forEach(mail => {
+        if (mail.match(emailRegEx)) {
+          validCount++;
+        }
+      });
+
+      return validCount > 0 && validCount === split.length;
+
+    }*/
 
   enterKeyPress(event: Event) {
     if (event['keyCode'] === 13) {
@@ -178,6 +181,31 @@ export class ClientProjectComponent implements OnInit {
   closeModal(event: Event) {
     event.preventDefault();
     this._displayAddCollaboratorsModal = false;
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (this.getCurrentScrollTop() > 10) {
+      this._scrollButton = true;
+    } else {
+      this._scrollButton = false;
+    }
+  }
+
+  getCurrentScrollTop() {
+    if (typeof window.scrollY !== 'undefined' && window.scrollY >= 0) {
+      return window.scrollY;
+    }
+    return 0;
+  };
+
+  scrollToTop(event: Event) {
+    event.preventDefault();
+    window.scrollTo(0, 0);
+  }
+
+  get scrollButton(): boolean {
+    return this._scrollButton;
   }
 
   get currentPage(): string {

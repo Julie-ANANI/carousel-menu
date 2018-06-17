@@ -7,7 +7,6 @@ import { ClientDiscoverDescriptionModule } from '../../../client/components/clie
 
 // Components
 import { UserFormSidebarComponent } from './components/user-form-sidebar/user-form-sidebar.component';
-import { InnovationPreviewSidebarComponent } from './components/innovation-preview/innovation-preview-sidebar.component';
 
 // Services
 import { UserFormSidebarService } from './services/user-form-sidebar.service';
@@ -21,15 +20,13 @@ import { UserFormSidebarService } from './services/user-form-sidebar.service';
     ClientDiscoverDescriptionModule
   ],
   declarations: [
-    UserFormSidebarComponent,
-    InnovationPreviewSidebarComponent
+    UserFormSidebarComponent
   ],
   providers: [
     UserFormSidebarService
   ],
   exports: [
-    UserFormSidebarComponent,
-    InnovationPreviewSidebarComponent
+    UserFormSidebarComponent
   ]
 })
 
