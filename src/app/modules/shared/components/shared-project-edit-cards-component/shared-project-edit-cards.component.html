@@ -1,7 +1,7 @@
 <div class="main-container" id="pitch-card" *ngIf="project">
   <div class="columns">
     <div class="column col-12">
-      <form novalidate>
+      <form #refForm="ngForm">
 
         <!-- Language choice -->
         <div class="choice-wrapper">
@@ -46,9 +46,6 @@
           </div>
         </div>
 
-        <!-- Innovation preview sidebar -->
-
-
         <div class="columns">
 
           <!-- Ques -->
@@ -65,9 +62,15 @@
                       id="innovation-title"
                       class="form-default"
                       name="title"
+                      #title="ngModel"
                       [(ngModel)]="project.innovationCards[i].title"
                       [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
-                      (ngModelChange)="notifyModelChanges($event)">
+                      (ngModelChange)="notifyModelChanges($event)"
+                      required
+                      (blur)="valueCheck($event)">
+                    <div class="form-error" *ngIf="title.touched && title.invalid">
+                      <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.ERROR' | translate }}</span>
+                    </div>
                   </div>
                 </div>
                 <!-- Summary -->
@@ -79,11 +82,16 @@
                       rows="8"
                       class="form-default"
                       name="summary"
+                      #summary="ngModel"
                       [(ngModel)]="project.innovationCards[i].summary"
-                      (ngModelChange)="notifyModelChanges($event)">
+                      (ngModelChange)="notifyModelChanges($event)"
+                      required>
                     </textarea>
                     <div class="charRemaining">
                       <span [ngStyle]="{'color': getColor(project.innovationCards[i].summary.length | characterCountdown:500)}">{{ project.innovationCards[i].summary.length | characterCountdown:500 }}</span>
+                    </div>
+                    <div class="form-error" *ngIf="summary.touched && summary.invalid">
+                      <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.ERROR' | translate }}</span>
                     </div>
                   </div>
                 </div>
@@ -97,12 +105,16 @@
                       id="innovation-problem"
                       class="form-default"
                       name="problem"
+                      #problem="ngModel"
                       [(ngModel)]="project.innovationCards[i].problem"
                       (ngModelChange)="notifyModelChanges($event)"
-                      (keyup)="setCharColor(project.innovationCards[i].problem.length, $event)">
+                      required>
                     </textarea>
                     <div class="charRemaining">
                       <span [ngStyle]="{'color': getColor(project.innovationCards[i].problem.length | characterCountdown:500)}">{{ project.innovationCards[i].problem.length | characterCountdown:500 }}</span>
+                    </div>
+                    <div class="form-error" *ngIf="problem.touched && problem.invalid">
+                      <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.ERROR' | translate }}</span>
                     </div>
                   </div>
                 </div>
@@ -116,11 +128,16 @@
                       id="innovation-solution"
                       class="form-default"
                       name="solution"
+                      #solution="ngModel"
                       [(ngModel)]="project.innovationCards[i].solution"
-                      (ngModelChange)="notifyModelChanges($event)">
+                      (ngModelChange)="notifyModelChanges($event)"
+                      required>
                     </textarea>
                     <div class="charRemaining">
                       <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:500)}">{{ project.innovationCards[i].solution.length | characterCountdown:500 }}</span>
+                    </div>
+                    <div class="form-error" *ngIf="solution.touched && solution.invalid">
+                      <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.ERROR' | translate }}</span>
                     </div>
                   </div>
                 </div>
@@ -132,6 +149,9 @@
                       (update)="addAdvantageToInventionCard($event, i)"
                       [config]="getConfig('advantages')">
                     </app-input-list>
+                  </div>
+                  <div class="form-error" *ngIf="advantageInputError">
+                    <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.ERROR' | translate }}</span>
                   </div>
                 </div>
               </div>

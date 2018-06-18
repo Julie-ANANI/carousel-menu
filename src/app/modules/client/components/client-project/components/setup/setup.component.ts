@@ -21,6 +21,7 @@ export class SetupProjectComponent implements OnInit {
   private _changesSaved: boolean;
   private _saveChanges: boolean;
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
+  formValid: boolean;
   private _currentTab: string;
   private _projectToBeSubmitted: boolean;
 
@@ -35,6 +36,7 @@ export class SetupProjectComponent implements OnInit {
     this._saveChanges = false;
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
+    this.formValid = false;
   }
 
   updateSettings(value: InnovationSettings): void {
@@ -70,6 +72,7 @@ export class SetupProjectComponent implements OnInit {
 
     if (this._saveChanges) {
       this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+
     } else {
       this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
     }

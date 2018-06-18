@@ -25,7 +25,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Output() projectChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
+  @Output() pitchFormField = new EventEmitter<boolean>();
 
+  advantageInputError: boolean;
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
   private _showDeleteModal = false;
@@ -45,11 +47,23 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.changesSaved = true;
+    this.checkField();
   }
 
   notifyModelChanges(_event: any) {
     this.changesSaved = false;
     this.saveChanges.emit(true);
+    this.checkField();
+  }
+
+  checkField() {
+    if (this.project.innovationCards[this.innovationCardEditingIndex].title !== '' && this.project.innovationCards[this.innovationCardEditingIndex].summary !== ''
+      && this.project.innovationCards[this.innovationCardEditingIndex].problem !== '' && this.project.innovationCards[this.innovationCardEditingIndex].solution !== ''
+      && this.project.innovationCards[this.innovationCardEditingIndex].advantages.length !== 0) {
+      this.pitchFormField.emit(true);
+    } else {
+      this.pitchFormField.emit(false);
+    }
   }
 
   /**
@@ -101,6 +115,12 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   addAdvantageToInventionCard (event: {value: Array<{text: string}>}, cardIdx: number): void {
     this.project.innovationCards[cardIdx].advantages = event.value;
     this.notifyModelChanges(event.value);
+    console.log(event);
+    if (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0) {
+      this.advantageInputError = true;
+    } else {
+      this.advantageInputError = false;
+    }
   }
 
   setAsPrincipal (innovationCardId: string): void {
@@ -185,6 +205,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   closeModal(event: Event) {
     event.preventDefault();
     this._showDeleteModal = false;
+  }
+
+  valueCheck(event: Event) {
+
   }
 
   getColor(length: number) {

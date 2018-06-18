@@ -20,7 +20,7 @@
             </button>
           </span>
           <span>
-            <button class="btn btn-primary" (click)="submitButton($event)">
+            <button class="btn btn-primary" [disabled]="!pitchFormField" (click)="submitButton($event)">
               {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
             </button>
           </span>
