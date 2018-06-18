@@ -52,13 +52,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.saveChanges.emit(true);
   }
 
-  charCalculate(maxChar: number, event: Event) {
-    event.preventDefault();
-    const _maxChar = maxChar;
-    console.log(_maxChar);
-    console.log(event);
-  }
-
   /**
    * This configuration tells the directive what text to use for the placeholder and if it exists,
    * the initial data to show.
@@ -201,6 +194,16 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  getColor(length: number) {
+    if (length === 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < 250) {
+      return '#f0ad4e';
+    } else {
+      return '#2ECC71';
+    }
   }
 
   get domSanitizer() {

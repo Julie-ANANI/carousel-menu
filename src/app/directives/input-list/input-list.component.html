@@ -1,6 +1,6 @@
 <form #f="ngForm" novalidate (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)">
 
-  <div class="input-group" *ngIf="canEdit">
+  <div class="input-group" *ngIf="canEdit" [ngStyle]="{ 'display': 'flex' }">
     <input
       type="text"
       class="form-default"

@@ -76,14 +76,14 @@
                   <div class="form-group pd-input">
                     <textarea
                       [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
-                      rows="5"
+                      rows="8"
                       class="form-default"
                       name="summary"
                       [(ngModel)]="project.innovationCards[i].summary"
                       (ngModelChange)="notifyModelChanges($event)">
                     </textarea>
                     <div class="charRemaining">
-                      <span>{{project.innovationCards[i].summary.length | characterCountdown:500 }}</span>
+                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].summary.length | characterCountdown:500)}">{{ project.innovationCards[i].summary.length | characterCountdown:500 }}</span>
                     </div>
                   </div>
                 </div>
@@ -98,8 +98,12 @@
                       class="form-default"
                       name="problem"
                       [(ngModel)]="project.innovationCards[i].problem"
-                      (ngModelChange)="notifyModelChanges($event)">
+                      (ngModelChange)="notifyModelChanges($event)"
+                      (keyup)="setCharColor(project.innovationCards[i].problem.length, $event)">
                     </textarea>
+                    <div class="charRemaining">
+                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].problem.length | characterCountdown:500)}">{{ project.innovationCards[i].problem.length | characterCountdown:500 }}</span>
+                    </div>
                   </div>
                 </div>
                 <!-- Solution -->
@@ -115,6 +119,9 @@
                       [(ngModel)]="project.innovationCards[i].solution"
                       (ngModelChange)="notifyModelChanges($event)">
                     </textarea>
+                    <div class="charRemaining">
+                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:500)}">{{ project.innovationCards[i].solution.length | characterCountdown:500 }}</span>
+                    </div>
                   </div>
                 </div>
                 <!-- Advantages -->
@@ -139,7 +146,8 @@
                     type="radio"
                     name="projectStatus"
                     [(ngModel)]="project.projectStatus"
-                    [value]="0">
+                    [value]="0"
+                    (ngModelChange)="notifyModelChanges($event)">
                   <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.0' | translate }}
                 </label>
                 <label class="form-radio">
@@ -147,7 +155,8 @@
                     type="radio"
                     name="projectStatus"
                     [(ngModel)]="project.projectStatus"
-                    [value]="1">
+                    [value]="1"
+                    (ngModelChange)="notifyModelChanges($event)">
                   <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.1' | translate }}
                 </label>
                 <label class="form-radio">
@@ -155,7 +164,8 @@
                     type="radio"
                     name="projectStatus"
                     [(ngModel)]="project.projectStatus"
-                    [value]="2">
+                    [value]="2"
+                    (ngModelChange)="notifyModelChanges($event)">
                   <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.2' | translate }}
                 </label>
               </div>
@@ -170,7 +180,8 @@
                     type="radio"
                     name="patented"
                     [(ngModel)]="project.patented"
-                    [value]="false">
+                    [value]="false"
+                    (ngModelChange)="notifyModelChanges($event)">
                   <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
                 </label>
                 <label class="form-radio">
@@ -178,7 +189,8 @@
                     type="radio"
                     name="patented"
                     [(ngModel)]="project.patented"
-                    [value]="true">
+                    [value]="true"
+                    (ngModelChange)="notifyModelChanges($event)">
                   <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
                 </label>
               </div>
@@ -194,7 +206,8 @@
                     type="radio"
                     name="external_diffusion"
                     [(ngModel)]="project.external_diffusion"
-                    [value]="false">
+                    [value]="false"
+                    (ngModelChange)="notifyModelChanges($event)">
                   <i class="form-icon"></i>{{ 'COMMON.NO' | translate }}
                 </label>
                 <label class="form-radio">
@@ -202,7 +215,8 @@
                     type="radio"
                     name="external_diffusion"
                     [(ngModel)]="project.external_diffusion"
-                    [value]="true">
+                    [value]="true"
+                    (ngModelChange)="notifyModelChanges($event)">
                   <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
                 </label>
               </div>
@@ -213,7 +227,7 @@
           <!-- Help -->
           <div class="column col-6 help-wrapper">
             <div class="bot-wrapper text-center">
-              <span class="bot-rect">We are working very hard. Something cool is comming soon...</span>
+              <span class="bot-rect">We are working very hard. Something cool is coming soon...</span>
               <br>
               <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
               <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
