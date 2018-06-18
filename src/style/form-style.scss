@@ -176,8 +176,10 @@ $success-color: #2ECC71;
 
 
 /*
-    Textarea non resizable
+    Textarea.
  */
 textarea {
   resize: none;
+  padding-right: 30px !important;
+
 }

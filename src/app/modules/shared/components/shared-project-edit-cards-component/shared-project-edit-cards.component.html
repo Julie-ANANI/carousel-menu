@@ -82,6 +82,9 @@
                       [(ngModel)]="project.innovationCards[i].summary"
                       (ngModelChange)="notifyModelChanges($event)">
                     </textarea>
+                    <div class="charRemaining">
+                      <span>{{project.innovationCards[i].summary.length | characterCountdown:500 }}</span>
+                    </div>
                   </div>
                 </div>
                 <!-- Problem -->
