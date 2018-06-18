@@ -40,9 +40,7 @@ export class AnswerModalComponent implements OnInit {
               private _answerService: AnswerService) { }
 
   ngOnInit() {
-
     this.adminMode = this.adminMode && this._authService.adminLevel > 2;
-    this.adminMode = true;
     this.floor = Math.floor;
 
     // On regarde si on a une question 'étoiles'
@@ -126,7 +124,7 @@ export class AnswerModalComponent implements OnInit {
 
   public close(event: Event): void {
     event.preventDefault();
-    //this.editMode = !this.editMode;
+    this.editMode = false;
     this.modalAnswerChange.emit(null);
   }
 

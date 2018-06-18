@@ -60,7 +60,9 @@
 
 
   <!-- Affichage des stats + valider + nom des workflows -->
+
   <div *ngIf="this.status == 1">
+    <!--
     <br>
       {{this.nameWorkflowA}}:
       DELIVERED : {{this.statsA.delivered}}&nbsp;  - &nbsp;
@@ -76,6 +78,8 @@
       INSIGHTS : {{this.statsB.insights}} &nbsp; - &nbsp;
       BOUNCED : {{this.statsA.bounced}}&nbsp;  -
     <br>
+    -->
+    <app-shared-table [data]="this.table" [config]="config"></app-shared-table>
     <button class="btn btn-primary" (click)="updateStatsBatch()">
       <i class="fas fa-sync"></i>
     </button>

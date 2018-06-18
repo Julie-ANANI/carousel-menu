@@ -26,24 +26,29 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   private _nameWorkflowB = '';
   private _sizeA: number;
   private _sizeB: number;
-
-  private _statsA: {
+  private _table: {};
+  private _statsA: Array<{
     delivered: number,
     opened: number,
     clicked: number,
     insights: number,
     bounced: number
-  };
-  private _statsB: {
+  }>;
+  private _statsB: Array<{
     delivered: number,
     opened: number,
     clicked: number,
     insights: number,
     bounced: number
-  };
+  }>;
 
   form: FormGroup;
 
+
+  public config: any = {
+    sort: {},
+    search: {}
+  };
   public switchActivated: Boolean = false;
 
   constructor(private formBuilder: FormBuilder,
@@ -59,8 +64,8 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       insights: 0,
       bounced: 0
     };
-    this._statsA = defAB;
-    this._statsB = defAB;
+    this._statsA = [defAB, defAB, defAB];
+    this._statsB = [defAB, defAB, defAB];
 
     this._status = this._campaign.settings.ABsettings.status;
 
@@ -125,6 +130,68 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     }
   }
 
+
+  public generateStatsTable() {
+    this._table = {
+      _selector: 'TODO',
+      _title: 'A/B Testing',
+      _content: [{
+          workflow: this._nameWorkflowA,
+          Delivered: this._statsA[0].delivered,
+          Opened: this._statsA[0].opened,
+          Clicked: this._statsA[0].clicked,
+          Insights: this._statsA[0].insights,
+        }, {
+          workflow: this._nameWorkflowA,
+          Delivered: this._statsA[1].delivered,
+          Opened: this._statsA[1].opened,
+          Clicked: this._statsA[1].clicked,
+          Insights: this._statsA[1].insights,
+        }, {
+          workflow: this._nameWorkflowA,
+          Delivered: this._statsA[2].delivered,
+          Opened: this._statsA[2].opened,
+          Clicked: this._statsA[2].clicked,
+          Insights: this._statsA[2].insights,
+        }, {
+          workflow: this._nameWorkflowB,
+          Delivered: this._statsB[0].delivered,
+          Opened: this._statsB[0].opened,
+          Clicked: this._statsB[0].clicked,
+          Insights: this._statsB[0].insights,
+        }, {
+          workflow: this._nameWorkflowB,
+          Delivered: this._statsB[1].delivered,
+          Opened: this._statsB[1].opened,
+          Clicked: this._statsB[1].clicked,
+          Insights: this._statsB[1].insights,
+        }, {
+          workflow: this._nameWorkflowB,
+          Delivered: this._statsB[2].delivered,
+          Opened: this._statsB[2].opened,
+          Clicked: this._statsB[2].clicked,
+          Insights: this._statsB[2].insights,
+      }],
+      _total: 1,
+      _columns: [{
+        _attr: 'Nom du workflow',
+        _type: String
+      }, {
+        _attr: 'Delivered',
+        _type: String
+      }, {
+        _attr: 'Opened',
+        _type: String
+      }, {
+        _attr: 'Clicked',
+        _type: String
+      }, {
+        _attr: 'Insights',
+        _type: String
+      }]
+    }
+  }
+
   public statusSwitch() {
     this.switchActivated = !this.switchActivated;
     if (this.switchActivated) {
@@ -142,6 +209,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       } else {
         this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
         this._statsA = obj;
+        this.generateStatsTable();
       }
     });
     this._campaignService.updateBatchStats(this.campaign.settings.ABsettings.batchB).subscribe((obj: any) => {
@@ -150,6 +218,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       } else {
         this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
         this._statsB = obj;
+        this.generateStatsTable();
       }
     });
   }
@@ -163,6 +232,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   get statsA(): any { return this._statsA };
   get statsB(): any { return this._statsB };
   get status(): number { return this._status };
+  get table(): any {return this._table};
 
 
   set nameWorkflowA(arg: string) { this._nameWorkflowA = arg};

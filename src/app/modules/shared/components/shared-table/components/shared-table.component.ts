@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Table} from '../models/table';
-import {Row} from '../models/row';
-import {Types} from '../models/types';
-import {Column} from '../models/column';
+import {Table} from './models/table';
+import {Row} from './models/row';
+import {Types} from './models/types';
+import {Column} from './models/column';
 
 @Component({
   selector: 'app-shared-table',
