@@ -57,12 +57,12 @@ export class SharedFilterMultiComponent {
         value.find(value1 => value1._attr.toLowerCase() === 'lastname')) {
         value = value.filter(value1 => value1._attr.toLowerCase() !== 'lastname');
       }
-      this._textProps = value.filter(value1 => value1._type === 'TEXT');
+      this._textProps = value.filter(value1 => this.getType(value1) === Types.TEXT);
       if (this._currentTextProp._attr === '' && this._textProps.length > 0) {
         this._currentTextProp = this._textProps[0];
       }
 
-      this._otherProps = value.filter(value1 => value1._type !== 'TEXT');
+      this._otherProps = value.filter(value1 => this.getType(value1) !== Types.TEXT);
     }
   }
 
