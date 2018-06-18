@@ -1,9 +1,26 @@
-<div class="input-group">
-  <select class="input-group-addon select-sm" (change)="changeCurrentProp($event)">
-    <option *ngFor="let propName of props" [value]="propName">{{getProp(propName)}}</option>
-  </select>
-  <input (keyup.enter)="filter($event)"
-         [placeholder]="'COMMON.FILTER' | translate"
-         [value]="config.search[currentProp] || ''" class="input-sm"/>
-</div>
+<ng-container>
+
+  <div class="form-group">
+    <select class="input-group-addon select-sm" (change)="changeCurrentTextProp($event)">
+      <option *ngFor="let propName of textProps" [value]="getAttr(propName)" [selected]="textIsSelected(propName)">{{getTextProp(propName)}}</option>
+    </select>
+    <input (keyup.enter)="filterText($event)"
+           [placeholder]="'COMMON.FILTER' | translate"
+           class="form-input"
+           [value]="config.search[currentTextProp] || ''" class="input-sm"/>
+  </div>
+
+  <div *ngFor="let prop of otherProps">
+    <ng-container [ngSwitch]="getType(prop)">
+      <label class="form-label">{{getName(prop)}}</label>
+      <select class="input-group-addon select-sm" (change)="filterOther($event, prop)" [(ngModel)]="config[getAttr(prop)]" *ngSwitchCase="'CHECK'">
+        <option [ngValue]="null">All</option>
+        <option [ngValue]="true">Oui</option>
+        <option [ngValue]="false">Non</option>
+      </select>
+    </ng-container>
+
+  </div>
+
+</ng-container>
 
