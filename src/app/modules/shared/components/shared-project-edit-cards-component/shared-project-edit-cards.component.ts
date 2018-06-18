@@ -187,15 +187,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this._showDeleteModal = false;
   }
 
-  containsLanguage(lang: string): boolean {
-    return this.project.innovationCards.some((c) => c.lang === lang);
-  }
-
-  ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-  }
-
   getColor(length: number) {
     if (length === 0) {
       return '#EA5858';
@@ -204,6 +195,15 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     } else {
       return '#2ECC71';
     }
+  }
+
+  containsLanguage(lang: string): boolean {
+    return this.project.innovationCards.some((c) => c.lang === lang);
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   get domSanitizer() {
