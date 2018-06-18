@@ -35,18 +35,19 @@
             <th width="50" *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)" [checked]="true"/></th>
             <th><span>{{selectedRows}} lignes selectionnée(s) </span></th>
 
-            <button class="btn btn-error"
-                    (click)="removeSelectedRows()"
-                    *ngIf="isDeletable">
-              Delete
-            </button>
-
             <ng-container>
-              <button *ngFor="let a of actions" class="btn" style="margin-left: 10px;"
+              <button *ngFor="let a of actions" class="btn btn-xs ghost-edit" style="margin-left: 10px;"
                       (click)="onActionClick(a)">
                 {{a}}
               </button>
             </ng-container>
+
+            <button class="btn btn-xs ghost-delete"
+                    style="margin-left: 10px;"
+                    (click)="removeSelectedRows()"
+                    *ngIf="isDeletable">
+              Delete
+            </button>
 
           </tr>
         </ng-container>
@@ -90,7 +91,7 @@
 
               </ng-container>
 
-              <button class="btn"
+              <button class="btn btn-xs ghost-edit"
                       *ngIf="isHover(content[key]) && columns.indexOf(column) == 0 && isEditable"
                       (click)="edit(content[key])">
                 Infos

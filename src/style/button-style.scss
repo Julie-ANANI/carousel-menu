@@ -13,6 +13,7 @@ $secondary-color: #0B90C6;
 $success-color: #2ECC71;
 $error-color: #EA5858;
 $disabled-color: #DBDBDB;
+$meta-color: #97A4B1;
 
 
 /*
@@ -133,6 +134,24 @@ $disabled-color: #DBDBDB;
   color: lighten($error-color, 15%) !important;
   background-color: white !important;
   border-color: lighten($error-color, 15%) !important;
+}
+
+/*
+    Ghost edit button class that you have to add with button class.
+    Class name: ghost-edit
+ */
+
+.ghost-edit:not(:disabled) {
+  color: $meta-color !important;
+  background-color: white !important;
+  border-color: $meta-color !important;
+  border-width: 2px;
+}
+
+.ghost-edit:not(:disabled):hover, .ghost-edit:not(:disabled):focus, .ghost-edit:not(:disabled):active {
+  color: lighten($meta-color, 15%) !important;
+  background-color: white !important;
+  border-color: lighten($meta-color, 15%) !important;
 }
 
 
