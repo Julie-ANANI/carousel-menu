@@ -2,7 +2,7 @@
 
 <sqFilterMulti [config]="config"
                (configChange)="changeConfig($event)"
-               [props]="columnsAttr">
+               [props]="columns">
 </sqFilterMulti>
 
 <div *ngIf="total == 0">
@@ -81,6 +81,12 @@
                           [attr.data-tooltip]="getContentValue(key, getAttr(column)) + '%'"
                           [value]="getContentValue(key, getAttr(column))" max="100">
                 </progress>
+
+                <!-- Si le type de la colonne est CHECK -->
+                <div *ngSwitchCase="'CHECK'">
+                  <i *ngIf="getContentValue(key, getAttr(column)) == 0" class="icon icon-cross"></i>
+                  <i *ngIf="getContentValue(key, getAttr(column)) == 1" class="icon icon-check"></i>
+                </div>
 
               </ng-container>
 

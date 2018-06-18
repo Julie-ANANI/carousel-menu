@@ -36,7 +36,6 @@ export class SharedTableComponent {
   private _total = 0;
   private _columns: Column[] = [];
   private _actions: string[] = [];
-  private _columnsAttr: string[] = [];
 
   private _config: any = null;
 
@@ -60,8 +59,6 @@ export class SharedTableComponent {
       value._columns.length > 10
         ? this._columns = value._columns.slice(0, 10)
         : this._columns = value._columns;
-
-      this._columnsAttr = this._columns.map(value1 => {return value1._attr});
 
       this._actions = value._actions || [];
     }
@@ -136,10 +133,6 @@ export class SharedTableComponent {
 
   get columns(): Column[] {
     return this._columns;
-  }
-
-  get columnsAttr(): string[] {
-    return this._columnsAttr;
   }
 
   get total(): number {
