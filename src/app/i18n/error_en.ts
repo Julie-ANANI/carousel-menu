@@ -3,9 +3,15 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
   'SUCCESS': 'Success',
   'CANNOT_REACH': 'Cannot reach to server.',
   'FORM_ERROR': 'Form error',
+
   'INVALID_FORM': 'There are errors in your form please correct them and try again.',
   'INVALID_FORM_DATA': 'The email/password combination is not valid.',
   'PAGE_NOT_FOUND': 'Page could not be found.',
+
+  'FORM': {
+    'PITCH_FORM': 'Please answers all the fields of the pitch form.',
+  },
+
   'LOGIN': {
     'WELCOME': 'Welcome back!',
     'LOGGED_IN': 'You have been successfully logged in.',
@@ -17,6 +23,7 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'LOGOUT': 'Logout',
     'LOGOUT_TEXT': 'You have been successfully logged out.',
   },
+
   'ACCOUNT': {
     'UPDATE': 'Successful update',
     'UPDATE_TEXT': 'Your profile has been successfully updated.',
@@ -26,6 +33,7 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'PASSWORD_UPDATED_TEXT': 'Your password has been successfully updated.',
     'SAME_PASSWORD': 'The passwords must be the same.'
   },
+
   'PROJECT': {
     'NOT_FOUND': 'Not found',
     'UNFORBIDDEN': 'Unforbidden',
@@ -38,19 +46,25 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'SUBMITTED': 'Submitted',
     'SUBMITTED_TEXT': 'Your project has been sent to validate.'
   },
+
   'PRESET': {
     'UPDATED': 'The configuration has been updated'
   },
+
   'SECTION': {
     'UPDATED': 'The section has been updated'
   },
+
   'QUESTION': {
     'UPDATED': 'The question has been updated'
   },
+
   'ANSWER': {
     'UPDATED': 'The answer has been updated'
   },
+
   'QUIZ': {
     'CREATED': 'The quiz has been created'
   }
+
 };

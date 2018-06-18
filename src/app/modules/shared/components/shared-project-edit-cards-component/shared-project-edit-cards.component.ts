@@ -27,12 +27,14 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Output() saveChanges = new EventEmitter<boolean>();
   @Output() pitchFormField = new EventEmitter<boolean>();
 
-  advantageInputError: boolean;
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
+
   private _showDeleteModal = false;
   private _deleteInnovCardId = '';
   private _langDelete = '';
+  advantageInputError: boolean;
+
   /*
    * Gestion de l'affichage
    */
@@ -48,6 +50,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.changesSaved = true;
     this.checkField();
+    console.log(this.changesSaved);
   }
 
   notifyModelChanges(_event: any) {
@@ -115,7 +118,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   addAdvantageToInventionCard (event: {value: Array<{text: string}>}, cardIdx: number): void {
     this.project.innovationCards[cardIdx].advantages = event.value;
     this.notifyModelChanges(event.value);
-    console.log(event);
     if (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0) {
       this.advantageInputError = true;
     } else {

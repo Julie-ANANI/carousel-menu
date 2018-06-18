@@ -4,6 +4,7 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
+import {Subject} from 'rxjs/Subject';
 
 const DEFAULT_TAB = 'pitch';
 
@@ -21,7 +22,8 @@ export class SetupProjectComponent implements OnInit {
   private _changesSaved: boolean;
   private _saveChanges: boolean;
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
-  formValid: boolean;
+  pitchFormValid: boolean;
+  showFieldError: Subject<boolean> = new Subject();
   private _currentTab: string;
   private _projectToBeSubmitted: boolean;
 
@@ -36,7 +38,6 @@ export class SetupProjectComponent implements OnInit {
     this._saveChanges = false;
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
-    this.formValid = false;
   }
 
   updateSettings(value: InnovationSettings): void {
@@ -72,9 +73,13 @@ export class SetupProjectComponent implements OnInit {
 
     if (this._saveChanges) {
       this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
-
     } else {
-      this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
+      if (this.pitchFormValid) {
+        this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
+      } else {
+        this.showFieldError.next(true);
+        this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.PITCH_FORM');
+      }
     }
 
   }
@@ -93,6 +98,11 @@ export class SetupProjectComponent implements OnInit {
         this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
 
+  }
+
+  // checking the pitch form validation.
+  checkFormValidation(value: boolean) {
+    this.pitchFormValid = value;
   }
 
   // getting the save value from the child component.
