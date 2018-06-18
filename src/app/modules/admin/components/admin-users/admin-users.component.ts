@@ -64,7 +64,7 @@ export class AdminUsersComponent implements OnInit {
             {_attr: 'firstName', _name: 'FIRSTNAME', _type: 'TEXT'},
             {_attr: 'lastName', _name: 'LASTNAME', _type: 'TEXT'},
             {_attr: 'jobTitle', _name: 'JOB', _type: 'TEXT'},
-            {_attr: 'companyName', _name: 'COMPANY', _type: 'TEXT'},
+            {_attr: 'companyName', _name: 'COMPANY', _type: 'LABEL', _choices: ['Veolia', 'UMI']},
             {_attr: 'isOperator', _name: 'EST-OPERATEUR', _type: 'CHECK'}],
           _actions: this._actions
         };

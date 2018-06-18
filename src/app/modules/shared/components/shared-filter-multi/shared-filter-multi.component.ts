@@ -96,6 +96,10 @@ export class SharedFilterMultiComponent {
     return column._name;
   }
 
+  getChoices(column: Column) {
+    return column._choices || [];
+  }
+
   changeCurrentTextProp(prop: any) {
     this._currentTextProp = this._textProps.find(value => value._attr === prop.srcElement.value);
   }

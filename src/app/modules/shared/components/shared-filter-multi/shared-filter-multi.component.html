@@ -13,10 +13,16 @@
   <div *ngFor="let prop of otherProps">
     <ng-container [ngSwitch]="getType(prop)">
       <label class="form-label">{{getName(prop)}}</label>
+
       <select class="input-group-addon select-sm" (change)="filterOther($event, prop)" [(ngModel)]="config[getAttr(prop)]" *ngSwitchCase="'CHECK'">
         <option [ngValue]="null">All</option>
         <option [ngValue]="true">Oui</option>
         <option [ngValue]="false">Non</option>
+      </select>
+
+      <select class="input-group-addon select-sm" (change)="filterOther($event, prop)" [(ngModel)]="config[getAttr(prop)]" *ngSwitchCase="'LABEL'">
+        <option [ngValue]="null">All</option>
+        <option *ngFor="let choice of getChoices(prop)">{{choice}}</option>
       </select>
     </ng-container>
 

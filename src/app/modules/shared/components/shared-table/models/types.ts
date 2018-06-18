@@ -3,5 +3,6 @@ export enum Types {
   COUNTRY = <any> 'COUNTRY',
   PICTURE = <any> 'PICTURE',
   PROGRESS = <any> 'PROGRESS',
-  CHECK = <any> 'CHECK'
+  CHECK = <any> 'CHECK',
+  LABEL = <any> 'LABEL'
 }
