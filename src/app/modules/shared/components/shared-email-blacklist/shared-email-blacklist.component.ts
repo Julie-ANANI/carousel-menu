@@ -106,6 +106,9 @@ export class SharedEmailBlacklistComponent implements OnInit {
       case("PROFESSIONAL_SUPPRESSION"):
           result = "Deleted professional";
         break;
+      case('MAIL_EVENT'):
+        result = "Unsubscribe event";
+        break;
       case("MANUALLY_ADDED"):
       default:
         result = "Added by operator";
