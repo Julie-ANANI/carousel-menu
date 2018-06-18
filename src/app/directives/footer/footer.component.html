@@ -3,7 +3,7 @@
     <div class="column col-12 col-mx-auto">
 
       <!-- Translate Section -->
-      <div class="column col-11 col-mx-auto lang-section">
+      <div class="column col-xs-12 col-11 col-mx-auto lang-section text-left">
         <div class="dropdown" [ngClass]="{ 'active': displayLangChoices }">
           <div class="btn-group">
             <button class="btn dropdown-toggle lang-button" (click)="(displayLangChoices = !displayLangChoices)">
@@ -28,43 +28,26 @@
       </div>
 
       <!-- Hr Section -->
-      <div class="column col-11 col-mx-auto">
+      <div class="column col-xs-12 col-11 col-mx-auto">
         <hr class="footer-hr"/>
       </div>
 
       <!-- Info Section -->
-      <div class="column col-11 col-mx-auto information-section">
-        <div class="columns">
-
-          <div class="column col-6 col-sm-12 col-mx-auto">
-            <p>{{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}</p>
-          </div>
-
-          <div class="column col-6 col-sm-12 col-mx-auto text-right">
-            <p>
-              <span *ngIf="checkIsMainDomain()">
-                <a
-                  [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')"
-                   target="_blank">
-                  {{ 'FOOTER.LEGAL_NOTICE' | translate }}
-                </a> &nbsp;&nbsp;
-                <div class="break-text">
-                  <br>
-                </div>
-                <a
-                  target="_blank"
-                  [href]="'https://www.umi.us' +
-                  (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">
-                  {{ 'FOOTER.TERMS' | translate }}
-                </a>
-              </span>
-            </p>
-          </div>
-
-        </div>
-
+      <div class="column col-xs-12 col-11 col-mx-auto information-section text-center">
+        {{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}
+        <span *ngIf="checkIsMainDomain()">
+          |
+          <a [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')" target="_blank">
+            {{ 'FOOTER.LEGAL_NOTICE' | translate }}
+          </a>
+          |
+          <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">
+            {{ 'FOOTER.TERMS' | translate }}
+          </a>
+        </span>
       </div>
 
     </div>
   </div>
 </footer>
+

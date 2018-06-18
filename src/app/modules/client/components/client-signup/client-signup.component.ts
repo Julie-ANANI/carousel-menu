@@ -19,17 +19,17 @@ import { User } from '../../../../models/user.model';
 })
 
 export class ClientSignupComponent implements OnInit {
+
   public isInvitation = false;
 
-  constructor(
-              private _authService: AuthService,
+  constructor(private _authService: AuthService,
               private _userService: UserService,
               private _location: Location,
               private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,
               private _notificationsService: TranslateNotificationsService,
-              private _userFormSidebarService: UserFormSidebarService)
-  { }
+              private _userFormSidebarService: UserFormSidebarService) {
+  }
 
   ngOnInit(): void {
     this._titleService.setTitle('COMMON.SIGN_UP');
@@ -47,29 +47,28 @@ export class ClientSignupComponent implements OnInit {
 
   }
 
-  public linkedInSignIn(event: Event) {
+  public linkedInSignUp(event: Event) {
     event.preventDefault();
+
     const domain = environment.domain;
-    this._authService.linkedinLogin(domain)
-      .first()
-      .subscribe(
-        url => {
+
+    this._authService.linkedinLogin(domain).first().subscribe(url => {
           window.location.href = url;
         },
         error => {
           this._notificationsService.error('ERROR.ERROR', error.message);
         }
       );
+
   }
 
   public onSubmit(res: FormGroup) {
     if (res.valid) {
       const user = new User(res.value);
+
       user.domain = environment.domain;
-      this._userService.create(user)
-        .first()
-        .subscribe(
-          _ => {
+
+      this._userService.create(user).first().subscribe(_ => {
             this._authService.login(user).first().subscribe(
               _ => {
                 this._location.back();
@@ -87,6 +86,7 @@ export class ClientSignupComponent implements OnInit {
     else {
       this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
+
   }
 
   get domainCompanyName(): string {

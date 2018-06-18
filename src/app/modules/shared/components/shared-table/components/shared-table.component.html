@@ -1,0 +1,110 @@
+<h1>{{total}} {{ title | translate }}</h1>
+
+<sqFilterMulti [config]="config"
+               (configChange)="changeConfig($event)"
+               [props]="columnsAttr">
+</sqFilterMulti>
+
+<div *ngIf="total == 0">
+  <tr><td>Pas de résultat</td></tr>
+</div>
+
+<div *ngIf="total > 0">
+  <table class="table" wt-responsive-table>
+    <thead>
+        <!-- Si il n'y a aucunes lignes selectionnées -->
+        <ng-container *ngIf="selectedRows==0">
+          <tr>
+
+            <th width="50" *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)"/></th>
+
+            <th *ngFor="let column of columns">
+              <sq-sort [config]="config"
+                       (configChange)="changeConfig($event)"
+                       [prop]="getAttr(column)">
+                {{getName(column) | translate }}
+              </sq-sort>
+            </th>
+          </tr>
+
+        </ng-container>
+
+        <ng-container *ngIf="selectedRows > 0">
+
+          <tr>
+            <th width="50" *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)" [checked]="true"/></th>
+            <th><span>{{selectedRows}} lignes selectionnée(s) </span></th>
+
+            <button class="btn btn-error"
+                    (click)="removeSelectedRows()"
+                    *ngIf="isDeletable">
+              Delete
+            </button>
+
+            <ng-container>
+              <button *ngFor="let a of actions" class="btn" style="margin-left: 10px;"
+                      (click)="onActionClick(a)">
+                {{a}}
+              </button>
+            </ng-container>
+
+          </tr>
+        </ng-container>
+    </thead>
+    <tbody>
+        <tr *ngFor="let key of getRowsKeys()"
+            [ngClass]="{'active': isSelected(content[key])}"
+            (click)="selectRow(key)"
+            (mouseenter)="hoverRow(key)"
+            (mouseleave)="hoverRow(key)">
+
+          <td width="50" *ngIf="isSelectable"><input type="checkbox" #s [checked]="isSelected(content[key])"/></td>
+
+          <ng-container>
+            <td *ngFor="let column of columns">
+              <ng-container [ngSwitch]="getType(column)">
+
+                <!-- Si le type de la colonne est TEXT -->
+                <span *ngSwitchDefault>{{getContentValue(key, getAttr(column)) || ' - '}}</span>
+
+                <!-- Si le type de la colonne est COUNTRY -->
+                <country-flag *ngSwitchCase="'COUNTRY'" [country]="getContentValue(key, getAttr(column))"></country-flag>
+
+                <!-- Si le type de la colonne est PICTURE -->
+                <div class="picture" *ngSwitchCase="'PICTURE'">
+                  <img [src]="getContentValue(key, getAttr(column))" class="img-fit-cover">
+                </div>
+
+                <!-- Si le type de la colonne est PROGRESS -->
+                <progress class="progress tooltip"
+                          *ngSwitchCase="'PROGRESS'"
+                          [attr.data-tooltip]="getContentValue(key, getAttr(column)) + '%'"
+                          [value]="getContentValue(key, getAttr(column))" max="100">
+                </progress>
+
+              </ng-container>
+
+              <button class="btn"
+                      *ngIf="isHover(content[key]) && columns.indexOf(column) == 0 && isEditable"
+                      (click)="edit(content[key])">
+                Infos
+              </button>
+
+            </td>
+          </ng-container>
+        </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="12">
+        <sqPagination [config]="config"
+                      (configChange)="changeConfig($event)"
+                      [total]="total"
+                      [propertyName]="selector">
+
+        </sqPagination>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+</div>

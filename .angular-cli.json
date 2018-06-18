@@ -17,6 +17,7 @@
       "prefix": "app",
       "styles": [
         "styles.scss",
+        "style/animation.scss",
         "style/client-styles.scss"
       ],
       "assets": [

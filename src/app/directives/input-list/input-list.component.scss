@@ -3,34 +3,55 @@ $primary-color: #3498DB !default;
 $secondary-color: #2ECC71 !default;
 $dark-color: #333 !default;
 
+.primary-button {
+  margin-left: 20px;
+  border-radius: 50%;
+  height: 44px;
+  padding-left: 13px;
+  padding-right: 13px;
+  margin-top: 3px;
+
+  i {
+    vertical-align: bottom;
+    margin-right: 0;
+  }
+
+}
+
+.form-input-default.ng-touched.ng-invalid{
+  border-color: unset !important;
+}
+
 .answerList {
   margin: 0;
+  list-style: none;
 
   li {
-    list-style: none;
     display: flex;
-    margin-bottom: 23px;
+    margin: 10px 0;
   }
 
   li span {
-    background: $secondary-color;
-    border-radius: 2px 0 0 2px;
+    background: #2ECC71;
+    border-radius: 5px 0 0 5px;
     padding: 15px 25px;
     color: white;
-    width: 100%;
+    font-size: 0.7rem;
+    width: 606px;
+    word-break: break-word;
   }
 
   a.delete {
     display: flex;
-    background: #11A751;
-    border-radius: 0 2px 2px 0;
+    background: darken(#2ECC71, 15%);
+    border-radius: 0 5px 5px 0;
     padding: 12px 17px;
     border: none;
   }
 
   i {
     display: flex;
-    font-size: 28px;
+    font-size: 1.4rem;
     color: rgba(255, 255, 255, 0.6);
     background: #11A751;
     border-radius: 0 2px 2px 0;
@@ -50,11 +71,13 @@ $dark-color: #333 !default;
   }
 
   a.delete:hover {
-    background: #D02A2A;
+    background: #EA5858;
   }
 
   .popover-container {
     background: white;
     box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
   }
+
 }
+

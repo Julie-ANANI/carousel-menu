@@ -1,0 +1,150 @@
+#setup-project {
+  padding-top: 0;
+
+  .row-1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-top: 50px;
+
+    .section-heading {
+      color: #333333;
+    }
+
+    .function-button {
+      display: flex;
+      flex-wrap: wrap;
+      flex: 1 0 auto;
+      justify-content: center;
+
+      span {
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+
+      .circle {
+        margin-top: -15px;
+        margin-left: -13px;
+      }
+
+      .save-project {
+
+        .ghost-button {
+          border-color: #2ECC71;
+          color: #262831;
+          pointer-events: auto;
+        }
+
+        .ghost-button:hover {
+          background-color: #FFF9EB;
+          box-shadow: none;
+        }
+
+        .circle {
+          background: #2ECC71;
+          animation-name: fadeIn;
+          animation-duration: .5s;
+          animation-timing-function: ease-in-out;
+        }
+
+      }
+
+      .disabled {
+
+        .ghost-button {
+          border-color: #dbdbdb;
+          color: #a9a9a9;
+          background-color: #dbdbdb;
+          cursor: not-allowed;
+          box-shadow: none;
+        }
+
+        .circle {
+          visibility: hidden;
+        }
+
+      }
+
+    }
+
+  }
+
+  .tabs-container {
+    padding-top: 25px;
+    padding-bottom: 25px;
+
+    .tabs li {
+      border-bottom: 1px solid #CDCDCD;
+
+      a {
+        background-color: white;
+        color: #4F5D6B;
+        border-bottom: 4px solid transparent;
+        font-weight: 500;
+
+        i {
+          display: none;
+        }
+
+      }
+
+      li a:hover {
+        border-bottom-color: #FFB300;
+      }
+
+    }
+
+  }
+
+  .active {
+    color: #FFB300 !important;
+    border-bottom-color: #FFB300 !important;
+  }
+
+}
+
+/********************************** Media ***************************************/
+
+@media (min-width: 480px) {
+
+  .tabs {
+    border-bottom: 1px solid #CDCDCD;
+
+    li {
+      border-bottom: none !important;
+      flex: unset;
+
+      a {
+        border-bottom: 4px solid transparent;
+        margin-right: 25px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+    }
+
+  }
+
+}
+
+@media (min-width: 768px) {
+
+  .row-1 {
+    flex-wrap: unset !important;
+
+    .function-button {
+      justify-content: flex-end !important;
+
+      span {
+        margin-bottom: 0 !important;
+        margin-right: 0 !important;
+        margin-left: 10px;
+      }
+
+    }
+
+  }
+
+}
+
+

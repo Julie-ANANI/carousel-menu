@@ -1,97 +1,99 @@
-.main-container {
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
+#login {
 
-  .logo-container {
-    padding-bottom: 25px;
+  .cover-image {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left top;
+    min-height: 100vh;
   }
 
-  .sign-in-container {
-    background: #FFFFFF;
-    border-radius: 0.25rem;
-    padding-top: 51px;
-    padding-bottom: 51px;
-    flex: 1;
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    min-height: 100vh;
 
-    .bot-container {
-      padding-top: 125px;
-    }
+    .form-container {
+      flex: 1 0 auto;
+      justify-content: center;
+      align-items: center;
+      display: inline-flex;
 
-    .button-container {
-      padding-bottom: 45px;
+      .bot-container {
+        padding-top: 25px;
+        text-align: center;
+        display: none;
 
-      .primary-button {
-        background: #1680B9;
-        border-color: #1680B9;
+        .bot-text {
+          animation-name: fadeIn;
+          animation-duration: 3s;
+          animation-timing-function: ease-in-out;
+          z-index: 2;
+
+        }
+
+        .bot-trian {
+          padding-left: 110px;
+          animation-name: fadeIn;
+          animation-duration: 3s;
+          animation-timing-function: ease-in-out;
+          margin-top: -1px;
+        }
+
       }
 
-      .primary-button:hover {
-        background: lighten(#1680B9, 15%);
-        border-color: lighten(#1680B9, 15%);
-        color: #FFFFFF;
+      .heading {
+        padding-top: 25px;
       }
 
-    }
+      .social-container {
 
-    .or-container {
-      color: #97A4B1;
-      padding-bottom: 45px;
+        .primary-button {
+          background: #1680B9;
+          border-color: #1680B9;
+        }
 
-      span::before {
-        content: '';
-        display: inline-block;
-        vertical-align: middle;
-        width: 130px;
-        height: 1px;
-        background: #97A4B1;
+        .primary-button:hover {
+          background: lighten(#1680B9, 10%);
+          border-color: lighten(#1680B9, 10%);
+        }
+
       }
 
-      span::after {
-        content: '';
-        display: inline-block;
-        vertical-align: middle;
-        width: 130px;
-        height: 1px;
-        background: #97A4B1;
+      .or-container {
+        padding-top: 25px;
       }
 
-    }
-
-    .credential-container {
-      padding-bottom: 25px;
-
-      .form-group {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
+      .passChange-container {
+        padding-top: 25px;
+        padding-bottom: 25px;
       }
 
-      .form-input-default {
-        max-width: 300px;
+      .credentials-container {
+        padding-top: 20px;
+
+        .form-input-default {
+          width: 300px;
+          margin-top: 8px;
+        }
+
       }
 
-      .form-error {
-        margin-bottom: 20px;
-      }
+      .submit-container {
+        padding-top: 20px;
+        padding-bottom: 25px;
 
-    }
+        .login-button {
+          padding-bottom: 14px;
+        }
 
-    .submit-container {
-      padding-bottom: 29px;
+        .text-link {
+          font-size: 0.7rem;
+        }
 
-      .login-button {
-        padding-bottom: 10px;
-      }
-
-      .text-link {
-        font-size: 0.7rem;
       }
 
     }
@@ -102,62 +104,38 @@
 
 /********************************** Media ***************************************/
 
-@media (max-width: 360px) {
+@media (max-width: 320px) {
 
-  .or-container {
-
-    span::before {
-      width: 108px !important;
-    }
-
-    span::after {
-      width: 108px !important;
-    }
-
-  }
-
-  .submit-container {
+  .create-container {
 
     .primary-button {
-      padding-left: 30px !important;
-      padding-right: 30px !important;
+      margin-top: 10px;
     }
 
   }
 
 }
 
+@media (max-width: 600px) {
 
-@media (max-width: 601px) {
+  #login {
 
-  .bot-container {
-    padding-top: 10px!important;
-    padding-bottom: 35px!important;
+    .cover-image {
+      display: none;
+    }
+
   }
 
 }
 
-@media (min-width: 601px) and (max-width: 840px) {
+@media (min-width: 840px) {
 
-  .sign-in-container {
-    width: 580px !important;;
+  #login {
+
+    .form-input-default {
+      width: 350px !important;
+    }
+
   }
 
 }
-
-@media (min-width: 768px) {
-
-  .main-container {
-    min-height: 100vh !important;
-  }
-
-}
-
-@media (min-width: 841px) {
-
-  .sign-in-container {
-    width: 800px !important;
-  }
-
-}
-

@@ -9,7 +9,7 @@ export interface Innovation {
   readonly _id?: string;
   readonly owner?: User;
   readonly campaigns?: Array<any>;
-  readonly status?: 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
+  status?: 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
   readonly name?: string;
   readonly domain?: string;
   readonly type?: 'insights' | 'apps' | 'leads';
@@ -27,5 +27,6 @@ export interface Innovation {
   readonly projectStatus?: number;
   readonly patented?: boolean;
   readonly launched?: Date;
+  readonly created?: Date;
   readonly updated?: Date;
 }
