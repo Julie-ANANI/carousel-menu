@@ -8,9 +8,10 @@
     <div>
       <h4>Tags management</h4>
       <app-autocomplete-input
-          (update)="updateTags($event)"
+          (add)="addTag($event)"
+          (remove)="removeTag($event)"
           [onlyOne]="false"
-          [config]="{placeholder: 'tags', initialData: tags || [], type: 'tags'}"
+          [config]="tagsAutocomplete"
           [multiLangObjects]="true">
       </app-autocomplete-input>
 
@@ -18,7 +19,7 @@
       <app-autocomplete-input
         (update)="updatePreset($event)"
         [onlyOne]="true"
-        [config]="{placeholder: 'preset', initialData: hasPreset() ? [project.preset] : [], type: 'preset'}">
+        [config]="presetAutocomplete">
       </app-autocomplete-input>
     </div>
 

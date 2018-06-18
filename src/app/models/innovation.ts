@@ -3,6 +3,7 @@ import { InnovCard } from './innov-card';
 import { QuestionReport } from './market-report';
 import { Media } from './media';
 import { Preset } from './preset';
+import { Tag } from './tag';
 import { User } from './user.model';
 
 export interface Innovation {
@@ -15,7 +16,7 @@ export interface Innovation {
   readonly type?: 'insights' | 'apps' | 'leads';
   readonly principalMedia?: Media;
   innovationCards?: Array<InnovCard>;
-  tags?: Array<any>;
+  tags?: Array<{tag: Tag}>;
   preset?: Preset;
   readonly quizId?: string;
   marketReport?: {[prop: string]: QuestionReport};

@@ -18,6 +18,9 @@ export class AutocompleteInputComponent implements OnInit {
   public inputForm: FormGroup;
 
   @Output() update = new EventEmitter<any>();
+  @Output() add = new EventEmitter<any>();
+  @Output() remove = new EventEmitter<any>();
+
   @Input() canEdit = true;
   @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
   @Input() adminMode = false;
@@ -88,14 +91,16 @@ export class AutocompleteInputComponent implements OnInit {
   }
 
   public autocompleListFormatter = (data: any) : SafeHtml => {
-    let text: string;
+    const text = this.autocompleValueFormatter(data);
+    return this._sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
+  };
+
+  public autocompleValueFormatter = (data: any) : string => {
     if (this.multiLangObjects) {
-      text = MultilingPipe.prototype.transform(data[this._identifier], this._translateService.currentLang);
+      return MultilingPipe.prototype.transform(data[this._identifier], this._translateService.currentLang);
     } else {
-      text = data[this._identifier];
+      return data[this._identifier];
     }
-    const content = `<span>${text}</span>`;
-    return this._sanitizer.bypassSecurityTrustHtml(content);
   };
 
   public canAdd(): boolean {
@@ -109,6 +114,8 @@ export class AutocompleteInputComponent implements OnInit {
       let _obj = {};
       _obj[this._identifier] = val;
       val = _obj;
+    } else if (this.multiLangObjects) {
+      val.name = MultilingPipe.prototype.transform(val.name, this._translateService.currentLang);
     }
     if (val && this.answerList.findIndex(t => {return t[this._identifier] === val[this._identifier]}) === -1) {
       if (this.onlyOne) {
@@ -118,6 +125,7 @@ export class AutocompleteInputComponent implements OnInit {
       }
       this.inputForm.get('answer').setValue('');
       this.update.emit({value: this.answerList});
+      this.add.emit({value: val});
     }
   }
 
@@ -141,8 +149,9 @@ export class AutocompleteInputComponent implements OnInit {
 
   rmProposition(event: Event, i: number): void {
     event.preventDefault();
-    this.answerList.splice(i, 1);
+    const val = this.answerList.splice(i, 1).pop();
     this.update.emit({value: this.answerList});
+    this.remove.emit({value: val});
   }
 
   thumbsUp(event: Event, index: number): void {
@@ -172,5 +181,9 @@ export class AutocompleteInputComponent implements OnInit {
   updateItem(event: Event): void {
     event.preventDefault();
     this.update.emit({value: this.answerList});
+  }
+
+  stringify(v: string): string {
+    return JSON.stringify(v);
   }
 }
