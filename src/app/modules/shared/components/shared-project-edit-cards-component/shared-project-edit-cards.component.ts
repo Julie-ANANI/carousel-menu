@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
@@ -25,116 +24,46 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Input() changesSaved: boolean;
 
   @Output() projectChange = new EventEmitter<any>();
-  @Output() cardsChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
+  @Output() pitchFormField = new EventEmitter<boolean>();
 
-  public innovationData: FormGroup; // Overall innovation
+  advantageInputError: boolean;
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
-  private _primaryLanguage: string;
-  private _primaryLength: number;
-  private _displayDeleteButton = false;
-  private _inputPreValue = '';
-  private _inputCurrValue = '';
   private _showDeleteModal = false;
-  private _deleteInnovId = '';
+  private _deleteInnovCardId = '';
+  private _langDelete = '';
   /*
    * Gestion de l'affichage
    */
   public innovationCardEditingIndex = 0; // Index de l'innovationCard que l'on édite (système d'onglets)
 
-  constructor(private _innovationService: InnovationService,
-              private _authService: AuthService,
-              private _domSanitizer: DomSanitizer,
-              private _translateService: TranslateService,
-              private _formBuilder: FormBuilder,
-              private _translateNotificationService: TranslateNotificationsService) {
+  constructor(private innovationService: InnovationService,
+              private authService: AuthService,
+              private domSanitizer1: DomSanitizer,
+              private translateService: TranslateService,
+              private translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit() {
-    this._buildForm();
-
     this.changesSaved = true;
+    this.checkField();
+  }
 
-    this.innovationData.patchValue(this.project);
+  notifyModelChanges(_event: any) {
+    this.changesSaved = false;
+    this.saveChanges.emit(true);
+    this.checkField();
+  }
 
-    this._primaryLanguage = this.project.innovationCards[0].lang;
-
-    if (this.project.innovationCards.length < 2) {
-      this._primaryLength = this.project.innovationCards.length;
+  checkField() {
+    if (this.project.innovationCards[this.innovationCardEditingIndex].title !== '' && this.project.innovationCards[this.innovationCardEditingIndex].summary !== ''
+      && this.project.innovationCards[this.innovationCardEditingIndex].problem !== '' && this.project.innovationCards[this.innovationCardEditingIndex].solution !== ''
+      && this.project.innovationCards[this.innovationCardEditingIndex].advantages.length !== 0) {
+      this.pitchFormField.emit(true);
     } else {
-      this._displayDeleteButton = true;
+      this.pitchFormField.emit(false);
     }
-
-    if (!this.canEdit) {
-      this.innovationData.disable();
-    }
-
-    for (const innovationCard of this.project.innovationCards) {
-      this._addInnovationCardWithData(innovationCard);
-    }
-
-    this.innovationData.valueChanges
-      .distinctUntilChanged()
-      .takeUntil(this.ngUnsubscribe)
-      .subscribe(_ => {
-        this.updateCards();
-      });
-
-  }
-
-  private _buildForm(): void {
-    this.innovationData = this._formBuilder.group({
-      patented: [undefined, Validators.required],
-      projectStatus: [undefined, Validators.required],
-      external_diffusion: [false, [Validators.required]],
-      innovationCards: this._formBuilder.array([])
-    });
-  }
-
-  formProgress(event: Event, value: string) {
-
-    if (event.target['type'] === 'radio') {
-      if (event.target['name'] === 'projectStatus') {
-        this._inputPreValue = this.innovationData.get('projectStatus').value;
-      } else if (event.target['name'] === 'patented') {
-        this._inputPreValue = this.innovationData.get('patented').value;
-      } else {
-        this._inputPreValue = this.innovationData.get('external_diffusion').value;
-      }
-
-      this._inputCurrValue = value;
-
-      if (this._inputPreValue !== this._inputCurrValue) {
-        this.changesSaved = true;
-        this.saveChanges.emit(true);
-      }
-
-    } else {
-
-      if (event.type === 'click') {
-        this._inputPreValue = value;
-      } else if (event.type === 'blur') {
-        this._inputCurrValue = value;
-
-        if (this._inputPreValue !== this._inputCurrValue) {
-          this.changesSaved = false;
-          this.saveChanges.emit(true);
-        }
-
-      }
-
-    }
-
-  }
-
-  public updateCards() {
-    this.cardsChange.emit(this.innovationData.value);
-  }
-
-  private _addInnovationCardWithData(innovationCardData: InnovCard): void {
-    const innovationCards = this.innovationData.controls['innovationCards'] as FormArray;
-    innovationCards.push(this._newInnovationCardFormBuilderGroup(innovationCardData));
   }
 
   /**
@@ -143,11 +72,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * @param type
    * @returns {any|{placeholder: string, initialData: string}}
    */
-  public getConfig(type: string): any {
+  getConfig(type: string): any {
     const _inputConfig = {
       'advantages': {
         placeholder: 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.INPUT',
-        initialData: this.innovationData.get('innovationCards').value[this.innovationCardEditingIndex]['advantages']
+        initialData: this.project.innovationCards[this.innovationCardEditingIndex]['advantages']
       }
     };
     return _inputConfig[type] || {
@@ -156,35 +85,22 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       };
   }
 
-  private _newInnovationCardFormBuilderGroup (data: InnovCard): any {
-    return this._formBuilder.group({
-      _id: [{value: data._id , disabled: !this.canEdit}, Validators.required],
-      title: [{value: data.title, disabled: !this.canEdit}, Validators.required],
-      summary: [{value: data.summary, disabled: !this.canEdit}, Validators.required],
-      problem: [{value: data.problem, disabled: !this.canEdit}, Validators.required],
-      solution: [{value: data.solution, disabled: !this.canEdit}, Validators.required],
-      advantages: [{value: data.advantages, disabled: !this.canEdit}],
-      lang: [{value: data.lang, disabled: !this.canEdit}, Validators.required],
-      principal: [{value: data.principal, disabled: !this.canEdit}, Validators.required],
-      media: [{value: data.media, disabled: !this.canEdit}, Validators.required]
-    });
-  }
-
-  public createInnovationCard(event: Event, lang: string): void {
+  createInnovationCard(event: Event, lang: string): void {
     event.preventDefault();
 
     if (this.canEdit) {
       if (this.changesSaved) {
         if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
-          this._innovationService.createInnovationCard(this.project._id, {
+          this.innovationService.createInnovationCard(this.project._id, {
             lang: lang
-          }).first()
-            .subscribe((data: InnovCard) => {
-              window.location.reload();
-            });
+          }).first().subscribe((data: InnovCard) => {
+            this.project.innovationCards.push(data);
+            this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
+            this.projectChange.emit(this.project);
+          });
         }
       } else {
-        this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
 
     }
@@ -196,99 +112,117 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    * @param event the resulting value sent from the components directive
    * @param cardIdx this is the index of the innovation card being edited.
    */
-  public addAdvantageToInventionCard (event: {value: Array<string>}, cardIdx: number): void {
-    const card = this.innovationData.get('innovationCards').value[cardIdx] as FormGroup;
-    card['advantages'] = event.value;
-    this.updateCards();
-    this.changesSaved = false;
-    this.saveChanges.emit(true);
+  addAdvantageToInventionCard (event: {value: Array<{text: string}>}, cardIdx: number): void {
+    this.project.innovationCards[cardIdx].advantages = event.value;
+    this.notifyModelChanges(event.value);
+    console.log(event);
+    if (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0) {
+      this.advantageInputError = true;
+    } else {
+      this.advantageInputError = false;
+    }
   }
 
-  public setAsPrincipal (innovationCardId: string): void {
-    this.innovationData.get('innovationCards').value.forEach((innovCard: any, index: number) => {
-      this.innovationData.get('innovationCards').get([index]).get('principal')
-        .patchValue(innovCard._id === innovationCardId);
+  setAsPrincipal (innovationCardId: string): void {
+    this.project.innovationCards.forEach((innovCard: any) => {
+      innovCard.principal = (innovCard._id === innovationCardId);
     });
-
   }
 
-  public imageUploaded(media: Media, cardIdx: number): void {
-    const card = this.innovationData.get('innovationCards').value[cardIdx] as FormGroup;
-    card['media'].push(media);
-    // this.updateCards();
+  imageUploaded(media: Media, cardIdx: number): void {
+    this.project.innovationCards[cardIdx].media.push(media);
     // this.projectChange.emit(this.project);
-  }
-
-  public newOnlineVideoToAdd (videoInfos: Video): void {
-    this._innovationService.addNewMediaVideoToInnovationCard(this.project._id,
-      this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
-      .first().subscribe(res => {
-        this.project = res;
-        this.projectChange.emit(this.project);
-      });
-  }
-
-  public setMediaAsPrimary (event: Event, media: Media, index: number): void {
-    event.preventDefault();
-
-    this.innovationCardEditingIndex = index;
-
-    this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
-
-    this._innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
-      this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
-      .first().subscribe((res: Innovation) => {
-        this.project = res;
-        this.projectChange.emit(this.project);
-        this.innovationData.patchValue(this.project);
-      });
-
-  }
-
-  public deleteMedia(event: Event, media: Media, index: number): void {
-    event.preventDefault();
-
-    this.innovationCardEditingIndex = index;
-
-    this.setAsPrincipal(this.project.innovationCards[this.innovationCardEditingIndex]._id);
-
-    this._innovationService.deleteMediaOfInnovationCard(this.project._id,
-      this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
-      .first().subscribe((res: Innovation) => {
-        this.project = res;
-        this.projectChange.emit(this.project);
-        this.innovationData.patchValue(this.project);
-      });
-
-  }
-
-  public deleteModal(innovID: string) {
-
-    if (this.canEdit) {
-      if (this.changesSaved) {
-        this._deleteInnovId = innovID;
-        this._showDeleteModal = true;
-      } else {
-        this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+    if (this.innovationCardEditingIndex === 0) {
+      if (this.project.principalMedia === null || this.project.principalMedia === undefined) {
+       this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id, this.project.innovationCards[0]._id, media._id).first().subscribe((res) => {
+         this.projectChange.emit(this.project);
+       });
       }
     }
 
   }
 
-  public deleteInnov(event: Event) {
+  newOnlineVideoToAdd (videoInfos: Video): void {
+    this.innovationService.addNewMediaVideoToInnovationCard(this.project._id,
+      this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
+      .first().subscribe(res => {
+        this.project.innovationCards[this.innovationCardEditingIndex].media.push(res);
+        this.projectChange.emit(this.project);
+      });
+  }
+
+  setMediaAsPrimary (event: Event, media: Media, index: number): void {
     event.preventDefault();
 
-    this._innovationService.removeInnovationCard(this.project._id, this._deleteInnovId).subscribe((res) => {
-      window.location.reload();
+    this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
+      this.project.innovationCards[index]._id, media._id)
+      .first().subscribe((res: Innovation) => {
+        this.project.innovationCards[index].principalMedia = media;
+        this.projectChange.emit(this.project);
+      });
+
+  }
+
+  deleteMedia(event: Event, media: Media, index: number): void {
+    event.preventDefault();
+
+    this.innovationCardEditingIndex = index;
+
+    this.innovationService.deleteMediaOfInnovationCard(this.project._id,
+      this.project.innovationCards[index]._id, media._id)
+      .first().subscribe((_res: Innovation) => {
+        this.project.innovationCards[index].media = this.project.innovationCards[index].media.filter((m) => m._id !== media._id);
+        this.projectChange.emit(this.project);
+      });
+
+  }
+
+  deleteModal(innovcardID: string, lang: string) {
+    if (this.canEdit) {
+      if (this.changesSaved) {
+        this._deleteInnovCardId = innovcardID;
+        this._langDelete = lang;
+        this._showDeleteModal = true;
+      } else {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+      }
+    }
+  }
+
+  deleteInnovCard(event: Event) {
+    event.preventDefault();
+    this.innovationService.removeInnovationCard(this.project._id, this._deleteInnovCardId).subscribe((res) => {
+      this.project.innovationCards = this.project.innovationCards.filter((card) => card._id !== this._deleteInnovCardId);
+      this.innovationCardEditingIndex -= 1;
+      this._showDeleteModal = false;
     }, err => {
-      this._translateNotificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+      this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+      this._showDeleteModal = false;
     });
 
   }
 
-  public closeModal(event: Event) {
+  closeModal(event: Event) {
     event.preventDefault();
     this._showDeleteModal = false;
+  }
+
+  valueCheck(event: Event) {
+
+  }
+
+  getColor(length: number) {
+    if (length === 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < 250) {
+      return '#f0ad4e';
+    } else {
+      return '#2ECC71';
+    }
+  }
+
+  containsLanguage(lang: string): boolean {
+    return this.project.innovationCards.some((c) => c.lang === lang);
   }
 
   ngOnDestroy() {
@@ -297,39 +231,19 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   get domSanitizer() {
-    return this._domSanitizer;
+    return this.domSanitizer1;
   }
 
   get companyName(){
     return (this._companyName || 'umi').toLocaleUpperCase();
   }
 
-  get primaryLanguage(): string {
-    return this._primaryLanguage;
-  }
-
-  get inputPreValue(): string {
-    return this._inputPreValue;
-  }
-
-  get inputCurrValue(): string {
-    return this._inputCurrValue;
-  }
-
-  get primaryLength(): number {
-    return this._primaryLength;
-  }
-
-  get displayDeleteButton(): boolean {
-    return this._displayDeleteButton;
-  }
-
   get showDeleteModal(): boolean {
     return this._showDeleteModal;
   }
 
-  get deleteInnovId(): string {
-    return this._deleteInnovId;
+  get langDelete(): string {
+    return this._langDelete;
   }
 
   get canEdit(): boolean {
@@ -337,11 +251,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
   get isAdmin(): boolean {
-    return (this._authService.adminLevel & 3) === 3;
+    return (this.authService.adminLevel & 3) === 3;
   }
 
 }

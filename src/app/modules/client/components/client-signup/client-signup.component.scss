@@ -1,4 +1,4 @@
-#signup {
+#sign-up {
 
   .cover-image {
     background-attachment: fixed;
@@ -8,74 +8,48 @@
     min-height: 100vh;
   }
 
-  .signup-container {
+  .sign-up-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 25px;
-    padding-bottom: 25px;
+    padding-bottom: 15px;
     min-height: 100vh;
 
-    .register-container {
+    .register-wrapper {
       flex: 1 0 auto;
       justify-content: center;
       align-items: center;
       display: inline-flex;
       flex-direction: column;
 
-      .bot-container {
-        padding-top: 50px;
-        text-align: center;
-        display: none;
+      .social-wrapper {
 
-        .bot-text {
-          animation-name: fadeIn;
-          animation-duration: 3s;
-          animation-timing-function: ease-in-out;
-          z-index: 2;
-          width: 223px;
-        }
-
-        .bot-trian {
-          padding-left: 110px;
-          animation-name: fadeIn;
-          animation-duration: 3s;
-          animation-timing-function: ease-in-out;
-          margin-top: -1px;
-        }
-
-      }
-
-      .heading {
-        padding-top: 25px;
-      }
-
-      .social-container {
-
-        .primary-button {
+        .btn {
           background: #1680B9;
           border-color: #1680B9;
+          color: white;
         }
 
-        .primary-button:hover {
+        .btn:hover {
           background: lighten(#1680B9, 10%);
           border-color: lighten(#1680B9, 10%);
+          color: white;
         }
 
       }
 
-      .or-container {
+      .or-wrapper {
         padding-top: 25px;
       }
 
-      .sign-container {
+      .sign-wrapper {
         padding-top: 25px;
-        padding-bottom: 25px;
 
-        .primary-button {
+        .btn {
 
           i {
-            vertical-align: bottom;
+            vertical-align: middle;
           }
 
         }
@@ -92,10 +66,14 @@
 
 @media (max-width: 600px) {
 
-  #signup {
+  #sign-up {
 
     .cover-image {
       display: none;
+    }
+
+    .heading {
+      padding-top: 25px;
     }
 
   }

@@ -1,14 +1,30 @@
 #setup-project {
   padding-top: 0;
 
+  .message-wrapper {
+    padding-top: 50px;
+
+    .message {
+      background-color: #2ECC71;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border-radius: 5px;
+    }
+
+  }
+
   .row-1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     padding-top: 50px;
+    padding-bottom: 25px;
 
-    .section-heading {
-      color: #333333;
+    h5 {
+      font-size: 1.35rem;
     }
 
     .function-button {
@@ -16,32 +32,38 @@
       flex-wrap: wrap;
       flex: 1 0 auto;
       justify-content: center;
+      flex-direction: column;
 
       span {
         margin-right: 10px;
         margin-bottom: 10px;
       }
 
-      .circle {
+      .circle-check {
         margin-top: -15px;
         margin-left: -13px;
+
+        i {
+          color: white;
+        }
+
       }
 
       .save-project {
 
-        .ghost-button {
-          border-color: #2ECC71;
-          color: #262831;
+        .ghost-primary {
+          border-color: #2ECC71 !important;
+          color: #262831 !important;
           pointer-events: auto;
         }
 
-        .ghost-button:hover {
-          background-color: #FFF9EB;
+        .ghost-primary:hover {
+          background-color: #FFF9EB !important;
           box-shadow: none;
         }
 
-        .circle {
-          background: #2ECC71;
+        .circle-check {
+          background: #2ECC71 !important;
           animation-name: fadeIn;
           animation-duration: .5s;
           animation-timing-function: ease-in-out;
@@ -51,15 +73,15 @@
 
       .disabled {
 
-        .ghost-button {
-          border-color: #dbdbdb;
-          color: #a9a9a9;
-          background-color: #dbdbdb;
+        .ghost-primary {
+          border-color: #dbdbdb !important;
+          color: #a9a9a9 !important;
+          background-color: #dbdbdb !important;
           cursor: not-allowed;
           box-shadow: none;
         }
 
-        .circle {
+        .circle-check {
           visibility: hidden;
         }
 
@@ -70,7 +92,6 @@
   }
 
   .tabs-container {
-    padding-top: 25px;
     padding-bottom: 25px;
 
     .tabs li {
@@ -81,17 +102,16 @@
         color: #4F5D6B;
         border-bottom: 4px solid transparent;
         font-weight: 500;
-
-        i {
-          display: none;
-        }
-
       }
 
       li a:hover {
         border-bottom-color: #FFB300;
       }
 
+    }
+
+    .pitch-check, .targeting-check, .survey-check {
+      display: none;
     }
 
   }
@@ -131,9 +151,14 @@
 
   .row-1 {
     flex-wrap: unset !important;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 11;
 
     .function-button {
       justify-content: flex-end !important;
+      flex-direction: row !important;
 
       span {
         margin-bottom: 0 !important;

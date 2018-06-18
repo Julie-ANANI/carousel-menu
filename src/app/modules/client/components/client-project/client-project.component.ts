@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, HostListener} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../models/innovation';
 import { emailRegEx } from '../../../../utils/regex';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 const DEFAULT_PAGE = 'setup';
 
@@ -19,6 +19,7 @@ export class ClientProjectComponent implements OnInit {
 
   private _imgType: string;
   private _currentPage: string;
+  private _scrollButton = false;
   /*
    * Ajout de collaborateurs
    */
@@ -33,24 +34,24 @@ export class ClientProjectComponent implements OnInit {
     invitationsToSendAgain: []
   };
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _innovationService: InnovationService,
-              private _router: Router,
-              private _translateNotificationService: TranslateNotificationsService) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private innovationService: InnovationService,
+              private router: Router,
+              private translateNotificationsService: TranslateNotificationsService) {
     // override the route reuse strategy
-    this._router.routeReuseStrategy.shouldReuseRoute = function() {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
     };
 
   }
 
   ngOnInit() {
-    const url = this._router.routerState.snapshot.url.split('/');
+    const url = this.router.routerState.snapshot.url.split('/');
 
     this._currentPage = url ? url[3] || DEFAULT_PAGE : DEFAULT_PAGE;
 
     if (!this.project) {
-      this.project = this._activatedRoute.snapshot.data['innovation'];
+      this.project = this.activatedRoute.snapshot.data['innovation'];
     }
 
     // Getting the project type
@@ -64,25 +65,31 @@ export class ClientProjectComponent implements OnInit {
 
   }
 
-  /*public validCollaboratorsList(): boolean {
-    let validCount = 0;
 
-    const split = this.collaborators_emails.split(/[\s,;:]/g).filter(val => val !== '');
 
-    split.forEach(mail => {
-      if (mail.match(emailRegEx)) {
-        validCount++;
-      }
-    });
+    /*public validCollaboratorsList(): boolean {
+      let validCount = 0;
 
-    return validCount > 0 && validCount === split.length;
+      const split = this.collaborators_emails.split(/[\s,;:]/g).filter(val => val !== '');
 
-  }*/
+      split.forEach(mail => {
+        if (mail.match(emailRegEx)) {
+          validCount++;
+        }
+      });
 
-  public addCollaborators (event: Event): void {
+      return validCount > 0 && validCount === split.length;
+
+    }*/
+
+  enterKeyPress(event: Event) {
+    if (event['keyCode'] === 13) {
+      this.addCollaborators(event);
+    }
+  }
+
+  addCollaborators (event: Event): void {
     event.preventDefault();
-
-    console.log(this.collaborators_emails);
 
     if (this.collaborators_emails === '') {
       this._showCollaboratorRequiredError = true;
@@ -93,12 +100,12 @@ export class ClientProjectComponent implements OnInit {
         this._showCollaboratorRequiredError = false;
         this._showCollaboratorInvalidError = false;
 
-        this._innovationService.inviteCollaborators(this.project._id, this.collaborators_emails).first()
+        this.innovationService.inviteCollaborators(this.project._id, this.collaborators_emails).first()
           .subscribe((data: any) => {
 
             if (data.usersAdded.length || data.invitationsToSend.length || data.invitationsToSendAgain.length) {
               this._collaboratorsAddingProcess = data;
-              this._collaboratorsAddingProcess.inviteUrl = this._innovationService.getInvitationUrl();
+              this._collaboratorsAddingProcess.inviteUrl = this.innovationService.getInvitationUrl();
 
               if (data.invitationsToSend.length) {
                 this._collaboratorsInvited.push(this._collaboratorsAddingProcess.invitationsToSend.toString());
@@ -126,11 +133,11 @@ export class ClientProjectComponent implements OnInit {
 
               if (data.usersAdded.length) {
                 this.project.collaborators = this.project.collaborators.concat(data.usersAdded);
-                this._translateNotificationService.success('PROJECT_MODULE.COLLABORATOR_ADDED.TITLE', 'PROJECT_MODULE.COLLABORATOR_ADDED.CONTENT');
+                this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_ADDED.TITLE', 'PROJECT_MODULE.COLLABORATOR_ADDED.CONTENT');
               }
 
             } else {
-              this._translateNotificationService.success('PROJECT_MODULE.COLLABORATOR_ALREADY_ADDED.TITLE', 'PROJECT_MODULE.COLLABORATOR_ALREADY_ADDED.CONTENT');
+              this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_ALREADY_ADDED.TITLE', 'PROJECT_MODULE.COLLABORATOR_ALREADY_ADDED.CONTENT');
             }
             this.collaborators_emails = '';
           });
@@ -143,26 +150,26 @@ export class ClientProjectComponent implements OnInit {
 
   }
 
-  public reinviteCollaborator(event: Event, email: string) {
+  reinviteCollaborator(event: Event, email: string) {
     event.preventDefault();
 
-    this._innovationService.inviteCollaborators(this.project._id, email).first().subscribe((data) => {
-      window.location.href = 'mailto:' + data.invitationsToSendAgain.join(',') + '?body=' + this._innovationService.getInvitationUrl();
+    this.innovationService.inviteCollaborators(this.project._id, email).first().subscribe((data) => {
+      window.location.href = 'mailto:' + data.invitationsToSendAgain.join(',') + '?body=' + this.innovationService.getInvitationUrl();
     });
 
   }
 
-  public removeCollaborator(event: Event, value: any) {
+  removeCollaborator(event: Event, value: any) {
     event.preventDefault();
 
-    this._innovationService.removeCollaborator(this.project._id, value).subscribe((data) => {
+    this.innovationService.removeCollaborator(this.project._id, value).subscribe((data) => {
       this.project.collaborators = data;
-      this._translateNotificationService.success('PROJECT_MODULE.COLLABORATOR_DELETED.TITLE', 'PROJECT_MODULE.COLLABORATOR_DELETED.CONTENT');
+      this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_DELETED.TITLE', 'PROJECT_MODULE.COLLABORATOR_DELETED.CONTENT');
     });
 
   }
 
-  public editCollaborator(event: Event) {
+  editCollaborator(event: Event) {
     event.preventDefault();
 
     this._displayAddCollaboratorsModal = true;
@@ -171,9 +178,34 @@ export class ClientProjectComponent implements OnInit {
 
   }
 
-  public closeModal(event: Event) {
+  closeModal(event: Event) {
     event.preventDefault();
     this._displayAddCollaboratorsModal = false;
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (this.getCurrentScrollTop() > 10) {
+      this._scrollButton = true;
+    } else {
+      this._scrollButton = false;
+    }
+  }
+
+  getCurrentScrollTop() {
+    if (typeof window.scrollY !== 'undefined' && window.scrollY >= 0) {
+      return window.scrollY;
+    }
+    return 0;
+  };
+
+  scrollToTop(event: Event) {
+    event.preventDefault();
+    window.scrollTo(0, 0);
+  }
+
+  get scrollButton(): boolean {
+    return this._scrollButton;
   }
 
   get currentPage(): string {
@@ -206,55 +238,3 @@ export class ClientProjectComponent implements OnInit {
 
 }
 
-/*
-this.collaboratorsInvited.forEach((items) => {
-                    if (items.includes(this.collaborators_emails.toString())) {
-                      window.location.href = 'mailto:' + this.collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this.collaboratorsAddingProcess.inviteUrl;
-                    } else {
-                      window.location.href = 'mailto:' + this.collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + this.collaboratorsAddingProcess.inviteUrl;
-                      this.collaboratorsInvited.push(this.collaboratorsAddingProcess.invitationsToSendAgain.toString());
-                    }
-                  });
-      if (this.collaborators_emails === '') {
-     this.showCollaboratorRequiredError = true;
-     this.showCollaboratorsInvalidError = false;
-   } else {
-     if (this.validCollaboratorsList()) {
-       this.innovationService.inviteCollaborators(this.project._id, this.collaborators_emails).first()
-         .subscribe((data: any) => {
-           if (data.usersAdded.length || data.invitationsToSend.length || data.invitationsToSendAgain.length) {
-             this.collaboratorsAddingProcess = data;
-             this.collaboratorsAddingProcess.inviteUrl = this.innovationService.getInvitationUrl();
-
-             if (data.usersAdded.length) {
-               this.project.collaborators = this.project.collaborators.concat(data.usersAdded);
-             }
-
-             console.log(data);
-
-           }
-           this.collaborators_emails = '';
-           this.displayAddCollaboratorsModal = false;
-         });
-     } else {
-       this.showCollaboratorRequiredError = false;
-       this.showCollaboratorsInvalidError = true;
-     }
-   }
-  if (this.collaborators_emails !== '') {
-     this.innovationService.inviteCollaborators(this.project._id, this.collaborators_emails).first()
-       .subscribe((data: any) => {
-       if (data.usersAdded.length || data.invitationsToSend.length || data.invitationsToSendAgain.length) {
-         this.collaboratorsAddingProcess = data;
-         this.collaboratorsAddingProcess.inviteUrl = this.innovationService.getInvitationUrl();
-         this.displayCollaboratorsAddingProcess = true;
-
-         if (data.usersAdded.length) {
-           this.project.collaborators = this.project.collaborators.concat(data.usersAdded);
-         }
-
-       }
-       this.collaborators_emails = '';
-       this.displayAddCollaboratorsModal = false;
-     });
-   }*/

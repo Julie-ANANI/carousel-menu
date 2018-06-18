@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { UserFormSidebarService } from '../../services/user-form-sidebar.service';
-import {environment} from '../../../../../../../environments/environment';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-user-form-sidebar',

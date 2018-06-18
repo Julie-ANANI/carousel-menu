@@ -1,0 +1,185 @@
+/*
+    This stylesheet contains all the form related class
+    on our platform.
+ */
+
+
+/*
+    Color variables for form.
+ */
+
+$primary-color: #FFB300;
+$error-color: #EA5858;
+$disabled-color: #DBDBDB;
+$input-color: #262831;
+$dark-color: #333333;
+$border-default-color: #E0E0E0;
+$placeholder-color: #AAB2BD;
+$success-color: #2ECC71;
+
+
+/*
+    Removing the focus default style.
+ */
+
+*:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+
+/*
+    Form input style. Just add this class when you are
+    defining the input of the form or any other. Class
+    name: .form-default
+ */
+
+.form-default {
+  border: 1px solid $border-default-color;
+  font-size: 0.7rem;
+  color: $input-color;
+  border-radius: 5px;
+  display: block;
+  width: 100%;
+  outline: none;
+  min-height: 51px;
+  position: relative;
+  background: white none;
+  padding: 15px;
+  transition: all 0.15s ease-in-out;
+  margin-top: 8px;
+}
+
+
+/*
+    Placeholder style
+ */
+
+.form-default:not(:disabled):placeholder-shown {
+  color: $placeholder-color;
+}
+
+
+/*
+    Focus on input style
+ */
+
+.form-default:not(:disabled):focus {
+  border-color: $primary-color;
+}
+
+
+/*
+    Error on input style
+ */
+
+.form-default.ng-touched.ng-invalid{
+  border-color: $error-color;
+}
+
+
+/*
+    Form input is disabled.
+ */
+
+.form-default:disabled, .form-default.disabled {
+  background: $disabled-color none;
+  color: #a9a9a9;
+  border-color: $disabled-color;
+}
+
+
+/*
+    Form group style
+*/
+
+.form-group {
+  margin-bottom: 20px !important;
+}
+
+
+/*
+    Form label style
+ */
+
+.form-label {
+  color: $dark-color;
+  font-weight: 600;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  padding: 0;
+  display: block;
+}
+
+
+/*
+    Form error style.  Add this class to show the error related to the
+    input. Class name: form-error
+ */
+
+.form-error {
+  color: $error-color;
+  font-size: 0.6rem;
+  padding: 4px 0;
+}
+
+
+/*
+    Form input radio button
+ */
+.form-radio {
+  color: $dark-color;
+}
+
+.form-radio input:checked + .form-icon {
+  border-color: rgba(46,204,113,0.45);
+  background: $success-color;
+}
+
+
+/*
+    This is to show the suggestion list when the user types in form
+    input like as a suggestion list. Just add this class to '<ul>' element,
+    and add the input in '<li>'. Class name: suggestion
+ */
+
+.suggestion {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 2;
+  background-color: white;
+  outline: none;
+
+  li {
+    padding: 8px 10px;
+    transition: all .15s ease-in-out;
+    cursor: pointer;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-radius: 2px;
+
+    a{
+      color: $dark-color;
+      text-decoration: none;
+    }
+
+  }
+
+  li:hover {
+    background:  #F2F2F2;
+    border-color: #F2F2F2;
+  }
+
+}
+
+
+/*
+    Textarea.
+ */
+textarea {
+  resize: none;
+  padding-right: 30px !important;
+
+}

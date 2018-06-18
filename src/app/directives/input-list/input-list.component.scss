@@ -3,23 +3,27 @@ $primary-color: #3498DB !default;
 $secondary-color: #2ECC71 !default;
 $dark-color: #333 !default;
 
-.primary-button {
+.btn {
   margin-left: 20px;
   border-radius: 50%;
-  height: 44px;
-  padding-left: 13px;
-  padding-right: 13px;
-  margin-top: 3px;
+  height: 48px;
+  width: 53px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 9px;
+  box-shadow: 0 1px 10px rgba(0,0,0,.1), 0 2px 40px rgba(0,0,0,.2);
 
   i {
-    vertical-align: bottom;
     margin-right: 0;
+    font-size: 0.75rem;
   }
 
 }
 
-.form-input-default.ng-touched.ng-invalid{
-  border-color: unset !important;
+.form-default.ng-touched.ng-invalid{
+  border-color: #E0E0E0;
 }
 
 .answerList {
@@ -43,7 +47,7 @@ $dark-color: #333 !default;
 
   a.delete {
     display: flex;
-    background: darken(#2ECC71, 15%);
+    background: #EA5858;
     border-radius: 0 5px 5px 0;
     padding: 12px 17px;
     border: none;
@@ -71,7 +75,7 @@ $dark-color: #333 !default;
   }
 
   a.delete:hover {
-    background: #EA5858;
+    background: lighten(#EA5858, 10%);
   }
 
   .popover-container {

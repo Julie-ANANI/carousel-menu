@@ -1,5 +1,5 @@
-import {Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router} from '@angular/router';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
@@ -16,10 +16,12 @@ const DEFAULT_TAB = 'pitch';
 export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
+  @Input() projectStatus: string;
 
   private _changesSaved: boolean;
   private _saveChanges: boolean;
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
+  formValid: boolean;
   private _currentTab: string;
   private _projectToBeSubmitted: boolean;
 
@@ -34,22 +36,24 @@ export class SetupProjectComponent implements OnInit {
     this._saveChanges = false;
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
+    this.formValid = false;
   }
 
-  public updateSettings(value: InnovationSettings): void {
+  updateSettings(value: InnovationSettings): void {
     this.project.settings = value;
+    this._saveChanges = true;
+    this._saveButtonClass = 'save-project';
   }
 
-  public updateInnovation(value: Innovation): void {
+  updateInnovation(value: Innovation): void {
     this.project = value;
   }
 
-  public saveProject(event: Event): void {
+  saveProject(event: Event): void {
     event.preventDefault();
 
      if (this._saveChanges) {
-        this.innovationService.save(this.project._id, this.project)
-          .first()
+        this.innovationService.save(this.project._id, this.project).first()
           .subscribe(data => {
             this.project = data;
             this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
@@ -63,26 +67,28 @@ export class SetupProjectComponent implements OnInit {
 
   }
 
-  public submitButton(event: Event): void {
+  submitButton(event: Event): void {
     event.preventDefault();
 
     if (this._saveChanges) {
       this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+
     } else {
       this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
     }
 
   }
 
-  public submitProject(event: Event) {
+  submitProject(event: Event) {
     event.preventDefault();
     this._projectToBeSubmitted = false;
 
     this.innovationService.submitProjectToValidation(this.project._id)
       .first()
       .subscribe(data => {
-        this.project.status = 'SUBMITTED';
-        this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
+       this.projectStatus = this.project.status = 'SUBMITTED';
+       this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
+       this.router.navigate(['projects']);
       }, err => {
         this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
@@ -90,7 +96,7 @@ export class SetupProjectComponent implements OnInit {
   }
 
   // getting the save value from the child component.
-  public saveInnovation(value: boolean) {
+  saveInnovation(value: boolean) {
     this._saveChanges = value;
     this._changesSaved = false;
     this._saveButtonClass = 'save-project';
@@ -102,7 +108,6 @@ export class SetupProjectComponent implements OnInit {
     if (this._saveChanges) {
       this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     } else {
-      console.log(this.project);
       this._currentTab = value;
     }
 

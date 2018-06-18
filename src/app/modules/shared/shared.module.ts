@@ -45,6 +45,7 @@ import { SharedEmailBlacklistComponent } from './components/shared-email-blackli
 import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
 import { FilterPipe } from '../../pipes/TableFilterPipe';
 import { LimitsPipe } from '../../pipes/TableLimitsPipe';
+import { CharacterCountdown } from '../../pipes/CharacterCountdown';
 
 // Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
@@ -56,6 +57,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
 // import { TableModule } from './components/shared-table/table.module';
+
 
 @NgModule({
   imports: [
@@ -70,7 +72,7 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     Angular2FontawesomeModule,
     Ng2PageScrollModule,
     Ng2AutoCompleteModule,
-    SharedWorldmapModule
+    SharedWorldmapModule,
   ],
   declarations: [
     // Directives
@@ -110,6 +112,7 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     FilterPipe,
     LimitsPipe,
     SharedEmailBlacklistComponent,
+    CharacterCountdown
   ],
   exports: [
     // Modules
@@ -155,7 +158,8 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedProjectEditCardsComponent,
     SharedEmailBlacklistComponent,
     FilterPipe,
-    LimitsPipe
+    LimitsPipe,
+    CharacterCountdown
   ]
 })
 

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'lodash';
 
@@ -18,6 +18,7 @@ export class AutocompleteInputComponent implements OnInit {
   public inputForm: FormGroup;
 
   @Output() update = new EventEmitter<any>();
+
   @Input() canEdit = true;
   @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
   @Input() adminMode = false;
@@ -35,9 +36,10 @@ export class AutocompleteInputComponent implements OnInit {
   private _canOrder: boolean;
   ////////////////////////////////////////////////////////////////////
 
-  constructor(private _fbuilder: FormBuilder,
-              private _sanitizer: DomSanitizer,
-              private _autocompleteService: AutocompleteService) {}
+  constructor(private formBuilder: FormBuilder,
+              private domSanitizer: DomSanitizer,
+              private autocompleteService: AutocompleteService) {
+  }
 
   @Input()
   set config(config: {placeholder: string, type: string, initialData: any, identifier: string, canOrder: boolean}) {
@@ -72,7 +74,7 @@ export class AutocompleteInputComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputForm = this._fbuilder.group({
+    this.inputForm = this.formBuilder.group({
       answer : '',
     });
   }
@@ -82,23 +84,23 @@ export class AutocompleteInputComponent implements OnInit {
         keyword: keyword,
         type: this._autocompleteType
       };
-      return this._autocompleteService.get(queryConf);
+      return this.autocompleteService.get(queryConf);
   }
 
   public autocompleListFormatter = (data: any) : SafeHtml => {
-    let html = `<span>${data[this._identifier]}</span>`;
-    return this._sanitizer.bypassSecurityTrustHtml(html);
+    const html = `<span>${data[this._identifier]}</span>`;
+    return this.domSanitizer.bypassSecurityTrustHtml(html);
   };
 
   public canAdd(): boolean {
-    return !this.onlyOne || this.answerList.length == 0;
+    return !this.onlyOne || this.answerList.length === 0;
   }
 
   addProposition(val: any): void {
     val = val ? val.get('answer').value : '';
     // Verify here if the value has the expected fields (name, logo and domain)
     if (typeof val === 'string') {
-      let _obj = {};
+      const _obj = {};
       _obj[this._identifier] = val;
       val = _obj;
     }
@@ -165,4 +167,5 @@ export class AutocompleteInputComponent implements OnInit {
     event.preventDefault();
     this.update.emit({value: this.answerList});
   }
+
 }

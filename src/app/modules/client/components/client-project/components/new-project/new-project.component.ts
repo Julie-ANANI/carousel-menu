@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../../../../environments/environment';
@@ -14,6 +14,7 @@ import { Innovation } from '../../../../../../models/innovation';
 export class NewProjectComponent implements OnInit {
 
   private _formData: FormGroup;
+  private _scrollButton = false;
 
   constructor(private _router: Router,
               private _formBuilder: FormBuilder,
@@ -43,6 +44,31 @@ export class NewProjectComponent implements OnInit {
         this._router.navigate(['/project/' + project._id + '/setup'])
       });
 
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (this.getCurrentScrollTop() > 10) {
+      this._scrollButton = true;
+    } else {
+      this._scrollButton = false;
+    }
+  }
+
+  getCurrentScrollTop() {
+    if (typeof window.scrollY !== 'undefined' && window.scrollY >= 0) {
+      return window.scrollY;
+    }
+    return 0;
+  };
+
+  scrollToTop(event: Event) {
+    event.preventDefault();
+    window.scrollTo(0, 0);
+  }
+
+  get scrollButton(): boolean {
+    return this._scrollButton;
   }
 
   get formData(): FormGroup {

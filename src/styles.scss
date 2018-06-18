@@ -1,7 +1,8 @@
-$body-font-color-darker: #333333 !default;
+/*$body-font-color-darker: #333333 !default;
 $body-font-color: #878787 !default;
 $base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
 $primary-color: #3498DB !default;
+*/
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 @import "../node_modules/spectre.css/src/spectre.scss";
@@ -13,6 +14,13 @@ $primary-color: #3498DB !default;
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css";
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
 
+@import "style/animation";
+@import "style/container-style";
+@import "style/general-style";
+@import "style/text-style";
+@import "style/form-style";
+@import "style/button-style";
+
 
 /********************************** Default Styles ***************************************/
 
@@ -23,43 +31,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333333;
-}
-
-.main-container {
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-}
-
-.hero-container {
-  padding-top: 50px;
-  padding-bottom: 50px;
-  margin: 0;
-}
-
-.hero-light-container {
-  padding-top: 50px;
-  padding-bottom: 25px;
-  margin: 0;
-}
-
-.section-container {
-  padding-top: 50px;
-  padding-bottom: 50px;
-  margin: 0;
-}
-
-*:hover {
-  transition: all 0.35s ease-in-out !important;
-}
-
-*:focus {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  outline: none !important;
-  text-decoration: none !important;
 }
 
 
@@ -90,7 +61,7 @@ $button-color: #ffb300;
 $button-disabled-color: #dbdbdb;
 
 
-/* Typographie */
+/* Typographie
 
 h1 {
   font-weight: 300;
@@ -117,7 +88,7 @@ h3, .h3 {
 }
 
 
-/* Formulaires */
+/* Formulaires
 
 .form-group:not(:last-child) {
   margin-bottom: 40px;
@@ -144,7 +115,7 @@ h3, .h3 {
 
 
 
-/* Barre de tri */
+/* Barre de tri
 
 ul.list-filter {
   text-align: right;
@@ -164,7 +135,7 @@ ul.list-filter {
 }
 
 
-/* On décale les notifications vers le bas pour ne pas qu'elles cachent le menu principal */
+/* On décale les notifications vers le bas pour ne pas qu'elles cachent le menu principal
 .simple-notification-wrapper.top {
   top: 80px !important;
 }
@@ -186,440 +157,9 @@ ul.list-filter {
   font-size: 12px;
   position: relative;
 }
-
-/********************************** Simple Notification Styles ***************************************/
-
-.simple-notification {
-  border: 1px solid transparent !important;
-  border-radius: 5px !important;
-  word-wrap: break-word !important;
-}
-
-.simple-notification-wrapper {
-  z-index: 9999 !important;
-}
-
-.simple-notification .sn-title {
-  font-size: 20px !important;
-  line-height: 1.4 !important;
-  padding-right: 0 !important;
-  font-weight: bold;
-  padding-bottom: 8px !important;
-}
-
-.simple-notification .sn-content {
-  font-size: 16px !important;
-  line-height: 1.4 !important;
-  padding-right: 0 !important;
-  padding-bottom: 10px !important;
-}
-
-.simple-notification.success {
-  background: $validation-element !important;
-  color: white !important;
-  border-color: $validation-element !important;
-}
-
-.simple-notification.error {
-  background: $alert-element !important;
-  color: white !important;
-  border-color: $alert-element !important;
-}
-
-/********************************** Text Styles ***************************************/
-
-.text {
-  color: $text-color;
-  padding: 16px 0;
-  margin: 0;
-}
-
-.project-info {
-  color: $proj-info;
-  font-weight: 600;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  margin: 0;
-}
-
-.ques {
-  font-size: 0.9rem;
-  color: $ques-color;
-}
-
-.para {
-  font-size: 0.9rem;
-  color: $para-color;
-  padding: 16px 0;
-  margin: 0;
-}
-
-.text-link, .text-link:active, .text-link:focus, .text-link:visited {
-  color: $primary-element;
-  cursor: pointer;
-}
-
-.text-link:hover {
-  text-decoration: underline;
-  color: $primary-element;
-}
-
-.text-link:focus {
-  color: $primary-element;
-}
-
-/********************************** Loading Styles ***************************************/
-
-.loading::after {
-  border-color: #FFB300;
-  border-right-color: transparent;
-  border-top-color: transparent;
-}
-
-
-/********************************** Or Styles ***************************************/
-
-.or-divider {
-  color: $meta-element;
-}
-
-.or-divider::before {
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
-  width: 130px;
-  height: 1px;
-  background: #97A4B1;
-}
-
-.or-divider::after {
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
-  width: 130px;
-  height: 1px;
-  background: #97A4B1;
-}
-
-/********************************** Bot Input Styles ***************************************/
-
-.bot-text {
-  padding: 20px 11px;
-  border-radius: 5px;
-  color: $primary-dark;
-  border: 1px solid #E0E0E0;
-  display: inline-block;
-  font-size: 0.9rem;
-  width: 213px;
-  text-align: center;
-  vertical-align: middle;
-  font-weight: 600;
-}
-
-/********************************** Num Rect Styles ***************************************/
-
-.num-rect {
-  color: white;
-  border-radius: 5px;
-  font-size: 1rem;
-  font-weight: 600;
-  font-style: normal;
-  padding: 7px 15px;
-  background: #4F5D6B;
-  margin-right: 20px;
-  display: inline-block;
-}
-
-/********************************** Circle Styles ***************************************/
-
-.circle {
-  border-radius: 50%;
-  height: 30px;
-  width: 30px;
-  background: $primary-element;
-  display: inline-block;
-  position: absolute;
-  z-index: 2;
-
-  i {
-    color: white;
-    display: flex;
-    justify-content: center;
-    padding-top: 7px;
-  }
-
-}
-
-
-/********************************** Label Styles ***************************************/
-
-.label-progress {
-  border-radius: 5px;
-  background: #EA9741;
-  color: white;
-  font-size: 0.6rem;
-  padding: 6px 15px;
-  margin-right: 10px;
-  font-weight: 600;
-}
-
-
-.label-validate {
-  border-radius: 5px;
-  background: $validation-element;
-  color: white;
-  font-size: 0.6rem;
-  padding: 6px 15px;
-  margin-right: 10px;
-  font-weight: 600;
-}
-
-.label-alert{
-  border-radius: 5px;
-  background: $alert-element;
-  color: white;
-  font-size: 0.6rem;
-  padding: 6px 15px;
-  margin-right: 10px;
-  font-weight: 600;
-}
-
-.label-editing{
-  border-radius: 5px;
-  background: $secondary-element;
-  color: white;
-  font-size: 0.6rem;
-  padding: 6px 15px;
-  margin-right: 10px;
-  font-weight: 600;
-}
-
-.label-draft{
-  border-radius: 5px;
-  background: #4F5D6B;
-  color: white;
-  font-size: 0.6rem;
-  padding: 6px 15px;
-  margin-right: 10px;
-  font-weight: 600;
-}
-
-/********************************** Tooltip Styles ***************************************/
-
-.tooltips {
-  position: absolute;
-  display: inline-block;
-  height: 15px;
-  width: 15px;
-  background-color: white;
-  border-radius: 50%;
-  z-index: 10;
-
-  i {
-    display: flex;
-    justify-content: center;
-  }
-
-  .tooltip-text {
-    visibility: hidden;
-    width: 190px;
-    display: flex;
-    flex-wrap: wrap;
-    background-color: #97A4B1;
-    color: #fff;
-    justify-content: center;
-    text-align: center;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 0.7rem;
-    position: absolute;
-    z-index: 10;
-    top: 0;
-    right: 127%;
-  }
-
-  .tooltip-text::after {
-    content: "";
-    position: absolute;
-    top: 8px;
-    left: 100%;
-    margin-top: -5px;
-    border: 5px solid transparent;
-    border-left-color: #97A4B1;
-  }
-
-}
-
-.tooltips:hover .tooltip-text {
-  animation-name: fadeIn;
-  animation-duration: 1s;
-  animation-timing-function: ease-in-out;
-  visibility: visible;
-}
-
-/********************************** Tab Styles ***************************************/
-
-.tabs {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  margin: 0;
-  padding: 0;
-
-  li {
-    margin-top: 0;
-    flex: 1 0 auto;
-
-    a {
-      color: white;
-      font-size: 0.9rem;
-      text-align: center;
-      display: block;
-      text-decoration: none;
-      padding: 15px 12px;
-      background: #747D88;
-      font-weight: 600;
-      cursor: pointer;
-
-      i {
-        margin-right: 10px;
-      }
-
-    }
-
-    a:hover {
-      background: $primary-element;
-    }
-
-    a:active {
-      color: white;
-      background: $primary-element;
-    }
-
-  }
-
-}
-
-
-/********************************** Modal Styles ***************************************/
-
-.modal {
-  box-shadow: none;
-
-  .modal-overlay {
-    background: rgba(51, 51, 51, 0.63) !important;
-  }
-
-  .modal-container {
-    padding: 0;
-    border-radius: 5px;
-    text-align: unset;
-    overflow: auto;
-  }
-
-  .modal-header {
-    min-height: 74px;
-    background: #0B90C6;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    padding: 21px 26px;
-  }
-
-  .btn-clear {
-    font-size: 1.1rem;
-    color: white;
-    line-height: 1.4;
-  }
-
-  .modal-title {
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: white;
-    line-height: 1.4;
-  }
-
-  .modal-body {
-    padding: 30px 26px;
-  }
-
-  .modal-footer {
-    padding: 0 26px 25px;
-    text-align: unset;
-    display: flex;
-    justify-content: flex-end;
-  }
-
-}
+*/
 
 /********************************** Form Input Styles ***************************************/
-
-// Form group
-
-.form-group {
-  margin-bottom: 20px !important;
-}
-
-// Form label
-
-.form-label-default {
-  color: $primary-dark;
-  font-weight: 600;
-  font-size: 0.7rem;
-}
-
-.form-label-active {
-  color: $primary-element;
-  font-size: 0.7rem;
-  font-weight: 600;
-}
-
-.form-label-error {
-  color: $alert-element;
-  font-size: 0.7rem;
-  font-weight: 600;
-}
-
-// Form input
-
-.form-input-default {
-  border: 1px solid #E0E0E0;
-  font-size: 0.7rem;
-  color: #262831 !important;
-  border-radius: 5px;
-  display: block;
-  width: 100%;
-  outline: none;
-  min-height: 36px;
-  position: relative;
-  background: white none;
-  padding: 15px;
-}
-
-.form-input-default:placeholder-shown {
-  color: #AAB2BD !important;
-}
-
-.form-input-default:focus {
-  border-color: $primary-element !important;
-}
-
-.form-input-default:disabled {
-  background: #E7E7E7;
-  color: #666666;
-}
-
-.form-input-default.ng-touched.ng-invalid{
-  border-color: $alert-element !important;
-}
-
-// Form error
-
-.form-error {
-  color: $alert-element;
-  font-size: 0.6rem;
-  padding: 4px 0;
-}
 
 // Form slide button
 
@@ -661,205 +201,10 @@ ul.list-filter {
   padding-bottom: 20px;
 }
 
-// Form radio
 
-.form-radio {
-  color: #484848;
-}
 
-.form-radio input:checked + .form-icon {
-  border-color: rgba(46,204,113,0.45) !important;
-  background: $validation-element;
-}
 
-/********************************** Form suggestion list Styles ***************************************/
 
-.form-suggestion {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  list-style: none;
-  z-index: 2;
-  background-color: white;
 
-  li {
-    padding: 8px 10px;
-    transition: all .35s ease-in-out;
-    cursor: pointer;
-    margin-top: 2px !important;
-    margin-bottom: 2px !important;
-    border-radius: 2px !important;
-
-    a{
-      color: #333333;
-      text-decoration: none;
-    }
-
-  }
-
-  li:hover {
-    background:  #F2F2F2;
-    border-color: #F2F2F2;
-  }
-
-}
-
-/********************************** Primary Button Styles ***************************************/
-
-.primary-button {
-  display: inline-block;
-  vertical-align: middle;
-  outline: none;
-  cursor: pointer;
-  user-select: none;
-  white-space: nowrap;
-  text-align: center;
-  text-decoration: none;
-  line-height: 20px;
-  background: $button-color none;
-  border: 1px solid $button-color;
-  font-size: 0.7rem;
-  color: white;
-  border-radius: 5px;
-  height: 50px;
-  padding: 10px 30px;
-  font-weight: 600;
-  transition: all 0.2s ease-in-out;
-
-  i {
-    margin-right: 15px;
-    font-size: 1rem;
-  }
-
-}
-
-.primary-button:hover {
-  color: white;
-  background: lighten($primary-element, 10%);;
-  border-color: lighten($primary-element, 10%);;
-  text-decoration: none;
-}
-
-.primary-button:disabled {
-  background: $button-disabled-color;
-  border-color: $button-disabled-color;
-  color: #a9a9a9;
-  cursor: not-allowed;
-}
-
-/********************************** Ghost Button Styles ***************************************/
-
-.ghost-button {
-  color: $button-color;
-  background: white none;
-  border-width: 2px;
-}
-
-.ghost-button:hover {
-  color: lighten($primary-element, 10%);
-  background: white;
-  border-color: lighten($primary-element, 10%);
-}
-
-.ghost-button:disabled {
-  border-color: lighten($button-disabled-color, 10%);
-  color: lighten(#a9a9a9, 10%);
-  background: white;
-  cursor: not-allowed;
-}
-
-/********************************** Ghost Delete Button Styles ***************************************/
-
-.ghost-delete-button {
-  color: $alert-element;
-  background: white none;
-  border-color: $alert-element;
-  border-width: 2px;
-}
-
-.ghost-delete-button:hover {
-  color: lighten($alert-element, 10%);
-  background: white;
-  border-color: lighten($alert-element, 10%);
-}
-
-/********************************** Ghost Cancel Button Styles ***************************************/
-
-.ghost-cancel-button {
-  color: $meta-element;
-  background: white none;
-  border-color: $meta-element;
-  border-width: 2px;
-}
-
-.ghost-cancel-button:hover {
-  color: lighten($meta-element, 10%);
-  background: white;
-  border-color: lighten($meta-element, 10%);
-}
-
-/********************************** Large Button Styles ***************************************/
-
-.lg-button {
-  padding-left: 84px !important;
-  padding-right: 84px !important;
-  height: 70px !important;
-  font-size: 1.2rem !important;
-}
-
-/********************************** Small Button Styles ***************************************/
-
-.sm-button {
-  height: 45px !important;
-  padding: 10px 30px !important;
-}
-
-/********************************** Extra Small Button Styles ***************************************/
-
-.xs-button {
-  height: 35px !important;
-  padding: 5px 15px !important;
-}
-
-/********************************** Media ***************************************/
-
-@media (max-width: 600px) {
-
-  // Tab
-  .tabs li {
-      flex-basis: 100% !important;
-      margin-left: 0 !important;
-  }
-
-  // Button
-  .large-button {
-    padding-left: 45px;
-    padding-right: 45px;
-  }
-
-}
-
-@media (min-width: 768px) {
-
-  // Tooltip position right
-  .tooltips {
-    margin-left: 4px;
-
-    .tooltip-text {
-      left: 127%;
-    }
-
-    .tooltip-text::after {
-      right: 100%;
-      left: unset;
-      border-top-color: transparent;
-      border-right-color: #97A4B1;
-      border-left-color: transparent;
-      border-bottom-color: transparent;
-    }
-
-  }
-
-}
 
 

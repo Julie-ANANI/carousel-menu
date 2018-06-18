@@ -1,14 +1,14 @@
 <form #f="ngForm" novalidate (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)">
 
-  <div class="input-group" *ngIf="canEdit">
+  <div class="input-group" *ngIf="canEdit" [ngStyle]="{ 'display': 'flex' }">
     <input
       type="text"
-      class="form-input-default"
+      class="form-default"
       name="answers"
       [(ngModel)]="answer"
       required
       [attr.placeholder]="placeholder | translate" />
-    <button class="primary-button" translate><span></span><i class="fas fa-plus"></i></button>
+    <button class="btn btn-primary" translate><span></span><i class="icon icon-plus"></i></button>
   </div>
 
   <ul *ngFor="let a of answerList; index as i" class="answerList">
@@ -24,8 +24,8 @@
         <i class="fas fa-pencil-alt"></i>
         <div class="popover-container">
           <div class="input-group">
-            <input type="text" class="form-input-default" [(ngModel)]="a.text" name="text"/>
-            <button class="primary-button" type="submit" (click)="updateItem($event)">GO</button>
+            <input type="text" class="form-default" [(ngModel)]="a.text" name="text"/>
+            <button class="btn" type="submit" (click)="updateItem($event)">GO</button>
           </div>
         </div>
       </div>

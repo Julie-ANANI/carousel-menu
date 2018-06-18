@@ -1,59 +1,99 @@
-<shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="project._id" [adminMode]="false" [questions]="questions"></shared-answer-modal>
+<div class="section-container" id="project-exploration">
+  <div class="columns">
+    <div class="column col-12">
 
-<div class="market-exploration">
-  <h1>{{'PROJECT_MODULE.EXPLORATION.TITLE' | translate}}</h1>
-  <a class="btn btn-primary" href="{{contactUrl}}">
-    {{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}
-  </a>
+      <!-- Project under editing status -->
+      <div *ngIf="project.status === 'EDITING' ">
+        <h1>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EDITING' | translate }}</h1>
+        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+          <span class="bot-rect">
+            {{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.A' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.B' | translate }}</span>
+            {{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.C' | translate }}
+          </span>
+          <br>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+          <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+        </div>
+      </div>
 
-  <h2>{{'PROJECT_MODULE.EXPLORATION.STATUS_TITLE' | translate}}</h2>
-  <ul>
-    <li>
-      {{'PROJECT_MODULE.EXPLORATION.STATUS.STARTED' | translate}} :
-      {{this.project.created | date}}
-    </li>
-    <li>
-      {{'PROJECT_MODULE.EXPLORATION.STATUS.LAUNCHED' | translate}} :
-      {{this.project.launched | date}}
-    </li>
-  </ul>
+      <!-- Project under submitted status -->
+      <div *ngIf="project.status === 'SUBMITTED' ">
+        <h1>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.SUBMITTED' | translate }}</h1>
+        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+          <span class="bot-rect">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</span>
+          <br>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+          <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+        </div>
+      </div>
 
-  <h2>{{'PROJECT_MODULE.EXPLORATION.ANALYTICS_TITLE' | translate}}</h2>
-  <ul>
-    <li>
-      {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate}} :
-      {{campaignStats.nbPros}}
-    </li>
-    <li>
-      {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate}} :
-      {{campaignStats.nbProsSent}}
-    </li>
-    <li>
-      {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate}} :
-      {{campaignStats.nbProsOpened}}
-    </li>
-    <li>
-      {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate}} :
-      {{campaignStats.nbProsClicked}}
-    </li>
-    <li>
-      {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate}} :
-      {{answers?.length || 0}}
-    </li>
-  </ul>
 
-  <h2>{{'PROJECT_MODULE.EXPLORATION.CLICKMAP_TITLE' | translate}}</h2>
-  <div class="map centered" width="684" height="339">
-    <app-worldmap [countries]="countries" [countriesColor]="'#0B90C6'"></app-worldmap>
+      <!-- Project under evaluating -->
+      <div *ngIf="project.status === 'EVALUATING'">
+        <shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="project._id" [adminMode]="false" [questions]="questions"></shared-answer-modal>
+
+        <div class="market-exploration">
+          <h1>{{'PROJECT_MODULE.EXPLORATION.TITLE' | translate}}</h1>
+          <a class="btn btn-primary" href="{{contactUrl}}">
+            {{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}
+          </a>
+
+          <h2>{{'PROJECT_MODULE.EXPLORATION.STATUS_TITLE' | translate}}</h2>
+          <ul>
+            <li>
+              {{'PROJECT_MODULE.EXPLORATION.STATUS.STARTED' | translate}} :
+              {{this.project.created | date}}
+            </li>
+            <li>
+              {{'PROJECT_MODULE.EXPLORATION.STATUS.LAUNCHED' | translate}} :
+              {{this.project.launched | date}}
+            </li>
+          </ul>
+
+          <h2>{{'PROJECT_MODULE.EXPLORATION.ANALYTICS_TITLE' | translate}}</h2>
+          <ul>
+            <li>
+              {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate}} :
+              {{campaignStats.nbPros}}
+            </li>
+            <li>
+              {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate}} :
+              {{campaignStats.nbProsSent}}
+            </li>
+            <li>
+              {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate}} :
+              {{campaignStats.nbProsOpened}}
+            </li>
+            <li>
+              {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate}} :
+              {{campaignStats.nbProsClicked}}
+            </li>
+            <li>
+              {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate}} :
+              {{answers?.length || 0}}
+            </li>
+          </ul>
+
+          <h2>{{'PROJECT_MODULE.EXPLORATION.CLICKMAP_TITLE' | translate}}</h2>
+          <div class="map centered" width="684" height="339">
+            <app-worldmap [countries]="countries" [countriesColor]="'#0B90C6'"></app-worldmap>
+          </div>
+
+          <h2>{{'PROJECT_MODULE.EXPLORATION.COMPANIESLIST_TITLE' | translate}}</h2>
+          <ul>
+            <li *ngFor="let company of companies">
+              {{company.name}}
+            </li>
+          </ul>
+
+          <h2>{{'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate}}</h2>
+          <app-answers-list [answers]="answers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
+        </div>
+      </div>
+
+    </div>
   </div>
-
-  <h2>{{'PROJECT_MODULE.EXPLORATION.COMPANIESLIST_TITLE' | translate}}</h2>
-  <ul>
-    <li *ngFor="let company of companies">
-      {{company.name}}
-    </li>
-  </ul>
-
-  <h2>{{'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate}}</h2>
-  <app-answers-list [answers]="answers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
 </div>
+
+
+
