@@ -9,7 +9,8 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
   'PAGE_NOT_FOUND': 'Page could not be found.',
 
   'FORM': {
-    'PITCH_FORM': 'Please answers all the fields of the pitch form.',
+    'PITCH_FORM': 'Please answer the fields of the pitch form.',
+    'TARGETING_FORM': 'Please answer the fields of the targeting form.'
   },
 
   'LOGIN': {

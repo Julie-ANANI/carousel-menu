@@ -5,6 +5,7 @@ import { ShareService } from '../../../../services/share/share.service';
 import { InnovationSettings } from '../../../../models/innov-settings';
 
 import * as _ from 'lodash';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-shared-project-settings',
@@ -16,11 +17,13 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   @Input() settings: InnovationSettings;
   @Input() adminMode: boolean;
+  @Input() showTargetingFieldError: Subject<boolean>;
 
   @Output() settingsChange = new EventEmitter<any>();
   @Output() targetingFormField = new EventEmitter<boolean>();
 
   showMarketError: boolean;
+  showGeographyError: boolean;
 
   private _displayCountriesToExcludeSection = false;
   private _displayCountriesCommentSection = false;
@@ -49,16 +52,19 @@ export class SharedProjectSettingsComponent implements OnInit {
       this._displayKeywordsSection = this.settings.keywords.length > 0;
     }
 
-    this.checkField();
+    this.showTargetingFieldError.subscribe(value => {
+      if (value) {
+        this.showMarketError = this.settings.market.comments.length === 0;
+        this.showGeographyError = this.settings.geography.exclude.length === 0 && this.settings.geography.comments.length === 0 &&
+          !this.settings.geography.continentTarget.russia && !this.settings.geography.continentTarget.oceania && !this.settings.geography.continentTarget.europe
+          && !this.settings.geography.continentTarget.asia && !this.settings.geography.continentTarget.americaSud && !this.settings.geography.continentTarget.americaNord
+          && !this.settings.geography.continentTarget.africa;
+      } else {
+        this.showMarketError = false;
+        this.showGeographyError = false;
+      }
+    });
 
-  }
-
-  checkField() {
-    if (this.settings.market.comments.length !== 0) {
-      this.targetingFormField.emit(true);
-    } else {
-      this.targetingFormField.emit(false);
-    }
   }
 
   getColor(length: number) {
@@ -145,6 +151,7 @@ export class SharedProjectSettingsComponent implements OnInit {
    */
   public addCountryToExclude(event: {value: Array<string>}): void {
     this.settings.geography.exclude = event.value;
+    this.showGeographyError = this.settings.geography.exclude.length === 0;
     this.updateSettings();
   }
 
@@ -268,6 +275,19 @@ export class SharedProjectSettingsComponent implements OnInit {
    */
   public updateSettings() {
     this.settingsChange.emit(this.settings);
+    this.checkField();
+  }
+
+  checkField() {
+    if (this.settings.market.comments.length !== 0 && this.settings.geography.exclude.length !== 0 || this.settings.geography.comments.length !== 0 ||
+      this.settings.geography.continentTarget.russia || this.settings.geography.continentTarget.oceania || this.settings.geography.continentTarget.europe
+      || this.settings.geography.continentTarget.asia || this.settings.geography.continentTarget.americaSud || this.settings.geography.continentTarget.americaNord
+      || this.settings.geography.continentTarget.africa) {
+      this.targetingFormField.emit(true);
+      this.showGeographyError = false;
+    } else {
+      this.targetingFormField.emit(false);
+    }
   }
 
 }

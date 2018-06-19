@@ -3,6 +3,7 @@
     [settings]="project.settings"
     (settingsChange)="updateSettings($event)"
     [adminMode]="false"
-    (targetingFormField)="targetingFormValidation($event)">
+    (targetingFormField)="targetingFormValidation($event)"
+    [showTargetingFieldError]="showFieldError">
   </app-shared-project-settings>
 </div>

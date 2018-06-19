@@ -50,6 +50,9 @@
                 <span [ngStyle]="{'color': getColor(settings.geography.comments.length | characterCountdown:500)}">{{ settings.geography.comments.length | characterCountdown:500 }}</span>
               </div>
           </div>
+          <div class="form-error" *ngIf="showGeographyError">
+            <span>{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.ERROR' | translate }}</span>
+          </div>
 
           <!-- Activity sectors -->
           <div class="activity-sector-wrapper pd-ques">
@@ -63,13 +66,14 @@
                 #market="ngModel"
                 [(ngModel)]="settings.market.comments"
                 (change)="updateSettings()"
-                [ngClass]="{'borderRed': market.touched && settings.market.comments.length === 0}">
+                [ngClass]="{'borderRed': market.touched && settings.market.comments.length === 0 || showMarketError}"
+                (focus)="showMarketError = false">
               </textarea>
               <div class="charRemaining">
                 <span [ngStyle]="{'color': getColor(settings.market.comments.length | characterCountdown:500)}">{{ settings.market.comments.length | characterCountdown:500 }}</span>
               </div>
-              <div class="form-error" *ngIf="market.touched && settings.market.comments.length === 0">
-                <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.ERROR' | translate }}</span>
+              <div class="form-error" *ngIf="market.touched && settings.market.comments.length === 0 || showMarketError">
+                <span>{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.ERROR' | translate }}</span>
               </div>
             </div>
           </div>

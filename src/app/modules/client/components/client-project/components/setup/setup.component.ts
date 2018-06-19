@@ -27,6 +27,7 @@ export class SetupProjectComponent implements OnInit {
   pitchFormValid: boolean;
   showPitchFieldError: Subject<boolean> = new Subject();
   targetingFormValid: boolean;
+  showTargetingFieldError: Subject<boolean> = new Subject();
 
   private _currentTab: string;
   private _projectToBeSubmitted: boolean;
@@ -37,21 +38,25 @@ export class SetupProjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('enterring component');
     const url = this.router.routerState.snapshot.url.split('/');
     this._currentTab = url ? url[4] || DEFAULT_TAB : DEFAULT_TAB;
     this._saveChanges = false;
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
-    console.log(this.project);
+    this.checkProjectStatus();
   }
 
   checkProjectStatus() {
-  /*  if (this.project.innovationCards[this.innovationCardEditingIndex].title !== '' && this.project.innovationCards[this.innovationCardEditingIndex].summary !== ''
-      && this.project.innovationCards[this.innovationCardEditingIndex].problem !== '' && this.project.innovationCards[this.innovationCardEditingIndex].solution !== ''
-      && this.project.innovationCards[this.innovationCardEditingIndex].advantages.length !== 0 && this.project.patented !== null && this.project.external_diffusion !== null) {
+    this.project.innovationCards.forEach((field) => {
+      this.pitchFormValid = field.title !== '' && field.summary !== '' && field.problem !== '' && field.solution !== '' &&
+        field.advantages.length !== 0 && this.project.patented !== null && this.project.external_diffusion !== null;
+    });
 
-    }*/
+    this.targetingFormValid = this.project.settings.market.comments.length !== 0 && this.project.settings.geography.exclude.length !== 0 || this.project.settings.geography.comments.length !== 0 ||
+      this.project.settings.geography.continentTarget.russia || this.project.settings.geography.continentTarget.oceania || this.project.settings.geography.continentTarget.europe
+      || this.project.settings.geography.continentTarget.asia || this.project.settings.geography.continentTarget.americaSud || this.project.settings.geography.continentTarget.americaNord
+      || this.project.settings.geography.continentTarget.africa;
+
   }
 
   updateSettings(value: InnovationSettings): void {
@@ -76,6 +81,7 @@ export class SetupProjectComponent implements OnInit {
             this._saveChanges = false;
             this._saveButtonClass = 'disabled';
             this.showPitchFieldError.next(true); // to show the client error in the form.
+            this.showTargetingFieldError.next(true); // to show the error to client in the form.
           }, err => {
             this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
           });
@@ -90,7 +96,12 @@ export class SetupProjectComponent implements OnInit {
       this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     } else {
       if (this.pitchFormValid) {
-        this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
+        if (this.targetingFormValid) {
+          this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
+        } else {
+          this.showTargetingFieldError.next(true);
+          this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.TARGETING_FORM');
+        }
       } else {
         this.showPitchFieldError.next(true);
         this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.PITCH_FORM');
