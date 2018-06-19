@@ -7,13 +7,11 @@
 
     <div>
       <h4>Tags management</h4>
-      <app-autocomplete-input
-          (add)="addTag($event)"
-          (remove)="removeTag($event)"
-          [onlyOne]="false"
-          [config]="tagsAutocomplete"
-          [multiLangObjects]="true">
-      </app-autocomplete-input>
+      <shared-tag-item
+        [tags]="project.tags"
+        (addTag)="addTag($event)"
+        (removeTag)="removeTag($event)">
+      </shared-tag-item>
 
       <h4>Presets management</h4>
       <app-autocomplete-input

@@ -1,4 +1,7 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { MultilingPipe } from '../../../../pipes/multiling/multiling.pipe';
+import { Tag } from '../../../../models/tag';
 
 @Component({
   selector: 'shared-tag-item',
@@ -6,17 +9,25 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
   styleUrls: ['./shared-tag-item.component.scss']
 })
 export class SharedTagItemComponent implements OnInit {
-  @Input() tags: Array<string>;
-  @Input() big: string;
-  @Output() tagsChange = new EventEmitter <any>();
-  @Input() prop: string;
+  @Input() tags: Array<Tag>;
 
-  private _displayTags = false;
+  @Output() addTag: EventEmitter<Tag> = new EventEmitter();
+  @Output() removeTag: EventEmitter<Tag> = new EventEmitter();
 
-  constructor() {}
+  private _displayTags = true;
+  public tagsAutocomplete: any;
+
+  constructor(private _translateService: TranslateService) {}
 
   ngOnInit() {
-    this.tags = this.tags || [];
+    this.tagsAutocomplete = {
+      placeholder: 'tags',
+      initialData: this.tags.map(t => {
+        t['name'] = MultilingPipe.prototype.transform(t['label'], this._translateService.currentLang);
+        return t;
+      }) || [],
+      type: 'tags'
+    };
   }
 
   toggleTags(event: Event) {
@@ -24,8 +35,12 @@ export class SharedTagItemComponent implements OnInit {
     this._displayTags = !this._displayTags;
   }
 
-  updateTags(event: {value: Array<string>}) {
-    this.tagsChange.emit(event.value);
+  public _addTag(event: {value: Tag}): void {
+    this.addTag.emit(event.value);
+  }
+
+  public _removeTag(event: {value: Tag}): void {
+    this.removeTag.emit(event.value);
   }
 
   set displayTags(value: boolean) { this._displayTags = value; }

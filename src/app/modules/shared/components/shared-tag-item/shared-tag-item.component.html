@@ -1,12 +1,16 @@
-<div [ngClass]="{'big': big}">
+<div class="shared-tag-item">
   <i
-    class="fa fa-tag tooltip"
+    class="fa fa-tag"
     [ngClass]="{'active': tags.length > 0}"
     (click)="toggleTags($event)"
-    [attr.data-tooltip]="tags.toString()"
   ></i>
   <div *ngIf="displayTags">
-    <app-input-list (update)="updateTags($event)"
-                    [config]="{placeholder: 'tag', initialData: tags}"></app-input-list>
+    <app-autocomplete-input
+      (add)="_addTag($event)"
+      (remove)="_removeTag($event)"
+      [onlyOne]="false"
+      [config]="tagsAutocomplete"
+      [multiLangObjects]="true">
+    </app-autocomplete-input>
   </div>
 </div>

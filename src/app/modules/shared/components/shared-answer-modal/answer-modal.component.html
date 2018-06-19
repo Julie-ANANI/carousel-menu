@@ -46,17 +46,28 @@
         </div>
 
         <div *ngIf="adminMode">
+
           <strong>{{'ANSWER_MODAL.TIME_SPENT' | translate}} : </strong>
+
           {{floor(modalAnswer.time_elapsed/60)}} min.
           {{floor(modalAnswer.time_elapsed%60)}} sec.
           <br>
+
           <strong>IP : </strong>{{modalAnswer.ip}}<br>
-          <shared-tag-item *ngIf="editMode" [big]="true" [prop]="profile" [tags]="modalAnswer.tags" (tagsChange)="updateTags($event)"></shared-tag-item>
+
+          <shared-tag-item
+            *ngIf="editMode"
+            [tags]="modalAnswer.tags"
+            (addTag)="addTag($event)"
+            (removeTag)="removeTag($event)">
+          </shared-tag-item>
+
           <label class="form-switch" for="toggleAdmin">
             <input type="checkbox" name="toggleAdmin" id="toggleAdmin"
                    (change)="(editMode = !editMode) && $event.preventDefault()">
             <i class="form-icon"></i>{{'ANSWER_MODAL.EDIT' | translate}}&nbsp;<i class="fas fa-pencil-alt"></i>
           </label>
+
         </div>
 
         <div>

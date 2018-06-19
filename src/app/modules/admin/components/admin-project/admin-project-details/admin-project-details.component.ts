@@ -47,9 +47,9 @@ export class AdminProjectDetailsComponent implements OnInit {
     };
   }
 
-  public addTag(event: {value: Tag}): void {
+  public addTag(event: Tag): void {
     this._innovationService
-      .addTag(this._project._id, event.value._id)
+      .addTag(this._project._id, event._id)
       .first()
       .subscribe((p) => {
         this._project = p;
@@ -59,9 +59,9 @@ export class AdminProjectDetailsComponent implements OnInit {
       });
   }
 
-  public removeTag(event: {value: Tag}): void {
+  public removeTag(event: Tag): void {
     this._innovationService
-      .removeTag(this._project._id, event.value._id)
+      .removeTag(this._project._id, event._id)
       .first()
       .subscribe((p) => {
         this._project = p;
