@@ -69,7 +69,10 @@ export const PITCH = {
 
   'STAGE': 'À quel stade en est votre projet ?',
 
-  'PATENTED': 'Votre projet est-t-il protégé par un brevet ?',
+  'PATENTED': {
+    'LABEL': 'Votre projet est-t-il protégé par un brevet ?',
+    'ERROR': 'Brevet est requis.'
+  },
 
   'MEDIA': {
     'LABEL': 'Ajouter des images / vidéos pour illustrer votre projet',

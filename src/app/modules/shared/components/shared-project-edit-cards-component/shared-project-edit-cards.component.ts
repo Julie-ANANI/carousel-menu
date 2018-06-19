@@ -33,6 +33,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   showProblemError: boolean;
   showSolutionError: boolean;
   showAdvantageError: boolean;
+  showPatentError: boolean;
 
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
@@ -73,36 +74,12 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   showError() {
-    if (this.project.innovationCards[this.innovationCardEditingIndex].title === '') {
-      this.showTitleError = true;
-    } else {
-      this.showTitleError = false;
-    }
-
-    if (this.project.innovationCards[this.innovationCardEditingIndex].summary === '') {
-      this.showSummaryError = true;
-    } else {
-      this.showSummaryError = false;
-    }
-
-    if (this.project.innovationCards[this.innovationCardEditingIndex].problem === '') {
-      this.showProblemError = true;
-    } else {
-      this.showProblemError = false;
-    }
-
-    if (this.project.innovationCards[this.innovationCardEditingIndex].solution === '') {
-      this.showSolutionError = true;
-    } else {
-      this.showSolutionError = false;
-    }
-
-    if (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0) {
-      this.showAdvantageError = true;
-    } else {
-      this.showAdvantageError = false;
-    }
-
+    this.showTitleError = this.project.innovationCards[this.innovationCardEditingIndex].title === '';
+    this.showSummaryError = this.project.innovationCards[this.innovationCardEditingIndex].summary === '';
+    this.showProblemError = this.project.innovationCards[this.innovationCardEditingIndex].problem === '';
+    this.showSolutionError = this.project.innovationCards[this.innovationCardEditingIndex].solution === '';
+    this.showAdvantageError = this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0;
+    this.showPatentError = this.project.patented === null;
   }
 
   resetErrorValue() {
@@ -116,7 +93,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   checkField() {
     if (this.project.innovationCards[this.innovationCardEditingIndex].title !== '' && this.project.innovationCards[this.innovationCardEditingIndex].summary !== ''
       && this.project.innovationCards[this.innovationCardEditingIndex].problem !== '' && this.project.innovationCards[this.innovationCardEditingIndex].solution !== ''
-      && this.project.innovationCards[this.innovationCardEditingIndex].advantages.length !== 0) {
+      && this.project.innovationCards[this.innovationCardEditingIndex].advantages.length !== 0 && this.project.patented !== null) {
       this.pitchFormField.emit(true);
     } else {
       this.pitchFormField.emit(false);

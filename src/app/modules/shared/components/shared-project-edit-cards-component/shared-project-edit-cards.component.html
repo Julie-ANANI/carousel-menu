@@ -200,7 +200,7 @@
 
             <!-- Project protected -->
             <div class="project-data">
-              <span class="num-rect">7</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.PATENTED' | translate }}</span>
+              <span class="num-rect">7</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.PATENTED.LABEL' | translate }}</span>
               <div class="form-group pd-input">
                 <label class="form-radio">
                   <input
@@ -220,6 +220,9 @@
                     (ngModelChange)="notifyModelChanges($event)">
                   <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
                 </label>
+                <div class="form-error" *ngIf="showPatentError">
+                  <span>{{ 'PROJECT_MODULE.SETUP.PITCH.PATENTED.ERROR' | translate }}</span>
+                </div>
               </div>
             </div>
 
