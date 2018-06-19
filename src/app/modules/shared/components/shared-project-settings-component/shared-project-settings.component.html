@@ -67,7 +67,7 @@
                 [(ngModel)]="settings.market.comments"
                 (change)="updateSettings()"
                 [ngClass]="{'borderRed': market.touched && settings.market.comments.length === 0 || showMarketError}"
-                (focus)="showMarketError = false">
+                (keyup)="showMarketError = false">
               </textarea>
               <div class="charRemaining">
                 <span [ngStyle]="{'color': getColor(settings.market.comments.length | characterCountdown:500)}">{{ settings.market.comments.length | characterCountdown:500 }}</span>
