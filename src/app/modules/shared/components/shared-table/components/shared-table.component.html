@@ -20,10 +20,12 @@
 
             <th *ngFor="let column of columns">
               <sq-sort [config]="config"
+                       *ngIf="isSortable"
                        (configChange)="changeConfig($event)"
                        [prop]="getAttr(column)">
                 {{getName(column) | translate }}
               </sq-sort>
+              <span *ngIf="!isSortable">{{getName(column) | translate }}</span>
             </th>
           </tr>
 
@@ -88,6 +90,10 @@
                   <i *ngIf="getContentValue(key, getAttr(column)) == 0" class="icon icon-cross"></i>
                   <i *ngIf="getContentValue(key, getAttr(column)) == 1" class="icon icon-check"></i>
                 </div>
+
+                <!-- Si le type de la colonne est LABEL -->
+                <span *ngSwitchCase="'LABEL'"
+                      [class]="getChoiceClass(getChoice(column, getContentValue(key, getAttr(column)).toString()))">{{getContentValue(key, getAttr(column)).toString() || ' - '}}</span>
 
               </ng-container>
 

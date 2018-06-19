@@ -7,6 +7,7 @@ export interface Table {
   readonly _isEditable?: boolean;
   readonly _isDeletable?: boolean;
   readonly _isFiltrable?: boolean;
+  readonly _isSortable?: boolean;
   readonly _content: any[];
   readonly _total: number;
   readonly _columns: Column[];

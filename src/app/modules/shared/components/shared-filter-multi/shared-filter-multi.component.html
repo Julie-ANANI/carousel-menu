@@ -21,7 +21,7 @@
 
         <select (change)="filterOther($event, prop)" [(ngModel)]="config[getAttr(prop)]" *ngSwitchCase="'LABEL'">
           <option [ngValue]="null">All</option>
-          <option *ngFor="let choice of getChoices(prop)">{{choice}}</option>
+          <option *ngFor="let choice of getChoices(prop)">{{getChoiceName(choice)}}</option>
         </select>
       </div>
 

@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {Column} from '../shared-table/models/column';
 import {Types} from '../shared-table/models/types';
+import {Label} from '../shared-table/models/label';
 
 @Component({
   selector: 'sqFilterMulti',
@@ -96,8 +97,12 @@ export class SharedFilterMultiComponent {
     return column._name;
   }
 
-  getChoices(column: Column) {
+  getChoices(column: Column): Label[] {
     return column._choices || [];
+  }
+
+  getChoiceName(choice: Label): string {
+    return choice._name;
   }
 
   changeCurrentTextProp(prop: any) {

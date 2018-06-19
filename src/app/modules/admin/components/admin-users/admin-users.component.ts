@@ -61,11 +61,19 @@ export class AdminUsersComponent implements OnInit {
           _isEditable: true,
           _isDeletable: true,
           _isFiltrable: true,
+          _isSortable: true,
           _columns: [
             {_attr: 'firstName', _name: 'FIRSTNAME', _type: 'TEXT'},
             {_attr: 'lastName', _name: 'LASTNAME', _type: 'TEXT'},
             {_attr: 'jobTitle', _name: 'JOB', _type: 'TEXTE'},
-            {_attr: 'companyName', _name: 'COMPANY', _type: 'LABEL', _choices: ['Veolia', 'UMI']},
+            {_attr: 'companyName', _name: 'COMPANY', _type: 'LABEL',
+              _choices: [
+                {_name: 'Veolia', _class: 'label-progress'},
+                {_name: 'UMI',  _class: 'label-validate'},
+                {_name: 'VeRI', _class: 'label-alert'},
+                {_name: 'Michelin', _class: 'label-editing'},
+                {_name: 'Dynergie', _class: 'label-draft'}
+                ]},
             {_attr: 'isOperator', _name: 'EST-OPERATEUR', _type: 'CHECK'}],
           _actions: this._actions
         };
