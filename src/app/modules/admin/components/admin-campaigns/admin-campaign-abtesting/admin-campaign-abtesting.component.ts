@@ -176,7 +176,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
           Clicked: this._statsB[1].clicked,
           Insights: this._statsB[1].insights,
         }, {
-          Workflow: this._nameWorkflowB+ ' 3eme mail',
+          Workflow: this._nameWorkflowB + ' 3eme mail',
           Delivered: this._statsB[2].delivered,
           Opened: this._statsB[2].opened,
           Clicked: this._statsB[2].clicked,
@@ -185,18 +185,23 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       _total: 1,
       _columns: [{
         _attr: 'Workflow',
+        _name: 'Workflow',
         _type: 'String'
       }, {
         _attr: 'Delivered',
+        _name: 'Delivered',
         _type: 'String'
       }, {
         _attr: 'Opened',
+        _name: 'Opened',
         _type: 'String'
       }, {
         _attr: 'Clicked',
+        _name: 'Clicked',
         _type: 'String'
       }, {
         _attr: 'Insights',
+        _name: 'Insights',
         _type: 'String'
       }]
     }
