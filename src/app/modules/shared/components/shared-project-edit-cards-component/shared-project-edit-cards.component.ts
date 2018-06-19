@@ -34,6 +34,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   showSolutionError: boolean;
   showAdvantageError: boolean;
   showPatentError: boolean;
+  showDiffusionError: boolean;
 
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
@@ -57,8 +58,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.changesSaved = true;
 
-    this.checkField();
-
     this.showPitchFieldError.subscribe(value => {
       if (value) {
         this.showError();
@@ -80,6 +79,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.showSolutionError = this.project.innovationCards[this.innovationCardEditingIndex].solution === '';
     this.showAdvantageError = this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0;
     this.showPatentError = this.project.patented === null;
+    this.showDiffusionError = this.project.external_diffusion === null;
   }
 
   resetErrorValue() {
@@ -88,12 +88,14 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.showProblemError = false;
     this.showSolutionError = false;
     this.showAdvantageError = false;
+    this.showPatentError = false;
+    this.showDiffusionError = false;
   }
 
   checkField() {
     if (this.project.innovationCards[this.innovationCardEditingIndex].title !== '' && this.project.innovationCards[this.innovationCardEditingIndex].summary !== ''
       && this.project.innovationCards[this.innovationCardEditingIndex].problem !== '' && this.project.innovationCards[this.innovationCardEditingIndex].solution !== ''
-      && this.project.innovationCards[this.innovationCardEditingIndex].advantages.length !== 0 && this.project.patented !== null) {
+      && this.project.innovationCards[this.innovationCardEditingIndex].advantages.length !== 0 && this.project.patented !== null && this.project.external_diffusion !== null) {
       this.pitchFormField.emit(true);
     } else {
       this.pitchFormField.emit(false);

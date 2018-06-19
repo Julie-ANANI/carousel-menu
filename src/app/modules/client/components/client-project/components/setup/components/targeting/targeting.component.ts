@@ -13,6 +13,7 @@ export class TargetingComponent {
   @Input() project: Innovation;
 
   @Output() newSettings = new EventEmitter<InnovationSettings>();
+  @Output() targetingFormField = new EventEmitter<boolean>();
 
   constructor() {}
 
@@ -20,6 +21,9 @@ export class TargetingComponent {
     this.newSettings.emit(value);
   }
 
+  public targetingFormValidation(value: boolean) {
+    this.targetingFormField.emit(value);
+  }
 
 
 }

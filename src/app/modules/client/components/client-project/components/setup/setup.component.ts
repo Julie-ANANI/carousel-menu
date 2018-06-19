@@ -26,6 +26,7 @@ export class SetupProjectComponent implements OnInit {
 
   pitchFormValid: boolean;
   showPitchFieldError: Subject<boolean> = new Subject();
+  targetingFormValid: boolean;
 
   private _currentTab: string;
   private _projectToBeSubmitted: boolean;
@@ -36,11 +37,21 @@ export class SetupProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('enterring component');
     const url = this.router.routerState.snapshot.url.split('/');
     this._currentTab = url ? url[4] || DEFAULT_TAB : DEFAULT_TAB;
     this._saveChanges = false;
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
+    console.log(this.project);
+  }
+
+  checkProjectStatus() {
+  /*  if (this.project.innovationCards[this.innovationCardEditingIndex].title !== '' && this.project.innovationCards[this.innovationCardEditingIndex].summary !== ''
+      && this.project.innovationCards[this.innovationCardEditingIndex].problem !== '' && this.project.innovationCards[this.innovationCardEditingIndex].solution !== ''
+      && this.project.innovationCards[this.innovationCardEditingIndex].advantages.length !== 0 && this.project.patented !== null && this.project.external_diffusion !== null) {
+
+    }*/
   }
 
   updateSettings(value: InnovationSettings): void {
@@ -107,6 +118,11 @@ export class SetupProjectComponent implements OnInit {
   // checking the pitch form validation.
   pitchFormValidation(value: boolean) {
     this.pitchFormValid = value;
+  }
+
+  // checking the targeting form validation.
+  targetingFormValidation(value: boolean) {
+    this.targetingFormValid = value;
   }
 
   // getting the save value from the child component.

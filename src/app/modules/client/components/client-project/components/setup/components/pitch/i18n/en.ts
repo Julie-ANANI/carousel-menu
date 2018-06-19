@@ -81,7 +81,8 @@ export const PITCH = {
 
   'EXTERNAL_DIFFUSION': {
     'A': 'Would you like to authorize',
-    'B' : 'to diffuse your project to it\'s ambassadors community?'
+    'B' : 'to diffuse your project to it\'s ambassadors community?',
+    'ERROR': 'Diffusion is required.'
   }
 
 };

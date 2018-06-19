@@ -87,7 +87,8 @@ export const PITCH = {
 
   'EXTERNAL_DIFFUSION': {
     'A': 'Souhaitez-vous autoriser',
-    'B' : 'à diffuser votre projet auprès de sa communauté d\'ambassadeurs ?'
+    'B' : 'à diffuser votre projet auprès de sa communauté d\'ambassadeurs ?',
+    'ERROR': 'La diffusion est requise.'
   }
 
 };

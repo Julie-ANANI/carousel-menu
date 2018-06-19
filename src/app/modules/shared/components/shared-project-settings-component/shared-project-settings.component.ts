@@ -18,6 +18,9 @@ export class SharedProjectSettingsComponent implements OnInit {
   @Input() adminMode: boolean;
 
   @Output() settingsChange = new EventEmitter<any>();
+  @Output() targetingFormField = new EventEmitter<boolean>();
+
+  showMarketError: boolean;
 
   private _displayCountriesToExcludeSection = false;
   private _displayCountriesCommentSection = false;
@@ -46,6 +49,26 @@ export class SharedProjectSettingsComponent implements OnInit {
       this._displayKeywordsSection = this.settings.keywords.length > 0;
     }
 
+    this.checkField();
+
+  }
+
+  checkField() {
+    if (this.settings.market.comments.length !== 0) {
+      this.targetingFormField.emit(true);
+    } else {
+      this.targetingFormField.emit(false);
+    }
+  }
+
+  getColor(length: number) {
+    if (length === 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < 250) {
+      return '#f0ad4e';
+    } else {
+      return '#2ECC71';
+    }
   }
 
   get lang() {

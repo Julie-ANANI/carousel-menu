@@ -16,12 +16,11 @@ export class PitchComponent implements OnInit {
 
   @Output() updateInnovation = new EventEmitter<Innovation>();
   @Output() saveChanges = new EventEmitter<boolean>();
-  @Output() pitchFormFields = new EventEmitter<boolean>();
+  @Output() pitchFormField = new EventEmitter<boolean>();
 
   showFieldError: Subject<boolean> = new Subject();
 
-  constructor() {
-  }
+  constructor() {}
 
   public updateProject(value: Innovation): void {
     const innovation = Object.assign(this.project, value);
@@ -37,7 +36,7 @@ export class PitchComponent implements OnInit {
   }
 
   public pitchFormValidation(value: boolean) {
-    this.pitchFormFields.emit(value);
+    this.pitchFormField.emit(value);
   }
 
   ngOnInit(): void {

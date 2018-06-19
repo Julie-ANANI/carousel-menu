@@ -249,6 +249,9 @@
                     (ngModelChange)="notifyModelChanges($event)">
                   <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
                 </label>
+                <div class="form-error" *ngIf="showDiffusionError">
+                  <span>{{ 'PROJECT_MODULE.SETUP.PITCH.EXTERNAL_DIFFUSION.ERROR' | translate }}</span>
+                </div>
               </div>
             </div>
 
