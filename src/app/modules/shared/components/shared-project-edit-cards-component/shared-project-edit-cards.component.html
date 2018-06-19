@@ -11,7 +11,7 @@
               <li
                 *ngFor="let innovationCard of project.innovationCards; let i = index;"
                 [ngClass]="{'active': innovationCardEditingIndex === i }"
-                (click)="(innovationCardEditingIndex = i) && $event.preventDefault()">
+                (click)="(innovationCardEditingIndex = i) && $event.preventDefault(); resetErrorValue(); checkField();">
                 <div class="circle-check"><i class="fas fa-check"></i></div>
                 <span>{{ 'COMMON.LANG.'+ innovationCard.lang | uppercase | translate }}</span>
               </li>
@@ -67,8 +67,9 @@
                       [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
                       (ngModelChange)="notifyModelChanges($event)"
                       required
-                      (blur)="valueCheck($event)">
-                    <div class="form-error" *ngIf="title.touched && title.invalid">
+                      [ngClass]="{'borderRed': showTitleError}"
+                      (keyup)="showTitleError = false">
+                    <div class="form-error" *ngIf="title.touched && title.invalid || showTitleError">
                       <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.ERROR' | translate }}</span>
                     </div>
                   </div>
@@ -85,12 +86,14 @@
                       #summary="ngModel"
                       [(ngModel)]="project.innovationCards[i].summary"
                       (ngModelChange)="notifyModelChanges($event)"
-                      required>
+                      required
+                      [ngClass]="{'borderRed': showSummaryError}"
+                      (focus)="showSummaryError = false">
                     </textarea>
                     <div class="charRemaining">
                       <span [ngStyle]="{'color': getColor(project.innovationCards[i].summary.length | characterCountdown:500)}">{{ project.innovationCards[i].summary.length | characterCountdown:500 }}</span>
                     </div>
-                    <div class="form-error" *ngIf="summary.touched && summary.invalid">
+                    <div class="form-error" *ngIf="summary.touched && summary.invalid || showSummaryError">
                       <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.ERROR' | translate }}</span>
                     </div>
                   </div>
@@ -108,12 +111,14 @@
                       #problem="ngModel"
                       [(ngModel)]="project.innovationCards[i].problem"
                       (ngModelChange)="notifyModelChanges($event)"
-                      required>
+                      required
+                      [ngClass]="{'borderRed': showProblemError}"
+                      (focus)="showProblemError = false">
                     </textarea>
                     <div class="charRemaining">
                       <span [ngStyle]="{'color': getColor(project.innovationCards[i].problem.length | characterCountdown:500)}">{{ project.innovationCards[i].problem.length | characterCountdown:500 }}</span>
                     </div>
-                    <div class="form-error" *ngIf="problem.touched && problem.invalid">
+                    <div class="form-error" *ngIf="problem.touched && problem.invalid || showProblemError">
                       <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.ERROR' | translate }}</span>
                     </div>
                   </div>
@@ -131,12 +136,14 @@
                       #solution="ngModel"
                       [(ngModel)]="project.innovationCards[i].solution"
                       (ngModelChange)="notifyModelChanges($event)"
-                      required>
+                      required
+                      [ngClass]="{'borderRed': showSolutionError}"
+                      (focus)="showSolutionError = false">
                     </textarea>
                     <div class="charRemaining">
                       <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:500)}">{{ project.innovationCards[i].solution.length | characterCountdown:500 }}</span>
                     </div>
-                    <div class="form-error" *ngIf="solution.touched && solution.invalid">
+                    <div class="form-error" *ngIf="solution.touched && solution.invalid || showSolutionError">
                       <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.ERROR' | translate }}</span>
                     </div>
                   </div>
@@ -150,7 +157,7 @@
                       [config]="getConfig('advantages')">
                     </app-input-list>
                   </div>
-                  <div class="form-error" *ngIf="advantageInputError">
+                  <div class="form-error" *ngIf="showAdvantageError">
                     <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.ERROR' | translate }}</span>
                   </div>
                 </div>

@@ -22,10 +22,17 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Input() project: Innovation;
   @Input() changesSaved: boolean;
+  @Input() showPitchFieldError: Subject<boolean>;
 
   @Output() projectChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
   @Output() pitchFormField = new EventEmitter<boolean>();
+
+  showTitleError: boolean;
+  showSummaryError: boolean;
+  showProblemError: boolean;
+  showSolutionError: boolean;
+  showAdvantageError: boolean;
 
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
@@ -33,7 +40,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   private _showDeleteModal = false;
   private _deleteInnovCardId = '';
   private _langDelete = '';
-  advantageInputError: boolean;
 
   /*
    * Gestion de l'affichage
@@ -49,14 +55,62 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.changesSaved = true;
+
     this.checkField();
-    console.log(this.changesSaved);
+
+    this.showPitchFieldError.subscribe(value => {
+      if (value) {
+        this.showError();
+      }
+    });
+
   }
 
   notifyModelChanges(_event: any) {
     this.changesSaved = false;
     this.saveChanges.emit(true);
     this.checkField();
+  }
+
+  showError() {
+    if (this.project.innovationCards[this.innovationCardEditingIndex].title === '') {
+      this.showTitleError = true;
+    } else {
+      this.showTitleError = false;
+    }
+
+    if (this.project.innovationCards[this.innovationCardEditingIndex].summary === '') {
+      this.showSummaryError = true;
+    } else {
+      this.showSummaryError = false;
+    }
+
+    if (this.project.innovationCards[this.innovationCardEditingIndex].problem === '') {
+      this.showProblemError = true;
+    } else {
+      this.showProblemError = false;
+    }
+
+    if (this.project.innovationCards[this.innovationCardEditingIndex].solution === '') {
+      this.showSolutionError = true;
+    } else {
+      this.showSolutionError = false;
+    }
+
+    if (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0) {
+      this.showAdvantageError = true;
+    } else {
+      this.showAdvantageError = false;
+    }
+
+  }
+
+  resetErrorValue() {
+    this.showTitleError = false;
+    this.showSummaryError = false;
+    this.showProblemError = false;
+    this.showSolutionError = false;
+    this.showAdvantageError = false;
   }
 
   checkField() {
@@ -119,9 +173,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.project.innovationCards[cardIdx].advantages = event.value;
     this.notifyModelChanges(event.value);
     if (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0) {
-      this.advantageInputError = true;
+      this.showAdvantageError = true;
     } else {
-      this.advantageInputError = false;
+      this.showAdvantageError = false;
     }
   }
 
@@ -207,10 +261,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   closeModal(event: Event) {
     event.preventDefault();
     this._showDeleteModal = false;
-  }
-
-  valueCheck(event: Event) {
-
   }
 
   getColor(length: number) {

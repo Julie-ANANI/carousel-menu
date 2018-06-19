@@ -57,8 +57,8 @@
             (updateInnovation)="updateInnovation($event)"
             [changesSaved]="changesSaved"
             (saveChanges)="saveInnovation($event)"
-            (pitchFormFields)="checkFormValidation($event)"
-            [showFieldError]="showFieldError">
+            (pitchFormFields)="pitchFormValidation($event)"
+            [showPitchFieldError]="showPitchFieldError">
           </app-project-pitch>
         </div>
         <!-- Targeting -->

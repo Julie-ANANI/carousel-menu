@@ -4,6 +4,7 @@
     (cardsChange)="updateProject($event)"
     [changesSaved]="changesSaved"
     (saveChanges)="saveInnovation($event)"
-    (pitchFormField)="checkFormValidation($event)">
+    (pitchFormField)="pitchFormValidation($event)"
+    [showPitchFieldError]="showFieldError">
   </app-shared-project-edit-cards>
 </div>
