@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Campaign } from '../../../../../models/campaign';
+import {Table} from '../../../../shared/components/shared-table/models/table';
 
 @Component({
   selector: 'app-admin-campaign-abtesting',
@@ -26,7 +27,12 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   private _nameWorkflowB = '';
   private _sizeA: number;
   private _sizeB: number;
-  private _table: {};
+  private _table: Table;
+
+
+
+
+
   private _statsA: Array<{
     delivered: number,
     opened: number,
@@ -41,6 +47,10 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     insights: number,
     bounced: number
   }>;
+
+
+
+
 
   form: FormGroup;
 
@@ -136,37 +146,37 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       _selector: 'TODO',
       _title: 'A/B Testing',
       _content: [{
-          workflow: this._nameWorkflowA,
+          Workflow: this._nameWorkflowA + ' 1er mail',
           Delivered: this._statsA[0].delivered,
           Opened: this._statsA[0].opened,
           Clicked: this._statsA[0].clicked,
           Insights: this._statsA[0].insights,
         }, {
-          workflow: this._nameWorkflowA,
+          Workflow: this._nameWorkflowA + ' 2eme mail',
           Delivered: this._statsA[1].delivered,
           Opened: this._statsA[1].opened,
           Clicked: this._statsA[1].clicked,
           Insights: this._statsA[1].insights,
         }, {
-          workflow: this._nameWorkflowA,
+          Workflow: this._nameWorkflowA + ' 3eme mail',
           Delivered: this._statsA[2].delivered,
           Opened: this._statsA[2].opened,
           Clicked: this._statsA[2].clicked,
           Insights: this._statsA[2].insights,
         }, {
-          workflow: this._nameWorkflowB,
+          Workflow: this._nameWorkflowB + ' 1er mail',
           Delivered: this._statsB[0].delivered,
           Opened: this._statsB[0].opened,
           Clicked: this._statsB[0].clicked,
           Insights: this._statsB[0].insights,
         }, {
-          workflow: this._nameWorkflowB,
+          Workflow: this._nameWorkflowB + ' 2eme mail',
           Delivered: this._statsB[1].delivered,
           Opened: this._statsB[1].opened,
           Clicked: this._statsB[1].clicked,
           Insights: this._statsB[1].insights,
         }, {
-          workflow: this._nameWorkflowB,
+          Workflow: this._nameWorkflowB+ ' 3eme mail',
           Delivered: this._statsB[2].delivered,
           Opened: this._statsB[2].opened,
           Clicked: this._statsB[2].clicked,
@@ -174,23 +184,23 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       }],
       _total: 1,
       _columns: [{
-        _attr: 'Nom du workflow',
-        _type: String
+        _attr: 'Workflow',
+        _type: 'String'
       }, {
         _attr: 'Delivered',
-        _type: String
+        _type: 'String'
       }, {
         _attr: 'Opened',
-        _type: String
+        _type: 'String'
       }, {
         _attr: 'Clicked',
-        _type: String
+        _type: 'String'
       }, {
         _attr: 'Insights',
-        _type: String
+        _type: 'String'
       }]
     }
-  }
+  };
 
   public statusSwitch() {
     this.switchActivated = !this.switchActivated;

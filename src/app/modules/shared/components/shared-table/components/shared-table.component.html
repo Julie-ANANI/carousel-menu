@@ -65,7 +65,7 @@
               <ng-container [ngSwitch]="getType(column)">
 
                 <!-- Si le type de la colonne est TEXT -->
-                <span *ngSwitchDefault>{{getContentValue(key, getAttr(column)) || ' - '}}</span>
+                <span *ngSwitchDefault>{{getContentValue(key, getAttr(column)).toString() || ' - '}}</span>
 
                 <!-- Si le type de la colonne est COUNTRY -->
                 <country-flag *ngSwitchCase="'COUNTRY'" [country]="getContentValue(key, getAttr(column))"></country-flag>
