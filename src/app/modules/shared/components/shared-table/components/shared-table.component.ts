@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Table} from '../models/table';
 import {Row} from '../models/row';
-import {Types} from '../models/types';
-import {Column} from '../models/column';
+import {Column, types} from '../models/column';
 import {Label} from '../models/label';
 
 @Component({
@@ -95,14 +94,8 @@ export class SharedTableComponent {
     return this._content[rowKey]._content[columnKey];
   }
 
-  getType(column: Column): Types {
-    let typeKey = 'TEXT';
-    for (const typesKey in Types) {
-      if (column._type === typesKey) {
-        typeKey = typesKey;
-      }
-    }
-    return Types[typeKey];
+  getType(column: Column): types {
+    return column._type;
   }
 
   getAttr(column: Column) {

@@ -65,7 +65,7 @@ export class AdminUsersComponent implements OnInit {
           _columns: [
             {_attr: 'firstName', _name: 'FIRSTNAME', _type: 'TEXT'},
             {_attr: 'lastName', _name: 'LASTNAME', _type: 'TEXT'},
-            {_attr: 'jobTitle', _name: 'JOB', _type: 'TEXTE'},
+            {_attr: 'jobTitle', _name: 'JOB', _type: 'TEXT'},
             {_attr: 'companyName', _name: 'COMPANY', _type: 'LABEL',
               _choices: [
                 {_name: 'Veolia', _class: 'label-progress'},

@@ -35,7 +35,7 @@
 
           <tr>
             <th width="50" *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)" [checked]="true"/></th>
-            <th><span>{{selectedRows}} lignes selectionnée(s) </span></th>
+            <th><span>{{selectedRows}} {{'COMMON.TABLE.SELECTED_LINES' | translate}} </span></th>
             <i class="icon icon-arrow-right"></i>
             <ng-container>
               <button *ngFor="let a of actions" class="btn btn-xs ghost-edit" style="margin-left: 10px;"

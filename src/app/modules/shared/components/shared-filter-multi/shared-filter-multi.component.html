@@ -14,13 +14,13 @@
         <label>{{getName(prop)}}</label>
 
         <select (change)="filterOther($event, prop)" [(ngModel)]="config[getAttr(prop)]" *ngSwitchCase="'CHECK'">
-          <option [ngValue]="null">All</option>
-          <option [ngValue]="true">Oui</option>
-          <option [ngValue]="false">Non</option>
+          <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
+          <option [ngValue]="true">{{'COMMON.YES' | translate}}</option>
+          <option [ngValue]="false">{{'COMMON.NO' | translate}}</option>
         </select>
 
         <select (change)="filterOther($event, prop)" [(ngModel)]="config[getAttr(prop)]" *ngSwitchCase="'LABEL'">
-          <option [ngValue]="null">All</option>
+          <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
           <option *ngFor="let choice of getChoices(prop)">{{getChoiceName(choice)}}</option>
         </select>
       </div>

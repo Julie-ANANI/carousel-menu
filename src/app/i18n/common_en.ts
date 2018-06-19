@@ -11,6 +11,7 @@ export const COMMON = {
   'LOG_OUT': 'Logout',
   'CANCEL': 'Cancel',
   'ADD': 'Add',
+  'ALL': 'All',
   'ADDED': 'Added on',
   'CREATED': 'Created on',
   'UPDATED': 'Updated on',
@@ -71,6 +72,10 @@ export const COMMON = {
 
   'BUTTON': {
     'SIGN_UP': 'Continue',
+  },
+
+  'TABLE' : {
+    'SELECTED_LINES': 'selected lines'
   },
 
   'PROJECT_STATE': {

@@ -11,6 +11,7 @@ export const COMMON = {
   'LOG_OUT': 'Se déconnecter',
   'CANCEL': 'Annuler',
   'ADD': 'Ajouter',
+  'ALL': 'Tous',
   'ADDED': 'Ajouté le',
   'CREATED': 'Créé le',
   'UPDATED': 'Modifié le',
@@ -85,6 +86,10 @@ export const COMMON = {
     '0': 'Idée',
     '1': 'Développement en cours',
     '2': 'Déjà disponible'
+  },
+
+  'TABLE' : {
+    'SELECTED_LINES': 'lignes selectionnées'
   },
 
   'INVALID': {
