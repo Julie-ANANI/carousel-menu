@@ -35,9 +35,8 @@ export class AdminProjectDetailsComponent implements OnInit {
     this.tagsAutocomplete = {
       placeholder: 'tags',
       initialData: this.project.tags.map(t => {
-        const tag = t.tag;
-        tag['name'] = MultilingPipe.prototype.transform(tag['label'], this._translateService.currentLang);
-        return tag;
+        t['name'] = MultilingPipe.prototype.transform(t['label'], this._translateService.currentLang);
+        return t;
       }) || [],
       type: 'tags'
     };

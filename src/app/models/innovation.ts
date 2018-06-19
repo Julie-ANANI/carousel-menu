@@ -16,7 +16,7 @@ export interface Innovation {
   readonly type?: 'insights' | 'apps' | 'leads';
   readonly principalMedia?: Media;
   innovationCards?: Array<InnovCard>;
-  tags?: Array<{tag: Tag}>;
+  tags?: Array<Tag>;
   preset?: Preset;
   readonly quizId?: string;
   marketReport?: {[prop: string]: QuestionReport};
