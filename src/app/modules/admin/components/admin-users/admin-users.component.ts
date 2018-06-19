@@ -60,6 +60,7 @@ export class AdminUsersComponent implements OnInit {
           _isSelectable: true,
           _isEditable: true,
           _isDeletable: true,
+          _isFiltrable: true,
           _columns: [
             {_attr: 'firstName', _name: 'FIRSTNAME', _type: 'TEXT'},
             {_attr: 'lastName', _name: 'LASTNAME', _type: 'TEXT'},
