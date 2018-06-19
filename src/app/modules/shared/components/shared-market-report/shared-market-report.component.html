@@ -1,9 +1,44 @@
+<div class="section-container" id="project-synthesis">
+  <div class="columns">
+    <div class="column col-12">
+
+      <!-- Project under editing status -->
+      <div *ngIf="project.status === 'EDITING' ">
+        <h1>{{ 'MARKET_REPORT.TITLE.EDITING' | translate }}</h1>
+        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+          <span *ngIf="project.status === 'EDITING'" class="bot-rect">
+            {{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.A' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.B' | translate }}</span>
+            {{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.C' | translate }}
+          </span>
+          <br>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+          <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+        </div>
+      </div>
+
+      <!-- Project under submitted status -->
+      <div *ngIf="project.status === 'SUBMITTED' ">
+        <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
+        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+          <span class="bot-rect">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</span>
+          <br>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+          <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!--
 <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
 <div class="market-report">
 
   <!-- *********************************************************
         Header
-  ************************************************************** -->
+  **************************************************************
 
   <div class="frontcover">
     <img src="{{ 'https://res.cloudinary.com/umi/image/upload/app/'+logoName }}" alt="Logo UMI" height="40" class="centered">
@@ -29,7 +64,7 @@
 
   <!-- *********************************************************
         Sidebar
-  ************************************************************** -->
+  **************************************************************
   <div class="d-flex">
     <div class="sidebar">
       <div class="sidebarIsSticky">
@@ -67,14 +102,14 @@
 
     <!-- *********************************************************
           Synthesis
-    ************************************************************** -->
+    **************************************************************
 
     <div class="flex-container">
       <div class="content">
 
         <!-- *********************************************************
               World Map and professionals cards
-        ************************************************************** -->
+        **************************************************************
         <section id="professionals">
           <h2>{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
           <div class="white-frame">
@@ -88,7 +123,7 @@
           ></app-question-conclusion>
 
             <div class="bloc">
-              <!--======= Carte du monde =======-->
+              <!--======= Carte du monde =======-
               <div class="map centered" width="684" height="339">
                 <app-worldmap (updateCountries)="filterByCountries($event)"
                               [countries]="countries"
@@ -99,7 +134,7 @@
               </div>
             </div>
 
-            <!-- ========= showListProfessional button ==============-->
+            <!-- ========= showListProfessional button ==============-
             <button type="button" class="market-report-btn centered"
                     [ngClass]="{'active': showListProfessional}"
                     (click)="showListProfessional = !showListProfessional; $event.preventDefault()">
@@ -109,7 +144,7 @@
             </button>
 
             <div *ngIf="showListProfessional" class="bloc details prosList">
-              <!--======= Liste des pros =======-->
+              <!--======= Liste des pros =======-
               <div *ngFor="let answer of filteredAnswers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
                 <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
               </div>
@@ -117,7 +152,7 @@
           </div>
         </section>
 
-        <!-- Les autres questions -->
+        <!-- Les autres questions --
         <section *ngFor="let question of questions">
           <app-question-section
             [infographic]="getInfo(question)"
@@ -137,3 +172,4 @@
 
   <div class="page-footer">UMI - contact@umi.us - www.umi.us</div>
 </div>
+-->

@@ -1,5 +1,10 @@
 export const MARKET_REPORT = {
-  'TITLE': 'Exploration du potentiel marché',
+  'TITLE': {
+    'EDITING': 'Le potentiel du marché de votre projet sera bientôt disponible',
+    'SUBMITTED': 'Explorer le potentiel du marché de votre projet'
+  },
+
+  // 'TITLE': 'Exploration du potentiel marché',
   'COLLAPSE': 'Tout plier',
   'EXPAND': 'Tout déplier',
   'FILTERS': 'Filtres',

@@ -1,12 +1,12 @@
-<footer class="container main-container">
+<footer class="main-container">
   <div class="columns">
-    <div class="column col-12 col-mx-auto">
+    <div class="column col-12">
 
       <!-- Translate Section -->
-      <div class="column col-xs-12 col-11 col-mx-auto lang-section text-left">
+      <div class="column col-xs-12 col-11 col-mx-auto lang-wrapper text-left">
         <div class="dropdown" [ngClass]="{ 'active': displayLangChoices }">
           <div class="btn-group">
-            <button class="btn dropdown-toggle lang-button" (click)="(displayLangChoices = !displayLangChoices)">
+            <button class="btn dropdown-toggle btn-lang" (click)="(displayLangChoices = !displayLangChoices)">
               <span class="icon-global"><i class="fas fa-globe"></i></span>
               {{ 'COMMON.LANG.'+translate.currentLang.toUpperCase() | translate }}
               <span class="icon-footer"><i class="icon icon-arrow-down"></i></span>
@@ -33,7 +33,7 @@
       </div>
 
       <!-- Info Section -->
-      <div class="column col-xs-12 col-11 col-mx-auto information-section text-center">
+      <div class="column col-xs-12 col-11 col-mx-auto information-wrapper text-center">
         {{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}
         <span *ngIf="checkIsMainDomain()">
           |

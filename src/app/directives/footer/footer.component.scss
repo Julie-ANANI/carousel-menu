@@ -5,29 +5,23 @@
   font-size: 0.65rem;
   color: #333333;
 
-  .lang-section {
+  .lang-wrapper {
 
-    .lang-button {
+    .btn-lang {
       background-color: #FAFAFA;
       color: #333333;
       padding: 0.4rem 0.7rem;
       height: 2.4rem;
-      border-radius: 0.25rem !important;
       border-color: #97A4B1;
-      font-size: 0.7rem;
-    }
 
-    .icon-global {
-      padding-right: 0.1rem;
-      font-size: 0.6rem;
+      i {
+        font-size: 0.6rem;
+      }
+
     }
 
     .icon-footer {
       padding-left: 0.7rem;
-    }
-
-    .btn:focus {
-      box-shadow: none !important;
     }
 
     .btn-group .btn:first-child:not(:last-child) {
@@ -52,7 +46,7 @@
       a:hover {
         text-decoration: none;
         cursor: pointer;
-        color: #0B90C6;
+        color: #FFB300;
       }
 
     }
@@ -65,7 +59,7 @@
     border-radius: .25rem;
   }
 
-  .information-section {
+  .information-wrapper {
     padding-top: 50px;
     transition: all 0.35s ease-in-out;
 

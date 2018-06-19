@@ -1,59 +1,53 @@
-$dark-bg: #262831;
-$second-color: #0B90C6;
+#project-setting {
+  padding-top: 25px;
+  padding-bottom: 0;
 
-.project-header {
-  background: $dark-bg;
-  color: white;
-  padding-bottom: 64px;
-  margin-bottom: 100px;
-
-  h1 {
-    color: white;
-    margin-top: 50px;
-    font-size: 2.3rem;
+  .pd-ques {
+    padding-top: 40px;
   }
 
-  h1::after {
-    display: none;
+  .pd-para, .pd-input {
+    margin: 0;
+    padding-top: 20px;
   }
 
-  h2 {
-    margin-bottom: 20px;
+  .icon-arrow-right, .icon-arrow-down {
+    margin-left: 2px;
+    font-size: 13px;
   }
 
-  .pitch {
-    font-size: 1.1rem;
-    margin-bottom: 40px;
+  .help-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
   }
 
-  .metas {
-    font-size: 0.8rem;
-    color: #878787;
-    line-height: 36px;
-  }
-
-  .metas::after {
-    display: block;
-    content: '';
-    width: 124px;
-    background: white;
-    height: 2px;
-    margin-top: 10px;
-    margin-bottom: 26px;
-  }
-
-  .share {
-    color: #929398;
-  }
 }
 
-.market-benefits {
-  background: #FAFAFA;
-  padding: 60px 0;
-  margin-bottom: 80px;
-  margin-top: 80px;
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  #project-setting {
+
+    .help-wrapper {
+      display: none;
+    }
+
+  }
+
 }
 
-h3 {
-  color: $second-color;
+@media (max-width: 840px) {
+
+  #project-setting{
+
+    .help-wrapper {
+      display: none;
+    }
+
+  }
+
 }
+

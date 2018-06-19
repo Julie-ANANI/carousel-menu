@@ -18,7 +18,7 @@ export class AdminUsersComponent implements OnInit {
   private _selfId = '';
   private _total = 0;
   private _config = {
-    fields: 'companyName jobTitle created domain firstName lastName',
+    fields: 'companyName jobTitle created domain firstName lastName isOperator',
     limit: 10,
     offset: 0,
     search: {},
@@ -60,11 +60,13 @@ export class AdminUsersComponent implements OnInit {
           _isSelectable: true,
           _isEditable: true,
           _isDeletable: true,
+          _isFiltrable: true,
           _columns: [
             {_attr: 'firstName', _name: 'FIRSTNAME', _type: 'TEXT'},
             {_attr: 'lastName', _name: 'LASTNAME', _type: 'TEXT'},
             {_attr: 'jobTitle', _name: 'JOB', _type: 'TEXTE'},
-            {_attr: 'companyName', _name: 'COMPANY', _type: 'TEXT'}],
+            {_attr: 'companyName', _name: 'COMPANY', _type: 'LABEL', _choices: ['Veolia', 'UMI']},
+            {_attr: 'isOperator', _name: 'EST-OPERATEUR', _type: 'CHECK'}],
           _actions: this._actions
         };
       });

@@ -1,9 +1,31 @@
-<div class="input-group">
-  <select class="input-group-addon select-sm" (change)="changeCurrentProp($event)">
-    <option *ngFor="let propName of props" [value]="propName">{{getProp(propName)}}</option>
-  </select>
-  <input (keyup.enter)="filter($event)"
-         [placeholder]="'COMMON.FILTER' | translate"
-         [value]="config.search[currentProp] || ''" class="input-sm"/>
+<div class="hero-container">
+  <div class="columns">
+    <div class="column col-3">
+        <select (change)="changeCurrentTextProp($event)">
+          <option *ngFor="let propName of textProps" [value]="getAttr(propName)" [selected]="textIsSelected(propName)">{{getTextProp(propName)}}</option>
+        </select>
+        <input (keyup.enter)="filterText($event)"
+               [placeholder]="'COMMON.FILTER' | translate"
+               [value]="config.search[currentTextProp] || ''" class="input-sm"/>
+    </div>
+
+    <div *ngFor="let prop of otherProps" class="column col-2">
+      <div [ngSwitch]="getType(prop)">
+        <label>{{getName(prop)}}</label>
+
+        <select (change)="filterOther($event, prop)" [(ngModel)]="config[getAttr(prop)]" *ngSwitchCase="'CHECK'">
+          <option [ngValue]="null">All</option>
+          <option [ngValue]="true">Oui</option>
+          <option [ngValue]="false">Non</option>
+        </select>
+
+        <select (change)="filterOther($event, prop)" [(ngModel)]="config[getAttr(prop)]" *ngSwitchCase="'LABEL'">
+          <option [ngValue]="null">All</option>
+          <option *ngFor="let choice of getChoices(prop)">{{choice}}</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
 </div>
 

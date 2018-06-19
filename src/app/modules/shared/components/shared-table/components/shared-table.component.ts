@@ -32,11 +32,11 @@ export class SharedTableComponent {
   private _isSelectable = false;
   private _isEditable = false;
   private _isDeletable = false;
+  private _isFiltrable = false;
   private _content: Row[] = [];
   private _total = 0;
   private _columns: Column[] = [];
   private _actions: string[] = [];
-  private _columnsAttr: string[] = [];
 
   private _config: any = null;
 
@@ -54,14 +54,14 @@ export class SharedTableComponent {
       this._isSelectable = value._isSelectable || false;
       this._isEditable = value._isEditable || false;
       this._isDeletable = value._isDeletable || false;
+      this._isFiltrable = value._isFiltrable || false;
+
       this._total = value._total;
 
       // Si on a plus de 10 colonnes, on ne prends que les 10 premières
       value._columns.length > 10
         ? this._columns = value._columns.slice(0, 10)
         : this._columns = value._columns;
-
-      this._columnsAttr = this._columns.map(value1 => {return value1._attr});
 
       this._actions = value._actions || [];
     }
@@ -130,16 +130,16 @@ export class SharedTableComponent {
     return this._isDeletable;
   }
 
+  get isFiltrable(): boolean {
+    return this._isFiltrable;
+  }
+
   get content(): Row[] {
     return this._content;
   }
 
   get columns(): Column[] {
     return this._columns;
-  }
-
-  get columnsAttr(): string[] {
-    return this._columnsAttr;
   }
 
   get total(): number {

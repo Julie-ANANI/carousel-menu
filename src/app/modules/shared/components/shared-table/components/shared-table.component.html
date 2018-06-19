@@ -1,8 +1,9 @@
 <h1>{{total}} {{ title | translate }}</h1>
 
-<sqFilterMulti [config]="config"
+<sqFilterMulti *ngIf="isFiltrable"
+               [config]="config"
                (configChange)="changeConfig($event)"
-               [props]="columnsAttr">
+               [props]="columns">
 </sqFilterMulti>
 
 <div *ngIf="total == 0">
@@ -15,7 +16,6 @@
         <!-- Si il n'y a aucunes lignes selectionnées -->
         <ng-container *ngIf="selectedRows==0">
           <tr>
-
             <th width="50" *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)"/></th>
 
             <th *ngFor="let column of columns">
@@ -34,19 +34,20 @@
           <tr>
             <th width="50" *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)" [checked]="true"/></th>
             <th><span>{{selectedRows}} lignes selectionnée(s) </span></th>
-
-            <button class="btn btn-error"
-                    (click)="removeSelectedRows()"
-                    *ngIf="isDeletable">
-              Delete
-            </button>
-
+            <i class="icon icon-arrow-right"></i>
             <ng-container>
-              <button *ngFor="let a of actions" class="btn" style="margin-left: 10px;"
+              <button *ngFor="let a of actions" class="btn btn-xs ghost-edit" style="margin-left: 10px;"
                       (click)="onActionClick(a)">
                 {{a}}
               </button>
             </ng-container>
+
+            <button class="btn btn-xs ghost-delete"
+                    style="margin-left: 10px;"
+                    (click)="removeSelectedRows()"
+                    *ngIf="isDeletable">
+              Delete
+            </button>
 
           </tr>
         </ng-container>
@@ -82,9 +83,15 @@
                           [value]="getContentValue(key, getAttr(column))" max="100">
                 </progress>
 
+                <!-- Si le type de la colonne est CHECK -->
+                <div *ngSwitchCase="'CHECK'">
+                  <i *ngIf="getContentValue(key, getAttr(column)) == 0" class="icon icon-cross"></i>
+                  <i *ngIf="getContentValue(key, getAttr(column)) == 1" class="icon icon-check"></i>
+                </div>
+
               </ng-container>
 
-              <button class="btn"
+              <button class="btn btn-xs ghost-edit"
                       *ngIf="isHover(content[key]) && columns.indexOf(column) == 0 && isEditable"
                       (click)="edit(content[key])">
                 Infos

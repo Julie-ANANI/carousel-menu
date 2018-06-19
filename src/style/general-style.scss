@@ -1,0 +1,472 @@
+/*
+    This stylesheet contains all the styles that are common
+    for everywhere on the platform.
+ */
+
+
+/*
+    Color variables.
+ */
+
+$primary-color: #FFB300;
+$secondary-color: #0B90C6;
+$success-color: #2ECC71;
+$error-color: #EA5858;
+$disabled-color: #DBDBDB;
+$meta-color: #97A4B1;
+$background-color: #4F5D6B;
+$dark-color: #333333;
+$border-color: #E0E0E0;
+
+
+/*
+    Removing the focus default style.
+ */
+
+*:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+
+/*
+    This is the style that are related to the notification that we see.
+ */
+
+.simple-notification {
+  border: 1px solid transparent !important;
+  border-radius: 5px !important;
+  word-wrap: break-word !important;
+}
+
+.simple-notification-wrapper {
+  z-index: 9999 !important;
+}
+
+.simple-notification .sn-title {
+  font-size: 20px !important;
+  line-height: 1.4 !important;
+  padding-right: 0 !important;
+  font-weight: bold;
+  padding-bottom: 8px !important;
+}
+
+.simple-notification .sn-content {
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+  padding-right: 0 !important;
+  padding-bottom: 10px !important;
+}
+
+.simple-notification.success {
+  background: $success-color !important;
+  color: white !important;
+  border-color: $success-color !important;
+}
+
+.simple-notification.error {
+  background: $error-color !important;
+  color: white !important;
+  border-color: $error-color !important;
+}
+
+
+/*
+    This is the style that is related to the loading circle we see.
+ */
+
+.loading::after {
+  border-color: $primary-color;
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
+
+/*
+    This is to show the horizontal line around the word to show as divider.
+    Just wrap the word with this class. Class name: .or-divider
+ */
+
+.or-divider {
+  color: $meta-color;
+  font-size: 0.7rem;
+}
+
+.or-divider::before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  width: 130px;
+  height: 1px;
+  background: $meta-color;
+}
+
+.or-divider::after {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  width: 130px;
+  height: 1px;
+  background: $meta-color;
+}
+
+
+/*
+    This is to show the rectangle box of bot text. Just add the class 'bot-rect'
+    to the text element and add class 'bot-trian' to the triangle image.
+ */
+
+.bot-rect {
+  padding: 20px 15px;
+  border-radius: 5px;
+  color: $dark-color;
+  border: 1px solid $border-color;
+  display: inline-block;
+  font-size: 0.9rem;
+  width: 217px;
+  text-align: center;
+  animation-name: fadeIn;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  z-index: 3;
+}
+
+.bot-trian {
+  padding-left: 150px;
+  animation-name: fadeIn;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  margin-top: -2px;
+}
+
+
+/*
+    This is to show the numbering of the question in the form. Just add the class 'num-rect'
+    to the number.
+ */
+
+.num-rect {
+  color: white;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-style: normal;
+  padding: 7px 15px;
+  background: $background-color;
+  margin-right: 20px;
+  display: inline-block;
+}
+
+
+/*
+    This is to show the circle with icon check. Just add this class to div and
+    icon check.
+ */
+.circle-check {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  background: transparent;
+  display: inline-block;
+  position: absolute;
+  z-index: 2;
+
+  i {
+    color: transparent;
+    display: flex;
+    justify-content: center;
+    padding-top: 7px;
+  }
+
+}
+
+
+/*
+    This is to show the remaining characters length in form.
+ */
+.charRemaining {
+  text-align: right;
+
+  span {
+    position: absolute;
+    margin-top: -20px;
+    margin-left: -37px;
+    font-size: 0.6rem;
+    color: $meta-color;
+  }
+
+}
+
+
+
+/*
+    This is to show the help to the user like a tooltip.
+ */
+.tooltips {
+  position: absolute;
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  background-color: white;
+  border-radius: 50%;
+  z-index: 10;
+  margin-left: 4px;
+
+  i {
+    display: flex;
+    justify-content: center;
+  }
+
+  .tooltips-text {
+    visibility: hidden;
+    width: 190px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #97A4B1;
+    color: #fff;
+    justify-content: center;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 0.7rem;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 127%;
+  }
+
+  .tooltips-text::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    right: 100%;
+    border: 5px solid transparent;
+    border-right-color: #97A4B1;
+  }
+
+}
+
+.tooltips:hover .tooltips-text {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  visibility: visible;
+}
+
+
+/*
+    Modal style
+ */
+.modal {
+  box-shadow: none;
+
+  .modal-overlay {
+    background: rgba(51, 51, 51, 0.63) !important;
+  }
+
+  .modal-container {
+    padding: 0;
+    border-radius: 5px;
+    text-align: unset;
+    overflow: auto;
+  }
+
+  .modal-header {
+    min-height: 74px;
+    background: $secondary-color;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 21px 26px;
+  }
+
+  .btn-clear {
+    font-size: 1.1rem;
+    color: white;
+    line-height: 1.4;
+  }
+
+  .modal-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: white;
+    line-height: 1.4;
+  }
+
+  .modal-body {
+    padding: 30px 26px;
+  }
+
+  .modal-footer {
+    padding: 0 26px 25px;
+    text-align: unset;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+}
+
+
+/*
+    Label styles
+ */
+.label-progress {
+  border-radius: 5px;
+  background: #F79323;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+
+.label-validate {
+  border-radius: 5px;
+  background: $success-color;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.label-alert{
+  border-radius: 5px;
+  background: $error-color;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.label-editing{
+  border-radius: 5px;
+  background: $secondary-color;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.label-draft{
+  border-radius: 5px;
+  background: #4F5D6B;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+
+/*
+    Tabs style
+ */
+.tabs {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin-top: 0;
+    flex: 1 0 auto;
+
+    a {
+      color: white;
+      font-size: 0.9rem;
+      text-align: center;
+      display: block;
+      text-decoration: none;
+      padding: 15px 12px;
+      background: #747D88;
+      font-weight: 600;
+      cursor: pointer;
+
+      i {
+        margin-right: 10px;
+      }
+
+    }
+
+    a:hover {
+      background: $primary-color;
+    }
+
+    a:active {
+      color: white;
+      background: $primary-color;
+    }
+
+  }
+
+}
+
+
+/*
+    Ng2 auto complete npm module style
+ */
+.ng2-auto-complete-wrapper {
+  display: inline-flex;
+  flex: 1;
+  max-width: 595px;
+}
+
+.ng2-auto-complete > ul {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  list-style: none;
+  z-index: 2;
+  background-color: white;
+  border: none !important;
+}
+
+.ng2-auto-complete > ul li {
+  padding: 8px 10px !important;
+  transition: all .35s ease-in-out;
+  cursor: pointer;
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+  border-radius: 2px !important;
+  border-bottom: none !important;
+  color: $dark-color !important;
+}
+
+.ng2-auto-complete > ul li:hover, .ng2-auto-complete > ul li.selected {
+  background:  #F2F2F2 !important;
+  border-color: #F2F2F2 !important;
+}
+
+
+/*
+    Media queries
+ */
+
+
+/*
+    Media max width 600px
+ */
+@media (max-width: 600px) {
+
+  /*
+    Tooltips display none
+   */
+  .tooltips {
+    display: none;
+  }
+
+
+  /*
+    Tabs
+   */
+  .tabs li {
+    flex-basis: 100% !important;
+    margin-left: 0 !important;
+  }
+
+}

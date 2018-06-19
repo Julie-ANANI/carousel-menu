@@ -1,39 +1,25 @@
-#newProject {
+#new-project {
   padding-top: 50px;
   padding-bottom: 34px;
 
-  .ques-section {
+  .ques-wrapper {
     order: 1;
 
     .ques-2 {
       padding-top: 30px;
     }
 
+    .form-group {
+      margin-bottom: 0;
+    }
+
   }
 
-  .image-section {
+  .image-wrapper {
     order: 0;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
 
-    .bot-text {
-      animation-name: fadeIn;
-      animation-duration: 2s;
-      animation-timing-function: ease-in-out;
-      z-index: 2;
-      background: #4FC8DA;
-      color: white;
-      border-color: #4FC8DA;
-    }
-
-    .bot-trian {
-      padding-left: 150px;
-      animation-name: fadeIn;
-      animation-duration: 2s;
-      animation-timing-function: ease-in-out;
-      margin-top: -1px;
-    }
-
-    .bot-image .img-responsive {
+     .img-responsive {
       display: inline-block;
     }
 
@@ -42,13 +28,13 @@
   .ques-3 {
     padding-top: 30px;
 
-    .selection-container {
+    .selection-wrapper {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
     }
 
-    .selection-container label {
+    .selection-wrapper label {
       margin-bottom: 20px;
       display: flex;
       justify-content: flex-end;
@@ -58,15 +44,9 @@
       display: none;
     }
 
-    .circle {
+    .circle-check {
       margin-top: -15px;
       margin-left: 13px;
-      background: transparent;
-
-      i {
-        color: transparent;
-      }
-
     }
 
     .offers {
@@ -91,24 +71,24 @@
     }
 
     .offers:hover {
-      transition: all 0.35s ease-in-out;
+      transition: all 0.15s ease-in-out;
       border-color: #FFB300;
       background-color: #FFF9EB;
     }
 
-    label input[type=radio]:checked + .circle {
-      transition: all 0.35s ease-in-out;
+    label input[type=radio]:checked + .circle-check {
+      transition: all 0.15s ease-in-out;
       border-color: #2ECC71;
       background: #2ECC71;
 
       i {
-        color: white;
-
+        color: white !important;
       }
+
     }
 
-    label input[type=radio]:checked + .circle + .offers {
-      transition: all 0.35s ease-in-out;
+    label input[type=radio]:checked + .circle-check + .offers {
+      transition: all 0.15s ease-in-out;
       border-color: #2ECC71;
     }
 
@@ -128,6 +108,7 @@
     .text {
       width: 221px;
       display: inline-block;
+      padding: 16px 0;
     }
 
   }
@@ -158,11 +139,15 @@
     display: none;
   }
 
+  .image-wrapper {
+    display: none;
+  }
+
 }
 
 @media (min-width: 768px) {
 
-  .selection-container label {
+  .selection-wrapper label {
     margin-right: 20px;
   }
 
@@ -174,19 +159,19 @@
 
 @media (min-width: 840px) {
 
-  #newProject {
+  #new-project {
 
-    .ques-section {
+    .ques-wrapper {
       order: 0;
-
     }
 
     .ques-3 {
       padding-top: 0 !important;
     }
 
-    .image-section {
+    .image-wrapper {
       order: 1;
+      padding-bottom: 30px;
     }
 
   }

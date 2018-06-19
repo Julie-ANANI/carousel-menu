@@ -7,12 +7,10 @@
       <!-- Header -->
       <div class="hero-light-container">
         <div class="column col-xs-12 col-11 col-mx-auto">
-
           <!-- Name -->
-          <h1 class="hero-title">{{ project.name[0] | uppercase }}{{ project.name | slice:1 }}</h1>
-
+          <h1>{{ project.name[0] | uppercase }}{{ project.name | slice:1 }}</h1>
           <!-- Info -->
-          <div class="info-container">
+          <div class="info-wrapper">
             <img [src]="imgType">
             <span class="project-info">
               {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
@@ -25,7 +23,6 @@
               </span>
             </span>
           </div>
-
           <!-- Tabs -->
           <div class="tab-container">
             <ul class="tabs">
@@ -51,38 +48,43 @@
               </li>
             </ul>
           </div>
-
         </div>
       </div>
 
       <!-- Sections -->
       <div class="column col-xs-12 col-11 col-mx-auto">
-
         <!-- Setup page -->
         <div *ngIf="currentPage === 'setup'">
           <app-client-setup-project [project]="project"></app-client-setup-project>
         </div>
-
         <!-- Exploration page -->
         <div *ngIf="currentPage === 'exploration'">
           <app-client-exploration-project [project]="project"></app-client-exploration-project>
         </div>
-
         <!-- Synthesis page -->
         <div *ngIf="currentPage === 'synthesis'">
           <app-shared-market-report [project]="project"></app-shared-market-report>
         </div>
-
         <!-- History page -->
         <div *ngIf="currentPage === 'history'">
+          <!--<app-client-history-project [project]="project"></app-client-history-project>-->
+          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '75px', 'padding-bottom': '50px' }">
+            <span class="bot-rect" [ngStyle]="{ 'width': '300px' }">We are working very hard. For more information contact Marc!</span>
+            <br>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+          </div>
         </div>
-
       </div>
 
     </div>
   </div>
 </div>
 
+<!-- Scroll to top button -->
+<div class="btn-scroll" [ngStyle]="{ 'display': scrollButton ? 'flex' : 'none' }" (click)="scrollToTop($event)">
+  <i class="icon icon-upward"></i>
+</div>
 
 <!-- Add collaborators -->
 <div class="modal" [ngClass]="{'active': displayAddCollaboratorsModal}">
@@ -95,12 +97,13 @@
     <div class="modal-body">
       <div class="content">
         <input
-          class="form-input-default"
+          class="form-default"
           type="text"
           [(ngModel)]="collaborators_emails"
-          [attr.placeholder]=" 'PROJECT_MODULE.ADD_COLLABORATORS_PLACEHOLDER' | translate ">
+          [attr.placeholder]=" 'PROJECT_MODULE.ADD_COLLABORATORS_PLACEHOLDER' | translate "
+          (keyup)="enterKeyPress($event)">
         <button
-          class="primary-button"
+          class="btn btn-primary"
           (click)="addCollaborators($event)">
           <i class="fas fa-user-plus"></i>{{ 'COMMON.ADD' | translate }}
         </button>
@@ -121,7 +124,7 @@
           <li class="invitation-detail">
             <span class="label-progress">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.B' | translate }}</span> {{ collaborator }}
           </li>
-          <button class="primary-button ghost-button xs-button" (click)="reinviteCollaborator($event, collaborator)">
+          <button class="btn btn-xs ghost-primary" (click)="reinviteCollaborator($event, collaborator)">
             {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.REINVITE' | translate }}
           </button>
         </ul>
@@ -132,7 +135,7 @@
           <li class="added-detail">
             <span class="label-validate">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.A' | translate }}</span> {{ collaborator.name }}
           </li>
-          <button class="primary-button ghost-delete-button xs-button" (click)="removeCollaborator($event, collaborator)">
+          <button class="btn btn-xs ghost-delete" (click)="removeCollaborator($event, collaborator)">
             {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.DELETE' | translate }}
           </button>
         </ul>
@@ -141,215 +144,3 @@
     </div>
   </div>
 </div>
-
-<!--<app-shared-loader *ngIf="!project"></app-shared-loader>
-
-<div class="modal" [ngClass]="{'active': displayAddCollaboratorsModal}">
-  <div class="modal-overlay" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></button>
-      <div class="modal-title">{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label-default">{{ 'COMMON.EMAIL' | translate }}</label>
-        <input class="form-input-default" type="email" [(ngModel)]="collaborators_emails" placeholder="john@catco.com, smith@gmail.com">
-        <span class="form-error">
-          <span [ngStyle]="{ 'display': showCollaboratorRequiredError ? 'block' : 'none', 'margin-top': '8px' }">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-          <span [ngStyle]="{ 'display': showCollaboratorsInvalidError ? 'block' : 'none', 'margin-top': '8px' }">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
-        </span>
-      </div>
-
-    </div>
-    <div class="modal-footer">
-      <button class="primary-button cancel-button" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()">
-        {{ 'COMMON.CANCEL' | translate }}
-      </button>
-      <button class="primary-button submit-button" (click)="addCollaborators($event)">{{ 'COMMON.ADD' | translate }}</button>
-    </div>
-  </div>
-</div>
-
-<div *ngIf="project">
-  <div class="project-header">
-    <div class="container section-container">
-      <div class="columns">
-        <div class="column col-10 col-mx-auto">
-          <div class="columns">
-            <div class="column col-7">
-              <h1>{{ project.name }}</h1>
-              <div class="metas">
-                {{ project.owner.name }}
-                / {{ project.owner.companyName }}
-                • {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
-                • {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
-              </div>
-            </div>
-            <div class="column col-5 collaborators">
-              <button class="btn btn-bordered" (click)="(displayAddCollaboratorsModal = true) && $event.preventDefault()">
-                <i class="icon icon-plus"></i> {{ 'PROJECT_MODULE.ADD_COLLABORATORS' | translate }}
-              </button>
-              <div>
-                <span *ngFor="let collaborator of project.collaborators"
-                      class="chip tooltip tooltip-bottom"
-                      [attr.data-tooltip]="collaborator.email">
-                  {{ collaborator.name }}
-                  <a (click)="removeCollaborator($event, collaborator)" class="btn btn-clear" aria-label="Close"
-                     role="button"></a>
-                </span>
-              </div>
-            </div>
-          </div>
-          <ul class="step">
-            <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !project.reviewing }">
-              <span>
-                {{ 'COMMON.PROJECT_STATE.EDITING' | translate }}
-              </span>
-            </li>
-            <li class="step-item" [ngClass]="{ 'active': project.status === 'SUBMITTED' }">
-              <span>
-                {{ 'COMMON.PROJECT_STATE.SUBMITTED' | translate }}
-              </span>
-            </li>
-            <li class="step-item" [ngClass]="{ 'active': project.status === 'EDITING' && !!project.reviewing }">
-              <span>
-                {{ 'COMMON.PROJECT_STATE.REVIEWING' | translate }}
-              </span>
-            </li>
-            <li class="step-item" [ngClass]="{ 'active': project.status === 'EVALUATING' }">
-              <span>
-                {{ 'COMMON.PROJECT_STATE.EVALUATING' | translate }}
-              </span>
-            </li>
-            <li class="step-item" [ngClass]="{ 'active': project.status === 'DONE' }">
-              <span>
-                {{ 'COMMON.PROJECT_STATE.DONE' | translate }}
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- MODAL : Add collaborators FORM (STEP 1) -->
-<!--<div class="modal" [ngClass]="{'active': displayAddCollaboratorsModal}">
-  <div class="modal-overlay" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()"></button>
-      <div class="modal-title h5">{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
-    </div>
-    <div class="modal-body">
-      <div class="content">{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.CONTENT' | translate }}</div>
-      <input type="text" [(ngModel)]="collaborators_emails" placeholder="alan.turing@gmail.com, joan.clarke@gmail.com">
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-link" (click)="(displayAddCollaboratorsModal = false) && $event.preventDefault()">
-        {{ 'COMMON.CANCEL' | translate }}
-      </button>
-      <button class="btn btn-primary" [disabled]="!validCollaboratorsList()" (click)="addCollaborators($event)">{{
-        'COMMON.ADD' | translate }}
-      </button>
-    </div>
-  </div>
-</div>
-
-
-<!-- MODAL : Add collaborators (STEP 2) -->
-<!--<div class="modal" [ngClass]="{'active': displayCollaboratorsAddingProcess}">
-  <div class="modal-overlay" (click)="(displayCollaboratorsAddingProcess = false) && $event.preventDefault()"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="(displayCollaboratorsAddingProcess = false) && $event.preventDefault()"></button>
-      <div class="modal-title h5">{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
-    </div>
-    <div class="modal-body">
-      <div class="content">
-        <p *ngIf="collaboratorsAddingProcess.usersAdded.length">
-          {{ collaboratorsAddingProcess.usersAdded.length }} {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.USERS_ADDED' | translate }}.
-        </p>
-
-        <div *ngIf="collaboratorsAddingProcess.invitationsToSend.length">
-          <p >
-            {{ collaboratorsAddingProcess.invitationsToSend.length }} {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TO_SEND_EMAIL' | translate }}
-          </p>
-          <p align="center">
-            <a class="btn btn-primary"
-               [href]="'mailto:' + collaboratorsAddingProcess.invitationsToSend.join(',') + '?body=' + collaboratorsAddingProcess.inviteUrl">
-              {{ 'COMMON.INVITE' | translate }}
-            </a>
-          </p>
-        </div>
-
-        <div *ngIf="collaboratorsAddingProcess.invitationsToSendAgain.length">
-          <p>
-            {{ collaboratorsAddingProcess.invitationsToSendAgain.length }} {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TO_RESEND_EMAIL' | translate }}"
-          </p>
-          <p align="center">
-            <a class="btn btn-primary"
-               [href]="'mailto:' + collaboratorsAddingProcess.invitationsToSendAgain.join(',') + '?body=' + collaboratorsAddingProcess.inviteUrl">
-              {{ 'COMMON.REINVITE' | translate }}
-            </a>
-          </p>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div *ngIf="project" class="container">
-  <div class="columns">
-    <div class="column col-10 col-mx-auto">
-
-      <ul class="tab tab-block">
-        <li class="tab-item">
-          <a [routerLink]="['setup']" [ngClass]="{'active': currentPage == 'setup'}">
-            {{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
-          </a>
-        </li>
-        <li class="tab-item">
-          <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage == 'exploration'}">
-            {{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
-          </a>
-        </li>
-        <li class="tab-item">
-          <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage == 'synthesis'}">
-            {{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
-          </a>
-        </li>
-        <li class="tab-item">
-          <a [routerLink]="['history']" [ngClass]="{'active': currentPage == 'history'}">
-            {{ 'PROJECT_MODULE.HISTORY_TAB' | translate }}
-          </a>
-        </li>
-      </ul>
-
-      <div class="tabs">
-        <div class="tab-content" *ngIf="currentPage === 'setup'">
-          <app-client-setup-project [project]="project"></app-client-setup-project>
-        </div>
-
-        <div class="tab-content" *ngIf="currentPage === 'exploration'">
-          <app-client-exploration-project [project]="project"></app-client-exploration-project>
-        </div>
-
-        <div class="tab-content" *ngIf="currentPage === 'synthesis'">
-          <app-shared-market-report [project]="project"></app-shared-market-report>
-        </div>
-
-        <div class="tab-content" *ngIf="currentPage === 'history'">
-          <app-client-history-project [project]="project"></app-client-history-project>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>-->
-
-
-

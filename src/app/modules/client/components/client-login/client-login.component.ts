@@ -18,16 +18,16 @@ export class ClientLoginComponent implements OnInit {
   private _formData: FormGroup;
 
   constructor(private _authService: AuthService,
-              private _router: Router,
-              private _formBuilder: FormBuilder,
-              private _titleService: TranslateTitleService,
-              private _notificationsService: TranslateNotificationsService) {
+              private router: Router,
+              private formBuilder: FormBuilder,
+              private translateTitleService: TranslateTitleService,
+              private translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit(): void {
-    this._titleService.setTitle('LOG_IN.TITLE');
+    this.translateTitleService.setTitle('LOG_IN.TITLE');
 
-    this._formData = this._formBuilder.group({
+    this._formData = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
@@ -53,23 +53,23 @@ export class ClientLoginComponent implements OnInit {
               preserveFragment: true
             };
 
-            this._notificationsService.success('ERROR.LOGIN.WELCOME', 'ERROR.LOGIN.LOGGED_IN');
+            this.translateNotificationsService.success('ERROR.LOGIN.WELCOME', 'ERROR.LOGIN.LOGGED_IN');
             // Redirect the user
-            this._router.navigate([redirect], navigationExtras);
+            this.router.navigate([redirect], navigationExtras);
           }
         },
         err => {
-          this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
         });
     } else {
       if (this._formData.untouched && this._formData.pristine) {
-        this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
       }
     }
 
   }
 
-  public linkedInSignIn(event: Event) {
+  linkedInSignIn(event: Event) {
     event.preventDefault();
 
     const domain = environment.domain;
@@ -81,7 +81,7 @@ export class ClientLoginComponent implements OnInit {
           window.location.href = url;
         },
         error => {
-          this._notificationsService.error('ERROR.ERROR', error.message);
+          this.translateNotificationsService.error('ERROR.ERROR', error.message);
         }
       );
 

@@ -6,7 +6,7 @@ import { Campaign } from '../../models/campaign';
 import { Innovation } from '../../models/innovation';
 import { InnovCard } from '../../models/innov-card';
 import { User } from '../../models/user.model';
-import { Video } from '../../models/media';
+import { Media, Video } from '../../models/media';
 import { QuestionReport } from '../../models/market-report';
 
 @Injectable()
@@ -51,7 +51,7 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public addNewMediaVideoToInnovationCard(innovationId: string, innovationCardId: string, videoInfos: Video): Observable<Innovation> {
+  public addNewMediaVideoToInnovationCard(innovationId: string, innovationCardId: string, videoInfos: Video): Observable<Media> {
     return this._http.post('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/video', videoInfos)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));

@@ -1,14 +1,22 @@
-<ul class="pagination" *ngIf="numPages >= 2">
-  <li class="page-item" *ngIf="currentPage > 1" (click)="(currentPage = 1) && $event.preventDefault()">1</li>
-  <li class="page-item" *ngIf="currentPage > 1"
-      (click)="(currentPage > 1 ? currentPage = currentPage - 1 : currentPage = 1) && $event.preventDefault()">«</li>
-  <li class="current-page">
-    <input type="text" [ngModel]="currentPage" (keyup.enter)="goToPage($event)"/>
-  </li>
-  <li class="page-item" *ngIf="currentPage < numPages" (click)="(currentPage = currentPage + 1) && $event.preventDefault()">»</li>
-  <li class="page-item" *ngIf="currentPage < numPages" (click)="(currentPage = numPages) && $event.preventDefault()">{{ numPages }}</li>
-</ul>
-<select [ngModel]="perPage" (ngModelChange)="perPage = $event">
-  <option *ngFor="let perPage of perPageValues" [value]="perPage">{{perPage}} {{ 'PAGINATION.PER_PAGE' | translate }}</option>
-  <option value="1000000">{{ 'PAGINATION.ALL' | translate }}</option>
-</select>
+<div class="hero-container">
+  <div class="columns">
+    <div class="column col-3">
+      <ul class="pagination" *ngIf="numPages >= 2">
+        <li class="page-item" *ngIf="currentPage > 1" (click)="(currentPage = 1) && $event.preventDefault()">1</li>
+        <li class="page-item" *ngIf="currentPage > 1"
+            (click)="(currentPage > 1 ? currentPage = currentPage - 1 : currentPage = 1) && $event.preventDefault()">«</li>
+        <li class="current-page">
+          <input type="text" [ngModel]="currentPage" (keyup.enter)="goToPage($event)"/>
+        </li>
+        <li class="page-item" *ngIf="currentPage < numPages" (click)="(currentPage = currentPage + 1) && $event.preventDefault()">»</li>
+        <li class="page-item" *ngIf="currentPage < numPages" (click)="(currentPage = numPages) && $event.preventDefault()">{{ numPages }}</li>
+      </ul>
+    </div>
+    <div class="column col-auto pagination">
+      <select [ngModel]="perPage" (ngModelChange)="perPage = $event" class="page-item ">
+        <option *ngFor="let perPage of perPageValues" [value]="perPage">{{perPage}} {{ 'PAGINATION.PER_PAGE' | translate }}</option>
+        <option value="1000000">{{ 'PAGINATION.ALL' | translate }}</option>
+      </select>
+    </div>
+  </div>
+</div>

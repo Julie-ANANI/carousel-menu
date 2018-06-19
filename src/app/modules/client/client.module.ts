@@ -8,7 +8,6 @@ import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
-import { ClientDiscoverDescriptionComponent } from './components/client-discover-description/client-discover-description.component';
 import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
 import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
@@ -16,6 +15,7 @@ import { ClientResetPasswordComponent } from './components/client-reset-password
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
 import { ClientForgetPasswordComponent } from './components/client-forget-password/client-forget-password.component';
+import { ClientDiscoverDescriptionModule } from './components/client-discover-description/client-discover-description.module';
 
 @NgModule({
   imports: [
@@ -24,13 +24,13 @@ import { ClientForgetPasswordComponent } from './components/client-forget-passwo
     ClientRoutingModule,
     SharedModule,
     TranslateModule.forChild(),
-    SharedMarketReportModule
+    SharedMarketReportModule,
+    ClientDiscoverDescriptionModule
   ],
   declarations: [
     ClientComponent,
     ClientMyAccountComponent,
     ClientDiscoverComponent,
-    ClientDiscoverDescriptionComponent,
     ClientWelcomeComponent,
     ClientLoginComponent,
     ClientSignupComponent,
