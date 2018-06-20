@@ -46,6 +46,9 @@ export class SetupProjectComponent implements OnInit {
     this.checkProjectStatus();
   }
 
+  /*
+      Here we are checking the fields that are required to submit the form.
+   */
   checkProjectStatus() {
     this.project.innovationCards.forEach((field) => {
       this.pitchFormValid = field.title !== '' && field.summary !== '' && field.problem !== '' && field.solution !== '' &&
@@ -80,8 +83,8 @@ export class SetupProjectComponent implements OnInit {
             this._changesSaved = true;
             this._saveChanges = false;
             this._saveButtonClass = 'disabled';
-            this.showPitchFieldError.next(true); // to show the client error in the form.
-            this.showTargetingFieldError.next(true); // to show the error to client in the form.
+            this.showPitchFieldError.next(true); // to show the error in pitch form.
+            this.showTargetingFieldError.next(true); // to show the error in targeting form.
           }, err => {
             this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
           });
@@ -89,6 +92,10 @@ export class SetupProjectComponent implements OnInit {
 
   }
 
+  /*
+      This is to show the error and open the confirmation modal before submitting
+      the project to the server.
+   */
   submitButton(event: Event): void {
     event.preventDefault();
 
@@ -126,32 +133,30 @@ export class SetupProjectComponent implements OnInit {
 
   }
 
-  // checking the pitch form validation.
+  /*
+      Here we are getting the value from the child component
+      to check that pitch required fields are filled or not.
+   */
   pitchFormValidation(value: boolean) {
     this.pitchFormValid = value;
   }
 
-  // checking the targeting form validation.
+  /*
+     Here we are getting the value from the child component
+     to check that targeting required fields are filled or not.
+  */
   targetingFormValidation(value: boolean) {
     this.targetingFormValid = value;
   }
 
-  // getting the save value from the child component.
+  /*
+     Here we are checking if there are any changes in the pitch form
+     shows the notification to the client.
+  */
   saveInnovation(value: boolean) {
     this._saveChanges = value;
     this._changesSaved = false;
     this._saveButtonClass = 'save-project';
-  }
-
-  settingTab(event: Event, value: string) {
-    event.preventDefault();
-
-    if (this._saveChanges) {
-      this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
-    } else {
-      this._currentTab = value;
-    }
-
   }
 
   closeModal(event: Event) {

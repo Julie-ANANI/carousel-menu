@@ -82,16 +82,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.showDiffusionError = this.project.external_diffusion === null;
   }
 
-  resetErrorValue() {
-    this.showTitleError = false;
-    this.showSummaryError = false;
-    this.showProblemError = false;
-    this.showSolutionError = false;
-    this.showAdvantageError = false;
-    this.showPatentError = false;
-    this.showDiffusionError = false;
-  }
-
   checkField() {
     if (this.project.innovationCards[this.innovationCardEditingIndex].title !== '' && this.project.innovationCards[this.innovationCardEditingIndex].summary !== ''
       && this.project.innovationCards[this.innovationCardEditingIndex].problem !== '' && this.project.innovationCards[this.innovationCardEditingIndex].solution !== ''
@@ -100,6 +90,16 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     } else {
       this.pitchFormField.emit(false);
     }
+  }
+
+  resetErrorValue() {
+    this.showTitleError = false;
+    this.showSummaryError = false;
+    this.showProblemError = false;
+    this.showSolutionError = false;
+    this.showAdvantageError = false;
+    this.showPatentError = false;
+    this.showDiffusionError = false;
   }
 
   /**
@@ -169,7 +169,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     // this.projectChange.emit(this.project);
     if (this.innovationCardEditingIndex === 0) {
       if (this.project.principalMedia === null || this.project.principalMedia === undefined) {
-       this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id, this.project.innovationCards[0]._id, media._id).first().subscribe((res) => {
+       this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
+         this.project.innovationCards[0]._id, media._id).first().subscribe((res) => {
          this.projectChange.emit(this.project);
        });
       }
@@ -201,7 +202,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   deleteMedia(event: Event, media: Media, index: number): void {
     event.preventDefault();
 
-    this.innovationCardEditingIndex = index;
+    // this.innovationCardEditingIndex = index;
 
     this.innovationService.deleteMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[index]._id, media._id)
