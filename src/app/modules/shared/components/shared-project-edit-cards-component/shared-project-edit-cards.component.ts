@@ -11,6 +11,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import {InnovationPreviewSidebarService} from '../shared-sidebar/services/innovation-preview-sidebar.service';
 
 @Component({
   selector: 'app-shared-project-edit-cards',
@@ -52,7 +53,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private domSanitizer1: DomSanitizer,
               private translateService: TranslateService,
-              private translateNotificationsService: TranslateNotificationsService) {
+              private translateNotificationsService: TranslateNotificationsService,
+              private innovationPreviewSidebarService: InnovationPreviewSidebarService) {
   }
 
   ngOnInit() {
@@ -100,6 +102,12 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.showAdvantageError = false;
     this.showPatentError = false;
     this.showDiffusionError = false;
+  }
+
+  // Sending values to the child component "Innovation preview sidebar"
+  showPreview(event: Event) {
+    event.preventDefault();
+    this.innovationPreviewSidebarService.setTemplateValues('active', 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW');
   }
 
   /**

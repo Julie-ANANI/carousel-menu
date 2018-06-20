@@ -89,6 +89,8 @@ export const PITCH = {
     'A': 'Souhaitez-vous autoriser',
     'B' : 'à diffuser votre projet auprès de sa communauté d\'ambassadeurs ?',
     'ERROR': 'La diffusion est requise.'
-  }
+  },
+
+  'INNOVATION_PREVIEW': 'Aperçu de l\'innovation',
 
 };

@@ -70,6 +70,7 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     Ng2PageScrollModule,
     Ng2AutoCompleteModule,
     SharedWorldmapModule,
+    SidebarModule
   ],
   declarations: [
     // Directives

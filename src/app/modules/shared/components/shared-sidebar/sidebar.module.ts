@@ -7,10 +7,12 @@ import { ClientDiscoverDescriptionModule } from '../../../client/components/clie
 
 // Services
 import { UserFormSidebarService } from './services/user-form-sidebar.service';
+import { InnovationPreviewSidebarService } from './services/innovation-preview-sidebar.service';
 
 // Components
 import { UserFormSidebarComponent } from './components/user-form-sidebar/user-form-sidebar.component';
 import { InnovationPreviewSidebarComponent } from './components/innovation-preview-sidebar/innovation-preview-sidebar.component';
+
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { InnovationPreviewSidebarComponent } from './components/innovation-previ
     InnovationPreviewSidebarComponent
   ],
   providers: [
-    UserFormSidebarService
+    UserFormSidebarService,
+    InnovationPreviewSidebarService
   ],
   exports: [
     UserFormSidebarComponent,
