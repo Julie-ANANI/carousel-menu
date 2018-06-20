@@ -56,8 +56,8 @@
           <strong>IP : </strong>{{modalAnswer.ip}}<br>
 
           <shared-tag-item
-            *ngIf="editMode"
             [tags]="modalAnswer.tags"
+            [editMode]="editMode"
             (addTag)="addTag($event)"
             (removeTag)="removeTag($event)">
           </shared-tag-item>

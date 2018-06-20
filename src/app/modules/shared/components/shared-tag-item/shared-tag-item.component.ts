@@ -9,12 +9,13 @@ import { Tag } from '../../../../models/tag';
   styleUrls: ['./shared-tag-item.component.scss']
 })
 export class SharedTagItemComponent implements OnInit {
-  @Input() tags: Array<Tag>;
+
+  @Input() public tags: Array<Tag>;
+  @Input() public editMode = false;
 
   @Output() addTag: EventEmitter<Tag> = new EventEmitter();
   @Output() removeTag: EventEmitter<Tag> = new EventEmitter();
 
-  private _displayTags = true;
   public tagsAutocomplete: any;
 
   constructor(private _translateService: TranslateService) {}
@@ -30,11 +31,6 @@ export class SharedTagItemComponent implements OnInit {
     };
   }
 
-  toggleTags(event: Event) {
-    event.preventDefault();
-    this._displayTags = !this._displayTags;
-  }
-
   public _addTag(event: {value: Tag}): void {
     this.addTag.emit(event.value);
   }
@@ -43,6 +39,5 @@ export class SharedTagItemComponent implements OnInit {
     this.removeTag.emit(event.value);
   }
 
-  set displayTags(value: boolean) { this._displayTags = value; }
-  get displayTags(): boolean { return this._displayTags; }
+  get lang(): string { return this._translateService.currentLang; }
 }

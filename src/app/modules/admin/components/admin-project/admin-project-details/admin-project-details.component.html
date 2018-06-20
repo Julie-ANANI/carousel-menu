@@ -9,6 +9,7 @@
       <h4>Tags management</h4>
       <shared-tag-item
         [tags]="project.tags"
+        [editMode]="true"
         (addTag)="addTag($event)"
         (removeTag)="removeTag($event)">
       </shared-tag-item>
