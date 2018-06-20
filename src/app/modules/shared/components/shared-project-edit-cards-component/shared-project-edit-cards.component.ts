@@ -105,9 +105,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   // Sending values to the child component "Innovation preview sidebar"
-  showPreview(event: Event) {
+  showPreview(event: Event, id: string, lang: string) {
     event.preventDefault();
-    this.innovationPreviewSidebarService.setTemplateValues('active', 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW');
+    this.innovationPreviewSidebarService.setValues('active', 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW', id, lang);
   }
 
   /**

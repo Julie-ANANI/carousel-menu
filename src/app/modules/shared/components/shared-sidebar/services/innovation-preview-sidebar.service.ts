@@ -2,27 +2,32 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 // Interface
-import { TemplateForm } from '../interfaces/template-form';
+import { InnovationPreview } from '../interfaces/innovation-preview';
 
 @Injectable()
 export class InnovationPreviewSidebarService {
 
-  templateValuesObservable = new Subject<TemplateForm>();
+  valuesObservable = new Subject<InnovationPreview>();
 
   constructor() { }
 
-  // Receiving the template default values from the parent component.
-  setTemplateValues(animationState: string, title: string) {
-    const templateValue: TemplateForm = {};
+  /*
+      Receiving the template default values and the innovation id
+      and the language from the parent component.
+   */
+  setValues(animationState: string, title: string, id: string, lang: string) {
+    const innovation: InnovationPreview = {};
 
-    templateValue.animate = animationState;
-    templateValue.title = title;
+    innovation.title = title;
+    innovation.animate = animationState;
+    innovation.id = id;
+    innovation.lang = lang;
 
-    this.templateValuesObservable.next(templateValue);
+    this.valuesObservable.next(innovation);
   }
 
-  getTemplateValues(): Subject<TemplateForm> {
-    return this.templateValuesObservable;
+  getValues(): Subject<InnovationPreview> {
+    return this.valuesObservable;
   }
 
 }

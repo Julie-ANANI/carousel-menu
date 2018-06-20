@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { InnovationPreviewSidebarService } from '../../services/innovation-preview-sidebar.service';
 
@@ -25,6 +25,10 @@ export class InnovationPreviewSidebarComponent implements OnInit {
 
   title: string;
   state: string;
+  innovDetail = {
+    'id': '',
+    'lang': ''
+  };
 
   constructor(private innovationPreviewSidebarService: InnovationPreviewSidebarService) {
   }
@@ -32,11 +36,15 @@ export class InnovationPreviewSidebarComponent implements OnInit {
   ngOnInit() {
     this.state = 'inactive';
 
-    // getting the template values sent by the parent component.
-    this.innovationPreviewSidebarService.getTemplateValues().subscribe(res => {
+    /*
+        receiving the template values and innovation values sent by the parent component.
+     */
+    this.innovationPreviewSidebarService.getValues().subscribe(res => {
       if (res !== null) {
         this.state = res.animate;
         this.title = res.title;
+        this.innovDetail.id = res.id;
+        this.innovDetail.lang = res.lang;
       }
     });
 
@@ -44,6 +52,8 @@ export class InnovationPreviewSidebarComponent implements OnInit {
 
   toggleState() {
     this.state = 'inactive';
+    this.innovDetail.id = '';
+    this.innovDetail.lang = '';
   }
 
 }

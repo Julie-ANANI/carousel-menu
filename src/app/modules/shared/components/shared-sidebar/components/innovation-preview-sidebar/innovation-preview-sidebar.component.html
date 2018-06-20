@@ -14,7 +14,10 @@
 
       <!-- Content -->
       <div class="sidebar-content">
-
+        <app-client-discover-description
+          *ngIf="innovDetail.id && innovDetail.lang"
+          [innovDetail]="innovDetail">
+        </app-client-discover-description>
       </div>
 
     </div>
