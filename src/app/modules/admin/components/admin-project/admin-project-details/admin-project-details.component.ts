@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { MultilingPipe } from '../../../../../pipes/multiling/multiling.pipe';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
@@ -20,7 +19,6 @@ export class AdminProjectDetailsComponent implements OnInit {
   private _project: Innovation;
   private _dirty = false;
 
-  public tagsAutocomplete: any;
   public presetAutocomplete: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -32,14 +30,6 @@ export class AdminProjectDetailsComponent implements OnInit {
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
-    this.tagsAutocomplete = {
-      placeholder: 'tags',
-      initialData: this.project.tags.map(t => {
-        t['name'] = MultilingPipe.prototype.transform(t['label'], this._translateService.currentLang);
-        return t;
-      }) || [],
-      type: 'tags'
-    };
     this.presetAutocomplete = {
       placeholder: 'preset',
       initialData: this.hasPreset() ? [this.project.preset] : [],
