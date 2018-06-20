@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { ShareService } from '../../../../services/share/share.service';

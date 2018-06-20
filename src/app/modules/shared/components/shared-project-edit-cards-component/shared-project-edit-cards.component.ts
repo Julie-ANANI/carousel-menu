@@ -11,7 +11,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import {InnovationPreviewSidebarService} from '../shared-sidebar/services/innovation-preview-sidebar.service';
+import { InnovationPreviewSidebarService } from '../shared-sidebar/services/innovation-preview-sidebar.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-shared-project-edit-cards',
@@ -54,17 +55,22 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
               private domSanitizer1: DomSanitizer,
               private translateService: TranslateService,
               private translateNotificationsService: TranslateNotificationsService,
-              private innovationPreviewSidebarService: InnovationPreviewSidebarService) {
+              private innovationPreviewSidebarService: InnovationPreviewSidebarService,
+              private location: Location) {
   }
 
   ngOnInit() {
     this.changesSaved = true;
 
-    this.showPitchFieldError.subscribe(value => {
-      if (value) {
-        this.showError();
-      }
-    });
+    console.log(this.location.path().slice(0, 6));
+
+    if (this.location.path().slice(0, 6) !== '/admin') {
+      this.showPitchFieldError.subscribe(value => {
+        if (value) {
+          this.showError();
+        }
+      });
+    }
 
   }
 

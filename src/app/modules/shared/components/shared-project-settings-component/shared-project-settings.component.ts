@@ -3,9 +3,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ShareService } from '../../../../services/share/share.service';
 import { InnovationSettings } from '../../../../models/innov-settings';
-
 import * as _ from 'lodash';
 import {Subject} from 'rxjs/Subject';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-shared-project-settings',
@@ -35,7 +35,8 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   constructor(private translateService: TranslateService,
               private _authService: AuthService,
-              public shareService: ShareService) {
+              public shareService: ShareService,
+              private location: Location) {
   }
 
 
@@ -52,18 +53,20 @@ export class SharedProjectSettingsComponent implements OnInit {
       this._displayKeywordsSection = this.settings.keywords.length > 0;
     }
 
-    this.showTargetingFieldError.subscribe(value => {
-      if (value) {
-        this.showMarketError = this.settings.market.comments.length === 0;
-        this.showGeographyError = this.settings.geography.exclude.length === 0 && this.settings.geography.comments.length === 0 &&
-          !this.settings.geography.continentTarget.russia && !this.settings.geography.continentTarget.oceania && !this.settings.geography.continentTarget.europe
-          && !this.settings.geography.continentTarget.asia && !this.settings.geography.continentTarget.americaSud && !this.settings.geography.continentTarget.americaNord
-          && !this.settings.geography.continentTarget.africa;
-      } else {
-        this.showMarketError = false;
-        this.showGeographyError = false;
-      }
-    });
+    if (this.location.path().slice(0, 6) !== '/admin') {
+      this.showTargetingFieldError.subscribe(value => {
+        if (value) {
+          this.showMarketError = this.settings.market.comments.length === 0;
+          this.showGeographyError = this.settings.geography.exclude.length === 0 && this.settings.geography.comments.length === 0 &&
+            !this.settings.geography.continentTarget.russia && !this.settings.geography.continentTarget.oceania && !this.settings.geography.continentTarget.europe
+            && !this.settings.geography.continentTarget.asia && !this.settings.geography.continentTarget.americaSud && !this.settings.geography.continentTarget.americaNord
+            && !this.settings.geography.continentTarget.africa;
+        } else {
+          this.showMarketError = false;
+          this.showGeographyError = false;
+        }
+      });
+    }
 
   }
 

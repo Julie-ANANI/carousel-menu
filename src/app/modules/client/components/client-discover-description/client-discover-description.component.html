@@ -12,7 +12,7 @@
           <div class="detail-wrapper">
             <div class="summary-wrapper">
               <p class="para">{{ innovation.summary }}</p>
-              <div class="quiz-wrapper">
+              <div class="quiz-wrapper" [ngStyle]="{ 'display': quizButtonDisplay }">
                 <a class="btn btn-primary" [href]="quizUrl" target="_blank">
                   <i class="icon icon-message"></i>{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}
                 </a>
@@ -64,7 +64,21 @@
         </div>
       </div>
 
-      <!-- Advantage section -->
+      <!-- Solution and issue section -->
+      <div class="section-container solution-wrapper">
+        <div class="column col-11 col-mx-auto">
+          <div class="columns">
+            <div class="column col-md-12 col-6">
+              <h3>{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h3>
+              <p class="para">{{ innovation.problem }}</p>
+            </div>
+            <div class="column col-md-12 col-6">
+              <h3 class="heading-solution">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h3>
+              <p class="para">{{ innovation.solution }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
