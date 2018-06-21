@@ -10,6 +10,8 @@ export const COMMON = {
   'SIGN_UP': 'Sign up',
   'LOG_OUT': 'Logout',
   'CANCEL': 'Cancel',
+  'MORE': 'See more',
+  'OF': 'of',
   'ADD': 'Add',
   'ALL': 'All',
   'ADDED': 'Added on',
@@ -22,6 +24,7 @@ export const COMMON = {
   'NO': 'No',
   'YES': 'Yes',
   'ACCEPT': 'Accept',
+  'PAGINATION' : 'Rows per page',
   'FILTER': 'Filter',
   'SEARCH': 'Search',
   'TAGS': 'Tags',
@@ -75,7 +78,8 @@ export const COMMON = {
   },
 
   'TABLE' : {
-    'SELECTED_LINES': 'selected lines'
+    'SELECTED_ROWS': 'selected rows',
+    'NO-RESULTS': 'No results'
   },
 
   'PROJECT_STATE': {
