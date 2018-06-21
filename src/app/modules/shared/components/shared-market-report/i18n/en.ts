@@ -1,7 +1,8 @@
 export const MARKET_REPORT = {
   'TITLE': {
     'EDITING': 'Market potential of your project will be available soon',
-    'SUBMITTED': 'Exploring market potential of your project'
+    'SUBMITTED': 'Exploring market potential of your project',
+    'EVALUATING': 'Fresh market insights of your project'
   },
 
 

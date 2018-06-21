@@ -83,8 +83,8 @@ export class SetupProjectComponent implements OnInit {
             this._changesSaved = true;
             this._saveChanges = false;
             this._saveButtonClass = 'disabled';
-            this.showPitchFieldError.next(true); // to show the error in pitch form.
-            this.showTargetingFieldError.next(true); // to show the error in targeting form.
+            // this.showPitchFieldError.next(true); // to show the error in pitch form.
+            // this.showTargetingFieldError.next(true); // to show the error in targeting form.
           }, err => {
             this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
           });

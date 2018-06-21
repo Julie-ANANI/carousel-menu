@@ -3,7 +3,7 @@
     <div class="column col-12">
 
       <!-- Project under editing status -->
-      <div *ngIf="project.status === 'EDITING' ">
+      <div *ngIf="project.status === 'EDITING' && !adminSide">
         <h1>{{ 'MARKET_REPORT.TITLE.EDITING' | translate }}</h1>
         <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span *ngIf="project.status === 'EDITING'" class="bot-rect">
@@ -17,7 +17,7 @@
       </div>
 
       <!-- Project under submitted status -->
-      <div *ngIf="project.status === 'SUBMITTED' ">
+      <div *ngIf="project.status === 'SUBMITTED' && !adminSide">
         <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
         <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span class="bot-rect">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</span>
@@ -25,6 +25,17 @@
           <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
           <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
         </div>
+      </div>
+
+      <!-- Project under evaluating status -->
+      <div *ngIf="project.status === 'EVALUATING' || adminSide">
+        <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
+        <div class="title-wrapper">
+          <h1>{{ 'MARKET_REPORT.TITLE.EVALUATING' | translate }}</h1>
+          <button class="btn btn-primary">Download</button>
+        </div>
+
+
       </div>
 
     </div>

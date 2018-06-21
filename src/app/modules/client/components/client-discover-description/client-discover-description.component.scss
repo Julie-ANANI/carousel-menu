@@ -42,7 +42,8 @@
         background-color: #235273;
         padding: 13px 18px 34px 18px;
         color: #fff;
-        width: 420px;
+        width: 310px;
+        flex: 1 0 auto;
 
         .para {
           font-size: 0.8rem;
@@ -133,7 +134,7 @@
       color: #5D5D5D;
       font-size: 0.9rem;
       margin: 0;
-      padding: 6px 8px 6px 0;
+      padding: 6px 8px;
     }
 
     li:last-child {
