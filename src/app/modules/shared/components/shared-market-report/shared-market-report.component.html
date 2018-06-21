@@ -6,7 +6,7 @@
   ************************************************************** -->
 
   <div class="frontcover">
-    <img src="{{ 'https://res.cloudinary.com/umi/image/upload/app/'+logoName }}" alt="Logo UMI" height="40" class="centered">
+    <img [src]="logoName()" alt="Logo" height="40" class="centered">
     <h1 id="title">{{project.name}}</h1>
     <p class="subtitle">{{today | date: 'fullDate'}}</p>
   </div>
