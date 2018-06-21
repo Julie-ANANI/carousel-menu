@@ -62,8 +62,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.changesSaved = true;
 
-    console.log(this.location.path().slice(0, 6));
-
     if (this.location.path().slice(0, 6) !== '/admin') {
       this.showPitchFieldError.subscribe(value => {
         if (value) {
@@ -100,6 +98,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /*
+      Resetting the value of all errors when we switch between the languages.
+   */
   resetErrorValue() {
     this.showTitleError = false;
     this.showSummaryError = false;
@@ -110,7 +111,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.showDiffusionError = false;
   }
 
-  // Sending values to the child component "Innovation preview sidebar"
+  /*
+      Sending values to the child component "Innovation preview sidebar"
+   */
   showPreview(event: Event, id: string, lang: string) {
     event.preventDefault();
     this.innovationPreviewSidebarService.setValues('active', 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW', id, lang);
@@ -152,7 +155,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       } else {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
-
     }
 
   }
@@ -180,14 +182,13 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   imageUploaded(media: Media, cardIdx: number): void {
     this.project.innovationCards[cardIdx].media.push(media);
-    // this.projectChange.emit(this.project);
-    if (this.innovationCardEditingIndex === 0) {
-      if (this.project.principalMedia === null || this.project.principalMedia === undefined) {
-       this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
-         this.project.innovationCards[0]._id, media._id).first().subscribe((res) => {
-         this.projectChange.emit(this.project);
-       });
-      }
+
+    if (this.project.innovationCards[this.innovationCardEditingIndex].principalMedia === null || undefined) {
+      this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
+        this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id).first().subscribe((res) => {
+        this.project.innovationCards[this.innovationCardEditingIndex].principalMedia = media;
+        this.projectChange.emit(this.project);
+      });
     }
 
   }
@@ -215,8 +216,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   deleteMedia(event: Event, media: Media, index: number): void {
     event.preventDefault();
-
-    // this.innovationCardEditingIndex = index;
 
     this.innovationService.deleteMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[index]._id, media._id)
