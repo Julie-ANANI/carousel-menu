@@ -46,6 +46,12 @@
                 [(ngModel)]="settings.geography.comments"
                 (change)="updateSettings()">
               </textarea>
+              <div class="charRemaining">
+                <span [ngStyle]="{'color': getColor(settings.geography.comments.length | characterCountdown:500)}">{{ settings.geography.comments.length | characterCountdown:500 }}</span>
+              </div>
+          </div>
+          <div class="form-error" *ngIf="showGeographyError">
+            <span>{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.ERROR' | translate }}</span>
           </div>
 
           <!-- Activity sectors -->
@@ -57,9 +63,18 @@
                 id="innovation-sector"
                 [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.MARKET.PLACEHOLDER' | translate"
                 rows="5"
+                #market="ngModel"
                 [(ngModel)]="settings.market.comments"
-                (change)="updateSettings()">
+                (change)="updateSettings()"
+                [ngClass]="{'borderRed': market.touched && settings.market.comments.length === 0 || showMarketError}"
+                (keyup)="showMarketError = false">
               </textarea>
+              <div class="charRemaining">
+                <span [ngStyle]="{'color': getColor(settings.market.comments.length | characterCountdown:500)}">{{ settings.market.comments.length | characterCountdown:500 }}</span>
+              </div>
+              <div class="form-error" *ngIf="market.touched && settings.market.comments.length === 0 || showMarketError">
+                <span>{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.ERROR' | translate }}</span>
+              </div>
             </div>
           </div>
 
@@ -101,6 +116,9 @@
                 [(ngModel)]="settings.companies.description"
                 (change)="updateSettings()">
               </textarea>
+              <div class="charRemaining">
+                <span [ngStyle]="{'color': getColor(settings.companies.description.length | characterCountdown:500)}">{{ settings.companies.description.length | characterCountdown:500 }}</span>
+              </div>
             </div>
           </div>
 
@@ -116,6 +134,9 @@
                 [(ngModel)]="settings.professionals.description"
                 (change)="updateSettings()">
               </textarea>
+              <div class="charRemaining">
+                <span [ngStyle]="{'color': getColor(settings.professionals.description.length | characterCountdown:500)}">{{ settings.professionals.description.length | characterCountdown:500 }}</span>
+              </div>
             </div>
             <p class="pd-para">
               <span class="text-link" (click)="(displayPersonsToExcludeSection = !displayPersonsToExcludeSection) && $event.preventDefault()">
@@ -145,6 +166,9 @@
                  [(ngModel)]="settings.comments"
                  (change)="updateSettings()">
               </textarea>
+              <div class="charRemaining">
+                <span [ngStyle]="{'color': getColor(settings.comments.length | characterCountdown:500)}">{{ settings.comments.length | characterCountdown:500 }}</span>
+              </div>
             </div>
             <div *ngIf="adminMode">
               <p class="pd-para">

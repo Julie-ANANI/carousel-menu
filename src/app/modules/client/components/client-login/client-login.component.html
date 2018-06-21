@@ -1,7 +1,6 @@
 <div class="main-container" id="login">
   <div class="columns">
     <div class="column col-12 col-mx-auto">
-
       <div class="columns col-gapless">
 
         <div class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image" [ngStyle]="{ 'background-image': 'url(' + getBackgroundImage() + ')' }">
@@ -9,36 +8,28 @@
 
 
         <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto login-wrapper">
-
           <!-- Logo -->
           <div class="text-center">
             <a href="https://www.umi.us"><img src="{{ getLogo() }}" alt="UMI" height="35px"></a>
           </div>
-
           <div class="form-wrapper">
-
             <!-- Heading -->
             <div class="heading text-center">
               <h1>{{ 'LOG_IN.HEADING' | translate }}</h1>
             </div>
-
             <!-- LinkedIn -->
             <div class="social-wrapper text-center" *ngIf="checkIsMainDomain()">
               <button class="btn" (click)="linkedInSignIn($event)">
                 <i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
               </button>
             </div>
-
             <!-- Or -->
             <div class="or-wrapper text-center">
               <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
             </div>
-
             <form novalidate (submit)="onSubmit()" [formGroup]="formData">
-
               <!-- Credentials -->
               <div class="credentials-wrapper">
-
                 <div class="form-group">
                   <label class="form-label">{{ 'COMMON.EMAIL' | translate }}</label>
                   <input
@@ -56,7 +47,6 @@
                   </span>
                 </span>
                 </div>
-
                 <div class="form-group">
                   <label class="form-label">{{ 'COMMON.PASSWORD' | translate }}</label>
                   <input
@@ -70,12 +60,9 @@
                   {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
                 </span>
                 </div>
-
               </div>
-
               <!-- Login button and forget password -->
               <div class="submit-wrapper text-center">
-
                 <div class="login-button">
                   <button
                     class="btn btn-primary"
@@ -84,26 +71,19 @@
                     {{ 'LOG_IN.LOG_IN_BTN' | translate }}
                   </button>
                 </div>
-
                 <span [ngStyle]="{ 'font-size': '0.7rem' }">{{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }}</span>
                 <a class="text-link" routerLink="/forget">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</a>
-
               </div>
-
             </form>
-
           </div>
-
           <!-- Sign up -->
           <div class="create-wrapper text-center">
             <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '10px' }">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
             <button class="btn btn-sm ghost-primary" routerLink="/signup">{{ 'LOG_IN.SIGN_UP' | translate }}</button>
           </div>
-
          </div>
 
        </div>
-
      </div>
    </div>
  </div>

@@ -12,7 +12,7 @@
         </div>
 
         <div class="column col-10">
-          <ul class="list-filter">
+          <ul class="list-filter" [ngStyle]="{'display': 'none'}">
             <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'name'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_NAME' | translate }}</button></sq-sort></li>
             <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'owner.companyName'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_COMPANY' | translate }}</button></sq-sort></li>
             <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'owner.name'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_AUTHOR' | translate }} </button></sq-sort></li>

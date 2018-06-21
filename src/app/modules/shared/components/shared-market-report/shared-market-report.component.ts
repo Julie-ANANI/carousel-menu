@@ -13,6 +13,7 @@ import { Section } from '../../../../models/section';
 import { Innovation } from '../../../../models/innovation';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { environment} from '../../../../../environments/environment';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -24,6 +25,8 @@ export class SharedMarketReportComponent implements OnInit {
 
   @Input() public project: Innovation;
   @Input() public adminMode: boolean;
+
+  adminSide: boolean;
 
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
@@ -48,9 +51,13 @@ export class SharedMarketReportComponent implements OnInit {
   constructor(private _translateService: TranslateService,
               private _answerService: AnswerService,
               private _innovationService: InnovationService,
-              private _notificationsService: TranslateNotificationsService) { }
+              private _notificationsService: TranslateNotificationsService,
+              private location: Location) { }
 
   ngOnInit() {
+
+    this.adminSide = this.location.path().slice(0, 6) === '/admin';
+
     this.today = Date.now();
     this._innoid = this.project._id;
     this.resetMap();

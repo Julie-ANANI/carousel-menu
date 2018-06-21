@@ -1,5 +1,6 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+import {Component, Output, Input, EventEmitter, OnInit} from '@angular/core';
 import { Innovation } from '../../../../../../../../models/innovation';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-project-pitch',
@@ -7,13 +8,17 @@ import { Innovation } from '../../../../../../../../models/innovation';
   styleUrls: ['pitch.component.scss']
 })
 
-export class PitchComponent {
+export class PitchComponent implements OnInit {
 
   @Input() project: Innovation;
   @Input() changesSaved: boolean;
+  @Input() showPitchFieldError: Subject<boolean>;
 
   @Output() updateInnovation = new EventEmitter<Innovation>();
   @Output() saveChanges = new EventEmitter<boolean>();
+  @Output() pitchFormField = new EventEmitter<boolean>();
+
+  showFieldError: Subject<boolean> = new Subject();
 
   constructor() {}
 
@@ -26,8 +31,18 @@ export class PitchComponent {
     this.saveChanges.emit(value);
   }
 
-  public innovationSaved(value: boolean) {
+  public innovationSaved() {
     this.changesSaved = this.changesSaved;
+  }
+
+  public pitchFormValidation(value: boolean) {
+    this.pitchFormField.emit(value);
+  }
+
+  ngOnInit(): void {
+    this.showPitchFieldError.subscribe( value => {
+      this.showFieldError.next(value);
+    });
   }
 
 }
