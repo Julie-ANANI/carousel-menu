@@ -1,5 +1,5 @@
 <div class="container">
-  <p class="text-right">
+  <p class="text-right" *ngIf="autorizedActions(2)">
     <button class="btn btn-primary" (click)="newCampaign($event)">Add a new campaign</button>
   </p>
   <table class="table users" wt-responsive-table>
