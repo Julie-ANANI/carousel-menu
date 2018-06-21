@@ -10,23 +10,29 @@ import { Tag } from '../../../../models/tag';
 })
 export class SharedTagItemComponent implements OnInit {
 
-  @Input() public tags: Array<Tag>;
+  @Input() set tags(value: Array<Tag>) {
+    this._tags = value;
+    if (this._tags && Array.isArray(this._tags)) {
+      this._tags.map(t => {
+        t['name'] = MultilingPipe.prototype.transform(t['label'], this._translateService.currentLang);
+        return t;
+      });
+    }
+  }
   @Input() public editMode = false;
 
   @Output() addTag: EventEmitter<Tag> = new EventEmitter();
   @Output() removeTag: EventEmitter<Tag> = new EventEmitter();
 
   public tagsAutocomplete: any;
+  private _tags: Array<Tag>;
 
   constructor(private _translateService: TranslateService) {}
 
   ngOnInit() {
     this.tagsAutocomplete = {
       placeholder: 'tags',
-      initialData: this.tags.map(t => {
-        t['name'] = MultilingPipe.prototype.transform(t['label'], this._translateService.currentLang);
-        return t;
-      }) || [],
+      initialData: this._tags || [],
       type: 'tags'
     };
   }
@@ -40,4 +46,5 @@ export class SharedTagItemComponent implements OnInit {
   }
 
   get lang(): string { return this._translateService.currentLang; }
+  get tags() { return this._tags; }
 }

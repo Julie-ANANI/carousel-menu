@@ -105,7 +105,7 @@ export class AnswerModalComponent implements OnInit {
       .addTag(this._modalAnswer._id, event._id)
       .first()
       .subscribe((a) => {
-        this._modalAnswer = a;
+        this.modalAnswer = a;
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
@@ -117,7 +117,7 @@ export class AnswerModalComponent implements OnInit {
       .removeTag(this._modalAnswer._id, event._id)
       .first()
       .subscribe((a) => {
-        this._modalAnswer = a;
+        this.modalAnswer = a;
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
