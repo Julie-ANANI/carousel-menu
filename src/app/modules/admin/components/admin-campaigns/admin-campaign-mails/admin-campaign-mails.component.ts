@@ -189,23 +189,25 @@ export class AdminCampaignMailsComponent implements OnInit {
 
 
   public generateTableBatch(batch: Batch): Table {
-
-
+    //TODO : format date, type date dans le tableau
     const firstJSdate = new Date(batch.firstMail);
-    const firstDate = firstJSdate.getDate() + '/' + firstJSdate.getMonth() + '/' + firstJSdate.getFullYear();
+    const firstMonth = firstJSdate.getMonth() + 1;
+    const firstDate = firstJSdate.getDate() + '/' + firstMonth + '/' + firstJSdate.getFullYear();
     const firstTime = firstJSdate.getHours() + ':' + firstJSdate.getMinutes();
 
     const secondJSdate = new Date(batch.secondMail);
-    const secondDate = secondJSdate.getDate() + '/' + secondJSdate.getMonth() + '/' + secondJSdate.getFullYear();
+    const secondMonth = secondJSdate.getMonth() + 1;
+    const secondDate = secondJSdate.getDate() + '/' + secondMonth + '/' + secondJSdate.getFullYear();
     const secondTime = secondJSdate.getHours() + ':' + secondJSdate.getMinutes();
 
     const thirdJSdate = new Date(batch.thirdMail);
-    const thirdDate = thirdJSdate.getDate() + '/' + thirdJSdate.getMonth() + '/' + thirdJSdate.getFullYear();
+    const thirdMonth = thirdJSdate.getMonth() + 1;
+    const thirdDate = thirdJSdate.getDate() + '/' + thirdMonth + '/' + thirdJSdate.getFullYear();
     const thirdTime = thirdJSdate.getHours() + ':' + thirdJSdate.getMinutes();
 
     const t: Table = {
       _selector: 'TODO',
-      _title: this._campaign.settings.defaultWorkflow,
+      _title: this._campaign.settings.defaultWorkflow || "A/B",
       _isNotPaginable: true,
       _content: [
         {

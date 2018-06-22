@@ -97,12 +97,11 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       this.form.disable();
     }
 
-    console.log("ABStatus Campagne : " + this.campaign.settings.ABsettings.status);
-    //Uniquement en statut 1 en 2 on le fait manuellement
+    // Uniquement en statut 1 en 2 on le fait manuellement
     if (this.campaign.settings.ABsettings.status == 1) {
       this.updateStatsBatches();
     }
-    //On recupere les deux batchs -> route de getBatch
+    // On recupere les deux batchs -> route de getBatch
     if (this.campaign.settings.ABsettings.status == 2) {
       this.getStatsBatch();
     }
@@ -151,6 +150,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
             this._campaign.settings.ABsettings = obj[0];
             this._sizeA = obj[1];
             this._sizeB = obj[2];
+            this.generateStatsTable();
             this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
           }
         }, (err: any) => {
