@@ -1,0 +1,21 @@
+<div class="main-container sidebar-wrapper" id="wrapper-sidebar" [@sidebarAnimate]="state">
+  <div class="columns">
+    <div class="column col-12">
+
+      <!-- Header -->
+      <div class="sidebar-header">
+        <div class="column col-11 col-mx-auto">
+          <div class="columns">
+            <div class="column col-6 col-mx-auto text-left">{{ title | translate }}</div>
+            <div class="column col-6 col-mx-auto text-right"><i class="icon icon-cross" (click)="toggleState()"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="column col-11 col-mx-auto text-left sidebar-content">
+        <label class="form-label">Bonjour {{content}}</label>
+      </div>
+    </div>
+  </div>
+</div>
