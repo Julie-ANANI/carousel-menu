@@ -18,6 +18,11 @@ export const SETUP = {
     'EVALUATING': {
       'A': 'Market exploration is under progress. You can\'t make changes in your project anymore.' ,
       'B': 'Synthesis of your project is available.'
+    },
+    'REVIEWING': {
+      'A': 'Your project needs to be modified. Please',
+      'B': 'reads',
+      'C': 'our comments.'
     }
   },
 

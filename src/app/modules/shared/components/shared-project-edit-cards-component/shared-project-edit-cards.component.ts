@@ -157,8 +157,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       } else {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
-    } else {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_ALLOWED');
     }
 
   }
@@ -314,13 +312,12 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   get projectStatus(): boolean {
-    return this.project.status === 'EDITING' || this.project.status === 'SUBMITTED' || this.isAdmin;
+    return this.project.status === 'EDITING' || this.project.status === 'SUBMITTED' || this.project.projectReviewing || this.isAdmin;
   }
 
-  get canEdit(): boolean {
-    // return this.project && (this.project.status === 'EDITING' || this.isAdmin);
-    return this.project && (this.project.status === 'EDITING');
-  }
+  /*get canEdit(): boolean {
+    return this.project && (this.project.status === 'EDITING' || this.isAdmin);
+  }*/
 
   get dateFormat(): string {
     return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';

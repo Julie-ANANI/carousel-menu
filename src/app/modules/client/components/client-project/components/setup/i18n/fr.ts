@@ -18,6 +18,11 @@ export const SETUP = {
     'EVALUATING': {
       'A': 'L\'exploration du marché est en cours. Vous ne pouvez plus apporter de modifications à votre projet.' ,
       'B': 'La synthèse de votre projet est disponible.'
+    },
+    'REVIEWING': {
+      'A': 'Votre projet doit être modifié. S\'il vous plaît',
+      'B': 'lit',
+      'C': 'nos commentaires.'
     }
   },
 

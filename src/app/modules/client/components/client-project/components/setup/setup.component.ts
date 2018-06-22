@@ -17,7 +17,6 @@ const DEFAULT_TAB = 'pitch';
 export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
-  @Input() projectStatus: string;
 
   private _changesSaved: boolean;
   private _saveChanges: boolean;
@@ -62,32 +61,19 @@ export class SetupProjectComponent implements OnInit {
 
   }
 
-  updateSettings(value: InnovationSettings): void {
-    this.project.settings = value;
-    this._saveChanges = true;
-    this._saveButtonClass = 'save-project';
-  }
-
-  updateInnovation(value: Innovation): void {
-    this.project = value;
-  }
-
   saveProject(event: Event): void {
     event.preventDefault();
 
      if (this._saveChanges) {
-        this.innovationService.save(this.project._id, this.project).first()
-          .subscribe(data => {
+        this.innovationService.save(this.project._id, this.project).first().subscribe(data => {
             this.project = data;
             this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
             this._changesSaved = true;
             this._saveChanges = false;
             this._saveButtonClass = 'disabled';
-            // this.showPitchFieldError.next(true); // to show the error in pitch form.
-            // this.showTargetingFieldError.next(true); // to show the error in targeting form.
           }, err => {
             this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-          });
+        });
      }
 
   }
@@ -122,15 +108,28 @@ export class SetupProjectComponent implements OnInit {
     this._projectToBeSubmitted = false;
 
     this.innovationService.submitProjectToValidation(this.project._id)
-      .first()
-      .subscribe(data => {
-       this.projectStatus = this.project.status = 'SUBMITTED';
+      .first().subscribe(data => {
+       this.project.status = 'SUBMITTED';
        this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
        this.router.navigate(['projects']);
       }, err => {
         this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
 
+  }
+
+  updateSettings(value: InnovationSettings): void {
+    if (this.projectStatus === 'EVALUATING') {
+      this._saveButtonClass = 'disabled';
+    } else {
+      this.project.settings = value;
+      this._saveChanges = true;
+      this._saveButtonClass = 'save-project';
+    }
+  }
+
+  updateInnovation(value: Innovation): void {
+    this.project = value;
   }
 
   /*
@@ -154,7 +153,9 @@ export class SetupProjectComponent implements OnInit {
      shows the notification to the client.
   */
   saveInnovation(value: boolean) {
-    if (this.projectState !== 'EVALUATING') {
+    if (this.projectStatus === 'EVALUATING') {
+      this._saveButtonClass = 'disabled';
+    } else {
       this._saveChanges = value;
       this._changesSaved = false;
       this._saveButtonClass = 'save-project';
@@ -190,7 +191,7 @@ export class SetupProjectComponent implements OnInit {
     return this._changesSaved;
   }
 
-  get projectState(): string {
+  get projectStatus(): string {
     return this.project.status;
   }
 

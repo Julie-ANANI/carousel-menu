@@ -3,12 +3,21 @@
     <div class="column col-xs-12 col-12">
 
       <!-- Project under submitted status message -->
-      <div *ngIf="projectState === 'SUBMITTED'" class="message-wrapper">
+      <div *ngIf="projectStatus === 'SUBMITTED'" class="message-wrapper">
         <div class="message text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</div>
       </div>
 
+      <!-- Project under reviewing status message -->
+      <div *ngIf="project.reviewing" class="message-wrapper">
+        <div class="message text-center">
+          {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.A' | translate }}
+          <span class="text-link">{{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.B' | translate }}</span>
+          {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.C' | translate }}
+        </div>
+      </div>
+
       <!-- Project under evaluating status message -->
-      <div *ngIf="projectState === 'EVALUATING'" class="message-wrapper">
+      <div *ngIf="projectStatus === 'EVALUATING'" class="message-wrapper">
         <div class="message text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING.A' | translate }}</div>
         <br>
         <div class="message text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING.B' | translate }}</div>
@@ -22,12 +31,12 @@
         <div class="function-button">
           <span [ngClass]="saveButtonClass">
             <div class="circle-check"><i class="fas fa-save"></i></div>
-              <button class="btn btn-primary ghost-primary" [disabled]="projectState === 'EVALUATING'" (click)="saveProject($event)">
+              <button class="btn btn-primary ghost-primary" (click)="saveProject($event)">
               {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
             </button>
           </span>
           <span>
-            <button [disabled]="projectState === 'EVALUATING'" class="btn btn-primary" (click)="submitButton($event)">
+            <button [disabled]="projectStatus === 'EVALUATING'" class="btn btn-primary" (click)="submitButton($event)">
               {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
             </button>
           </span>
@@ -39,17 +48,17 @@
         <ul class="tabs">
           <li>
             <a [routerLink]="['setup', 'pitch']" [ngClass]="{'active': currentTab == 'pitch'}">
-              <i class="fas fa-check pitch-check"></i>{{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
+              <i class="fas fa-check pitch-check" [ngStyle]="{ 'display': pitchFormValid ? 'inline-block' : 'none' }"></i>{{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
             </a>
           </li>
           <li>
             <a [routerLink]="['setup', 'targeting']" [ngClass]="{'active': currentTab == 'targeting'}">
-              <i class="fas fa-check targeting-check"></i>{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
+              <i class="fas fa-check targeting-check" [ngStyle]="{ 'display': targetingFormValid ? 'inline-block' : 'none' }"></i>{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
             </a>
           </li>
           <li>
             <a [routerLink]="['setup', 'survey']" [ngClass]="{'active': currentTab == 'survey'}">
-              <i class="fas fa-check survey-check"></i>{{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
+              {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
             </a>
           </li>
         </ul>
