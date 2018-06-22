@@ -100,8 +100,8 @@ export class CampaignService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public updateBatchStats(batchID: string): Observable<any> {
-    return this._http.post(`/batch/${batchID}/updateStats`)
+  public updateBatchesStats(campaign: string): Observable<any> {
+    return this._http.post(`/campaign/${campaign}/updateBatchesStats`)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

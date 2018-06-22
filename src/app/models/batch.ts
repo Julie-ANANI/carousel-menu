@@ -13,21 +13,11 @@ export interface Batch {
   size: number,
   status?: number,
   active: boolean,
-  stats?: {
-    delivered: {
-      type: number
-    },
-    opened: {
-      type: number
-    },
-    clicked: {
-      type: number
-    },
-    bounced: {
-      type: number
-    },
-    insights: {
-      type: number
-    }
-  }
+  stats?: [{
+    delivered: number,
+    opened: number,
+    clicked: number,
+    bounced: number,
+    insights: number
+  }]
 }

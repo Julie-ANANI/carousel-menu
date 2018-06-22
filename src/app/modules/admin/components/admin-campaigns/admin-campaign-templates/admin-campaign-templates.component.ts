@@ -125,7 +125,8 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
   private generateAvailableScenario() {
     this._availableScenarios = [];
-    let scenariosnames = new Set<string>();
+    let scenariosnames: Set<string>;
+    scenariosnames = new Set<string>();
     if (this._campaign.settings && this._campaign.settings.emails) {
       this._campaign.settings.emails.forEach((x) => {
         scenariosnames.add(x.nameWorkflow);

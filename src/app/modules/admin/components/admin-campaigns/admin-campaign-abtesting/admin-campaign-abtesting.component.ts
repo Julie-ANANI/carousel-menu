@@ -5,6 +5,7 @@ import { CampaignService } from '../../../../../services/campaign/campaign.servi
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Campaign } from '../../../../../models/campaign';
 import {Table} from '../../../../shared/components/shared-table/models/table';
+import {Batch} from '../../../../../models/batch';
 
 @Component({
   selector: 'app-admin-campaign-abtesting',
@@ -20,17 +21,15 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     this._campaign = arg;
   }
 
+  public switchActivated: Boolean = false;
+
   private _campaign: Campaign;
   private _status: number;
   private _modifiedScenarios: Array<EmailScenario> ;
   private _nameWorkflowA = '';
   private _nameWorkflowB = '';
-  private _sizeA: number;
-  private _sizeB: number;
-  private _table: Table;
-
-
-
+  private _tableA: Table;
+  private _tableB: Table;
 
 
   private _statsA: Array<{
@@ -47,19 +46,20 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     insights: number,
     bounced: number
   }>;
-
+  private _sizeA: number;
+  private _sizeB: number;
 
 
 
 
   form: FormGroup;
-
-
   public config: any = {
     sort: {},
     search: {}
   };
-  public switchActivated: Boolean = false;
+
+
+
 
   constructor(private formBuilder: FormBuilder,
               private _campaignService: CampaignService,
@@ -97,9 +97,26 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       this.form.disable();
     }
 
-    if (this.campaign.settings.ABsettings.status > 0) {
-      this.updateStatsBatch();
+    console.log("ABStatus Campagne : " + this.campaign.settings.ABsettings.status);
+    //Uniquement en statut 1 en 2 on le fait manuellement
+    if (this.campaign.settings.ABsettings.status == 1) {
+      this.updateStatsBatches();
     }
+    //On recupere les deux batchs -> route de getBatch
+    if (this.campaign.settings.ABsettings.status == 2) {
+      this.getStatsBatch();
+    }
+  }
+
+
+  // MessageStats => Recupere tout les batch de la campagne
+  public getStatsBatch() {
+    this._campaignService.messagesStats(this.campaign._id).subscribe(batches => {
+      this._sizeA = batches[0].size;
+      this._sizeB = batches[1].size;
+      this._statsA = batches[0].stats;
+      this._statsB = batches[0].stats;
+    });
   }
 
   public validateABtesting() {
@@ -123,14 +140,17 @@ export class AdminCampaignAbtestingComponent implements OnInit {
           this.sizeB = this.campaign.stats.nbPros90 - this.sizeA
         }
       }
+      // obj = [Absettings, sizeA, size B]
       this._campaignService.startABtesting(this.campaign._id, this.nameWorkflowA, this.nameWorkflowB, this.sizeA, this.sizeB)
-        .subscribe((campSettingsAB: any) => {
-          if (campSettingsAB.length === 0) {
+        .subscribe((obj: Array<any>) => {
+          if (obj.length === 0) {
             this._notificationsService.error('ERROR.ERROR', 'Not enough Pros in campaign');
           } else {
             this._status = 1;
+            this._campaign.settings.ABsettings = obj[0];
+            this._sizeA = obj[1];
+            this._sizeB = obj[2];
             this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-            this._campaign.settings.ABsettings = campSettingsAB;
           }
         }, (err: any) => {
           this._notificationsService.error('ERROR.ERROR', err);
@@ -142,6 +162,8 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
 
   public generateStatsTable() {
+    console.log(' JE SUIS A ' + this._sizeA);
+    console.log(' JE SUIS B ' + this._sizeB);
     this._table = {
       _selector: 'TODO',
       _title: 'A/B Testing',
@@ -207,6 +229,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     }
   };
 
+
   public statusSwitch() {
     this.switchActivated = !this.switchActivated;
     if (this.switchActivated) {
@@ -217,24 +240,13 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
 
-  public updateStatsBatch() {
-    this._campaignService.updateBatchStats(this.campaign.settings.ABsettings.batchA).subscribe((obj: any) => {
-      if (obj.length === 0) {
-        this._notificationsService.error('ERROR.ERROR', 'No event detected yet');
-      } else {
-        this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-        this._statsA = obj;
-        this.generateStatsTable();
-      }
-    });
-    this._campaignService.updateBatchStats(this.campaign.settings.ABsettings.batchB).subscribe((obj: any) => {
-      if (obj.length === 0) {
-        this._notificationsService.error('ERROR.ERROR', 'No event detected yet');
-      } else {
-        this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-        this._statsB = obj;
-        this.generateStatsTable();
-      }
+  public updateStatsBatches() {
+    this._campaignService.updateBatchesStats(this.campaign._id).subscribe((obj: Array<Batch>) => {
+      this._statsA = obj[0].stats;
+      this._statsB = obj[1].stats;
+      this._sizeA = obj[0].size;
+      this._sizeB = obj[1].size;
+      this.generateStatsTable();
     });
   }
 
