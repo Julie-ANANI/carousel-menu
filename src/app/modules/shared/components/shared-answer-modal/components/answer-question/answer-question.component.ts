@@ -76,9 +76,9 @@ export class AnswerQuestionComponent implements OnInit {
     delete this.fullAnswer.answers[this.question.identifier + 'Comment'];
   }
 
-  public addTag(event: Tag): void {
+  public addTag(event: Tag, q_identifier: string): void {
     this._answerService
-      .addTag(this.fullAnswer._id, event._id, this.question.identifier)
+      .addTag(this.fullAnswer._id, event._id, q_identifier)
       .first()
       .subscribe((a) => {
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
@@ -87,9 +87,9 @@ export class AnswerQuestionComponent implements OnInit {
       });
   }
 
-  public removeTag(event: Tag): void {
+  public removeTag(event: Tag, q_identifier: string): void {
     this._answerService
-      .removeTag(this.fullAnswer._id, event._id, this.question.identifier)
+      .removeTag(this.fullAnswer._id, event._id, q_identifier)
       .first()
       .subscribe((a) => {
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
