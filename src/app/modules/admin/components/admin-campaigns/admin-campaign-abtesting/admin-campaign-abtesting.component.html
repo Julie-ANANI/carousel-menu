@@ -62,7 +62,8 @@
   <!-- Affichage des stats + valider + nom des workflows -->
 
   <div *ngIf="this.status == 1">
-    <app-shared-table [data]="this.table" [config]="config"></app-shared-table>
+    <app-shared-table [data]="this.tableA" [config]="config"></app-shared-table>
+    <app-shared-table [data]="this.tableB" [config]="config"></app-shared-table>
     <button class="btn btn-primary" (click)="updateStatsBatches()">
       <i class="fas fa-sync"></i>
     </button>
@@ -73,7 +74,8 @@
 
   <div *ngIf="this.status == 2">
     <br>
-    <app-shared-table [data]="this.table" [config]="config"></app-shared-table>
+    <app-shared-table [data]="this.tableA" [config]="config"></app-shared-table>
+    <app-shared-table [data]="this.tableB" [config]="config"></app-shared-table>
     <br>
     <button class="btn btn-primary" (click)="updateStatsBatches()">
       <i class="fas fa-sync"></i>

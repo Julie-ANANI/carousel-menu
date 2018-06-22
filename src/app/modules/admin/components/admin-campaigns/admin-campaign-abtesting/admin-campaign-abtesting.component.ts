@@ -109,13 +109,14 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
 
-  // MessageStats => Recupere tout les batch de la campagne
+  // MessageStats => Recupere tout les batch de la campagne sans les update (moins lourd, on update sur demande en statut 2)
   public getStatsBatch() {
-    this._campaignService.messagesStats(this.campaign._id).subscribe(batches => {
-      this._sizeA = batches[0].size;
-      this._sizeB = batches[1].size;
-      this._statsA = batches[0].stats;
-      this._statsB = batches[0].stats;
+    this._campaignService.messagesStats(this.campaign._id).subscribe(result => {
+      this._sizeA = result.batches[0].size;
+      this._sizeB = result.batches[1].size;
+      this._statsA = result.batches[0].stats;
+      this._statsB = result.batches[1].stats;
+      this.generateStatsTable();
     });
   }
 
@@ -164,67 +165,98 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   public generateStatsTable() {
     console.log(' JE SUIS A ' + this._sizeA);
     console.log(' JE SUIS B ' + this._sizeB);
-    this._table = {
+    //TODO limit de float ?
+    this._tableB = {
       _selector: 'TODO',
-      _title: 'A/B Testing',
-      _content: [{
-          Workflow: this._nameWorkflowA + ' 1er mail',
-          Delivered: this._statsA[0].delivered,
-          Opened: this._statsA[0].opened,
-          Clicked: this._statsA[0].clicked,
-          Insights: this._statsA[0].insights,
+      _title: this._nameWorkflowB,
+      _content: [
+        {
+          Step: ' 1er mail',
+          Delivered: (this._statsB[0].delivered  / this._sizeB) * 100 + '%',
+          Opened: (this._statsB[0].opened / this._sizeB) * 100 + '%',
+          Clicked: (this._statsB[0].clicked / this._sizeB) * 100 + '%',
+          Insights: (this._statsB[0].insights / this._sizeB) * 100 + '%',
         }, {
-          Workflow: this._nameWorkflowA + ' 2eme mail',
-          Delivered: this._statsA[1].delivered,
-          Opened: this._statsA[1].opened,
-          Clicked: this._statsA[1].clicked,
-          Insights: this._statsA[1].insights,
+          Step: ' 2eme mail',
+          Delivered: (this._statsB[1].delivered / this._sizeB) * 100 + '%',
+          Opened: (this._statsB[1].opened / this._sizeB) * 100 + '%',
+          Clicked: (this._statsB[1].clicked / this._sizeB) * 100 + '%',
+          Insights: (this._statsB[1].insights / this._sizeB) * 100 + '%',
         }, {
-          Workflow: this._nameWorkflowA + ' 3eme mail',
-          Delivered: this._statsA[2].delivered,
-          Opened: this._statsA[2].opened,
-          Clicked: this._statsA[2].clicked,
-          Insights: this._statsA[2].insights,
-        }, {
-          Workflow: this._nameWorkflowB + ' 1er mail',
-          Delivered: this._statsB[0].delivered,
-          Opened: this._statsB[0].opened,
-          Clicked: this._statsB[0].clicked,
-          Insights: this._statsB[0].insights,
-        }, {
-          Workflow: this._nameWorkflowB + ' 2eme mail',
-          Delivered: this._statsB[1].delivered,
-          Opened: this._statsB[1].opened,
-          Clicked: this._statsB[1].clicked,
-          Insights: this._statsB[1].insights,
-        }, {
-          Workflow: this._nameWorkflowB + ' 3eme mail',
-          Delivered: this._statsB[2].delivered,
-          Opened: this._statsB[2].opened,
-          Clicked: this._statsB[2].clicked,
-          Insights: this._statsB[2].insights,
-      }],
-      _total: 1,
+          Step: ' 3eme mail',
+          Delivered: (this._statsB[2].delivered / this._sizeB) * 100 + '%',
+          Opened: (this._statsB[2].opened / this._sizeB) * 100 + '%',
+          Clicked: (this._statsB[2].clicked / this._sizeB) * 100 + '%',
+          Insights: (this._statsB[2].insights / this._sizeB) * 100 + '%',
+        }],
+      _total: this._sizeB,
       _columns: [{
-        _attr: 'Workflow',
-        _name: 'Workflow',
-        _type: 'String'
+        _attr: 'Step',
+        _name: 'Step',
+        _type: 'TEXT'
       }, {
         _attr: 'Delivered',
         _name: 'Delivered',
-        _type: 'String'
+        _type: 'TEXT'
       }, {
         _attr: 'Opened',
         _name: 'Opened',
-        _type: 'String'
+        _type: 'TEXT'
       }, {
         _attr: 'Clicked',
         _name: 'Clicked',
-        _type: 'String'
+        _type: 'TEXT'
       }, {
         _attr: 'Insights',
         _name: 'Insights',
-        _type: 'String'
+        _type: 'TEXT'
+      }]
+    };
+
+
+    this._tableA = {
+      _selector: 'TODO',
+      _title: this._nameWorkflowA,
+      _content: [{
+          Step: ' 1er mail',
+          Delivered: (this._statsA[0].delivered / this._sizeA) * 100 + '%',
+          Opened: (this._statsA[0].opened / this._sizeA) * 100 + '%',
+          Clicked: (this._statsA[0].clicked / this._sizeA) * 100 + '%',
+          Insights: (this._statsA[0].insights / this._sizeA) * 100 + '%',
+        }, {
+        Step: ' 2eme mail',
+          Delivered: (this._statsA[1].delivered / this._sizeA) * 100 + '%',
+          Opened: (this._statsA[1].opened / this._sizeA) * 100 + '%',
+          Clicked: (this._statsA[1].clicked / this._sizeA) * 100 + '%',
+          Insights: (this._statsA[1].insights / this._sizeA) * 100 + '%',
+        }, {
+        Step: ' 3eme mail',
+          Delivered: (this._statsA[2].delivered / this._sizeA) * 100 + '%',
+          Opened: (this._statsA[2].opened / this._sizeA) * 100 + '%',
+          Clicked: (this._statsA[2].clicked / this._sizeA) * 100 + '%',
+          Insights: (this._statsA[2].insights / this._sizeA) * 100 + '%',
+        }],
+      _total: this._sizeA,
+      _columns: [{
+        _attr: 'Step',
+        _name: 'Step',
+        _type: 'TEXT'
+      }, {
+        _attr: 'Delivered',
+        _name: 'Delivered',
+        _type: 'TEXT'
+      }, {
+        _attr: 'Opened',
+        _name: 'Opened',
+        _type: 'TEXT'
+      }, {
+        _attr: 'Clicked',
+        _name: 'Clicked',
+        _type: 'TEXT'
+      }, {
+        _attr: 'Insights',
+        _name: 'Insights',
+        _type: 'TEXT'
       }]
     }
   };
@@ -259,7 +291,8 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   get statsA(): any { return this._statsA };
   get statsB(): any { return this._statsB };
   get status(): number { return this._status };
-  get table(): any {return this._table};
+  get tableA(): Table {return this._tableA};
+  get tableB(): Table {return this._tableB};
 
 
   set nameWorkflowA(arg: string) { this._nameWorkflowA = arg};
