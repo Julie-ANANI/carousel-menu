@@ -3,8 +3,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ShareService } from '../../../../services/share/share.service';
 import { InnovationSettings } from '../../../../models/innov-settings';
-
 import * as _ from 'lodash';
+import {Subject} from 'rxjs/Subject';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-shared-project-settings',
@@ -16,8 +17,13 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   @Input() settings: InnovationSettings;
   @Input() adminMode: boolean;
+  @Input() showTargetingFieldError: Subject<boolean>;
 
   @Output() settingsChange = new EventEmitter<any>();
+  @Output() targetingFormField = new EventEmitter<boolean>();
+
+  showMarketError: boolean;
+  showGeographyError: boolean;
 
   private _displayCountriesToExcludeSection = false;
   private _displayCountriesCommentSection = false;
@@ -29,7 +35,8 @@ export class SharedProjectSettingsComponent implements OnInit {
 
   constructor(private translateService: TranslateService,
               private _authService: AuthService,
-              public shareService: ShareService) {
+              public shareService: ShareService,
+              private location: Location) {
   }
 
 
@@ -46,6 +53,31 @@ export class SharedProjectSettingsComponent implements OnInit {
       this._displayKeywordsSection = this.settings.keywords.length > 0;
     }
 
+    if (this.location.path().slice(0, 6) !== '/admin') {
+      this.showTargetingFieldError.subscribe(value => {
+        if (value) {
+          this.showMarketError = this.settings.market.comments.length === 0;
+          this.showGeographyError = this.settings.geography.exclude.length === 0 && this.settings.geography.comments.length === 0 &&
+            !this.settings.geography.continentTarget.russia && !this.settings.geography.continentTarget.oceania && !this.settings.geography.continentTarget.europe
+            && !this.settings.geography.continentTarget.asia && !this.settings.geography.continentTarget.americaSud && !this.settings.geography.continentTarget.americaNord
+            && !this.settings.geography.continentTarget.africa;
+        } else {
+          this.showMarketError = false;
+          this.showGeographyError = false;
+        }
+      });
+    }
+
+  }
+
+  getColor(length: number) {
+    if (length === 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < 250) {
+      return '#f0ad4e';
+    } else {
+      return '#2ECC71';
+    }
   }
 
   get lang() {
@@ -122,6 +154,7 @@ export class SharedProjectSettingsComponent implements OnInit {
    */
   public addCountryToExclude(event: {value: Array<string>}): void {
     this.settings.geography.exclude = event.value;
+    this.showGeographyError = this.settings.geography.exclude.length === 0;
     this.updateSettings();
   }
 
@@ -245,6 +278,19 @@ export class SharedProjectSettingsComponent implements OnInit {
    */
   public updateSettings() {
     this.settingsChange.emit(this.settings);
+    this.checkField();
+  }
+
+  checkField() {
+    if (this.settings.market.comments.length !== 0 && this.settings.geography.exclude.length !== 0 || this.settings.geography.comments.length !== 0 ||
+      this.settings.geography.continentTarget.russia || this.settings.geography.continentTarget.oceania || this.settings.geography.continentTarget.europe
+      || this.settings.geography.continentTarget.asia || this.settings.geography.continentTarget.americaSud || this.settings.geography.continentTarget.americaNord
+      || this.settings.geography.continentTarget.africa) {
+      this.targetingFormField.emit(true);
+      this.showGeographyError = false;
+    } else {
+      this.targetingFormField.emit(false);
+    }
   }
 
 }

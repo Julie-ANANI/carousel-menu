@@ -20,7 +20,7 @@ $mandatory-star: #EA5858;
 }
 
 .sidebar-header {
-  height: 74px;
+  min-height: 74px;
   background-color: $header-background;
   color: white;
   padding-top: 22px;

@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Table} from '../models/table';
 import {Row} from '../models/row';
-import {Types} from '../models/types';
-import {Column} from '../models/column';
+import {Column, types} from '../models/column';
+import {Label} from '../models/label';
 
 @Component({
   selector: 'app-shared-table',
@@ -33,6 +33,7 @@ export class SharedTableComponent {
   private _isEditable = false;
   private _isDeletable = false;
   private _isFiltrable = false;
+  private _isSortable= false;
   private _content: Row[] = [];
   private _total = 0;
   private _columns: Column[] = [];
@@ -55,6 +56,7 @@ export class SharedTableComponent {
       this._isEditable = value._isEditable || false;
       this._isDeletable = value._isDeletable || false;
       this._isFiltrable = value._isFiltrable || false;
+      this._isSortable = value._isSortable || false;
 
       this._total = value._total;
 
@@ -92,14 +94,8 @@ export class SharedTableComponent {
     return this._content[rowKey]._content[columnKey];
   }
 
-  getType(column: Column): Types {
-    let typeKey = 'TEXT';
-    for (const typesKey in Types) {
-      if (column._type === typesKey) {
-        typeKey = typesKey;
-      }
-    }
-    return Types[typeKey];
+  getType(column: Column): types {
+    return column._type;
   }
 
   getAttr(column: Column) {
@@ -108,6 +104,22 @@ export class SharedTableComponent {
 
   getName(column: Column) {
     return column._name;
+  }
+
+  getChoices(column: Column): Label[] {
+    return column._choices || [];
+  }
+
+  getChoice(column: Column, name: string): Label {
+    return this.getChoices(column).find(value => value._name === name) || {_name: '', _class: ''};
+  }
+
+  getChoiceName(choice: Label): string {
+    return choice._name || '';
+  }
+
+  getChoiceClass(choice: Label): string {
+    return choice._class || '';
   }
 
   get selector(): string {
@@ -132,6 +144,10 @@ export class SharedTableComponent {
 
   get isFiltrable(): boolean {
     return this._isFiltrable;
+  }
+
+  get isSortable(): boolean {
+    return this._isSortable;
   }
 
   get content(): Row[] {

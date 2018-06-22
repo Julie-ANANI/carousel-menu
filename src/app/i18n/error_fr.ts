@@ -3,9 +3,16 @@ export const ERROR = {
   'SUCCESS': 'Succès',
   'CANNOT_REACH': 'Le serveur ne répond pas.',
   'FORM_ERROR': 'Erreur de formulaire',
+
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',
   'INVALID_FORM_DATA': 'La combinaison e-mail / mot de passe n\'est pas valide.',
   'PAGE_NOT_FOUND': 'La page n\'a pas pu être trouvée.',
+
+  'FORM': {
+    'PITCH_FORM': 'Merci de répondre aux champs du formulaire de terrain.',
+    'TARGETING_FORM': 'Merci de répondre aux champs du formulaire de ciblage.'
+  },
+
   'LOGIN': {
     'WELCOME': 'Bienvenue !',
     'LOGGED_IN': 'Vous avez été connecté(e) avec succès.',
@@ -17,6 +24,7 @@ export const ERROR = {
     'LOGOUT': 'Déconnexion',
     'LOGOUT_TEXT': 'Vous avez été déconnecté(e) avec succès.',
   },
+
   'ACCOUNT': {
     'UPDATE': 'Mise à jour réussie',
     'UPDATE_TEXT': 'Votre profil a bien été mis à jour.',
@@ -26,6 +34,7 @@ export const ERROR = {
     'PASSWORD_UPDATED_TEXT': 'Votre mot de passe a bien été mis à jour.',
     'SAME_PASSWORD': 'Les deux mots de passe doivent être identiques.'
   },
+
   'PROJECT': {
     'NOT_FOUND': 'Introuvable',
     'UNFORBIDDEN': 'Accès interdit',
@@ -38,19 +47,25 @@ export const ERROR = {
     'SUBMITTED': 'Soumis',
     'SUBMITTED_TEXT': 'Votre projet a été envoyé pour valider.'
   },
+
   'PRESET': {
     'UPDATED': 'Configuration bien mise à jour'
   },
+
   'SECTION': {
     'UPDATED': 'Section bien mise à jour'
   },
+
   'QUESTION': {
     'UPDATED': 'Question bien mise à jour'
   },
+
   'ANSWER': {
     'UPDATED': 'Réponse bien mise à jour'
   },
+
   'QUIZ': {
     'CREATED': 'Le quiz a bien été créé'
   }
+
 };

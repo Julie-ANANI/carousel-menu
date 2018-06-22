@@ -1,120 +1,178 @@
-//import
-@import '../../../../../style/client-styles';
+#discover-description {
 
-$white-color: #FFFFFF;
+  .hero-container {
+    background-color: #4F5D6B;
 
-// Text color
-$header-text-color: #FFFFFF;
+    h1, .para {
+      color: white;
+    }
 
-.hero-container {
-  background: url(https://res.cloudinary.com/umi/image/upload/v1524582699/app/default-images/hero-background.png) repeat;
+    h6 {
+      color: #a4a4a4;
+      font-size: 0.8rem;
+      margin-bottom: 15px;
+    }
 
-  h1::after {
-    display: none;
-  }
+    .detail-wrapper {
+      display: flex;
+      justify-content: space-between;
 
-  .hero-title {
-    color: $header-text-color;
-  }
+      .summary-wrapper {
+        padding-right: 20px;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
 
-  .hero-hr {
-    border-color: $header-text-color;
-  }
+      .quiz-wrapper {
 
-  .hero-subtitle {
-    font-size: 1.1rem;
-    color: $header-text-color;
-  }
+        .btn {
+          padding-top: 14px;
+          padding-bottom: 14px;
 
-  .button-container {
-    padding-top: 52px;
+          i {
+            vertical-align: middle;
+          }
 
-    .button {
-      background-color: #F79323;
-      border-color: #F79323;
-      color: $white-color;
+        }
 
-      span i {
-        margin-left: 0.25rem;
+      }
+
+      .share-wrapper {
+        background-color: #235273;
+        padding: 13px 18px 34px 18px;
+        color: #fff;
+        width: 310px;
+        flex: 1 0 auto;
+
+        .para {
+          font-size: 0.8rem;
+        }
+
+        .fab {
+          margin: 5px 0 5px 2px;
+          padding: 11.79px 11.82px;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: all 0.15s ease-in-out;
+        }
+
+        a {
+          color: #FFFFFF;
+          text-decoration: none;
+        }
+
+        #icon-linkedIn {
+          padding-left: 13.5px;
+          padding-right: 13.5px;
+          background-color: #0077B5;
+        }
+
+        #icon-linkedIn:hover {
+          background-color: white;
+          color: #0077B5;
+        }
+
+        #icon-twitter {
+          background-color: #48AAEB;
+        }
+
+        #icon-twitter:hover {
+          background-color: white;
+          color: #48AAEB;
+        }
+
+        #icon-facebook {
+          padding-left: 19.5px;
+          padding-right: 19.5px;
+          background-color: #4F65A1;
+          color: white;
+        }
+
+        #icon-facebook:hover {
+          background-color: white;
+          color: #4F65A1;
+        }
+
+        #icon-google {
+          background-color: #CC5441;
+          padding-right: 8px;
+          padding-left: 8px;
+        }
+
+        #icon-google:hover {
+          background-color: white;
+          color: #CC5441;
+        }
+
       }
 
     }
 
-    .button:hover {
-      background-color: #c5751c;
-      border-color: #c5751c;
+  }
+
+  .media-wrapper {
+    display: inline-block;
+    margin: 8px 8px 8px 0;
+
+    img {
+      max-width: 336px;
+      max-height: 250px;
+      display: inline-block;
     }
 
   }
 
-  #share-container {
-    background-color: #325B78;
-    max-width: 336px;
-    padding: 13px 18px 18px 24px;
-    min-height: 220px;
-    color: $white-color;
-    margin-left: 10px;
+  h3 {
+    color: #0B90C6;
+  }
 
-    #share-data {
+  .advantage {
+    margin: 0;
+
+    li {
+      color: #5D5D5D;
+      font-size: 0.9rem;
+      margin: 0;
+      padding: 6px 8px;
+    }
+
+    li:last-child {
+      padding-bottom: 0;
+    }
+
+  }
+
+  .solution-wrapper {
 
     .para {
-      color: $white-color;
+      padding: 0;
     }
 
-    .fab {
-      padding: 11.79px 11.82px;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: all 0.5s ease;
+  }
+
+}
+
+/********************************** Media ***************************************/
+
+@media (max-width: 320px) {
+
+  #discover-description {
+
+    .detail-wrapper {
+
+      .share-wrapper {
+        max-width: 292px !important;
+      }
+
     }
 
-    a {
-      color: #FFFFFF;
-      text-decoration: none;
-    }
+    .quiz-wrapper {
 
-    #icon-linkedIn {
-      padding-left: 13.5px;
-      padding-right: 13.5px;
-      background-color: #0077B5;
-    }
-
-    #icon-linkedIn:hover {
-      background-color: $white-color;
-      color: #0077B5;
-    }
-
-    #icon-twitter {
-      background-color: #48AAEB;
-    }
-
-    #icon-twitter:hover {
-      background-color: $white-color;
-      color: #48AAEB;
-    }
-
-    #icon-facebook {
-      padding-left: 19.5px;
-      padding-right: 19.5px;
-      background-color: #4F65A1;
-      color: $white-color;
-    }
-
-    #icon-facebook:hover {
-      background-color: $white-color;
-      color: #4F65A1;
-    }
-
-    #icon-google {
-      background-color: #CC5441;
-      padding-right: 8px;
-      padding-left: 8px;
-    }
-
-    #icon-google:hover {
-      background-color: $white-color;
-      color: #CC5441;
-    }
+      .btn {
+        padding-left: 17px;
+        padding-right: 17px;
+      }
 
     }
 
@@ -122,70 +180,46 @@ $header-text-color: #FFFFFF;
 
 }
 
-#gallery-section {
-  padding-bottom: 25px;
+@media (max-width: 600px) {
 
-  #padding-bottom {
-    padding-bottom: 25px;
-  }
+  #discover-description {
 
-}
+    .media-wrapper {
 
-#advantages-section{
-  background-color: #ececec;
+      img {
+        max-width: 100%;
+        max-height: unset;
+      }
 
-  ul {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  li {
-    color: $para-color;
-    font-size: 1rem;
-  }
-
-}
-
-#solution-section {
-  padding-bottom: 25px;
-
-}
-
-@media (max-width: 426px) {
-
-  .button {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-  }
-
-  #share-container {
-    padding: 7px 9px 9px 16px !important;
-    max-width: 300px !important;
-  }
-
-}
-
-@media (min-width: 960px) {
-
-  #solution-section {
-
-    #col-padding-right {
-      padding-right: 35px !important;
-    }
-
-    #col-padding-left {
-      padding-left: 35px !important;
     }
 
   }
 
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 840px) {
 
-  #padding-top-share {
-    padding-top: 30px !important;
+  #discover-description {
+
+    .detail-wrapper {
+      flex-direction: column;
+
+      .share-wrapper {
+        margin-top: 25px;
+        width: unset !important;
+        max-width: 336px;
+      }
+
+    }
+
+    .solution-wrapper {
+
+      .heading-solution {
+        margin-top: 25px;
+      }
+
+    }
+
   }
 
 }
-

@@ -5,7 +5,6 @@ import { FormGroup } from '@angular/forms';
 // Interface
 import { TemplateForm } from '../interfaces/template-form';
 
-
 @Injectable()
 export class UserFormSidebarService {
 

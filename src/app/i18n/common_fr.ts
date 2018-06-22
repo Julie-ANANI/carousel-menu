@@ -11,6 +11,9 @@ export const COMMON = {
   'LOG_OUT': 'Se déconnecter',
   'CANCEL': 'Annuler',
   'ADD': 'Ajouter',
+  'MORE': 'Voir Plus',
+  'ALL': 'Tous',
+  'OF': 'de',
   'ADDED': 'Ajouté le',
   'CREATED': 'Créé le',
   'UPDATED': 'Modifié le',
@@ -21,6 +24,7 @@ export const COMMON = {
   'NO': 'Non',
   'YES': 'Oui',
   'ACCEPT': 'Accepter',
+  'PAGINATION' : 'Lignes par pages',
   'FILTER': 'Filtrer',
   'SEARCH': 'Recherche',
   'TAGS': 'Tags',
@@ -85,6 +89,11 @@ export const COMMON = {
     '0': 'Idée',
     '1': 'Développement en cours',
     '2': 'Déjà disponible'
+  },
+
+  'TABLE' : {
+    'SELECTED_ROWS': 'lignes selectionnées',
+    'NO-RESULTS': 'Pas de résultats'
   },
 
   'INVALID': {

@@ -63,7 +63,10 @@ export const PITCH = {
 
   'STAGE': 'At what stage is your project?',
 
-  'PATENTED': 'Is your project patent protected?',
+  'PATENTED': {
+    'LABEL': 'Is your project patent protected?',
+    'ERROR': 'Patent is required.'
+  },
 
   'MEDIA': {
     'LABEL': 'Add images/videos to illustrate your project',
@@ -78,7 +81,10 @@ export const PITCH = {
 
   'EXTERNAL_DIFFUSION': {
     'A': 'Would you like to authorize',
-    'B' : 'to diffuse your project to it\'s ambassadors community?'
-  }
+    'B' : 'to diffuse your project to it\'s ambassadors community?',
+    'ERROR': 'Diffusion is required.'
+  },
+
+  'INNOVATION_PREVIEW': 'Innovation Preview',
 
 };

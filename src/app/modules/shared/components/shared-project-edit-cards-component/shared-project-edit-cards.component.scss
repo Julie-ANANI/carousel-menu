@@ -50,6 +50,7 @@
 
         li.active {
           border-color: #2ECC71;
+          background-color: white;
 
           .circle-check {
             background-color: #2ECC71;
@@ -154,205 +155,13 @@
 
   }
 
-}
-
-
-
-
-#pitchCard {
-  padding-top: 25px;
-  padding-bottom: 25px;
-
-  .describe-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    .ques {
-      margin-right: 25px;
-      margin-bottom: 25px;
-    }
-
-    .lang-container {
-
-      ul {
-        display: flex;
-        padding: 0;
-        list-style: none;
-        margin: 0;
-
-        li {
-          border: 2px solid #dddddd;
-          border-radius: 5px;
-          text-align: center;
-          cursor: pointer;
-          background: #FAFAFA;
-          font-size: 0.9em;
-          color: #262831;
-          padding: 12px 30px;
-          margin: 0 30px 0 0;
-
-          .circle-check {
-            margin-top: -31px;
-            margin-left: -44px;
-            visibility: hidden;
-            i {
-              padding-top: 9px;
-            }
-
-          }
-
-        }
-
-
-
-        li:hover {
-          background-color: #FFF9EB;
-          border-color: #FFB300;
-        }
-
-        li.active {
-          border-color: #2ECC71 !important;
-
-          .circle-check {
-            border-color: #2ECC71;
-            background: #2ECC71;
-            visibility: visible;
-            i {
-              color: white;
-            }
-
-          }
-
-        }
-
-      }
-
-    }
-
-    .create-innovation {
-      margin-top: 25px;
-    }
-
-  }
-
-  .lang-action {
-    display: inline-block;
-
-    .preview-link {
-      color: #97A4B1;
-    }
-
-
-
-  }
-
-
-
-
-
-  .pd-label {
-    padding-top: 20px;
-  }
-
-  .form-group {
-    margin-bottom: 0 !important;
-  }
-
-  .media-disp-container {
-    padding-bottom: 20px;
-
-    .tooltips {
-
-      .tooltip-text {
-        left: 127%;
-      }
-
-      .tooltip-text::after {
-        right: 100%;
-        left: unset;
-        border-top-color: transparent;
-        border-right-color: #97A4B1;
-        border-left-color: transparent;
-        border-bottom-color: transparent;
-      }
-
-    }
-
-    .para {
-      font-size: 0.7rem;
-      padding-top: 0;
-      color: #97A4B1;
-    }
-
-    .principal-media {
-      margin-bottom: 50px;
-      margin-top: 16px;
-
-      img, iframe {
-        box-shadow: 0 0 20px 0 rgba(0,0,0,0.5);
-        border-radius: 5px;
-      }
-
-    }
-
-    .media-content {
-      display: inline-block;
-      margin-right: 10px;
-
-      img, iframe {
-        border-radius: 5px;
-      }
-
-      .func-button {
-        padding-top: 10px;
-        padding-bottom: 16px;
-        font-size: 0.7rem;
-
-        .delete-link {
-          color: #EA5858;
-        }
-
-      }
-
-    }
-
-  }
-
-  .upload-wrapper {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    flex-direction: column;
-
-    .image-upload-wrapper {
-      flex: 1;
-    }
-
-    .or-wrapper {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-
-      .para {
-        color: #97A4B1;
-        font-size: 0.7rem;
-        margin: 25px;
-      }
-
-    }
-
-    .video-upload-wrapper {
-      flex: 1;
-    }
-
+  .borderRed {
+    border-color: #EA5858;
   }
 
 }
 
 /********************************** Media ***************************************/
-
 
 @media (max-width: 600px) {
 

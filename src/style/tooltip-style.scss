@@ -1,0 +1,66 @@
+/*
+    This stylesheet contains the style related to the tooltip.
+    It is to show the help to the user like a tooltip.
+ */
+
+
+.tooltips {
+  position: absolute;
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  background-color: white;
+  border-radius: 50%;
+  z-index: 10;
+  margin-left: 4px;
+
+  i {
+    display: flex;
+    justify-content: center;
+  }
+
+  .tooltips-text {
+    visibility: hidden;
+    width: 190px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #97A4B1;
+    color: #fff;
+    justify-content: center;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 0.7rem;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 127%;
+  }
+
+  .tooltips-text::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    right: 100%;
+    border: 5px solid transparent;
+    border-right-color: #97A4B1;
+  }
+
+}
+
+.tooltips:hover .tooltips-text {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  visibility: visible;
+}
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  .tooltips {
+    display: none;
+  }
+
+}

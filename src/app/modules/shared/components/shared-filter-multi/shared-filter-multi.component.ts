@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {Column} from '../shared-table/models/column';
-import {Types} from '../shared-table/models/types';
+import {Column, types} from '../shared-table/models/column';
+import {Label} from '../shared-table/models/label';
 
 @Component({
   selector: 'sqFilterMulti',
@@ -57,12 +57,12 @@ export class SharedFilterMultiComponent {
         value.find(value1 => value1._attr.toLowerCase() === 'lastname')) {
         value = value.filter(value1 => value1._attr.toLowerCase() !== 'lastname');
       }
-      this._textProps = value.filter(value1 => this.getType(value1) === Types.TEXT);
+      this._textProps = value.filter(value1 => this.getType(value1) === 'TEXT');
       if (this._currentTextProp._attr === '' && this._textProps.length > 0) {
         this._currentTextProp = this._textProps[0];
       }
 
-      this._otherProps = value.filter(value1 => this.getType(value1) !== Types.TEXT);
+      this._otherProps = value.filter(value1 => this.getType(value1) !== 'TEXT');
     }
   }
 
@@ -78,14 +78,8 @@ export class SharedFilterMultiComponent {
     return this._otherProps;
   }
 
-  getType(column: Column): Types {
-    let typeKey = 'TEXT';
-    for (const typesKey in Types) {
-      if (column._type === typesKey) {
-        typeKey = typesKey;
-      }
-    }
-    return Types[typeKey];
+  getType(column: Column): types {
+    return column._type;
   }
 
   getAttr(column: Column) {
@@ -96,8 +90,12 @@ export class SharedFilterMultiComponent {
     return column._name;
   }
 
-  getChoices(column: Column) {
+  getChoices(column: Column): Label[] {
     return column._choices || [];
+  }
+
+  getChoiceName(choice: Label): string {
+    return choice._name;
   }
 
   changeCurrentTextProp(prop: any) {

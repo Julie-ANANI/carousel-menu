@@ -11,6 +11,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { InnovationPreviewSidebarService } from '../shared-sidebar/services/innovation-preview-sidebar.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-shared-project-edit-cards',
@@ -22,17 +24,27 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Input() project: Innovation;
   @Input() changesSaved: boolean;
+  @Input() showPitchFieldError: Subject<boolean>;
 
   @Output() projectChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
   @Output() pitchFormField = new EventEmitter<boolean>();
 
-  advantageInputError: boolean;
+  showTitleError: boolean;
+  showSummaryError: boolean;
+  showProblemError: boolean;
+  showSolutionError: boolean;
+  showAdvantageError: boolean;
+  showPatentError: boolean;
+  showDiffusionError: boolean;
+
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
+
   private _showDeleteModal = false;
   private _deleteInnovCardId = '';
   private _langDelete = '';
+
   /*
    * Gestion de l'affichage
    */
@@ -42,12 +54,22 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private domSanitizer1: DomSanitizer,
               private translateService: TranslateService,
-              private translateNotificationsService: TranslateNotificationsService) {
+              private translateNotificationsService: TranslateNotificationsService,
+              private innovationPreviewSidebarService: InnovationPreviewSidebarService,
+              private location: Location) {
   }
 
   ngOnInit() {
     this.changesSaved = true;
-    this.checkField();
+
+    if (this.location.path().slice(0, 6) !== '/admin') {
+      this.showPitchFieldError.subscribe(value => {
+        if (value) {
+          this.showError();
+        }
+      });
+    }
+
   }
 
   notifyModelChanges(_event: any) {
@@ -56,14 +78,46 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.checkField();
   }
 
+  showError() {
+    this.showTitleError = this.project.innovationCards[this.innovationCardEditingIndex].title === '';
+    this.showSummaryError = this.project.innovationCards[this.innovationCardEditingIndex].summary === '';
+    this.showProblemError = this.project.innovationCards[this.innovationCardEditingIndex].problem === '';
+    this.showSolutionError = this.project.innovationCards[this.innovationCardEditingIndex].solution === '';
+    this.showAdvantageError = this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0;
+    this.showPatentError = this.project.patented === null;
+    this.showDiffusionError = this.project.external_diffusion === null;
+  }
+
   checkField() {
     if (this.project.innovationCards[this.innovationCardEditingIndex].title !== '' && this.project.innovationCards[this.innovationCardEditingIndex].summary !== ''
       && this.project.innovationCards[this.innovationCardEditingIndex].problem !== '' && this.project.innovationCards[this.innovationCardEditingIndex].solution !== ''
-      && this.project.innovationCards[this.innovationCardEditingIndex].advantages.length !== 0) {
+      && this.project.innovationCards[this.innovationCardEditingIndex].advantages.length !== 0 && this.project.patented !== null
+      && this.project.external_diffusion !== null) {
       this.pitchFormField.emit(true);
     } else {
       this.pitchFormField.emit(false);
     }
+  }
+
+  /*
+      Resetting the value of all errors when we switch between the languages.
+   */
+  resetErrorValue() {
+    this.showTitleError = false;
+    this.showSummaryError = false;
+    this.showProblemError = false;
+    this.showSolutionError = false;
+    this.showAdvantageError = false;
+    this.showPatentError = false;
+    this.showDiffusionError = false;
+  }
+
+  /*
+      Sending values to the child component "Innovation preview sidebar"
+   */
+  showPreview(event: Event, id: string, lang: string) {
+    event.preventDefault();
+    this.innovationPreviewSidebarService.setValues('active', 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW', id, lang);
   }
 
   /**
@@ -97,12 +151,12 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
             this.project.innovationCards.push(data);
             this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
             this.projectChange.emit(this.project);
+            this.checkField();
           });
         }
       } else {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
       }
-
     }
 
   }
@@ -115,11 +169,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   addAdvantageToInventionCard (event: {value: Array<{text: string}>}, cardIdx: number): void {
     this.project.innovationCards[cardIdx].advantages = event.value;
     this.notifyModelChanges(event.value);
-    console.log(event);
     if (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0) {
-      this.advantageInputError = true;
+      this.showAdvantageError = true;
     } else {
-      this.advantageInputError = false;
+      this.showAdvantageError = false;
     }
   }
 
@@ -131,13 +184,14 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   imageUploaded(media: Media, cardIdx: number): void {
     this.project.innovationCards[cardIdx].media.push(media);
-    // this.projectChange.emit(this.project);
-    if (this.innovationCardEditingIndex === 0) {
-      if (this.project.principalMedia === null || this.project.principalMedia === undefined) {
-       this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id, this.project.innovationCards[0]._id, media._id).first().subscribe((res) => {
-         this.projectChange.emit(this.project);
-       });
-      }
+
+    if (!this.project.innovationCards[this.innovationCardEditingIndex].principalMedia) {
+      this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
+        this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id).first()
+        .subscribe((res) => {
+        this.project.innovationCards[cardIdx].principalMedia = media;
+        this.projectChange.emit(this.project);
+      });
     }
 
   }
@@ -166,12 +220,13 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   deleteMedia(event: Event, media: Media, index: number): void {
     event.preventDefault();
 
-    this.innovationCardEditingIndex = index;
-
     this.innovationService.deleteMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[index]._id, media._id)
       .first().subscribe((_res: Innovation) => {
         this.project.innovationCards[index].media = this.project.innovationCards[index].media.filter((m) => m._id !== media._id);
+        if (this.project.innovationCards[index].principalMedia._id === media._id) {
+          this.project.innovationCards[index].principalMedia = null;
+        }
         this.projectChange.emit(this.project);
       });
 
@@ -191,9 +246,12 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   deleteInnovCard(event: Event) {
     event.preventDefault();
-    this.innovationService.removeInnovationCard(this.project._id, this._deleteInnovCardId).subscribe((res) => {
+    this.innovationService.removeInnovationCard(this.project._id, this._deleteInnovCardId)
+      .subscribe((res) => {
       this.project.innovationCards = this.project.innovationCards.filter((card) => card._id !== this._deleteInnovCardId);
       this.innovationCardEditingIndex -= 1;
+      this.resetErrorValue();
+      this.checkField();
       this._showDeleteModal = false;
     }, err => {
       this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
@@ -205,10 +263,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   closeModal(event: Event) {
     event.preventDefault();
     this._showDeleteModal = false;
-  }
-
-  valueCheck(event: Event) {
-
   }
 
   getColor(length: number) {

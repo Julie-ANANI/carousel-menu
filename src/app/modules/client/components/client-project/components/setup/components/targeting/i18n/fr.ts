@@ -6,6 +6,7 @@ export const TARGETING = {
     'NEW_COUNTRY_TO_EXCLUDE_PLACEHOLDER': 'Nom du pays à exclure',
     'COMMENT': 'Un commentaire ?',
     'SPECIFIC_REQUEST_PLACEHOLDER': 'Cibler en priorité les USA, l\'UE, la Corée, le Japon et la Chine',
+    'ERROR': 'La zone géographique est requise.'
   },
 
   'GEOGRAPHYs': 'Sélectionnez la zone géographique du projet',
@@ -13,7 +14,8 @@ export const TARGETING = {
 
   'MARKET': {
     'LABEL': 'Secteurs d’activité',
-    'PLACEHOLDER': 'Ex : Branche micro-électronique, secteur photovoltaïque, sécurité industrielle...'
+    'PLACEHOLDER': 'Ex : Branche micro-électronique, secteur photovoltaïque, sécurité industrielle...',
+    'ERROR': 'Le secteur du marché est requis.'
   },
 
   'PROFESSIONALS': {
