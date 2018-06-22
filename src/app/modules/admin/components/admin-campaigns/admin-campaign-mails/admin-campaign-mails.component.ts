@@ -179,12 +179,67 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
 
-  private generateTableBatch(batch: Batch): Table {
-
-
+  public generateTableBatch(batch: Batch): Table {
     const t: Table = {
-
-    }
+      _selector: 'TODO',
+      _title: this._campaign.settings.defaultWorkflow,
+      _content: [
+        {
+          Step: '01 - HelloWorld',
+          Sent: batch.stats[0].delivered + batch.stats[0].bounced,
+          Opened: (batch.stats[0].opened / batch.size) * 100 + '%',
+          Clicked: (batch.stats[0].clicked / batch.size) * 100 + '%',
+          Insights: batch.stats[0].insights,
+          Date: batch.firstMail
+        }, {
+          Step: '02 - 2nd try',
+          Sent: batch.stats[1].delivered + batch.stats[1].bounced,
+          Opened: (batch.stats[1].opened / batch.size) * 100 + '%',
+          Clicked: (batch.stats[1].clicked / batch.size) * 100 + '%',
+          Insights: batch.stats[1].insights,
+          Date: batch.secondMail
+        }, {
+          Step: '03 - 3rd try',
+          Sent: batch.stats[2].delivered + batch.stats[2].bounced,
+          Opened: (batch.stats[2].opened / batch.size) * 100 + '%',
+          Clicked: (batch.stats[2].clicked / batch.size) * 100 + '%',
+          Insights: batch.stats[2].insights,
+          Date: batch.thirdMail
+        }/*, { TODO: backend (undefined)
+          Step: '04 - Thanks',
+          Sent: (batch.stats[3].delivered / batch.size) * 100 + '%',
+          Opened: (batch.stats[3].opened / batch.size) * 100 + '%',
+          Clicked: (batch.stats[3].clicked / batch.size) * 100 + '%',
+          Insights: (batch.stats[3].insights / batch.size) * 100 + '%',
+        }*/],
+      _total: null,
+      _columns: [{
+        _attr: 'Step',
+        _name: 'Step',
+        _type: 'TEXT'
+      }, {
+        _attr: 'Sent',
+        _name: 'Sent',
+        _type: 'TEXT'
+      }, {
+        _attr: 'Opened',
+        _name: 'Opened',
+        _type: 'TEXT'
+      }, {
+        _attr: 'Clicked',
+        _name: 'Clicked',
+        _type: 'TEXT'
+      }, {
+        _attr: 'Insights',
+        _name: 'Insights',
+        _type: 'TEXT'
+      }, {
+        _attr: 'Date',
+        _name: 'Date',
+        _type: 'TEXT'
+      }]
+    };
+    return t;
   }
 
 

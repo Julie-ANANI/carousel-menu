@@ -81,7 +81,12 @@
       </div>
       <div class="card-subtitle text-gray">créé le {{ batch.created | date: dateformat }}</div>
     </div>
+
+
+
     <div class="card-body">
+      <app-shared-table [data]="generateTableBatch(batch)"></app-shared-table>
+      <!--
       <div *ngFor="let step of ['firstMail', 'secondMail', 'thirdMail']; let i = index">
         <div [ngClass]="batch.status > i ? 'text-success' : 'text-warning'" class="text-center">
           <span class="badge" [attr.data-badge]="i + 1">
@@ -100,6 +105,9 @@
           </div>
         </div>
       </div>
+      </div>
+      -->
+
     </div>
   </div>
 </div>
@@ -139,7 +147,7 @@
       </button>
     </div>
   </div>
-</div>)
+</div>
 
 <!-- MODAL : Suppression du batch -->
 <div class="modal" [ngClass]="{'active': selectedBatchToBeDeleted}"  >
