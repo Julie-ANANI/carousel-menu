@@ -5,7 +5,7 @@ import { AdminProjectCampaignsComponent } from './admin-project-campaigns/admin-
 import { AdminProjectSynthesisComponent } from './admin-project-synthesis/admin-project-synthesis.component';
 
 export const projectRoutes: Routes = [
-  { path: '', redirectTo: 'cards', pathMatch: 'full'},
+  { path: '', redirectTo: 'settings', pathMatch: 'full'},
   { path: 'settings', component: AdminProjectDetailsComponent, pathMatch: 'full'},
   { path: 'cards', component: AdminProjectCardsComponent, pathMatch: 'full'},
   { path: 'synthesis', component: AdminProjectSynthesisComponent, pathMatch: 'full'},
