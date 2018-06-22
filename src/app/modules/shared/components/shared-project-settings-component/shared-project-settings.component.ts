@@ -4,7 +4,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { ShareService } from '../../../../services/share/share.service';
 import { InnovationSettings } from '../../../../models/innov-settings';
 import * as _ from 'lodash';
-import {Subject} from 'rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
 import { Location } from '@angular/common';
 
 @Component({
@@ -292,5 +292,9 @@ export class SharedProjectSettingsComponent implements OnInit {
       this.targetingFormField.emit(false);
     }
   }
+
+  /*get projectState(): boolean {
+    return this.project.status === 'EDITING' || this.project.status === 'SUBMITTED' || this.isAdmin;
+  }*/
 
 }

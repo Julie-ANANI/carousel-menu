@@ -14,6 +14,10 @@ export const SETUP = {
       'A': 'Please finish',
       'B': 'setup of your project',
       'C': 'and submit it.'
+    },
+    'EVALUATING': {
+      'A': 'Market exploration is under progress. You can\'t make changes in your project anymore.' ,
+      'B': 'Synthesis of your project is available.'
     }
   },
 

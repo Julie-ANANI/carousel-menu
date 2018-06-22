@@ -154,9 +154,11 @@ export class SetupProjectComponent implements OnInit {
      shows the notification to the client.
   */
   saveInnovation(value: boolean) {
-    this._saveChanges = value;
-    this._changesSaved = false;
-    this._saveButtonClass = 'save-project';
+    if (this.projectState !== 'EVALUATING') {
+      this._saveChanges = value;
+      this._changesSaved = false;
+      this._saveButtonClass = 'save-project';
+    }
   }
 
   closeModal(event: Event) {
@@ -186,6 +188,10 @@ export class SetupProjectComponent implements OnInit {
 
   get changesSaved(): boolean {
     return this._changesSaved;
+  }
+
+  get projectState(): string {
+    return this.project.status;
   }
 
 }
