@@ -18,6 +18,8 @@ export class SharedProjectSettingsComponent implements OnInit {
   @Input() settings: InnovationSettings;
   @Input() adminMode: boolean;
   @Input() showTargetingFieldError: Subject<boolean>;
+  @Input() projectStatus: string;
+  @Input() projectReviewing: any;
 
   @Output() settingsChange = new EventEmitter<any>();
   @Output() targetingFormField = new EventEmitter<boolean>();
@@ -68,20 +70,6 @@ export class SharedProjectSettingsComponent implements OnInit {
       });
     }
 
-  }
-
-  getColor(length: number) {
-    if (length <= 0) {
-      return '#EA5858';
-    } else if (length > 0 && length < 250) {
-      return '#f0ad4e';
-    } else {
-      return '#2ECC71';
-    }
-  }
-
-  get lang() {
-    return this.translateService.currentLang;
   }
 
   /**
@@ -277,8 +265,10 @@ export class SharedProjectSettingsComponent implements OnInit {
    * After all the settings modifications are done, send them back to the project to be saved.
    */
   public updateSettings() {
-    this.settingsChange.emit(this.settings);
-    this.checkField();
+    if (this._projectStatus) {
+      this.settingsChange.emit(this.settings);
+      this.checkField();
+    }
   }
 
   checkField() {
@@ -293,8 +283,22 @@ export class SharedProjectSettingsComponent implements OnInit {
     }
   }
 
-  /*get projectState(): boolean {
-    return this.project.status === 'EDITING' || this.project.status === 'SUBMITTED' || this.isAdmin;
-  }*/
+  getColor(length: number) {
+    if (length <= 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < 250) {
+      return '#f0ad4e';
+    } else {
+      return '#2ECC71';
+    }
+  }
+
+  get lang() {
+    return this.translateService.currentLang;
+  }
+
+  get _projectStatus(): boolean {
+    return this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED' || this.projectReviewing ;
+  }
 
 }

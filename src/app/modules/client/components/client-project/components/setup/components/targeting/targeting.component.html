@@ -1,6 +1,8 @@
 <div class="targeting">
   <app-shared-project-settings
     [settings]="project.settings"
+    [projectStatus]="project.status"
+    [projectReviewing]="project.reviewing"
     (settingsChange)="updateSettings($event)"
     [adminMode]="false"
     (targetingFormField)="targetingFormValidation($event)"
