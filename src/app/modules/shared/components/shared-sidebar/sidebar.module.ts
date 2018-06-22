@@ -12,7 +12,7 @@ import { InnovationPreviewSidebarService } from './services/innovation-preview-s
 // Components
 import { UserFormSidebarComponent } from './components/user-form-sidebar/user-form-sidebar.component';
 import { InnovationPreviewSidebarComponent } from './components/innovation-preview-sidebar/innovation-preview-sidebar.component';
-
+import { GenericSidebarComponent } from './components/generic-sidebar/generic-sidebar.component';
 
 
 @NgModule({
@@ -24,7 +24,8 @@ import { InnovationPreviewSidebarComponent } from './components/innovation-previ
   ],
   declarations: [
     UserFormSidebarComponent,
-    InnovationPreviewSidebarComponent
+    InnovationPreviewSidebarComponent,
+    GenericSidebarComponent
   ],
   providers: [
     UserFormSidebarService,
@@ -32,7 +33,8 @@ import { InnovationPreviewSidebarComponent } from './components/innovation-previ
   ],
   exports: [
     UserFormSidebarComponent,
-    InnovationPreviewSidebarComponent
+    InnovationPreviewSidebarComponent,
+    GenericSidebarComponent
   ]
 })
 

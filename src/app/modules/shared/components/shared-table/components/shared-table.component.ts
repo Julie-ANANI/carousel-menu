@@ -33,7 +33,8 @@ export class SharedTableComponent {
   private _isEditable = false;
   private _isDeletable = false;
   private _isFiltrable = false;
-  private _isSortable= false;
+  private _isSortable = false;
+  private _isPaginable = true;
   private _content: Row[] = [];
   private _total = 0;
   private _columns: Column[] = [];
@@ -57,6 +58,7 @@ export class SharedTableComponent {
       this._isDeletable = value._isDeletable || false;
       this._isFiltrable = value._isFiltrable || false;
       this._isSortable = value._isSortable || false;
+      this._isPaginable = value._isPaginable || true;
 
       this._total = value._total;
 
@@ -148,6 +150,10 @@ export class SharedTableComponent {
 
   get isSortable(): boolean {
     return this._isSortable;
+  }
+
+  get isPaginable(): boolean {
+    return this._isPaginable;
   }
 
   get content(): Row[] {

@@ -4,6 +4,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
 import { Table } from '../../../shared/components/shared-table/models/table';
+import {GenericSidebar} from '../../../shared/components/shared-sidebar/interfaces/generic-sidebar';
 
 @Component({
   selector: 'app-admin-users',
@@ -14,6 +15,7 @@ export class AdminUsersComponent implements OnInit {
 
   private _users: Array<User> = [];
   private _actions: string[] = [];
+  private _more: GenericSidebar = {_animate: 'inactive', _content: null};
   private _tableInfos: Table = null;
   private _selfId = '';
   private _total = 0;
@@ -86,7 +88,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
   editUser(user: User) {
-    console.log(user);
+    this._more = {_animate: 'active', _content: user.firstName};
   }
 
   get selfId(): string {
@@ -120,4 +122,5 @@ export class AdminUsersComponent implements OnInit {
   get config(): any { return this._config; }
   get total(): number { return this._total; }
   get users() { return this._users; }
+  get more(): any { return this._more };
 }

@@ -10,12 +10,12 @@
 
 
 <!-- If there are no results -->
-<div *ngIf="total == 0">
+<div *ngIf="total === 0">
   <tr><td>{{'COMMON.TABLE.NO-RESULTS' | translate}}</td></tr>
 </div>
 
 <!-- Else we begin to create the table -->
-<div *ngIf="total > 0">
+<div *ngIf="total !== 0">
   <table class="table" wt-responsive-table>
     <thead>
         <!-- If there are no selected rows we show columns name in the header-->
@@ -124,6 +124,7 @@
   <sqPagination [config]="config"
                 (configChange)="changeConfig($event)"
                 [total]="total"
+                *ngIf="isPaginable"
                 [propertyName]="selector">
 
   </sqPagination>
