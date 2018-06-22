@@ -5,6 +5,7 @@ import { environment } from '../../../../../../environments/environment';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import {Batch} from '../../../../../models/batch';
+import {Table} from '../../../../shared/components/shared-table/models/table';
 
 @Component({
   selector: 'app-admin-campaign-mails',
@@ -177,6 +178,14 @@ export class AdminCampaignMailsComponent implements OnInit {
     );
   }
 
+
+  private generateTableBatch(batch: Batch): Table {
+
+
+    const t: Table = {
+
+    }
+  }
 
 
   get innoReady() {

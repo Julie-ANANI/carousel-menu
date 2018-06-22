@@ -124,7 +124,7 @@
   <sqPagination [config]="config"
                 (configChange)="changeConfig($event)"
                 [total]="total"
-                [propertyName]="selector">
-
+                [propertyName]="selector"
+                *ngIf="isPaginable">
   </sqPagination>
 </div>
