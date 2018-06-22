@@ -34,7 +34,7 @@ export class SharedTableComponent {
   private _isDeletable = false;
   private _isFiltrable = false;
   private _isSortable = false;
-  private _isPaginable = false;
+  private _isNotPaginable = false;
   private _content: Row[] = [];
   private _total = 0;
   private _columns: Column[] = [];
@@ -58,7 +58,9 @@ export class SharedTableComponent {
       this._isDeletable = value._isDeletable || false;
       this._isFiltrable = value._isFiltrable || false;
       this._isSortable = value._isSortable || false;
-      this._isPaginable = value._isPaginable || false;
+
+      this._isNotPaginable = value._isNotPaginable || false;
+
       this._total = value._total;
 
       // Si on a plus de 10 colonnes, on ne prends que les 10 premières
@@ -151,8 +153,8 @@ export class SharedTableComponent {
     return this._isSortable;
   }
 
-  get isPaginable(): boolean {
-    return this._isPaginable;
+  get isNotPaginable(): boolean {
+    return this._isNotPaginable;
   }
 
   get content(): Row[] {
@@ -215,6 +217,5 @@ export class SharedTableComponent {
   selectAll(e: any): void  {
       this._content.forEach(value => { value._isSelected = e.srcElement.checked; });
   }
-
 
 }

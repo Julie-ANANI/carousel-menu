@@ -60,6 +60,15 @@ export class AdminCampaignMailsComponent implements OnInit {
     };
   }
 
+  private getStatus(step: number, status: number): string {
+    if (status > step) {
+      return 'Sent';
+    } else {
+      return 'Planned';
+    }
+
+  }
+
   public createNewBatch(sendNow: boolean) {
     this.newBatch.firstMail = sendNow ? Date.now() : this._computeDate(this.dateMail, this.timeMail);
     this.newBatch.sendNow = sendNow;
@@ -180,9 +189,27 @@ export class AdminCampaignMailsComponent implements OnInit {
 
 
   public generateTableBatch(batch: Batch): Table {
+
+
+    const firstJSdate = new Date(batch.firstMail);
+    const firstDate = firstJSdate.getDate() + '/' + firstJSdate.getMonth() + '/' + firstJSdate.getFullYear();
+    const firstTime = firstJSdate.getHours() + ':' + firstJSdate.getMinutes();
+
+    const secondJSdate = new Date(batch.secondMail);
+    const secondDate = secondJSdate.getDate() + '/' + secondJSdate.getMonth() + '/' + secondJSdate.getFullYear();
+    const secondTime = secondJSdate.getHours() + ':' + secondJSdate.getMinutes();
+
+    const thirdJSdate = new Date(batch.thirdMail);
+    const thirdDate = thirdJSdate.getDate() + '/' + thirdJSdate.getMonth() + '/' + thirdJSdate.getFullYear();
+    const thirdTime = thirdJSdate.getHours() + ':' + thirdJSdate.getMinutes();
+
+
+
+    console.log(typeof batch.firstMail)
     const t: Table = {
       _selector: 'TODO',
       _title: this._campaign.settings.defaultWorkflow,
+      _isNotPaginable: true,
       _content: [
         {
           Step: '01 - HelloWorld',
@@ -190,21 +217,27 @@ export class AdminCampaignMailsComponent implements OnInit {
           Opened: (batch.stats[0].opened / batch.size) * 100 + '%',
           Clicked: (batch.stats[0].clicked / batch.size) * 100 + '%',
           Insights: batch.stats[0].insights,
-          Date: batch.firstMail
+          Date: firstDate,
+          Time: firstTime,
+          Status: this.getStatus(0, batch.status)
         }, {
           Step: '02 - 2nd try',
           Sent: batch.stats[1].delivered + batch.stats[1].bounced,
           Opened: (batch.stats[1].opened / batch.size) * 100 + '%',
           Clicked: (batch.stats[1].clicked / batch.size) * 100 + '%',
           Insights: batch.stats[1].insights,
-          Date: batch.secondMail
+          Date: secondDate,
+          Time: secondTime,
+          Status: this.getStatus(1, batch.status)
         }, {
           Step: '03 - 3rd try',
           Sent: batch.stats[2].delivered + batch.stats[2].bounced,
           Opened: (batch.stats[2].opened / batch.size) * 100 + '%',
           Clicked: (batch.stats[2].clicked / batch.size) * 100 + '%',
           Insights: batch.stats[2].insights,
-          Date: batch.thirdMail
+          Date: thirdDate,
+          Time: thirdTime,
+          Status: this.getStatus(2, batch.status)
         }/*, { TODO: backend (undefined)
           Step: '04 - Thanks',
           Sent: (batch.stats[3].delivered / batch.size) * 100 + '%',
@@ -237,10 +270,19 @@ export class AdminCampaignMailsComponent implements OnInit {
         _attr: 'Date',
         _name: 'Date',
         _type: 'TEXT'
+      }, {
+        _attr: 'Time',
+        _name: 'Time',
+        _type: 'TEXT'
+      }, {
+        _attr: 'Status',
+        _name: 'Status',
+        _type: 'TEXT'
       }]
     };
     return t;
   }
+
 
 
   get innoReady() {

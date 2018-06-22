@@ -17,4 +17,6 @@
                         (removeRows)="removeUsers($event)"
                         (performAction)="performActions($event)">
       </app-shared-table>
+
+      <app-generic-sidebar *ngIf="more._animate === 'active'" [data]="more"></app-generic-sidebar>
 </div>

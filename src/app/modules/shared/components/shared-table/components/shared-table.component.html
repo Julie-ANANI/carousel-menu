@@ -121,10 +121,10 @@
   </table>
 
   <!-- Behind the table we show the pagination -->
-  <sqPagination [config]="config"
+  <sqPagination *ngIf="!isNotPaginable"
+                [config]="config"
                 (configChange)="changeConfig($event)"
                 [total]="total"
-                [propertyName]="selector"
-                *ngIf="isPaginable">
+                [propertyName]="selector">
   </sqPagination>
 </div>
