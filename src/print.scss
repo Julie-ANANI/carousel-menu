@@ -50,6 +50,7 @@
 */
 
   .page-footer {
+    display: none;
     position: fixed;
     bottom: 0;
     right: 0;
@@ -76,7 +77,12 @@
   .see-answer,
   .market-report-btn,
   .item-menu-sandwich,
-  .bar-stats i{
+  .bar-stats i,
+  .container.main-container,
+  .btn.btn-action.circle,
+  .popover.popover-bottom,
+  .fas.fa-filter,
+  .fas.fa-link {
     display: none !important;
   }
 
@@ -163,8 +169,12 @@
 
     .items {
       page-break-before: always;
-    }
 
+      .clickable-url {
+        display: none;
+      }
+    }
+/*
     .items > div {
         page-break-inside: avoid;
         color: #333 !important;
@@ -178,6 +188,18 @@
     .items > div:before {
       content: "-";
       float: left;
+    }*/
+
+    .items div.items-list > div {
+      page-break-inside: avoid;
+      color: #333 !important;
+      background: transparent !important;
+      padding: 0 0 !important;
+      border-radius: 0 !important;
+      margin-bottom: 0 !important;
+      width: 49%;
+      font-size: 12px !important;
+      font-weight: normal !important;
     }
 
     country-flag img {
@@ -216,19 +238,33 @@
     }
 
     .world-map .map {
-      height: 220px !important;
+      height: 260px !important;
+      page-break-inside: avoid;
+    }
+
+    .world-map {
+      page-break-after: always;
+    }
+
+    .prosList {
       page-break-inside: avoid;
     }
 
     .professional-item {
       page-break-inside: avoid;
       box-shadow: none !important;
-      margin-bottom: 0 !important;
+      margin: 20px 5px 0px 5px !important;
       color: #333 !important;
+      padding: 0 !important;
+      /* max-width: 220px !important; */
+    }
 
-      .pro-tag {
-        page-break-inside: avoid;
-      }
+    .prosList .professional-item:nth-child(9) {
+      page-break-after: always;
+    }
+
+    app-pro-tag {
+      page-break-inside: avoid;
     }
 
     .bloc {
@@ -246,6 +282,45 @@
 
     .big-blue-synthesis .total-score {
       padding: 0 !important;
+    }
+
+    .stars-component .star-ratings-css,
+    .stars-component .popover-container {
+      display: inline-block;
+
+      .top,
+      .grade-number {
+        color: #0c90c6 !important;
+      }
+
+      .grade-number {
+        font-size: 1.1em !important;
+      }
+    }
+
+    .stars-component .popover-container {
+      max-width: 100% !important;
+      box-shadow: none !important;
+      margin-left: 20px;
+
+      small {
+        display: inline-block;
+        margin-left: 15px;
+      }
+    }
+
+    .market-item {
+      margin-left: 0 !important;
+      margin-bottom: 15px !important;
+    }
+
+    .professional-item.top-profil {
+      color: #333 !important;
+      background: transparent !important;
+    }
+
+    .professional-item.top-profil:before {
+      top: -20px !important;
     }
 
   }

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../models/campaign';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class AdminCampaignComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _notificationsService: TranslateNotificationsService,
-              private _campaignService: CampaignService) { }
+              private _campaignService: CampaignService,
+              private _authService: AuthService) { }
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.data['campaign'];
@@ -50,6 +52,11 @@ export class AdminCampaignComponent implements OnInit {
     }
   }
 
+  public autorizedActions(level: number): boolean {
+    const adminLevel = this._authService.adminLevel;
+    return adminLevel > level;
+  }
+
   public updateStats() {
     this._campaignService.updateStats(this._campaign._id)
       .first()
@@ -60,6 +67,15 @@ export class AdminCampaignComponent implements OnInit {
         this._notificationsService.error('ERROR', error.message);
       });
   };
+
+  get authorizedTabs(): Array<string> {
+    const adminLevel = this._authService.adminLevel;
+    if(adminLevel > 2) {
+      return this.tabs;
+    } else {
+      return ['answers'];
+    }
+  }
 
   get baseUrl(): any { return `/admin/campaigns/campaign/${this._campaign._id}/`; }
   get campaign(): any { return this._campaign; }

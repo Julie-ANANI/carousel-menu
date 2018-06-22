@@ -169,6 +169,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     this._tableB = {
       _selector: 'TODO',
       _title: this._nameWorkflowB,
+      // _isNotPaginable: true,
       _content: [
         {
           Step: ' 1er mail',

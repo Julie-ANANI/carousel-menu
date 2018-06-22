@@ -3,7 +3,7 @@
   <h2>{{ campaign.title }}</h2>
 
   <ul class="tab tab-block">
-    <li class="tab-item" *ngFor="let tab of tabs">
+    <li class="tab-item" *ngFor="let tab of authorizedTabs">
       <a [routerLink]="baseUrl + tab" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         {{ 'CAMPAIGNS.' + tab.toUpperCase() | translate }}
       </a>
@@ -13,7 +13,7 @@
   <div class="tabs">
     <div class="tab-content">
       <div class="toolbar" *ngIf="campaign.stats">
-        <div class="block">
+        <div class="block" *ngIf="autorizedActions(2)">
           <i class="fas fa-sync c-hand" (click)="updateStats()"></i>
         </div>
         <div class="block">

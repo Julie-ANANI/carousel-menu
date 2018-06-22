@@ -232,8 +232,8 @@ export class SharedMarketReportComponent implements OnInit {
     }
   }
 
-  public get logoName(): string {
-    return `logo-${ environment.domain || 'umi.us'}.png`;
+  public logoName(): string {
+    return environment.logoSynthURL;
   }
 
   get answers(): Array<Answer> { return this._answers; }

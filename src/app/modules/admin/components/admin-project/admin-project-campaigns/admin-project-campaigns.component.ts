@@ -7,6 +7,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { environment } from '../../../../../../environments/environment';
 import { Campaign } from '../../../../../models/campaign';
 import { Innovation } from '../../../../../models/innovation';
+import { AuthService } from '../../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-admin-project-campaigns',
@@ -26,7 +27,8 @@ export class AdminProjectCampaignsComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
-              private _campaignService: CampaignService) { }
+              private _campaignService: CampaignService,
+              private _authService: AuthService) { }
 
   ngOnInit() {
     this._innovation =  this._activatedRoute.snapshot.parent.data['innovation'];
@@ -68,6 +70,11 @@ export class AdminProjectCampaignsComponent implements OnInit {
     }, error => {
       this._notificationsService.error('ERROR', error.message);
     });
+  }
+
+  public autorizedActions(level: number): boolean {
+    const adminLevel = this._authService.adminLevel;
+    return adminLevel > level;
   }
 
   get campaigns(): Array<any> {
