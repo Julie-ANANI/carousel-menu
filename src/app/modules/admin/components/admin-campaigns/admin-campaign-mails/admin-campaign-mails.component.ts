@@ -203,9 +203,6 @@ export class AdminCampaignMailsComponent implements OnInit {
     const thirdDate = thirdJSdate.getDate() + '/' + thirdJSdate.getMonth() + '/' + thirdJSdate.getFullYear();
     const thirdTime = thirdJSdate.getHours() + ':' + thirdJSdate.getMinutes();
 
-
-
-    console.log(typeof batch.firstMail)
     const t: Table = {
       _selector: 'TODO',
       _title: this._campaign.settings.defaultWorkflow,
@@ -238,13 +235,16 @@ export class AdminCampaignMailsComponent implements OnInit {
           Date: thirdDate,
           Time: thirdTime,
           Status: this.getStatus(2, batch.status)
-        }/*, { TODO: backend (undefined)
+        }, { //TODO: backend (undefined)
           Step: '04 - Thanks',
-          Sent: (batch.stats[3].delivered / batch.size) * 100 + '%',
+          Sent: batch.stats[3].delivered + batch.stats[3].bounced,
           Opened: (batch.stats[3].opened / batch.size) * 100 + '%',
           Clicked: (batch.stats[3].clicked / batch.size) * 100 + '%',
-          Insights: (batch.stats[3].insights / batch.size) * 100 + '%',
-        }*/],
+          Insights: '',
+          Date: '',
+          Time: '',
+          Status: ''
+        }],
       _total: null,
       _columns: [{
         _attr: 'Step',

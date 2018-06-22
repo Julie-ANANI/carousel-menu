@@ -169,7 +169,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     this._tableB = {
       _selector: 'TODO',
       _title: this._nameWorkflowB,
-      // _isNotPaginable: true,
+       _isNotPaginable: true,
       _content: [
         {
           Step: ' 1er mail',
@@ -218,6 +218,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     this._tableA = {
       _selector: 'TODO',
       _title: this._nameWorkflowA,
+      _isNotPaginable: true,
       _content: [{
           Step: ' 1er mail',
           Delivered: (this._statsA[0].delivered / this._sizeA) * 100 + '%',
