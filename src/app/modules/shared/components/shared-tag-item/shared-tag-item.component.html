@@ -12,7 +12,7 @@
     </app-autocomplete-input>
 
     <div class="flex-container" *ngSwitchDefault>
-      <i class="fa fa-tag big" [ngClass]="{'active': tags.length > 0}"></i>
+      <i class="fa fa-tag big" [ngClass]="{'active': tags?.length > 0}"></i>
       <span *ngFor="let t of tags" class="label label-rounded label-primary">
         {{t.label | multiling:lang}}
       </span>

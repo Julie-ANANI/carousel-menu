@@ -46,14 +46,18 @@ export class AnswerService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public addTag(answerId: string, tagId: string): Observable<Answer> {
-    return this._http.post('/answer/' + answerId + '/tag', { params: {tag: tagId }})
+  public addTag(answerId: string, tagId: string, questionId?: string): Observable<Answer> {
+    const params = {tag: tagId };
+    if (questionId) { params['questionId'] = questionId; }
+    return this._http.post('/answer/' + answerId + '/tag', { params: params})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public removeTag(answerId: string, tagId: string): Observable<Answer> {
-    return this._http.delete('/answer/' + answerId + '/tag', { params: {tag: tagId }})
+  public removeTag(answerId: string, tagId: string, questionId?: string): Observable<Answer> {
+    const params = {tag: tagId };
+    if (questionId) { params['questionId'] = questionId; }
+    return this._http.delete('/answer/' + answerId + '/tag', { params: params})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

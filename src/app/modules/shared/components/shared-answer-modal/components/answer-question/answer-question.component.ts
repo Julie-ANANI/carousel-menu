@@ -1,10 +1,13 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { AnswerService } from '../../../../../../services/answer/answer.service';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Answer } from '../../../../../../models/answer';
 import { Question } from '../../../../../../models/question';
+import { Tag } from '../../../../../../models/tag';
 import * as _ from 'lodash';
 
 @Component({
@@ -18,11 +21,12 @@ export class AnswerQuestionComponent implements OnInit {
   @Input() public question: Question;
   @Input() public fullAnswer: Answer;
   @Input() public editMode: boolean;
-  @Output() fullAnswerChange = new EventEmitter <any>();
 
   _commenting: boolean;
 
-  constructor(private _translateService: TranslateService) { }
+  constructor(private _translateService: TranslateService,
+              private _notificationsService: TranslateNotificationsService,
+              private _answerService: AnswerService) { }
 
   ngOnInit() {
     this._commenting = !!(this.fullAnswer.answers && this.fullAnswer.answers[this.question.identifier + 'Comment']);
@@ -30,7 +34,6 @@ export class AnswerQuestionComponent implements OnInit {
 
   updateQuality(object: {key: string, value: 0 | 1 | 2}) {
     this.fullAnswer.answers[object.key + 'Quality'] = object.value;
-    this.fullAnswerChange.emit(this.fullAnswer);
   }
 
   link(domain: string): string {
@@ -51,13 +54,11 @@ export class AnswerQuestionComponent implements OnInit {
       this.fullAnswer.answers[this.question.identifier] = {};
     }
     this.fullAnswer.answers[this.question.identifier][id] = !this.fullAnswer.answers[this.question.identifier][id];
-    this.fullAnswerChange.emit(this.fullAnswer);
   }
 
   selectOption(event: Event, option: any) {
     event.preventDefault();
     this.fullAnswer.answers[this.question.identifier] = option.identifier;
-    this.fullAnswerChange.emit(this.fullAnswer);
   }
 
   setAnswer(event: any) {
@@ -68,13 +69,33 @@ export class AnswerQuestionComponent implements OnInit {
     event.preventDefault();
     this._commenting = true;
     this.fullAnswer.answers[this.question.identifier + 'Comment'] = '';
-    this.fullAnswerChange.emit(this.fullAnswer);
   }
 
   deleteComment(event: Event) {
     event.preventDefault();
     delete this.fullAnswer.answers[this.question.identifier + 'Comment'];
-    this.fullAnswerChange.emit(this.fullAnswer);
+  }
+
+  public addTag(event: Tag): void {
+    this._answerService
+      .addTag(this.fullAnswer._id, event._id, this.question.identifier)
+      .first()
+      .subscribe((a) => {
+        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
+      }, err => {
+        this._notificationsService.error('ERROR.ERROR', err);
+      });
+  }
+
+  public removeTag(event: Tag): void {
+    this._answerService
+      .removeTag(this.fullAnswer._id, event._id, this.question.identifier)
+      .first()
+      .subscribe((a) => {
+        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
+      }, err => {
+        this._notificationsService.error('ERROR.ERROR', err);
+      });
   }
 
   get lang (): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }

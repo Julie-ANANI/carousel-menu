@@ -96,16 +96,11 @@ export class AnswerModalComponent implements OnInit {
     this._modalAnswer.profileQuality = object.value;
   }
 
-  updateAnswer(answer: Answer) {
-    this._modalAnswer = answer;
-  }
-
   public addTag(event: Tag): void {
     this._answerService
       .addTag(this._modalAnswer._id, event._id)
       .first()
       .subscribe((a) => {
-        this.modalAnswer = a;
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
@@ -117,7 +112,6 @@ export class AnswerModalComponent implements OnInit {
       .removeTag(this._modalAnswer._id, event._id)
       .first()
       .subscribe((a) => {
-        this.modalAnswer = a;
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
