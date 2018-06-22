@@ -11,6 +11,10 @@ import {Label} from '../models/label';
 })
 export class SharedTableComponent {
 
+  // A faire:
+  // date
+
+
   @Input() set config(value: any) {
     this.loadConfig(value);
   }

@@ -88,7 +88,9 @@ export class AdminUsersComponent implements OnInit {
   }
 
   editUser(user: User) {
-    this._more = {_animate: 'active', _content: user.firstName};
+    this._more = {_animate: 'active',
+      _content: '<div>Bonjour ' + user.firstName + '</div>'
+    };
   }
 
   get selfId(): string {

@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {GenericSidebar} from '../../interfaces/generic-sidebar';
 
