@@ -16,7 +16,7 @@ import {GenericSidebar} from '../../interfaces/generic-sidebar';
         transform: 'translateX(0)',
         opacity: 1
       })),
-      transition('inactive => active', animate('700ms ease-in-out'))
+      transition('inactive <=> active', animate('700ms ease-in-out'))
     ])
   ]
 })
@@ -63,5 +63,6 @@ export class GenericSidebarComponent {
   toggleState() {
     this._state = 'inactive';
   }
+
 }
 
