@@ -189,21 +189,14 @@ export class AdminCampaignMailsComponent implements OnInit {
 
 
   public generateTableBatch(batch: Batch): Table {
-    //TODO : format date, type date dans le tableau
     const firstJSdate = new Date(batch.firstMail);
-    const firstMonth = firstJSdate.getMonth() + 1;
-    const firstDate = firstJSdate.getDate() + '/' + firstMonth + '/' + firstJSdate.getFullYear();
     const firstTime = firstJSdate.getHours() + ':' + firstJSdate.getMinutes();
 
     const secondJSdate = new Date(batch.secondMail);
-    const secondMonth = secondJSdate.getMonth() + 1;
-    const secondDate = secondJSdate.getDate() + '/' + secondMonth + '/' + secondJSdate.getFullYear();
     const secondTime = secondJSdate.getHours() + ':' + secondJSdate.getMinutes();
-    
+
     const thirdJSdate = new Date(batch.thirdMail);
-    const thirdMonth = thirdJSdate.getMonth() + 1;
-    const thirdDate = thirdJSdate.getDate() + '/' + thirdMonth + '/' + thirdJSdate.getFullYear();
-    const thirdTime = thirdJSdate.getHours() + ':' + thirdJSdate.getMinutes();
+    const thirdTime = batch.thirdMail.getHours() + ':' + thirdJSdate.getMinutes();
 
     const t: Table = {
       _selector: 'TODO',
@@ -216,7 +209,7 @@ export class AdminCampaignMailsComponent implements OnInit {
           Opened: (batch.stats[0].opened / batch.size) * 100 + '%',
           Clicked: (batch.stats[0].clicked / batch.size) * 100 + '%',
           Insights: batch.stats[0].insights,
-          Date: firstDate,
+          Date: batch.firstMail,
           Time: firstTime,
           Status: this.getStatus(0, batch.status)
         }, {
@@ -225,7 +218,7 @@ export class AdminCampaignMailsComponent implements OnInit {
           Opened: (batch.stats[1].opened / batch.size) * 100 + '%',
           Clicked: (batch.stats[1].clicked / batch.size) * 100 + '%',
           Insights: batch.stats[1].insights,
-          Date: secondDate,
+          Date: batch.secondMail,
           Time: secondTime,
           Status: this.getStatus(1, batch.status)
         }, {
@@ -234,7 +227,7 @@ export class AdminCampaignMailsComponent implements OnInit {
           Opened: (batch.stats[2].opened / batch.size) * 100 + '%',
           Clicked: (batch.stats[2].clicked / batch.size) * 100 + '%',
           Insights: batch.stats[2].insights,
-          Date: thirdDate,
+          Date: batch.thirdMail,
           Time: thirdTime,
           Status: this.getStatus(2, batch.status)
         }, { //TODO: backend (undefined)
@@ -271,7 +264,7 @@ export class AdminCampaignMailsComponent implements OnInit {
       }, {
         _attr: 'Date',
         _name: 'Date',
-        _type: 'TEXT'
+        _type: 'DATE'
       }, {
         _attr: 'Time',
         _name: 'Time',
