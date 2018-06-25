@@ -1,7 +1,17 @@
 export const EXPLORATION = {
   'TITLE': {
     'EDITING': 'Les informations sur le marché de votre projet seront bientôt disponibles',
-    'SUBMITTED': 'Collecte des informations sur le marché de votre projet'
+    'SUBMITTED': 'Collecte des informations sur le marché de votre projet',
+  },
+
+  'MESSAGE': {
+    'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
+    'EDITING': {
+      'A': 'S\'il vous plaît terminer',
+      'B': 'la configuration de votre projet',
+      'C': 'et le soumettre.'
+    },
+    'REVIEWING': 'Veuillez modifier les modifications de votre projet et renvoyez-le..'
   },
 
   'CONTACT_BUTTON': 'Contact us',

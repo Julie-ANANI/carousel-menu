@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Innovation } from '../../../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../../../models/innov-settings';
-import {Subject} from 'rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-project-targeting',
@@ -15,6 +15,7 @@ export class TargetingComponent implements OnInit {
   @Input() showTargetingFieldError: Subject<boolean>;
 
   @Output() newSettings = new EventEmitter<InnovationSettings>();
+  @Output() targetingFormField = new EventEmitter<boolean>();
 
   showFieldError: Subject<boolean> = new Subject();
 
