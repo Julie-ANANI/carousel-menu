@@ -3,6 +3,7 @@ import {Table} from '../models/table';
 import {Row} from '../models/row';
 import {Column, types} from '../models/column';
 import {Label} from '../models/label';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-shared-table',
@@ -10,6 +11,10 @@ import {Label} from '../models/label';
   styleUrls: ['./shared-table.component.scss']
 })
 export class SharedTableComponent {
+
+  // A faire:
+  // date
+
 
   @Input() set config(value: any) {
     this.loadConfig(value);
@@ -42,7 +47,7 @@ export class SharedTableComponent {
 
   private _config: any = null;
 
-  constructor() {}
+  constructor(private _translateService: TranslateService) {}
 
   loadData(value: Table): void  {
     if (value) {
@@ -216,6 +221,10 @@ export class SharedTableComponent {
 
   selectAll(e: any): void  {
       this._content.forEach(value => { value._isSelected = e.srcElement.checked; });
+  }
+
+  get dateFormat(): string {
+    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
 }

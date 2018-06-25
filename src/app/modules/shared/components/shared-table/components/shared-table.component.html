@@ -105,6 +105,10 @@
                   {{getContentValue(key, getAttr(column)).toString() || ' - '}}
                 </span>
 
+                <span *ngSwitchCase="'DATE'">
+                  {{(getContentValue(key, getAttr(column)).toString()) ? dateFormat : ' - '}}
+                </span>
+
               </ng-container>
 
               <!-- If isEditable we show a button onHover the row -->

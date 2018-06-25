@@ -15,7 +15,7 @@ export class AdminUsersComponent implements OnInit {
 
   private _users: Array<User> = [];
   private _actions: string[] = [];
-  private _more: GenericSidebar = {_animate: 'inactive', _content: null};
+  private _more: GenericSidebar = {_animate: 'inactive', _content: ''};
   private _tableInfos: Table = null;
   private _selfId = '';
   private _total = 0;
@@ -88,7 +88,9 @@ export class AdminUsersComponent implements OnInit {
   }
 
   editUser(user: User) {
-    this._more = {_animate: 'active', _content: user.firstName};
+    this._more = {_animate: 'active',
+      _content: '<div>Bonjour ' + user.firstName + '</div>'
+    };
   }
 
   get selfId(): string {
