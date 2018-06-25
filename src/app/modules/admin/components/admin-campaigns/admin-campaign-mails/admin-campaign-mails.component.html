@@ -57,7 +57,7 @@
   <div class="card" *ngFor="let batch of stats.batches; let batchIndex = index">
     <div class="card-header">
       <div class="card-title h5">
-        {{this.getWorkflowName(index)}}
+        {{this.getWorkflowName(batchIndex)}}
         <a class="c-hand" role="button" (click)="(removeOK(batch)) && $event.preventDefault()">
           <i class="fas fa-trash"></i>
         </a>

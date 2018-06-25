@@ -50,7 +50,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   private _sizeB: number;
   private _statusA: number;
   private _statusB: number;
-
+  private _batchesLength: number = 0;
 
 
 
@@ -68,6 +68,10 @@ export class AdminCampaignAbtestingComponent implements OnInit {
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
+
+    this._campaignService.messagesStats(this._campaign._id).first().subscribe(stats => {
+      this._batchesLength = stats.batches.length;
+    });
 
     const defAB = {
       delivered: 0,
@@ -112,7 +116,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   // MessageStats => Recupere tout les batch de la campagne sans les update (moins lourd, on update sur demande en statut 2)
   public getStatsBatch() {
-    this._campaignService.messagesStats(this.campaign._id).subscribe(result => {
+    this._campaignService.messagesStats(this.campaign._id).first().subscribe(result => {
       this._sizeA = result.batches[0].size;
       this._sizeB = result.batches[1].size;
       this._statsA = result.batches[0].stats;
@@ -137,15 +141,12 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   public startABtesting() {
     if (this.campaign.stats.nbPros90 > 0) {
       if (this.sizeA + this.sizeB > this.campaign.stats.nbPros90) {
-        if (this.sizeA > this.sizeB) {
-          this.sizeA = this.campaign.stats.nbPros90 - this.sizeB
-        }
-        else {
-          this.sizeB = this.campaign.stats.nbPros90 - this.sizeA
-        }
+        const mid = Math.floor(this.campaign.stats.nbPros90 / 2);
+        this.sizeA = mid;
+        this.sizeB = this.campaign.stats.nbPros90 - mid;
       }
       // obj = [Absettings, sizeA, size B]
-      this._campaignService.startABtesting(this.campaign._id, this.nameWorkflowA, this.nameWorkflowB, this.sizeA, this.sizeB)
+      this._campaignService.startABtesting(this.campaign._id, this.nameWorkflowA, this.nameWorkflowB, this.sizeA, this.sizeB).first()
         .subscribe((obj: Array<any>) => {
           if (obj.length === 0) {
             this._notificationsService.error('ERROR.ERROR', 'Not enough Pros in campaign');
@@ -301,7 +302,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
 
   public updateStatsBatches() {
-    this._campaignService.updateBatchesStats(this.campaign._id).subscribe((obj: Array<Batch>) => {
+    this._campaignService.updateBatchesStats(this.campaign._id).first().subscribe((obj: Array<Batch>) => {
       this._statsA = obj[0].stats;
       this._statsB = obj[1].stats;
       this._sizeA = obj[0].size;
