@@ -196,7 +196,7 @@ export class AdminCampaignMailsComponent implements OnInit {
     const secondTime = secondJSdate.getHours() + ':' + secondJSdate.getMinutes();
 
     const thirdJSdate = new Date(batch.thirdMail);
-    const thirdTime = batch.thirdMail.getHours() + ':' + thirdJSdate.getMinutes();
+    const thirdTime = thirdJSdate.getHours() + ':' + thirdJSdate.getMinutes();
 
     const t: Table = {
       _selector: 'TODO',
