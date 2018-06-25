@@ -15,7 +15,7 @@ export class AdminUsersComponent implements OnInit {
 
   private _users: Array<User> = [];
   private _actions: string[] = [];
-  private _more: GenericSidebar = {_animate: 'inactive', _content: null};
+  private _more: GenericSidebar = {_animate: 'inactive', _content: ''};
   private _tableInfos: Table = null;
   private _selfId = '';
   private _total = 0;

@@ -7,4 +7,4 @@ export interface Column {
   readonly _choices?: Label[];
 }
 
-export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK' | 'LABEL';
+export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK' | 'LABEL' | 'DATE';
