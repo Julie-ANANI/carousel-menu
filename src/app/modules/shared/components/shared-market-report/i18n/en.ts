@@ -5,6 +5,27 @@ export const MARKET_REPORT = {
     'EVALUATING': 'Fresh market insights of your project'
   },
 
+  'MESSAGE': {
+    'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
+    'EDITING': {
+      'A': 'Please finish',
+      'B': 'setup of your project',
+      'C': 'and submit it.'
+    },
+    'REVIEWING': 'Please modify the changes in your project and re-submit it.'
+  },
+
+  'BUTTON': {
+    'DOWNLOAD': 'Download'
+  },
+
+  'PROFESSIONAL': {
+    'SIDEBAR': 'Professional',
+    'TITLE': 'Professionals',
+    'NUMBER': 'Answers from professionals',
+    'QUESTION': 'Origin of responses'
+  },
+
 
  // 'TITLE': 'Exploring market potential',
   'COLLAPSE': 'Collapse',
@@ -33,10 +54,5 @@ export const MARKET_REPORT = {
     'COUNTRY': 'Country',
     'BACK': 'Back'
   },
-  'PROFESSIONAL': {
-    'SIDEBAR': 'Professional',
-    'TITLE': 'Professionals',
-    'NUMBER': 'Answers from professionals',
-    'QUESTION': 'Origin of responses'
-  }
+
 };

@@ -1,17 +1,4 @@
-#project-synthesis {
 
-  .bot-rect {
-    width: 300px;
-  }
-
-  .title-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-
-}
 
 
 
@@ -344,3 +331,57 @@ body.sample-infographic {
     background-color: #747474;
   }
 }
+
+#project-synthesis {
+
+  .bot-rect {
+    width: 300px;
+  }
+
+  .title-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 25px;
+  }
+
+  .question-wrapper {
+    border-right: 1px solid #D1D1D1;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        margin: 0;
+        padding: 12px;
+        border-radius: 5px;
+        transition: all 0.15s ease-in-out;
+
+        a {
+          color: #333333;
+          text-decoration: none;
+        }
+
+        .icon {
+          font-size: 0.7rem;
+          vertical-align: -9%;
+        }
+
+      }
+
+      li:hover {
+        cursor: pointer;
+        background:  #F2F2F2;
+        border-color: #F2F2F2;
+      }
+
+    }
+
+  }
+
+
+}
+
+/********************************** Media ***************************************/

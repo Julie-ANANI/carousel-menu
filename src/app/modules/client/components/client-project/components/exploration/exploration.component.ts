@@ -13,6 +13,7 @@ import { Section } from '../../../../../../models/section';
   templateUrl: 'exploration.component.html',
   styleUrls: ['exploration.component.scss']
 })
+
 export class ExplorationProjectComponent implements OnInit {
 
   @Input() project: Innovation;

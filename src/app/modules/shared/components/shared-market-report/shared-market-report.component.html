@@ -3,12 +3,12 @@
     <div class="column col-12">
 
       <!-- Project under editing status -->
-      <div *ngIf="project.status === 'EDITING' && !adminSide">
+      <div *ngIf="projectStatus === 'EDITING' && !adminSide && !project.reviewing">
         <h1>{{ 'MARKET_REPORT.TITLE.EDITING' | translate }}</h1>
         <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span *ngIf="project.status === 'EDITING'" class="bot-rect">
-            {{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.A' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.B' | translate }}</span>
-            {{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.C' | translate }}
+            {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'MARKET_REPORT.MESSAGE.EDITING.B' | translate }}</span>
+            {{ 'MARKET_REPORT.MESSAGE.EDITING.C' | translate }}
           </span>
           <br>
           <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
@@ -17,10 +17,21 @@
       </div>
 
       <!-- Project under submitted status -->
-      <div *ngIf="project.status === 'SUBMITTED' && !adminSide">
+      <div *ngIf="projectStatus === 'SUBMITTED' && !adminSide">
         <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
         <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
-          <span class="bot-rect">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</span>
+          <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}</span>
+          <br>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+          <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+        </div>
+      </div>
+
+      <!-- Project under reviewing status -->
+      <div *ngIf="project.reviewing && !adminSide">
+        <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
+        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+          <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}</span>
           <br>
           <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
           <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
@@ -28,11 +39,43 @@
       </div>
 
       <!-- Project under evaluating status -->
-      <div *ngIf="project.status === 'EVALUATING' || adminSide">
+      <div *ngIf="project.status === 'EVALUATING' || project.status === 'EVALUATING_DONE' || adminSide">
         <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
+
         <div class="title-wrapper">
           <h1>{{ 'MARKET_REPORT.TITLE.EVALUATING' | translate }}</h1>
-          <button class="btn btn-primary">Download</button>
+          <button class="btn btn-primary">{{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }}</button>
+        </div>
+
+        <div class="columns">
+          <!-- Sidebar -->
+          <div class="column col-3 question-wrapper">
+            <ul>
+              <li>
+                <a pageScroll href="#professionals">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}<i class="icon icon-arrow-right"></i></a>
+              </li>
+            </ul>
+          </div>
+          <!-- Content -->
+          <div class="column col-9">
+            <!-- section-origin -->
+            <h2>{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h2>
+            <app-question-conclusion
+              [innovation]="project"
+              [infographic]="infographics?.professionals"
+              [question]="{identifier: 'professionals'}"
+              [readonly]="!adminMode"
+              [stats]="{nbAnswers: answers.length, percentage: 0}">
+            </app-question-conclusion>
+            <div class="map-wrapper" >
+              <app-worldmap
+                (updateCountries)="filterByCountries($event)"
+                [countries]="countries"
+                [countriesColor]="'#FFB300'"
+                [initialConfiguration]="mapInitialConfiguration">
+              </app-worldmap>
+            </div>
+          </div>
         </div>
 
 
@@ -134,7 +177,7 @@
           ></app-question-conclusion>
 
             <div class="bloc">
-              <!--======= Carte du monde =======-
+              <!--======= Carte du monde =======--
               <div class="map centered" width="684" height="339">
                 <app-worldmap (updateCountries)="filterByCountries($event)"
                               [countries]="countries"

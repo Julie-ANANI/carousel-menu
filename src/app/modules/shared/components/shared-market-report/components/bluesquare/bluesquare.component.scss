@@ -1,28 +1,54 @@
 .big-blue-synthesis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
+  flex-direction: column;
   background: #0B90C6;
-  padding: 25px;
-  text-align: center;
-  min-width: 220px;
   margin-right: 30px;
-  font-weight: 600;
   font-size: 14px;
   color: #FFFFFF;
   margin-bottom: 30px;
-  max-width: 220px;
+  min-height: 180px;
+  padding-top: 25px;
+  width: 240px;
+  padding-bottom: 25px;
+  border-radius: 3px;
 
   hr {
-    opacity: 0.5;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px;
+    width: 80%;
+    border-color: white;
   }
 
-  .number-answers span {
-    display: block;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: 64px;
-    font-weight: 400;
+  .para {
+    padding: 8px 0;
+    color: white;
+    font-size: 0.7rem;
+  }
+
+  .number-answers {
+    text-align: center;
+
+    span {
+      font-size: 3.2rem;
+      font-weight: 400;
+    }
+
+    .para {
+      padding-top: 4px;
+    }
+
+  }
+
+  .number-ratio {
+    color: white;
+    text-align: center;
+
+    span {
+      font-size: 1.6rem;
+    }
+
   }
 
   .total-score {
@@ -46,14 +72,5 @@
     margin-bottom: 10px;
   }
 
-  .number-ratio {
-    color: #94E1FF;
-  }
 
-  .number-ratio span {
-    display: block;
-    font-weight: 400;
-    font-size: 30px;
-    margin-bottom: 5px;
-  }
 }
