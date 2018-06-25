@@ -98,11 +98,15 @@ export class SharedTableComponent {
   }
 
   getContentValue(rowKey: string, columnKey: string[]): any  {
-    let content = '';
-    for (const i of columnKey) {
-      content = content + this._content[rowKey]._content[i] + ' ';
+    if (columnKey.length === 1) {
+      return this._content[rowKey]._content[columnKey[0]];
+    } else {
+      let content = '';
+      for (const i of columnKey) {
+        content = content + this._content[rowKey]._content[i] + ' ';
+      }
+      return content;
     }
-    return content;
   }
 
   getType(column: Column): types {
