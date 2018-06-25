@@ -106,7 +106,7 @@
                 </span>
 
                 <span *ngSwitchCase="'DATE'">
-                  {{(getContentValue(key, getAttr(column)).toString()) ? dateFormat : ' - '}}
+                  {{(getContentValue(key, getAttr(column)).toString() | date:dateFormat)}}
                 </span>
 
               </ng-container>
