@@ -1,7 +1,11 @@
 <div class="form-group-inline-space">
   <div class="input-group">
     <select (change)="changeCurrentTextProp($event)" class="input-group-addon form-select">
-      <option *ngFor="let propName of textProps" [value]="getAttr(propName)" [selected]="textIsSelected(propName)">{{getTextProp(propName)}}</option>
+      <option *ngFor="let propName of textProps"
+              [value]="getAttr(propName)"
+              [selected]="textIsSelected(propName)">
+        {{getName(propName) | translate}}
+      </option>
     </select>
     <div class="has-icon-right">
       <input (keyup.enter)="filterText($event)"
@@ -15,7 +19,7 @@
 
   <div *ngFor="let prop of otherProps">
     <div [ngSwitch]="getType(prop)" class="input-group">
-      <label class="form-label">{{getName(prop)}}</label>
+      <label class="form-label">{{getName(prop) | translate}}</label>
       <select (change)="filterOther($event, prop)" [(ngModel)]="config[getAttr(prop)]" class="form-select small-select" *ngSwitchCase="'CHECK'">
         <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
         <option [ngValue]="true">{{'COMMON.YES' | translate}}</option>
@@ -24,7 +28,7 @@
 
       <select (change)="filterOther($event, prop)" [(ngModel)]="config[getAttr(prop)]" class="form-select small-select" *ngSwitchCase="'LABEL'">
         <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
-        <option *ngFor="let choice of getChoices(prop)">{{getChoiceName(choice)}}</option>
+        <option *ngFor="let choice of getChoices(prop)">{{getChoiceName(choice) | translate}}</option>
       </select>
     </div>
   </div>

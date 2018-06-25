@@ -97,8 +97,12 @@ export class SharedTableComponent {
     return Object.keys(this._content);
   }
 
-  getContentValue(rowKey: string, columnKey: string): any  {
-    return this._content[rowKey]._content[columnKey];
+  getContentValue(rowKey: string, columnKey: string[]): any  {
+    let content = '';
+    for (const i of columnKey) {
+      content = content + this._content[rowKey]._content[i] + ' ';
+    }
+    return content;
   }
 
   getType(column: Column): types {
