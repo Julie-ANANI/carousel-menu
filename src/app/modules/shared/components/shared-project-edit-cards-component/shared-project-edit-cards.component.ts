@@ -28,7 +28,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Output() projectChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
-  @Output() pitchFormField = new EventEmitter<boolean>();
 
   showTitleError: boolean;
   showSummaryError: boolean;
@@ -75,7 +74,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   notifyModelChanges(_event: any) {
     this.changesSaved = false;
     this.saveChanges.emit(true);
-    this.checkField();
   }
 
   showError() {
@@ -86,17 +84,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.showAdvantageError = this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0;
     this.showPatentError = this.project.patented === null;
     this.showDiffusionError = this.project.external_diffusion === null;
-  }
-
-  checkField() {
-    this.project.innovationCards.forEach((field) => {
-      if ( field.title === '' || field.summary === '' || field.problem === '' || field.solution === '' ||
-        field.advantages.length === 0 || this.project.patented === null || this.project.external_diffusion === null) {
-        this.pitchFormField.emit(false);
-      } else {
-        this.pitchFormField.emit(true);
-      }
-    });
   }
 
   /*
@@ -151,7 +138,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
             this.project.innovationCards.push(data);
             this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
             this.projectChange.emit(this.project);
-            this.checkField();
           });
         }
       } else {
@@ -261,7 +247,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
           this.project.innovationCards = this.project.innovationCards.filter((card) => card._id !== this._deleteInnovCardId);
           this.innovationCardEditingIndex -= 1;
           this.resetErrorValue();
-          this.checkField();
           this._showDeleteModal = false;
         }, err => {
           this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);

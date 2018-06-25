@@ -22,7 +22,6 @@ export class SharedProjectSettingsComponent implements OnInit {
   @Input() projectReviewing: any;
 
   @Output() settingsChange = new EventEmitter<any>();
-  @Output() targetingFormField = new EventEmitter<boolean>();
 
   showMarketError: boolean;
   showGeographyError: boolean;
@@ -267,19 +266,6 @@ export class SharedProjectSettingsComponent implements OnInit {
   public updateSettings() {
     if (this._projectStatus) {
       this.settingsChange.emit(this.settings);
-      this.checkField();
-    }
-  }
-
-  checkField() {
-    if (this.settings.market.comments.length !== 0 && this.settings.geography.exclude.length !== 0 || this.settings.geography.comments.length !== 0 ||
-      this.settings.geography.continentTarget.russia || this.settings.geography.continentTarget.oceania || this.settings.geography.continentTarget.europe
-      || this.settings.geography.continentTarget.asia || this.settings.geography.continentTarget.americaSud || this.settings.geography.continentTarget.americaNord
-      || this.settings.geography.continentTarget.africa) {
-      this.targetingFormField.emit(true);
-      this.showGeographyError = false;
-    } else {
-      this.targetingFormField.emit(false);
     }
   }
 

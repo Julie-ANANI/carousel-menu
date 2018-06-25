@@ -16,7 +16,6 @@ export class PitchComponent implements OnInit {
 
   @Output() updateInnovation = new EventEmitter<Innovation>();
   @Output() saveChanges = new EventEmitter<boolean>();
-  @Output() pitchFormField = new EventEmitter<boolean>();
 
   showFieldError: Subject<boolean> = new Subject();
 
@@ -33,10 +32,6 @@ export class PitchComponent implements OnInit {
 
   public innovationSaved() {
     this.changesSaved = this.changesSaved;
-  }
-
-  public pitchFormValidation(value: boolean) {
-    this.pitchFormField.emit(value);
   }
 
   ngOnInit(): void {

@@ -9,13 +9,12 @@ import {Subject} from 'rxjs/Subject';
   styleUrls: ['targeting.component.scss']
 })
 
-export class TargetingComponent implements OnInit{
+export class TargetingComponent implements OnInit {
 
   @Input() project: Innovation;
   @Input() showTargetingFieldError: Subject<boolean>;
 
   @Output() newSettings = new EventEmitter<InnovationSettings>();
-  @Output() targetingFormField = new EventEmitter<boolean>();
 
   showFieldError: Subject<boolean> = new Subject();
 
@@ -23,10 +22,6 @@ export class TargetingComponent implements OnInit{
 
   public updateSettings(value: InnovationSettings): void {
     this.newSettings.emit(value);
-  }
-
-  public targetingFormValidation(value: boolean) {
-    this.targetingFormField.emit(value);
   }
 
   ngOnInit(): void {

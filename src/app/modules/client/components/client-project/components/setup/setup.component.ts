@@ -20,7 +20,6 @@ export class SetupProjectComponent implements OnInit {
 
   private _changesSaved: boolean;
   private _saveChanges: boolean;
-
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
 
   pitchFormValid: boolean;
@@ -42,31 +41,32 @@ export class SetupProjectComponent implements OnInit {
     this._saveChanges = false;
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
-    this.pitchFormValid = true;
     this.checkProjectStatus();
   }
 
   /*
-      Here we are checking the fields that are required to submit the form.
+      Here we are checking the fields that are required to submit or validate the form.
    */
   checkProjectStatus() {
-    /*this.project.innovationCards.forEach((field) => {
-      this.pitchFormValid = field.title !== '' && field.summary !== '' && field.problem !== '' && field.solution !== '' &&
-        field.advantages.length !== 0 && this.project.patented !== null && this.project.external_diffusion !== null;
-      console.log(field);
-    });*/
-    this.project.innovationCards.forEach((field) => {
-      if ( field.title === '' || field.summary === '' || field.problem === '' || field.solution === '' ||
-        field.advantages.length === 0 || this.project.patented === null || this.project.external_diffusion === null) {
+    for (let i = 0; i < this.project.innovationCards.length; i++ ) {
+      if (this.project.innovationCards[i].title === '' || this.project.innovationCards[i].summary === '' || this.project.innovationCards[i].problem === ''
+        || this.project.innovationCards[i].solution === '' || this.project.innovationCards[i].advantages.length === 0 || this.project.external_diffusion === null
+      || this.project.patented === null) {
         this.pitchFormValid = false;
+        break;
+      } else {
+        this.pitchFormValid = true;
       }
+    }
 
-    });
-
-    this.targetingFormValid = this.project.settings.market.comments.length !== 0 && this.project.settings.geography.exclude.length !== 0 || this.project.settings.geography.comments.length !== 0 ||
+    if (this.project.settings.market.comments.length !== 0 && (this.project.settings.geography.exclude.length !== 0 || this.project.settings.geography.comments.length !== 0 ||
       this.project.settings.geography.continentTarget.russia || this.project.settings.geography.continentTarget.oceania || this.project.settings.geography.continentTarget.europe
       || this.project.settings.geography.continentTarget.asia || this.project.settings.geography.continentTarget.americaSud || this.project.settings.geography.continentTarget.americaNord
-      || this.project.settings.geography.continentTarget.africa;
+      || this.project.settings.geography.continentTarget.africa) ) {
+      this.targetingFormValid = true;
+    } else {
+      this.targetingFormValid = false;
+    }
 
   }
 
@@ -80,6 +80,7 @@ export class SetupProjectComponent implements OnInit {
             this._changesSaved = true;
             this._saveChanges = false;
             this._saveButtonClass = 'disabled';
+            this.checkProjectStatus();
           }, err => {
             this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
         });
@@ -127,6 +128,9 @@ export class SetupProjectComponent implements OnInit {
 
   }
 
+  /*
+      Here we are receiving the value from the targeting form.
+   */
   updateSettings(value: InnovationSettings): void {
     if (this.projectStatus === 'EVALUATING') {
       this._saveButtonClass = 'disabled';
@@ -137,24 +141,12 @@ export class SetupProjectComponent implements OnInit {
     }
   }
 
+
+  /*
+      Here we are receiving the value from the pitch form.
+   */
   updateInnovation(value: Innovation): void {
     this.project = value;
-  }
-
-  /*
-      Here we are getting the value from the child component
-      to check that pitch required fields are filled or not.
-   */
-  pitchFormValidation(value: boolean) {
-    this.pitchFormValid = value;
-  }
-
-  /*
-     Here we are getting the value from the child component
-     to check that targeting required fields are filled or not.
-  */
-  targetingFormValidation(value: boolean) {
-    this.targetingFormValid = value;
   }
 
   /*
