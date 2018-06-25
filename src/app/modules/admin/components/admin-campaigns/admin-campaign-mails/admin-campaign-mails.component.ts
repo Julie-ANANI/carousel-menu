@@ -199,7 +199,7 @@ export class AdminCampaignMailsComponent implements OnInit {
     const secondMonth = secondJSdate.getMonth() + 1;
     const secondDate = secondJSdate.getDate() + '/' + secondMonth + '/' + secondJSdate.getFullYear();
     const secondTime = secondJSdate.getHours() + ':' + secondJSdate.getMinutes();
-
+    
     const thirdJSdate = new Date(batch.thirdMail);
     const thirdMonth = thirdJSdate.getMonth() + 1;
     const thirdDate = thirdJSdate.getDate() + '/' + thirdMonth + '/' + thirdJSdate.getFullYear();
