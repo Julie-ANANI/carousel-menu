@@ -17,11 +17,9 @@ const DEFAULT_TAB = 'pitch';
 export class SetupProjectComponent implements OnInit {
 
   @Input() project: Innovation;
-  @Input() projectStatus: string;
 
   private _changesSaved: boolean;
   private _saveChanges: boolean;
-
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
 
   pitchFormValid: boolean;
@@ -47,47 +45,45 @@ export class SetupProjectComponent implements OnInit {
   }
 
   /*
-      Here we are checking the fields that are required to submit the form.
+      Here we are checking the fields that are required to submit or validate the form.
    */
   checkProjectStatus() {
-    this.project.innovationCards.forEach((field) => {
-      this.pitchFormValid = field.title !== '' && field.summary !== '' && field.problem !== '' && field.solution !== '' &&
-        field.advantages.length !== 0 && this.project.patented !== null && this.project.external_diffusion !== null;
-    });
+    for (let i = 0; i < this.project.innovationCards.length; i++ ) {
+      if (this.project.innovationCards[i].title === '' || this.project.innovationCards[i].summary === '' || this.project.innovationCards[i].problem === ''
+        || this.project.innovationCards[i].solution === '' || this.project.innovationCards[i].advantages.length === 0 || this.project.external_diffusion === null
+      || this.project.patented === null) {
+        this.pitchFormValid = false;
+        break;
+      } else {
+        this.pitchFormValid = true;
+      }
+    }
 
-    this.targetingFormValid = this.project.settings.market.comments.length !== 0 && this.project.settings.geography.exclude.length !== 0 || this.project.settings.geography.comments.length !== 0 ||
+    if (this.project.settings.market.comments.length !== 0 && (this.project.settings.geography.exclude.length !== 0 || this.project.settings.geography.comments.length !== 0 ||
       this.project.settings.geography.continentTarget.russia || this.project.settings.geography.continentTarget.oceania || this.project.settings.geography.continentTarget.europe
       || this.project.settings.geography.continentTarget.asia || this.project.settings.geography.continentTarget.americaSud || this.project.settings.geography.continentTarget.americaNord
-      || this.project.settings.geography.continentTarget.africa;
+      || this.project.settings.geography.continentTarget.africa) ) {
+      this.targetingFormValid = true;
+    } else {
+      this.targetingFormValid = false;
+    }
 
-  }
-
-  updateSettings(value: InnovationSettings): void {
-    this.project.settings = value;
-    this._saveChanges = true;
-    this._saveButtonClass = 'save-project';
-  }
-
-  updateInnovation(value: Innovation): void {
-    this.project = value;
   }
 
   saveProject(event: Event): void {
     event.preventDefault();
 
      if (this._saveChanges) {
-        this.innovationService.save(this.project._id, this.project).first()
-          .subscribe(data => {
+        this.innovationService.save(this.project._id, this.project).first().subscribe(data => {
             this.project = data;
             this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
             this._changesSaved = true;
             this._saveChanges = false;
             this._saveButtonClass = 'disabled';
-            // this.showPitchFieldError.next(true); // to show the error in pitch form.
-            // this.showTargetingFieldError.next(true); // to show the error in targeting form.
+            this.checkProjectStatus();
           }, err => {
             this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-          });
+        });
      }
 
   }
@@ -122,9 +118,8 @@ export class SetupProjectComponent implements OnInit {
     this._projectToBeSubmitted = false;
 
     this.innovationService.submitProjectToValidation(this.project._id)
-      .first()
-      .subscribe(data => {
-       this.projectStatus = this.project.status = 'SUBMITTED';
+      .first().subscribe(data => {
+       this.project.status = 'SUBMITTED';
        this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
        this.router.navigate(['projects']);
       }, err => {
@@ -134,19 +129,24 @@ export class SetupProjectComponent implements OnInit {
   }
 
   /*
-      Here we are getting the value from the child component
-      to check that pitch required fields are filled or not.
+      Here we are receiving the value from the targeting form.
    */
-  pitchFormValidation(value: boolean) {
-    this.pitchFormValid = value;
+  updateSettings(value: InnovationSettings): void {
+    if (this.projectStatus === 'EVALUATING') {
+      this._saveButtonClass = 'disabled';
+    } else {
+      this.project.settings = value;
+      this._saveChanges = true;
+      this._saveButtonClass = 'save-project';
+    }
   }
 
+
   /*
-     Here we are getting the value from the child component
-     to check that targeting required fields are filled or not.
-  */
-  targetingFormValidation(value: boolean) {
-    this.targetingFormValid = value;
+      Here we are receiving the value from the pitch form.
+   */
+  updateInnovation(value: Innovation): void {
+    this.project = value;
   }
 
   /*
@@ -154,9 +154,13 @@ export class SetupProjectComponent implements OnInit {
      shows the notification to the client.
   */
   saveInnovation(value: boolean) {
-    this._saveChanges = value;
-    this._changesSaved = false;
-    this._saveButtonClass = 'save-project';
+    if (this.projectStatus === 'EVALUATING') {
+      this._saveButtonClass = 'disabled';
+    } else {
+      this._saveChanges = value;
+      this._changesSaved = false;
+      this._saveButtonClass = 'save-project';
+    }
   }
 
   closeModal(event: Event) {
@@ -186,6 +190,10 @@ export class SetupProjectComponent implements OnInit {
 
   get changesSaved(): boolean {
     return this._changesSaved;
+  }
+
+  get projectStatus(): string {
+    return this.project.status;
   }
 
 }

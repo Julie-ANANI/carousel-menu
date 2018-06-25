@@ -25,6 +25,7 @@ export interface Innovation {
   restitution?: boolean;
   thanks?: boolean;
   readonly projectStatus?: number;
+  readonly reviewing?: any;
   readonly patented?: boolean;
   readonly external_diffusion?: boolean;
   readonly launched?: Date;

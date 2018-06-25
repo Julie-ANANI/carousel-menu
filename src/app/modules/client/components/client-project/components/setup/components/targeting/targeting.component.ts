@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Innovation } from '../../../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../../../models/innov-settings';
-import {Subject} from 'rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-project-targeting',
@@ -9,7 +9,7 @@ import {Subject} from 'rxjs/Subject';
   styleUrls: ['targeting.component.scss']
 })
 
-export class TargetingComponent implements OnInit{
+export class TargetingComponent implements OnInit {
 
   @Input() project: Innovation;
   @Input() showTargetingFieldError: Subject<boolean>;
@@ -23,10 +23,6 @@ export class TargetingComponent implements OnInit{
 
   public updateSettings(value: InnovationSettings): void {
     this.newSettings.emit(value);
-  }
-
-  public targetingFormValidation(value: boolean) {
-    this.targetingFormField.emit(value);
   }
 
   ngOnInit(): void {

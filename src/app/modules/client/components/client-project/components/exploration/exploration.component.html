@@ -3,12 +3,12 @@
     <div class="column col-12">
 
       <!-- Project under editing status -->
-      <div *ngIf="project.status === 'EDITING' ">
+      <div *ngIf="projectStatus === 'EDITING' && !project.reviewing">
         <h1>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EDITING' | translate }}</h1>
         <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span class="bot-rect">
-            {{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.A' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.B' | translate }}</span>
-            {{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.C' | translate }}
+            {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.A' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.B' | translate }}</span>
+            {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.C' | translate }}
           </span>
           <br>
           <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
@@ -17,10 +17,21 @@
       </div>
 
       <!-- Project under submitted status -->
-      <div *ngIf="project.status === 'SUBMITTED' ">
+      <div *ngIf="projectStatus === 'SUBMITTED'">
         <h1>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.SUBMITTED' | translate }}</h1>
         <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
-          <span class="bot-rect">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</span>
+          <span class="bot-rect">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.SUBMITTED' | translate }}</span>
+          <br>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+          <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+        </div>
+      </div>
+
+      <!-- Project under submitted status -->
+      <div *ngIf="project.reviewing">
+        <h1>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.SUBMITTED' | translate }}</h1>
+        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+          <span class="bot-rect">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.REVIEWING' | translate }}</span>
           <br>
           <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
           <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
@@ -29,7 +40,7 @@
 
 
       <!-- Project under evaluating -->
-      <div *ngIf="project.status === 'EVALUATING'">
+      <div *ngIf="projectStatus === 'EVALUATING'">
         <shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="project._id" [adminMode]="false" [questions]="questions"></shared-answer-modal>
 
         <div class="market-exploration">

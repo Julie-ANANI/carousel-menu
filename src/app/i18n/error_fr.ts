@@ -45,7 +45,8 @@ export const ERROR = {
     'SAVED_TEXT': 'Votre projet a été enregistré.',
     'SAVE_ERROR': 'Veuillez sauvegarder toutes vos modifications avant de continuer.',
     'SUBMITTED': 'Soumis',
-    'SUBMITTED_TEXT': 'Votre projet a été envoyé pour valider.'
+    'SUBMITTED_TEXT': 'Votre projet a été envoyé pour valider.',
+    'NOT_ALLOWED': 'Vous n\'êtes plus autorisé à effectuer cette action.'
   },
 
   'PRESET': {
