@@ -42,6 +42,7 @@ export class SetupProjectComponent implements OnInit {
     this._saveChanges = false;
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
+    this.pitchFormValid = true;
     this.checkProjectStatus();
   }
 
@@ -49,9 +50,17 @@ export class SetupProjectComponent implements OnInit {
       Here we are checking the fields that are required to submit the form.
    */
   checkProjectStatus() {
-    this.project.innovationCards.forEach((field) => {
+    /*this.project.innovationCards.forEach((field) => {
       this.pitchFormValid = field.title !== '' && field.summary !== '' && field.problem !== '' && field.solution !== '' &&
         field.advantages.length !== 0 && this.project.patented !== null && this.project.external_diffusion !== null;
+      console.log(field);
+    });*/
+    this.project.innovationCards.forEach((field) => {
+      if ( field.title === '' || field.summary === '' || field.problem === '' || field.solution === '' ||
+        field.advantages.length === 0 || this.project.patented === null || this.project.external_diffusion === null) {
+        this.pitchFormValid = false;
+      }
+
     });
 
     this.targetingFormValid = this.project.settings.market.comments.length !== 0 && this.project.settings.geography.exclude.length !== 0 || this.project.settings.geography.comments.length !== 0 ||

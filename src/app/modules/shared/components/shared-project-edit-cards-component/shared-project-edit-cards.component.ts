@@ -89,14 +89,14 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   checkField() {
-    if (this.project.innovationCards[this.innovationCardEditingIndex].title !== '' && this.project.innovationCards[this.innovationCardEditingIndex].summary !== ''
-      && this.project.innovationCards[this.innovationCardEditingIndex].problem !== '' && this.project.innovationCards[this.innovationCardEditingIndex].solution !== ''
-      && this.project.innovationCards[this.innovationCardEditingIndex].advantages.length !== 0 && this.project.patented !== null
-      && this.project.external_diffusion !== null) {
-      this.pitchFormField.emit(true);
-    } else {
-      this.pitchFormField.emit(false);
-    }
+    this.project.innovationCards.forEach((field) => {
+      if ( field.title === '' || field.summary === '' || field.problem === '' || field.solution === '' ||
+        field.advantages.length === 0 || this.project.patented === null || this.project.external_diffusion === null) {
+        this.pitchFormField.emit(false);
+      } else {
+        this.pitchFormField.emit(true);
+      }
+    });
   }
 
   /*
