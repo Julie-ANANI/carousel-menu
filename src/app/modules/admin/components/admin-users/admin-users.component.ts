@@ -20,7 +20,7 @@ export class AdminUsersComponent implements OnInit {
   private _selfId = '';
   private _total = 0;
   private _config = {
-    fields: 'companyName jobTitle created domain firstName lastName isOperator',
+    fields: 'companyName jobTitle created domain location firstName lastName',
     limit: 10,
     offset: 0,
     search: {},
@@ -65,18 +65,16 @@ export class AdminUsersComponent implements OnInit {
           _isFiltrable: true,
           _isSortable: true,
           _columns: [
-            {_attr: 'firstName', _name: 'FIRSTNAME', _type: 'TEXT'},
-            {_attr: 'lastName', _name: 'LASTNAME', _type: 'TEXT'},
-            {_attr: 'jobTitle', _name: 'JOB', _type: 'TEXT'},
-            {_attr: 'companyName', _name: 'COMPANY', _type: 'LABEL',
+            {_attr: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+            {_attr: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
+            {_attr: ['companyName'], _name: 'COMMON.COMPANY', _type: 'LABEL',
               _choices: [
                 {_name: 'Veolia', _class: 'label-progress'},
                 {_name: 'UMI',  _class: 'label-validate'},
                 {_name: 'VeRI', _class: 'label-alert'},
                 {_name: 'Michelin', _class: 'label-editing'},
                 {_name: 'Dynergie', _class: 'label-draft'}
-                ]},
-            {_attr: 'isOperator', _name: 'EST-OPERATEUR', _type: 'CHECK'}],
+                ]}],
           _actions: this._actions
         };
       });

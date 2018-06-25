@@ -15,7 +15,7 @@ export class SharedFilterMultiComponent {
     this.loadProps(value);
   }
 
-  private _currentTextProp: Column = {_attr: '', _name: '', _type: 'TEXT'};
+  private _currentTextProp: Column = {_attr: [''], _name: '', _type: 'TEXT'};
   private _textProps: Column[] = [];
   private _otherProps: Column[] = [];
 
@@ -25,24 +25,30 @@ export class SharedFilterMultiComponent {
 
     this._textProps.forEach(value1 =>
     {
-      if (this.config.search[value1._attr] && value1._attr !== this._currentTextProp._attr) {
-        delete this.config.search[value1._attr]
+      for (const i in value1._attr) {
+        if (this.config.search[i] && value1._attr[i] !== this._currentTextProp._attr[i]) {
+          delete this.config.search[value1._attr[i]]
       }
+    }
     });
 
     const value = (<HTMLInputElement> event.srcElement).value;
-    if (this.config.search[this._currentTextProp._attr] && value === '') {
-      delete this.config.search[this._currentTextProp._attr];
-      this.configChange.emit(this.config);
-    } else if (value !== '') {
-      this.config.search[this._currentTextProp._attr] = value;
-      this.configChange.emit(this.config);
+    for (const i in this.currentTextProp._attr) {
+      if (this.config.search[i] && value === '') {
+        delete this.config.search[i];
+        this.configChange.emit(this.config);
+      } else if (value !== '') {
+        this.config.search[i] = value;
+        this.configChange.emit(this.config);
+      }
     }
   }
 
   filterOther(event: any, prop: Column) {
-    if (this.config[prop._attr] === null) {
-      delete this.config[prop._attr];
+    for (const i in prop._attr) {
+      if (this.config[i] === null) {
+        delete this.config[i];
+      }
     }
     this.configChange.emit(this.config);
   }
@@ -53,12 +59,8 @@ export class SharedFilterMultiComponent {
 
   loadProps(value: Column[]) {
     if (value) {
-      if (value.find(value1 => value1._attr.toLowerCase() === 'firstname') &&
-        value.find(value1 => value1._attr.toLowerCase() === 'lastname')) {
-        value = value.filter(value1 => value1._attr.toLowerCase() !== 'lastname');
-      }
       this._textProps = value.filter(value1 => this.getType(value1) === 'TEXT');
-      if (this._currentTextProp._attr === '' && this._textProps.length > 0) {
+      if (this._currentTextProp._attr[0] === '' && this._textProps.length > 0) {
         this._currentTextProp = this._textProps[0];
       }
 
@@ -100,14 +102,5 @@ export class SharedFilterMultiComponent {
 
   changeCurrentTextProp(prop: any) {
     this._currentTextProp = this._textProps.find(value => value._attr === prop.srcElement.value);
-  }
-
-  getTextProp(prop: Column): string {
-    if (prop) {
-      if (prop._attr.toLowerCase() === 'firstname' || prop._attr.toLowerCase() === 'lastname') {
-        return 'Name';
-      }
-      return prop._name.charAt(0).toUpperCase() + prop._name.slice(1).toLowerCase();
-    }
   }
 }

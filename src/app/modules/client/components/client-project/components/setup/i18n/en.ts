@@ -9,11 +9,20 @@ export const SETUP = {
   'SUBMIT_PROJECT': 'Submit project',
 
   'MESSAGE': {
-    'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
+    'SUBMITTED': 'Votre projet est en cours de révision par notre équipe. Nous reviendrons bientôt !',
     'EDITING': {
       'A': 'Please finish',
       'B': 'setup of your project',
       'C': 'and submit it.'
+    },
+    'EVALUATING': {
+      'A': 'Market exploration is under progress. You can\'t make changes in your project anymore.' ,
+      'B': 'Synthesis of your project is available.'
+    },
+    'REVIEWING': {
+      'A': 'Your project needs to be modified. Please',
+      'B': 'reads',
+      'C': 'our comments.'
     }
   },
 

@@ -64,9 +64,9 @@ export class ExplorationProjectComponent implements OnInit {
                   acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
                 }
                 if (campaign.stats.mail) {
-                  acc.nbProsSent += (campaign.stats.mail.totalPros || 0);
+                  acc.nbProsSent += (campaign.stats.mail.totalPros ||  0);
                   acc.nbProsOpened += (campaign.stats.mail.statuses.opened || 0);
-                  acc.nbProsClicked += (campaign.stats.mail.statuses.clicked || 0);
+                  acc.nbProsClicked += (campaign.stats.mail.statuses.clicked ||  0);
                 }
               }
               return acc;
@@ -83,17 +83,44 @@ export class ExplorationProjectComponent implements OnInit {
     }
   }
 
+  get projectStatus(): string {
+    return this.project.status;
+  }
+
   public seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
   }
 
-  get answers() { return this._answers; }
-  get campaignStats() { return this._campaignsStats; }
-  get companies() { return this._companies; }
-  get countries() { return this._countries; }
-  get contactUrl() { return this._contactUrl; }
-  get modalAnswer() { return this._modalAnswer; }
-  set modalAnswer(modalAnswer: Answer) { this._modalAnswer = modalAnswer; }
-  get questions() { return this._questions; }
+  get answers() {
+    return this._answers;
+  }
+
+  get campaignStats() {
+    return this._campaignsStats;
+  }
+
+  get companies() {
+    return this._companies;
+  }
+
+  get countries() {
+    return this._countries;
+  }
+
+  get contactUrl() {
+    return this._contactUrl;
+  }
+
+  get modalAnswer() {
+    return this._modalAnswer;
+  }
+
+  set modalAnswer(modalAnswer: Answer) {
+    this._modalAnswer = modalAnswer;
+  }
+
+  get questions() {
+    return this._questions;
+  }
 
 }

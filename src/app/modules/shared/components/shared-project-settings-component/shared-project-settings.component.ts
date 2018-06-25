@@ -4,7 +4,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { ShareService } from '../../../../services/share/share.service';
 import { InnovationSettings } from '../../../../models/innov-settings';
 import * as _ from 'lodash';
-import {Subject} from 'rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
 import { Location } from '@angular/common';
 
 @Component({
@@ -18,9 +18,10 @@ export class SharedProjectSettingsComponent implements OnInit {
   @Input() settings: InnovationSettings;
   @Input() adminMode: boolean;
   @Input() showTargetingFieldError: Subject<boolean>;
+  @Input() projectStatus: string;
+  @Input() projectReviewing: any;
 
   @Output() settingsChange = new EventEmitter<any>();
-  @Output() targetingFormField = new EventEmitter<boolean>();
 
   showMarketError: boolean;
   showGeographyError: boolean;
@@ -68,20 +69,6 @@ export class SharedProjectSettingsComponent implements OnInit {
       });
     }
 
-  }
-
-  getColor(length: number) {
-    if (length === 0) {
-      return '#EA5858';
-    } else if (length > 0 && length < 250) {
-      return '#f0ad4e';
-    } else {
-      return '#2ECC71';
-    }
-  }
-
-  get lang() {
-    return this.translateService.currentLang;
   }
 
   /**
@@ -277,20 +264,27 @@ export class SharedProjectSettingsComponent implements OnInit {
    * After all the settings modifications are done, send them back to the project to be saved.
    */
   public updateSettings() {
-    this.settingsChange.emit(this.settings);
-    this.checkField();
+    if (this._projectStatus) {
+      this.settingsChange.emit(this.settings);
+    }
   }
 
-  checkField() {
-    if (this.settings.market.comments.length !== 0 && this.settings.geography.exclude.length !== 0 || this.settings.geography.comments.length !== 0 ||
-      this.settings.geography.continentTarget.russia || this.settings.geography.continentTarget.oceania || this.settings.geography.continentTarget.europe
-      || this.settings.geography.continentTarget.asia || this.settings.geography.continentTarget.americaSud || this.settings.geography.continentTarget.americaNord
-      || this.settings.geography.continentTarget.africa) {
-      this.targetingFormField.emit(true);
-      this.showGeographyError = false;
+  getColor(length: number) {
+    if (length <= 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < 250) {
+      return '#f0ad4e';
     } else {
-      this.targetingFormField.emit(false);
+      return '#2ECC71';
     }
+  }
+
+  get lang() {
+    return this.translateService.currentLang;
+  }
+
+  get _projectStatus(): boolean {
+    return this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED' || this.projectReviewing ;
   }
 
 }

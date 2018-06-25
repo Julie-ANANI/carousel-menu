@@ -17,7 +17,7 @@
               </li>
               <span *ngIf="project.innovationCards?.length < 2" class="add-project">
                 {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.LANGUAGE.ADD_PROJECT_LANGUAGE' | translate }}
-                <span class="text-link">
+                <span class="text-link" [ngClass]="{ 'c-disabled': !projectStatus }">
                   <span *ngIf="!containsLanguage('fr')" (click)="createInnovationCard($event, 'fr')">
                     {{ 'COMMON.LANG.FR' | translate }}
                   </span>
@@ -39,14 +39,15 @@
               <span
                 *ngIf="project.innovationCards?.length > 1"
                 (click)="deleteModal(innovationCard._id, innovationCard.lang)"
-                class="text-link delete-link">
+                class="text-link delete-link"
+                [ngClass]="{ 'c-disabled': !projectStatus }">
                 {{ 'COMMON.DELETE' | translate }}
               </span>
             </span>
           </div>
         </div>
 
-        <div class="columns">
+        <div class="columns" [ngClass]="{ 'c-disabled': !projectStatus }">
 
           <!-- Ques -->
           <div class="column col-md-12 col-6">
@@ -88,7 +89,7 @@
                       (ngModelChange)="notifyModelChanges($event)"
                       required
                       [ngClass]="{'borderRed': showSummaryError}"
-                      (focus)="showSummaryError = false">
+                      (keyup)="showSummaryError = false">
                     </textarea>
                     <div class="charRemaining">
                       <span [ngStyle]="{'color': getColor(project.innovationCards[i].summary.length | characterCountdown:500)}">
@@ -114,7 +115,7 @@
                       (ngModelChange)="notifyModelChanges($event)"
                       required
                       [ngClass]="{'borderRed': showProblemError}"
-                      (focus)="showProblemError = false">
+                      (keyup)="showProblemError = false">
                     </textarea>
                     <div class="charRemaining">
                       <span [ngStyle]="{'color': getColor(project.innovationCards[i].problem.length | characterCountdown:500)}">
@@ -140,7 +141,7 @@
                       (ngModelChange)="notifyModelChanges($event)"
                       required
                       [ngClass]="{'borderRed': showSolutionError}"
-                      (focus)="showSolutionError = false">
+                      (keyup)="showSolutionError = false">
                     </textarea>
                     <div class="charRemaining">
                       <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:500)}">
@@ -273,7 +274,7 @@
         </div>
 
         <!-- Project medias -->
-        <div *ngFor="let innovationItem of project.innovationCards; let i = index">
+        <div *ngFor="let innovationItem of project.innovationCards; let i = index" [ngClass]="{ 'c-disabled': !projectStatus }">
           <div *ngIf="innovationCardEditingIndex === i">
             <div class="project-data">
               <span class="num-rect">9</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.LABEL' | translate }}</span>
@@ -330,7 +331,6 @@
                 <div class="upload-wrapper">
                   <div class="image-upload-wrapper">
                     <app-shared-upload-zone-photo
-                      *ngIf="canEdit"
                       [uri]="'/innovation/'+project._id+'/innovationCard/'+innovationItem._id+'/media/image'"
                       (cbFn)="imageUploaded($event, i)">
                     </app-shared-upload-zone-photo>
@@ -339,7 +339,7 @@
                     <span class="para">{{ 'COMMON.OR' | translate }}</span>
                   </div>
                   <div class="video-upload-wrapper">
-                    <app-shared-upload-zone-video *ngIf="canEdit" (cbFn)="newOnlineVideoToAdd($event)"></app-shared-upload-zone-video>
+                    <app-shared-upload-zone-video (cbFn)="newOnlineVideoToAdd($event)"></app-shared-upload-zone-video>
                   </div>
                 </div>
 

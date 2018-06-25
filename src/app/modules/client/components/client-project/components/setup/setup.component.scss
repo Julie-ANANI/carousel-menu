@@ -14,6 +14,11 @@
       border-radius: 5px;
     }
 
+    .text-link {
+      color: white;
+      text-decoration: underline;
+    }
+
   }
 
   .row-1 {
@@ -110,8 +115,9 @@
 
     }
 
-    .pitch-check, .targeting-check, .survey-check {
-      display: none;
+    .pitch-check, .targeting-check {
+      color: #2ECC71;
+      transition: all 0.15s ease-in-out;
     }
 
   }

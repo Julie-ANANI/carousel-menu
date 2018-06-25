@@ -45,7 +45,8 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'SAVED_TEXT': 'Your project has been saved.',
     'SAVE_ERROR': 'Please save all your changes before proceeding.',
     'SUBMITTED': 'Submitted',
-    'SUBMITTED_TEXT': 'Your project has been sent to validate.'
+    'SUBMITTED_TEXT': 'Your project has been sent to validate.',
+    'NOT_ALLOWED': 'You are not allowed to perform this action anymore.'
   },
 
   'PRESET': {

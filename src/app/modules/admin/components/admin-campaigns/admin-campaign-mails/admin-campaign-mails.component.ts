@@ -66,7 +66,6 @@ export class AdminCampaignMailsComponent implements OnInit {
     } else {
       return 'Planned';
     }
-
   }
 
   public createNewBatch(sendNow: boolean) {
@@ -187,6 +186,19 @@ export class AdminCampaignMailsComponent implements OnInit {
     );
   }
 
+  public getWorkflowName(index: number) {
+    if (this.campaign.settings.ABsettings.status != 0) {
+      if (index == 0) {
+        return this.campaign.settings.ABsettings.nameWorkflowA;
+      }
+      if (index == 1) {
+        return this.campaign.settings.ABsettings.nameWorkflowB;
+      }
+    }
+    return this.campaign.settings.defaultWorkflow;
+  }
+
+
 
   public generateTableBatch(batch: Batch): Table {
     const firstJSdate = new Date(batch.firstMail);
@@ -200,7 +212,7 @@ export class AdminCampaignMailsComponent implements OnInit {
 
     const t: Table = {
       _selector: 'TODO',
-      _title: this._campaign.settings.defaultWorkflow || "A/B",
+      _title: 'Batch de ' + batch.size + ' pros',
       _isNotPaginable: true,
       _content: [
         {
@@ -230,7 +242,7 @@ export class AdminCampaignMailsComponent implements OnInit {
           Date: batch.thirdMail,
           Time: thirdTime,
           Status: this.getStatus(2, batch.status)
-        }, { //TODO: backend (undefined)
+        }, {
           Step: '04 - Thanks',
           Sent: batch.stats[3].delivered + batch.stats[3].bounced,
           Opened: (batch.stats[3].opened / batch.size) * 100 + '%',
@@ -242,38 +254,38 @@ export class AdminCampaignMailsComponent implements OnInit {
         }],
       _total: null,
       _columns: [{
-        _attr: 'Step',
+        _attr: ['Step'],
         _name: 'Step',
         _type: 'TEXT'
       }, {
-        _attr: 'Sent',
+        _attr: ['Sent'],
         _name: 'Sent',
         _type: 'TEXT'
       }, {
-        _attr: 'Opened',
+        _attr: ['Opened'],
         _name: 'Opened',
         _type: 'TEXT'
       }, {
-        _attr: 'Clicked',
+        _attr: ['Clicked'],
         _name: 'Clicked',
         _type: 'TEXT'
       }, {
-        _attr: 'Insights',
+        _attr: ['Insights'],
         _name: 'Insights',
         _type: 'TEXT'
       }, {
-        _attr: 'Date',
+        _attr: ['Date'],
         _name: 'Date',
         _type: 'DATE'
       }, {
-        _attr: 'Time',
+        _attr: ['Time'],
         _name: 'Time',
         _type: 'TEXT'
-      }, {
-        _attr: 'Status',
-        _name: 'Status',
-        _type: 'TEXT'
-      }]
+      }, {_attr: ['Status'], _name: 'Status', _type: 'LABEL',
+        _choices: [
+          {_name: 'Sent', _class: 'label-progress'},
+          {_name: 'Planned',  _class: 'label-validate'},
+        ]}]
     };
     return t;
   }

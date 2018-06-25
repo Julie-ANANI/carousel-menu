@@ -1,8 +1,8 @@
-/*$body-font-color-darker: #333333 !default;
+$body-font-color-darker: #333333 !default;
 $body-font-color: #878787 !default;
 $base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
 $primary-color: #3498DB !default;
-*/
+
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 @import "../node_modules/spectre.css/src/spectre.scss";
@@ -14,16 +14,6 @@ $primary-color: #3498DB !default;
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css";
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
 
-@import "style/animation";
-@import "style/container-style";
-@import "style/general-style";
-@import "style/text-style";
-@import "style/form-style";
-@import "style/button-style";
-@import "style/tab-style";
-@import "style/table-style";
-@import "style/modal-style";
-@import "style/tooltip-style";
 
 
 /********************************** Default Styles ***************************************/
@@ -65,7 +55,7 @@ $button-color: #ffb300;
 $button-disabled-color: #dbdbdb;
 
 
-/* Typographie
+/* Typographie*/
 
 h1 {
   font-weight: 300;
@@ -92,7 +82,7 @@ h3, .h3 {
 }
 
 
-/* Formulaires
+/* Formulaires */
 
 .form-group:not(:last-child) {
   margin-bottom: 40px;
@@ -119,7 +109,7 @@ h3, .h3 {
 
 
 
-/* Barre de tri
+/* Barre de tri*/
 
 ul.list-filter {
   text-align: right;
@@ -139,7 +129,7 @@ ul.list-filter {
 }
 
 
-/* On décale les notifications vers le bas pour ne pas qu'elles cachent le menu principal
+/* On décale les notifications vers le bas pour ne pas qu'elles cachent le menu principal*/
 .simple-notification-wrapper.top {
   top: 80px !important;
 }
@@ -161,7 +151,18 @@ ul.list-filter {
   font-size: 12px;
   position: relative;
 }
-*/
+
+
+@import "style/animation";
+@import "style/container-style";
+@import "style/general-style";
+@import "style/text-style";
+@import "style/form-style";
+@import "style/button-style";
+@import "style/tab-style";
+@import "style/modal-style";
+@import "style/tooltip-style";
+@import "style/table-style";
 
 /********************************** Form Input Styles ***************************************/
 
