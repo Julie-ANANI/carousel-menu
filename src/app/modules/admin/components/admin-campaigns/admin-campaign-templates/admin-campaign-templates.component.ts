@@ -5,7 +5,6 @@ import { EmailScenario } from '../../../../../models/email-scenario';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TemplatesService } from '../../../../../services/templates/templates.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import {InnovationService} from '../../../../../services/innovation/innovation.service';
 
 @Component({
   selector: 'app-admin-campaign-templates',
@@ -30,17 +29,14 @@ export class AdminCampaignTemplatesComponent implements OnInit {
       created: -1
     }
   };
-  private _domain: string;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
               private _templatesService: TemplatesService,
-              private _notificationsService: TranslateNotificationsService,
-              private _innovationService: InnovationService) { }
+              private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
-    this._domain = this._campaign.innovation.settings.domain;
     this._scenario.name = this._campaign.title;
     if (this._campaign.settings && this._campaign.settings.emails) {
       this._scenario.emails = this._campaign.settings.emails;
@@ -61,14 +57,6 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     this._saveTemplates();
   }
 
-  public updateDomain() {
-    this._innovationService.updateSettingsDomain(this._campaign.innovation._id, this._domain).first().subscribe( x => {
-      this._notificationsService.success("ERROR.SUCCESS", "|*DOMAIN*| is set");
-      this._domain = x.domain;
-    }, error => {
-      this._notificationsService.error('ERROR', error);
-    });
-  }
 
   private _saveTemplates() {
     this._campaign.settings.emails = this._scenario.emails;
@@ -78,8 +66,14 @@ export class AdminCampaignTemplatesComponent implements OnInit {
       this._notificationsService.error('ERROR', err);
     });
   }
-  get domain(): string { return this._domain; }
-  set domain(d: string) { this._domain = d; }
+
+
+  public domain(): boolean {
+    return (this._campaign.innovation.settings.domain !== '');
+
+  }
+
+  get campaign(): any { return this._campaign};
   get config(): any { return this._config; }
   set config(value: any) { this._config = value; }
   get scenario(): EmailScenario { return this._scenario; }

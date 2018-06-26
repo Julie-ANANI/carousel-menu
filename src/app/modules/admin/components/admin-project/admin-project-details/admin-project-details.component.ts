@@ -18,6 +18,7 @@ export class AdminProjectDetailsComponent implements OnInit {
   private _project: Innovation;
   private _tags: Array<any> = [];
   private _dirty = false;
+  private _domain = {fr: '', en: ''};
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
@@ -28,6 +29,7 @@ export class AdminProjectDetailsComponent implements OnInit {
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
+    this._domain = this._project.settings.domain;
     this._tags = this._project.tags.map(tag => {
       return {name: tag.label, _id: tag.id}
     });
@@ -128,6 +130,17 @@ export class AdminProjectDetailsComponent implements OnInit {
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
+
+  public updateDomain() {
+    console.log(this._domain);
+    this._innovationService.updateSettingsDomain(this._project._id, this._domain).first().subscribe( x => {
+      this._domain = x.domain;
+    }, (error) => {
+      this._notificationsService.error('ERROR', error);
+    });
+  }
+  set domain(domain: {en: string, fr: string}) { this._domain = domain; }
+  get domain() { return this._domain; }
   get project() { return this._project; }
   get dirty() { return this._dirty; }
 }
