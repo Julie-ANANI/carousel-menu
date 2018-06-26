@@ -58,7 +58,8 @@ export class AdminTagNewComponent {
       en: new FormControl(),
       fr: new FormControl()
     }),
-    attachments: new FormControl()
+    attachments: new FormControl(),
+    type: new FormControl()
   });
 
   constructor(private _tagsService: TagsService,

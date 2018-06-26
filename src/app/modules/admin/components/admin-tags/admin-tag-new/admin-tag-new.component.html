@@ -39,7 +39,8 @@
                         </div>
                       </fieldset>
 
-                        <div>
+                      <div class="columns">
+                        <div class="column col-6 col-mx-auto">
                             <!--<label class="form-label h4" for="atchtype">{{ 'TAGS.NEW.ATTACHMENTS.LABEL' | translate }}</label>
                             <select id="atchtype" [(ngModel)]="selType">
                                 <option value="null">--</option>
@@ -50,6 +51,17 @@
                                                     (update)="addAttachment($event)"
                                                     [config]="addAttachmentConfig"></app-autocomplete-input>
                         </div>
+                        <div class="column col-6 col-mx-auto">
+                          <label class="form-label h4" for="type">{{ 'TAGS.NEW.TYPE.LABEL' | translate }}</label>
+                          <select id="type" formControlName="type">
+                            <option value="UNKNOWN">{{ 'TAGS.NEW.TYPE.UNKNOWN' | translate }}</option>
+                            <option value="SECTOR">{{ 'TAGS.NEW.TYPE.SECTOR' | translate }}</option>
+                            <option value="VALUE_CHAIN">{{ 'TAGS.NEW.TYPE.VALUE_CHAIN' | translate }}</option>
+                            <option value="SOLUTION_TYPE">{{ 'TAGS.NEW.TYPE.SOLUTION_TYPE' | translate }}</option>
+                            <option value="QUALIFICATION">{{ 'TAGS.NEW.TYPE.QUALIFICATION' | translate }}</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                 </div>
             </div>
