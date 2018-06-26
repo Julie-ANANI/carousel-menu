@@ -16,5 +16,6 @@ export const PROJECT = {
   'SETTINGS': 'Paramètres',
   'CARDS': 'Innovation Cards',
   'SYNTHESIS': 'Synthèse',
+  'TAGS': 'Tags',
   'MAIL_CONFIG': 'Configuration Emails'
 };

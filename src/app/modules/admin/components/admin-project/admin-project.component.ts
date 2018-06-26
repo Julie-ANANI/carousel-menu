@@ -10,9 +10,9 @@ import { AuthService } from '../../../../services/auth/auth.service';
   styleUrls: ['./admin-project.component.scss']
 })
 export class AdminProjectComponent implements OnInit {
-  
+
   private _project: Innovation;
-  private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis'];
+  private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis', 'tags'];
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,

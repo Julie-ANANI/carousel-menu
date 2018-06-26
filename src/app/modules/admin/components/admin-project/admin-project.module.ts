@@ -8,6 +8,7 @@ import { AdminProjectDetailsComponent } from './admin-project-details/admin-proj
 import { AdminProjectCardsComponent } from './admin-project-cards/admin-project-cards.component';
 import { AdminProjectCampaignsComponent } from './admin-project-campaigns/admin-project-campaigns.component';
 import { AdminProjectSynthesisComponent } from './admin-project-synthesis/admin-project-synthesis.component';
+import { AdminProjectTagsPoolComponent } from './admin-project-tags-pool/admin-project-tags-pool.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { AdminProjectSynthesisComponent } from './admin-project-synthesis/admin-
     AdminProjectDetailsComponent,
     AdminProjectCardsComponent,
     AdminProjectCampaignsComponent,
-    AdminProjectSynthesisComponent
+    AdminProjectSynthesisComponent,
+    AdminProjectTagsPoolComponent
   ],
   exports: [
     AdminProjectComponent
