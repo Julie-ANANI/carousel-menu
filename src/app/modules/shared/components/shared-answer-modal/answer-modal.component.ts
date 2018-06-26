@@ -124,6 +124,7 @@ export class AnswerModalComponent implements OnInit {
 
   public close(event: Event): void {
     event.preventDefault();
+    this.editMode = false;
     this.modalAnswerChange.emit(null);
   }
 

@@ -25,10 +25,10 @@ export class AdminProjectComponent implements OnInit {
 
   get authorizedTabs(): Array<string> {
     const adminLevel = this._authService.adminLevel;
-    if(adminLevel>2) {
+    if(adminLevel > 1) {
       return this._tabs;
     } else {
-      return ['settings', 'cards', 'synthesis'];
+      return ['cards', 'campaigns', 'synthesis'];
     }
   }
 
