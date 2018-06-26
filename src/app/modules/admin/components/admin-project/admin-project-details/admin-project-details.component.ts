@@ -7,6 +7,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../models/innov-settings';
 import { Preset } from '../../../../../models/preset';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-admin-project-details',
@@ -20,11 +21,18 @@ export class AdminProjectDetailsComponent implements OnInit {
   private _dirty = false;
   private _domain = {fr: '', en: ''};
 
+
+  public formData: FormGroup = this._formBuilder.group({
+    domainen: ['', [Validators.required]],
+    domainfr: ['', [Validators.required]]
+  });
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
-              private _titleService: TranslateTitleService) {}
+              private _titleService: TranslateTitleService,
+              private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
@@ -132,8 +140,11 @@ export class AdminProjectDetailsComponent implements OnInit {
   }
 
   public updateDomain() {
-    console.log(this._domain);
+    this._domain = {en: '', fr: ''};
+    this._domain.en = this.formData['domainen'];
+    this._domain.fr = this.formData['domainfr'];
     this._innovationService.updateSettingsDomain(this._project._id, this._domain).first().subscribe( x => {
+      console.log(x);
       this._domain = x.domain;
     }, (error) => {
       this._notificationsService.error('ERROR', error);
