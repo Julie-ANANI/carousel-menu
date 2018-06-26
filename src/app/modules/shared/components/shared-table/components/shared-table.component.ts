@@ -99,7 +99,7 @@ export class SharedTableComponent {
 
   getContentValue(rowKey: string, columnKey: string[]): any  {
     if (columnKey.length === 1) {
-      return this._content[rowKey]._content[columnKey[0]] || ' - ';
+      return this._content[rowKey]._content[columnKey[0]];
     } else {
       let content = '';
       for (const i of columnKey) {
@@ -135,6 +135,10 @@ export class SharedTableComponent {
 
   getChoiceClass(choice: Label): string {
     return choice._class || '';
+  }
+
+  getUrl(choice: Label): string {
+    return choice._url || '';
   }
 
   get selector(): string {
