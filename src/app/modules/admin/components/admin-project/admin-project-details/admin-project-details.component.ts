@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../models/innov-settings';
 import { Preset } from '../../../../../models/preset';
+import { Tag } from '../../../../../models/tag';
 
 @Component({
   selector: 'app-admin-project-details',
@@ -16,8 +17,9 @@ import { Preset } from '../../../../../models/preset';
 export class AdminProjectDetailsComponent implements OnInit {
 
   private _project: Innovation;
-  private _tags: Array<any> = [];
   private _dirty = false;
+
+  public presetAutocomplete: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
@@ -28,24 +30,35 @@ export class AdminProjectDetailsComponent implements OnInit {
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
-    this._tags = this._project.tags.map(tag => {
-      return {name: tag.label, _id: tag.id}
-    });
+    this.presetAutocomplete = {
+      placeholder: 'preset',
+      initialData: this.hasPreset() ? [this.project.preset] : [],
+      type: 'preset'
+    };
   }
 
-  set tags(value: Array<any>) {
-    this._tags = value;
-    this._dirty = true;
+  public addTag(event: Tag): void {
+    this._innovationService
+      .addTag(this._project._id, event._id)
+      .first()
+      .subscribe((p) => {
+        this._project = p;
+        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
+      }, err => {
+        this._notificationsService.error('ERROR.ERROR', err);
+      });
   }
 
-  get tags(): Array<any> {
-    return this._tags;
-  }
-
-  public updateTags(event: {value: Array<any>}): void {
-    this._tags = event.value;
-    this._project.tags = this._tags;
-    this._dirty = true;
+  public removeTag(event: Tag): void {
+    this._innovationService
+      .removeTag(this._project._id, event._id)
+      .first()
+      .subscribe((p) => {
+        this._project = p;
+        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
+      }, err => {
+        this._notificationsService.error('ERROR.ERROR', err);
+      });
   }
 
   public updatePreset(event: {value: Array<Preset>}): void {

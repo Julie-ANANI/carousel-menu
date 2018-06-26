@@ -1,4 +1,7 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { MultilingPipe } from '../../../../pipes/multiling/multiling.pipe';
+import { Tag } from '../../../../models/tag';
 
 @Component({
   selector: 'shared-tag-item',
@@ -6,28 +9,42 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
   styleUrls: ['./shared-tag-item.component.scss']
 })
 export class SharedTagItemComponent implements OnInit {
-  @Input() tags: Array<string>;
-  @Input() big: string;
-  @Output() tagsChange = new EventEmitter <any>();
-  @Input() prop: string;
 
-  private _displayTags = false;
+  @Input() set tags(value: Array<Tag>) {
+    this._tags = value;
+    if (this._tags && Array.isArray(this._tags)) {
+      this._tags.map(t => {
+        t['name'] = MultilingPipe.prototype.transform(t['label'], this._translateService.currentLang);
+        return t;
+      });
+    }
+  }
+  @Input() public editMode = false;
 
-  constructor() {}
+  @Output() addTag: EventEmitter<Tag> = new EventEmitter();
+  @Output() removeTag: EventEmitter<Tag> = new EventEmitter();
+
+  public tagsAutocomplete: any;
+  private _tags: Array<Tag>;
+
+  constructor(private _translateService: TranslateService) {}
 
   ngOnInit() {
-    this.tags = this.tags || [];
+    this.tagsAutocomplete = {
+      placeholder: 'tags',
+      initialData: this._tags || [],
+      type: 'tags'
+    };
   }
 
-  toggleTags(event: Event) {
-    event.preventDefault();
-    this._displayTags = !this._displayTags;
+  public _addTag(event: {value: Tag}): void {
+    this.addTag.emit(event.value);
   }
 
-  updateTags(event: {value: Array<string>}) {
-    this.tagsChange.emit(event.value);
+  public _removeTag(event: {value: Tag}): void {
+    this.removeTag.emit(event.value);
   }
 
-  set displayTags(value: boolean) { this._displayTags = value; }
-  get displayTags(): boolean { return this._displayTags; }
+  get lang(): string { return this._translateService.currentLang; }
+  get tags() { return this._tags; }
 }

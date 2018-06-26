@@ -45,6 +45,7 @@ import { SharedEmailBlacklistComponent } from './components/shared-email-blackli
 import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
 import { FilterPipe } from '../../pipes/TableFilterPipe';
 import { LimitsPipe } from '../../pipes/TableLimitsPipe';
+import { MultilingModule } from '../../pipes/multiling/multiling.module';
 import { CharacterCountdown } from '../../pipes/CharacterCountdown';
 
 // Directives
@@ -74,6 +75,8 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     Ng2AutoCompleteModule,
     SharedWorldmapModule,
     SidebarModule
+    SharedWorldmapModule,
+    MultilingModule
   ],
   declarations: [
     // Directives
@@ -89,6 +92,7 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedFilterInputComponent,
     SharedFilterMultiComponent,
     SharedTextZoneComponent,
+    SharedModalComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedVideoComponent,

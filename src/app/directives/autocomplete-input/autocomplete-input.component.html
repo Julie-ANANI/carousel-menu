@@ -65,9 +65,10 @@
     <div class="input-group" *ngIf="canEdit">
       <input ng2-auto-complete
              formControlName="answer"
+             [accept-user-input]="canAdd()"
              [list-formatter]="autocompleListFormatter"
+             [value-formatter]="autocompleValueFormatter"
              [source]="suggestions.bind(this)"
-             value-property-name="id"
              [display-property-name]="identifier"
              [attr.placeholder]="placeholder | translate"
              class="form-input form-control input-lg">
