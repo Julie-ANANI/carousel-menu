@@ -1,9 +1,9 @@
 <div class="ques-conclusion-wrapper">
 
   <ng-container [ngSwitch]="question.controlType">
-    <!--======= Pie Chart =======-->
+    <!-- Pie chart -->
     <piechart *ngSwitchCase="'radio'" [pieChart]="pieChart"></piechart>
-    <!--======= ou Encadré Bleu =======-->
+    <!-- ou encadré bleu -->
     <market-report-bluesquare
       *ngSwitchDefault
       [numberFocus]="stats.nbAnswers"
@@ -12,18 +12,16 @@
     </market-report-bluesquare>
   </ng-container>
 
-  <!--======= Conclusion =======
+  <!-- Conclusion -->
   <div class="umi-synthesis">
-    <h3 class="title">{{ question.label | multiling:lang }}</h3>
-    <p *ngIf="!readonly && (!innovation?.marketReport[question.identifier]?.conclusion) && infographic?.conclusion">
-      <b style="color: red">PLEASE UPDATE DATA</b>
-    </p>
+    <!--<h4>{{ question.label | multiling:lang }}</h4>-->
+    <p *ngIf="!readonly && (!innovation?.marketReport[question.identifier]?.conclusion) && infographic?.conclusion" class="para">PLEASE UPDATE DATA</p>
     <text-zone
       [elementId]="domSectionId"
       [readonly]="readonly"
       [data]="innovation?.marketReport[question.identifier]?.conclusion || infographic?.conclusion"
       (onEditorKeyup)="keyupHandlerFunction($event)">
     </text-zone>
-  </div>-->
+  </div>
 
 </div>

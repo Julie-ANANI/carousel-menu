@@ -296,3 +296,17 @@ $border-color: #E0E0E0;
   pointer-events: none;
 }
 
+/*
+    ul and li default style
+ */
+ul {
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin: 0;
+    padding: 8px;
+  }
+
+}
+

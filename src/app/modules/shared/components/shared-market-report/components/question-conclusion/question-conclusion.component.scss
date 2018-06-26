@@ -1,31 +1,13 @@
 .ques-conclusion-wrapper {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .umi-synthesis {
 
-  .title {
-    font-size: 30px;
-    color: #4A4A4A;
-    display: block;
-    margin-bottom: 20px;
-    line-height: 1.3;
-
-    span {
-      color: #3498DB;
-    }
-  }
-
-  .desc {
-    font-size: 15px;
-    color: #8E8E8E;
-    line-height: 27px;
-
-    ul li {
-      list-style: disc;
-      margin-left: 20px;
-    }
+  .para {
+    padding-top: 0;
+    color: #EA5858;
+    font-weight: bold;
   }
 
 }

@@ -17,7 +17,7 @@
       </div>
 
       <!-- Project under submitted status -->
-      <div *ngIf="projectStatus === 'SUBMITTED' && !adminSide">
+      <div *ngIf="projectStatus === 'SUBMITTED' && !adminSide && !project.reviewing">
         <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
         <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}</span>
@@ -28,7 +28,7 @@
       </div>
 
       <!-- Project under reviewing status -->
-      <div *ngIf="project.reviewing && !adminSide">
+      <div *ngIf="project.reviewing && !adminSide && !projectStatus === 'EVALUATING_DONE'">
         <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
         <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}</span>
@@ -39,7 +39,7 @@
       </div>
 
       <!-- Project under evaluating status -->
-      <div *ngIf="project.status === 'EVALUATING' || project.status === 'EVALUATING_DONE' || adminSide">
+      <div *ngIf="projectStatus === 'DONE' || projectStatus === 'EVALUATING_DONE' || adminSide">
         <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
 
         <div class="title-wrapper">
@@ -47,19 +47,27 @@
           <button class="btn btn-primary">{{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }}</button>
         </div>
 
-        <div class="columns">
-          <!-- Sidebar -->
-          <div class="column col-3 question-wrapper">
-            <ul>
-              <li>
-                <a pageScroll href="#professionals">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}<i class="icon icon-arrow-right"></i></a>
-              </li>
-            </ul>
-          </div>
-          <!-- Content -->
-          <div class="column col-9">
-            <!-- section-origin -->
-            <h2>{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h2>
+        <!-- Sidebar -->
+        <div class="question-wrapper">
+          <ul>
+            <li>
+              <a pageScroll href="#professionals">
+                {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }} <i class="icon icon-arrow-right"></i>
+              </a>
+            </li>
+            <li *ngFor="let question of cleaned_questions">
+              <a pageScroll [href]="'#' + question.identifier">
+                {{ question.title | multiling:lang }} <i class="icon icon-arrow-right"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Answers -->
+        <div class="answer-wrapper">
+          <!-- Origin of responses -->
+          <div class="section-container">
+            <h3>{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h3>
             <app-question-conclusion
               [innovation]="project"
               [infographic]="infographics?.professionals"
@@ -67,7 +75,7 @@
               [readonly]="!adminMode"
               [stats]="{nbAnswers: answers.length, percentage: 0}">
             </app-question-conclusion>
-            <div class="map-wrapper" >
+            <div class="map-wrapper">
               <app-worldmap
                 (updateCountries)="filterByCountries($event)"
                 [countries]="countries"
@@ -76,8 +84,31 @@
               </app-worldmap>
             </div>
           </div>
-        </div>
+          <!-- Professionals -->
+          <div class="section-container">
+            <h3 id="professionals">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h3>
+            <div class="professional">
+              <div *ngFor="let answer of filteredAnswers" class="profile">
+                <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+              </div>
+            </div>
+          </div>
+          <!-- Other questions -->
+          <div *ngFor="let question of questions" class="section-container">
+            <app-question-section
+              [infographic]="getInfo(question)"
+              [innovation]="project"
+              [question]="question"
+              [answers]="filteredAnswers"
+              [showComments]="showDetails"
+              [showDetails]="showDetails"
+              [readonly]="!adminMode"
+              (addFilter)="addFilter($event)"
+              (modalAnswerChange)="seeAnswer($event)">
+            </app-question-section>
+          </div>
 
+        </div>
 
       </div>
 
