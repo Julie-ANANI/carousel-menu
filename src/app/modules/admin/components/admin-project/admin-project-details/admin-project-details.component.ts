@@ -140,11 +140,7 @@ export class AdminProjectDetailsComponent implements OnInit {
   }
 
   public updateDomain() {
-    this._domain = {en: '', fr: ''};
-    this._domain.en = this.formData['domainen'];
-    this._domain.fr = this.formData['domainfr'];
     this._innovationService.updateSettingsDomain(this._project._id, this._domain).first().subscribe( x => {
-      console.log(x);
       this._domain = x.domain;
     }, (error) => {
       this._notificationsService.error('ERROR', error);
