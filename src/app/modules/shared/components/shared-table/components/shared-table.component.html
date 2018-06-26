@@ -76,7 +76,7 @@
               <ng-container [ngSwitch]="getType(column)">
 
                 <!-- If column type is  TEXT -->
-                <span *ngSwitchDefault>{{getContentValue(key, getAttr(column)).toString()}}</span>
+                <span *ngSwitchDefault>{{(getContentValue(key, getAttr(column)) || '-').toString()}}</span>
 
                 <!-- If column type is COUNTRY -->
                 <country-flag *ngSwitchCase="'COUNTRY'" [country]="getContentValue(key, getAttr(column))"></country-flag>
@@ -110,7 +110,7 @@
                 </span>
 
                 <span *ngSwitchCase="'ARRAY'">
-                  {{getContentValue(key, getAttr(column)).length.toString()}}
+                  {{(getContentValue(key, getAttr(column)) || []).length.toString()}}
                 </span>
 
               </ng-container>
