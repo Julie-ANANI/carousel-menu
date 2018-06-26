@@ -9,6 +9,7 @@ import { AnswerService } from '../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Answer } from '../../../../models/answer';
 import { Question } from '../../../../models/question';
+import { Tag } from '../../../../models/tag';
 
 @Component({
   selector: 'shared-answer-modal',
@@ -95,12 +96,26 @@ export class AnswerModalComponent implements OnInit {
     this._modalAnswer.profileQuality = object.value;
   }
 
-  updateAnswer(answer: Answer) {
-    this._modalAnswer = answer;
+  public addTag(event: Tag): void {
+    this._answerService
+      .addTag(this._modalAnswer._id, event._id)
+      .first()
+      .subscribe((a) => {
+        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
+      }, err => {
+        this._notificationsService.error('ERROR.ERROR', err);
+      });
   }
 
-  updateTags(object: Array<string>) {
-    this._modalAnswer.tags = object;
+  public removeTag(event: Tag): void {
+    this._answerService
+      .removeTag(this._modalAnswer._id, event._id)
+      .first()
+      .subscribe((a) => {
+        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
+      }, err => {
+        this._notificationsService.error('ERROR.ERROR', err);
+      });
   }
 
   public save(event: Event) {

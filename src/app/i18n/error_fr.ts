@@ -31,6 +31,11 @@ export const ERROR = {
     'SUBMITTED': 'Projet envoyé',
     'SUBMITTED_TEXT': 'Votre projet a été transmis pour la validation.'
   },
+  'TAGS': {
+    'UPDATE': 'Tag',
+    'ADDED': 'Le tag a bien été ajouté.',
+    'REMOVED': 'Le tag a bien été supprimé.'
+  },
   'PRESET': {
     'UPDATED': 'Configuration bien mise à jour'
   },

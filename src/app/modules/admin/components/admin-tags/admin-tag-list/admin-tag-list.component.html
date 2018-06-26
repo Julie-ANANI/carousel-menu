@@ -24,8 +24,14 @@
 
             <ng-container *ngSwitchCase="true">
                 <td><input type="checkbox" [(ngModel)]="datum.isSelected"/></td>
-                <td><input type="text" size="25" [(ngModel)]="datum.label" alt="label" placeholder="label"/></td>
-                <td><input type="text" size="45" [(ngModel)]="datum.description" alt="description" placeholder="description"/></td>
+                <td>
+                  <input type="text" size="20" [(ngModel)]="datum.label.en" alt="label" placeholder="label in english"/>
+                  <input type="text" size="20" [(ngModel)]="datum.label.fr" alt="label" placeholder="label en français"/>
+                </td>
+                <td>
+                  <input type="text" size="40" [(ngModel)]="datum.description.en" alt="description" placeholder="description in english"/>
+                  <input type="text" size="40" [(ngModel)]="datum.description.fr" alt="description" placeholder="description en français"/>
+                </td>
                 <td>{{ datum.status }}</td>
                 <td>
                     <app-autocomplete-input id="attachments"
@@ -42,10 +48,10 @@
             <ng-container *ngSwitchDefault>
                 <ng-container (click)="selectPro(datum)">
                     <td><input type="checkbox" [(ngModel)]="datum.isSelected"/></td>
-                    <td>{{ datum.label }}</td>
-                    <td>{{ datum.description }}</td>
+                    <td>{{ datum.label | multiling:lang }}</td>
+                    <td>{{ datum.description | multiling:lang }}</td>
                     <td>{{ datum.status }}</td>
-                    <td>{{ datum.attachments.length || 0 }}</td>
+                    <td>{{ datum.attachments?.length || 0 }}</td>
                     <td>{{ datum.created | date }}</td>
                 </ng-container>
                 <td>

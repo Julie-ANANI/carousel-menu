@@ -1,12 +1,4 @@
 import { Component, Input } from '@angular/core';
-//import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-/*import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-
-import { TagsService } from './../../../../../services/tags/tags.service';
-
-import { TagAttachment } from './../../../../../models/tag-attachment';
-import { Tag } from './../../../../../models/tag';*/
 
 @Component({
   selector: 'app-admin-tag-new-modal',
@@ -17,7 +9,7 @@ export class AdminTagNewModalComponent {
 
   @Input() public title: string;
 
-  private _active: boolean = false;
+  private _active = false;
   private _initialData: Array<any> = [];
 
   constructor() {}
@@ -33,7 +25,6 @@ export class AdminTagNewModalComponent {
 
   @Input()
   set active(data: boolean) {
-    console.log("set as active..." + data);
     this._active = data;
   }
 
