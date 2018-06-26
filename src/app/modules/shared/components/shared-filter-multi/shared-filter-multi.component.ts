@@ -25,46 +25,40 @@ export class SharedFilterMultiComponent {
 
     this._textProps.forEach(value1 =>
     {
-      for (const i in value1._attr) {
-        if (this.config.search[i] && value1._attr[i] !== this._currentTextProp._attr[i]) {
-          delete this.config.search[value1._attr[i]]
+        if (this.config.search[0] && value1._attr[0] !== this._currentTextProp._attr[0]) {
+          delete this.config.search[value1._attr[0]]
       }
-    }
     });
 
     const value = (<HTMLInputElement> event.srcElement).value;
-    for (const i in this.currentTextProp._attr) {
-      if (this.config.search[i] && value === '') {
-        delete this.config.search[i];
+      if (this.config.search[this._currentTextProp._attr[0]] && value === '') {
+        delete this.config.search[this._currentTextProp._attr[0]];
         this.configChange.emit(this.config);
       } else if (value !== '') {
-        this.config.search[i] = value;
+        this.config.search[this._currentTextProp._attr[0]] = value;
         this.configChange.emit(this.config);
       }
-    }
   }
 
-  filterOther(event: any, prop: Column) {
-    for (const i in prop._attr) {
-      if (this.config[i] === null) {
-        delete this.config[i];
-      }
+  filterOther(prop: Column) {
+      if (this.config[prop._attr[0]] === null) {
+        delete this.config[prop._attr[0]];
     }
     this.configChange.emit(this.config);
   }
 
   textIsSelected(prop: Column): boolean {
-    return this._currentTextProp._attr === prop._attr;
+    return this._currentTextProp._attr[0] === prop._attr[0];
   }
 
   loadProps(value: Column[]) {
     if (value) {
-      this._textProps = value.filter(value1 => this.getType(value1) === 'TEXT');
+      this._textProps = value.filter(value1 => this.getType(value1) !== 'CHECK' && this.getType(value1) !== 'LABEL' && this.getType(value1) !== 'ARRAY');
       if (this._currentTextProp._attr[0] === '' && this._textProps.length > 0) {
         this._currentTextProp = this._textProps[0];
       }
 
-      this._otherProps = value.filter(value1 => this.getType(value1) !== 'TEXT');
+      this._otherProps = value.filter(value1 => this.getType(value1) === 'CHECK' || this.getType(value1) === 'LABEL');
     }
   }
 
@@ -85,7 +79,7 @@ export class SharedFilterMultiComponent {
   }
 
   getAttr(column: Column) {
-    return column._attr;
+    return column._attr[0];
   }
 
   getName(column: Column) {
@@ -101,6 +95,6 @@ export class SharedFilterMultiComponent {
   }
 
   changeCurrentTextProp(prop: any) {
-    this._currentTextProp = this._textProps.find(value => value._attr === prop.srcElement.value);
+    this._currentTextProp = this._textProps.find(value => value._attr[0] === prop.srcElement.value);
   }
 }

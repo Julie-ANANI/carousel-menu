@@ -20,13 +20,13 @@
   <div *ngFor="let prop of otherProps">
     <div [ngSwitch]="getType(prop)" class="input-group">
       <label class="form-label">{{getName(prop) | translate}}</label>
-      <select (change)="filterOther($event, prop)" [(ngModel)]="config[getAttr(prop)]" class="form-select small-select" *ngSwitchCase="'CHECK'">
+      <select (change)="filterOther(prop)" [(ngModel)]="config[getAttr(prop)]" class="form-select small-select" *ngSwitchCase="'CHECK'">
         <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
         <option [ngValue]="true">{{'COMMON.YES' | translate}}</option>
         <option [ngValue]="false">{{'COMMON.NO' | translate}}</option>
       </select>
 
-      <select (change)="filterOther($event, prop)" [(ngModel)]="config[getAttr(prop)]" class="form-select small-select" *ngSwitchCase="'LABEL'">
+      <select (change)="filterOther(prop)" [(ngModel)]="config[getAttr(prop)]" class="form-select small-select" *ngSwitchCase="'LABEL'">
         <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
         <option *ngFor="let choice of getChoices(prop)">{{getChoiceName(choice) | translate}}</option>
       </select>
