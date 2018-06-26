@@ -24,7 +24,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   public switchActivated: Boolean = false;
 
   private _campaign: Campaign;
-  private _status: number;
   private _modifiedScenarios: Array<EmailScenario> ;
   private _nameWorkflowA = '';
   private _nameWorkflowB = '';
@@ -50,7 +49,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   private _sizeB: number;
   private _statusA: number;
   private _statusB: number;
-  private _batchesLength: number = 0;
+  private _batchesLength = 0;
 
 
 
@@ -73,6 +72,8 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       this._batchesLength = stats.batches.length;
     });
 
+
+    // Data initi
     const defAB = {
       delivered: 0,
       opened: 0,
@@ -83,25 +84,22 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     this._statsA = [defAB, defAB, defAB];
     this._statsB = [defAB, defAB, defAB];
 
-    this._status = this._campaign.settings.ABsettings.status;
-
     if (this._campaign.settings.ABsettings.nameWorkflowA) {
       this._nameWorkflowA = this._campaign.settings.ABsettings.nameWorkflowA;
     }
+
     if (this._campaign.settings.ABsettings.nameWorkflowB) {
       this._nameWorkflowB = this._campaign.settings.ABsettings.nameWorkflowB;
     }
+
+
     this.form = this.formBuilder.group({
       workflowA: ['', [Validators.required]],
       workflowB: ['', [Validators.required]],
       sizeA: ['', [Validators.required]],
       sizeB: ['', [Validators.required]]
     });
-    if (this.switchActivated) {
-      this.form.enable();
-    } else {
-      this.form.disable();
-    }
+    this.form.disable();
 
     // Uniquement en statut 1 en 2 on le fait manuellement
     if (this.campaign.settings.ABsettings.status == 1) {
@@ -130,8 +128,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   public validateABtesting() {
     this._campaign.settings.ABsettings.status = 2;
     this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
-      this._status = 2;
-      this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
     });
@@ -151,7 +148,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
           if (obj.length === 0) {
             this._notificationsService.error('ERROR.ERROR', 'Not enough Pros in campaign');
           } else {
-            this._status = 1;
             this._campaign.settings.ABsettings = obj[0];
             this._sizeA = obj[1];
             this._sizeB = obj[2];
@@ -168,7 +164,8 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
 
   public generateStatsTable() {
-    //TODO limit de float ?
+    const digit = 3; // Number of decimals.
+
     this._tableB = {
       _selector: 'TODO',
       _title: this._nameWorkflowB,
@@ -177,23 +174,23 @@ export class AdminCampaignAbtestingComponent implements OnInit {
         {
           Step: ' 1er mail',
           Sent: this._statsB[0].delivered + this._statsB[0].bounced,
-          Opened: (this._statsB[0].opened / this._sizeB) * 100 + '%',
-          Clicked: (this._statsB[0].clicked / this._sizeB) * 100 + '%',
-          Insights: (this._statsB[0].insights / this._sizeB) * 100 + '%',
+          Opened: ((this._statsB[0].opened / this._sizeB) * 100).toFixed(digit) + '%',
+          Clicked: ((this._statsB[0].clicked / this._sizeB) * 100).toFixed(digit) + '%',
+          Insights: ((this._statsB[0].insights / this._sizeB) * 100).toFixed(digit) + '%',
           Status: this.getStatus(0, this._statusB)
         }, {
           Step: ' 2eme mail',
           Sent: this._statsB[1].delivered + this._statsB[1].bounced,
-          Opened: (this._statsB[1].opened / this._sizeB) * 100 + '%',
-          Clicked: (this._statsB[1].clicked / this._sizeB) * 100 + '%',
-          Insights: (this._statsB[1].insights / this._sizeB) * 100 + '%',
+          Opened: ((this._statsB[1].opened / this._sizeB) * 100).toFixed(digit) + '%',
+          Clicked: ((this._statsB[1].clicked / this._sizeB) * 100).toFixed(digit) + '%',
+          Insights: ((this._statsB[1].insights / this._sizeB) * 100).toFixed(digit) + '%',
           Status: this.getStatus(1, this._statusB)
         }, {
           Step: ' 3eme mail',
           Sent: this._statsB[2].delivered + this._statsB[2].bounced,
-          Opened: (this._statsB[2].opened / this._sizeB) * 100 + '%',
-          Clicked: (this._statsB[2].clicked / this._sizeB) * 100 + '%',
-          Insights: (this._statsB[2].insights / this._sizeB) * 100 + '%',
+          Opened: ((this._statsB[2].opened / this._sizeB) * 100).toFixed(digit) + '%',
+          Clicked: ((this._statsB[2].clicked / this._sizeB) * 100).toFixed(digit) + '%',
+          Insights: ((this._statsB[2].insights / this._sizeB) * 100).toFixed(digit) + '%',
           Status: this.getStatus(2, this._statusB)
         }],
       _total: this._sizeB,
@@ -233,23 +230,23 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       _content: [{
           Step: ' 1er mail',
           Sent: this._statsA[0].delivered + this._statsA[0].bounced,
-          Opened: (this._statsA[0].opened / this._sizeA) * 100 + '%',
-          Clicked: (this._statsA[0].clicked / this._sizeA) * 100 + '%',
-          Insights: (this._statsA[0].insights / this._sizeA) * 100 + '%',
+          Opened: ((this._statsA[0].opened / this._sizeA) * 100).toFixed(digit) + '%',
+          Clicked: ((this._statsA[0].clicked / this._sizeA) * 100).toFixed(digit) + '%',
+          Insights: ((this._statsA[0].insights / this._sizeA) * 100).toFixed(digit) + '%',
           Status: this.getStatus(0, this._statusA)
         }, {
         Step: ' 2eme mail',
           Sent: this._statsA[1].delivered + this._statsA[1].bounced,
-          Opened: (this._statsA[1].opened / this._sizeA) * 100 + '%',
-          Clicked: (this._statsA[1].clicked / this._sizeA) * 100 + '%',
-          Insights: (this._statsA[1].insights / this._sizeA) * 100 + '%',
+          Opened: ((this._statsA[1].opened / this._sizeA) * 100).toFixed(digit) + '%',
+          Clicked: ((this._statsA[1].clicked / this._sizeA) * 100).toFixed(digit) + '%',
+          Insights: ((this._statsA[1].insights / this._sizeA) * 100).toFixed(digit) + '%',
           Status: this.getStatus(1, this._statusA)
         }, {
         Step: ' 3eme mail',
           Sent: this._statsA[2].delivered + this._statsA[2].bounced,
-          Opened: (this._statsA[2].opened / this._sizeA) * 100 + '%',
-          Clicked: (this._statsA[2].clicked / this._sizeA) * 100 + '%',
-          Insights: (this._statsA[2].insights / this._sizeA) * 100 + '%',
+          Opened: ((this._statsA[2].opened / this._sizeA) * 100).toFixed(digit) + '%',
+          Clicked: ((this._statsA[2].clicked / this._sizeA) * 100).toFixed(digit) + '%',
+          Insights: ((this._statsA[2].insights / this._sizeA) * 100).toFixed(digit) + '%',
           Status: this.getStatus(2, this._statusA)
         }],
       _total: this._sizeA,
@@ -321,7 +318,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   get campaign(): Campaign { return this._campaign };
   get statsA(): any { return this._statsA };
   get statsB(): any { return this._statsB };
-  get status(): number { return this._status };
   get tableA(): Table {return this._tableA};
   get tableB(): Table {return this._tableB};
 
