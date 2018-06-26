@@ -53,12 +53,12 @@ export class SharedFilterMultiComponent {
 
   loadProps(value: Column[]) {
     if (value) {
-      this._textProps = value.filter(value1 => this.getType(value1) === 'TEXT');
+      this._textProps = value.filter(value1 => this.getType(value1) !== 'CHECK' && this.getType(value1) !== 'LABEL' && this.getType(value1) !== 'ARRAY');
       if (this._currentTextProp._attr[0] === '' && this._textProps.length > 0) {
         this._currentTextProp = this._textProps[0];
       }
 
-      this._otherProps = value.filter(value1 => this.getType(value1) !== 'TEXT');
+      this._otherProps = value.filter(value1 => this.getType(value1) === 'CHECK' || this.getType(value1) === 'LABEL');
     }
   }
 

@@ -1,3 +1,5 @@
+import {Campaign} from './campaign';
+
 export interface Professional {
   readonly _id: string;
   readonly firstName: string;
@@ -7,4 +9,5 @@ export interface Professional {
   readonly email: string;
   readonly profileUrl: string;
   readonly country: string;
+  readonly campaigns: Campaign[];
 }
