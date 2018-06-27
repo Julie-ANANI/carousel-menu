@@ -12,7 +12,7 @@ export class SearchService {
   }
 
   public search(params: any): Observable<any> {
-    return this._http.get('/search/search', {params: params})
+    return this._http.post('/search/searchPros', params)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

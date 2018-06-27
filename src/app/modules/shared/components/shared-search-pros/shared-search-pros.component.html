@@ -12,19 +12,15 @@
     </div>
     <div *ngIf="displaySettings">
       <label class="form-switch">
-        <input type="checkbox" [(ngModel)]="params.smart">
+        <input type="checkbox" [(ngModel)]="params.options.smart">
         <i class="form-icon"></i> {{ 'SEARCH.SMART' | translate }}
       </label>
       <label class="form-switch">
-        <input type="checkbox" [(ngModel)]="params.regions">
+        <input type="checkbox" [(ngModel)]="params.options.regions">
         <i class="form-icon"></i> {{ 'SEARCH.REGIONS' | translate }}
       </label>
       <label class="form-switch">
-        <input type="checkbox" [(ngModel)]="params.queued">
-        <i class="form-icon"></i> {{ 'SEARCH.ADDTOQUEUE' | translate }}
-      </label>
-      <label class="form-switch">
-        <input type="checkbox" [(ngModel)]="params.automated">
+        <input type="checkbox" [(ngModel)]="params.options.automated">
         <i class="form-icon"></i> {{ 'SEARCH.SEARCHMAILS' | translate }}
       </label>
       <label class="form-group">
