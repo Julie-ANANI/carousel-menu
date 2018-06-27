@@ -143,6 +143,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   public imageUploaded(media: Media): void {
+    this.project.innovationCards[this.innovationCardEditingIndex].media = this.project.innovationCards[this.innovationCardEditingIndex].media || [];
     this.project.innovationCards[this.innovationCardEditingIndex].media.push(media);
     this.projectChange.emit(this.project);
   }
