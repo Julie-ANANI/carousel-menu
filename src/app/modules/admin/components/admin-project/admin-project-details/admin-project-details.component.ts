@@ -142,6 +142,7 @@ export class AdminProjectDetailsComponent implements OnInit {
   public updateDomain() {
     this._innovationService.updateSettingsDomain(this._project._id, this._domain).first().subscribe( x => {
       this._domain = x.domain;
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     }, (error) => {
       this._notificationsService.error('ERROR', error);
     });
