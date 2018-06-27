@@ -72,6 +72,14 @@
               </a>
             </li>
           </ul>
+          <div *ngIf="objectKeys(filters).length" class="filter-wrapper">
+            <p>{{'MARKET_REPORT.FILTERS' | translate}}</p>
+            <ul>
+              <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
+                <a>{{filters[fKey].questionTitle | multiling:lang}} <i class="icon icon-cross"></i></a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <!-- Answers -->

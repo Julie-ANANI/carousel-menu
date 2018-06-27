@@ -14,7 +14,7 @@
       color: #5d5d5d;
       background: white;
       box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
-      padding: 8px 15px;
+      padding: 8px 12px;
       border-radius: 3px;
       font-size: 0.7rem;
       width: 49%;
@@ -35,11 +35,11 @@
       font-weight: 600;
 
       a {
-        color: rgba(255, 255, 255, 0.8);
+        color: black;
       }
 
       a:hover, a:focus {
-        color: white
+        color: black;
       }
 
       .item-occurrence {
@@ -48,6 +48,11 @@
         padding: 0 4px;
         border-radius: 500px;
         background: #0B90C6;
+      }
+
+      .fa-filter {
+        color: #0B90C6;
+        cursor: pointer;
       }
 
     }

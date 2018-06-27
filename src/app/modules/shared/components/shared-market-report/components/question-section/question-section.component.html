@@ -48,11 +48,10 @@
     <!-- Answer section -->
 
     <!-- Answer button -->
-    <div class="answer-btn-wrapper">
+    <div *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'&& question.controlType !== 'list' && question.controlType !== 'clearbit'" class="answer-btn-wrapper">
       <button
         type="button"
         class="btn btn-secondary"
-        *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'&& question.controlType !== 'list' && question.controlType !== 'clearbit'"
         [ngClass]="{'active': showDetails}"
         (click)="showDetails = !showDetails; $event.preventDefault()">
         {{(showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate}}
