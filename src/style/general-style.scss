@@ -296,6 +296,7 @@ $border-color: #E0E0E0;
   pointer-events: none;
 }
 
+
 /*
     ul and li default style
  */
@@ -310,3 +311,12 @@ ul {
 
 }
 
+
+/*
+    Paragraph default style
+ */
+p {
+  margin: 0;
+  padding: 8px 0;
+  color: #5D5D5D;
+}

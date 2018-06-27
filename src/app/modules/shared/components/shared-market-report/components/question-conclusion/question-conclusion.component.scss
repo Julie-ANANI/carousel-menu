@@ -4,10 +4,21 @@
 
 .umi-synthesis {
 
-  .para {
+  p {
     padding-top: 0;
     color: #EA5858;
     font-weight: bold;
+  }
+
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: 800px) {
+
+  .ques-conclusion-wrapper {
+    flex-wrap: wrap;
   }
 
 }
