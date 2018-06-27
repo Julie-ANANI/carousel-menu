@@ -251,7 +251,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   getColor(length: number) {
-    if (length === 0) {
+    if (length <= 0) {
       return '#EA5858';
     } else if (length > 0 && length < 250) {
       return '#f0ad4e';
