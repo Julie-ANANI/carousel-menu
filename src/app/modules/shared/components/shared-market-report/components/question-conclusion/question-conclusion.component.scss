@@ -2,7 +2,12 @@
   display: flex;
 }
 
+.pieChart-wrapper, .blueSquare-wrapper{
+  margin: 0 25px 25px 0;
+}
+
 .umi-synthesis {
+  margin-bottom: 25px;
 
   p {
     padding-top: 0;
@@ -15,10 +20,15 @@
 
 /********************************** Media ***************************************/
 
-@media (max-width: 800px) {
+@media (max-width: 840px) {
 
   .ques-conclusion-wrapper {
     flex-wrap: wrap;
+  }
+
+  .pieChart-wrapper, .blueSquare-wrapper {
+    margin-right: auto;
+    margin-left: auto;
   }
 
 }

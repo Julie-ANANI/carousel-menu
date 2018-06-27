@@ -390,9 +390,9 @@ body.sample-infographic {
     display: inline-flex;
     flex-direction: column;
     position: relative;
-    max-width: 81%;
     border-left: 1px solid #D1D1D1;
     padding-left: 20px;
+    max-width: 81%;
 
     .section-container {
       padding-bottom: 0;
@@ -436,7 +436,10 @@ body.sample-infographic {
     }
 
     .answer-wrapper {
-      max-width: unset;
+      max-width: 100%;
+      padding-left: unset;
+      border-left: none;
+      width: 100%;
     }
 
   }
