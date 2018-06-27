@@ -129,7 +129,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   createInnovationCard(event: Event, lang: string): void {
     event.preventDefault();
 
-    if (this.canEdit) {
+    if (this.projectStatus) {
       if (this.changesSaved) {
         if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
           this.innovationService.createInnovationCard(this.project._id, {
@@ -219,7 +219,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   deleteModal(innovcardID: string, lang: string) {
-    if (this.canEdit) {
+    if (this.projectStatus) {
       if (this.changesSaved) {
         this._deleteInnovCardId = innovcardID;
         this._langDelete = lang;
@@ -285,9 +285,13 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     return this._langDelete;
   }
 
-  get canEdit(): boolean {
-    return this.project && (this.project.status === 'EDITING' || this.isAdmin);
+  get projectStatus(): boolean {
+    return this.project.status === 'EDITING' || this.project.status === 'SUBMITTED' || this.project.reviewing || this.isAdmin;
   }
+
+ /* get canEdit(): boolean {
+    return this.project && (this.project.status === 'EDITING' || this.isAdmin);
+  }*/
 
   get dateFormat(): string {
     return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
