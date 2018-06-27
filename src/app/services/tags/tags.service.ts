@@ -28,7 +28,7 @@ export class TagsService {
   }
 
   public getAttachments(type: string): Observable<{result: Array<any>, _metadata: any}> {
-    return this._http.get('/tags/attachments' + (type ? '?type='+type : ''))
+    return this._http.get('/tags/attachments' + (type ? '?type=' + type : ''))
         .map((res: Response) => res.json())
         .catch((error: Response) => Observable.throw(error.text()));
   }
@@ -41,6 +41,34 @@ export class TagsService {
 
   public save(tagId: string, tagObj: Tag): Observable<Tag> {
     return this._http.put('/tags/entity/' + tagId, tagObj)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  /*
+   * Pools routes
+   */
+
+  public getTagsFromPool(innovationId: string): Observable<Array<Tag>> {
+    return this._http.get('/tags/' + innovationId + '/pool')
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public addTagToPool(innovationId: string, tagId: string): Observable<Array<Tag>> {
+    return this._http.post('/tags/' + innovationId + '/pool', { params: {tag: tagId }})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public updateTagInPool(innovationId: string, tag: Tag): Observable<Array<Tag>> {
+    return this._http.put('/tags/' + innovationId + '/pool', { params: tag})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public removeTagFromPool(innovationId: string, tagId: string): Observable<Array<Tag>> {
+    return this._http.delete('/tags/' + innovationId + '/pool', { params: {tag: tagId }})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

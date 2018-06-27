@@ -1,13 +1,70 @@
-<div class="admin-project-tags">
+<div class="admin-project-tags-pool">
 
   <h2>Tags Pool management</h2>
 
-  <shared-tag-item
-    [tags]="project.tags"
-    [editMode]="true"
-    (addTag)="addTag($event)"
-    (removeTag)="removeTag($event)">
-  </shared-tag-item>
+  <form class="form-horizontal" [formGroup]="tagForm" (ngSubmit)="addTag($event)">
+    <div class="input-group">
+      <input ng2-auto-complete
+             formControlName="tag"
+             [source]="suggestions.bind(this)"
+             [list-formatter]="autocompleListFormatter"
+             [value-formatter]="autocompleValueFormatter"
+             [attr.placeholder]="'Add an existing tag'"
+             class="form-input form-control input-lg">
+      <button class="btn btn-primary btn-lg input-group-btn" translate>
+        COMMON.ADD
+        <i class="icon icon-arrow-right"></i>
+      </button>
+    </div>
+  </form>
+
+  <table class="table tags-pool" wt-responsive-table>
+    <thead>
+    <tr>
+      <th><sq-sort [config]="config" [prop]="'label'">Label</sq-sort></th>
+      <th><sq-sort [config]="config" [prop]="'description'">Description</sq-sort></th>
+      <th><sq-sort [config]="config" [prop]="'type'">Type</sq-sort></th>
+      <th>{{ 'CAMPAIGNS.ACTIONS' | translate }}</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let datum of tags" [ngClass]="{'active': datum.isSelected}">
+
+      <ng-container [ngSwitch]="editDatum[datum._id]">
+
+        <ng-container *ngSwitchCase="true">
+          <td>
+            <input type="text" size="20" [(ngModel)]="datum.label.en" alt="label" placeholder="label in english"/>
+            <input type="text" size="20" [(ngModel)]="datum.label.fr" alt="label" placeholder="label en français"/>
+          </td>
+          <td>
+            <input type="text" size="40" [(ngModel)]="datum.description.en" alt="description" placeholder="description in english"/>
+            <input type="text" size="40" [(ngModel)]="datum.description.fr" alt="description" placeholder="description en français"/>
+          </td>
+          <td>{{ 'TAGS.NEW.TYPE.' + datum.type | translate }}</td>
+          <td>
+            <button class="btn btn-action" (click)="editDatum[datum._id] = false"><i class="fas fa-times"></i></button>
+            <button class="btn btn-action" (click)="updateTag($event, datum)"><i class="far fa-save"></i></button>
+            <button class="btn btn-error" (click)="removeTag($event, datum)"><i class="far fa-trash-alt"></i></button>
+          </td>
+        </ng-container>
+
+        <ng-container *ngSwitchDefault>
+          <ng-container>
+            <td>{{ datum.label | multiling:lang }}</td>
+            <td>{{ datum.description | multiling:lang }}</td>
+            <td>{{ 'TAGS.NEW.TYPE.' + datum.type | translate }}</td>
+          </ng-container>
+          <td>
+            <button class="btn btn-action" (click)="editDatum[datum._id] = true"><i class="fas fa-edit"></i></button>
+          </td>
+        </ng-container>
+
+      </ng-container>
+    </tr>
+    </tbody>
+  </table>
 
 </div>
 

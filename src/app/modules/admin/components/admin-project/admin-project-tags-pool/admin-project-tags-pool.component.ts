@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateTitleService } from '../../../../../services/title/title.service';
-import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
+import { AutocompleteService } from '../../../../../services/autocomplete/autocomplete.service';
+import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
+import { Observable } from 'rxjs/Observable';
+import { MultilingPipe } from '../../../../../pipes/multiling/multiling.pipe';
 
 @Component({
   selector: 'app-admin-project-tags-pool',
@@ -13,42 +17,97 @@ import { Tag } from '../../../../../models/tag';
 })
 export class AdminProjectTagsPoolComponent implements OnInit {
 
-  private _project: Innovation;
+  private _projectId: string;
+  private _tags: Array<Tag>;
+  private _tagForm: FormGroup;
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _innovationService: InnovationService,
-              private _notificationsService: TranslateNotificationsService,
-              private _titleService: TranslateTitleService) {}
+  public editDatum = {};
+  private _config = {
+    limit: 10,
+    offset: 0,
+    search: {},
+    sort: {
+      label: -1
+    }
+  };
+
+  constructor(private route: ActivatedRoute,
+              private formBuilder: FormBuilder,
+              private sanitizer: DomSanitizer,
+              private translateService: TranslateService,
+              private autocompleteService: AutocompleteService,
+              private notificationsService: TranslateNotificationsService,
+              private tagService: TagsService) {}
 
   ngOnInit(): void {
-    this._titleService.setTitle('MY_PROJECTS.TITLE');
-    this._project = this._activatedRoute.snapshot.parent.data['innovation'];
+    this._projectId = this.route.snapshot.parent.data['innovation']._id;
+    this._tagForm = this.formBuilder.group({
+      tag: null,
+    });
+    this.tagService.getTagsFromPool(this._projectId).subscribe((data) => {
+      this._tags = data;
+    });
   }
 
-  public addTag(event: Tag): void {
-    this._innovationService
-      .addTag(this._project._id, event._id)
+  public suggestions(keyword: string): Observable<Array<any>> {
+    const queryConf = {
+      keyword: keyword,
+      type: 'tags'
+    };
+    return this.autocompleteService.get(queryConf);
+  }
+
+  public autocompleListFormatter = (data: {name: string, _id: string}) : SafeHtml => {
+    const text = this.autocompleValueFormatter(data);
+    return this.sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
+  };
+
+  public autocompleValueFormatter = (data: {name: string, _id: string}) : string => {
+      return MultilingPipe.prototype.transform(data.name, this.translateService.currentLang);
+  };
+
+  public addTag(event: Event): void {
+    event.preventDefault();
+    this.tagService
+      .addTagToPool(this._projectId, this._tagForm.get('tag').value._id)
       .first()
-      .subscribe((p) => {
-        this._project = p;
-        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
+      .subscribe((data) => {
+        console.log(data);
+        this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
-        this._notificationsService.error('ERROR.ERROR', err);
+        this.notificationsService.error('ERROR.ERROR', err);
+      });
+    this._tagForm.get('tag').reset();
+  }
+
+  public updateTag(event: Event, tag: Tag): void {
+    event.preventDefault();
+    this.tagService
+      .updateTagInPool(this._projectId, tag)
+      .first()
+      .subscribe((data) => {
+        console.log(data);
+        this.editDatum[tag._id] = false;
+        this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
+      }, err => {
+        this.notificationsService.error('ERROR.ERROR', err);
       });
   }
 
-  public removeTag(event: Tag): void {
-    this._innovationService
-      .removeTag(this._project._id, event._id)
+  public removeTag(event: Event, tag: Tag): void {
+    event.preventDefault();
+    this.tagService
+      .removeTagFromPool(this._projectId, tag._id)
       .first()
-      .subscribe((p) => {
-        this._project = p;
-        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
+      .subscribe((data) => {
+        this._tags = this._tags.filter((t) => t._id !== tag._id);
+        this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
       }, err => {
-        this._notificationsService.error('ERROR.ERROR', err);
+        this.notificationsService.error('ERROR.ERROR', err);
       });
   }
 
-
-  get project() { return this._project; }
+  get config() { return this._config; }
+  get tagForm() { return this._tagForm; }
+  get tags() { return this._tags; }
 }
