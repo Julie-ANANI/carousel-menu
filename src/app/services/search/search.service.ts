@@ -21,7 +21,7 @@ export class SearchService {
     const query = {
       path: '/request/' + requestId,
       params: {
-        fields: 'status, flag, mailRequest, request, entity, _id, keywords, country, language, campaign, profiles, automated'
+        fields: 'status, flag, mailRequest, request, entity, _id, keywords, oldKeywords, country, language, campaign, profiles, automated'
       }
     };
 

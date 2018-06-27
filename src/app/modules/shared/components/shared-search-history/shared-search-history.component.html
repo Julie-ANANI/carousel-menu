@@ -37,11 +37,11 @@
 
         <td>
           <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && !campaignId"
-            [routerLink]="'/admin/search/results/' + request._id">{{request.keywords[0].original}}</a>
+            [routerLink]="'/admin/search/results/' + request._id">{{request.keywords}}</a>
           <a *ngIf="(request.entity==='PERSON' || request.entity==='PERSON_BY_COUNTRIES' || request.entity==='PERSON_BY_REGIONS') && campaignId"
-             [routerLink]="'/admin/campaigns/campaign/' + campaignId + '/results/' + request._id">{{request.keywords[0].original}}</a>
-          <a *ngIf="mails" href="">{{request.keywords[0].original}}</a>
-          <a *ngIf="request.entity==='MAIL'" href="">{{request.keywords[0].original}}</a>
+             [routerLink]="'/admin/campaigns/campaign/' + campaignId + '/results/' + request._id">{{request.keywords}}</a>
+          <a *ngIf="mails" href="">{{request.keywords}}</a>
+          <a *ngIf="request.entity==='MAIL'" href="">{{request.keywords}}</a>
           <br/>
           <small *ngIf="request.entity==='PERSON'">{{request.results ? request.results.person.length : 0}} résultats | {{request.metadata.user.name}}</small>
           <small *ngIf="request.entity==='PERSON_BY_COUNTRIES'">{{request.totalResults}} résultats | {{request.metadata.user.name}}</small>
@@ -107,11 +107,11 @@
         </td>
         <td>
           <a *ngIf="(childRequest.entity==='PERSON' || childRequest.entity==='PERSON_BY_COUNTRIES' || childRequest.entity==='PERSON_BY_REGIONS') && !campaignId"
-             [routerLink]="'/admin/search/results/' + childRequest._id">{{childRequest.keywords[0].original}}</a>
+             [routerLink]="'/admin/search/results/' + childRequest._id">{{childRequest.keywords}}</a>
           <a *ngIf="(childRequest.entity==='PERSON' || childRequest.entity==='PERSON_BY_COUNTRIES' || childRequest.entity==='PERSON_BY_REGIONS') && campaignId"
-             [routerLink]="'/admin/campaigns/campaign/' + campaignId + '/results/' + childRequest._id">{{childRequest.keywords[0].original}}</a>
-          <a *ngIf="mails" href="">{{childRequest.keywords[0].original}}</a>
-          <a *ngIf="childRequest.entity==='MAIL'" href="">{{childRequest.keywords[0].original}}</a>
+             [routerLink]="'/admin/campaigns/campaign/' + campaignId + '/results/' + childRequest._id">{{childRequest.keywords}}</a>
+          <a *ngIf="mails" href="">{{childRequest.keywords}}</a>
+          <a *ngIf="childRequest.entity==='MAIL'" href="">{{childRequest.keywords}}</a>
           <br/>
           <small *ngIf="childRequest.entity==='PERSON'">{{childRequest.results ? childRequest.results.person.length : 0}} résultats | {{childRequest.metadata.user.name}}</small>
           <small *ngIf="childRequest.entity==='PERSON_BY_COUNTRIES'">{{childRequest.totalResults}} résultats | {{childRequest.metadata.user.name}}</small>

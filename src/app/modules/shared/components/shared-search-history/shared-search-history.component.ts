@@ -18,7 +18,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _total: number = 0;
   private _googleQuota: number = 30000;
   private _config: any = {
-    fields: 'entity keywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results',
+    fields: 'entity keywords oldKeywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results',
     limit: 10,
     offset: 0,
     search: {},
@@ -54,7 +54,10 @@ export class SharedSearchHistoryComponent implements OnInit {
     this._searchService.getRequests(this._config)
       .first()
       .subscribe(result => {
-        this._requests = result.requests;
+        this._requests = result.requests.map((request: any) => {
+          request.keywords = request.keywords || request.oldKeywords[0].original;
+          return request;
+        });
         this._paused = result._metadata.paused;
         if (result._metadata) {
           this._total = result._metadata.totalCount;
