@@ -72,7 +72,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       .addTagToPool(this._projectId, this._tagForm.get('tag').value._id)
       .first()
       .subscribe((data) => {
-        console.log(data);
+        this._tags = data;
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
         this.notificationsService.error('ERROR.ERROR', err);
@@ -86,7 +86,6 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       .updateTagInPool(this._projectId, tag)
       .first()
       .subscribe((data) => {
-        console.log(data);
         this.editDatum[tag._id] = false;
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
       }, err => {
@@ -100,7 +99,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       .removeTagFromPool(this._projectId, tag._id)
       .first()
       .subscribe((data) => {
-        this._tags = this._tags.filter((t) => t._id !== tag._id);
+        this._tags = data;
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
       }, err => {
         this.notificationsService.error('ERROR.ERROR', err);
