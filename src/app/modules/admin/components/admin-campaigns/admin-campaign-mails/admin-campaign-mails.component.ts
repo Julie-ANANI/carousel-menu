@@ -292,6 +292,13 @@ export class AdminCampaignMailsComponent implements OnInit {
 
 
 
+  public getPredictionsBatch(b: Batch) {
+    this._campaignService.getPredictionsBatch(b._id).first().subscribe(data => {
+      console.log(data);
+    });
+  }
+
+
   get innoReady() {
     return (
       this._campaign.innovation.status === 'EVALUATING'
