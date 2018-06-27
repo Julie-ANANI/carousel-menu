@@ -40,7 +40,7 @@
 
 
       <!-- Project under evaluating -->
-      <div *ngIf="projectStatus === 'EVALUATING'">
+      <div *ngIf="projectStatus === 'EVALUATING' || projectStatus === 'EVALUATING_DONE'">
         <shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="project._id" [adminMode]="false" [questions]="questions"></shared-answer-modal>
 
         <div class="market-exploration">

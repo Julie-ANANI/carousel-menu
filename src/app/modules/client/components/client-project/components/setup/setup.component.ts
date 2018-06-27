@@ -132,7 +132,7 @@ export class SetupProjectComponent implements OnInit {
       Here we are receiving the value from the targeting form.
    */
   updateSettings(value: InnovationSettings): void {
-    if (this.projectStatus === 'EVALUATING') {
+    if (this.projectStatus !== 'EDITING') {
       this._saveButtonClass = 'disabled';
     } else {
       this.project.settings = value;
@@ -154,7 +154,7 @@ export class SetupProjectComponent implements OnInit {
      shows the notification to the client.
   */
   saveInnovation(value: boolean) {
-    if (this.projectStatus === 'EVALUATING') {
+    if (this.projectStatus !== 'EDITING') {
       this._saveButtonClass = 'disabled';
     } else {
       this._saveChanges = value;

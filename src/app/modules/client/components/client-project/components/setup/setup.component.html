@@ -18,9 +18,12 @@
 
       <!-- Project under evaluating status message -->
       <div *ngIf="projectStatus === 'EVALUATING'" class="message-wrapper">
-        <div class="message text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING.A' | translate }}</div>
-        <br>
-        <div class="message text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING.B' | translate }}</div>
+        <div class="message text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING' | translate }}</div>
+      </div>
+
+      <!-- Project under evaluating status message -->
+      <div *ngIf="projectStatus === 'EVALUATING_DONE' || projectStatus === 'DONE'" class="message-wrapper">
+        <div class="message text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.DONE' | translate }}</div>
       </div>
 
       <!-- Row 1 -->
@@ -36,7 +39,7 @@
             </button>
           </span>
           <span>
-            <button [disabled]="projectStatus === 'EVALUATING'" class="btn btn-primary" (click)="submitButton($event)">
+            <button [disabled]="projectStatus !== 'EDITING'" class="btn btn-primary" (click)="submitButton($event)">
               {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
             </button>
           </span>

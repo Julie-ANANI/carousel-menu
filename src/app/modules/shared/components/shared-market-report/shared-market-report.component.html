@@ -28,7 +28,7 @@
       </div>
 
       <!-- Project under reviewing status -->
-      <div *ngIf="project.reviewing && !adminSide && !projectStatus === 'EVALUATING_DONE'">
+      <div *ngIf="project.reviewing && !adminSide && projectStatus === 'EDITING'">
         <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
         <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}</span>
@@ -39,6 +39,17 @@
       </div>
 
       <!-- Project under evaluating status -->
+      <div *ngIf="projectStatus === 'EVALUATING' && !adminSide">
+        <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
+        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+          <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.EVALUATING' | translate }}</span>
+          <br>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+          <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+        </div>
+      </div>
+
+      <!-- Project under evaluating_done status -->
       <div *ngIf="projectStatus === 'DONE' || projectStatus === 'EVALUATING_DONE' || adminSide">
         <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
 

@@ -15,15 +15,13 @@ export const SETUP = {
       'B': 'setup of your project',
       'C': 'and submit it.'
     },
-    'EVALUATING': {
-      'A': 'Market exploration is under progress. You can\'t make changes in your project anymore.' ,
-      'B': 'Synthesis of your project is available.'
-    },
+    'EVALUATING': 'Market exploration is under progress. You can\'t make changes in your project anymore.',
     'REVIEWING': {
       'A': 'Your project needs to be modified. Please',
       'B': 'reads',
       'C': 'our comments.'
-    }
+    },
+    'DONE': 'Synthesis of your project is available. You can\'t make changes in your project anymore.'
   },
 
   'PITCH_TAB': 'Pitch',

@@ -12,7 +12,8 @@ export const MARKET_REPORT = {
       'B': 'la configuration de votre projet',
       'C': 'et le soumettre.'
     },
-    'REVIEWING': 'Veuillez modifier les modifications de votre projet et renvoyez-le.'
+    'REVIEWING': 'Veuillez modifier les modifications de votre projet et renvoyez-le.',
+    'EVALUATING': 'Nous collectons le potentiel de marché de votre projet. Nous reviendrons bientôt!'
   },
 
   'BUTTON': {
