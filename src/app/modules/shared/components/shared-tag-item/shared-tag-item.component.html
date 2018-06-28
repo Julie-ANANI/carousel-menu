@@ -1,12 +1,24 @@
-<div [ngClass]="{'big': big}">
-  <i
-    class="fa fa-tag tooltip"
-    [ngClass]="{'active': tags.length > 0}"
-    (click)="toggleTags($event)"
-    [attr.data-tooltip]="tags.toString()"
-  ></i>
-  <div *ngIf="displayTags">
-    <app-input-list (update)="updateTags($event)"
-                    [config]="{placeholder: 'tag', initialData: tags}"></app-input-list>
+<div class="shared-tag-item">
+
+  <div [ngSwitch]="editMode">
+
+    <app-autocomplete-input
+      *ngSwitchCase="true"
+      (add)="_addTag($event)"
+      (remove)="_removeTag($event)"
+      [onlyOne]="false"
+      [config]="tagsAutocomplete"
+      [multiLangObjects]="true">
+    </app-autocomplete-input>
+
+    <div class="flex-container" *ngSwitchDefault>
+      <ng-container *ngIf="tags?.length > 0">
+        <i class="fa fa-tag big"></i>
+        <span *ngFor="let t of tags" class="label label-rounded label-primary">
+          {{t.label | multiling:lang}}
+        </span>
+      </ng-container>
+    </div>
+
   </div>
 </div>

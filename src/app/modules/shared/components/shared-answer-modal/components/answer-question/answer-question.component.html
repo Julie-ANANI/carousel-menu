@@ -73,6 +73,12 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="'textbox'">
+      <shared-tag-item
+        [tags]="fullAnswer.answerTags[question.identifier]"
+        [editMode]="editMode"
+        (addTag)="addTag($event, question.identifier)"
+        (removeTag)="removeTag($event, question.identifier)">
+      </shared-tag-item>
       <p>
         {{fullAnswer.answers[question.identifier]}}
         <app-rating-item [editMode]="editMode" [prop]="question.identifier"
@@ -82,6 +88,12 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="'textarea'">
+      <shared-tag-item
+        [tags]="fullAnswer.answerTags[question.identifier]"
+        [editMode]="editMode"
+        (addTag)="addTag($event, question.identifier)"
+        (removeTag)="removeTag($event, question.identifier)">
+      </shared-tag-item>
       <blockquote *ngIf="fullAnswer.answers[question.identifier] && !editMode">
         <p>
           {{fullAnswer.answers[question.identifier]}}
@@ -91,7 +103,6 @@
       </blockquote>
       <form *ngIf="editMode">
         <textarea class="form-input" [(ngModel)]="fullAnswer.answers[question.identifier]" name="comment"></textarea>
-        <button type="submit" (click)="fullAnswerChange.emit(fullAnswer) && $event.preventDefault()">OK</button>
         <app-rating-item [editMode]="editMode" [prop]="question.identifier" [rating]="fullAnswer.answers[question.identifier + 'Quality']"
                          (ratingChange)="updateQuality($event)"></app-rating-item>
       </form>
@@ -136,6 +147,12 @@
                            [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']"
                            (ratingChange)="updateQuality($event)"></app-rating-item>
         </p>
+        <shared-tag-item
+          [tags]="fullAnswer.answerTags[question.identifier + 'Comment']"
+          [editMode]="editMode"
+          (addTag)="addTag($event, question.identifier + 'Comment')"
+          (removeTag)="removeTag($event, question.identifier + 'Comment')">
+        </shared-tag-item>
       </blockquote>
     </ng-container>
 
@@ -147,12 +164,17 @@
       <form *ngIf="commenting">
         <textarea class="form-input" name="comment"
                   [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']"></textarea>
-        <button type="submit" (click)="fullAnswerChange.emit(fullAnswer) && $event.preventDefault()">OK</button>
         <app-rating-item [editMode]="editMode" [prop]="question.identifier + 'Comment'"
                          [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']"
                          (ratingChange)="updateQuality($event)"></app-rating-item>
         <i class="fas fa-trash" (click)="deleteComment($event)"></i>
       </form>
+      <shared-tag-item
+        [tags]="fullAnswer.answerTags[question.identifier + 'Comment']"
+        [editMode]="editMode"
+        (addTag)="addTag($event, question.identifier + 'Comment')"
+        (removeTag)="removeTag($event, question.identifier + 'Comment')">
+      </shared-tag-item>
     </ng-container>
   </ng-container>
 
