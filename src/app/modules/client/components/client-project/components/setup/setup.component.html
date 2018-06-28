@@ -11,7 +11,7 @@
         </div>
 
         <!-- Project under reviewing status message -->
-        <div *ngIf="project.reviewing" class="msg-wrapper">
+        <div *ngIf="project.reviewing && projectStatus === 'EDITING'" class="msg-wrapper">
           <div class="content text-center">
             {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.A' | translate }}
             <span class="text-link">{{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.B' | translate }}</span>
