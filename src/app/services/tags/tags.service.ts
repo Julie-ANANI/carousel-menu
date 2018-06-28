@@ -55,6 +55,12 @@ export class TagsService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public searchTagInPool(innovationId: string, keyword: string): Observable<Array<Tag>> {
+    return this._http.get('/tags/' + innovationId + '/pool/search', { params: {keyword: keyword }})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public addTagToPool(innovationId: string, tagId: string): Observable<Array<Tag>> {
     return this._http.post('/tags/' + innovationId + '/pool', { params: {tag: tagId }})
       .map((res: Response) => res.json())

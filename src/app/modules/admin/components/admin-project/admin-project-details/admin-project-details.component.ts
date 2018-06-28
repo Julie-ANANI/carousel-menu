@@ -1,13 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { MultilingPipe } from '../../../../../pipes/multiling/multiling.pipe';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../models/innov-settings';
 import { Preset } from '../../../../../models/preset';
 import { Tag } from '../../../../../models/tag';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-admin-project-details',
@@ -17,18 +22,25 @@ import { Tag } from '../../../../../models/tag';
 export class AdminProjectDetailsComponent implements OnInit {
 
   private _project: Innovation;
+  private _tagForm: FormGroup;
   private _dirty = false;
 
   public presetAutocomplete: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _translateService: TranslateService,
+              private formBuilder: FormBuilder,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
-              private _titleService: TranslateTitleService) {}
+              private sanitizer: DomSanitizer,
+              private tagsService: TagsService,
+              private _titleService: TranslateTitleService,
+              private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
+    this._tagForm = this.formBuilder.group({
+      tag: null,
+    });
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this.presetAutocomplete = {
       placeholder: 'preset',
@@ -37,24 +49,41 @@ export class AdminProjectDetailsComponent implements OnInit {
     };
   }
 
-  public addTag(event: Tag): void {
+  public tagSuggestions(keyword: string): Observable<Array<any>> {
+    return this.tagsService.searchTagInPool(this._project._id, keyword);
+  }
+
+  public autocompleListFormatter = (data: Tag) : SafeHtml => {
+    const text = this.autocompleValueFormatter(data);
+    return this.sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
+  };
+
+  public autocompleValueFormatter = (data: Tag) : string => {
+    return MultilingPipe.prototype.transform(data.label, this.translateService.currentLang);
+  };
+
+  public addTag(event: Event): void {
+    event.preventDefault();
+    const tag = this._tagForm.get('tag').value;
     this._innovationService
-      .addTag(this._project._id, event._id)
+      .addTag(this._project._id, tag._id)
       .first()
       .subscribe((p) => {
-        this._project = p;
+        this._project.tags.push(tag);
+        this._tagForm.get('tag').reset();
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
       });
   }
 
-  public removeTag(event: Tag): void {
+  public removeTag(event: Event, tag: Tag): void {
+    event.preventDefault();
     this._innovationService
-      .removeTag(this._project._id, event._id)
+      .removeTag(this._project._id, tag._id)
       .first()
       .subscribe((p) => {
-        this._project = p;
+        this._project.tags = this._project.tags.filter(t => t._id !== tag._id);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
@@ -139,8 +168,9 @@ export class AdminProjectDetailsComponent implements OnInit {
   }
 
   get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
   get project() { return this._project; }
+  get tagForm() { return this._tagForm; }
   get dirty() { return this._dirty; }
 }
