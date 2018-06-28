@@ -1,18 +1,16 @@
 <form #f="ngForm" novalidate (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)">
 
-  <div class="input-group" *ngIf="canEdit" [ngStyle]="{ 'display': 'flex' }">
+  <div class="input-group" [ngStyle]="{ 'display': 'flex' }">
     <input
       type="text"
       class="form-default"
       name="answers"
       [(ngModel)]="answer"
       required
-      [attr.placeholder]="placeholder | translate"
-      [disabled]="!editable">
+      [attr.placeholder]="placeholder | translate">
     <button
       class="btn-round btn-primary"
-      translate
-      [disabled]="!editable">
+      translate>
       <i class="icon icon-plus"></i>
     </button>
   </div>
@@ -24,8 +22,7 @@
         class="delete"
         aria-label="Close"
         role="button"
-        (click)="rmProposition(i)"
-        [ngStyle]="{ 'cursor': editable ? 'pointer' : 'not-allowed' }">
+        (click)="rmProposition(i)">
         <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
       </a>
     </li>

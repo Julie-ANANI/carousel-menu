@@ -17,7 +17,9 @@ export class SharedUploadZonePhotoComponent implements OnInit {
   public loading = false;
 
   @Input() uri: string;
+
   @Output() public cbFn: EventEmitter <any> = new EventEmitter();
+
   @ViewChild('fileInput') fileInput: any;
 
   constructor(private notificationsService: TranslateNotificationsService) {}

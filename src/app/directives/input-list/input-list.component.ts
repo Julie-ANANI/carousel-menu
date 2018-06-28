@@ -15,7 +15,6 @@ export class InputListComponent {
 
   @Input() canEdit = true;
   @Input() adminMode = false;
-  @Input() editable = true;
 
   answer: string;
   answerList: Array<any>;
@@ -43,10 +42,8 @@ export class InputListComponent {
   }
 
   rmProposition(i: number): void {
-    if (this.editable) {
-      this.answerList.splice(i, 1);
-      this.update.emit({value: this.answerList});
-    }
+    this.answerList.splice(i, 1);
+    this.update.emit({value: this.answerList});
   }
 
   thumbsUp(event: Event, index: number): void {

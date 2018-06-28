@@ -89,9 +89,9 @@ $edit-color: #97A4B1;
  */
 
 .btn:disabled, .btn[disabled], .btn.disabled, .btn-round:disabled, .btn-round[disabled], .btn-round.disabled {
-  color: #a9a9a9;
-  background-color: $disabled-color;
-  border-color: $disabled-color;
+  color: #a9a9a9 !important;
+  background-color: $disabled-color !important;
+  border-color: $disabled-color !important;
   cursor: not-allowed;
   pointer-events: auto;
   opacity: 1;
