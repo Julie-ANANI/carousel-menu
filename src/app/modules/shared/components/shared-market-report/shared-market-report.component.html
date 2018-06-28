@@ -19,7 +19,7 @@
         </div>
 
         <!-- Project under submitted status -->
-        <div *ngIf="projectStatus === 'SUBMITTED' && !adminSide && !project.reviewing">
+        <div *ngIf="projectStatus === 'SUBMITTED' && !adminSide">
           <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
             <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}</span>

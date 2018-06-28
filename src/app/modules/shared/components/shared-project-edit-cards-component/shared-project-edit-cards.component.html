@@ -336,7 +336,9 @@
 
                       <!-- Main media -->
                       <div class="column col-md-12 col-lg-4 col-3 col-mr-auto" [ngStyle]="{ 'padding-bottom': '20px' }">
-                        <p class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.MAIN' | translate }}</p>
+                        <p class="ques" [ngStyle]=" { 'font-size': '0.8rem' , 'padding-bottom': '10px' }">
+                          {{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.MAIN' | translate }}
+                        </p>
                         <div *ngIf="innovationItem.principalMedia?.type === 'PHOTO'">
                           <img
                             [src]="innovationItem.principalMedia.url"
@@ -353,7 +355,9 @@
 
                       <!-- Secondary medias -->
                       <div class="column col-md-12 col-lg-8 col-9 col-mx-auto" [ngStyle]="{ 'padding-bottom': '20px' }">
-                        <p class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.SECONDARY' | translate }}</p>
+                        <p class="ques" [ngStyle]=" { 'font-size': '0.8rem' , 'padding-bottom': '10px' }">
+                          {{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.SECONDARY' | translate }}
+                        </p>
                         <div *ngFor="let media of innovationItem.media" class="media-content text-center">
                           <img
                             *ngIf="media.type === 'PHOTO'"
