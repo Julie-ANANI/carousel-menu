@@ -138,6 +138,10 @@ export class SharedTableComponent {
     return choice._class || '';
   }
 
+  getUrl(choice: Label): string {
+    return choice._url || '';
+  }
+
   get selector(): string {
     return this._selector;
   }
