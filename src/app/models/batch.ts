@@ -19,5 +19,10 @@ export interface Batch {
     clicked: number,
     bounced: number,
     insights: number
+  }],
+  predictions?: [{
+    opened: number,
+    clicked: number,
+    insights: number
   }]
 }
