@@ -1,17 +1,19 @@
-<div class="form-group-inline-space-between">
+<div class="form-group-inline-right">
   <div class="input-group">
-    <label class="form-label">{{'COMMON.PAGINATION' | translate}}</label>
-    <select [ngModel]="perPage" (ngModelChange)="perPage = $event" class="form-select small-select">
-      <option *ngFor="let perPage of perPageValues" [value]="perPage">{{perPage}} {{ 'PAGINATION.PER_PAGE' | translate }}</option>
-      <option value="1000000">{{ 'PAGINATION.ALL' | translate }}</option>
-    </select>
+    <ul class="pagination">
+      <li class="page-item">
+        <label class="form-label">{{'COMMON.PAGINATION' | translate}}</label>
+      </li>
+      <li class="page-item">
+        <select [ngModel]="perPage" (ngModelChange)="perPage = $event" class="form-select small-select">
+          <option *ngFor="let perPage of perPageValues" [value]="perPage">{{perPage}}</option>
+          <option value="1000000">{{ 'PAGINATION.ALL' | translate }}</option>
+        </select>
+      </li>
+    </ul>
   </div>
   <div class="input-group">
     <ul class="pagination" *ngIf="numPages >= 2">
-      <li class="page-item" *ngIf="currentPage > 1"
-          (click)="(currentPage > 1 ? currentPage = currentPage - 1 : currentPage = 1) && $event.preventDefault()">
-        <label class="form-label"> « </label>
-      </li>
       <li class="page-item">
         <label class="form-label">
           {{(perPage * currentPage) - perPage+1}}-{{(perPage * currentPage <= total)
@@ -19,7 +21,19 @@
           : total}} {{'COMMON.OF' | translate}} {{total}}
         </label>
       </li>
+      <li class="page-item" *ngIf="currentPage > 2"
+          (click)="(currentPage = 1) && $event.preventDefault()">
+        <label class="form-label"> « </label>
+      </li>
+      <li class="page-item" *ngIf="currentPage > 1"
+          (click)="(currentPage > 1 ? currentPage = currentPage - 1 : currentPage = 1) && $event.preventDefault()">
+        <label class="form-label"> < </label>
+      </li>
       <li class="page-item" *ngIf="currentPage < numPages" (click)="(currentPage = currentPage + 1) && $event.preventDefault()">
+        <label class="form-label"> > </label>
+      </li>
+      <li class="page-item" *ngIf="currentPage < numPages-1"
+          (click)="(currentPage = numPages) && $event.preventDefault()">
         <label class="form-label"> » </label>
       </li>
     </ul>

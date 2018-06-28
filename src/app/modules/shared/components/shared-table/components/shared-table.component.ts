@@ -1,3 +1,4 @@
+///<reference path="../../../../../../../node_modules/@angular/core/src/metadata/lifecycle_hooks.d.ts"/>
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Table} from '../models/table';
 import {Row} from '../models/row';
@@ -11,10 +12,6 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./shared-table.component.scss']
 })
 export class SharedTableComponent {
-
-  // A faire:
-  // date
-
 
   @Input() set config(value: any) {
     this.loadConfig(value);
@@ -67,10 +64,14 @@ export class SharedTableComponent {
 
       this._total = value._total;
 
-      // Si on a plus de 10 colonnes, on ne prends que les 10 premières
-      value._columns.length > 10
-        ? this._columns = value._columns.slice(0, 10)
-        : this._columns = value._columns;
+      if (this._columns.length === 0) {
+        // Si on a plus de 10 colonnes, on ne prends que les 10 premières
+        value._columns.length > 10
+          ? this._columns = value._columns.slice(0, 10)
+          : this._columns = value._columns;
+
+        this.initialiseColumns();
+      }
 
       this._actions = value._actions || [];
     }
@@ -222,12 +223,29 @@ export class SharedTableComponent {
     this._content[key]._isHover = !(this._content[key]._isHover);
   }
 
-  isSelected(row: Row): boolean {
-    return row._isSelected;
+  initialiseColumns() {
+    this._columns.forEach((value1, index) => {
+      this._columns[index]._isSelected = false,
+      this._columns[index]._isHover = false});
   }
 
-  isHover(row: Row) {
-    return row._isHover;
+  selectColumn(key: string) {
+    this.initialiseColumns();
+    const index = this._columns.findIndex(value => value._attr[0] === key);
+    this._columns[index]._isSelected = true;
+  }
+
+  hoverColumn(key: string) {
+    const index = this._columns.findIndex(value => value._attr[0] === key);
+    this._columns[index]._isHover = !(this._columns[index]._isHover);
+  }
+
+  isSelected(content: any): boolean {
+    return content._isSelected;
+  }
+
+  isHover(content: any): boolean {
+    return content._isHover;
   }
 
   selectAll(e: any): void  {

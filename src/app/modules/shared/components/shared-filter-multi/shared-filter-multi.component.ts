@@ -23,18 +23,11 @@ export class SharedFilterMultiComponent {
 
   filterText(event: any) {
 
-    this._textProps.forEach(value1 =>
-    {
-        if (this.config.search[0] && value1._attr[0] !== this._currentTextProp._attr[0]) {
-          delete this.config.search[value1._attr[0]]
-      }
-    });
-
-    const value = (<HTMLInputElement> event.srcElement).value;
-      if (this.config.search[this._currentTextProp._attr[0]] && value === '') {
-        delete this.config.search[this._currentTextProp._attr[0]];
+    this.config.search = {};
+    const value = event.value;
+      if (value === '') {
         this.configChange.emit(this.config);
-      } else if (value !== '') {
+      } else {
         this.config.search[this._currentTextProp._attr[0]] = value;
         this.configChange.emit(this.config);
       }

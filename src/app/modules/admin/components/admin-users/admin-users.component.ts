@@ -59,23 +59,12 @@ export class AdminUsersComponent implements OnInit {
           _title: 'COMMON.USERS',
           _content: this._users,
           _total: this._total,
-          _isSelectable: true,
-          _isEditable: true,
-          _isDeletable: true,
           _isFiltrable: true,
           _isSortable: true,
           _columns: [
             {_attr: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attr: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-            {_attr: ['companyName'], _name: 'COMMON.COMPANY', _type: 'LABEL',
-              _choices: [
-                {_name: 'Veolia', _class: 'label-progress'},
-                {_name: 'UMI',  _class: 'label-validate'},
-                {_name: 'VeRI', _class: 'label-alert'},
-                {_name: 'Michelin', _class: 'label-editing'},
-                {_name: 'Dynergie', _class: 'label-draft'}
-                ]}],
-          _actions: this._actions
+            {_attr: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'}]
         };
       });
   }

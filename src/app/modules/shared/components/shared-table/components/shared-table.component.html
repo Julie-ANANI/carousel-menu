@@ -25,14 +25,21 @@
           <tr>
             <th *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)"/>
               <div class="square-check"><i class="icon icon-check"></i></div></th>
-            <th *ngFor="let column of columns">
+
+            <th *ngFor="let column of columns"
+                [ngClass]="{'active': isSelected(column)}"
+                (click)="selectColumn(getAttr(column)[0])"
+                (mouseenter)="hoverColumn(getAttr(column)[0])"
+                (mouseleave)="hoverColumn(getAttr(column)[0])" >
+
               <sq-sort [config]="config"
-                       *ngIf="isSortable"
+                       *ngIf="isSortable && (isHover(column) || isSelected(column))"
                        (configChange)="changeConfig($event)"
                        [prop]="getAttr(column)[0]">
                 {{getName(column) | translate }}
               </sq-sort>
-              <span *ngIf="!isSortable">{{getName(column) | translate }}</span>
+
+              <span *ngIf="!isSortable || (!isHover(column) && !isSelected(column))">{{getName(column) | translate }}</span>
             </th>
           </tr>
         </ng-container>
@@ -129,7 +136,7 @@
 
               <!-- If isEditable we show a button onHover the row -->
               <button class="btn btn-xs ghost-edit"
-                      *ngIf="isHover(content[key]) && columns.indexOf(column) == 0 && isEditable"
+                      [ngClass]="isHover(content[key]) && columns.indexOf(column) == 0 && isEditable ? 'visible' : 'invisible'"
                       (click)="edit(content[key])">
                 {{'COMMON.MORE' | translate}}
               </button>

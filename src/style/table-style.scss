@@ -18,6 +18,11 @@ $border-color: #E0E0E0;
   thead {
     background-color: #F5F8FA;
     border: 1px solid #DFE3EB;
+
+    th.active{
+      background-color: #E1EAF1;
+    }
+
   }
 
   tbody {
@@ -59,6 +64,11 @@ $border-color: #E0E0E0;
   input:checked ~ .square-check {
     background-color: #FFFFFF;
   }
+
+  th, td {
+    width: 10%;
+    min-height: 50px;
+  }
 }
 
 .square-check {
@@ -70,5 +80,49 @@ $border-color: #E0E0E0;
 
 .small-select {
   border: 0;
+  padding: 2px;
+}
 
+.primary {
+  color: $primary-color;
+}
+
+.pagination {
+  margin: 0;
+  padding: 0;
+}
+
+.form-group-inline-left{
+  display: flex;
+  justify-content: flex-start;
+
+  .input-group{
+    margin-left: 50px;
+  }
+
+}
+
+.form-group-inline-right{
+  display: flex;
+  justify-content: flex-end;
+
+  .input-group{
+    margin-right: 50px;
+  }
+}
+
+.sort-icon {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  color: $meta-color;
+  height: 22px;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
 }
