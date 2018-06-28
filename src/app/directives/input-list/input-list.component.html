@@ -7,14 +7,25 @@
       name="answers"
       [(ngModel)]="answer"
       required
-      [attr.placeholder]="placeholder | translate" />
-    <button class="btn btn-primary" translate><span></span><i class="icon icon-plus"></i></button>
+      [attr.placeholder]="placeholder | translate"
+      [disabled]="!editable">
+    <button
+      class="btn-round btn-primary"
+      translate
+      [disabled]="!editable">
+      <i class="icon icon-plus"></i>
+    </button>
   </div>
 
   <ul *ngFor="let a of answerList; index as i" class="answerList">
     <li *ngIf="!adminMode">
       <span>{{a.text}}</span>
-      <a [routerLink]="" class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
+      <a
+        class="delete"
+        aria-label="Close"
+        role="button"
+        (click)="rmProposition(i)"
+        [ngStyle]="{ 'cursor': editable ? 'pointer' : 'not-allowed' }">
         <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
       </a>
     </li>
