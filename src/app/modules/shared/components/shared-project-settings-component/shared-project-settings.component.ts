@@ -284,7 +284,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   }
 
   get _projectStatus(): boolean {
-    return this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED' || this.projectReviewing ;
+    return this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED' || this.projectReviewing || this.adminMode;
   }
 
 }

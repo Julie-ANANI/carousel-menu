@@ -10,8 +10,9 @@
           value-property-name="id"
           [display-property-name]="identifier"
           [attr.placeholder]="placeholder | translate"
-          class="form-default">
-      <button class="btn btn-primary" [ngStyle]="{ 'width': '50px' }" [disabled]="!canAdd()" translate><span></span><i class="icon icon-plus"></i></button>
+          class="form-default"
+          [ngStyle]="{ 'margin-top': '0', 'margin-right': '20px' }">
+      <button class="btn-round btn-primary" [disabled]="!canAdd()" translate><span></span><i class="icon icon-plus"></i></button>
     </div>
 
   </form>

@@ -1,5 +1,5 @@
 <div class="section-container" id="project-setting">
-  <div class="columns" [ngClass]="{ 'c-disabled': !_projectStatus }">
+  <div class="columns">
     <div class="column col-12 col-mx-auto">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
@@ -11,7 +11,7 @@
               (updateContinent)="continentModificationDrain($event)"
               [initialConfiguration]="continentTarget"
               [width]="'400px'"
-              [canEdit]="true">
+              [isEditable]="_projectStatus">
             </app-worldmap>
           </div>
         </div>
@@ -26,21 +26,36 @@
             <!-- Geography input -->
             <div class="pd-para">
               <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</span>
-              <div class="pd-input">
+              <!-- Exclude countries -->
+              <div *ngIf="!_projectStatus" class="pd-input">
+                <div *ngIf="settings.geography.exclude.length > 0">
+                  <p *ngFor="let country of settings.geography.exclude;">{{ country.name }}</p>
+                </div>
+                <div *ngIf="settings.geography.exclude.length === 0">
+                  <p>{{ 'PROJECT_MODULE.SETUP.TARGETING.NO' | translate }}</p>
+                </div>
+              </div>
+              <div *ngIf="_projectStatus" class="pd-input">
                 <app-autocomplete-input
                   (update)="addCountryToExclude($event)"
-                  [canEdit]="true"
                   [config]="getConfig('countries')">
                 </app-autocomplete-input>
               </div>
             </div>
-            <p class="pd-para">
+            <!-- Comment countries -->
+            <p *ngIf="!_projectStatus && settings.geography.comments" class="pd-para">
+              <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.COMMENT' | translate }}</span>
+            </p>
+            <div *ngIf="!_projectStatus && settings.geography.comments" class="pd-input">
+              <p *ngIf="settings.geography.comments">{{ settings.geography.comments }}</p>
+            </div>
+            <p *ngIf="_projectStatus" class="pd-para">
              <span class="text-link" (click)="(displayCountriesCommentSection = !displayCountriesCommentSection) && $event.preventDefault()">
                 {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.COMMENT' | translate }}
                 <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayCountriesCommentSection, 'icon-arrow-right' : !displayCountriesCommentSection  }"></i>
               </span>
             </p>
-            <div *ngIf="displayCountriesCommentSection" class="pd-input">
+            <div *ngIf="displayCountriesCommentSection && _projectStatus" class="pd-input">
               <textarea
                 class="form-default"
                 id="countries-comments"
@@ -60,7 +75,10 @@
             <!-- Activity sectors -->
             <div class="activity-sector-wrapper pd-ques">
               <span class="num-rect">2</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}</span>
-              <div class="pd-input">
+              <div *ngIf="!_projectStatus" class="pd-input">
+                <p>{{ settings.market.comments }}</p>
+              </div>
+              <div *ngIf="_projectStatus" class="pd-input">
               <textarea
                 class="form-default"
                 id="innovation-sector"
@@ -84,33 +102,56 @@
             <!-- Types of enterprises -->
             <div class="enterprises-wrapper pd-ques">
               <span class="num-rect">3</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.LABEL' | translate }}</span>
+              <!-- Companies include -->
               <div class="pd-para">
                 <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}</span>
-                <div class="pd-input">
+                <div *ngIf="!_projectStatus" class="pd-input">
+                  <div *ngIf="settings.companies.include.length > 0">
+                    <p *ngFor="let companyInclude of settings.companies.include">{{ companyInclude.name }}</p>
+                  </div>
+                  <div *ngIf="settings.companies.include.length === 0">
+                    <p>{{ 'PROJECT_MODULE.SETUP.TARGETING.NO' | translate }}</p>
+                  </div>
+                </div>
+                <div *ngIf="_projectStatus" class="pd-input">
                   <app-autocomplete-input
                     (update)="addCompanyToInclude($event)"
-                    [canEdit]="true"
                     [config]="getConfig('includedCompanies')">
                   </app-autocomplete-input>
                 </div>
               </div>
+              <!-- Companies exclude -->
               <div class="pd-para">
                 <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}</span>
-                <div class="pd-input">
+                <div *ngIf="!_projectStatus" class="pd-input">
+                  <div *ngIf="settings.companies.exclude.length > 0">
+                    <p *ngFor="let companyExclude of settings.companies.exclude">{{ companyExclude.name }}</p>
+                  </div>
+                  <div *ngIf="settings.companies.exclude.length === 0">
+                    <p>{{ 'PROJECT_MODULE.SETUP.TARGETING.NO' | translate }}</p>
+                  </div>
+                </div>
+                <div *ngIf="_projectStatus" class="pd-input">
                   <app-autocomplete-input
                     (update)="addCompanyToExclude($event)"
-                    [canEdit]="true"
                     [config]="getConfig('excludedCompanies')">
                   </app-autocomplete-input>
                 </div>
               </div>
-              <p class="pd-para">
+              <!-- Companies comment -->
+              <p *ngIf="!_projectStatus && settings.companies.description" class="pd-para">
+                <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.COMMENT' | translate }}</span>
+              </p>
+              <div *ngIf="!_projectStatus && settings.companies.description" class="pd-input">
+                <p *ngIf="settings.companies.description">{{ settings.companies.description }}</p>
+              </div>
+              <p *ngIf="_projectStatus" class="pd-para">
               <span class="text-link" (click)="(displayCompanyCommentSection = !displayCompanyCommentSection) && $event.preventDefault()">
-                {{'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.COMMENT' | translate }}
+                {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.COMMENT' | translate }}
                 <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayCompanyCommentSection, 'icon-arrow-right' : !displayCompanyCommentSection  }"></i>
               </span>
               </p>
-              <div *ngIf="displayCompanyCommentSection" class="pd-input">
+              <div *ngIf="displayCompanyCommentSection && _projectStatus" class="pd-input">
               <textarea
                 class="form-default"
                 id="innovation-companies"
@@ -128,7 +169,12 @@
             <!-- Professional profiles -->
             <div class="professional-wrapper pd-ques">
               <span class="num-rect">4</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate }}</span>
-              <div class="pd-input">
+              <!-- Description -->
+              <div *ngIf="!_projectStatus" class="pd-input">
+                <p *ngIf="settings.professionals.description">{{ settings.professionals.description }}</p>
+                <p *ngIf="!settings.professionals.description">{{ 'PROJECT_MODULE.SETUP.TARGETING.NO' | translate }}</p>
+              </div>
+              <div *ngIf="_projectStatus" class="pd-input">
               <textarea
                 class="form-default"
                 id="innovation-pros"
@@ -141,16 +187,22 @@
                   <span [ngStyle]="{'color': getColor(settings.professionals.description.length | characterCountdown:500)}">{{ settings.professionals.description.length | characterCountdown:500 }}</span>
                 </div>
               </div>
-              <p class="pd-para">
+              <!-- Exclude professional -->
+              <p *ngIf="!_projectStatus && settings.professionals.exclude.length > 0" class="pd-para">
+                <span  [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</span>
+              </p>
+              <div *ngIf="!_projectStatus && settings.professionals.exclude.length > 0" class="pd-input">
+                <p *ngFor="let professionalExclude of settings.professionals.exclude">{{ professionalExclude.text }}</p>
+              </div>
+              <p *ngIf="_projectStatus" class="pd-para">
               <span class="text-link" (click)="(displayPersonsToExcludeSection = !displayPersonsToExcludeSection) && $event.preventDefault()">
                 {{'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}
                 <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayPersonsToExcludeSection, 'icon-arrow-right' : !displayPersonsToExcludeSection  }"></i>
               </span>
               </p>
-              <div *ngIf="displayPersonsToExcludeSection" class="pd-input">
+              <div *ngIf="displayPersonsToExcludeSection && _projectStatus" class="pd-input">
                 <app-input-list
                   (update)="addPeopleToExclude($event)"
-                  [canEdit]="true"
                   [config]="getConfig('excludedPeople')">
                 </app-input-list>
               </div>
@@ -159,7 +211,11 @@
             <!-- Keywords and other stuffs -->
             <div class="comment-wrapper pd-ques">
               <span class="num-rect">5</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</span>
-              <div class="pd-input">
+              <div *ngIf="!_projectStatus" class="pd-input">
+                <p *ngIf="settings.comments">{{ settings.comments }}</p>
+                <p *ngIf="!settings.comments">{{ 'PROJECT_MODULE.SETUP.TARGETING.NO' | translate }}</p>
+              </div>
+              <div *ngIf="_projectStatus" class="pd-input">
               <textarea
                 class="form-default"
                 id="other-comments"
@@ -170,7 +226,8 @@
                 (change)="updateSettings()">
               </textarea>
                 <div class="charRemaining">
-                  <span [ngStyle]="{'color': getColor(settings.comments.length | characterCountdown:500)}">{{ settings.comments.length | characterCountdown:500 }}</span>
+                  <span [ngStyle]="{'color': getColor(settings.comments.length | characterCountdown:500)}">
+                    {{ settings.comments.length | characterCountdown:500 }}</span>
                 </div>
               </div>
               <div *ngIf="adminMode">

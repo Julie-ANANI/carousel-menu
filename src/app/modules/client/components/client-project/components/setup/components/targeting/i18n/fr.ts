@@ -9,6 +9,8 @@ export const TARGETING = {
     'ERROR': 'La zone géographique est requise.'
   },
 
+  'NO': 'Aucun',
+
   'GEOGRAPHYs': 'Sélectionnez la zone géographique du projet',
   'SPECIFIC_REQUEST': 'Demande spécifique',
 

@@ -154,7 +154,7 @@
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.LABEL' | translate }}
                     </span>
                     <div *ngIf="!projectStatus" class="pd-input">
-                      <p>{{project.innovationCards[i].solution}}</p>
+                      <p>{{ project.innovationCards[i].solution }}</p>
                     </div>
                     <div *ngIf="projectStatus" class="form-group pd-input">
                     <textarea
@@ -187,7 +187,7 @@
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.LABEL' | translate }}
                     </span>
                     <div *ngIf="!projectStatus" class="pd-input">
-                      <p *ngFor="let advantage of project.innovationCards[i].advantages">{{advantage.text}}</p>
+                      <p *ngFor="let advantage of project.innovationCards[i].advantages">{{ advantage.text }}</p>
                     </div>
                     <div *ngIf="projectStatus" class="pd-input" [ngStyle]="{ 'margin-top': '8px' }">
                       <app-input-list

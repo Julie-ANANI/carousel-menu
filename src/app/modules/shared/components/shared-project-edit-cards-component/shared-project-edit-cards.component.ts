@@ -286,7 +286,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   get projectStatus(): boolean {
-    return this.project.status === 'EDITING' || this.project.status === 'SUBMITTED' || this.project.reviewing;
+    return this.project.status === 'EDITING' || this.project.status === 'SUBMITTED' || this.project.reviewing || this.isAdmin;
   }
 
  /* get canEdit(): boolean {

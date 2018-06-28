@@ -17,3 +17,7 @@ path.clickable:not(.selected):hover,
   fill: #FFB300;
 }
 
+g.disabled, path.disabled, .disabled g, .disabled path {
+  cursor: not-allowed;
+}
+
