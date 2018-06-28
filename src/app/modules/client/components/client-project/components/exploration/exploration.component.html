@@ -30,7 +30,7 @@
         </div>
 
         <!-- Project under submitted status -->
-        <div *ngIf="project.reviewing">
+        <div *ngIf="project.reviewing && projectStatus === 'EDITING'">
           <h1>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.SUBMITTED' | translate }}</h1>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
             <span class="bot-rect">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.REVIEWING' | translate }}</span>
