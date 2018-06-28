@@ -1,16 +1,15 @@
 #setup-project {
   padding-top: 0;
 
-  .message-wrapper {
+  .msg-wrapper {
     padding-top: 50px;
 
-    .message {
+    .content {
       background-color: #2ECC71;
       color: white;
       font-weight: 600;
       font-size: 0.9rem;
-      padding-top: 15px;
-      padding-bottom: 15px;
+      padding: 15px;
       border-radius: 5px;
     }
 
@@ -21,73 +20,77 @@
 
   }
 
-  .row-1 {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  .setup-section-1-wrapper {
     padding-top: 50px;
     padding-bottom: 25px;
 
-    h5 {
-      font-size: 1.35rem;
-    }
-
-    .function-button {
+    .row-1-wrapper {
       display: flex;
       flex-wrap: wrap;
-      flex: 1 0 auto;
-      justify-content: center;
-      flex-direction: column;
+      justify-content: space-between;
 
-      span {
-        margin-right: 10px;
-        margin-bottom: 10px;
+      h5 {
+        font-size: 1.35rem;
       }
 
-      .circle-check {
-        margin-top: -15px;
-        margin-left: -13px;
+      .func-btn-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        flex: 1 0 auto;
+        justify-content: flex-start;
+        flex-direction: column;
 
-        i {
-          color: white;
-        }
-
-      }
-
-      .save-project {
-
-        .ghost-primary {
-          border-color: #2ECC71 !important;
-          color: #262831 !important;
-          pointer-events: auto;
-        }
-
-        .ghost-primary:hover {
-          background-color: #FFF9EB !important;
-          box-shadow: none;
+        span {
+          margin-right: 10px;
+          margin-bottom: 10px;
         }
 
         .circle-check {
-          background: #2ECC71 !important;
-          animation-name: fadeIn;
-          animation-duration: .5s;
-          animation-timing-function: ease-in-out;
+          margin-top: -15px;
+          margin-left: -13px;
+
+          i {
+            color: white;
+          }
+
         }
 
-      }
+        .save-project {
 
-      .disabled {
+          .ghost-primary {
+            border-color: #2ECC71 !important;
+            color: #262831 !important;
+            pointer-events: auto;
+          }
 
-        .ghost-primary {
-          border-color: #dbdbdb !important;
-          color: #a9a9a9 !important;
-          background-color: #dbdbdb !important;
-          cursor: not-allowed;
-          box-shadow: none;
+          .ghost-primary:hover {
+            background-color: #FFF9EB !important;
+            box-shadow: none;
+          }
+
+          .circle-check {
+            background: #2ECC71 !important;
+            animation-name: fadeIn;
+            animation-duration: .5s;
+            animation-timing-function: ease-in-out;
+          }
+
         }
 
-        .circle-check {
-          visibility: hidden;
+        .disabled {
+
+          .ghost-primary {
+            border-color: #dbdbdb !important;
+            color: #a9a9a9 !important;
+            background-color: #dbdbdb !important;
+            cursor: not-allowed;
+            box-shadow: none;
+          }
+
+          .circle-check {
+            visibility: hidden;
+          }
+
         }
 
       }
@@ -155,21 +158,25 @@
 
 @media (min-width: 768px) {
 
-  .row-1 {
-    flex-wrap: unset !important;
+  .setup-section-1-wrapper {
     position: sticky;
     top: 0;
     background-color: white;
     z-index: 11;
 
-    .function-button {
-      justify-content: flex-end !important;
-      flex-direction: row !important;
+    .row-1-wrapper {
+      flex-wrap: unset !important;
 
-      span {
-        margin-bottom: 0 !important;
-        margin-right: 0 !important;
-        margin-left: 10px;
+      .func-btn-wrapper {
+        justify-content: flex-end !important;
+        flex-direction: row !important;
+
+        span {
+          margin-bottom: 0 !important;
+          margin-right: 0 !important;
+          margin-left: 10px;
+        }
+
       }
 
     }

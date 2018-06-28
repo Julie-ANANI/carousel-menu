@@ -3,7 +3,16 @@ $primary-color: #3498DB !default;
 $secondary-color: #2ECC71 !default;
 $dark-color: #333 !default;
 
-.btn {
+.input-group {
+
+  .form-default {
+    margin-right: 20px;
+    margin-top: 0;
+  }
+
+}
+
+/*.btn {
   margin-left: 20px;
   border-radius: 50%;
   height: 48px;
@@ -20,7 +29,7 @@ $dark-color: #333 !default;
     font-size: 0.75rem;
   }
 
-}
+}*/
 
 .form-default.ng-touched.ng-invalid{
   border-color: #E0E0E0;
@@ -33,6 +42,7 @@ $dark-color: #333 !default;
   li {
     display: flex;
     margin: 10px 0;
+    padding: 0;
   }
 
   li span {
@@ -51,6 +61,7 @@ $dark-color: #333 !default;
     border-radius: 0 5px 5px 0;
     padding: 12px 17px;
     border: none;
+    cursor: pointer;
   }
 
   i {

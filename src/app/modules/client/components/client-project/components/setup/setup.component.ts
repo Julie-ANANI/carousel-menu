@@ -132,15 +132,14 @@ export class SetupProjectComponent implements OnInit {
       Here we are receiving the value from the targeting form.
    */
   updateSettings(value: InnovationSettings): void {
-    if (this.projectStatus === 'EVALUATING') {
-      this._saveButtonClass = 'disabled';
-    } else {
+    if (this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED') {
       this.project.settings = value;
       this._saveChanges = true;
       this._saveButtonClass = 'save-project';
+    } else {
+      this._saveButtonClass = 'disabled';
     }
   }
-
 
   /*
       Here we are receiving the value from the pitch form.
@@ -154,12 +153,12 @@ export class SetupProjectComponent implements OnInit {
      shows the notification to the client.
   */
   saveInnovation(value: boolean) {
-    if (this.projectStatus === 'EVALUATING') {
-      this._saveButtonClass = 'disabled';
-    } else {
+    if (this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED') {
       this._saveChanges = value;
       this._changesSaved = false;
       this._saveButtonClass = 'save-project';
+    } else {
+      this._saveButtonClass = 'disabled';
     }
   }
 

@@ -12,8 +12,10 @@ export class InputListComponent {
   _placeholder: string;
 
   @Output() update = new EventEmitter<any>();
+
   @Input() canEdit = true;
   @Input() adminMode = false;
+  @Input() editable = true;
 
   answer: string;
   answerList: Array<any>;
@@ -41,8 +43,10 @@ export class InputListComponent {
   }
 
   rmProposition(i: number): void {
-    this.answerList.splice(i, 1);
-    this.update.emit({value: this.answerList});
+    if (this.editable) {
+      this.answerList.splice(i, 1);
+      this.update.emit({value: this.answerList});
+    }
   }
 
   thumbsUp(event: Event, index: number): void {

@@ -1,43 +1,147 @@
 <div class="section-container" id="project-synthesis">
   <div class="columns">
-    <div class="column col-12">
+    <div class="column col-12 col-mx-auto">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <!-- Bot messages -->
 
-      <!-- Project under editing status -->
-      <div *ngIf="project.status === 'EDITING' && !adminSide">
-        <h1>{{ 'MARKET_REPORT.TITLE.EDITING' | translate }}</h1>
-        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+        <!-- Project under editing status -->
+        <div *ngIf="projectStatus === 'EDITING' && !adminSide && !project.reviewing">
+          <h1>{{ 'MARKET_REPORT.TITLE.EDITING' | translate }}</h1>
+          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span *ngIf="project.status === 'EDITING'" class="bot-rect">
-            {{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.A' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.B' | translate }}</span>
-            {{ 'PROJECT_MODULE.SETUP.MESSAGE.EDITING.C' | translate }}
+            {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'MARKET_REPORT.MESSAGE.EDITING.B' | translate }}</span>
+            {{ 'MARKET_REPORT.MESSAGE.EDITING.C' | translate }}
           </span>
-          <br>
-          <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-          <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
-        </div>
-      </div>
-
-      <!-- Project under submitted status -->
-      <div *ngIf="project.status === 'SUBMITTED' && !adminSide">
-        <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
-        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
-          <span class="bot-rect">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</span>
-          <br>
-          <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-          <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
-        </div>
-      </div>
-
-      <!-- Project under evaluating status -->
-      <div *ngIf="project.status === 'EVALUATING' || adminSide">
-        <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
-        <div class="title-wrapper">
-          <h1>{{ 'MARKET_REPORT.TITLE.EVALUATING' | translate }}</h1>
-          <button class="btn btn-primary">Download</button>
+            <br>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+          </div>
         </div>
 
+        <!-- Project under submitted status -->
+        <div *ngIf="projectStatus === 'SUBMITTED' && !adminSide && !project.reviewing">
+          <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
+          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+            <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}</span>
+            <br>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+          </div>
+        </div>
+
+        <!-- Project under reviewing status -->
+        <div *ngIf="project.reviewing && !adminSide && projectStatus === 'EDITING'">
+          <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
+          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+            <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}</span>
+            <br>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+          </div>
+        </div>
+
+        <!-- Project under evaluating status -->
+        <div *ngIf="projectStatus === 'EVALUATING' && !adminSide">
+          <h1>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
+          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+            <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.EVALUATING' | translate }}</span>
+            <br>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+          </div>
+        </div>
+
+        <!-- /Bot messages -->
+
+        <!-- Project under evaluating_done status -->
+        <div *ngIf="projectStatus === 'DONE' || projectStatus === 'EVALUATING_DONE' || adminSide">
+          <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
+
+          <!-- Title and download button section -->
+          <div class="title-wrapper">
+            <h1>{{ 'MARKET_REPORT.TITLE.EVALUATING' | translate }}</h1>
+            <button class="btn btn-primary">{{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }}</button>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="question-wrapper">
+            <ul>
+              <li>
+                <a pageScroll href="#professionals">
+                  {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }} <i class="icon icon-arrow-right"></i>
+                </a>
+              </li>
+              <li *ngFor="let question of cleaned_questions">
+                <a pageScroll [href]="'#' + question.identifier">
+                  {{ question.title | multiling:lang }} <i class="icon icon-arrow-right"></i>
+                </a>
+              </li>
+            </ul>
+            <div *ngIf="objectKeys(filters).length" class="filter-wrapper">
+              <p>{{'MARKET_REPORT.FILTERS' | translate}}</p>
+              <ul>
+                <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
+                  <a>{{filters[fKey].questionTitle | multiling:lang}} <i class="icon icon-cross"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Answer section -->
+          <div class="answer-wrapper">
+
+            <!-- Origin of responses -->
+            <div class="section-container">
+              <h3>{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h3>
+              <app-question-conclusion
+                [innovation]="project"
+                [infographic]="infographics?.professionals"
+                [question]="{identifier: 'professionals'}"
+                [readonly]="!adminMode"
+                [stats]="{nbAnswers: answers.length, percentage: 0}">
+              </app-question-conclusion>
+              <div class="map-wrapper">
+                <app-worldmap
+                  (updateCountries)="filterByCountries($event)"
+                  [countries]="countries"
+                  [countriesColor]="'#FFB300'"
+                  [initialConfiguration]="mapInitialConfiguration">
+                </app-worldmap>
+              </div>
+            </div>
+
+            <!-- Professionals -->
+            <div class="section-container">
+              <h3 id="professionals">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h3>
+              <div class="professional">
+                <div *ngFor="let answer of filteredAnswers" class="profile">
+                  <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+                </div>
+              </div>
+            </div>
+
+            <!-- Other questions -->
+            <div *ngFor="let question of questions" class="section-container">
+              <app-question-section
+                [infographic]="getInfo(question)"
+                [innovation]="project"
+                [question]="question"
+                [answers]="filteredAnswers"
+                [showComments]="showDetails"
+                [showDetails]="showDetails"
+                [readonly]="!adminMode"
+                (addFilter)="addFilter($event)"
+                (modalAnswerChange)="seeAnswer($event)">
+              </app-question-section>
+            </div>
+
+          </div>
+          <!-- /Answer section -->
+
+        </div>
+        <!-- /Project under evaluating_done status -->
 
       </div>
-
     </div>
   </div>
 </div>
@@ -134,7 +238,7 @@
           ></app-question-conclusion>
 
             <div class="bloc">
-              <!--======= Carte du monde =======-
+              <!--======= Carte du monde =======--
               <div class="map centered" width="684" height="339">
                 <app-worldmap (updateCountries)="filterByCountries($event)"
                               [countries]="countries"

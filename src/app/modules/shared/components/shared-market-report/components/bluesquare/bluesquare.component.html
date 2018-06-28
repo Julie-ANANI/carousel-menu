@@ -2,13 +2,14 @@
 
   <div class="number-answers">
     <span>{{ numberFocus || 0 }}</span>
-    {{ subtitle }}
+    <p [ngStyle]="{ 'display': subtitle !== '' ? 'block' : 'none' }">{{ subtitle }}</p>
   </div>
 
   <ng-container *ngIf="percentage">
     <hr>
     <div class="number-ratio">
-      <span>{{ percentage || 0 }}%</span> {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
+      <span>{{ percentage || 0 }}%</span>
+      <p>{{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}</p>
     </div>
   </ng-container>
 

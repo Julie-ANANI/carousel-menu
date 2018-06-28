@@ -2,7 +2,7 @@
 
 <div class="main-container" *ngIf="project" id="project-description">
   <div class="columns">
-    <div class="column col-12">
+    <div class="column col-12 col-mx-auto">
 
       <!-- Header -->
       <div class="hero-light-container">
@@ -41,41 +41,43 @@
                   <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
                 </a>
               </li>
-              <li>
+              <!--<li>
                 <a [routerLink]="['history']" [ngClass]="{'active': currentPage == 'history'}">
                   <i class="fas fa-history"></i>{{ 'PROJECT_MODULE.HISTORY_TAB' | translate }}
                 </a>
-              </li>
+              </li>-->
             </ul>
           </div>
         </div>
       </div>
+      <!-- /Header -->
 
       <!-- Sections -->
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <!-- Setup page -->
-        <div *ngIf="currentPage === 'setup'">
-          <app-client-setup-project [project]="project"></app-client-setup-project>
-        </div>
-        <!-- Exploration page -->
-        <div *ngIf="currentPage === 'exploration'">
-          <app-client-exploration-project [project]="project"></app-client-exploration-project>
-        </div>
-        <!-- Synthesis page -->
-        <div *ngIf="currentPage === 'synthesis'">
-          <app-shared-market-report [project]="project"></app-shared-market-report>
-        </div>
-        <!-- History page -->
-        <div *ngIf="currentPage === 'history'">
-          <!--<app-client-history-project [project]="project"></app-client-history-project>-->
-          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '75px', 'padding-bottom': '50px' }">
-            <span class="bot-rect" [ngStyle]="{ 'width': '300px' }">We are working very hard. For more information contact Marc!</span>
-            <br>
-            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
-          </div>
+
+      <!-- Setup page -->
+      <div *ngIf="currentPage === 'setup'">
+        <app-client-setup-project [project]="project"></app-client-setup-project>
+      </div>
+      <!-- Exploration page -->
+      <div *ngIf="currentPage === 'exploration'">
+        <app-client-exploration-project [project]="project"></app-client-exploration-project>
+      </div>
+      <!-- Synthesis page -->
+      <div *ngIf="currentPage === 'synthesis'">
+        <app-shared-market-report [project]="project"></app-shared-market-report>
+      </div>
+      <!-- History page -->
+      <div *ngIf="currentPage === 'history'">
+        <!--<app-client-history-project [project]="project"></app-client-history-project>-->
+        <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '75px', 'padding-bottom': '50px' }">
+          <span class="bot-rect" [ngStyle]="{ 'width': '300px' }">Work in progress...</span>
+          <br>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+          <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
         </div>
       </div>
+
+      <!-- /Sections -->
 
     </div>
   </div>
