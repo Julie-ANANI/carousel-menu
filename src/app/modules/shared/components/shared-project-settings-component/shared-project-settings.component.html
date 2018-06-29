@@ -25,23 +25,29 @@
 
             <!-- Geography input -->
             <div class="pd-para">
-              <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</span>
+              <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">
+                {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
+              </span>
+
               <!-- Exclude countries -->
               <div *ngIf="!_projectStatus" class="pd-input">
                 <div *ngIf="settings.geography.exclude.length > 0">
-                  <p *ngFor="let country of settings.geography.exclude;">{{ country.name }}</p>
+                  <p *ngFor="let country of settings.geography.exclude;">{{ '•' }} {{ country.name }}</p>
                 </div>
                 <div *ngIf="settings.geography.exclude.length === 0">
                   <p>{{ 'PROJECT_MODULE.SETUP.TARGETING.NO' | translate }}</p>
                 </div>
               </div>
+
               <div *ngIf="_projectStatus" class="pd-input">
                 <app-autocomplete-input
                   (update)="addCountryToExclude($event)"
                   [config]="getConfig('countries')">
                 </app-autocomplete-input>
               </div>
+
             </div>
+
             <!-- Comment countries -->
             <p *ngIf="!_projectStatus && settings.geography.comments" class="pd-para">
               <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.COMMENT' | translate }}</span>
