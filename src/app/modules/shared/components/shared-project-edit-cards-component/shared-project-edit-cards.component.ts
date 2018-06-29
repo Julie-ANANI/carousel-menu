@@ -290,9 +290,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       || this.project.status === 'EDITING' || this.project.status === 'SUBMITTED' || this.isAdmin;
   }
 
- /* get canEdit(): boolean {
-    return this.project && (this.project.status === 'EDITING' || this.isAdmin);
-  }*/
 
   get dateFormat(): string {
     return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';

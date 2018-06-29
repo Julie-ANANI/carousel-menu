@@ -62,9 +62,11 @@
                     <span class="num-rect">1</span><span class="ques">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.LABEL' | translate }}
                     </span>
+
                     <div *ngIf="!projectStatus" class="pd-input">
                       <p>{{project.innovationCards[i].title}}</p>
                     </div>
+
                     <div *ngIf="projectStatus" class="form-group pd-input">
                       <input
                         type="text"
@@ -82,6 +84,7 @@
                         <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.ERROR' | translate }}</span>
                       </div>
                     </div>
+
                   </div>
 
                   <!-- Summary -->
@@ -89,9 +92,11 @@
                     <span class="num-rect">2</span><span class="ques">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.LABEL' | translate }}
                     </span>
+
                     <div *ngIf="!projectStatus" class="pd-input">
                       <p>{{project.innovationCards[i].summary}}</p>
                     </div>
+
                     <div *ngIf="projectStatus" class="form-group pd-input">
                     <textarea
                       [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
@@ -113,6 +118,7 @@
                         <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.ERROR' | translate }}</span>
                       </div>
                     </div>
+
                   </div>
 
                   <!-- Problem -->
@@ -120,9 +126,11 @@
                     <span class="num-rect">3</span><span class="ques">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.LABEL' | translate }}
                     </span>
+
                     <div *ngIf="!projectStatus" class="pd-input">
                       <p>{{project.innovationCards[i].problem}}</p>
                     </div>
+
                     <div *ngIf="projectStatus" class="form-group pd-input">
                     <textarea
                       [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
@@ -146,6 +154,7 @@
                         <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.ERROR' | translate }}</span>
                       </div>
                     </div>
+
                   </div>
 
                   <!-- Solution -->
@@ -153,9 +162,11 @@
                     <span class="num-rect">4</span><span class="ques">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.LABEL' | translate }}
                     </span>
+
                     <div *ngIf="!projectStatus" class="pd-input">
                       <p>{{ project.innovationCards[i].solution }}</p>
                     </div>
+
                     <div *ngIf="projectStatus" class="form-group pd-input">
                     <textarea
                       [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
@@ -179,6 +190,7 @@
                         <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.ERROR' | translate }}</span>
                       </div>
                     </div>
+
                   </div>
 
                   <!-- Advantages -->
@@ -186,9 +198,13 @@
                     <span class="num-rect">5</span><span class="ques">
                       {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.LABEL' | translate }}
                     </span>
+
                     <div *ngIf="!projectStatus" class="pd-input">
-                      <p *ngFor="let advantage of project.innovationCards[i].advantages">{{ advantage.text }}</p>
+                      <div *ngFor="let advantage of project.innovationCards[i].advantages; let i = index;" class="adv-padding">
+                        <p>{{ i + 1 + '.' }}&nbsp;{{ advantage.text }}</p>
+                      </div>
                     </div>
+
                     <div *ngIf="projectStatus" class="pd-input" [ngStyle]="{ 'margin-top': '8px' }">
                       <app-input-list
                         (update)="addAdvantageToInventionCard($event, i)"
@@ -198,19 +214,22 @@
                     <div class="form-error" *ngIf="showAdvantageError">
                       <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.ADVANTAGES.ERROR' | translate }}</span>
                     </div>
+
                   </div>
 
                 </div>
               </div>
 
               <!-- Project stage -->
-              <div class="project-data">
+              <div [ngStyle]="{ 'padding-top': projectStatus ? '50px' : '35px' }">
                 <span class="num-rect">6</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.STAGE' | translate }}</span>
+
                 <div *ngIf="!projectStatus" class="pd-input">
                   <p *ngIf="project.projectStatus === 0">{{ 'COMMON.PROJECT_STATUS.0' | translate }}</p>
                   <p *ngIf="project.projectStatus === 1">{{ 'COMMON.PROJECT_STATUS.1' | translate }}</p>
                   <p *ngIf="project.projectStatus === 2">{{ 'COMMON.PROJECT_STATUS.2' | translate }}</p>
                 </div>
+
                 <div *ngIf="projectStatus" class="form-group pd-input">
                   <label class="form-radio">
                     <input
@@ -240,15 +259,18 @@
                     <i class="form-icon"></i>{{ 'COMMON.PROJECT_STATUS.2' | translate }}
                   </label>
                 </div>
+
               </div>
 
               <!-- Project protected -->
               <div class="project-data">
                 <span class="num-rect">7</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.PATENTED.LABEL' | translate }}</span>
+
                 <div *ngIf="!projectStatus" class="pd-input">
                   <p *ngIf="project.patented === false">{{ 'COMMON.NO' | translate }}</p>
                   <p *ngIf="project.patented === true">{{ 'COMMON.YES' | translate }}</p>
                 </div>
+
                 <div *ngIf="projectStatus" class="form-group pd-input">
                   <label class="form-radio">
                     <input
@@ -272,16 +294,23 @@
                     <span>{{ 'PROJECT_MODULE.SETUP.PITCH.PATENTED.ERROR' | translate }}</span>
                   </div>
                 </div>
+
               </div>
 
               <!-- Diffusion -->
               <div class="project-data">
                 <span class="num-rect">8</span>
-                <span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.EXTERNAL_DIFFUSION.A' | translate }} {{companyName}} {{ 'PROJECT_MODULE.SETUP.PITCH.EXTERNAL_DIFFUSION.B' | translate }}</span>
+                <span class="ques">
+                  {{ 'PROJECT_MODULE.SETUP.PITCH.EXTERNAL_DIFFUSION.A' | translate }}
+                  {{companyName}}
+                  {{ 'PROJECT_MODULE.SETUP.PITCH.EXTERNAL_DIFFUSION.B' | translate }}
+                </span>
+
                 <div *ngIf="!projectStatus" class="pd-input">
                   <p *ngIf="project.external_diffusion === false">{{ 'COMMON.NO' | translate }}</p>
                   <p *ngIf="project.external_diffusion === true">{{ 'COMMON.YES' | translate }}</p>
                 </div>
+
                 <div *ngIf="projectStatus" class="form-group pd-input">
                   <label class="form-radio">
                     <input
@@ -305,6 +334,7 @@
                     <span>{{ 'PROJECT_MODULE.SETUP.PITCH.EXTERNAL_DIFFUSION.ERROR' | translate }}</span>
                   </div>
                 </div>
+
               </div>
 
             </div>
@@ -370,7 +400,9 @@
                           </iframe>
                           <div *ngIf="projectStatus" class="media-action text-center">
                             <span *ngIf="media._id !== innovationItem.principalMedia?._id" [ngStyle]="{ 'color': '#97A4B1' }">
-                              <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.MAKE_MAIN' | translate }}</a>
+                              <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">
+                                {{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.MAKE_MAIN' | translate }}
+                              </a>
                               /
                             </span>
                             <a class="text-link delete-link" (click)="deleteMedia($event, media, i)">{{ 'COMMON.DELETE' | translate }}</a>
@@ -394,7 +426,9 @@
                       <span class="para">{{ 'COMMON.OR' | translate }}</span>
                     </div>
                     <div class="video-upload-wrapper">
-                      <app-shared-upload-zone-video (cbFn)="newOnlineVideoToAdd($event)"></app-shared-upload-zone-video>
+                      <app-shared-upload-zone-video
+                        (cbFn)="newOnlineVideoToAdd($event)">
+                      </app-shared-upload-zone-video>
                     </div>
                   </div>
                   <!-- /Uploading center -->
