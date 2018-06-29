@@ -10,6 +10,7 @@ export const TARGETING = {
   },
 
   'NO': 'None',
+  'NOT_ANSWER': 'You haven\'t answered this field.',
 
   'GEOGRAPHYs': 'Select the geographical area of the project',
   'SPECIFIC_REQUEST': 'Specific request',

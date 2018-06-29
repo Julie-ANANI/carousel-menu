@@ -32,7 +32,15 @@
   }
 
   p {
-    padding: 0 0 0 10px;
+    padding: 0;
+  }
+
+  .pd-bottom {
+    padding-bottom: 15px;
+  }
+
+  .pd-top {
+    padding-top: 5px;
   }
 
 }
