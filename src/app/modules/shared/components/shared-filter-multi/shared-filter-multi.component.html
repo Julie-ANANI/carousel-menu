@@ -2,7 +2,7 @@
   <div class="input-group">
     <select (change)="changeCurrentTextProp($event); search.value = '';" class="input-group-addon form-select">
       <option *ngFor="let propName of textProps"
-              [value]="getAttr(propName)"
+              [value]="getAttrs(propName)"
               [selected]="textIsSelected(propName)">
         {{getName(propName) | translate}}
       </option>
@@ -30,7 +30,7 @@
       <select (change)="filterOther(prop)" [(ngModel)]="config[getAttr(prop)]"
               class="form-select small-select primary"
               style="margin-right: 10px;"
-              *ngSwitchCase="'LABEL'">
+              *ngSwitchCase="'LABEL'" >
         <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
         <option *ngFor="let choice of getChoices(prop)">{{getChoiceName(choice) | translate}}</option>
       </select>

@@ -126,3 +126,20 @@ $border-color: #E0E0E0;
 .visible {
   visibility: visible;
 }
+
+.left-label {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+  margin-right: 0;
+}
+
+.middle-label {
+  border-radius: 0px;
+  margin-right: 0;
+}
+
+.right-label {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+  margin-right: 0;
+}

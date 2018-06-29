@@ -3,8 +3,9 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Table} from '../models/table';
 import {Row} from '../models/row';
 import {Column, types} from '../models/column';
-import {Label} from '../models/label';
+import {Choice} from '../models/choice';
 import {TranslateService} from '@ngx-translate/core';
+import {MultiLabel} from '../models/multi-label';
 
 @Component({
   selector: 'app-shared-table',
@@ -98,48 +99,64 @@ export class SharedTableComponent {
     return Object.keys(this._content);
   }
 
-  getContentValue(rowKey: string, columnKey: string[]): any  {
-    if (columnKey.length === 1) {
-      return this._content[rowKey]._content[columnKey[0]];
-    } else {
-      let content = '';
-      for (const i of columnKey) {
-        content = content + this._content[rowKey]._content[i] + ' ';
-      }
-      return content;
-    }
+  getContentValue(rowKey: string, columnAttr: string): any  {
+      return this._content[rowKey]._content[columnAttr];
   }
 
   getType(column: Column): types {
     return column._type;
   }
 
-  getAttr(column: Column) {
-    return column._attr;
+  getAttrs(column: Column) {
+    return column._attrs;
+  }
+
+  getAttrIndex(column: Column, attr: string) {
+    return this.getAttrs(column).findIndex(value => value === attr);
   }
 
   getName(column: Column) {
     return column._name;
   }
 
-  getChoices(column: Column): Label[] {
+  getChoices(column: Column): Choice[] {
     return column._choices || [];
   }
 
-  getChoice(column: Column, name: string): Label {
+  getChoice(column: Column, name: string): Choice {
     return this.getChoices(column).find(value => value._name === name) || {_name: '', _class: ''};
   }
 
-  getChoiceName(choice: Label): string {
+  getChoiceName(choice: Choice): string {
     return choice._name || '';
   }
 
-  getChoiceClass(choice: Label): string {
+  getChoiceClass(choice: Choice): string {
     return choice._class || '';
   }
 
-  getUrl(choice: Label): string {
+  getUrl(choice: Choice): string {
     return choice._url || '';
+  }
+
+  getMultiLabels(column: Column): MultiLabel[] {
+    return column._multiLabels || [];
+  }
+
+  getMultiLabel(column: Column, attr: string) {
+    return column._multiLabels.find(value => value._attr === attr) || {_attr: '', _class: ''};
+  }
+
+  getMultiLabelIndex(column: Column, multiLabel: MultiLabel) {
+    return this.getMultiLabels(column).findIndex(value => value._attr === multiLabel._attr);
+  }
+
+  getMultiLabelClass(multiLabel: MultiLabel): string {
+    return multiLabel._class;
+  }
+
+  getMultiChoiceAttr(multiLabel: MultiLabel) {
+    return multiLabel._attr;
   }
 
   get selector(): string {
@@ -231,12 +248,12 @@ export class SharedTableComponent {
 
   selectColumn(key: string) {
     this.initialiseColumns();
-    const index = this._columns.findIndex(value => value._attr[0] === key);
+    const index = this._columns.findIndex(value => value._attrs[0] === key);
     this._columns[index]._isSelected = true;
   }
 
   hoverColumn(key: string) {
-    const index = this._columns.findIndex(value => value._attr[0] === key);
+    const index = this._columns.findIndex(value => value._attrs[0] === key);
     this._columns[index]._isHover = !(this._columns[index]._isHover);
   }
 

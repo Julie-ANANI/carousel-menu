@@ -62,9 +62,9 @@ export class AdminUsersComponent implements OnInit {
           _isFiltrable: true,
           _isSortable: true,
           _columns: [
-            {_attr: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
-            {_attr: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-            {_attr: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'}]
+            {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+            {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
+            {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'}]
         };
       });
   }
