@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
@@ -7,7 +8,6 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../models/innov-settings';
 import { Preset } from '../../../../../models/preset';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Tag } from '../../../../../models/tag';
 
 @Component({
@@ -19,7 +19,6 @@ export class AdminProjectDetailsComponent implements OnInit {
 
   private _project: Innovation;
   private _dirty = false;
-  private _tags: Array<any> = [];
   private _domain = {fr: '', en: ''};
 
 
@@ -31,10 +30,10 @@ export class AdminProjectDetailsComponent implements OnInit {
   public presetAutocomplete: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
               private _titleService: TranslateTitleService,
+              private _translateService: TranslateService,
               private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
@@ -46,29 +45,26 @@ export class AdminProjectDetailsComponent implements OnInit {
       type: 'preset'
     };
     this._domain = this._project.settings.domain;
-    this._tags = this._project.tags.map(tag => {
-      return {name: tag.label, _id: tag._id}
-    });
   }
 
-  public addTag(event: Tag): void {
+  public addTag(tag: Tag): void {
     this._innovationService
-      .addTag(this._project._id, event._id)
+      .addTag(this._project._id, tag._id)
       .first()
       .subscribe((p) => {
-        this._project = p;
+        this._project.tags.push(tag);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
       });
   }
 
-  public removeTag(event: Tag): void {
+  public removeTag(tag: Tag): void {
     this._innovationService
-      .removeTag(this._project._id, event._id)
+      .removeTag(this._project._id, tag._id)
       .first()
       .subscribe((p) => {
-        this._project = p;
+        this._project.tags = this._project.tags.filter(t => t._id !== tag._id);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);

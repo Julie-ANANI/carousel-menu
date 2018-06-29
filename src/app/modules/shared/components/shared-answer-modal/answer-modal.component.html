@@ -55,12 +55,13 @@
 
           <strong>IP : </strong>{{modalAnswer.ip}}<br>
 
-          <shared-tag-item
+          <app-shared-tag-item
             [tags]="modalAnswer.tags"
             [editMode]="editMode"
+            [projectId]="innoid"
             (addTag)="addTag($event)"
             (removeTag)="removeTag($event)">
-          </shared-tag-item>
+          </app-shared-tag-item>
 
           <label class="form-switch" for="toggleAdmin">
             <input type="checkbox" name="toggleAdmin" id="toggleAdmin"
@@ -102,6 +103,7 @@
           [editMode]="editMode"
           [question]="question"
           [fullAnswer]="modalAnswer"
+          [innoid]="innoid"
         ></app-answer-question>
       </div>
     </div>
