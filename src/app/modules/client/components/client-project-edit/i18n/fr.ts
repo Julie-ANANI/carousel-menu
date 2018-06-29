@@ -1,4 +1,5 @@
 export const PROJECT_EDIT = {
+  'PRINT': 'Imprimer la fiche projet',
   'HOW': 'Comment lancer l’étude de mon projet ?',
   'ADD_COLLABORATORS': 'Ajouter des collaborateurs',
   'STEP1': 'Définissez votre marché cible',

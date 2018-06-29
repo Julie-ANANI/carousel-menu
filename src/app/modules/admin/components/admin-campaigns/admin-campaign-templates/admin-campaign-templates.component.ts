@@ -51,11 +51,12 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     this.importModal = false;
     this._saveTemplates();
   }
-  
+
   public updateScenario(scenario: EmailScenario) {
     this._scenario = scenario;
     this._saveTemplates();
   }
+
 
   private _saveTemplates() {
     this._campaign.settings.emails = this._scenario.emails;
@@ -66,6 +67,13 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     });
   }
 
+
+  public domain(): boolean {
+    return (this._campaign.innovation.settings.domain !== '');
+
+  }
+
+  get campaign(): any { return this._campaign};
   get config(): any { return this._config; }
   set config(value: any) { this._config = value; }
   get scenario(): EmailScenario { return this._scenario; }

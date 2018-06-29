@@ -7,6 +7,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../models/innov-settings';
 import { Preset } from '../../../../../models/preset';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Tag } from '../../../../../models/tag';
 
 @Component({
@@ -18,6 +19,14 @@ export class AdminProjectDetailsComponent implements OnInit {
 
   private _project: Innovation;
   private _dirty = false;
+  private _tags: Array<any> = [];
+  private _domain = {fr: '', en: ''};
+
+
+  public formData: FormGroup = this._formBuilder.group({
+    domainen: ['', [Validators.required]],
+    domainfr: ['', [Validators.required]]
+  });
 
   public presetAutocomplete: any;
 
@@ -25,7 +34,8 @@ export class AdminProjectDetailsComponent implements OnInit {
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
-              private _titleService: TranslateTitleService) {}
+              private _titleService: TranslateTitleService,
+              private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
@@ -35,6 +45,10 @@ export class AdminProjectDetailsComponent implements OnInit {
       initialData: this.hasPreset() ? [this.project.preset] : [],
       type: 'preset'
     };
+    this._domain = this._project.settings.domain;
+    this._tags = this._project.tags.map(tag => {
+      return {name: tag.label, _id: tag._id}
+    });
   }
 
   public addTag(event: Tag): void {
@@ -141,6 +155,17 @@ export class AdminProjectDetailsComponent implements OnInit {
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
+
+  public updateDomain() {
+    this._innovationService.updateSettingsDomain(this._project._id, this._domain).first().subscribe( x => {
+      this._domain = x.domain;
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+    }, (error) => {
+      this._notificationsService.error('ERROR', error);
+    });
+  }
+  set domain(domain: {en: string, fr: string}) { this._domain = domain; }
+  get domain() { return this._domain; }
   get project() { return this._project; }
   get dirty() { return this._dirty; }
 }

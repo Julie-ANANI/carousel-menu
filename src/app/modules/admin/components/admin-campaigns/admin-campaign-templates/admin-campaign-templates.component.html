@@ -1,9 +1,25 @@
 <div class="container col-10 col-mx-auto section-container">
   <h2>Templates de mails</h2>
   <button class="btn btn-primary" (click)="importModal = true">Importer un template de la bibliothèque</button>
-
+  <div *ngIf="!domain()">
+    <h4>
+      ATTENTION *|DOMAIN|* non défini
+    </h4>
+  </div>
+  <div *ngIf="domain()">
+    <h5>
+      *|DOMAIN|* <br>
+      en :{{this.campaign.innovation.settings.domain.en}} <br>
+      fr :{{this.campaign.innovation.settings.domain.fr}}
+   </h5>
+  </div>
   <app-shared-edit-scenario *ngIf="scenario.emails && scenario.emails.length" [scenario]="scenario" (scenarioChange)="updateScenario($event)"></app-shared-edit-scenario>
 </div>
+
+
+
+
+
 
 
 <!-- MODAL : Import d'un template -->
