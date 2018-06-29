@@ -98,21 +98,24 @@ export class AutocompleteInputComponent implements OnInit {
 
   addProposition(val: any): void {
     val = val ? val.get('answer').value : '';
-    // Verify here if the value has the expected fields (name, logo and domain)
-    if (typeof val === 'string') {
-      const _obj = {};
-      _obj[this._identifier] = val;
-      val = _obj;
-    }
-    if (val && this.answerList.findIndex(t => {return t[this._identifier] === val[this._identifier]}) === -1) {
-      if (this.onlyOne) {
-        this.answerList = [val];
-      } else {
-        this.answerList.push(val);
+    if (val) {
+      // Verify here if the value has the expected fields (name, logo and domain)
+      if (typeof val === 'string') {
+        const _obj = {};
+        _obj[this._identifier] = val;
+        val = _obj;
       }
-      this.inputForm.get('answer').setValue('');
-      this.update.emit({value: this.answerList});
+      if (val && this.answerList.findIndex(t => {return t[this._identifier] === val[this._identifier]}) === -1) {
+        if (this.onlyOne) {
+          this.answerList = [val];
+        } else {
+          this.answerList.push(val);
+        }
+        this.inputForm.get('answer').setValue('');
+        this.update.emit({value: this.answerList});
+      }
     }
+
   }
 
   up(event: Event, i: number): void {
