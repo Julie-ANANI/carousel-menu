@@ -31,11 +31,9 @@ export class AdminProjectDetailsComponent implements OnInit {
   public presetAutocomplete: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
-              private _titleService: TranslateTitleService,
-              private _formBuilder: FormBuilder) {}
+              private _titleService: TranslateTitleService) {}
 
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
@@ -51,24 +49,24 @@ export class AdminProjectDetailsComponent implements OnInit {
     });
   }
 
-  public addTag(event: Tag): void {
+  public addTag(tag: Tag): void {
     this._innovationService
-      .addTag(this._project._id, event._id)
+      .addTag(this._project._id, tag._id)
       .first()
       .subscribe((p) => {
-        this._project = p;
+        this._project.tags.push(tag);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
       });
   }
 
-  public removeTag(event: Tag): void {
+  public removeTag(tag: Tag): void {
     this._innovationService
-      .removeTag(this._project._id, event._id)
+      .removeTag(this._project._id, tag._id)
       .first()
       .subscribe((p) => {
-        this._project = p;
+        this._project.tags = this._project.tags.filter(t => t._id !== tag._id);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
@@ -153,7 +151,7 @@ export class AdminProjectDetailsComponent implements OnInit {
   }
 
   get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
   public updateDomain() {

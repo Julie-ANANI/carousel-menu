@@ -2,23 +2,30 @@
 
   <div [ngSwitch]="editMode">
 
-    <app-autocomplete-input
-      *ngSwitchCase="true"
-      (add)="_addTag($event)"
-      (remove)="_removeTag($event)"
-      [onlyOne]="false"
-      [config]="tagsAutocomplete"
-      [multiLangObjects]="true">
-    </app-autocomplete-input>
-
-    <div class="flex-container" *ngSwitchDefault>
+    <div class="flex-container">
       <ng-container *ngIf="tags?.length > 0">
-        <i class="fa fa-tag big"></i>
-        <span *ngFor="let t of tags" class="label label-rounded label-primary">
-          {{t.label | multiling:lang}}
+        <i class="fa fa-tag"></i>
+        <span *ngFor="let t of tags" class="label label-rounded label-primary tag-label">
+            <i *ngIf="editMode" class="icon icon-cross" (click)="removeTagEmitter($event, t)"></i>
+            {{t?.label | multiling:lang}}
         </span>
       </ng-container>
     </div>
+    <form *ngIf="editMode" class="form-horizontal" [formGroup]="tagForm" (ngSubmit)="addTagEmitter($event)">
+      <div class="input-group">
+        <input ng2-auto-complete
+               formControlName="tag"
+               [source]="tagSuggestions.bind(this)"
+               [list-formatter]="autocompleListFormatter"
+               [value-formatter]="autocompleValueFormatter"
+               [attr.placeholder]="'Add an existing tag'"
+               class="form-input form-control input-lg">
+        <button class="btn btn-primary btn-lg input-group-btn" translate>
+          COMMON.ADD
+          <i class="icon icon-arrow-right"></i>
+        </button>
+      </div>
+    </form>
 
   </div>
 </div>
