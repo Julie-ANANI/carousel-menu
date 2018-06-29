@@ -123,7 +123,7 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public updateSettingsDomain(innovationId: string, domain: {}): Observable<any> {
+  public updateSettingsDomain(innovationId: string, domain: any): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/updateSettingsDomain', {domain})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));

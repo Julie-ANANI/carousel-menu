@@ -19,6 +19,7 @@ export class AdminProjectDetailsComponent implements OnInit {
 
   private _project: Innovation;
   private _dirty = false;
+  private _tags: Array<any> = [];
   private _domain = {fr: '', en: ''};
 
 
@@ -46,7 +47,7 @@ export class AdminProjectDetailsComponent implements OnInit {
     };
     this._domain = this._project.settings.domain;
     this._tags = this._project.tags.map(tag => {
-      return {name: tag.label, _id: tag.id}
+      return {name: tag.label, _id: tag._id}
     });
   }
 
