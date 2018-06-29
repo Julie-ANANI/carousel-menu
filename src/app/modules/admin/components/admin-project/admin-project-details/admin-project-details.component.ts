@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
@@ -7,7 +8,6 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../models/innov-settings';
 import { Preset } from '../../../../../models/preset';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Tag } from '../../../../../models/tag';
 
 @Component({
@@ -19,7 +19,6 @@ export class AdminProjectDetailsComponent implements OnInit {
 
   private _project: Innovation;
   private _dirty = false;
-  private _tags: Array<any> = [];
   private _domain = {fr: '', en: ''};
 
 
@@ -33,7 +32,9 @@ export class AdminProjectDetailsComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
-              private _titleService: TranslateTitleService) {}
+              private _titleService: TranslateTitleService,
+              private _translateService: TranslateService,
+              private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
@@ -44,9 +45,6 @@ export class AdminProjectDetailsComponent implements OnInit {
       type: 'preset'
     };
     this._domain = this._project.settings.domain;
-    this._tags = this._project.tags.map(tag => {
-      return {name: tag.label, _id: tag._id}
-    });
   }
 
   public addTag(tag: Tag): void {
@@ -151,7 +149,7 @@ export class AdminProjectDetailsComponent implements OnInit {
   }
 
   get dateFormat(): string {
-    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
   public updateDomain() {
