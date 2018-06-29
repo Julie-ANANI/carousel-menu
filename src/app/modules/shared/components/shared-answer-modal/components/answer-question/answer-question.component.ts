@@ -18,6 +18,7 @@ import * as _ from 'lodash';
 
 export class AnswerQuestionComponent implements OnInit {
 
+  @Input() public innoid: string;
   @Input() public question: Question;
   @Input() public fullAnswer: Answer;
   @Input() public editMode: boolean;
@@ -81,6 +82,7 @@ export class AnswerQuestionComponent implements OnInit {
       .addTag(this.fullAnswer._id, tag._id, q_identifier)
       .first()
       .subscribe((a) => {
+        this.fullAnswer.answerTags[q_identifier].push(tag);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
@@ -92,6 +94,7 @@ export class AnswerQuestionComponent implements OnInit {
       .removeTag(this.fullAnswer._id, tag._id, q_identifier)
       .first()
       .subscribe((a) => {
+        this.fullAnswer.answerTags[q_identifier] = this.fullAnswer.answerTags[q_identifier].filter(t => t._id !== tag._id);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
