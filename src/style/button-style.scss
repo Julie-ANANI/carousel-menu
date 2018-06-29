@@ -134,6 +134,24 @@ $edit-color: #97A4B1;
 
 
 /*
+    Error button class that you have to add with button class.
+    Class name: btn-error
+ */
+
+.btn-error:not(:disabled), .btn-error:not(:disabled):focus, .btn-error:not(:disabled):active {
+  color: white;
+  background-color: $error-color;
+  border-color: $error-color;
+}
+
+.btn-error:not(:disabled):hover {
+  color: white;
+  background-color: lighten($error-color, 15%);
+  border-color: lighten($error-color, 15%);
+}
+
+
+/*
     Ghost primary button class that you have to add with button class.
     Class name: ghost-primary
  */
