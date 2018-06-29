@@ -33,4 +33,5 @@ export interface InnovationSettings {
     emails: Array<string>;
     readonly people: Array<any>;
   };
+  domain?: any; // {en: string, fr: string}
 }

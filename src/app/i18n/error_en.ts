@@ -31,6 +31,11 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'SUBMITTED': 'Project submitted',
     'SUBMITTED_TEXT': 'Your project has been sent to validation.'
   },
+  'TAGS': {
+    'UPDATE': 'Tag update',
+    'ADDED': 'The tag has been successfully added.',
+    'REMOVED': 'The tag has been successfully removed.'
+  },
   'PRESET': {
     'UPDATED': 'The configuration has been updated'
   },

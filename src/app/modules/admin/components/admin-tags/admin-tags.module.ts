@@ -4,7 +4,9 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
 import { SharedModule } from '../../../shared/shared.module';
 
 import { AdminTagsComponent } from './admin-tags.component';
@@ -15,22 +17,24 @@ import { AdminTagAttachmentsSubsetComponent } from './admin-tag-attachment-list/
 import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/admin-tag-new-modal.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        SharedModule,
-        TranslateModule.forChild()
-    ],
-    declarations: [
-        AdminTagsComponent,
-        AdminTagListComponent,
-        AdminTagNewComponent,
-        AdminTagAttachmentsListComponent,
-        AdminTagAttachmentsSubsetComponent,
-        AdminTagNewModalComponent
-    ],
-    exports: [
-        AdminTagsComponent
-    ]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MultilingModule,
+    SharedModule,
+    TranslateModule.forChild()
+  ],
+  declarations: [
+    AdminTagsComponent,
+    AdminTagListComponent,
+    AdminTagNewComponent,
+    AdminTagAttachmentsListComponent,
+    AdminTagAttachmentsSubsetComponent,
+    AdminTagNewModalComponent
+  ],
+  exports: [
+    AdminTagsComponent
+  ]
 })
 
 export class AdminTagsModule {}

@@ -46,6 +46,22 @@ export class AnswerService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public addTag(answerId: string, tagId: string, questionId?: string): Observable<Answer> {
+    const params = {tag: tagId };
+    if (questionId) { params['questionId'] = questionId; }
+    return this._http.post('/answer/' + answerId + '/tag', { params: params})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public removeTag(answerId: string, tagId: string, questionId?: string): Observable<Answer> {
+    const params = {tag: tagId };
+    if (questionId) { params['questionId'] = questionId; }
+    return this._http.delete('/answer/' + answerId + '/tag', { params: params})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public getInnovationValidAnswers(innovationId: string): Observable<{answers: Array<Answer>}> {
     return this._http.get('/innovation/' + innovationId + '/validAnswers')
       .map((res: Response) => res.json())

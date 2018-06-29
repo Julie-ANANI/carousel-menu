@@ -12,7 +12,7 @@ import { EmailScenario } from '../../../../../../models/email-scenario';
 export class AdminEditScenarioComponent implements OnInit {
 
   private _scenario: EmailScenario;
-  public deleteModal: boolean = false;
+  public deleteModal = false;
 
   constructor(private _templatesService: TemplatesService,
               private _activatedRoute: ActivatedRoute,
@@ -20,13 +20,15 @@ export class AdminEditScenarioComponent implements OnInit {
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    this._scenario = this._activatedRoute.snapshot.data['scenario'];
+    this._activatedRoute.params.subscribe(_data => {
+      this._scenario = this._activatedRoute.snapshot.data['scenario'];
+    });
   }
 
   public updateScenario(scenario: EmailScenario) {
     this._templatesService.save(scenario).first().subscribe(updatedScenario => {
       this._scenario = updatedScenario;
-      this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
     });

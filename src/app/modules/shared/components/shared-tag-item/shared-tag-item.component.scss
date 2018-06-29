@@ -1,14 +1,15 @@
-i {
-  font-size: 20px;
-  color: #adadad;
-}
+.shared-tag-item {
 
-.fa-tag:hover, .fa-tag.active {
-  color: #00b0ff;
-}
-
-.big {
-  i {
+  i.big {
     font-size: 28px;
+    color: #adadad;
   }
+
+  .flex-container {
+    display: flex;
+    span {
+      margin-left: 10px;
+    }
+  }
+
 }

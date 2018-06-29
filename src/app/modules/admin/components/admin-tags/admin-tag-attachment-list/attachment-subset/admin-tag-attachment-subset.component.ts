@@ -26,11 +26,11 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
   };
 
   private _filter = {
-    text: "",
-    notation: ""
+    text: '',
+    notation: ''
   };
 
-  private _activeNTM: boolean = false;
+  private _activeNTM = false;
 
   constructor(private _tagsService: TagsService,
               private _notificationsService: TranslateNotificationsService) {}
@@ -47,19 +47,20 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
   }
 
   public loadData() {
-    this._tagsService.getAttachments(this.type||'').subscribe(result=>{
-      if(result) {
+    this._tagsService.getAttachments(this.type || '').subscribe((result) => {
+      if (result) {
         this._dataset = result;
       }
-    }, error=>{
-      this._notificationsService.error('Attachments', "Error loading some attachments of type " + this.type);
+    }, error => {
+      this._notificationsService.error('Attachments', 'Error loading some attachments of type ' + this.type);
       console.error(error);
     });
   }
 
   public selectDatum(datum: any) {
-    datum.isSelected = !(!!datum.isSelected);
+    datum.isSelected = !datum.isSelected;
   }
+
   public createTagFromCodes() {
     this._activeNTM = true;
   }
@@ -68,13 +69,15 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
     return this._dataset.result.filter(datum => !!datum.isSelected);
   }
 
-
   get activeNTM(): boolean { return this._activeNTM; }
+
   get data(): Array<any> { return this._dataset.result; };
+
   get config(): any { return this._config; };
   set config(value: any) { this._config = value; };
-  get total(): number { return this._dataset._metadata.totalCount; };
-  get filter(): any { return this._filter; }
 
+  get total(): number { return this._dataset._metadata.totalCount; };
+
+  get filter(): any { return this._filter; }
   set filter(value: any) { this._filter = value; }
 }
