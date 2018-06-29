@@ -297,7 +297,9 @@
             </div>
 
             <!-- Keywords and other stuffs -->
-            <div class="comment-wrapper pd-ques">
+            <div
+              class="comment-wrapper"
+              [ngStyle]="{ 'padding-top': settings.professionals.exclude.length === 0 && _projectStatus ? '40px' : '25px' }">
               <span class="num-rect">5</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</span>
 
               <div *ngIf="!_projectStatus" class="pd-input">
