@@ -7,30 +7,13 @@
 
     <div>
       <h4>Tags management</h4>
-      <div class="flex-container">
-        <ng-container *ngIf="project?.tags?.length > 0">
-          <i class="fa fa-tag"></i>
-          <span *ngFor="let t of project?.tags" class="label label-rounded label-primary tag-label">
-            <i class="icon icon-cross" (click)="removeTag($event, t)"></i>
-            {{t.label | multiling:lang}}
-        </span>
-        </ng-container>
-      </div>
-      <form class="form-horizontal" [formGroup]="tagForm" (ngSubmit)="addTag($event)">
-        <div class="input-group">
-          <input ng2-auto-complete
-                 formControlName="tag"
-                 [source]="tagSuggestions.bind(this)"
-                 [list-formatter]="autocompleListFormatter"
-                 [value-formatter]="autocompleValueFormatter"
-                 [attr.placeholder]="'Add an existing tag'"
-                 class="form-input form-control input-lg">
-          <button class="btn btn-primary btn-lg input-group-btn" translate>
-            COMMON.ADD
-            <i class="icon icon-arrow-right"></i>
-          </button>
-        </div>
-      </form>
+      <app-shared-tag-item
+        [editMode]="true"
+        [tags]="project.tags"
+        [projectId]="project._id"
+        (addTag)="addTag($event)"
+        (removeTag)="removeTag($event)">
+      </app-shared-tag-item>
 
       <h4>Presets management</h4>
       <app-autocomplete-input
