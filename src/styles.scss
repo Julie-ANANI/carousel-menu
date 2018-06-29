@@ -15,6 +15,7 @@ $primary-color: #3498DB !default;
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
 
 
+
 /********************************** Default Styles ***************************************/
 
 body {
@@ -161,6 +162,7 @@ ul.list-filter {
 @import "style/tab-style";
 @import "style/modal-style";
 @import "style/tooltip-style";
+@import "style/table-style";
 
 /********************************** Form Input Styles ***************************************/
 
