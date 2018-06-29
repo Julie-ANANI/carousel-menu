@@ -7,7 +7,7 @@
         <i class="fa fa-tag"></i>
         <span *ngFor="let t of tags" class="label label-rounded label-primary tag-label">
             <i *ngIf="editMode" class="icon icon-cross" (click)="removeTagEmitter($event, t)"></i>
-            {{t.label | multiling:lang}}
+            {{t?.label | multiling:lang}}
         </span>
       </ng-container>
     </div>
