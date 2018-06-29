@@ -1,14 +1,14 @@
 <div class="container col-10 col-mx-auto section-container">
+  <h2>Campagne : {{campaign.title}}</h2>
   <h2>Templates de mails</h2>
   <button class="btn btn-primary" (click)="importModal = true">Importer un template de la bibliothèque</button>
+  <br>
   <div>
     <app-admin-campaign-abtesting [modifiedScenarios]="modifiedScenarios" [campaign]="campaign"></app-admin-campaign-abtesting>
   </div>
+<br>
   <div>
-    <h2>Campagne : {{campaign.title}}</h2>
-
     <h3> Choix du Workflow par défault</h3>
-
     <form>
       <select class = "form-select"
               [(ngModel)] = "modalSelectDefault[1]"
