@@ -27,10 +27,10 @@
         <option [ngValue]="false">{{'COMMON.NO' | translate}}</option>
       </select>
 
-      <select (change)="filterOther(prop)" [(ngModel)]="config[getAttr(prop)]"
+      <select (change)="filterOther(prop)" [(ngModel)]="config[getAttrs(prop)]"
               class="form-select small-select primary"
               style="margin-right: 10px;"
-              *ngSwitchCase="'LABEL'" >
+              *ngSwitchCase="'MULTI-CHOICES'" >
         <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
         <option *ngFor="let choice of getChoices(prop)">{{getChoiceName(choice) | translate}}</option>
       </select>
