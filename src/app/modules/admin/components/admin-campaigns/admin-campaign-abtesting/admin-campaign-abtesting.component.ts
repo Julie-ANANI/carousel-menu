@@ -101,6 +101,11 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     });
     this.form.disable();
 
+    if (this._campaign.settings.ABsettings.status != 0) {
+      this.getStatsBatch();
+    }
+
+    /*
     // Uniquement en statut 1 en 2 on le fait manuellement
     if (this.campaign.settings.ABsettings.status == 1) {
       this.updateStatsBatches();
@@ -109,6 +114,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     if (this.campaign.settings.ABsettings.status == 2) {
       this.getStatsBatch();
     }
+    */
   }
 
 
