@@ -114,9 +114,14 @@ $border-color: #E0E0E0;
 .sort-icon {
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
+  justify-content: center;
+  margin-left: 15px;
   color: $meta-color;
-  height: 22px;
+
+  .icon {
+    width: 8px;
+    height: 10px;
+  }
 }
 
 .invisible {
