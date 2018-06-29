@@ -6,6 +6,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import { environment } from '../../../../../environments/environment';
+import {Table} from '../shared-table/models/table';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -21,6 +22,7 @@ export class SharedProsListComponent {
   private _config: any;
   public smartSelect: any = null;
   public editUser: {[propString: string]: boolean} = {};
+  private _tableInfos: Table = null;
 
   @Input() public requestId: string;
   @Input() public campaign: Campaign;
@@ -39,17 +41,51 @@ export class SharedProsListComponent {
 
   loadPros(config: any): void {
     this._config = config;
+
     if (this.requestId) {
       this._searchService.getPros(this._config, this.requestId).first().subscribe(pros => {
         this._pros = pros.persons;
         this._total = pros._metadata.totalCount;
+
+        this._tableInfos = {
+          _selector: 'admin-pros',
+          _title: 'COMMON.PROFESSIONALS',
+          _content: this._pros,
+          _total: this._total,
+          _isFiltrable: true,
+          _isSortable: true,
+          _columns: [
+            {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+            {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
+            {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
+            {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+            {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
+        };
+
       });
     } else {
       this._professionalService.getAll(this._config).first().subscribe(pros => {
         this._pros = pros.result;
         this._total = pros._metadata.totalCount;
+
+        this._tableInfos = {
+          _selector: 'admin-pros',
+          _title: 'COMMON.PROFESSIONALS',
+          _content: this._pros,
+          _total: this._total,
+          _isFiltrable: true,
+          _isSortable: true,
+          _columns: [
+            {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+            {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
+            {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
+            {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+            {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
+        };
+
       });
     }
+
   }
 
   selectPro(pro: SelectedProfessional): void {
@@ -101,4 +137,5 @@ export class SharedProsListComponent {
   get total() { return this._total; }
   get pros() { return this._pros; }
   get config() { return this._config; }
+  get tableInfos(): Table { return this._tableInfos; }
 }

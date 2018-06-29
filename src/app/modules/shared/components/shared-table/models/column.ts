@@ -1,10 +1,14 @@
-import {Label} from './label';
+import {Choice} from './choice';
+import {MultiLabel} from './multi-label';
 
 export interface Column {
-  readonly _attr: string;
+  _isSelected?: boolean;
+  _isHover?: boolean;
+  readonly _attrs: string[];
   readonly _type: types;
   readonly _name?: string;
-  readonly _choices?: Label[];
+  readonly _choices?: Choice[];
+  readonly _multiLabels?: MultiLabel[];
 }
 
-export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK' | 'LABEL' | 'DATE';
+export type types = 'TEXT' | 'COUNTRY' | 'PICTURE' | 'PROGRESS' | 'CHECK' | 'MULTI-CHOICES' | 'DATE' | 'ARRAY' | 'MULTI-LABEL';
