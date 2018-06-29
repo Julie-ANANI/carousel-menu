@@ -1,6 +1,10 @@
 <app-shared-loader *ngIf="!project"></app-shared-loader>
 
-<div *ngIf="project">
+<div class="innovation-card-print">
+  <app-client-project content [project]=project></app-client-project>
+</div>
+
+<div *ngIf="project" class="project-page">
   <div class="project-header">
     <div class="container section-container">
       <div class="columns">
@@ -28,6 +32,10 @@
                      role="button"></a>
                 </span>
               </div>
+
+              <button class="btn btn-bordered" (click)="printInnovationCard($event)">
+                {{ 'PROJECT_EDIT.PRINT' | translate }}
+              </button>
             </div>
           </div>
           <ul class="step">

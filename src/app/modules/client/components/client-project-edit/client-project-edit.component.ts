@@ -222,6 +222,12 @@ export class ClientProjectEditComponent implements OnInit, OnDestroy, ComponentC
     });
   }
 
+  // Print Innovation Card
+  public printInnovationCard(event: Event) {
+    event.preventDefault();
+    window.print();
+  }
+
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     return !this.shouldSave;
