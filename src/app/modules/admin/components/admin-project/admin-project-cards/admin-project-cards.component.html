@@ -7,7 +7,8 @@
           <div class="func-button">
 
             <div>
-              <button [ngClass]="'btn btn-primary' + (shouldSave ? ' badge' : '')" (click)="save($event)" data-badge="!">
+              <div class="circle-check"><i class="fas fa-save"></i></div>
+              <button class="btn ghost-primary" (click)="save($event)">
                 {{ 'COMMON.SAVE_DRAFT' | translate }}
               </button>
               <p *ngIf="lastSavedDate" [ngStyle]="{ 'margin-left': '10px' , 'display': 'inline-flex' }">
