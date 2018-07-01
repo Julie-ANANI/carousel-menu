@@ -8,26 +8,33 @@
 
 
         <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto login-wrapper">
+
           <!-- Logo -->
           <div class="text-center">
             <a href="https://www.umi.us"><img src="{{ getLogo() }}" alt="UMI" height="35px"></a>
           </div>
+
           <div class="form-wrapper">
+
             <!-- Heading -->
             <div class="heading text-center">
               <h1>{{ 'LOG_IN.HEADING' | translate }}</h1>
             </div>
+
             <!-- LinkedIn -->
             <div class="social-wrapper text-center" *ngIf="checkIsMainDomain()">
               <button class="btn" (click)="linkedInSignIn($event)">
                 <i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
               </button>
             </div>
+
             <!-- Or -->
             <div class="or-wrapper text-center">
               <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
             </div>
+
             <form novalidate (submit)="onSubmit()" [formGroup]="formData">
+
               <!-- Credentials -->
               <div class="credentials-wrapper">
                 <div class="form-group">
@@ -61,6 +68,7 @@
                 </span>
                 </div>
               </div>
+
               <!-- Login button and forget password -->
               <div class="submit-wrapper text-center">
                 <div class="login-button">
@@ -74,8 +82,10 @@
                 <span [ngStyle]="{ 'font-size': '0.7rem' }">{{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }}</span>
                 <a class="text-link" routerLink="/forget">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</a>
               </div>
+
             </form>
           </div>
+
           <!-- Sign up -->
           <div class="create-wrapper text-center">
             <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '10px' }">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>

@@ -49,26 +49,10 @@ $mandatory-star: #EA5858;
 
 /********************************** Media ***************************************/
 
-@media (min-width:421px) and (max-width: 600px) {
+@media (max-width: 600px) {
 
   .sidebar-wrapper {
-    width: 423px !important;
-  }
-
-}
-
-@media (min-width:350px) and (max-width: 420px){
-
-  .sidebar-wrapper {
-    width: 350px !important;
-  }
-
-}
-
-@media (max-width: 320px) {
-
-  .sidebar-wrapper {
-    width: 310px !important;
+    width: 300px !important;
   }
 
 }
