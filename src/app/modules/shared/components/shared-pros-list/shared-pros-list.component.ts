@@ -54,6 +54,7 @@ export class SharedProsListComponent {
           _total: this._total,
           _isFiltrable: true,
           _isSortable: true,
+          _isHeadable: true,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
@@ -75,6 +76,7 @@ export class SharedProsListComponent {
           _total: this._total,
           _isFiltrable: true,
           _isSortable: true,
+          _isHeadable: true,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
