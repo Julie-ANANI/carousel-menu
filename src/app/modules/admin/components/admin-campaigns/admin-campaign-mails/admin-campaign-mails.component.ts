@@ -254,34 +254,34 @@ export class AdminCampaignMailsComponent implements OnInit {
         }],
       _total: null,
       _columns: [{
-        _attr: ['Step'],
+        _attrs: ['Step'],
         _name: 'Step',
         _type: 'TEXT'
       }, {
-        _attr: ['Sent'],
+        _attrs: ['Sent'],
         _name: 'Sent',
         _type: 'TEXT'
       }, {
-        _attr: ['Opened'],
+        _attrs: ['Opened'],
         _name: 'Opened',
         _type: 'TEXT'
       }, {
-        _attr: ['Clicked'],
+        _attrs: ['Clicked'],
         _name: 'Clicked',
         _type: 'TEXT'
       }, {
-        _attr: ['Insights'],
+        _attrs: ['Insights'],
         _name: 'Insights',
         _type: 'TEXT'
       }, {
-        _attr: ['Date'],
+        _attrs: ['Date'],
         _name: 'Date',
         _type: 'DATE'
       }, {
-        _attr: ['Time'],
+        _attrs: ['Time'],
         _name: 'Time',
         _type: 'TEXT'
-      }, {_attr: ['Status'], _name: 'Status', _type: 'LABEL',
+      }, {_attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
         _choices: [
           {_name: 'Sent', _class: 'label-progress'},
           {_name: 'Planned',  _class: 'label-validate'},
