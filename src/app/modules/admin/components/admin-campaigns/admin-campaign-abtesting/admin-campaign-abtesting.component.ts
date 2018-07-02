@@ -170,7 +170,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
 
   public generateStatsTable() {
-    const digit = 3; // Number of decimals.
+    const digit = 2; // Number of decimals.
 
     this._tableB = {
       _selector: 'TODO',

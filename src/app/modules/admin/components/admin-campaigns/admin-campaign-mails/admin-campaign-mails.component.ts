@@ -210,6 +210,8 @@ export class AdminCampaignMailsComponent implements OnInit {
     const thirdJSdate = new Date(batch.thirdMail);
     const thirdTime = thirdJSdate.getHours() + ':' + thirdJSdate.getMinutes();
 
+    const digit = 2;
+
     const t: Table = {
       _selector: 'TODO',
       _title: 'Batch de ' + batch.size + ' pros',
@@ -218,36 +220,48 @@ export class AdminCampaignMailsComponent implements OnInit {
         {
           Step: '01 - HelloWorld',
           Sent: batch.stats[0].delivered + batch.stats[0].bounced,
-          Opened: (batch.stats[0].opened / batch.size) * 100 + '%',
-          Clicked: (batch.stats[0].clicked / batch.size) * 100 + '%',
-          Insights: batch.stats[0].insights,
+          OpenedPred: '0',
+          OpenedReel: ((batch.stats[0].opened / batch.size) * 100).toFixed(digit) + '%',
+          ClickedPred: '0',
+          ClickedReel: ((batch.stats[0].clicked / batch.size) * 100).toFixed(digit) + '%',
+          InsightsPred: '0',
+          InsightsReel: batch.stats[0].insights,
           Date: batch.firstMail,
           Time: firstTime,
           Status: this.getStatus(0, batch.status)
         }, {
           Step: '02 - 2nd try',
           Sent: batch.stats[1].delivered + batch.stats[1].bounced,
-          Opened: (batch.stats[1].opened / batch.size) * 100 + '%',
-          Clicked: (batch.stats[1].clicked / batch.size) * 100 + '%',
-          Insights: batch.stats[1].insights,
+          OpenedPred: '0',
+          OpenedReel: ((batch.stats[1].opened / batch.size) * 100).toFixed(digit) + '%',
+          ClickedPred: '0',
+          ClickedReel: ((batch.stats[1].clicked / batch.size) * 100).toFixed(digit) + '%',
+          InsightsPred: '0',
+          InsightsReel: batch.stats[1].insights,
           Date: batch.secondMail,
           Time: secondTime,
           Status: this.getStatus(1, batch.status)
         }, {
           Step: '03 - 3rd try',
           Sent: batch.stats[2].delivered + batch.stats[2].bounced,
-          Opened: (batch.stats[2].opened / batch.size) * 100 + '%',
-          Clicked: (batch.stats[2].clicked / batch.size) * 100 + '%',
-          Insights: batch.stats[2].insights,
+          OpenedPred: '0',
+          OpenedReel: ((batch.stats[2].opened / batch.size) * 100).toFixed(digit) + '%',
+          ClickedPred: '0',
+          ClickedReel: ((batch.stats[2].clicked / batch.size) * 100).toFixed(digit) + '%',
+          InsightsPred: '0',
+          InsightsReel: batch.stats[2].insights,
           Date: batch.thirdMail,
           Time: thirdTime,
           Status: this.getStatus(2, batch.status)
         }, {
           Step: '04 - Thanks',
           Sent: batch.stats[3].delivered + batch.stats[3].bounced,
-          Opened: (batch.stats[3].opened / batch.size) * 100 + '%',
-          Clicked: (batch.stats[3].clicked / batch.size) * 100 + '%',
-          Insights: '',
+          OpenedPred: '0',
+          OpenedReel: ((batch.stats[3].opened / batch.size) * 100).toFixed(digit) + '%',
+          ClickedPred: '0',
+          ClickedReel: ((batch.stats[3].clicked / batch.size) * 100).toFixed(digit) + '%',
+          InsightsPred: '',
+          InsightsReel: '',
           Date: '',
           Time: '',
           Status: ''
@@ -262,17 +276,17 @@ export class AdminCampaignMailsComponent implements OnInit {
         _name: 'Sent',
         _type: 'TEXT'
       }, {
-        _attrs: ['Opened'],
+        _attrs: ['OpenedPred', 'OpenedReel'],
         _name: 'Opened',
-        _type: 'TEXT'
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label-validate'} ]
       }, {
-        _attrs: ['Clicked'],
+        _attrs: ['ClickedPred', 'ClickedReel'],
         _name: 'Clicked',
-        _type: 'TEXT'
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'ClickedReel', _class: 'label-validate'} ]
       }, {
-        _attrs: ['Insights'],
+        _attrs: ['InsightsPred', 'InsightsReel'],
         _name: 'Insights',
-        _type: 'TEXT'
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'InsightsReel', _class: 'label-validate'} ]
       }, {
         _attrs: ['Date'],
         _name: 'Date',
@@ -281,12 +295,14 @@ export class AdminCampaignMailsComponent implements OnInit {
         _attrs: ['Time'],
         _name: 'Time',
         _type: 'TEXT'
-      }, {_attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
+      }, {
+        _attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
         _choices: [
           {_name: 'Sent', _class: 'label-progress'},
           {_name: 'Planned',  _class: 'label-validate'},
         ]}]
     };
+    console.log(t);
     return t;
   }
 
