@@ -6,7 +6,7 @@
 
         <!-- Project under editing status -->
         <div *ngIf="projectStatus === 'EDITING' && !project.reviewing">
-          <h1>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EDITING' | translate }}</h1>
+          <h5>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EDITING' | translate }}</h5>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span class="bot-rect">
             {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.A' | translate }}
@@ -21,7 +21,7 @@
 
         <!-- Project under submitted status -->
         <div *ngIf="projectStatus === 'SUBMITTED'">
-          <h1>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.SUBMITTED' | translate }}</h1>
+          <h5>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.SUBMITTED' | translate }}</h5>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
             <span class="bot-rect">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.SUBMITTED' | translate }}</span>
             <br>
@@ -32,7 +32,7 @@
 
         <!-- Project under submitted status -->
         <div *ngIf="project.reviewing && projectStatus === 'EDITING'">
-          <h1>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.SUBMITTED' | translate }}</h1>
+          <h5>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.SUBMITTED' | translate }}</h5>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
             <span class="bot-rect">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.REVIEWING' | translate }}</span>
             <br>
@@ -49,8 +49,8 @@
 
           <!-- Title and contact button section -->
           <div class="title-wrapper">
-            <h1 *ngIf="projectStatus === 'EVALUATING'">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING' | translate }}</h1>
-            <h1 *ngIf="projectStatus === 'EVALUATING_DONE'">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING_DONE' | translate }}</h1>
+            <h5 *ngIf="projectStatus === 'EVALUATING'">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING' | translate }}</h5>
+            <h5 *ngIf="projectStatus === 'EVALUATING_DONE'">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING_DONE' | translate }}</h5>
             <a class="btn btn-primary" href="{{ contactUrl }}">{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</a>
           </div>
 
