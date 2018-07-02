@@ -71,6 +71,16 @@ export class SharedProsListComponent {
     });
   }
 
+  deletePro(pro: Professional, event: Event): void {
+      event.preventDefault();
+      this.editUser[pro._id] = false;
+      this._professionalService.remove(pro._id).first().subscribe(res => {
+          this._notificationsService.success('ERROR.SUCCESS', 'ERROR.SUCCESS');
+      }, err => {
+          this._notificationsService.error('ERROR', err.message);
+      });
+  }
+
   updateSelection(event: any) {
     this.smartSelect = event;
     const config = this._config;
