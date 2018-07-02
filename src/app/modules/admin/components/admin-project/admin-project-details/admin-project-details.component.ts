@@ -76,10 +76,8 @@ export class AdminProjectDetailsComponent implements OnInit {
    */
   public save(event: Event): void {
     event.preventDefault();
-    this._innovationService
-      .save(this._project._id, this._project)
-      .first()
-      .subscribe(data => {
+
+    this._innovationService.save(this._project._id, this._project).first().subscribe(data => {
         this._project = data;
         this._dirty = false;
       }, err => {
@@ -117,17 +115,24 @@ export class AdminProjectDetailsComponent implements OnInit {
     return (p && p.constructor === Object && Object.keys(p).length > 0);
   }
 
-  public notifClass(): string {
+  public notifyClass(): string {
     if (this._dirty) {
-      return 'btn btn-primary input-group-btn btn-lg badge';
+      return 'btn ghost-primary btn-lg badge';
     } else {
-      return 'btn btn-primary input-group-btn btn-lg';
+      return 'btn ghost-primary btn-lg';
     }
   }
 
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
-  get project() { return this._project; }
-  get dirty() { return this._dirty; }
+
+  get project() {
+    return this._project;
+  }
+
+  get dirty() {
+    return this._dirty;
+  }
+
 }

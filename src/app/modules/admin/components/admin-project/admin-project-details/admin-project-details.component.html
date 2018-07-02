@@ -1,41 +1,69 @@
-<div class="columns">
-  <div class="column col-8">
-    <app-shared-project-settings [settings]="project.settings" (settingsChange)="updateSettings($event)" [adminMode]="true"></app-shared-project-settings>
-  </div>
-  <div class="column col-4">
-    <h3>Administration</h3>
+<div class="section-container" id="admin-setting">
+  <div class="columns">
+    <div class="column col-12 col-mx-auto">
+      <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <div>
-      <h4>Tags management</h4>
-      <app-autocomplete-input
-          (update)="updateTags($event)"
-          [onlyOne]="false"
-          [config]="{placeholder: 'tags', initialData: tags || [], type: 'tags'}">
-      </app-autocomplete-input>
+        <div class="columns">
 
+          <div class="column col-xs-12 col-md-12 col-7 col-mx-auto">
+            <app-shared-project-settings
+              [settings]="project.settings"
+              (settingsChange)="updateSettings($event)"
+              [adminMode]="true">
+            </app-shared-project-settings>
+          </div>
 
-      <h4>Presets management</h4>
-      <app-autocomplete-input
-        (update)="updatePreset($event)"
-        [onlyOne]="true"
-        [config]="{placeholder: 'preset', initialData: hasPreset() ? [project.preset] : [], type: 'preset'}">
-      </app-autocomplete-input>
-    </div>
+          <div class="column col-xs-12 col-md-12 col-5 col-mx-auto">
+            <h3>Administration</h3>
 
-    <div>
-      <h4>Quiz management</h4>
-      <p *ngIf="!hasPreset()">To generate a quiz, you need to set a preset for the innovation.</p>
-      <button *ngIf="hasPreset()" type="button" class="btn btn-primary btn-lg" [ngClass]="{'disabled': dirty}" (click)="generateQuiz($event)">
-        Générer le quiz
-      </button>
-    </div>
+            <div class="tag-managment-wrapper">
+              <h6>Tags management</h6>
+              <app-autocomplete-input
+                (update)="updateTags($event)"
+                [onlyOne]="false"
+                [config]="{ placeholder: 'tags', initialData: tags || [], type: 'tags' }">
+              </app-autocomplete-input>
+            </div>
 
-    <hr>
-    <div>
-      <button [ngClass]="notifClass()" class="btn btn-primary input-group-btn btn-lg" (click)="save($event)"
-              data-badge="&#f069;">
-        {{ 'COMMON.SAVE' | translate }}
-      </button>
+            <div class="preset-management-wrapper">
+              <h6>Presets management</h6>
+              <app-autocomplete-input
+                (update)="updatePreset($event)"
+                [onlyOne]="true"
+                [config]="{ placeholder: 'preset', initialData: hasPreset() ? [project.preset] : [], type: 'preset' }">
+              </app-autocomplete-input>
+            </div>
+
+            <div class="quiz-management-wrapper">
+              <h6>Quiz management</h6>
+              <p *ngIf="!hasPreset()">To generate a quiz, you need to set a preset for the innovation.</p>
+              <button
+                *ngIf="hasPreset()"
+                type="button"
+                class="btn btn-primary"
+                [ngClass]="{'disabled': dirty}"
+                (click)="generateQuiz($event)">
+                Générer le quiz
+              </button>
+            </div>
+
+            <hr>
+
+            <div class="save-wrapper text-right">
+              <button
+                [ngClass]="notifyClass()"
+                class="btn ghost-primary"
+                (click)="save($event)"
+                data-badge="&#f069;">
+                {{ 'COMMON.SAVE' | translate }}
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
     </div>
   </div>
 </div>

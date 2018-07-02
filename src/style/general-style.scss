@@ -259,7 +259,7 @@ $border-color: #E0E0E0;
 .ng2-auto-complete-wrapper {
   display: inline-flex;
   flex: 1;
-  max-width: 595px;
+  max-width: 100%;
 }
 
 .ng2-auto-complete > ul {
@@ -317,7 +317,7 @@ ul {
  */
 p {
   margin: 0;
-  padding: 10px 0;
+  padding: 0 0 10px 0;
   color: #5D5D5D;
 }
 

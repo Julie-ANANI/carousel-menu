@@ -15,7 +15,7 @@ export class AdminProjectCardsComponent implements OnInit {
   private _formData: any = {};
   public shouldSave = false; // To prevent leaving page
   public lastSavedDate: Date;
-  
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService) {}
@@ -26,10 +26,8 @@ export class AdminProjectCardsComponent implements OnInit {
 
   public save(event: Event): void {
     event.preventDefault();
-    this._innovationService
-      .save(this._project._id, this._formData)
-      .first()
-      .subscribe((data: Innovation) => {
+    this._innovationService.save(this._project._id, this._formData)
+      .first().subscribe((data: Innovation) => {
         this.lastSavedDate = new Date(data.updated);
         this.shouldSave = false;
       }, err => {
@@ -45,7 +43,7 @@ export class AdminProjectCardsComponent implements OnInit {
   public updateProject(event: Innovation) {
     this._project = event;
   }
-  
+
   public validateProject (): void {
     this._innovationService.validate(this._project._id).first().subscribe(_ => {
       this._notificationsService.success('Projet validé', 'Le projet a bien été validé');
@@ -58,5 +56,8 @@ export class AdminProjectCardsComponent implements OnInit {
     });
   }
 
-  get project() { return this._project; }
+  get project() {
+    return this._project;
+  }
+
 }

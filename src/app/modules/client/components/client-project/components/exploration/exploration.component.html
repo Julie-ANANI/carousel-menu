@@ -1,7 +1,7 @@
 <div class="section-container" id="project-exploration">
   <div class="columns">
     <div class="column col-12 col-mx-auto">
-      <div class="col-xs-12 col-11 col-mx-auto">
+      <div class="column col-xs-12 col-11 col-mx-auto">
         <!-- Bot messages -->
 
         <!-- Project under editing status -->
@@ -9,7 +9,8 @@
           <h1>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EDITING' | translate }}</h1>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span class="bot-rect">
-            {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.A' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.B' | translate }}</span>
+            {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.A' | translate }}
+            <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.B' | translate }}</span>
             {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.C' | translate }}
           </span>
             <br>
@@ -46,25 +47,77 @@
         <div *ngIf="projectStatus === 'EVALUATING' || projectStatus === 'EVALUATING_DONE'">
           <shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="project._id" [adminMode]="false" [questions]="questions"></shared-answer-modal>
 
+          <!-- Title and contact button section -->
+          <div class="title-wrapper">
+            <h1 *ngIf="projectStatus === 'EVALUATING'">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING' | translate }}</h1>
+            <h1 *ngIf="projectStatus === 'EVALUATING_DONE'">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING_DONE' | translate }}</h1>
+            <a class="btn btn-primary" href="{{ contactUrl }}">{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</a>
+          </div>
+
+          <!-- Status and comment section -->
+          <div class="sts_comm-wrapper section-light-container">
+
+            <div class="status-wrapper">
+              <h6>{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.A' | translate }}</h6>
+
+              <div class="info-status">
+                <p><i class="fas fa-check"></i>&nbsp;&nbsp;<span class="text-white">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.G' | translate }}</span></p>
+                <p><span class="text-white">{{ project.created | date }}</span></p>
+              </div>
+
+              <div class="info-status">
+                <p><i class="fas fa-check"></i>&nbsp;&nbsp;<span class="text-white">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.B' | translate }}</span></p>
+                <p><span class="text-white">{{ project.launched | date }}</span></p>
+              </div>
+
+            </div>
+
+            <div class="comment-wrapper">
+              <h3>{{ 'PROJECT_MODULE.EXPLORATION.COMMENTS' | translate }}</h3>
+              <p>Lorem ipsum dolor sit amet, feugait tractatos quo ut. Latine denique nam id, eu facilisi electram nam, ea vim reque efficiantur. Vix cu aliquid adversarium, pri ea altera nonumes dissentiet. Aeque molestie accusamus vis in, velit malorum nonumes ut sea, odio aeque atomorum ea sit. Unum reque ut pro, te usu zril vitae alterum, vim elitr vituperata an.</p>
+              <div>
+                <span>{{ 'PROJECT_MODULE.EXPLORATION.ACCOUNT_MANAGER' | translate }}</span> {{ project.owner.name }}
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Analytics section -->
+          <div class="section-light-container">
+            <h3>{{'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate}}</h3>
+
+            <div class="analytic-wrapper">
+
+              <div class="info-analytic">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate }}</p>
+                <h5 class="text-center">{{ campaignStats.nbPros }}</h5>
+              </div>
+
+              <div class="info-analytic">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
+                <h5 class="text-center">{{ campaignStats.nbProsSent }}</h5>
+              </div>
+
+              <div class="info-analytic">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
+                <h5 class="text-center">{{ campaignStats.nbProsOpened }}</h5>
+              </div>
+
+              <div class="info-analytic">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
+                <h5 class="text-center">{{ campaignStats.nbProsClicked }}</h5>
+              </div>
+
+            </div>
+
+          </div>
+
+
+
           <div class="market-exploration">
-            <h1>{{'PROJECT_MODULE.EXPLORATION.TITLE' | translate}}</h1>
-            <a class="btn btn-primary" href="{{contactUrl}}">
-              {{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}
-            </a>
 
-            <h2>{{'PROJECT_MODULE.EXPLORATION.STATUS_TITLE' | translate}}</h2>
-            <ul>
-              <li>
-                {{'PROJECT_MODULE.EXPLORATION.STATUS.STARTED' | translate}} :
-                {{this.project.created | date}}
-              </li>
-              <li>
-                {{'PROJECT_MODULE.EXPLORATION.STATUS.LAUNCHED' | translate}} :
-                {{this.project.launched | date}}
-              </li>
-            </ul>
 
-            <h2>{{'PROJECT_MODULE.EXPLORATION.ANALYTICS_TITLE' | translate}}</h2>
+
             <ul>
               <li>
                 {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate}} :
@@ -79,7 +132,7 @@
                 {{campaignStats.nbProsOpened}}
               </li>
               <li>
-                {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate}} :
+                {{'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate}} :
                 {{campaignStats.nbProsClicked}}
               </li>
               <li>

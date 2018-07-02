@@ -29,6 +29,9 @@
           background: #1680B9;
           border-color: #1680B9;
           color: white;
+          width: 280px;
+          padding-left: 0;
+          padding-right: 0;
         }
 
         .btn:hover {
@@ -47,7 +50,10 @@
         padding-top: 25px;
 
         .btn {
-
+          width: 280px;
+          padding-left: 0;
+          padding-right: 0;
+          
           i {
             vertical-align: middle;
           }

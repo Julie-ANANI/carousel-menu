@@ -58,13 +58,9 @@ export class SharedProjectSettingsComponent implements OnInit {
       this.showTargetingFieldError.subscribe(value => {
         if (value) {
           this.showMarketError = this.settings.market.comments.length === 0;
-          this.showGeographyError = this.settings.geography.exclude.length === 0 && this.settings.geography.comments.length === 0 &&
-            !this.settings.geography.continentTarget.russia && !this.settings.geography.continentTarget.oceania && !this.settings.geography.continentTarget.europe
-            && !this.settings.geography.continentTarget.asia && !this.settings.geography.continentTarget.americaSud && !this.settings.geography.continentTarget.americaNord
-            && !this.settings.geography.continentTarget.africa;
+          this.checkGeographyError();
         } else {
           this.showMarketError = false;
-          this.showGeographyError = false;
         }
       });
     }
@@ -132,6 +128,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   public continentModificationDrain(event: any) {
     if (event) {
       this.settings.geography.continentTarget = event.continents;
+      this.checkGeographyError();
       this.updateSettings();
     }
   }
@@ -142,6 +139,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   public addCountryToExclude(event: {value: Array<string>}): void {
     this.settings.geography.exclude = event.value;
     this.showGeographyError = this.settings.geography.exclude.length === 0;
+    this.checkGeographyError();
     this.updateSettings();
   }
 
@@ -266,6 +264,18 @@ export class SharedProjectSettingsComponent implements OnInit {
   public updateSettings() {
     if (this._projectStatus) {
       this.settingsChange.emit(this.settings);
+    }
+  }
+
+  checkGeographyError() {
+    if (this.settings.geography.exclude.length === 0 && this.settings.geography.comments.length === 0
+      && !this.settings.geography.continentTarget.russia && !this.settings.geography.continentTarget.oceania
+      && !this.settings.geography.continentTarget.europe && !this.settings.geography.continentTarget.asia
+      && !this.settings.geography.continentTarget.americaSud && !this.settings.geography.continentTarget.americaNord
+      && !this.settings.geography.continentTarget.africa) {
+      this.showGeographyError = true;
+    } else {
+      this.showGeographyError = false;
     }
   }
 
