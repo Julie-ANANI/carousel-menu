@@ -13,6 +13,7 @@ import { InnovationPreviewSidebarService } from './services/innovation-preview-s
 import { UserFormSidebarComponent } from './components/user-form-sidebar/user-form-sidebar.component';
 import { InnovationPreviewSidebarComponent } from './components/innovation-preview-sidebar/innovation-preview-sidebar.component';
 import { GenericSidebarComponent } from './components/generic-sidebar/generic-sidebar.component';
+import { UserEditSidebarComponent} from './components/user-edit-sidebar/user-edit-sidebar.component';
 import { ConfirmationSidebarComponent } from './components/confirmation-sidebar/confirmation-sidebar.component';
 
 
@@ -27,6 +28,8 @@ import { ConfirmationSidebarComponent } from './components/confirmation-sidebar/
     UserFormSidebarComponent,
     InnovationPreviewSidebarComponent,
     GenericSidebarComponent,
+    UserEditSidebarComponent,
+    GenericSidebarComponent,
     ConfirmationSidebarComponent
   ],
   providers: [
@@ -37,7 +40,9 @@ import { ConfirmationSidebarComponent } from './components/confirmation-sidebar/
     UserFormSidebarComponent,
     InnovationPreviewSidebarComponent,
     GenericSidebarComponent,
-    ConfirmationSidebarComponent
+    ConfirmationSidebarComponent,
+    GenericSidebarComponent,
+    UserEditSidebarComponent
   ]
 })
 

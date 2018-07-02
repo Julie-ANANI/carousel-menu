@@ -17,6 +17,7 @@
                         (removeRows)="removeUsers($event)"
                         (performAction)="performActions($event)">
       </app-shared-table>
-
-      <app-generic-sidebar [data]="more"></app-generic-sidebar>
+      <app-generic-sidebar [data]="more">
+        <app-user-edit-sidebar [userId]="currentUserId"></app-user-edit-sidebar>
+      </app-generic-sidebar>
 </div>
