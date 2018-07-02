@@ -55,11 +55,11 @@ export class SharedProsListComponent {
           _isFiltrable: true,
           _isSortable: true,
           _columns: [
-            {_attr: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
-            {_attr: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
-            {_attr: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-            {_attr: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
-            {_attr: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
+            {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+            {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
+            {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
+            {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+            {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
         };
 
       });
@@ -76,11 +76,11 @@ export class SharedProsListComponent {
           _isFiltrable: true,
           _isSortable: true,
           _columns: [
-            {_attr: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
-            {_attr: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
-            {_attr: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-            {_attr: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
-            {_attr: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
+            {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+            {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
+            {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
+            {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+            {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
         };
 
       });

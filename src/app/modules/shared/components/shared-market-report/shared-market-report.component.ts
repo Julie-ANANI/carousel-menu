@@ -13,7 +13,7 @@ import { Section } from '../../../../models/section';
 import { Innovation } from '../../../../models/innovation';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { environment} from '../../../../../environments/environment';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -48,10 +48,10 @@ export class SharedMarketReportComponent implements OnInit {
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer;
 
-  constructor(private _translateService: TranslateService,
-              private _answerService: AnswerService,
-              private _innovationService: InnovationService,
-              private _notificationsService: TranslateNotificationsService,
+  constructor(private translateService: TranslateService,
+              private answerService: AnswerService,
+              private innovationService: InnovationService,
+              private translateNotificationsService: TranslateNotificationsService,
               private location: Location) { }
 
   ngOnInit() {
@@ -62,15 +62,16 @@ export class SharedMarketReportComponent implements OnInit {
     this._innoid = this.project._id;
     this.resetMap();
 
-    this._innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
+    this.innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
       this._infographics = synthesis.infographics;
-      }, error => this._notificationsService.error('ERROR.ERROR', error.message));
+      }, error => this.translateNotificationsService.error('ERROR.ERROR', error.message));
 
     this.loadAnswers();
     if (this.project.preset && this.project.preset.sections) {
       this.project.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions);
       });
+
       // remove spaces in questions identifiers.
       this._cleaned_questions = this._questions.map((q) => {
         const ret = JSON.parse(JSON.stringify(q));
@@ -79,26 +80,24 @@ export class SharedMarketReportComponent implements OnInit {
         ret.identifier = ret.identifier.replace(/\s/g, '');
         return ret;
       });
+
     }
+
     this._modalAnswer = null;
     PageScrollConfig.defaultDuration = 800;
+
   }
 
   private loadAnswers() {
-    this._answerService
-      .getInnovationValidAnswers(this._innoid)
-      .first()
-      .subscribe((results) => {
-
-        this._answers = results.answers
-          .sort((a, b) => {
+    this.answerService.getInnovationValidAnswers(this._innoid)
+      .first().subscribe((results) => {
+        this._answers = results.answers.sort((a, b) => {
             return b.profileQuality - a.profileQuality;
           });
 
         this._filteredAnswers = this._answers;
 
-        this._countries = results.answers
-          .reduce((acc, answer) => {
+        this._countries = results.answers.reduce((acc, answer) => {
             if (acc.indexOf(answer.country.flag) === -1) {
               acc.push(answer.country.flag);
             }
@@ -106,7 +105,7 @@ export class SharedMarketReportComponent implements OnInit {
           }, []);
 
       }, (error) => {
-        this._notificationsService.error('ERROR.ERROR', error.message);
+        this.translateNotificationsService.error('ERROR.ERROR', error.message);
       });
   }
 
@@ -236,18 +235,66 @@ export class SharedMarketReportComponent implements OnInit {
     return environment.logoSynthURL;
   }
 
-  get answers(): Array<Answer> { return this._answers; }
-  get filters() { return this._filters; }
-  get filteredAnswers(): Array<Answer> { return this._filteredAnswers; }
-  get countries(): Array<string> { return this._countries; }
-  get cleaned_questions(): Array<Question> { return this._cleaned_questions; }
-  get questions(): Array<Question> { return this._questions; }
-  get modalAnswer(): Answer { return this._modalAnswer; }
-  set modalAnswer(modalAnswer: Answer) { this._modalAnswer = modalAnswer; }
-  get showListProfessional(): boolean { return this._showListProfessional; }
-  set showListProfessional(val: boolean) { this._showListProfessional = val; }
-  get innoid(): string { return this._innoid; }
-  get showDetails (): boolean { return this._showDetails; }
-  get infographics () { return this._infographics; }
-  get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
+  get projectStatus(): string {
+    return this.project.status;
+  }
+
+
+  get answers(): Array<Answer> {
+    return this._answers;
+  }
+
+  get filters() {
+    return this._filters;
+  }
+
+  get filteredAnswers(): Array<Answer> {
+    return this._filteredAnswers;
+  }
+
+
+  get countries(): Array<string> {
+    return this._countries;
+  }
+
+  get cleaned_questions(): Array<Question> {
+    return this._cleaned_questions;
+  }
+
+  get questions(): Array<Question> {
+    return this._questions;
+  }
+
+  get modalAnswer(): Answer {
+    return this._modalAnswer;
+  }
+
+  set modalAnswer(modalAnswer: Answer) {
+    this._modalAnswer = modalAnswer;
+  }
+
+  get showListProfessional(): boolean {
+    return this._showListProfessional;
+  }
+
+  set showListProfessional(val: boolean) {
+    this._showListProfessional = val;
+  }
+
+  get innoid(): string {
+    return this._innoid;
+  }
+
+  get showDetails (): boolean {
+    return this._showDetails;
+  }
+
+  get infographics () {
+    return this._infographics;
+  }
+
+  get lang(): string {
+    return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
+  }
+
 }

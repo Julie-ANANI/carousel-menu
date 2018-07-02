@@ -11,7 +11,7 @@ export const EXPLORATION = {
       'B': 'la configuration de votre projet',
       'C': 'et le soumettre.'
     },
-    'REVIEWING': 'Veuillez modifier les modifications de votre projet et renvoyez-le..'
+    'REVIEWING': 'Veuillez modifier les modifications de votre projet et renvoyez-le.'
   },
 
   'CONTACT_BUTTON': 'Contact us',

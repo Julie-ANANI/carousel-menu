@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {Column, types} from '../shared-table/models/column';
-import {Label} from '../shared-table/models/label';
+import {Choice} from '../shared-table/models/choice';
 
 @Component({
   selector: 'sqFilterMulti',
@@ -15,7 +15,7 @@ export class SharedFilterMultiComponent {
     this.loadProps(value);
   }
 
-  private _currentTextProp: Column = {_attr: [''], _name: '', _type: 'TEXT'};
+  private _currentTextProp: Column = {_attrs: [''], _name: '', _type: 'TEXT'};
   private _textProps: Column[] = [];
   private _otherProps: Column[] = [];
 
@@ -23,42 +23,35 @@ export class SharedFilterMultiComponent {
 
   filterText(event: any) {
 
-    this._textProps.forEach(value1 =>
-    {
-        if (this.config.search[0] && value1._attr[0] !== this._currentTextProp._attr[0]) {
-          delete this.config.search[value1._attr[0]]
-      }
-    });
-
-    const value = (<HTMLInputElement> event.srcElement).value;
-      if (this.config.search[this._currentTextProp._attr[0]] && value === '') {
-        delete this.config.search[this._currentTextProp._attr[0]];
+    this.config.search = {};
+    const value = event.value;
+      if (value === '') {
         this.configChange.emit(this.config);
-      } else if (value !== '') {
-        this.config.search[this._currentTextProp._attr[0]] = value;
+      } else {
+        this.config.search[this._currentTextProp._attrs[0]] = value;
         this.configChange.emit(this.config);
       }
   }
 
   filterOther(prop: Column) {
-      if (this.config[prop._attr[0]] === null) {
-        delete this.config[prop._attr[0]];
+      if (this.config[prop._attrs[0]] === null) {
+        delete this.config[prop._attrs[0]];
     }
     this.configChange.emit(this.config);
   }
 
   textIsSelected(prop: Column): boolean {
-    return this._currentTextProp._attr[0] === prop._attr[0];
+    return this._currentTextProp._attrs[0] === prop._attrs[0];
   }
 
   loadProps(value: Column[]) {
     if (value) {
-      this._textProps = value.filter(value1 => this.getType(value1) !== 'CHECK' && this.getType(value1) !== 'LABEL' && this.getType(value1) !== 'ARRAY');
-      if (this._currentTextProp._attr[0] === '' && this._textProps.length > 0) {
+      this._textProps = value.filter(value1 => this.getType(value1) === 'TEXT' && this.getType(value1) !== 'COUNTRY' && this.getType(value1) !== 'DATE');
+      if (this._currentTextProp._attrs[0] === '' && this._textProps.length > 0) {
         this._currentTextProp = this._textProps[0];
       }
 
-      this._otherProps = value.filter(value1 => this.getType(value1) === 'CHECK' || this.getType(value1) === 'LABEL');
+      this._otherProps = value.filter(value1 => this.getType(value1) === 'CHECK' || this.getType(value1) === 'MULTI-CHOICES');
     }
   }
 
@@ -78,23 +71,23 @@ export class SharedFilterMultiComponent {
     return column._type;
   }
 
-  getAttr(column: Column) {
-    return column._attr[0];
+  getAttrs(column: Column) {
+    return column._attrs[0];
   }
 
   getName(column: Column) {
     return column._name;
   }
 
-  getChoices(column: Column): Label[] {
+  getChoices(column: Column): Choice[] {
     return column._choices || [];
   }
 
-  getChoiceName(choice: Label): string {
+  getChoiceName(choice: Choice): string {
     return choice._name;
   }
 
   changeCurrentTextProp(prop: any) {
-    this._currentTextProp = this._textProps.find(value => value._attr[0] === prop.srcElement.value);
+    this._currentTextProp = this._textProps.find(value => value._attrs[0] === prop.srcElement.value);
   }
 }

@@ -4,11 +4,9 @@
   padding: 0;
   text-align: center;
   min-width: 220px;
-  margin-right: 30px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.7rem;
   color: #FFFFFF;
-  margin-bottom: 30px;
   max-width: 220px;
 
   .chart-pie {
@@ -18,13 +16,17 @@
   }
 
   .number-ratio {
-    color: #8E8E8E;
+    // color: #8E8E8E;
+
+    span {
+      font-size: 1.6rem;
+      color: #0B90C6;
+    }
+
+    p {
+      color: #0B90C6;
+    }
+
   }
 
-  .number-ratio span {
-    display: block;
-    font-weight: 400;
-    font-size: 30px;
-    margin-bottom: 5px;
-  }
 }

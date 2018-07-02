@@ -59,7 +59,6 @@ import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldm
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
 // import { TableModule } from './components/shared-table/table.module';
 
-
 @NgModule({
   imports: [
     CommonModule,

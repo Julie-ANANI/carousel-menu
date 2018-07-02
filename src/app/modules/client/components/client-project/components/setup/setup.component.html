@@ -1,94 +1,119 @@
 <div class="section-container" id="setup-project">
   <div class="columns">
-    <div class="column col-xs-12 col-12">
+    <div class="column col-12 col-mx-auto">
 
-      <!-- Project under submitted status message -->
-      <div *ngIf="projectStatus === 'SUBMITTED'" class="message-wrapper">
-        <div class="message text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</div>
+      <!-- Messages -->
+      <div class="column col-xs-12 col-11 col-mx-auto">
+
+        <!-- Project under submitted status message -->
+        <div *ngIf="projectStatus === 'SUBMITTED'" class="msg-wrapper">
+          <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.SUBMITTED' | translate }}</div>
+        </div>
+
+        <!-- Project under reviewing status message -->
+        <div *ngIf="project.reviewing" class="msg-wrapper">
+          <div class="content text-center">
+            {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.A' | translate }}
+            <span class="text-link">{{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.B' | translate }}</span>
+            {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.C' | translate }}
+          </div>
+        </div>
+
+        <!-- Project under evaluating status message -->
+        <div *ngIf="projectStatus === 'EVALUATING'" class="msg-wrapper">
+          <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING' | translate }}</div>
+        </div>
+
+        <!-- Project under evaluating status message -->
+        <div *ngIf="projectStatus === 'EVALUATING_DONE' || projectStatus === 'DONE'" class="msg-wrapper">
+          <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.DONE' | translate }}</div>
+        </div>
+
       </div>
+      <!-- Messages -->
 
-      <!-- Project under reviewing status message -->
-      <div *ngIf="project.reviewing" class="message-wrapper">
-        <div class="message text-center">
-          {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.A' | translate }}
-          <span class="text-link">{{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.B' | translate }}</span>
-          {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.C' | translate }}
+      <!-- Button section -->
+      <div class="setup-section-1-wrapper">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="row-1-wrapper">
+            <!-- Heading -->
+            <h5>{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h5>
+            <!-- Buttons -->
+            <div class="func-btn-wrapper">
+              <span [ngClass]="saveButtonClass">
+                <div class="circle-check"><i class="fas fa-save"></i></div>
+                <button class="btn btn-primary ghost-primary" (click)="saveProject($event)">
+                  {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
+                </button>
+              </span>
+              <span>
+                <button
+                  [disabled]="projectStatus === 'EVALUATING' || projectStatus === 'EVALUATING_DONE'"
+                  class="btn btn-primary"
+                  (click)="submitButton($event)">
+                  {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
+                </button>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- /Button section -->
 
-      <!-- Project under evaluating status message -->
-      <div *ngIf="projectStatus === 'EVALUATING'" class="message-wrapper">
-        <div class="message text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING.A' | translate }}</div>
-        <br>
-        <div class="message text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING.B' | translate }}</div>
-      </div>
-
-      <!-- Row 1 -->
-      <div class="row-1">
-        <!-- Heading -->
-        <h5>{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h5>
-        <!-- Buttons -->
-        <div class="function-button">
-          <span [ngClass]="saveButtonClass">
-            <div class="circle-check"><i class="fas fa-save"></i></div>
-              <button class="btn btn-primary ghost-primary" (click)="saveProject($event)">
-              {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
-            </button>
-          </span>
-          <span>
-            <button [disabled]="projectStatus === 'EVALUATING'" class="btn btn-primary" (click)="submitButton($event)">
-              {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
-            </button>
-          </span>
+      <!-- Tab section -->
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="tabs-container">
+          <ul class="tabs">
+            <li>
+              <a [routerLink]="['setup', 'pitch']" [ngClass]="{'active': currentTab == 'pitch'}">
+                <i class="fas fa-check pitch-check" [ngStyle]="{ 'display': pitchFormValid ? 'inline-block' : 'none' }"></i>
+                {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
+              </a>
+            </li>
+            <li>
+              <a [routerLink]="['setup', 'targeting']" [ngClass]="{'active': currentTab == 'targeting'}">
+                <i class="fas fa-check targeting-check" [ngStyle]="{ 'display': targetingFormValid ? 'inline-block' : 'none' }"></i>
+                {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
+              </a>
+            </li>
+            <li>
+              <a [routerLink]="['setup', 'survey']" [ngClass]="{'active': currentTab == 'survey'}">
+                {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
+      <!-- /Tab section -->
 
-      <!-- Row 2 -->
-      <div class="column col-12 tabs-container">
-        <ul class="tabs">
-          <li>
-            <a [routerLink]="['setup', 'pitch']" [ngClass]="{'active': currentTab == 'pitch'}">
-              <i class="fas fa-check pitch-check" [ngStyle]="{ 'display': pitchFormValid ? 'inline-block' : 'none' }"></i>{{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="['setup', 'targeting']" [ngClass]="{'active': currentTab == 'targeting'}">
-              <i class="fas fa-check targeting-check" [ngStyle]="{ 'display': targetingFormValid ? 'inline-block' : 'none' }"></i>{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="['setup', 'survey']" [ngClass]="{'active': currentTab == 'survey'}">
-              {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
-            </a>
-          </li>
-        </ul>
+      <!-- Different components based on the click -->
+
+      <!-- Pitch component -->
+      <div *ngIf="currentTab === 'pitch'">
+        <app-project-pitch
+          [project]="project"
+          (updateInnovation)="updateInnovation($event)"
+          [changesSaved]="changesSaved"
+          (saveChanges)="saveInnovation($event)"
+          [showPitchFieldError]="showPitchFieldError">
+        </app-project-pitch>
       </div>
 
-      <!-- Row 3 -->
-      <div class="column col-12">
-        <!-- Pitch -->
-        <div *ngIf="currentTab === 'pitch'">
-          <app-project-pitch
-            [project]="project"
-            (updateInnovation)="updateInnovation($event)"
-            [changesSaved]="changesSaved"
-            (saveChanges)="saveInnovation($event)"
-            [showPitchFieldError]="showPitchFieldError">
-          </app-project-pitch>
-        </div>
-        <!-- Targeting -->
-        <div *ngIf="currentTab === 'targeting'">
-          <app-project-targeting
-            [project]="project"
-            (newSettings)="updateSettings($event)"
-            [showTargetingFieldError]="showTargetingFieldError">
-          </app-project-targeting>
-        </div>
-        <!-- Survey -->
-        <div *ngIf="currentTab === 'survey'">
-          <app-project-survey [project]="project"></app-project-survey>
-        </div>
+      <!-- Targeting component -->
+      <div *ngIf="currentTab === 'targeting'">
+        <app-project-targeting
+          [project]="project"
+          (newSettings)="updateSettings($event)"
+          [showTargetingFieldError]="showTargetingFieldError">
+        </app-project-targeting>
       </div>
+
+      <!-- Survey component -->
+      <div *ngIf="currentTab === 'survey'">
+        <app-project-survey [project]="project"></app-project-survey>
+      </div>
+
+      <!-- /Different components based on the click -->
 
     </div>
   </div>

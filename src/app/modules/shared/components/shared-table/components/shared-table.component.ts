@@ -1,9 +1,11 @@
+///<reference path="../../../../../../../node_modules/@angular/core/src/metadata/lifecycle_hooks.d.ts"/>
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Table} from '../models/table';
 import {Row} from '../models/row';
 import {Column, types} from '../models/column';
-import {Label} from '../models/label';
+import {Choice} from '../models/choice';
 import {TranslateService} from '@ngx-translate/core';
+import {MultiLabel} from '../models/multi-label';
 
 @Component({
   selector: 'app-shared-table',
@@ -11,10 +13,6 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./shared-table.component.scss']
 })
 export class SharedTableComponent {
-
-  // A faire:
-  // date
-
 
   @Input() set config(value: any) {
     this.loadConfig(value);
@@ -68,10 +66,14 @@ export class SharedTableComponent {
 
       this._total = value._total;
 
-      // Si on a plus de 10 colonnes, on ne prends que les 10 premières
-      value._columns.length > 10
-        ? this._columns = value._columns.slice(0, 10)
-        : this._columns = value._columns;
+      if (this._columns.length === 0) {
+        // Si on a plus de 10 colonnes, on ne prends que les 10 premières
+        value._columns.length > 10
+          ? this._columns = value._columns.slice(0, 10)
+          : this._columns = value._columns;
+
+        this.initialiseColumns();
+      }
 
       this._actions = value._actions || [];
     }
@@ -98,48 +100,64 @@ export class SharedTableComponent {
     return Object.keys(this._content);
   }
 
-  getContentValue(rowKey: string, columnKey: string[]): any  {
-    if (columnKey.length === 1) {
-      return this._content[rowKey]._content[columnKey[0]];
-    } else {
-      let content = '';
-      for (const i of columnKey) {
-        content = content + this._content[rowKey]._content[i] + ' ';
-      }
-      return content;
-    }
+  getContentValue(rowKey: string, columnAttr: string): any  {
+      return this._content[rowKey]._content[columnAttr];
   }
 
   getType(column: Column): types {
     return column._type;
   }
 
-  getAttr(column: Column) {
-    return column._attr;
+  getAttrs(column: Column) {
+    return column._attrs;
+  }
+
+  getAttrIndex(column: Column, attr: string) {
+    return this.getAttrs(column).findIndex(value => value === attr);
   }
 
   getName(column: Column) {
     return column._name;
   }
 
-  getChoices(column: Column): Label[] {
+  getChoices(column: Column): Choice[] {
     return column._choices || [];
   }
 
-  getChoice(column: Column, name: string): Label {
+  getChoice(column: Column, name: string): Choice {
     return this.getChoices(column).find(value => value._name === name) || {_name: '', _class: ''};
   }
 
-  getChoiceName(choice: Label): string {
+  getChoiceName(choice: Choice): string {
     return choice._name || '';
   }
 
-  getChoiceClass(choice: Label): string {
+  getChoiceClass(choice: Choice): string {
     return choice._class || '';
   }
 
-  getUrl(choice: Label): string {
+  getUrl(choice: Choice): string {
     return choice._url || '';
+  }
+
+  getMultiLabels(column: Column): MultiLabel[] {
+    return column._multiLabels || [];
+  }
+
+  getMultiLabel(column: Column, attr: string) {
+    return column._multiLabels.find(value => value._attr === attr) || {_attr: '', _class: ''};
+  }
+
+  getMultiLabelIndex(column: Column, multiLabel: MultiLabel) {
+    return this.getMultiLabels(column).findIndex(value => value._attr === multiLabel._attr);
+  }
+
+  getMultiLabelClass(multiLabel: MultiLabel): string {
+    return multiLabel._class;
+  }
+
+  getMultiChoiceAttr(multiLabel: MultiLabel) {
+    return multiLabel._attr;
   }
 
   get selector(): string {
@@ -223,12 +241,29 @@ export class SharedTableComponent {
     this._content[key]._isHover = !(this._content[key]._isHover);
   }
 
-  isSelected(row: Row): boolean {
-    return row._isSelected;
+  initialiseColumns() {
+    this._columns.forEach((value1, index) => {
+      this._columns[index]._isSelected = false,
+      this._columns[index]._isHover = false});
   }
 
-  isHover(row: Row) {
-    return row._isHover;
+  selectColumn(key: string) {
+    this.initialiseColumns();
+    const index = this._columns.findIndex(value => value._attrs[0] === key);
+    this._columns[index]._isSelected = true;
+  }
+
+  hoverColumn(key: string) {
+    const index = this._columns.findIndex(value => value._attrs[0] === key);
+    this._columns[index]._isHover = !(this._columns[index]._isHover);
+  }
+
+  isSelected(content: any): boolean {
+    return content._isSelected;
+  }
+
+  isHover(content: any): boolean {
+    return content._isHover;
   }
 
   selectAll(e: any): void  {

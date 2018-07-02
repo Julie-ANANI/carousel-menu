@@ -1,23 +1,10 @@
-#project-synthesis {
-
-  .bot-rect {
-    width: 300px;
-  }
-
-  .title-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-
-}
+/*
 
 
 
-/* ==========================================================================
+!* ==========================================================================
    Market Report module
-   ========================================================================== */
+   ========================================================================== *!
 body.campaign-edit-infographic-new,
 body.sample-infographic {
 
@@ -100,7 +87,7 @@ body.sample-infographic {
     text-align: center;
   }
 
-  /* === Sidebar === */
+  !* === Sidebar === *!
 
   .sidebar {
     padding: 30px 0 30px 0;
@@ -154,7 +141,7 @@ body.sample-infographic {
 
   }
 
-  /* === Responsive pour mobile === */
+  !* === Responsive pour mobile === *!
   @media screen and (max-width: 900px) {
     .content {
       margin-top: 0;
@@ -246,7 +233,7 @@ body.sample-infographic {
   height: 480px;
 }
 
-/* === Professionals list === */
+!* === Professionals list === *!
 
 #professionals {
 
@@ -343,4 +330,186 @@ body.sample-infographic {
   &.active {
     background-color: #747474;
   }
+}*/
+
+#project-synthesis {
+
+  .bot-rect {
+    width: 300px;
+  }
+
+  .title-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 25px;
+  }
+
+  .question-wrapper {
+    background-color: white;
+    display: inline-flex;
+    position: sticky;
+    flex-direction: column;
+    top: 40px;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        margin: 0;
+        padding: 12px 6px;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        transition: all 0.15s ease-in-out;
+        width: 250px;
+
+        a {
+          color: #333333;
+          text-decoration: none;
+        }
+
+        .icon {
+          font-size: 0.7rem;
+          vertical-align: -9%;
+        }
+
+      }
+
+      li:hover {
+        cursor: pointer;
+        background:  #F2F2F2;
+        border-color: #F2F2F2;
+      }
+
+    }
+
+    .filter-wrapper {
+      padding-top: 25px;
+      padding-bottom: 25px;
+
+      li {
+        background:  #F2F2F2;
+        margin-bottom: 10px;
+      }
+
+    }
+
+  }
+
+  .answer-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    position: relative;
+    border-left: 1px solid #D1D1D1;
+    padding-left: 20px;
+    max-width: 80%;
+
+    .section-container {
+      padding-bottom: 0;
+    }
+
+    .section-container:first-child {
+      padding-top: 0;
+    }
+
+    .professional {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .profile {
+        background: white;
+        box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
+        border: 1px solid #F2F2F2;
+        padding: 20px 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        margin-right: 20px;
+        flex: 1 0 calc(32% - 1rem);
+      }
+
+    }
+
+  }
+
+
+}
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  #project-synthesis {
+
+    .question-wrapper {
+      display: none;
+    }
+
+    .answer-wrapper {
+      max-width: 100%;
+      padding-left: unset;
+      border-left: none;
+      width: 100%;
+    }
+
+  }
+
+}
+
+@media (min-width: 601px) and (max-width: 840px) {
+
+  #project-synthesis {
+
+    .question-wrapper ul li {
+      width: 180px;
+    }
+
+    .answer-wrapper {
+      max-width: 65%
+    }
+
+  }
+
+}
+
+@media (min-width: 841px) and (max-width: 960px) {
+
+  #project-synthesis {
+
+    .question-wrapper ul li {
+      width: 180px;
+    }
+
+    .answer-wrapper {
+      max-width: 66%;
+    }
+
+  }
+
+}
+
+@media (min-width: 961px) and (max-width: 1280px) {
+
+  #project-synthesis {
+
+    .answer-wrapper {
+      max-width: 70%;
+    }
+
+  }
+
+}
+
+@media (min-width: 1281px) and (max-width: 1440px) {
+
+  #project-synthesis {
+
+    .answer-wrapper {
+      max-width: 78%;
+    }
+
+  }
+
 }

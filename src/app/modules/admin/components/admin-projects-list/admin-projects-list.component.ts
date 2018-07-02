@@ -135,8 +135,8 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
           _isFiltrable: true,
           _isSortable: true,
           _columns: [
-            {_attr: ['name'], _name: 'COMMON.PROJECTS', _type: 'TEXT'},
-            {_attr: ['type'], _name: 'COMMON.TYPE', _type: 'LABEL',
+            {_attrs: ['name'], _name: 'COMMON.PROJECTS', _type: 'TEXT'},
+            {_attrs: ['type'], _name: 'COMMON.TYPE', _type: 'MULTI-CHOICES',
               _choices: [
                 {_name: 'apps', _url: 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-apps.svg'},
                 {_name: 'insights', _url: 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-insights.svg'},

@@ -1,31 +1,34 @@
-.flex-container {
+.ques-conclusion-wrapper {
   display: flex;
 }
 
+.pieChart-wrapper, .blueSquare-wrapper{
+  margin: 0 25px 25px 0;
+}
+
 .umi-synthesis {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 
-  .title {
-    font-size: 30px;
-    color: #4A4A4A;
-    display: block;
-    margin-bottom: 20px;
-    line-height: 1.3;
-
-    span {
-      color: #3498DB;
-    }
+  p {
+    padding-top: 0;
+    color: #EA5858;
+    font-weight: bold;
   }
 
-  .desc {
-    font-size: 15px;
-    color: #8E8E8E;
-    line-height: 27px;
+}
 
-    ul li {
-      list-style: disc;
-      margin-left: 20px;
-    }
+
+/********************************** Media ***************************************/
+
+@media (max-width: 840px) {
+
+  .ques-conclusion-wrapper {
+    flex-wrap: wrap;
+  }
+
+  .pieChart-wrapper, .blueSquare-wrapper {
+    margin-right: auto;
+    margin-left: auto;
   }
 
 }
