@@ -90,6 +90,7 @@ export class ExplorationProjectComponent implements OnInit {
         this._questions = this._questions.concat(section.questions || []);
       });
     }
+
   }
 
   get projectStatus(): string {

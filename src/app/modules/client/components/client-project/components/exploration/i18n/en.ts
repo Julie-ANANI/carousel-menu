@@ -22,7 +22,7 @@ export const EXPLORATION = {
     'C': 'Emails sent',
     'D': 'Relaunch',
     'F': 'Last relaunch',
-    'G': 'Started'
+    'G': 'Created'
   },
 
   'CONTACT_BUTTON': 'Contact us',
@@ -40,12 +40,15 @@ export const EXPLORATION = {
     'ANSWERS': 'Validated answers'
   },
 
-  'CLICKMAP_TITLE': 'Click rate',
-  'COMPANIESLIST_TITLE': 'Companies to contact',
+  'CLICK_MAP_TITLE': 'Click rate',
+
+  'COMPANIES_LIST_TITLE': 'Companies to contact',
+
   'INSIGHTS_TITLE': 'Insights',
+
   'STATUS': {
     'STARTED': 'Started',
     'LAUNCHED': 'Launched'
-  },
+  }
 
 };

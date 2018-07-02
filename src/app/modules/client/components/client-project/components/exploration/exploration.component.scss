@@ -69,15 +69,39 @@
   .analytic-wrapper {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+
+    .pd-top {
+      padding-top: 22px;
+    }
 
     .info-analytic {
-      margin-left: 20px;
-      margin-right: 20px;
+      margin-left: 25px;
+      margin-right: 25px;
+      margin-bottom: 25px;
 
       p {
         color: #97A4B1;
       }
 
+      .svg-text {
+        font-size: 0.7rem;
+        font-weight: 600;
+        fill: #FFFFFF;
+      }
+
+    }
+
+  }
+
+  .com-nme {
+    list-style: none;
+
+    li {
+      padding-top: 0;
+      padding-left: 0;
+      display: inline-flex;
+      width: 33.33%;
     }
 
   }
@@ -119,6 +143,14 @@
         width: 310px;
         margin-right: 0;
         margin-bottom: 25px;
+      }
+
+    }
+
+    .com-nme {
+
+      li {
+        width: 50%;
       }
 
     }
