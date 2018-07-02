@@ -31,6 +31,7 @@ export class SharedTableComponent {
 
   private _selector = '';
   private _title = 'Résultats';
+  private _isHeadable = false;
   private _isSelectable = false;
   private _isEditable = false;
   private _isDeletable = false;
@@ -55,6 +56,7 @@ export class SharedTableComponent {
       this._content = [];
       value._content.forEach(value1 => this._content.push({_isHover: false, _isSelected: false, _content: value1}));
 
+      this._isHeadable = value._isHeadable || false;
       this._isSelectable = value._isSelectable || false;
       this._isEditable = value._isEditable || false;
       this._isDeletable = value._isDeletable || false;
@@ -164,6 +166,10 @@ export class SharedTableComponent {
 
   get title(): string {
     return this._title;
+  }
+
+  get isHeadable(): boolean {
+    return this._isHeadable;
   }
 
   get isSelectable(): boolean {

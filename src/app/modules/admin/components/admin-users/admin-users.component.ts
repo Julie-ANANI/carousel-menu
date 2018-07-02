@@ -60,6 +60,7 @@ export class AdminUsersComponent implements OnInit {
           _title: 'COMMON.USERS',
           _content: this._users,
           _total: this._total,
+          _isHeadable: true,
           _isFiltrable: true,
           _isSortable: true,
           _isSelectable: true,
