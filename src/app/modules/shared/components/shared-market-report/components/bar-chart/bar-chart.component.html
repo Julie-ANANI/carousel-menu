@@ -30,7 +30,7 @@
     </div>
 
     <!--======= textarea =======-->
-    <ul *ngIf="!showAnswers[i]" class="comments-bar">
+    <ul *ngIf="showAnswers[i]" class="comments-bar">
       <li *ngFor="let answer of barData.answers">
         <market-comment
           [answer]="answer"
