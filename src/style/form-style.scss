@@ -99,6 +99,36 @@ $success-color: #2ECC71;
   margin-bottom: 20px !important;
 }
 
+/*
+    Form group inline styles
+*/
+.form-group-inline-left{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  .input-group{
+    margin-left: 5%;
+  }
+
+}
+
+.form-group-inline-right{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .input-group{
+    margin-right: 5%;
+  }
+}
+
+.form-group-inline-space {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 /*
     Form label style
