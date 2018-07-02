@@ -28,7 +28,7 @@ import { ConfirmationSidebarComponent } from './components/confirmation-sidebar/
     UserFormSidebarComponent,
     InnovationPreviewSidebarComponent,
     GenericSidebarComponent,
-    UserEditSidebarComponent
+    UserEditSidebarComponent,
     GenericSidebarComponent,
     ConfirmationSidebarComponent
   ],
@@ -40,7 +40,7 @@ import { ConfirmationSidebarComponent } from './components/confirmation-sidebar/
     UserFormSidebarComponent,
     InnovationPreviewSidebarComponent,
     GenericSidebarComponent,
-    ConfirmationSidebarComponent
+    ConfirmationSidebarComponent,
     GenericSidebarComponent,
     UserEditSidebarComponent
   ]
