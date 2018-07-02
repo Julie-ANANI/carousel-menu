@@ -61,7 +61,8 @@
         <td>
           <button class="btn btn-action" (click)="editUser[pro._id] = false"><i class="fas fa-times"></i></button>
           <button class="btn btn-action" (click)="updatePro(pro, $event)"><i class="fas fa-save"></i></button>
-          <button class="btn btn-danger" (click)="deletePro(pro, $event)"><i class="fas fa-trash"></i></button>
+          <button class="btn btn-danger" (click)="deletePro(pro, $event)"
+                  title="Warning! This operation will delete the professional from the database. This operation is tracked."><i class="fas fa-trash"></i></button>
         </td>
       </ng-container>
 
