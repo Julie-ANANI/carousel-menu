@@ -2,6 +2,8 @@ export const EXPLORATION = {
   'TITLE': {
     'EDITING': 'Les informations sur le marché de votre projet seront bientôt disponibles',
     'SUBMITTED': 'Collecte des informations sur le marché de votre projet',
+    'EVALUATING': 'Collecte des informations sur le marché de votre projet',
+    'EVALUATING_DONE': 'Les perspectives du marché de votre projet'
   },
 
   'MESSAGE': {
@@ -15,6 +17,7 @@ export const EXPLORATION = {
   },
 
   'CONTACT_BUTTON': 'Contact us',
+
   'STATUS_TITLE': 'Status',
   'ANALYTICS_TITLE': 'Analytics',
   'CLICKMAP_TITLE': 'Click rate',
