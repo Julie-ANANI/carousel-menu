@@ -91,8 +91,6 @@ export class QuestionSectionComponent implements OnInit {
               && a.answers[id + 'Comment']
               && a.answers[id + 'CommentQuality'] !== 0;
           });
-          console.log(this.question.identifier);
-          console.log(this._answersWithComment);
           break;
         case 'radio':
           this._answersWithComment = this._answers.filter(function(a) {
@@ -100,8 +98,6 @@ export class QuestionSectionComponent implements OnInit {
             && a.answers[id + 'Comment']
             && a.answers[id + 'CommentQuality'] !== 0
           });
-          console.log(this.question.identifier);
-          console.log(this._answersWithComment);
           break;
         default:
           this._answersWithComment = this._answers.filter(function(a) {
