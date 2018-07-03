@@ -1,23 +1,43 @@
 <div class="container">
 
 
-      <!--<button class="btn btn-lg btn-primary" (click)="inviteUser($event)">{{ 'USERS.INVITE_USER' | translate }}</button>-->
+  <!--<button class="btn btn-lg btn-primary" (click)="inviteUser($event)">{{ 'USERS.INVITE_USER' | translate }}</button>-->
 
-      <!-- TODO
-      <div class="invitation-pending" *ngIf="pending_invitations && pending_invitations.length > 0">
-        <h3>{{ 'USERS.WAITING_INVITATIONS' | translate }}</h3>
-        <p>{{ pending_invitations.join(', ') }}</p>
+  <!-- TODO
+  <div class="invitation-pending" *ngIf="pending_invitations && pending_invitations.length > 0">
+    <h3>{{ 'USERS.WAITING_INVITATIONS' | translate }}</h3>
+    <p>{{ pending_invitations.join(', ') }}</p>
+  </div>
+  -->
+
+  <app-shared-table [data]="tableInfos"
+                    [config]="config"
+                    (configChange)="loadUsers($event)"
+                    (editRow)="editUser($event)"
+                    (removeRows)="removeUsers($event)"
+                    (performAction)="performActions($event)">
+  </app-shared-table>
+  <app-generic-sidebar [data]="more">
+    <app-user-edit-sidebar [userId]="currentUserId" (userChange)="userEditionFinish()" (deleteUser)="deleteModal($event)"></app-user-edit-sidebar>
+  </app-generic-sidebar>
+
+  <!-- Modal to ask admin to sure about deleting the user -->
+  <div class="modal" [ngClass]="{ 'active': showDeleteModal }">
+    <div class="modal-overlay" (click)="closeModal($event)"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+        <div class="modal-title">{{ 'USERS.DELETE' | translate }}</div>
       </div>
-      -->
-
-      <app-shared-table [data]="tableInfos"
-                        [config]="config"
-                        (configChange)="loadUsers($event)"
-                        (editRow)="editUser($event)"
-                        (removeRows)="removeUsers($event)"
-                        (performAction)="performActions($event)">
-      </app-shared-table>
-      <app-generic-sidebar [data]="more">
-        <app-user-edit-sidebar [userId]="currentUserId"></app-user-edit-sidebar>
-      </app-generic-sidebar>
+      <div class="modal-body">
+        <div class="content">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-sm ghost-delete" (click)="removeUser($event)">
+          {{ 'COMMON.DELETE' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

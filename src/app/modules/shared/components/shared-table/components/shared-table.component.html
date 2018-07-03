@@ -137,7 +137,7 @@
                 <!-- If column type is MULTI-LABEL -->
                 <span *ngSwitchCase="'MULTI-LABEL'">
                   <span *ngFor="let attr of getAttrs(column)"
-                        [class]="getMultiLabelClass(getMultiLabel(column, attr)) || 'label-draft'"
+                        [class]="getMultiLabelClass(getMultiLabel(column, attr)) || ''"
                         [ngClass]="{
                         'left-label': getAttrIndex(column, attr) === 0 && getAttrs(column).length !== 1,
                          'right-label' : getAttrIndex(column, attr) === getAttrs(column).length-1 && getAttrs(column).length !== 1,
@@ -145,7 +145,7 @@
                          getAttrIndex(column, attr) !== getAttrs(column).length-1
                          }">
 
-                      {{(getContentValue(key, attr || " - ").toString())}}
+                      {{(getContentValue(key, attr) || " - ").toString()}}
 
                   </span>
                 </span>
@@ -157,7 +157,7 @@
                       *ngIf="columns.indexOf(column) == 0 && isEditable"
                       [ngClass]="isHover(content[key]) ? 'visible' : 'invisible'"
                       (click)="edit(content[key])">
-                {{'COMMON.MORE' | translate}}
+                {{'COMMON.EDIT' | translate}}
               </button>
 
             </td>

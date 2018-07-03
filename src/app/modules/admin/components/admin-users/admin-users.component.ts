@@ -17,6 +17,7 @@ export class AdminUsersComponent implements OnInit {
   private _actions: string[] = [];
   private _more: GenericSidebar = {_animate: 'inactive'};
   private _tableInfos: Table = null;
+  private _showDeleteModal = false;
   private _selfId = '';
   private _currentUserId = '';
   private _total = 0;
@@ -84,6 +85,11 @@ export class AdminUsersComponent implements OnInit {
     this._currentUserId = us.id;
   }
 
+  userEditionFinish() {
+    this._more = {_animate: 'inactive', _title: this._more._title};
+    this.loadUsers(this._config);
+  }
+
   get selfId(): string {
     return this._selfId;
   }
@@ -101,8 +107,23 @@ export class AdminUsersComponent implements OnInit {
       });
   }
 
+  deleteModal(usersToRemove: any) {
+    this._showDeleteModal = true;
+  }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._showDeleteModal = false;
+  }
+
   removeUsers(usersToRemove: User[]) {
-    console.log(usersToRemove);
+    for (const user of usersToRemove) {
+      this.removeUser(user.id);
+    }
+  }
+
+  removeUser(userId: string) {
+    this._userService.deleteUser(userId);
   }
 
   performActions(action: any) {
@@ -117,4 +138,5 @@ export class AdminUsersComponent implements OnInit {
   get users() { return this._users; }
   get more(): any { return this._more; }
   get currentUserId(): string { return this._currentUserId; }
+  get showDeleteModal(): boolean { return this._showDeleteModal; }
 }
