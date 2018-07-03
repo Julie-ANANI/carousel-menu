@@ -147,8 +147,6 @@ export class AutocompleteInputComponent implements OnInit {
     }
   }
 
-  }
-
   up(event: Event, i: number): void {
     event.preventDefault();
     if (i !== 0) {
