@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import {Collaborator} from '../../interfaces/collaborator';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from '../../../../../../models/user.model';
 
 @Component({
   selector: 'app-sidebar-collaborator',
@@ -25,29 +26,33 @@ export class SidebarCollaboratorComponent implements OnInit {
 
   @Input() animate_state: string;
 
-  @Input() set collaborator(value: Collaborator) {
-    this.loadCollaborator(value);
-  }
+  @Input() addedCollaborator: Array<User>;
 
   @Output() closeSidebar = new EventEmitter<string>();
 
-  addedLength = 0;
-  invitedLength = 0;
+  formData: FormGroup;
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
     this.animate_state = 'inactive';
-  }
 
-  loadCollaborator(value: Collaborator) {
-    this.addedLength = value.addedLength;
-    this.invitedLength = value.invitedLength;
+    this.formData = this.formBuilder.group({
+      collaboratorEmail: ['', [Validators.required, Validators.email]]
+    });
+
   }
 
   toggleState() {
     this.animate_state = 'inactive';
     this.closeSidebar.emit(this.animate_state);
+    this.formData.reset();
+  }
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+    console.log(this.formData.get('collaboratorEmail').value);
   }
 
 }

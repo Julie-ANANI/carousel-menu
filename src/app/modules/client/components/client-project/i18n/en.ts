@@ -46,7 +46,8 @@ export const PROJECT_MODULE = {
     'invitation clicking in the button below:',
     'TO_RESEND_EMAIL': 'or more e-mail addresses do not correspond to any of the existing users and they may have received already an invitation from you. To add ' +
     'them as collaborators for this project, you need to send them an invitation clicking in the button below:',
-    'LABEL': 'Collaborator email'
+    'LABEL': 'Collaborator email',
+    'BOT_MESSAGE': 'You do not have any collaborator!'
   },
 
   'SETUP_TAB': 'Setup Project',

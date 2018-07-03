@@ -93,7 +93,7 @@
 <app-sidebar-collaborator
   [animate_state]="sidebarAnimateState"
   (closeSidebar)="closeSidebar($event)"
-  [collaborator]="collaboratorValues">
+  [addedCollaborator]="project.collaborators">
 </app-sidebar-collaborator>
 
 <div class="modal" [ngClass]="{'active': displayAddCollaboratorsModal}">

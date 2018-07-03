@@ -4,7 +4,6 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { Innovation } from '../../../../models/innovation';
 import { emailRegEx } from '../../../../utils/regex';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { Collaborator } from '../../../shared/components/shared-sidebar/interfaces/collaborator';
 
 const DEFAULT_PAGE = 'setup';
 
@@ -19,7 +18,6 @@ export class ClientProjectComponent implements OnInit {
   @Input() project: Innovation;
 
   sidebarAnimateState: string;
-  collaboratorValues: Collaborator = {};
 
   private _imgType: string;
   private _currentPage: string;
@@ -66,6 +64,8 @@ export class ClientProjectComponent implements OnInit {
     } else {
       this._imgType = 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-insights.svg';
     }
+
+    console.log(this.project.collaborators);
 
   }
 
@@ -177,11 +177,6 @@ export class ClientProjectComponent implements OnInit {
     event.preventDefault();
 
     this.sidebarAnimateState = 'active';
-
-    this.collaboratorValues = {
-      addedLength: this.project.collaborators.length,
-      invitedLength: this.collaboratorsInvited.length
-    };
 
     this._displayAddCollaboratorsModal = true;
     this._showCollaboratorRequiredError = false;
