@@ -152,7 +152,6 @@ export class AdminProjectDetailsComponent implements OnInit {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
-
   public updateDomain() {
     this._innovationService.updateSettingsDomain(this._project._id, this._domain).first().subscribe( x => {
       this._domain = x.domain;

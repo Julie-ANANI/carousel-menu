@@ -37,6 +37,7 @@ export class ClientLoginComponent implements OnInit {
   onSubmit() {
     if (this._formData.valid) {
       const user = new User(this._formData.value);
+      user.domain = environment.domain;
 
       this._authService.login(user)
         .first()

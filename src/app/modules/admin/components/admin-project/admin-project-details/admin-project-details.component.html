@@ -16,8 +16,8 @@
           <div class="column col-xs-12 col-md-12 col-5 col-mx-auto">
             <h3>Administration</h3>
 
-    <div>
-      <h4>Tags management</h4>
+    <div class="tag-managment-wrapper">
+      <h6>Tags management</h6>
       <app-shared-tag-item
         [editMode]="true"
         [tags]="project.tags"
@@ -25,8 +25,10 @@
         (addTag)="addTag($event)"
         (removeTag)="removeTag($event)">
       </app-shared-tag-item>
+    </div>
 
-      <h4>Presets management</h4>
+    <div class="preset-management-wrapper">
+      <h6>Presets management</h6>
       <app-autocomplete-input
         (update)="updatePreset($event)"
         [onlyOne]="true"
@@ -34,18 +36,18 @@
       </app-autocomplete-input>
     </div>
 
-            <div class="quiz-management-wrapper">
-              <h6>Quiz management</h6>
-              <p *ngIf="!hasPreset()">To generate a quiz, you need to set a preset for the innovation.</p>
-              <button
-                *ngIf="hasPreset()"
-                type="button"
-                class="btn btn-primary"
-                [ngClass]="{'disabled': dirty}"
-                (click)="generateQuiz($event)">
-                Générer le quiz
-              </button>
-            </div>
+    <div class="quiz-management-wrapper">
+      <h6>Quiz management</h6>
+      <p *ngIf="!hasPreset()">To generate a quiz, you need to set a preset for the innovation.</p>
+      <button
+        *ngIf="hasPreset()"
+        type="button"
+        class="btn btn-primary"
+        [ngClass]="{'disabled': dirty}"
+        (click)="generateQuiz($event)">
+        Générer le quiz
+      </button>
+    </div>
 
             <hr>
 

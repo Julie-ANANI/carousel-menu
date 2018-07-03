@@ -5,8 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
 import { MultilingPipe } from '../../pipes/multiling/multiling.pipe';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/switchMap';
-import 'lodash';
 
 @Component({
   moduleId: module.id,
@@ -22,6 +20,7 @@ export class AutocompleteInputComponent implements OnInit {
   @Output() update = new EventEmitter<any>();
   @Output() add = new EventEmitter<any>();
   @Output() remove = new EventEmitter<any>();
+
 
   @Input() canEdit = true;
   @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
@@ -40,6 +39,7 @@ export class AutocompleteInputComponent implements OnInit {
   private _identifier: string;
   private _canOrder: boolean;
   ////////////////////////////////////////////////////////////////////
+
 
   constructor(private _fbuilder: FormBuilder,
               private _sanitizer: DomSanitizer,
@@ -106,11 +106,28 @@ export class AutocompleteInputComponent implements OnInit {
   };
 
   public canAdd(): boolean {
-    return !this.onlyOne || this.answerList.length == 0;
+    return !this.onlyOne || this.answerList.length === 0;
   }
 
   addProposition(val: any): void {
     val = val ? val.get('answer').value : '';
+    if (val) {
+      // Verify here if the value has the expected fields (name, logo and domain)
+      if (typeof val === 'string') {
+        const _obj = {};
+        _obj[this._identifier] = val;
+        val = _obj;
+      }
+      if (val && this.answerList.findIndex(t => {return t[this._identifier] === val[this._identifier]}) === -1) {
+        if (this.onlyOne) {
+          this.answerList = [val];
+        } else {
+          this.answerList.push(val);
+        }
+        this.inputForm.get('answer').setValue('');
+        this.update.emit({value: this.answerList});
+      }
+    }
     // Verify here if the value has the expected fields (name, logo and domain)
     if (typeof val === 'string') {
       let _obj = {};
