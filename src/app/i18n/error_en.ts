@@ -48,6 +48,12 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'SUBMITTED_TEXT': 'Your project has been sent to validate.',
     'NOT_ALLOWED': 'You are not allowed to perform this action anymore.'
   },
+  'TAGS': {
+    'UPDATE': 'Tag update',
+    'ADDED': 'The tag has been successfully added.',
+    'UPDATED': 'The tag has been successfully updated.',
+    'REMOVED': 'The tag has been successfully removed.'
+  },
 
   'PRESET': {
     'UPDATED': 'The configuration has been updated'

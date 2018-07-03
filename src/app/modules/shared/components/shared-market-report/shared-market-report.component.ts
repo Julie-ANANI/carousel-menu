@@ -34,8 +34,8 @@ export class SharedMarketReportComponent implements OnInit {
   private _filters: {[questionId: string]: Filter} = {};
   private _filteredAnswers: Array<Answer> = [];
   private _countries: Array<string> = [];
-  private _showListProfessional = false;
-  private _showDetails = false;
+  private _showListProfessional = true;
+  private _showDetails = true;
   private _innoid: string;
 
   public today: Number;
@@ -231,8 +231,8 @@ export class SharedMarketReportComponent implements OnInit {
     }
   }
 
-  public get logoName(): string {
-    return `logo-${ environment.domain || 'umi.us'}.png`;
+  public logoName(): string {
+    return environment.logoSynthURL;
   }
 
   get projectStatus(): string {

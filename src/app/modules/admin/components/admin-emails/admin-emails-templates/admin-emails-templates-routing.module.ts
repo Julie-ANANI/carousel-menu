@@ -8,6 +8,6 @@ import { AdminEditSignatureComponent } from './admin-edit-signature/admin-edit-s
 export const emailsTemplatesRoutes: Routes = [
   { path: '', redirectTo: 'new', pathMatch: 'full'},
   { path: 'new', component: AdminNewScenarioComponent, pathMatch: 'full' },
-  { path: 'scenario/:scenarioId', component: AdminEditScenarioComponent, resolve: { scenario: ScenarioResolver }, pathMatch: 'full' },
+  { path: 'scenario/:scenarioId', component: AdminEditScenarioComponent, resolve: { scenario: ScenarioResolver } , pathMatch: 'full' },
   { path: 'signature/:signatureId', component: AdminEditSignatureComponent, resolve: { signature: SignatureResolver }, pathMatch: 'full' }
 ];

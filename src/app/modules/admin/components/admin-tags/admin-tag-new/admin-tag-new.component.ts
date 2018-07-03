@@ -1,12 +1,14 @@
 import { Component, Output, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TagsService } from '../../../../../services/tags/tags.service';
 
-import { TagsService } from './../../../../../services/tags/tags.service';
+import { TagAttachment } from '../../../../../models/tag-attachment';
+import { Tag } from '../../../../../models/tag';
+import { MultilingPipe } from '../../../../../pipes/multiling/multiling.pipe';
 
-import { TagAttachment } from './../../../../../models/tag-attachment';
-import { Tag } from './../../../../../models/tag';
 
 @Component({
   selector: 'app-admin-tag-new',
@@ -14,6 +16,16 @@ import { Tag } from './../../../../../models/tag';
   styleUrls: ['admin-tag-new.component.scss']
 })
 export class AdminTagNewComponent {
+
+  @Input()
+  set showForm(value: boolean) { this._showForm = value; }
+
+  @Input()
+  set attachmentInitialData( data: Array<TagAttachment>) {
+    this._addAttachmentConfig.initialData = data;
+  }
+
+  @Output() public result: Tag;
 
   private _addAttachmentConfig: {
     placeholder: string,
@@ -29,7 +41,7 @@ export class AdminTagNewComponent {
     canOrder: false
   };
 
-  private _showForm: boolean = false;
+  private _showForm = false;
 
   private _codeTypes = [
     {'name': 'ISIC', 'value': 'isic'},
@@ -37,30 +49,38 @@ export class AdminTagNewComponent {
     {'name': 'Thomson Reuters', 'value': 'threuters'},
   ];
 
-  public formData: FormGroup = this._formBuilder.group({
-    label: ['', Validators.required],
-    attachments: [[]],
-    description: ['']
+  public formData: FormGroup = new FormGroup({
+    label: new FormGroup({
+      en: new FormControl(),
+      fr: new FormControl()
+    }),
+    description: new FormGroup({
+      en: new FormControl(),
+      fr: new FormControl()
+    }),
+    attachments: new FormControl(),
+    type: new FormControl()
   });
 
-  @Output() public result: Tag;
-
-  constructor(private _formBuilder: FormBuilder,
-              private _tagsService: TagsService,
+  constructor(private _tagsService: TagsService,
+              private _translateService: TranslateService,
               private _notificationsService: TranslateNotificationsService) {}
 
-  public onSubmit(event: any) {
-    this._tagsService.create(this.formData.value).subscribe(result=>{
-      if(result) {
-        this.result = result;
-        this._notificationsService.success("Tag creation", `The tag ${result.label} was created.`);
-      } else {
-        this._notificationsService.error('ERROR.ERROR', "Empty response from server");
-      }
-    }, error => {
-      error = JSON.parse(error);
-      this._notificationsService.error('ERROR.ERROR', error.message);
-    });
+  public onSubmit(_event: any) {
+    this._tagsService.create(this.formData.value)
+      .first()
+      .subscribe((result) => {
+        if (result) {
+          this.result = result;
+          const t_label = MultilingPipe.prototype.transform(result.label, this._translateService.currentLang);
+          this._notificationsService.success('Tag creation', `The tag ${t_label} was created.`);
+        } else {
+          this._notificationsService.error('ERROR.ERROR', 'Empty response from server');
+        }
+        }, (error) => {
+          error = JSON.parse(error);
+          this._notificationsService.error('ERROR.ERROR', error.message);
+      });
     this._showForm = false;
   }
 
@@ -74,11 +94,4 @@ export class AdminTagNewComponent {
 
   get showForm(): boolean { return this._showForm; }
 
-  @Input()
-  set showForm(value: boolean) { this._showForm = value; }
-
-  @Input()
-  set attachmentInitialData( data: Array<TagAttachment>) {
-    this._addAttachmentConfig.initialData = data;
-  }
 }

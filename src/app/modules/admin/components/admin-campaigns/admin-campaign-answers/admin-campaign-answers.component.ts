@@ -7,6 +7,7 @@ import { Answer } from '../../../../../models/answer';
 import { Campaign } from '../../../../../models/campaign';
 import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
+import { AuthService } from '../../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -31,7 +32,8 @@ export class AdminCampaignAnswersComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
               private answerService: AnswerService,
-              private notificationService: TranslateNotificationsService) { }
+              private notificationService: TranslateNotificationsService,
+              private _authService: AuthService) { }
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
@@ -54,6 +56,11 @@ export class AdminCampaignAnswersComponent implements OnInit {
       this._draftAnswers = result.answers.draftAnswers;
       this._rejectedAnswers = this.filterByStatus('REJECTED');
     });
+  }
+
+  public autorizedActions(level: number): boolean {
+    const adminLevel = this._authService.adminLevel;
+    return adminLevel > level;
   }
 
   public filterByStatus(status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED') {

@@ -74,8 +74,10 @@ export class AdminCampaignMailsComponent implements OnInit {
       if (result.length === 0) {
         this._notificationsService.success('Autobatch OFF', 'No batch will be created');
       } else {
+        if (result[0] !== 0) {
           this.stats.batches = result;
-          this._notificationsService.success('Autobatch ON', 'Every pro in campaign just get batched');
+        }
+        this._notificationsService.success('Autobatch ON', 'Every pro in campaign just get batched');
       }
     });
   }

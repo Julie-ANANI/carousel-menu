@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../models/innov-settings';
 import { Preset } from '../../../../../models/preset';
+import { Tag } from '../../../../../models/tag';
 
 @Component({
   selector: 'app-admin-project-details',
@@ -16,36 +18,57 @@ import { Preset } from '../../../../../models/preset';
 export class AdminProjectDetailsComponent implements OnInit {
 
   private _project: Innovation;
-  private _tags: Array<any> = [];
   private _dirty = false;
+  private _domain = {fr: '', en: ''};
+
+
+  public formData: FormGroup = this._formBuilder.group({
+    domainen: ['', [Validators.required]],
+    domainfr: ['', [Validators.required]]
+  });
+
+  public presetAutocomplete: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
-              private _titleService: TranslateTitleService) {}
+              private _titleService: TranslateTitleService,
+              private _translateService: TranslateService,
+              private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
-    this._tags = this._project.tags.map(tag => {
-      return {name: tag.label, _id: tag.id}
-    });
+    this.presetAutocomplete = {
+      placeholder: 'preset',
+      initialData: this.hasPreset() ? [this.project.preset] : [],
+      type: 'preset'
+    };
+    this._domain = this._project.settings.domain;
   }
 
-  set tags(value: Array<any>) {
-    this._tags = value;
-    this._dirty = true;
+  public addTag(tag: Tag): void {
+    this._innovationService
+      .addTag(this._project._id, tag._id)
+      .first()
+      .subscribe((p) => {
+        this._project.tags.push(tag);
+        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
+      }, err => {
+        this._notificationsService.error('ERROR.ERROR', err);
+      });
   }
 
-  get tags(): Array<any> {
-    return this._tags;
-  }
-
-  public updateTags(event: {value: Array<any>}): void {
-    this._tags = event.value;
-    this._project.tags = this._tags;
-    this._dirty = true;
+  public removeTag(tag: Tag): void {
+    this._innovationService
+      .removeTag(this._project._id, tag._id)
+      .first()
+      .subscribe((p) => {
+        this._project.tags = this._project.tags.filter(t => t._id !== tag._id);
+        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
+      }, err => {
+        this._notificationsService.error('ERROR.ERROR', err);
+      });
   }
 
   public updatePreset(event: {value: Array<Preset>}): void {
@@ -76,8 +99,10 @@ export class AdminProjectDetailsComponent implements OnInit {
    */
   public save(event: Event): void {
     event.preventDefault();
-
-    this._innovationService.save(this._project._id, this._project).first().subscribe(data => {
+    this._innovationService
+      .save(this._project._id, this._project)
+      .first()
+      .subscribe(data => {
         this._project = data;
         this._dirty = false;
       }, err => {
@@ -126,6 +151,19 @@ export class AdminProjectDetailsComponent implements OnInit {
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
+
+  public updateDomain() {
+    this._innovationService.updateSettingsDomain(this._project._id, this._domain).first().subscribe( x => {
+      this._domain = x.domain;
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+    }, (error) => {
+      this._notificationsService.error('ERROR', error);
+    });
+  }
+  set domain(domain: {en: string, fr: string}) { this._domain = domain; }
+  get domain() { return this._domain; }
+  get project() { return this._project; }
+  get dirty() { return this._dirty; }
 
   get project() {
     return this._project;

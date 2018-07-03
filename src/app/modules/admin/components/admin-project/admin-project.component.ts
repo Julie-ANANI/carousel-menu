@@ -10,9 +10,9 @@ import { AuthService } from '../../../../services/auth/auth.service';
   styleUrls: ['./admin-project.component.scss']
 })
 export class AdminProjectComponent implements OnInit {
-  
+
   private _project: Innovation;
-  private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis'];
+  private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis', 'tags'];
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,
@@ -25,10 +25,10 @@ export class AdminProjectComponent implements OnInit {
 
   get authorizedTabs(): Array<string> {
     const adminLevel = this._authService.adminLevel;
-    if(adminLevel>2) {
+    if(adminLevel > 1) {
       return this._tabs;
     } else {
-      return ['settings', 'cards', 'synthesis'];
+      return ['cards', 'campaigns', 'synthesis'];
     }
   }
 

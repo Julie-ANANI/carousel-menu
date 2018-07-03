@@ -1,12 +1,31 @@
-<div [ngClass]="{'big': big}">
-  <i
-    class="fa fa-tag tooltip"
-    [ngClass]="{'active': tags.length > 0}"
-    (click)="toggleTags($event)"
-    [attr.data-tooltip]="tags.toString()"
-  ></i>
-  <div *ngIf="displayTags">
-    <app-input-list (update)="updateTags($event)"
-                    [config]="{placeholder: 'tag', initialData: tags}"></app-input-list>
+<div class="shared-tag-item">
+
+  <div [ngSwitch]="editMode">
+
+    <div class="flex-container">
+      <ng-container *ngIf="tags?.length > 0">
+        <i class="fa fa-tag"></i>
+        <span *ngFor="let t of tags" class="label label-rounded label-primary tag-label">
+            <i *ngIf="editMode" class="icon icon-cross" (click)="removeTagEmitter($event, t)"></i>
+            {{t?.label | multiling:lang}}
+        </span>
+      </ng-container>
+    </div>
+    <form *ngIf="editMode" class="form-horizontal" [formGroup]="tagForm" (ngSubmit)="addTagEmitter($event)">
+      <div class="input-group">
+        <input ng2-auto-complete
+               formControlName="tag"
+               [source]="tagSuggestions.bind(this)"
+               [list-formatter]="autocompleListFormatter"
+               [value-formatter]="autocompleValueFormatter"
+               [attr.placeholder]="'Add an existing tag'"
+               class="form-input form-control input-lg">
+        <button class="btn btn-primary btn-lg input-group-btn" translate>
+          COMMON.ADD
+          <i class="icon icon-arrow-right"></i>
+        </button>
+      </div>
+    </form>
+
   </div>
 </div>

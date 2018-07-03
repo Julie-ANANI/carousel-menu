@@ -1,7 +1,7 @@
 $dark-bg: #262831;
 $second-color: #0B90C6;
 
-.project-header {
+.project-header-card {
   background: $dark-bg;
   color: white;
   padding-bottom: 16px;
@@ -56,4 +56,56 @@ $second-color: #0B90C6;
 
 h3 {
   color: $second-color;
+}
+
+
+
+@media print and (color) {
+
+  h2 {
+    margin-bottom: 20px !important;
+  }
+
+  .galery-innovation-card {
+    //page-break-before: always;
+  }
+
+  .project-header-card {
+    background: transparent !important;
+    padding: 40px 0 !important;
+    margin: 0 !important;
+
+    h1 {
+      color: #333 !important;
+      margin: 0 !important;
+    }
+
+    .metas {
+      display: none !important;
+    }
+
+    .pitch {
+      font-size: 0.9rem;
+      color: #333 !important;
+      margin-top: 20px !important;
+      margin-bottom: 20px !important;
+    }
+  }
+
+  .project-page {
+    display: none !important;
+  }
+
+  .share {
+    display: none !important;
+  }
+
+  .market-benefits {
+    background: transparent !important;
+    padding: 30px 0 !important;
+    margin-bottom: 40px !important;
+    margin-top: 40px !important;
+    page-break-after: always;
+  }
+
 }

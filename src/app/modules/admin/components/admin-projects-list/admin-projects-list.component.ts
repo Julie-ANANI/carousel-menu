@@ -170,7 +170,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
       // case 'SUBMITTED':
       //   return link;
       default:
-        return link + '/settings';
+        return link;
     }
   }
 

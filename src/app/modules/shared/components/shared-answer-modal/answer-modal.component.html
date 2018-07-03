@@ -46,17 +46,29 @@
         </div>
 
         <div *ngIf="adminMode">
+
           <strong>{{'ANSWER_MODAL.TIME_SPENT' | translate}} : </strong>
+
           {{floor(modalAnswer.time_elapsed/60)}} min.
           {{floor(modalAnswer.time_elapsed%60)}} sec.
           <br>
+
           <strong>IP : </strong>{{modalAnswer.ip}}<br>
-          <shared-tag-item *ngIf="editMode" [big]="true" [prop]="profile" [tags]="modalAnswer.tags" (tagsChange)="updateTags($event)"></shared-tag-item>
+
+          <app-shared-tag-item
+            [tags]="modalAnswer.tags"
+            [editMode]="editMode"
+            [projectId]="innoid"
+            (addTag)="addTag($event)"
+            (removeTag)="removeTag($event)">
+          </app-shared-tag-item>
+
           <label class="form-switch" for="toggleAdmin">
             <input type="checkbox" name="toggleAdmin" id="toggleAdmin"
                    (change)="(editMode = !editMode) && $event.preventDefault()">
             <i class="form-icon"></i>{{'ANSWER_MODAL.EDIT' | translate}}&nbsp;<i class="fas fa-pencil-alt"></i>
           </label>
+
         </div>
 
         <div>
@@ -93,7 +105,7 @@
           [editMode]="editMode"
           [question]="question"
           [fullAnswer]="modalAnswer"
-          (fullAnswerChange)="updateAnswer($event)"
+          [innoid]="innoid"
         ></app-answer-question>
       </div>
     </div>
@@ -120,7 +132,7 @@
         <i class="fas fa-check"></i> {{'ANSWER_MODAL.VALID_ANSWER' | translate}}
       </button>
       <button class="btn btn-error"
-              *ngIf="(modalAnswer.status === 'VALIDATED' && modalAnswer.professional?.email)"
+              *ngIf="adminMode && (modalAnswer.status === 'VALIDATED' && modalAnswer.professional?.email)"
               (click)="changeStatus($event, 'SUBMITTED')">
         <i class="fas fa-minus"></i> {{'ANSWER_MODAL.INVALID_ANSWER' | translate}}
       </button>

@@ -46,6 +46,7 @@ import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
 import { FilterPipe } from '../../pipes/TableFilterPipe';
 import { LimitsPipe } from '../../pipes/TableLimitsPipe';
 import { CharacterCountdown } from '../../pipes/CharacterCountdown';
+import { MultilingModule } from '../../pipes/multiling/multiling.module';
 
 // Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
@@ -73,6 +74,8 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     Ng2AutoCompleteModule,
     SharedWorldmapModule,
     SidebarModule
+    SharedWorldmapModule,
+    MultilingModule
   ],
   declarations: [
     // Directives

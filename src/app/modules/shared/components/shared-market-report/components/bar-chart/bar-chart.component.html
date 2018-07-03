@@ -9,7 +9,7 @@
 
 <div class="bar-chart-component">
 
-  <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i">
+  <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i" class="page-break">
 
     <div class="flex-container">
       <div class="horizontal-bar" (click)="showAnswers[i] = !showAnswers[i]">

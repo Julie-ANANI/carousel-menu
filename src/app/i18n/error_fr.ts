@@ -49,6 +49,13 @@ export const ERROR = {
     'NOT_ALLOWED': 'Vous n\'êtes plus autorisé à effectuer cette action.'
   },
 
+  'TAGS': {
+    'UPDATE': 'Tag',
+    'ADDED': 'Le tag a bien été ajouté.',
+    'UPDATED': 'Le tag a bien été modifié.',
+    'REMOVED': 'Le tag a bien été supprimé.'
+  },
+
   'PRESET': {
     'UPDATED': 'Configuration bien mise à jour'
   },

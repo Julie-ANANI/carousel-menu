@@ -2,6 +2,7 @@
 
 <h2>{{ total }} {{ 'CAMPAIGNS.ANSWERS' | translate }}</h2>
 
+<div *ngIf="autorizedActions(2)">
 <button class="btn btn-default" (click)="exportAnswers($event)">
   {{ 'CAMPAIGNS.EXPORT-ANSWERS' | translate }}
 </button>
@@ -11,15 +12,18 @@
   <span class="btn btn-default">{{ 'CAMPAIGNS.IMPORT-ANSWERS' | translate }}</span>
 </label>
 
+</div>
+
 <div class="bg-success answers-header">
   <h5>{{validatedAnswers.length}} {{ 'CAMPAIGNS.VALIDATED' | translate }}</h5>
 </div>
-<app-answers-list [answers]="validatedAnswers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
+<app-admin-answers-list [answers]="validatedAnswers" (modalAnswerChange)="seeAnswer($event)"></app-admin-answers-list>
 
+<div *ngIf="autorizedActions(0)">
 <div class="bg-warning answers-header">
   <h5>{{submittedAnswers.length}} {{ 'CAMPAIGNS.SUBMITTED' | translate }}</h5>
 </div>
-<app-answers-list [answers]="submittedAnswers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
+<app-admin-answers-list [answers]="submittedAnswers" (modalAnswerChange)="seeAnswer($event)"></app-admin-answers-list>
 
 
 <!-- TODO: on cache la section "à compléter", si personne ne s'est plaint d'ici le mois d'août, on supprime définitivement
@@ -32,9 +36,10 @@
 <div class="bg-dark answers-header">
   <h5>{{draftAnswers.length}} {{ 'CAMPAIGNS.DRAFTS' | translate }}</h5>
 </div>
-<app-answers-list [answers]="draftAnswers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
+<app-admin-answers-list [answers]="draftAnswers" (modalAnswerChange)="seeAnswer($event)"></app-admin-answers-list>
 
 <div class="bg-error answers-header">
   <h5>{{rejectedAnswers.length}} {{ 'CAMPAIGNS.REJECTED' | translate }}</h5>
 </div>
-<app-answers-list [answers]="rejectedAnswers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
+<app-admin-answers-list [answers]="rejectedAnswers" (modalAnswerChange)="seeAnswer($event)"></app-admin-answers-list>
+</div>

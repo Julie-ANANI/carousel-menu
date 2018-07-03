@@ -2,10 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { Tag } from '../../../../../models/tag';
 
-import { TagsService } from '../../../../../services/tags/tags.service';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-
-
 @Component({
   selector: 'app-admin-tag-attachment-list',
   templateUrl: 'admin-tag-attachment-list.component.html',
@@ -24,9 +20,7 @@ export class AdminTagAttachmentsListComponent implements OnInit{
     }
   };
 
-  constructor(private _tagsService: TagsService,
-              private _notificationsService: TranslateNotificationsService) {}
-
+  constructor() {}
 
   ngOnInit(): void {
     this._dataset = {
@@ -35,12 +29,6 @@ export class AdminTagAttachmentsListComponent implements OnInit{
         totalCount: 0
       }
     };
-    console.log(this._tagsService);
-    console.log(this._notificationsService);
-  }
-
-  public createTag(data: any) {
-    console.log(data);
   }
 
   get data(): Array<Tag> { return this._dataset.result; };
