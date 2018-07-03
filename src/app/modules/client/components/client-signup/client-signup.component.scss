@@ -53,13 +53,22 @@
           width: 280px;
           padding-left: 0;
           padding-right: 0;
-          
+
           i {
             vertical-align: middle;
           }
 
         }
 
+      }
+
+    }
+
+    .signin-wrapper {
+
+      .btn-sm {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
       }
 
     }
