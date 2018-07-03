@@ -1,4 +1,4 @@
-<form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData">
+<form novalidate [formGroup]="formData">
   <div class="form-group-inline-space">
     <label class="form-switch" for="operator">
       <input type="checkbox" name="operator" id="operator" formControlName="isOperator">
@@ -6,7 +6,7 @@
       {{ 'PROJECT_LIST.OPERATOR' | translate }}
     </label>
 
-    <button type="submit" class="btn btn-primary">
+    <button (click)="onSubmit()" class="btn btn-primary">
       {{'COMMON.SAVE' | translate}}
     </button>
   </div>
@@ -45,6 +45,10 @@
     <label class="form-label" for="companyName">{{ "COMMON.COMPANY" | translate }}</label>
     <input class="form-default" id="companyName" name="companyName" formControlName="companyName" type="text"
            placeholder="United Motion Ideas">
+  </div>
+
+  <div class="form-group">
+    <button class="btn btn-xs ghost-delete" (click)="removeUser()">{{'COMMON.DELETE' | translate}}</button>
   </div>
 
 </form>

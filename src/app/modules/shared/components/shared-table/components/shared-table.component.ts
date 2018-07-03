@@ -156,7 +156,7 @@ export class SharedTableComponent {
   }
 
   getMultiLabel(column: Column, attr: string) {
-    return column._multiLabels.find(value => value._attr === attr) || {_attr: '', _class: ''};
+    return column._multiLabels.find(value => value._attr === attr) || {};
   }
 
   getMultiLabelIndex(column: Column, multiLabel: MultiLabel) {

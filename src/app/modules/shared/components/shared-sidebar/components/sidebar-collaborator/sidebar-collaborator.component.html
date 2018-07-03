@@ -1,0 +1,41 @@
+<div class="main-container sidebar-wrapper" [@sidebarAnimate]="animate_state">
+  <div class="columns">
+    <div class="column col-12 col-mx-auto">
+
+      <!-- Header -->
+      <div class="sidebar-header">
+        <div class="column col-11 col-mx-auto">
+          <div class="header-content">
+            <span>{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</span>
+            <span><i class="icon icon-cross" (click)="toggleState()"></i></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="column col-11 col-mx-auto sidebar-content">
+
+        <!-- Add button -->
+        <div class="text-right">
+          <button class="btn btn-primary"><i class="fas fa-user-plus"></i>{{ 'COMMON.ADD' | translate }}</button>
+        </div>
+
+        <!-- Input field -->
+        <div class="form-group pd-top">
+          <label class="form-label" for="collaborator">{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.LABEL' | translate }}</label>
+          <input
+            class="form-default"
+            id="collaborator"
+            type="email"
+            placeholder="jhon@catco.com">
+        </div>
+
+        <!-- Bot -->
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

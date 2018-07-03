@@ -89,6 +89,13 @@
 </div>
 
 <!-- Add collaborators -->
+
+<app-sidebar-collaborator
+  [animate_state]="sidebarAnimateState"
+  (closeSidebar)="closeSidebar($event)"
+  [collaborator]="collaboratorValues">
+</app-sidebar-collaborator>
+
 <div class="modal" [ngClass]="{'active': displayAddCollaboratorsModal}">
   <div class="modal-overlay" (click)="closeModal($event)"></div>
   <div class="modal-container">
