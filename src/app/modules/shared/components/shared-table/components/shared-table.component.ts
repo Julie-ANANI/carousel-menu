@@ -1,4 +1,3 @@
-///<reference path="../../../../../../../node_modules/@angular/core/src/metadata/lifecycle_hooks.d.ts"/>
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Table} from '../models/table';
 import {Row} from '../models/row';
@@ -32,6 +31,7 @@ export class SharedTableComponent {
 
   private _selector = '';
   private _title = 'Résultats';
+  private _isHeadable = false;
   private _isSelectable = false;
   private _isEditable = false;
   private _isDeletable = false;
@@ -56,6 +56,7 @@ export class SharedTableComponent {
       this._content = [];
       value._content.forEach(value1 => this._content.push({_isHover: false, _isSelected: false, _content: value1}));
 
+      this._isHeadable = value._isHeadable || false;
       this._isSelectable = value._isSelectable || false;
       this._isEditable = value._isEditable || false;
       this._isDeletable = value._isDeletable || false;
@@ -101,7 +102,17 @@ export class SharedTableComponent {
   }
 
   getContentValue(rowKey: string, columnAttr: string): any  {
+    if (columnAttr.split('.').length > 1) {
+      let newColumnAttr = columnAttr.split('.');
+      let tmpContent = this._content[rowKey]._content[newColumnAttr[0]];
+      newColumnAttr = newColumnAttr.splice(1);
+      for (const i of newColumnAttr){
+        tmpContent = tmpContent[i];
+      }
+      return tmpContent;
+    }else {
       return this._content[rowKey]._content[columnAttr];
+    }
   }
 
   getType(column: Column): types {
@@ -168,6 +179,10 @@ export class SharedTableComponent {
     return this._title;
   }
 
+  get isHeadable(): boolean {
+    return this._isHeadable;
+  }
+
   get isSelectable(): boolean {
     return this._isSelectable;
   }
@@ -227,7 +242,6 @@ export class SharedTableComponent {
   }
 
   removeSelectedRows() {
-
     this.removeRows.emit(this.getSelectedRowsContent());
   }
 

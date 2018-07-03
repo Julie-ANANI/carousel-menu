@@ -9,6 +9,9 @@ export const TARGETING = {
     'ERROR': 'Geographical area is required.'
   },
 
+  'NO': 'None',
+  'NOT_ANSWER': 'You haven\'t answered this field.',
+
   'GEOGRAPHYs': 'Select the geographical area of the project',
   'SPECIFIC_REQUEST': 'Specific request',
 

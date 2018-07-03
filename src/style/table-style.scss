@@ -65,7 +65,7 @@ $border-color: #E0E0E0;
     background-color: #FFFFFF;
   }
 
-  th, td {
+  th:not(input[type="checkbox"]), td:not(input[type="checkbox"]) {
     width: 10%;
     min-height: 50px;
   }
@@ -90,25 +90,6 @@ $border-color: #E0E0E0;
 .pagination {
   margin: 0;
   padding: 0;
-}
-
-.form-group-inline-left{
-  display: flex;
-  justify-content: flex-start;
-
-  .input-group{
-    margin-left: 50px;
-  }
-
-}
-
-.form-group-inline-right{
-  display: flex;
-  justify-content: flex-end;
-
-  .input-group{
-    margin-right: 50px;
-  }
 }
 
 .sort-icon {

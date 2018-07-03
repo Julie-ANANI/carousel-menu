@@ -134,6 +134,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
           _total: this._total,
           _isFiltrable: true,
           _isSortable: true,
+          _isHeadable: true,
           _columns: [
             {_attrs: ['name'], _name: 'COMMON.PROJECTS', _type: 'TEXT'},
             {_attrs: ['type'], _name: 'COMMON.TYPE', _type: 'MULTI-CHOICES',

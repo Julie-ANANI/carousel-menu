@@ -3,4 +3,9 @@
   <router-outlet></router-outlet>
 </div>
 
+<!-- Scroll to top button -->
+<div class="btn-scroll" [ngStyle]="{ 'display': scrollButton ? 'flex' : 'none' }" (click)="scrollToTop($event)">
+  <i class="icon icon-upward"></i>
+</div>
+
 <!-- <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/tags'" title="">{{ 'COMMON.TAGS' | translate }}</a></li>-->

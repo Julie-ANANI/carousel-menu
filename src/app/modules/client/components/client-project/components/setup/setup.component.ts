@@ -49,9 +49,10 @@ export class SetupProjectComponent implements OnInit {
    */
   checkProjectStatus() {
     for (let i = 0; i < this.project.innovationCards.length; i++ ) {
-      if (this.project.innovationCards[i].title === '' || this.project.innovationCards[i].summary === '' || this.project.innovationCards[i].problem === ''
-        || this.project.innovationCards[i].solution === '' || this.project.innovationCards[i].advantages.length === 0 || this.project.external_diffusion === null
-      || this.project.patented === null) {
+      if (this.project.innovationCards[i].title === '' || this.project.innovationCards[i].summary === ''
+        || this.project.innovationCards[i].problem === '' || this.project.innovationCards[i].solution === ''
+        || this.project.innovationCards[i].advantages.length === 0 || this.project.external_diffusion === null
+        || this.project.patented === null) {
         this.pitchFormValid = false;
         break;
       } else {
@@ -59,10 +60,11 @@ export class SetupProjectComponent implements OnInit {
       }
     }
 
-    if (this.project.settings.market.comments.length !== 0 && (this.project.settings.geography.exclude.length !== 0 || this.project.settings.geography.comments.length !== 0 ||
-      this.project.settings.geography.continentTarget.russia || this.project.settings.geography.continentTarget.oceania || this.project.settings.geography.continentTarget.europe
-      || this.project.settings.geography.continentTarget.asia || this.project.settings.geography.continentTarget.americaSud || this.project.settings.geography.continentTarget.americaNord
-      || this.project.settings.geography.continentTarget.africa) ) {
+    if (this.project.settings.market.comments.length !== 0 && (this.project.settings.geography.exclude.length !== 0
+      || this.project.settings.geography.comments.length !== 0 || this.project.settings.geography.continentTarget.russia
+      || this.project.settings.geography.continentTarget.oceania || this.project.settings.geography.continentTarget.europe
+      || this.project.settings.geography.continentTarget.asia || this.project.settings.geography.continentTarget.americaSud
+      || this.project.settings.geography.continentTarget.americaNord || this.project.settings.geography.continentTarget.africa) ) {
       this.targetingFormValid = true;
     } else {
       this.targetingFormValid = false;

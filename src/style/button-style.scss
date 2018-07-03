@@ -74,7 +74,6 @@ $edit-color: #97A4B1;
               border-left-color 0.15s ease-in-out,
               border-right-color 0.15s ease-in-out,
               border-top-color 0.15s ease-in-out;
-  box-shadow: 0 1px 10px rgba(0,0,0,.1), 0 2px 40px rgba(0,0,0,.2);
 
   i {
     font-size: 0.6rem;
@@ -89,9 +88,9 @@ $edit-color: #97A4B1;
  */
 
 .btn:disabled, .btn[disabled], .btn.disabled, .btn-round:disabled, .btn-round[disabled], .btn-round.disabled {
-  color: #a9a9a9;
-  background-color: $disabled-color;
-  border-color: $disabled-color;
+  color: #a9a9a9 !important;
+  background-color: $disabled-color !important;
+  border-color: $disabled-color !important;
   cursor: not-allowed;
   pointer-events: auto;
   opacity: 1;
@@ -131,6 +130,24 @@ $edit-color: #97A4B1;
   color: white;
   background-color: lighten($secondary-color, 15%);
   border-color: lighten($secondary-color, 15%);
+}
+
+
+/*
+    Error button class that you have to add with button class.
+    Class name: btn-error
+ */
+
+.btn-error:not(:disabled), .btn-error:not(:disabled):focus, .btn-error:not(:disabled):active {
+  color: white;
+  background-color: $error-color;
+  border-color: $error-color;
+}
+
+.btn-error:not(:disabled):hover {
+  color: white;
+  background-color: lighten($error-color, 15%);
+  border-color: lighten($error-color, 15%);
 }
 
 

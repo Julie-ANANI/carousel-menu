@@ -5,6 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
 import { MultilingPipe } from '../../pipes/multiling/multiling.pipe';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
+import 'lodash';
 
 @Component({
   moduleId: module.id,

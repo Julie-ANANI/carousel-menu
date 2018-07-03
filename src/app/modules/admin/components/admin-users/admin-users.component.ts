@@ -15,12 +15,13 @@ export class AdminUsersComponent implements OnInit {
 
   private _users: Array<User> = [];
   private _actions: string[] = [];
-  private _more: GenericSidebar = {_animate: 'inactive', _content: ''};
+  private _more: GenericSidebar = {_animate: 'inactive'};
   private _tableInfos: Table = null;
   private _selfId = '';
+  private _currentUserId = '';
   private _total = 0;
   private _config = {
-    fields: 'companyName jobTitle created domain location firstName lastName',
+    fields: 'id companyName jobTitle created domain location firstName lastName',
     limit: 10,
     offset: 0,
     search: {},
@@ -59,8 +60,11 @@ export class AdminUsersComponent implements OnInit {
           _title: 'COMMON.USERS',
           _content: this._users,
           _total: this._total,
+          _isHeadable: true,
           _isFiltrable: true,
           _isSortable: true,
+          _isSelectable: true,
+          _isEditable: true,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
@@ -75,9 +79,9 @@ export class AdminUsersComponent implements OnInit {
   }
 
   editUser(user: User) {
-    this._more = {_animate: 'active',
-      _content: '<div>Bonjour ' + user.firstName + '</div>'
-    };
+    this._more = {_animate: 'active', _title: 'COMMON.EDIT'};
+    const us = new User(user);
+    this._currentUserId = us.id;
   }
 
   get selfId(): string {
@@ -111,5 +115,6 @@ export class AdminUsersComponent implements OnInit {
   get config(): any { return this._config; }
   get total(): number { return this._total; }
   get users() { return this._users; }
-  get more(): any { return this._more };
+  get more(): any { return this._more; }
+  get currentUserId(): string { return this._currentUserId; }
 }

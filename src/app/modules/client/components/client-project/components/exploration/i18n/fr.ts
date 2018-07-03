@@ -2,6 +2,8 @@ export const EXPLORATION = {
   'TITLE': {
     'EDITING': 'Les informations sur le marché de votre projet seront bientôt disponibles',
     'SUBMITTED': 'Collecte des informations sur le marché de votre projet',
+    'EVALUATING': 'Collecte des informations sur le marché de votre projet',
+    'EVALUATING_DONE': 'Les perspectives du marché de votre projet'
   },
 
   'MESSAGE': {
@@ -14,21 +16,34 @@ export const EXPLORATION = {
     'REVIEWING': 'Veuillez modifier les modifications de votre projet et renvoyez-le.'
   },
 
-  'CONTACT_BUTTON': 'Contact us',
-  'STATUS_TITLE': 'Status',
-  'ANALYTICS_TITLE': 'Analytics',
-  'CLICKMAP_TITLE': 'Click rate',
-  'COMPANIESLIST_TITLE': 'Companies to contact',
-  'INSIGHTS_TITLE': 'Insights',
-  'STATUS': {
-    'STARTED': 'Started',
-    'LAUNCHED': 'Launched'
+  'STATUS_TEXT': {
+    'A': 'Statut',
+    'B': 'Targeting',
+    'C': 'Emails sent',
+    'D': 'Relaunch',
+    'F': 'Last relaunch',
+    'G': 'Created'
   },
+
+  'CONTACT_BUTTON': 'Contact us',
+
+  'COMMENTS': 'Our comments',
+
+  'ACCOUNT_MANAGER': 'Your account manager:',
+
+  'CLICK_MAP_TITLE': 'Click rate',
+
+  'COMPANIES_LIST_TITLE': 'Companies to contact',
+
+  'INSIGHTS_TITLE': 'Insights',
+
   'ANALYTICS': {
+    'TITLE': 'Analytics',
     'PROFESSIONALS': 'Professionals',
     'PROFESSIONALS_REACHED': 'Reached',
     'EMAILS_OPENED': 'Emails opened',
     'CLICKS': 'Visits',
     'ANSWERS': 'Validated answers'
   }
+
 };

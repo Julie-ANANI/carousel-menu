@@ -46,7 +46,7 @@ export class SharedFilterMultiComponent {
 
   loadProps(value: Column[]) {
     if (value) {
-      this._textProps = value.filter(value1 => this.getType(value1) === 'TEXT' && this.getType(value1) !== 'COUNTRY' && this.getType(value1) !== 'DATE');
+      this._textProps = value.filter(value1 => this.getType(value1) === 'TEXT' || this.getType(value1) === 'COUNTRY' || this.getType(value1) === 'DATE');
       if (this._currentTextProp._attrs[0] === '' && this._textProps.length > 0) {
         this._currentTextProp = this._textProps[0];
       }

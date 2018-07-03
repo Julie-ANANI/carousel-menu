@@ -19,7 +19,7 @@ import { environment } from '../../../../../../../environments/environment';
         transform: 'translateX(0)',
         opacity: 1
       })),
-      transition('inactive => active', animate('700ms ease-in-out'))
+      transition('inactive <=> active', animate('700ms ease-in-out'))
     ])
   ]
 })
@@ -133,7 +133,7 @@ export class UserFormSidebarComponent implements OnInit {
     return this._displayCountrySuggestion;
   }
 
-  get companyName(){
+  get companyName() {
     return (this._companyName || 'umi').toLocaleUpperCase();
   }
 

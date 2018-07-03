@@ -1,13 +1,15 @@
 <div class="main-container" id="discover-description">
   <div class="columns">
-    <div *ngFor="let innovation of innovationCard" class="column col-12">
+    <div *ngFor="let innovation of innovationCard" class="column col-12 col-mx-auto">
 
       <!-- Hero section -->
       <div class="hero-container">
+
         <div class="column col-11 col-mx-auto">
           <h1>{{ innovation.title }}</h1>
           <h6>{{ 'DISCOVERDESCRIPTION.AVAILABLE' | translate }} &nbsp;•&nbsp;  {{ 'DISCOVERDESCRIPTION.PATENT' | translate }}</h6>
           <hr class="hero-hr" align="left">
+
           <!-- Summary and share button -->
           <div class="detail-wrapper">
             <div class="summary-wrapper">
@@ -34,6 +36,7 @@
               </a>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -84,117 +87,6 @@
   </div>
 </div>
 
-
-<!--<div class="container main-container">
-  <div class="columns">
-    <div class="column col-12 col-mx-auto" *ngFor="let innovation of innovationCard">
-
-      <!-- Hero container
-      <div class="column col-12 col-mx-auto hero-container">
-          <div class="column col-11 col-mx-auto">
-
-            <!-- Title, Subtitle and Hr -
-            <h1 class="hero-title">{{ innovation.title }}</h1>
-            <div class="hero-description">{{ 'DISCOVERDESCRIPTION.AVAILABLE' | translate }} &nbsp;•&nbsp;  {{ 'DISCOVERDESCRIPTION.PATENT' | translate }}</div>
-            <hr class="hero-hr" align="left">
-
-            <!-- Summary, Button and Share -
-            <div class="columns">
-
-              <!-- Summary and Button
-              <div class="column col-xl-12 col-lg-12 col-9 col-mx-auto">
-                <h3 class="hero-subtitle">{{ innovation.summary }}</h3>
-                <div class="button-container" [ngStyle]="{ 'display': quizButtonDisplay }">
-                  <a class="btn button" [href]="quizUrl" target="_blank">
-                    <span>{{ 'DISCOVERDESCRIPTION.OPINION' | translate }} <i class="icon icon-message"></i></span>
-                  </a>
-                </div>
-              </div>
-              <!-- /Summary and Button
-
-              <!-- Share
-              <div class="column col-xs-12 col-sm-10 col-md-7 col-lg-5 col-xl-4 col-3 padding-lr-rm" id="padding-top-share">
-                <div id="share-container">
-                  <div id="share-data">
-                    <p class="para">{{ 'DISCOVERDESCRIPTION.SHARE' | translate }}</p>
-                      <a [href]="linkedInUrl" target="_blank">
-                        <i class="fab fa-linkedin-in fa-2x" id="icon-linkedIn"></i>
-                      </a>&nbsp;
-                      <a [href]="twitterUrl" target="_blank">
-                        <i class="fab fa-twitter fa-2x" id="icon-twitter"></i>
-                      </a>&nbsp;
-                      <a [href]="facebookUrl" target="_blank">
-                        <i class="fab fa-facebook-f fa-2x" id="icon-facebook"></i>
-                      </a>&nbsp;
-                      <a [href]="googlePlusUrl" target="_blank">
-                        <i class="fab fa-google-plus-g fa-2x" id="icon-google"></i>
-                      </a>
-                  </div>
-                </div>
-              </div>
-              <!-- Share
-
-            </div>
-
-          </div>
-      </div>
-
-      <!-- Gallery section container
-      <div class="section-container" id="gallery-section">
-        <div class="column col-11 col-mx-auto">
-          <div class="columns">
-            <div class="column col-sm-12 col-md-6 col-lg-4 col-3" id="padding-bottom" *ngFor="let media of innovation.media">
-              <a [href]="media.url" target="_blank">
-                <img [src]="media.url"
-                       class="img-responsive"
-                       [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate"
-                  >
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- /Gallery section container -->
-
-      <!-- Advantages section container
-      <div class="section-container" id="advantages-section">
-        <div class="column col-11 col-mx-auto">
-          <h2 class="section-title">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
-          <ul>
-            <li *ngFor="let advantage of innovation.advantages;">{{ advantage.text[0] | uppercase }}{{advantage.text|slice:1}}</li>
-          </ul>
-        </div>
-      </div>
-      <!-- /Advantages section container
-
-      <!-- Problem and Solution section container
-      <div class="section-container" id="solution-section">
-        <div class="column col-11 col-mx-auto">
-          <div class="columns">
-
-            <!-- Problem
-            <div class="column col-lg-12 col-6 col-mx-auto" id="col-padding-right">
-              <h3 class="section-title">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h3>
-              <p class="section-description"> {{ innovation.problem }} </p>
-            </div>
-            <!-- /Problem -->
-
-            <!-- Solution
-            <div class="column col-lg-12 col-6 col-mx-auto" id="col-padding-left">
-              <h3 class="section-title">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h3>
-              <p class="section-description"> {{ innovation.solution }} </p>
-            </div>
-            <!-- /Solution -
-
-          </div>
-        </div>
-      </div>
-      <!-- /Problem and Solution section container
-
-
-    </div>
-  </div>
-</div>-->
 
 
 

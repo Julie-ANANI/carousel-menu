@@ -29,13 +29,11 @@ export class GenericSidebarComponent {
 
   private _title: string; // Sidebar heading
   private _state: string; // animation state
-  private _content: string;
 
   constructor() {
   }
 
   loadData(value: GenericSidebar) {
-    this._content = value._content;
     this._state = value._animate;
     this._title = value._title || 'SideBar';
   }
@@ -54,10 +52,6 @@ export class GenericSidebarComponent {
 
   get title(): string {
     return this._title;
-  }
-
-  get content(): string {
-    return this._content;
   }
 
   toggleState() {

@@ -20,30 +20,37 @@ export class ExplorationProjectComponent implements OnInit {
 
   private _contactUrl: string;
   private _answers: Array<Answer>;
-  private _campaignsStats: {nbPros: number, nbProsSent: number, nbProsOpened: number, nbProsClicked: number};
+  private _campaignsStats: {
+    nbPros: number,
+    nbProsSent: number,
+    nbProsOpened: number,
+    nbProsClicked: number
+  };
   private _companies: Array<Clearbit>;
   private _countries: Array<string>;
   private _questions: Array<Question>;
   private _modalAnswer: Answer;
 
-  constructor(private answerService: AnswerService, private innovationService: InnovationService,
-              private notificationService: TranslateNotificationsService) {}
+  constructor(private answerService: AnswerService,
+              private innovationService: InnovationService,
+              private notificationService: TranslateNotificationsService) {
+  }
 
   ngOnInit() {
     this._contactUrl = encodeURI('mailto:contact@umi.us?subject=' + this.project.name);
-    this.answerService
-      .getInnovationValidAnswers(this.project._id)
-      .first()
-      .subscribe((results) => {
+
+    this.answerService.getInnovationValidAnswers(this.project._id)
+      .first().subscribe((results) => {
         this._answers = results.answers;
-        this._companies = results.answers
-          .map((answer) => answer.company || {name: answer.professional.company})
-          .filter(function(item, pos, self) {
+
+        this._companies = results.answers.map((answer) => answer.company || {
+          name: answer.professional.company
+        }).filter(function(item, pos, self) {
             // this is here to remove duplicate
             return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
           });
-        this._countries = results.answers
-          .reduce((acc, answer) => {
+
+        this._countries = results.answers.reduce((acc, answer) => {
             if (acc.indexOf(answer.country.flag) === -1) {
               acc.push(answer.country.flag);
             }
@@ -52,6 +59,7 @@ export class ExplorationProjectComponent implements OnInit {
       }, (error) => {
         this.notificationService.error('ERROR.ERROR', error.message);
       });
+
     this._campaignsStats = {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0};
     this.innovationService
       .campaigns(this.project._id)
@@ -82,6 +90,7 @@ export class ExplorationProjectComponent implements OnInit {
         this._questions = this._questions.concat(section.questions || []);
       });
     }
+
   }
 
   get projectStatus(): string {

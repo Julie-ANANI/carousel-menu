@@ -74,7 +74,7 @@ export const PITCH = {
     'SECONDARY': 'Secondary medias',
     'UPLOAD_PICTURE': 'Upload picture',
     'UPLOAD_VIDEO': 'Upload video',
-    'SLIDE': 'faites glisser le fichier ici',
+    'SLIDE': 'drag the file here',
     'URL': 'Enter the address of your Youtube or Vimeo video here',
     'MAKE_MAIN': 'Make it as main media'
   },

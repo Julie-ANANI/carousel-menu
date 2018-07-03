@@ -30,10 +30,10 @@ export class AdminProjectDetailsComponent implements OnInit {
   public presetAutocomplete: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
+              private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
               private _titleService: TranslateTitleService,
-              private _translateService: TranslateService,
               private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
@@ -140,17 +140,18 @@ export class AdminProjectDetailsComponent implements OnInit {
     return (p && p.constructor === Object && Object.keys(p).length > 0);
   }
 
-  public notifClass(): string {
+  public notifyClass(): string {
     if (this._dirty) {
-      return 'btn btn-primary input-group-btn btn-lg badge';
+      return 'btn ghost-primary btn-lg badge';
     } else {
-      return 'btn btn-primary input-group-btn btn-lg';
+      return 'btn ghost-primary btn-lg';
     }
   }
 
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
+
 
   public updateDomain() {
     this._innovationService.updateSettingsDomain(this._project._id, this._domain).first().subscribe( x => {

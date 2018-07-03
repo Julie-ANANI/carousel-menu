@@ -2,9 +2,162 @@
 
 #project-exploration {
 
+  .title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 25px;
+
+    .btn {
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
+  }
+
+  .sts_comm-wrapper {
+    display: flex;
+    padding-top: 0;
+
+    .status-wrapper {
+      height: 236px;
+      width: 330px;
+      background-color: #4F5D6B;
+      border-radius: 3px;
+      padding: 35px;
+      margin-right: 25px;
+      flex: 1 0 auto;
+
+      h6 {
+        color: white;
+        font-weight: 300;
+      }
+
+      .fas {
+        color: #2ECC71;
+      }
+
+      .text-white {
+        color: white;
+        font-size: 0.7rem;
+      }
+
+      .info-status {
+        display: flex;
+        justify-content: space-between;
+      }
+
+    }
+
+    .comment-wrapper {
+
+      div {
+        padding-top: 25px;
+
+        span {
+          font-weight: 600;
+        }
+
+      }
+
+    }
+
+  }
+
+  h3 {
+    color: #0B90C6;
+    font-weight: 300;
+    font-size: 1.3rem;
+  }
+
+  .analytic-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .pd-top {
+      padding-top: 22px;
+    }
+
+    .info-analytic {
+      margin-left: 25px;
+      margin-right: 25px;
+      margin-bottom: 25px;
+
+      p {
+        color: #97A4B1;
+      }
+
+      .svg-text {
+        font-size: 0.7rem;
+        font-weight: 600;
+        fill: #FFFFFF;
+      }
+
+    }
+
+  }
+
+  .com-nme {
+    list-style: none;
+
+    li {
+      padding-top: 0;
+      padding-left: 0;
+      display: inline-flex;
+      width: 33.33%;
+    }
+
+  }
+
   .bot-rect {
     width: 300px;
   }
 
+
+}
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  #project-exploration {
+
+    .title-wrapper {
+      flex-direction: column;
+
+      .btn {
+        width: 133.72px;
+      }
+
+    }
+
+  }
+
+}
+
+@media (max-width: 800px) {
+
+  #project-exploration {
+
+    .sts_comm-wrapper {
+      flex-direction: column;
+
+      .status-wrapper {
+        width: 310px;
+        margin-right: 0;
+        margin-bottom: 25px;
+      }
+
+    }
+
+    .com-nme {
+
+      li {
+        width: 50%;
+      }
+
+    }
+
+  }
 
 }
