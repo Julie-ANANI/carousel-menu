@@ -54,7 +54,7 @@
             </div>
 
             <!-- Comment countries -->
-            <div *ngIf="!_projectStatus && settings.geography.comments">
+            <div *ngIf="!_projectStatus && !!settings.geography.comments">
               <p class="pd-top">
                 <span [ngStyle]="{ 'color': '#FFB300' }">
                   {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.COMMENT' | translate }}
@@ -196,7 +196,7 @@
               </div>
 
               <!-- Companies comment -->
-              <div *ngIf="!_projectStatus && settings.companies.description">
+              <div *ngIf="!_projectStatus && !!settings.companies.description">
                 <p class="pd-top">
                   <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.COMMENT' | translate }}</span>
                 </p>
@@ -243,7 +243,7 @@
               </div>
 
               <!-- Description -->
-              <div *ngIf="!_projectStatus && settings.professionals.description" class="pd-input">
+              <div *ngIf="!_projectStatus && !!settings.professionals.description" class="pd-input">
                 <p>{{ settings.professionals.description }}</p>
               </div>
 
