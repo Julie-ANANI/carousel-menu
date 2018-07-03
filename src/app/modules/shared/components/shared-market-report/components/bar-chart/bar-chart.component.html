@@ -4,12 +4,12 @@
   [pieChart]="pieChart"
   [question]="question"
   [readonly]="readonly"
-  [stats]="stats">
-</app-question-conclusion>
+  [stats]="stats"
+></app-question-conclusion>
 
 <div class="bar-chart-component">
 
-  <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i">
+  <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i" class="page-break">
 
     <div class="flex-container">
       <div class="horizontal-bar" (click)="showAnswers[i] = !showAnswers[i]">
@@ -20,16 +20,17 @@
              [attr.data-tooltip]="barData.count + ' ' + ('MARKET_REPORT.ANSWERS' | translate)">
           <span *ngSwitchCase="'radio'">{{barData.absolutePercentage}}</span>
           <span *ngSwitchCase="'checkbox'">{{barData.count}} {{'MARKET_REPORT.ANSWERS' | translate}}</span>
-          <i class="icon" aria-hidden="true" [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
+          <i class="fas" aria-hidden="true" [ngClass]="showAnswers[i] ? 'fa-angle-up' : 'fa-angle-down'"></i>
         </div>
       </div>
-      <button class="btn btn-secondary" (click)="filterAnswer(barData, $event)">
+      &nbsp;
+      <button class="btn btn-action circle" (click)="filterAnswer(barData, $event)">
         <i class="fas fa-filter"></i>
       </button>
     </div>
 
-    <!-- Textarea -->
-    <ul *ngIf="showAnswers[i]" class="comments">
+    <!--======= textarea =======-->
+    <ul *ngIf="showAnswers[i]" class="comments-bar">
       <li *ngFor="let answer of barData.answers">
         <market-comment
           [answer]="answer"

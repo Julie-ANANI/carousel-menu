@@ -24,7 +24,7 @@
                [data]="email.content || ''"
                (onEditorKeyup)="updateContent($event)"></text-zone>
     <button *ngIf="editionMode" type="submit" class="btn btn-primary centered" (click)="save()">Sauvegarder</button>
-    <p *ngIf="editionMode">Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*</p>
+    <p *ngIf="editionMode">Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*, *|DOMAIN|*</p>
   </div>
   <!--
   <div class="card-footer" *ngIf="email.content != null">

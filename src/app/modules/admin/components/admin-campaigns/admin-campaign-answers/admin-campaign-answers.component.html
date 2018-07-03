@@ -19,7 +19,7 @@
 </div>
 <app-answers-list [answers]="validatedAnswers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
 
-<div *ngIf="autorizedActions(2)">
+<div *ngIf="autorizedActions(0)">
 <div class="bg-warning answers-header">
   <h5>{{submittedAnswers.length}} {{ 'CAMPAIGNS.SUBMITTED' | translate }}</h5>
 </div>

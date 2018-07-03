@@ -51,6 +51,7 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
   'TAGS': {
     'UPDATE': 'Tag update',
     'ADDED': 'The tag has been successfully added.',
+    'UPDATED': 'The tag has been successfully updated.',
     'REMOVED': 'The tag has been successfully removed.'
   },
   'PRESET': {

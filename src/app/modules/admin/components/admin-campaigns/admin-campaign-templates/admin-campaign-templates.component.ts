@@ -85,6 +85,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     this._saveTemplates();
   }
 
+
   private _saveTemplates() {
     this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
       this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
@@ -150,6 +151,13 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     this.modalSelectDefault[1] = this._campaign.settings.defaultWorkflow;
   }
 
+
+  public domain(): boolean {
+    return (this._campaign.innovation.settings.domain !== '');
+
+  }
+
+  get campaign(): any { return this._campaign};
   get config(): any { return this._config; }
 
   get availableScenarios(): Array<EmailScenario> { return this._availableScenarios }

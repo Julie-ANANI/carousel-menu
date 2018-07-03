@@ -73,12 +73,13 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="'textbox'">
-      <shared-tag-item
+      <app-shared-tag-item
         [tags]="fullAnswer.answerTags[question.identifier]"
         [editMode]="editMode"
+        [projectId]="innoid"
         (addTag)="addTag($event, question.identifier)"
         (removeTag)="removeTag($event, question.identifier)">
-      </shared-tag-item>
+      </app-shared-tag-item>
       <p>
         {{fullAnswer.answers[question.identifier]}}
         <app-rating-item [editMode]="editMode" [prop]="question.identifier"
@@ -88,12 +89,13 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="'textarea'">
-      <shared-tag-item
+      <app-shared-tag-item
         [tags]="fullAnswer.answerTags[question.identifier]"
         [editMode]="editMode"
+        [projectId]="innoid"
         (addTag)="addTag($event, question.identifier)"
         (removeTag)="removeTag($event, question.identifier)">
-      </shared-tag-item>
+      </app-shared-tag-item>
       <blockquote *ngIf="fullAnswer.answers[question.identifier] && !editMode">
         <p>
           {{fullAnswer.answers[question.identifier]}}
@@ -147,12 +149,13 @@
                            [rating]="fullAnswer.answers[question.identifier + 'CommentQuality']"
                            (ratingChange)="updateQuality($event)"></app-rating-item>
         </p>
-        <shared-tag-item
+        <app-shared-tag-item
           [tags]="fullAnswer.answerTags[question.identifier + 'Comment']"
           [editMode]="editMode"
+          [projectId]="innoid"
           (addTag)="addTag($event, question.identifier + 'Comment')"
           (removeTag)="removeTag($event, question.identifier + 'Comment')">
-        </shared-tag-item>
+        </app-shared-tag-item>
       </blockquote>
     </ng-container>
 
@@ -169,12 +172,14 @@
                          (ratingChange)="updateQuality($event)"></app-rating-item>
         <i class="fas fa-trash" (click)="deleteComment($event)"></i>
       </form>
-      <shared-tag-item
+      <app-shared-tag-item
+        *ngIf="fullAnswer.answers && fullAnswer.answers[question.identifier + 'Comment']"
         [tags]="fullAnswer.answerTags[question.identifier + 'Comment']"
         [editMode]="editMode"
+        [projectId]="innoid"
         (addTag)="addTag($event, question.identifier + 'Comment')"
         (removeTag)="removeTag($event, question.identifier + 'Comment')">
-      </shared-tag-item>
+      </app-shared-tag-item>
     </ng-container>
   </ng-container>
 

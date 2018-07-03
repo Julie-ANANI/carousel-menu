@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
@@ -18,14 +19,22 @@ export class AdminProjectDetailsComponent implements OnInit {
 
   private _project: Innovation;
   private _dirty = false;
+  private _domain = {fr: '', en: ''};
+
+
+  public formData: FormGroup = this._formBuilder.group({
+    domainen: ['', [Validators.required]],
+    domainfr: ['', [Validators.required]]
+  });
 
   public presetAutocomplete: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
-              private _titleService: TranslateTitleService) {}
+              private _titleService: TranslateTitleService,
+              private _translateService: TranslateService,
+              private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this._titleService.setTitle('MY_PROJECTS.TITLE');
@@ -35,26 +44,27 @@ export class AdminProjectDetailsComponent implements OnInit {
       initialData: this.hasPreset() ? [this.project.preset] : [],
       type: 'preset'
     };
+    this._domain = this._project.settings.domain;
   }
 
-  public addTag(event: Tag): void {
+  public addTag(tag: Tag): void {
     this._innovationService
-      .addTag(this._project._id, event._id)
+      .addTag(this._project._id, tag._id)
       .first()
       .subscribe((p) => {
-        this._project = p;
+        this._project.tags.push(tag);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
       });
   }
 
-  public removeTag(event: Tag): void {
+  public removeTag(tag: Tag): void {
     this._innovationService
-      .removeTag(this._project._id, event._id)
+      .removeTag(this._project._id, tag._id)
       .first()
       .subscribe((p) => {
-        this._project = p;
+        this._project.tags = this._project.tags.filter(t => t._id !== tag._id);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
@@ -141,6 +151,17 @@ export class AdminProjectDetailsComponent implements OnInit {
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
+
+  public updateDomain() {
+    this._innovationService.updateSettingsDomain(this._project._id, this._domain).first().subscribe( x => {
+      this._domain = x.domain;
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+    }, (error) => {
+      this._notificationsService.error('ERROR', error);
+    });
+  }
+  set domain(domain: {en: string, fr: string}) { this._domain = domain; }
+  get domain() { return this._domain; }
   get project() { return this._project; }
   get dirty() { return this._dirty; }
 }

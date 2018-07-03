@@ -1,4 +1,5 @@
 export const PROJECT_EDIT = {
+  'PRINT': 'Print innovation description',
   'HOW': 'How to launch the study of my project?',
   'ADD_COLLABORATORS': 'Add collaborators',
   'STEP1': 'Define your target market',

@@ -3,6 +3,9 @@ $body-font-color-darker: #333333;
 $primary-color: #3498DB;
 
 
+.innovation-card-print {
+  display: none;
+}
 
 .project-header {
   background: $dark-bg;
@@ -39,7 +42,7 @@ $primary-color: #3498DB;
   background: #FAFAFA;
   padding: 15px 0;
   position:sticky;
-  top: 0px;
+  top: 0;
   z-index:300;
   font-size: 0.8rem;
 
@@ -142,4 +145,18 @@ $primary-color: #3498DB;
   height: 150px;      /* Give height of your fixed element */
   margin-top: -150px; /* Give negative margin of your fixed element */
   visibility: hidden;
+}
+
+
+
+@media print and (color) {
+
+  .project-page {
+    display: none !important;
+  }
+
+  .innovation-card-print {
+    display: block !important;
+  }
+
 }

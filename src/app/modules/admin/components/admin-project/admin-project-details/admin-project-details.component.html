@@ -7,12 +7,13 @@
 
     <div>
       <h4>Tags management</h4>
-      <shared-tag-item
-        [tags]="project.tags"
+      <app-shared-tag-item
         [editMode]="true"
+        [tags]="project.tags"
+        [projectId]="project._id"
         (addTag)="addTag($event)"
         (removeTag)="removeTag($event)">
-      </shared-tag-item>
+      </app-shared-tag-item>
 
       <h4>Presets management</h4>
       <app-autocomplete-input
@@ -37,5 +38,27 @@
         {{ 'COMMON.SAVE' | translate }}
       </button>
     </div>
-  </div>
+    <h3>Domaine   *|DOMAIN|*</h3>
+    <form [formGroup]="formData">
+      <div class ="form-group">
+        <input type="text"
+               class="form-input"
+               name="domainen"
+               [(ngModel)]="domain.en"
+               formControlName="domainen">
+        <h6> EN </h6>
+      </div>
+      <div class ="form-group">
+          <input type="text"
+                 class="form-input"
+                 name="domainfr"
+                 [(ngModel)]="domain.fr"
+                 formControlName="domainfr">
+          <h5> FR </h5>
+      </div>
+      <div class ="form-group">
+        <input type="submit" value="Valider" (click)="updateDomain()">
+      </div>
+    </form>
+    </div>
 </div>

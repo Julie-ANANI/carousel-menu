@@ -18,6 +18,7 @@ import * as _ from 'lodash';
 
 export class AnswerQuestionComponent implements OnInit {
 
+  @Input() public innoid: string;
   @Input() public question: Question;
   @Input() public fullAnswer: Answer;
   @Input() public editMode: boolean;
@@ -76,22 +77,24 @@ export class AnswerQuestionComponent implements OnInit {
     delete this.fullAnswer.answers[this.question.identifier + 'Comment'];
   }
 
-  public addTag(event: Tag, q_identifier: string): void {
+  public addTag(tag: Tag, q_identifier: string): void {
     this._answerService
-      .addTag(this.fullAnswer._id, event._id, q_identifier)
+      .addTag(this.fullAnswer._id, tag._id, q_identifier)
       .first()
       .subscribe((a) => {
+        this.fullAnswer.answerTags[q_identifier].push(tag);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
       });
   }
 
-  public removeTag(event: Tag, q_identifier: string): void {
+  public removeTag(tag: Tag, q_identifier: string): void {
     this._answerService
-      .removeTag(this.fullAnswer._id, event._id, q_identifier)
+      .removeTag(this.fullAnswer._id, tag._id, q_identifier)
       .first()
       .subscribe((a) => {
+        this.fullAnswer.answerTags[q_identifier] = this.fullAnswer.answerTags[q_identifier].filter(t => t._id !== tag._id);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
