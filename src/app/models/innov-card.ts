@@ -6,6 +6,7 @@ export interface InnovCard {
   readonly title?: string;
   readonly lang: string;
   media?: Array<Media>;
+  principalMedia?: Media;
   readonly principalMediaIdx?: number;
   readonly summary?: string;
   problem?: string;

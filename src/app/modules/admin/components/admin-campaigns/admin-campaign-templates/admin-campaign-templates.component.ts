@@ -15,7 +15,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 export class AdminCampaignTemplatesComponent implements OnInit {
 
   private _campaign: Campaign;
-  public importModal: boolean = false;
+  public importModal = false;
   public modalSelectDefault: Array<any> = [false, ''];
 
   private _scenario: EmailScenario = {
@@ -157,7 +157,6 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
   }
 
-  get campaign(): any { return this._campaign};
   get config(): any { return this._config; }
 
   get availableScenarios(): Array<EmailScenario> { return this._availableScenarios }
