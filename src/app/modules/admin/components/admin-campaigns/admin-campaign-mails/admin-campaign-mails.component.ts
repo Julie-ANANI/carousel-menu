@@ -237,6 +237,7 @@ export class AdminCampaignMailsComponent implements OnInit {
       _selector: 'TODO',
       _title: 'Batch de ' + batch.size + ' pros',
       _isNotPaginable: true,
+      _isHeadable: true,
       _content: [
         {
           Step: '01 - HelloWorld',
