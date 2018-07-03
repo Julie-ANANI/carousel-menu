@@ -30,6 +30,9 @@ export class AdminCampaignMailsComponent implements OnInit {
   public dateMail: string;
   public timeMail: string;
 
+  private _tableBatch: Array<any> = [];
+
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
               private _notificationsService: TranslateNotificationsService) { }
@@ -51,6 +54,14 @@ export class AdminCampaignMailsComponent implements OnInit {
       } else {
         this.mailsToSend = 0;
       }
+
+      this._stats.batches.forEach( (batch: any) => {
+        this._tableBatch.push(
+          this.generateTableBatch(batch)
+        );
+      });
+
+
     });
 
     this.newBatch = {
@@ -90,6 +101,9 @@ export class AdminCampaignMailsComponent implements OnInit {
       } else {
         if (result[0] !== 0) {
           this.stats.batches = result;
+          this._tableBatch = this.stats.batches.map((batch: any) => {
+            return this.generateTableBatch(batch);
+          });
         }
         this._notificationsService.success('Autobatch ON', 'Every pro in campaign just get batched');
       }
@@ -136,6 +150,9 @@ export class AdminCampaignMailsComponent implements OnInit {
   public deleteBatch(batchId: string) {
      this._campaignService.deleteBatch(batchId).first().subscribe(_ => {
        this.stats.batches.splice(this._getBatchIndex(batchId), 1);
+       this._tableBatch = this.stats.batches.map((batch: any) => {
+         return this.generateTableBatch(batch);
+       });
        this.selectedBatchToBeDeleted = null;
     });
   }
@@ -201,6 +218,7 @@ export class AdminCampaignMailsComponent implements OnInit {
 
 
   public generateTableBatch(batch: Batch): Table {
+    console.log('generate ' + batch._id);
     const firstJSdate = new Date(batch.firstMail);
     const firstTime = firstJSdate.getHours() + ':' + firstJSdate.getMinutes();
 
@@ -211,7 +229,10 @@ export class AdminCampaignMailsComponent implements OnInit {
     const thirdTime = thirdJSdate.getHours() + ':' + thirdJSdate.getMinutes();
 
     const digit = 2;
-
+    if (!batch.predictions || batch.predictions.length === 0) {
+      const reset = {opened: 0, clicked: 0, insights: 0};
+      batch.predictions = [reset, reset, reset];
+    }
     const t: Table = {
       _selector: 'TODO',
       _title: 'Batch de ' + batch.size + ' pros',
@@ -220,11 +241,11 @@ export class AdminCampaignMailsComponent implements OnInit {
         {
           Step: '01 - HelloWorld',
           Sent: batch.stats[0].delivered + batch.stats[0].bounced,
-          OpenedPred: '0',
+          OpenedPred: ((batch.predictions[0].opened  * 100).toFixed(digit) + '%'  || ''),
           OpenedReel: ((batch.stats[0].opened / batch.size) * 100).toFixed(digit) + '%',
-          ClickedPred: '0',
+          ClickedPred: ((batch.predictions[0].clicked * 100).toFixed(digit) + '%'  || ''),
           ClickedReel: ((batch.stats[0].clicked / batch.size) * 100).toFixed(digit) + '%',
-          InsightsPred: '0',
+          InsightsPred: batch.predictions[0].insights,
           InsightsReel: batch.stats[0].insights,
           Date: batch.firstMail,
           Time: firstTime,
@@ -232,11 +253,11 @@ export class AdminCampaignMailsComponent implements OnInit {
         }, {
           Step: '02 - 2nd try',
           Sent: batch.stats[1].delivered + batch.stats[1].bounced,
-          OpenedPred: '0',
+          OpenedPred: ((batch.predictions[1].opened  * 100).toFixed(digit) + '%'  || ''),
           OpenedReel: ((batch.stats[1].opened / batch.size) * 100).toFixed(digit) + '%',
-          ClickedPred: '0',
+          ClickedPred: ((batch.predictions[1].clicked * 100).toFixed(digit) + '%'  || ''),
           ClickedReel: ((batch.stats[1].clicked / batch.size) * 100).toFixed(digit) + '%',
-          InsightsPred: '0',
+          InsightsPred: batch.predictions[1].insights,
           InsightsReel: batch.stats[1].insights,
           Date: batch.secondMail,
           Time: secondTime,
@@ -244,11 +265,11 @@ export class AdminCampaignMailsComponent implements OnInit {
         }, {
           Step: '03 - 3rd try',
           Sent: batch.stats[2].delivered + batch.stats[2].bounced,
-          OpenedPred: '0',
+          OpenedPred: ((batch.predictions[2].opened  * 100).toFixed(digit) + '%' || ''),
           OpenedReel: ((batch.stats[2].opened / batch.size) * 100).toFixed(digit) + '%',
-          ClickedPred: '0',
+          ClickedPred: ((batch.predictions[2].clicked * 100).toFixed(digit) + '%'  || ''),
           ClickedReel: ((batch.stats[2].clicked / batch.size) * 100).toFixed(digit) + '%',
-          InsightsPred: '0',
+          InsightsPred: batch.predictions[2].insights,
           InsightsReel: batch.stats[2].insights,
           Date: batch.thirdMail,
           Time: thirdTime,
@@ -256,9 +277,9 @@ export class AdminCampaignMailsComponent implements OnInit {
         }, {
           Step: '04 - Thanks',
           Sent: batch.stats[3].delivered + batch.stats[3].bounced,
-          OpenedPred: '0',
+          OpenedPred: '',
           OpenedReel: ((batch.stats[3].opened / batch.size) * 100).toFixed(digit) + '%',
-          ClickedPred: '0',
+          ClickedPred: '',
           ClickedReel: ((batch.stats[3].clicked / batch.size) * 100).toFixed(digit) + '%',
           InsightsPred: '',
           InsightsReel: '',
@@ -302,7 +323,6 @@ export class AdminCampaignMailsComponent implements OnInit {
           {_name: 'Planned',  _class: 'label-validate'},
         ]}]
     };
-    console.log(t);
     return t;
   }
 
@@ -327,5 +347,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   get campaign() { return this._campaign }
   get quizLinks() {return this._quizLinks }
   get stats() {return this._stats }
+
+  public tableBatch(index: number) { return this._tableBatch[index] }
 
 }
