@@ -9,7 +9,7 @@ import { EmailTemplate } from '../../../../models/email-template';
 export class SharedEditEmail {
 
   @Input() email: EmailTemplate;
-  @Input() inCampaign: Boolean;
+  @Input() inCampaign: boolean;
   @Output() emailChange = new EventEmitter<any>();
 
   public editionMode: boolean = false;

@@ -326,6 +326,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   get statsB(): any { return this._statsB };
   get tableA(): Table {return this._tableA};
   get tableB(): Table {return this._tableB};
+  get batchesLength(): number { return this._batchesLength };
 
 
   set nameWorkflowA(arg: string) { this._nameWorkflowA = arg};
