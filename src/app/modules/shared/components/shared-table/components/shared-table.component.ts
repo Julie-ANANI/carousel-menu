@@ -101,7 +101,17 @@ export class SharedTableComponent {
   }
 
   getContentValue(rowKey: string, columnAttr: string): any  {
+    if (columnAttr.split('.').length > 1) {
+      let newColumnAttr = columnAttr.split('.');
+      let tmpContent = this._content[rowKey]._content[newColumnAttr[0]];
+      newColumnAttr = newColumnAttr.splice(1);
+      for (const i of newColumnAttr){
+        tmpContent = tmpContent[i];
+      }
+      return tmpContent;
+    }else {
       return this._content[rowKey]._content[columnAttr];
+    }
   }
 
   getType(column: Column): types {
@@ -231,7 +241,6 @@ export class SharedTableComponent {
   }
 
   removeSelectedRows() {
-
     this.removeRows.emit(this.getSelectedRowsContent());
   }
 
