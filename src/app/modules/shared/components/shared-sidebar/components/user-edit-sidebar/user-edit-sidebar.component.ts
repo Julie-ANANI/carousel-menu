@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { UserService } from '../../../../../../services/user/user.service';
 import { User } from '../../../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -18,6 +18,11 @@ export class UserEditSidebarComponent implements OnInit {
     this.loadUser(value);
   }
 
+  @Output() userChange = new EventEmitter <any>();
+  @Output() deleteUser = new EventEmitter<any>();
+
+  private _userId = '';
+
   // TODO : profile picture, location
 
   constructor(private _userService: UserService,
@@ -25,6 +30,8 @@ export class UserEditSidebarComponent implements OnInit {
               private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
+
+    this._userId = '';
 
     this.formData = this._formBuilder.group({
       isOperator: false,
@@ -40,12 +47,14 @@ export class UserEditSidebarComponent implements OnInit {
   public onSubmit() {
     if (this.formData.valid) {
       const user = new User(this.formData.value);
+      user.id = this._userId;
       this._userService.updateOther(user)
         .first()
         .subscribe(
           data => {
             this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
             this.formData.patchValue(data);
+            this.userChange.emit();
           },
           error => {
             this._notificationsService.error('ERROR.ERROR', error.message);
@@ -57,9 +66,14 @@ export class UserEditSidebarComponent implements OnInit {
   }
 
   loadUser(id: string) {
-    this._userService.get(id).subscribe(user => {
+    this._userId = id;
+    this._userService.get(this._userId).subscribe(user => {
       this.formData.patchValue(user);
     });
+  }
+
+  removeUser() {
+    this.deleteUser.emit(this._userId);
   }
 
 }
