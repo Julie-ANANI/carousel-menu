@@ -19,7 +19,6 @@ export class SharedProjectSettingsComponent implements OnInit {
   @Input() adminMode: boolean;
   @Input() showTargetingFieldError: Subject<boolean>;
   @Input() projectStatus: string;
-  @Input() projectReviewing: any;
 
   @Output() settingsChange = new EventEmitter<any>();
 
@@ -294,8 +293,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   }
 
   get _projectStatus(): boolean {
-    return (this.projectStatus === 'EDITING' && this.projectReviewing) || (this.projectStatus === 'SUBMITTED' && this.projectReviewing)
-      || this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED' || this.adminMode;
+    return this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED' || this.adminMode;
   }
 
 }

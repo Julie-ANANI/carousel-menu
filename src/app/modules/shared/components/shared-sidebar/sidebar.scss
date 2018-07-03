@@ -4,7 +4,7 @@ $mandatory-star: #EA5858;
 
 .sidebar-wrapper {
   top: 0;
-  width: 100%;
+  width: 452px;
   height: 100vh;
   z-index: 8888;
   position: fixed;
@@ -30,6 +30,16 @@ $mandatory-star: #EA5858;
   position: sticky;
   top: 0;
   z-index: 2;
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .icon {
+    vertical-align: -2px;
+  }
+
 }
 
 

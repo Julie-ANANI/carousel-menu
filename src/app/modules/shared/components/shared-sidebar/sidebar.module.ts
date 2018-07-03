@@ -14,7 +14,7 @@ import { UserFormSidebarComponent } from './components/user-form-sidebar/user-fo
 import { InnovationPreviewSidebarComponent } from './components/innovation-preview-sidebar/innovation-preview-sidebar.component';
 import { GenericSidebarComponent } from './components/generic-sidebar/generic-sidebar.component';
 import { UserEditSidebarComponent} from './components/user-edit-sidebar/user-edit-sidebar.component';
-import { ConfirmationSidebarComponent } from './components/confirmation-sidebar/confirmation-sidebar.component';
+import { SidebarCollaboratorComponent } from './components/sidebar-collaborator/sidebar-collaborator.component';
 
 
 @NgModule({
@@ -30,7 +30,7 @@ import { ConfirmationSidebarComponent } from './components/confirmation-sidebar/
     GenericSidebarComponent,
     UserEditSidebarComponent,
     GenericSidebarComponent,
-    ConfirmationSidebarComponent
+    SidebarCollaboratorComponent
   ],
   providers: [
     UserFormSidebarService,
@@ -40,9 +40,9 @@ import { ConfirmationSidebarComponent } from './components/confirmation-sidebar/
     UserFormSidebarComponent,
     InnovationPreviewSidebarComponent,
     GenericSidebarComponent,
-    ConfirmationSidebarComponent,
     GenericSidebarComponent,
-    UserEditSidebarComponent
+    UserEditSidebarComponent,
+    SidebarCollaboratorComponent
   ]
 })
 
