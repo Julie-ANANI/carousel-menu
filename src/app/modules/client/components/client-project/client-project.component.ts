@@ -1,9 +1,10 @@
-import {Component, OnInit, Input, HostListener} from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../models/innovation';
 import { emailRegEx } from '../../../../utils/regex';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Collaborator } from '../../../shared/components/shared-sidebar/interfaces/collaborator';
 
 const DEFAULT_PAGE = 'setup';
 
@@ -16,6 +17,9 @@ const DEFAULT_PAGE = 'setup';
 export class ClientProjectComponent implements OnInit {
 
   @Input() project: Innovation;
+
+  sidebarAnimateState: string;
+  collaboratorValues: Collaborator = {};
 
   private _imgType: string;
   private _currentPage: string;
@@ -172,10 +176,21 @@ export class ClientProjectComponent implements OnInit {
   editCollaborator(event: Event) {
     event.preventDefault();
 
+    this.sidebarAnimateState = 'active';
+
+    this.collaboratorValues = {
+      addedLength: this.project.collaborators.length,
+      invitedLength: this.collaboratorsInvited.length
+    };
+
     this._displayAddCollaboratorsModal = true;
     this._showCollaboratorRequiredError = false;
     this._showCollaboratorInvalidError = false;
 
+  }
+
+  closeSidebar(value: string) {
+    this.sidebarAnimateState = value;
   }
 
   closeModal(event: Event) {

@@ -19,7 +19,6 @@ export class SharedProjectSettingsComponent implements OnInit {
   @Input() adminMode: boolean;
   @Input() showTargetingFieldError: Subject<boolean>;
   @Input() projectStatus: string;
-  @Input() projectReviewing: any;
 
   @Output() settingsChange = new EventEmitter<any>();
 

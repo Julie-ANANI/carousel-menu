@@ -56,7 +56,7 @@ export class UserFormSidebarComponent implements OnInit {
     // getting the template values sent by the parent component.
     this._userFormSidebarService.getTemplateValues().subscribe(res => {
       if (res !== null) {
-        this._state = res.animate;
+        this._state = res.animate_state;
         this._title = res.title;
         this.formType = res.type.toLowerCase();
       }
