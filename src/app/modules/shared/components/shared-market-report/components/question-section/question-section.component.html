@@ -100,9 +100,8 @@
     <!--************************************************
                  COMMENTS SECTION
       **************************************************-->
-    <ng-container *ngIf="((showDetails && question.controlType !== 'checkbox' && question.controlType !== 'radio')
-                          || question.controlType === 'list' || question.controlType === 'clearbit')
-                         && answersWithComment.length > 0">
+    <ng-container *ngIf="(showDetails || question.controlType === 'list' || question.controlType === 'clearbit')
+                          && answersWithComment.length > 0">
 
       <!-- ========= SHOW COMMENTS BUTTON ==============-->
       <button type="button" class="market-report-btn centered"
