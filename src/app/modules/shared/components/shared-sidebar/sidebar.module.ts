@@ -13,6 +13,7 @@ import { UserEditSidebarComponent} from './components/user-edit-sidebar/user-edi
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
 import { SidebarComponent } from './sidebar.component';
 import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.component';
+import { InnovationPreviewComponent } from './components/innovation-preview/innovation-preview.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.
     UserEditSidebarComponent,
     SidebarBatchComponent,
     CollaboratorComponent,
-    SidebarComponent
+    SidebarComponent,
+    InnovationPreviewComponent
   ],
   providers: [
     UserFormSidebarService,
