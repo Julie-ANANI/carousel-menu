@@ -51,16 +51,18 @@ export class AdminCampaignTemplatesComponent implements OnInit {
   }
 
   public importTemplate(template: EmailScenario) {
-    this._scenario.emails = template.emails;
-    this._scenario.name = template.name;
-    this._scenario.emails.forEach((x) => {
-      x.nameWorkflow = template.name;
-    });
+    const mails: EmailScenario = {
+      name: template.name,
+      emails: template.emails.map( m => {
+        m.nameWorkflow = template.name;
+        return m;
+      })
+    };
     this.importModal = false;
     this._campaign.settings.emails = this._campaign.settings.emails.filter((x) => {
-      return (x.nameWorkflow !== this._scenario.name);
+      return (x.nameWorkflow !== template.name);
     });
-    this._campaign.settings.emails = this._campaign.settings.emails.concat(this._scenario.emails);
+    this._campaign.settings.emails = this._campaign.settings.emails.concat(mails.emails);
     this.generateAvailableScenario();
     this._saveTemplates();
   }
