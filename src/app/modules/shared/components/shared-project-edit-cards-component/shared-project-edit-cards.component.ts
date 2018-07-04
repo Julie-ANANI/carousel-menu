@@ -12,6 +12,7 @@ import 'rxjs/add/operator/debounceTime';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Location } from '@angular/common';
+import {Template} from '../shared-sidebar/interfaces/template';
 
 @Component({
   selector: 'app-shared-project-edit-cards',
@@ -27,6 +28,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Output() projectChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
+
+  sidebarTemplateValue: Template = {};
 
   showTitleError: boolean;
   showSummaryError: boolean;
@@ -100,9 +103,12 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   /*
       Sending values to the child component "Innovation preview sidebar"
    */
-  showPreview(event: Event, id: string, lang: string) {
+  showPreview(event: Event) {
     event.preventDefault();
-
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE'
+    }
   }
 
   /**

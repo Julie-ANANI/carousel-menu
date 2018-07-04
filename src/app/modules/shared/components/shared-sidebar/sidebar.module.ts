@@ -38,7 +38,8 @@ import { InnovationPreviewComponent } from './components/innovation-preview/inno
     UserEditSidebarComponent,
     CollaboratorComponent,
     SidebarComponent,
-    SidebarBatchComponent
+    SidebarBatchComponent,
+    InnovationPreviewComponent
   ]
 })
 

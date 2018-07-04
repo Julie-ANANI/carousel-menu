@@ -35,7 +35,7 @@
           <div  class="action-wrapper text-center">
             <div *ngFor="let innovationCard of project.innovationCards; let i = index;">
             <span *ngIf="innovationCardEditingIndex === i">
-              <span class="text-link" (click)="showPreview($event, innovationCard.innovation_reference, innovationCard.lang)">
+              <span class="text-link" (click)="showPreview($event)">
                 {{ 'COMMON.PREVIEW' | translate }}</span>
               <span *ngIf="project.innovationCards?.length > 1" class="separator">/</span>
               <span
@@ -468,3 +468,9 @@
   </div>
 </div>
 
+<!-- Innovation preview sidebar -->
+<app-sidebar
+  [template]="sidebarTemplateValue"
+  (closeSidebar)="closeSidebar($event)">
+  <app-innovation-preview></app-innovation-preview>
+</app-sidebar>
