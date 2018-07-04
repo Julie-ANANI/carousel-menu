@@ -15,6 +15,7 @@ export class AdminUsersComponent implements OnInit {
 
   private _users: Array<User> = [];
   private _actions: string[] = [];
+  private _usersToRemove: User[] = [];
   private _more: GenericSidebar = {_animate: 'inactive'};
   private _tableInfos: Table = null;
   private _showDeleteModal = false;
@@ -63,6 +64,7 @@ export class AdminUsersComponent implements OnInit {
           _total: this._total,
           _isHeadable: true,
           _isFiltrable: true,
+          _isDeletable: true,
           _isSortable: true,
           _isSelectable: true,
           _isEditable: true,
@@ -107,8 +109,17 @@ export class AdminUsersComponent implements OnInit {
       });
   }
 
-  deleteModal(usersToRemove: any) {
+  deleteUserModal(user: User) {
+    this._usersToRemove = [];
+    this._more = {_animate: 'inactive', _title: this._more._title};
     this._showDeleteModal = true;
+    this._usersToRemove.push(user);
+  }
+
+  deleteUsersModal(users: User[]) {
+    this._usersToRemove = [];
+    this._showDeleteModal = true;
+    users.forEach(value => this._usersToRemove.push(new User(value)));
   }
 
   closeModal(event: Event) {
@@ -116,14 +127,19 @@ export class AdminUsersComponent implements OnInit {
     this._showDeleteModal = false;
   }
 
-  removeUsers(usersToRemove: User[]) {
-    for (const user of usersToRemove) {
+  removeUsers() {
+    for (const user of this._usersToRemove) {
       this.removeUser(user.id);
     }
+    this._usersToRemove = [];
+    this._showDeleteModal = false;
   }
 
   removeUser(userId: string) {
-    this._userService.deleteUser(userId);
+    this._userService.deleteUser(userId).first()
+      .subscribe(foo => {
+        this.loadUsers(this._config);
+      });
   }
 
   performActions(action: any) {
@@ -135,6 +151,7 @@ export class AdminUsersComponent implements OnInit {
   set config(value: any) { this._config = value; }
   get config(): any { return this._config; }
   get total(): number { return this._total; }
+  get usersToRemove(): User[] { return this._usersToRemove; }
   get users() { return this._users; }
   get more(): any { return this._more; }
   get currentUserId(): string { return this._currentUserId; }

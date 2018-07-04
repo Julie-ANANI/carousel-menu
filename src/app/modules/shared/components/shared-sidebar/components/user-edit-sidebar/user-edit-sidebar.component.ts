@@ -19,7 +19,7 @@ export class UserEditSidebarComponent implements OnInit {
   }
 
   @Output() userChange = new EventEmitter <any>();
-  @Output() deleteUser = new EventEmitter<any>();
+  @Output() deleteUser = new EventEmitter<User>();
 
   private _userId = '';
 
@@ -73,7 +73,9 @@ export class UserEditSidebarComponent implements OnInit {
   }
 
   removeUser() {
-    this.deleteUser.emit(this._userId);
+    const user = new User(this.formData.value);
+    user.id = this._userId;
+    this.deleteUser.emit(user);
   }
 
 }
