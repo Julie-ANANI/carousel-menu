@@ -7,6 +7,7 @@ import { Clearbit } from '../../../../../../models/clearbit';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
+import {Table} from '../../../../../shared/components/shared-table/models/table';
 
 @Component({
   selector: 'app-client-exploration-project',
@@ -31,6 +32,17 @@ export class ExplorationProjectComponent implements OnInit {
   private _questions: Array<Question>;
   private _modalAnswer: Answer;
 
+  tableInfos: Table = null;
+  public config: any = {
+    fields: '',
+    limit: 10,
+    offset: 0,
+    status: 'VALIDATED',
+    sort: {
+      created: -1
+    }
+  };
+
   constructor(private answerService: AnswerService,
               private innovationService: InnovationService,
               private notificationService: TranslateNotificationsService) {
@@ -38,32 +50,53 @@ export class ExplorationProjectComponent implements OnInit {
 
   ngOnInit() {
     this._contactUrl = encodeURI('mailto:contact@umi.us?subject=' + this.project.name);
+    this.loadAnswers();
+  }
 
-    this.answerService.getInnovationValidAnswers(this.project._id)
-      .first().subscribe((results) => {
-        this._answers = results.answers;
+  loadAnswers() {
+    this.config.innovation = this.project._id;
 
-        this._companies = results.answers.map((answer) => answer.company || {
-          name: answer.professional.company
-        }).filter(function(item, pos, self) {
-            // this is here to remove duplicate
-            return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
-          });
+    this.answerService.getAll(this.config).first().subscribe( (response) => {
 
-        this._countries = results.answers.reduce((acc, answer) => {
-            if (acc.indexOf(answer.country.flag) === -1) {
-              acc.push(answer.country.flag);
-            }
-            return acc;
-          }, []);
-      }, (error) => {
-        this.notificationService.error('ERROR.ERROR', error.message);
+      this._answers = response.result;
+
+      this.tableInfos = {
+        _selector: 'client-answer',
+        _content: this._answers,
+        _isSortable: true,
+        _isEditable: true,
+        _total: response._metadata.totalCount,
+        _columns: [
+          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+          {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
+          {_attrs: ['progress'], _name: 'COMMON.PROGRESS', _type: 'PROGRESS'},
+          {_attrs: ['professional.company'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+        ]
+      };
+
+      console.log(this.tableInfos);
+
+      this._companies = response.result.map((answer: any) => answer.company || {
+        name: answer.professional.company
+      }).filter(function(item: any, pos: any, self: any) {
+        // this is here to remove duplicate
+        return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
       });
 
+      this._countries = response.result.reduce((acc: any, answer: any) => {
+        if (acc.indexOf(answer.country.flag) === -1) {
+          acc.push(answer.country.flag);
+        }
+        return acc;
+      }, []);
+
+    }, (error) => {
+      this.notificationService.error('ERROR.ERROR', error.message);
+    });
+
     this._campaignsStats = {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0};
-    this.innovationService
-      .campaigns(this.project._id)
-      .first()
+
+    this.innovationService.campaigns(this.project._id).first()
       .subscribe((results) => {
         if (results && Array.isArray(results.result)) {
           this._campaignsStats = results.result
@@ -132,5 +165,7 @@ export class ExplorationProjectComponent implements OnInit {
   get questions() {
     return this._questions;
   }
+
+
 
 }

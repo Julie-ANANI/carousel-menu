@@ -37,6 +37,7 @@ export const COMMON = {
   'SEARCHINNOVATION': 'Recherche innovation',
   'LOADING': 'Chargement',
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
+  'PROGRESS': 'Évolution',
 
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',

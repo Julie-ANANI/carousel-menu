@@ -203,6 +203,16 @@
           <!-- Insight section -->
           <div class="section-light-container">
             <h3>{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h3>
+            <app-shared-table
+              [data]="tableInfos"
+              [config]="config"
+              (configChange)="loadAnswers()"
+              (editRow)="seeAnswer($event)"></app-shared-table>
+          </div>
+
+          <!-- Insight section -->
+          <div class="section-light-container">
+            <h3>{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h3>
             <app-answers-list [answers]="answers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
           </div>
 

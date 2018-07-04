@@ -40,7 +40,7 @@
         </form>
 
         <!-- Bot -->
-        <div *ngIf="collaborator.length === 0">
+        <div *ngIf="collaborator.length === 0 && collaboratorsInvited.length === 0">
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '10px' }">
           <span class="bot-rect">
             {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE' | translate }}
