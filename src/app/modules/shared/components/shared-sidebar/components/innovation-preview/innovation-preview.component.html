@@ -1,3 +1,31 @@
-<p>
-  innovation-preview works!
-</p>
+<div class="innovation-wrapper">
+  <div class="hero-light-container">
+    <div class="column col-11 col-mx-auto">
+
+      <!-- Title -->
+      <h1>{{ innovation.title }}</h1>
+
+      <!-- Summary -->
+      <p>{{ innovation.summary }}</p>
+
+      <!-- Media -->
+      <div class="media-wrapper" *ngFor="let media of innovation.media">
+
+        <!-- Video -->
+        <div *ngIf="media?.type === 'VIDEO'">
+          <iframe
+            [src]="domSanitizer.bypassSecurityTrustResourceUrl(media?.video.embeddableUrl)"
+            width="220" height="146">
+          </iframe>
+        </div>
+        <div *ngIf="media?.type === 'PHOTO'">
+          <img
+            [src]="media.url"
+            [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+            width="220" height="146">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

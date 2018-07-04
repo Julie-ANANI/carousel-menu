@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Template } from './interfaces/template';
 
@@ -31,8 +31,9 @@ export class SidebarComponent implements OnInit {
 
   title: string; // Sidebar heading
   state: string; // Animation state
+  size: string; // Sidebar size
 
-  constructor() {}
+  constructor() {  }
 
   ngOnInit(): void {
     this.state = 'inactive';
@@ -41,6 +42,7 @@ export class SidebarComponent implements OnInit {
   setTemplate(value: Template) {
     this.state = value.animate_state;
     this.title = value.title;
+    this.size = value.size;
   }
 
   toggleState() {

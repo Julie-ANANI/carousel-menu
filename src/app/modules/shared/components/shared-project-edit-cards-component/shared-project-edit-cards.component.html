@@ -472,5 +472,7 @@
 <app-sidebar
   [template]="sidebarTemplateValue"
   (closeSidebar)="closeSidebar($event)">
-  <app-innovation-preview></app-innovation-preview>
+  <app-innovation-preview
+    [innovation]="project.innovationCards[innovationCardEditingIndex]">
+  </app-innovation-preview>
 </app-sidebar>
