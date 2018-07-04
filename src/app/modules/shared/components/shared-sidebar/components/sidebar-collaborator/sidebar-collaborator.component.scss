@@ -4,10 +4,6 @@
   padding-top: 30px;
 }
 
-.mg-top {
-  margin-top: 30px;
-}
-
 .collaborator {
   display: flex;
   justify-content: space-between;
@@ -38,6 +34,10 @@ ul:hover {
 
 .ghost-delete {
   visibility: hidden;
+  margin-bottom: 20px;
+}
+
+.ghost-primary {
   margin-bottom: 20px;
 }
 
