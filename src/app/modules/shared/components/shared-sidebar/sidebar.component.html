@@ -1,0 +1,21 @@
+<div class="main-container sidebar-wrapper" [@sidebarAnimate]="state">
+  <div class="columns">
+    <div class="column col-12 col-mx-auto">
+
+      <!-- Header -->
+      <div class="sidebar-header">
+        <div class="column col-11 col-mx-auto">
+          <div class="header-content">
+            <span>{{ title | translate }}</span>
+            <span><i class="icon icon-cross" (click)="toggleState()"></i></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="column col-11 col-mx-auto sidebar-content">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

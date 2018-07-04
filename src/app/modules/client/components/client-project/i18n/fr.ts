@@ -45,7 +45,7 @@ export const PROJECT_MODULE = {
     'vous devez leur/lui envoyer une invitation en cliquant sur le bouton ci-dessous :',
     'TO_RESEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application et ont peut-être déjà reçu une invitation de vôtre part. Pour ' +
     'les/l\'ajouter comme collabora-teur-trice-s à ce projet, vous devez leur/lui envoyer une invitation en cliquant sur le bouton',
-    'LABEL': 'E-mail du collaborateur',
+    'LABEL': 'Email adresse',
     'BOT_MESSAGE': 'You do not have any collaborator!'
   },
 

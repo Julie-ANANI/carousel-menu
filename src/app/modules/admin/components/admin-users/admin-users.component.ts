@@ -4,7 +4,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
 import { Table } from '../../../shared/components/shared-table/models/table';
-import {GenericSidebar} from '../../../shared/components/shared-sidebar/interfaces/generic-sidebar';
+import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
 
 @Component({
   selector: 'app-admin-users',
@@ -16,7 +16,7 @@ export class AdminUsersComponent implements OnInit {
   private _users: Array<User> = [];
   private _actions: string[] = [];
   private _usersToRemove: User[] = [];
-  private _more: GenericSidebar = {_animate: 'inactive'};
+  private _more: Template = {animate_state: 'inactive'};
   private _tableInfos: Table = null;
   private _showDeleteModal = false;
   private _selfId = '';
@@ -81,13 +81,13 @@ export class AdminUsersComponent implements OnInit {
   }
 
   editUser(user: User) {
-    this._more = {_animate: 'active', _title: 'COMMON.EDIT'};
+    this._more = {animate_state: 'active', title: 'COMMON.EDIT'};
     const us = new User(user);
     this._currentUserId = us.id;
   }
 
   userEditionFinish() {
-    this._more = {_animate: 'inactive', _title: this._more._title};
+    this._more = {animate_state: 'inactive', title: this._more.title};
     this.loadUsers(this._config);
   }
 
@@ -110,7 +110,7 @@ export class AdminUsersComponent implements OnInit {
 
   deleteUserModal(user: User) {
     this._usersToRemove = [];
-    this._more = {_animate: 'inactive', _title: this._more._title};
+    this._more = {animate_state: 'inactive', title: this._more.title};
     this._showDeleteModal = true;
     this._usersToRemove.push(user);
   }

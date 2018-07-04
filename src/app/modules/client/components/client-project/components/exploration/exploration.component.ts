@@ -73,8 +73,6 @@ export class ExplorationProjectComponent implements OnInit {
         ]
       };
 
-      console.log(this.tableInfos);
-
       this._companies = response.result.map((answer: any) => answer.company || {
         name: answer.professional.company
       }).filter(function(item: any, pos: any, self: any) {

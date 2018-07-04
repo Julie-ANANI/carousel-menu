@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { ShareService } from '../../../../services/share/share.service';
@@ -13,11 +13,6 @@ import { Innovation } from '../../../../models/innovation';
 })
 
 export class ClientDiscoverDescriptionComponent implements OnInit {
-
-  @Input() innovDetail = {
-    'id': '',
-    'lang': ''
-  };
 
   private _innovationCard: InnovCard[] = [];
   private innovation: Innovation;
@@ -34,15 +29,9 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    if (this.innovDetail.id && this.innovDetail.lang) {
-      this.loadInnovation(this.innovDetail.id, this.innovDetail.lang);
-    } else {
-      this._activatedRoute.params.subscribe(params => {
-        this.loadInnovation(params['id'], params['lang']);
-      });
-    }
-
+    this._activatedRoute.params.subscribe(params => {
+      this.loadInnovation(params['id'], params['lang']);
+    });
   }
 
   loadInnovation(id: any, lang: any) {
