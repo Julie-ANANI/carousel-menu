@@ -40,7 +40,7 @@
         </form>
 
         <!-- Bot -->
-        <div *ngIf="addedCollaborator.length === 0">
+        <div *ngIf="collaborator.length === 0">
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '10px' }">
           <span class="bot-rect">
             {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE' | translate }}
@@ -57,7 +57,7 @@
         </div>
 
         <!-- Invited collaborator -->
-        <!--<div *ngIf="collaboratorsInvited.length >= 1">
+        <div *ngIf="collaboratorsInvited.length >= 1">
           <ul *ngFor="let collaborator of collaboratorsInvited; let i = index" class="collaborator">
             <li>
               <span class="label-progress">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.B' | translate }}</span> {{ collaborator }}
@@ -66,11 +66,11 @@
               {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.REINVITE' | translate }}
             </button>
           </ul>
-        </div>-->
+        </div>
 
         <!-- Added collaborator -->
-        <div *ngIf="addedCollaborator.length >= 1">
-          <ul *ngFor="let collaborator of addedCollaborator" class="collaborator">
+        <div *ngIf="collaborator.length >= 1">
+          <ul *ngFor="let collaborator of collaborator" class="collaborator">
             <li>
               <span class="label-validate">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.A' | translate }}</span> {{ collaborator.name }}
             </li>
@@ -81,6 +81,7 @@
         </div>
 
       </div>
+      <!-- /Content -->
 
     </div>
   </div>
