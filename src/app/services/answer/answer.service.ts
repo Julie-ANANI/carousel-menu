@@ -22,7 +22,7 @@ export class AnswerService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public getAll(config: any): Observable<Array<Answer>> {
+  public getAll(config: any): Observable<{result: Array<Answer>, _metadata: any}> {
     return this._http.get('/answer/', {params: config})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));

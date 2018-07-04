@@ -42,7 +42,6 @@ $mandatory-star: #EA5858;
 
 }
 
-
 .icon-cross:hover {
   cursor: pointer;
 }
@@ -62,7 +61,7 @@ $mandatory-star: #EA5858;
 @media (max-width: 600px) {
 
   .sidebar-wrapper {
-    width: 300px !important;
+    width: 90vw !important;
   }
 
 }

@@ -4,5 +4,6 @@ export const ADMIN_USERS = {
   'WAITING_INVITATIONS': 'Waiting invitations',
   'LAUNCHED_PROJECTS': 'Launched projects',
   'DOMAIN': 'Domain',
-  'DELETE': 'Delete user'
+  'DELETE': 'Delete user',
+  'PITCH-DELETE': 'Are you sure you want to delete the user(s) ? '
 };

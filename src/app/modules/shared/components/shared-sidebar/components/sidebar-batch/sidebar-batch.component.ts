@@ -1,37 +1,33 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { UserService } from '../../../../../../services/user/user.service';
-import { User } from '../../../../../../models/user.model';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+// import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import 'rxjs/add/operator/filter';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-user-edit-sidebar',
-  templateUrl: './user-edit-sidebar.component.html',
-  styleUrls: ['./user-edit-sidebar.component.scss']
+  selector: 'app-sidebar-batch',
+  templateUrl: './sidebar-batch.component.html',
+  styleUrls: ['./sidebar-batch.component.scss']
 })
-export class UserEditSidebarComponent implements OnInit {
+export class SidebarBatchComponent implements OnInit {
 
   public formData: FormGroup;
 
-  @Input() set userId(value: string) {
-    this.loadUser(value);
+  @Input() set batchId(value: string) {
+    this.loadBatch(value);
   }
 
-  @Output() userChange = new EventEmitter <any>();
-  @Output() deleteUser = new EventEmitter<User>();
+  @Output() batchChange = new EventEmitter <any>();
 
-  private _userId = '';
+  private _batchId = '';
 
   // TODO : profile picture, location
 
-  constructor(private _userService: UserService,
-              private _notificationsService: TranslateNotificationsService,
+  constructor(// private _notificationsService: TranslateNotificationsService,
               private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
 
-    this._userId = '';
+    this._batchId = '';
 
     this.formData = this._formBuilder.group({
       isOperator: false,
@@ -45,7 +41,7 @@ export class UserEditSidebarComponent implements OnInit {
   }
 
   public onSubmit() {
-    if (this.formData.valid) {
+    /*if (this.formData.valid) {
       const user = new User(this.formData.value);
       user.id = this._userId;
       this._userService.updateOther(user)
@@ -62,20 +58,14 @@ export class UserEditSidebarComponent implements OnInit {
     }
     else {
       this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
-    }
+    }*/
   }
 
-  loadUser(id: string) {
-    this._userId = id;
-    this._userService.get(this._userId).subscribe(user => {
-      this.formData.patchValue(user);
-    });
-  }
-
-  removeUser() {
-    const user = new User(this.formData.value);
-    user.id = this._userId;
-    this.deleteUser.emit(user);
+  loadBatch(id: string) {
+    this._batchId = id;
+    // this._userService.get(this._userId).subscribe(user => {
+    //  this.formData.patchValue(user);
+    // });
   }
 
 }

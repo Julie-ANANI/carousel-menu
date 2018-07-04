@@ -14,12 +14,12 @@
                     [config]="config"
                     (configChange)="loadUsers($event)"
                     (editRow)="editUser($event)"
-                    (removeRows)="removeUsers($event)"
+                    (removeRows)="deleteUsersModal($event)"
                     (performAction)="performActions($event)">
   </app-shared-table>
-  <app-generic-sidebar [data]="more">
-    <app-user-edit-sidebar [userId]="currentUserId" (userChange)="userEditionFinish()" (deleteUser)="deleteModal($event)"></app-user-edit-sidebar>
-  </app-generic-sidebar>
+  <app-sidebar-template [data]="more">
+    <app-user-edit-sidebar [userId]="currentUserId" (userChange)="userEditionFinish()" (deleteUser)="deleteUserModal($event)"></app-user-edit-sidebar>
+  </app-sidebar-template>
 
   <!-- Modal to ask admin to sure about deleting the user -->
   <div class="modal" [ngClass]="{ 'active': showDeleteModal }">
@@ -31,10 +31,14 @@
       </div>
       <div class="modal-body">
         <div class="content">
+          {{ 'USERS.PITCH-DELETE' | translate }}
+          <ul>
+            <li *ngFor="let user of usersToRemove">{{user.firstName}} {{user.lastName}}</li>
+          </ul>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm ghost-delete" (click)="removeUser($event)">
+        <button class="btn btn-sm ghost-delete" (click)="removeUsers()">
           {{ 'COMMON.DELETE' | translate }}
         </button>
       </div>

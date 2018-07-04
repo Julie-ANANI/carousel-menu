@@ -3,9 +3,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import {GenericSidebar} from '../../interfaces/generic-sidebar';
 
 @Component({
-  selector: 'app-generic-sidebar',
-  templateUrl: './generic-sidebar.component.html',
-  styleUrls: ['./generic-sidebar.component.scss'],
+  selector: 'app-sidebar-template',
+  templateUrl: './sidebar-template.component.html',
+  styleUrls: ['./sidebar-template.component.scss'],
   animations: [
     trigger('sidebarAnimate', [
       state('inactive', style({
@@ -21,7 +21,7 @@ import {GenericSidebar} from '../../interfaces/generic-sidebar';
   ]
 })
 
-export class GenericSidebarComponent {
+export class SidebarTemplateComponent {
 
   @Input() set data(value: GenericSidebar) {
     this.loadData(value);

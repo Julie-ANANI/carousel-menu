@@ -80,12 +80,12 @@ export class SharedProsListComponent {
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
-            {_attrs: ['companyName', 'companyName'], _name: 'COMMON.NAME', _type: 'MULTI-LABEL', _multiLabels: []
-            },
             {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
             {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
             {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
         };
+
+        console.log(this._pros);
 
       });
     }

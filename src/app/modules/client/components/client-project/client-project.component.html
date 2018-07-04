@@ -89,67 +89,10 @@
 </div>
 
 <!-- Add collaborators -->
-
 <app-sidebar-collaborator
   [animate_state]="sidebarAnimateState"
   (closeSidebar)="closeSidebar($event)"
-  [collaborator]="collaboratorValues">
+  (collaboratorAdded)="addCollaborators($event)"
+  [collaborator]="project.collaborators"
+  [projectId]="project._id">
 </app-sidebar-collaborator>
-
-<div class="modal" [ngClass]="{'active': displayAddCollaboratorsModal}">
-  <div class="modal-overlay" (click)="closeModal($event)"></div>
-  <div class="modal-container">
-    <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-      <div class="modal-title">{{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE' | translate }}</div>
-    </div>
-    <div class="modal-body">
-      <div class="content">
-        <input
-          class="form-default"
-          type="text"
-          [(ngModel)]="collaborators_emails"
-          [attr.placeholder]=" 'PROJECT_MODULE.ADD_COLLABORATORS_PLACEHOLDER' | translate "
-          (keyup)="enterKeyPress($event)">
-        <button
-          class="btn btn-primary"
-          (click)="addCollaborators($event)">
-          <i class="fas fa-user-plus"></i>{{ 'COMMON.ADD' | translate }}
-        </button>
-      </div>
-      <span class="form-error">
-        <span
-          [ngStyle]="{ 'display': showCollaboratorRequiredError ? 'block' : 'none', 'margin-top': '8px' }">
-          {{ 'COMMON.REQUIRED.EMAIL' | translate }}
-        </span>
-        <span
-          [ngStyle]="{ 'display': showCollaboratorInvalidError ? 'block' : 'none', 'margin-top': '8px' }">
-          {{ 'COMMON.INVALID.EMAIL' | translate }}
-        </span>
-      </span>
-
-      <div *ngIf="collaboratorsInvited.length >= 1" class="collaborators-invitation-container">
-        <ul *ngFor="let collaborator of collaboratorsInvited; let i = index" class="collaborator">
-          <li class="invitation-detail">
-            <span class="label-progress">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.B' | translate }}</span> {{ collaborator }}
-          </li>
-          <button class="btn btn-xs ghost-primary" (click)="reinviteCollaborator($event, collaborator)">
-            {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.REINVITE' | translate }}
-          </button>
-        </ul>
-      </div>
-
-      <div *ngIf="project.collaborators.length >= 1" class="collaborators-added-container">
-        <ul *ngFor="let collaborator of project.collaborators" class="collaborator">
-          <li class="added-detail">
-            <span class="label-validate">{{ 'PROJECT_MODULE.COLLABORATOR_STATUS.A' | translate }}</span> {{ collaborator.name }}
-          </li>
-          <button class="btn btn-xs ghost-delete" (click)="removeCollaborator($event, collaborator)">
-            {{ 'PROJECT_MODULE.COLLABORATOR_MODAL_BUTTON.DELETE' | translate }}
-          </button>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</div>
