@@ -300,15 +300,15 @@ export class AdminCampaignMailsComponent implements OnInit {
       }, {
         _attrs: ['OpenedPred', 'OpenedReel'],
         _name: 'Opened',
-        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label-validate'} ]
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label-validate'}, {_attr: 'OpenedPred', _class: 'label-draft'} ]
       }, {
         _attrs: ['ClickedPred', 'ClickedReel'],
         _name: 'Clicked',
-        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'ClickedReel', _class: 'label-validate'} ]
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'ClickedReel', _class: 'label-validate'}, {_attr: 'ClickedPred', _class: 'label-draft'} ]
       }, {
         _attrs: ['InsightsPred', 'InsightsReel'],
         _name: 'Insights',
-        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'InsightsReel', _class: 'label-validate'} ]
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'InsightsReel', _class: 'label-validate'} , {_attr: 'InsightsPred', _class: 'label-draft'}]
       }, {
         _attrs: ['Date'],
         _name: 'Date',

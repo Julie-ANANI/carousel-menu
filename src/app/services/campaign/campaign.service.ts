@@ -100,6 +100,7 @@ export class CampaignService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  // Update A/B test stats. (MailService / No NLP)
   public updateBatchesStats(campaign: string): Observable<any> {
     return this._http.post(`/campaign/${campaign}/updateBatchesStats`)
       .map((res: Response) => res.json())
