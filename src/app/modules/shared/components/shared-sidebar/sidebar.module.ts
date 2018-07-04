@@ -12,9 +12,10 @@ import { InnovationPreviewSidebarService } from './services/innovation-preview-s
 // Components
 import { UserFormSidebarComponent } from './components/user-form-sidebar/user-form-sidebar.component';
 import { InnovationPreviewSidebarComponent } from './components/innovation-preview-sidebar/innovation-preview-sidebar.component';
-import { GenericSidebarComponent } from './components/generic-sidebar/generic-sidebar.component';
+import { SidebarTemplateComponent } from './components/sidebar-template/sidebar-template.component';
 import { UserEditSidebarComponent} from './components/user-edit-sidebar/user-edit-sidebar.component';
 import { SidebarCollaboratorComponent } from './components/sidebar-collaborator/sidebar-collaborator.component';
+import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.component';
 
 
 @NgModule({
@@ -27,10 +28,11 @@ import { SidebarCollaboratorComponent } from './components/sidebar-collaborator/
   declarations: [
     UserFormSidebarComponent,
     InnovationPreviewSidebarComponent,
-    GenericSidebarComponent,
+    SidebarTemplateComponent,
     UserEditSidebarComponent,
-    GenericSidebarComponent,
-    SidebarCollaboratorComponent
+    SidebarTemplateComponent,
+    SidebarCollaboratorComponent,
+    SidebarBatchComponent
   ],
   providers: [
     UserFormSidebarService,
@@ -39,10 +41,11 @@ import { SidebarCollaboratorComponent } from './components/sidebar-collaborator/
   exports: [
     UserFormSidebarComponent,
     InnovationPreviewSidebarComponent,
-    GenericSidebarComponent,
-    GenericSidebarComponent,
+    SidebarTemplateComponent,
+    SidebarTemplateComponent,
     UserEditSidebarComponent,
-    SidebarCollaboratorComponent
+    SidebarCollaboratorComponent,
+    SidebarBatchComponent
   ]
 })
 

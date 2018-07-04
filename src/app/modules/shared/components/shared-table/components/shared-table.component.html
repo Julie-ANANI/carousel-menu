@@ -154,10 +154,10 @@
 
               <!-- If isEditable we show a button onHover the row -->
               <button class="btn btn-xs ghost-edit"
-                      *ngIf="columns.indexOf(column) == 0 && isEditable"
+                      *ngIf="columns.indexOf(column) == 0 && (isEditable || isShowable)"
                       [ngClass]="isHover(content[key]) ? 'visible' : 'invisible'"
                       (click)="edit(content[key])">
-                {{'COMMON.EDIT' | translate}}
+                {{isEditable ? ('COMMON.EDIT' | translate) : ('COMMON.MORE' | translate) }}
               </button>
 
             </td>

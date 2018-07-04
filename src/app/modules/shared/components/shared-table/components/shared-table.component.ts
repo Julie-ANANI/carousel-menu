@@ -34,6 +34,7 @@ export class SharedTableComponent {
   private _isHeadable = false;
   private _isSelectable = false;
   private _isEditable = false;
+  private _isShowable = false;
   private _isDeletable = false;
   private _isFiltrable = false;
   private _isSortable = false;
@@ -59,6 +60,7 @@ export class SharedTableComponent {
       this._isHeadable = value._isHeadable || false;
       this._isSelectable = value._isSelectable || false;
       this._isEditable = value._isEditable || false;
+      this._isShowable = value._isShowable || false;
       this._isDeletable = value._isDeletable || false;
       this._isFiltrable = value._isFiltrable || false;
       this._isSortable = value._isSortable || false;
@@ -188,6 +190,10 @@ export class SharedTableComponent {
 
   get isEditable(): boolean {
     return this._isEditable;
+  }
+
+  get isShowable(): boolean {
+    return this._isShowable;
   }
 
   get isDeletable(): boolean {

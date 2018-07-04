@@ -17,9 +17,9 @@
                     (removeRows)="deleteUsersModal($event)"
                     (performAction)="performActions($event)">
   </app-shared-table>
-  <app-generic-sidebar [data]="more">
+  <app-sidebar-template [data]="more">
     <app-user-edit-sidebar [userId]="currentUserId" (userChange)="userEditionFinish()" (deleteUser)="deleteUserModal($event)"></app-user-edit-sidebar>
-  </app-generic-sidebar>
+  </app-sidebar-template>
 
   <!-- Modal to ask admin to sure about deleting the user -->
   <div class="modal" [ngClass]="{ 'active': showDeleteModal }">

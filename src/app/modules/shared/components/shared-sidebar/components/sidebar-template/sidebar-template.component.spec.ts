@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GenericSidebarComponent } from './generic-sidebar.component';
+import { SidebarTemplateComponent } from './sidebar-template.component';
 
-describe('GenericSidebarComponent', () => {
-  let component: GenericSidebarComponent;
-  let fixture: ComponentFixture<GenericSidebarComponent>;
+describe('SidebarTemplateComponent', () => {
+  let component: SidebarTemplateComponent;
+  let fixture: ComponentFixture<SidebarTemplateComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GenericSidebarComponent ]
+      declarations: [ SidebarTemplateComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GenericSidebarComponent);
+    fixture = TestBed.createComponent(SidebarTemplateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
