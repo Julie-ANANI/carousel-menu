@@ -33,13 +33,13 @@
                 (mouseleave)="hoverColumn(getAttrs(column)[0])" >
 
               <sq-sort [config]="config"
-                       *ngIf="isSortable && (isHover(column) || isSelected(column))"
+                       *ngIf="isSortable(column) && (isHover(column) || isSelected(column))"
                        (configChange)="changeConfig($event)"
                        [prop]="getAttrs(column)[0]">
                 {{getName(column) | translate }}
               </sq-sort>
 
-              <span *ngIf="!isSortable || (!isHover(column) && !isSelected(column))">{{getName(column) | translate }}</span>
+              <span *ngIf="!isSortable(column) || (!isHover(column) && !isSelected(column))">{{getName(column) | translate }}</span>
             </th>
           </tr>
         </ng-container>

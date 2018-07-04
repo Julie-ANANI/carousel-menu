@@ -65,7 +65,6 @@ export class AdminUsersComponent implements OnInit {
           _isHeadable: true,
           _isFiltrable: true,
           _isDeletable: true,
-          _isSortable: true,
           _isSelectable: true,
           _isEditable: true,
           _columns: [
