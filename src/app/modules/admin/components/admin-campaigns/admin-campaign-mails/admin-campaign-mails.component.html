@@ -73,20 +73,14 @@
         <a *ngIf="batch.editing" class="c-hand" role="button" (click)="updateBatch(batch)">
           <i class="far fa-save"></i>
         </a>
-        <a class="c-hand" role="button" (click)="getPredictionsBatch(batch)">
-          <i class="fas fa-sync c-hand"></i>
-        </a>
         <a *ngIf="batch.editing" class="c-hand" role="button" (click)="(batch.editing = false) && $event.preventDefault()">
           <i class="fas fa-times"></i>
         </a>
       </div>
       <div class="card-subtitle text-gray">créé {{ batch.created | date: dateformat }}</div>
-    </div>
-
-
-
-    <div class="card-body">
-      <app-shared-table [data]="this.tableBatch(batchIndex)"></app-shared-table>
+      <div class="card-body">
+        <app-shared-table [data]="this.tableBatch(batchIndex)"></app-shared-table>
+      </div>
     </div>
   </div>
 </div>

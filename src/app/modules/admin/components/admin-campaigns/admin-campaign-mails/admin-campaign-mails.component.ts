@@ -218,7 +218,7 @@ export class AdminCampaignMailsComponent implements OnInit {
 
 
   public generateTableBatch(batch: Batch): Table {
-    console.log('generate ' + batch._id);
+    // console.log('generate ' + batch._id);
     const firstJSdate = new Date(batch.firstMail);
     const firstTime = firstJSdate.getHours() + ':' + firstJSdate.getMinutes();
 
@@ -326,15 +326,6 @@ export class AdminCampaignMailsComponent implements OnInit {
     };
     return t;
   }
-
-
-
-  public getPredictionsBatch(b: Batch) {
-    this._campaignService.getPredictionsBatch(b._id).first().subscribe(data => {
-      console.log(data);
-    });
-  }
-
 
   get innoReady() {
     return (

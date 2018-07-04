@@ -125,9 +125,11 @@ export class CampaignService {
         .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  /*
   public getPredictionsBatch(batchId: string):  Observable<any> {
     return this._http.post(`/batch/${batchId}/getPredictions`, {ID: batchId})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
+  */
 }
