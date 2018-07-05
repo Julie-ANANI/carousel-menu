@@ -16,7 +16,7 @@ export class SharedPaginationComponent implements OnChanges, OnInit {
   private _initialized = false;
 
   constructor() {
-    this.perPageValues = this.perPageValues || [10, 20, 50, 100];
+    this.perPageValues = this.perPageValues || [10, 20, 50, 100, 1000];
   }
 
   ngOnInit() {

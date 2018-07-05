@@ -59,7 +59,7 @@
 
             <!-- Status -->
             <div class="status-wrapper">
-              <h6>{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.A' | translate }}</h6>
+              <h1 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.A' | translate }}</h1>
 
               <div class="info-status">
                 <p><i class="fas fa-check"></i>&nbsp;&nbsp;<span class="text-white">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.G' | translate }}</span></p>
@@ -187,7 +187,11 @@
           <!-- Click rate section -->
           <div class="section-light-container">
             <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.CLICK_MAP_TITLE' | translate }}</h2>
-            <app-worldmap [countries]="countries" [countriesColor]="'#FFB300'"></app-worldmap>
+            <app-worldmap
+              [countries]="countries"
+              [countriesColor]="'#FFB300'"
+              [isEditable]="false">
+            </app-worldmap>
           </div>
 
           <!-- Company section -->

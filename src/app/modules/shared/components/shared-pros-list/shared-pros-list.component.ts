@@ -7,6 +7,7 @@ import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import { environment } from '../../../../../environments/environment';
 import {Table} from '../shared-table/models/table';
+import {Template} from '../shared-sidebar/interfaces/template';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -34,6 +35,11 @@ export class SharedProsListComponent {
   private _total = 0;
   private _pros: Array <SelectedProfessional>;
 
+  private _prosToRemove: Professional[] = [];
+  private _more: Template = {};
+  private _showDeleteModal = false;
+  private _currentProId = '';
+
   constructor(private _professionalService: ProfessionalsService,
               private _notificationsService: TranslateNotificationsService,
               private _translateService: TranslateService,
@@ -54,6 +60,7 @@ export class SharedProsListComponent {
           _total: this._total,
           _isFiltrable: true,
           _isHeadable: true,
+          _isEditable: true,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
@@ -75,6 +82,7 @@ export class SharedProsListComponent {
           _total: this._total,
           _isFiltrable: true,
           _isHeadable: true,
+          _isEditable: true,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
@@ -82,8 +90,6 @@ export class SharedProsListComponent {
             {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
             {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
         };
-
-        console.log(this._pros);
 
       });
     }
@@ -146,8 +152,53 @@ export class SharedProsListComponent {
     }
     return this._pros ? this._pros.filter(p => p.isSelected).length : 0;
   }
+
+  editPro(pro: Professional) {
+    this._more = {
+      animate_state: (this._more.animate_state === 'active' && this._currentProId === pro._id) ? 'inactive' : 'active',
+      title: 'COMMON.EDIT'
+    };
+    this._currentProId = pro._id;
+  }
+
+  deleteProModal(pro: Professional) {
+    this._prosToRemove = [];
+    this._more = {animate_state: 'inactive', title: this._more.title};
+    this._showDeleteModal = true;
+    this._prosToRemove.push(pro);
+  }
+
+  deleteProsModal(pros: Professional[]) {
+    this._showDeleteModal = true;
+    this._prosToRemove = pros;
+  }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._showDeleteModal = false;
+  }
+
+  removePros() {
+    for (const pro of this._prosToRemove) {
+      this.removePro(pro._id);
+    }
+    this._prosToRemove = [];
+    this._showDeleteModal = false;
+  }
+
+  removePro(userId: string) {
+    this._professionalService.remove(userId).first()
+      .subscribe(foo => {
+        this.loadPros(this._config);
+      });
+  }
+
   get total() { return this._total; }
   get pros() { return this._pros; }
   get config() { return this._config; }
   get tableInfos(): Table { return this._tableInfos; }
+  get prosToRemove(): Professional[] { return this._prosToRemove; }
+  get more(): any { return this._more; }
+  get showDeleteModal(): boolean { return this._showDeleteModal; }
+  get currentProId(): string { return this._currentProId; }
 }
