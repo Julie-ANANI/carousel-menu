@@ -20,4 +20,11 @@ export class DashboardService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public getNextDateSend(date: String): Observable<any> {
+      console.log(date);
+      return this._http.post('/dashboard/nextMails', {date: date})
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.text()));
+  }
+
 }
