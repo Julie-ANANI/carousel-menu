@@ -52,16 +52,17 @@ import { MultilingModule } from '../../pipes/multiling/multiling.module';
 import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
 import { SearchInputComponent } from '../../directives/search-input/search-input.component';
-import { CountryFlagComponent } from '../../directives/country-flag/country-flag.component';
 
 // Internal Modules
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
 // import { TableModule } from './components/shared-table/table.module';
+import { CountryFlagModule } from '../../directives/country-flag/country-flag.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    CountryFlagModule,
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
@@ -80,7 +81,6 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
   declarations: [
     // Directives
     // FormErrorDirective,
-    CountryFlagComponent,
     InputListComponent,
     SharedAnswersListComponent,
     SharedNotFoundComponent,
@@ -125,10 +125,10 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     Ng2FileDropModule,
     Ng2PageScrollModule,
     SidebarModule,
+    CountryFlagModule,
     // TableModule,
 
     // Directives
-    CountryFlagComponent,
     InputListComponent,
 
     // Components
