@@ -6,7 +6,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { User } from '../../../../models/user.model';
 import { Subject } from 'rxjs/Subject';
 import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
-
+import { InnovationService } from '../../../../services/innovation/innovation.service';
 
 
 @Component({
@@ -19,20 +19,15 @@ export class AdminDashboardComponent implements OnInit {
   public operators: Array<User> = [];
   public operatorId = '';
 
+  private _modalSelected = false;
   private _dateNow = new Date();
 
   public nbDaysOfStats = 1;
 
   sidebarTemplateValue: Template = {};
-
-  private _modalOver = false;
+  private _selectedInnovation: any;
 
   private _weekBatches: Array<any> = [[], [], [], [], []];
-
-
-  private listOver: any;
-
-
 
   public operatorData: {
     nbProjectsToValidate: number,
@@ -59,7 +54,8 @@ export class AdminDashboardComponent implements OnInit {
   constructor(private _titleService: TranslateTitleService,
               private _dashboardService: DashboardService,
               private _searchService: SearchService,
-              private _authService: AuthService) { }
+              private _authService: AuthService,
+              private _innovationService: InnovationService) { }
 
   ngOnInit(): void {
 
@@ -96,11 +92,6 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  public showList(obj: any) {
-    this.listOver = obj;
-  }
-
-
   public getWeek() {
     const now = Date.now();
     this._dateNow = new Date(now);
@@ -124,21 +115,27 @@ export class AdminDashboardComponent implements OnInit {
   }
 
 
-  showPreview(event: Event) {
+  showPreview(event: Event, batch: any) {
     event.preventDefault();
-    this.sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW',
-      size: '726px'
-    };
-  }
+    console.log(batch);
 
+    this._innovationService.getInnovationCard(batch.innovation.innovationCards[0]).first().subscribe( card => {
+      console.log(card);
+      this._selectedInnovation = card;
+      this.sidebarTemplateValue = {
+        animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+        title: 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW',
+        size: '726px'
+      };
+      this._modalSelected = true;
+    });
+  }
 
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
+    console.log("koukou");
+    this._modalSelected = false;
   }
-
-
 
   get refreshNeededEmitter(): Subject<any> {
     return this._refreshNeededEmitter;
@@ -148,14 +145,16 @@ export class AdminDashboardComponent implements OnInit {
     return this._authService.adminLevel;
   }
 
-  set ModalOver(b: boolean) {
-    this._modalOver = b;
-  }
-  get ModalOver(): boolean {
-    return this._modalOver;
+
+  get weekBatches(): any {
+    return this._weekBatches;
   }
 
-  get weekBatches() : any {
-    return this._weekBatches;
+  get selectedInnovation(): any {
+    return this._selectedInnovation;
+  }
+
+  get modalSelected(): boolean {
+    return this._modalSelected;
   }
 }

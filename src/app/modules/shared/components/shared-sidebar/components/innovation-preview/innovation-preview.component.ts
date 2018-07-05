@@ -16,6 +16,10 @@ export class InnovationPreviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("onINit");
+    console.log(this.innovation);
+    console.log(this.innovation.advantages[0])
+
   }
 
   get domSanitizer() {

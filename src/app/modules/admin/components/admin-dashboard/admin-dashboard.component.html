@@ -38,13 +38,13 @@
 
 
       <li *ngIf="i2 < 3">
-          <label class="label-1st" *ngIf="batches.status == 0" (click)="showPreview($event)"s>
+          <label class="label-1st" *ngIf="batches.status == 0" (click)="showPreview($event, batches)">
             {{batches.innovation.name}}  {{batches.size}}
           </label>
-          <label class="label-2nd" *ngIf="batches.status == 1" (click)="showPreview($event)">
+          <label class="label-2nd" *ngIf="batches.status == 1" (click)="showPreview($event, batches)">
             {{batches.innovation.name}}  {{batches.size}}
           </label>
-          <label class="label-3rd" *ngIf="batches.status == 2" (click)="showPreview($event)">
+          <label class="label-3rd" *ngIf="batches.status == 2" (click)="showPreview($event, batches)">
             {{batches.innovation.name}}  {{batches.size}}
           </label>
       </li>
@@ -62,13 +62,13 @@
               <div class="card-body">
                 <ul *ngFor="let batchesOver of days; let i3 = index">
                   <li>
-                    <label class="label-1st" *ngIf="batchesOver.status == 0" (click)="showPreview($event)">
+                    <label class="label-1st" *ngIf="batchesOver.status == 0" (click)="showPreview($event, batchesOver)">
                       {{batchesOver.innovation.name}}  {{batchesOver.size}}
                     </label>
-                    <label class="label-2nd" *ngIf="batchesOver.status == 1" (click)="showPreview($event)">
+                    <label class="label-2nd" *ngIf="batchesOver.status == 1" (click)="showPreview($event, batchesOver)">
                       {{batchesOver.innovation.name}}  {{batchesOver.size}}
                     </label>
-                    <label class="label-3rd" *ngIf="batchesOver.status == 2" (click)="showPreview($event)">
+                    <label class="label-3rd" *ngIf="batchesOver.status == 2" (click)="showPreview($event, batchesOver)">
                       {{batchesOver.innovation.name}}  {{batchesOver.size}}
                     </label>
                   </li>
@@ -87,11 +87,15 @@
 
 
 <!-- Popover Modal -->
-<!-- Innovation preview sidebar -->
-<app-sidebar
-  [template]="sidebarTemplateValue"
-  (closeSidebar)="closeSidebar($event)">
-  <app-innovation-preview
-    [innovation]="">
-  </app-innovation-preview>
-</app-sidebar>
+<!-- Innovation preview sidebar-->
+<!--
+<div *ngIf="this.modalSelected">-->
+  <app-sidebar
+    [template]="sidebarTemplateValue"
+    (closeSidebar)="closeSidebar($event)">
+    <app-innovation-preview
+      [innovation]="this.selectedInnovation">
+    </app-innovation-preview>
+  </app-sidebar>
+
+
