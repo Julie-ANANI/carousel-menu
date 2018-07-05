@@ -15,6 +15,7 @@ import { ProfessionalComponent } from './components/professional/professional.co
 import { SidebarComponent } from './sidebar.component';
 import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.component';
 import { InnovationPreviewComponent } from './components/innovation-preview/innovation-preview.component';
+import { UserFormComponent } from './components/user-form/user-form.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { InnovationPreviewComponent } from './components/innovation-preview/inno
     CollaboratorComponent,
     ProfessionalComponent,
     SidebarComponent,
-    InnovationPreviewComponent
+    InnovationPreviewComponent,
+    UserFormComponent
   ],
   providers: [
     UserFormSidebarService,
@@ -42,7 +44,8 @@ import { InnovationPreviewComponent } from './components/innovation-preview/inno
     ProfessionalComponent,
     SidebarComponent,
     SidebarBatchComponent,
-    InnovationPreviewComponent
+    InnovationPreviewComponent,
+    UserFormComponent
   ]
 })
 
