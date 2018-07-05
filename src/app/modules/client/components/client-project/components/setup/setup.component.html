@@ -37,7 +37,7 @@
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="row-1-wrapper">
             <!-- Heading -->
-            <h5>{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h5>
+            <h2 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h2>
             <!-- Buttons -->
             <div class="func-btn-wrapper">
               <span [ngClass]="saveButtonClass">
@@ -78,6 +78,7 @@
             </li>
             <li>
               <a [routerLink]="['setup', 'survey']" [ngClass]="{'active': currentTab == 'survey'}">
+                <i class="fas fa-check survey-check" [ngStyle]="{ 'display': surveyCreated ? 'inline-block' : 'none' }"></i>
                 {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
               </a>
             </li>
@@ -110,7 +111,10 @@
 
       <!-- Survey component -->
       <div *ngIf="currentTab === 'survey'">
-        <app-project-survey [project]="project"></app-project-survey>
+        <app-project-survey
+          [project]="project"
+          (surveyCreated)="surveyAvailable($event)">
+        </app-project-survey>
       </div>
 
       <!-- /Different components based on the click -->

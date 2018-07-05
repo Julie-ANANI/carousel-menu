@@ -2,17 +2,26 @@
 
   <div class="flex-container">
     <p class="flex-container pro-header">
+
       <country-flag *ngIf="answer.country?.flag" [country]="answer.country.flag"></country-flag>
-      &nbsp; {{(answer.professional?.firstName + ' ' + answer.professional?.lastName) | ellipsis:30}}
+      <span [ngStyle]=" { 'margin-left': '10px' }">
+        {{(answer.professional?.firstName + ' ' + answer.professional?.lastName) | ellipsis:30}}
+      </span>
+
       <ng-container *ngIf="answer.job || answer.professional?.jobTitle">
         - {{(answer.job || answer.professional?.jobTitle) | ellipsis:22}}
       </ng-container>
+
       <ng-container *ngIf="answer.company?.name || answer.professional?.company">
         - {{(answer.company?.name || answer.professional?.company) | ellipsis:22}}
       </ng-container>
+
       <i class="fas fa-star" *ngIf="answer.answers[questionId+'Quality'] === 2" aria-hidden="true"></i>
+
     </p>
+
     <market-report-popover [answers]="[answer]" (modalAnswerChange)="seeAnswer($event)"></market-report-popover>
+
   </div>
 
   <strong class="comment-desc">{{answer.answers[questionId]}}</strong>

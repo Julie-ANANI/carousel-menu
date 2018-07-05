@@ -338,11 +338,6 @@ body.sample-infographic {
     width: 300px;
   }
 
-  h3 {
-    font-weight: 300;
-    font-size: 1.3rem;
-  }
-
   .title-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -435,6 +430,10 @@ body.sample-infographic {
         flex: 1 0 calc(32% - 1rem);
       }
 
+    }
+
+    .section-heading {
+      color: #333333;
     }
 
   }
