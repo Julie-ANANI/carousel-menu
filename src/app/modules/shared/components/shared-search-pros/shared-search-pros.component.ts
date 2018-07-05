@@ -93,7 +93,7 @@ export class SharedSearchProsComponent implements OnInit {
   ngOnInit(): void {
     this._initParams();
   }
-  
+
   private _initParams() {
     this._params = {
       keywords: '',
@@ -105,19 +105,19 @@ export class SharedSearchProsComponent implements OnInit {
       },
       count: '10',
       country: '',
-      automated: false,
-      smart: false,
-      regions: false,
-      indexSearch: false,
       countries: [],
-      queued: false
+      options: {
+        automated: false,
+        smart: false,
+        regions: false,
+        indexSearch: false
+      }
     };
-    
+
     if (this.campaign) {
-      this._params.automated = true;
-      this._params.smart = true;
-      this._params.regions = true;
-      this._params.queued = true;
+      this._params.options.automated = true;
+      this._params.options.smart = true;
+      this._params.options.regions = true;
       this._params.count = 100;
       this._params.campaign = this.campaign._id;
       if (this.campaign.innovation && this.campaign.innovation.settings && this.campaign.innovation.settings) {
@@ -171,10 +171,9 @@ export class SharedSearchProsComponent implements OnInit {
   public search(event: Event): void {
     event.preventDefault();
     const searchParams = this._params;
-    searchParams.name = 'people';
-    searchParams.user = this._authService.getUserInfo();
+    searchParams.metadata = {user: this._authService.getUserInfo()};
     searchParams.websites = Object.keys(searchParams.websites).filter(key => searchParams.websites[key]).join(' ');
-    this._searchService.search(searchParams).first().subscribe(result => {
+    this._searchService.search(searchParams).first().subscribe(_ => {
       this._initParams();
       this._notificationsService.success("Requête ajoutée", "La requête a bien été ajoutée à la file d'attente");
     });
