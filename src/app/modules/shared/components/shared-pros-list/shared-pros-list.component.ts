@@ -58,7 +58,7 @@ export class SharedProsListComponent {
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
             {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-            {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+            {_attrs: ['company.name'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
             {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
         };
 
@@ -79,7 +79,7 @@ export class SharedProsListComponent {
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
             {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-            {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+            {_attrs: ['company'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
             {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
         };
 
