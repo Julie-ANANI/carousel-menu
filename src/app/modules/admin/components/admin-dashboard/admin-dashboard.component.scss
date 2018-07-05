@@ -1,6 +1,11 @@
 $secondary-color: #0B90C6;
 $dark-background: #262831;
 
+.list-table {
+  display: flex;
+  justify: space between;
+}
+
 .projects-stats {
   background: $secondary-color;
   display: flex;
