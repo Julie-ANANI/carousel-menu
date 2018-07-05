@@ -40,7 +40,7 @@ export const EXPLORATION = {
     'ANSWERS': 'Validated answers'
   },
 
-  'CLICK_MAP_TITLE': 'Click rate',
+  'CLICK_MAP_TITLE': 'Responses mapping',
 
   'COMPANIES_LIST_TITLE': 'Companies to contact',
 
