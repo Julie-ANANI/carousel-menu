@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { UserService } from '../../../../../../services/user/user.service';
 import { User } from '../../../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -10,13 +10,14 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   templateUrl: './user-edit-sidebar.component.html',
   styleUrls: ['./user-edit-sidebar.component.scss']
 })
-export class UserEditSidebarComponent implements OnInit {
+export class UserEditSidebarComponent implements OnInit, OnChanges {
 
   public formData: FormGroup;
 
   @Input() set userId(value: string) {
     this.loadUser(value);
   }
+  @Input() sidebarState: string;
 
   @Output() userChange = new EventEmitter <any>();
   @Output() deleteUser = new EventEmitter<User>();
@@ -76,6 +77,14 @@ export class UserEditSidebarComponent implements OnInit {
     const user = new User(this.formData.value);
     user.id = this._userId;
     this.deleteUser.emit(user);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.sideabarState) {
+      if (changes.sidebarState.currentValue !== changes.sidebarState.previousValue) {
+        this.formData.reset();
+      }
+    }
   }
 
 }

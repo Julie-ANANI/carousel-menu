@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { AuthService } from '../../../../services/auth/auth.service';
@@ -16,7 +16,7 @@ export class AdminUsersComponent implements OnInit {
   private _users: Array<User> = [];
   private _actions: string[] = [];
   private _usersToRemove: User[] = [];
-  private _more: Template = {animate_state: 'inactive'};
+  private _more: Template = {};
   private _tableInfos: Table = null;
   private _showDeleteModal = false;
   private _selfId = '';
@@ -81,9 +81,16 @@ export class AdminUsersComponent implements OnInit {
   }
 
   editUser(user: User) {
-    this._more = {animate_state: 'active', title: 'COMMON.EDIT'};
     const us = new User(user);
+    this._more = {
+      animate_state: (this._more.animate_state === 'active' && this._currentUserId === us.id) ? 'inactive' : 'active',
+      title: 'COMMON.EDIT'
+    };
     this._currentUserId = us.id;
+  }
+
+  closeSidebar(value: string) {
+    this.more.animate_state = value;
   }
 
   userEditionFinish() {
@@ -145,6 +152,10 @@ export class AdminUsersComponent implements OnInit {
     this._actions.find(value => value === action._action)
       ? console.log('Execution de l\'action ' + action._action + ' sur les lignes ' + JSON.stringify(action._rows, null, 2))
       : console.log('l\'Action' + action + 'n\'existe pas !');
+  }
+
+  getAnimateState() {
+    return this._more.animate_state;
   }
 
   set config(value: any) { this._config = value; }
