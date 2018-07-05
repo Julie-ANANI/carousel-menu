@@ -80,9 +80,9 @@ export class UserEditSidebarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.sideabarState) {
+    if (changes.sidebarState) {
       if (changes.sidebarState.currentValue !== changes.sidebarState.previousValue) {
-        this.formData.reset();
+        this.loadUser(this._userId);
       }
     }
   }
