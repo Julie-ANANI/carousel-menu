@@ -1,52 +1,222 @@
-$body-font-color-darker: #333333;
-$primary-color: #3498DB;
+#pitch-card {
+  padding-top: 0;
+  padding-bottom: 0;
 
-
-.language-choice ul {
-  margin: 0;
-
-  li {
-    font-size: 1rem;
-    color: $body-font-color-darker;
-    list-style: none;
-    cursor: pointer;
-    margin-bottom: 20px;
-
-    span {
-      font-size: 0.7rem;
-      display: block;
-      color: #878787;
-    }
-
-    i {
-      font-size: 0.8rem;
-    }
-  }
-
-  li.active {
-    color: $primary-color;
-  }
-
-}
-
-.medias {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
-  .media {
+  .choice-wrapper {
     display: flex;
-    background-color: #258cd1;
-    margin-bottom: 15px;
-    border: 2px solid #d7d7d7;
+    align-items: center;
+    justify-content: center;
 
-    div {
-      padding: 8px 12px;
-
-      a {
-        display: block;
-        padding-bottom: 4px;
-      }
+    .ques {
+      padding-top: 26px;
     }
+
+    .lang {
+      margin-top: 30px;
+
+      ul {
+        list-style: none;
+        margin: 0 0 0 50px;
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+
+        li {
+          margin: 0 50px 0 0;
+          border: 2px solid #E0E0E0;
+          border-radius: 5px;
+          text-align: center;
+          cursor: pointer;
+          background: white;
+          font-size: 0.8rem;
+          color: #262831;
+          padding: 12px 30px;
+
+          .circle-check {
+            margin-top: -27px;
+            margin-left: -44px;
+          }
+
+        }
+
+        li:last-child {
+          margin-left: 0;
+        }
+
+        li:hover {
+          background-color: #FFF9EB;
+          border-color: #FFB300;
+        }
+
+        li.active {
+          border-color: #2ECC71;
+          background-color: white;
+
+          .circle-check {
+            background-color: #2ECC71;
+
+            i {
+              color: white;
+            }
+
+          }
+
+        }
+
+        .add-project {
+          padding-top: 11px;
+          color: #97A4B1;
+        }
+
+      }
+
+    }
+
   }
+
+  .action-wrapper {
+    padding-top: 30px;
+    padding-left: 170px;
+
+    .separator {
+      color: #97A4B1;
+      padding-left: 2.5px;
+      padding-right: 2.5px;
+    }
+
+    .delete-link {
+      color: #EA5858;
+    }
+
+  }
+
+  .project-data {
+    padding-top: 50px;
+  }
+
+  .pd-input {
+    padding-top: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 0 !important;
+  }
+
+  .help-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .media-content {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  .media-action {
+    padding-top: 10px;
+    padding-bottom: 16px;
+    font-size: 0.7rem;
+    word-wrap: break-word;
+
+    .delete-link {
+      color: #EA5858;
+    }
+
+  }
+
+  .upload-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+    .image-upload-wrapper {
+      flex: 1;
+    }
+
+    .or-wrapper {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+
+      .para {
+        color: #97A4B1;
+        font-size: 0.7rem;
+        margin: 25px;
+      }
+
+    }
+
+    .video-upload-wrapper {
+      flex: 1;
+    }
+
+  }
+
+  .borderRed {
+    border-color: #EA5858;
+  }
+
+  p {
+    padding: 0;
+  }
+
+  .adv-padding {
+    padding-bottom: 15px;
+  }
+
 }
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  #pitch-card {
+    padding-top: 25px;
+
+    .choice-wrapper {
+      flex-direction: column;
+
+      .ques {
+        padding-top: 0;
+      }
+
+      .lang {
+        margin-top: 15px;
+
+        ul {
+          flex-direction: column;
+          margin-left: 0;
+
+          li {
+            margin: 15px 50px;
+          }
+
+          li:last-child {
+            margin-left: 50px;
+          }
+
+          .add-project {
+            padding-top: 15px;
+          }
+
+        }
+
+      }
+
+    }
+
+    .action-wrapper {
+      padding-left: 0;
+    }
+
+    .upload-wrapper {
+      flex-direction: column;
+    }
+
+  }
+
+}
+

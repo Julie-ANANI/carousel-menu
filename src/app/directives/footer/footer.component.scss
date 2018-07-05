@@ -1,32 +1,27 @@
 .main-container {
   background: #f2f2f2;
-  padding-top: 25px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   font-size: 0.65rem;
   color: #333333;
 
-  .lang-section {
+  .lang-wrapper {
 
-    .lang-button {
+    .btn-lang {
       background-color: #FAFAFA;
       color: #333333;
       padding: 0.4rem 0.7rem;
       height: 2.4rem;
-      border-radius: 0.25rem !important;
-      border-color: #333333;
-      font-size: 0.7rem;
-    }
+      border-color: #97A4B1;
 
-    .icon-global {
-      padding-right: 0.1rem;
-      font-size: 0.6rem;
+      i {
+        font-size: 0.6rem;
+      }
+
     }
 
     .icon-footer {
       padding-left: 0.7rem;
-    }
-
-    .btn:focus {
-      box-shadow: none !important;
     }
 
     .btn-group .btn:first-child:not(:last-child) {
@@ -51,7 +46,7 @@
       a:hover {
         text-decoration: none;
         cursor: pointer;
-        color: #0B90C6;
+        color: #FFB300;
       }
 
     }
@@ -59,42 +54,20 @@
   }
 
   .footer-hr {
-    margin-top: 35px;
-    margin-bottom: 20px;
-    border: .5px solid #333333;
+    margin-top: 50px;
+    border: .5px solid #97A4B1;
     border-radius: .25rem;
   }
 
-  .information-section {
-    padding-top: 10px;
+  .information-wrapper {
+    padding-top: 50px;
     transition: all 0.35s ease-in-out;
 
     a{
       color: #333333;
     }
 
-    .break-text {
-      display: none;
-    }
-
   }
 
 }
 
-/********************************** Media ***************************************/
-
-@media (max-width: 600px) {
-
-  .text-right {
-    text-align: left!important;
-  }
-
-}
-
-@media (max-width: 360px) {
-
-  .information-section .break-text {
-    display: block !important;
-  }
-
-}

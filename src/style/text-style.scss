@@ -1,0 +1,152 @@
+/*
+    This stylesheet contains all the styles related to the text on our platform.
+    Like: headings, text-link etc.
+ */
+
+
+/*
+    Color variables for text.
+ */
+
+$primary-color: #333333;
+$secondary-color: #0B90C6;
+$link-color: #FFB300;
+$ques-color: #333333;
+$para-color: #5D5D5D;
+
+/*
+    h1, h2, h3, h4, h5, and h6 common style
+ */
+
+h1, h2, h3, h4, h5, h6 {
+  color: $primary-color;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 25px;
+}
+
+
+/*
+    h1
+ */
+
+h1 {
+  font-size: 1.7rem;
+}
+
+
+/*
+    h2
+ */
+
+h2 {
+  font-size: 1.6rem;
+}
+
+
+/*
+    h3
+ */
+
+h3 {
+  font-size: 1.5rem;
+}
+
+
+/*
+    h4
+ */
+
+h4 {
+  font-size: 1.4rem;
+}
+
+
+/*
+    h5
+ */
+
+h5 {
+  font-size: 1.3rem;
+}
+
+
+/*
+    h6
+ */
+
+h6 {
+  font-size: 1.2rem;
+}
+
+
+/*
+    Text style that has link. Class name: text-link
+ */
+
+.text-link, .text-link:active, .text-link:focus, .text-link:visited {
+  color: $link-color;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.text-link:hover {
+  color: $link-color;
+  text-decoration: underline;
+}
+
+
+/*
+    Question style
+ */
+.ques {
+  font-size: 0.9rem;
+  color: $ques-color;
+}
+
+
+/*
+    Para style
+ */
+.para {
+  font-size: 0.9rem;
+  color: $para-color;
+  padding: 16px 0;
+  margin: 0;
+}
+
+
+/*
+    Hero hr style
+ */
+.hero-hr {
+  width: 125px;
+  border: 2px solid white;
+  border-radius: .25rem;
+  margin-bottom: 16px;
+}
+
+
+/*
+    Page heading
+ */
+.main-heading {
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 25px;
+  color: $primary-color;
+}
+
+
+/*
+    Section heading
+ */
+.section-heading {
+  font-size: 1.3rem;
+  font-weight: 300;
+  line-height: 1.4;
+  margin: 0 0 25px;
+  color: $secondary-color;
+}

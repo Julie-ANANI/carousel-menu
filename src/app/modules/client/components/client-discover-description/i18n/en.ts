@@ -6,5 +6,6 @@ export const DISCOVERDESCRIPTION = {
   'MEDIA': 'Media not available.',
   'BENEFITS': 'Market benefits',
   'ISSUE': 'Issue',
-  'SOLUTION': 'Solution'
+  'SOLUTION': 'Solution',
+  'MEDIAS': 'Medias',
 };

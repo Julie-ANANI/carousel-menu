@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
-import { UserService } from '../../../../services/user/user.service';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-client-login',
@@ -16,20 +15,19 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 export class ClientLoginComponent implements OnInit {
 
-  public formData: FormGroup;
+  private _formData: FormGroup;
 
   constructor(private _authService: AuthService,
-              private _userService: UserService,
-              private _router: Router,
-              private _formBuilder: FormBuilder,
-              private _titleService: TranslateTitleService,
-              private _notificationsService: TranslateNotificationsService) {
+              private router: Router,
+              private formBuilder: FormBuilder,
+              private translateTitleService: TranslateTitleService,
+              private translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit(): void {
-    this._titleService.setTitle('LOG_IN.TITLE');
+    this.translateTitleService.setTitle('LOG_IN.TITLE');
 
-    this.formData = this._formBuilder.group({
+    this._formData = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
@@ -37,8 +35,8 @@ export class ClientLoginComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.formData.valid) {
-      const user = new User(this.formData.value);
+    if (this._formData.valid) {
+      const user = new User(this._formData.value);
       user.domain = environment.domain;
 
       this._authService.login(user)
@@ -56,23 +54,23 @@ export class ClientLoginComponent implements OnInit {
               preserveFragment: true
             };
 
-            this._notificationsService.success('ERROR.LOGIN.WELCOME', 'ERROR.LOGIN.LOGGED_IN');
-
+            this.translateNotificationsService.success('ERROR.LOGIN.WELCOME', 'ERROR.LOGIN.LOGGED_IN');
             // Redirect the user
-            this._router.navigate([redirect], navigationExtras);
+            this.router.navigate([redirect], navigationExtras);
           }
         },
         err => {
-          this._notificationsService.error('ERROR.ERROR', err.message);
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
         });
-    }
-    else {
-      this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
+    } else {
+      if (this._formData.untouched && this._formData.pristine) {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+      }
     }
 
   }
 
-  public linkedInSignIn(event: Event) {
+  linkedInSignIn(event: Event) {
     event.preventDefault();
 
     const domain = environment.domain;
@@ -84,32 +82,18 @@ export class ClientLoginComponent implements OnInit {
           window.location.href = url;
         },
         error => {
-          this._notificationsService.error('ERROR.ERROR', error.message);
+          this.translateNotificationsService.error('ERROR.ERROR', error.message);
         }
       );
 
   }
 
-  public changePassword(event: Event) {
-    event.preventDefault();
-
-    if (!this.formData.get('email')!.value) {
-      this._notificationsService.error('ERROR.LOGIN.EMPTY_EMAIL', 'ERROR.LOGIN.EMAIL_PLEASE');
-    }
-    else {
-      this._userService.changePassword(this.formData.get('email')!.value)
-        .first()
-        .subscribe(_ => {
-          this._notificationsService.success('ERROR.LOGIN.EMAIL_SENT', 'ERROR.LOGIN.CHANGE_PASSWORD');
-        }, _ => {
-          this._notificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_NOT_FOUND');
-        });
-    }
-
-  }
-
   get authService(): AuthService {
     return this._authService;
+  }
+
+  get formData(): FormGroup {
+    return this._formData;
   }
 
   public checkIsMainDomain(): boolean {

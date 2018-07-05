@@ -1,18 +1,29 @@
-<form #f="ngForm" novalidate
-      (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)" >
-  <div class="input-group" *ngIf="canEdit">
-    <input type="text" class="form-input input-lg" name="answers" [(ngModel)]="answer" required
-           [attr.placeholder]="placeholder | translate" />
-    <button class="btn btn-primary btn-lg input-group-btn" translate>
-      COMMON.ADD
-      <i class="icon icon-arrow-right"></i>
+<form #f="ngForm" novalidate (ngSubmit)="f.form.valid && addProposition(answer); (answer = undefined)">
+
+  <div class="input-group" [ngStyle]="{ 'display': 'flex' }">
+    <input
+      type="text"
+      class="form-default"
+      name="answers"
+      [(ngModel)]="answer"
+      required
+      [attr.placeholder]="placeholder | translate">
+    <button
+      class="btn-round btn-primary"
+      [ngStyle]="{ 'width': '53.9px' }"
+      translate>
+      <i class="icon icon-plus"></i>
     </button>
   </div>
 
   <ul *ngFor="let a of answerList; index as i" class="answerList">
     <li *ngIf="!adminMode">
       <span>{{a.text}}</span>
-      <a [routerLink]="" class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
+      <a
+        class="delete"
+        aria-label="Close"
+        role="button"
+        (click)="rmProposition(i)">
         <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">
       </a>
     </li>
@@ -22,8 +33,8 @@
         <i class="fas fa-pencil-alt"></i>
         <div class="popover-container">
           <div class="input-group">
-            <input type="text" class="form-input" [(ngModel)]="a.text" name="text"/>
-            <button class="btn btn-primary input-group-btn" type="submit" (click)="updateItem($event)">GO</button>
+            <input type="text" class="form-default" [(ngModel)]="a.text" name="text"/>
+            <button class="btn" type="submit" (click)="updateItem($event)">GO</button>
           </div>
         </div>
       </div>

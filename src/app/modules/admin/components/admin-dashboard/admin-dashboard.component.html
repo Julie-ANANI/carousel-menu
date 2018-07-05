@@ -22,13 +22,17 @@
 </div>
 
 <div class="content">
-  <app-admin-projects-list [status]="'WITHOUT_OPERATOR'" [operators]="operators"></app-admin-projects-list>
+  <app-admin-projects-list [operatorId]="operatorId" [operators]="operators" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
+
+  <!--
 
   <app-admin-projects-list [status]="'PREPARING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
   <app-admin-projects-list [status]="'EVALUATING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
   <app-admin-projects-list [status]="'DONE'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
+
+  -->
 </div>
 
 <div class="page-footer">

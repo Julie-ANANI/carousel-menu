@@ -1,0 +1,59 @@
+/*
+    This stylesheet contains the style related to the tabs.
+ */
+
+
+.tabs {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin-top: 0;
+    padding: 0;
+    flex: 1 0 auto;
+
+    a {
+      color: white;
+      font-size: 0.9rem;
+      text-align: center;
+      display: block;
+      text-decoration: none;
+      padding: 15px 12px;
+      background: #747D88;
+      font-weight: 600;
+      cursor: pointer;
+
+      i {
+        margin-right: 10px;
+      }
+
+    }
+
+    a:hover {
+      background:  #FFB300;
+    }
+
+    a:active {
+      color: white;
+      background:  #FFB300;
+    }
+
+  }
+
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  .tabs li {
+    flex-basis: 100% !important;
+    margin-left: 0 !important;
+  }
+
+}

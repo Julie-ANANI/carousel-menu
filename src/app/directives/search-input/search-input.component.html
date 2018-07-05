@@ -10,8 +10,8 @@
     <i class="form-icon icon icon-cross" *ngIf="crossIcon" (click)="clearInput()"></i>
   </div>
 
-  <ul *ngIf="searchField.value" [ngStyle]="{'display': displaySuggestion ? 'block' : 'none' }" class="menu">
-    <li *ngFor="let suggestion of suggestions" class="menu-item">
+  <ul *ngIf="searchField.value" [ngStyle]="{'display': displaySuggestion ? 'block' : 'none' }" class="form-suggestion">
+    <li *ngFor="let suggestion of suggestions">
       <a (click)="onValueSelect(suggestion)">
         <span>{{ suggestion.text }}</span>
       </a>

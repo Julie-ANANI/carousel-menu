@@ -1,0 +1,41 @@
+<div class="form-group-inline-left">
+  <div class="input-group">
+    <select (change)="changeCurrentTextProp($event); search.value = '';" class="input-group-addon form-select">
+      <option *ngFor="let propName of textProps"
+              [value]="getAttrs(propName)"
+              [selected]="textIsSelected(propName)">
+        {{getName(propName) | translate}}
+      </option>
+    </select>
+    <div class="has-icon-right">
+      <input (keyup.enter)="filterText($event.srcElement)"
+             #search
+             class="form-input"
+             [placeholder]="'COMMON.FILTER' | translate"
+      />
+      <span (click)="filterText(search)"><i class="form-icon icon icon-search" *ngIf="search.value === ''"></i></span>
+      <span (click)="search.value = ''; filterText(search)"><i class="form-icon icon icon-cross" *ngIf="search.value !== ''"></i></span>
+    </div>
+  </div>
+
+  <div *ngFor="let prop of otherProps">
+    <div [ngSwitch]="getType(prop)" class="input-group">
+      <label class="form-label" style="margin-right: 10px;">{{getName(prop) | translate}}</label>
+      <select (change)="filterOther(prop)" [(ngModel)]="config[getAttr(prop)]" class="form-select small-select primary" *ngSwitchCase="'CHECK'">
+        <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
+        <option [ngValue]="true">{{'COMMON.YES' | translate}}</option>
+        <option [ngValue]="false">{{'COMMON.NO' | translate}}</option>
+      </select>
+
+      <select (change)="filterOther(prop)" [(ngModel)]="config[getAttrs(prop)]"
+              class="form-select small-select primary"
+              style="margin-right: 10px;"
+              *ngSwitchCase="'MULTI-CHOICES'" >
+        <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
+        <option *ngFor="let choice of getChoices(prop)">{{getChoiceName(choice) | translate}}</option>
+      </select>
+    </div>
+  </div>
+
+</div>
+

@@ -1,198 +1,96 @@
-.main-container {
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  min-height: 100vh;
+#sign-up {
 
-  .logo-container {
-    padding-bottom: 50px;
+  .cover-image {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left top;
+    min-height: 100vh;
   }
 
-  .sign-up-container {
-    background: #FFFFFF;
-    border-radius: 0.25rem;
-    padding-top: 51px;
-    padding-bottom: 51px;
-    flex: 1;
-  }
+  .sign-up-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+    padding-bottom: 15px;
+    min-height: 100vh;
 
-  h1 {
-    padding-bottom: 45px;
-    font-size: 1.35rem;
-    font-weight: 600;
-    padding-left: 10px;
-  }
-  h1::after {
-    display: none !important;
-  }
+    .register-wrapper {
+      flex: 1 0 auto;
+      justify-content: center;
+      align-items: center;
+      display: inline-flex;
+      flex-direction: column;
 
+      .social-wrapper {
 
-  .button-container {
-    padding-bottom: 45px;
-    .primary-button {
-      background: #1680B9;
-      border-color: #1680B9;
-    }
-    .primary-button:hover {
-      background: lighten(#1680B9, 15%);
-      border-color: lighten(#1680B9, 15%);
-      color: #FFFFFF;
-    }
-  }
+        .btn {
+          background: #1680B9;
+          border-color: #1680B9;
+          color: white;
+          width: 280px;
+          padding-left: 0;
+          padding-right: 0;
+        }
 
-  .or-container {
-    color: #97A4B1;
-    padding-bottom: 45px;
-    span::before {
-      content: '';
-      display: inline-block;
-      vertical-align: middle;
-      width: 135px;
-      height: 1px;
-      background: #97A4B1;
-    }
-    span::after {
-      content: '';
-      display: inline-block;
-      vertical-align: middle;
-      width: 135px;
-      height: 1px;
-      background: #97A4B1;
-    }
-  }
+        .btn:hover {
+          background: lighten(#1680B9, 10%);
+          border-color: lighten(#1680B9, 10%);
+          color: white;
+        }
 
-  .signup-button {
-    padding-bottom: 29px;
-    .button-signup {
-      padding: 13px 20px;
-      i {
-        vertical-align: bottom;
-        margin-right: 20px;
       }
-      .far {
-        font-weight: unset;
+
+      .or-wrapper {
+        padding-top: 25px;
       }
+
+      .sign-wrapper {
+        padding-top: 25px;
+
+        .btn {
+          width: 280px;
+          padding-left: 0;
+          padding-right: 0;
+
+          i {
+            vertical-align: middle;
+          }
+
+        }
+
+      }
+
     }
+
+    .signin-wrapper {
+
+      .btn-sm {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+      }
+
+    }
+
   }
 
 }
-
 
 /********************************** Media ***************************************/
 
-@media (min-width: 320px) and (max-width: 374px) {
+@media (max-width: 600px) {
 
-  .sign-up-container {
-    width: 300px !important;
-  }
+  #sign-up {
 
-  .or-container {
-    span::before {
-      width: 108px !important;
+    .cover-image {
+      display: none;
     }
-    span::after {
-      width: 108px !important;
+
+    .heading {
+      padding-top: 25px;
     }
+
   }
 
 }
-
-@media (min-width: 375px) and (max-width: 399px) {
-
-  .sign-up-container {
-    width: 335px !important;
-  }
-
-}
-
-@media (min-width: 400px) and (max-width: 480px) {
-
-  .sign-up-container {
-    width: 380px !important;
-  }
-
-  h1 {
-    padding-left: 30px !important;
-  }
-
-}
-
-@media (min-width: 481px) {
-
-  .sign-up-container {
-    width: 480px !important;
-  }
-
-  h1 {
-    padding-left: 60px !important;
-  }
-
-/*  .signup-button {
-    .button-signup {
-      padding-left: 30px !important;
-      padding-right: 30px !important;
-    }
-  } */
-
-
-}
-
-
-
-/*
-.left, .right {
-  padding: 30px;
-}
-
-.left {
-  border-right: solid 1px #e0e0e0;
-}
-
-.btn-linkedin, .btn-email  {
-  width: 100%;
-}
-
-.divider {
-  margin: 30px 0;
-}
-
-label {
-  span {
-    display: block;
-  }
-  input {
-    border: none;
-    border-bottom: solid 1px #333;
-    width: 100%;
-    padding: 5px 10px;
-    margin-bottom: 30px;
-    transition-duration: .5s;
-
-    &:hover, &:focus {
-      border-bottom: solid 1px #3498DB;
-    }
-  }
-}
-
-.error {
-  color: red;
-}
-
-.signup-form {
-  padding: 30px;
-
-  .modal-header {
-    padding-bottom: 30px;
-  }
-
-  .column {
-    padding: 5px 20px;
-  }
-}
-*/

@@ -13,15 +13,15 @@ export class TranslateNotificationsService {
 
   public error(title: string, message: string, config?: any): Notification {
     return this._notificationsService.error(
-      this._translateService.instant(title),
-      this._translateService.instant(message),
+      title ? this._translateService.instant(title) : '',
+      message ? this._translateService.instant(message) : '',
       config);
   }
 
   public success(title: string, message: string, config?: any): Notification {
     return this._notificationsService.success(
-      this._translateService.instant(title),
-      this._translateService.instant(message),
+      title ? this._translateService.instant(title) : title,
+      message ? this._translateService.instant(message) : message,
       config);
   }
 

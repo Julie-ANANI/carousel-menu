@@ -1,13 +1,41 @@
 .videos-upload {
-  background: #FAFAFA;
-  border: 2px dashed #979797;
-  padding: 60px 30px 60px 30px;
+  border: 2px dashed #E0E0E0;
+  position: relative;
+  border-radius: 5px;
+  min-height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 25px 10px;
 
-  .logos-videos {
-    margin-top: 10px;
+
+  .logos {
+    padding-bottom: 20px;
 
     img {
-      margin: 0 5px;
+      margin-right: 30px;
     }
+
   }
+
+  .form-default {
+    max-width: 450px;
+  }
+
+  .form-default.ng-touched.ng-invalid{
+    border-color: unset !important;
+  }
+
+  .btn {
+    margin-top: 20px;
+  }
+
 }
+
+.videos-upload:hover {
+  border-color: #FFB300;
+  background-color: #FFF9EB;
+}
+
+

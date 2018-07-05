@@ -7,7 +7,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CountryFlagComponent implements OnInit {
 
-  @Input() country: any;
+  private _country: any;
+
+  @Input() set country(value: any) {
+    this._country = value;
+    this.updateFlag();
+  };
   @Input() width = 37;
   @Input() height = 25;
 
@@ -65,11 +70,15 @@ export class CountryFlagComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.updateFlag();
+  }
+
+  updateFlag() {
     let flag = '00';
-    if (this.country && typeof this.country === 'string') {
-      flag = this.country.toUpperCase();
-    } else if (this.country && this.country.flag) {
-      flag = this.country.flag.toUpperCase();
+    if (this._country && typeof this._country === 'string') {
+      flag = this._country.toUpperCase();
+    } else if (this._country && this._country.flag) {
+      flag = this._country.flag.toUpperCase();
     }
     this._url = `https://res.cloudinary.com/umi/image/upload/app/flags/${flag}.png`;
     this._name = this.names[flag] || 'Unknown';

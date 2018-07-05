@@ -1,3 +1,27 @@
+/********************************** Color ***************************************/
+
+// Elements color
+$primary-element: #FFB300;
+$secondary-element: #0B90C6;
+$meta-element: #97A4B1;
+$validation-element: #2ECC71;
+$alert-element: #EA5858;
+
+$primary-hover: #246a99;
+$primary-dark: #333333;
+
+// Text color
+$para-color: #484848;
+$title-color: #333333;
+
+// Backgrounds
+$page-background: #333333;
+$header-background: #4F5D6B;
+
+//Primary button
+$button-color: #ffb300;
+$button-disabled-color: #dbdbdb;
+
 $primary-color: #3498DB !default;
 $hover-color: #246a99 !default;
 
@@ -5,15 +29,37 @@ $hover-color: #246a99 !default;
 $hero-title: #333333 !default;
 $hero-subtitle: #878787;
 $hero-description: #A4A4A4;
-$para-color: #878787;
 $section-title: #0B90C6;
+$section-heading: #0B90C6;
 $section-description: #878787;
 
-//Page Main Container
+// Headings
 
-.main-container {
-  padding-left: 0;
-  padding-right: 0;
+.c-heading-1 {
+  color: $primary-dark;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.c-heading-2 {
+  color: $primary-dark;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.c-heading-3 {
+  color: $primary-dark;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+// Paragraph and line
+
+.c-para {
+  font-size: 0.9rem;
+  color: $para-color;
+  padding: 16px 0;
+  margin: 0;
 }
 
 // Button Default Style
@@ -30,18 +76,6 @@ $section-description: #878787;
   line-height: 1.4rem;
 }
 
-// Paragraph Default Style
-
-.para {
-  font-size: 0.9rem;
-  color: $para-color;
-  padding: 16px 0;
-  margin: 0;
-}
-
-// Font Awesome Icon Default Style
-
-
 // Padding Remove
 
 .padding-lr-rm {
@@ -49,29 +83,9 @@ $section-description: #878787;
   padding-right: 0;
 }
 
-
-
 /********************************** Hero Styles ***************************************/
 
-//Hero container
 
-.hero-light-container {
-  padding: 50px 0 25px 0;
-  margin: 0;
-}
-
-.hero-container {
-  padding: 50px 0;
-  margin: 0;
-}
-
-.hero-title {
-  padding: 0 0 25px 0;
-  color: $hero-title;
-  font-weight: 300;
-  font-size: 2.6rem;
-  margin: 0;
-}
 
 .hero-subtitle {
   color: $hero-subtitle;
@@ -87,34 +101,24 @@ $section-description: #878787;
   margin: 0;
 }
 
-// HR Styles
-
-.hero-hr {
-  width: 125px;
-  border: 2px solid $primary-color;
-  border-radius: .25rem;
-  margin-bottom: 16px;
-}
-
-
-/********************************** End Hero Styles ***************************************/
-
 
 
 /********************************** Section Styles ***************************************/
 
-//Section container
-
-.section-container {
-  padding: 50px 0;
-  margin: 0;
-}
-
 .section-title {
   padding: 0 0 25px 0;
   color: $section-title;
-  font-weight: normal;
-  font-size: 1.6rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.section-heading {
+  padding: 0 0 25px 0;
+  color: $section-title;
+  font-size: 1.35rem;
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -127,6 +131,5 @@ $section-description: #878787;
   margin-bottom: 0;
 }
 
-/********************************** End Section Styles ***************************************/
 
 

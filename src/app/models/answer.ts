@@ -15,4 +15,5 @@ export interface Answer {
   company: Clearbit;
   readonly professional: Professional;
   readonly answers: any;
+  readonly created: Date;
 }

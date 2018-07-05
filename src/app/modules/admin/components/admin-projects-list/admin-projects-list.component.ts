@@ -5,6 +5,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { Subject } from 'rxjs/Subject';
 import { Innovation } from '../../../../models/innovation';
 import { User } from '../../../../models/user.model';
+import {Table} from '../../../shared/components/shared-table/models/table';
 
 @Component({
   selector: 'app-admin-projects-list',
@@ -19,6 +20,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   @Input() refreshNeededEmitter: Subject<any>;
   private _projects: Array<Innovation> = [];
   public selectedProjectIdToBeDeleted: any = null;
+  private _tableInfos: Table = null;
   private _total = 0;
   private _config: any;
 
@@ -49,7 +51,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     this._projects = [];
     this._config = {
       fields: '',
-      limit: 5,
+      limit: 10,
       offset: 0,
       search: {},
       sort: {
@@ -109,7 +111,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     this._innovationService.getAll(this._config)
       .first()
       .subscribe(projects => {
-        this._projects = this._projects.concat(projects.result.map((project: Innovation) => {
+        this._projects = projects.result.map((project: Innovation) => {
           if (!project.stats) {
             project.stats = {
               pros: 0,
@@ -122,9 +124,25 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
             }
           }
           return project;
-        }));
+        });
         this._total = projects._metadata.totalCount;
-        this._config.offset += 5;
+
+        this._tableInfos = {
+          _selector: 'admin-projects',
+          _title: 'COMMON.PROJECTS',
+          _content: this._projects,
+          _total: this._total,
+          _isFiltrable: true,
+          _isHeadable: true,
+          _columns: [
+            {_attrs: ['name'], _name: 'COMMON.PROJECTS', _type: 'TEXT'},
+            {_attrs: ['type'], _name: 'COMMON.TYPE', _type: 'MULTI-CHOICES',
+              _choices: [
+                {_name: 'apps', _url: 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-apps.svg'},
+                {_name: 'insights', _url: 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-insights.svg'},
+                {_name: 'leads', _url: 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-leads.svg'}
+              ]}]
+        };
       });
   }
 
@@ -180,10 +198,10 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     const delai = 8; // On se donne 8 jours à compter de la validation du projet
     const today: Date = new Date();
     date = date || new Date('1970');
-    if(!date.getTime) {
+    if (!date.getTime) {
       date = new Date(date);
     }
-    let time = delai - Math.round((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+    const time = delai - Math.round((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
     return time;
   }
 
@@ -206,7 +224,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   }
 
   public setOperator (operatorId: string, project: Innovation) {
-    if(operatorId) {
+    if (operatorId) {
       this._innovationService.setOperator(project._id, operatorId)
           .first()
           .subscribe(_ => {
@@ -228,5 +246,6 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   get config() { return this._config; }
   get total () { return this._total; }
   get projects () { return this._projects; }
+  get tableInfos(): Table { return this._tableInfos; }
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
 }

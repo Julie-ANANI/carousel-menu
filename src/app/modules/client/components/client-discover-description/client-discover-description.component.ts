@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { ShareService } from '../../../../services/share/share.service';
-
 import { InnovCard } from '../../../../models/innov-card';
-
 import { environment } from '../../../../../environments/environment';
-import {Innovation} from '../../../../models/innovation';
+import { Innovation } from '../../../../models/innovation';
 
 @Component({
   selector: 'app-client-discover-description',
@@ -28,15 +25,14 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
 
   constructor(private _innovationService: InnovationService,
               private _activatedRoute: ActivatedRoute,
-              private _shareService: ShareService)
-  {
-    this._activatedRoute.params.subscribe(params => {
-      this.loadInnovation(params['id'], params['lang']);
-
-    });
+              private _shareService: ShareService) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._activatedRoute.params.subscribe(params => {
+      this.loadInnovation(params['id'], params['lang']);
+    });
+  }
 
   loadInnovation(id: any, lang: any) {
 
@@ -46,11 +42,11 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
         this.quizButtonDisplay = 'none';
       }
 
-      this.quizUrl = environment.quizUrl + '/quiz/' + response.quizId + '/' + response.campaigns[0].id + '?lang=' + lang;
+      if (response.campaigns.length !== 0) {
+        this.quizUrl = environment.quizUrl + '/quiz/' + response.quizId + '/' + response.campaigns[0].id + '?lang=' + lang;
+      }
 
       this.innovation = response;
-
-      console.log(this.innovation);
 
       this.linkedInUrl = this._shareService.linkedinProjectShareLink(this.innovation, lang);
 

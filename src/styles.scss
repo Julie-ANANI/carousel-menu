@@ -3,6 +3,7 @@ $body-font-color: #878787 !default;
 $base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
 $primary-color: #3498DB !default;
 
+
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 @import "../node_modules/spectre.css/src/spectre.scss";
 @import "../node_modules/spectre.css/src/spectre-icons.scss";
@@ -14,19 +15,18 @@ $primary-color: #3498DB !default;
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
 
 
+
+/********************************** Default Styles ***************************************/
+
 body {
   font-size: 16px;
   line-height: 1.4;
   font-family: 'Open Sans', sans-serif;;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #333333;
 }
 
-*:focus {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  outline: none !important;
-}
 
 /********************************** Color ***************************************/
 
@@ -42,7 +42,9 @@ $primary-dark: #333333;
 
 // Text color
 $para-color: #5D5D5D;
-$title-color: #333333;
+$proj-info: #97A4B1;
+$ques-color: #333333;
+$text-color: #333333;
 
 // Backgrounds
 $page-background: #333333;
@@ -53,7 +55,7 @@ $button-color: #ffb300;
 $button-disabled-color: #dbdbdb;
 
 
-/* Typographie */
+/* Typographie*/
 
 h1 {
   font-weight: 300;
@@ -63,16 +65,6 @@ h1 {
   //margin-top: 110px;
 }
 
-h1::after {
-  display: block;
-  content: '';
-  width: 124px;
-  background: $primary-color;
-  height: 3px;
-  margin-top: 30px;
-  margin-bottom:56px;
-  border-radius: 5px;
-}
 
 h2 {
   font-weight: 400;
@@ -117,7 +109,7 @@ h3, .h3 {
 
 
 
-/* Barre de tri */
+/* Barre de tri*/
 
 ul.list-filter {
   text-align: right;
@@ -137,7 +129,7 @@ ul.list-filter {
 }
 
 
-/* On décale les notifications vers le bas pour ne pas qu'elles cachent le menu principal */
+/* On décale les notifications vers le bas pour ne pas qu'elles cachent le menu principal*/
 .simple-notification-wrapper.top {
   top: 80px !important;
 }
@@ -160,132 +152,19 @@ ul.list-filter {
   position: relative;
 }
 
-/********************************** Simple Notification Styles ***************************************/
 
-.simple-notification {
-  border: 1px solid transparent !important;
-  border-radius: 5px !important;
-  word-wrap: break-word !important;
-}
-
-.simple-notification-wrapper {
-  z-index: 9999 !important;
-}
-
-.simple-notification .sn-title {
-  font-size: 20px !important;
-  line-height: 1.4 !important;
-  padding-right: 0 !important;
-  font-weight: bold;
-  padding-bottom: 8px !important;
-}
-
-.simple-notification .sn-content {
-  font-size: 16px !important;
-  line-height: 1.4 !important;
-  padding-right: 0 !important;
-  padding-bottom: 10px !important;
-}
-
-.simple-notification.success {
-  background: #d4edda !important;
-  color: #155724 !important;
-  border-color: #c3e6cb !important;
-}
-
-.simple-notification.error {
-  background: #f8d7da !important;
-  color: #721c24 !important;
-  border-color: #f5c6cb !important;
-}
-
-/********************************** Text Styles ***************************************/
-
-.text {
-  color: $title-color;
-  padding: 16px 0;
-  margin: 0;
-}
-
-.para {
-  font-size: 0.9rem;
-  color: $para-color;
-  padding: 16px 0;
-  margin: 0;
-}
-
-.text-link, .text-link:active, .text-link:visited {
-  color: $primary-element;
-  cursor: pointer;
-}
-
-.text-link:hover {
-  color: lighten($primary-element, 15%);
-}
-
-.text-link:focus {
-  color: $primary-element;
-}
+@import "style/animation";
+@import "style/container-style";
+@import "style/general-style";
+@import "style/text-style";
+@import "style/form-style";
+@import "style/button-style";
+@import "style/tab-style";
+@import "style/modal-style";
+@import "style/tooltip-style";
+@import "style/table-style";
 
 /********************************** Form Input Styles ***************************************/
-
-
-// Form label
-
-.form-label-default {
-  color: $meta-element;
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding-left: 2px;
-}
-
-.form-label-active {
-  color: $primary-element;
-  font-size: 0.7rem;
-  font-weight: 600;
-}
-
-.form-label-error {
-  color: $alert-element;
-  font-size: 0.7rem;
-  font-weight: 600;
-}
-
-// Form input
-
-.form-input-default {
-  border-right: none;
-  border-left: none;
-  border-top: none;
-  border-bottom-color: $meta-element;
-  font-size: 0.7rem;
-  color: #484848;
-  padding: 12px 4px;
-}
-
-.form-input-default:focus {
-  border-color: $primary-element !important;
-}
-
-.form-input-default:disabled {
-  background: #E7E7E7;
-  color: #666666;
-}
-
-.form-input-default.ng-touched.ng-invalid{
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-color: $alert-element !important;
-}
-
-// Form error
-
-.form-error {
-  color: $alert-element;
-  font-size: 0.6rem;
-  padding: 4px 0;
-}
 
 // Form slide button
 
@@ -320,7 +199,6 @@ ul.list-filter {
 .form-switch {
   padding-left: 2rem;
   padding-right: 0.2rem;
-  line-height: 1.4;
 }
 
 .form-switch-padding {
@@ -328,176 +206,10 @@ ul.list-filter {
   padding-bottom: 20px;
 }
 
-// Form suggestion list
 
-.form-suggestion {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  margin: 0;
-  padding: 4px;
-  list-style: none;
-  z-index: 2;
 
-  li {
-    padding: 8px;
-    transition: all .35s ease-in-out;
-    cursor: pointer;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    border-radius: 5px;
 
-    a{
-      color: #333333;
-      transition: all .35s ease-in-out;
-      text-decoration: none;
-    }
 
-  }
 
-  li:hover {
-    background:  $secondary-element;
-    border-color: $secondary-element;
 
-    a {
-      color: white;
-    }
-
-  }
-
-}
-
-/********************************** Buttons Styles ***************************************/
-
-// Primary button
-
-.primary-button {
-  background: $button-color;
-  color: white;
-  border-radius: 5px;
-  border-color: $button-color;
-  min-height: 50px;
-  padding: 11px 30px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  transition: all 0.5s ease-in-out;
-
-  i {
-    margin-right: 36px;
-    font-size: 1.1rem;
-  }
-
-}
-
-.primary-button:hover, .primary-button:active {
-  color: white;
-  background: lighten($button-color, 15%);
-  border-color: lighten($button-color, 15%);
-}
-
-.primary-button:disabled {
-  background: $button-disabled-color;
-  border-color: $button-disabled-color;
-  color: #a9a9a9;
-}
-
-.primary-button:focus {
-  background: $button-color;
-  border-color: $button-color;
-  color: white;
-}
-
-// Secondary button
-
-.secondary-button {
-  background: white;
-  color: $button-color;
-  border-radius: 5px;
-  border: 2px solid $button-color;
-  min-height: 50px;
-  padding: 12px 30px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  transition: all 0.5s ease-in-out;
-
-  i {
-    margin-right: 36px;
-    font-size: 1.1rem;
-  }
-
-}
-
-.secondary-button:hover, .secondary-button:active {
-  background: white;
-  color: lighten($button-color, 15%);
-  border-color: lighten($button-color, 15%);
-}
-
-.secondary-button:disabled {
-  border-color: $button-disabled-color;
-  color: #a9a9a9;
-  background: white;
-}
-
-.secondary-button:focus {
-  background: white;
-  color: $button-color;
-  border-color: $button-color;
-}
-
-.secondary-button-alert {
-  background: white;
-  color: $alert-element;
-  border-radius: 5px;
-  border: 2px solid $alert-element;
-  min-height: 50px;
-  padding: 12px 30px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  transition: all 0.5s ease-in-out;
-
-  i {
-    margin-right: 36px;
-    font-size: 1.1rem;
-  }
-
-}
-
-.secondary-button-alert:hover, .secondary-button-alert:active {
-  background: white;
-  color: lighten($alert-element, 15%);
-  border-color: lighten($alert-element, 15%);
-}
-
-.secondary-button-alert:focus {
-  background: white;
-  border-color: $alert-element;
-  color: $alert-element;
-}
-
-/********************************** Media ***************************************/
-
-@media (max-width: 360px) {
-
-  .form-input-default {
-    max-width: 290px !important;
-  }
-
-  .primary-button, .secondary-button, .secondary-button-alert {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-
-    i {
-      margin-right: 16px !important;
-    }
-
-  }
-
-}
-
-@media (max-width: 320px) {
-
-  .form-input-default {
-    max-width: 250px !important;
-  }
-
-}
 

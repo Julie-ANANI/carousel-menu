@@ -32,7 +32,7 @@ export class ClientDiscoverComponent implements OnInit {
     offset: 0,
     search: {
       isPublic: 1,
-      status: 'DONE',
+      status: 'DONE' || 'EVALUATING',
     },
     sort: {
       created: -1

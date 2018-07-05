@@ -5,11 +5,15 @@ export const COMMON = {
   'UPDATE': 'Update',
   'EDIT': 'Edit',
   'DELETE': 'Delete',
-  'LOG_IN': 'Login',
+  'SUBMIT': 'CONFIRM',
+  'LOG_IN': 'Sign in',
   'SIGN_UP': 'Sign up',
   'LOG_OUT': 'Logout',
   'CANCEL': 'Cancel',
+  'MORE': 'See more',
+  'OF': 'of',
   'ADD': 'Add',
+  'ALL': 'All',
   'ADDED': 'Added on',
   'CREATED': 'Created on',
   'UPDATED': 'Updated on',
@@ -20,6 +24,7 @@ export const COMMON = {
   'NO': 'No',
   'YES': 'Yes',
   'ACCEPT': 'Accept',
+  'PAGINATION' : 'Rows per page',
   'FILTER': 'Filter',
   'SEARCH': 'Search',
   'TAGS': 'Tags',
@@ -31,6 +36,8 @@ export const COMMON = {
   'SYNTHESIS': 'Synthesis',
   'SEARCHINNOVATION': 'Search innovation',
   'LOADING': 'Loading',
+  'MEDIA_NOT_AVAILABLE': 'Media not available',
+  'PROGRESS': 'Progress',
 
   'NAME': 'Name',
   'FIRSTNAME': 'First name',
@@ -38,13 +45,21 @@ export const COMMON = {
   'EMAIL': 'Email address',
   'PHONE': 'Phone',
   'PASSWORD': 'Password',
+  'PASSWORD_PLACEHOLDER': 'Enter your password',
+  'PASSWORD_SIGNUP_PLACEHOLDER': '8+ characters',
   'PASSWORD_CONFIRM': 'Password confirmation',
   'COMPANY': 'Company',
+  'COMPANY_PLACEHOLDER': 'Enter your company name',
   'JOBTITLE': 'Job title',
+  'JOBTITLE_PLACEHOLDER': 'Enter your job title',
   'TYPE': 'Type',
   'DOMAIN': 'Domain',
   'COUNTRY': 'Country',
-  'TERMS': 'I accept the terms and conditions of use.',
+  'COUNTRY_PLACEHOLDER': 'Enter your country',
+  'TERMS': {
+    'A': 'By clicking "Continue" I agree to',
+    'B': 'terms and conditions of use.',
+  },
 
   'REQUIRED': {
     'FIRSTNAME': 'First name is required.',
@@ -60,7 +75,12 @@ export const COMMON = {
   },
 
   'BUTTON': {
-    'SIGN_UP': 'Sign up',
+    'SIGN_UP': 'Continue',
+  },
+
+  'TABLE' : {
+    'SELECTED_ROWS': 'selected rows',
+    'NO-RESULTS': 'No results'
   },
 
   'PROJECT_STATE': {
@@ -78,13 +98,13 @@ export const COMMON = {
   },
 
   'INVALID': {
-    'EMAIL': 'Email is invalid.',
+    'EMAIL': 'Please enter a valid email address.',
     'PASSWORD_TOO_SHORT': 'Password is too short.'
   },
 
   'LINKS': 'Links',
   'HELP': 'Help',
-  'OR': 'or',
+  'OR': 'Or',
 
   'LANGUAGE': 'Language',
   'LANG': {

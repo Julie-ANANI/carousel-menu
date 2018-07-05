@@ -3,14 +3,15 @@
   [innovation]="innovation"
   [question]="question"
   [readonly]="readonly"
-  [stats]="stats"
-></app-question-conclusion>
+  [stats]="stats">
+</app-question-conclusion>
 
 <div class="items">
 
   <div class="items-list">
-    <div *ngFor="let item of (!details && listItems.length > maxToShow) ? listItems.slice(0, maxToShow) : listItems; let i = index"
-        [ngClass]="{'top-profil': item.rating === 2}">
+    <div
+      *ngFor="let item of (!details && listItems.length > maxToShow) ? listItems.slice(0, maxToShow) : listItems; let i = index"
+      [ngClass]="{'top-profil': item.rating === 2}">
       <div class="flex-container">
         <strong class="market-item">
           <span *ngIf="item.count > 1" class="item-occurrence">{{item.count}}x</span>

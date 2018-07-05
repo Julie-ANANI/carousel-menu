@@ -1,22 +1,25 @@
-<div class="container">
+<div class="main-container" id="admin-project">
   <div class="columns">
-    <div class="column col-10 col-mx-auto">
+    <div class="column col-12 col-mx-auto">
 
-      <h2>{{ this.project.name }}</h2>
-
-      <ul class="tab tab-block">
-        <li class="tab-item" *ngFor="let tab of authorizedTabs">
-          <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }">
-            {{ 'PROJECT.' + tab.toUpperCase() | translate }}
-          </a>
-        </li>
-      </ul>
-
-      <div class="tabs">
-        <div class="tab-content">
-          <router-outlet></router-outlet>
+      <div class="hero-light-container">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <h1>{{ this.project.name }}</h1>
         </div>
       </div>
+
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <ul class="tabs">
+          <li *ngFor="let tab of authorizedTabs">
+            <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }">
+              {{ 'PROJECT.' + tab.toUpperCase() | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <router-outlet></router-outlet>
+
     </div>
   </div>
 </div>

@@ -8,9 +8,9 @@ import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/cor
 
 export class SharedWorldmapComponent {
 
-  @Input() public canEdit: boolean;
   @Input() public width = '800px';
   @Input() public countriesColor: string;
+  @Input() isEditable = true;
 
   @Input() set countries(value: Array<string>) {
     if (Array.isArray(value) && value.length > 0) {
@@ -104,9 +104,13 @@ export class SharedWorldmapComponent {
    */
   public clickOnContinent(event: Event, continent: string): void {
     event.preventDefault();
-    this._continents[continent] = !this._continents[continent];
-    this.updateContinent.emit({continents: this._continents});
-    this.updateCountries.emit({countries: this.getCountriesList(), allChecked: this.areAllContinentChecked()});
+
+    if (this.isEditable) {
+      this._continents[continent] = !this._continents[continent];
+      this.updateContinent.emit({continents: this._continents});
+      this.updateCountries.emit({countries: this.getCountriesList(), allChecked: this.areAllContinentChecked()});
+    }
+
   }
 
   /**

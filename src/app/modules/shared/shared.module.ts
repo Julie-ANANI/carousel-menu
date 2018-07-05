@@ -12,13 +12,14 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
 // Components
+import { SharedAnswersListComponent } from './components/shared-answers-list/shared-answers-list.component';
 import { SharedNotFoundComponent } from './components/shared-not-found/shared-not-found.component';
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
 import { SharedLoaderComponent } from './components/shared-loader/shared-loader.component';
 import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
 import { SharedFilterInputComponent } from './components/shared-filter-input/shared-filter-input.component';
-import { SharedModalComponent } from './components/shared-modal-component/shared-modal.component';
+import { SharedFilterMultiComponent} from './components/shared-filter-multi/shared-filter-multi.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
 import { SharedTagItemComponent } from './components/shared-tag-item/shared-tag-item.component';
@@ -33,6 +34,7 @@ import { SharedProsListComponent } from './components/shared-pros-list/shared-pr
 import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
+import { SharedTableComponent } from './components/shared-table/components/shared-table.component';
 import { SharedEditEmail } from './components/shared-edit-email/shared-edit-email.component';
 import { SharedEditEmailsStep } from './components/shared-edit-emails-step/shared-edit-emails-step.component';
 import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
@@ -43,6 +45,7 @@ import { SharedEmailBlacklistComponent } from './components/shared-email-blackli
 import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
 import { FilterPipe } from '../../pipes/TableFilterPipe';
 import { LimitsPipe } from '../../pipes/TableLimitsPipe';
+import { CharacterCountdown } from '../../pipes/CharacterCountdown';
 import { MultilingModule } from '../../pipes/multiling/multiling.module';
 
 // Directives
@@ -54,6 +57,7 @@ import { CountryFlagComponent } from '../../directives/country-flag/country-flag
 // Internal Modules
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
+// import { TableModule } from './components/shared-table/table.module';
 
 @NgModule({
   imports: [
@@ -69,6 +73,8 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     Ng2PageScrollModule,
     Ng2AutoCompleteModule,
     SharedWorldmapModule,
+    SidebarModule,
+    SharedWorldmapModule,
     MultilingModule
   ],
   declarations: [
@@ -76,14 +82,15 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     // FormErrorDirective,
     CountryFlagComponent,
     InputListComponent,
+    SharedAnswersListComponent,
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
+    SharedFilterMultiComponent,
     SharedTextZoneComponent,
-    SharedModalComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedVideoComponent,
@@ -99,6 +106,7 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
     SharedMarketReportExampleComponent,
+    SharedTableComponent,
     SharedEditEmail,
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
@@ -106,7 +114,8 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     DomSanitizerPipe,
     FilterPipe,
     LimitsPipe,
-    SharedEmailBlacklistComponent
+    SharedEmailBlacklistComponent,
+    CharacterCountdown
   ],
   exports: [
     // Modules
@@ -116,6 +125,7 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     Ng2FileDropModule,
     Ng2PageScrollModule,
     SidebarModule,
+    // TableModule,
 
     // Directives
     CountryFlagComponent,
@@ -123,13 +133,14 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
 
     // Components
     SharedNotFoundComponent,
+    SharedAnswersListComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
     SharedPaginationComponent,
     SharedFilterInputComponent,
+    SharedFilterMultiComponent,
     SharedTextZoneComponent,
-    SharedModalComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedSortComponent,
@@ -143,13 +154,15 @@ import { SidebarModule } from './components/shared-sidebar/sidebar.module';
     SharedProsListComponent,
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
+    SharedTableComponent,
     SharedEditEmail,
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
     SharedProjectEditCardsComponent,
     SharedEmailBlacklistComponent,
     FilterPipe,
-    LimitsPipe
+    LimitsPipe,
+    CharacterCountdown
   ]
 })
 
