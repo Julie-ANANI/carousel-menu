@@ -8,7 +8,6 @@
     <app-question-conclusion
       *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'
       && question.controlType !== 'list' && question.controlType !== 'clearbit'"
-      [infographic]="infographic"
       [innovation]="innovation"
       [question]="question"
       [readonly]="readonly"
@@ -21,7 +20,6 @@
     <app-bar-chart
       *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'"
       [answers]="answersToShow"
-      [infographic]="infographic"
       [innovation]="innovation"
       [question]="question"
       [readonly]="readonly"
@@ -34,7 +32,6 @@
     <app-item-list
       *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
       [answers]="answersToShow"
-      [infographic]="infographic"
       [innovation]="innovation"
       [question]="question"
       [readonly]="readonly"
