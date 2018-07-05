@@ -31,7 +31,6 @@ export class BarChartComponent implements OnInit {
     this._answers = value;
     this.updateAnswersData();
   }
-  @Input() public infographic: any;
   @Input() public innovation: Innovation;
   @Input() public question: Question;
   @Input() public readonly: boolean;

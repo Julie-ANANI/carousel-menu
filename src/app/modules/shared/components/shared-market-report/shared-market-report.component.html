@@ -95,7 +95,6 @@
               <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h2>
               <app-question-conclusion
                 [innovation]="project"
-                [infographic]="infographics?.professionals"
                 [question]="{identifier: 'professionals'}"
                 [readonly]="!adminMode"
                 [stats]="{nbAnswers: answers.length, percentage: 0}">
@@ -123,7 +122,6 @@
             <!-- Other questions -->
             <div *ngFor="let question of questions" class="section-container">
               <app-question-section
-                [infographic]="getInfo(question)"
                 [innovation]="project"
                 [question]="question"
                 [answers]="filteredAnswers"
@@ -145,153 +143,3 @@
     </div>
   </div>
 </div>
-
-
-<!--
-<shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
-
-<!--
-<div class="innovation-card-print">
-  <app-client-project content [project]=project.innovationCards[0]></app-client-project>
-</div>
-
-
-<div class="market-report">
-
-  <!-- *********************************************************
-        Header
-  **************************************************************
-
-  <div class="frontcover">
-    <img [src]="logoName()" alt="Logo" height="40" class="centered">
-    <h1 id="title">{{project.name}}</h1>
-    <p class="subtitle">{{today | date: 'fullDate'}}</p>
-  </div>
-
-  <!--
-  <div class="admin-buttons">
-    <button type="button" *ngIf="adminMode"
-            class="btn btn-lg btn-primary"
-            (click)="recalculateSynthesis($event)"
-            [disabled]="calculating"
-            [ngClass]="{'loading': calculating, '': !calculating}"
-    >
-      {{'MARKET_REPORT.BTN_RECOMPUTE' | translate}}
-      <i class="fas fa-sync" aria-hidden="true"></i>
-    </button>
-    <pdf-generator class="btn btn-lg btn-primary" [model]="getModel()" style="margin:10px;">
-    </pdf-generator>
-  </div>
-  -->
-
-  <!-- *********************************************************
-        Sidebar
-  **************************************************************
-  <div class="d-flex">
-    <div class="sidebar">
-      <div class="sidebarIsSticky">
-        <div (click)="toggleDetails($event)" class="toggle-sections">
-          {{ (showDetails ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND') | translate}}
-          <i class="fas fa-angle-right" aria-hidden="true"
-             [ngClass]="{'fa-plus-square-o': !showDetails, 'fa-minus-square-o': showDetails}"></i>
-        </div>
-        <ul>
-          <li>
-            <a pageScroll href="#professionals">
-              {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
-              <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li *ngFor="let question of cleaned_questions">
-            <a pageScroll [href]="'#' + question.identifier">
-              {{ question.title | multiling:lang }}
-              <i class="fas fa-angle-right float-right" aria-hidden="true"></i>
-            </a>
-          </li>
-        </ul>
-        <div *ngIf="objectKeys(filters).length">
-          <span>{{'MARKET_REPORT.FILTERS' | translate}}</span>
-          <ul>
-            <li *ngFor="let fKey of objectKeys(filters)">
-              <button class="btn btn-secondary btn-sm" (click)="deleteFilter(fKey, $event)">
-                {{filters[fKey].questionTitle | multiling:lang}} <i class="icon icon-cross"></i>
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- *********************************************************
-          Synthesis
-    **************************************************************
-
-    <div class="flex-container">
-      <div class="content">
-
-        <!-- *********************************************************
-              World Map and professionals cards
-        **************************************************************
-        <section id="professionals">
-          <h2>{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
-          <div class="white-frame">
-
-          <app-question-conclusion
-            [innovation]="project"
-            [infographic]="infographics?.professionals"
-            [question]="{identifier: 'professionals'}"
-            [readonly]="!adminMode"
-            [stats]="{nbAnswers: answers.length, percentage: 0}"
-          ></app-question-conclusion>
-
-            <div class="bloc">
-              <!--======= Carte du monde =======--
-              <div class="map centered" width="684" height="339">
-                <app-worldmap (updateCountries)="filterByCountries($event)"
-                              [countries]="countries"
-                              [countriesColor]="'#0B90C6'"
-                              [initialConfiguration]="mapInitialConfiguration"
-                              [width]="'800px'">
-                </app-worldmap>
-              </div>
-            </div>
-
-            <!-- ========= showListProfessional button ==============-
-            <button type="button" class="market-report-btn centered"
-                    [ngClass]="{'active': showListProfessional}"
-                    (click)="showListProfessional = !showListProfessional; $event.preventDefault()">
-              {{(showListProfessional ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate}}
-              <i class="fas" aria-hidden="true"
-                 [ngClass]="showListProfessional ? 'fa-angle-up' : 'fa-angle-down'"></i>
-            </button>
-
-            <div *ngIf="showListProfessional" class="bloc details prosList">
-              <!--======= Liste des pros =======-
-              <div *ngFor="let answer of filteredAnswers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
-                <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Les autres questions --
-        <section *ngFor="let question of questions">
-          <app-question-section
-            [infographic]="getInfo(question)"
-            [innovation]="project"
-            [question]="question"
-            [answers]="filteredAnswers"
-            [showComments]="showDetails"
-            [showDetails]="showDetails"
-            [readonly]="!adminMode"
-            (addFilter)="addFilter($event)"
-            (modalAnswerChange)="seeAnswer($event)">
-          </app-question-section>
-        </section>
-      </div>
-    </div>
-  </div>
-
-  <div class="page-footer">UMI - contact@umi.us - www.umi.us</div>
-</div>
--->
