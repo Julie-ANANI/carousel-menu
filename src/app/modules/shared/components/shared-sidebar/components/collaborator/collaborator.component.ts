@@ -1,36 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../../../../../models/user.model';
-import {InnovationService} from '../../../../../../services/innovation/innovation.service';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 
 @Component({
-  selector: 'app-sidebar-collaborator',
-  templateUrl: './sidebar-collaborator.component.html',
-  styleUrls: ['./sidebar-collaborator.component.scss'],
-  animations: [
-    trigger('sidebarAnimate', [
-      state('inactive', style({
-        transform: 'translateX(100%)',
-        opacity: 0
-      })),
-      state('active', style({
-        transform: 'translateX(0)',
-        opacity: 1
-      })),
-      transition('inactive <=> active', animate('700ms ease-in-out'))
-    ])
-  ]
+  selector: 'app-collaborator',
+  templateUrl: './collaborator.component.html',
+  styleUrls: ['./collaborator.component.scss']
 })
 
-export class SidebarCollaboratorComponent implements OnInit {
+export class CollaboratorComponent implements OnInit, OnChanges {
 
-  @Input() animate_state: string;
   @Input() projectId: string;
   @Input() collaborator: Array<User>;
+  @Input() sidebarState: string;
 
-  @Output() closeSidebar = new EventEmitter<string>();
   @Output() collaboratorAdded = new EventEmitter<any>();
 
   formData: FormGroup;
@@ -47,19 +32,11 @@ export class SidebarCollaboratorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.animate_state = 'inactive';
-
     this.formData = this.formBuilder.group({
       collaboratorEmail: ['', [Validators.required, Validators.email]]
     });
-
   }
 
-  toggleState() {
-    this.animate_state = 'inactive';
-    this.closeSidebar.emit(this.animate_state);
-    this.formData.reset();
-  }
 
   onSubmit(event: Event) {
     event.preventDefault();
@@ -129,6 +106,12 @@ export class SidebarCollaboratorComponent implements OnInit {
       this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_DELETED.TITLE', 'PROJECT_MODULE.COLLABORATOR_DELETED.CONTENT');
     });
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+   if (changes.sidebarState.currentValue !== changes.sidebarState.previousValue) {
+     this.formData.reset();
+   }
   }
 
 }

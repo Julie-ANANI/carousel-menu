@@ -7,6 +7,7 @@ export interface Column {
   readonly _attrs: string[];
   readonly _type: types;
   readonly _name?: string;
+  readonly _isSortable?: boolean;
   readonly _choices?: Choice[];
   readonly _multiLabels?: MultiLabel[];
 }

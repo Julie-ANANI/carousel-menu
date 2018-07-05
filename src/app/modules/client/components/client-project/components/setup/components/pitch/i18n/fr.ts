@@ -91,6 +91,6 @@ export const PITCH = {
     'ERROR': 'La diffusion est requise.'
   },
 
-  'INNOVATION_PREVIEW': 'Aperçu de l\'innovation',
+  'INNOVATION_PREVIEW': 'Aperçu',
 
 };

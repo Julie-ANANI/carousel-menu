@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Innovation } from '../../../../models/innovation';
+import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
 
 const DEFAULT_PAGE = 'setup';
 
@@ -14,8 +15,9 @@ export class ClientProjectComponent implements OnInit {
 
   @Input() project: Innovation;
 
-  sidebarAnimateState: string;
+  sidebarTemplateValue: Template = {
 
+  };
   private _imgType: string;
   private _currentPage: string;
   private _scrollButton = false;
@@ -55,11 +57,14 @@ export class ClientProjectComponent implements OnInit {
 
   editCollaborator(event: Event) {
     event.preventDefault();
-    this.sidebarAnimateState = this.sidebarAnimateState === 'active' ? 'inactive' : 'active' ;
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE'
+    }
   }
 
   closeSidebar(value: string) {
-    this.sidebarAnimateState = value;
+    this.sidebarTemplateValue.animate_state = value;
   }
 
   @HostListener('window:scroll', [])
@@ -94,7 +99,6 @@ export class ClientProjectComponent implements OnInit {
   get imgType(): string {
     return this._imgType;
   }
-
 
 }
 

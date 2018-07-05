@@ -85,6 +85,6 @@ export const PITCH = {
     'ERROR': 'Diffusion is required.'
   },
 
-  'INNOVATION_PREVIEW': 'Innovation Preview',
+  'INNOVATION_PREVIEW': 'Preview',
 
 };

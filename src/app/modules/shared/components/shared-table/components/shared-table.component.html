@@ -16,7 +16,7 @@
 </div>
 
 <!-- Else we begin to create the table -->
-<div *ngIf="total !== 0">
+<span *ngIf="total !== 0">
 
   <table class="table" wt-responsive-table>
     <thead>
@@ -33,13 +33,13 @@
                 (mouseleave)="hoverColumn(getAttrs(column)[0])" >
 
               <sq-sort [config]="config"
-                       *ngIf="isSortable && (isHover(column) || isSelected(column))"
+                       *ngIf="isSortable(column) && (isHover(column) || isSelected(column))"
                        (configChange)="changeConfig($event)"
                        [prop]="getAttrs(column)[0]">
                 {{getName(column) | translate }}
               </sq-sort>
 
-              <span *ngIf="!isSortable || (!isHover(column) && !isSelected(column))">{{getName(column) | translate }}</span>
+              <span *ngIf="!isSortable(column) || (!isHover(column) && !isSelected(column))">{{getName(column) | translate }}</span>
             </th>
           </tr>
         </ng-container>
@@ -72,46 +72,46 @@
 
         <tr *ngFor="let key of getRowsKeys()"
             [ngClass]="{'active': isSelected(content[key])}"
-            (click)="selectRow(key)"
             (mouseenter)="hoverRow(key)"
             (mouseleave)="hoverRow(key)">
 
-          <td *ngIf="isSelectable"><input type="checkbox" [checked]="isSelected(content[key])"/>
+          <td *ngIf="isSelectable" (click)="selectRow(key)"><input type="checkbox" [checked]="isSelected(content[key])"/>
             <div class="square-check primary"><i class="icon icon-check"></i></div></td>
 
           <!-- Foreach columns -->
           <ng-container>
             <td *ngFor="let column of columns">
-              <ng-container [ngSwitch]="getType(column)">
+              <span (click)="selectRow(key)">
+                <ng-container [ngSwitch]="getType(column)">
 
-                <!-- If column type is  TEXT -->
-                <span *ngSwitchDefault>
+                  <!-- If column type is  TEXT -->
+                  <span *ngSwitchDefault>
                   <span *ngFor="let attr of getAttrs(column)">{{(getContentValue(key, attr)|| " - ").toString()}} </span>
                 </span>
 
-                <!-- If column type is COUNTRY -->
-                <country-flag *ngSwitchCase="'COUNTRY'" [country]="(getContentValue(key, getAttrs(column)[0]) || '')"></country-flag>
+                  <!-- If column type is COUNTRY -->
+                  <country-flag *ngSwitchCase="'COUNTRY'" [country]="(getContentValue(key, getAttrs(column)[0]) || '')"></country-flag>
 
-                <!-- If column type is PICTURE -->
-                <div class="picture" *ngSwitchCase="'PICTURE'">
-                  <img [src]="getContentValue(key, getAttrs(column)[0]) || ''" class="img-fit-cover">
-                </div>
+                  <!-- If column type is PICTURE -->
+                  <div class="picture" *ngSwitchCase="'PICTURE'">
+                    <img [src]="getContentValue(key, getAttrs(column)[0]) || ''" class="img-fit-cover">
+                  </div>
 
-                <!-- If column type is PROGRESS -->
-                <progress class="progress tooltip"
-                          *ngSwitchCase="'PROGRESS'"
-                          [attr.data-tooltip]="getContentValue(key, getAttrs(column)[0]) || 0 + '%'"
-                          [value]="getContentValue(key, getAttrs(column)[0]) || 0" max="100">
-                </progress>
+                  <!-- If column type is PROGRESS -->
+                  <progress class="progress tooltip"
+                            *ngSwitchCase="'PROGRESS'"
+                            [attr.data-tooltip]="getContentValue(key, getAttrs(column)[0]) || 0 + '%'"
+                            [value]="getContentValue(key, getAttrs(column)[0]) || 0" max="100">
+                  </progress>
 
-                <!-- If column type is CHECK -->
-                <div *ngSwitchCase="'CHECK'">
-                  <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 0" class="icon icon-cross"></i>
-                  <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 1" class="icon icon-check"></i>
-                </div>
+                  <!-- If column type is CHECK -->
+                  <div *ngSwitchCase="'CHECK'">
+                    <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 0" class="icon icon-cross"></i>
+                    <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 1" class="icon icon-check"></i>
+                  </div>
 
-                <!-- If column type is LABEL -->
-                <span *ngSwitchCase="'MULTI-CHOICES'">
+                  <!-- If column type is LABEL -->
+                  <span *ngSwitchCase="'MULTI-CHOICES'">
 
                   <img [src]="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || ''))"
                        *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) !== ''"
@@ -126,17 +126,17 @@
 
                 </span>
 
-                <span *ngSwitchCase="'DATE'">
+                  <span *ngSwitchCase="'DATE'">
                   {{(getContentValue(key, getAttrs(column)[0]).toString() | date:dateFormat)}}
                 </span>
 
-                <span *ngSwitchCase="'ARRAY'">
+                  <span *ngSwitchCase="'ARRAY'">
                   {{(getContentValue(key, getAttrs(column)[0]) || []).length.toString()}}
                 </span>
 
-                <!-- If column type is MULTI-LABEL -->
-                <span *ngSwitchCase="'MULTI-LABEL'">
-                  <span *ngFor="let attr of getAttrs(column)"
+                  <!-- If column type is MULTI-LABEL -->
+                  <span *ngSwitchCase="'MULTI-LABEL'">
+                    <span *ngFor="let attr of getAttrs(column)"
                         [class]="getMultiLabelClass(getMultiLabel(column, attr)) || ''"
                         [ngClass]="{
                         'left-label': getAttrIndex(column, attr) === 0 && getAttrs(column).length !== 1,
@@ -147,10 +147,11 @@
 
                       {{(getContentValue(key, attr) || " - ").toString()}}
 
-                  </span>
+                    </span>
                 </span>
 
-              </ng-container>
+                </ng-container>
+              </span>
 
               <!-- If isEditable we show a button onHover the row -->
               <button class="btn btn-xs ghost-edit"
@@ -174,4 +175,4 @@
                 [propertyName]="selector">
 
   </sqPagination>
-</div>
+</span>

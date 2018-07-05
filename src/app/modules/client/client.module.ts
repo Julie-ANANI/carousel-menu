@@ -15,7 +15,7 @@ import { ClientResetPasswordComponent } from './components/client-reset-password
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
 import { ClientForgetPasswordComponent } from './components/client-forget-password/client-forget-password.component';
-import { ClientDiscoverDescriptionModule } from './components/client-discover-description/client-discover-description.module';
+import { ClientDiscoverDescriptionComponent } from './components/client-discover-description/client-discover-description.component';
 
 @NgModule({
   imports: [
@@ -24,8 +24,7 @@ import { ClientDiscoverDescriptionModule } from './components/client-discover-de
     ClientRoutingModule,
     SharedModule,
     TranslateModule.forChild(),
-    SharedMarketReportModule,
-    ClientDiscoverDescriptionModule
+    SharedMarketReportModule
   ],
   declarations: [
     ClientComponent,
@@ -37,7 +36,8 @@ import { ClientDiscoverDescriptionModule } from './components/client-discover-de
     ClientLogoutComponent,
     ClientResetPasswordComponent,
     DiscoverSummaryPipe,
-    ClientForgetPasswordComponent
+    ClientForgetPasswordComponent,
+    ClientDiscoverDescriptionComponent
   ]
 })
 

@@ -26,6 +26,7 @@ export class SetupProjectComponent implements OnInit {
   showPitchFieldError: Subject<boolean> = new Subject();
   targetingFormValid: boolean;
   showTargetingFieldError: Subject<boolean> = new Subject();
+  surveyCreated: boolean;
 
   private _currentTab: string;
   private _projectToBeSubmitted: boolean;
@@ -69,6 +70,8 @@ export class SetupProjectComponent implements OnInit {
     } else {
       this.targetingFormValid = false;
     }
+
+    this.surveyCreated = !!this.project.quizId;
 
   }
 

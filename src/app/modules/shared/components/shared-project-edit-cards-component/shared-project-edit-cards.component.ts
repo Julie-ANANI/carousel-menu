@@ -12,8 +12,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { InnovationPreviewSidebarService } from '../shared-sidebar/services/innovation-preview-sidebar.service';
 import { Location } from '@angular/common';
+import {Template} from '../shared-sidebar/interfaces/template';
 
 @Component({
   selector: 'app-shared-project-edit-cards',
@@ -29,6 +29,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Output() projectChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
+
+  sidebarTemplateValue: Template = {};
 
   showTitleError: boolean;
   showSummaryError: boolean;
@@ -55,7 +57,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
               private domSanitizer1: DomSanitizer,
               private translateService: TranslateService,
               private translateNotificationsService: TranslateNotificationsService,
-              private innovationPreviewSidebarService: InnovationPreviewSidebarService,
               private location: Location) {
   }
 
@@ -100,12 +101,17 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.showDiffusionError = false;
   }
 
-  /*
-      Sending values to the child component "Innovation preview sidebar"
-   */
-  showPreview(event: Event, id: string, lang: string) {
+  showPreview(event: Event) {
     event.preventDefault();
-    this.innovationPreviewSidebarService.setValues('active', 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW', id, lang);
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW',
+      size: '726px'
+    };
+  }
+
+  closeSidebar(value: string) {
+    this.sidebarTemplateValue.animate_state = value;
   }
 
   /**
@@ -287,10 +293,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   get projectStatus(): boolean {
-    return (this.project.status === 'EDITING' && this.project.reviewing) || (this.project.status === 'SUBMITTED' && this.project.reviewing)
-      || this.project.status === 'EDITING' || this.project.status === 'SUBMITTED' || this.isAdmin;
+    return this.project.status === 'EDITING' || this.project.status === 'SUBMITTED' || this.isAdmin;
   }
-
 
   get dateFormat(): string {
     return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';

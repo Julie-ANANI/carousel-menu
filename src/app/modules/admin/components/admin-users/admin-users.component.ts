@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
 import { Table } from '../../../shared/components/shared-table/models/table';
-import {GenericSidebar} from '../../../shared/components/shared-sidebar/interfaces/generic-sidebar';
+import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
 
 @Component({
   selector: 'app-admin-users',
@@ -16,7 +16,7 @@ export class AdminUsersComponent implements OnInit {
   private _users: Array<User> = [];
   private _actions: string[] = [];
   private _usersToRemove: User[] = [];
-  private _more: GenericSidebar = {_animate: 'inactive'};
+  private _more: Template = {};
   private _tableInfos: Table = null;
   private _showDeleteModal = false;
   private _selfId = '';
@@ -65,7 +65,6 @@ export class AdminUsersComponent implements OnInit {
           _isHeadable: true,
           _isFiltrable: true,
           _isDeletable: true,
-          _isSortable: true,
           _isSelectable: true,
           _isEditable: true,
           _columns: [
@@ -82,13 +81,20 @@ export class AdminUsersComponent implements OnInit {
   }
 
   editUser(user: User) {
-    this._more = {_animate: 'active', _title: 'COMMON.EDIT'};
     const us = new User(user);
+    this._more = {
+      animate_state: (this._more.animate_state === 'active' && this._currentUserId === us.id) ? 'inactive' : 'active',
+      title: 'COMMON.EDIT'
+    };
     this._currentUserId = us.id;
   }
 
+  closeSidebar(value: string) {
+    this.more.animate_state = value;
+  }
+
   userEditionFinish() {
-    this._more = {_animate: 'inactive', _title: this._more._title};
+    this._more = {animate_state: 'inactive', title: this._more.title};
     this.loadUsers(this._config);
   }
 
@@ -111,7 +117,7 @@ export class AdminUsersComponent implements OnInit {
 
   deleteUserModal(user: User) {
     this._usersToRemove = [];
-    this._more = {_animate: 'inactive', _title: this._more._title};
+    this._more = {animate_state: 'inactive', title: this._more.title};
     this._showDeleteModal = true;
     this._usersToRemove.push(user);
   }
@@ -146,6 +152,10 @@ export class AdminUsersComponent implements OnInit {
     this._actions.find(value => value === action._action)
       ? console.log('Execution de l\'action ' + action._action + ' sur les lignes ' + JSON.stringify(action._rows, null, 2))
       : console.log('l\'Action' + action + 'n\'existe pas !');
+  }
+
+  getAnimateState() {
+    return this._more.animate_state;
   }
 
   set config(value: any) { this._config = value; }

@@ -63,18 +63,15 @@ export class ExplorationProjectComponent implements OnInit {
       this.tableInfos = {
         _selector: 'client-answer',
         _content: this._answers,
-        _isSortable: true,
-        _isEditable: true,
+        _isShowable: true,
         _total: response._metadata.totalCount,
         _columns: [
-          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
           {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
           {_attrs: ['progress'], _name: 'COMMON.PROGRESS', _type: 'PROGRESS'},
-          {_attrs: ['professional.company'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+          {_attrs: ['professional.company'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false},
         ]
       };
-
-      console.log(this.tableInfos);
 
       this._companies = response.result.map((answer: any) => answer.company || {
         name: answer.professional.company
