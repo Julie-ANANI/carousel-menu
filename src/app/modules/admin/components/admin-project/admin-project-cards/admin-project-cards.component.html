@@ -1,23 +1,44 @@
-<div class="container">
-  <button [ngClass]="'btn btn-primary btn-lg' + (shouldSave ? ' badge' : '')" (click)="save($event)" data-badge="!">
-    {{ 'COMMON.SAVE_DRAFT' | translate }}
-  </button>
-  <p *ngIf="lastSavedDate" class="last-saved"> {{ 'COMMON.LAST_SAVED_AT' | translate }} {{ lastSavedDate |
-    date:'HH:mm:ss' }}</p>
-  <app-shared-project-edit-cards [project]="project" (cardsChange)="updateCards($event)" (projectChange)="updateProject($event)"></app-shared-project-edit-cards>
-  <div *ngIf="project.status !== 'EDITING'">
-    <div class="project-submit">
-      <div *ngIf="project.status === 'SUBMITTED'">
-        <h3 class="text-center">Validation du projet</h3>
-        <button class="btn btn-xxl btn-primary centered" (click)="validateProject()">
-          Valider
-        </button>
+<div class="section-container" id="admin-card">
+  <div class="columns">
+    <div class="column col-12 col-mx-auto">
+
+      <div class="button-sticky">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="func-button">
+
+            <div>
+              <div class="circle-check"><i class="fas fa-save"></i></div>
+              <button class="btn ghost-primary" (click)="save($event)">
+                {{ 'COMMON.SAVE_DRAFT' | translate }}
+              </button>
+              <p *ngIf="lastSavedDate" [ngStyle]="{ 'margin-left': '10px' , 'display': 'inline-flex' }">
+                {{ 'COMMON.LAST_SAVED_AT' | translate }} {{ lastSavedDate | date:'HH:mm:ss' }}
+              </p>
+            </div>
+
+            <div *ngIf="project.status !== 'EDITING'">
+              <div *ngIf="project.status === 'SUBMITTED'" [ngStyle]="{ 'margin-right': '30px' , 'display': 'inline-flex' }">
+                <button class="btn btn-primary" (click)="validateProject()">
+                  Validation du projet
+                </button>
+              </div>
+              <div [ngStyle]="{ 'display': 'inline-flex' }">
+                <button class="btn btn-error centered" (click)="askRevision()">
+                  Demander une révision
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
-      <div>
-        <button class="btn btn-xxl btn-error centered" (click)="askRevision()">
-          Demander une révision
-        </button>
-      </div>
+
+      <app-shared-project-edit-cards
+        [project]="project"
+        (cardsChange)="updateCards($event)"
+        (projectChange)="updateProject($event)">
+      </app-shared-project-edit-cards>
+
     </div>
   </div>
 </div>

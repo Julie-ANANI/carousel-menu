@@ -140,11 +140,11 @@ export class AdminProjectDetailsComponent implements OnInit {
     return (p && p.constructor === Object && Object.keys(p).length > 0);
   }
 
-  public notifClass(): string {
+  public notifyClass(): string {
     if (this._dirty) {
-      return 'btn btn-primary input-group-btn btn-lg badge';
+      return 'btn ghost-primary btn-lg badge';
     } else {
-      return 'btn btn-primary input-group-btn btn-lg';
+      return 'btn ghost-primary btn-lg';
     }
   }
 
@@ -161,7 +161,17 @@ export class AdminProjectDetailsComponent implements OnInit {
     });
   }
   set domain(domain: {en: string, fr: string}) { this._domain = domain; }
-  get domain() { return this._domain; }
-  get project() { return this._project; }
-  get dirty() { return this._dirty; }
+
+  get domain() {
+    return this._domain;
+  }
+
+  get project() {
+    return this._project;
+  }
+
+  get dirty() {
+    return this._dirty;
+  }
+
 }

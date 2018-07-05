@@ -81,7 +81,9 @@
           {{ 'MARKET_REPORT.POPUP.RECEIVED' | translate }} {{modalAnswer.date | date : dateFormat}} - {{modalAnswer.date | date:'HH:mm'}}<br>
           <div class="d-flex">
             <country-flag [country]="modalAnswer.country" [width]="30" [height]="20"></country-flag>
+            &nbsp;
             {{(modalAnswer.country) ? modalAnswer.country.name : ""}}
+            &nbsp;
             <div *ngIf="editMode" class="popover popover-bottom">
               <i class="fas fa-edit"></i>
               <div class="popover-container">

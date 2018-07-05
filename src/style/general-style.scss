@@ -1,0 +1,330 @@
+/*
+    This stylesheet contains all the styles that are common
+    for everywhere on the platform.
+ */
+
+
+/*
+    Color variables.
+ */
+
+$primary-color: #FFB300;
+$secondary-color: #0B90C6;
+$success-color: #2ECC71;
+$error-color: #EA5858;
+$disabled-color: #DBDBDB;
+$meta-color: #97A4B1;
+$background-color: #4F5D6B;
+$dark-color: #333333;
+$border-color: #E0E0E0;
+
+
+/*
+    Removing the focus default style.
+ */
+
+*:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+
+/*
+    This is the style that are related to the notification that we see.
+ */
+
+.simple-notification {
+  border: 1px solid transparent !important;
+  border-radius: 5px !important;
+  word-wrap: break-word !important;
+}
+
+.simple-notification-wrapper {
+  z-index: 9999 !important;
+}
+
+.simple-notification .sn-title {
+  font-size: 20px !important;
+  line-height: 1.4 !important;
+  padding-right: 0 !important;
+  font-weight: bold;
+  padding-bottom: 8px !important;
+}
+
+.simple-notification .sn-content {
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+  padding-right: 0 !important;
+  padding-bottom: 10px !important;
+}
+
+.simple-notification.success {
+  background: $success-color !important;
+  color: white !important;
+  border-color: $success-color !important;
+}
+
+.simple-notification.error {
+  background: $error-color !important;
+  color: white !important;
+  border-color: $error-color !important;
+}
+
+
+/*
+    This is the style that is related to the loading circle we see.
+ */
+
+.loading::after {
+  border-color: $primary-color;
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
+
+/*
+    This is to show the horizontal line around the word to show as divider.
+    Just wrap the word with this class. Class name: .or-divider
+ */
+
+.or-divider {
+  color: $meta-color;
+  font-size: 0.7rem;
+}
+
+.or-divider::before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  width: 130px;
+  height: 1px;
+  background: $meta-color;
+}
+
+.or-divider::after {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  width: 130px;
+  height: 1px;
+  background: $meta-color;
+}
+
+
+/*
+    This is to show the rectangle box of bot text. Just add the class 'bot-rect'
+    to the text element and add class 'bot-trian' to the triangle image.
+ */
+
+.bot-rect {
+  padding: 20px 15px;
+  border-radius: 5px;
+  color: $dark-color;
+  border: 1px solid $border-color;
+  display: inline-block;
+  width: 217px;
+  font-size: 0.8rem;
+  text-align: center;
+  animation-name: fadeIn;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  z-index: 3;
+}
+
+.bot-trian {
+  padding-left: 150px;
+  animation-name: fadeIn;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  margin-top: -2px;
+}
+
+
+/*
+    This is to show the numbering of the question in the form. Just add the class 'num-rect'
+    to the number.
+ */
+
+.num-rect {
+  color: white;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-style: normal;
+  padding: 7px 15px;
+  background: $background-color;
+  margin-right: 20px;
+  display: inline-block;
+}
+
+
+/*
+    This is to show the circle with icon check. Just add this class to div and
+    icon check.
+ */
+.circle-check {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  background: transparent;
+  display: inline-block;
+  position: absolute;
+  z-index: 2;
+
+  i {
+    color: transparent;
+    display: flex;
+    justify-content: center;
+    padding-top: 7px;
+  }
+
+}
+
+
+/*
+    This is to show the remaining characters length in form.
+ */
+.charRemaining {
+  text-align: right;
+
+  span {
+    position: absolute;
+    margin-top: -20px;
+    margin-left: -37px;
+    font-size: 0.6rem;
+    color: $meta-color;
+  }
+
+}
+
+
+/*
+    Label styles
+ */
+.label-progress {
+  border-radius: 5px;
+  background: #F79323;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+
+.label-validate {
+  border-radius: 5px;
+  background: $success-color;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.label-alert{
+  border-radius: 5px;
+  background: $error-color;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.label-editing{
+  border-radius: 5px;
+  background: $secondary-color;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.label-draft{
+  border-radius: 5px;
+  background: #4F5D6B;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+
+/*
+    Ng2 auto complete npm module style
+ */
+.ng2-auto-complete-wrapper {
+  display: inline-flex;
+  flex: 1;
+  max-width: 100%;
+}
+
+.ng2-auto-complete > ul {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  list-style: none;
+  z-index: 2;
+  background-color: white;
+  border: none !important;
+}
+
+.ng2-auto-complete > ul li {
+  padding: 8px 10px !important;
+  transition: all .35s ease-in-out;
+  cursor: pointer;
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+  border-radius: 2px !important;
+  border-bottom: none !important;
+  color: $dark-color !important;
+}
+
+.ng2-auto-complete > ul li:hover, .ng2-auto-complete > ul li.selected {
+  background:  #F2F2F2 !important;
+  border-color: #F2F2F2 !important;
+}
+
+
+/*
+    Disabled cursor
+ */
+.c-disabled {
+  pointer-events: none;
+}
+
+
+/*
+    ul and li default style
+ */
+ul {
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin: 0;
+    padding: 10px;
+  }
+
+}
+
+
+/*
+    Paragraph default style
+ */
+p {
+  margin: 0;
+  padding: 0 0 10px 0;
+  color: #5D5D5D;
+}
+
+
+/*
+    a default style
+ */
+a {
+  color: $secondary-color;
+}

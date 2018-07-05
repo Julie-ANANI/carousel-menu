@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angu
 
 @Component({
   selector: 'sqPagination',
-  templateUrl: './shared-pagination.component.html',
+  templateUrl: './shared-smallPagination.component.html',
   styleUrls: ['./shared-pagination.component.scss']
 })
 export class SharedPaginationComponent implements OnChanges, OnInit {
@@ -13,7 +13,7 @@ export class SharedPaginationComponent implements OnChanges, OnInit {
   @Input() propertyName: string;
 
   private _numPages: number;
-  private _initialized: boolean = false;
+  private _initialized = false;
 
   constructor() {
     this.perPageValues = this.perPageValues || [10, 20, 50, 100];
@@ -25,10 +25,10 @@ export class SharedPaginationComponent implements OnChanges, OnInit {
 
   ngOnChanges() {
     if (!this._initialized && this.propertyName) {
-      //Dès l'initialisation, on regarde si l'utilisateur a déjà des préférences concernant la pagination,
-      //Et on met à jour si c'est le cas
+      // Dès l'initialisation, on regarde si l'utilisateur a déjà des préférences concernant la pagination,
+      // Et on met à jour si c'est le cas
       this.config.limit = localStorage.getItem(`${this.propertyName}-limit`) || this.config.limit;
-      //this.config.offset = sessionStorage.getItem(`${this.propertyName}-offset`) || this.config.offset;
+      // this.config.offset = sessionStorage.getItem(`${this.propertyName}-offset`) || this.config.offset;
     }
     this._numPages = Math.ceil(this.total / this.perPage);
     this._update();
@@ -45,7 +45,7 @@ export class SharedPaginationComponent implements OnChanges, OnInit {
   private _update() {
     if (this.propertyName) {
       localStorage.setItem(`${this.propertyName}-limit`, this.config.limit);
-      //sessionStorage.setItem(`${this.propertyName}-offset`, this.config.offset);
+      // sessionStorage.setItem(`${this.propertyName}-offset`, this.config.offset);
     }
     this.configChange.emit(this.config);
   }

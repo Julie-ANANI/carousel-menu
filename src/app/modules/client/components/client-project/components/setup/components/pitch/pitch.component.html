@@ -1,0 +1,9 @@
+<div class="pitch">
+  <app-shared-project-edit-cards
+    [project]="project"
+    (cardsChange)="updateProject($event)"
+    [changesSaved]="changesSaved"
+    (saveChanges)="saveInnovation($event)"
+    [showPitchFieldError]="showFieldError">
+  </app-shared-project-edit-cards>
+</div>

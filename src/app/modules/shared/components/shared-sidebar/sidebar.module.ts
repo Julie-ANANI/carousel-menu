@@ -4,26 +4,42 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-// Components
-import { UserFormSidebarComponent } from './components/user-form-sidebar/user-form-sidebar.component';
-
 // Services
 import { UserFormSidebarService } from './services/user-form-sidebar.service';
+
+// Components
+import { UserFormSidebarComponent } from './components/user-form-sidebar/user-form-sidebar.component';
+import { UserEditSidebarComponent} from './components/user-edit-sidebar/user-edit-sidebar.component';
+import { CollaboratorComponent } from './components/collaborator/collaborator.component';
+import { SidebarComponent } from './sidebar.component';
+import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.component';
+import { InnovationPreviewComponent } from './components/innovation-preview/innovation-preview.component';
+
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
   ],
   declarations: [
-    UserFormSidebarComponent
+    UserFormSidebarComponent,
+    UserEditSidebarComponent,
+    SidebarBatchComponent,
+    CollaboratorComponent,
+    SidebarComponent,
+    InnovationPreviewComponent
   ],
   providers: [
-    UserFormSidebarService
+    UserFormSidebarService,
   ],
   exports: [
-    UserFormSidebarComponent
+    UserFormSidebarComponent,
+    UserEditSidebarComponent,
+    CollaboratorComponent,
+    SidebarComponent,
+    SidebarBatchComponent,
+    InnovationPreviewComponent
   ]
 })
 

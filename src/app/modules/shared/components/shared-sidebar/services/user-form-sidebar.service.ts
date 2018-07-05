@@ -3,13 +3,12 @@ import { Subject } from 'rxjs/Subject';
 import { FormGroup } from '@angular/forms';
 
 // Interface
-import { TemplateForm } from '../interfaces/template-form';
-
+import { Template } from '../interfaces/template';
 
 @Injectable()
 export class UserFormSidebarService {
 
-  templateValuesObservable = new Subject<TemplateForm>();
+  templateValuesObservable = new Subject<Template>();
   formDataObservable = new Subject<FormGroup>();
 
   constructor() {}
@@ -25,16 +24,16 @@ export class UserFormSidebarService {
 
   // Receiving the template default values from the parent component.
   setTemplateValues(animationState: string, title: string, type: string) {
-    const templateValue: TemplateForm = {};
+    const templateValue: Template = {};
 
-    templateValue.animate = animationState;
+    templateValue.animate_state = animationState;
     templateValue.type = type;
     templateValue.title = title;
 
     this.templateValuesObservable.next(templateValue);
   }
 
-  getTemplateValues(): Subject<TemplateForm> {
+  getTemplateValues(): Subject<Template> {
     return this.templateValuesObservable;
   }
 

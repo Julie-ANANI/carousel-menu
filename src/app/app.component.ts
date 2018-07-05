@@ -5,6 +5,7 @@ import { TranslateNotificationsService } from './services/notifications/notifica
 import { LoaderService } from './services/loader/loader.service';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/pairwise';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -32,11 +33,19 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private _translateService: TranslateService,
               private _authService: AuthService,
               private _loaderService: LoaderService,
-              private _notificationsService: TranslateNotificationsService) {
+              private _notificationsService: TranslateNotificationsService,
+              private _router: Router) {
   }
 
   ngOnInit(): void {
     initTranslation(this._translateService);
+
+    this._router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+        return;
+      }
+      window.scrollTo(0, 0);
+    });
 
     this._loaderService.isLoading$.takeUntil(this.ngUnsubscribe).subscribe((isLoading: boolean) => {
       // Bug corrigé avec setTimeout :
@@ -48,7 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     setTimeout (() => {
       this._displayLoading = false;
-    }, 800);
+    }, 600);
 
     if (this._authService.isAcceptingCookies) { // CNIL
       this._authService.initializeSession().takeUntil(this.ngUnsubscribe).subscribe(

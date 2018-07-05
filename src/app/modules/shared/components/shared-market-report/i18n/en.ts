@@ -1,5 +1,34 @@
 export const MARKET_REPORT = {
-  'TITLE': 'Exploring market potential',
+  'TITLE': {
+    'EDITING': 'Market potential of your project will be available soon',
+    'SUBMITTED': 'Exploring market potential of your project',
+    'EVALUATING': 'Fresh market insights of your project'
+  },
+
+  'MESSAGE': {
+    'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
+    'EDITING': {
+      'A': 'Please finish',
+      'B': 'setup of your project',
+      'C': 'and submit it.'
+    },
+    'REVIEWING': 'Please modify the changes in your project and re-submit it.',
+    'EVALUATING': 'We are collecting market potential of your project. We\'ll come back soon!'
+  },
+
+  'BUTTON': {
+    'DOWNLOAD': 'Download'
+  },
+
+  'PROFESSIONAL': {
+    'SIDEBAR': 'Professional',
+    'TITLE': 'Professionals',
+    'NUMBER': 'Answers from professionals',
+    'QUESTION': 'Origin of responses'
+  },
+
+
+ // 'TITLE': 'Exploring market potential',
   'COLLAPSE': 'Collapse',
   'EXPAND': 'Expand',
   'FILTERS': 'Filters',
@@ -26,10 +55,5 @@ export const MARKET_REPORT = {
     'COUNTRY': 'Country',
     'BACK': 'Back'
   },
-  'PROFESSIONAL': {
-    'SIDEBAR': 'Professional',
-    'TITLE': 'Professionals',
-    'NUMBER': 'Answers from professionals',
-    'QUESTION': 'Origin of responses'
-  }
+
 };

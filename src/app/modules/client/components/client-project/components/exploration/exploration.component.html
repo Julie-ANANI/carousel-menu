@@ -1,0 +1,228 @@
+<div class="section-container" id="project-exploration">
+  <div class="columns">
+    <div class="column col-12 col-mx-auto">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <!-- Bot messages -->
+
+        <!-- Project under editing status -->
+        <div *ngIf="projectStatus === 'EDITING' && !project.reviewing">
+          <h5>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EDITING' | translate }}</h5>
+          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+          <span class="bot-rect">
+            {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.A' | translate }}
+            <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.B' | translate }}</span>
+            {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.C' | translate }}
+          </span>
+            <br>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+          </div>
+        </div>
+
+        <!-- Project under submitted status -->
+        <div *ngIf="projectStatus === 'SUBMITTED'">
+          <h5>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.SUBMITTED' | translate }}</h5>
+          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+            <span class="bot-rect">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.SUBMITTED' | translate }}</span>
+            <br>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+          </div>
+        </div>
+
+        <!-- Project under submitted status -->
+        <div *ngIf="project.reviewing && projectStatus === 'EDITING'">
+          <h5>{{ 'PROJECT_MODULE.EXPLORATION.TITLE.SUBMITTED' | translate }}</h5>
+          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+            <span class="bot-rect">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.REVIEWING' | translate }}</span>
+            <br>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+          </div>
+        </div>
+
+        <!-- /Bot messages -->
+
+        <!-- Project under evaluating and evaluating done status-->
+        <div *ngIf="projectStatus === 'EVALUATING' || projectStatus === 'EVALUATING_DONE'">
+          <shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="project._id" [adminMode]="false" [questions]="questions"></shared-answer-modal>
+
+          <!-- Title and contact button section -->
+          <div class="title-wrapper">
+            <h5 *ngIf="projectStatus === 'EVALUATING'">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING' | translate }}</h5>
+            <h5 *ngIf="projectStatus === 'EVALUATING_DONE'">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING_DONE' | translate }}</h5>
+            <a class="btn btn-primary" href="{{ contactUrl }}">{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</a>
+          </div>
+
+          <!-- Status and comment section -->
+          <div class="sts_comm-wrapper section-light-container">
+
+            <!-- Status -->
+            <div class="status-wrapper">
+              <h6>{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.A' | translate }}</h6>
+
+              <div class="info-status">
+                <p><i class="fas fa-check"></i>&nbsp;&nbsp;<span class="text-white">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.G' | translate }}</span></p>
+                <p><span class="text-white">{{ project.created | date }}</span></p>
+              </div>
+
+              <div class="info-status">
+                <p><i class="fas fa-check"></i>&nbsp;&nbsp;<span class="text-white">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.B' | translate }}</span></p>
+                <p><span class="text-white">{{ project.launched | date }}</span></p>
+              </div>
+
+            </div>
+
+            <!-- Comment -->
+            <div class="comment-wrapper">
+              <h3>{{ 'PROJECT_MODULE.EXPLORATION.COMMENTS' | translate }}</h3>
+              <p>Lorem ipsum dolor sit amet, feugait tractatos quo ut. Latine denique nam id, eu facilisi electram nam, ea vim reque efficiantur. Vix cu aliquid adversarium, pri ea altera nonumes dissentiet. Aeque molestie accusamus vis in, velit malorum nonumes ut sea, odio aeque atomorum ea sit. Unum reque ut pro, te usu zril vitae alterum, vim elitr vituperata an.</p>
+              <div>
+                <span>{{ 'PROJECT_MODULE.EXPLORATION.ACCOUNT_MANAGER' | translate }}</span> {{ project.owner.name }}
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Analytics section -->
+          <div class="section-light-container" [ngStyle]="{ 'padding-bottom': '0' }">
+            <h3>{{'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate}}</h3>
+
+            <div class="analytic-wrapper">
+
+              <!-- Professionals -->
+              <div class="info-analytic">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate }}</p>
+                <h5 class="text-center">{{ campaignStats.nbPros }}</h5>
+              </div>
+
+              <div class="info-analytic pd-top">
+                <svg width="80px" height="38px" viewBox="0 0 80 38">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g transform="translate(-701.000000, -810.000000)">
+                      <g transform="translate(701.000000, 810.000000)">
+                        <polygon fill="#97A4B1" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                        <text class="svg-text">
+                          <tspan x="27.4760742" y="24">97%</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Reached -->
+              <div class="info-analytic">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
+                <h5 class="text-center">{{ campaignStats.nbProsSent }}</h5>
+              </div>
+
+              <div class="info-analytic pd-top">
+                <svg width="80px" height="38px" viewBox="0 0 80 38">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g transform="translate(-701.000000, -810.000000)">
+                      <g transform="translate(701.000000, 810.000000)">
+                        <polygon fill="#2ECC71" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                        <text class="svg-text">
+                          <tspan x="27.4760742" y="24">20%</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Emails -->
+              <div class="info-analytic">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
+                <h5 class="text-center">{{ campaignStats.nbProsOpened }}</h5>
+              </div>
+
+              <div class="info-analytic pd-top">
+                <svg width="80px" height="38px" viewBox="0 0 80 38">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g transform="translate(-701.000000, -810.000000)">
+                      <g transform="translate(701.000000, 810.000000)">
+                        <polygon fill="#EA5858" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                        <text class="svg-text">
+                          <tspan x="27.4760742" y="24">25%</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Clicks -->
+              <div class="info-analytic">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
+                <h5 class="text-center">{{ campaignStats.nbProsClicked }}</h5>
+              </div>
+
+              <div class="info-analytic pd-top">
+                <svg width="80px" height="38px" viewBox="0 0 80 38">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g transform="translate(-701.000000, -810.000000)">
+                      <g transform="translate(701.000000, 810.000000)">
+                        <polygon fill="#F79323" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                        <text class="svg-text">
+                          <tspan x="27.4760742" y="24">26%</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Answers -->
+              <div class="info-analytic">
+                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
+                <h5 class="text-center">{{ answers?.length || 0 }}</h5>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Click rate section -->
+          <div class="section-light-container">
+            <h3>{{ 'PROJECT_MODULE.EXPLORATION.CLICK_MAP_TITLE' | translate }}</h3>
+            <app-worldmap [countries]="countries" [countriesColor]="'#FFB300'"></app-worldmap>
+          </div>
+
+          <!-- Company section -->
+          <div class="section-light-container" [ngStyle]="{ 'padding-bottom': '15px' }">
+            <h3>{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h3>
+            <ul class="com-nme">
+              <li *ngFor="let company of companies; let i = index;">
+               {{ i + 1 + '.'}} {{ company.name }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Insight section -->
+          <div class="section-light-container">
+            <h3>{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h3>
+            <app-shared-table
+              [data]="tableInfos"
+              [config]="config"
+              (configChange)="loadAnswers()"
+              (editRow)="seeAnswer($event)"></app-shared-table>
+          </div>
+
+          <!-- Insight section -->
+          <div class="section-light-container">
+            <h3>{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h3>
+            <app-answers-list [answers]="answers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
+          </div>
+
+        </div>
+        <!-- /Project under evaluating and evaluating done status-->
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

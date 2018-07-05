@@ -1,0 +1,216 @@
+#project-description {
+
+  .hero-light-container {
+    background-color: #4F5D6B;
+    padding-bottom: 0;
+
+    h1 {
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .info-wrapper {
+
+      img {
+        vertical-align: middle;
+        margin-bottom: 5px;
+      }
+
+      .project-info {
+        color: #97A4B1;
+        font-weight: 600;
+        padding-left: 15px;
+      }
+
+    }
+
+    .tab-container {
+      padding-top: 35px;
+
+      .tabs li a {
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+      }
+
+    }
+
+  }
+
+  .active {
+    background: white;
+    color: #333333;
+  }
+
+}
+
+.modal {
+
+  .text-link {
+    font-size: 0.75rem;
+  }
+
+  .para {
+    font-size: 0.6rem;
+    padding: 0;
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+
+    .form-default {
+      display: inline-flex;
+      margin-top: 0;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      margin-left: 10px;
+
+      i {
+        font-size: 0.9rem;
+      }
+
+    }
+
+  }
+
+  .collaborator {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .collaborators-invitation-container {
+    margin-top: 30px;
+
+    ul {
+      list-style: none;
+      margin-left: 0;
+      margin-top: 0;
+
+      .invitation-detail {
+        margin-top: 0;
+      }
+
+    }
+
+    ul:last-child {
+      margin-bottom: 0;
+    }
+
+  }
+
+  .collaborators-added-container {
+    margin-top: 30px;
+
+    ul {
+      list-style: none;
+      margin-left: 0;
+      margin-top: 0;
+
+      .added-detail {
+        margin-top: 0;
+      }
+
+      .ghost-delete {
+        visibility: hidden;
+      }
+
+    }
+
+    ul:hover {
+
+      .ghost-delete {
+        visibility: visible;
+      }
+
+    }
+
+    ul:last-child {
+      margin-bottom: 0;
+    }
+
+  }
+
+}
+
+/********************************** Media ***************************************/
+
+@media (max-width: 375px) {
+
+  .modal {
+
+    .content {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .btn {
+        margin-top: 15px;
+        margin-left: 0;
+      }
+
+    }
+
+    .collaborators-added-container, .collaborators-invitation-container {
+
+      .collaborator {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .ghost-delete, .ghost-primary {
+        margin-top: 15px;
+      }
+
+    }
+
+  }
+
+
+}
+
+@media (max-width: 600px) {
+
+  .tabs li a {
+    border-radius: 5px;
+  }
+
+  .modal {
+
+    .ghost-delete {
+      visibility: visible !important;
+    }
+
+  }
+
+}
+
+@media (min-width: 768px) {
+
+  .tabs li {
+    margin-right: 15px;
+  }
+
+  .tabs li:last-child {
+    margin-right: 0;
+  }
+
+  .modal {
+
+    .content {
+      flex-direction: row;
+      flex-wrap: unset;
+    }
+
+  }
+
+}
+
+
+

@@ -1,6 +1,6 @@
 .items {
 
-  /* === Items list === */
+  //Items list
   div.items-list {
     display: flex;
     flex-wrap: wrap;
@@ -11,40 +11,50 @@
     }
 
     > div {
-      color: white;
-      background: #0B90C6;
-      padding: 8px 15px;
-      border-radius: 2px;
+      color: #5d5d5d;
+      background: white;
+      box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
+      padding: 8px 12px;
+      border-radius: 3px;
+      font-size: 0.7rem;
       width: 49%;
       margin-bottom: 5px;
+      border: 1px solid #F2F2F2;
 
       .flex-container {
         align-items: flex-start;
       }
+
     }
 
-    /* === Horizontals bars === */
+    // Horizontals bars
     .market-item {
       flex: 1;
       margin-left: 10px;
+      margin-right: 10px;
       font-weight: 600;
 
       a {
-        color: rgba(255, 255, 255, 0.8);
+        color: black;
       }
 
       a:hover, a:focus {
-        color: white
+        color: black;
       }
 
       .item-occurrence {
-        font-weight: 600;
-        font-size: 14px;
-        color: #0878A5;
+        font-size: 0.6rem;
+        color: white;
         padding: 0 4px;
         border-radius: 500px;
-        background: rgba(255, 255, 255, 0.8);
+        background: #0B90C6;
       }
+
+      .fa-filter {
+        color: #0B90C6;
+        cursor: pointer;
+      }
+
     }
 
   }
@@ -57,4 +67,25 @@
   .clickable-url {
     cursor: pointer;
   }
+
+}
+
+/********************************** Media ***************************************/
+
+
+@media (max-width: 600px) {
+
+  .items {
+
+    .items-list {
+      flex-direction: column;
+
+      > div {
+        width: 100% !important;
+      }
+
+    }
+
+  }
+
 }

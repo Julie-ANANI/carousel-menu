@@ -1,97 +1,76 @@
-.main-container {
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
+#login {
 
-  .logo-container {
-    padding-bottom: 25px;
+  .cover-image {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left top;
+    min-height: 100vh;
   }
 
-  .sign-in-container {
-    background: #FFFFFF;
-    border-radius: 0.25rem;
-    padding-top: 51px;
-    padding-bottom: 51px;
-    flex: 1;
+  .login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+    padding-bottom: 15px;
+    min-height: 100vh;
 
-    .bot-container {
-      padding-top: 125px;
+    .form-wrapper {
+      flex: 1 0 auto;
+      justify-content: center;
+      align-items: center;
+      display: inline-flex;
+      flex-direction: column;
+
+      .social-wrapper {
+
+        .btn {
+          background: #1680B9;
+          border-color: #1680B9;
+          color: white;
+        }
+
+        .btn:hover {
+          background: lighten(#1680B9, 10%);
+          border-color: lighten(#1680B9, 10%);
+          color: white;
+        }
+
+      }
+
+      .or-wrapper {
+        padding-top: 25px;
+      }
+
+      .credentials-wrapper {
+        padding-top: 20px;
+
+        .form-default {
+          width: 300px;
+        }
+
+      }
+
+      .submit-wrapper {
+        padding-top: 20px;
+
+        .login-button {
+          padding-bottom: 14px;
+        }
+
+        .text-link {
+          font-size: 0.7rem;
+        }
+
+      }
     }
 
-    .button-container {
-      padding-bottom: 45px;
+    .create-wrapper {
 
-      .primary-button {
-        background: #1680B9;
-        border-color: #1680B9;
-      }
-
-      .primary-button:hover {
-        background: lighten(#1680B9, 15%);
-        border-color: lighten(#1680B9, 15%);
-        color: #FFFFFF;
-      }
-
-    }
-
-    .or-container {
-      color: #97A4B1;
-      padding-bottom: 45px;
-
-      span::before {
-        content: '';
-        display: inline-block;
-        vertical-align: middle;
-        width: 130px;
-        height: 1px;
-        background: #97A4B1;
-      }
-
-      span::after {
-        content: '';
-        display: inline-block;
-        vertical-align: middle;
-        width: 130px;
-        height: 1px;
-        background: #97A4B1;
-      }
-
-    }
-
-    .credential-container {
-      padding-bottom: 25px;
-
-      .form-group {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-      }
-
-      .form-input-default {
-        max-width: 300px;
-      }
-
-      .form-error {
-        margin-bottom: 20px;
-      }
-
-    }
-
-    .submit-container {
-      padding-bottom: 29px;
-
-      .login-button {
-        padding-bottom: 10px;
-      }
-
-      .text-link {
-        font-size: 0.7rem;
+      .btn-sm {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
       }
 
     }
@@ -102,62 +81,38 @@
 
 /********************************** Media ***************************************/
 
-@media (max-width: 360px) {
+@media (max-width: 600px) {
 
-  .or-container {
+  #login {
 
-    span::before {
-      width: 108px !important;
+    .cover-image {
+      display: none;
     }
 
-    span::after {
-      width: 108px !important;
+    .login-wrapper {
+      padding-bottom: 25px !important;
+    }
+
+    .heading {
+      padding-top: 25px;
+    }
+
+    .submit-wrapper {
+      padding-bottom: 25px;
     }
 
   }
 
-  .submit-container {
+}
 
-    .primary-button {
-      padding-left: 30px !important;
-      padding-right: 30px !important;
+@media (min-width: 840px) {
+
+  #login {
+
+    .form-default {
+      width: 350px !important;
     }
 
   }
 
 }
-
-
-@media (max-width: 601px) {
-
-  .bot-container {
-    padding-top: 10px!important;
-    padding-bottom: 35px!important;
-  }
-
-}
-
-@media (min-width: 601px) and (max-width: 840px) {
-
-  .sign-in-container {
-    width: 580px !important;;
-  }
-
-}
-
-@media (min-width: 768px) {
-
-  .main-container {
-    min-height: 100vh !important;
-  }
-
-}
-
-@media (min-width: 841px) {
-
-  .sign-in-container {
-    width: 800px !important;
-  }
-
-}
-

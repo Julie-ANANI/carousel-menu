@@ -6,4 +6,4 @@ export class UserForm {
   country?: string;
   email?: string;
   password?: string;
-};
+}
