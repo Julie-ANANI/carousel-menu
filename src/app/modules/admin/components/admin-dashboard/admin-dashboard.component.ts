@@ -24,19 +24,7 @@ export class AdminDashboardComponent implements OnInit {
 
 
 
-  private _weekBatches: {
-    monday: Array<any>,
-    tuesday: Array<any>,
-    wednesday: Array<any>,
-    thursday: Array<any>,
-    friday: Array<any>
-  } = {
-    monday: [],
-    tuesday: [],
-    wednesday: [],
-    thursday: [],
-    friday: []
-  };
+  private _weekBatches: Array<any> = [[], [], [], [], []];
 
 
 
@@ -105,28 +93,22 @@ export class AdminDashboardComponent implements OnInit {
   public getWeek() {
     const now = Date.now();
     this._dateNow = new Date(now);
-    console.log(this._dateNow);
     this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe( (batches: Array<any>) => {
-        console.log(batches);
-        this._weekBatches.monday = batches[0];
-        this._weekBatches.tuesday = batches[1];
-        this._weekBatches.wednesday = batches[2];
-        this._weekBatches.thursday = batches[3];
-        this._weekBatches.friday = batches[4];
+        this._weekBatches = batches;
     });
   }
 
   public getNextWeek() {
     this._dateNow.setDate(this._dateNow.getDate() + 7);
     this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe((batches: Array<any>) => {
-      console.log(batches);
+      this._weekBatches = batches;
     });
   }
 
   public lastNextWeek() {
     this._dateNow.setDate(this._dateNow.getDate() - 7);
     this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe((batches: Array<any>) => {
-      console.log(batches);
+      this._weekBatches = batches;
     });
   }
 

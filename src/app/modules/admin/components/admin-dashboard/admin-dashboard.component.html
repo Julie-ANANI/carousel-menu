@@ -36,34 +36,19 @@
 </div>
 
 <div class="list-table">
-  <div>
-    Lundi
-    <ul>
-      <li *ngFor="let mondays of this.weekBatches.monday"> <label class="label-draft"> {{mondays.innovation.name}}  {{mondays.size}}</label> </li>
-    </ul>
-  </div>
-  <div>
-    Mardi
-    <ul>
-      <li *ngFor="let tuesdays of this.weekBatches.tuesday"> <label class="label-draft"> {{tuesdays.innovation.name}}  {{tuesdays.size}}</label> </li>
-    </ul>
-  </div>
-  <div>
-    Mercredi
-    <ul>
-      <li *ngFor="let wednesdays of this.weekBatches.wednesday"> <label class="label-draft"> {{wednesdays.innovation.name}}  {{wednesdays.size}}</label> </li>
-    </ul>
-  </div>
-  <div>
-    Jeudi
-    <ul>
-      <li *ngFor="let thursdays of this.weekBatches.thursday"> <label class="label-draft"> {{thursdays.innovation.name}}  {{thursdays.size}}</label> </li>
-    </ul>
-  </div>
-  <div>
-    Vendredi
-    <ul>
-      <li *ngFor="let fridays of this.weekBatches.friday"> <label class="label-draft"> {{fridays.innovation.name}}  {{fridays.size}}</label> </li>
+  <div *ngFor="let days of this.weekBatches">
+    {{}}
+    <ul *ngFor="let batches of days; let i = index">
+      <li *ngIf="i < 3">
+          <label class="label-draft">
+            {{batches.innovation.name}}  {{batches.size}}
+          </label>
+      </li>
+      <li *ngIf="i == 3">
+        <label class="label-draft">
+          ...
+        </label>
+      </li>
     </ul>
   </div>
 </div>
