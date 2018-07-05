@@ -22,7 +22,7 @@ export const PROJECT_MODULE = {
 
   'COLLABORATOR_MODAL_BUTTON': {
     'DELETE': 'Supprimer',
-    'REINVITE': 'Réinventer'
+    'REINVITE': 'Renvoyer une invitation'
   },
 
   'COLLABORATOR_ALREADY_ADDED': {
