@@ -1,31 +1,67 @@
 <div class="innovation-wrapper">
+
+  <!-- Hero section -->
   <div class="hero-light-container">
     <div class="column col-11 col-mx-auto">
 
       <!-- Title -->
-      <h1>{{ innovation.title }}</h1>
+      <h1 class="main-heading">{{ innovation.title }}</h1>
 
       <!-- Summary -->
       <p>{{ innovation.summary }}</p>
 
       <!-- Media -->
-      <div class="media-wrapper" *ngFor="let media of innovation.media">
+      <div class="media-wrapper">
+        <div *ngFor="let media of innovation.media">
 
-        <!-- Video -->
-        <div *ngIf="media?.type === 'VIDEO'">
-          <iframe
-            [src]="domSanitizer.bypassSecurityTrustResourceUrl(media?.video.embeddableUrl)"
-            width="220" height="146">
-          </iframe>
-        </div>
-        <div *ngIf="media?.type === 'PHOTO'">
-          <img
-            [src]="media.url"
-            [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
-            width="220" height="146">
+          <!-- Video -->
+          <div *ngIf="media?.type === 'VIDEO'" class="gap">
+            <iframe
+              [src]="domSanitizer.bypassSecurityTrustResourceUrl(media?.video.embeddableUrl)"
+              width="220" height="146">
+            </iframe>
+          </div>
+
+          <!-- Image -->
+          <div *ngIf="media?.type === 'PHOTO'" class="gap">
+            <img
+              [src]="media.url"
+              [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+              width="220" height="146">
+          </div>
+
         </div>
       </div>
 
     </div>
   </div>
+
+  <!-- Advantage section -->
+  <div class="section-container">
+    <div class="column col-11 col-mx-auto">
+      <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
+      <ul class="advantage">
+        <li *ngFor="let advantage of innovation.advantages;">
+          {{ advantage.text[0] | uppercase }}{{advantage.text|slice:1}}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Issue section -->
+  <div class="section-container">
+    <div class="column col-11 col-mx-auto">
+      <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
+      <p>{{ innovation.problem }}</p>
+    </div>
+  </div>
+
+  <!-- Solution section -->
+  <div class="section-container">
+    <div class="column col-11 col-mx-auto">
+      <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
+      <p>{{ innovation.solution }}</p>
+    </div>
+  </div>
+
 </div>
