@@ -5,6 +5,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { User } from '../../../../models/user.model';
 import { Subject } from 'rxjs/Subject';
+import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
 
 
 
@@ -22,6 +23,7 @@ export class AdminDashboardComponent implements OnInit {
 
   public nbDaysOfStats = 1;
 
+  sidebarTemplateValue: Template = {};
 
   private _modalOver = false;
 
@@ -120,6 +122,22 @@ export class AdminDashboardComponent implements OnInit {
       this._weekBatches = batches;
     });
   }
+
+
+  showPreview(event: Event) {
+    event.preventDefault();
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW',
+      size: '726px'
+    };
+  }
+
+
+  closeSidebar(value: string) {
+    this.sidebarTemplateValue.animate_state = value;
+  }
+
 
 
   get refreshNeededEmitter(): Subject<any> {
