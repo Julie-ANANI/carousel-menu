@@ -6,7 +6,7 @@
 
         <!-- Project under editing status -->
         <div *ngIf="projectStatus === 'EDITING' && !adminSide && !project.reviewing">
-          <h5>{{ 'MARKET_REPORT.TITLE.EDITING' | translate }}</h5>
+          <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.EDITING' | translate }}</h1>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span *ngIf="project.status === 'EDITING'" class="bot-rect">
             {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'MARKET_REPORT.MESSAGE.EDITING.B' | translate }}</span>
@@ -20,7 +20,7 @@
 
         <!-- Project under submitted status -->
         <div *ngIf="projectStatus === 'SUBMITTED' && !adminSide">
-          <h5>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h5>
+          <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
             <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}</span>
             <br>
@@ -31,7 +31,7 @@
 
         <!-- Project under reviewing status -->
         <div *ngIf="project.reviewing && !adminSide && projectStatus === 'EDITING'">
-          <h5>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h5>
+          <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
             <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}</span>
             <br>
@@ -42,7 +42,7 @@
 
         <!-- Project under evaluating status -->
         <div *ngIf="projectStatus === 'EVALUATING' && !adminSide">
-          <h5>{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h5>
+          <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
             <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.EVALUATING' | translate }}</span>
             <br>
@@ -59,7 +59,7 @@
 
           <!-- Title and download button section -->
           <div class="title-wrapper">
-            <h5>{{ 'MARKET_REPORT.TITLE.EVALUATING' | translate }}</h5>
+            <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.EVALUATING' | translate }}</h1>
             <button class="btn btn-primary">{{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }}</button>
           </div>
 
@@ -92,7 +92,7 @@
 
             <!-- Origin of responses -->
             <div class="section-container">
-              <h3>{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h3>
+              <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h2>
               <app-question-conclusion
                 [innovation]="project"
                 [infographic]="infographics?.professionals"
@@ -112,7 +112,7 @@
 
             <!-- Professionals -->
             <div class="section-container">
-              <h3 id="professionals">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h3>
+              <h2 class="section-heading" id="professionals">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
               <div class="professional">
                 <div *ngFor="let answer of filteredAnswers" class="profile">
                   <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
@@ -154,7 +154,7 @@
 <div class="innovation-card-print">
   <app-client-project content [project]=project.innovationCards[0]></app-client-project>
 </div>
--->
+
 
 <div class="market-report">
 
