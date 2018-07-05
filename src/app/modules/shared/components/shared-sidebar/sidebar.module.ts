@@ -11,6 +11,7 @@ import { UserFormSidebarService } from './services/user-form-sidebar.service';
 import { UserFormSidebarComponent } from './components/user-form-sidebar/user-form-sidebar.component';
 import { UserEditSidebarComponent} from './components/user-edit-sidebar/user-edit-sidebar.component';
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
+import { ProfessionalComponent } from './components/professional/professional.component';
 import { SidebarComponent } from './sidebar.component';
 import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.component';
 import { InnovationPreviewComponent } from './components/innovation-preview/innovation-preview.component';
@@ -27,6 +28,7 @@ import { InnovationPreviewComponent } from './components/innovation-preview/inno
     UserEditSidebarComponent,
     SidebarBatchComponent,
     CollaboratorComponent,
+    ProfessionalComponent,
     SidebarComponent,
     InnovationPreviewComponent
   ],
@@ -37,6 +39,7 @@ import { InnovationPreviewComponent } from './components/innovation-preview/inno
     UserFormSidebarComponent,
     UserEditSidebarComponent,
     CollaboratorComponent,
+    ProfessionalComponent,
     SidebarComponent,
     SidebarBatchComponent,
     InnovationPreviewComponent
