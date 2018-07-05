@@ -14,6 +14,7 @@ import { CollaboratorComponent } from './components/collaborator/collaborator.co
 import { SidebarComponent } from './sidebar.component';
 import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.component';
 import { InnovationPreviewComponent } from './components/innovation-preview/innovation-preview.component';
+import { UserFormComponent } from './components/user-form/user-form.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { InnovationPreviewComponent } from './components/innovation-preview/inno
     SidebarBatchComponent,
     CollaboratorComponent,
     SidebarComponent,
-    InnovationPreviewComponent
+    InnovationPreviewComponent,
+    UserFormComponent
   ],
   providers: [
     UserFormSidebarService,
