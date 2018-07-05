@@ -9,6 +9,7 @@
  */
 
 $primary-color: #333333;
+$secondary-color: #0B90C6;
 $link-color: #FFB300;
 $ques-color: #333333;
 $para-color: #5D5D5D;
@@ -66,7 +67,7 @@ h4 {
  */
 
 h5 {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
 }
 
 
@@ -124,4 +125,28 @@ h6 {
   border: 2px solid white;
   border-radius: .25rem;
   margin-bottom: 16px;
+}
+
+
+/*
+    Page heading
+ */
+.main-heading {
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 25px;
+  color: $primary-color;
+}
+
+
+/*
+    Section heading
+ */
+.section-heading {
+  font-size: 1.3rem;
+  font-weight: 300;
+  line-height: 1.4;
+  margin: 0 0 25px;
+  color: $secondary-color;
 }
