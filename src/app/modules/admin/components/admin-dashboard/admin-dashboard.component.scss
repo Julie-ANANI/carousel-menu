@@ -28,6 +28,37 @@ $dark-background: #262831;
   }
 }
 
+
+.label-1st{
+  border-radius: 5px;
+  background: #1c1aaa;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.label-2nd{
+  border-radius: 5px;
+  background: #0bb465;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.label-3rd{
+  border-radius: 5px;
+  background: #a9a72d;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
 .emails-stats {
   background: #FAFAFA;
   display: flex;

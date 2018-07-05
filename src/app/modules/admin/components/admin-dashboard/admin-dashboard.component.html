@@ -36,21 +36,58 @@
 </div>
 
 <div class="list-table">
-  <div *ngFor="let days of this.weekBatches">
-    {{}}
-    <ul *ngFor="let batches of days; let i = index">
-      <li *ngIf="i < 3">
-          <label class="label-draft">
+  <div *ngFor="let days of this.weekBatches; let i1 = index">
+    Day {{i1}}
+    <ul *ngFor="let batches of days; let i2 = index">
+
+
+      <li *ngIf="i2 < 3">
+          <label class="label-1st" *ngIf="batches.status == 0">
+            {{batches.innovation.name}}  {{batches.size}}
+          </label>
+          <label class="label-2nd" *ngIf="batches.status == 1">
+            {{batches.innovation.name}}  {{batches.size}}
+          </label>
+          <label class="label-3rd" *ngIf="batches.status == 2">
             {{batches.innovation.name}}  {{batches.size}}
           </label>
       </li>
-      <li *ngIf="i == 3">
-        <label class="label-draft">
-          ...
-        </label>
+
+
+      <li *ngIf="i2 == 3">
+        <div class="popover popover">
+          <label class="label-draft" (click)="showList(days)">
+            ...
+          </label>
+          <div class="popover-container">
+            <div class="card">
+              <div class="card-header">
+              </div>
+              <div class="card-body">
+                <ul *ngFor="let batchesOver of days; let i3 = index">
+                  <li>
+                    <label class="label-1st" *ngIf="batchesOver.status == 0">
+                      {{batchesOver.innovation.name}}  {{batchesOver.size}}
+                    </label>
+                    <label class="label-2nd" *ngIf="batchesOver.status == 1">
+                      {{batchesOver.innovation.name}}  {{batchesOver.size}}
+                    </label>
+                    <label class="label-3rd" *ngIf="batchesOver.status == 2">
+                      {{batchesOver.innovation.name}}  {{batchesOver.size}}
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-footer">
+              </div>
+            </div>
+          </div>
+        </div>
       </li>
     </ul>
   </div>
 </div>
 
 
+
+<!-- Popover Modal -->

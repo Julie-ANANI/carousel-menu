@@ -23,8 +23,12 @@ export class AdminDashboardComponent implements OnInit {
   public nbDaysOfStats = 1;
 
 
+  private _modalOver = false;
 
   private _weekBatches: Array<any> = [[], [], [], [], []];
+
+
+  private listOver: any;
 
 
 
@@ -90,6 +94,11 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
+  public showList(obj: any) {
+    this.listOver = obj;
+  }
+
+
   public getWeek() {
     const now = Date.now();
     this._dateNow = new Date(now);
@@ -121,7 +130,12 @@ export class AdminDashboardComponent implements OnInit {
     return this._authService.adminLevel;
   }
 
-
+  set ModalOver(b: boolean) {
+    this._modalOver = b;
+  }
+  get ModalOver(): boolean {
+    return this._modalOver;
+  }
 
   get weekBatches() : any {
     return this._weekBatches;
