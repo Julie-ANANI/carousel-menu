@@ -22,7 +22,7 @@ export const PROJECT_MODULE = {
 
   'COLLABORATOR_MODAL_BUTTON': {
     'DELETE': 'Supprimer',
-    'REINVITE': 'Réinventer'
+    'REINVITE': 'Renvoyer une invitation'
   },
 
   'COLLABORATOR_ALREADY_ADDED': {
@@ -36,7 +36,7 @@ export const PROJECT_MODULE = {
   },
 
   'ADD_COLLABORATORS_MODAL': {
-    'TITLE': 'Conseil des collaborateurs',
+    'TITLE': 'Management des collaborateurs',
     'CONTENT': 'Vous pouvez ajouter ici les adresses e-mail des personnes que vous souhaitez ajouter en tant que collaborateurs pour votre projet.',
     'NOTE': 'Info: les personnes déjà utilisateurs de la plateforme seront ajoutées immédiatement, sinon elles recevront un e-mail avec une invitation à s\'inscrire. ' +
     'N\'oubliez pas: pour accepter l\'invitation, les nouveaux utilisateurs doivent s\'inscrire en utilisant la même adresse d\'inscription.',
@@ -45,11 +45,11 @@ export const PROJECT_MODULE = {
     'vous devez leur/lui envoyer une invitation en cliquant sur le bouton ci-dessous :',
     'TO_RESEND_EMAIL': 'adresse(s) e-mail(s) ne correspond(ent) à aucun compte dans notre application et ont peut-être déjà reçu une invitation de vôtre part. Pour ' +
     'les/l\'ajouter comme collabora-teur-trice-s à ce projet, vous devez leur/lui envoyer une invitation en cliquant sur le bouton',
-    'LABEL': 'Email adresse',
+    'LABEL': 'Adresse Email',
     'BOT_MESSAGE': 'You do not have any collaborator!'
   },
 
-  'SETUP_TAB': 'Projet d\'installation',
+  'SETUP_TAB': 'Édition du projet',
   'EXPLORATION_TAB': 'Exploration du marché',
   'SYNTHESIS_TAB': 'Synthèse',
   'HISTORY_TAB': 'Histoire',

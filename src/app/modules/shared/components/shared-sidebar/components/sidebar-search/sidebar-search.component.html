@@ -1,0 +1,78 @@
+<div id="search-settings-wrapper" class="column col-11 col-mx-auto">
+  <form>
+    <div class="form-group">
+      <button (click)="saveParams()" class="btn btn-primary">
+        {{'COMMON.SAVE' | translate}}
+      </button>
+    </div>
+    <div class="form-group">
+      <label class="form-group">
+        <h4>{{ 'SEARCH.NUMBER' | translate }}</h4>
+        <select name="count" class="form-control" [(ngModel)]="params.count">
+          <option value="10">{{10}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
+          <option value="20">{{20}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
+          <option value="30">{{30}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
+          <option value="40">{{40}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
+          <option value="50">{{50}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
+          <option value="100">{{100}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
+        </select>
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="form-switch">
+        <input type="checkbox" [(ngModel)]="params.options.smart" name="smart">
+        <i class="form-icon"></i> {{ 'SEARCH.SMART' | translate }}
+      </label>
+      <label class="form-switch">
+        <input type="checkbox" [(ngModel)]="params.options.regions" name="regions">
+        <i class="form-icon"></i> {{ 'SEARCH.REGIONS' | translate }}
+      </label>
+      <label class="form-switch">
+        <input type="checkbox" [(ngModel)]="params.options.automated" name="automated">
+        <i class="form-icon"></i> {{ 'SEARCH.SEARCHMAILS' | translate }}
+      </label>
+    </div>
+    <div class="form-group">
+
+      <h4>{{ 'SEARCH.ENGINE' | translate }}</h4>
+      <label class="tooltip" data-tooltip="Index">
+        <input type="checkbox" name="indexSearch" value="indexSearch"
+               [(ngModel)]="params.options.indexSearch">
+        [0]
+      </label>
+      <label class="tooltip" data-tooltip="LinkedIn">
+        <input type="checkbox" name="linkedin" value="linkedin"
+               [(ngModel)]="params.websites.linkedin">
+        [1]
+      </label>
+      <label class="tooltip" data-tooltip="Viadeo">
+        <input type="checkbox" name="viadeo" value="viadeo" [(ngModel)]="params.websites.viadeo">
+        [2]
+      </label>
+      <label class="tooltip" data-tooltip="Xing">
+        <input type="checkbox" name="xing" value="xing"
+               [(ngModel)]="params.websites.xing">
+        [3]
+      </label>
+    </div>
+    <div>
+      <h4>{{ 'SEARCH.COUNTRY_LIST' | translate }}</h4>
+      <div class="d-flex">
+        <div *ngFor="let group of groups; let i = index">
+          <input type="checkbox" [(ngModel)]="group.checked" (click)="selectGroup(i)" [name]="group.name"/> {{group.name}}
+        </div>
+      </div>
+      <div *ngFor="let continent of continents">
+        <input type="checkbox" [(ngModel)]="continent.checked" (click)="selectContinent(continent)" [name]="continent.name"/> {{continent.name}}
+        <div class="continent">
+          <div *ngFor="let country of countries[continent.key]" class="flag"
+               (click)="checkCountry(country)"
+               [ngClass]="{'checked': params.countries.indexOf(country) > -1}">
+            <country-flag [country]="country"></country-flag>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,25 @@
+#search-settings-wrapper {
+  padding-top: 30px;
+}
+
+h4 {
+  color: #97A4B1;
+  font-size: 0.8rem;
+}
+
+.flag {
+  margin: 0;
+  border: 2px solid transparent;
+  opacity: 0.5;
+}
+
+.flag.checked {
+  border: 2px solid #FFFFFF;
+  opacity: 1;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+}
+
+.continent {
+  display: flex;
+  flex-wrap: wrap;
+}

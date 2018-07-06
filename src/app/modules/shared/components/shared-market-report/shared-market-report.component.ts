@@ -11,7 +11,6 @@ import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
 import { Innovation } from '../../../../models/innovation';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { environment} from '../../../../../environments/environment';
 import { Location } from '@angular/common';
 
@@ -42,15 +41,12 @@ export class SharedMarketReportComponent implements OnInit {
   public objectKeys = Object.keys;
   public mapInitialConfiguration: {[continent: string]: boolean};
 
-  private _infographics: any; // TODO remove infographics once conclusions have been migrated to Innovation
-
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer;
 
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
-              private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService,
               private location: Location) { }
 
@@ -61,10 +57,6 @@ export class SharedMarketReportComponent implements OnInit {
     this.today = Date.now();
     this._innoid = this.project._id;
     this.resetMap();
-
-    this.innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
-      this._infographics = synthesis.infographics;
-      }, error => this.translateNotificationsService.error('ERROR.ERROR', error.message));
 
     this.loadAnswers();
     if (this.project.preset && this.project.preset.sections) {
@@ -222,15 +214,6 @@ export class SharedMarketReportComponent implements OnInit {
     this.filterAnswers();
   }
 
-  // TODO: remove once conclusions have been copied
-  public getInfo(question: Question) {
-    if (this._infographics) {
-      return this._infographics.questions.find((infoQ: any) => infoQ.id === question.identifier);
-    } else {
-      return null;
-    }
-  }
-
   public logoName(): string {
     return environment.logoSynthURL;
   }
@@ -287,10 +270,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   get showDetails (): boolean {
     return this._showDetails;
-  }
-
-  get infographics () {
-    return this._infographics;
   }
 
   get lang(): string {

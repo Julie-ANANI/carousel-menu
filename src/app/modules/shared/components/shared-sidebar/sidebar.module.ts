@@ -1,7 +1,7 @@
 // Modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 // Services
@@ -15,13 +15,17 @@ import { ProfessionalComponent } from './components/professional/professional.co
 import { SidebarComponent } from './sidebar.component';
 import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.component';
 import { InnovationPreviewComponent } from './components/innovation-preview/innovation-preview.component';
+import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
+import { CountryFlagModule } from '../../../../directives/country-flag/country-flag.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
+    CountryFlagModule
   ],
   declarations: [
     UserFormSidebarComponent,
@@ -30,19 +34,22 @@ import { InnovationPreviewComponent } from './components/innovation-preview/inno
     CollaboratorComponent,
     ProfessionalComponent,
     SidebarComponent,
-    InnovationPreviewComponent
+    InnovationPreviewComponent,
+    SidebarSearchComponent
   ],
   providers: [
     UserFormSidebarService,
   ],
   exports: [
+    CountryFlagModule,
     UserFormSidebarComponent,
     UserEditSidebarComponent,
     CollaboratorComponent,
     ProfessionalComponent,
     SidebarComponent,
     SidebarBatchComponent,
-    InnovationPreviewComponent
+    InnovationPreviewComponent,
+    SidebarSearchComponent
   ]
 })
 
