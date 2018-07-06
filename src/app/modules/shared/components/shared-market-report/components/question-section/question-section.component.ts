@@ -88,7 +88,6 @@ export class QuestionSectionComponent implements OnInit {
         const answerTags = answer.answerTags[id];
         if (Array.isArray(answerTags)) {
           answerTags.forEach((t) => {
-            // TODO: list -> set with count
             const previousTag = tagsList.find((t2) => t2._id === t._id);
             if (previousTag) {
               previousTag['count'] += 1;
