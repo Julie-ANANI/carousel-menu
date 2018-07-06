@@ -140,14 +140,6 @@ export class AdminProjectDetailsComponent implements OnInit {
     return (p && p.constructor === Object && Object.keys(p).length > 0);
   }
 
-  public notifyClass(): string {
-    if (this._dirty) {
-      return 'btn ghost-primary badge';
-    } else {
-      return 'btn ghost-primary';
-    }
-  }
-
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }

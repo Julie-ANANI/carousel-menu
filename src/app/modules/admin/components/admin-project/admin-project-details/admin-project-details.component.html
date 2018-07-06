@@ -83,10 +83,9 @@
 
             <div class="save-wrapper text-right">
               <button
-                [ngClass]="notifyClass()"
+                [disabled]="!dirty"
                 class="btn ghost-primary"
-                (click)="save($event)"
-                data-badge="&#f069;">
+                (click)="save($event)">
                 {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
               </button>
             </div>

@@ -146,8 +146,8 @@
                       (keyup)="showProblemError = false">
                     </textarea>
                       <div class="charRemaining">
-                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].problem.length | characterCountdown:500)}">
-                        {{ project.innovationCards[i].problem.length | characterCountdown:500 }}
+                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].problem.length | characterCountdown:1000)}">
+                        {{ project.innovationCards[i].problem.length | characterCountdown:1000 }}
                       </span>
                       </div>
                       <div class="form-error" *ngIf="problem.touched && problem.invalid || showProblemError">
@@ -182,8 +182,8 @@
                       (keyup)="showSolutionError = false">
                     </textarea>
                       <div class="charRemaining">
-                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:500)}">
-                        {{ project.innovationCards[i].solution.length | characterCountdown:500 }}
+                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:1000)}">
+                        {{ project.innovationCards[i].solution.length | characterCountdown:1000 }}
                       </span>
                       </div>
                       <div class="form-error" *ngIf="solution.touched && solution.invalid || showSolutionError">
