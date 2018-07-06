@@ -87,12 +87,19 @@ export class QuestionSectionComponent implements OnInit {
       this._tags = this._answersToShow.reduce((tagsList, answer) => {
         const answerTags = answer.answerTags[id];
         if (Array.isArray(answerTags)) {
-          return tagsList.concat(answerTags);
-        } else {
-          return tagsList;
+          answerTags.forEach((t) => {
+            // TODO: list -> set with count
+            const previousTag = tagsList.find((t2) => t2._id === t._id);
+            if (previousTag) {
+              previousTag['count'] += 1;
+            } else {
+              t['count'] = 1;
+              tagsList.push(t);
+            }
+          });
         }
-      }, []);
-      console.log(this._tags);
+        return tagsList;
+      }, []).sort((a, b) => b.count - a.count);
 
       // filter comments
       switch (this.question.controlType) {

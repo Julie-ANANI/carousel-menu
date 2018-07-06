@@ -5,6 +5,7 @@
   <div class="tags-list" *ngIf="tags?.length > 0">
     <i class="fa fa-tag"></i>
     <span *ngFor="let t of tags" class="label label-rounded label-primary tag-label">
+      <span *ngIf="t?.count > 1">(x{{t?.count}})</span>
       {{t?.label | multiling:lang}}
     </span>
   </div>
