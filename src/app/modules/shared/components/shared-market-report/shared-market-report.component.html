@@ -48,10 +48,10 @@
 
             <ng-container [ngSwitch]="adminSide">
               <ng-container *ngSwitchCase="true">
-                <button *ngIf="projectStatus === 'EVALUATING'" class="btn btn-primary">
+                <button *ngIf="projectStatus === 'EVALUATING'" (click)="changeStatus($event, 'DONE')" class="btn btn-primary">
                   {{ 'MARKET_REPORT.BUTTON.STATUS_TO_DONE' | translate }}
                 </button>
-                <button *ngIf="projectStatus === 'DONE'" class="btn btn-primary">
+                <button *ngIf="projectStatus === 'DONE'" (click)="changeStatus($event, 'EVALUATING')" class="btn btn-primary">
                   {{ 'MARKET_REPORT.BUTTON.STATUS_TO_EVALUATING' | translate }}
                 </button>
               </ng-container>
