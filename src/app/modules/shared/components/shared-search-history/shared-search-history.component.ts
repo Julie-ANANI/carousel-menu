@@ -79,7 +79,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       this._searchService.getRequests({
         'motherRequest': request._id,
         'region': '',
-        'fields': 'entity keywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results'
+        'fields': 'entity keywords oldKeywords created country elapsedTime status cost flag campaign motherRequest totalResults metadata results'
       })
         .first()
         .subscribe(children => {
