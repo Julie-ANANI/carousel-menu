@@ -85,4 +85,13 @@ export class SearchService {
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public getCountriesSettings(): Observable<any> {
+    const query = {
+      path: '/countries',
+    };
+    return this._http.get('/search/get', {params: query})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
 }
