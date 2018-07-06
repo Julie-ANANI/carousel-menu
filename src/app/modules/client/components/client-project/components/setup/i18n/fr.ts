@@ -9,7 +9,7 @@ export const SETUP = {
   'SUBMIT_PROJECT': 'Soumettre le projet',
 
   'MESSAGE': {
-    'SUBMITTED': 'Votre projet est en cours de révision par notre équipe. Nous reviendrons bientôt !',
+    'SUBMITTED': 'Votre projet est en cours de validation. Nous reviendrons vers vous rapidement!',
     'EDITING': {
       'A': 'S\'il vous plaît terminer',
       'B': 'la configuration de votre projet',
@@ -24,9 +24,9 @@ export const SETUP = {
     'DONE': 'La synthèse de votre projet est disponible. Vous ne pouvez plus apporter de modifications à votre projet.'
   },
 
-  'PITCH_TAB': 'Pitch',
-  'TARGETING_TAB': 'Targeting',
-  'SURVEY_TAB': 'Survey',
+  'PITCH_TAB': 'Description',
+  'TARGETING_TAB': 'Ciblage',
+  'SURVEY_TAB': 'Questionnaire',
 
   'PITCH': PITCH,
   'SURVEY': SURVEY,

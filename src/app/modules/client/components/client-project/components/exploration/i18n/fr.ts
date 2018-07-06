@@ -7,7 +7,7 @@ export const EXPLORATION = {
   },
 
   'MESSAGE': {
-    'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
+    'SUBMITTED': 'Votre projet est en cours de validation. Nous reviendrons vers vous rapidement!',
     'EDITING': {
       'A': 'S\'il vous plaît terminer',
       'B': 'la configuration de votre projet',
@@ -25,25 +25,25 @@ export const EXPLORATION = {
     'G': 'Created'
   },
 
-  'CONTACT_BUTTON': 'Contact us',
+  'CONTACT_BUTTON': 'Nous contacter',
 
-  'COMMENTS': 'Our comments',
+  'COMMENTS': 'Nos commentaires',
 
-  'ACCOUNT_MANAGER': 'Your account manager:',
+  'ACCOUNT_MANAGER': 'Votre gestionnaire de compte:',
 
-  'CLICK_MAP_TITLE': 'Click rate',
+  'CLICK_MAP_TITLE': 'Cartographie des répondants',
 
-  'COMPANIES_LIST_TITLE': 'Companies to contact',
+  'COMPANIES_LIST_TITLE': 'Les entreprises à contacter',
 
   'INSIGHTS_TITLE': 'Insights',
 
   'ANALYTICS': {
     'TITLE': 'Analytics',
-    'PROFESSIONALS': 'Professionals',
-    'PROFESSIONALS_REACHED': 'Reached',
-    'EMAILS_OPENED': 'Emails opened',
-    'CLICKS': 'Visits',
-    'ANSWERS': 'Validated answers'
+    'PROFESSIONALS': 'Professionnels ciblés',
+    'PROFESSIONALS_REACHED': 'Professionnels contactés',
+    'EMAILS_OPENED': 'Emails ouverts',
+    'CLICKS': 'Visites',
+    'ANSWERS': 'Réponses valides'
   }
 
 };

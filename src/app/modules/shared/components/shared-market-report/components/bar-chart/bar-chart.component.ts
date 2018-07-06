@@ -85,7 +85,7 @@ export class BarChartComponent implements OnInit {
       // If we have a radio question, we should also calculate the pieChart data.
       if (this.question.controlType === 'radio') {
         let positiveAnswersCount = 0;
-        const pieChartData: {data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number} = {
+        const pieChartData: {data: Array<number>, colors: Array<string>, labels: {fr: Array<string>, en: Array<string>}, percentage?: number} = {
           data: [],
           colors: [],
           labels: {fr: [], en: []}
