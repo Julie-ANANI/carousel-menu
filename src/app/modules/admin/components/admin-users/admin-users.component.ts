@@ -5,6 +5,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
 import { Table } from '../../../shared/components/shared-table/models/table';
 import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -20,7 +21,7 @@ export class AdminUsersComponent implements OnInit {
   private _tableInfos: Table = null;
   private _showDeleteModal = false;
   private _selfId = '';
-  private _currentUserId = '';
+  currentUser: User;
   private _total = 0;
   private _config = {
     fields: 'id companyName jobTitle created domain location firstName lastName',
@@ -34,7 +35,8 @@ export class AdminUsersComponent implements OnInit {
 
   constructor(private _titleService: TranslateTitleService,
               private _userService: UserService,
-              private _authService: AuthService) {}
+              private _authService: AuthService,
+              private _notificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
     this._titleService.setTitle('USERS.TITLE');
@@ -82,20 +84,32 @@ export class AdminUsersComponent implements OnInit {
 
   editUser(user: User) {
     const us = new User(user);
-    this._more = {
-      animate_state: (this._more.animate_state === 'active' && this._currentUserId === us.id) ? 'inactive' : 'active',
-      title: 'COMMON.EDIT'
-    };
-    this._currentUserId = us.id;
+    this._userService.get(us.id).subscribe(value => {
+      this._more = {
+        animate_state: (this._more.animate_state === 'active' && this.currentUser.id === value.id) ? 'inactive' : 'active',
+        title: 'COMMON.EDIT',
+        type: 'editUser'
+      };
+      this.currentUser = value;
+    });
   }
 
   closeSidebar(value: string) {
     this.more.animate_state = value;
   }
 
-  userEditionFinish() {
-    this._more = {animate_state: 'inactive', title: this._more.title};
-    this.loadUsers(this._config);
+  userEditionFinish(user: User) {
+    this._userService.updateOther(user)
+      .first()
+      .subscribe(
+        data => {
+          this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
+          this._more = {animate_state: 'inactive', title: this._more.title};
+          this.loadUsers(this._config);
+        },
+        error => {
+          this._notificationsService.error('ERROR.ERROR', error.message);
+        });
   }
 
   get selfId(): string {
@@ -164,6 +178,5 @@ export class AdminUsersComponent implements OnInit {
   get usersToRemove(): User[] { return this._usersToRemove; }
   get users() { return this._users; }
   get more(): any { return this._more; }
-  get currentUserId(): string { return this._currentUserId; }
   get showDeleteModal(): boolean { return this._showDeleteModal; }
 }

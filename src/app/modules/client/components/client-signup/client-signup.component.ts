@@ -7,9 +7,9 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
-import { UserFormSidebarService } from '../../../shared/components/shared-sidebar/services/user-form-sidebar.service';
 import { UserService } from '../../../../services/user/user.service';
 import { User } from '../../../../models/user.model';
+import { Template } from '../../../shared/components/shared-sidebar/interfaces/template';
 
 
 @Component({
@@ -21,14 +21,14 @@ import { User } from '../../../../models/user.model';
 export class ClientSignupComponent implements OnInit {
 
   public isInvitation = false;
+  sidebarTemplateValue: Template = {};
 
   constructor(private _authService: AuthService,
               private userService: UserService,
               private _location: Location,
               private activatedRoute: ActivatedRoute,
               private translateTitleService: TranslateTitleService,
-              private translateNotificationsService: TranslateNotificationsService,
-              private userFormSidebarService: UserFormSidebarService) {
+              private translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit(): void {
@@ -36,13 +36,6 @@ export class ClientSignupComponent implements OnInit {
 
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.isInvitation = params['invitation'] && params['invitation'] === 'true';
-    });
-
-    // Listening to the form values from child.
-    this.userFormSidebarService.getFormValue().subscribe((res: FormGroup) => {
-      if (res !== null) {
-        this.onSubmit(res);
-      }
     });
 
   }
@@ -98,7 +91,7 @@ export class ClientSignupComponent implements OnInit {
   }
 
   public getCompanyUrl(): string {
-    return environment.companyURL || "";
+    return environment.companyURL || '';
   }
 
   // getting the company logo.
@@ -111,10 +104,19 @@ export class ClientSignupComponent implements OnInit {
     return environment.background;
   }
 
-  // Sending values to the child component "UserForm Sidebar"
   onSignUpClick(event: Event) {
     event.preventDefault();
-    this.userFormSidebarService.setTemplateValues('active', 'COMMON.SIGN_UP', 'Sign Up');
+
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'COMMON.SIGN_UP',
+      type: 'signUp'
+    }
+
+  }
+
+  closeSidebar(value: string) {
+    this.sidebarTemplateValue.animate_state = value;
   }
 
 }
