@@ -11,18 +11,17 @@
         </span>
       </ng-container>
     </div>
-    <form *ngIf="editMode" class="form-horizontal" [formGroup]="tagForm" (ngSubmit)="addTagEmitter($event)">
-      <div class="input-group">
+    <form *ngIf="editMode" [formGroup]="tagForm" (ngSubmit)="addTagEmitter($event)">
+      <div class="input-group" [ngStyle]="{ 'display': 'flex' }">
         <input ng2-auto-complete
                formControlName="tag"
                [source]="tagSuggestions.bind(this)"
                [list-formatter]="autocompleListFormatter"
                [value-formatter]="autocompleValueFormatter"
                [attr.placeholder]="'Add an existing tag'"
-               class="form-input form-control input-lg">
-        <button class="btn btn-primary btn-lg input-group-btn" translate>
-          COMMON.ADD
-          <i class="icon icon-arrow-right"></i>
+               class="form-default">
+        <button class="btn-round  btn-primary">
+          <i class="icon icon-plus"></i>
         </button>
       </div>
     </form>
