@@ -7,7 +7,6 @@
       <li class="page-item">
         <select [ngModel]="perPage" (ngModelChange)="perPage = $event" class="form-select small-select">
           <option *ngFor="let perPage of perPageValues" [value]="perPage">{{perPage}}</option>
-          <option value="1000000">{{ 'PAGINATION.ALL' | translate }}</option>
         </select>
       </li>
     </ul>

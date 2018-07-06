@@ -6,7 +6,7 @@ export const MARKET_REPORT = {
   },
 
   'MESSAGE': {
-    'SUBMITTED': 'Votre projet est en cours de révision par notre équipe. Nous reviendrons bientôt!',
+    'SUBMITTED': 'Votre projet est en cours de validation. Nous reviendrons vers vous rapidement!',
     'EDITING': {
       'A': 'S\'il vous plaît terminer',
       'B': 'la configuration de votre projet',
@@ -17,7 +17,9 @@ export const MARKET_REPORT = {
   },
 
   'BUTTON': {
-    'DOWNLOAD': 'Télécharger'
+    'DOWNLOAD': 'Télécharger',
+    'STATUS_TO_DONE': 'Finaliser la synthése',
+    'STATUS_TO_EVALUATING': 'Modifier la synthése'
   },
 
   // 'TITLE': 'Exploration du potentiel marché',

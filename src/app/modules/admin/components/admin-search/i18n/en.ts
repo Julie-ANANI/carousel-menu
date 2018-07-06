@@ -1,7 +1,9 @@
 /**
  * Created by bastien on 31/01/2018.
  */
-export const SEARCH = {"NORESULT": "No result :-(",
+export const SEARCH = {
+  "COUNTRY_LIST": "Country list",
+  "NORESULT": "No result :-(",
   "PRO": "Professional",
   "SELECTED": "selected",
   "COMPUTEMAILS": "Recompute emails",

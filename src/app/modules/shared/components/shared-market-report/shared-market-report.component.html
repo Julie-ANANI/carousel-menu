@@ -2,65 +2,63 @@
   <div class="columns">
     <div class="column col-12 col-mx-auto">
       <div class="column col-xs-12 col-11 col-mx-auto">
+
         <!-- Bot messages -->
-
-        <!-- Project under editing status -->
-        <div *ngIf="projectStatus === 'EDITING' && !adminSide && !project.reviewing">
-          <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.EDITING' | translate }}</h1>
+        <div *ngIf="!adminSide && projectStatus !== 'DONE'">
+          <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + projectStatus) | translate }}</h1>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
-          <span *ngIf="project.status === 'EDITING'" class="bot-rect">
-            {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'MARKET_REPORT.MESSAGE.EDITING.B' | translate }}</span>
-            {{ 'MARKET_REPORT.MESSAGE.EDITING.C' | translate }}
-          </span>
+            <span class="bot-rect" [ngSwitch]="projectStatus">
+
+              <ng-container *ngSwitchCase="'EDITING'">
+                <ng-container *ngIf="project.reviewing">
+                  {{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}
+                </ng-container>
+                <ng-container *ngIf="!project.reviewing">
+                  {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }}
+                  <span [ngStyle]="{ 'color': '#FFB300' }">
+                    {{ 'MARKET_REPORT.MESSAGE.EDITING.B' | translate }}
+                  </span>
+                  {{ 'MARKET_REPORT.MESSAGE.EDITING.C' | translate }}
+                </ng-container>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'SUBMITTED'">
+                {{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'EVALUATING'">
+                {{ 'MARKET_REPORT.MESSAGE.EVALUATING' | translate }}
+              </ng-container>
+
+            </span>
             <br>
             <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
             <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
           </div>
         </div>
-
-        <!-- Project under submitted status -->
-        <div *ngIf="projectStatus === 'SUBMITTED' && !adminSide">
-          <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
-          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
-            <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}</span>
-            <br>
-            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
-          </div>
-        </div>
-
-        <!-- Project under reviewing status -->
-        <div *ngIf="project.reviewing && !adminSide && projectStatus === 'EDITING'">
-          <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
-          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
-            <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}</span>
-            <br>
-            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
-          </div>
-        </div>
-
-        <!-- Project under evaluating status -->
-        <div *ngIf="projectStatus === 'EVALUATING' && !adminSide">
-          <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.SUBMITTED' | translate }}</h1>
-          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
-            <span class="bot-rect">{{ 'MARKET_REPORT.MESSAGE.EVALUATING' | translate }}</span>
-            <br>
-            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
-          </div>
-        </div>
-
         <!-- /Bot messages -->
 
-        <!-- Project under evaluating_done status -->
-        <div *ngIf="projectStatus === 'DONE' || projectStatus === 'EVALUATING_DONE' || adminSide">
+        <!-- Project under DONE status -->
+        <div *ngIf="projectStatus === 'DONE' || adminSide">
           <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
 
           <!-- Title and download button section -->
           <div class="title-wrapper">
             <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.EVALUATING' | translate }}</h1>
-            <button class="btn btn-primary">{{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }}</button>
+
+            <ng-container [ngSwitch]="adminSide">
+              <ng-container *ngSwitchCase="true">
+                <button *ngIf="projectStatus === 'EVALUATING'" (click)="changeStatus($event, 'DONE')" class="btn btn-primary">
+                  {{ 'MARKET_REPORT.BUTTON.STATUS_TO_DONE' | translate }}
+                </button>
+                <button *ngIf="projectStatus === 'DONE'" (click)="changeStatus($event, 'EVALUATING')" class="btn btn-primary">
+                  {{ 'MARKET_REPORT.BUTTON.STATUS_TO_EVALUATING' | translate }}
+                </button>
+              </ng-container>
+              <button *ngSwitchDefault (click)="print($event)" class="btn btn-primary">
+                {{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }} <!-- We display the download button only client side -->
+              </button>
+            </ng-container>
           </div>
 
           <!-- Sidebar -->
