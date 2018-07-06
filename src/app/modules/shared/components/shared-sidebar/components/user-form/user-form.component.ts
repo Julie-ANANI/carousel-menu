@@ -17,7 +17,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       this.loadSignUp();
     } else if (type === 'editUser') {
       this.loadEditUser();
-    } else {
+    } else if (type === 'professional') {
       this.loadProfessional();
     }
   }
@@ -67,7 +67,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       this.userSignUpData.emit(this.userForm);
     } else if (this.isEditUser) {
       this.editUserData.emit(this.userForm);
-    } else {
+    } else if (this.isProfessional) {
       this.professionalUserData.emit(this.userForm);
     }
   }
