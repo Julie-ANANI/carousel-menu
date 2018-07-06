@@ -86,7 +86,7 @@ export class AdminUsersComponent implements OnInit {
     const us = new User(user);
     this._userService.get(us.id).subscribe(value => {
       this._more = {
-        animate_state: (this._more.animate_state === 'active' && this.currentUser.id === value.id) ? 'inactive' : 'active',
+        animate_state: 'active',
         title: 'COMMON.EDIT',
         type: 'editUser'
       };
@@ -103,7 +103,7 @@ export class AdminUsersComponent implements OnInit {
       .first()
       .subscribe(
         data => {
-          this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
+          this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
           this._more = {animate_state: 'inactive', title: this._more.title};
           this.loadUsers(this._config);
         },

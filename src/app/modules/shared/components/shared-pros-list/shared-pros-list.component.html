@@ -2,8 +2,11 @@
 </app-shared-table>
 
 <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
-  <app-professional-sidebar [proId]="currentProId" (deleteUser)="deleteProModal($event)" [sidebarState]="more.animate_state">
-  </app-professional-sidebar>
+  <app-user-form [sidebarState]="more.animate_state"
+                 [type]="more.type"
+                 [pro]="currentPro"
+                 (professionalUserData)="updatePro($event)">
+  </app-user-form>
 </app-sidebar>
 
 <!-- Modal to ask admin to sure about deleting the user -->
