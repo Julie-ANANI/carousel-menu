@@ -147,13 +147,6 @@ export class SetupProjectComponent implements OnInit {
   }
 
   /*
-      Here we are receiving the value from the pitch form.
-   */
-  updateInnovation(value: Innovation): void {
-    this.project = value;
-  }
-
-  /*
      Here we are checking if there are any changes in the pitch form
      shows the notification to the client.
   */
@@ -174,10 +167,6 @@ export class SetupProjectComponent implements OnInit {
 
   get currentTab() {
     return this._currentTab;
-  }
-
-  set currentTab(value: string) {
-    this._currentTab = value;
   }
 
   get saveButtonClass(): string {
