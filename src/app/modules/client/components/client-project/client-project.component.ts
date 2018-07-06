@@ -15,9 +15,7 @@ export class ClientProjectComponent implements OnInit {
 
   @Input() project: Innovation;
 
-  sidebarTemplateValue: Template = {
-
-  };
+  sidebarTemplateValue: Template = {};
   private _imgType: string;
   private _currentPage: string;
   private _scrollButton = false;

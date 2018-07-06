@@ -1,5 +1,35 @@
-<app-shared-table [config]="config" [data]="tableInfos" (configChange)="loadPros($event)">
+<app-shared-table [config]="config" [data]="tableInfos" (configChange)="loadPros($event)" (editRow)="editPro($event)" (removeRows)="deleteProsModal($event)">
 </app-shared-table>
 
+<app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
+  <app-user-form [sidebarState]="more.animate_state"
+                 [type]="more.type"
+                 [pro]="currentPro"
+                 (professionalUserData)="updatePro($event)">
+  </app-user-form>
+</app-sidebar>
 
+<!-- Modal to ask admin to sure about deleting the user -->
+<div class="modal" [ngClass]="{ 'active': showDeleteModal }">
+  <div class="modal-overlay" (click)="closeModal($event)"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+      <div class="modal-title">{{ 'USERS.DELETE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        {{ 'USERS.PITCH-DELETE' | translate }}
+        <ul>
+          <li *ngFor="let pro of prosToRemove">{{pro.firstName}} {{pro.lastName}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-sm ghost-delete" (click)="removePros()">
+        {{ 'COMMON.DELETE' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
 

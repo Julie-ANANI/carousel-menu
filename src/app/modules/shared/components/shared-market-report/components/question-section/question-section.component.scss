@@ -3,6 +3,15 @@ h3 {
   font-size: 1.3rem;
 }
 
+.tags-list {
+
+  padding-bottom: 20px;
+
+  .tag-label {
+    margin-left: 10px;
+  }
+}
+
 .umi-synthesis {
   flex-direction: column;
 

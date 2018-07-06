@@ -18,6 +18,7 @@ export const COMMON = {
   'CREATED': 'Créé le',
   'UPDATED': 'Modifié le',
   'LAUNCHED': 'Lancé le',
+  'EXPIRATION' : 'Expire le',
   'CLOSE': 'Fermer',
   'CLONE': 'Clôner',
   'PREVIEW': 'Prévisualiser',
@@ -38,6 +39,8 @@ export const COMMON = {
   'LOADING': 'Chargement',
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
+  'PROFILE-URL': 'Profil Linkedin',
+  'BLACKLIST': 'Emails blacklistés',
 
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
@@ -60,6 +63,7 @@ export const COMMON = {
     'A': 'En cliquant sur "Continuer", j\'accepte',
     'B': 'termes et conditions d\'utilisation.',
   },
+  'PROFILE_URL': 'Profile URL',
 
   'REQUIRED': {
     'FIRSTNAME': 'Le prénom est requis.',
@@ -71,7 +75,8 @@ export const COMMON = {
     'JOBTITLE': 'Le poste est requis.',
     'MESSAGE': 'Tous les champs sont obligatoires',
     'ACCEPT': 'Veuillez accepter les termes et conditions.',
-    'COUNTRY': 'Le pays est requis.'
+    'COUNTRY': 'Le pays est requis.',
+    'URL': 'Le profil est requis.'
   },
 
   'BUTTON': {

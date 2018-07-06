@@ -17,13 +17,14 @@
                     (removeRows)="deleteUsersModal($event)"
                     (performAction)="performActions($event)">
   </app-shared-table>
-  <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
-    <app-user-edit-sidebar
-      [userId]="currentUserId"
-      (userChange)="userEditionFinish()"
-      (deleteUser)="deleteUserModal($event)"
-      [sidebarState]="this.more.animate_state">
-    </app-user-edit-sidebar>
+  <app-sidebar
+    [template]="more" (closeSidebar)="closeSidebar($event)">
+    <app-user-form
+      [sidebarState]="this.more.animate_state"
+      [type]="more.type"
+      [user]="currentUser"
+      (editUserData)="userEditionFinish($event)">
+    </app-user-form>
   </app-sidebar>
 
   <!-- Modal to ask admin to sure about deleting the user -->

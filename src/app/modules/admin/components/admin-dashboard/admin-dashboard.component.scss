@@ -1,6 +1,11 @@
 $secondary-color: #0B90C6;
 $dark-background: #262831;
 
+.list-table {
+  display: flex;
+  justify-content: space-between;
+}
+
 .projects-stats {
   background: $secondary-color;
   display: flex;
@@ -22,6 +27,48 @@ $dark-background: #262831;
     margin: auto 36px auto 30px;
   }
 }
+
+
+.label-1st{
+  border-radius: 5px;
+  background: #1c1aaa;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.label-2nd{
+  border-radius: 5px;
+  background: #0bb465;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.label-3rd{
+  border-radius: 5px;
+  background: #a9a72d;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.label-4th{
+  border-radius: 5px;
+  background: #7e00b1;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
 
 .emails-stats {
   background: #FAFAFA;

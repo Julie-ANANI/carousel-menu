@@ -37,7 +37,7 @@
             <span *ngIf="innovationCardEditingIndex === i">
               <span class="text-link" (click)="showPreview($event)">
                 {{ 'COMMON.PREVIEW' | translate }}</span>
-              <span *ngIf="project.innovationCards?.length > 1" class="separator">/</span>
+              <span *ngIf="project.innovationCards?.length > 1 && projectStatus" class="separator">/</span>
               <span
                 *ngIf="project.innovationCards?.length > 1 && projectStatus"
                 (click)="deleteModal(innovationCard._id, innovationCard.lang)"

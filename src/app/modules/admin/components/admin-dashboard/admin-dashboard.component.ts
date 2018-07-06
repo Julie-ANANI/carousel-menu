@@ -5,6 +5,10 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { User } from '../../../../models/user.model';
 import { Subject } from 'rxjs/Subject';
+import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import {InnovCard} from '../../../../models/innov-card';
+
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -16,7 +20,16 @@ export class AdminDashboardComponent implements OnInit {
   public operators: Array<User> = [];
   public operatorId = '';
 
+  private _modalSelected = false;
+  private _dateNow = new Date();
+
   public nbDaysOfStats = 1;
+
+  sidebarTemplateValue: Template = {};
+  private _selectedInnovation: InnovCard;
+
+  private _weekBatches: Array<any> = [[], [], [], [], []];
+  // => [['DATE', batch, batch,..]...]
 
   public operatorData: {
     nbProjectsToValidate: number,
@@ -43,9 +56,11 @@ export class AdminDashboardComponent implements OnInit {
   constructor(private _titleService: TranslateTitleService,
               private _dashboardService: DashboardService,
               private _searchService: SearchService,
-              private _authService: AuthService) { }
+              private _authService: AuthService,
+              private _innovationService: InnovationService) { }
 
   ngOnInit(): void {
+
     this._titleService.setTitle('Admin Dashboard');
 
     if (this._authService.user && this._authService.user.isOperator) {
@@ -57,6 +72,9 @@ export class AdminDashboardComponent implements OnInit {
     this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData) => this.operatorData = operatorData);
 
     this.getPeriodStats();
+
+
+    this.getWeek();
   }
 
   public newOperatorSelected(operatorId: string) {
@@ -76,11 +94,65 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
+  public getWeek() {
+    const now = Date.now();
+    this._dateNow = new Date(now);
+    this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe( (batches: Array<any>) => {
+        this._weekBatches = batches;
+    });
+  }
+
+  public getNextWeek() {
+    this._dateNow.setDate(this._dateNow.getDate() + 7);
+    this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe((batches: Array<any>) => {
+      this._weekBatches = batches;
+    });
+  }
+
+  public getLastWeek() {
+    this._dateNow.setDate(this._dateNow.getDate() - 7);
+    this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe((batches: Array<any>) => {
+      this._weekBatches = batches;
+    });
+  }
+
+
+  showPreview(event: Event, batch: any) {
+    event.preventDefault();
+    this._innovationService.getInnovationCard(batch.innovation.innovationCards[0]).first().subscribe( card => {
+      this._selectedInnovation = card;
+      this.sidebarTemplateValue = {
+        animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+        title: 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW',
+        size: '726px'
+      };
+      this._modalSelected = true;
+    });
+  }
+
+  closeSidebar(value: string) {
+    this.sidebarTemplateValue.animate_state = value;
+    this._modalSelected = false;
+  }
+
   get refreshNeededEmitter(): Subject<any> {
     return this._refreshNeededEmitter;
   }
 
   get adminLevel(): number {
     return this._authService.adminLevel;
+  }
+
+
+  get weekBatches(): any {
+    return this._weekBatches;
+  }
+
+  get selectedInnovation(): any {
+    return this._selectedInnovation;
+  }
+
+  get modalSelected(): boolean {
+    return this._modalSelected;
   }
 }

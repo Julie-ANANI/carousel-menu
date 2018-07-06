@@ -42,13 +42,13 @@
         <!-- /Bot messages -->
 
         <!-- Project under evaluating and evaluating done status-->
-        <div *ngIf="projectStatus === 'EVALUATING' || projectStatus === 'EVALUATING_DONE'">
+        <div *ngIf="projectStatus === 'EVALUATING' || projectStatus === 'DONE'">
           <shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="project._id" [adminMode]="false" [questions]="questions"></shared-answer-modal>
 
           <!-- Title and contact button section -->
           <div class="title-wrapper">
             <h1 *ngIf="projectStatus === 'EVALUATING'" class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING' | translate }}</h1>
-            <h1 *ngIf="projectStatus === 'EVALUATING_DONE'" class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING_DONE' | translate }}</h1>
+            <h1 *ngIf="projectStatus === 'DONE'" class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING_DONE' | translate }}</h1>
             <a class="btn btn-primary" href="{{ contactUrl }}">{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</a>
           </div>
 
@@ -57,7 +57,7 @@
 
             <!-- Status -->
             <div class="status-wrapper">
-              <h6>{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.A' | translate }}</h6>
+              <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.A' | translate }}</h2>
 
               <div class="info-status">
                 <p><i class="fas fa-check"></i>&nbsp;&nbsp;<span class="text-white">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.G' | translate }}</span></p>
@@ -185,9 +185,11 @@
           <!-- Click rate section -->
           <div class="section-light-container">
             <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.CLICK_MAP_TITLE' | translate }}</h2>
-            <app-worldmap [countries]="countries"
-                          [countriesColor]="'#FFB300'"
-                          [isEditable]="false"></app-worldmap>
+            <app-worldmap
+              [countries]="countries"
+              [countriesColor]="'#FFB300'"
+              [isEditable]="false">
+            </app-worldmap>
           </div>
 
           <!-- Company section -->
