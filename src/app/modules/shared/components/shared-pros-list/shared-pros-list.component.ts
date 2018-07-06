@@ -38,7 +38,7 @@ export class SharedProsListComponent {
   private _prosToRemove: Professional[] = [];
   private _more: Template = {};
   private _showDeleteModal = false;
-  private _currentProId = '';
+  private _currentPro: Professional = null;
 
   constructor(private _professionalService: ProfessionalsService,
               private _notificationsService: TranslateNotificationsService,
@@ -105,13 +105,14 @@ export class SharedProsListComponent {
     });
   }
 
-  updatePro(pro: Professional, event: Event): void {
-    event.preventDefault();
+  updatePro(pro: Professional): void {
     this.editUser[pro._id] = false;
     this._professionalService.save(pro._id, pro).first().subscribe(res => {
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.SUCCESS');
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+      this._more = {animate_state: 'inactive', title: this._more.title};
+      this.loadPros(this._config);
     }, err => {
-      this._notificationsService.error('ERROR', err.message);
+      this._notificationsService.error('ERROR.ERROR', err.message);
     });
   }
 
@@ -154,11 +155,14 @@ export class SharedProsListComponent {
   }
 
   editPro(pro: Professional) {
-    this._more = {
-      animate_state: (this._more.animate_state === 'active' && this._currentProId === pro._id) ? 'inactive' : 'active',
-      title: 'COMMON.EDIT'
-    };
-    this._currentProId = pro._id;
+    this._professionalService.get(pro._id).subscribe((professional: Professional) => {
+      this._more = {
+        animate_state: 'active',
+        title: 'COMMON.EDIT',
+        type: 'professional'
+      };
+      this._currentPro = professional;
+    });
   }
 
   deleteProModal(pro: Professional) {
@@ -200,5 +204,5 @@ export class SharedProsListComponent {
   get prosToRemove(): Professional[] { return this._prosToRemove; }
   get more(): any { return this._more; }
   get showDeleteModal(): boolean { return this._showDeleteModal; }
-  get currentProId(): string { return this._currentProId; }
+  get currentPro(): Professional { return this._currentPro; }
 }

@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
-import { ProfessionalComponent } from './components/professional/professional.component';
 import { SidebarComponent } from './sidebar.component';
 import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.component';
 import { InnovationPreviewComponent } from './components/innovation-preview/innovation-preview.component';
@@ -26,7 +25,6 @@ import { CountryFlagModule } from '../../../../directives/country-flag/country-f
   declarations: [
     SidebarBatchComponent,
     CollaboratorComponent,
-    ProfessionalComponent,
     SidebarComponent,
     InnovationPreviewComponent,
     UserFormComponent,
@@ -36,7 +34,6 @@ import { CountryFlagModule } from '../../../../directives/country-flag/country-f
   exports: [
     CountryFlagModule,
     CollaboratorComponent,
-    ProfessionalComponent,
     SidebarComponent,
     SidebarBatchComponent,
     InnovationPreviewComponent,

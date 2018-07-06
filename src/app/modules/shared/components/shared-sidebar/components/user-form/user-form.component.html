@@ -17,6 +17,13 @@
         <button type="submit" class="btn btn-primary">{{'COMMON.SAVE' | translate}}</button>
       </div>
 
+      <!-- Save only -->
+      <div class="text-right up" *ngIf="isProfessional">
+        <button type="submit" class="btn btn-primary">
+          {{'COMMON.SAVE' | translate}}
+        </button>
+      </div>
+
       <!-- First name -->
       <div class="form-group">
         <label class="form-label" for="firstName">{{ 'COMMON.FIRSTNAME' | translate }}</label>
@@ -75,29 +82,6 @@
         </div>
       </div>
 
-      <!-- Country -->
-      <div class="form-group">
-        <label class="form-label" for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
-        <input
-          class="form-default"
-          formControlName="country"
-          id="country"
-          type="text"
-          [attr.placeholder]="'COMMON.COUNTRY_PLACEHOLDER' | translate"
-          (click)="onSuggestCountries()">
-        <ul
-          *ngIf="userForm.get('country').value"
-          class="suggestion"
-          [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
-          <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onValueSelect(suggestion)">
-            <a><span>{{ suggestion }}</span></a>
-          </li>
-        </ul>
-        <div class="form-error" *ngIf="userForm.get('country').touched && userForm.get('country').invalid">
-          <span *ngIf="userForm.get('country').hasError('required')">{{ 'COMMON.REQUIRED.COUNTRY' | translate }}</span>
-        </div>
-      </div>
-
       <!-- Job -->
       <div class="form-group">
         <label class="form-label" for="jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
@@ -123,6 +107,29 @@
           [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
         <div class="form-error" *ngIf="userForm.get('company').touched && userForm.get('company').invalid">
           <span *ngIf="userForm.get('company').hasError('required')">{{ 'COMMON.REQUIRED.COMPANY' | translate }}</span>
+        </div>
+      </div>
+
+      <!-- Country -->
+      <div class="form-group">
+        <label class="form-label" for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
+        <input
+          class="form-default"
+          formControlName="country"
+          id="country"
+          type="text"
+          [attr.placeholder]="'COMMON.COUNTRY_PLACEHOLDER' | translate"
+          (click)="onSuggestCountries()">
+        <ul
+          *ngIf="userForm.get('country').value"
+          class="suggestion"
+          [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
+          <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onValueSelect(suggestion)">
+            <a><span>{{ suggestion }}</span></a>
+          </li>
+        </ul>
+        <div class="form-error" *ngIf="userForm.get('country').touched && userForm.get('country').invalid">
+          <span *ngIf="userForm.get('country').hasError('required')">{{ 'COMMON.REQUIRED.COUNTRY' | translate }}</span>
         </div>
       </div>
 

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { User } from '../../../../../../models/user.model';
+import {Professional} from '../../../../../../models/professional';
 
 @Component({
   selector: 'app-user-form',
@@ -21,17 +22,23 @@ export class UserFormComponent implements OnInit, OnChanges {
     this.loadEditUser();
   };
 
+  /*
+      For type 'professional', put the data into the attribute user and patch it to the formData
+   */
+  @Input() set pro(value: Professional) {
+    this._pro = value;
+    this.loadProfessional();
+  };
+
   @Input() set type(type: string) {
     if (type === 'signUp') {
       this.loadSignUp();
-    } else if (type === 'professional') {
-      this.loadProfessional();
     }
   }
 
   @Output() userSignUpData = new EventEmitter<FormGroup>();
   @Output() editUserData = new EventEmitter<User>();
-  @Output() professionalUserData = new EventEmitter<FormGroup>();
+  @Output() professionalUserData = new EventEmitter<Professional>();
 
   isSignUp = false;
   isEditUser = false;
@@ -40,6 +47,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   countriesSuggestion: Array<string> = [];
   displayCountrySuggestion = false;
   private _user: User = null;
+  private _pro: Professional = null;
 
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService) { }
@@ -71,6 +79,9 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   loadProfessional() {
     this.isProfessional = true;
+    if (this._pro) {
+      this.userForm.patchValue(this._pro);
+    }
   }
 
   onSubmit() {
@@ -81,7 +92,9 @@ export class UserFormComponent implements OnInit, OnChanges {
       user.id = this._user.id;
       this.editUserData.emit(user);
     } else if (this.isProfessional) {
-      this.professionalUserData.emit(this.userForm);
+      const pro = this.userForm.value;
+      pro._id = this._pro._id;
+      this.professionalUserData.emit(pro);
     }
   }
 
@@ -119,6 +132,7 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   }
 
-  get user(): User { return this._user };
+  get user(): User { return this._user; }
+  get pro(): Professional { return this._pro; }
 
 }
