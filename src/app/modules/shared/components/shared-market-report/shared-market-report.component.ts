@@ -214,7 +214,12 @@ export class SharedMarketReportComponent implements OnInit {
     this.filterAnswers();
   }
 
-  public logoName(): string {
+  public print(event: Event): void {
+    event.preventDefault();
+    window.print();
+  }
+
+  get logoName(): string {
     return environment.logoSynthURL;
   }
 

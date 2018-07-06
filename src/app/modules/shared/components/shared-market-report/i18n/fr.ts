@@ -17,7 +17,9 @@ export const MARKET_REPORT = {
   },
 
   'BUTTON': {
-    'DOWNLOAD': 'Télécharger'
+    'DOWNLOAD': 'Télécharger',
+    'STATUS_TO_DONE': 'Finaliser la synthése',
+    'STATUS_TO_EVALUATING': 'Modifier la synthése'
   },
 
   // 'TITLE': 'Exploration du potentiel marché',
