@@ -16,13 +16,13 @@
         (click)="changeSettings() && $event.preventDefault()">
         <i class="fas fa-cogs"></i>
       </button>
-      <input
+      <textarea
         type="text"
         class="form-default input-lg"
         name="keywords"
         [(ngModel)]="params.keywords"
         required
-        placeholder="Recherche 'Google-like'">
+        placeholder="Recherche 'Google-like', une requête par ligne"></textarea>
       <button
         (click)="search($event)"
         class="btn-primary input-group-btn"
