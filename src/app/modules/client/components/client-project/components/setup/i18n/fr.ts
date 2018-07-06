@@ -3,25 +3,25 @@ import { SURVEY } from '../components/survey/i18n/fr';
 import { TARGETING } from '../components/targeting/i18n/fr';
 
 export const SETUP = {
-  'TITLE': 'Toutes les informations sur votre projet',
+  'TITLE': 'Tout sur votre projet',
 
   'SAVE_PROJECT': 'Sauvegarder le projet',
   'SUBMIT_PROJECT': 'Soumettre le projet',
 
   'MESSAGE': {
-    'SUBMITTED': 'Votre projet est en cours de validation. Nous reviendrons vers vous rapidement!',
+    'SUBMITTED': 'Votre projet est en cours de validation. Nous revenons vers vous rapidement !',
     'EDITING': {
-      'A': 'S\'il vous plaît terminer',
+      'A': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',
       'B': 'la configuration de votre projet',
       'C': 'et le soumettre.'
     },
-    'EVALUATING': 'L\'exploration du marché est en cours. Vous ne pouvez plus apporter de modifications à votre projet.',
+    'EVALUATING': 'Il n\'est plus possible de modifier votre projet car l\'exploration marché est en cours.',
     'REVIEWING': {
       'A': 'Votre projet doit être modifié. S\'il vous plaît',
       'B': 'lit',
       'C': 'nos commentaires.'
     },
-    'DONE': 'La synthèse de votre projet est disponible. Vous ne pouvez plus apporter de modifications à votre projet.'
+    'DONE': 'La synthèse est disponible. Vous ne pouvez plus apporter de modifications à votre projet.'
   },
 
   'PITCH_TAB': 'Description',
