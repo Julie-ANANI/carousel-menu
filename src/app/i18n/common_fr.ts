@@ -38,6 +38,7 @@ export const COMMON = {
   'LOADING': 'Chargement',
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
+  'PROFILE-URL': 'Profil Linkedin',
 
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',

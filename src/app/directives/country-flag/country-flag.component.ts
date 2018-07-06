@@ -13,6 +13,7 @@ export class CountryFlagComponent implements OnInit {
     this._country = value;
     this.updateFlag();
   };
+
   @Input() width = 37;
   @Input() height = 25;
 
@@ -84,6 +85,12 @@ export class CountryFlagComponent implements OnInit {
     this._name = this.names[flag] || 'Unknown';
   }
 
-  get url(): string { return this._url; }
-  get name(): string { return this._name; }
+  get url(): string {
+    return this._url;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
 }
