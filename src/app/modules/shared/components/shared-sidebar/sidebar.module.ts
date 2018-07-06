@@ -30,8 +30,7 @@ import { CountryFlagModule } from '../../../../directives/country-flag/country-f
     SidebarComponent,
     InnovationPreviewComponent,
     UserFormComponent,
-    SidebarSearchComponent,
-    UserFormComponent
+    SidebarSearchComponent
   ],
   exports: [
     CountryFlagModule,
