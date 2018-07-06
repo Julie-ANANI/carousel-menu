@@ -165,6 +165,10 @@ export class SharedProsListComponent {
     });
   }
 
+  closeSidebar(value: string) {
+    this._more.animate_state = value;
+  }
+
   deleteProModal(pro: Professional) {
     this._prosToRemove = [];
     this._more = {animate_state: 'inactive', title: this._more.title};
