@@ -20,7 +20,7 @@ export class AdminUsersComponent implements OnInit {
   private _tableInfos: Table = null;
   private _showDeleteModal = false;
   private _selfId = '';
-  private _currentUserId = '';
+  currentUser: User;
   private _total = 0;
   private _config = {
     fields: 'id companyName jobTitle created domain location firstName lastName',
@@ -82,11 +82,14 @@ export class AdminUsersComponent implements OnInit {
 
   editUser(user: User) {
     const us = new User(user);
-    this._more = {
-      animate_state: (this._more.animate_state === 'active' && this._currentUserId === us.id) ? 'inactive' : 'active',
-      title: 'COMMON.EDIT'
-    };
-    this._currentUserId = us.id;
+    this._userService.get(us.id).subscribe(value => {
+      this._more = {
+        animate_state: (this._more.animate_state === 'active' && this.currentUser.id === value.id) ? 'inactive' : 'active',
+        title: 'COMMON.EDIT',
+        type: 'editUser'
+      };
+      this.currentUser = value;
+    });
   }
 
   closeSidebar(value: string) {
@@ -164,6 +167,5 @@ export class AdminUsersComponent implements OnInit {
   get usersToRemove(): User[] { return this._usersToRemove; }
   get users() { return this._users; }
   get more(): any { return this._more; }
-  get currentUserId(): string { return this._currentUserId; }
   get showDeleteModal(): boolean { return this._showDeleteModal; }
 }

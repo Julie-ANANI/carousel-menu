@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
+import { User } from '../../../../../../models/user.model';
 
 @Component({
   selector: 'app-user-form',
@@ -12,11 +13,17 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   @Input() sidebarState: string;
 
+  /*
+      For type 'editUser', put the data into the attribute user and patch it to the formData
+   */
+  @Input() set user(value: User) {
+    this._user = value;
+    this.loadEditUser();
+  };
+
   @Input() set type(type: string) {
     if (type === 'signUp') {
       this.loadSignUp();
-    } else if (type === 'editUser') {
-      this.loadEditUser();
     } else if (type === 'professional') {
       this.loadProfessional();
     }
@@ -32,6 +39,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   userForm: FormGroup;
   countriesSuggestion: Array<string> = [];
   displayCountrySuggestion = false;
+  private _user: User = null;
 
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService) { }
@@ -56,6 +64,9 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   loadEditUser() {
     this.isEditUser = true;
+    if (this._user) {
+      this.userForm.patchValue(this._user);
+    }
   }
 
   loadProfessional() {
@@ -105,5 +116,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     }
 
   }
+
+  get user(): User { return this._user };
 
 }

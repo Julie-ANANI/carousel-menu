@@ -18,6 +18,7 @@ export const COMMON = {
   'CREATED': 'Créé le',
   'UPDATED': 'Modifié le',
   'LAUNCHED': 'Lancé le',
+  'EXPIRATION' : 'Expire le',
   'CLOSE': 'Fermer',
   'CLONE': 'Clôner',
   'PREVIEW': 'Prévisualiser',
@@ -39,6 +40,7 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
+  'BLACKLIST': 'Emails blacklistés',
 
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',

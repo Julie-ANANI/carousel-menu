@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { EmailService } from './../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import {Table} from '../shared-table/models/table';
 
 
 @Component({
@@ -21,12 +22,14 @@ export class SharedEmailBlacklistComponent implements OnInit {
     }
   };
 
-  private _dataset: {blacklists: Array<any>, _metadata:any};
+  private _dataset: {blacklists: Array<any>, _metadata: any};
 
-  private _searchConfiguration = "";
-  private _addressToBL = "";
+  private _searchConfiguration = '';
+  private _addressToBL = '';
 
   public editDatum: {[propString: string]: boolean} = {};
+
+  private _tableInfos: Table = null;
 
   constructor( private _emailService: EmailService,
                private _translateService: TranslateService,
@@ -46,15 +49,34 @@ export class SharedEmailBlacklistComponent implements OnInit {
   public loadData(config: any) {
     this._config = config || this._config;
     this._emailService.getBlacklist(this._config)
-        .subscribe(result=>{
-          if(result && result.message) {
-            //The server may be busy...
-            this._notificationsService.error("Warning", "The server is busy, try again in 1 minute.");
+        .subscribe(result => {
+          if (result && result.message) {
+            // The server may be busy...
+            this._notificationsService.error('Warning', 'The server is busy, try again in 1 minute.');
           } else {
             this._dataset = result;
+              const data =  this._dataset.blacklists.map((entry: any) => {
+              entry.expiration = new Date(entry.expiration).getTime() ? entry.expiration : '';
+              return entry;
+            });
+
+            this._tableInfos = {
+              _selector: 'shared-blacklist',
+              _title: 'COMMON.BLACKLIST',
+              _content: data,
+              _total: this._dataset._metadata.totalCount,
+              _isHeadable: true,
+              _isFiltrable: true,
+              _isSelectable: true,
+              _isEditable: true,
+              _columns: [
+                {_attrs: ['email'], _name: 'COMMON.EMAIL', _type: 'TEXT'},
+                {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'},
+                {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE'}]
+            };
           }
-        }, error=>{
-          this._notificationsService.error("Error", error);
+        }, error => {
+          this._notificationsService.error('Error', error);
         });
   }
 
@@ -116,6 +138,7 @@ export class SharedEmailBlacklistComponent implements OnInit {
     return result;
   }
 
+  get tableInfos(): Table { return this._tableInfos; }
   get data(): Array<any> { return this._dataset.blacklists; };
   get metadata(): any { return this._dataset._metadata; };
   get config(): any { return this._config; };
