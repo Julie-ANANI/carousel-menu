@@ -16,6 +16,7 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _params: any;
   private _more: Template = {};
+  private _googleQuota: number = 30000;
 
   @Input() campaign: Campaign;
 
@@ -65,6 +66,15 @@ export class SharedSearchProsComponent implements OnInit {
       title: 'SEARCH.ADVANCEDSEARCH'
     };
   }
+  
+  public getGoogleQuota() {
+    this._searchService.dailyStats().first().subscribe(result => {
+      this._googleQuota = 30000;
+      if (result.hours) {
+        this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0)
+      }
+    });
+  }
 
   updateSettings(value: any) {
     this._params = value;
@@ -104,5 +114,6 @@ export class SharedSearchProsComponent implements OnInit {
 
   get params(): any { return this._params; }
   get more(): any { return this._more; }
+  get googleQuota(): number { return this._googleQuota; }
   set params(value: any) { this._params = value; }
 }

@@ -30,5 +30,10 @@
         <i class="fas fa-search"></i>
       </button>
     </div>
+    <h6 [ngClass]="{
+  'text-success': googleQuota > 10000,
+  'text-warning': googleQuota < 10000 && googleQuota > 5000,
+  'text-error': googleQuota < 5000}">
+      {{ googleQuota }} requêtes google restantes  <i (click)="getGoogleQuota()" class="c-hand fa fa-refresh"></i> </h6>
   </div>
 </div>
