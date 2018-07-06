@@ -1,5 +1,3 @@
-<!--
-
 <div [ngClass]="{'project-preparation': status==='PREPARING', 'project-launched': status==='EVALUATING', 'project-completed': status==='DONE'}" *ngIf="projects.length">
   <div class="title-section" *ngIf="status==='PREPARING'"><span>{{total}}</span> {{ "PROJECT_LIST.IN_PREPARATION" | translate }}</div>
   <div class="title-section" *ngIf="status==='EVALUATING'"><span>{{total}}</span> {{ "PROJECT_LIST.LAUNCHED" | translate }}</div>
@@ -20,7 +18,7 @@
       <th *ngIf="status==='EVALUATING'" width="80" class="text-center">{{ "PROJECT_LIST.CLICKED" | translate }}</th>
       <th *ngIf="status==='EVALUATING'" width="80" class="text-center">{{ "PROJECT_LIST.TO_TACKLE" | translate }}</th>
       <th *ngIf="status==='EVALUATING'" width="80" class="text-center">{{ "PROJECT_LIST.DELAY" | translate }} <i class="icon icon-arrow-down"></i></th>
-      <th *ngIf="status==='DONE'" width="120" class="text-center">{{ "PROJECT_LIST.CONCLUSIONS" | translate }} <!--<i class="icon icon-arrow-down"></i></th>
+      <th *ngIf="status==='DONE'" width="120" class="text-center">{{ "PROJECT_LIST.CONCLUSIONS" | translate }} <i class="icon icon-arrow-down"></i></th>
       <th *ngIf="status==='DONE'" width="100" class="text-center">{{ "PROJECT_LIST.DELIVERED" | translate }}</th>
       <th *ngIf="status==='DONE'" width="130" class="text-center">{{ "PROJECT_LIST.THANKS" | translate }}</th>
       <th *ngIf="status==='EVALUATING' || status==='DONE'" width="90" class="text-center">{{ "PROJECT_LIST.ANSWERS" | translate }}</th>
@@ -50,55 +48,55 @@
       <td *ngIf="status==='PREPARING' && !project.tags.length" class="project-tagging warning">TODO</td>
 
       <td *ngIf="status==='PREPARING' || status==='EVALUATING'" class="project-professional"
-          [ngClass]="{'warning': project.stats.pros < 7000}"> <!-- Pros
+          [ngClass]="{'warning': project.stats.pros < 7000}"> <!-- Pros -->
         {{project.stats.pros}}
       </td>
 
       <td *ngIf="status==='PREPARING' || status==='EVALUATING'" class="project-emails-ok"
-          [ngClass]="{'warning': project.stats.emailsOK < 5000}"> <!-- Emails OK
+          [ngClass]="{'warning': project.stats.emailsOK < 5000}"> <!-- Emails OK -->
         {{project.stats.emailsOK}}
       </td>
       <td *ngIf="status==='PREPARING'" class="project-status"
-          [ngClass]="{'alert': project.status === 'SUBMITTED'}"> <!-- Statut
+          [ngClass]="{'alert': project.status === 'SUBMITTED'}"> <!-- Statut -->
         <a [routerLink]=getRelevantLink(project) target="_blank">
           {{ 'DASHBOARD.PROJECT_STATE.' + (project.reviewing ? 'REVIEWING' : project.status) | translate }}
         </a>
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-received"
-          [ngClass]="{'alert': ratio(project.stats.received, project.stats.emailsOK) < 99}"> <!-- Reçus
+          [ngClass]="{'alert': ratio(project.stats.received, project.stats.emailsOK) < 99}"> <!-- Reçus -->
         {{ratio(project.stats.received, project.stats.emailsOK)}}%
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-opened"
-          [ngClass]="{'warning': ratio(project.stats.opened, project.stats.received) < 10}"> <!-- Ouverts
+          [ngClass]="{'warning': ratio(project.stats.opened, project.stats.received) < 10}"> <!-- Ouverts -->
         {{ratio(project.stats.opened, project.stats.received)}}%
       </td>
       <td *ngIf="status==='EVALUATING'" class="project-email-clicked"
-          [ngClass]="{'warning': ratio(project.stats.clicked, project.stats.opened) < 10}"> <!-- Cliqués
+          [ngClass]="{'warning': ratio(project.stats.clicked, project.stats.opened) < 10}"> <!-- Cliqués -->
         {{ratio(project.stats.clicked, project.stats.opened)}}%
       </td>
-      <td *ngIf="status==='EVALUATING'" class="project-to-check"><a [routerLink]="null" target="_blank">{{project.stats.submittedAnswers}}</a></td> <!-- À traiter
+      <td *ngIf="status==='EVALUATING'" class="project-to-check"><a [routerLink]="null" target="_blank">{{project.stats.submittedAnswers}}</a></td> <!-- À traiter -->
       <td *ngIf="status==='EVALUATING'" class="project-time-limit warning" ng-init="delai = getDelai(project.launched)"
           [ngClass]="{
             'warning': getDelai(project.launched) <= 4 && getDelai(project.launched) > 0,
             'alert': getDelai(project.launched) <= 0
           }">{{ getDelai(project.launched) | dateTransform}}</td> <!-- Délai
-      <!-- Conclusions
+      <!-- Conclusions -->
       <td *ngIf="status==='DONE' && project.conclusions" class="project-conclusion">OK*</td>
       <td *ngIf="status==='DONE' && !project.conclusions" class="project-conclusion warning"><a [routerLink]=getRelevantLink(project) target="_blank" title="">TODO</a></td>
-      <!-- Restitution
+      <!-- Restitution -->
       <td *ngIf="status==='DONE' && project.restitution" class="project-restitution c-hand" (click)="updateRestitutionState($event, project)">OK</td>
       <td *ngIf="status==='DONE' && !project.restitution" class="project-restitution c-hand warning" (click)="updateRestitutionState($event, project)">TODO</td>
-      <!-- Remerciements
+      <!-- Remerciements -->
       <td *ngIf="status==='DONE' && project.thanks" class="project-thanks c-hand" (click)="updateThanksState($event, project)">OK</td>
       <td *ngIf="status==='DONE' && !project.thanks" class="project-thanks c-hand warning" (click)="updateThanksState($event, project)">TODO</td>
       <td *ngIf="status==='EVALUATING' || status==='DONE'" class="project-answer"
           [ngClass]="{
           'alert': project.stats.answers <= 20,
           'warning': project.stats.answers <= 25 && project.stats.answers > 20,
-          'all-is-fine': project.stats.answers > 25}"> <!-- Réponses
+          'all-is-fine': project.stats.answers > 25}"> <!-- Réponses -->
         {{project.stats.answers}}
       </td>
-      <td *ngIf="status==='WITHOUT_OPERATOR'"> <!-- Opérateur
+      <td *ngIf="status==='WITHOUT_OPERATOR'"> <!-- Opérateur -->
         <select [disabled]="disableOperatorsList()"
                 class="form-select"
                 [(ngModel)]="project.operator"
@@ -127,7 +125,7 @@
 
 
 
-<!-- MODAL : Are you sure you want to delete this project ?
+<!-- MODAL : Are you sure you want to delete this project ? -->
 <div class="modal" [ngClass]="{'active': selectedProjectIdToBeDeleted}">
   <div class="modal-overlay" (click)="(selectedProjectIdToBeDeleted = null) && $event.preventDefault()"></div>
   <div class="modal-container">
@@ -147,6 +145,6 @@
   </div>
 </div>
 
--->
-
+<!--
 <app-shared-table [config]="config" [data]="tableInfos" (configChange)="loadProjects($event)"></app-shared-table>
+-->

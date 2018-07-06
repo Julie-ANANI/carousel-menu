@@ -24,15 +24,81 @@
 <div class="content">
   <app-admin-projects-list [operatorId]="operatorId" [operators]="operators" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
-  <!--
-
   <app-admin-projects-list [status]="'PREPARING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
   <app-admin-projects-list [status]="'EVALUATING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
   <app-admin-projects-list [status]="'DONE'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
-
-  -->
 </div>
+
+<div class="list-table">
+  <div> <i class="fa fa-arrow-circle-left" style="font-size:36px"(click)="getLastWeek()"></i></div>
+  <div *ngFor="let days of this.weekBatches; let i1 = index">
+    <ul *ngFor="let batches of days; let i2 = index">
+      <span *ngIf="i2==0">
+        {{batches}}
+      </span>
+      <span *ngIf="i2 != 0">
+      <li *ngIf="i2 < 4">
+          <label class="label-1st" *ngIf="batches.status == 0" (click)="showPreview($event, batches)">
+            {{batches.innovation.name}}  {{batches.size}}
+          </label>
+          <label class="label-2nd" *ngIf="batches.status == 1" (click)="showPreview($event, batches)">
+            {{batches.innovation.name}}  {{batches.size}}
+          </label>
+          <label class="label-3rd" *ngIf="batches.status == 2" (click)="showPreview($event, batches)">
+            {{batches.innovation.name}}  {{batches.size}}
+          </label>
+      </li>
+      <li *ngIf="i2 == 4">
+        <div class="popover popover">
+          <label class="label-draft">
+            ...
+          </label>
+          <div class="popover-container">
+            <div class="card">
+              <div class="card-header">
+              </div>
+              <div class="card-body">
+                <ul *ngFor="let batchesOver of days; let i3 = index">
+                  <li>
+                    <label class="label-1st" *ngIf="batchesOver.status == 0" (click)="showPreview($event, batchesOver)">
+                      {{batchesOver.innovation.name}}  {{batchesOver.size}}
+                    </label>
+                    <label class="label-2nd" *ngIf="batchesOver.status == 1" (click)="showPreview($event, batchesOver)">
+                      {{batchesOver.innovation.name}}  {{batchesOver.size}}
+                    </label>
+                    <label class="label-3rd" *ngIf="batchesOver.status == 2" (click)="showPreview($event, batchesOver)">
+                      {{batchesOver.innovation.name}}  {{batchesOver.size}}
+                    </label>
+                    <label class="label-4th" *ngIf="batchesOver.status == 3" (click)="showPreview($event, batchesOver)">
+                      {{batchesOver.innovation.name}}  {{batchesOver.size}}
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+        </span>
+    </ul>
+
+  </div>
+  <div> <i class="fa fa-arrow-circle-right" style="font-size:36px" (click)="getNextWeek()"></i></div>
+</div>
+
+
+
+<!-- Innovation preview sidebar-->
+<app-sidebar
+  [template]="sidebarTemplateValue"
+  (closeSidebar)="closeSidebar($event)">
+  <app-innovation-preview
+    [innovation]="this.selectedInnovation">
+  </app-innovation-preview>
+</app-sidebar>
 
 
