@@ -9,7 +9,7 @@ export const ERROR = {
   'PAGE_NOT_FOUND': 'La page n\'a pas pu être trouvée.',
 
   'FORM': {
-    'PITCH_FORM': 'Merci de répondre aux champs du formulaire de terrain.',
+    'PITCH_FORM': 'Veuillez remplir tous les champs avant de soumettre votre projet. Merci !',
     'TARGETING_FORM': 'Merci de répondre aux champs du formulaire de ciblage.'
   },
 

@@ -75,7 +75,7 @@
                         name="title"
                         #title="ngModel"
                         [(ngModel)]="project.innovationCards[i].title"
-                        [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
+                        [attr.placeholder]=""
                         (ngModelChange)="notifyModelChanges($event)"
                         required
                         [ngClass]="{'borderRed': showTitleError}"
@@ -343,7 +343,7 @@
             <!-- Help -->
             <div class="column col-6 col-mx-auto hide-md help-wrapper">
               <div class="bot-wrapper text-center">
-                <span class="bot-rect">We are working very hard. Something cool is coming soon...</span>
+                <span class="bot-rect">{{ 'PROJECT_MODULE.SETUP.PITCH.BOT.HELP' | translate }}</span>
                 <br>
                 <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
                 <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
