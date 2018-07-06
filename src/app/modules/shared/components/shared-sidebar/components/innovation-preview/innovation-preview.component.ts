@@ -11,15 +11,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class InnovationPreviewComponent implements OnInit {
 
   @Input() innovation: InnovCard;
-
+  public strings: Array<any> [];
   constructor(private domSanitizer1: DomSanitizer) {
   }
 
   ngOnInit() {
-    console.log("onINit");
-    console.log(this.innovation);
-    console.log(this.innovation.advantages[0])
-
   }
 
   get domSanitizer() {

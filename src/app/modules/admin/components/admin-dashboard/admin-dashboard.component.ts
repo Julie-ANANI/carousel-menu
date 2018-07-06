@@ -7,6 +7,7 @@ import { User } from '../../../../models/user.model';
 import { Subject } from 'rxjs/Subject';
 import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
+import {InnovCard} from '../../../../models/innov-card';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class AdminDashboardComponent implements OnInit {
   public nbDaysOfStats = 1;
 
   sidebarTemplateValue: Template = {};
-  private _selectedInnovation: any;
+  private _selectedInnovation: InnovCard;
 
   private _weekBatches: Array<any> = [[], [], [], [], []];
 
@@ -117,10 +118,7 @@ export class AdminDashboardComponent implements OnInit {
 
   showPreview(event: Event, batch: any) {
     event.preventDefault();
-    console.log(batch);
-
     this._innovationService.getInnovationCard(batch.innovation.innovationCards[0]).first().subscribe( card => {
-      console.log(card);
       this._selectedInnovation = card;
       this.sidebarTemplateValue = {
         animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
@@ -133,7 +131,6 @@ export class AdminDashboardComponent implements OnInit {
 
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
-    console.log("koukou");
     this._modalSelected = false;
   }
 
