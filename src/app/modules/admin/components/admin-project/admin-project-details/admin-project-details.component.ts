@@ -37,7 +37,7 @@ export class AdminProjectDetailsComponent implements OnInit {
               private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this._titleService.setTitle('MY_PROJECTS.TITLE');
+    this._titleService.setTitle('COMMON.MY_PROJECT');
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this.presetAutocomplete = {
       placeholder: 'preset',
@@ -142,9 +142,9 @@ export class AdminProjectDetailsComponent implements OnInit {
 
   public notifyClass(): string {
     if (this._dirty) {
-      return 'btn ghost-primary btn-lg badge';
+      return 'btn ghost-primary badge';
     } else {
-      return 'btn ghost-primary btn-lg';
+      return 'btn ghost-primary';
     }
   }
 
