@@ -3,7 +3,7 @@ $dark-background: #262831;
 
 .list-table {
   display: flex;
-  justify: space between;
+  justify-content: space-between;
 }
 
 .projects-stats {
@@ -58,6 +58,17 @@ $dark-background: #262831;
   margin-right: 10px;
   font-weight: 600;
 }
+
+.label-4th{
+  border-radius: 5px;
+  background: #7e00b1;
+  color: white;
+  font-size: 0.6rem;
+  padding: 6px 15px;
+  margin-right: 10px;
+  font-weight: 600;
+}
+
 
 .emails-stats {
   background: #FAFAFA;

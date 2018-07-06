@@ -29,6 +29,7 @@ export class AdminDashboardComponent implements OnInit {
   private _selectedInnovation: InnovCard;
 
   private _weekBatches: Array<any> = [[], [], [], [], []];
+  // => [['DATE', batch, batch,..]...]
 
   public operatorData: {
     nbProjectsToValidate: number,
@@ -108,7 +109,7 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  public lastNextWeek() {
+  public getLastWeek() {
     this._dateNow.setDate(this._dateNow.getDate() - 7);
     this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
