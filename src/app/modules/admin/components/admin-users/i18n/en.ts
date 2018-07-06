@@ -5,5 +5,5 @@ export const ADMIN_USERS = {
   'LAUNCHED_PROJECTS': 'Launched projects',
   'DOMAIN': 'Domain',
   'DELETE': 'Delete user',
-  'PITCH-DELETE': 'Are you sure you want to delete the user(s) ? '
+  'PITCH-DELETE': 'Are you sure you want to delete the user(s)?',
 };

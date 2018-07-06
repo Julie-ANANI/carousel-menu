@@ -158,7 +158,7 @@ export class SharedProsListComponent {
     this._professionalService.get(pro._id).subscribe((professional: Professional) => {
       this._more = {
         animate_state: 'active',
-        title: 'COMMON.EDIT',
+        title: 'COMMON.EDIT_PROFESSIONAL',
         type: 'professional'
       };
       this._currentPro = professional;

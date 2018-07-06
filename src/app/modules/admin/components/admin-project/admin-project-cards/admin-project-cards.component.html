@@ -8,8 +8,11 @@
 
             <div>
               <div class="circle-check"><i class="fas fa-save"></i></div>
-              <button class="btn ghost-primary" (click)="save($event)">
-                {{ 'COMMON.SAVE_DRAFT' | translate }}
+              <button
+                class="btn ghost-primary"
+                (click)="save($event)"
+                [disabled]="!shouldSave">
+                {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
               </button>
               <p *ngIf="lastSavedDate" [ngStyle]="{ 'margin-left': '10px' , 'display': 'inline-flex' }">
                 {{ 'COMMON.LAST_SAVED_AT' | translate }} {{ lastSavedDate | date:'HH:mm:ss' }}
@@ -35,7 +38,6 @@
 
       <app-shared-project-edit-cards
         [project]="project"
-        (cardsChange)="updateCards($event)"
         (projectChange)="updateProject($event)">
       </app-shared-project-edit-cards>
 
