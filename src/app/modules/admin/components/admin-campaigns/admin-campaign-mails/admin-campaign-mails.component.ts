@@ -247,6 +247,7 @@ export class AdminCampaignMailsComponent implements OnInit {
       _title: workflowname,
       _isNotPaginable: true,
       _isHeadable: true,
+      _isEditable: true,
       _content: [
         {
           Step: '01 - HelloWorld',
