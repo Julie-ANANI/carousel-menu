@@ -1,80 +1,34 @@
 <div>
-  <h2>Recherche de professionels</h2>
+  <h2>Recherche de professionnels</h2>
   <div class="column col-8 col-mx-auto">
-    <div class="input-group">
-      <button class="btn btn-lg input-group-btn" (click)="(displaySettings = !displaySettings) && $event.preventDefault()">
+
+    <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
+      <app-sidebar-search
+        [params]="params"
+        (paramsChange)="updateSettings($event)"
+        [sidebarState]="this.more.animate_state">
+      </app-sidebar-search>
+    </app-sidebar>
+
+    <div class="input-group-lg" id="input-search">
+      <button
+        class="btn-secondary input-group-btn"
+        (click)="changeSettings() && $event.preventDefault()">
         <i class="fas fa-cogs"></i>
       </button>
-      <input class="form-input form-control input-lg" [(ngModel)]="params.keywords" placeholder="Recherche 'Google-like'">
-      <button class="btn btn-primary btn-lg input-group-btn" (click)="search($event)">
+      <input
+        type="text"
+        class="form-default input-lg"
+        name="keywords"
+        [(ngModel)]="params.keywords"
+        required
+        placeholder="Recherche 'Google-like'">
+      <button
+        (click)="search($event)"
+        class="btn-primary input-group-btn"
+        translate>
         <i class="fas fa-search"></i>
       </button>
-    </div>
-    <div *ngIf="displaySettings">
-      <label class="form-switch">
-        <input type="checkbox" [(ngModel)]="params.smart">
-        <i class="form-icon"></i> {{ 'SEARCH.SMART' | translate }}
-      </label>
-      <label class="form-switch">
-        <input type="checkbox" [(ngModel)]="params.regions">
-        <i class="form-icon"></i> {{ 'SEARCH.REGIONS' | translate }}
-      </label>
-      <label class="form-switch">
-        <input type="checkbox" [(ngModel)]="params.queued">
-        <i class="form-icon"></i> {{ 'SEARCH.ADDTOQUEUE' | translate }}
-      </label>
-      <label class="form-switch">
-        <input type="checkbox" [(ngModel)]="params.automated">
-        <i class="form-icon"></i> {{ 'SEARCH.SEARCHMAILS' | translate }}
-      </label>
-      <label class="form-group">
-        {{ 'SEARCH.NUMBER' | translate }}
-        <select name="count" class="form-control" [(ngModel)]="params.count">
-          <option value="10">{{10}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="20">{{20}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="30">{{30}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="40">{{40}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="50">{{50}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-          <option value="100">{{100}} {{ 'CAMPAIGNS.PROS' | translate }}</option>
-        </select>
-      </label>
-      {{ 'SEARCH.ENGINE' | translate }}
-      <label class="tooltip" data-tooltip="Index">
-        <input type="checkbox" name="indexSearch" value="indexSearch"
-               [(ngModel)]="params.indexSearch">
-        [0]
-      </label>
-      <label class="tooltip" data-tooltip="LinkedIn">
-        <input type="checkbox" name="linkedin" value="linkedin"
-               [(ngModel)]="params.websites.linkedin">
-        [1]
-      </label>
-      <label class="tooltip" data-tooltip="Viadeo">
-        <input type="checkbox" name="viadeo" value="viadeo" [(ngModel)]="params.websites.viadeo">
-        [2]
-      </label>
-      <label class="tooltip" data-tooltip="Xing">
-        <input type="checkbox" name="xing" value="xing"
-               [(ngModel)]="params.websites.xing">
-        [3]
-      </label>
-      <div>
-        <div class="d-flex">
-          <div *ngFor="let group of groups; let i = index">
-            <input type="checkbox" [(ngModel)]="group.checked" (click)="selectGroup(i)"/> {{group.name}}
-          </div>
-        </div>
-        <div *ngFor="let continent of continents">
-          <input type="checkbox" [(ngModel)]="continent.checked" (click)="selectContinent(continent)"/> {{continent.name}}
-          <div class="continent">
-              <div *ngFor="let country of countries[continent.key]" class="flag"
-                   (click)="checkCountry(country)"
-                   [ngClass]="{'checked': params.countries.indexOf(country) > -1}">
-                <country-flag [country]="country"></country-flag>
-              </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>

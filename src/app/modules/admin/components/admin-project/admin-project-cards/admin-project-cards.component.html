@@ -16,7 +16,7 @@
               </p>
             </div>
 
-            <div *ngIf="project.status !== 'EDITING'">
+            <div *ngIf="project.status !== 'EDITING' && project.status !== 'DONE'">
               <div *ngIf="project.status === 'SUBMITTED'" [ngStyle]="{ 'margin-right': '30px' , 'display': 'inline-flex' }">
                 <button class="btn btn-primary" (click)="validateProject()">
                   Validation du projet

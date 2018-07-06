@@ -117,20 +117,14 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public getInnovationSythesis(innovationId: string): Observable<any> {
-    return this._http.get('/innovation/' + innovationId + '/synthesis')
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
-  }
-
   public updateSettingsDomain(innovationId: string, domain: any): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/updateSettingsDomain', {domain})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public recalculateSynthesis(innovationId: string): Observable<any> {
-    return this._http.get('/innovation/' + innovationId + '/recalculateSynthesis')
+  public updateStatus(innovationId: string, status: 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE'): Observable<Innovation> {
+    return this._http.put('/innovation/' + innovationId, {status: status})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

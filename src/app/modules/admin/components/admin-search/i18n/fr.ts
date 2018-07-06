@@ -2,6 +2,7 @@
  * Created by bastien on 31/01/2018.
  */
 export const SEARCH = {
+  "COUNTRY_LIST": "Liste de pays",
   "NORESULT": "Pas de résultat :-(",
   "PRO": "Professionnel",
   "SELECTED": "sélectionné",

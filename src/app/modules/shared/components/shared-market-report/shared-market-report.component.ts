@@ -2,18 +2,18 @@
  * Created by juandavidcruzgomez on 11/09/2017.
  */
 import { Component, OnInit, Input } from '@angular/core';
+import { Location } from '@angular/common';
 import { PageScrollConfig } from 'ng2-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Answer } from '../../../../models/answer';
 import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
 import { Innovation } from '../../../../models/innovation';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { environment} from '../../../../../environments/environment';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -42,17 +42,15 @@ export class SharedMarketReportComponent implements OnInit {
   public objectKeys = Object.keys;
   public mapInitialConfiguration: {[continent: string]: boolean};
 
-  private _infographics: any; // TODO remove infographics once conclusions have been migrated to Innovation
-
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer;
 
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
-              private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService,
-              private location: Location) { }
+              private location: Location,
+              private innovationService: InnovationService) { }
 
   ngOnInit() {
 
@@ -61,10 +59,6 @@ export class SharedMarketReportComponent implements OnInit {
     this.today = Date.now();
     this._innoid = this.project._id;
     this.resetMap();
-
-    this.innovationService.getInnovationSythesis(this._innoid).subscribe(synthesis => {
-      this._infographics = synthesis.infographics;
-      }, error => this.translateNotificationsService.error('ERROR.ERROR', error.message));
 
     this.loadAnswers();
     if (this.project.preset && this.project.preset.sections) {
@@ -109,28 +103,15 @@ export class SharedMarketReportComponent implements OnInit {
       });
   }
 
-  /**
-   * Builds the data required to ask the API for a PDF
-   * @returns {{projectId, innovationCardId}}
-   */
-  public dataBuilder(lang: string): any {
-    return {
-      projectId: this._innoid,
-      title: this.project.name.slice(0, Math.min(20, this.project.name.length)) + '-synthesis(' + lang + ').pdf'
-    }
+  public changeStatus(event: Event, status: 'EVALUATING' | 'DONE'): void {
+    this.innovationService
+      .updateStatus(this.innoid, status)
+      .first().subscribe((results) => {
+        this.translateNotificationsService.success('ERROR.SUCCESS', '');
+      }, (error) => {
+        this.translateNotificationsService.error('ERROR.ERROR', error.message);
+      });
   }
-
-  /*
-  public getModel (): any {
-    const lang = this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
-    return {
-      lang: lang,
-      jobType: 'synthesis',
-      labels: 'EXPORT.INNOVATION.SYNTHESIS',
-      pdfDataseedFunction: this.dataBuilder(lang)
-    };
-  }
-  */
 
   public toggleDetails(event: Event): void {
     event.preventDefault();
@@ -222,16 +203,12 @@ export class SharedMarketReportComponent implements OnInit {
     this.filterAnswers();
   }
 
-  // TODO: remove once conclusions have been copied
-  public getInfo(question: Question) {
-    if (this._infographics) {
-      return this._infographics.questions.find((infoQ: any) => infoQ.id === question.identifier);
-    } else {
-      return null;
-    }
+  public print(event: Event): void {
+    event.preventDefault();
+    window.print();
   }
 
-  public logoName(): string {
+  get logoName(): string {
     return environment.logoSynthURL;
   }
 
@@ -287,10 +264,6 @@ export class SharedMarketReportComponent implements OnInit {
 
   get showDetails (): boolean {
     return this._showDetails;
-  }
-
-  get infographics () {
-    return this._infographics;
   }
 
   get lang(): string {

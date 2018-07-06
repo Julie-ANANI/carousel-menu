@@ -187,7 +187,11 @@
           <!-- Click rate section -->
           <div class="section-light-container">
             <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.CLICK_MAP_TITLE' | translate }}</h2>
-            <app-worldmap [countries]="countries" [countriesColor]="'#FFB300'"></app-worldmap>
+            <app-worldmap
+              [countries]="countries"
+              [countriesColor]="'#FFB300'"
+              [isEditable]="false">
+            </app-worldmap>
           </div>
 
           <!-- Company section -->

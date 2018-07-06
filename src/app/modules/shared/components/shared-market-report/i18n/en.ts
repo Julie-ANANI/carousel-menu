@@ -17,7 +17,9 @@ export const MARKET_REPORT = {
   },
 
   'BUTTON': {
-    'DOWNLOAD': 'Download'
+    'DOWNLOAD': 'Download',
+    'STATUS_TO_DONE': 'Finalize synthesis',
+    'STATUS_TO_EVALUATING': 'Modify synthesis'
   },
 
   'PROFESSIONAL': {

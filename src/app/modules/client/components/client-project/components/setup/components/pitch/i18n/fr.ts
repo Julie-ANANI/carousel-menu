@@ -71,7 +71,7 @@ export const PITCH = {
 
   'PATENTED': {
     'LABEL': 'Votre projet est-t-il protégé par un brevet ?',
-    'ERROR': 'Brevet est requis.'
+    'ERROR': 'Cette réponse est requise.'
   },
 
   'MEDIA': {

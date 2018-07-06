@@ -39,6 +39,7 @@ export class SharedSearchResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this._request = this._activatedRoute.snapshot.data['request'];
+    this._request.keywords = this._request.keywords || this._request.oldKeywords[0].original;
     if (this.campaign) {
       const chosenCampaign = {
         _id: this.campaign._id,
@@ -97,7 +98,7 @@ export class SharedSearchResultsComponent implements OnInit {
       newCampaignId: campaign._id,
       newInnovationId: campaign.innovation,
       requestId: this._request._id,
-      keywords: this._request.keywords[0].original
+      keywords: this._request.keywords
     };
     if (this._selection.pros != 'all') {
       const prosWithEmail = this._selection.pros.filter((p: any) => p.email);
@@ -134,7 +135,7 @@ export class SharedSearchResultsComponent implements OnInit {
     }
 
     this._searchService.export(params.requestId, params).first().subscribe((result: any) => {
-      this._downloadService.saveCsv(result.csv, this.request.keywords[0].original);
+      this._downloadService.saveCsv(result.csv, this.request.keywords);
     });
   }
   get totalSelected () { return this._selection && this._selection.total || 0};

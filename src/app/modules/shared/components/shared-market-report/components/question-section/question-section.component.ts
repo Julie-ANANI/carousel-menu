@@ -43,8 +43,6 @@ export class QuestionSectionComponent implements OnInit {
   @Input() public question: Question;
   @Input() public innovation: Innovation;
 
-  @Input() public infographic: any;
-
   constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
@@ -83,8 +81,30 @@ export class QuestionSectionComponent implements OnInit {
           this._answersToShow = this._answersToShow.filter((a) => (a.answers[id + 'Quality'] !== 0));
       }
 
-      this._answersWithComment = this._answers
-        .filter((a) => (a.answers[id + 'Comment'] && a.answers[id + 'CommentQuality'] !== 0))
+      // filter comments
+      switch (this.question.controlType) {
+        case 'checkbox':
+          this._answersWithComment = this._answers.filter(function(a) {
+            return !Object.keys(a.answers[id]).some((k) => a.answers[id][k])
+              && a.answers[id + 'Comment']
+              && a.answers[id + 'CommentQuality'] !== 0;
+          });
+          break;
+        case 'radio':
+          this._answersWithComment = this._answers.filter(function(a) {
+            return !a.answers[id]
+            && a.answers[id + 'Comment']
+            && a.answers[id + 'CommentQuality'] !== 0
+          });
+          break;
+        default:
+          this._answersWithComment = this._answers.filter(function(a) {
+            return a.answers[id + 'Comment']
+              && a.answers[id + 'CommentQuality'] !== 0
+          });
+      }
+      // sort comments
+      this._answersWithComment = this._answersWithComment
         .sort((a, b) => {
           if ((b.answers[id + 'CommentQuality'] || 1) - (a.answers[id + 'CommentQuality'] || 1) === 0) {
             return b.answers[id + 'Comment'].length - a.answers[id + 'Comment'].length;
