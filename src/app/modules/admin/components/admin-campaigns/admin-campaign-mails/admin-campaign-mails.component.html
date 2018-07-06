@@ -58,7 +58,7 @@
   <div class="card" *ngFor="let batch of stats.batches; let batchIndex = index">
     <div class="card-header">
       <div class="card-title h5">
-        {{this.getWorkflowName(batchIndex)}}
+        Batch de {{batch.size}} pros
         <a class="c-hand" role="button" (click)="(removeOK(batch)) && $event.preventDefault()">
           <i class="fas fa-trash"></i>
         </a>
@@ -80,7 +80,7 @@
       </div>
       <div class="card-subtitle text-gray">créé {{ batch.created | date: dateformat }}</div>
       <div class="card-body">
-        <app-shared-table [data]="this.tableBatch(batchIndex)"></app-shared-table>
+        <app-shared-table [data]="this.tableBatch(batchIndex)" [config]="config"></app-shared-table>
       </div>
     </div>
   </div>

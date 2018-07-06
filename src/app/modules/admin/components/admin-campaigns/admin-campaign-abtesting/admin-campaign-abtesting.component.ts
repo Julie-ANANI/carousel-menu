@@ -203,25 +203,31 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       _columns: [{
         _attrs: ['Step'],
         _name: 'Step',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['Sent'],
         _name: 'Sent',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['Opened'],
         _name: 'Opened',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['Clicked'],
         _name: 'Clicked',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['Insights'],
         _name: 'Insights',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
+        _isSortable: false,
         _choices: [
           {_name: 'Sent', _class: 'label-progress'},
           {_name: 'Planned',  _class: 'label-validate'},
@@ -259,25 +265,31 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       _columns: [{
         _attrs: ['Step'],
         _name: 'Step',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['Sent'],
         _name: 'Sent',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['Opened'],
         _name: 'Opened',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['Clicked'],
         _name: 'Clicked',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['Insights'],
         _name: 'Insights',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
+        _isSortable: false,
         _choices: [
           {_name: 'Sent', _class: 'label-progress'},
           {_name: 'Planned',  _class: 'label-validate'},

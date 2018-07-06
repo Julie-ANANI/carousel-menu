@@ -32,6 +32,11 @@ export class AdminCampaignMailsComponent implements OnInit {
 
   private _tableBatch: Array<any> = [];
 
+  public config: any = {
+    sort: {},
+    search: {}
+  };
+
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
@@ -228,6 +233,10 @@ export class AdminCampaignMailsComponent implements OnInit {
     const thirdJSdate = new Date(batch.thirdMail);
     const thirdTime = thirdJSdate.getHours() + ':' + thirdJSdate.getMinutes();
 
+    const index = this._getBatchIndex(batch._id);
+
+    const workflowname = this.getWorkflowName(index);
+
     const digit = 2;
     if (!batch.predictions || batch.predictions.length === 0) {
       const reset = {opened: 0, clicked: 0, insights: 0};
@@ -235,7 +244,7 @@ export class AdminCampaignMailsComponent implements OnInit {
     }
     const t: Table = {
       _selector: 'TODO',
-      _title: 'Batch de ' + batch.size + ' pros',
+      _title: workflowname,
       _isNotPaginable: true,
       _isHeadable: true,
       _content: [
@@ -292,33 +301,41 @@ export class AdminCampaignMailsComponent implements OnInit {
       _columns: [{
         _attrs: ['Step'],
         _name: 'Step',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['Sent'],
         _name: 'Sent',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['OpenedPred', 'OpenedReel'],
         _name: 'Opened',
-        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label-validate'}, {_attr: 'OpenedPred', _class: 'label-draft'} ]
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'OpenedReel', _class: 'label-validate'}, {_attr: 'OpenedPred', _class: 'label-draft'} ],
+        _isSortable: false
       }, {
         _attrs: ['ClickedPred', 'ClickedReel'],
         _name: 'Clicked',
-        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'ClickedReel', _class: 'label-validate'}, {_attr: 'ClickedPred', _class: 'label-draft'} ]
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'ClickedReel', _class: 'label-validate'}, {_attr: 'ClickedPred', _class: 'label-draft'} ],
+        _isSortable: false
       }, {
         _attrs: ['InsightsPred', 'InsightsReel'],
         _name: 'Insights',
-        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'InsightsReel', _class: 'label-validate'} , {_attr: 'InsightsPred', _class: 'label-draft'}]
+        _type: 'MULTI-LABEL', _multiLabels: [ {_attr: 'InsightsReel', _class: 'label-validate'} , {_attr: 'InsightsPred', _class: 'label-draft'}],
+        _isSortable: false
       }, {
         _attrs: ['Date'],
         _name: 'Date',
-        _type: 'DATE'
+        _type: 'DATE',
+        _isSortable: false
       }, {
         _attrs: ['Time'],
         _name: 'Time',
-        _type: 'TEXT'
+        _type: 'TEXT',
+        _isSortable: false
       }, {
         _attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
+        _isSortable: false,
         _choices: [
           {_name: 'Sent', _class: 'label-progress'},
           {_name: 'Planned',  _class: 'label-validate'},
