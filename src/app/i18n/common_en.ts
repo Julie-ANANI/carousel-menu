@@ -61,6 +61,7 @@ export const COMMON = {
     'A': 'By clicking "Continue" I agree to',
     'B': 'terms and conditions of use.',
   },
+  'PROFILE_URL': 'Profile URL',
 
   'REQUIRED': {
     'FIRSTNAME': 'First name is required.',
@@ -72,7 +73,8 @@ export const COMMON = {
     'JOBTITLE': 'Job title is required.',
     'MESSAGE': 'All fields are mandatory.',
     'ACCEPT': 'Please accept the terms and conditions.',
-    'COUNTRY': 'Country is required.'
+    'COUNTRY': 'Country is required.',
+    'URL': 'Profile is required.'
   },
 
   'BUTTON': {

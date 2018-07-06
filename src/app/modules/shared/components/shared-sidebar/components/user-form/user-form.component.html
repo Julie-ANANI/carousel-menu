@@ -126,6 +126,20 @@
         </div>
       </div>
 
+      <!-- Url -->
+      <div *ngIf="isProfessional" class="form-group">
+        <label class="form-label" for="url">{{ 'COMMON.PROFILE_URL' | translate }}</label>
+        <input
+          class="form-default"
+          formControlName="url"
+          id="url"
+          type="text"
+          placeholder="http://www.linkedin.com/in/johnsmith">
+        <div class="form-error" *ngIf="userForm.get('url').touched && userForm.get('url').invalid">
+          <span *ngIf="userForm.get('url').hasError('required')">{{ 'COMMON.REQUIRED.URL' | translate }}</span>
+        </div>
+      </div>
+
       <!-- Terms -->
       <div *ngIf="isSignUp" class="terms-wrapper text-center">
         {{ 'COMMON.TERMS.A' | translate }} {{companyName}}{{'\'s'}}

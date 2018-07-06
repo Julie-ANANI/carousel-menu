@@ -18,15 +18,17 @@ export class UserFormComponent implements OnInit, OnChanges {
     } else if (type === 'editUser') {
       this.loadEditUser();
     } else {
-
+      this.loadProfessional();
     }
   }
 
   @Output() userSignUpData = new EventEmitter<FormGroup>();
   @Output() editUserData = new EventEmitter<FormGroup>();
+  @Output() professionalUserData = new EventEmitter<FormGroup>();
 
-  isSignUp: boolean;
-  isEditUser: boolean;
+  isSignUp = false;
+  isEditUser = false;
+  isProfessional = false;
   userForm: FormGroup;
   countriesSuggestion: Array<string> = [];
   displayCountrySuggestion = false;
@@ -43,18 +45,21 @@ export class UserFormComponent implements OnInit, OnChanges {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       country: ['', [Validators.required]],
-      operator: ['']
+      operator: [false],
+      url: ['', [Validators.required]],
     });
   }
 
   loadSignUp() {
     this.isSignUp = true;
-    this.isEditUser = false;
   }
 
   loadEditUser() {
     this.isEditUser = true;
-    this.isSignUp = false;
+  }
+
+  loadProfessional() {
+    this.isProfessional = true;
   }
 
   onSubmit() {
@@ -62,6 +67,8 @@ export class UserFormComponent implements OnInit, OnChanges {
       this.userSignUpData.emit(this.userForm);
     } else if (this.isEditUser) {
       this.editUserData.emit(this.userForm);
+    } else {
+      this.professionalUserData.emit(this.userForm);
     }
   }
 
