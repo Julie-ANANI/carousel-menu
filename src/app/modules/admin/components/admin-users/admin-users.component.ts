@@ -5,6 +5,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
 import { Table } from '../../../shared/components/shared-table/models/table';
 import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -34,7 +35,8 @@ export class AdminUsersComponent implements OnInit {
 
   constructor(private _titleService: TranslateTitleService,
               private _userService: UserService,
-              private _authService: AuthService) {}
+              private _authService: AuthService,
+              private _notificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
     this._titleService.setTitle('USERS.TITLE');
@@ -96,9 +98,18 @@ export class AdminUsersComponent implements OnInit {
     this.more.animate_state = value;
   }
 
-  userEditionFinish() {
-    this._more = {animate_state: 'inactive', title: this._more.title};
-    this.loadUsers(this._config);
+  userEditionFinish(user: User) {
+    this._userService.updateOther(user)
+      .first()
+      .subscribe(
+        data => {
+          this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
+          this._more = {animate_state: 'inactive', title: this._more.title};
+          this.loadUsers(this._config);
+        },
+        error => {
+          this._notificationsService.error('ERROR.ERROR', error.message);
+        });
   }
 
   get selfId(): string {

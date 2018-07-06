@@ -30,7 +30,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   }
 
   @Output() userSignUpData = new EventEmitter<FormGroup>();
-  @Output() editUserData = new EventEmitter<FormGroup>();
+  @Output() editUserData = new EventEmitter<User>();
   @Output() professionalUserData = new EventEmitter<FormGroup>();
 
   isSignUp = false;
@@ -77,7 +77,9 @@ export class UserFormComponent implements OnInit, OnChanges {
     if (this.isSignUp) {
       this.userSignUpData.emit(this.userForm);
     } else if (this.isEditUser) {
-      this.editUserData.emit(this.userForm);
+      const user = new User(this.userForm.value);
+      user.id = this._user.id;
+      this.editUserData.emit(user);
     } else if (this.isProfessional) {
       this.professionalUserData.emit(this.userForm);
     }
