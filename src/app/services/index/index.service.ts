@@ -17,4 +17,12 @@ export class IndexService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  public getAllCountries(): Observable<any> {
+    return this._http.post('/index/getWholeSet', {query: {type: 'countries'}})
+      .map((res: Response) => {
+        const response = res.json();
+        return response;
+      })
+      .catch((error: Response) => Observable.throw(error.json()));
+  }
 }
