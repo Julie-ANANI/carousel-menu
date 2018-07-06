@@ -42,7 +42,15 @@
             </div>
 
             <!-- Sign up sidebar -->
-            <app-user-form-sidebar></app-user-form-sidebar>
+            <app-sidebar
+              [template]="sidebarTemplateValue"
+              (closeSidebar)="closeSidebar($event)">
+              <app-user-form
+                [type]="sidebarTemplateValue.type"
+                (userSignUpData)="onSubmit($event)"
+                [sidebarState]="sidebarTemplateValue.animate_state">
+              </app-user-form>
+            </app-sidebar>
 
           </div>
 
