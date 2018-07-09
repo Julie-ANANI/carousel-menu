@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 // import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import 'rxjs/add/operator/filter';
- import { FormGroup, Validators, FormBuilder  } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder  } from '@angular/forms';
+
 
 @Component({
   selector: 'app-sidebar-batch',
@@ -18,6 +19,9 @@ export class SidebarBatchComponent implements OnInit {
 
   @Input() set content(content: {}) {
     this._content = content;
+    if (content) {
+      this._text = true;
+    }
   }
 
   @Output() batchChange = new EventEmitter <any>();
@@ -25,6 +29,7 @@ export class SidebarBatchComponent implements OnInit {
   private _content = {};
   private _dateMail: Date;
   private _timeMail = '';
+  private _text = false;
 
   // TODO : profile picture, location
 
@@ -45,6 +50,7 @@ export class SidebarBatchComponent implements OnInit {
       this._dateMail = this.formData.value.dateMail;
       this._timeMail = this.formData.value.timeMail;
       this.batchChange.emit({date: this._dateMail, time: this._timeMail});
+      this._text = false;
     }
   }
 
@@ -58,6 +64,13 @@ export class SidebarBatchComponent implements OnInit {
     }
   }
 
+
+  public thereIsContent(): boolean {
+    if (this._content) {
+      return true;
+    }
+    return false;
+  }
 
   get dateMail() {
       return this._dateMail;
