@@ -41,6 +41,7 @@ export const COMMON = {
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
   'BLACKLIST': 'Blacklisted e-mails',
+  'EDIT-BLACKLIST': 'Edit blacklisted e-mail',
 
   'NAME': 'Name',
   'FIRSTNAME': 'First name',

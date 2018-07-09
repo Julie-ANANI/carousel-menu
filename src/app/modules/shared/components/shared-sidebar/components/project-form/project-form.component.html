@@ -1,0 +1,27 @@
+<div class="project-form-wrapper">
+  <div class="column col-11 col-mx-auto">
+    <form novalidate [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <!-- Save only -->
+      <div class="text-right submit-wrapper" *ngIf="isBlacklist">
+        <button type="submit" class="btn btn-primary">
+          {{'COMMON.SAVE' | translate}}
+        </button>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group" *ngIf="isBlacklist">
+        <label class="form-label" for="email">{{ 'COMMON.EMAIL' | translate }}</label>
+        <input
+          class="form-default"
+          formControlName="email"
+          id="email"
+          type="email"
+          placeholder="john@catco.com">
+        <div class="form-error" *ngIf="projectForm.get('email').touched && projectForm.get('email').invalid">
+          <span *ngIf="projectForm.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+          <span *ngIf="projectForm.get('email').hasError('email') && userForm.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

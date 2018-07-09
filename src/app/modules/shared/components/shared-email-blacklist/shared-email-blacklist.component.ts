@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { EmailService } from './../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import {Table} from '../shared-table/models/table';
+import {Template} from '../shared-sidebar/interfaces/template';
 
 
 @Component({
@@ -30,6 +31,9 @@ export class SharedEmailBlacklistComponent implements OnInit {
   public editDatum: {[propString: string]: boolean} = {};
 
   private _tableInfos: Table = null;
+
+  private _more: Template = {};
+  private _currentEmailToBlacklist: any = {};
 
   constructor( private _emailService: EmailService,
                private _translateService: TranslateService,
@@ -87,18 +91,48 @@ export class SharedEmailBlacklistComponent implements OnInit {
 
   public resetSearch() {
     this._config.search = {};
-    this.searchConfiguration = "";
+    this.searchConfiguration = '';
     this.loadData(null);
   }
 
+  editBlacklist(email: any) {
+    this._emailService.getOneBlacklist(email._id).subscribe(value => {
+      this._more = {
+        animate_state: 'active',
+        title: 'COMMON.EDIT-BLACKLIST',
+        type: 'editBlacklist'
+      };
+      this._currentEmailToBlacklist = value;
+      console.log(this._currentEmailToBlacklist);
+    });
+  }
+
+  closeSidebar(value: string) {
+    this.more.animate_state = value;
+  }
+
+  /*userEditionFinish(user: User) {
+    this._userService.updateOther(user)
+      .first()
+      .subscribe(
+        data => {
+          this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+          this._more = {animate_state: 'inactive', title: this._more.title};
+          this.loadUsers(this._config);
+        },
+        error => {
+          this._notificationsService.error('ERROR.ERROR', error.message);
+        });
+  }*/
+
   public addEntry() {
     this._emailService.addToBlacklist({email:this.addressToBL})
-        .subscribe(result=>{
-          this.addressToBL = "";
+        .subscribe(result => {
+          this.addressToBL = '';
           this.resetSearch();
-          this._notificationsService.success("Blacklist", `The address ${this.addressToBL} has been added successfully to the blacklist`);
-        }, error=>{
-          this._notificationsService.error("Error", error);
+          this._notificationsService.success('Blacklist', `The address ${this.addressToBL} has been added successfully to the blacklist`);
+        }, error => {
+          this._notificationsService.error('Error', error);
         });
   }
 
@@ -106,17 +140,17 @@ export class SharedEmailBlacklistComponent implements OnInit {
     event.preventDefault();
     this.editDatum[datum._id] = false;
     this._emailService.updateBlacklistEntry(datum._id, datum)
-        .subscribe(result=>{
+        .subscribe(result => {
           this.resetSearch();
-          this._notificationsService.success("Blacklist", `The address ${this.addressToBL} has been updated`);
-        }, error=>{
-          this._notificationsService.error("Error", error);
+          this._notificationsService.success('Blacklist', `The address ${this.addressToBL} has been updated`);
+        }, error => {
+          this._notificationsService.error('Error', error);
         });
   }
 
   public canAdd(): boolean {
     const EMAIL_REGEXP = /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
-    return this.addressToBL !== "" && !!this.addressToBL.match(EMAIL_REGEXP);
+    return this.addressToBL !== '' && !!this.addressToBL.match(EMAIL_REGEXP);
   }
 
   public reasonFormat(datum: any): string {
@@ -146,7 +180,8 @@ export class SharedEmailBlacklistComponent implements OnInit {
   get total(): number { return this._dataset._metadata.totalCount; };
   get searchConfiguration(): string { return this._searchConfiguration; };
   get addressToBL(): string { return this._addressToBL; };
-
+  get more(): Template { return this._more; }
+  get currentEmailToBlacklist(): any { return this._currentEmailToBlacklist; }
   set searchConfiguration(value: string) { this._searchConfiguration = value; };
   set addressToBL(address: string ) { this._addressToBL = address; };
 }

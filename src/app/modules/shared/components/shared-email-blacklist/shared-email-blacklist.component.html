@@ -1,1 +1,10 @@
-<app-shared-table [data]="tableInfos" [config]="config" (configChange)="loadData($event)"></app-shared-table>
+<app-shared-table [data]="tableInfos" [config]="config" (configChange)="loadData($event)" (editRow)="editBlacklist($event)"></app-shared-table>
+
+<app-sidebar
+  [template]="more" (closeSidebar)="closeSidebar($event)">
+  <app-project-form
+    [sidebarState]="more.animate_state"
+    [type]="more.type"
+    [emailToBlacklist]="currentEmailToBlacklist">
+  </app-project-form>
+</app-sidebar>
