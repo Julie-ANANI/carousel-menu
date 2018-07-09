@@ -12,6 +12,8 @@ import { FormGroup, Validators, FormBuilder  } from '@angular/forms';
 export class SidebarBatchComponent implements OnInit {
 
   public formData: FormGroup;
+  private _row: any;
+  private _formHidden = false;
 
   @Input() set rowBatch(value: any) {
     this.load(value);
@@ -52,16 +54,28 @@ export class SidebarBatchComponent implements OnInit {
   }
 
   load(row: any) {
+    this._row = row;
     if (row.Date) {
       this._dateMail = new Date(row.Date);
-      this._timeMail = row.time;
+      this._timeMail = row.Time;
       this.formData.patchValue({dateMail: this._dateMail, timeMail: this._timeMail});
+    }
+    this.thanks();
+  }
+
+  public thanks() {
+    if (this._row.Step === '04 - Thanks') {
+      this._formHidden = true;
+    } else {
+      this._formHidden = false;
     }
   }
 
-  get dateMail() {
-      return this._dateMail;
-  }
-  get timeMail() { return this._timeMail; }
+
+  get getdateMail() { return this._dateMail; }
+  get formHidden() { return this._formHidden; }
+  get gettimeMail() {return this._timeMail; }
   get content() { return this._content; }
+  get row() { return this._row;}
+
 }
