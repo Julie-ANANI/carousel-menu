@@ -31,8 +31,6 @@ export class SidebarBatchComponent implements OnInit {
   private _timeMail = '';
   private _text = false;
 
-  // TODO : profile picture, location
-
   constructor(// private _notificationsService: TranslateNotificationsService,
               private _formBuilder: FormBuilder
               ) {}
@@ -46,7 +44,6 @@ export class SidebarBatchComponent implements OnInit {
 
   public onSubmit() {
     if (this.formData.valid) {
-      console.log(this.formData);
       this._dateMail = this.formData.value.dateMail;
       this._timeMail = this.formData.value.timeMail;
       this.batchChange.emit({date: this._dateMail, time: this._timeMail});
@@ -55,21 +52,11 @@ export class SidebarBatchComponent implements OnInit {
   }
 
   load(row: any) {
-    console.log(row);
     if (row.Date) {
-      //this._dateMail = row.Date;
       this._dateMail = new Date(row.Date);
-    } else {
-      console.log('nana');
+      this._timeMail = row.time;
+      this.formData.patchValue({dateMail: this._dateMail, timeMail: this._timeMail});
     }
-  }
-
-
-  public thereIsContent(): boolean {
-    if (this._content) {
-      return true;
-    }
-    return false;
   }
 
   get dateMail() {

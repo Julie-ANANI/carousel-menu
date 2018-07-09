@@ -162,10 +162,8 @@
     </div>
   </div>
 </div>
-
-
   <app-sidebar
-    [template]="templateSidebar">
+    [template]="templateSidebar" (closeSidebar)="closeSidebar($event)">
     <app-sidebar-batch
       [rowBatch]="currentRow"
       [content]="content"
@@ -173,5 +171,4 @@
     >
     </app-sidebar-batch>
   </app-sidebar>
-
 

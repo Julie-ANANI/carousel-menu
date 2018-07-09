@@ -46,4 +46,4 @@ import { CountryFlagModule } from '../../../../directives/country-flag/country-f
   ]
 })
 
-export class SidebarModule { }
+export class SidebarModule {}

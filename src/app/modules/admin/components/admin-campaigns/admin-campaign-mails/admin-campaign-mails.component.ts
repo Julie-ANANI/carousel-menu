@@ -42,7 +42,6 @@ export class AdminCampaignMailsComponent implements OnInit {
   public currentBatch: Batch;
   public content = {};
   public currentRow = {};
-  public siderbarBool = false;
   public currentStep: number;
 
 
@@ -362,7 +361,6 @@ export class AdminCampaignMailsComponent implements OnInit {
 
   closeSidebar(value: string) {
     this.templateSidebar.animate_state = value;
-    this.siderbarBool = false;
   }
 
   editBatch(row: any, batch: Batch) {
@@ -393,7 +391,6 @@ export class AdminCampaignMailsComponent implements OnInit {
       title: 'COMMON.EDIT',
       type: 'editBatch'
     };
-    this.siderbarBool = true;
   }
 
   public getContentWorkflowStep(batchID: any, step: any): any {
@@ -426,7 +423,9 @@ export class AdminCampaignMailsComponent implements OnInit {
     }
     this._campaignService.updateBatch(this.currentBatch).first().subscribe( batch => {
       this.stats.batches[this._getBatchIndex(batch)] = batch;
-      this.siderbarBool = false;
+      console.log("output");
+      //this.closeSidebar('inactive');
+      this.templateSidebar = { animate_state: 'inactive', title: 'COMMON.EDIT', type: 'editBatch'}
     });
   }
 
