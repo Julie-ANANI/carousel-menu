@@ -62,9 +62,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.changesSaved = true;
 
-    const a = {something: 4};
-    a.something = 8;
-
     if (this.location.path().slice(0, 6) !== '/admin') {
       this.showPitchFieldError.subscribe(value => {
         if (value) {
@@ -147,6 +144,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
           }).first().subscribe((data: InnovCard) => {
             this.project.innovationCards.push(data);
             this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
+            this.notifyModelChanges(event);
           });
         }
       } else {
@@ -179,15 +177,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   imageUploaded(media: Media, cardIdx: number): void {
     this.project.innovationCards[cardIdx].media.push(media);
-
-    if (!this.project.innovationCards[this.innovationCardEditingIndex].principalMedia) {
-      this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
-        this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id).first()
-        .subscribe((res) => {
-        this.project.innovationCards[cardIdx].principalMedia = media;
-      });
-    }
-
+    this.checkPrincipalMedia(media, cardIdx);
   }
 
   newOnlineVideoToAdd (videoInfos: Video): void {
@@ -195,7 +185,21 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
       .first().subscribe(res => {
         this.project.innovationCards[this.innovationCardEditingIndex].media.push(res);
+        this.checkPrincipalMedia(res, this.innovationCardEditingIndex);
       });
+
+  }
+
+  checkPrincipalMedia(media: Media, cardIdx: number) {
+    if (this.project.innovationCards[this.innovationCardEditingIndex].media.length > 0) {
+      if (!this.project.innovationCards[this.innovationCardEditingIndex].principalMedia) {
+        this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
+          this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id).first()
+          .subscribe((res) => {
+            this.project.innovationCards[cardIdx].principalMedia = media;
+          });
+      }
+    }
   }
 
   setMediaAsPrimary (event: Event, media: Media, index: number): void {
@@ -220,6 +224,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
           this.project.innovationCards[index].principalMedia = null;
         }
         this.projectChange.emit(this.project);
+        this.checkPrincipalMedia(this.project.innovationCards[this.innovationCardEditingIndex].media[0],
+        this.innovationCardEditingIndex);
       });
 
   }
@@ -242,8 +248,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
       this.project.innovationCards = this.project.innovationCards.filter((card) => card._id !== this._deleteInnovCardId);
       this.innovationCardEditingIndex -= 1;
-      this.resetErrorValue();
       this._showDeleteModal = false;
+      this.notifyModelChanges(event);
+      this.resetErrorValue();
     }, err => {
       this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       this._showDeleteModal = false;

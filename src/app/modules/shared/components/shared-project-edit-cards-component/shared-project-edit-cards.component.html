@@ -343,10 +343,17 @@
             <!-- Help -->
             <div *ngIf="!isAdmin" class="column col-6 col-mx-auto hide-md help-wrapper">
               <div class="bot-wrapper text-center">
-                <span class="bot-rect">We are working very hard. Something cool is coming soon...</span>
+                <span class="bot-rect">Please finish setup of your project and submit it.</span>
                 <br>
-                <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-                <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+                <img
+                  src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg"
+                  class="bot-trian">
+                <div>
+                  <img
+                    src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg"
+                    alt="Bot"
+                    class="bot-image">
+                </div>
               </div>
             </div>
 
@@ -356,8 +363,13 @@
           <!-- Project medias -->
           <div *ngFor="let innovationItem of project.innovationCards; let i = index">
             <div *ngIf="innovationCardEditingIndex === i">
+
               <div class="project-data">
-                <span class="num-rect">9</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.LABEL' | translate }}</span>
+                <span class="num-rect">9</span>
+                <span class="ques">
+                  {{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.LABEL' | translate }}
+                </span>
+
                 <div class="pd-input">
 
                   <!-- Media display -->
@@ -373,13 +385,18 @@
                           <img
                             [src]="innovationItem.principalMedia.url"
                             [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
-                            width="220" height="146">
+                            height="146" width="220px">
                         </div>
                         <div *ngIf="innovationItem.principalMedia?.type === 'VIDEO'">
                           <iframe
                             [src]="domSanitizer.bypassSecurityTrustResourceUrl(innovationItem.principalMedia.video.embeddableUrl)"
-                            width="220" height="146">
+                            height="148" width="220px">
                           </iframe>
+                        </div>
+                        <div *ngIf="projectStatus && innovationItem.principalMedia" [ngStyle]="{ 'padding-left': '90px' }">
+                          <a class="text-link delete-link" (click)="deleteMedia($event, innovationItem.principalMedia, i)">
+                            {{ 'COMMON.DELETE' | translate }}
+                          </a>
                         </div>
                       </div>
 
@@ -388,26 +405,27 @@
                         <p class="ques" [ngStyle]=" { 'font-size': '0.8rem' , 'padding-bottom': '10px' }">
                           {{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.SECONDARY' | translate }}
                         </p>
-                        <div *ngFor="let media of innovationItem.media" class="media-content text-center">
-                          <img
-                            *ngIf="media.type === 'PHOTO'"
-                            [src]="'https://res.cloudinary.com/umi/image/upload/h_146,w_220/' + media.cloudinary.public_id"
-                            [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
-                          <iframe
-                            *ngIf="media.type === 'VIDEO'"
-                            [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
-                            width="220" height="146">
-                          </iframe>
-                          <div *ngIf="projectStatus" class="media-action text-center">
-                            <span *ngIf="media._id !== innovationItem.principalMedia?._id" [ngStyle]="{ 'color': '#97A4B1' }">
-                              <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">
-                                {{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.MAKE_MAIN' | translate }}
-                              </a>
-                              /
-                            </span>
-                            <a class="text-link delete-link" (click)="deleteMedia($event, media, i)">{{ 'COMMON.DELETE' | translate }}</a>
+                        <span *ngFor="let media of innovationItem.media" class="media-content text-center">
+                          <div *ngIf="innovationItem.principalMedia?._id !== media._id" class="media">
+                            <img
+                              *ngIf="media.type === 'PHOTO'"
+                              [src]="'https://res.cloudinary.com/umi/image/upload/' + media.cloudinary.public_id"
+                              [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+                              height="146" width="220px">
+                            <iframe
+                              *ngIf="media.type === 'VIDEO'"
+                              [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+                              width="220" height="148">
+                            </iframe>
+                            <div
+                              *ngIf="projectStatus && media._id !== innovationItem.principalMedia?._id"
+                              class="media-action text-center">
+                                <a class="text-link" (click)="setMediaAsPrimary($event, media, i)">
+                                  {{ 'PROJECT_MODULE.SETUP.PITCH.MEDIA.MAKE_MAIN' | translate }}
+                                </a>
+                            </div>
                           </div>
-                        </div>
+                        </span>
                       </div>
 
                     </div>

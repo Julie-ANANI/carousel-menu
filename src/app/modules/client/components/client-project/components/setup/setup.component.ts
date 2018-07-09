@@ -100,16 +100,20 @@ export class SetupProjectComponent implements OnInit {
   submitButton(event: Event): void {
     event.preventDefault();
 
-    if (this.pitchFormValid) {
-      if (this.targetingFormValid) {
-        this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
-      } else {
-        this.showTargetingFieldError.next(true);
-        this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.TARGETING_FORM');
-      }
+    if (this._saveChanges) {
+      this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     } else {
-      this.showPitchFieldError.next(true);
-      this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.PITCH_FORM');
+      if (this.pitchFormValid) {
+        if (this.targetingFormValid) {
+          this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
+        } else {
+          this.showTargetingFieldError.next(true);
+          this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.TARGETING_FORM');
+        }
+      } else {
+        this.showPitchFieldError.next(true);
+        this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.PITCH_FORM');
+      }
     }
 
   }
@@ -148,6 +152,7 @@ export class SetupProjectComponent implements OnInit {
   */
   saveInnovation(value: boolean) {
     if (this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED') {
+      this.checkProjectStatus();
       this._saveChanges = value;
       this._changesSaved = false;
       this._saveButtonClass = 'save-project';
