@@ -14,17 +14,11 @@ export class PitchComponent implements OnInit {
   @Input() changesSaved: boolean;
   @Input() showPitchFieldError: Subject<boolean>;
 
-  @Output() updateInnovation = new EventEmitter<Innovation>();
   @Output() saveChanges = new EventEmitter<boolean>();
 
   showFieldError: Subject<boolean> = new Subject();
 
   constructor() {}
-
-  public updateProject(value: Innovation): void {
-    const innovation = Object.assign(this.project, value);
-    this.updateInnovation.emit(innovation);
-  }
 
   public saveInnovation(value: boolean) {
     this.saveChanges.emit(value);

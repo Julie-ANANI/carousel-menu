@@ -20,6 +20,7 @@
         type="text"
         class="form-default input-lg"
         name="keywords"
+        (ngModelChange)="estimateNumberOfGoogleRequests()"
         [(ngModel)]="params.keywords"
         required
         placeholder="Recherche 'Google-like', une requête par ligne"></textarea>
@@ -30,5 +31,11 @@
         <i class="fas fa-search"></i>
       </button>
     </div>
+    <h6> <span [ngClass]="{
+  'text-success': googleQuota > 10000,
+  'text-warning': googleQuota < 10000 && googleQuota > 5000,
+  'text-error': googleQuota < 5000}">
+      {{ googleQuota }} requêtes google restantes  <i (click)="getGoogleQuota()" class="c-hand fa fa-refresh"></i></span>
+      - Cette recherche utilisera au maximum {{estimatedNumberOfGoogleRequests}} requêtes</h6>
   </div>
 </div>

@@ -62,6 +62,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.changesSaved = true;
 
+    const a = {something: 4};
+    a.something = 8;
+
     if (this.location.path().slice(0, 6) !== '/admin') {
       this.showPitchFieldError.subscribe(value => {
         if (value) {
@@ -75,6 +78,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   notifyModelChanges(_event: any) {
     this.changesSaved = false;
     this.saveChanges.emit(true);
+    this.projectChange.emit(this.project);
   }
 
   showError() {
@@ -143,7 +147,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
           }).first().subscribe((data: InnovCard) => {
             this.project.innovationCards.push(data);
             this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
-            this.projectChange.emit(this.project);
           });
         }
       } else {
@@ -182,7 +185,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id).first()
         .subscribe((res) => {
         this.project.innovationCards[cardIdx].principalMedia = media;
-        this.projectChange.emit(this.project);
       });
     }
 
@@ -193,7 +195,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
       .first().subscribe(res => {
         this.project.innovationCards[this.innovationCardEditingIndex].media.push(res);
-        this.projectChange.emit(this.project);
       });
   }
 
@@ -204,7 +205,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this.project.innovationCards[index]._id, media._id)
       .first().subscribe((res: Innovation) => {
         this.project.innovationCards[index].principalMedia = media;
-        this.projectChange.emit(this.project);
       });
 
   }

@@ -87,7 +87,7 @@ export class AdminUsersComponent implements OnInit {
     this._userService.get(us.id).subscribe(value => {
       this._more = {
         animate_state: 'active',
-        title: 'COMMON.EDIT',
+        title: 'COMMON.EDIT_USER',
         type: 'editUser'
       };
       this.currentUser = value;
