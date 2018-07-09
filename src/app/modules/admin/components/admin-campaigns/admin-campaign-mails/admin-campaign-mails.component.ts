@@ -250,7 +250,7 @@ export class AdminCampaignMailsComponent implements OnInit {
       batch.predictions = [reset, reset, reset];
     }
     const t: Table = {
-      _selector: 'TODO',
+      _selector: batch._id,
       _title: workflowname,
       _isNotPaginable: true,
       _isHeadable: true,
@@ -421,11 +421,19 @@ export class AdminCampaignMailsComponent implements OnInit {
         this.currentBatch.thirdMail = this._computeDate(result.date, result.time);
         break;
     }
-    this._campaignService.updateBatch(this.currentBatch).first().subscribe( batch => {
+    this._campaignService.updateBatch(this.currentBatch).first().subscribe( (batch => {
       this.stats.batches[this._getBatchIndex(batch)] = batch;
-      console.log("output");
-      //this.closeSidebar('inactive');
-      this.templateSidebar = { animate_state: 'inactive', title: 'COMMON.EDIT', type: 'editBatch'}
+      this.templateSidebar = { animate_state: 'inactive', title: 'COMMON.EDIT', type: 'editBatch'};
+      this._tableBatch.forEach((table, index) => {
+        if (table._selector === batch._id) {
+          this._tableBatch[index] = this.generateTableBatch(batch);
+          // TODO : arreter l'itération
+          this._notificationsService.success('ERROR.SUCCESS', '');
+        }
+      });
+    }), error => {
+      this._notificationsService.success('ERROR.ERROR', '');
+      console.log(error);
     });
   }
 
