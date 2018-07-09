@@ -6,6 +6,7 @@ import { CampaignService } from '../../../../../services/campaign/campaign.servi
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import {Batch} from '../../../../../models/batch';
 import {Table} from '../../../../shared/components/shared-table/models/table';
+import {Template} from '../../../../shared/components/shared-sidebar/interfaces/template';
 
 @Component({
   selector: 'app-admin-campaign-mails',
@@ -17,14 +18,14 @@ export class AdminCampaignMailsComponent implements OnInit {
   private _campaign: Campaign;
   private _quizLinks: Array<string> = [];
   private _stats: any = {};
-  public mailsToSend: number = 0;
-  public firstMail: number = 0;
-  public secondMail: number = 0;
-  public lastMail: number = 0;
-  public testModal: boolean = false;
-  public batchModal: boolean = false;
+  public mailsToSend = 0;
+  public firstMail = 0;
+  public secondMail = 0;
+  public lastMail = 0;
+  public testModal= false;
+  public batchModal = false;
   public newBatch: Batch;
-  public dateformat: string = "le dd/MM/yyyy à HH:mm";
+  public dateformat = 'le dd/MM/yyyy à HH:mm';
   public selectedBatchToBeDeleted: any = null;
   public editDates: Array<any>;
   public dateMail: string;
@@ -37,6 +38,10 @@ export class AdminCampaignMailsComponent implements OnInit {
     search: {}
   };
 
+  public templateSidebar: Template = {};
+  public currentBatch = {};
+  public content = {};
+  public currentRow = {};
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
@@ -345,11 +350,66 @@ export class AdminCampaignMailsComponent implements OnInit {
     return t;
   }
 
+
   get innoReady() {
     return (
       this._campaign.innovation.status === 'EVALUATING'
     );
   }
+
+  closeSidebar(value: string) {
+    this.templateSidebar.animate_state = value;
+  }
+
+  editBatch(row: any, batch: Batch) {
+    let step;
+    switch (row.Step) {
+      case ('01 - HelloWorld') :
+        step = 'FIRST';
+        break;
+      case ('02 - 2nd try')  :
+        step = 'SECOND';
+        break;
+      case ('03 - 3rd try') :
+        step = 'THIRD';
+        break;
+      case ('04 - Thanks') :
+        step = 'THANKS';
+        break;
+    }
+    this.content = this.getContentWorkflowStep(batch._id, step);
+    this.currentRow = row;
+    this.currentBatch = batch;
+    this.templateSidebar = {
+      animate_state: 'active',
+      title: 'COMMON.EDIT',
+      type: 'editBatch'
+    };
+  }
+
+  public getContentWorkflowStep(batchID: any, step: any): any {
+    const index = this._getBatchIndex(batchID);
+    const workflowname = this.getWorkflowName(index);
+    const content = {en: '', fr: ''}
+    this.campaign.settings.emails.forEach( mail => {
+      if (mail.step === step && workflowname === mail.nameWorkflow) {
+       if (mail.language == 'en') {
+         content.en = mail.content;
+       } else {
+         content.fr = mail.content;
+       }
+      }
+    });
+    return content;
+  }
+
+  onSubmitEditBatch(batch: Batch) {
+    this._campaignService.updateBatch(batch).first().subscribe( batch => {
+      //virer la sideBar
+      //Afficher le bon batch dans les batch de stats :)
+    });
+  }
+
 
   get statusAB() { return this._campaign.settings.ABsettings.status }
   get defaultWorkflow() { return  this._campaign.settings.defaultWorkflow }

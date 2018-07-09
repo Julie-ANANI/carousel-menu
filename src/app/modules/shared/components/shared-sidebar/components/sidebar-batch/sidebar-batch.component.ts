@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 // import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import 'rxjs/add/operator/filter';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+ import { FormGroup, Validators, FormBuilder  } from '@angular/forms';
+import {Batch} from '../../../../../../models/batch';
 
 @Component({
   selector: 'app-sidebar-batch',
@@ -12,38 +13,47 @@ export class SidebarBatchComponent implements OnInit {
 
   public formData: FormGroup;
 
-  @Input() set batchId(value: string) {
+  @Input() set rowBatch(value: any) {
     this.loadBatch(value);
+  }
+
+  @Input() set content(content: {}) {
+    this._content = content;
   }
 
   @Output() batchChange = new EventEmitter <any>();
 
   private _batchId = '';
+  private _content = {};
+  private _firstMail = new Date();
+  private _secondMail = new Date();
+  private _thirdMail = new Date();
 
   // TODO : profile picture, location
 
   constructor(// private _notificationsService: TranslateNotificationsService,
-              private _formBuilder: FormBuilder) {}
+              private _formBuilder: FormBuilder
+              ) {}
 
   ngOnInit(): void {
 
-    this._batchId = '';
 
     this.formData = this._formBuilder.group({
-      isOperator: false,
-      firstName: '',
-      lastName: '',
-      email: ['', [Validators.email]],
-      companyName: '',
-      jobTitle: '',
-      language: ''
+      firstMail: ['', [Validators.required]],
+      secondMail: ['', [Validators.required]],
+      thirdMail: ['', [Validators.required]],
+      firstTime: ['', [Validators.required]],
+      secondTime: ['', [Validators.required]],
+      thirdTime: ['', [Validators.required]]
     });
   }
 
   public onSubmit() {
-    /*if (this.formData.valid) {
-      const user = new User(this.formData.value);
-      user.id = this._userId;
+    console.log(this.formData);
+    if (this.formData.valid) {
+
+    }
+      /*
       this._userService.updateOther(user)
         .first()
         .subscribe(
@@ -58,14 +68,24 @@ export class SidebarBatchComponent implements OnInit {
     }
     else {
       this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
-    }*/
+    }
+    */
   }
 
-  loadBatch(id: string) {
-    this._batchId = id;
-    // this._userService.get(this._userId).subscribe(user => {
-    //  this.formData.patchValue(user);
-    // });
+  loadBatch(b: Batch) {
+    console.log(b);
+    this._batchId = b._id;
+    this._firstMail = b.firstMail;
+    this._secondMail = b.secondMail;
+    this._thirdMail = b.thirdMail;
   }
 
+
+  get firstMail(): any { return this._firstMail; }
+  get secondMail(): any { return this._secondMail; }
+  get thirdMail(): any { return this._thirdMail; }
+
+  set firstMail(d: any) { this._firstMail = d; }
+  set secondMail(d: any) { this._secondMail = d; }
+  set thirdMail(d: any ) { this._thirdMail = d; }
 }

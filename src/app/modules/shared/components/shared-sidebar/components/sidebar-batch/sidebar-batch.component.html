@@ -1,19 +1,25 @@
+
 <form novalidate [formGroup]="formData">
+
   <div class="form-group">
     <button (click)="onSubmit()" class="btn btn-primary">
       {{'COMMON.SAVE' | translate}}
     </button>
   </div>
   <div class="form-group">
-    <label class="form-label" for="firstName">{{ "COMMON.FIRSTNAME" | translate }}</label>
-    <input class="form-default" id="firstName" name="firstName" formControlName="firstName" type="text"
-           placeholder="John">
+    <label class="form-label"> 1st Mail </label>
+    <input class="form-default" id="firstMail" name="firstMail" formControlName="firstMail" type="date"
+           placeholder="{{this.firstMail}}">
   </div>
   <div class="form-group">
-    <label class="form-label" for="lastName">{{ "COMMON.LASTNAME" | translate }}</label>
-    <input class="form-default" id="lastName" name="lastName" formControlName="lastName" type="text"
-           placeholder="Doe">
+    <label class="form-label"> 2nd Mail </label>
+    <input class="form-default" id="secondMail" name="firstMail" formControlName="firstMail" type="date"
+           placeholder="{{this.secondMail}}">
   </div>
-
+  <div class="form-group">
+    <label class="form-label"> Third Mail</label>
+    <input class="form-default" id="thirdMail" name="firstMail" formControlName="firstMail" type="date"
+           placeholder="{{this.thirdMail}}">
+  </div>
 </form>
 

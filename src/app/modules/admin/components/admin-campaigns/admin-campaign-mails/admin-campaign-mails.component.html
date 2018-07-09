@@ -62,25 +62,18 @@
         <a class="c-hand" role="button" (click)="(removeOK(batch)) && $event.preventDefault()">
           <i class="fas fa-trash"></i>
         </a>
-
         <label class="form-switch" style="float:right">
           <input type="checkbox" (change)="freezeStatus(batch)" [ngModel]="batch.active" >
           <i class="form-icon"></i>
         </label>
-
-        <a *ngIf="!batch.editing" class="c-hand" role="button" (click)="startEditing(batch) && $event.preventDefault()">
-          <i class="fa fa-edit"></i>
-        </a>
-        <a *ngIf="batch.editing" class="c-hand" role="button" (click)="updateBatch(batch)">
-          <i class="far fa-save"></i>
-        </a>
-        <a *ngIf="batch.editing" class="c-hand" role="button" (click)="(batch.editing = false) && $event.preventDefault()">
-          <i class="fas fa-times"></i>
-        </a>
       </div>
       <div class="card-subtitle text-gray">créé {{ batch.created | date: dateformat }}</div>
       <div class="card-body">
-        <app-shared-table [data]="this.tableBatch(batchIndex)" [config]="config"></app-shared-table>
+        <app-shared-table
+          [data]="this.tableBatch(batchIndex)"
+          [config]="config"
+          (editRow)="editBatch($event, batch)">
+        </app-shared-table>
       </div>
     </div>
   </div>
@@ -169,3 +162,14 @@
     </div>
   </div>
 </div>
+
+
+<app-sidebar
+  [template]="templateSidebar">
+  <app-sidebar-batch
+    [rowBatch]="currentRow"
+    [content]="content"
+    (batchChange)="onSubmitEditBatch($event)"
+  >
+  </app-sidebar-batch>
+</app-sidebar>
