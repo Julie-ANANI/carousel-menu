@@ -19,7 +19,7 @@ export class AdminProjectComponent implements OnInit {
               private _authService: AuthService) {}
 
   ngOnInit(): void {
-    this._titleService.setTitle('MY_PROJECTS.TITLE');
+    this._titleService.setTitle('COMMON.MY_PROJECT');
     this._project = this._activatedRoute.snapshot.data['innovation'];
   }
 

@@ -52,7 +52,7 @@
           <div class="columns">
 
             <!-- Ques -->
-            <div class="column col-md-12 col-6 col-mx-auto">
+            <div class="column col-md-12 col-6" [ngClass]="{ 'col-12' : isAdmin, 'col-mx-auto' : !isAdmin }">
 
               <div *ngFor="let innovationItem of project.innovationCards; let i = index">
                 <div *ngIf="innovationCardEditingIndex === i">
@@ -146,8 +146,8 @@
                       (keyup)="showProblemError = false">
                     </textarea>
                       <div class="charRemaining">
-                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].problem.length | characterCountdown:500)}">
-                        {{ project.innovationCards[i].problem.length | characterCountdown:500 }}
+                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].problem.length | characterCountdown:1000)}">
+                        {{ project.innovationCards[i].problem.length | characterCountdown:1000 }}
                       </span>
                       </div>
                       <div class="form-error" *ngIf="problem.touched && problem.invalid || showProblemError">
@@ -182,8 +182,8 @@
                       (keyup)="showSolutionError = false">
                     </textarea>
                       <div class="charRemaining">
-                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:500)}">
-                        {{ project.innovationCards[i].solution.length | characterCountdown:500 }}
+                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:1000)}">
+                        {{ project.innovationCards[i].solution.length | characterCountdown:1000 }}
                       </span>
                       </div>
                       <div class="form-error" *ngIf="solution.touched && solution.invalid || showSolutionError">
@@ -341,7 +341,7 @@
             <!-- /Ques -->
 
             <!-- Help -->
-            <div class="column col-6 col-mx-auto hide-md help-wrapper">
+            <div *ngIf="!isAdmin" class="column col-6 col-mx-auto hide-md help-wrapper">
               <div class="bot-wrapper text-center">
                 <span class="bot-rect">{{ 'PROJECT_MODULE.SETUP.PITCH.BOT.HELP' | translate }}</span>
                 <br>
