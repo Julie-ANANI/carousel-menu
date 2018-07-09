@@ -22,6 +22,8 @@ export const MARKET_REPORT = {
     'STATUS_TO_EVALUATING': 'Modifier la synthése'
   },
 
+  'INSIGHT': 'Des idées',
+
   // 'TITLE': 'Exploration du potentiel marché',
   'COLLAPSE': 'Tout plier',
   'EXPAND': 'Tout déplier',

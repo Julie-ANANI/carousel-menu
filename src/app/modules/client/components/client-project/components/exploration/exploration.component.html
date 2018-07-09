@@ -44,13 +44,13 @@
         <!-- /Bot messages -->
 
         <!-- Project under evaluating and evaluating done status-->
-        <div *ngIf="projectStatus === 'EVALUATING' || projectStatus === 'DONE'">
+        <div *ngIf="projectStatus === 'EVALUATING' || projectStatus === 'DONE' || projectStatus === 'EVALUATING_DONE'">
           <shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="project._id" [adminMode]="false" [questions]="questions"></shared-answer-modal>
 
           <!-- Title and contact button section -->
           <div class="title-wrapper">
             <h1 *ngIf="projectStatus === 'EVALUATING'" class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING' | translate }}</h1>
-            <h1 *ngIf="projectStatus === 'DONE'" class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING_DONE' | translate }}</h1>
+            <h1 *ngIf="projectStatus === 'DONE' || projectStatus === 'EVALUATING_DONE'" class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING_DONE' | translate }}</h1>
             <a class="btn btn-primary" href="{{ contactUrl }}">{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</a>
           </div>
 
@@ -199,7 +199,7 @@
             <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h2>
             <ul class="com-nme">
               <li *ngFor="let company of companies; let i = index;">
-               {{ i + 1 + '.'}} {{ company.name }}
+               {{ i + 1 + '.'}} {{ company.name[0] | uppercase }}{{ company.name | slice:1 }}
               </li>
             </ul>
           </div>

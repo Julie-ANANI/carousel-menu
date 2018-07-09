@@ -29,6 +29,8 @@ export const MARKET_REPORT = {
     'QUESTION': 'Origin of responses'
   },
 
+  'INSIGHT': 'Insight',
+
 
  // 'TITLE': 'Exploring market potential',
   'COLLAPSE': 'Collapse',

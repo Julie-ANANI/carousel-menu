@@ -1,38 +1,53 @@
-.pro-tag {
-  display: inline-flex;
+.pro-info {
+  display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  height: 100%;
 
-  .user-flag {
-    margin-right: 10px;
-    float: left;
-  }
+  .user {
+    display: inline-flex;
+    flex-direction: column;
 
-  .user-name {
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 21px;
-    //margin: -1rem 0 auto;
+    .detail {
 
-    a, .see-answer {
-      cursor: pointer;
-      position: relative;
-      top: -3px;
+      .flag {
+        margin-right: 10px;
+        margin-bottom: 10px;
+        float: left;
+      }
+
     }
+
+    .profile, .email {
+      margin-bottom: 10px;
+
+      a {
+        color: #0B90C6;
+      }
+
+      a:hover {
+        color: #0B90C6;
+        text-decoration: underline;
+      }
+
+    }
+
+    .job, .company {
+      margin-bottom: 10px;
+
+      i {
+        font-size: 15px;
+        margin: auto 8px auto 5px;
+      }
+
+    }
+
   }
 
-  .user-job,
-  .user-company {
-    margin: 0;
-    opacity: 0.8;
-    font-weight: 600;
-    font-size: 13px;
-    line-height: 21px;
-  }
-
-  a, .see-answer {
+  .answer {
+    text-decoration: underline;
     cursor: pointer;
-    margin-right: 15px;
-    font-size: 13px;
   }
 
 }

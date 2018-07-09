@@ -4,7 +4,7 @@
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- Bot messages -->
-        <div *ngIf="!adminSide && projectStatus !== 'DONE'">
+        <div *ngIf="!adminSide && projectStatus !== 'DONE' && projectStatus !== 'EVALUATING_DONE'">
           <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + projectStatus) | translate }}</h1>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
             <span class="bot-rect" [ngSwitch]="projectStatus">
@@ -39,7 +39,7 @@
         <!-- /Bot messages -->
 
         <!-- Project under DONE status -->
-        <div *ngIf="projectStatus === 'DONE' || adminSide">
+        <div *ngIf="projectStatus === 'DONE' || projectStatus === 'EVALUATING_DONE' || adminSide">
           <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
 
           <!-- Title and download button section -->
@@ -61,7 +61,7 @@
             </ng-container>
           </div>
 
-          <!-- Sidebar -->
+          <!-- Menu -->
           <div class="question-wrapper">
             <ul>
               <li>
@@ -111,7 +111,7 @@
             <!-- Professionals -->
             <div class="section-container">
               <h2 class="section-heading" id="professionals">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
-              <div class="professional">
+              <div class="professional-wrapper">
                 <div *ngFor="let answer of filteredAnswers" class="profile">
                   <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
                 </div>
@@ -142,3 +142,16 @@
     </div>
   </div>
 </div>
+
+
+<!-- Insight preview -->
+<app-sidebar
+  [template]="sidebarTemplateValue"
+  (closeSidebar)="closeSidebar($event)">
+  <app-user-answer
+    [adminMode]="adminMode"
+    [(userAnswer)]="modalAnswer"
+    [innovationId]="innoid"
+    [questions]="questions">
+  </app-user-answer>
+</app-sidebar>

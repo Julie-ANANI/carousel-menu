@@ -1,5 +1,5 @@
 <div class="user-form-wrapper">
-  <div class="column col-11 col-mx-auto">
+  <div class="column col-xs-12 col-11 col-mx-auto">
 
     <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
@@ -155,7 +155,7 @@
 
       <!-- Submit button -->
       <div *ngIf="isSignUp" class="signUp-button-wrapper text-center">
-        <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid">{{'COMMON.BUTTON.SIGN_UP' | translate }}</button>
+        <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid && userForm.get('url').value !== '' && userForm.get('operator').value !== false">{{'COMMON.BUTTON.SIGN_UP' | translate }}</button>
       </div>
 
     </form>

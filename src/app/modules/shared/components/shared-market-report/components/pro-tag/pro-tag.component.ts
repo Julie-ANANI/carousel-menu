@@ -9,12 +9,13 @@ import { Answer } from '../../../../../../models/answer';
 
 export class ProfessionalTagComponent {
 
-  @Input() public answer: Answer;
+  @Input() answer: Answer;
+
   @Output() modalAnswerChange = new EventEmitter<any>();
 
-  constructor() { }
+  constructor() {}
 
-  public seeAnswer(event: Event, answer: Answer) {
+  seeAnswer(event: Event, answer: Answer) {
     event.preventDefault();
     this.modalAnswerChange.emit(answer);
   }

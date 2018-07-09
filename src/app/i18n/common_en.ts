@@ -133,6 +133,7 @@ export const COMMON = {
   'CLIENT_SIDE': 'Client Side',
   'EDIT_USER': 'Edit User',
   'EDIT_PROFESSIONAL': 'Edit Professional',
+  'EDIT_INSIGHT': 'Edit Insight',
 
   'SORT': {
     'BY_NAME': 'By name',

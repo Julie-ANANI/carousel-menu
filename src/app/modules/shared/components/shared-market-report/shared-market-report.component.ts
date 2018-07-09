@@ -14,6 +14,7 @@ import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
 import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
+import { Template } from '../shared-sidebar/interfaces/template';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -27,6 +28,7 @@ export class SharedMarketReportComponent implements OnInit {
   @Input() public adminMode: boolean;
 
   adminSide: boolean;
+  sidebarTemplateValue: Template = {};
 
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
@@ -38,9 +40,9 @@ export class SharedMarketReportComponent implements OnInit {
   private _showDetails = true;
   private _innoid: string;
 
-  public today: Number;
-  public objectKeys = Object.keys;
-  public mapInitialConfiguration: {[continent: string]: boolean};
+  today: Number;
+  objectKeys = Object.keys;
+  mapInitialConfiguration: {[continent: string]: boolean};
 
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
@@ -50,17 +52,20 @@ export class SharedMarketReportComponent implements OnInit {
               private answerService: AnswerService,
               private translateNotificationsService: TranslateNotificationsService,
               private location: Location,
-              private innovationService: InnovationService) { }
+              private innovationService: InnovationService) {}
 
   ngOnInit() {
 
     this.adminSide = this.location.path().slice(0, 6) === '/admin';
 
     this.today = Date.now();
+
     this._innoid = this.project._id;
+
     this.resetMap();
 
     this.loadAnswers();
+
     if (this.project.preset && this.project.preset.sections) {
       this.project.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions);
@@ -78,13 +83,14 @@ export class SharedMarketReportComponent implements OnInit {
     }
 
     this._modalAnswer = null;
+
     PageScrollConfig.defaultDuration = 800;
 
   }
 
   private loadAnswers() {
-    this.answerService.getInnovationValidAnswers(this._innoid)
-      .first().subscribe((results) => {
+    this.answerService.getInnovationValidAnswers(this._innoid).first()
+      .subscribe((results) => {
         this._answers = results.answers.sort((a, b) => {
             return b.profileQuality - a.profileQuality;
           });
@@ -122,6 +128,17 @@ export class SharedMarketReportComponent implements OnInit {
 
   public seeAnswer(answer: Answer): void {
     this._modalAnswer = answer;
+
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: this.adminSide ? 'COMMON.EDIT_INSIGHT' : 'MARKET_REPORT.INSIGHT',
+      size: '726px'
+    };
+
+  }
+
+  closeSidebar(value: string) {
+    this.sidebarTemplateValue.animate_state = value;
   }
 
   public filterAnswers(): void {
