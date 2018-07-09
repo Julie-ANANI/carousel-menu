@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../models/innovation';
@@ -32,12 +31,10 @@ export class AdminProjectDetailsComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
-              private _titleService: TranslateTitleService,
               private _translateService: TranslateService,
               private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this.presetAutocomplete = {
       placeholder: 'preset',

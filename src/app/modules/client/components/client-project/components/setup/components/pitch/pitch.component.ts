@@ -30,10 +30,6 @@ export class PitchComponent implements OnInit {
     this.saveChanges.emit(value);
   }
 
-  public innovationSaved() {
-    this.changesSaved = this.changesSaved;
-  }
-
   ngOnInit(): void {
     this.showPitchFieldError.subscribe( value => {
       this.showFieldError.next(value);

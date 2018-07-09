@@ -19,8 +19,8 @@ export class AdminProjectComponent implements OnInit {
               private _authService: AuthService) {}
 
   ngOnInit(): void {
-    this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._project = this._activatedRoute.snapshot.data['innovation'];
+    this._titleService.setTitle(this._project.name);
   }
 
   get authorizedTabs(): Array<string> {
