@@ -1,6 +1,96 @@
 .answer-wrapper {
   padding-top: 30px;
+  font-size: 0.7rem;
 
+  .user-wrapper {
+    display: flex;
+    justify-content: space-between;
 
+    .detail {
+
+      .title {
+        display: inline-flex;
+        vertical-align: middle;
+
+        h6 {
+          margin-right: 15px;
+          margin-bottom: 10px;
+        }
+
+        .country {
+          margin-left: 15px;
+        }
+
+      }
+
+      p {
+        padding-bottom: 6px;
+      }
+
+      .email {
+        padding-bottom: 6px;
+
+        a {
+          color: #FFB300;
+        }
+
+        a:hover {
+          color: #FFB300;
+          text-decoration: underline;
+        }
+
+      }
+
+      .time {
+        color: #97a4b1;
+      }
+
+    }
+
+    .save {
+      display: inline-flex;
+    }
+
+  }
+
+  .status-wrapper {
+    padding-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .status-rejected, .status-validated {
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    .radio-button {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid #E0E0E0;
+      margin: 20px auto 0 auto;
+      text-align: center;
+      cursor: pointer;
+
+      span {
+        color: #E0E0E0;
+        font-size: 21px;
+      }
+
+    }
+
+    .radio-button:hover {
+      background-color: #FFB300;
+
+      span {
+        color: white;
+      }
+
+    }
+
+  }
 
 }
+
+/********************************** Media ***************************************/
+

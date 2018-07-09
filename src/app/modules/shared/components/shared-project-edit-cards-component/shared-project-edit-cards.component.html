@@ -391,7 +391,7 @@
                         <div *ngFor="let media of innovationItem.media" class="media-content text-center">
                           <img
                             *ngIf="media.type === 'PHOTO'"
-                            [src]="'https://res.cloudinary.com/umi/image/upload/c_thumb,h_146,w_220/' + media.cloudinary.public_id"
+                            [src]="'https://res.cloudinary.com/umi/image/upload/h_146,w_220/' + media.cloudinary.public_id"
                             [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
                           <iframe
                             *ngIf="media.type === 'VIDEO'"

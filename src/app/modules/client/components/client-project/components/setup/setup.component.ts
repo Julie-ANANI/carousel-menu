@@ -100,20 +100,16 @@ export class SetupProjectComponent implements OnInit {
   submitButton(event: Event): void {
     event.preventDefault();
 
-    if (this._saveChanges) {
-      this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
-    } else {
-      if (this.pitchFormValid) {
-        if (this.targetingFormValid) {
-          this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
-        } else {
-          this.showTargetingFieldError.next(true);
-          this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.TARGETING_FORM');
-        }
+    if (this.pitchFormValid) {
+      if (this.targetingFormValid) {
+        this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
       } else {
-        this.showPitchFieldError.next(true);
-        this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.PITCH_FORM');
+        this.showTargetingFieldError.next(true);
+        this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.TARGETING_FORM');
       }
+    } else {
+      this.showPitchFieldError.next(true);
+      this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.PITCH_FORM');
     }
 
   }

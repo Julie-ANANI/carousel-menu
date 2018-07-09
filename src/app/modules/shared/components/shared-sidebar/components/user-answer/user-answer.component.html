@@ -4,14 +4,71 @@
     <!-- User detail -->
     <div class="user-wrapper">
 
-      <div class="text-left">
+      <div class="detail">
+
+        <div class="title">
+         <h6>{{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}</h6>
+          <app-shared-rating-item
+            [editMode]="true"
+            [big]="true"
+            [prop]="profile"
+            [rating]="modalAnswer.profileQuality"
+            (ratingChange)="updateProfileQuality($event)">
+          </app-shared-rating-item>
+          <div class="country">
+            <country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></country-flag>
+          </div>
+        </div>
+
+        <div *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle">
+          <p>{{ modalAnswer.job || modalAnswer.professional?.jobTitle }}</p>
+        </div>
+
+        <div *ngIf="modalAnswer.company?.name || modalAnswer.professional?.company">
+          <p>{{ modalAnswer.company?.name || modalAnswer.professional?.company }}</p>
+        </div>
+
+        <div *ngIf="modalAnswer.professional?.email" class="email">
+          <a [href]="'mailto:'+modalAnswer.professional.email">
+            {{ modalAnswer.professional.email }}
+          </a>
+        </div>
+
+        <div *ngIf="modalAnswer.created || modalAnswer.time_elapsed" class="time">
+          <p>
+            <strong>
+              <span *ngIf="modalAnswer.created">
+                {{ 'ANSWER.RECEIVED.A' | translate }} {{ modalAnswer.created | date }} {{ 'ANSWER.RECEIVED.B' | translate }} {{ modalAnswer.created | slice: 11 : 16  }}
+              </span>
+              <span *ngIf="modalAnswer.created && modalAnswer.time_elapsed">&nbsp; • &nbsp;</span>
+              <span *ngIf="modalAnswer.time_elapsed">
+                {{ 'ANSWER.RECEIVED.C' | translate }} {{ floor(modalAnswer.time_elapsed/60) }} min. {{ floor(modalAnswer.time_elapsed%60) }} sec.
+              </span>
+            </strong>
+          </p>
+        </div>
 
       </div>
 
-      <div class="text-right">
+      <div class="save">
         <button class="btn btn-primary">
           {{'COMMON.SAVE' | translate}}
         </button>
+      </div>
+
+    </div>
+
+    <!-- Status -->
+    <div class="status-wrapper">
+
+      <div class="status-rejected text-center">
+        <span class="label-alert">{{ 'ANSWER.STATUS.REJECTED' | translate }}</span>
+        <div class="radio-button"><span>•</span></div>
+      </div>
+
+      <div class="status-validated">
+        <span class="label-validate">{{ 'ANSWER.STATUS.VALIDATED' | translate }}</span>
+        <div class="radio-button"><span>•</span></div>
       </div>
 
     </div>

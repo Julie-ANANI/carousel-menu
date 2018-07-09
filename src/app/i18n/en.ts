@@ -1,5 +1,6 @@
 import { COMMON } from './common_en';
 import { ERROR } from './error_en';
+import { ANSWER } from '../modules/shared/components/shared-sidebar/components/user-answer/i18n/en';
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/en';
 import { DISCOVER } from '../modules/client/components/client-discover/i18n/en';
 import { DISCOVERDESCRIPTION } from '../modules/client/components/client-discover-description/i18n/en';
@@ -33,6 +34,7 @@ export const en = {
   'USERS': ADMIN_USERS,
   'FOOTER': FOOTER,
   'ANSWER_MODAL': ANSWER_MODAL,
+  'ANSWER': ANSWER,
   'DISCOVER': DISCOVER,
   'DISCOVERDESCRIPTION': DISCOVERDESCRIPTION,
   'LOG_IN': LOG_IN,

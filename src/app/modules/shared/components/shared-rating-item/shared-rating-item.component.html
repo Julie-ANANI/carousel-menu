@@ -1,0 +1,10 @@
+<div class="rating-wrapper">
+
+  <div class="thumbs-up-wrapper" [ngClass]="{ 'active': rating === 2 }">
+    <i *ngIf="editMode || rating === 2" class="fas fa-thumbs-up" (click)="thumbsUp($event)"></i>
+  </div>
+  <div class="thumbs-down-wrapper" [ngClass]="{ 'active': rating === 0 }">
+    <i *ngIf="editMode || rating === 0" class="fas fa-thumbs-down" (click)="thumbsDown($event)"></i>
+  </div>
+
+</div>

@@ -18,6 +18,7 @@ export class UserAnswerComponent implements OnInit {
 
   @Input() set userAnswer(value: Answer) {
     this.modalAnswer = value;
+    console.log(this.modalAnswer);
     if (this.modalAnswer && !this.modalAnswer.company) {
       this.modalAnswer.company = {};
     }
@@ -34,6 +35,7 @@ export class UserAnswerComponent implements OnInit {
     this.adminMode = this.adminMode && this.authService.adminLevel > 2;
 
     this.floor = Math.floor;
+
   }
 
   get lang(): string {

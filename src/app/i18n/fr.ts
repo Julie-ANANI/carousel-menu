@@ -1,5 +1,6 @@
 import { COMMON } from './common_fr';
 import { ERROR } from './error_fr';
+import { ANSWER } from '../modules/shared/components/shared-sidebar/components/user-answer/i18n/fr';
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/fr';
 import { DISCOVER } from '../modules/client/components/client-discover/i18n/fr';
 import { DISCOVERDESCRIPTION } from '../modules/client/components/client-discover-description/i18n/fr';
@@ -32,6 +33,7 @@ export const fr = {
   'MARKET_REPORT': MARKET_REPORT,
   'USERS': ADMIN_USERS,
   'FOOTER': FOOTER,
+  'ANSWER': ANSWER,
   'ANSWER_MODAL': ANSWER_MODAL,
   'DISCOVER': DISCOVER,
   'DISCOVERDESCRIPTION': DISCOVERDESCRIPTION,

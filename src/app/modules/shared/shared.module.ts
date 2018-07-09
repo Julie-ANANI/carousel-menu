@@ -56,8 +56,10 @@ import { SearchInputComponent } from '../../directives/search-input/search-input
 // Internal Modules
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
+
 // import { TableModule } from './components/shared-table/table.module';
 import { CountryFlagModule } from '../../directives/country-flag/country-flag.module';
+import {SharedRatingItemModule} from './components/shared-rating-item/shared-rating-item-module';
 
 @NgModule({
   imports: [
@@ -76,7 +78,8 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedWorldmapModule,
     SidebarModule,
     SharedWorldmapModule,
-    MultilingModule
+    MultilingModule,
+    SharedRatingItemModule
   ],
   declarations: [
     // Directives
@@ -126,6 +129,7 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     Ng2PageScrollModule,
     SidebarModule,
     CountryFlagModule,
+    SharedRatingItemModule,
     // TableModule,
 
     // Directives
