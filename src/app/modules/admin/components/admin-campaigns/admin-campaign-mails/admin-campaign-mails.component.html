@@ -164,12 +164,14 @@
 </div>
 
 
-<app-sidebar
-  [template]="templateSidebar">
-  <app-sidebar-batch
-    [rowBatch]="currentRow"
-    [content]="content"
-    (batchChange)="onSubmitEditBatch($event)"
-  >
-  </app-sidebar-batch>
-</app-sidebar>
+  <app-sidebar
+    [template]="templateSidebar">
+    <app-sidebar-batch
+      [rowBatch]="currentRow"
+      [content]="content"
+      (batchChange)="onSubmitEditBatch($event)"
+    >
+    </app-sidebar-batch>
+  </app-sidebar>
+
+

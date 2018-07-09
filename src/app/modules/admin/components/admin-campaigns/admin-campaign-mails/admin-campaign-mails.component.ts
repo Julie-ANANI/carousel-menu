@@ -39,9 +39,12 @@ export class AdminCampaignMailsComponent implements OnInit {
   };
 
   public templateSidebar: Template = {};
-  public currentBatch = {};
+  public currentBatch: Batch;
   public content = {};
   public currentRow = {};
+  public siderbarBool = false;
+  public currentStep: number;
+
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
@@ -359,6 +362,7 @@ export class AdminCampaignMailsComponent implements OnInit {
 
   closeSidebar(value: string) {
     this.templateSidebar.animate_state = value;
+    this.siderbarBool = false;
   }
 
   editBatch(row: any, batch: Batch) {
@@ -366,15 +370,19 @@ export class AdminCampaignMailsComponent implements OnInit {
     switch (row.Step) {
       case ('01 - HelloWorld') :
         step = 'FIRST';
+        this.currentStep = 0;
         break;
       case ('02 - 2nd try')  :
         step = 'SECOND';
+        this.currentStep = 1;
         break;
       case ('03 - 3rd try') :
         step = 'THIRD';
+        this.currentStep = 2;
         break;
       case ('04 - Thanks') :
         step = 'THANKS';
+        this.currentStep = 3;
         break;
     }
     this.content = this.getContentWorkflowStep(batch._id, step);
@@ -385,6 +393,7 @@ export class AdminCampaignMailsComponent implements OnInit {
       title: 'COMMON.EDIT',
       type: 'editBatch'
     };
+    this.siderbarBool = true;
   }
 
   public getContentWorkflowStep(batchID: any, step: any): any {
@@ -403,10 +412,21 @@ export class AdminCampaignMailsComponent implements OnInit {
     return content;
   }
 
-  onSubmitEditBatch(batch: Batch) {
-    this._campaignService.updateBatch(batch).first().subscribe( batch => {
-      //virer la sideBar
-      //Afficher le bon batch dans les batch de stats :)
+  onSubmitEditBatch(result: any) {
+    switch (this.currentStep) {
+      case 0:
+        this.currentBatch.firstMail = this._computeDate(result.date, result.time);
+        break;
+      case 1:
+        this.currentBatch.secondMail = this._computeDate(result.date, result.time);
+        break;
+      case 2:
+        this.currentBatch.thirdMail = this._computeDate(result.date, result.time);
+        break;
+    }
+    this._campaignService.updateBatch(this.currentBatch).first().subscribe( batch => {
+      this.stats.batches[this._getBatchIndex(batch)] = batch;
+      this.siderbarBool = false;
     });
   }
 

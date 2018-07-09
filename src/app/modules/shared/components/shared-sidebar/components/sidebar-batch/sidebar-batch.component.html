@@ -1,25 +1,23 @@
 
 <form novalidate [formGroup]="formData">
-
   <div class="form-group">
     <button (click)="onSubmit()" class="btn btn-primary">
       {{'COMMON.SAVE' | translate}}
     </button>
   </div>
   <div class="form-group">
-    <label class="form-label"> 1st Mail </label>
-    <input class="form-default" id="firstMail" name="firstMail" formControlName="firstMail" type="date"
-           placeholder="{{this.firstMail}}">
+    <label class="form-label"> DATE </label>
+    {{dateMail}}
+    <input class="form-default" id="dateMail" name="dateMail" formControlName="dateMail" type="date" >
   </div>
   <div class="form-group">
-    <label class="form-label"> 2nd Mail </label>
-    <input class="form-default" id="secondMail" name="firstMail" formControlName="firstMail" type="date"
-           placeholder="{{this.secondMail}}">
-  </div>
-  <div class="form-group">
-    <label class="form-label"> Third Mail</label>
-    <input class="form-default" id="thirdMail" name="firstMail" formControlName="firstMail" type="date"
-           placeholder="{{this.thirdMail}}">
+    <label class="form-label"> TIME </label>
+    <input class="form-default" id="timeMail" name="timeMail" formControlName="timeMail" type="time">
   </div>
 </form>
-
+<div class="text-ellipsis">
+  <label class="text-ellipsis"> EN </label>
+  {{this.content.en}}
+  <label class="text-ellipsis"> FR </label>
+  {{this.content.fr}}
+</div>
