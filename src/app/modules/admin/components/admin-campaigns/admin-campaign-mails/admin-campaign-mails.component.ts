@@ -199,6 +199,11 @@ export class AdminCampaignMailsComponent implements OnInit {
     }
   }
 
+  public poubelle(batch: Batch) {
+    console.log(batch.status === 0);
+    return batch.status === 0;
+  }
+
   get readyAutoBatch() {
     return (
       this.quizGenerated &&

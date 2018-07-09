@@ -59,9 +59,11 @@
     <div class="card-header">
       <div class="card-title h5">
         Batch de {{batch.size}} pros
-        <a class="c-hand" role="button" (click)="(removeOK(batch)) && $event.preventDefault()">
-          <i class="fas fa-trash"></i>
-        </a>
+          <span *ngIf="this.poubelle(batch)">
+            <a class="c-hand" role="button" (click)="(removeOK(batch)) && $event.preventDefault()">
+              <i class="fas fa-trash"></i>
+            </a>
+          </span>
         <label class="form-switch" style="float:right">
           <input type="checkbox" (change)="freezeStatus(batch)" [ngModel]="batch.active" >
           <i class="form-icon"></i>
