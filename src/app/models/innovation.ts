@@ -17,7 +17,7 @@ export interface Innovation {
     date: Date
   }>
   readonly name?: string;
-  readonly domain?: string;
+  domain?: string;
   readonly type?: 'insights' | 'apps' | 'leads';
   readonly principalMedia?: Media;
   innovationCards?: Array<InnovCard>;
