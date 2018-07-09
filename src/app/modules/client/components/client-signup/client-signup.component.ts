@@ -109,7 +109,7 @@ export class ClientSignupComponent implements OnInit {
 
     this.sidebarTemplateValue = {
       animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'COMMON.SIGN_UP',
+      title: 'SIGN_UP.HEADING_SIDEBAR',
       type: 'signUp'
     }
 

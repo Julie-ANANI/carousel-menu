@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { User } from '../../../../../../models/user.model';
-import {Professional} from '../../../../../../models/professional';
+import { Professional } from '../../../../../../models/professional';
 
 @Component({
   selector: 'app-user-form',
@@ -12,11 +12,9 @@ import {Professional} from '../../../../../../models/professional';
 
 export class UserFormComponent implements OnInit, OnChanges {
 
-  @Input() sidebarState: string;
-
   /*
-      For type 'editUser', put the data into the attribute user and patch it to the formData
-   */
+     For type 'editUser', put the data into the attribute user and patch it to the formData
+  */
   @Input() set user(value: User) {
     this._user = value;
     this.loadEditUser();
@@ -29,7 +27,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     this._pro = value;
     this.loadProfessional();
   };
-
+  @Input() sidebarState: string;
   @Input() set type(type: string) {
     if (type === 'signUp') {
       this.loadSignUp();
@@ -50,7 +48,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   private _pro: Professional = null;
 
   constructor(private formBuilder: FormBuilder,
-              private autoCompleteService: AutocompleteService) { }
+              private autoCompleteService: AutocompleteService) {}
 
   ngOnInit() {
     this.userForm = this.formBuilder.group( {
@@ -132,7 +130,12 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   }
 
-  get user(): User { return this._user; }
-  get pro(): Professional { return this._pro; }
+  get user(): User {
+    return this._user;
+  }
+
+  get pro(): Professional {
+    return this._pro;
+  }
 
 }

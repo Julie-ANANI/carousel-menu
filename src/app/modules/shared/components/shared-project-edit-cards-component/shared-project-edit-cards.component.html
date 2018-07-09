@@ -54,7 +54,7 @@
             <!-- Ques -->
             <div class="column col-md-12 col-6" [ngClass]="{ 'col-12' : isAdmin, 'col-mx-auto' : !isAdmin }">
 
-              <div *ngFor="let innovationItem of project.innovationCards; let i = index">
+              <div *ngFor="let innovationCards of project.innovationCards; let i = index">
                 <div *ngIf="innovationCardEditingIndex === i">
 
                   <!-- Project title -->

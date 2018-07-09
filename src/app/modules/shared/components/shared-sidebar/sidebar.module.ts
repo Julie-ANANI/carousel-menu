@@ -12,6 +12,7 @@ import { InnovationPreviewComponent } from './components/innovation-preview/inno
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
 import { CountryFlagModule } from '../../../../directives/country-flag/country-flag.module';
+import { UserAnswerComponent } from './components/user-answer/user-answer.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { CountryFlagModule } from '../../../../directives/country-flag/country-f
     SidebarComponent,
     InnovationPreviewComponent,
     UserFormComponent,
-    SidebarSearchComponent
+    SidebarSearchComponent,
+    UserAnswerComponent
   ],
   exports: [
     CountryFlagModule,
@@ -37,7 +39,8 @@ import { CountryFlagModule } from '../../../../directives/country-flag/country-f
     SidebarBatchComponent,
     InnovationPreviewComponent,
     UserFormComponent,
-    SidebarSearchComponent
+    SidebarSearchComponent,
+    UserAnswerComponent
   ]
 })
 

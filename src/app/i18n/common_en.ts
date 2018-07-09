@@ -131,8 +131,8 @@ export const COMMON = {
   'PRESET': 'Preset',
   'PRESETS': 'Presets',
   'CLIENT_SIDE': 'Client Side',
-  'EDIT_USER': 'Edit user',
-  'EDIT_PROFESSIONAL': 'Edit professional',
+  'EDIT_USER': 'Edit User',
+  'EDIT_PROFESSIONAL': 'Edit Professional',
 
   'SORT': {
     'BY_NAME': 'By name',

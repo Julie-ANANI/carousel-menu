@@ -132,7 +132,7 @@ export const COMMON = {
   'PRESETS': 'Configurations',
   'CLIENT_SIDE': 'Interface Client',
   'EDIT_USER': 'Modifier l\'utilisateur',
-  'EDIT_PROFESSIONAL': 'Modifier professionnel',
+  'EDIT_PROFESSIONAL': 'Modifier Professionnel',
 
   'SORT': {
     'BY_NAME': 'Nom',

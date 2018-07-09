@@ -12,11 +12,9 @@ export class InnovationPreviewComponent implements OnInit {
 
   @Input() innovation: InnovCard;
 
-  constructor(private domSanitizer1: DomSanitizer) {
-  }
+  constructor(private domSanitizer1: DomSanitizer) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   get domSanitizer() {
     return this.domSanitizer1;

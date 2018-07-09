@@ -17,7 +17,7 @@
           <!-- Video -->
           <div *ngIf="media?.type === 'VIDEO'" class="gap">
             <iframe
-              [src]="domSanitizer.bypassSecurityTrustResourceUrl(media?.video.embeddableUrl)"
+              [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
               width="220" height="146">
             </iframe>
           </div>

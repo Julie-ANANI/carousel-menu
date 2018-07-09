@@ -27,7 +27,7 @@
 
     <!-- Bot -->
     <div *ngIf="collaborator.length === 0 && collaboratorsInvited.length === 0">
-      <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '10px' }">
+      <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '40px' }">
         <span class="bot-rect">
           {{ 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.BOT_MESSAGE' | translate }}
         </span>
@@ -36,7 +36,7 @@
         <div>
           <img
             src="https://res.cloudinary.com/umi/image/upload/v1530628389/app/default-images/bot-2.svg"
-            height="170px"
+            height="150px"
             alt="Bot">
         </div>
       </div>
