@@ -182,7 +182,7 @@
               <!-- Answers -->
               <div class="info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
-                <h5 class="text-center">{{ answers?.length || 0 }}</h5>
+                <!-- <h5 class="text-center">{{ answers?.length || 0 }}</h5> -->
               </div>
 
             </div>
@@ -217,12 +217,6 @@
               [config]="config"
               (configChange)="loadAnswers()"
               (editRow)="seeAnswer($event)"></app-shared-table>
-          </div>
-
-          <!-- Insight section -->
-          <div class="section-light-container">
-            <h3>{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h3>
-            <app-answers-list [answers]="answers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
           </div>
 
         </div>
