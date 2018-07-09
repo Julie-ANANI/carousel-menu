@@ -11,6 +11,11 @@ export interface Innovation {
   readonly owner?: User;
   readonly campaigns?: Array<any>;
   status?: 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
+  statusLogs?: Array<{
+    action: 'SUBMIT' | 'REJECT' | 'VALIDATE' | 'FINISH'
+    user: User,
+    date: Date
+  }>
   readonly name?: string;
   readonly domain?: string;
   readonly type?: 'insights' | 'apps' | 'leads';

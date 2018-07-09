@@ -25,7 +25,7 @@
         </div>
 
         <!-- Project under evaluating status message -->
-        <div *ngIf="projectStatus === 'EVALUATING_DONE' || projectStatus === 'DONE'" class="msg-wrapper">
+        <div *ngIf="projectStatus === 'DONE'" class="msg-wrapper">
           <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.DONE' | translate }}</div>
         </div>
 
@@ -48,7 +48,7 @@
               </span>
               <span>
                 <button
-                  [disabled]="projectStatus === 'EVALUATING' || projectStatus === 'EVALUATING_DONE'"
+                  [disabled]="projectStatus !== 'EDITING'"
                   class="btn btn-primary"
                   (click)="submitButton($event)">
                   {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}

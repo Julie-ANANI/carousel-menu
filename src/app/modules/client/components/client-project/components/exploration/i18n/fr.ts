@@ -17,12 +17,15 @@ export const EXPLORATION = {
   },
 
   'STATUS_TEXT': {
-    'A': 'Statut',
-    'B': 'Targeting',
+    'TITLE': 'Statut',
     'C': 'Emails sent',
     'D': 'Relaunch',
     'F': 'Last relaunch',
-    'G': 'Created'
+    'CREATED': 'Créé',
+    'SUBMIT': 'Soumis',
+    'REJECT': 'Rejetté',
+    'VALIDATE': 'Validé',
+    'FINISH': 'Terminé'
   },
 
   'CONTACT_BUTTON': 'Nous contacter',
