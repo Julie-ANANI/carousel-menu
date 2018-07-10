@@ -82,7 +82,7 @@
           </div>
 
           <!-- Answer section -->
-          <div class="answer-wrapper">
+          <div id="answer-wrapper">
 
             <!-- Origin of responses -->
             <div class="section-container">
@@ -105,14 +105,14 @@
             </div>
 
             <!-- Professionals -->
-            <div class="section-container">
-              <h2 class="section-heading" id="professionals">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
+            <section class="section-container" id="professionals">
+              <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
               <div class="professional">
                 <div *ngFor="let answer of filteredAnswers" class="profile">
                   <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
                 </div>
               </div>
-            </div>
+            </section>
 
             <!-- Other questions -->
             <div *ngFor="let question of questions" class="section-container">

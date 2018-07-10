@@ -398,7 +398,7 @@ body.sample-infographic {
 
   }
 
-  .answer-wrapper {
+  #answer-wrapper {
     display: inline-flex;
     flex-direction: column;
     position: relative;
@@ -451,7 +451,7 @@ body.sample-infographic {
       display: none;
     }
 
-    .answer-wrapper {
+    #answer-wrapper {
       max-width: 100%;
       padding-left: unset;
       border-left: none;
@@ -470,7 +470,7 @@ body.sample-infographic {
       width: 180px;
     }
 
-    .answer-wrapper {
+    #answer-wrapper {
       max-width: 65%
     }
 
@@ -486,7 +486,7 @@ body.sample-infographic {
       width: 180px;
     }
 
-    .answer-wrapper {
+    #answer-wrapper {
       max-width: 66%;
     }
 
@@ -498,7 +498,7 @@ body.sample-infographic {
 
   #project-synthesis {
 
-    .answer-wrapper {
+    #answer-wrapper {
       max-width: 70%;
     }
 
@@ -510,7 +510,7 @@ body.sample-infographic {
 
   #project-synthesis {
 
-    .answer-wrapper {
+    #answer-wrapper {
       max-width: 78%;
     }
 
