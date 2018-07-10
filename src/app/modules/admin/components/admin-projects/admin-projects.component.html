@@ -10,6 +10,7 @@
           <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'name'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_NAME' | translate }}</button></sq-sort></li>
           <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'owner.companyName'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_COMPANY' | translate }}</button></sq-sort></li>
           <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'owner.name'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_AUTHOR' | translate }} </button></sq-sort></li>
+          <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'domain'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_DOMAIN' | translate }} </button></sq-sort></li>
           <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'updated'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_UPDATE_DATE' | translate }} </button></sq-sort></li>
           <li><sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'created'"><button class="btn btn-link">{{ 'COMMON.SORT.BY_CREATION_DATE' | translate }}</button></sq-sort></li>
           <li><sqFilter [config]="config" (configChange)="loadProjects($event)" prop="name"></sqFilter><i class="icon icon-search"></i></li>
@@ -20,11 +21,11 @@
         <div class="empty-icon">
           <i class="icon icon-plus"></i>
         </div>
-        <p class="empty-title h5">{{ 'MY_PROJECTS.NO_PROJECT.TITLE' | translate }}</p>
-        <p class="empty-subtitle">{{ 'MY_PROJECTS.NO_PROJECT.CONTENT' | translate }}</p>
+        <p class="empty-title h5">{{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}</p>
+        <p class="empty-subtitle">{{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT' | translate }}</p>
         <div class="empty-action">
           <button [routerLink]="'/projects/new'" class="btn btn-lg btn-primary" (click)="$event.preventDefault()">
-            {{ 'MY_PROJECTS.ADD_PROJECT' | translate }} <i class="icon icon-arrow-right"></i>
+            {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }} <i class="icon icon-arrow-right"></i>
           </button>
         </div>
       </div>
@@ -39,6 +40,7 @@
           <div class="title"><a [routerLink]="getRelevantLink(project)">{{ project.name || ('MY_PROJECTS.UNTITLED' | translate) }}</a></div>
           <div class="metas">{{ project.owner ? project.owner.firstName + ' ' + project.owner.lastName : "N/A" }}
             <span *ngIf="project.owner && project.owner.companyName"> / {{ project.owner.companyName }}</span>
+            <span>&nbsp;({{project.domain.toUpperCase()}})&nbsp;</span>
             • {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
             • {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
             • <a (click)="(selectedProjectIdToBeDeleted = project._id) && $event.preventDefault()" class="text-error c-hand">
