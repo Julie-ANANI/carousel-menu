@@ -38,6 +38,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   private _showDetails = true;
   private _innoid: string;
 
+  public activeSection: string;
   public today: Number;
   public objectKeys = Object.keys;
   public mapInitialConfiguration: {[continent: string]: boolean};
@@ -84,12 +85,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     const sections = Array.from(
-      document.getElementById('answer-wrapper').querySelectorAll('section')
+      document
+        .getElementById('answer-wrapper')
+        .querySelectorAll('section')
     );
-    window.onscroll = function() {
-      const scrollPosY = window.pageYOffset | document.body.scrollTop;
-      const section = sections.find((n) => scrollPosY < n.getBoundingClientRect().top);
-      if (section) { console.log(section.id); }
+    window.onscroll = () => {
+      const scrollPosY = document.body.scrollTop;
+      const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
+      this.activeSection = section ? section.id : '';
     };
   }
 

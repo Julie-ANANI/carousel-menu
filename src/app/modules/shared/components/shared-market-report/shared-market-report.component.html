@@ -60,12 +60,13 @@
           <!-- Sidebar -->
           <div class="question-wrapper">
             <ul>
-              <li>
+              <li [ngClass]="{'active': activeSection === 'professionals'}">
                 <a pageScroll href="#professionals">
                   {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }} <i class="icon icon-arrow-right"></i>
                 </a>
               </li>
-              <li *ngFor="let question of cleaned_questions">
+              <li *ngFor="let question of cleaned_questions"
+                  [ngClass]="{'active': activeSection === question.identifier}">
                 <a pageScroll [href]="'#' + question.identifier">
                   {{ question.title | multiling:lang }} <i class="icon icon-arrow-right"></i>
                 </a>
