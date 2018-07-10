@@ -25,6 +25,7 @@
           <div class="form-group text-center">
             <label class="form-label h3">{{ "PRESETS.SECTION.EDIT.ADD" | translate }}</label>
             <app-autocomplete-input (update)="addQuestion($event)"
+                                    [forceSelection]="true"
                                     [config]="addQuestionConfig"></app-autocomplete-input>
           </div>
           <button type="submit" class="btn btn-primary centered" (click)="save($event)">{{ 'PRESETS.SECTION.EDIT.SAVE' | translate }}</button>

@@ -37,7 +37,7 @@
             <span *ngIf="innovationCardEditingIndex === i">
               <span class="text-link" (click)="showPreview($event)">
                 {{ 'COMMON.PREVIEW' | translate }}</span>
-              <span *ngIf="project.innovationCards?.length > 1" class="separator">/</span>
+              <span *ngIf="project.innovationCards?.length > 1 && projectStatus" class="separator">/</span>
               <span
                 *ngIf="project.innovationCards?.length > 1 && projectStatus"
                 (click)="deleteModal(innovationCard._id, innovationCard.lang)"
@@ -52,7 +52,7 @@
           <div class="columns">
 
             <!-- Ques -->
-            <div class="column col-md-12 col-6 col-mx-auto">
+            <div class="column col-md-12 col-6" [ngClass]="{ 'col-12' : isAdmin, 'col-mx-auto' : !isAdmin }">
 
               <div *ngFor="let innovationItem of project.innovationCards; let i = index">
                 <div *ngIf="innovationCardEditingIndex === i">
@@ -75,7 +75,7 @@
                         name="title"
                         #title="ngModel"
                         [(ngModel)]="project.innovationCards[i].title"
-                        [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
+                        [attr.placeholder]=""
                         (ngModelChange)="notifyModelChanges($event)"
                         required
                         [ngClass]="{'borderRed': showTitleError}"
@@ -146,8 +146,8 @@
                       (keyup)="showProblemError = false">
                     </textarea>
                       <div class="charRemaining">
-                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].problem.length | characterCountdown:500)}">
-                        {{ project.innovationCards[i].problem.length | characterCountdown:500 }}
+                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].problem.length | characterCountdown:1000)}">
+                        {{ project.innovationCards[i].problem.length | characterCountdown:1000 }}
                       </span>
                       </div>
                       <div class="form-error" *ngIf="problem.touched && problem.invalid || showProblemError">
@@ -182,8 +182,8 @@
                       (keyup)="showSolutionError = false">
                     </textarea>
                       <div class="charRemaining">
-                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:500)}">
-                        {{ project.innovationCards[i].solution.length | characterCountdown:500 }}
+                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:1000)}">
+                        {{ project.innovationCards[i].solution.length | characterCountdown:1000 }}
                       </span>
                       </div>
                       <div class="form-error" *ngIf="solution.touched && solution.invalid || showSolutionError">
@@ -341,9 +341,9 @@
             <!-- /Ques -->
 
             <!-- Help -->
-            <div class="column col-6 col-mx-auto hide-md help-wrapper">
+            <div *ngIf="!isAdmin" class="column col-6 col-mx-auto hide-md help-wrapper">
               <div class="bot-wrapper text-center">
-                <span class="bot-rect">We are working very hard. Something cool is coming soon...</span>
+                <span class="bot-rect">{{ 'PROJECT_MODULE.SETUP.PITCH.BOT.HELP' | translate }}</span>
                 <br>
                 <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
                 <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>

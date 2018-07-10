@@ -7,6 +7,7 @@ import { Answer } from '../../../../../../models/answer';
 import { Filter } from '../../models/filter';
 import { Question } from '../../../../../../models/question';
 import { Innovation } from '../../../../../../models/innovation';
+import { Tag } from '../../../../../../models/tag';
 
 @Component({
   selector: 'app-question-section',
@@ -23,6 +24,7 @@ export class QuestionSectionComponent implements OnInit {
   private _answersWithComment: Array<Answer> = [];
   private _answersToShow: Array<Answer> = [];
   private _readonly: boolean;
+  private _tags: Array<Tag>;
   private _stats: {nbAnswers?: number, percentage?: number};
 
   @Input() set answers(value: Array<Answer>) {
@@ -80,6 +82,23 @@ export class QuestionSectionComponent implements OnInit {
         default:
           this._answersToShow = this._answersToShow.filter((a) => (a.answers[id + 'Quality'] !== 0));
       }
+
+      // calculate tags list
+      this._tags = this._answersToShow.reduce((tagsList, answer) => {
+        const answerTags = answer.answerTags[id];
+        if (Array.isArray(answerTags)) {
+          answerTags.forEach((t) => {
+            const previousTag = tagsList.find((t2) => t2._id === t._id);
+            if (previousTag) {
+              previousTag['count'] += 1;
+            } else {
+              t['count'] = 1;
+              tagsList.push(t);
+            }
+          });
+        }
+        return tagsList;
+      }, []).sort((a, b) => b.count - a.count);
 
       // filter comments
       switch (this.question.controlType) {
@@ -141,5 +160,6 @@ export class QuestionSectionComponent implements OnInit {
   get answersToShow(): Array<Answer> { return this._answersToShow; }
   get answersWithComment(): Array<Answer> { return this._answersWithComment; }
   get stats() { return this._stats; }
+  get tags() { return this._tags; }
   get lang(): string { return this._translateService.currentLang; }
 }

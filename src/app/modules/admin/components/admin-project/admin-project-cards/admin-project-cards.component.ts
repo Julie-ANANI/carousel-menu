@@ -11,53 +11,44 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 })
 export class AdminProjectCardsComponent implements OnInit {
 
-  private _project: Innovation;
-  private _formData: any = {};
-  public shouldSave = false; // To prevent leaving page
-  public lastSavedDate: Date;
+  project: Innovation;
+  shouldSave = false;
+  lastSavedDate: Date;
 
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _innovationService: InnovationService,
-              private _notificationsService: TranslateNotificationsService) {}
+  constructor(private activatedRoute: ActivatedRoute,
+              private innovationService: InnovationService,
+              private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit(): void {
-    this._project = this._activatedRoute.snapshot.parent.data['innovation'];
+    this.project = this.activatedRoute.snapshot.parent.data['innovation'];
   }
 
   public save(event: Event): void {
     event.preventDefault();
-    this._innovationService.save(this._project._id, this._formData)
+    this.innovationService.save(this.project._id, this.project)
       .first().subscribe((data: Innovation) => {
         this.lastSavedDate = new Date(data.updated);
         this.shouldSave = false;
       }, err => {
-        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+        this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
   }
 
-  public updateCards(event: any) {
-    this.shouldSave = true;
-    this._formData = event;
-  }
-
   public updateProject(event: Innovation) {
-    this._project = event;
+    this.project = event;
+    this.shouldSave = true;
   }
 
   public validateProject (): void {
-    this._innovationService.validate(this._project._id).first().subscribe(_ => {
-      this._notificationsService.success('Projet validé', 'Le projet a bien été validé');
+    this.innovationService.validate(this.project._id).first().subscribe(_ => {
+      this.translateNotificationsService.success('Projet validé', 'Le projet a bien été validé');
     });
   }
 
   public askRevision (): void {
-    this._innovationService.askRevision(this._project._id).first().subscribe(_ => {
-      this._notificationsService.success('Projet en révision', 'Le projet a été passé en status de révision, veuillez avertir le propriétaire des chagements à effectuer');
+    this.innovationService.askRevision(this.project._id).first().subscribe(_ => {
+      this.translateNotificationsService.success('Projet en révision', 'Le projet a été passé en status de révision, veuillez avertir le propriétaire des chagements à effectuer');
     });
-  }
-
-  get project() {
-    return this._project;
   }
 
 }

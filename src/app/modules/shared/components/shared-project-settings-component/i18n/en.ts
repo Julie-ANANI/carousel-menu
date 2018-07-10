@@ -11,5 +11,8 @@ export const PROJECT = {
     'TWITTER': 'Share on Twitter',
     'FACEBOOK': 'Share on Facebook',
     'MAIL': 'Share by email',
+  },
+  'BOT': {
+    'HELP': 'Besoin d\'inspiration ? Voici 2 projets concis et bien décrits à découvrir ici et là.'
   }
 };

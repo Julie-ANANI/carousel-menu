@@ -26,11 +26,13 @@
               <button class="btn" (click)="linkedInSignIn($event)">
                 <i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
               </button>
-            </div>
 
-            <!-- Or -->
-            <div class="or-wrapper text-center">
-              <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
+
+              <!-- Or -->
+              <div class="or-wrapper text-center">
+                <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
+              </div>
+
             </div>
 
             <form novalidate (submit)="onSubmit()" [formGroup]="formData">

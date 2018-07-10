@@ -1,4 +1,4 @@
 export const SURVEY = {
-  'NOQUIZ': 'Il n\'y a actuellement aucun quiz créé.',
+  'NOQUIZ': 'Le questionnaire sera visible lorsque votre projet sera validé.',
   'DONTSHAREQUIZ': 'Please don\'t share this link, answers won\'t be kept'
 };

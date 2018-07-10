@@ -131,11 +131,14 @@ export const COMMON = {
   'PRESET': 'Configuration',
   'PRESETS': 'Configurations',
   'CLIENT_SIDE': 'Interface Client',
+  'EDIT_USER': 'Modifier l\'utilisateur',
+  'EDIT_PROFESSIONAL': 'Modifier professionnel',
 
   'SORT': {
     'BY_NAME': 'Nom',
     'BY_COMPANY': 'Entreprise',
     'BY_AUTHOR': 'Auteur',
+    'BY_DOMAIN': 'Domain',
     'BY_CREATION_DATE': 'Création',
     'BY_UPDATE_DATE': 'Mise à jour'
   }

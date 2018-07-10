@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../models/innovation';
@@ -20,6 +19,21 @@ export class AdminProjectDetailsComponent implements OnInit {
   private _project: Innovation;
   private _dirty = false;
   private _domain = {fr: '', en: ''};
+  private _editInstanceDomain = false;
+
+  private _updateInstanceDomainConfig: {
+      placeholder: string,
+      initialData: Array<string>,
+      type: string,
+      identifier: string,
+      canOrder: boolean
+  } = {
+      placeholder: 'Partners domain list',
+      initialData: [],
+      type: 'domain',
+      identifier: 'name',
+      canOrder: false
+  };
 
 
   public formData: FormGroup = this._formBuilder.group({
@@ -30,14 +44,12 @@ export class AdminProjectDetailsComponent implements OnInit {
   public presetAutocomplete: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _notificationsService: TranslateNotificationsService,
-              private _titleService: TranslateTitleService,
+              private _translateService: TranslateService,
               private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this._titleService.setTitle('MY_PROJECTS.TITLE');
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this.presetAutocomplete = {
       placeholder: 'preset',
@@ -70,6 +82,26 @@ export class AdminProjectDetailsComponent implements OnInit {
         this._notificationsService.error('ERROR.ERROR', err);
       });
   }
+
+  public startEditInstanceDomain(event: Event): void {
+      this._editInstanceDomain = true;
+  }
+
+  public endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
+      this._editInstanceDomain = false;
+      this._project.domain = event.value[0].name || "umi";
+      this._dirty = true;
+  }
+
+  public buildInstanceDomainListConfig( initialData: Array<any>): any {
+      this._updateInstanceDomainConfig.initialData = initialData || [];
+      return this._updateInstanceDomainConfig;
+  }
+
+  public updateInstanceDomain(event: any): void {
+    this.endEditInstanceDomain(event);
+  }
+
 
   public updatePreset(event: {value: Array<Preset>}): void {
     this._project.preset = event.value[0];
@@ -161,7 +193,22 @@ export class AdminProjectDetailsComponent implements OnInit {
     });
   }
   set domain(domain: {en: string, fr: string}) { this._domain = domain; }
-  get domain() { return this._domain; }
-  get project() { return this._project; }
-  get dirty() { return this._dirty; }
+
+
+  get domain() {
+    return this._domain;
+  }
+
+  get project() {
+    return this._project;
+  }
+
+  get dirty() {
+    return this._dirty;
+  }
+
+  get editInstanceDomain(): boolean {
+      return this._editInstanceDomain;
+  }
+
 }

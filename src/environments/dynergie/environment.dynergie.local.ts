@@ -6,7 +6,8 @@ export const environment = {
   domain: 'dynergie',
   innovationUrl: 'http://localhost:3080',
   quizUrl: 'http://localhost:4200',
-  companyURL: 'www.dynergie.eu',
+  companyURL: 'https://www.dynergie.eu',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/v1513701711/app/logo-dynergie.png',
-  background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg'
+  background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg',
+  logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1513701711/app/logo-dynergie.png'
 };

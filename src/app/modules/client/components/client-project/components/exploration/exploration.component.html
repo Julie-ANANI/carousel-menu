@@ -10,8 +10,6 @@
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span class="bot-rect">
             {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.A' | translate }}
-            <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.B' | translate }}</span>
-            {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.C' | translate }}
           </span>
             <br>
             <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
@@ -44,13 +42,13 @@
         <!-- /Bot messages -->
 
         <!-- Project under evaluating and evaluating done status-->
-        <div *ngIf="projectStatus === 'EVALUATING' || projectStatus === 'EVALUATING_DONE'">
+        <div *ngIf="projectStatus === 'EVALUATING' || projectStatus === 'DONE'">
           <shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="project._id" [adminMode]="false" [questions]="questions"></shared-answer-modal>
 
           <!-- Title and contact button section -->
           <div class="title-wrapper">
             <h1 *ngIf="projectStatus === 'EVALUATING'" class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING' | translate }}</h1>
-            <h1 *ngIf="projectStatus === 'EVALUATING_DONE'" class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING_DONE' | translate }}</h1>
+            <h1 *ngIf="projectStatus === 'DONE'" class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.TITLE.EVALUATING_DONE' | translate }}</h1>
             <a class="btn btn-primary" href="{{ contactUrl }}">{{'PROJECT_MODULE.EXPLORATION.CONTACT_BUTTON' | translate}}</a>
           </div>
 
@@ -59,17 +57,24 @@
 
             <!-- Status -->
             <div class="status-wrapper">
-              <h6>{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.A' | translate }}</h6>
+              <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.TITLE' | translate }}</h2>
 
               <div class="info-status">
-                <p><i class="fas fa-check"></i>&nbsp;&nbsp;<span class="text-white">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.G' | translate }}</span></p>
+                <p><i class="fas fa-check"></i>&nbsp;&nbsp;<span class="text-white">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.CREATED' | translate }}</span></p>
                 <p><span class="text-white">{{ project.created | date }}</span></p>
               </div>
 
-              <div class="info-status">
-                <p><i class="fas fa-check"></i>&nbsp;&nbsp;<span class="text-white">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.B' | translate }}</span></p>
-                <p><span class="text-white">{{ project.launched | date }}</span></p>
-              </div>
+              <ng-container *ngFor="let action of project.statusLogs">
+                <div class="info-status">
+                  <p>
+                    <i class="fas" [ngClass]="(action.action === 'REJECT') ? 'fa-times' : 'fa-check'"></i>&nbsp;&nbsp;
+                    <span class="text-white">
+                      {{('PROJECT_MODULE.EXPLORATION.STATUS_TEXT.' + action.action) | translate }}
+                    </span>
+                  </p>
+                  <p><span class="text-white">{{ action.date | date }}</span></p>
+                </div>
+              </ng-container>
 
             </div>
 
@@ -177,7 +182,7 @@
               <!-- Answers -->
               <div class="info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
-                <h5 class="text-center">{{ answers?.length || 0 }}</h5>
+                <!-- <h5 class="text-center">{{ answers?.length || 0 }}</h5> -->
               </div>
 
             </div>
@@ -212,12 +217,6 @@
               [config]="config"
               (configChange)="loadAnswers()"
               (editRow)="seeAnswer($event)"></app-shared-table>
-          </div>
-
-          <!-- Insight section -->
-          <div class="section-light-container">
-            <h3>{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h3>
-            <app-answers-list [answers]="answers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
           </div>
 
         </div>

@@ -1,28 +1,31 @@
 export const EXPLORATION = {
   'TITLE': {
-    'EDITING': 'Les informations sur le marché de votre projet seront bientôt disponibles',
-    'SUBMITTED': 'Collecte des informations sur le marché de votre projet',
-    'EVALUATING': 'Collecte des informations sur le marché de votre projet',
-    'EVALUATING_DONE': 'Les perspectives du marché de votre projet'
+    'EDITING': 'Lancement de votre étude imminent...',
+    'SUBMITTED': 'En attente de validation de votre projet...',
+    'EVALUATING': 'Collecte des insights marché en cours',
+    'EVALUATING_DONE': 'Synthèse de vos insights marché'
   },
 
   'MESSAGE': {
-    'SUBMITTED': 'Votre projet est en cours de validation. Nous reviendrons vers vous rapidement!',
+    'SUBMITTED': 'Votre projet est en cours de validation. Nous revenons vers vous rapidement !',
     'EDITING': {
-      'A': 'S\'il vous plaît terminer',
+      'A': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',
       'B': 'la configuration de votre projet',
       'C': 'et le soumettre.'
     },
-    'REVIEWING': 'Veuillez modifier les modifications de votre projet et renvoyez-le.'
+    'REVIEWING': 'Votre projet a besoin d\'être modifié. VousPlease read our comments.'
   },
 
   'STATUS_TEXT': {
-    'A': 'Statut',
-    'B': 'Targeting',
+    'TITLE': 'Statut',
     'C': 'Emails sent',
     'D': 'Relaunch',
     'F': 'Last relaunch',
-    'G': 'Created'
+    'CREATED': 'Créé',
+    'SUBMIT': 'Soumis',
+    'REJECT': 'Rejetté',
+    'VALIDATE': 'Validé',
+    'FINISH': 'Terminé'
   },
 
   'CONTACT_BUTTON': 'Nous contacter',

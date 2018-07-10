@@ -8,6 +8,7 @@ import { Subject } from 'rxjs/Subject';
 import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import {InnovCard} from '../../../../models/innov-card';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class AdminDashboardComponent implements OnInit {
 
   sidebarTemplateValue: Template = {};
   private _selectedInnovation: InnovCard;
+  private _selectedBatch: any;
 
   private _weekBatches: Array<any> = [[], [], [], [], []];
   // => [['DATE', batch, batch,..]...]
@@ -57,7 +59,8 @@ export class AdminDashboardComponent implements OnInit {
               private _dashboardService: DashboardService,
               private _searchService: SearchService,
               private _authService: AuthService,
-              private _innovationService: InnovationService) { }
+              private _innovationService: InnovationService,
+              private _translateService: TranslateService) { }
 
   ngOnInit(): void {
 
@@ -117,8 +120,46 @@ export class AdminDashboardComponent implements OnInit {
   }
 
 
+  public getState(b: any) {
+    const day = this._dateNow.getDay();
+    let Now = new Date(this._dateNow);
+    const beginWeek = new Date(Now.setDate(Now.getDate() - day));
+    Now = new Date(this._dateNow);
+    const endWeek = new Date(Now.setDate(Now.getDate() - day + 6));
+    const FM = new Date(b.firstMail);
+    const SM = new Date(b.secondMail);
+    const TM = new Date(b.thirdMail);
+    if ((beginWeek < FM) && (FM < endWeek)) {
+      return 0;
+    }
+    if ((beginWeek < SM) && (SM < endWeek)) {
+      return 1;
+    }
+    if ((beginWeek < TM) && (TM < endWeek)) {
+      return 2;
+    }
+  }
+
+  public getDateString(d: any): string {
+    let result = '';
+    let day = d.split('/')[0];
+    let month = d.split('/')[1];
+    day = ('0' + day).slice(-2);
+    month = Number(month);
+    month ++;
+    month = month.toString();
+    month = ('0' + month).slice(-2);
+    if (this._translateService.currentLang === 'fr') {
+      result = day + '/' + month;
+    } else {
+      result = month + '/' + day;
+    }
+    return result;
+  }
+
   showPreview(event: Event, batch: any) {
     event.preventDefault();
+    this._selectedBatch = batch;
     this._innovationService.getInnovationCard(batch.innovation.innovationCards[0]).first().subscribe( card => {
       this._selectedInnovation = card;
       this.sidebarTemplateValue = {
@@ -151,8 +192,16 @@ export class AdminDashboardComponent implements OnInit {
   get selectedInnovation(): any {
     return this._selectedInnovation;
   }
+  get selectedBatch(): any {
+    return this._selectedBatch;
+  }
+
+  get dateNow(): any {
+    return this._dateNow;
+  }
 
   get modalSelected(): boolean {
     return this._modalSelected;
   }
+
 }

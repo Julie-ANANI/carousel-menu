@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateTitleService } from '../../../../services/title/title.service';
 import { Innovation } from '../../../../models/innovation';
-import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
+import { Template } from '../../../shared/components/shared-sidebar/interfaces/template';
 
 const DEFAULT_PAGE = 'setup';
 
@@ -13,14 +14,14 @@ const DEFAULT_PAGE = 'setup';
 
 export class ClientProjectComponent implements OnInit {
 
-  @Input() project: Innovation;
-
-  sidebarTemplateValue: Template = {};
+  private _project: Innovation;
   private _imgType: string;
   private _currentPage: string;
   private _scrollButton = false;
+  sidebarTemplateValue: Template = {};
 
   constructor(private activatedRoute: ActivatedRoute,
+              private titleService: TranslateTitleService,
               private router: Router) {
     // override the route reuse strategy
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
@@ -31,26 +32,28 @@ export class ClientProjectComponent implements OnInit {
 
   ngOnInit() {
     const url = this.router.routerState.snapshot.url.split('/');
-
     this._currentPage = url ? url[3] || DEFAULT_PAGE : DEFAULT_PAGE;
 
-    if (!this.project) {
-      this.project = this.activatedRoute.snapshot.data['innovation'];
-    }
+    this._project = this.activatedRoute.snapshot.data['innovation'];
+    this.titleService.setTitle(this._project.name);
 
     // Getting the project type
-    if (this.project.type === 'leads') {
-      this._imgType = 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-leads.svg';
-    } else if (this.project.type === 'apps') {
-      this._imgType = 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-apps.svg';
-    } else {
-      this._imgType = 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-insights.svg';
+    switch (this._project.type) {
+      case 'leads':
+        this._imgType = 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-leads.svg';
+        break;
+      case 'apps':
+        this._imgType = 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-apps.svg';
+        break;
+      case 'insights':
+        this._imgType = 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-insights.svg';
+        break;
     }
 
   }
 
   addCollaborators (event: any): void {
-    this.project.collaborators = this.project.collaborators.concat(event);
+    this._project.collaborators = this._project.collaborators.concat(event);
   }
 
   editCollaborator(event: Event) {
@@ -67,11 +70,7 @@ export class ClientProjectComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    if (this.getCurrentScrollTop() > 10) {
-      this._scrollButton = true;
-    } else {
-      this._scrollButton = false;
-    }
+    this._scrollButton = (this.getCurrentScrollTop() > 10);
   }
 
   getCurrentScrollTop() {
@@ -84,6 +83,10 @@ export class ClientProjectComponent implements OnInit {
   scrollToTop(event: Event) {
     event.preventDefault();
     window.scrollTo(0, 0);
+  }
+
+  get project() {
+    return this._project;
   }
 
   get scrollButton(): boolean {

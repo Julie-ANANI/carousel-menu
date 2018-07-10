@@ -16,10 +16,9 @@
           id="collaborator"
           type="text"
           formControlName="collaboratorEmail"
-          placeholder="jhon@catco.com">
+          placeholder="elon.musk@gmail.com">
         <div class="form-error" *ngIf="formData.get('collaboratorEmail').touched && formData.get('collaboratorEmail').invalid">
           <span *ngIf="formData.get('collaboratorEmail').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-          <span *ngIf="formData.get('collaboratorEmail').hasError('email') && formData.get('collaboratorEmail').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
         </div>
       </div>
 

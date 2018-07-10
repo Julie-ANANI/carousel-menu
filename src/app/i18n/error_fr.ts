@@ -1,5 +1,5 @@
 export const ERROR = {
-  'ERROR': 'Erreur',
+  'ERROR': 'Oups...',
   'SUCCESS': 'Succès',
   'CANNOT_REACH': 'Le serveur ne répond pas.',
   'FORM_ERROR': 'Erreur de formulaire',
@@ -9,8 +9,8 @@ export const ERROR = {
   'PAGE_NOT_FOUND': 'La page n\'a pas pu être trouvée.',
 
   'FORM': {
-    'PITCH_FORM': 'Merci de répondre aux champs du formulaire de terrain.',
-    'TARGETING_FORM': 'Merci de répondre aux champs du formulaire de ciblage.'
+    'PITCH_FORM': 'Veuillez remplir tous les champs avant de soumettre votre projet. Merci !',
+    'TARGETING_FORM': 'Il manque quelques informations dans l\'onglet "Ciblage".'
   },
 
   'LOGIN': {
@@ -22,16 +22,16 @@ export const ERROR = {
     'CHANGE_PASSWORD': 'Pour changer votre mot de passe, veuillez cliquer sur le lien que nous venons de vous envoyer par email.',
     'EMAIL_NOT_FOUND': 'Le courriel entré n\'a pu être trouvé, veuillez le vérifier et réessayer.',
     'LOGOUT': 'Déconnexion',
-    'LOGOUT_TEXT': 'Vous avez été déconnecté(e) avec succès.',
+    'LOGOUT_TEXT': 'Vous avez été déconnecté(e).',
   },
 
   'ACCOUNT': {
     'UPDATE': 'Mise à jour réussie',
     'UPDATE_TEXT': 'Votre profil a bien été mis à jour.',
     'DELETED': 'Compte supprimé',
-    'DELETED_TEXT': 'Le compte a bien été supprimé.',
+    'DELETED_TEXT': 'Le compte a été supprimé.',
     'PASSWORD_UPDATED': 'Mot de passe mis à jour.',
-    'PASSWORD_UPDATED_TEXT': 'Votre mot de passe a bien été mis à jour.',
+    'PASSWORD_UPDATED_TEXT': 'Votre mot de passe a été mis à jour.',
     'SAME_PASSWORD': 'Les deux mots de passe doivent être identiques.'
   },
 
@@ -41,11 +41,11 @@ export const ERROR = {
     'CANT_EDIT': 'Vous ne pouvez pas éditer ce projet.',
     'SAVED': 'Sauvegardé',
     'DELETED': 'Supprimé',
-    'DELETED_TEXT': 'Votre projet a été supprimé avec succès dans la langue spécifiée.',
+    'DELETED_TEXT': 'Votre projet a été supprimé dans la langue spécifiée.',
     'SAVED_TEXT': 'Votre projet a été enregistré.',
     'SAVE_ERROR': 'Veuillez sauvegarder toutes vos modifications avant de continuer.',
     'SUBMITTED': 'Soumis',
-    'SUBMITTED_TEXT': 'Votre projet a été envoyé pour valider.',
+    'SUBMITTED_TEXT': 'Votre projet a été envoyé pour validation.',
     'NOT_ALLOWED': 'Vous n\'êtes plus autorisé à effectuer cette action.'
   },
   'TAGS': {

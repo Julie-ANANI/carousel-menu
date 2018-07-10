@@ -1,14 +1,14 @@
 export const MARKET_REPORT = {
   'TITLE': {
-    'EDITING': 'Le potentiel du marché de votre projet sera bientôt disponible',
-    'SUBMITTED': 'Explorer le potentiel du marché de votre projet',
-    'EVALUATING': 'Informations sur le marché de votre projet'
+    'EDITING': 'Lancement de votre étude imminent...',
+    'SUBMITTED': 'En attente de validation de votre projet...',
+    'EVALUATING': 'Collecte des insights marché en cours'
   },
 
   'MESSAGE': {
-    'SUBMITTED': 'Votre projet est en cours de validation. Nous reviendrons vers vous rapidement!',
+    'SUBMITTED': 'Votre projet est en cours de validation. Nous revenons vers vous rapidement !',
     'EDITING': {
-      'A': 'S\'il vous plaît terminer',
+      'A': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',
       'B': 'la configuration de votre projet',
       'C': 'et le soumettre.'
     },
@@ -18,8 +18,8 @@ export const MARKET_REPORT = {
 
   'BUTTON': {
     'DOWNLOAD': 'Télécharger',
-    'STATUS_TO_DONE': 'Finaliser la synthése',
-    'STATUS_TO_EVALUATING': 'Modifier la synthése'
+    'STATUS_TO_DONE': 'Finaliser la synthèse',
+    'STATUS_TO_EVALUATING': 'Modifier la synthèse'
   },
 
   // 'TITLE': 'Exploration du potentiel marché',

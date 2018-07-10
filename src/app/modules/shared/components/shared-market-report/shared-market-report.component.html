@@ -4,7 +4,7 @@
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- Bot messages -->
-        <div *ngIf="!adminSide">
+        <div *ngIf="!adminSide && projectStatus !== 'DONE'">
           <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + projectStatus) | translate }}</h1>
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
             <span class="bot-rect" [ngSwitch]="projectStatus">
@@ -15,10 +15,6 @@
                 </ng-container>
                 <ng-container *ngIf="!project.reviewing">
                   {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }}
-                  <span [ngStyle]="{ 'color': '#FFB300' }">
-                    {{ 'MARKET_REPORT.MESSAGE.EDITING.B' | translate }}
-                  </span>
-                  {{ 'MARKET_REPORT.MESSAGE.EDITING.C' | translate }}
                 </ng-container>
               </ng-container>
 
@@ -64,12 +60,13 @@
           <!-- Sidebar -->
           <div class="question-wrapper">
             <ul>
-              <li>
+              <li [ngClass]="{'active': activeSection === 'professionals'}">
                 <a pageScroll href="#professionals">
                   {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }} <i class="icon icon-arrow-right"></i>
                 </a>
               </li>
-              <li *ngFor="let question of cleaned_questions">
+              <li *ngFor="let question of cleaned_questions"
+                  [ngClass]="{'active': activeSection === question.identifier}">
                 <a pageScroll [href]="'#' + question.identifier">
                   {{ question.title | multiling:lang }} <i class="icon icon-arrow-right"></i>
                 </a>
@@ -86,7 +83,7 @@
           </div>
 
           <!-- Answer section -->
-          <div class="answer-wrapper">
+          <div id="answer-wrapper">
 
             <!-- Origin of responses -->
             <div class="section-container">
@@ -109,14 +106,14 @@
             </div>
 
             <!-- Professionals -->
-            <div class="section-container">
-              <h2 class="section-heading" id="professionals">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
+            <section class="section-container" id="professionals">
+              <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
               <div class="professional">
                 <div *ngFor="let answer of filteredAnswers" class="profile">
                   <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
                 </div>
               </div>
-            </div>
+            </section>
 
             <!-- Other questions -->
             <div *ngFor="let question of questions" class="section-container">
