@@ -85,6 +85,10 @@ export const PITCH = {
     'ERROR': 'Diffusion is required.'
   },
 
+  'BOT': {
+    'HELP': 'Besoin d\'inspiration ? Voici 2 projets concis et bien décrits à découvrir ici et là.'
+  },
+
   'INNOVATION_PREVIEW': 'Preview',
 
 };
