@@ -20,9 +20,9 @@ export class AutocompleteInputComponent implements OnInit {
   @Output() update = new EventEmitter<any>();
   @Output() add = new EventEmitter<any>();
   @Output() remove = new EventEmitter<any>();
-
-
+  
   @Input() canEdit = true;
+  @Input() forceSelection = false; // si le booléen est à true, on accepte un string hors auto-complete
   @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
   @Input() adminMode = false;
   @Input() multiLangObjects = false;
@@ -104,8 +104,9 @@ export class AutocompleteInputComponent implements OnInit {
     }
   };
 
-  public canAdd(): boolean {
-    return !this.onlyOne || this.answerList.length === 0;
+  get canAdd(): boolean {
+    return (!this.onlyOne || this.answerList.length === 0) &&
+      (!this.forceSelection || typeof this.inputForm.get('answer').value !== 'string');
   }
 
   addProposition(val: any): void {
