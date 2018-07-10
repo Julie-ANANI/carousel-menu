@@ -200,7 +200,6 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public poubelle(batch: Batch) {
-    console.log(batch.status === 0);
     return batch.status === 0;
   }
 
@@ -415,6 +414,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   onSubmitEditBatch(result: any) {
+    console.log(result);
     switch (this.currentStep) {
       case 0:
         this.currentBatch.firstMail = this._computeDate(result.date, result.time);
@@ -429,16 +429,16 @@ export class AdminCampaignMailsComponent implements OnInit {
     this._campaignService.updateBatch(this.currentBatch).first().subscribe( (batch => {
       this.stats.batches[this._getBatchIndex(batch)] = batch;
       this.templateSidebar = { animate_state: 'inactive', title: 'COMMON.EDIT', type: 'editBatch'};
-      this._tableBatch.forEach((table, index) => {
+      this._tableBatch.every((table, index) => {
         if (table._selector === batch._id) {
           this._tableBatch[index] = this.generateTableBatch(batch);
-          // TODO : arreter l'itération
           this._notificationsService.success('ERROR.SUCCESS', '');
+          return false;
         }
+        return true;
       });
     }), error => {
       this._notificationsService.success('ERROR.ERROR', '');
-      console.log(error);
     });
   }
 
