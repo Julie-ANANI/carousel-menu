@@ -12,7 +12,6 @@ import 'rxjs/add/operator/debounceTime';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Location } from '@angular/common';
-import {Template} from '../shared-sidebar/interfaces/template';
 
 @Component({
   selector: 'app-shared-project-edit-cards',
@@ -28,8 +27,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Output() projectChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
-
-  sidebarTemplateValue: Template = {};
+  @Output() innovationToPreview = new EventEmitter<number>();
 
   showTitleError: boolean;
   showSummaryError: boolean;
@@ -101,17 +99,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.showDiffusionError = false;
   }
 
-  showPreview(event: Event) {
+  onLangSelect(event: Event, index: number) {
     event.preventDefault();
-    this.sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW',
-      size: '726px'
-    };
-  }
-
-  closeSidebar(value: string) {
-    this.sidebarTemplateValue.animate_state = value;
+    this.innovationCardEditingIndex = index;
+    this.resetErrorValue();
+    this.innovationToPreview.emit(this.innovationCardEditingIndex);
   }
 
   /**
@@ -145,6 +137,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
             this.project.innovationCards.push(data);
             this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
             this.notifyModelChanges(event);
+            this.onLangSelect(event, this.innovationCardEditingIndex);
           });
         }
       } else {
@@ -247,10 +240,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.innovationService.removeInnovationCard(this.project._id, this._deleteInnovCardId)
       .subscribe((res) => {
       this.project.innovationCards = this.project.innovationCards.filter((card) => card._id !== this._deleteInnovCardId);
-      this.innovationCardEditingIndex -= 1;
+      // this.innovationCardEditingIndex -= 1;
       this._showDeleteModal = false;
       this.notifyModelChanges(event);
-      this.resetErrorValue();
+      this.onLangSelect(event, 0);
     }, err => {
       this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       this._showDeleteModal = false;

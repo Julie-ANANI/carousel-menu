@@ -40,6 +40,9 @@
             <h2 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h2>
             <!-- Buttons -->
             <div class="func-btn-wrapper">
+              <span>
+                <button class="btn ghost-primary" (click)="showInnovation($event)">{{ 'PROJECT_MODULE.SETUP.PREVIEW_BUTTON' | translate }}</button>
+              </span>
               <span [ngClass]="saveButtonClass">
                 <div class="circle-check"><i class="fas fa-save"></i></div>
                 <button class="btn btn-primary ghost-primary" (click)="saveProject($event)">
@@ -95,7 +98,8 @@
           [project]="project"
           [changesSaved]="changesSaved"
           (saveChanges)="saveInnovation($event)"
-          [showPitchFieldError]="showPitchFieldError">
+          [showPitchFieldError]="showPitchFieldError"
+          (innovationToPreview)="innovationIndex($event)">
         </app-project-pitch>
       </div>
 
@@ -141,3 +145,13 @@
     </div>
   </div>
 </div>
+
+
+<!-- Innovation preview sidebar -->
+<app-sidebar
+  [template]="sidebarTemplateValue"
+  (closeSidebar)="closeSidebar($event)">
+  <app-innovation-preview
+    [innovation]="project.innovationCards[innovationPreviewIndex]">
+  </app-innovation-preview>
+</app-sidebar>

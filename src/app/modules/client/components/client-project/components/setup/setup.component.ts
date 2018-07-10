@@ -5,6 +5,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
 import { Subject } from 'rxjs/Subject';
+import { Template } from '../../../../../shared/components/shared-sidebar/interfaces/template';
 
 const DEFAULT_TAB = 'pitch';
 
@@ -27,6 +28,9 @@ export class SetupProjectComponent implements OnInit {
   targetingFormValid: boolean;
   showTargetingFieldError: Subject<boolean> = new Subject();
   surveyCreated: boolean;
+
+  innovationPreviewIndex = 0;
+  sidebarTemplateValue: Template = {};
 
   private _currentTab: string;
   private _projectToBeSubmitted: boolean;
@@ -164,6 +168,23 @@ export class SetupProjectComponent implements OnInit {
   closeModal(event: Event) {
     event.preventDefault();
     this._projectToBeSubmitted = false;
+  }
+
+  innovationIndex(value: number) {
+    this.innovationPreviewIndex = value;
+  }
+
+  showInnovation(event: Event) {
+    event.preventDefault();
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'PROJECT_MODULE.SETUP.PREVIEW',
+      size: '726px'
+    };
+  }
+
+  closeSidebar(value: string) {
+    this.sidebarTemplateValue.animate_state = value;
   }
 
   get currentTab() {

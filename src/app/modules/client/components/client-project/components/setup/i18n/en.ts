@@ -33,6 +33,7 @@ export const SETUP = {
   'TARGETING': TARGETING,
 
   'PREVIEW': 'Preview',
+  'PREVIEW_BUTTON': 'Preview innovation'
 
 
 };

@@ -70,10 +70,10 @@
     padding-top: 44px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 
     .status-rejected, .status-validated, .status-submitted, .status-email {
-      margin-right: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 25px;
     }
 
     .radio-button {
@@ -131,7 +131,7 @@
   }
 
   .tag-wrapper {
-    padding-top: 40px;
+    padding-top: 15px;
   }
 
   .ques-wrapper {
