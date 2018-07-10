@@ -1,7 +1,7 @@
 /**
  * Created by juandavidcruzgomez on 11/09/2017.
  */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { PageScrollConfig } from 'ng2-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -21,7 +21,7 @@ import { environment} from '../../../../../environments/environment';
   styleUrls: ['./shared-market-report.component.scss']
 })
 
-export class SharedMarketReportComponent implements OnInit {
+export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   @Input() public project: Innovation;
   @Input() public adminMode: boolean;
@@ -38,6 +38,7 @@ export class SharedMarketReportComponent implements OnInit {
   private _showDetails = true;
   private _innoid: string;
 
+  public activeSection: string;
   public today: Number;
   public objectKeys = Object.keys;
   public mapInitialConfiguration: {[continent: string]: boolean};
@@ -80,6 +81,19 @@ export class SharedMarketReportComponent implements OnInit {
     this._modalAnswer = null;
     PageScrollConfig.defaultDuration = 800;
 
+  }
+
+  ngAfterViewInit() {
+    const sections = Array.from(
+      document
+        .getElementById('answer-wrapper')
+        .querySelectorAll('section')
+    );
+    window.onscroll = () => {
+      const scrollPosY = document.body.scrollTop;
+      const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
+      this.activeSection = section ? section.id : '';
+    };
   }
 
   private loadAnswers() {
