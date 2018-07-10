@@ -9,9 +9,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export class ProjectFormComponent implements OnInit, OnChanges {
 
-  /*
-     For type 'editUser', put the data into the attribute user and patch it to the formData
-  */
   @Input() set emailToBlacklist(value: any) {
     this._emailToBlacklist = value;
     this.loadBlacklist();
@@ -19,55 +16,78 @@ export class ProjectFormComponent implements OnInit, OnChanges {
 
   @Input() sidebarState: string;
   @Input() set type(type: string) {
-
+    if (type === 'addEmail') {
+      this.isBlacklist = false;
+      this.isAddEmail = true;
+    }
   }
 
   @Output() editBlacklist = new EventEmitter<any>();
+  @Output() addBlacklists = new EventEmitter<Array<string>>();
 
   isBlacklist = false;
-  projectForm: FormGroup;
+  editBlacklistForm: FormGroup = null;
+
+  isAddEmail = false;
+  addBlacklistForm: FormGroup = null;
+
   private _emailToBlacklist: any = null;
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    this.projectForm = this.formBuilder.group( {
+    this.editBlacklistForm = this.formBuilder.group( {
       email: ['', [Validators.required, Validators.email]],
       expiration: ''
+    });
+
+    this.addBlacklistForm = this.formBuilder.group( {
+      emails: ['', [Validators.required, Validators.email]]
     });
   }
 
   loadBlacklist() {
     this.isBlacklist = true;
-    if (this._emailToBlacklist && this.projectForm) {
+    if (this._emailToBlacklist && this.editBlacklistForm) {
       this._emailToBlacklist.expiration === ''
         ? this._emailToBlacklist.expiration = ''
         : this._emailToBlacklist.expiration = new Date(this._emailToBlacklist.expiration);
-      this.projectForm.patchValue(this._emailToBlacklist);
+      this.editBlacklistForm.patchValue(this._emailToBlacklist);
     }
   }
 
   onSubmit() {
     if (this.isBlacklist) {
-      const blacklist = this.projectForm.value;
+      const blacklist = this.editBlacklistForm.value;
       blacklist.expiration === '' ? blacklist.expiration = 0 : blacklist.expiration = blacklist.expiration
       blacklist._id = this._emailToBlacklist._id;
       this.editBlacklist.emit(blacklist);
+      this.isBlacklist = false;
+    }
+
+    if (this.isAddEmail) {
+      this.addBlacklists.emit(this.addBlacklistForm.value.emails);
+      this.isAddEmail = false;
     }
   }
 
   resetExpirationDate(check: boolean) {
     if (check === true) {
-      this.projectForm.value.expiration = '';
+      this.editBlacklistForm.value.expiration = '';
     } else {
-      this.projectForm.value.expiration = new Date();
+      this.editBlacklistForm.value.expiration = new Date();
     }
   }
 
+  addEmail(event: {value: Array<string>}) {
+    this.addBlacklistForm.get('email')!.setValue(event.value);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    /*if (changes.sidebarState.currentValue !== changes.sidebarState.previousValue) {
-        this.projectForm.reset();
-    }*/
+    if (changes.sidebarState.currentValue !== changes.sidebarState.previousValue) {
+        this.editBlacklistForm.reset();
+        this.addBlacklistForm.reset();
+    }
   }
 
   get emailToBlacklist(): any {

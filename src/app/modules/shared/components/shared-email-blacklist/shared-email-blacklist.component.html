@@ -1,3 +1,7 @@
+<div class="text-right">
+  <button class="btn btn-primary" (click)="addEmails()">{{'COMMON.ADD-EMAIL' | translate}}</button>
+</div>
+
 <app-shared-table [data]="tableInfos" [config]="config" (configChange)="loadData($event)" (editRow)="editBlacklist($event)"></app-shared-table>
 
 <app-sidebar
@@ -5,6 +9,6 @@
   <app-project-form
     [sidebarState]="more.animate_state"
     [type]="more.type"
-    [emailToBlacklist]="currentEmailToBlacklist" (editBlacklist)="blacklistEditionFinish($event)">
+    [emailToBlacklist]="currentEmailToBlacklist" (editBlacklist)="blacklistEditionFinish($event)" >
   </app-project-form>
 </app-sidebar>

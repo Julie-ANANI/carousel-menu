@@ -1,8 +1,8 @@
 <div class="project-form-wrapper">
   <div class="column col-11 col-mx-auto">
-    <form novalidate [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+    <form novalidate [formGroup]="editBlacklistForm" (ngSubmit)="onSubmit()">
       <!-- Save only -->
-      <div class="text-right submit-wrapper" *ngIf="isBlacklist">
+      <div class="text-right submit-wrapper" *ngIf="isBlacklist || isAddEmail">
         <button type="submit" class="btn btn-primary">
           {{'COMMON.SAVE' | translate}}
         </button>
@@ -17,9 +17,9 @@
           id="email"
           type="email"
           placeholder="john@catco.com">
-        <div class="form-error" *ngIf="projectForm.get('email').touched && projectForm.get('email').invalid">
-          <span *ngIf="projectForm.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-          <span *ngIf="projectForm.get('email').hasError('email') && projectForm.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+        <div class="form-error" *ngIf="editBlacklistForm.get('email').touched && editBlacklistForm.get('email').invalid">
+          <span *ngIf="editBlacklistForm.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+          <span *ngIf="editBlacklistForm.get('email').hasError('email') && editBlacklistForm.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
         </div>
       </div>
 
@@ -27,7 +27,7 @@
       <div class="form-group" *ngIf="isBlacklist">
         <label class="form-label" for="expirationDate">{{ 'COMMON.EXPIRATION' | translate }}</label>
         <div class="form-group-inline-left">
-          <input type="checkbox" [checked]="projectForm.value.expiration === ''"
+          <input type="checkbox" [checked]="editBlacklistForm.value.expiration === ''"
                  (change)="resetExpirationDate($event.srcElement.checked)"/>
           <label class="form-label">{{'COMMON.NEVER' | translate}}</label>
         </div>
@@ -35,9 +35,24 @@
         <input
           class="form-default"
           formControlName="expiration"
-          [value]="projectForm.value.expiration | date:'yyyy-MM-dd'"
+          [value]="editBlacklistForm.value.expiration | date:'yyyy-MM-dd'"
           id="expirationDate"
           type="date">
+      </div>
+
+      <!-- Add email -->
+      <div class="form-group" *ngIf="isAddEmail">
+        <label class="form-label">{{ 'COMMON.ADD-EMAIL' | translate }}</label>
+        <div class="input-group">
+          <app-input-list [config]="{
+                                initialData: addBlacklistForm.get('emails').value
+                              }">
+          </app-input-list>
+        </div>
+        <div class="form-error" *ngIf="addBlacklistForm.get('emails').touched && addBlacklistForm.get('emails').invalid">
+          <span *ngIf="addBlacklistForm.get('emails').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+          <span *ngIf="addBlacklistForm.get('emails').hasError('emails') && addBlacklistForm.get('emails').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+        </div>
       </div>
 
     </form>

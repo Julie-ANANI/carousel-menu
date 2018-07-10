@@ -104,6 +104,14 @@ export class SharedEmailBlacklistComponent implements OnInit {
       };
   }
 
+  addEmails() {
+    this._more = {
+      animate_state: 'active',
+      title: 'COMMON.ADD-EMAIL',
+      type: 'addEmail'
+    };
+  }
+
   closeSidebar(value: string) {
     this.more.animate_state = value;
   }
@@ -121,6 +129,10 @@ export class SharedEmailBlacklistComponent implements OnInit {
         error => {
           this._notificationsService.error('ERROR.ERROR', error.message);
         });
+  }
+
+  addEmailsToBlacklistFinish(emails: Array<string>) {
+
   }
 
   public addEntry() {

@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedRatingItemModule } from '../shared-rating-item/shared-rating-item-module';
 import { CountryFlagModule } from '../../../../directives/country-flag/country-flag.module';
+import { InputListModule } from '../../../../directives/input-list/input-list.module';
 
 // Components
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
@@ -23,6 +24,7 @@ import { UserAnswerComponent } from './components/user-answer/user-answer.compon
     ReactiveFormsModule,
     TranslateModule.forChild(),
     CountryFlagModule,
+    InputListModule,
     SharedRatingItemModule
   ],
   declarations: [
@@ -37,6 +39,7 @@ import { UserAnswerComponent } from './components/user-answer/user-answer.compon
   ],
   exports: [
     CountryFlagModule,
+    InputListModule,
     CollaboratorComponent,
     SidebarComponent,
     SidebarBatchComponent,

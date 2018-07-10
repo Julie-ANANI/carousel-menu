@@ -49,13 +49,13 @@ import { CharacterCountdown } from '../../pipes/CharacterCountdown';
 import { MultilingModule } from '../../pipes/multiling/multiling.module';
 
 // Directives
-import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
 import { SearchInputComponent } from '../../directives/search-input/search-input.component';
 
 // Internal Modules
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
+import { InputListModule } from '../../directives/input-list/input-list.module';
 
 // import { TableModule } from './components/shared-table/table.module';
 import { CountryFlagModule } from '../../directives/country-flag/country-flag.module';
@@ -76,6 +76,7 @@ import {SharedRatingItemModule} from './components/shared-rating-item/shared-rat
     Ng2PageScrollModule,
     Ng2AutoCompleteModule,
     SharedWorldmapModule,
+    InputListModule,
     SidebarModule,
     SharedWorldmapModule,
     MultilingModule,
@@ -84,7 +85,6 @@ import {SharedRatingItemModule} from './components/shared-rating-item/shared-rat
   declarations: [
     // Directives
     // FormErrorDirective,
-    InputListComponent,
     SharedAnswersListComponent,
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
@@ -130,10 +130,8 @@ import {SharedRatingItemModule} from './components/shared-rating-item/shared-rat
     SidebarModule,
     CountryFlagModule,
     SharedRatingItemModule,
+    InputListModule,
     // TableModule,
-
-    // Directives
-    InputListComponent,
 
     // Components
     SharedNotFoundComponent,
