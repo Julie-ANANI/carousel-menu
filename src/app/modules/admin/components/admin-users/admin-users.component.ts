@@ -72,7 +72,8 @@ export class AdminUsersComponent implements OnInit {
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-            {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'}]
+            {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+            {_attrs: ['domain'], _name: 'COMMON.DOMAIN', _type: 'TEXT'}]
         };
       });
   }

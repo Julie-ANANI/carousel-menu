@@ -1,5 +1,5 @@
 export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit par Bastien en précipitation)
-  'ERROR': 'Error',
+  'ERROR': 'Oups...',
   'SUCCESS': 'Success',
   'CANNOT_REACH': 'Cannot reach to server.',
   'FORM_ERROR': 'Form error',

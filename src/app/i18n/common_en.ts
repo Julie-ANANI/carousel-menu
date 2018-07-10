@@ -138,6 +138,7 @@ export const COMMON = {
     'BY_NAME': 'By name',
     'BY_COMPANY': 'By company',
     'BY_AUTHOR': 'By author',
+    'BY_DOMAIN': 'By domain',
     'BY_CREATION_DATE': 'By date',
     'BY_UPDATE_DATE': 'By default'
   }

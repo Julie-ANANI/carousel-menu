@@ -60,12 +60,13 @@
           <!-- Sidebar -->
           <div class="question-wrapper">
             <ul>
-              <li>
+              <li [ngClass]="{'active': activeSection === 'professionals'}">
                 <a pageScroll href="#professionals">
                   {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }} <i class="icon icon-arrow-right"></i>
                 </a>
               </li>
-              <li *ngFor="let question of cleaned_questions">
+              <li *ngFor="let question of cleaned_questions"
+                  [ngClass]="{'active': activeSection === question.identifier}">
                 <a pageScroll [href]="'#' + question.identifier">
                   {{ question.title | multiling:lang }} <i class="icon icon-arrow-right"></i>
                 </a>
@@ -82,7 +83,7 @@
           </div>
 
           <!-- Answer section -->
-          <div class="answer-wrapper">
+          <div id="answer-wrapper">
 
             <!-- Origin of responses -->
             <div class="section-container">
@@ -105,14 +106,14 @@
             </div>
 
             <!-- Professionals -->
-            <div class="section-container">
-              <h2 class="section-heading" id="professionals">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
+            <section class="section-container" id="professionals">
+              <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
               <div class="professional">
                 <div *ngFor="let answer of filteredAnswers" class="profile">
                   <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
                 </div>
               </div>
-            </div>
+            </section>
 
             <!-- Other questions -->
             <div *ngFor="let question of questions" class="section-container">

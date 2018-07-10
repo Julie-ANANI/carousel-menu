@@ -11,5 +11,8 @@ export const PROJECT = {
     'TWITTER': 'Partager sur Twitter',
     'FACEBOOK': 'Partager sur Facebook',
     'MAIL': 'Partager par email',
+  },
+  'BOT': {
+    'HELP': 'Ces informations permettront de vous procurer les insights les plus qualifiés.'
   }
 };

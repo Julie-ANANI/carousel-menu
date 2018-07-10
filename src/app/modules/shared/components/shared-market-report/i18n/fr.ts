@@ -18,8 +18,8 @@ export const MARKET_REPORT = {
 
   'BUTTON': {
     'DOWNLOAD': 'Télécharger',
-    'STATUS_TO_DONE': 'Finaliser la synthése',
-    'STATUS_TO_EVALUATING': 'Modifier la synthése'
+    'STATUS_TO_DONE': 'Finaliser la synthèse',
+    'STATUS_TO_EVALUATING': 'Modifier la synthèse'
   },
 
   // 'TITLE': 'Exploration du potentiel marché',

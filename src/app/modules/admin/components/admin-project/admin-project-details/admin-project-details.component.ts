@@ -19,6 +19,21 @@ export class AdminProjectDetailsComponent implements OnInit {
   private _project: Innovation;
   private _dirty = false;
   private _domain = {fr: '', en: ''};
+  private _editInstanceDomain = false;
+
+  private _updateInstanceDomainConfig: {
+      placeholder: string,
+      initialData: Array<string>,
+      type: string,
+      identifier: string,
+      canOrder: boolean
+  } = {
+      placeholder: 'Partners domain list',
+      initialData: [],
+      type: 'domain',
+      identifier: 'name',
+      canOrder: false
+  };
 
 
   public formData: FormGroup = this._formBuilder.group({
@@ -67,6 +82,26 @@ export class AdminProjectDetailsComponent implements OnInit {
         this._notificationsService.error('ERROR.ERROR', err);
       });
   }
+
+  public startEditInstanceDomain(event: Event): void {
+      this._editInstanceDomain = true;
+  }
+
+  public endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
+      this._editInstanceDomain = false;
+      this._project.domain = event.value[0].name || "umi";
+      this._dirty = true;
+  }
+
+  public buildInstanceDomainListConfig( initialData: Array<any>): any {
+      this._updateInstanceDomainConfig.initialData = initialData || [];
+      return this._updateInstanceDomainConfig;
+  }
+
+  public updateInstanceDomain(event: any): void {
+    this.endEditInstanceDomain(event);
+  }
+
 
   public updatePreset(event: {value: Array<Preset>}): void {
     this._project.preset = event.value[0];
@@ -169,6 +204,10 @@ export class AdminProjectDetailsComponent implements OnInit {
 
   get dirty() {
     return this._dirty;
+  }
+
+  get editInstanceDomain(): boolean {
+      return this._editInstanceDomain;
   }
 
 }

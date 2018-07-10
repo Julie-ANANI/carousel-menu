@@ -20,7 +20,6 @@ export class ExplorationProjectComponent implements OnInit {
   @Input() project: Innovation;
 
   private _contactUrl: string;
-  private _answers: Array<Answer>;
   private _campaignsStats: {
     nbPros: number,
     nbProsSent: number,
@@ -33,15 +32,6 @@ export class ExplorationProjectComponent implements OnInit {
   private _modalAnswer: Answer;
 
   tableInfos: Table = null;
-  public config: any = {
-    fields: '',
-    limit: 10,
-    offset: 0,
-    status: 'VALIDATED',
-    sort: {
-      created: -1
-    }
-  };
 
   constructor(private answerService: AnswerService,
               private innovationService: InnovationService,
@@ -54,17 +44,14 @@ export class ExplorationProjectComponent implements OnInit {
   }
 
   loadAnswers() {
-    this.config.innovation = this.project._id;
-
-    this.answerService.getAll(this.config).first().subscribe( (response) => {
-
-      this._answers = response.result;
+    this.answerService.getInnovationValidAnswers(this.project._id).first().subscribe( (response) => {
 
       this.tableInfos = {
         _selector: 'client-answer',
-        _content: this._answers,
+        _content: response.answers,
         _isShowable: true,
-        _total: response._metadata.totalCount,
+        _isNotPaginable: true,
+        _total: response.answers.length,
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
           {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT', _isSortable: false},
@@ -73,14 +60,14 @@ export class ExplorationProjectComponent implements OnInit {
         ]
       };
 
-      this._companies = response.result.map((answer: any) => answer.company || {
+      this._companies = response.answers.map((answer: any) => answer.company || {
         name: answer.professional.company
       }).filter(function(item: any, pos: any, self: any) {
         // this is here to remove duplicate
         return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
       });
 
-      this._countries = response.result.reduce((acc: any, answer: any) => {
+      this._countries = response.answers.reduce((acc: any, answer: any) => {
         if (acc.indexOf(answer.country.flag) === -1) {
           acc.push(answer.country.flag);
         }
@@ -131,10 +118,6 @@ export class ExplorationProjectComponent implements OnInit {
 
   public seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
-  }
-
-  get answers() {
-    return this._answers;
   }
 
   get campaignStats() {
