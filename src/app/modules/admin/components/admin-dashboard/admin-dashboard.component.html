@@ -40,13 +40,13 @@
       </span>
       <span *ngIf="i2 != 0">
       <li *ngIf="i2 < 4">
-          <label class="label-1st" *ngIf="batches.status == 0" (click)="showPreview($event, batches)">
+          <label class="label-1st" *ngIf="getState(batches) == 0" (click)="showPreview($event, batches)">
             {{batches.innovation.name}}  {{batches.size}}
           </label>
-          <label class="label-2nd" *ngIf="batches.status == 1" (click)="showPreview($event, batches)">
+          <label class="label-2nd" *ngIf="getState(batches) == 1" (click)="showPreview($event, batches)">
             {{batches.innovation.name}}  {{batches.size}}
           </label>
-          <label class="label-3rd" *ngIf="batches.status == 2" (click)="showPreview($event, batches)">
+          <label class="label-3rd" *ngIf="getState(batches) == 2" (click)="showPreview($event, batches)">
             {{batches.innovation.name}}  {{batches.size}}
           </label>
       </li>

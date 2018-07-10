@@ -119,6 +119,28 @@ export class AdminDashboardComponent implements OnInit {
   }
 
 
+  public getState(b: any) {
+    const day = this._dateNow.getDay();
+    let Now = new Date(this._dateNow);
+    const beginWeek = new Date(Now.setDate(Now.getDate() - day));
+    Now = new Date(this._dateNow);
+    const endWeek = new Date(Now.setDate(Now.getDate() - day + 6));
+    const FM = new Date(b.firstMail);
+    const SM = new Date(b.secondMail);
+    const TM = new Date(b.thirdMail);
+    if ((beginWeek < FM) && (FM < endWeek)) {
+      return 0;
+    }
+    if ((beginWeek < SM) && (SM < endWeek)) {
+      return 1;
+    }
+    if ((beginWeek < TM) && (TM < endWeek)) {
+      return 2;
+    }
+  }
+
+
+
   showPreview(event: Event, batch: any) {
     event.preventDefault();
     this._selectedBatch = batch;

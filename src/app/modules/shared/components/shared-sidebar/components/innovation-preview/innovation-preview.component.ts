@@ -21,7 +21,7 @@ export class InnovationPreviewComponent implements OnInit {
       if (data.status == 1) {
         this._date = new Date(data.secondMail);
       }
-      if (data.status == 2) {
+      if (data.status == 2 || data.status == 3) {
         this._date = new Date(data.thirdMail);
       }
     }
