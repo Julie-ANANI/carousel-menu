@@ -97,7 +97,7 @@
   (closeSidebar)="closeSidebar($event)">
   <app-innovation-preview
     [innovation]="this.selectedInnovation"
-    [batchInfo]="this.selectedBatch">
+    [batchInfo]="{batchSelected:this.selectedBatch,date: this.dateNow}">
   </app-innovation-preview>
 </app-sidebar>
 

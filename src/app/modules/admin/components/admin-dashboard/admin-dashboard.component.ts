@@ -99,7 +99,6 @@ export class AdminDashboardComponent implements OnInit {
     const now = Date.now();
     this._dateNow = new Date(now);
     this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe( (batches: Array<any>) => {
-      console.log(batches);
         this._weekBatches = batches;
     });
   }
@@ -178,6 +177,10 @@ export class AdminDashboardComponent implements OnInit {
   }
   get selectedBatch(): any {
     return this._selectedBatch;
+  }
+
+  get dateNow(): any {
+    return this._dateNow;
   }
 
   get modalSelected(): boolean {

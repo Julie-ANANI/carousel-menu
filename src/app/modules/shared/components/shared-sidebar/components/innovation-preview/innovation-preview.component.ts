@@ -15,14 +15,24 @@ export class InnovationPreviewComponent implements OnInit {
 
   @Input() set batchInfo(data: any) {
     if (data) {
-      if (data.status == 0) {
-        this._date = new Date(data.firstMail);
-      }
-      if (data.status == 1) {
-        this._date = new Date(data.secondMail);
-      }
-      if (data.status == 2 || data.status == 3) {
-        this._date = new Date(data.thirdMail);
+      if (data.batchSelected && data.date) {
+        const day = data.date.getDay();
+        let Now = new Date(data.date);
+        const beginWeek = new Date(Now.setDate(Now.getDate() - day));
+        Now = new Date(data.date);
+        const endWeek = new Date(Now.setDate(Now.getDate() - day + 6));
+        const FM = new Date(data.batchSelected.firstMail);
+        const SM = new Date(data.batchSelected.secondMail);
+        const TM = new Date(data.batchSelected.thirdMail);
+        if ((beginWeek < FM) && (FM < endWeek)) {
+          this._date = data.batchSelected.firstMail;
+        }
+        if ((beginWeek < SM) && (SM < endWeek)) {
+          this._date = data.batchSelected.secondMail;
+        }
+        if ((beginWeek < TM) && (TM < endWeek)) {
+          this._date = data.batchSelected.thirdMail;
+        }
       }
     }
   };
