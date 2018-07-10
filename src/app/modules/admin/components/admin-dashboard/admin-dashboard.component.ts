@@ -27,6 +27,7 @@ export class AdminDashboardComponent implements OnInit {
 
   sidebarTemplateValue: Template = {};
   private _selectedInnovation: InnovCard;
+  private _selectedBatch: any;
 
   private _weekBatches: Array<any> = [[], [], [], [], []];
   // => [['DATE', batch, batch,..]...]
@@ -98,6 +99,7 @@ export class AdminDashboardComponent implements OnInit {
     const now = Date.now();
     this._dateNow = new Date(now);
     this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe( (batches: Array<any>) => {
+      console.log(batches);
         this._weekBatches = batches;
     });
   }
@@ -119,6 +121,7 @@ export class AdminDashboardComponent implements OnInit {
 
   showPreview(event: Event, batch: any) {
     event.preventDefault();
+    this._selectedBatch = batch;
     this._innovationService.getInnovationCard(batch.innovation.innovationCards[0]).first().subscribe( card => {
       this._selectedInnovation = card;
       this.sidebarTemplateValue = {
@@ -150,6 +153,9 @@ export class AdminDashboardComponent implements OnInit {
 
   get selectedInnovation(): any {
     return this._selectedInnovation;
+  }
+  get selectedBatch(): any {
+    return this._selectedBatch;
   }
 
   get modalSelected(): boolean {

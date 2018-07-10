@@ -85,7 +85,6 @@
       </li>
         </span>
     </ul>
-
   </div>
   <div> <i class="fa fa-arrow-circle-right" style="font-size:36px" (click)="getNextWeek()"></i></div>
 </div>
@@ -97,7 +96,8 @@
   [template]="sidebarTemplateValue"
   (closeSidebar)="closeSidebar($event)">
   <app-innovation-preview
-    [innovation]="this.selectedInnovation">
+    [innovation]="this.selectedInnovation"
+    [batchInfo]="this.selectedBatch">
   </app-innovation-preview>
 </app-sidebar>
 
