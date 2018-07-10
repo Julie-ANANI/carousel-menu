@@ -21,9 +21,6 @@ export class SidebarBatchComponent implements OnInit {
 
   @Input() set content(content: {}) {
     this._content = content;
-    if (content) {
-      this._text = true;
-    }
   }
 
   @Output() batchChange = new EventEmitter <any>();
@@ -31,7 +28,6 @@ export class SidebarBatchComponent implements OnInit {
   private _content = {};
   private _dateMail: Date;
   private _timeMail = '';
-  private _text = false;
 
   constructor(// private _notificationsService: TranslateNotificationsService,
               private _formBuilder: FormBuilder
@@ -46,10 +42,10 @@ export class SidebarBatchComponent implements OnInit {
 
   public onSubmit() {
     if (this.formData.valid) {
+      this.formData.value.dateMail = new Date(this.formData.value.dateMail);
       this._dateMail = this.formData.value.dateMail;
       this._timeMail = this.formData.value.timeMail;
       this.batchChange.emit({date: this._dateMail, time: this._timeMail});
-      this._text = false;
     }
   }
 

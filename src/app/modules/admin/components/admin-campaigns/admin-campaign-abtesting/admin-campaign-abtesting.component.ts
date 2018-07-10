@@ -104,17 +104,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     if (this._campaign.settings.ABsettings.status != 0) {
       this.getStatsBatch();
     }
-
-    /*
-    // Uniquement en statut 1 en 2 on le fait manuellement
-    if (this.campaign.settings.ABsettings.status == 1) {
-      this.updateStatsBatches();
-    }
-    // On recupere les deux batchs -> route de getBatch
-    if (this.campaign.settings.ABsettings.status == 2) {
-      this.getStatsBatch();
-    }
-    */
   }
 
 
@@ -182,21 +171,21 @@ export class AdminCampaignAbtestingComponent implements OnInit {
           Sent: this._statsB[0].delivered + this._statsB[0].bounced,
           Opened: ((this._statsB[0].opened / this._sizeB) * 100).toFixed(digit) + '%',
           Clicked: ((this._statsB[0].clicked / this._sizeB) * 100).toFixed(digit) + '%',
-          Insights: ((this._statsB[0].insights / this._sizeB) * 100).toFixed(digit) + '%',
+          Insights: this._statsB[0].insights,
           Status: this.getStatus(0, this._statusB)
         }, {
           Step: ' 2eme mail',
           Sent: this._statsB[1].delivered + this._statsB[1].bounced,
           Opened: ((this._statsB[1].opened / this._sizeB) * 100).toFixed(digit) + '%',
           Clicked: ((this._statsB[1].clicked / this._sizeB) * 100).toFixed(digit) + '%',
-          Insights: ((this._statsB[1].insights / this._sizeB) * 100).toFixed(digit) + '%',
+          Insights: this._statsB[1].insights,
           Status: this.getStatus(1, this._statusB)
         }, {
           Step: ' 3eme mail',
           Sent: this._statsB[2].delivered + this._statsB[2].bounced,
           Opened: ((this._statsB[2].opened / this._sizeB) * 100).toFixed(digit) + '%',
           Clicked: ((this._statsB[2].clicked / this._sizeB) * 100).toFixed(digit) + '%',
-          Insights: ((this._statsB[2].insights / this._sizeB) * 100).toFixed(digit) + '%',
+          Insights: this._statsB[2].insights ,
           Status: this.getStatus(2, this._statusB)
         }],
       _total: this._sizeB,
@@ -244,21 +233,21 @@ export class AdminCampaignAbtestingComponent implements OnInit {
           Sent: this._statsA[0].delivered + this._statsA[0].bounced,
           Opened: ((this._statsA[0].opened / this._sizeA) * 100).toFixed(digit) + '%',
           Clicked: ((this._statsA[0].clicked / this._sizeA) * 100).toFixed(digit) + '%',
-          Insights: ((this._statsA[0].insights / this._sizeA) * 100).toFixed(digit) + '%',
+          Insights: this._statsA[0].insights,
           Status: this.getStatus(0, this._statusA)
         }, {
         Step: ' 2eme mail',
           Sent: this._statsA[1].delivered + this._statsA[1].bounced,
           Opened: ((this._statsA[1].opened / this._sizeA) * 100).toFixed(digit) + '%',
           Clicked: ((this._statsA[1].clicked / this._sizeA) * 100).toFixed(digit) + '%',
-          Insights: ((this._statsA[1].insights / this._sizeA) * 100).toFixed(digit) + '%',
+          Insights: this._statsA[1].insights,
           Status: this.getStatus(1, this._statusA)
         }, {
         Step: ' 3eme mail',
           Sent: this._statsA[2].delivered + this._statsA[2].bounced,
           Opened: ((this._statsA[2].opened / this._sizeA) * 100).toFixed(digit) + '%',
           Clicked: ((this._statsA[2].clicked / this._sizeA) * 100).toFixed(digit) + '%',
-          Insights: ((this._statsA[2].insights / this._sizeA) * 100).toFixed(digit) + '%',
+          Insights: this._statsA[2].insights,
           Status: this.getStatus(2, this._statusA)
         }],
       _total: this._sizeA,

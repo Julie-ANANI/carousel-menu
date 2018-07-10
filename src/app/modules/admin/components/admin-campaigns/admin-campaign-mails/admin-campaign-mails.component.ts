@@ -234,21 +234,15 @@ export class AdminCampaignMailsComponent implements OnInit {
 
 
   public generateTableBatch(batch: Batch): Table {
-    // console.log('generate ' + batch._id);
     const firstJSdate = new Date(batch.firstMail);
-    const firstTime = firstJSdate.getHours() + ':' + firstJSdate.getMinutes();
-
+    const firstTime = ('0' + firstJSdate.getHours()).slice(-2) + ':' + ('0' + firstJSdate.getMinutes()).slice(-2);
     const secondJSdate = new Date(batch.secondMail);
-    const secondTime = secondJSdate.getHours() + ':' + secondJSdate.getMinutes();
-
+    const secondTime = ('0' + secondJSdate.getHours()).slice(-2) + ':' + ('0' + secondJSdate.getMinutes()).slice(-2);
     const thirdJSdate = new Date(batch.thirdMail);
-    const thirdTime = thirdJSdate.getHours() + ':' + thirdJSdate.getMinutes();
-
+    const thirdTime = ('0' + thirdJSdate.getHours()).slice(-2) + ':' + ('0' + thirdJSdate.getMinutes()).slice(-2)
     const index = this._getBatchIndex(batch._id);
-
     const workflowname = this.getWorkflowName(index);
-
-    const digit = 2;
+    const digit = 2; // number of decimals stats/prred
     if (!batch.predictions || batch.predictions.length === 0) {
       const reset = {opened: 0, clicked: 0, insights: 0};
       batch.predictions = [reset, reset, reset];
@@ -414,7 +408,6 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   onSubmitEditBatch(result: any) {
-    console.log(result);
     switch (this.currentStep) {
       case 0:
         this.currentBatch.firstMail = this._computeDate(result.date, result.time);
