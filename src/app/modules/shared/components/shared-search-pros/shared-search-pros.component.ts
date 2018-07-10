@@ -123,7 +123,7 @@ export class SharedSearchProsComponent implements OnInit {
 
   public estimateNumberOfGoogleRequests() {
     const numberOfSearches = this._params.keywords.split("\n").length;
-    let numberOfRequests = 1;
+    let numberOfRequests = 0;
     const selectedCountries = this._params.countries;
     let smartCountries = 0;
     if (this._params.options.smart || this._params.options.regions) {
@@ -139,7 +139,7 @@ export class SharedSearchProsComponent implements OnInit {
       });
     }
     if (!this._params.options.smart) {
-      numberOfRequests += (selectedCountries.length - smartCountries);
+      numberOfRequests += ((selectedCountries.length || 1) - smartCountries);
     }
     this._estimatedNumberOfGoogleRequests = numberOfSearches * numberOfRequests * this._params.count / 10;
   }
