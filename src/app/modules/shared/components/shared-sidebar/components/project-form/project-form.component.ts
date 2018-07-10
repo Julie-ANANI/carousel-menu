@@ -40,6 +40,9 @@ export class ProjectFormComponent implements OnInit, OnChanges {
   loadBlacklist() {
     this.isBlacklist = true;
     if (this._emailToBlacklist && this.projectForm) {
+      this._emailToBlacklist.expiration === ''
+        ? this._emailToBlacklist.expiration = ''
+        : this._emailToBlacklist.expiration = new Date(this._emailToBlacklist.expiration);
       this.projectForm.patchValue(this._emailToBlacklist);
     }
   }
@@ -47,8 +50,17 @@ export class ProjectFormComponent implements OnInit, OnChanges {
   onSubmit() {
     if (this.isBlacklist) {
       const blacklist = this.projectForm.value;
+      blacklist.expiration === '' ? blacklist.expiration = 0 : blacklist.expiration = blacklist.expiration
       blacklist._id = this._emailToBlacklist._id;
       this.editBlacklist.emit(blacklist);
+    }
+  }
+
+  resetExpirationDate(check: boolean) {
+    if (check === true) {
+      this.projectForm.value.expiration = '';
+    } else {
+      this.projectForm.value.expiration = new Date();
     }
   }
 

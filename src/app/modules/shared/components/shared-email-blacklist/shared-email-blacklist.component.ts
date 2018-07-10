@@ -58,16 +58,16 @@ export class SharedEmailBlacklistComponent implements OnInit {
             // The server may be busy...
             this._notificationsService.error('Warning', 'The server is busy, try again in 1 minute.');
           } else {
-            this._dataset = result;
-              const data =  this._dataset.blacklists.map((entry: any) => {
-              entry.expiration = new Date(entry.expiration).getTime() ? entry.expiration : '';
-              return entry;
-            });
+            this._dataset._metadata = result._metadata;
+              this._dataset.blacklists = result.blacklists.map((entry: any) => {
+                entry.expiration = new Date(entry.expiration).getTime() ? entry.expiration : '';
+                return entry;
+              });
 
             this._tableInfos = {
               _selector: 'shared-blacklist',
               _title: 'COMMON.BLACKLIST',
-              _content: data,
+              _content: this._dataset.blacklists,
               _total: this._dataset._metadata.totalCount,
               _isHeadable: true,
               _isFiltrable: true,
@@ -96,34 +96,32 @@ export class SharedEmailBlacklistComponent implements OnInit {
   }
 
   editBlacklist(email: any) {
-    this._emailService.getOneBlacklist(email._id).subscribe(value => {
+    this._currentEmailToBlacklist = this._dataset.blacklists.find(value => value._id === email._id);
       this._more = {
         animate_state: 'active',
         title: 'COMMON.EDIT-BLACKLIST',
         type: 'editBlacklist'
       };
-      this._currentEmailToBlacklist = value;
-      console.log(this._currentEmailToBlacklist);
-    });
   }
 
   closeSidebar(value: string) {
     this.more.animate_state = value;
   }
 
-  /*userEditionFinish(user: User) {
-    this._userService.updateOther(user)
+  blacklistEditionFinish(email: any) {
+    console.log(email);
+    this._emailService.updateBlacklistEntry(email._id, email)
       .first()
       .subscribe(
         data => {
           this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
           this._more = {animate_state: 'inactive', title: this._more.title};
-          this.loadUsers(this._config);
+          this.loadData(this._config);
         },
         error => {
           this._notificationsService.error('ERROR.ERROR', error.message);
         });
-  }*/
+  }
 
   public addEntry() {
     this._emailService.addToBlacklist({email:this.addressToBL})

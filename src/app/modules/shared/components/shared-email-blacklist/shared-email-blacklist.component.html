@@ -5,6 +5,6 @@
   <app-project-form
     [sidebarState]="more.animate_state"
     [type]="more.type"
-    [emailToBlacklist]="currentEmailToBlacklist">
+    [emailToBlacklist]="currentEmailToBlacklist" (editBlacklist)="blacklistEditionFinish($event)">
   </app-project-form>
 </app-sidebar>

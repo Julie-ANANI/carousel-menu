@@ -19,6 +19,7 @@ export const COMMON = {
   'UPDATED': 'Modifié le',
   'LAUNCHED': 'Lancé le',
   'EXPIRATION' : 'Expire le',
+  'EXPIRATION-SPECIFY': 'Ou renseigner une date d\'expiration',
   'CLOSE': 'Fermer',
   'CLONE': 'Clôner',
   'PREVIEW': 'Prévisualiser',
@@ -42,6 +43,7 @@ export const COMMON = {
   'PROFILE-URL': 'Profil Linkedin',
   'BLACKLIST': 'Emails blacklistés',
   'EDIT-BLACKLIST': 'Modifier email blacklisté',
+  'NEVER': 'Jamais',
 
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
