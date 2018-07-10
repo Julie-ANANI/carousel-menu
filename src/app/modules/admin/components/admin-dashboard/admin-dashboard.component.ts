@@ -8,6 +8,7 @@ import { Subject } from 'rxjs/Subject';
 import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import {InnovCard} from '../../../../models/innov-card';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
@@ -58,7 +59,8 @@ export class AdminDashboardComponent implements OnInit {
               private _dashboardService: DashboardService,
               private _searchService: SearchService,
               private _authService: AuthService,
-              private _innovationService: InnovationService) { }
+              private _innovationService: InnovationService,
+              private _translateService: TranslateService) { }
 
   ngOnInit(): void {
 
@@ -138,7 +140,22 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-
+  public getDateString(d: any): string {
+    let result = '';
+    let day = d.split('/')[0];
+    let month = d.split('/')[1];
+    day = ('0' + day).slice(-2);
+    month = Number(month);
+    month ++;
+    month = month.toString();
+    month = ('0' + month).slice(-2);
+    if (this._translateService.currentLang === 'fr') {
+      result = day + '/' + month;
+    } else {
+      result = month + '/' + day;
+    }
+    return result;
+  }
 
   showPreview(event: Event, batch: any) {
     event.preventDefault();
@@ -186,4 +203,5 @@ export class AdminDashboardComponent implements OnInit {
   get modalSelected(): boolean {
     return this._modalSelected;
   }
+
 }
