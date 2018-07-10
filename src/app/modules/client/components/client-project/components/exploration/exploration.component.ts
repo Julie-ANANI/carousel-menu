@@ -104,8 +104,10 @@ export class ExplorationProjectComponent implements OnInit {
                 }
                 if (campaign.stats.mail) {
                   acc.nbProsSent += (campaign.stats.mail.totalPros ||  0);
-                  acc.nbProsOpened += (campaign.stats.mail.statuses.opened || 0);
-                  acc.nbProsClicked += (campaign.stats.mail.statuses.clicked ||  0);
+                  if(campaign.stats.mail.statuses) {
+                    acc.nbProsOpened += (campaign.stats.mail.statuses.opened || 0);
+                    acc.nbProsClicked += (campaign.stats.mail.statuses.clicked ||  0);
+                  }
                 }
               }
               return acc;
