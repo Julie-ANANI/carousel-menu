@@ -1,12 +1,23 @@
 .answer-wrapper {
-  padding-top: 30px;
   font-size: 0.7rem;
+
+  .fa-pencil-alt {
+    color: #97A4B1;
+    cursor: pointer;
+    vertical-align: 2px;
+  }
+
+  .form-group {
+    margin-bottom: 10px !important;
+    width: 400px;
+  }
 
   .user-wrapper {
     display: flex;
     justify-content: space-between;
 
     .detail {
+      padding-top: 30px;
 
       .title {
         display: inline-flex;
@@ -19,6 +30,7 @@
 
         .country {
           margin-left: 15px;
+          display: flex;
         }
 
       }
@@ -41,7 +53,7 @@
 
       }
 
-      .time {
+      .time, .ip {
         color: #97a4b1;
       }
 
@@ -49,16 +61,17 @@
 
     .save {
       display: inline-flex;
+      padding-top: 30px;
     }
 
   }
 
   .status-wrapper {
-    padding-top: 24px;
+    padding-top: 44px;
     display: flex;
     flex-wrap: wrap;
 
-    .status-rejected, .status-validated {
+    .status-rejected, .status-validated, .status-submitted, .status-email {
       margin-right: 10px;
       margin-bottom: 10px;
     }
@@ -71,6 +84,7 @@
       margin: 20px auto 0 auto;
       text-align: center;
       cursor: pointer;
+      transition: all 0.15s ease-in-out;
 
       span {
         color: #E0E0E0;
@@ -79,8 +93,8 @@
 
     }
 
-    .radio-button:hover {
-      background-color: #FFB300;
+    .rejected:hover, .rejected.active {
+      background-color: #EA5858;
 
       span {
         color: white;
@@ -88,9 +102,61 @@
 
     }
 
+    .submitted:hover, .submitted.active {
+      background-color: #F79323;
+
+      span {
+        color: white;
+      }
+
+    }
+
+    .validated:hover, .validated.active {
+      background-color: #2ECC71;
+
+      span {
+        color: white;
+      }
+
+    }
+
+    .status-email {
+
+      .form-switch {
+        top: -4px;
+      }
+
+    }
+
   }
+
+  .tag-wrapper {
+    padding-top: 40px;
+  }
+
+  .ques-wrapper {
+    padding-top: 30px;
+  }
+
 
 }
 
 /********************************** Media ***************************************/
 
+@media (max-width: 600px) {
+
+  .user-wrapper {
+    flex-direction: column;
+
+    .detail {
+      order: 1;
+    }
+
+    .save {
+      order: 0;
+      justify-content: flex-end;
+    }
+
+  }
+
+}

@@ -5,11 +5,14 @@ export const ANSWER = {
     'C': 'Time spent:'
   },
 
+  'IP': 'Ip:',
+
   'STATUS': {
     'REJECTED': 'Rejected',
     'VALIDATED': 'Validated',
+    'SUBMITTED': 'Submitted',
+    'EMAIL': 'Send email'
   },
-
 
 
   'VALIDATED_ANSWER': 'Answer validated',

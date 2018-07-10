@@ -6,13 +6,17 @@ import { AnswerModalComponent } from './answer-modal.component';
 import { AnswerQuestionComponent } from './components/answer-question/answer-question.component';
 import { RatingItemComponent } from './components/rating-item/rating-item.component';
 import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
+import { AutocompleteInputModule } from '../../../../directives/autocomplete-input/autocomplete-input.module';
+import { SharedTagItemModule } from '../shared-tag-item/shared-tag-item.module';
 
 @NgModule({
   imports: [
     CommonModule,
     MultilingModule,
     SharedModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    AutocompleteInputModule,
+    SharedTagItemModule
   ],
   declarations: [
     AnswerModalComponent,

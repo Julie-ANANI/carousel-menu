@@ -11,6 +11,7 @@ import { AdminProjectCardsComponent } from './admin-project-cards/admin-project-
 import { AdminProjectCampaignsComponent } from './admin-project-campaigns/admin-project-campaigns.component';
 import { AdminProjectSynthesisComponent } from './admin-project-synthesis/admin-project-synthesis.component';
 import { AdminProjectTagsPoolComponent } from './admin-project-tags-pool/admin-project-tags-pool.component';
+import {AutocompleteInputModule} from '../../../../directives/autocomplete-input/autocomplete-input.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { AdminProjectTagsPoolComponent } from './admin-project-tags-pool/admin-p
     SharedMarketReportModule,
     TranslateModule.forChild(),
     Ng2AutoCompleteModule,
-    MultilingModule
+    MultilingModule,
+    AutocompleteInputModule
   ],
   declarations: [
     AdminProjectComponent,

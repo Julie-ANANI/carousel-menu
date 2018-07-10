@@ -92,7 +92,6 @@ export class QuestionSectionComponent implements OnInit {
           return tagsList;
         }
       }, []);
-      console.log(this._tags);
 
       // filter comments
       switch (this.question.controlType) {

@@ -5,9 +5,13 @@ export const ANSWER = {
     'C': 'Temps passé:'
   },
 
+  'IP': 'Ip:',
+
   'STATUS': {
     'REJECTED': 'Rejeté',
     'VALIDATED': 'Validé',
+    'SUBMITTED': 'Soumis',
+    'EMAIL': 'Envoyer email'
   },
 
   'VALIDATED_ANSWER': 'Réponse validée',

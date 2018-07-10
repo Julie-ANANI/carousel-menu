@@ -22,7 +22,6 @@ import { SharedFilterInputComponent } from './components/shared-filter-input/sha
 import { SharedFilterMultiComponent} from './components/shared-filter-multi/shared-filter-multi.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
-import { SharedTagItemComponent } from './components/shared-tag-item/shared-tag-item.component';
 import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
 import { SharedLatexManagerComponent } from './components/shared-latex-manager/shared-latex-manager.component';
@@ -49,17 +48,16 @@ import { CharacterCountdown } from '../../pipes/CharacterCountdown';
 import { MultilingModule } from '../../pipes/multiling/multiling.module';
 
 // Directives
-import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
 import { SearchInputComponent } from '../../directives/search-input/search-input.component';
 
 // Internal Modules
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
 import { InputListModule } from '../../directives/input-list/input-list.module';
-
-// import { TableModule } from './components/shared-table/table.module';
 import { CountryFlagModule } from '../../directives/country-flag/country-flag.module';
-import {SharedRatingItemModule} from './components/shared-rating-item/shared-rating-item-module';
+import { SharedRatingItemModule } from './components/shared-rating-item/shared-rating-item-module';
+import { AutocompleteInputModule } from '../../directives/autocomplete-input/autocomplete-input.module';
+import { SharedTagItemModule } from './components/shared-tag-item/shared-tag-item.module';
 
 @NgModule({
   imports: [
@@ -80,7 +78,9 @@ import {SharedRatingItemModule} from './components/shared-rating-item/shared-rat
     SidebarModule,
     SharedWorldmapModule,
     MultilingModule,
-    SharedRatingItemModule
+    AutocompleteInputModule,
+    SharedRatingItemModule,
+    SharedTagItemModule
   ],
   declarations: [
     // Directives
@@ -99,9 +99,7 @@ import {SharedRatingItemModule} from './components/shared-rating-item/shared-rat
     SharedVideoComponent,
     SharedSortComponent,
     SharedProjectSettingsComponent,
-    AutocompleteInputComponent,
     SearchInputComponent,
-    SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
     SharedSearchMailComponent,
@@ -131,6 +129,7 @@ import {SharedRatingItemModule} from './components/shared-rating-item/shared-rat
     CountryFlagModule,
     SharedRatingItemModule,
     InputListModule,
+    SharedTagItemModule,
     // TableModule,
 
     // Components
@@ -147,9 +146,7 @@ import {SharedRatingItemModule} from './components/shared-rating-item/shared-rat
     SharedLatexManagerComponent,
     SharedSortComponent,
     SharedProjectSettingsComponent,
-    AutocompleteInputComponent,
     SearchInputComponent,
-    SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
     SharedSearchMailComponent,

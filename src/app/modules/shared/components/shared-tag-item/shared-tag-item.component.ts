@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './shared-tag-item.component.html',
   styleUrls: ['./shared-tag-item.component.scss']
 })
+
 export class SharedTagItemComponent implements OnInit {
 
   @Input() tags: Array<Tag>;
@@ -58,5 +59,8 @@ export class SharedTagItemComponent implements OnInit {
     this.removeTag.emit(tag);
   }
 
-  get tagForm() { return this._tagForm; }
+  get tagForm() {
+    return this._tagForm;
+  }
+
 }

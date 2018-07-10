@@ -27,7 +27,9 @@ export class UserFormComponent implements OnInit, OnChanges {
     this._pro = value;
     this.loadProfessional();
   };
+
   @Input() sidebarState: string;
+
   @Input() set type(type: string) {
     if (type === 'signUp') {
       this.loadSignUp();

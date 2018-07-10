@@ -6,6 +6,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedRatingItemModule } from '../shared-rating-item/shared-rating-item-module';
 import { CountryFlagModule } from '../../../../directives/country-flag/country-flag.module';
 import { InputListModule } from '../../../../directives/input-list/input-list.module';
+import { AutocompleteInputModule } from '../../../../directives/autocomplete-input/autocomplete-input.module';
+import { SharedTagItemModule } from '../shared-tag-item/shared-tag-item.module';
 
 // Components
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
@@ -25,7 +27,9 @@ import { UserAnswerComponent } from './components/user-answer/user-answer.compon
     TranslateModule.forChild(),
     CountryFlagModule,
     InputListModule,
-    SharedRatingItemModule
+    SharedRatingItemModule,
+    AutocompleteInputModule,
+    SharedTagItemModule
   ],
   declarations: [
     SidebarBatchComponent,
@@ -38,8 +42,6 @@ import { UserAnswerComponent } from './components/user-answer/user-answer.compon
     ProjectFormComponent
   ],
   exports: [
-    CountryFlagModule,
-    InputListModule,
     CollaboratorComponent,
     SidebarComponent,
     SidebarBatchComponent,
@@ -48,7 +50,6 @@ import { UserAnswerComponent } from './components/user-answer/user-answer.compon
     SidebarSearchComponent,
     UserAnswerComponent,
     ProjectFormComponent,
-    SharedRatingItemModule
   ]
 })
 

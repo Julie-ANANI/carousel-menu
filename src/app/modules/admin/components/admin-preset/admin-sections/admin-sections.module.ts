@@ -6,12 +6,14 @@ import { AdminSectionsEditComponent } from './admin-sections-edit/admin-sections
 import { AdminSectionsListComponent } from './admin-sections-list/admin-sections-list.component';
 import { AdminSectionsNewComponent } from './admin-sections-new/admin-sections-new.component';
 import { SharedModule } from '../../../../shared/shared.module';
+import {AutocompleteInputModule} from '../../../../../directives/autocomplete-input/autocomplete-input.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    AutocompleteInputModule
   ],
   declarations: [
     AdminSectionsComponent,

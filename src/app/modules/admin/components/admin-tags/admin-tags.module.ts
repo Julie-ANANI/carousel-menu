@@ -15,6 +15,7 @@ import { AdminTagNewComponent } from './admin-tag-new/admin-tag-new.component';
 import { AdminTagAttachmentsListComponent } from './admin-tag-attachment-list/admin-tag-attachment-list.component';
 import { AdminTagAttachmentsSubsetComponent } from './admin-tag-attachment-list/attachment-subset/admin-tag-attachment-subset.component';
 import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/admin-tag-new-modal.component';
+import {AutocompleteInputModule} from '../../../../directives/autocomplete-input/autocomplete-input.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/a
     ReactiveFormsModule,
     MultilingModule,
     SharedModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    AutocompleteInputModule
   ],
   declarations: [
     AdminTagsComponent,
