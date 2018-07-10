@@ -66,16 +66,12 @@ export class AdminCampaignMailsComponent implements OnInit {
       } else {
         this.mailsToSend = 0;
       }
-
       this._stats.batches.forEach( (batch: any) => {
         this._tableBatch.push(
           this.generateTableBatch(batch)
         );
       });
-
-
     });
-
     this.newBatch = {
       campaign: this._campaign,
       size: 0,
@@ -125,38 +121,6 @@ export class AdminCampaignMailsComponent implements OnInit {
 // DEBUG AUTOBATCH => Creation de pro a la volée
   public creerpro() {
     this._campaignService.creerpro(this._campaign._id).first().subscribe();
-  }
-
-  public startEditing(batch: Batch) {
-    const getDate = (d: string) => d.toString().slice(0,10);
-    const getTime = (d: string) => (new Date(d)).toLocaleTimeString();
-    this.editDates = [
-      {
-        date: getDate(batch.firstMail),
-        time: getTime(batch.firstMail)
-      },
-      {
-        date: getDate(batch.secondMail),
-        time: getTime(batch.secondMail)
-      },
-      {
-        date: getDate(batch.thirdMail),
-        time: getTime(batch.thirdMail)
-      }
-    ];
-    this.stats.batches[this._getBatchIndex(batch._id)]['editing'] = true;
-
-  }
-
-  public updateBatch(batch: Batch) {
-    this.stats.batches[this._getBatchIndex(batch._id)]['editing'] = false;
-    batch.firstMail = this._computeDate(this.editDates[0].date, this.editDates[0].time);
-    batch.secondMail = this._computeDate(this.editDates[1].date, this.editDates[1].time);
-    batch.thirdMail = this._computeDate(this.editDates[2].date, this.editDates[2].time);
-    delete batch.status;
-    this._campaignService.updateBatch(batch).first().subscribe((Abatch: Batch) => {
-      this.stats.batches[this._getBatchIndex(Abatch._id)] = Abatch;
-    });
   }
 
   public deleteBatch(batchId: string) {
@@ -434,7 +398,6 @@ export class AdminCampaignMailsComponent implements OnInit {
       this._notificationsService.success('ERROR.ERROR', '');
     });
   }
-
 
   get statusAB() { return this._campaign.settings.ABsettings.status }
   get defaultWorkflow() { return  this._campaign.settings.defaultWorkflow }
