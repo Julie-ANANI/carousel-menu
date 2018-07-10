@@ -111,7 +111,6 @@ export class SharedEmailBlacklistComponent implements OnInit {
       type: 'addEmail'
     };
   }
-
   closeSidebar(value: string) {
     this.more.animate_state = value;
   }
@@ -132,7 +131,16 @@ export class SharedEmailBlacklistComponent implements OnInit {
   }
 
   addEmailsToBlacklistFinish(emails: Array<string>) {
-
+    emails.forEach((value: any) => {
+      this._emailService.addToBlacklist({email: value.text})
+        .subscribe(result => {
+          this._notificationsService.success('Blacklist', 'ERROR.ACCOUNT.UPDATE');
+          this._more = {animate_state: 'inactive', title: this._more.title};
+          this.loadData(this._config);
+        }, error => {
+          this._notificationsService.error('Error', error);
+        });
+    });
   }
 
   public addEntry() {
