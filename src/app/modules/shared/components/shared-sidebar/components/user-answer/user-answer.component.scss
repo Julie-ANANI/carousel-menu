@@ -1,5 +1,5 @@
 .answer-wrapper {
-  font-size: 0.7rem;
+  font-size: 14px;
 
   .fa-pencil-alt {
     color: #97A4B1;
@@ -76,23 +76,6 @@
       margin-bottom: 25px;
     }
 
-    .radio-button {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border: 1px solid #E0E0E0;
-      margin: 20px auto 0 auto;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.15s ease-in-out;
-
-      span {
-        color: #E0E0E0;
-        font-size: 21px;
-      }
-
-    }
-
     .rejected:hover, .rejected.active {
       background-color: #EA5858;
 
@@ -135,7 +118,7 @@
   }
 
   .ques-wrapper {
-    padding-top: 30px;
+    padding-top: 40px;
   }
 
 

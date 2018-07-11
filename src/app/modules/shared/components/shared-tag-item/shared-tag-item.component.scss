@@ -10,7 +10,31 @@
     margin-right: 20px;
   }
 
-  .tag-display-wrapper {
+  .form-default.ng-touched.ng-invalid{
+    border-color: #E0E0E0;
+  }
+
+  .tags {
+    display: inline-flex;
+    margin-right: 15px;
+    margin-bottom: 10px;
+  }
+
+  .tags-wrapper {
+    font-size: 14px;
+    display: flex;
+    background-color: #F8F4F4;
+    color: #333333;
+    padding: 8px 15px;
+    border-radius: 5px;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+
+    i {
+      margin-left: 15px;
+      cursor: pointer;
+    }
 
   }
 

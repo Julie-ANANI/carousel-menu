@@ -21,7 +21,6 @@ export class UserAnswerComponent implements OnInit {
 
   @Input() set userAnswer(value: Answer) {
     this.modalAnswer = value;
-    console.log(this.modalAnswer);
     if (this.modalAnswer && !this.modalAnswer.company) {
       this.modalAnswer.company = {};
     }
@@ -94,7 +93,7 @@ export class UserAnswerComponent implements OnInit {
         this.modalAnswer.tags.push(tag);
         this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
       }, err => {
-        this.translateNotificationsService.error('ERROR.ERROR', err);
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
       });
   }
 

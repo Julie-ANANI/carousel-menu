@@ -12,18 +12,17 @@
           [value-formatter]="autocompleValueFormatter"
           [attr.placeholder]="'Add an existing tag'"
           class="form-default">
-        <button class="btn-round  btn-primary"><i class="icon icon-plus"></i></button>
+        <button class="btn-round  btn-primary" [disabled]="!canAdd"><i class="icon icon-plus"></i></button>
       </div>
     </form>
 
-    <div *ngIf="tags?.length > 0" class="tag-display-wrapper">
-        <i class="fa fa-tag"></i>
-        <span *ngFor="let t of tags" class="label label-rounded label-primary tag-label">
-            <i *ngIf="editMode" class="icon icon-cross" (click)="removeTagEmitter($event, t)"></i>
-            {{t?.label | multiling:lang}}
-        </span>
+    <div *ngIf="tags?.length > 0" [ngStyle]="{ 'margin-top': '10px' }">
+      <div *ngFor="let t of tags" class="tags">
+        <div class="tags-wrapper">
+          {{ t.label | multiling:lang }} <i class="icon icon-cross" (click)="removeTagEmitter($event, t)"></i>
+        </div>
+      </div>
     </div>
-
 
   </div>
 </div>

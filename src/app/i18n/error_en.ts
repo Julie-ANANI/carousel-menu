@@ -1,5 +1,5 @@
 export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit par Bastien en précipitation)
-  'ERROR': 'Error',
+  'ERROR': 'Oups...',
   'SUCCESS': 'Success',
   'CANNOT_REACH': 'Cannot reach to server.',
   'FORM_ERROR': 'Form error',
@@ -53,7 +53,8 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'UPDATE': 'Tag update',
     'ADDED': 'The tag has been successfully added.',
     'UPDATED': 'The tag has been successfully updated.',
-    'REMOVED': 'The tag has been successfully removed.'
+    'REMOVED': 'The tag has been successfully removed.',
+    'ALREADY_ADDED': 'The tag has been already added.'
   },
 
   'PRESET': {

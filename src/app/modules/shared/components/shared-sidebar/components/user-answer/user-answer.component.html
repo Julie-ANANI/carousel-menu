@@ -12,7 +12,6 @@
           <app-shared-rating-item
             *ngIf="adminMode"
             [editMode]="true"
-            [big]="true"
             [prop]="profile"
             [rating]="modalAnswer.profileQuality"
             (ratingChange)="updateProfileQuality($event)">
@@ -106,7 +105,7 @@
     <!-- /User detail -->
 
     <!-- Status section -->
-    <div *ngIf="adminMode" class="status-wrapper text-center">
+    <div *ngIf="adminMode" class="status-wrapper">
 
       <!-- Rejected -->
       <div class="status-rejected">

@@ -8,14 +8,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export class SharedRatingItemComponent {
 
-  @Input() big: string;
   @Input() editMode: boolean;
-  @Output() ratingChange = new EventEmitter<any>();
   @Input() prop: string;
 
   @Input() set rating(value: number) {
     this._rating = Number.isInteger(value) ? value : 1;
   }
+
+  @Output() ratingChange = new EventEmitter<any>();
 
   private _rating: number;
 

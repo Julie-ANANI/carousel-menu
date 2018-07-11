@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { TagsService } from '../../../../services/tags/tags.service';
@@ -31,7 +31,7 @@ export class SharedTagItemComponent implements OnInit {
 
   ngOnInit() {
     this._tagForm = this.formBuilder.group({
-      tag: null,
+      tag: [''],
     });
   }
 
@@ -57,6 +57,10 @@ export class SharedTagItemComponent implements OnInit {
   public removeTagEmitter(event: Event, tag: Tag): void {
     event.preventDefault();
     this.removeTag.emit(tag);
+  }
+
+  get canAdd(): boolean {
+    return (this._tagForm.get('tag').value && typeof this._tagForm.get('tag').value !== 'string');
   }
 
   get tagForm() {

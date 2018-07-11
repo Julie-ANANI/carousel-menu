@@ -1,5 +1,5 @@
 export const ERROR = {
-  'ERROR': 'Erreur',
+  'ERROR': 'Oups...',
   'SUCCESS': 'Succès',
   'CANNOT_REACH': 'Le serveur ne répond pas.',
   'FORM_ERROR': 'Erreur de formulaire',
@@ -53,7 +53,8 @@ export const ERROR = {
     'UPDATE': 'Tag',
     'ADDED': 'Le tag a bien été ajouté.',
     'UPDATED': 'Le tag a bien été modifié.',
-    'REMOVED': 'Le tag a bien été supprimé.'
+    'REMOVED': 'Le tag a bien été supprimé.',
+    'ALREADY_ADDED': 'Le tag a déjà été ajoutée.'
   },
 
   'PRESET': {

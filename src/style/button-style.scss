@@ -33,7 +33,7 @@ $edit-color: #97A4B1;
   line-height: 1.4;
   background: transparent none;
   border: 1px solid transparent;
-  font-size: 0.7rem;
+  font-size: 14px;
   border-radius: 5px;
   height: 51px;
   padding: 8px 30px;
@@ -230,7 +230,7 @@ $edit-color: #97A4B1;
   animation-timing-function: ease-in-out;
 
   i {
-    font-size: 0.85rem;
+    font-size: 17px;
   }
 
 }
@@ -242,6 +242,28 @@ $edit-color: #97A4B1;
 
 
 /*
+    Radio button
+ */
+.radio-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #E0E0E0;
+  margin: 20px auto 0 auto;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+
+  span {
+    color: #E0E0E0;
+    font-size: 21px;
+  }
+
+}
+
+
+
+/*
     To make a button large just add this class with the btn class and
     color button class. Class name: btn-lg
 */
@@ -250,7 +272,7 @@ $edit-color: #97A4B1;
   padding-left: 84px !important;
   padding-right: 84px !important;
   height: 70px !important;
-  font-size: 1.2rem !important;
+  font-size: 24px !important;
 }
 
 
