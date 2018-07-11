@@ -8,7 +8,7 @@ import { CountryFlagModule } from '../../../../directives/country-flag/country-f
 import { InputListModule } from '../../../../directives/input-list/input-list.module';
 import { AutocompleteInputModule } from '../../../../directives/autocomplete-input/autocomplete-input.module';
 import { SharedTagItemModule } from '../shared-tag-item/shared-tag-item.module';
-import {MultilingModule} from '../../../../pipes/multiling/multiling.module';
+import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
 
 // Components
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';

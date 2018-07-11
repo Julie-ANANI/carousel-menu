@@ -2,7 +2,7 @@
 
   <p class="ques-label">{{ question.label | multiling:lang }}</p>
 
- <div [ngSwitch]="question.controlType" class="answer">
+  <div [ngSwitch]="question.controlType" class="answer">
 
    <!-- Radio case -->
     <ng-container *ngSwitchCase="'radio'">
@@ -43,9 +43,12 @@
    <!-- List case -->
    <ng-container *ngSwitchCase="'list'">
 
-     <div *ngIf="!editMode" class="list">
-       <span class="chip" [ngClass]="{'topItem': item.rating === 2, 'badItem': item.rating === 0}" *ngFor="let item of fullAnswer.answers[question.identifier]">
-         {{item.text}}
+     <div *ngIf="!editMode" [ngStyle]="{ 'padding-top': '20px', 'padding-bottom': '10px' }">
+       <span
+         *ngFor="let item of fullAnswer.answers[question.identifier]"
+         class="list-wrapper"
+         [ngClass]="{'topItem': item.rating === 2, 'badItem': item.rating === 0}">
+         {{ item.text }}
          <a *ngIf="item.link" [href]=item.link target="_blank"><i class="fas fa-link" aria-hidden="true"></i></a>
        </span>
      </div>
@@ -55,12 +58,35 @@
          *ngIf="editMode"
          (update)="setAnswer($event)"
          [canEdit]="true"
-         [config]="{ placeholder: '', initialData: fullAnswer.answers[question.identifier] || [] }"
+         [config]="{ placeholder: 'Enter your response', initialData: fullAnswer.answers[question.identifier] || [] }"
          [adminMode]="editMode">
        </app-input-list>
      </div>
 
    </ng-container>
+
+    <!-- Checkbox case -->
+    <ng-container *ngSwitchCase="'checkbox'">
+
+      <div *ngIf="fullAnswer.answers[question.identifier] || editMode" [ngStyle]="{ 'padding-top': '20px' }">
+        <ul *ngFor="let option of question.options" class="checkbox-wrapper">
+          <li
+            *ngIf="fullAnswer.answers[question.identifier] || editMode"
+            class="response-wrapper">
+            <!--<span (click)="checkOption(option.identifier, $event)">{{ optionLabel(option.identifier) }}</span>-->
+            <span>{{ '•' }} {{ optionLabel(option.identifier) }}</span>
+            <app-shared-rating-item
+              *ngIf="editMode"
+              [editMode]="editMode"
+              [prop]="question.identifier"
+              [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+              (ratingChange)="updateQuality($event)">
+            </app-shared-rating-item>
+          </li>
+        </ul>
+      </div>
+
+    </ng-container>
 
    <!-- Clearbit case -->
    <!--<ng-container *ngSwitchCase="'clearbit'">
@@ -84,22 +110,7 @@
    </ng-container>
 
 
-   <ng-container *ngSwitchCase="'checkbox'">
-     <ul *ngFor="let option of question.options">
-       <li
-         *ngIf="(fullAnswer.answers[question.identifier] && fullAnswer.answers[question.identifier][option.identifier] === true) || editMode"
-         [ngClass]="{'inactive': !fullAnswer.answers[question.identifier] || fullAnswer.answers[question.identifier][option.identifier] != true,
-                     'c-hand': editMode}">
-         <span (click)="checkOption(option.identifier, $event)">
-           {{optionLabel(option.identifier)}}
-         </span>
-         <app-shared-rating-item *ngIf="fullAnswer.answers[question.identifier] && fullAnswer.answers[question.identifier][option.identifier] == true"
-                          [editMode]="editMode" [prop]="question.identifier"
-                          [rating]="fullAnswer.answers[question.identifier + 'Quality']"
-                          (ratingChange)="updateQuality($event)"></app-shared-rating-item>
-       </li>
-     </ul>
-   </ng-container>
+
 
    <ng-container *ngSwitchCase="'textbox'">
      <app-shared-tag-item
@@ -172,8 +183,10 @@
 
     <!-- Case false -->
     <ng-container *ngSwitchCase="false">
-      <p class="comment-text">{{ 'COMMON.COMMENT' | translate }}</p>
-      <p class="comment-answer">{{fullAnswer.answers[question.identifier + 'Comment']}}</p>
+      <div *ngIf="fullAnswer.answers[question.identifier + 'Comment']">
+        <p class="comment-text">{{ 'COMMON.COMMENT' | translate }}</p>
+        <p class="comment-answer">{{fullAnswer.answers[question.identifier + 'Comment']}}</p>
+      </div>
     </ng-container>
 
     <!-- Case true -->

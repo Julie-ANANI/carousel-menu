@@ -1,5 +1,5 @@
 .ques-label {
-  padding-top: 20px;
+  padding-top: 50px;
   padding-bottom: 0;
   color: #97A4B1;
   font-weight: 600;
@@ -8,6 +8,8 @@
 .response-wrapper {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
 }
 
 .comment-wrapper {
@@ -54,24 +56,59 @@
   padding-bottom: 20px;
 }
 
+.list-wrapper {
+  background: #4F5D6B;
+  color: white;
+  border-radius: 25px;
+  display: inline-flex;
+  margin-right: 10px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
 
+  a {
 
+    i {
+      margin-left: 15px;
+      font-size: 16px;
+      color: #FFB300;
+    }
+
+    i:hover {
+      cursor: pointer;
+      color: lighten(#FFB300, 10%);;
+    }
+
+  }
+
+}
 
 
 .topItem, .badItem {
-  background: #00b700;
+  background: #2ECC71;
   color: white;
 
   i {
     color: rgba(255, 255, 255, 0.8);
   }
+
   i:hover {
     color: white;
   }
+
 }
 
 .badItem {
-  background: #f20d0d;
+  background: #EA5858;
+}
+
+.checkbox-wrapper {
+  color: #333333;
+
+  li {
+    padding-left: 0;
+    padding-top: 0;
+  }
+
 }
 
 i {
