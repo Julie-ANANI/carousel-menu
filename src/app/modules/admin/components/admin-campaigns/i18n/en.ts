@@ -2,6 +2,7 @@
  * Created by bastien on 10/01/2018.
  */
 export const CAMPAIGNS = {
+  'CAMPAIGN-NAME': 'Campaign name',
   'DETAILS': 'Details',
   'HISTORY': 'History',
   'SEARCH': 'Search',
