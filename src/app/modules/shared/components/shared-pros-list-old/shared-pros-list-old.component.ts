@@ -1,11 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
-import { environment } from '../../../../../environments/environment';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -32,10 +28,7 @@ export class SharedProsListOldComponent {
   private _total = 0;
   private _pros: Array <SelectedProfessional>;
 
-  constructor(private _professionalService: ProfessionalsService,
-              private _notificationsService: TranslateNotificationsService,
-              private _translateService: TranslateService,
-              private _searchService: SearchService) { }
+  constructor(private _searchService: SearchService) { }
 
   loadPros(config: any): void {
     this._config = config;
@@ -54,16 +47,6 @@ export class SharedProsListOldComponent {
     });
   }
 
-  updatePro(pro: Professional, event: Event): void {
-    event.preventDefault();
-    this.editUser[pro._id] = false;
-    this._professionalService.save(pro._id, pro).first().subscribe(res => {
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.SUCCESS');
-    }, err => {
-      this._notificationsService.error('ERROR', err.message);
-    });
-  }
-
   updateSelection(event: any) {
     this.smartSelect = event;
     const config = this._config;
@@ -74,13 +57,6 @@ export class SharedProsListOldComponent {
       pros: 'all',
       query: config
     });
-  }
-
-  openQuizUri(pro: Professional, event: Event): void {
-    event.preventDefault();
-    const baseUri = environment.quizUrl + '/quiz/' + this.campaign.innovation.quizId + '/' + this.campaign._id;
-    const parameters = '?pro=' + pro._id + '&lang=' + this._translateService.currentLang;
-    window.open(baseUri + parameters);
   }
 
   get nbSelected(): number {
