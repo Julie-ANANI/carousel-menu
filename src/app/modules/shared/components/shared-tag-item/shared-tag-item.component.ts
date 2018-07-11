@@ -58,5 +58,9 @@ export class SharedTagItemComponent implements OnInit {
     this.removeTag.emit(tag);
   }
 
+  get canAdd(): boolean {
+    return (this._tagForm.get('tag').value && typeof this._tagForm.get('tag').value !== 'string');
+  }
+
   get tagForm() { return this._tagForm; }
 }

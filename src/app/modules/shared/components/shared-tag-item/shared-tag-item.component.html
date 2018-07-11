@@ -20,7 +20,7 @@
                [value-formatter]="autocompleValueFormatter"
                [attr.placeholder]="'Add an existing tag'"
                class="form-default">
-        <button class="btn-round  btn-primary">
+        <button class="btn-round  btn-primary" [disabled]="!canAdd">
           <i class="icon icon-plus"></i>
         </button>
       </div>
