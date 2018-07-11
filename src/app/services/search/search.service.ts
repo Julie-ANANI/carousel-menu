@@ -94,4 +94,22 @@ export class SearchService {
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public relaunchRequests(): Observable<any> {
+    const query = {
+      path: '/search/people/relaunch',
+    };
+    return this._http.get('/search/get', {params: query})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public relaunchMailRequests(): Observable<any> {
+    const query = {
+      path: '/search/mail/relaunch',
+    };
+    return this._http.get('/search/get', {params: query})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
 }

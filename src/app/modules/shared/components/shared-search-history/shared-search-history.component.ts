@@ -64,6 +64,18 @@ export class SharedSearchHistoryComponent implements OnInit {
         }
       });
   }
+  
+  public relaunchRequests() {
+    this._searchService.relaunchRequests().first().subscribe(_ => {
+      this.loadHistory();
+    });
+  }
+  
+  public relaunchMailRequests() {
+    this._searchService.relaunchMailRequests().first().subscribe(_ => {
+      this.loadHistory();
+    });
+  }
 
   public getGoogleQuota() {
     this._searchService.dailyStats().first().subscribe(result => {
