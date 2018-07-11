@@ -101,13 +101,12 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     });
     this.form.disable();
 
-    if (this._campaign.settings.ABsettings.status != 0) {
+    if (this._campaign.settings.ABsettings.status !== 0) {
       this._nameWorkflowA = this._campaign.settings.ABsettings.nameWorkflowA;
       this._nameWorkflowB = this._campaign.settings.ABsettings.nameWorkflowB;
       this.getStatsBatch();
     }
   }
-
 
   // MessageStats => Recupere tout les batch de la campagne sans les update (moins lourd, on update sur demande en statut 2)
   public getStatsBatch() {
@@ -130,7 +129,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       this._notificationsService.error('ERROR', err);
     });
   }
-
 
   public startABtesting() {
     if (this.campaign.stats.nbPros90 > 0) {
@@ -158,7 +156,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       this._notificationsService.error('ERROR.ERROR', 'Please, update stats of campaign or wait for pros. ')
     }
   }
-
 
   public generateStatsTable() {
     const digit = 2; // Number of decimals.
@@ -296,7 +293,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     }
   }
 
-
   public statusSwitch() {
     this.switchActivated = !this.switchActivated;
     if (this.switchActivated) {
@@ -305,7 +301,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       this.form.disable();
     }
   }
-
 
   public updateStatsBatches() {
     this._campaignService.updateBatchesStats(this.campaign._id).first().subscribe((obj: Array<Batch>) => {
