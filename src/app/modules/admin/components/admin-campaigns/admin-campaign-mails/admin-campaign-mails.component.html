@@ -70,7 +70,7 @@
         </label>
       </div>
       <div class="card-subtitle text-gray">créé {{ batch.created | date: dateformat }}</div>
-      <div class="card-body">
+      <div class="card-body-batch">
         <app-shared-table
           [data]="this.tableBatch(batchIndex)"
           [config]="config"
