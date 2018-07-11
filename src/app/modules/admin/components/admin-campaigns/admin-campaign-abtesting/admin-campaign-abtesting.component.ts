@@ -30,6 +30,8 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   private _tableA: Table;
   private _tableB: Table;
 
+  private _avertABtesting = false;
+
 
   private _statsA: Array<{
     delivered: number,
@@ -131,6 +133,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
   public startABtesting() {
+    this._avertABtesting = false;
     if (this.campaign.stats.nbPros90 > 0) {
       if (this.sizeA + this.sizeB > this.campaign.stats.nbPros90) {
         const mid = Math.floor(this.campaign.stats.nbPros90 / 2);
@@ -314,6 +317,11 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     });
   }
 
+  public setAvertAB(b: boolean) {
+    this._avertABtesting = b;
+  }
+
+
   get nameWorkflowA(): string { return this._nameWorkflowA };
   get nameWorkflowB(): string { return this._nameWorkflowB };
   get sizeA(): number { return this._sizeA };
@@ -325,11 +333,11 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   get tableA(): Table {return this._tableA};
   get tableB(): Table {return this._tableB};
   get batchesLength(): number { return this._batchesLength };
-
+  get avertAB(): boolean { return this._avertABtesting; }
 
   set nameWorkflowA(arg: string) { this._nameWorkflowA = arg};
   set nameWorkflowB(arg: string) { this._nameWorkflowB = arg};
   set sizeA(arg: number) { this._sizeA = arg};
   set sizeB(arg: number) { this._sizeB = arg};
-
+ // set avertAB(b: boolean) { this._avertABtesting = b; }
 }

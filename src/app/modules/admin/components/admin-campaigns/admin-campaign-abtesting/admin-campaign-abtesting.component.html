@@ -43,7 +43,7 @@
         <input type="number" id="sizeB"  [(ngModel)] = "sizeB" formControlName="sizeB" />
       </div>
       <!-- On click => envoi de données -->
-      <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="startABtesting()">
+      <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="this.setAvertAB(true)">
         Submit
       </button>
 
@@ -80,3 +80,21 @@
   </div>
 </div>
 
+<div class="modal" [ngClass]="{'active': avertAB}"  >
+  <div class="modal-overlay" (click)="(this.setAvertAB(false)) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(this.setAvertAB(false)) && $event.preventDefault()"></button>
+      <div class="modal-title h5">Suppression d'un batch</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">Etes-vous bien sûr de vouloir supprimer ce magnifique batch ??</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="startABtesting()">{{ 'CAMPAIGNS.STARTAB' | translate }}</button>
+      <button class="btn btn-primary" (click)="(this.setAvertAB(false)) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
