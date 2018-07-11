@@ -6,11 +6,13 @@ import { AdminPresetsEditComponent } from './admin-presets-edit/admin-presets-ed
 import { AdminPresetsListComponent } from './admin-presets-list/admin-presets-list.component';
 import { AdminPresetsNewComponent } from './admin-presets-new/admin-presets-new.component';
 import { SharedModule } from '../../../../shared/shared.module';
+import { GlobalModule } from "../../../../global/global.module";
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
+    GlobalModule,
     TranslateModule.forChild()
   ],
   declarations: [

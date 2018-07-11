@@ -12,6 +12,7 @@ import { InnovationPreviewComponent } from './components/innovation-preview/inno
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
 import { CountryFlagModule } from '../../../../directives/country-flag/country-flag.module';
+import { GlobalModule } from "../../../global/global.module";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { CountryFlagModule } from '../../../../directives/country-flag/country-f
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    CountryFlagModule
+    CountryFlagModule,
+    GlobalModule
   ],
   declarations: [
     SidebarBatchComponent,

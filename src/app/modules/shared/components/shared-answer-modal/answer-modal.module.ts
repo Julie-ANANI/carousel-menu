@@ -6,13 +6,15 @@ import { AnswerModalComponent } from './answer-modal.component';
 import { AnswerQuestionComponent } from './components/answer-question/answer-question.component';
 import { RatingItemComponent } from './components/rating-item/rating-item.component';
 import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
+import { GlobalModule } from "../../../global/global.module";
 
 @NgModule({
   imports: [
     CommonModule,
     MultilingModule,
     SharedModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    GlobalModule
   ],
   declarations: [
     AnswerModalComponent,

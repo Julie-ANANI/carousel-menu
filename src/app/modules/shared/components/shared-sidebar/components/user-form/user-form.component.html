@@ -17,6 +17,20 @@
         <button type="submit" class="btn btn-primary">{{'COMMON.SAVE' | translate}}</button>
       </div>
 
+      <div class="domain-management-wrapper">
+        <h6>Domain management</h6>
+        <div *ngIf="!editInstanceDomain">
+          Actual domain: {{userForm.get('domain').value}}
+            <a (click)="startEditInstanceDomain($event)"><span *ngIf="!isSelf"><i class="fas fa-pencil-alt"></i></span></a>
+        </div>
+        <div *ngIf="editInstanceDomain">
+          New domain:  <app-autocomplete-input id="domains"
+                                               (update)="updateInstanceDomain($event)"
+                                               [onlyOne]="true"
+                                               [config]="buildInstanceDomainListConfig()"></app-autocomplete-input>
+        </div>
+      </div>
+
       <!-- Save only -->
       <div class="text-right operator-wrapper" *ngIf="isProfessional">
         <button type="submit" class="btn btn-primary">
