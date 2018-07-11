@@ -31,7 +31,7 @@ export class AdminQuestionsNewComponent {
     this._presetService.createQuestion(newQuestion)
       .first()
       .subscribe(question => {
-        this._router.navigate(['/admin/questions/' + question._id])
+        this._router.navigate(['/admin/presets/questions/' + question._id])
       });
 
   }

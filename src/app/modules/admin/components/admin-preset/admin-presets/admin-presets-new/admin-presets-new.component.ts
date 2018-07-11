@@ -30,7 +30,7 @@ export class AdminPresetsNewComponent {
     this._presetService.create(newPreset)
       .first()
       .subscribe(preset => {
-        this._router.navigate(['/admin/presets/' + preset._id])
+        this._router.navigate(['/admin/presets/presets/' + preset._id])
       });
 
   }

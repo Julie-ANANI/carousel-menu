@@ -29,7 +29,7 @@ export class AdminSectionsNewComponent {
     this._presetService.createSection(newSection)
       .first()
       .subscribe(section => {
-        this._router.navigate(['/admin/sections/' + section._id])
+        this._router.navigate(['/admin/presets/sections/' + section._id])
       });
 
   }

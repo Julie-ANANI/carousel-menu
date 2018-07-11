@@ -1,6 +1,6 @@
 <h1>{{total}} {{ 'COMMON.PRESETS' | translate }}</h1>
 
-<button [routerLink]="'/admin/presets/new'" class="btn btn-lg btn-primary" (click)="$event.preventDefault()">
+<button [routerLink]="'/admin/presets/presets/new'" class="btn btn-lg btn-primary" (click)="$event.preventDefault()">
   {{ 'PRESETS.PRESET.ADD' | translate }} <i class="icon icon-arrow-right"></i>
 </button>
 
@@ -10,7 +10,7 @@
   <p class="empty-title h5">{{ 'PRESETS.PRESET.NONE.TITLE' | translate }}</p>
   <p class="empty-subtitle">{{ 'PRESETS.PRESET.NONE.CONTENT' | translate }}</p>
   <div class="empty-action">
-    <button [routerLink]="'/admin/presets/new'" class="btn btn-lg btn-primary" (click)="$event.preventDefault()">
+    <button [routerLink]="'/admin/presets/presets/new'" class="btn btn-lg btn-primary" (click)="$event.preventDefault()">
       {{ 'PRESETS.PRESET.ADD' | translate }} <i class="icon icon-arrow-right"></i>
     </button>
   </div>
@@ -32,7 +32,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let preset of presets">
-        <td><a [routerLink]="['/admin/presets/' + preset._id]">{{preset.name}}</a></td>
+        <td><a [routerLink]="['/admin/presets/presets/' + preset._id]">{{preset.name}}</a></td>
         <td>{{preset.sections ? preset.sections.length : 0}}</td>
         <td>{{preset.domain}}</td>
         <td>{{preset.created | date : dateFormat}}</td>
