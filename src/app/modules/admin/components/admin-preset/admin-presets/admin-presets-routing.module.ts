@@ -7,7 +7,7 @@ import { AdminPresetsNewComponent } from './admin-presets-new/admin-presets-new.
 
 export const presetsRoutes: Routes = [
   {
-    path: '',
+    path: 'presets',
     component: AdminPresetsComponent,
     children: [
       { path: '', component: AdminPresetsListComponent, pathMatch: 'full' },

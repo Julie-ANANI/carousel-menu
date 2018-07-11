@@ -3,30 +3,19 @@
     <div class="column col-10 col-mx-auto">
 
       <ul class="tab tab-block">
-        <li class="tab-item"><a [routerLink]="'/admin/presets'" [ngClass]="{'active': currentPage == 'presets'}">
+        <li class="tab-item"><a [routerLink]="'/admin/presets/presets'" routerLinkActive="active">
           {{ 'COMMON.PRESETS' | translate }}
         </a></li>
-        <li class="tab-item"><a [routerLink]="'/admin/sections'" [ngClass]="{'active': currentPage == 'sections'}">
+        <li class="tab-item"><a [routerLink]="'/admin/presets/sections'" routerLinkActive="active">
           {{ 'PRESETS.SECTIONS' | translate }}
         </a></li>
-        <li class="tab-item"><a [routerLink]="'/admin/questions'" [ngClass]="{'active': currentPage == 'questions'}">
+        <li class="tab-item"><a [routerLink]="'/admin/presets/questions'" routerLinkActive="active">
           {{ 'PRESETS.QUESTIONS' | translate }}
         </a></li>
       </ul>
 
-      <div class="tabs">
-        <div class="tab-content" [hidden]="currentPage != 'presets'">
-          <app-admin-presets-module></app-admin-presets-module>
-        </div>
+      <router-outlet></router-outlet>
 
-        <div class="tab-content" [hidden]="currentPage != 'sections'">
-          <app-admin-sections-module></app-admin-sections-module>
-        </div>
-
-        <div class="tab-content" [hidden]="currentPage != 'questions'">
-          <app-admin-questions-module></app-admin-questions-module>
-        </div>
-      </div>
     </div>
   </div>
 </div>
