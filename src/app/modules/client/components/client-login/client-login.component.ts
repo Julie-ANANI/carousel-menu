@@ -109,6 +109,10 @@ export class ClientLoginComponent implements OnInit {
     return environment.logoURL;
   }
 
+  public getLogoWBG(): string {
+    return environment.logoSynthURL;
+  }
+
   // getting the background image of the company
   public getBackgroundImage(): string {
     return environment.background;

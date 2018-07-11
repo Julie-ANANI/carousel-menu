@@ -45,7 +45,7 @@ export const COMMON = {
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
   'LASTNAME': 'Nom',
-  'EMAIL': 'Email adresse',
+  'EMAIL': 'Adresse e-mail',
   'PHONE': 'Téléphone',
   'PASSWORD': 'Mot de passe',
   'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',

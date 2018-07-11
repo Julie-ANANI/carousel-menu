@@ -84,16 +84,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const sections = Array.from(
-      document
-        .getElementById('answer-wrapper')
-        .querySelectorAll('section')
-    );
-    window.onscroll = () => {
-      const scrollPosY = document.body.scrollTop;
-      const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
-      this.activeSection = section ? section.id : '';
-    };
+    const wrapper = document
+      .getElementById('answer-wrapper');
+    if(wrapper) {
+      const sections = Array.from(
+        wrapper.querySelectorAll('section')
+      );
+      window.onscroll = () => {
+        const scrollPosY = document.body.scrollTop;
+        const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
+        this.activeSection = section ? section.id : '';
+      };
+    }
   }
 
   private loadAnswers() {

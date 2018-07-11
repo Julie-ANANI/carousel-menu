@@ -108,6 +108,10 @@ export class ClientSignupComponent implements OnInit {
     return environment.background;
   }
 
+  public getLogoWBG(): string {
+    return environment.logoSynthURL;
+  }
+
   onSignUpClick(event: Event) {
     event.preventDefault();
 
