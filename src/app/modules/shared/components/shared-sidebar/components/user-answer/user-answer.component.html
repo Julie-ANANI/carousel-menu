@@ -172,7 +172,14 @@
 
     <!-- Questions section -->
     <div class="ques-wrapper">
-
+      <div *ngFor="let question of questions">
+        <app-answer-question
+          [editMode]="true"
+          [question]="question"
+          [fullAnswer]="modalAnswer"
+          [innoid]="innovationId">
+        </app-answer-question>
+      </div>
     </div>
     <!-- /Questions -->
 

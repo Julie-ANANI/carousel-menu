@@ -6,6 +6,7 @@ import { AuthService } from '../../../../../../services/auth/auth.service';
 import {Tag} from '../../../../../../models/tag';
 import {AnswerService} from '../../../../../../services/answer/answer.service';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
+import {InnovationService} from '../../../../../../services/innovation/innovation.service';
 
 @Component({
   selector: 'app-user-answer',
@@ -38,12 +39,46 @@ export class UserAnswerComponent implements OnInit {
   constructor(private translateService: TranslateService,
               private authService: AuthService,
               private answerService: AnswerService,
-              private translateNotificationsService: TranslateNotificationsService) {}
+              private translateNotificationsService: TranslateNotificationsService,
+              private innovationService: InnovationService) {}
 
   ngOnInit() {
     this.adminMode = this.adminMode && this.authService.adminLevel > 2;
 
     this.floor = Math.floor;
+
+    // On regarde si on a une question 'étoiles'
+    const starQuestions = this.questions.filter(q => q && q.controlType === 'stars');
+
+    if (starQuestions.length) {
+      // Si question 'étoiles', on récupère les advantages
+      // TODO: merge the 2 following subscribers in only one
+      this.innovationService.getInnovationCardByLanguage(this.innovationId, 'en').first().subscribe(cardEn => {
+        this.innovationService.getInnovationCardByLanguage(this.innovationId, 'fr').first().subscribe(cardFr => {
+          // puis on les assigne aux questions stars
+          starQuestions.forEach(question => {
+            question.options = [];
+            let i = 0;
+            let advantagesLeft = true;
+            while (advantagesLeft) {
+              if ((cardFr && cardFr.advantages && cardFr.advantages[i] && cardFr.advantages[i].text)
+                || (cardEn && cardEn.advantages && cardEn.advantages[i] && cardEn.advantages[i].text)) {
+                question.options.push({
+                  identifier: i.toString(),
+                  label: {
+                    fr: cardFr && cardFr.advantages && cardFr.advantages[i] ? cardFr.advantages[i].text : '',
+                    en: cardEn && cardEn.advantages && cardEn.advantages[i] ? cardEn.advantages[i].text : ''
+                  }
+                });
+                i++;
+              } else {
+                advantagesLeft = false;
+              }
+            }
+          })
+        });
+      });
+    }
 
   }
 
@@ -51,11 +86,15 @@ export class UserAnswerComponent implements OnInit {
     this.saveChanges = true;
   }
 
-  save(event: Event) {
-    event.preventDefault();
+  resetEdit() {
     this.editJob = false;
     this.editCompany = false;
     this.editCountry = false;
+  }
+
+  save(event: Event) {
+    event.preventDefault();
+    this.resetEdit();
     this.saveChanges = false;
   }
 

@@ -45,6 +45,7 @@ export const COMMON = {
   'EDIT-BLACKLIST': 'Modifier email blacklisté',
   'ADD-EMAIL': 'Ajouter des emails',
   'NEVER': 'Jamais',
+  'COMMENT': 'Commentaire',
 
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',

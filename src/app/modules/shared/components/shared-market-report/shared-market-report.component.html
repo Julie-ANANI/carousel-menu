@@ -40,7 +40,6 @@
 
         <!-- Project under DONE status -->
         <div *ngIf="projectStatus === 'DONE' || projectStatus === 'EVALUATING_DONE' || adminSide">
-          <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
 
           <!-- Title and download button section -->
           <div class="title-wrapper">

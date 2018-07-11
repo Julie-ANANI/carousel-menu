@@ -16,7 +16,6 @@ export class InputListComponent {
       this.answerList = config.initialData || [];
     }
   }
-
   @Input() canEdit = true;
   @Input() adminMode = false;
   @Input() isEmail = false;
@@ -86,5 +85,6 @@ export class InputListComponent {
   get placeholder(): string {
     return this._placeholder;
   }
+
 
 }

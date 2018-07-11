@@ -27,17 +27,17 @@
     </li>
 
     <li *ngIf="adminMode">
-      <span>{{a.text}}</span>
+      <span>{{ a.text }}</span>
       <div class="popover">
         <i class="fas fa-pencil-alt"></i>
         <div class="popover-container">
           <div class="input-group">
             <input type="text" class="form-default" [(ngModel)]="a.text" name="text"/>
-            <button class="btn" type="submit" (click)="updateItem($event)">GO</button>
+            <button class="btn btn-primary btn-sm" type="submit" (click)="updateItem($event)">Update</button>
           </div>
         </div>
       </div>
-      <i class="fas fa-thumbs-up" [ngClass]="{'active': a.rating === 2}" (click)="thumbsUp($event, i)"></i>
+      <i class="fas fa-thumbs-up" [ngClass]="{ 'active': a.rating === 2 }" (click)="thumbsUp($event, i)"></i>
       <i class="fas fa-thumbs-down" [ngClass]="{'active': a.rating === 0}" (click)="thumbsDown($event, i)"></i>
       <a [routerLink]="" class="delete" aria-label="Close" role="button" (click)="rmProposition(i)">
         <img src="https://res.cloudinary.com/umi/image/upload/app/delete.svg" width="" height="">

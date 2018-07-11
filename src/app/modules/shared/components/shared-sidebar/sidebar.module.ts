@@ -8,6 +8,7 @@ import { CountryFlagModule } from '../../../../directives/country-flag/country-f
 import { InputListModule } from '../../../../directives/input-list/input-list.module';
 import { AutocompleteInputModule } from '../../../../directives/autocomplete-input/autocomplete-input.module';
 import { SharedTagItemModule } from '../shared-tag-item/shared-tag-item.module';
+import {MultilingModule} from '../../../../pipes/multiling/multiling.module';
 
 // Components
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
@@ -18,6 +19,7 @@ import { InnovationPreviewComponent } from './components/innovation-preview/inno
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
 import { UserAnswerComponent } from './components/user-answer/user-answer.component';
+import { AnswerQuestionComponent } from './components/user-answer/answer-question/answer-question.component';
 
 @NgModule({
   imports: [
@@ -29,7 +31,8 @@ import { UserAnswerComponent } from './components/user-answer/user-answer.compon
     InputListModule,
     SharedRatingItemModule,
     AutocompleteInputModule,
-    SharedTagItemModule
+    SharedTagItemModule,
+    MultilingModule
   ],
   declarations: [
     SidebarBatchComponent,
@@ -39,7 +42,8 @@ import { UserAnswerComponent } from './components/user-answer/user-answer.compon
     UserFormComponent,
     SidebarSearchComponent,
     UserAnswerComponent,
-    ProjectFormComponent
+    ProjectFormComponent,
+    AnswerQuestionComponent
   ],
   exports: [
     CollaboratorComponent,
