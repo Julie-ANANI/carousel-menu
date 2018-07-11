@@ -31,6 +31,7 @@ import { SharedSearchHistoryComponent } from './components/shared-search-history
 import { SharedSearchProsComponent } from './components/shared-search-pros/shared-search-pros.component';
 import { SharedSearchMailComponent } from './components/shared-search-mail/shared-search-mail.component';
 import { SharedProsListComponent } from './components/shared-pros-list/shared-pros-list.component';
+import { SharedProsListOldComponent } from './components/shared-pros-list-old/shared-pros-list-old.component';
 import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
@@ -108,6 +109,7 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedSearchProsComponent,
     SharedSearchMailComponent,
     SharedProsListComponent,
+    SharedProsListOldComponent,
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
     SharedMarketReportExampleComponent,
@@ -157,6 +159,7 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedSearchProsComponent,
     SharedSearchMailComponent,
     SharedProsListComponent,
+    SharedProsListOldComponent,
     SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
     SharedTableComponent,
