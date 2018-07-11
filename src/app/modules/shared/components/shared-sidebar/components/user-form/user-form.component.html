@@ -4,24 +4,30 @@
     <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
       <!-- Operator -->
-      <div *ngIf="isEditUser" class="form-group-inline-space operator-wrapper">
-        <label class="form-switch" for="operator">
-          <input
-            type="checkbox"
-            name="operator"
-            id="operator"
-            formControlName="operator">
-          <i class="form-icon"></i>
-          {{ 'PROJECT_LIST.OPERATOR' | translate }}
-        </label>
-        <button type="submit" class="btn btn-primary">{{'COMMON.SAVE' | translate}}</button>
-      </div>
+      <div *ngIf="isEditUser || isProfessional" class="form-group-inline-space operator-wrapper">
+        <div class="input-group">
+          <label class="form-switch" for="operator" *ngIf="authService.userId != user.id && isEditUser">
+            <input
+              type="checkbox"
+              name="operator"
+              id="operator"
+              formControlName="operator">
+            <i class="form-icon"></i>
+            {{ 'PROJECT_LIST.OPERATOR' | translate }}
+          </label>
 
-      <!-- Save only -->
-      <div class="text-right operator-wrapper" *ngIf="isProfessional">
-        <button type="submit" class="btn btn-primary">
-          {{'COMMON.SAVE' | translate}}
-        </button>
+          <label class="form-switch" for="role" *ngIf="authService.adminLevel > 2 && authService.userId != user.id && isEditUser">
+            <input
+              type="checkbox"
+              name="role"
+              id="role"
+              [checked]="userForm.value.roles === 'admin'"
+              (change)="affectAsAdmin($event.srcElement.checked)" >
+            <i class="form-icon"></i>
+            {{ 'USERS.ADMIN' | translate }}
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary">{{'COMMON.SAVE' | translate}}</button>
       </div>
 
       <!-- First name -->

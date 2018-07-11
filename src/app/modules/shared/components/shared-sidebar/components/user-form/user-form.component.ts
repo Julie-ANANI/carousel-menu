@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { User } from '../../../../../../models/user.model';
 import { Professional } from '../../../../../../models/professional';
+import {AuthService} from '../../../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-user-form',
@@ -46,11 +47,12 @@ export class UserFormComponent implements OnInit, OnChanges {
   userForm: FormGroup;
   countriesSuggestion: Array<string> = [];
   displayCountrySuggestion = false;
-  private _user: User = null;
+  private _user: User;
   private _pro: Professional = null;
 
   constructor(private formBuilder: FormBuilder,
-              private autoCompleteService: AutocompleteService) {}
+              private autoCompleteService: AutocompleteService,
+              private _authService: AuthService) {}
 
   ngOnInit() {
     this.userForm = this.formBuilder.group( {
@@ -61,9 +63,12 @@ export class UserFormComponent implements OnInit, OnChanges {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       country: ['', [Validators.required]],
+      roles: '',
       operator: [false],
       url: [null],
     });
+
+    this._user = new User();
   }
 
   loadSignUp() {
@@ -132,12 +137,24 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   }
 
+  affectAsAdmin(check: boolean) {
+    if (check === true) {
+      this.userForm.get('roles').setValue('admin');
+    } else {
+      this.userForm.get('roles').setValue('user');
+    }
+  }
+
   get user(): User {
     return this._user;
   }
 
   get pro(): Professional {
     return this._pro;
+  }
+
+  get authService(): AuthService {
+    return this._authService;
   }
 
 }
