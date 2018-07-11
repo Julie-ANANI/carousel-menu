@@ -55,7 +55,9 @@
   <!-- Affichage des stats + valider + nom des workflows -->
 
   <div *ngIf="this.campaign.settings.ABsettings.status == 1">
+    <h3>{{nameWorkflowA}}</h3>
     <app-shared-table [data]="this.tableA" [config]="config"></app-shared-table>
+    <h3>{{nameWorkflowB}}</h3>
     <app-shared-table [data]="this.tableB" [config]="config"></app-shared-table>
     <button class="btn btn-primary" (click)="updateStatsBatches()">
       <i class="fas fa-sync"></i>
@@ -67,7 +69,9 @@
 
   <div *ngIf="this.campaign.settings.ABsettings.status == 2">
     <br>
+    <h3>{{nameWorkflowA}}</h3>
     <app-shared-table [data]="this.tableA" [config]="config"></app-shared-table>
+    <h3>{{nameWorkflowB}}</h3>
     <app-shared-table [data]="this.tableB" [config]="config"></app-shared-table>
     <br>
     <button class="btn btn-primary" (click)="updateStatsBatches()">
