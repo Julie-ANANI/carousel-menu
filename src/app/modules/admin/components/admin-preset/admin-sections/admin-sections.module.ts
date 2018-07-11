@@ -6,11 +6,13 @@ import { AdminSectionsEditComponent } from './admin-sections-edit/admin-sections
 import { AdminSectionsListComponent } from './admin-sections-list/admin-sections-list.component';
 import { AdminSectionsNewComponent } from './admin-sections-new/admin-sections-new.component';
 import { SharedModule } from '../../../../shared/shared.module';
+import { GlobalModule } from "../../../../global/global.module";
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
+    GlobalModule,
     TranslateModule.forChild()
   ],
   declarations: [

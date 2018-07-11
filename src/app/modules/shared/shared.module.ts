@@ -40,18 +40,22 @@ import { SharedEditEmailsStep } from './components/shared-edit-emails-step/share
 import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
 import { SharedProjectEditCardsComponent } from './components/shared-project-edit-cards-component/shared-project-edit-cards.component';
 import { SharedEmailBlacklistComponent } from './components/shared-email-blacklist/shared-email-blacklist.component';
+import { GlobalModule } from "../global/global.module";
 
 // Pipes
-import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
+/*import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
 import { FilterPipe } from '../../pipes/TableFilterPipe';
 import { LimitsPipe } from '../../pipes/TableLimitsPipe';
 import { CharacterCountdown } from '../../pipes/CharacterCountdown';
+import { MultilingModule } from '../../pipes/multiling/multiling.module';*/
+
+
 import { MultilingModule } from '../../pipes/multiling/multiling.module';
 
 // Directives
-import { InputListComponent } from '../../directives/input-list/input-list.component';
+/*import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
-import { SearchInputComponent } from '../../directives/search-input/search-input.component';
+import { SearchInputComponent } from '../../directives/search-input/search-input.component';*/
 
 // Internal Modules
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
@@ -76,12 +80,13 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedWorldmapModule,
     SidebarModule,
     SharedWorldmapModule,
-    MultilingModule
+    MultilingModule,
+    GlobalModule
   ],
   declarations: [
     // Directives
     // FormErrorDirective,
-    InputListComponent,
+    //InputListComponent,
     SharedAnswersListComponent,
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
@@ -96,8 +101,8 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedVideoComponent,
     SharedSortComponent,
     SharedProjectSettingsComponent,
-    AutocompleteInputComponent,
-    SearchInputComponent,
+    //AutocompleteInputComponent,
+    //SearchInputComponent,
     SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
@@ -111,11 +116,11 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
     SharedProjectEditCardsComponent,
-    DomSanitizerPipe,
-    FilterPipe,
-    LimitsPipe,
+    //DomSanitizerPipe,
+    //FilterPipe,
+    //LimitsPipe,
     SharedEmailBlacklistComponent,
-    CharacterCountdown
+    //CharacterCountdown
   ],
   exports: [
     // Modules
@@ -129,7 +134,7 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     // TableModule,
 
     // Directives
-    InputListComponent,
+    //InputListComponent,
 
     // Components
     SharedNotFoundComponent,
@@ -145,8 +150,8 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedLatexManagerComponent,
     SharedSortComponent,
     SharedProjectSettingsComponent,
-    AutocompleteInputComponent,
-    SearchInputComponent,
+    //AutocompleteInputComponent,
+    //SearchInputComponent,
     SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
@@ -160,9 +165,9 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedEditScenarioComponent,
     SharedProjectEditCardsComponent,
     SharedEmailBlacklistComponent,
-    FilterPipe,
-    LimitsPipe,
-    CharacterCountdown
+    //FilterPipe,
+    //LimitsPipe,
+    //CharacterCountdown
   ]
 })
 

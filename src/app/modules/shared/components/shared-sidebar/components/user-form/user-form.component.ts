@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from "../../../../../../services/auth/auth.service";
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { User } from '../../../../../../models/user.model';
-import {Professional} from '../../../../../../models/professional';
+import { Professional } from '../../../../../../models/professional';
 
 @Component({
   selector: 'app-user-form',
@@ -13,6 +14,8 @@ import {Professional} from '../../../../../../models/professional';
 export class UserFormComponent implements OnInit, OnChanges {
 
   @Input() sidebarState: string;
+
+    private _editInstanceDomain = false;
 
   /*
       For type 'editUser', put the data into the attribute user and patch it to the formData
@@ -43,14 +46,32 @@ export class UserFormComponent implements OnInit, OnChanges {
   isSignUp = false;
   isEditUser = false;
   isProfessional = false;
+
+  isSelf =  false;
+
   userForm: FormGroup;
   countriesSuggestion: Array<string> = [];
   displayCountrySuggestion = false;
   private _user: User = null;
   private _pro: Professional = null;
 
+  private _updateInstanceDomainConfig: {
+    placeholder: string,
+    initialData: Array<string>,
+    type: string,
+    identifier: string,
+    canOrder: boolean
+  } = {
+    placeholder: 'Partners domain list',
+    initialData: [],
+    type: 'domain',
+    identifier: 'name',
+    canOrder: false
+  };
+
   constructor(private formBuilder: FormBuilder,
-              private autoCompleteService: AutocompleteService) { }
+              private autoCompleteService: AutocompleteService,
+              private _authService: AuthService) { }
 
   ngOnInit() {
     this.userForm = this.formBuilder.group( {
@@ -62,6 +83,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       password: ['', [Validators.required, Validators.minLength(8)]],
       country: ['', [Validators.required]],
       operator: [false],
+      domain: ['', [Validators.required]],
       url: [null],
     });
   }
@@ -73,6 +95,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   loadEditUser() {
     this.isEditUser = true;
     if (this._user) {
+      this.isSelf = this._authService.userId === this._user.id;
       this.userForm.patchValue(this._user);
     }
   }
@@ -129,10 +152,28 @@ export class UserFormComponent implements OnInit, OnChanges {
         this.userForm.reset();
       }
     }
+  }
 
+  public startEditInstanceDomain(event: Event): void {
+      this._editInstanceDomain = true;
+  }
+
+  public endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
+      this._editInstanceDomain = false;
+      this.userForm.get('domain').setValue(event.value[0].name || "umi");
+  }
+
+  public buildInstanceDomainListConfig(): any {
+      this._updateInstanceDomainConfig.initialData = [];
+      return this._updateInstanceDomainConfig;
+  }
+
+  public updateInstanceDomain(event: any): void {
+      this.endEditInstanceDomain(event);
   }
 
   get user(): User { return this._user; }
   get pro(): Professional { return this._pro; }
+  get editInstanceDomain() { return this._editInstanceDomain; }
 
 }

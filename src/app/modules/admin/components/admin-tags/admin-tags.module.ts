@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
 import { SharedModule } from '../../../shared/shared.module';
+import { GlobalModule } from "../../../global/global.module";
 
 import { AdminTagsComponent } from './admin-tags.component';
 import { AdminTagListComponent } from './admin-tag-list/admin-tag-list.component';
@@ -22,6 +23,7 @@ import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/a
     ReactiveFormsModule,
     MultilingModule,
     SharedModule,
+    GlobalModule,
     TranslateModule.forChild()
   ],
   declarations: [

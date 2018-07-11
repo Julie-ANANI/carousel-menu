@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '../shared/shared.module';
+import { GlobalModule } from "../global/global.module";
 import { ClientProjectModule } from './components/client-project/client-project.module';
 import { SharedMarketReportModule } from '../shared/components/shared-market-report/shared-market-report.module';
 import { ClientRoutingModule } from './client-routing.module';
@@ -23,6 +24,7 @@ import { ClientDiscoverDescriptionComponent } from './components/client-discover
     ClientProjectModule,
     ClientRoutingModule,
     SharedModule,
+    GlobalModule,
     TranslateModule.forChild(),
     SharedMarketReportModule
   ],

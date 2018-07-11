@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 // Modules
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { GlobalModule } from "../global/global.module";
 import { SharedAnswerModalModule } from '../shared/components/shared-answer-modal/answer-modal.module';
 import { AdminPresetsModule } from './components/admin-preset/admin-presets/admin-presets.module';
 import { AdminQuestionsModule } from './components/admin-preset/admin-questions/admin-questions.module';
@@ -52,6 +53,7 @@ import { DateFormatPipe } from '../../pipes/DateFormatPipe';
     AdminTagsModule,
     AdminProjectModule,
     SharedModule,
+    GlobalModule,
     SharedAnswerModalModule,
     TranslateModule.forChild()
   ],
