@@ -17,7 +17,7 @@
         <button type="submit" class="btn btn-primary">{{'COMMON.SAVE' | translate}}</button>
       </div>
 
-      <div class="domain-management-wrapper">
+      <div *ngIf="isEditUser" class="domain-management-wrapper">
         <h6>Domain management</h6>
         <div *ngIf="!editInstanceDomain">
           Actual domain: {{userForm.get('domain').value}}
