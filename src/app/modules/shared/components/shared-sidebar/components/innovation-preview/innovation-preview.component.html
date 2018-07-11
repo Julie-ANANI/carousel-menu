@@ -1,5 +1,4 @@
 <div *ngIf="innovation" class="innovation-wrapper">
-
   <!-- Hero section -->
   <div class="hero-light-container">
     <div class="column col-11 col-mx-auto">
@@ -35,7 +34,9 @@
 
     </div>
   </div>
-
+  <div *ngIf="this.getDate">
+    {{'DASHBOARD.SENDINGDATE' | translate}} {{this.getDate| date: this.dateFormat}}
+  </div>
   <!-- Advantage section -->
   <div class="section-container">
     <div class="column col-11 col-mx-auto">
