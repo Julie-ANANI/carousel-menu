@@ -101,7 +101,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     });
     this.form.disable();
 
-    if (this._campaign.settings.ABsettings.status !== 0) {
+    if (this._campaign.settings.ABsettings.status != 0) {
       this._nameWorkflowA = this._campaign.settings.ABsettings.nameWorkflowA;
       this._nameWorkflowB = this._campaign.settings.ABsettings.nameWorkflowB;
       this.getStatsBatch();
