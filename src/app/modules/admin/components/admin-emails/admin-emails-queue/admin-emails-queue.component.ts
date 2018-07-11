@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmailQueueModel } from '../../../../../models/mail.queue.model';
 import { EmailService } from '../../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import {Table} from '../../../../shared/components/shared-table/models/table';
 
 @Component({
   selector: 'app-admin-email-queue',
@@ -14,6 +15,7 @@ export class AdminEmailQueueComponent implements OnInit {
     mailqueues: [],
     _metadata: {}
   };
+
   private _config = {
     fields: '',
     limit: 10,
@@ -23,6 +25,8 @@ export class AdminEmailQueueComponent implements OnInit {
       created: -1
     }
   };
+
+  private _tableInfos: Table = null;
 
   constructor(private _emailService: EmailService,
               private _notificationsService: TranslateNotificationsService) { }
@@ -45,6 +49,21 @@ export class AdminEmailQueueComponent implements OnInit {
       .first()
       .subscribe(queue => {
           this._queueList = queue;
+
+          this._tableInfos = {
+            _selector: 'shared-blacklist',
+            _title: 'COMMON.BLACKLIST',
+            _content: this._queueList.mailqueues,
+            _total: this._queueList._metadata.totalCount,
+            _isHeadable: true,
+            _isFiltrable: true,
+            _isSelectable: true,
+            _isEditable: true,
+            _columns: [
+              {_attrs: ['email'], _name: 'COMMON.EMAIL', _type: 'TEXT'},
+              {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'},
+              {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE'}]
+          };
         },
         error => this._notificationsService.error('ERROR', error.message)
       );

@@ -45,7 +45,7 @@
       <div class="form-group" *ngIf="isAddEmail">
         <label class="form-label">{{ 'COMMON.ADD-EMAIL' | translate }}</label>
         <div class="input-group">
-          <app-input-list (update)="addEmail($event)" [config]="{initialData: formData.get('email').value}">
+          <app-input-list [isEmail]="true" (update)="addEmail($event)" [config]="{initialData: formData.get('email').value}">
           </app-input-list>
         </div>
       </div>

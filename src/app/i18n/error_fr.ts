@@ -10,7 +10,7 @@ export const ERROR = {
 
   'FORM': {
     'PITCH_FORM': 'Merci de répondre aux champs du formulaire de terrain.',
-    'TARGETING_FORM': 'Merci de répondre aux champs du formulaire de ciblage.'
+    'TARGETING_FORM': 'Merci de répondre aux champs du formulaire de ciblage.',
   },
 
   'LOGIN': {

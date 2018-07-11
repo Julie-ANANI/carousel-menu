@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
+import {TranslateNotificationsService} from '../../services/notifications/notifications.service';
 
 @Component({
   moduleId: module.id,
@@ -15,6 +16,7 @@ export class InputListComponent {
 
   @Input() canEdit = true;
   @Input() adminMode = false;
+  @Input() isEmail = false;
 
   answer: string;
   answerList: Array<any>;
@@ -27,7 +29,7 @@ export class InputListComponent {
     }
   }
 
-  constructor() {}
+  constructor(private _notificationsService: TranslateNotificationsService) {}
 
   get placeholder(): string {
     return this._placeholder;
@@ -35,9 +37,22 @@ export class InputListComponent {
 
   addProposition(val: string): void {
     if (this.answerList.findIndex(t => {return t === val}) === -1) {
-      this.answerList.push({text: val});
-      this.answer = '';
-      this.update.emit({value: this.answerList});
+
+      // if we want to test if it's an email
+      if (this.isEmail) {
+        const testValue = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if (testValue.test(val)) {
+          this.answerList.push({text: val});
+          this.answer = '';
+          this.update.emit({value: this.answerList});
+        } else {
+          this._notificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
+        }
+      } else {
+        this.answerList.push({text: val});
+        this.answer = '';
+        this.update.emit({value: this.answerList});
+      }
     }
   }
 

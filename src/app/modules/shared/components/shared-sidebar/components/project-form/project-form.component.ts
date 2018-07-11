@@ -73,8 +73,8 @@ export class ProjectFormComponent implements OnInit, OnChanges {
     }
   }
 
-  addEmail(event: {value: Array<string>}) {
-    this.formData.get('email')!.setValue(event.value);
+  addEmail(event: {value: Array<any>}) {
+    this.formData.get('email')!.setValue(event.value)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
