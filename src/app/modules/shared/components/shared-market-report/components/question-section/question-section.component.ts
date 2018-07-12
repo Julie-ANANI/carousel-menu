@@ -140,16 +140,16 @@ export class QuestionSectionComponent implements OnInit {
     }
   }
 
-  public addSomeFilter(event: Filter) {
-    this.addFilter.emit(event);
-  }
-
   public updateNumberOfItems(event: number): void {
     this._stats.nbAnswers = event;
   }
 
   public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
+  }
+
+  public newFilter(filter: Filter) {
+    this.addFilter.emit(filter);
   }
 
   get answers() { return this._answers; }

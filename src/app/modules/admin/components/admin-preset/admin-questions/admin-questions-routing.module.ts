@@ -7,7 +7,7 @@ import { AdminQuestionsNewComponent } from './admin-questions-new/admin-question
 
 export const questionsRoutes: Routes = [
   {
-    path: '',
+    path: 'questions',
     component: AdminQuestionsComponent,
     children: [
       { path: '', component: AdminQuestionsListComponent, pathMatch: 'full' },

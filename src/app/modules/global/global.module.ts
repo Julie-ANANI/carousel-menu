@@ -1,22 +1,22 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Directives
 import { InputListComponent } from '../../directives/input-list/input-list.component';
 import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
 import { SearchInputComponent } from '../../directives/search-input/search-input.component';
 
-//Pipes
+// Pipes
 import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
 import { FilterPipe } from '../../pipes/TableFilterPipe';
 import { LimitsPipe } from '../../pipes/TableLimitsPipe';
 import { CharacterCountdown } from '../../pipes/CharacterCountdown';
 import { MultilingModule } from '../../pipes/multiling/multiling.module';
-import { TranslateModule } from "@ngx-translate/core";
-import { RouterModule } from "@angular/router";
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Angular2FontawesomeModule } from "angular2-fontawesome";
-import { Ng2AutoCompleteModule } from "ng2-auto-complete";
+import { TranslateModule } from '@ngx-translate/core';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome';
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 
 @NgModule({
@@ -34,7 +34,6 @@ import { Ng2AutoCompleteModule } from "ng2-auto-complete";
         InputListComponent,
         AutocompleteInputComponent,
         SearchInputComponent,
-        DomSanitizerPipe,
         FilterPipe,
         LimitsPipe,
         CharacterCountdown,

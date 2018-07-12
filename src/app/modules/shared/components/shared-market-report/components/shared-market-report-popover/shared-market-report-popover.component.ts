@@ -3,6 +3,7 @@
  */
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../../../models/answer';
+import { Filter } from '../../models/filter';
 
 @Component({
   selector: 'market-report-popover',
@@ -13,12 +14,18 @@ import { Answer } from '../../../../../../models/answer';
 export class SharedMarketReportPopoverComponent {
 
   @Input() public answers: Array<Answer>;
+
+  @Output() addFilter = new EventEmitter<Filter>();
   @Output() modalAnswerChange = new EventEmitter<any>();
 
   constructor() { }
 
   public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
+  }
+
+  public newFilter(filter: Filter) {
+    this.addFilter.emit(filter);
   }
 
 }

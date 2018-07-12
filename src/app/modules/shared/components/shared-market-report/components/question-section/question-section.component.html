@@ -32,7 +32,7 @@
       [question]="question"
       [readonly]="readonly"
       [stats]="stats"
-      (addFilter)="addSomeFilter($event)"
+      (addFilter)="newFilter($event)"
       (modalAnswerChange)="seeAnswer($event)">
     </app-bar-chart>
 
@@ -46,7 +46,7 @@
       [stats]="stats"
       [showDetails]="showDetails"
       (updateNumberOfItems)="updateNumberOfItems($event)"
-      (addFilter)="addSomeFilter($event)"
+      (addFilter)="newFilter($event)"
       (modalAnswerChange)="seeAnswer($event)">
     </app-item-list>
 
@@ -92,6 +92,7 @@
           <market-comment
             [answer]="answer"
             [questionId]="question.identifier"
+            (addFilter)="newFilter($event)"
             (modalAnswerChange)="seeAnswer($event)">
           </market-comment>
         </li>
@@ -101,6 +102,7 @@
         <div *ngFor="let answer of answersToShow" class="white-frame professional-item">
           <app-pro-tag
             [answer]="answer"
+            (addFilter)="newFilter($event)"
             (modalAnswerChange)="seeAnswer($event)">
           </app-pro-tag>
         </div>
@@ -135,6 +137,7 @@
             <market-comment
               [answer]="answer"
               [questionId]="question.identifier+'Comment'"
+              (addFilter)="newFilter($event)"
               (modalAnswerChange)="seeAnswer($event)">
             </market-comment>
           </li>

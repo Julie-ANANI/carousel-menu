@@ -40,5 +40,15 @@
     </p>
   </div>
 
+  <div class="tag-wrapper" *ngIf="answer.tags?.length > 0">
+    <i class="fa fa-tag"></i>
+    <span *ngFor="let t of answer.tags"
+          class="label label-rounded label-primary tag-label"
+          (click)="newFilter($event, t)">
+      {{t?.label | multiling:lang}}
+      <i class="fas fa-filter"></i>
+    </span>
+  </div>
+
 
 </div>

@@ -1,5 +1,9 @@
 $primary-color: #3498DB;
 
+.admin {
+  background: #F5F5F5;
+}
+
 .sidebar {
   background: #262831;
   min-height: 100vh;
@@ -24,5 +28,4 @@ $primary-color: #3498DB;
     color: $primary-color;
     text-decoration: none;
   }
-
 }
