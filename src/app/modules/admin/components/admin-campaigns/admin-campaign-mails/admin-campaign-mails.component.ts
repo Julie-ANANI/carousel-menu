@@ -164,7 +164,15 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public poubelle(batch: Batch) {
-    return batch.status === 0;
+    if (this._campaign.settings.ABsettings.status == 0) {
+      return batch.status === 0;
+    } else {
+      if (batch._id == this._campaign.settings.ABsettings.batchA || batch._id == this._campaign.settings.ABsettings.batchB) {
+        return false;
+      } else {
+        return batch.status === 0;
+      }
+    }
   }
 
   get readyAutoBatch() {
