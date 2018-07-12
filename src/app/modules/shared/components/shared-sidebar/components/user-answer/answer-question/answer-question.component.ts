@@ -47,12 +47,12 @@ export class AnswerQuestionComponent implements OnInit {
     }
   }
 
-  checkOption(id: string, event: Event) {
+/*  checkOption(id: string, event: Event) {
     if (!this.fullAnswer.answers[this.question.identifier]) {
       this.fullAnswer.answers[this.question.identifier] = {};
     }
     this.fullAnswer.answers[this.question.identifier][id] = !this.fullAnswer.answers[this.question.identifier][id];
-  }
+  }*/
 
   selectOption(event: Event, option: any) {
     event.preventDefault();

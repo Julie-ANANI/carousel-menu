@@ -2,11 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Question } from '../../../../../../models/question';
 import { Answer } from '../../../../../../models/answer';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from '../../../../../../services/auth/auth.service';
-import {Tag} from '../../../../../../models/tag';
-import {AnswerService} from '../../../../../../services/answer/answer.service';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
-import {InnovationService} from '../../../../../../services/innovation/innovation.service';
+import { Tag } from '../../../../../../models/tag';
+import { AnswerService } from '../../../../../../services/answer/answer.service';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 
 @Component({
   selector: 'app-user-answer',
@@ -30,20 +29,18 @@ export class UserAnswerComponent implements OnInit {
   modalAnswer: Answer;
   editMode = false;
   floor: any;
-  saveChanges = false;
   displayEmail = false;
   editJob = false;
   editCompany = false;
   editCountry = false;
 
   constructor(private translateService: TranslateService,
-              private authService: AuthService,
               private answerService: AnswerService,
               private translateNotificationsService: TranslateNotificationsService,
               private innovationService: InnovationService) {}
 
   ngOnInit() {
-    this.adminMode = this.adminMode && this.authService.adminLevel > 2;
+    // this.adminMode = this.adminMode && this.authService.adminLevel > 2;
 
     this.floor = Math.floor;
 
@@ -82,10 +79,6 @@ export class UserAnswerComponent implements OnInit {
 
   }
 
-  notifyChanges() {
-    this.saveChanges = true;
-  }
-
   resetEdit() {
     this.editJob = false;
     this.editCompany = false;
@@ -95,12 +88,25 @@ export class UserAnswerComponent implements OnInit {
   save(event: Event) {
     event.preventDefault();
     this.resetEdit();
-    this.saveChanges = false;
+
+    if (this.modalAnswer.professional.email) {
+      // Hack : les réponses anciennes n'ont pas de champ quizReference,
+      // mais il faut forcément une valeur pour sauvegarder la réponse
+      // TODO: remove this hack
+      this.modalAnswer.originalAnswerReference = this.modalAnswer.originalAnswerReference || 'oldQuiz';
+      this.modalAnswer.quizReference = this.modalAnswer.quizReference || 'oldQuiz';
+      this.answerService.save(this.modalAnswer._id, this.modalAnswer).first()
+        .subscribe(_ => {
+          this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
+        }, err => {
+          this.translateNotificationsService.error('ERROR.ERROR', err);
+        });
+    }
+
   }
 
   updateProfileQuality(object: {value: number}) {
     this.modalAnswer.profileQuality = object.value;
-    this.notifyChanges();
   }
 
   updateCountry(event: {value: Array<any>}) {
@@ -108,7 +114,6 @@ export class UserAnswerComponent implements OnInit {
   }
 
   updateStatus(event: Event, status: any) {
-    this.notifyChanges();
     event.preventDefault();
     this.modalAnswer.status = status;
     if (status === 'VALIDATED' || status === 'VALIDATED_NO_MAIL') {

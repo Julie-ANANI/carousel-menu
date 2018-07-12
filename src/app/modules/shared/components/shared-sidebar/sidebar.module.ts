@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedRatingItemModule } from '../shared-rating-item/shared-rating-item-module';
 import { CountryFlagModule } from '../../../../directives/country-flag/country-flag.module';
 import { InputListModule } from '../../../../directives/input-list/input-list.module';
 import { AutocompleteInputModule } from '../../../../directives/autocomplete-input/autocomplete-input.module';
@@ -20,6 +19,7 @@ import { UserFormComponent } from './components/user-form/user-form.component';
 import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
 import { UserAnswerComponent } from './components/user-answer/user-answer.component';
 import { AnswerQuestionComponent } from './components/user-answer/answer-question/answer-question.component';
+import { RatingItemComponent } from './components/user-answer/rating-item/rating-item.component';
 
 @NgModule({
   imports: [
@@ -29,7 +29,6 @@ import { AnswerQuestionComponent } from './components/user-answer/answer-questio
     TranslateModule.forChild(),
     CountryFlagModule,
     InputListModule,
-    SharedRatingItemModule,
     AutocompleteInputModule,
     SharedTagItemModule,
     MultilingModule
@@ -43,7 +42,8 @@ import { AnswerQuestionComponent } from './components/user-answer/answer-questio
     SidebarSearchComponent,
     UserAnswerComponent,
     ProjectFormComponent,
-    AnswerQuestionComponent
+    AnswerQuestionComponent,
+    RatingItemComponent
   ],
   exports: [
     CollaboratorComponent,

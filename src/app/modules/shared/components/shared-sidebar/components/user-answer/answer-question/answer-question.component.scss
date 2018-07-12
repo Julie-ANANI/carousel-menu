@@ -1,6 +1,5 @@
 .ques-label {
-  padding-top: 50px;
-  padding-bottom: 0;
+  padding-bottom: 20px;
   color: #97A4B1;
   font-weight: 600;
 }
@@ -9,7 +8,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 20px;
 }
 
 .comment-wrapper {
@@ -17,7 +15,7 @@
   justify-content: space-between;
 
   .form-default {
-    margin-top: 20px;
+    margin-top: 15px;
     max-width: 80%;
     padding: 6px 12px;
     font-size: 12px;
@@ -26,13 +24,13 @@
 }
 
 .comment-answer {
-  color: #333333;
-  padding-top: 10px;
+  color: #5d5d5d;
+  padding-top: 15px;
   padding-bottom: 0;
 }
 
 .answer {
-  color: #FFB300;
+  color: #2ECC71;
 }
 
 .gaping {
@@ -40,16 +38,16 @@
 }
 
 .inactive {
-  color: #333333;
+  color: #5d5d5d;
 }
 
 .comment-text {
-  color: #0B90C6;
+  color: #FFB300;
   padding-bottom: 0;
 }
 
 .pd-top {
-  padding-top: 20px;
+  padding-top: 25px;
 }
 
 .pd-bottom {
@@ -57,12 +55,12 @@
 }
 
 .list-wrapper {
-  background: #4F5D6B;
-  color: white;
-  border-radius: 25px;
+  background: #F8F4F4;
+  color: #333333;
+  padding: 8px 15px;
+  border-radius: 5px;
   display: inline-flex;
   margin-right: 10px;
-  padding: 10px 15px;
   margin-bottom: 10px;
 
   a {
@@ -102,23 +100,58 @@
 }
 
 .checkbox-wrapper {
-  color: #333333;
+  background: #4F5D6B;
+  color: white;
+  border-radius: 25px;
+  display: inline-flex;
+  margin-right: 10px;
+  margin-bottom: 10px;
 
   li {
-    padding-left: 0;
-    padding-top: 0;
+    padding: 10px 15px;
   }
 
 }
 
-i {
-  color: #adadad;
-  cursor: pointer;
-  font-size: 20px;
+.nCheckbox-wrapper {
+  color: #5d5d5d;
+
+  li {
+    padding-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+  }
+
 }
 
-i:hover {
-  color: #0B90C6;
+.div-gap {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.star-wrapper {
+  display: flex;
+  list-style: none;
+  color: #5d5d5d;
+  justify-content: space-between;
+
+  li {
+    padding: 0;
+    margin-bottom: 10px;
+    align-items: center;
+
+    span {
+      color: #FFB300;
+      margin-left: 3px;
+    }
+
+  }
+
+}
+
+.toggle-wrapper {
+  margin-bottom: 20px;
+  color: #5d5d5d;
 }
 
 

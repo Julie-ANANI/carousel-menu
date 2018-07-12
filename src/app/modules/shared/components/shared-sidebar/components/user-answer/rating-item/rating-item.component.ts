@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-shared-rating-item',
-  templateUrl: './shared-rating-item.component.html',
-  styleUrls: ['./shared-rating-item.component.scss']
+  selector: 'app-rating-item',
+  templateUrl: './rating-item.component.html',
+  styleUrls: ['./rating-item.component.scss']
 })
 
-export class SharedRatingItemComponent {
+export class RatingItemComponent {
 
   @Input() editMode: boolean;
   @Input() prop: string;

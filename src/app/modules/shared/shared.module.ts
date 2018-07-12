@@ -55,7 +55,6 @@ import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldm
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
 import { InputListModule } from '../../directives/input-list/input-list.module';
 import { CountryFlagModule } from '../../directives/country-flag/country-flag.module';
-import { SharedRatingItemModule } from './components/shared-rating-item/shared-rating-item-module';
 import { AutocompleteInputModule } from '../../directives/autocomplete-input/autocomplete-input.module';
 import { SharedTagItemModule } from './components/shared-tag-item/shared-tag-item.module';
 
@@ -79,7 +78,6 @@ import { SharedTagItemModule } from './components/shared-tag-item/shared-tag-ite
     SharedWorldmapModule,
     MultilingModule,
     AutocompleteInputModule,
-    SharedRatingItemModule,
     SharedTagItemModule
   ],
   declarations: [
@@ -127,7 +125,6 @@ import { SharedTagItemModule } from './components/shared-tag-item/shared-tag-ite
     Ng2PageScrollModule,
     SidebarModule,
     CountryFlagModule,
-    SharedRatingItemModule,
     InputListModule,
     SharedTagItemModule,
     // TableModule,

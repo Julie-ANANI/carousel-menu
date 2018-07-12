@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SharedRatingItemComponent } from './shared-rating-item.component';
+import { RatingItemComponent } from './rating-item.component';
 
-describe('SharedRatingItemComponent', () => {
-  let component: SharedRatingItemComponent;
-  let fixture: ComponentFixture<SharedRatingItemComponent>;
+describe('RatingItemComponent', () => {
+  let component: RatingItemComponent;
+  let fixture: ComponentFixture<RatingItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SharedRatingItemComponent ]
+      declarations: [ RatingItemComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SharedRatingItemComponent);
+    fixture = TestBed.createComponent(RatingItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

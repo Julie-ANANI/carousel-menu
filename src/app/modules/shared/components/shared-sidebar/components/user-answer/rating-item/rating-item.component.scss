@@ -41,4 +41,30 @@
 
   }
 
+  .c-thumbs-up-wrapper {
+    border: 1px solid #2ECC71;
+    padding: 6px 12px;
+    background-color: #2ECC71;
+    border-radius: 5px;
+    color: white;
+
+    .fa-thumbs-up {
+      color: white;
+    }
+
+  }
+
+  .c-thumbs-down-wrapper {
+    border: 1px solid #EA5858;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background-color: #EA5858;
+    color: white;
+
+    .fa-thumbs-down {
+      color: white;
+    }
+
+  }
+
 }
