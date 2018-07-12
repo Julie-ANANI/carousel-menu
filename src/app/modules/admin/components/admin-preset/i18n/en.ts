@@ -1,6 +1,6 @@
 export const PRESETS = {
   'PRESET': {
-    'ADD_PRESET': 'Add a preset',
+    'ADD': 'Add a preset',
     'FILTER': 'Search',
     'DELETE_MODAL': {
       'TITLE': 'Are you sure?',
@@ -27,7 +27,7 @@ export const PRESETS = {
     }
   },
   'SECTION': {
-    'ADD_PRESET': 'Add a section',
+    'ADD': 'Add a section',
     'FILTER': 'Search',
     'DELETE_MODAL': {
       'TITLE': 'Are you sure?',
@@ -61,7 +61,7 @@ export const PRESETS = {
     }
   },
   'QUESTION': {
-    'ADD_PRESET': 'Add a question',
+    'ADD': 'Add a question',
     'FILTER': 'Search',
     'DELETE_MODAL': {
       'TITLE': 'Are you sure?',

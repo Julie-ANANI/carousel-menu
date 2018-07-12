@@ -30,7 +30,6 @@ export class SharedSearchProsComponent implements OnInit {
     this._initParams();
     this._searchService.getCountriesSettings().first().subscribe(countriesSettings => {
       this._countriesSettings = countriesSettings.countries;
-      console.log(this._countriesSettings);
     });
   }
 
