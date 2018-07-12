@@ -5,12 +5,18 @@ import { AdminQuestionsComponent } from './admin-questions.component';
 import { AdminQuestionsEditComponent } from './admin-questions-edit/admin-questions-edit.component';
 import { AdminQuestionsListComponent } from './admin-questions-list/admin-questions-list.component';
 import { AdminQuestionsNewComponent } from './admin-questions-new/admin-questions-new.component';
+import { SharedSortModule} from '../../../../shared/components/shared-sort/sort.module';
+import { SharedPaginationModule } from '../../../../shared/components/shared-pagination/pagination.module';
+import { SharedFilterInputModule } from '../../../../shared/components/shared-filter-input/filter-input.module';
 import { SharedModule } from '../../../../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
+    SharedSortModule,
+    SharedPaginationModule,
+    SharedFilterInputModule,
     TranslateModule.forChild()
   ],
   declarations: [

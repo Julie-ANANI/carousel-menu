@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedRatingItemModule } from '../shared-rating-item/shared-rating-item-module';
 import { CountryFlagModule } from '../../../../directives/country-flag/country-flag.module';
 import { InputListModule } from '../../../../directives/input-list/input-list.module';
+import { SharedTableModule } from '../shared-table/table.module';
 import { AutocompleteInputModule } from '../../../../directives/autocomplete-input/autocomplete-input.module';
 import { SharedTagItemModule } from '../shared-tag-item/shared-tag-item.module';
 import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
@@ -30,6 +31,7 @@ import { AnswerQuestionComponent } from './components/user-answer/answer-questio
     CountryFlagModule,
     InputListModule,
     SharedRatingItemModule,
+    SharedTableModule,
     AutocompleteInputModule,
     SharedTagItemModule,
     MultilingModule

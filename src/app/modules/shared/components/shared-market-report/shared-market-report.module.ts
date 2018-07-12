@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { ChartsModule } from 'ng2-charts';
+import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
+
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { BluesquareComponent } from './components/bluesquare/bluesquare.component';
 import { PiechartComponent } from './components/piechart/piechart.component';
@@ -28,6 +30,7 @@ import { CommonService } from '../../../../services/common/common.service';
     EllipsisModule,
     MultilingModule,
     SharedModule,
+    SharedTextZoneModule,
     SharedAnswerModalModule,
     SharedWorldmapModule,
     TranslateModule.forChild()
