@@ -20,7 +20,11 @@
 
     </p>
 
-    <market-report-popover [answers]="[answer]" (modalAnswerChange)="seeAnswer($event)"></market-report-popover>
+    <market-report-popover
+      [answers]="[answer]"
+      (addFilter)="newFilter($event)"
+      (modalAnswerChange)="seeAnswer($event)">
+    </market-report-popover>
 
   </div>
 

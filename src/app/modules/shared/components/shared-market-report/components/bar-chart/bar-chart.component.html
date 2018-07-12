@@ -33,6 +33,7 @@
         <market-comment
           [answer]="answer"
           [questionId]="question.identifier+'Comment'"
+          (addFilter)="newFilter($event)"
           (modalAnswerChange)="seeAnswer($event)">
         </market-comment>
       </li>

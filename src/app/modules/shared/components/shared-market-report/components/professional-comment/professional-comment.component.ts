@@ -3,6 +3,7 @@
  */
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../../../models/answer';
+import { Filter } from '../../models/filter';
 
 @Component({
   selector: 'market-comment',
@@ -14,12 +15,18 @@ export class SharedMarketCommentComponent {
 
   @Input() public answer: Answer;
   @Input() public questionId: string;
+
+  @Output() addFilter = new EventEmitter<Filter>();
   @Output() modalAnswerChange = new EventEmitter<any>();
 
   constructor() { }
 
   public seeAnswer(event: any) {
     this.modalAnswerChange.emit(event);
+  }
+
+  public newFilter(filter: Filter) {
+    this.addFilter.emit(filter);
   }
 
 }
