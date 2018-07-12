@@ -21,7 +21,7 @@ $dark-background: #262831;
   .form-select {
     width: 150px;
     color: $dark-background;
-    margin: auto 36px auto 30px;
+    margin: auto 36px auto 0;
   }
 }
 
@@ -75,7 +75,7 @@ $dark-background: #262831;
   .form-select {
     width: 150px;
     color: $dark-background;
-    margin: auto 36px auto 30px;
+    margin: 0 36px 0 0;
   }
 }
 .content {
