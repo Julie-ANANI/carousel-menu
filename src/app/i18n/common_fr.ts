@@ -129,8 +129,9 @@ export const COMMON = {
   'CAMPAIGNS': 'Campagnes',
   'DISCOVER': 'Découvrir',
   'PRESET': 'Configuration',
-  'PRESETS': 'Configurations',
-  'CLIENT_SIDE': 'Interface Client',
+  'PRESETS': 'Settings',
+  'QUESTIONNAIRE': 'Questionnaire(s)',
+  'CLIENT_SIDE': 'Client',
   'EDIT_USER': 'Modifier l\'utilisateur',
   'EDIT_PROFESSIONAL': 'Modifier professionnel',
 

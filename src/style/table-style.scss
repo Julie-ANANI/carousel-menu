@@ -12,6 +12,18 @@ $border-color: #E0E0E0;
 /*
     Table style
  */
+
+.table-title {
+  font-size: 16px;
+  color: #97A4B1;
+  display: inline-block;
+  margin-top: 30px;
+}
+
+sqFilterMulti {
+  display: inline-block;
+}
+
 .table {
   border: 3px solid #E9E9E9;
   background: white;
@@ -24,11 +36,22 @@ $border-color: #E0E0E0;
       background-color: #E1EAF1;
     }
 
+    span,
+    .activeHeader {
+      font-weight: 600;
+      font-size: 0.7rem;
+      color: $primary-dark;
+    }
+
   }
 
   tbody {
     tr.active{
       background-color: #FFFBF1;
+    }
+
+    span {
+      font-size: 0.7rem;
     }
   }
 
@@ -66,7 +89,8 @@ $border-color: #E0E0E0;
     background-color: #FFFFFF;
   }
 
-  th:not(input[type="checkbox"]), td:not(input[type="checkbox"]) {
+  th:not(input[type="checkbox"]),
+  td:not(input[type="checkbox"]) {
     width: 10%;
     min-height: 50px;
   }
@@ -88,9 +112,28 @@ $border-color: #E0E0E0;
   color: $primary-color;
 }
 
-.pagination {
-  margin: 0;
-  padding: 0;
+.small-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 5px 0;
+  font-size: 0.7rem;
+
+  select {
+    width: 50px;
+    margin: 0 10px;
+  }
+
+  .number-of-page {
+    display: flex;
+    align-items: center;
+
+    a {
+      margin: 0 5px;
+      font-size: 1rem;
+    }
+
+  }
 }
 
 .sort-icon {
@@ -115,18 +158,18 @@ $border-color: #E0E0E0;
 }
 
 .left-label {
-  border-bottom-right-radius: 0px;
-  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
   margin-right: 0;
 }
 
 .middle-label {
-  border-radius: 0px;
+  border-radius: 0;
   margin-right: 0;
 }
 
 .right-label {
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
   margin-right: 0;
 }

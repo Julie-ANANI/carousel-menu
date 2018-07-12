@@ -7,14 +7,11 @@ $dark-background: #262831;
 }
 
 .projects-stats {
-  background: $secondary-color;
   display: flex;
-  color: #CFE8F2;
   min-height: 82px;
 
   span {
     font-size: 1.1rem;
-    color: white;
   }
 
   div {
