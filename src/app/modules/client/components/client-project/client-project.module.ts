@@ -6,7 +6,7 @@ import { SharedSortModule } from '../../../shared/components/shared-sort/sort.mo
 import { SharedAnswerModalModule } from '../../../shared/components/shared-answer-modal/answer-modal.module';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
-import { SharedProjectsListModule } from '../../../admin/components/admin-projects-list/projects-list.module';
+import { SharedProjectsListModule } from '../../../admin/components/admin-projects-list/admin-projects-list.module';
 import { ClientProjectComponent } from './client-project.component';
 import { ExplorationProjectComponent } from './components/exploration/exploration.component';
 import { HistoryProjectComponent } from './components/history/history.component';

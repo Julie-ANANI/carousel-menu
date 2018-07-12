@@ -7,15 +7,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { SharedAnswerModalModule } from '../shared/components/shared-answer-modal/answer-modal.module';
-import { AdminPresetModule } from './components/admin-preset/preset.module';
+import { AdminPresetModule } from './components/admin-preset/admin-preset.module';
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
-import { AdminUsersModule } from './components/admin-users/users.module';
-import { AdminProfessionalsModule } from './components/admin-professionals/professionals.module';
+import { AdminUsersModule } from './components/admin-users/admin-users.module';
+import { AdminProfessionalsModule } from './components/admin-professionals/admin-professionals.module';
 import { AdminEmailBlacklistModule } from './components/admin-email-blacklist/admin-email-blacklist.module';
 import { AdminEmailsModule } from './components/admin-emails/admin-emails.module';
 import { AdminTagsModule } from './components/admin-tags/admin-tags.module';
 import { AdminProjectModule } from './components/admin-project/admin-project.module';
-import { AdminProjectsModule } from './components/admin-projects/projects.module';
+import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
 
 // Components
