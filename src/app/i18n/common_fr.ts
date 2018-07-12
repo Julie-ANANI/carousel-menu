@@ -19,6 +19,7 @@ export const COMMON = {
   'UPDATED': 'Modifié le',
   'LAUNCHED': 'Lancé le',
   'EXPIRATION' : 'Expire le',
+  'REASON': 'Raison',
   'CLOSE': 'Fermer',
   'CLONE': 'Clôner',
   'PREVIEW': 'Prévisualiser',

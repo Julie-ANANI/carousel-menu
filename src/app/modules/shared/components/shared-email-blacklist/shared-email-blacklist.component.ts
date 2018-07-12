@@ -72,7 +72,8 @@ export class SharedEmailBlacklistComponent implements OnInit {
               _columns: [
                 {_attrs: ['email'], _name: 'COMMON.EMAIL', _type: 'TEXT'},
                 {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'},
-                {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE'}]
+                {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE'},
+                {_attrs: ['reason'], _name: 'COMMON.REASON', _type: 'TEXT'}]
             };
           }
         }, error => {
