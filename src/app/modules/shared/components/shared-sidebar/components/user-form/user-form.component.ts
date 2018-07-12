@@ -58,7 +58,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     this.userForm = this.formBuilder.group( {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      company: ['', [Validators.required]],
+      companyName: ['', [Validators.required]],
       jobTitle: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],

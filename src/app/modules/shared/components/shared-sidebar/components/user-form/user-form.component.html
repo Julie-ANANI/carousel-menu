@@ -104,15 +104,15 @@
 
       <!-- Company -->
       <div class="form-group">
-        <label class="form-label" for="company">{{ 'COMMON.COMPANY' | translate }}</label>
+        <label class="form-label" for="companyName">{{ 'COMMON.COMPANY' | translate }}</label>
         <input
           class="form-default"
-          formControlName="company"
-          id="company"
+          formControlName="companyName"
+          id="companyName"
           type="text"
           [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
-        <div class="form-error" *ngIf="userForm.get('company').touched && userForm.get('company').invalid">
-          <span *ngIf="userForm.get('company').hasError('required')">{{ 'COMMON.REQUIRED.COMPANY' | translate }}</span>
+        <div class="form-error" *ngIf="userForm.get('companyName').touched && userForm.get('companyName').invalid">
+          <span *ngIf="userForm.get('companyName').hasError('required')">{{ 'COMMON.REQUIRED.COMPANY' | translate }}</span>
         </div>
       </div>
 
