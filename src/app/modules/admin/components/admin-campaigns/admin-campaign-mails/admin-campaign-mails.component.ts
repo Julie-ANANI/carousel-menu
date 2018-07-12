@@ -27,7 +27,6 @@ export class AdminCampaignMailsComponent implements OnInit {
   public newBatch: Batch;
   public dateformat = 'le dd/MM/yyyy à HH:mm';
   public selectedBatchToBeDeleted: any = null;
-  public editDates: Array<any>;
   public dateMail: string;
   public timeMail: string;
 
@@ -37,7 +36,6 @@ export class AdminCampaignMailsComponent implements OnInit {
     sort: {},
     search: {}
   };
-
   public templateSidebar: Template = {};
   public currentBatch: Batch;
   public content = {};
@@ -206,15 +204,20 @@ export class AdminCampaignMailsComponent implements OnInit {
 
 
   public generateTableBatch(batch: Batch): Table {
+
     const firstJSdate = new Date(batch.firstMail);
     const firstTime = ('0' + firstJSdate.getHours()).slice(-2) + ':' + ('0' + firstJSdate.getMinutes()).slice(-2);
+
     const secondJSdate = new Date(batch.secondMail);
     const secondTime = ('0' + secondJSdate.getHours()).slice(-2) + ':' + ('0' + secondJSdate.getMinutes()).slice(-2);
+
     const thirdJSdate = new Date(batch.thirdMail);
     const thirdTime = ('0' + thirdJSdate.getHours()).slice(-2) + ':' + ('0' + thirdJSdate.getMinutes()).slice(-2)
-    const index = this._getBatchIndex(batch._id);
-    const workflowname = this.getWorkflowName(index);
-    const digit = 2; // number of decimals stats/prred
+
+    const workflowname = this.getWorkflowName(this._getBatchIndex(batch._id));
+
+    const digit = 2; // number of decimals stats/pred
+
     if (!batch.predictions || batch.predictions.length === 0) {
       const reset = {opened: 0, clicked: 0, insights: 0};
       batch.predictions = [reset, reset, reset];

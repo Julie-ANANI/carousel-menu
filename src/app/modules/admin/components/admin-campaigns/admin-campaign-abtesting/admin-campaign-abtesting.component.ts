@@ -339,5 +339,4 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   set nameWorkflowB(arg: string) { this._nameWorkflowB = arg};
   set sizeA(arg: number) { this._sizeA = arg};
   set sizeB(arg: number) { this._sizeB = arg};
- // set avertAB(b: boolean) { this._avertABtesting = b; }
 }
