@@ -98,11 +98,16 @@
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="(modalSelectDefault[0] = !modalSelectDefault[0])"></button>
       <div class="modal-title h5">{{ 'CAMPAIGNS.SELECT_DEFAULT.TITLE' | translate }}</div>
-      <div class="modal-body">{{'CAMPAIGNS.SELECT_DEFAULT.CONTENT' | translate}}</div>
     </div>
+      <div class="modal-body">
+        <div class="content">
+        {{'CAMPAIGNS.SELECT_DEFAULT.CONTENT' | translate}}
+        </div>
+      </div>
+
     <div class="modal-footer">
-      <button class="btn btn-link" (click)="changeDefaultWorkflow()">{{ 'COMMON.UPDATE' | translate }}</button>
-      <button class="btn btn-primary" (click)="resetDefaultWorkflow()">
+      <button class="btn btn-primary" (click)="changeDefaultWorkflow()">{{ 'COMMON.UPDATE' | translate }}</button>
+      <button class="btn btn-link" (click)="resetDefaultWorkflow()">
         {{ 'COMMON.CANCEL' | translate }}
       </button>
     </div>
