@@ -119,6 +119,10 @@ export class BarChartComponent implements OnInit {
     this.modalAnswerChange.emit(event);
   }
 
+  public newFilter(filter: Filter) {
+    this.addFilter.emit(filter);
+  }
+
   get barsData(): Array<BarData> { return this._barsData; }
   get lang(): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
   get pieChart() { return this._pieChart; }

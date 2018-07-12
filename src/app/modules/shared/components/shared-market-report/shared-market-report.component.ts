@@ -12,6 +12,7 @@ import { Answer } from '../../../../models/answer';
 import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
+import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
 
@@ -84,16 +85,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const sections = Array.from(
-      document
-        .getElementById('answer-wrapper')
-        .querySelectorAll('section')
-    );
-    window.onscroll = () => {
-      const scrollPosY = document.body.scrollTop;
-      const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
-      this.activeSection = section ? section.id : '';
-    };
+    const wrapper = document
+      .getElementById('answer-wrapper');
+    if(wrapper) {
+      const sections = Array.from(
+        wrapper.querySelectorAll('section')
+      );
+      window.onscroll = () => {
+        const scrollPosY = document.body.scrollTop;
+        const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
+        this.activeSection = section ? section.id : '';
+      };
+    }
   }
 
   private loadAnswers() {
@@ -143,6 +146,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     Object.keys(this._filters).forEach((filterKey) => {
       const filter = this._filters[filterKey];
       switch (filter.status) {
+        case 'TAG':
+          filteredAnswers = filteredAnswers.filter((answer) => {
+            return answer.tags.some((t: Tag) => t._id === filter.value);
+          });
+          break;
         case 'CHECKBOX':
           filteredAnswers = filteredAnswers.filter((answer) => {
             return answer.answers[filter.questionId] && answer.answers[filter.questionId][filter.value];

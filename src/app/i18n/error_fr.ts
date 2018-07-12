@@ -7,6 +7,7 @@ export const ERROR = {
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',
   'INVALID_FORM_DATA': 'L\'e-mail ou le mot de passe n\'est pas valide.',
   'PAGE_NOT_FOUND': 'Pas de page par ici...',
+  'INVALID_DOMAIN': 'On peut pas créer un compte super-admin dans cette instance.',
 
   'FORM': {
     'PITCH_FORM': 'Veuillez remplir tous les champs avant de soumettre votre projet. Merci !',

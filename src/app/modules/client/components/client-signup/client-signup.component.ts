@@ -61,7 +61,10 @@ export class ClientSignupComponent implements OnInit {
 
       user.domain = environment.domain;
 
-      this.userService.create(user).first().subscribe(_ => {
+      if(user.email.match(/umi.us/gi) && user.domain !== 'umi') {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
+      }else {
+        this.userService.create(user).first().subscribe(_ => {
             this._authService.login(user).first().subscribe(
               _ => {
                 this._location.back();
@@ -75,6 +78,7 @@ export class ClientSignupComponent implements OnInit {
             this.translateNotificationsService.error('ERROR.ERROR', error.message);
           }
         );
+      }
     }
     else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
@@ -102,6 +106,10 @@ export class ClientSignupComponent implements OnInit {
   // getting the background image.
   public backgroundImage(): string {
     return environment.background;
+  }
+
+  public getLogoWBG(): string {
+    return environment.logoSynthURL;
   }
 
   onSignUpClick(event: Event) {

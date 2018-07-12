@@ -5,6 +5,7 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
   'FORM_ERROR': 'Form error',
 
   'INVALID_FORM': 'There are errors in your form please correct them and try again.',
+  'INVALID_DOMAIN': 'Cannot create a super-admin account in this instance.',
   'INVALID_FORM_DATA': 'The email/password combination is not valid.',
   'PAGE_NOT_FOUND': 'Page could not be found.',
 

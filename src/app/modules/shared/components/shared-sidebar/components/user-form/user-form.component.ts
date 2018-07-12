@@ -83,7 +83,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       password: ['', [Validators.required, Validators.minLength(8)]],
       country: ['', [Validators.required]],
       operator: [false],
-      domain: ['', [Validators.required]],
+      domain: [''],
       url: [null],
     });
   }
