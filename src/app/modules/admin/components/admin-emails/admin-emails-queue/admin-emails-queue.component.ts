@@ -60,7 +60,7 @@ export class AdminEmailQueueComponent implements OnInit {
             _total: this._queueList._metadata.totalCount,
             _isHeadable: true,
             _isFiltrable: true,
-            _isEditable: true,
+            _isShowable: true,
             _columns: [
               {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSortable: false},
               {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSortable: false},
@@ -95,8 +95,8 @@ export class AdminEmailQueueComponent implements OnInit {
     }
   }
 
-  showCampaignInfos(queue: EmailQueueModel) {
-    this._currentQueue = this._queueList.mailqueues.find(value => value.id === queue.id);
+  showCampaignInfos(queueToShow: EmailQueueModel) {
+    this._currentQueue = new EmailQueueModel(queueToShow);
     this._more = {
       animate_state: 'active',
       title: this.campaignName(this._currentQueue),

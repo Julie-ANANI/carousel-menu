@@ -72,22 +72,26 @@ export class ProjectFormComponent implements OnInit, OnChanges {
   }
 
   loadCampaignInfos() {
-    this._tableInfos = {
-      _selector: 'admin-mailgun',
-      _title: 'Batchs',
-      _content: this.campaignInfosToShow.payload.metadata.recipients,
-      _total: 0,
-      _columns: [
-        {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
-        {_attrs: ['company'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false},
-      ]
-    };
+    if (this.campaignInfosToShow) {
+      this._tableInfos = {
+        _selector: 'admin-mailgun',
+        _title: 'COMMON.PROFESSIONALS',
+        _isHeadable: true,
+        _content: this.campaignInfosToShow.payload.recipients,
+        _total: this.campaignInfosToShow.payload.recipients.length,
+        _isNotPaginable: true,
+        _columns: [
+          {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
+          {_attrs: ['company'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false},
+        ]
+      };
+    }
   }
 
   onSubmit() {
     if (this.isBlacklist) {
       const blacklist = this.formData.value;
-      blacklist.expiration === '' ? blacklist.expiration = 0 : blacklist.expiration = blacklist.expiration
+      blacklist.expiration === '' ? blacklist.expiration = 0 : blacklist.expiration = blacklist.expiration;
       blacklist._id = this.emailToEdit._id;
       this.editBlacklist.emit(blacklist);
     } else if (this.isAddEmail) {

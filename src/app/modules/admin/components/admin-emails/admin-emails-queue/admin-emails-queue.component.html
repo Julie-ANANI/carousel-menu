@@ -39,6 +39,6 @@
   [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-project-form
     [sidebarState]="more.animate_state"
-    [type]="more.type" >
+    [type]="more.type" [campaignInfos]="currentQueue">
   </app-project-form>
 </app-sidebar>
