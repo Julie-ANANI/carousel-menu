@@ -1,8 +1,10 @@
 <h1>{{total}} {{ 'PRESETS.QUESTIONS' | translate }}</h1>
 
-<button [routerLink]="'/admin/presets/questions/new'" class="btn btn-lg btn-primary" (click)="$event.preventDefault()">
-  {{ 'PRESETS.QUESTION.ADD' | translate }} <i class="icon icon-arrow-right"></i>
-</button>
+<div class="text-right">
+  <button [routerLink]="'/admin/presets/questions/new'" class="btn btn-primary" (click)="$event.preventDefault()">
+    {{ 'PRESETS.QUESTION.ADD' | translate }}
+  </button>
+</div>
 
 <label>{{ 'PRESETS.QUESTION.FILTER' | translate }} : <sqFilter [config]="config" (configChange)="loadQuestions($event)" [prop]="'identifier'"></sqFilter>
 
@@ -36,7 +38,7 @@
         <td>{{question.created | date : dateFormat}}</td>
         <td>{{question.updated | date : dateFormat}}</td>
         <td>
-          <button class="btn btn-primary" (click)="(selectedQuestionToBeCloned = question) && $event.preventDefault()">
+          <button class="btn btn-xs ghost-edit" (click)="(selectedQuestionToBeCloned = question) && $event.preventDefault()">
             <i class="far fa-copy"></i> {{ 'COMMON.CLONE' | translate }}
           </button>
         </td>

@@ -9,6 +9,7 @@
   <div *ngIf="operatorData.nbProjectsToValidate !== 'undefined'"><span>{{ operatorData.nbProjectsToValidate }}</span> projet{{ operatorData.nbProjectsToValidate>1?'s':'' }} à valider</div>
   <div *ngIf="operatorData.nbProjectsToTreat !== 'undefined'"><span>{{ operatorData.nbProjectsToTreat }}</span> réponse{{ operatorData.nbProjectsToTreat>1?'s':'' }} à traiter</div>
 </div>
+<!--
 <div class="emails-stats" *ngIf="adminLevel > 2">
   <select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="getPeriodStats()">
     <option [value]="1">Comparer...</option>
@@ -19,17 +20,15 @@
   <div>Emails trouvés : <span>{{ statistics.percentFoundEmails }}%</span></div>
   <div>Emails OK : <span>{{ statistics.percentOkEmails }}%</span></div>
   <div>Emails reçus : <span>{{ statistics.percentReceivedEmails }}%</span></div>
-</div>
+</div>-->
 
-<div class="content">
-  <app-admin-projects-list [operatorId]="operatorId" [operators]="operators" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
+<app-admin-projects-list [operatorId]="operatorId" [operators]="operators" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
-  <app-admin-projects-list [status]="'PREPARING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
+<app-admin-projects-list [status]="'PREPARING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
-  <app-admin-projects-list [status]="'EVALUATING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
+<app-admin-projects-list [status]="'EVALUATING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
-  <app-admin-projects-list [status]="'DONE'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
-</div>
+<app-admin-projects-list [status]="'DONE'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
 <div class="list-table">
   <div>
