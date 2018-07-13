@@ -131,6 +131,10 @@ export const COMMON = {
 
   'USERS': 'Users',
   'PROFESSIONALS': 'Professionals',
+  'PROFESSIONAL': {
+    'PITCH-DELETE': 'Are you sure you want to delete the professionnal(s)?',
+    'DELETE': 'Delete professionnal(s)',
+  },
   'HOME': 'Home',
   'ADMIN': 'Admin',
   'MY_PROJECT': 'My project',
