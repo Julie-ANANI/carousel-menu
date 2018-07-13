@@ -1,7 +1,7 @@
 
 
-<div *ngIf="!(this.batchesLength)  || (campaign.settings.ABsettings.status != 0) ">
-  <div *ngIf="this.campaign.settings.ABsettings.status == 0">
+<div *ngIf="!(this.batchesLength)  || (campaign.settings.ABsettings.status !== 0) ">
+  <div *ngIf="this.campaign.settings.ABsettings?.status === 0">
     <label class="form-switch" style="">
       <input type="checkbox" [disabled]="ABDISPO()" (click)="statusSwitch()" >
       <i class="form-icon"></i>
@@ -54,7 +54,7 @@
 
   <!-- Affichage des stats + valider + nom des workflows -->
 
-  <div *ngIf="this.campaign.settings.ABsettings.status == 1">
+  <div *ngIf="this.campaign.settings.ABsettings?.status == 1">
     <h3>{{nameWorkflowA}}</h3>
     <app-shared-table [data]="this.tableA" [config]="config"></app-shared-table>
     <h3>{{nameWorkflowB}}</h3>
@@ -67,7 +67,7 @@
     </button>
   </div>
 
-  <div *ngIf="this.campaign.settings.ABsettings.status == 2">
+  <div *ngIf="this.campaign.settings.ABsettings?.status == 2">
     <br>
     <h3>{{nameWorkflowA}}</h3>
     <app-shared-table [data]="this.tableA" [config]="config"></app-shared-table>

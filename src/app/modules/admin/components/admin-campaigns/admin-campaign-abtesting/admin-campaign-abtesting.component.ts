@@ -86,11 +86,11 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     this._statsA = [defAB, defAB, defAB];
     this._statsB = [defAB, defAB, defAB];
 
-    if (this._campaign.settings.ABsettings.nameWorkflowA) {
+    if (this._campaign.settings.ABsettings && this._campaign.settings.ABsettings.nameWorkflowA) {
       this._nameWorkflowA = this._campaign.settings.ABsettings.nameWorkflowA;
     }
 
-    if (this._campaign.settings.ABsettings.nameWorkflowB) {
+    if (this._campaign.settings.ABsettings && this._campaign.settings.ABsettings.nameWorkflowB) {
       this._nameWorkflowB = this._campaign.settings.ABsettings.nameWorkflowB;
     }
 
@@ -103,7 +103,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     });
     this.form.disable();
 
-    if (this._campaign.settings.ABsettings.status != 0) {
+    if (this._campaign.settings.ABsettings && this._campaign.settings.ABsettings.status !== 0) {
       this._nameWorkflowA = this._campaign.settings.ABsettings.nameWorkflowA;
       this._nameWorkflowB = this._campaign.settings.ABsettings.nameWorkflowB;
       this.getStatsBatch();

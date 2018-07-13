@@ -73,7 +73,23 @@ export class SharedEmailBlacklistComponent implements OnInit {
                 {_attrs: ['email'], _name: 'COMMON.EMAIL', _type: 'TEXT'},
                 {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'},
                 {_attrs: ['expiration'], _name: 'COMMON.EXPIRATION', _type: 'DATE'},
-                {_attrs: ['reason'], _name: 'COMMON.REASON', _type: 'TEXT'}]
+                {_attrs: ['reason'], _name: 'COMMON.REASON', _type: 'MULTI-CHOICES',
+                  _choices: [
+                    {
+                      _name: "MANUALLY_ADDED",
+                      _class: 'label-progress'
+                    }, {
+                      _name: "USER_SUPPRESSION",
+                      _class: 'label-validate'
+                    }, {
+                      _name: "PROFESSIONAL_SUPPRESSION",
+                      _class: 'label-alert'
+                    },
+                    {
+                      _name: "MAIL_EVENT",
+                      _class: 'label-editing'
+                    }
+                    ]}]
             };
           }
         }, error => {
