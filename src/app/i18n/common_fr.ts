@@ -19,6 +19,7 @@ export const COMMON = {
   'UPDATED': 'Modifié le',
   'LAUNCHED': 'Lancé le',
   'EXPIRATION' : 'Expire le',
+  'EXPIRATION-SPECIFY': 'Ou renseigner une date d\'expiration',
   'REASON': 'Raison',
   'CLOSE': 'Fermer',
   'CLONE': 'Clôner',
@@ -42,6 +43,10 @@ export const COMMON = {
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
   'BLACKLIST': 'Emails blacklistés',
+  'EDIT-BLACKLIST': 'Modifier email blacklisté',
+  'ADD-EMAIL': 'Ajouter des emails',
+  'NEVER': 'Jamais',
+  'COMMENT': 'Commentaire',
 
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
@@ -84,6 +89,12 @@ export const COMMON = {
     'SIGN_UP': 'Continuer',
   },
 
+  'PROJECT': {
+    'OWNER': 'Propriétaire',
+    'TITLE': 'Titre',
+    'DOMAIN': 'Domaine'
+  },
+
   'PROJECT_STATE': {
     'EDITING': 'Description',
     'SUBMITTED': 'Soumis',
@@ -104,7 +115,7 @@ export const COMMON = {
   },
 
   'INVALID': {
-    'EMAIL': 'S\'il vous plaît, mettez une adresse email valide',
+    'EMAIL': 'Veuillez renseigner une adresse email valide',
     'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court.'
   },
 
@@ -134,7 +145,8 @@ export const COMMON = {
   'QUESTIONNAIRE': 'Questionnaire(s)',
   'CLIENT_SIDE': 'Client',
   'EDIT_USER': 'Modifier l\'utilisateur',
-  'EDIT_PROFESSIONAL': 'Modifier professionnel',
+  'EDIT_PROFESSIONAL': 'Modifier Professionnel',
+  'EDIT_INSIGHT': 'Modifier l\'aperçu',
 
   'SORT': {
     'BY_NAME': 'Nom',

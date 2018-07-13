@@ -121,7 +121,7 @@
                   <span *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) === ''"
                         [class]="getChoiceClass(getChoice(column, (getContentValue(key, getAttrs(column)[0]) || '')))">
 
-                    {{(getContentValue(key, getAttrs(column)[0])|| " - ").toString()}}
+                    {{(getChoiceAlias(getChoice(column, getContentValue(key, getAttrs(column)[0])|| " - ")))}}
 
                   </span>
 

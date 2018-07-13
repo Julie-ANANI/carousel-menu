@@ -19,6 +19,7 @@ export const COMMON = {
   'UPDATED': 'Updated on',
   'LAUNCHED': 'Launched on',
   'EXPIRATION' : 'Expires on',
+  'EXPIRATION-SPECIFY': 'Or specify a date',
   'REASON': 'Reason',
   'CLOSE': 'Close',
   'CLONE': 'Clone',
@@ -42,6 +43,10 @@ export const COMMON = {
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
   'BLACKLIST': 'Blacklisted e-mails',
+  'EDIT-BLACKLIST': 'Edit blacklisted e-mail',
+  'ADD-EMAIL': 'Add email',
+  'NEVER': 'Never',
+  'COMMENT': 'Comment',
 
   'NAME': 'Name',
   'FIRSTNAME': 'First name',
@@ -89,6 +94,12 @@ export const COMMON = {
     'NO-RESULTS': 'No results'
   },
 
+  'PROJECT': {
+    'OWNER': 'Owner',
+    'TITLE': 'Title',
+    'DOMAIN': 'Domain'
+  },
+
   'PROJECT_STATE': {
     'EDITING': 'Description',
     'SUBMITTED': 'Submitted',
@@ -130,6 +141,11 @@ export const COMMON = {
   'CAMPAIGNS': 'Campaigns',
   'DISCOVER': 'Discover',
   'PRESET': 'Preset',
+  'PRESETS': 'Presets',
+  'CLIENT_SIDE': 'Client Side',
+  'EDIT_USER': 'Edit User',
+  'EDIT_PROFESSIONAL': 'Edit Professional',
+  'EDIT_INSIGHT': 'Edit Insight',
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
   'CLIENT_SIDE': 'Client',

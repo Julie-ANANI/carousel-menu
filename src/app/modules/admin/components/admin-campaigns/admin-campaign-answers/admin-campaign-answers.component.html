@@ -1,4 +1,6 @@
+<!--
 <shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="campaign.innovation._id" [adminMode]="true" [questions]="questions"></shared-answer-modal>
+-->
 
 <h2>{{ total }} {{ 'CAMPAIGNS.ANSWERS' | translate }}</h2>
 
@@ -43,3 +45,15 @@
   </div>
   <app-answers-list [answers]="rejectedAnswers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
 </div>
+
+<!-- Insight preview -->
+<app-sidebar
+  [template]="sidebarTemplateValue"
+  (closeSidebar)="closeSidebar($event)">
+  <app-user-answer
+    [adminMode]="true"
+    [(userAnswer)]="modalAnswer"
+    [innovationId]="campaign.innovation._id"
+    [questions]="questions">
+  </app-user-answer>
+</app-sidebar>

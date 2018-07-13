@@ -1,14 +1,11 @@
-/**
- * Created by juandavidcruzgomez on 11/09/2017.
- */
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AnswerService } from '../../../../../../services/answer/answer.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { Answer } from '../../../../../../models/answer';
-import { Question } from '../../../../../../models/question';
-import { Tag } from '../../../../../../models/tag';
 import * as _ from 'lodash';
+import { Question } from '../../../../../../../models/question';
+import { Answer } from '../../../../../../../models/answer';
+import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { AnswerService } from '../../../../../../../services/answer/answer.service';
+import { Tag } from '../../../../../../../models/tag';
 
 @Component({
   selector: 'app-answer-question',
@@ -50,12 +47,12 @@ export class AnswerQuestionComponent implements OnInit {
     }
   }
 
-  checkOption(id: string, event: Event) {
+/*  checkOption(id: string, event: Event) {
     if (!this.fullAnswer.answers[this.question.identifier]) {
       this.fullAnswer.answers[this.question.identifier] = {};
     }
     this.fullAnswer.answers[this.question.identifier][id] = !this.fullAnswer.answers[this.question.identifier][id];
-  }
+  }*/
 
   selectOption(event: Event, option: any) {
     event.preventDefault();
@@ -85,7 +82,7 @@ export class AnswerQuestionComponent implements OnInit {
         this.fullAnswer.answerTags[q_identifier].push(tag);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
-        this._notificationsService.error('ERROR.ERROR', err);
+        this._notificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
       });
   }
 
@@ -101,6 +98,12 @@ export class AnswerQuestionComponent implements OnInit {
       });
   }
 
-  get lang (): string { return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en'; }
-  get commenting() { return this._commenting; }
+  get lang (): string {
+    return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
+  }
+
+  get commenting() {
+    return this._commenting;
+  }
+
 }

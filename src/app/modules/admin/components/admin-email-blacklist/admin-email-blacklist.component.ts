@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { EmailService } from './../../../../services/email/email.service';
+import { EmailService } from '../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import {Table} from '../shared-table/models/table';
+import {Table} from '../../../shared/components/shared-table/models/table';
+import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
 
 
 @Component({
   selector: 'app-shared-email-blacklist',
-  templateUrl: 'shared-email-blacklist.component.html',
-  styleUrls: ['shared-email-blacklist.component.scss']
+  templateUrl: 'admin-email-blacklist.component.html',
+  styleUrls: ['admin-email-blacklist.component.scss']
 })
-export class SharedEmailBlacklistComponent implements OnInit {
+export class AdminEmailBlacklistComponent implements OnInit {
 
   private _config = {
     limit: 10,
@@ -30,6 +31,9 @@ export class SharedEmailBlacklistComponent implements OnInit {
   public editDatum: {[propString: string]: boolean} = {};
 
   private _tableInfos: Table = null;
+
+  private _more: Template = {};
+  private _currentEmailToBlacklist: any = {};
 
   constructor( private _emailService: EmailService,
                private _translateService: TranslateService,
@@ -54,16 +58,16 @@ export class SharedEmailBlacklistComponent implements OnInit {
             // The server may be busy...
             this._notificationsService.error('Warning', 'The server is busy, try again in 1 minute.');
           } else {
-            this._dataset = result;
-              const data =  this._dataset.blacklists.map((entry: any) => {
-              entry.expiration = new Date(entry.expiration).getTime() ? entry.expiration : '';
-              return entry;
-            });
+            this._dataset._metadata = result._metadata;
+              this._dataset.blacklists = result.blacklists.map((entry: any) => {
+                entry.expiration = new Date(entry.expiration).getTime() ? entry.expiration : '';
+                return entry;
+              });
 
             this._tableInfos = {
               _selector: 'shared-blacklist',
               _title: 'COMMON.BLACKLIST',
-              _content: data,
+              _content: this._dataset.blacklists,
               _total: this._dataset._metadata.totalCount,
               _isHeadable: true,
               _isFiltrable: true,
@@ -104,18 +108,66 @@ export class SharedEmailBlacklistComponent implements OnInit {
 
   public resetSearch() {
     this._config.search = {};
-    this.searchConfiguration = "";
+    this.searchConfiguration = '';
     this.loadData(null);
+  }
+
+  editBlacklist(email: any) {
+    this._currentEmailToBlacklist = this._dataset.blacklists.find(value => value._id === email._id);
+      this._more = {
+        animate_state: 'active',
+        title: 'COMMON.EDIT-BLACKLIST',
+        type: 'editBlacklist'
+      };
+  }
+
+  addEmails() {
+    this._more = {
+      animate_state: 'active',
+      title: 'COMMON.ADD-EMAIL',
+      type: 'addEmail'
+    };
+  }
+  closeSidebar(value: string) {
+    this.more.animate_state = value;
+  }
+
+  blacklistEditionFinish(email: any) {
+    console.log(email);
+    this._emailService.updateBlacklistEntry(email._id, email)
+      .first()
+      .subscribe(
+        data => {
+          this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+          this._more = {animate_state: 'inactive', title: this._more.title};
+          this.loadData(this._config);
+        },
+        error => {
+          this._notificationsService.error('ERROR.ERROR', error.message);
+        });
+  }
+
+  addEmailsToBlacklistFinish(emails: Array<string>) {
+    emails.forEach((value: any) => {
+      this._emailService.addToBlacklist({email: value.text})
+        .subscribe(result => {
+          this._notificationsService.success('Blacklist', 'ERROR.ACCOUNT.UPDATE');
+          this._more = {animate_state: 'inactive', title: this._more.title};
+          this.loadData(this._config);
+        }, error => {
+          this._notificationsService.error('Error', error);
+        });
+    });
   }
 
   public addEntry() {
     this._emailService.addToBlacklist({email:this.addressToBL})
-        .subscribe(result=>{
-          this.addressToBL = "";
+        .subscribe(result => {
+          this.addressToBL = '';
           this.resetSearch();
-          this._notificationsService.success("Blacklist", `The address ${this.addressToBL} has been added successfully to the blacklist`);
-        }, error=>{
-          this._notificationsService.error("Error", error);
+          this._notificationsService.success('Blacklist', `The address ${this.addressToBL} has been added successfully to the blacklist`);
+        }, error => {
+          this._notificationsService.error('Error', error);
         });
   }
 
@@ -123,17 +175,17 @@ export class SharedEmailBlacklistComponent implements OnInit {
     event.preventDefault();
     this.editDatum[datum._id] = false;
     this._emailService.updateBlacklistEntry(datum._id, datum)
-        .subscribe(result=>{
+        .subscribe(result => {
           this.resetSearch();
-          this._notificationsService.success("Blacklist", `The address ${this.addressToBL} has been updated`);
-        }, error=>{
-          this._notificationsService.error("Error", error);
+          this._notificationsService.success('Blacklist', `The address ${this.addressToBL} has been updated`);
+        }, error => {
+          this._notificationsService.error('Error', error);
         });
   }
 
   public canAdd(): boolean {
     const EMAIL_REGEXP = /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
-    return this.addressToBL !== "" && !!this.addressToBL.match(EMAIL_REGEXP);
+    return this.addressToBL !== '' && !!this.addressToBL.match(EMAIL_REGEXP);
   }
 
   public reasonFormat(datum: any): string {
@@ -163,7 +215,8 @@ export class SharedEmailBlacklistComponent implements OnInit {
   get total(): number { return this._dataset._metadata.totalCount; };
   get searchConfiguration(): string { return this._searchConfiguration; };
   get addressToBL(): string { return this._addressToBL; };
-
+  get more(): Template { return this._more; }
+  get currentEmailToBlacklist(): any { return this._currentEmailToBlacklist; }
   set searchConfiguration(value: string) { this._searchConfiguration = value; };
   set addressToBL(address: string ) { this._addressToBL = address; };
 }

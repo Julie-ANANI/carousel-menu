@@ -13,7 +13,6 @@ import 'rxjs/add/operator/debounceTime';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Location } from '@angular/common';
-import {Template} from '../shared-sidebar/interfaces/template';
 
 @Component({
   selector: 'app-shared-project-edit-cards',
@@ -29,8 +28,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Output() projectChange = new EventEmitter<any>();
   @Output() saveChanges = new EventEmitter<boolean>();
-
-  sidebarTemplateValue: Template = {};
+  @Output() innovationToPreview = new EventEmitter<number>();
 
   showTitleError: boolean;
   showSummaryError: boolean;
@@ -62,9 +60,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.changesSaved = true;
-
-    const a = {something: 4};
-    a.something = 8;
 
     if (this.location.path().slice(0, 6) !== '/admin') {
       this.showPitchFieldError.subscribe(value => {
@@ -105,17 +100,11 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.showDiffusionError = false;
   }
 
-  showPreview(event: Event) {
+  onLangSelect(event: Event, index: number) {
     event.preventDefault();
-    this.sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'PROJECT_MODULE.SETUP.PITCH.INNOVATION_PREVIEW',
-      size: '726px'
-    };
-  }
-
-  closeSidebar(value: string) {
-    this.sidebarTemplateValue.animate_state = value;
+    this.innovationCardEditingIndex = index;
+    this.resetErrorValue();
+    this.innovationToPreview.emit(this.innovationCardEditingIndex);
   }
 
   /**
@@ -148,6 +137,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
           }).first().subscribe((data: InnovCard) => {
             this.project.innovationCards.push(data);
             this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
+            this.notifyModelChanges(event);
+            this.onLangSelect(event, this.innovationCardEditingIndex);
           });
         }
       } else {
@@ -180,15 +171,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   imageUploaded(media: Media, cardIdx: number): void {
     this.project.innovationCards[cardIdx].media.push(media);
-
-    if (!this.project.innovationCards[this.innovationCardEditingIndex].principalMedia) {
-      this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
-        this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id).first()
-        .subscribe((res) => {
-        this.project.innovationCards[cardIdx].principalMedia = media;
-      });
-    }
-
+    this.checkPrincipalMedia(media, cardIdx);
   }
 
   newOnlineVideoToAdd (videoInfos: Video): void {
@@ -196,7 +179,21 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
       .first().subscribe(res => {
         this.project.innovationCards[this.innovationCardEditingIndex].media.push(res);
+        this.checkPrincipalMedia(res, this.innovationCardEditingIndex);
       });
+
+  }
+
+  checkPrincipalMedia(media: Media, cardIdx: number) {
+    if (this.project.innovationCards[this.innovationCardEditingIndex].media.length > 0) {
+      if (!this.project.innovationCards[this.innovationCardEditingIndex].principalMedia) {
+        this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
+          this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id).first()
+          .subscribe((res) => {
+            this.project.innovationCards[cardIdx].principalMedia = media;
+          });
+      }
+    }
   }
 
   setMediaAsPrimary (event: Event, media: Media, index: number): void {
@@ -221,6 +218,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
           this.project.innovationCards[index].principalMedia = null;
         }
         this.projectChange.emit(this.project);
+        this.checkPrincipalMedia(this.project.innovationCards[this.innovationCardEditingIndex].media[0],
+        this.innovationCardEditingIndex);
       });
 
   }
@@ -242,9 +241,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this.innovationService.removeInnovationCard(this.project._id, this._deleteInnovCardId)
       .subscribe((res) => {
       this.project.innovationCards = this.project.innovationCards.filter((card) => card._id !== this._deleteInnovCardId);
-      this.innovationCardEditingIndex -= 1;
-      this.resetErrorValue();
+      // this.innovationCardEditingIndex -= 1;
       this._showDeleteModal = false;
+      this.notifyModelChanges(event);
+      this.onLangSelect(event, 0);
     }, err => {
       this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       this._showDeleteModal = false;

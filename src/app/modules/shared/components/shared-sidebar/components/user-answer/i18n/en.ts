@@ -1,4 +1,20 @@
-export const ANSWER_MODAL = {
+export const ANSWER = {
+  'RECEIVED': {
+    'A': 'Received',
+    'B': 'at',
+    'C': 'Time spent:'
+  },
+
+  'IP': 'Ip:',
+
+  'STATUS': {
+    'REJECTED': 'Rejected',
+    'VALIDATED': 'Validated',
+    'SUBMITTED': 'Submitted',
+    'EMAIL': 'Send email'
+  },
+
+
   'VALIDATED_ANSWER': 'Answer validated',
   'UNVALIDATED_ANSWER': 'Answer not validated',
   'JOB': 'Job',

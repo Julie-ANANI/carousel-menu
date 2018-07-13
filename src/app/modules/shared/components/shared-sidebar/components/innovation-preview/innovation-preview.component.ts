@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { InnovCard } from '../../../../../../models/innov-card';
 import { DomSanitizer } from '@angular/platform-browser';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-innovation-preview',
@@ -40,7 +40,7 @@ export class InnovationPreviewComponent implements OnInit {
   private _date: Date;
 
   constructor(private domSanitizer1: DomSanitizer,
-              private _translateService: TranslateService) {
+              private translateService: TranslateService) {
   }
 
   ngOnInit() {
@@ -53,5 +53,9 @@ export class InnovationPreviewComponent implements OnInit {
   get getDate() {
     return this._date;
   }
-  get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y HH:mm' : 'y/MM/dd HH:mm'; }
+
+  get dateFormat(): string {
+    return this.translateService.currentLang === 'fr' ? 'dd/MM/y HH:mm' : 'y/MM/dd HH:mm';
+  }
+
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { SharedTableModule } from './components/shared-table/table.module';
 import { HttpModule } from '@angular/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -12,57 +13,37 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
 // Components
-import { SharedAnswersListComponent } from './components/shared-answers-list/shared-answers-list.component';
 import { SharedNotFoundComponent } from './components/shared-not-found/shared-not-found.component';
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
 import { SharedLoaderComponent } from './components/shared-loader/shared-loader.component';
-import { SharedPaginationComponent } from './components/shared-pagination/shared-pagination.component';
-import { SharedFilterInputComponent } from './components/shared-filter-input/shared-filter-input.component';
-import { SharedFilterMultiComponent} from './components/shared-filter-multi/shared-filter-multi.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
-import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
-import { SharedTagItemComponent } from './components/shared-tag-item/shared-tag-item.component';
-import { SharedTextZoneModule } from './components/shared-text-zone/shared-text-zone.module';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
 import { SharedLatexManagerComponent } from './components/shared-latex-manager/shared-latex-manager.component';
 import { SharedProjectSettingsComponent } from './components/shared-project-settings-component/shared-project-settings.component';
-import { SharedSearchHistoryComponent } from './components/shared-search-history/shared-search-history.component';
-import { SharedSearchProsComponent } from './components/shared-search-pros/shared-search-pros.component';
 import { SharedSearchMailComponent } from './components/shared-search-mail/shared-search-mail.component';
-import { SharedProsListComponent } from './components/shared-pros-list/shared-pros-list.component';
-import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
-import { SharedTableComponent } from './components/shared-table/components/shared-table.component';
-import { SharedEditEmail } from './components/shared-edit-email/shared-edit-email.component';
-import { SharedEditEmailsStep } from './components/shared-edit-emails-step/shared-edit-emails-step.component';
-import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
 import { SharedProjectEditCardsComponent } from './components/shared-project-edit-cards-component/shared-project-edit-cards.component';
-import { SharedEmailBlacklistComponent } from './components/shared-email-blacklist/shared-email-blacklist.component';
 import { GlobalModule } from '../global/global.module';
-import { SharedProsListOldComponent} from './components/shared-pros-list-old/shared-pros-list-old.component';
 
 // Pipes
-/*import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
+import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
 import { FilterPipe } from '../../pipes/TableFilterPipe';
 import { LimitsPipe } from '../../pipes/TableLimitsPipe';
 import { CharacterCountdown } from '../../pipes/CharacterCountdown';
-import { MultilingModule } from '../../pipes/multiling/multiling.module';*/
-
-
 import { MultilingModule } from '../../pipes/multiling/multiling.module';
 
 // Directives
-/*import { InputListComponent } from '../../directives/input-list/input-list.component';
-import { AutocompleteInputComponent } from '../../directives/autocomplete-input/autocomplete-input.component';
-import { SearchInputComponent } from '../../directives/search-input/search-input.component';*/
+import { SearchInputComponent } from '../../directives/search-input/search-input.component';
 
 // Internal Modules
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
-// import { TableModule } from './components/shared-table/table.module';
+import { InputListModule } from '../../directives/input-list/input-list.module';
 import { CountryFlagModule } from '../../directives/country-flag/country-flag.module';
+import { AutocompleteInputModule } from '../../directives/autocomplete-input/autocomplete-input.module';
+import { SharedTagItemModule } from './components/shared-tag-item/shared-tag-item.module';
 
 @NgModule({
   imports: [
@@ -80,49 +61,33 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     Ng2PageScrollModule,
     Ng2AutoCompleteModule,
     SharedWorldmapModule,
+    InputListModule,
     SidebarModule,
     SharedWorldmapModule,
+    AutocompleteInputModule,
     MultilingModule,
     GlobalModule
   ],
   declarations: [
     // Directives
     // FormErrorDirective,
-    // InputListComponent,
-    SharedAnswersListComponent,
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
-    SharedPaginationComponent,
-    SharedFilterInputComponent,
-    SharedFilterMultiComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedVideoComponent,
-    SharedSortComponent,
     SharedProjectSettingsComponent,
-    // AutocompleteInputComponent,
-    // SearchInputComponent,
-    SharedTagItemComponent,
-    SharedSearchHistoryComponent,
-    SharedSearchProsComponent,
+    SearchInputComponent,
     SharedSearchMailComponent,
-    SharedProsListComponent,
-    SharedProsListOldComponent,
-    SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
     SharedMarketReportExampleComponent,
-    SharedTableComponent,
-    SharedEditEmail,
-    SharedEditEmailsStep,
-    SharedEditScenarioComponent,
     SharedProjectEditCardsComponent,
-    // DomSanitizerPipe,
-    // FilterPipe,
-    // LimitsPipe,
-    SharedEmailBlacklistComponent,
-    // CharacterCountdown
+    DomSanitizerPipe,
+    FilterPipe,
+    LimitsPipe,
+    CharacterCountdown
   ],
   exports: [
     // Modules
@@ -133,44 +98,26 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     Ng2PageScrollModule,
     SidebarModule,
     CountryFlagModule,
-    // TableModule,
-
-    // Directives
-    // InputListComponent,
+    SharedTableModule,
+    InputListModule,
+    SharedTagItemModule,
+    SharedTableModule,
 
     // Components
     SharedNotFoundComponent,
-    SharedAnswersListComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
     SharedLoaderComponent,
-    SharedPaginationComponent,
-    SharedFilterInputComponent,
-    SharedFilterMultiComponent,
-    SharedTextZoneModule,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
-    SharedSortComponent,
     SharedProjectSettingsComponent,
-    // AutocompleteInputComponent,
-    // SearchInputComponent,
-    SharedTagItemComponent,
-    SharedSearchHistoryComponent,
-    SharedSearchProsComponent,
+    SearchInputComponent,
     SharedSearchMailComponent,
-    SharedProsListComponent,
-    SharedProsListOldComponent,
-    SharedSearchResultsComponent,
     SharedSmartSelectInputComponent,
-    SharedTableComponent,
-    SharedEditEmail,
-    SharedEditEmailsStep,
-    SharedEditScenarioComponent,
     SharedProjectEditCardsComponent,
-    SharedEmailBlacklistComponent,
-    // FilterPipe,
-    // LimitsPipe,
-    // CharacterCountdown
+    FilterPipe,
+    LimitsPipe,
+    CharacterCountdown
   ]
 })
 

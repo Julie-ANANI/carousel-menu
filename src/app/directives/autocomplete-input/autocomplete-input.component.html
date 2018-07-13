@@ -12,7 +12,7 @@
           [attr.placeholder]="placeholder | translate"
           class="form-default"
           [ngStyle]="{ 'margin-top': '0', 'margin-right': '20px' }">
-      <button class="btn-round btn-primary" [disabled]="!canAdd"><i class="icon icon-plus"></i></button>
+      <button class="btn-round btn-primary" [disabled]="!canAdd" translate><span></span><i class="icon icon-plus"></i></button>
     </div>
 
   </form>
@@ -34,8 +34,8 @@
         <i class="fas fa-pencil-alt"></i>
         <div class="popover-container">
           <div class="input-group">
-            <input type="text" class="form-input" [(ngModel)]="a[identifier]" name="text"/>
-            <button class="btn btn-primary input-group-btn" type="submit" (click)="updateItem($event)">GO</button>
+            <input type="text" class="form-default" [(ngModel)]="a[identifier]" name="text"/>
+            <button class="btn btn-primary btn-sm" type="submit" (click)="updateItem($event)">Update</button>
           </div>
         </div>
       </div>
@@ -44,8 +44,8 @@
         <div class="popover-container">
           Entrez un lien:
           <div class="input-group">
-            <input type="text" class="form-input" [(ngModel)]="a.domain" name="domain"/>
-            <button class="btn btn-primary input-group-btn" type="submit" (click)="updateItem($event)">GO</button>
+            <input type="text" class="form-default" [(ngModel)]="a.domain" name="domain"/>
+            <button class="btn btn-primary btn-sm" type="submit" (click)="updateItem($event)">Update</button>
           </div>
         </div>
       </div>

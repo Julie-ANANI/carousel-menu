@@ -6,4 +6,5 @@ export const ADMIN_USERS = {
   'DOMAIN': 'Domaine',
   'DELETE': 'Supprimer l\'utilisateur',
   'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) utilisateur(s)',
+  'ADMIN': 'Affecter comme administrateur'
 };

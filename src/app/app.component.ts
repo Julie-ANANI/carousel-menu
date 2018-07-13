@@ -16,12 +16,12 @@ import { NavigationEnd, Router } from '@angular/router';
 export class AppComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<any> = new Subject();
-  public displayLoader = false;
+  displayLoader = false;
   private _displayLoading = true; // to show spinner.
 
   public notificationsOptions = {
     position: ['bottom', 'right'],
-    timeOut: 7000,
+    timeOut: 5000,
     lastOnBottom: true,
     maxStack: 4,
     animate: 'fromRight',
@@ -30,39 +30,38 @@ export class AppComponent implements OnInit, OnDestroy {
     clickToClose: true
   };
 
-  constructor(private _translateService: TranslateService,
-              private _authService: AuthService,
-              private _loaderService: LoaderService,
-              private _notificationsService: TranslateNotificationsService,
-              private _router: Router) {
-  }
+  constructor(private translateService: TranslateService,
+              private authService: AuthService,
+              private loaderService: LoaderService,
+              private translateNotificationsService: TranslateNotificationsService,
+              private router: Router) {}
 
   ngOnInit(): void {
-    initTranslation(this._translateService);
+    initTranslation(this.translateService);
 
-    this._router.events.subscribe((event) => {
+    this.router.events.subscribe((event) => {
       if (!(event instanceof NavigationEnd)) {
         return;
       }
       window.scrollTo(0, 0);
     });
 
-    this._loaderService.isLoading$.takeUntil(this.ngUnsubscribe).subscribe((isLoading: boolean) => {
+    this.loaderService.isLoading$.takeUntil(this.ngUnsubscribe).subscribe((isLoading: boolean) => {
       // Bug corrigé avec setTimeout :
       // https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
       setTimeout((_: void) => { this.displayLoader = isLoading; } );
     });
 
-    this._loaderService.stopLoading();
+    this.loaderService.stopLoading();
 
     setTimeout (() => {
       this._displayLoading = false;
     }, 600);
 
-    if (this._authService.isAcceptingCookies) { // CNIL
-      this._authService.initializeSession().takeUntil(this.ngUnsubscribe).subscribe(
+    if (this.authService.isAcceptingCookies) { // CNIL
+      this.authService.initializeSession().takeUntil(this.ngUnsubscribe).subscribe(
         _ => {},
-        _ => this._notificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
+        _ => this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
           clickToClose: false,
           timeOut: 0
         })

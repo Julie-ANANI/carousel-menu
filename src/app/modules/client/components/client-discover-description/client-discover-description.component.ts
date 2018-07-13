@@ -5,6 +5,7 @@ import { ShareService } from '../../../../services/share/share.service';
 import { InnovCard } from '../../../../models/innov-card';
 import { environment } from '../../../../../environments/environment';
 import { Innovation } from '../../../../models/innovation';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-client-discover-description',
@@ -23,20 +24,21 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
   private googlePlusUrl: string;
   private quizButtonDisplay: string;
 
-  constructor(private _innovationService: InnovationService,
-              private _activatedRoute: ActivatedRoute,
-              private _shareService: ShareService) {
+  constructor(private innovationService: InnovationService,
+              private activatedRoute: ActivatedRoute,
+              private shareService: ShareService,
+              private domSanitizer1: DomSanitizer) {
   }
 
   ngOnInit() {
-    this._activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe(params => {
       this.loadInnovation(params['id'], params['lang']);
     });
   }
 
   loadInnovation(id: any, lang: any) {
 
-    this._innovationService.get(id).subscribe( response => {
+    this.innovationService.get(id).subscribe(response => {
 
       if (response.quizId === '') {
         this.quizButtonDisplay = 'none';
@@ -48,13 +50,15 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
 
       this.innovation = response;
 
-      this.linkedInUrl = this._shareService.linkedinProjectShareLink(this.innovation, lang);
+      this.linkedInUrl = this.shareService.linkedinProjectShareLink(this.innovation, lang);
 
-      this.twitterUrl = this._shareService.twitterProjectShareLink(this.innovation, lang);
+      this.linkedInUrl = this.shareService.linkedinProjectShareLink(this.innovation, lang);
 
-      this.facebookUrl = this._shareService.facebookProjectShareLink(this.innovation);
+      this.twitterUrl = this.shareService.twitterProjectShareLink(this.innovation, lang);
 
-      this.googlePlusUrl = this._shareService.googleProjectShareLink(this.innovation, lang);
+      this.facebookUrl = this.shareService.facebookProjectShareLink(this.innovation);
+
+      this.googlePlusUrl = this.shareService.googleProjectShareLink(this.innovation, lang);
 
       const innovationCardIndex = response.innovationCards.findIndex( card => card.lang === lang);
 
@@ -66,6 +70,10 @@ export class ClientDiscoverDescriptionComponent implements OnInit {
 
   get innovationCard(): InnovCard[] {
     return this._innovationCard;
+  }
+
+  get domSanitizer() {
+    return this.domSanitizer1;
   }
 
 }

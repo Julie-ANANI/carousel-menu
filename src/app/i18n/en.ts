@@ -1,5 +1,6 @@
 import { COMMON } from './common_en';
 import { ERROR } from './error_en';
+import { ANSWER } from '../modules/shared/components/shared-sidebar/components/user-answer/i18n/en';
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/en';
 import { DISCOVER } from '../modules/client/components/client-discover/i18n/en';
 import { DISCOVERDESCRIPTION } from '../modules/client/components/client-discover-description/i18n/en';
@@ -10,7 +11,6 @@ import { SIGN_UP } from '../modules/client/components/client-signup/i18n/en';
 import { WELCOME } from '../modules/client/components/client-welcome/i18n/en';
 import { HEADER } from '../directives/header/i18n/en';
 import { FOOTER } from '../directives/footer/i18n/en';
-import { ANSWER_MODAL } from '../modules/shared/components/shared-answer-modal/i18n/en';
 import { EXPORT } from '../modules/shared/components/shared-latex-manager/i18n/en';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/en';
 import { PAGINATION } from '../modules/shared/components/shared-pagination/i18n/en';
@@ -19,7 +19,7 @@ import { DASHBOARD } from '../modules/admin/components/admin-dashboard/i18n/en';
 import { PRESETS } from '../modules/admin/components/admin-preset/i18n/en';
 import { CAMPAIGNS } from '../modules/admin/components/admin-campaigns/i18n/en';
 import { SEARCH } from '../modules/admin/components/admin-search/i18n/en';
-import { BLACKLISTS } from '../modules/shared/components/shared-email-blacklist/i18n/en';
+import { BLACKLISTS } from '../modules/admin/components/admin-email-blacklist/i18n/en';
 import { TAGS } from '../modules/admin/components/admin-tags/i18n/en';
 import { PROJECT_LIST } from '../modules/admin/components/admin-projects-list/i18n/en';
 import { PROJECT_MODULE } from '../modules/client/components/client-project/i18n/en';
@@ -32,7 +32,7 @@ export const en = {
   'MARKET_REPORT': MARKET_REPORT,
   'USERS': ADMIN_USERS,
   'FOOTER': FOOTER,
-  'ANSWER_MODAL': ANSWER_MODAL,
+  'ANSWER': ANSWER,
   'DISCOVER': DISCOVER,
   'DISCOVERDESCRIPTION': DISCOVERDESCRIPTION,
   'LOG_IN': LOG_IN,

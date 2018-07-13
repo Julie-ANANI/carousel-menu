@@ -51,7 +51,6 @@ export class SidebarComponent implements OnInit {
     this.state = 'inactive';
   }
 
-
   setTemplate(value: Template) {
     this.state = value.animate_state;
     this.title = value.title;
