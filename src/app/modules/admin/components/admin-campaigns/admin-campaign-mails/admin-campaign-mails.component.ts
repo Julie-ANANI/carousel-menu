@@ -410,7 +410,7 @@ export class AdminCampaignMailsComponent implements OnInit {
     });
   }
 
-  get statusAB() { return this._campaign.settings.ABsettings.status }
+  get statusAB() { return this._campaign.settings.ABsettings ? this._campaign.settings.ABsettings.status : null }
   get defaultWorkflow() { return  this._campaign.settings.defaultWorkflow }
   get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""); }
   get campaign() { return this._campaign }

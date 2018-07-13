@@ -1,11 +1,11 @@
 <div class="container col-10 col-mx-auto section-container">
   <h2>Campagne : {{campaign.title}}</h2>
-  <div *ngIf="!domain()">
+  <div *ngIf="!domain">
     <h4>
       ATTENTION *|DOMAIN|* non défini
     </h4>
   </div>
-  <div *ngIf="domain()">
+  <div *ngIf="domain">
     <h5>
       *|DOMAIN|* <br>
       en :{{this.campaign.innovation.settings.domain.en}} <br>

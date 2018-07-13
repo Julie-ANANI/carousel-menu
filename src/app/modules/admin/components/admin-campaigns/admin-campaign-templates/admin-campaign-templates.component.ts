@@ -154,7 +154,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
   }
 
 
-  public domain(): boolean {
+  get domain(): boolean {
     return (this._campaign.innovation.settings.domain !== '');
 
   }
