@@ -16,7 +16,11 @@
             {{ 'PROJECT_LIST.OPERATOR' | translate }}
           </label>
 
-          <label class="form-switch" for="role" *ngIf="authService.adminLevel > 2 && authService.userId != user.id && isEditUser">
+          <label
+            class="form-switch"
+            for="role"
+            *ngIf="authService.adminLevel > 2 && authService.userId != user.id && isEditUser"
+            [ngStyle]="{ 'margin-top': '10px' }">
             <input
               type="checkbox"
               name="role"
@@ -28,6 +32,28 @@
           </label>
         </div>
         <button type="submit" class="btn btn-primary">{{'COMMON.SAVE' | translate}}</button>
+      </div>
+
+      <!-- Domain management -->
+      <div *ngIf="isEditUser" class="domain-wrapper">
+        <h6>Domain Management</h6>
+        <div *ngIf="!editInstanceDomain" [ngStyle]="{ 'padding-bottom': '30px' }">
+          <label class="form-label">Actual domain:
+            <span>{{ userForm.get('domain').value }}</span>
+            <a (click)="startEditInstanceDomain($event)">
+              <span *ngIf="!isSelf"><i class="fas fa-pencil-alt"></i></span>
+            </a>
+          </label>
+        </div>
+        <div *ngIf="editInstanceDomain" [ngStyle]="{ 'padding-bottom': '30px' }">
+          <label class="form-label">New domain:</label>
+          <app-autocomplete-input
+            id="domain"
+            (update)="updateInstanceDomain($event)"
+            [onlyOne]="true"
+            [config]="buildInstanceDomainListConfig()">
+          </app-autocomplete-input>
+        </div>
       </div>
 
       <!-- First name -->

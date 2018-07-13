@@ -22,7 +22,6 @@ import { SharedProjectDescriptionComponent } from './components/shared-project-d
 import { SharedLatexManagerComponent } from './components/shared-latex-manager/shared-latex-manager.component';
 import { SharedProjectSettingsComponent } from './components/shared-project-settings-component/shared-project-settings.component';
 import { SharedSearchMailComponent } from './components/shared-search-mail/shared-search-mail.component';
-import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
 import { SharedProjectEditCardsComponent } from './components/shared-project-edit-cards-component/shared-project-edit-cards.component';
 import { GlobalModule } from '../global/global.module';
@@ -36,7 +35,6 @@ import { MultilingModule } from '../../pipes/multiling/multiling.module';
 
 // Directives
 import { SearchInputComponent } from '../../directives/search-input/search-input.component';
-
 // Internal Modules
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
@@ -44,6 +42,7 @@ import { InputListModule } from '../../directives/input-list/input-list.module';
 import { CountryFlagModule } from '../../directives/country-flag/country-flag.module';
 import { AutocompleteInputModule } from '../../directives/autocomplete-input/autocomplete-input.module';
 import { SharedTagItemModule } from './components/shared-tag-item/shared-tag-item.module';
+import { SharedTextZoneModule } from './components/shared-text-zone/shared-text-zone.module';
 
 @NgModule({
   imports: [
@@ -81,7 +80,6 @@ import { SharedTagItemModule } from './components/shared-tag-item/shared-tag-ite
     SharedProjectSettingsComponent,
     SearchInputComponent,
     SharedSearchMailComponent,
-    SharedSmartSelectInputComponent,
     SharedMarketReportExampleComponent,
     SharedProjectEditCardsComponent,
     DomSanitizerPipe,
@@ -113,7 +111,6 @@ import { SharedTagItemModule } from './components/shared-tag-item/shared-tag-ite
     SharedProjectSettingsComponent,
     SearchInputComponent,
     SharedSearchMailComponent,
-    SharedSmartSelectInputComponent,
     SharedProjectEditCardsComponent,
     FilterPipe,
     LimitsPipe,

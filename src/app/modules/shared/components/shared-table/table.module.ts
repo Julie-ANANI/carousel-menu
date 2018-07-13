@@ -24,7 +24,7 @@ import { SharedTableComponent } from './components/shared-table.component';
     TranslateModule.forChild()
   ],
   declarations: [
-    SharedTableComponent,
+    SharedTableComponent
   ],
   exports: [
     SharedTableComponent,

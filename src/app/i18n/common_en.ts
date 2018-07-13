@@ -141,16 +141,12 @@ export const COMMON = {
   'CAMPAIGNS': 'Campaigns',
   'DISCOVER': 'Discover',
   'PRESET': 'Preset',
-  'PRESETS': 'Presets',
-  'CLIENT_SIDE': 'Client Side',
   'EDIT_USER': 'Edit User',
   'EDIT_PROFESSIONAL': 'Edit Professional',
   'EDIT_INSIGHT': 'Edit Insight',
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
   'CLIENT_SIDE': 'Client',
-  'EDIT_USER': 'Edit user',
-  'EDIT_PROFESSIONAL': 'Edit professional',
 
   'SORT': {
     'BY_NAME': 'By name',

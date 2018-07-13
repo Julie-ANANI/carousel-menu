@@ -7,10 +7,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { AdminPresetModule } from './components/admin-preset/admin-preset.module';
-import { GlobalModule } from "../global/global.module";
-import { AdminPresetsModule } from './components/admin-preset/admin-presets/admin-presets.module';
-import { AdminQuestionsModule } from './components/admin-preset/admin-questions/admin-questions.module';
-import { AdminSectionsModule } from './components/admin-preset/admin-sections/admin-sections.module';
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
 import { AdminUsersModule } from './components/admin-users/admin-users.module';
 import { AdminProfessionalsModule } from './components/admin-professionals/admin-professionals.module';
@@ -31,6 +27,7 @@ import { AdminProjectsListComponent } from './components/admin-projects-list/adm
 
 // Pipes
 import { DateFormatPipe } from '../../pipes/DateFormatPipe';
+import {GlobalModule} from '../global/global.module';
 
 @NgModule({
   imports: [

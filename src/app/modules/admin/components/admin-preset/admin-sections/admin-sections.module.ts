@@ -10,7 +10,8 @@ import { SharedPaginationModule } from '../../../../shared/components/shared-pag
 import { SharedFilterInputModule } from '../../../../shared/components/shared-filter-input/filter-input.module';
 import { SharedModule } from '../../../../shared/shared.module';
 import {AutocompleteInputModule} from '../../../../../directives/autocomplete-input/autocomplete-input.module';
-import { GlobalModule } from "../../../../global/global.module";
+import {GlobalModule} from '../../../../global/global.module';
+
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { GlobalModule } from "../../../../global/global.module";
     SharedPaginationModule,
     SharedFilterInputModule,
     TranslateModule.forChild(),
-    AutocompleteInputModule
+    AutocompleteInputModule,
     GlobalModule,
     TranslateModule.forChild()
   ],

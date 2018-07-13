@@ -10,14 +10,14 @@ import { SharedModule } from '../../../../shared/shared.module';
 import {AutocompleteInputModule} from '../../../../../directives/autocomplete-input/autocomplete-input.module';
 import { SharedSortModule} from '../../../../shared/components/shared-sort/sort.module';
 import { SharedPaginationModule } from '../../../../shared/components/shared-pagination/pagination.module';
-import { GlobalModule } from "../../../../global/global.module";
+import { GlobalModule } from '../../../../global/global.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     GlobalModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
     SharedFilterInputModule,
     SharedSortModule,
     SharedPaginationModule,

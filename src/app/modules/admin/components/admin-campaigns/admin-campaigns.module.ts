@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedProsListModule } from '../../../shared/components/shared-pros-list/pros-list.module';
-import { SharedAnswerModalModule } from '../../../shared/components/shared-answer-modal/answer-modal.module';
 import { SharedAnswerListModule } from '../../../shared/components/shared-answers-list/shared-answer-list.module';
 import { SharedSearchHistoryModule} from '../../../shared/components/shared-search-history/search-history.module';
 import {SharedSearchProsModule} from '../../../shared/components/shared-search-pros/shared-search-pros.module';
@@ -24,6 +23,9 @@ import { AdminCampaignProsComponent } from './admin-campaign-pros/admin-campaign
 import { AdminCampaignSearchComponent } from './admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignSearchResultsComponent } from './admin-campaign-search-results/admin-campaign-search-results.component';
 import { AdminCampaignTemplatesComponent } from './admin-campaign-templates/admin-campaign-templates.component';
+import {SidebarModule} from '../../../shared/components/shared-sidebar/sidebar.module';
+import {SharedTableModule} from '../../../shared/components/shared-table/table.module';
+import {AdminCampaignAbtestingComponent} from './admin-campaign-abtesting/admin-campaign-abtesting.component';
 
 @NgModule({
   imports: [
@@ -33,12 +35,14 @@ import { AdminCampaignTemplatesComponent } from './admin-campaign-templates/admi
     FormsModule,
     SharedSearchProsModule,
     SharedSearchResultsModule,
-    SharedAnswerModalModule,
     SharedAnswerListModule,
     SharedSearchHistoryModule,
     SharedEditScenarioModule,
     RouterModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    SidebarModule,
+    SharedTableModule,
+
   ],
   declarations: [
     AdminCampaignsComponent,
@@ -50,7 +54,8 @@ import { AdminCampaignTemplatesComponent } from './admin-campaign-templates/admi
     AdminCampaignProsComponent,
     AdminCampaignSearchComponent,
     AdminCampaignSearchResultsComponent,
-    AdminCampaignTemplatesComponent
+    AdminCampaignTemplatesComponent,
+    AdminCampaignAbtestingComponent
 
   ],
   exports: [

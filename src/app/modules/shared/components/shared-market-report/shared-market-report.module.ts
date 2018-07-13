@@ -30,7 +30,6 @@ import { CommonService } from '../../../../services/common/common.service';
     MultilingModule,
     SharedModule,
     SharedTextZoneModule,
-    SharedAnswerModalModule,
     SharedWorldmapModule,
     TranslateModule.forChild()
   ],

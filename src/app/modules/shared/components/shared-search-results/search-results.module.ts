@@ -9,6 +9,7 @@ import { CountryFlagModule } from '../../../../directives/country-flag/country-f
 
 // Components
 import {SharedSearchResultsComponent} from './shared-search-results.component';
+import {SharedProsListOldModule} from '../shared-pros-list-old/shared-pros-list-old.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import {SharedSearchResultsComponent} from './shared-search-results.component';
     AutocompleteInputModule,
     SharedProsListModule,
     CountryFlagModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    SharedProsListOldModule
   ],
   declarations: [
     SharedSearchResultsComponent

@@ -72,7 +72,7 @@
                         name="title"
                         #title="ngModel"
                         [(ngModel)]="project.innovationCards[i].title"
-                        [attr.placeholder]=""
+                        [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
                         (ngModelChange)="notifyModelChanges($event)"
                         required
                         [ngClass]="{'borderRed': showTitleError}"

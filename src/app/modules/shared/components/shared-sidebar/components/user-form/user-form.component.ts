@@ -50,6 +50,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   displayCountrySuggestion = false;
   private _user: User;
   private _pro: Professional = null;
+  private _editInstanceDomain = false;
 
   private _updateInstanceDomainConfig: {
     placeholder: string,
@@ -93,15 +94,18 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   loadEditUser() {
     this.isEditUser = true;
+
     if (this._user) {
       this.isSelf = this._authService.userId === this._user.id;
       this.userForm.patchValue(this._user);
     }
+
   }
 
   loadProfessional() {
     this.isProfessional = true;
     if (this._pro) {
+      this.userForm.get('companyName').setValue(this._pro.company);
       this.userForm.patchValue(this._pro);
     }
   }
@@ -116,6 +120,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     } else if (this.isProfessional) {
       const pro = this.userForm.value;
       pro._id = this._pro._id;
+      pro.company = this.userForm.get('companyName').value;
       this.professionalUserData.emit(pro);
     }
   }
@@ -159,7 +164,7 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   public endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
       this._editInstanceDomain = false;
-      this.userForm.get('domain').setValue(event.value[0].name || "umi");
+      this.userForm.get('domain').setValue(event.value[0].name || 'umi');
   }
 
   public buildInstanceDomainListConfig(): any {
@@ -171,15 +176,16 @@ export class UserFormComponent implements OnInit, OnChanges {
       this.endEditInstanceDomain(event);
   }
 
-  get user(): User { return this._user; }
-  get pro(): Professional { return this._pro; }
-  get editInstanceDomain() { return this._editInstanceDomain; }
   affectAsAdmin(check: boolean) {
     if (check === true) {
       this.userForm.get('roles').setValue('admin');
     } else {
       this.userForm.get('roles').setValue('user');
     }
+  }
+
+  get editInstanceDomain() {
+    return this._editInstanceDomain;
   }
 
   get user(): User {

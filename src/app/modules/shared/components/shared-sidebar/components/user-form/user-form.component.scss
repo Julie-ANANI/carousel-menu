@@ -3,6 +3,29 @@
 
   .operator-wrapper {
     padding-bottom: 30px;
+
+    .input-group {
+      flex-direction: column;
+
+      .form-switch {
+        font-size: 14px;
+      }
+
+    }
+
+  }
+
+  .domain-wrapper {
+
+    a, span{
+      color: #97A4B1;
+    }
+
+    a:hover {
+      cursor: pointer;
+      text-decoration: none;
+    }
+
   }
 
   .terms-wrapper {

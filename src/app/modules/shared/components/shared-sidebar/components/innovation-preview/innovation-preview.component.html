@@ -5,9 +5,11 @@
 
       <!-- Title -->
       <h1 class="main-heading">{{ innovation.title }}</h1>
-      <h2 class="date-heading" *ngIf="this.getDate">
+
+      <!-- Batch date -->
+      <h6 *ngIf="this.getDate">
         {{'DASHBOARD.SENDINGDATE' | translate}} {{this.getDate| date: this.dateFormat}}
-      </h2>
+      </h6>
 
       <!-- Summary -->
       <p>{{ innovation.summary }}</p>
