@@ -35,7 +35,7 @@
           </option>
         </select>
       </div>
-      Nombre de pros max : {{campaign.stats.nbPros90}}
+      Nombre de pros max : {{campaign.stats?.nbPros90 || 0}}
       <div class="form-group">
         <input type="number" id="sizeA" [(ngModel)]="sizeA" formControlName="sizeA" />
       </div>
