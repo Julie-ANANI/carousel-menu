@@ -40,7 +40,8 @@ import { SharedEditEmailsStep } from './components/shared-edit-emails-step/share
 import { SharedEditScenarioComponent } from './components/shared-edit-scenario/shared-edit-scenario.component';
 import { SharedProjectEditCardsComponent } from './components/shared-project-edit-cards-component/shared-project-edit-cards.component';
 import { SharedEmailBlacklistComponent } from './components/shared-email-blacklist/shared-email-blacklist.component';
-import { GlobalModule } from "../global/global.module";
+import { GlobalModule } from '../global/global.module';
+import { SharedProsListOldComponent} from './components/shared-pros-list-old/shared-pros-list-old.component';
 
 // Pipes
 /*import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
@@ -87,7 +88,7 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
   declarations: [
     // Directives
     // FormErrorDirective,
-    //InputListComponent,
+    // InputListComponent,
     SharedAnswersListComponent,
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
@@ -101,8 +102,8 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedVideoComponent,
     SharedSortComponent,
     SharedProjectSettingsComponent,
-    //AutocompleteInputComponent,
-    //SearchInputComponent,
+    // AutocompleteInputComponent,
+    // SearchInputComponent,
     SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
@@ -117,11 +118,11 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedEditEmailsStep,
     SharedEditScenarioComponent,
     SharedProjectEditCardsComponent,
-    //DomSanitizerPipe,
-    //FilterPipe,
-    //LimitsPipe,
+    // DomSanitizerPipe,
+    // FilterPipe,
+    // LimitsPipe,
     SharedEmailBlacklistComponent,
-    //CharacterCountdown
+    // CharacterCountdown
   ],
   exports: [
     // Modules
@@ -135,7 +136,7 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     // TableModule,
 
     // Directives
-    //InputListComponent,
+    // InputListComponent,
 
     // Components
     SharedNotFoundComponent,
@@ -151,8 +152,8 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedLatexManagerComponent,
     SharedSortComponent,
     SharedProjectSettingsComponent,
-    //AutocompleteInputComponent,
-    //SearchInputComponent,
+    // AutocompleteInputComponent,
+    // SearchInputComponent,
     SharedTagItemComponent,
     SharedSearchHistoryComponent,
     SharedSearchProsComponent,
@@ -167,9 +168,9 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedEditScenarioComponent,
     SharedProjectEditCardsComponent,
     SharedEmailBlacklistComponent,
-    //FilterPipe,
-    //LimitsPipe,
-    //CharacterCountdown
+    // FilterPipe,
+    // LimitsPipe,
+    // CharacterCountdown
   ]
 })
 
