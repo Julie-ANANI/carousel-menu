@@ -1,7 +1,7 @@
 
 
 <div *ngIf="!(this.batchesLength)  || (campaign.settings.ABsettings.status !== 0) ">
-  <div *ngIf="this.campaign.settings.ABsettings?.status === 0">
+  <div *ngIf="this.campaign.settings.ABsettings?.status == 0">
     <label class="form-switch" style="">
       <input type="checkbox" [disabled]="ABDISPO()" (click)="statusSwitch()" >
       <i class="form-icon"></i>
