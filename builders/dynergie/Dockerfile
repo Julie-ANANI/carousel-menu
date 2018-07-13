@@ -9,7 +9,7 @@ RUN npm install -g typings
 WORKDIR /var/web
 ADD package.json package.json
 ADD .npmrc /var/web/.npmrc
-ADD prod .
+ADD . .
 
 
 WORKDIR /var/web

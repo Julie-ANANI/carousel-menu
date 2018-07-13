@@ -42,7 +42,6 @@
       <div class="popover">
         <i class="fas fa-link" [ngClass]="{'active': a.domain && a.domain.length > 0}"></i>
         <div class="popover-container">
-          Entrez un lien:
           <div class="input-group">
             <input type="text" class="form-default" [(ngModel)]="a.domain" name="domain"/>
             <button class="btn btn-primary btn-sm" type="submit" (click)="updateItem($event)">Update</button>

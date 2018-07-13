@@ -7,13 +7,13 @@
         <country-flag [country]="answer.country" [width]="23" [height]="16"></country-flag>
       </div>
       <div class="name">
-        {{ answer.professional.firstName[0] | uppercase }}{{ answer.professional.firstName | slice:1 }} {{ answer.professional.lastName }}
+        {{ answer.professional?.firstName[0] | uppercase }}{{ answer.professional?.firstName | slice:1 }} {{ answer.professional?.lastName }}
       </div>
     </div>
 
-    <div *ngIf="answer.professional.profileUrl" class="profile">
-      <a [href]="answer.professional.profileUrl" target="_blank">
-        {{ answer.professional.profileUrl }}
+    <div *ngIf="answer.professional?.profileUrl" class="profile">
+      <a [href]="answer.professional?.profileUrl" target="_blank">
+        {{ answer.professional?.profileUrl }}
       </a>
     </div>
 
@@ -21,7 +21,7 @@
       <i class="fas fa-user" aria-hidden="true"></i> {{ answer.job || answer.professional?.jobTitle }}
     </div>
 
-    <div *ngIf="!answer.company?.domain" class="company">
+    <div *ngIf="answer.company?.name || answer.professional?.company" class="company">
       <i class="fas fa-building"></i> {{ answer.company?.name || answer.professional?.company }}
     </div>
 
