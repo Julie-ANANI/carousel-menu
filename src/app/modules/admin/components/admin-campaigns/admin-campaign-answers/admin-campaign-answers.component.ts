@@ -96,6 +96,10 @@ export class AdminCampaignAnswersComponent implements OnInit {
       });
   }
 
+  public closeSidebar(state: string) {
+    this.sidebarTemplateValue.animate_state = state;
+  }
+
   get questions() { return this._questions; }
   get modalAnswer() { return this._modalAnswer; }
   set modalAnswer(modalAnswer: Answer) { this._modalAnswer = modalAnswer; }
