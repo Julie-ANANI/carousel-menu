@@ -3,6 +3,8 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Innovation } from '../../../../models/innovation';
+import {Table} from '../../../shared/components/shared-table/models/table';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-admin-projects',
@@ -14,6 +16,7 @@ export class AdminProjectsComponent implements OnInit {
   private _projects: Array<Innovation>;
   public selectedProjectIdToBeDeleted: any = null;
   private _total: number;
+  private _tableInfos: Table = null;
   private _config = {
     fields: '',
     limit: 10,
@@ -26,6 +29,7 @@ export class AdminProjectsComponent implements OnInit {
 
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
+              private router: Router,
               private _titleService: TranslateTitleService) {}
 
   ngOnInit(): void {
@@ -40,6 +44,28 @@ export class AdminProjectsComponent implements OnInit {
       .subscribe(projects => {
         this._projects = projects.result;
         this._total = projects._metadata.totalCount;
+
+        this._tableInfos = {
+          _selector: 'admin-projects',
+          _title: 'COMMON.PROJECTS',
+          _content: this._projects,
+          _total: this._total,
+          _isHeadable: true,
+          _isFiltrable: true,
+          _isShowable: true,
+          _columns: [
+            {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
+            {_attrs: ['name'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+            {_attrs: ['created'], _name: 'COMMON.SORT.BY_CREATION_DATE', _type: 'DATE'},
+            {_attrs: ['updated'], _name: 'COMMON.SORT.BY_UPDATE_DATE', _type: 'DATE'},
+            {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _choices: [
+                {_name: 'EDITING', _class: 'label-editing'},
+                {_name: 'SUBMITTED', _class: 'label-draft'},
+                {_name: 'EVALUATING', _class: 'label-progress'},
+                {_name: 'DONE', _class: 'label-validate'},
+              ]}
+          ]
+        };
       });
   }
 
@@ -59,6 +85,10 @@ export class AdminProjectsComponent implements OnInit {
 
   public getRelevantLink (project: Innovation) { // routerLink : /projects/:project_id
     return 'project/' + project._id;
+  }
+
+  goToProject(project: Innovation) {
+    this.router.navigate(['/admin/projects/' + this.getRelevantLink(project)]);
   }
 
   private _getProjectIndex(projectId: string): number {
@@ -86,5 +116,6 @@ export class AdminProjectsComponent implements OnInit {
   get config() { return this._config; }
   get total () { return this._total; }
   get projects () { return this._projects; }
+  get tableInfos() { return this._tableInfos; }
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
 }
