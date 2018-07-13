@@ -106,7 +106,7 @@ export class SharedTableComponent {
       let tmpContent = this._content[rowKey]._content[newColumnAttr[0]];
       newColumnAttr = newColumnAttr.splice(1);
       for (const i of newColumnAttr){
-        tmpContent = tmpContent[i];
+        tmpContent = tmpContent ? tmpContent[i] : '-';
       }
       return tmpContent;
     }else {

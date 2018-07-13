@@ -93,6 +93,12 @@ export const COMMON = {
     'NO-RESULTS': 'No results'
   },
 
+  'PROJECT': {
+    'OWNER': 'Owner',
+    'TITLE': 'Title',
+    'DOMAIN': 'Domain'
+  },
+
   'PROJECT_STATE': {
     'EDITING': 'Description',
     'SUBMITTED': 'Submitted',

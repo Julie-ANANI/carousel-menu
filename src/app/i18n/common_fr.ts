@@ -88,6 +88,12 @@ export const COMMON = {
     'SIGN_UP': 'Continuer',
   },
 
+  'PROJECT': {
+    'OWNER': 'Propriétaire',
+    'TITLE': 'Titre',
+    'DOMAIN': 'Domaine'
+  },
+
   'PROJECT_STATE': {
     'EDITING': 'Description',
     'SUBMITTED': 'Soumis',
