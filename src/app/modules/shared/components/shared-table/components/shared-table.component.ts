@@ -138,8 +138,12 @@ export class SharedTableComponent {
     return this.getChoices(column).find(value => value._name === name) || {_name: '', _class: ''};
   }
 
-  getChoiceName(choice: Choice): string {
-    return choice._name || '';
+  getChoiceAlias(choice: Choice) {
+    if (choice) {
+      return choice._alias || choice._name;
+    } else {
+      return ' - ';
+    }
   }
 
   getChoiceClass(choice: Choice): string {

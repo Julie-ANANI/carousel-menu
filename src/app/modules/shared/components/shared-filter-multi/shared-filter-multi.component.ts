@@ -89,6 +89,10 @@ export class SharedFilterMultiComponent {
     return choice._name;
   }
 
+  getChoiceAlias(choice: Choice): string {
+    return choice._alias || choice._name;
+  }
+
   isFiltrable(column: Column): boolean {
     return column._isFiltrable === undefined ? true : column._isFiltrable;
   }
