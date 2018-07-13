@@ -224,7 +224,7 @@ export class AdminCampaignMailsComponent implements OnInit {
     }
     const t: Table = {
       _selector: batch._id,
-      _title: workflowname,
+      _title: 'Workflow : ' + workflowname,
       _isNotPaginable: true,
       _isHeadable: true,
       _isEditable: true,
