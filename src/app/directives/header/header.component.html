@@ -42,7 +42,7 @@
               <!-- Client projects page -->
               <li class="navbar-item" *ngIf="!backOfficeValue">
                 <a
-                  [routerLink]="'/projects'"
+                  [routerLink]="'/project'"
                   routerLinkActive="active"
                   (click)="onClickLink()">
                   {{ 'COMMON.MY_PROJECTS' | translate }}
@@ -133,7 +133,7 @@
               <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
                 <a
                   routerLinkActive="active"
-                  [routerLink]="'/projects'"
+                  [routerLink]="'/'"
                   title=""
                   (click)="toggleBackOfficeState(); onClickLink();">
                   {{ 'COMMON.CLIENT_SIDE' | translate }}
