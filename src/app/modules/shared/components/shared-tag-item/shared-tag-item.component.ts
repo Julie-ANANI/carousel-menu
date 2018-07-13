@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { TagsService } from '../../../../services/tags/tags.service';
@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './shared-tag-item.component.html',
   styleUrls: ['./shared-tag-item.component.scss']
 })
+
 export class SharedTagItemComponent implements OnInit {
 
   @Input() tags: Array<Tag>;
@@ -62,5 +63,8 @@ export class SharedTagItemComponent implements OnInit {
     return (this._tagForm.get('tag').value && typeof this._tagForm.get('tag').value !== 'string');
   }
 
-  get tagForm() { return this._tagForm; }
+  get tagForm() {
+    return this._tagForm;
+  }
+
 }

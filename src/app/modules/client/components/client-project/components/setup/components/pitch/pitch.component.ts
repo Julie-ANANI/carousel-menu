@@ -15,6 +15,7 @@ export class PitchComponent implements OnInit {
   @Input() showPitchFieldError: Subject<boolean>;
 
   @Output() saveChanges = new EventEmitter<boolean>();
+  @Output() innovationToPreview = new EventEmitter<number>();
 
   showFieldError: Subject<boolean> = new Subject();
 
@@ -22,6 +23,10 @@ export class PitchComponent implements OnInit {
 
   public saveInnovation(value: boolean) {
     this.saveChanges.emit(value);
+  }
+
+  innovationPreview(value: number) {
+    this.innovationToPreview.emit(value);
   }
 
   ngOnInit(): void {

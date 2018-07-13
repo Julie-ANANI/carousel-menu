@@ -45,7 +45,13 @@
         <div class="column col-11 col-mx-auto">
           <h3>{{ 'DISCOVERDESCRIPTION.MEDIAS' | translate }}</h3>
           <div class="media-wrapper" *ngFor="let media of innovation.media">
-            <a [href]="media.url" target="_blank">
+            <div *ngIf="media?.type === 'VIDEO'">
+              <iframe
+                [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
+                width="336" height="250">
+              </iframe>
+            </div>
+            <a *ngIf="media?.type === 'PHOTO'" [href]="media.url" target="_blank">
               <img
                 [src]="media.url"
                 class="img-responsive"

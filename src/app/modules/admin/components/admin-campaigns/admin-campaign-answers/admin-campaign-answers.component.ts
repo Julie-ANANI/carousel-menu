@@ -8,6 +8,7 @@ import { Campaign } from '../../../../../models/campaign';
 import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 import { AuthService } from '../../../../../services/auth/auth.service';
+import {Template} from '../../../../shared/components/shared-sidebar/interfaces/template';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -28,6 +29,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer;
+  sidebarTemplateValue: Template = {};
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
@@ -69,6 +71,13 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   public seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
+
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'COMMON.EDIT_INSIGHT',
+      size: '726px'
+    };
+
   }
 
   public exportAnswers(event: Event) {
@@ -85,6 +94,10 @@ export class AdminCampaignAnswersComponent implements OnInit {
       }, (err) => {
         this.notificationService.error('ERROR.ERROR', err.message);
       });
+  }
+
+  public closeSidebar(state: string) {
+    this.sidebarTemplateValue.animate_state = state;
   }
 
   get questions() { return this._questions; }

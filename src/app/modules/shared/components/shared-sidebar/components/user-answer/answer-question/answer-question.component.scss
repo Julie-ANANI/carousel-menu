@@ -1,0 +1,164 @@
+.ques-label {
+  color: #97A4B1;
+  font-weight: 600;
+  padding-bottom: 0;
+}
+
+.response-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.div-top {
+  padding-top: 20px;
+}
+
+.comment-wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  .form-default {
+    margin-top: 20px;
+    max-width: 80%;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+}
+
+.comment-answer {
+  color: #5d5d5d;
+  padding-top: 15px;
+  padding-bottom: 0;
+}
+
+.answer {
+  color: #2ECC71;
+}
+
+.gaping {
+  margin-right: 30px;
+}
+
+.inactive {
+  color: #5d5d5d;
+}
+
+.comment-text {
+  color: #FFB300;
+  padding-bottom: 0;
+}
+
+.pd-top {
+  padding-top: 15px;
+}
+
+.pd-bottom {
+  padding-bottom: 20px;
+}
+
+.list-wrapper {
+  background: #F8F4F4;
+  color: #333333;
+  padding: 8px 15px;
+  border-radius: 5px;
+  display: inline-flex;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+
+.topItem, .badItem {
+  background: #2ECC71;
+  color: white;
+
+  i {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  i:hover {
+    color: white;
+  }
+
+}
+
+.badItem {
+  background: #EA5858;
+}
+
+.checkbox-wrapper {
+  background: #F8F4F4;
+  color: #333333;
+  border-radius: 5px;
+  display: inline-flex;
+  margin-right: 10px;
+  margin-bottom: 10px;
+
+  li {
+    padding: 10px 15px;
+  }
+
+}
+
+.nCheckbox-wrapper {
+  color: #5d5d5d;
+
+  li {
+    padding: 0 0 10px;
+  }
+
+}
+
+.div-gap {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.scale-text {
+  padding: 15px 0 0;
+  color: #5d5d5d;
+}
+
+.star-wrapper {
+  display: flex;
+  list-style: none;
+  flex-direction: column;
+  padding-top: 15px;
+  color: #5d5d5d;
+  justify-content: space-between;
+
+  li {
+    padding: 0;
+    margin-bottom: 10px;
+    align-items: center;
+
+    span {
+      color: #FFB300;
+      margin-left: 3px;
+    }
+
+  }
+
+}
+
+.toggle-wrapper {
+  margin-top: 15px;
+  color: #5d5d5d;
+}
+
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  .comment-wrapper {
+    flex-direction: column;
+
+    .form-default {
+      max-width: 100%;
+    }
+
+  }
+
+}

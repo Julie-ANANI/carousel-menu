@@ -1,0 +1,22 @@
+<div *ngIf="editMode" class="rating-wrapper">
+
+  <div class="thumbs-up-wrapper" [ngClass]="{ 'active': rating === 2 }">
+    <i *ngIf="editMode || rating === 2" class="fas fa-thumbs-up" (click)="thumbsUp($event)"></i>
+  </div>
+  <div class="thumbs-down-wrapper" [ngClass]="{ 'active': rating === 0 }">
+    <i *ngIf="editMode || rating === 0" class="fas fa-thumbs-down" (click)="thumbsDown($event)"></i>
+  </div>
+
+</div>
+
+<div *ngIf="!editMode" class="rating-wrapper">
+
+  <div *ngIf="rating === 2" class="c-thumbs-up-wrapper">
+    <i class="fas fa-thumbs-up"></i>
+  </div>
+
+  <div *ngIf="rating === 0" class="c-thumbs-down-wrapper">
+    <i class="fas fa-thumbs-down"></i>
+  </div>
+
+</div>

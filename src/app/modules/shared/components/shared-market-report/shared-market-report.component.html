@@ -1,4 +1,7 @@
 <div class="section-container" id="project-synthesis">
+  <div class="columns">
+    <div class="column col-12 col-mx-auto">
+      <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- Bot messages -->
         <div *ngIf="!adminSide && projectStatus !== 'DONE'">
@@ -12,6 +15,10 @@
                 </ng-container>
                 <ng-container *ngIf="!project.reviewing">
                   {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }}
+                  <span [ngStyle]="{ 'color': '#FFB300' }">
+                    {{ 'MARKET_REPORT.MESSAGE.EDITING.B' | translate }}
+                  </span>
+                  {{ 'MARKET_REPORT.MESSAGE.EDITING.C' | translate }}
                 </ng-container>
               </ng-container>
 
@@ -33,7 +40,6 @@
 
         <!-- Project under DONE status -->
         <div *ngIf="projectStatus === 'DONE' || adminSide">
-          <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
 
           <!-- Title and download button section -->
           <div class="title-wrapper">
@@ -48,13 +54,13 @@
                   {{ 'MARKET_REPORT.BUTTON.STATUS_TO_EVALUATING' | translate }}
                 </button>
               </ng-container>
-              <button *ngSwitchDefault (click)="print($event)" class="btn btn-primary">
-                {{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }} <!-- We display the download button only client side -->
-              </button>
+             <!-- <button *ngSwitchDefault (click)="print($event)" class="btn btn-primary">
+                {{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }} &lt;!&ndash; We display the download button only client side &ndash;&gt;
+              </button>-->
             </ng-container>
           </div>
 
-          <!-- Sidebar -->
+          <!-- Menu -->
           <div class="question-wrapper">
             <ul>
               <li [ngClass]="{'active': activeSection === 'professionals'}">
@@ -97,20 +103,20 @@
                   [countries]="countries"
                   [countriesColor]="'#FFB300'"
                   [initialConfiguration]="mapInitialConfiguration"
-                  [isEditable]="false">
+                  [isEditable]="true">
                 </app-worldmap>
               </div>
             </div>
 
             <!-- Professionals -->
-            <section class="section-container" id="professionals">
+            <div class="section-container" id="professionals">
               <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
-              <div class="professional">
+              <div class="professional-wrapper">
                 <div *ngFor="let answer of filteredAnswers" class="profile">
                   <app-pro-tag [answer]="answer" (addFilter)="addFilter($event)" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
                 </div>
               </div>
-            </section>
+            </div>
 
             <!-- Other questions -->
             <div *ngFor="let question of questions" class="section-container">
@@ -132,4 +138,20 @@
         </div>
         <!-- /Project under evaluating_done status -->
 
+      </div>
+    </div>
+  </div>
 </div>
+
+
+<!-- Insight preview -->
+<app-sidebar
+  [template]="sidebarTemplateValue"
+  (closeSidebar)="closeSidebar($event)">
+  <app-user-answer
+    [adminMode]="adminMode"
+    [(userAnswer)]="modalAnswer"
+    [innovationId]="innoid"
+    [questions]="questions">
+  </app-user-answer>
+</app-sidebar>

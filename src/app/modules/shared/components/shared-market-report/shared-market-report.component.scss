@@ -419,7 +419,7 @@ body.sample-infographic {
       padding-top: 0;
     }
 
-    .professional {
+    .professional-wrapper {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -428,7 +428,7 @@ body.sample-infographic {
         background: white;
         box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
         border: 1px solid #F2F2F2;
-        padding: 20px 10px;
+        padding: 20px 15px;
         border-radius: 5px;
         margin-bottom: 20px;
         margin-right: 20px;

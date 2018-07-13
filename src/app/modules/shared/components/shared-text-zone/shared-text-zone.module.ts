@@ -1,15 +1,17 @@
-/**
- * Created by bastien on 05/07/2018.
- */
+// Modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+
+// Components
 import { SharedTextZoneComponent } from './shared-text-zone.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    TranslateModule.forChild(),
+    ReactiveFormsModule,
+    TranslateModule.forChild()
   ],
   declarations: [
     SharedTextZoneComponent

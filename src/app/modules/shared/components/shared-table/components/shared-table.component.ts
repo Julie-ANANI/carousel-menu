@@ -106,7 +106,7 @@ export class SharedTableComponent {
       let tmpContent = this._content[rowKey]._content[newColumnAttr[0]];
       newColumnAttr = newColumnAttr.splice(1);
       for (const i of newColumnAttr){
-        tmpContent = tmpContent[i];
+        tmpContent = tmpContent ? tmpContent[i] : '-';
       }
       return tmpContent;
     }else {
@@ -138,8 +138,12 @@ export class SharedTableComponent {
     return this.getChoices(column).find(value => value._name === name) || {_name: '', _class: ''};
   }
 
-  getChoiceName(choice: Choice): string {
-    return choice._name || '';
+  getChoiceAlias(choice: Choice) {
+    if (choice) {
+      return choice._alias || choice._name;
+    } else {
+      return ' - ';
+    }
   }
 
   getChoiceClass(choice: Choice): string {

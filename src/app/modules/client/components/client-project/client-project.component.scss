@@ -20,6 +20,7 @@
         color: #97A4B1;
         font-weight: 600;
         padding-left: 15px;
+        font-size: 14px;
       }
 
     }
@@ -43,150 +44,12 @@
 
 }
 
-.modal {
-
-  .text-link {
-    font-size: 0.75rem;
-  }
-
-  .para {
-    font-size: 0.6rem;
-    padding: 0;
-  }
-
-  .content {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
-
-    .form-default {
-      display: inline-flex;
-      margin-top: 0;
-    }
-
-    .btn {
-      padding: 10px 20px;
-      margin-left: 10px;
-
-      i {
-        font-size: 0.9rem;
-      }
-
-    }
-
-  }
-
-  .collaborator {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-
-  .collaborators-invitation-container {
-    margin-top: 30px;
-
-    ul {
-      list-style: none;
-      margin-left: 0;
-      margin-top: 0;
-
-      .invitation-detail {
-        margin-top: 0;
-      }
-
-    }
-
-    ul:last-child {
-      margin-bottom: 0;
-    }
-
-  }
-
-  .collaborators-added-container {
-    margin-top: 30px;
-
-    ul {
-      list-style: none;
-      margin-left: 0;
-      margin-top: 0;
-
-      .added-detail {
-        margin-top: 0;
-      }
-
-      .ghost-delete {
-        visibility: hidden;
-      }
-
-    }
-
-    ul:hover {
-
-      .ghost-delete {
-        visibility: visible;
-      }
-
-    }
-
-    ul:last-child {
-      margin-bottom: 0;
-    }
-
-  }
-
-}
-
 /********************************** Media ***************************************/
-
-@media (max-width: 375px) {
-
-  .modal {
-
-    .content {
-      flex-direction: column;
-      align-items: flex-start;
-
-      .btn {
-        margin-top: 15px;
-        margin-left: 0;
-      }
-
-    }
-
-    .collaborators-added-container, .collaborators-invitation-container {
-
-      .collaborator {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .ghost-delete, .ghost-primary {
-        margin-top: 15px;
-      }
-
-    }
-
-  }
-
-
-}
 
 @media (max-width: 600px) {
 
   .tabs li a {
     border-radius: 5px;
-  }
-
-  .modal {
-
-    .ghost-delete {
-      visibility: visible !important;
-    }
-
   }
 
 }
@@ -199,15 +62,6 @@
 
   .tabs li:last-child {
     margin-right: 0;
-  }
-
-  .modal {
-
-    .content {
-      flex-direction: row;
-      flex-wrap: unset;
-    }
-
   }
 
 }

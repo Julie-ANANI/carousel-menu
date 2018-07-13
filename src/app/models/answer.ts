@@ -4,7 +4,7 @@ import { Tag } from './tag';
 
 export interface Answer {
   readonly _id: string;
-  readonly status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED';
+  status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED';
   quizReference: string;
   originalAnswerReference: string;
   tags: Array<Tag>;
@@ -12,6 +12,7 @@ export interface Answer {
   profileQuality: number;
   country: {flag: string, domain: string, name: string};
   job: string;
+  readonly ip: any;
   company: Clearbit;
   readonly professional: Professional;
   readonly answers: any;

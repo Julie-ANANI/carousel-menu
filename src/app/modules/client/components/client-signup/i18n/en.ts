@@ -3,8 +3,10 @@ export const SIGN_UP = {
 
   'HAVE_ACCOUNT': 'Already have an account?',
 
-  'SIGN_UP_BTN': 'Sign up',
-  'SIGN_UP_LINKEDIN': 'Sign up with Linkedin',
+  'HEADING_SIDEBAR': 'Sign Up',
+
+  'SIGN_UP_LINKEDIN': 'Sign up with LinkedIn',
+
   'SIGN_UP_EMAIL': 'Sign up with email address'
 
 };

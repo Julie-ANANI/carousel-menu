@@ -29,9 +29,9 @@ $dark-color: #333 !default;
   li span {
     background: #2ECC71;
     border-radius: 5px 0 0 5px;
-    padding: 15px 25px;
+    padding: 15px;
     color: white;
-    font-size: 0.7rem;
+    font-size: 14px;
     width: 100%;
     word-break: break-word;
   }
@@ -43,20 +43,11 @@ $dark-color: #333 !default;
     padding: 12px 17px;
     border: none;
     cursor: pointer;
-  }
 
-  i {
-    display: flex;
-    font-size: 1.4rem;
-    color: rgba(255, 255, 255, 0.6);
-    background: #11A751;
-    border-radius: 0 2px 2px 0;
-    padding: 13px 17px;
-    border: none;
-  }
+    img {
+      width: 16px;
+    }
 
-  i.active, i:hover {
-    color: white;
   }
 
   a.updown {
@@ -70,9 +61,45 @@ $dark-color: #333 !default;
     background: lighten(#EA5858, 10%);
   }
 
+  i {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    background: #11A751;
+    padding: 17px;
+    border: none;
+  }
+
+  .fa-thumbs-up.active, .fa-thumbs-up:hover, .fa-thumbs-down.active, .fa-thumbs-down:hover, .fa-pencil-alt:hover {
+    color: white;
+    cursor: pointer;
+  }
+
+
+  .popover {
+
+    .fa-link {
+      color: #FFB300;
+    }
+
+    .fa-link:hover {
+      cursor: pointer;
+      color: lighten(#FFB300, 10%);
+    }
+
+  }
+
   .popover-container {
-    background: white;
-    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
+    background: #F8F4F4;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    z-index: 2;
+    border-radius: 3px;
+
+    .btn {
+      margin-top: 3px;
+    }
+
   }
 
 }

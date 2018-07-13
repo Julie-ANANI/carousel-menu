@@ -1,13 +1,15 @@
 <div *ngIf="innovation" class="innovation-wrapper">
   <!-- Hero section -->
   <div class="hero-light-container">
-    <div class="column col-11 col-mx-auto">
+    <div class="column col-xs-12 col-11 col-mx-auto">
 
       <!-- Title -->
       <h1 class="main-heading">{{ innovation.title }}</h1>
-      <h2 class="date-heading" *ngIf="this.getDate">
+
+      <!-- Batch date -->
+      <h6 *ngIf="this.getDate">
         {{'DASHBOARD.SENDINGDATE' | translate}} {{this.getDate| date: this.dateFormat}}
-      </h2>
+      </h6>
 
       <!-- Summary -->
       <p>{{ innovation.summary }}</p>
@@ -19,7 +21,7 @@
           <!-- Video -->
           <div *ngIf="media?.type === 'VIDEO'" class="gap">
             <iframe
-              [src]="domSanitizer.bypassSecurityTrustResourceUrl(media?.video.embeddableUrl)"
+              [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
               width="220" height="146">
             </iframe>
           </div>
@@ -39,7 +41,7 @@
   </div>
   <!-- Advantage section -->
   <div class="section-container">
-    <div class="column col-11 col-mx-auto">
+    <div class="column col-xs-12 col-11 col-mx-auto">
       <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h2>
       <ul class="advantage">
         <li *ngFor="let advantage of innovation.advantages;">
@@ -51,7 +53,7 @@
 
   <!-- Issue section -->
   <div class="section-container">
-    <div class="column col-11 col-mx-auto">
+    <div class="column col-xs-12 col-11 col-mx-auto">
       <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
       <p>{{ innovation.problem }}</p>
     </div>
@@ -59,7 +61,7 @@
 
   <!-- Solution section -->
   <div class="section-container">
-    <div class="column col-11 col-mx-auto">
+    <div class="column col-xs-12 col-11 col-mx-auto">
       <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
       <p>{{ innovation.solution }}</p>
     </div>
