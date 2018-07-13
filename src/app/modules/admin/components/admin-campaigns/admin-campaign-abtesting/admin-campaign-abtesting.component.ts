@@ -321,6 +321,14 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     this._avertABtesting = b;
   }
 
+  public ABDISPO() {
+    if (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""  && this._modifiedScenarios.length > 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 
   get nameWorkflowA(): string { return this._nameWorkflowA };
   get nameWorkflowB(): string { return this._nameWorkflowB };
