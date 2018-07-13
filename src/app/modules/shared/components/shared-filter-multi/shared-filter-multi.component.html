@@ -32,7 +32,9 @@
               style="margin-right: 10px;"
               *ngSwitchCase="'MULTI-CHOICES'" >
         <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
-        <option *ngFor="let choice of getChoices(prop)">{{getChoiceName(choice) | translate}}</option>
+        <option *ngFor="let choice of getChoices(prop)"
+                [ngValue]="getChoiceName(choice)">
+          {{getChoiceAlias(choice) | translate}}</option>
       </select>
     </div>
   </div>

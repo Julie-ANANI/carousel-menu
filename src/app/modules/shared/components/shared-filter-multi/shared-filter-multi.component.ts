@@ -46,7 +46,9 @@ export class SharedFilterMultiComponent {
 
   loadProps(value: Column[]) {
     if (value) {
-      this._textProps = value.filter(value1 => this.getType(value1) === 'TEXT' || this.getType(value1) === 'COUNTRY');
+      this._textProps = value.filter(value1 =>
+        (this.getType(value1) === 'TEXT' || this.getType(value1) === 'COUNTRY') && (this.isFiltrable(value1)));
+
       if (this._currentTextProp._attrs[0] === '' && this._textProps.length > 0) {
         this._currentTextProp = this._textProps[0];
       }
@@ -85,6 +87,14 @@ export class SharedFilterMultiComponent {
 
   getChoiceName(choice: Choice): string {
     return choice._name;
+  }
+
+  getChoiceAlias(choice: Choice): string {
+    return choice._alias || choice._name;
+  }
+
+  isFiltrable(column: Column): boolean {
+    return column._isFiltrable === undefined ? true : column._isFiltrable;
   }
 
   changeCurrentTextProp(prop: any) {

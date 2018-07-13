@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Table} from '../../../shared-table/models/table';
+import {EmailQueueModel} from '../../../../../../models/mail.queue.model';
 
 @Component({
   selector: 'app-project-form',
@@ -14,14 +16,25 @@ export class ProjectFormComponent implements OnInit, OnChanges {
     this.loadBlacklist();
   };
 
+  @Input() set campaignInfos(value: EmailQueueModel) {
+    this.campaignInfosToShow = value;
+    this.loadCampaignInfos();
+  }
+
   @Input() sidebarState: string;
 
   @Input() set type(type: string) {
     if (type === 'addEmail') {
       this.isBlacklist = false;
       this.isAddEmail = true;
+      this.isShowCampaignInfos = false;
     } else if (type === 'editBlacklist') {
       this.isBlacklist = true;
+      this.isAddEmail = false;
+      this.isShowCampaignInfos = false;
+    } else if (type === 'showCampaignInfos') {
+      this.isShowCampaignInfos = true;
+      this.isBlacklist = false;
       this.isAddEmail = false;
     }
   }
@@ -31,10 +44,14 @@ export class ProjectFormComponent implements OnInit, OnChanges {
 
   isBlacklist = false;
   isAddEmail = false;
+  isShowCampaignInfos = false;
+
+  private _tableInfos: Table = null;
 
   formData: FormGroup;
 
   emailToEdit: any = null;
+  campaignInfosToShow: EmailQueueModel = null;
 
   constructor (private formBuilder: FormBuilder) {}
 
@@ -54,10 +71,27 @@ export class ProjectFormComponent implements OnInit, OnChanges {
     }
   }
 
+  loadCampaignInfos() {
+    if (this.campaignInfosToShow) {
+      this._tableInfos = {
+        _selector: 'admin-mailgun',
+        _title: 'COMMON.PROFESSIONALS',
+        _isHeadable: true,
+        _content: this.campaignInfosToShow.payload.recipients,
+        _total: this.campaignInfosToShow.payload.recipients.length,
+        _isNotPaginable: true,
+        _columns: [
+          {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
+          {_attrs: ['company'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false},
+        ]
+      };
+    }
+  }
+
   onSubmit() {
     if (this.isBlacklist) {
       const blacklist = this.formData.value;
-      blacklist.expiration === '' ? blacklist.expiration = 0 : blacklist.expiration = blacklist.expiration
+      blacklist.expiration === '' ? blacklist.expiration = 0 : blacklist.expiration = blacklist.expiration;
       blacklist._id = this.emailToEdit._id;
       this.editBlacklist.emit(blacklist);
     } else if (this.isAddEmail) {
@@ -85,6 +119,8 @@ export class ProjectFormComponent implements OnInit, OnChanges {
     }
 
   }
+
+  get tableInfos(): Table { return this._tableInfos; }
 
 
 }

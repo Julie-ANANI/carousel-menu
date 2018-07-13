@@ -20,7 +20,7 @@ import { DASHBOARD } from '../modules/admin/components/admin-dashboard/i18n/en';
 import { PRESETS } from '../modules/admin/components/admin-preset/i18n/en';
 import { CAMPAIGNS } from '../modules/admin/components/admin-campaigns/i18n/en';
 import { SEARCH } from '../modules/admin/components/admin-search/i18n/en';
-import { BLACKLISTS } from '../modules/shared/components/shared-email-blacklist/i18n/en';
+import { BLACKLISTS } from '../modules/admin/components/admin-email-blacklist/i18n/en';
 import { TAGS } from '../modules/admin/components/admin-tags/i18n/en';
 import { PROJECT_LIST } from '../modules/admin/components/admin-projects-list/i18n/en';
 import { PROJECT_MODULE } from '../modules/client/components/client-project/i18n/en';

@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '../../../shared/shared.module';
+import {SharedSearchHistoryModule} from '../../../shared/components/shared-search-history/search-history.module';
+import {SharedSearchResultsModule} from '../../../shared/components/shared-search-results/search-results.module';
+import {SharedSearchProsModule} from '../../../shared/components/shared-search-pros/shared-search-pros.module';
+
 import { AdminSearchComponent } from './admin-search.component';
 import { AdminSearchProsComponent } from './admin-search-pros/admin-search-pros.component';
 import { AdminSearchMailComponent } from './admin-search-mail/admin-search-mail.component';
@@ -9,10 +13,14 @@ import { AdminSearchHistoryComponent } from './admin-search-history/admin-search
 import { AdminSearchQueueComponent } from './admin-search-queue/admin-search-queue.component';
 import { AdminSearchResultsComponent } from './admin-search-results/admin-search-results.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
+    SharedSearchResultsModule,
+    SharedSearchProsModule,
+    SharedSearchHistoryModule,
     TranslateModule.forChild()
   ],
   declarations: [

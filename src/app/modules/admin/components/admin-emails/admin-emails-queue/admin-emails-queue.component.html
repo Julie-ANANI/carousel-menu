@@ -33,4 +33,12 @@
 </div>
 -->
 
-<app-shared-table [data]="tableInfos" [config]="config" (configChange)="loadQueue($event)"></app-shared-table>
+<app-shared-table [data]="tableInfos" [config]="config" (configChange)="loadQueue($event)" (editRow)="showCampaignInfos($event)"></app-shared-table>
+
+<app-sidebar
+  [template]="more" (closeSidebar)="closeSidebar($event)">
+  <app-project-form
+    [sidebarState]="more.animate_state"
+    [type]="more.type" [campaignInfos]="currentQueue">
+  </app-project-form>
+</app-sidebar>

@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { EmailService } from './../../../../services/email/email.service';
+import { EmailService } from '../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import {Table} from '../shared-table/models/table';
-import {Template} from '../shared-sidebar/interfaces/template';
+import {Table} from '../../../shared/components/shared-table/models/table';
+import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
 
 
 @Component({
   selector: 'app-shared-email-blacklist',
-  templateUrl: 'shared-email-blacklist.component.html',
-  styleUrls: ['shared-email-blacklist.component.scss']
+  templateUrl: 'admin-email-blacklist.component.html',
+  styleUrls: ['admin-email-blacklist.component.scss']
 })
-export class SharedEmailBlacklistComponent implements OnInit {
+export class AdminEmailBlacklistComponent implements OnInit {
 
   private _config = {
     limit: 10,

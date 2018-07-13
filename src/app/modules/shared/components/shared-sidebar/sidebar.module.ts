@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { CountryFlagModule } from '../../../../directives/country-flag/country-flag.module';
 import { InputListModule } from '../../../../directives/input-list/input-list.module';
+import { SharedTableModule } from '../shared-table/table.module';
 import { AutocompleteInputModule } from '../../../../directives/autocomplete-input/autocomplete-input.module';
 import { SharedTagItemModule } from '../shared-tag-item/shared-tag-item.module';
 import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
@@ -29,6 +30,7 @@ import { RatingItemComponent } from './components/user-answer/rating-item/rating
     TranslateModule.forChild(),
     CountryFlagModule,
     InputListModule,
+    SharedTableModule,
     AutocompleteInputModule,
     SharedTagItemModule,
     MultilingModule

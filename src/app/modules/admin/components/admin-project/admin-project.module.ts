@@ -5,6 +5,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { SharedModule } from '../../../shared/shared.module';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
+import { SharedSortModule } from '../../../shared/components/shared-sort/sort.module';
 import { AdminProjectComponent } from './admin-project.component';
 import { AdminProjectDetailsComponent } from './admin-project-details/admin-project-details.component';
 import { AdminProjectCardsComponent } from './admin-project-cards/admin-project-cards.component';
@@ -17,6 +18,7 @@ import {AutocompleteInputModule} from '../../../../directives/autocomplete-input
   imports: [
     CommonModule,
     SharedModule,
+    SharedSortModule,
     SharedMarketReportModule,
     TranslateModule.forChild(),
     Ng2AutoCompleteModule,

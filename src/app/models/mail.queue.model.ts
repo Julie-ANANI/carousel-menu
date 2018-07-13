@@ -18,7 +18,6 @@ export class EmailQueueModel extends Model {
     super(queue);
   }
 
-
   get id(): string {
     return this._id;
   }
