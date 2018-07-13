@@ -11,9 +11,9 @@
       </div>
     </div>
 
-    <div *ngIf="answer.professional.profileUrl" class="profile">
-      <a [href]="answer.professional.profileUrl" target="_blank">
-        {{ answer.professional.profileUrl }}
+    <div *ngIf="answer.professional?.profileUrl" class="profile">
+      <a [href]="answer.professional?.profileUrl" target="_blank">
+        {{ answer.professional?.profileUrl }}
       </a>
     </div>
 
