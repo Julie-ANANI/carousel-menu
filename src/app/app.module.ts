@@ -51,7 +51,7 @@ import { SignatureResolver } from './resolvers/signature.resolver';
   declarations: [
     AppComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({

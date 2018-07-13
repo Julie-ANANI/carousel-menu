@@ -23,7 +23,7 @@ import { SharedFilterMultiComponent} from './components/shared-filter-multi/shar
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { SharedSortComponent } from './components/shared-sort/shared-sort.component';
 import { SharedTagItemComponent } from './components/shared-tag-item/shared-tag-item.component';
-import { SharedTextZoneComponent } from './components/shared-text-zone/shared-text-zone.component';
+import { SharedTextZoneModule } from './components/shared-text-zone/shared-text-zone.module';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
 import { SharedLatexManagerComponent } from './components/shared-latex-manager/shared-latex-manager.component';
 import { SharedProjectSettingsComponent } from './components/shared-project-settings-component/shared-project-settings.component';
@@ -31,7 +31,6 @@ import { SharedSearchHistoryComponent } from './components/shared-search-history
 import { SharedSearchProsComponent } from './components/shared-search-pros/shared-search-pros.component';
 import { SharedSearchMailComponent } from './components/shared-search-mail/shared-search-mail.component';
 import { SharedProsListComponent } from './components/shared-pros-list/shared-pros-list.component';
-import { SharedProsListOldComponent } from './components/shared-pros-list-old/shared-pros-list-old.component';
 import { SharedSearchResultsComponent } from './components/shared-search-results/shared-search-results.component';
 import { SharedSmartSelectInputComponent } from './components/shared-smart-select/shared-smart-select.component';
 import { SharedMarketReportExampleComponent } from './components/shared-market-report-example/shared-market-report-example.component';
@@ -68,6 +67,7 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
   imports: [
     CommonModule,
     CountryFlagModule,
+    SharedTextZoneModule,
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
@@ -96,7 +96,6 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedFilterMultiComponent,
-    SharedTextZoneComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedVideoComponent,
@@ -147,7 +146,7 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
     SharedPaginationComponent,
     SharedFilterInputComponent,
     SharedFilterMultiComponent,
-    SharedTextZoneComponent,
+    SharedTextZoneModule,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedSortComponent,

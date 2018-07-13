@@ -194,6 +194,7 @@ export class AdminProjectDetailsComponent implements OnInit {
   }
   set domain(domain: {en: string, fr: string}) { this._domain = domain; }
 
+
   get domain() {
     return this._domain;
   }

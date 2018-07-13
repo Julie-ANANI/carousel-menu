@@ -1,21 +1,52 @@
-<h2>Templates de mails</h2>
+<div class="container col-10 col-mx-auto section-container">
+  <h2>Campagne : {{campaign.title}}</h2>
+  <div *ngIf="!domain()">
+    <h4>
+      ATTENTION *|DOMAIN|* non défini
+    </h4>
+  </div>
+  <div *ngIf="domain()">
+    <h5>
+      *|DOMAIN|* <br>
+      en :{{this.campaign.innovation.settings.domain.en}} <br>
+      fr :{{this.campaign.innovation.settings.domain.fr}}
+    </h5>
+  </div>
+  <h2>Templates de mails</h2>
+  <button class="btn btn-primary" (click)="importModal = true">Importer un template de la bibliothèque</button>
+  <br>
+  <div>
+    <app-admin-campaign-abtesting [modifiedScenarios]="modifiedScenarios" [campaign]="campaign"></app-admin-campaign-abtesting>
+  </div>
+<br>
+  <div>
+    <h3> Choix du Workflow par défault </h3>
+    <form>
+      <select class = "form-select"
+              [(ngModel)] = "modalSelectDefault[1]"
+              id = "workflow"
+              name = "quelquechose"
+              (ngModelChange) ="areYouSureYouWantToChange($event)">
+        <option *ngFor = "let scenario of modifiedScenarios"
+                [ngValue] = "scenario.name">
+          {{scenario.name}}
+        </option>
+      </select>
+    </form>
+    <div *ngFor="let scenario of availableScenarios">
+      <br>
+      <app-shared-edit-scenario
+        *ngIf="scenario.emails && scenario.emails.length"
+        [scenario]="scenario"
+        [inCampaign]="true"
+        (scenarioChange)="updateAvailableScenario(scenario)"
+        (removeScenario)="removeScenario(scenario)"
+      ></app-shared-edit-scenario>
+    </div>
+  </div>
 
-<button class="btn btn-primary" (click)="importModal = true">Importer un template de la bibliothèque</button>
-<div *ngIf="!domain()">
-  <h4>
-    ATTENTION *|DOMAIN|* non défini
-  </h4>
+  <app-shared-edit-scenario *ngIf="scenario.emails && scenario.emails.length" [scenario]="scenario" (scenarioChange)="updateScenario($event)"></app-shared-edit-scenario>
 </div>
-<div *ngIf="domain()">
-  <h5>
-    *|DOMAIN|* <br>
-    en :{{this.campaign.innovation.settings.domain.en}} <br>
-    fr :{{this.campaign.innovation.settings.domain.fr}}
- </h5>
-</div>
-<app-shared-edit-scenario *ngIf="scenario.emails && scenario.emails.length" [scenario]="scenario" (scenarioChange)="updateScenario($event)"></app-shared-edit-scenario>
-
-
 
 
 <!-- MODAL : Import d'un template -->
@@ -58,3 +89,29 @@
     </div>
   </div>
 </div>
+
+
+<!-- Modal selection  d'un workflow par default -->
+<div class="modal" [ngClass]="{'active': modalSelectDefault[0]}">
+  <div class="modal-overlay" (click)="(modalSelectDefault[0] = !modalSelectDefault[0])"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(modalSelectDefault[0] = !modalSelectDefault[0])"></button>
+      <div class="modal-title h5">{{ 'CAMPAIGNS.SELECT_DEFAULT.TITLE' | translate }}</div>
+    </div>
+      <div class="modal-body">
+        <div class="content">
+        {{'CAMPAIGNS.SELECT_DEFAULT.CONTENT' | translate}}
+        </div>
+      </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="changeDefaultWorkflow()">{{ 'COMMON.UPDATE' | translate }}</button>
+      <button class="btn btn-link" (click)="resetDefaultWorkflow()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+

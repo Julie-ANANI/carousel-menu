@@ -10,11 +10,18 @@ import { EmailTemplate } from '../../../../models/email-template';
 export class SharedEditScenarioComponent implements OnInit {
 
   @Input() scenario: EmailScenario;
+  @Input() inCampaign: Boolean;
   @Output() scenarioChange = new EventEmitter <EmailScenario>();
+  @Output() removeScenario = new EventEmitter<any>();
+
   public displayedLanguages: Array<string> = ['en', 'fr'];
   public displayedProfiles: Array<string> = ['NEW'];
   public availableLanguages: Array<string> = ['en', 'fr'];
   public availableProfiles: Array<string> = ['NEW'];
+  public availableScenario: Array<EmailScenario>;
+  public isCollapsed: Boolean = true;
+  public modalRemoveScenario: Boolean = false;
+  private _isModified: Boolean;
 
   constructor() { }
 
@@ -27,13 +34,19 @@ export class SharedEditScenarioComponent implements OnInit {
       return languages;
     }, []);
     */
+    this._isModified = this.scenario.emails.reduce((acc, current) => {
+      return (acc && current.modified);
+    }, true);
   }
 
   public save(emails: Array<EmailTemplate>, step: string) {
-    //On supprime les anciens mails enregistrés pour cette étape
+    // On supprime les anciens mails enregistrés pour cette étape
     this.scenario.emails = this.scenario.emails.filter(e => e.step != step);
-    //Puis on ajoute les mails mis à jours
+    // Puis on ajoute les mails mis à jours
     this.scenario.emails = this.scenario.emails.concat(emails).filter(e => e.content);
+    this._isModified = this.scenario.emails.reduce((acc, current) => {
+      return (acc && current.modified);
+    }, true);
     this.scenarioChange.emit(this.scenario);
   }
 
@@ -63,11 +76,21 @@ export class SharedEditScenarioComponent implements OnInit {
         language: language,
         subject: "TODO",
         content: "TODO",
-        modified: false
+        modified: false,
+        nameWorkflow: this.scenario.name
       };
     return template;
   }
 
+
+  public areYouSureYouWantToRemoveMe() {
+    this.modalRemoveScenario = true;
+  }
+
+  public removeMeFromCampaign() {
+    this.removeScenario.emit(this.scenario);
+  }
+/*
   public checkLanguage(language: string) {
     const index = this.displayedLanguages.indexOf(language);
     if (index === -1) {
@@ -85,7 +108,7 @@ export class SharedEditScenarioComponent implements OnInit {
       this.displayedProfiles.splice(index, 1);
     }
   }
-
+*/
   get first(): Array<EmailTemplate> { return this._getTemplates('FIRST'); }
   get second(): Array<EmailTemplate> { return this._getTemplates('SECOND'); }
   get third(): Array<EmailTemplate> { return this._getTemplates('THIRD'); }

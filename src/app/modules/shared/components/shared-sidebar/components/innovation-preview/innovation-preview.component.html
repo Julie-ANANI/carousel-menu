@@ -5,6 +5,9 @@
 
       <!-- Title -->
       <h1 class="main-heading">{{ innovation.title }}</h1>
+      <h2 class="date-heading" *ngIf="this.getDate">
+        {{'DASHBOARD.SENDINGDATE' | translate}} {{this.getDate| date: this.dateFormat}}
+      </h2>
 
       <!-- Summary -->
       <p>{{ innovation.summary }}</p>
@@ -33,9 +36,6 @@
       </div>
 
     </div>
-  </div>
-  <div *ngIf="this.getDate">
-    {{'DASHBOARD.SENDINGDATE' | translate}} {{this.getDate| date: this.dateFormat}}
   </div>
   <!-- Advantage section -->
   <div class="section-container">

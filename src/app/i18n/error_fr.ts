@@ -49,14 +49,12 @@ export const ERROR = {
     'SUBMITTED_TEXT': 'Votre projet a été envoyé pour validation.',
     'NOT_ALLOWED': 'Vous n\'êtes plus autorisé à effectuer cette action.'
   },
-
   'TAGS': {
     'UPDATE': 'Tag',
     'ADDED': 'Le tag a été ajouté.',
     'UPDATED': 'Le tag a été modifié.',
     'REMOVED': 'Le tag a été supprimé.'
   },
-
   'PRESET': {
     'UPDATED': 'Configuration mise à jour'
   },
@@ -68,13 +66,10 @@ export const ERROR = {
   'QUESTION': {
     'UPDATED': 'Question  mise à jour'
   },
-
   'ANSWER': {
     'UPDATED': 'Réponse mise à jour'
   },
-
   'QUIZ': {
     'CREATED': 'Le quiz a été créé'
   }
-
 };

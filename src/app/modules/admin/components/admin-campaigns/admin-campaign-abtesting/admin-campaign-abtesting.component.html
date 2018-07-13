@@ -1,0 +1,100 @@
+
+
+<div *ngIf="!(this.batchesLength)  || (campaign.settings.ABsettings.status != 0) ">
+  <div *ngIf="this.campaign.settings.ABsettings.status == 0">
+    <label class="form-switch" style="">
+      <input type="checkbox" [disabled]="ABDISPO()" (click)="statusSwitch()" >
+      <i class="form-icon"></i>
+    </label>
+    <form class="form-horizontal" [formGroup]="form" >
+
+
+      <div class="form-group">
+        <select class = "form-select"
+                [(ngModel)] = "nameWorkflowA"
+                id = "workflowA"
+                name = "quelquechoseA"
+                formControlName="workflowA"
+        >
+          <option *ngFor = "let scenario of modifiedScenarios"
+                  [ngValue] = "scenario.name">
+            {{scenario.name}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select class = "form-select"
+                [(ngModel)] = "nameWorkflowB"
+                id = "workflowB"
+                name = "quelquechoseB"
+                formControlName="workflowB"
+        >
+          <option *ngFor = "let scenario of modifiedScenarios"
+                  [ngValue] = "scenario.name">
+            {{scenario.name}}
+          </option>
+        </select>
+      </div>
+      Nombre de pros max : {{campaign.stats.nbPros90}}
+      <div class="form-group">
+        <input type="number" id="sizeA" [(ngModel)]="sizeA" formControlName="sizeA" />
+      </div>
+      <div class="form-group">
+        <input type="number" id="sizeB"  [(ngModel)] = "sizeB" formControlName="sizeB" />
+      </div>
+      <!-- On click => envoi de données -->
+      <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="this.setAvertAB(true)">
+        Submit
+      </button>
+
+
+    </form>
+  </div>
+
+
+  <!-- Affichage des stats + valider + nom des workflows -->
+
+  <div *ngIf="this.campaign.settings.ABsettings.status == 1">
+    <h3>{{nameWorkflowA}}</h3>
+    <app-shared-table [data]="this.tableA" [config]="config"></app-shared-table>
+    <h3>{{nameWorkflowB}}</h3>
+    <app-shared-table [data]="this.tableB" [config]="config"></app-shared-table>
+    <button class="btn btn-primary" (click)="updateStatsBatches()">
+      <i class="fas fa-sync"></i>
+    </button>
+    <button class="btn btn-primary" (click)="validateABtesting()">
+      Valider
+    </button>
+  </div>
+
+  <div *ngIf="this.campaign.settings.ABsettings.status == 2">
+    <br>
+    <h3>{{nameWorkflowA}}</h3>
+    <app-shared-table [data]="this.tableA" [config]="config"></app-shared-table>
+    <h3>{{nameWorkflowB}}</h3>
+    <app-shared-table [data]="this.tableB" [config]="config"></app-shared-table>
+    <br>
+    <button class="btn btn-primary" (click)="updateStatsBatches()">
+      <i class="fas fa-sync"></i>
+    </button>
+  </div>
+</div>
+
+<div class="modal" [ngClass]="{'active': avertAB}"  >
+  <div class="modal-overlay" (click)="(this.setAvertAB(false)) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(this.setAvertAB(false)) && $event.preventDefault()"></button>
+      <div class="modal-title h5">{{ 'CAMPAIGNS.STARTAB.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">{{ 'CAMPAIGNS.STARTAB.CONTENT' | translate }}</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="startABtesting()"> {{'COMMON.SUBMIT' | translate }}</button>
+      <button class="btn btn-primary" (click)="(this.setAvertAB(false)) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

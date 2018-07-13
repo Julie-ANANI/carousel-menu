@@ -11,7 +11,7 @@ import { Campaign } from '../../../../../models/campaign';
 })
 export class AdminBatchInformationComponent implements OnInit {
 
-  private _batch: any = {};
+  private _batch: any = {}; // Utilisation particulière d'un batch, pas la meme semantique que lors d'une camapgne
   private _recipients: Array<any> = [];
   private _campaign: Campaign = null;
 

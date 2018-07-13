@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module'
 
 // Components
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
@@ -15,6 +16,7 @@ import { CountryFlagModule } from '../../../../directives/country-flag/country-f
 import { GlobalModule } from "../../../global/global.module";
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -22,6 +24,7 @@ import { GlobalModule } from "../../../global/global.module";
     ReactiveFormsModule,
     TranslateModule.forChild(),
     CountryFlagModule,
+    SharedTextZoneModule,
     GlobalModule
   ],
   declarations: [
@@ -30,17 +33,20 @@ import { GlobalModule } from "../../../global/global.module";
     SidebarComponent,
     InnovationPreviewComponent,
     UserFormComponent,
+    InnovationPreviewComponent,
     SidebarSearchComponent
   ],
   exports: [
     CountryFlagModule,
+    SharedTextZoneModule,
     CollaboratorComponent,
     SidebarComponent,
     SidebarBatchComponent,
     InnovationPreviewComponent,
     UserFormComponent,
+    InnovationPreviewComponent,
     SidebarSearchComponent
   ]
 })
 
-export class SidebarModule { }
+export class SidebarModule {}

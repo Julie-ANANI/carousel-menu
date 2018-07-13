@@ -77,7 +77,7 @@
               </div>
               <div class="card-body">
                 <ul *ngFor="let batchesOver of days; let i3 = index">
-                  <li>
+                  <li *ngIf="i3 > 0">
                     <label class="label-1st" *ngIf="getState(batchesOver) == 0" (click)="showPreview($event, batchesOver)">
                       {{batchesOver.innovation.name}}  {{batchesOver.size}}
                     </label>

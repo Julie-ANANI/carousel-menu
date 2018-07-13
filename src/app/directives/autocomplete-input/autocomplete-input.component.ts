@@ -40,6 +40,7 @@ export class AutocompleteInputComponent implements OnInit {
   private _canOrder: boolean;
   ////////////////////////////////////////////////////////////////////
 
+
   constructor(private _fbuilder: FormBuilder,
               private _sanitizer: DomSanitizer,
               private _autocompleteService: AutocompleteService,
