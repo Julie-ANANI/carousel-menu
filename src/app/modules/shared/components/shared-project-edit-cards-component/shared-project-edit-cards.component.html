@@ -197,8 +197,8 @@
                     </span>
 
                     <div *ngIf="!projectStatus" class="pd-input">
-                      <div *ngFor="let advantage of project.innovationCards[i].advantages; let i = index;" class="adv-padding">
-                        <p>{{ i + 1 + '.' }}&nbsp;{{ advantage.text }}</p>
+                      <div *ngFor="let advantage of project.innovationCards[i].advantages; let i = index;" class="answer-wrapper adv-padding">
+                        {{ advantage.text }}
                       </div>
                     </div>
 
