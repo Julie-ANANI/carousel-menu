@@ -11,7 +11,6 @@ import { SIGN_UP } from '../modules/client/components/client-signup/i18n/en';
 import { WELCOME } from '../modules/client/components/client-welcome/i18n/en';
 import { HEADER } from '../directives/header/i18n/en';
 import { FOOTER } from '../directives/footer/i18n/en';
-import { ANSWER_MODAL } from '../modules/shared/components/shared-answer-modal/i18n/en';
 import { EXPORT } from '../modules/shared/components/shared-latex-manager/i18n/en';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/en';
 import { PAGINATION } from '../modules/shared/components/shared-pagination/i18n/en';
@@ -33,7 +32,6 @@ export const en = {
   'MARKET_REPORT': MARKET_REPORT,
   'USERS': ADMIN_USERS,
   'FOOTER': FOOTER,
-  'ANSWER_MODAL': ANSWER_MODAL,
   'ANSWER': ANSWER,
   'DISCOVER': DISCOVER,
   'DISCOVERDESCRIPTION': DISCOVERDESCRIPTION,

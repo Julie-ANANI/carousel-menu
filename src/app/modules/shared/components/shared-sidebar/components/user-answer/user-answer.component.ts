@@ -27,7 +27,6 @@ export class UserAnswerComponent implements OnInit {
   }
 
   modalAnswer: Answer;
-  editMode = false;
   floor: any;
   displayEmail = false;
   editJob = false;

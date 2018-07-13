@@ -10,34 +10,35 @@
     position: relative;
     border: 1px solid #D6D6D6;
     width: 100%;
-    height: 39px;
+    height: 49px;
+    margin-right: 20px;
     border-radius: 3px;
-    margin-bottom: 10px;
+    margin-bottom: 13px;
     cursor: pointer;
 
     .bar-number {
       background: grey;
-      width: 38px;
-      height: 37.5px;
+      width: 47.5px;
+      height: 47.5px;
       color: white;
       text-align: center;
       font-weight: bold;
       font-size: 16px;
       float: left;
-      padding-top: 7px;
+      padding-top: 12.5px;
       border-radius: 3px 1px 1px 3px;
     }
 
     .bar-fill {
       background-image: linear-gradient(-90deg, #edeeef 16%, #d7dee0 100%);
-      height: 37px;
+      height: 47.5px;
       padding-left: 38px;
     }
 
     .bar-name {
       position: absolute;
-      top: 8px;
-      left: 50px;
+      top: 12.5px;
+      left: 62px;
       font-size: 0.7rem;
       font-weight: 600;
       color: #5d5d5d;
@@ -45,31 +46,11 @@
 
     .bar-stats {
       position: absolute;
-      top: 8px;
+      top: 12.5px;
       right: 12px;
       font-weight: 600;
       font-size: 0.7rem;
       color: #0B90C6;
-    }
-
-  }
-
-  .btn {
-    margin-left: 20px;
-    border-radius: 50%;
-    height: 35px;
-    width: 35px;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2px;
-    box-shadow: 0 1px 10px rgba(0,0,0,.1), 0 2px 40px rgba(0,0,0,.2);
-
-    i {
-      margin-right: 0;
-      margin-top: 2px;
-      font-size: 0.6rem;
     }
 
   }
@@ -91,7 +72,7 @@
     margin-bottom: 30px;
   }
 
-  ul.comments-bar {
+  ul.comments {
 
     li {
       list-style: none;

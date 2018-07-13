@@ -54,9 +54,9 @@
                   {{ 'MARKET_REPORT.BUTTON.STATUS_TO_EVALUATING' | translate }}
                 </button>
               </ng-container>
-              <button *ngSwitchDefault (click)="print($event)" class="btn btn-primary">
-                {{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }} <!-- We display the download button only client side -->
-              </button>
+             <!-- <button *ngSwitchDefault (click)="print($event)" class="btn btn-primary">
+                {{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }} &lt;!&ndash; We display the download button only client side &ndash;&gt;
+              </button>-->
             </ng-container>
           </div>
 
@@ -102,7 +102,7 @@
                   [countries]="countries"
                   [countriesColor]="'#FFB300'"
                   [initialConfiguration]="mapInitialConfiguration"
-                  [isEditable]="false">
+                  [isEditable]="true">
                 </app-worldmap>
               </div>
             </div>

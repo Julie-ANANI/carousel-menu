@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '../../../shared/shared.module';
 import { SharedSortModule } from '../../../shared/components/shared-sort/sort.module';
-import { SharedAnswerModalModule } from '../../../shared/components/shared-answer-modal/answer-modal.module';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { SharedProjectsListModule } from '../../../admin/components/admin-projects-list/admin-projects-list.module';
@@ -26,7 +25,6 @@ import { SharedAnswerListModule } from '../../../shared/components/shared-answer
     SharedModule,
     SharedSortModule,
     SharedPaginationModule,
-    SharedAnswerModalModule,
     SharedMarketReportModule,
     SharedAnswerListModule,
     SharedProjectsListModule,

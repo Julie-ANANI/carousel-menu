@@ -7,7 +7,8 @@ import { Clearbit } from '../../../../../../models/clearbit';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
-import {Table} from '../../../../../shared/components/shared-table/models/table';
+import { Table } from '../../../../../shared/components/shared-table/models/table';
+import { Template } from '../../../../../shared/components/shared-sidebar/interfaces/template';
 
 @Component({
   selector: 'app-client-exploration-project',
@@ -31,6 +32,7 @@ export class ExplorationProjectComponent implements OnInit {
   private _countries: Array<string>;
   private _questions: Array<Question>;
   private _modalAnswer: Answer;
+  sidebarTemplateValue: Template = {};
 
   tableInfos: Table = null;
   public config: any = {
@@ -129,8 +131,19 @@ export class ExplorationProjectComponent implements OnInit {
     return this.project.status;
   }
 
-  public seeAnswer(answer: Answer) {
+  seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
+
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'MARKET_REPORT.INSIGHT',
+      size: '726px'
+    };
+
+  }
+
+  closeSidebar(value: string) {
+    this.sidebarTemplateValue.animate_state = value;
   }
 
   get answers() {
