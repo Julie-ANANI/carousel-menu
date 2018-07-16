@@ -1,22 +1,26 @@
+/* Module */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '../shared/shared.module';
-import { GlobalModule } from "../global/global.module";
 import { ClientProjectModule } from './components/client-project/client-project.module';
 import { SharedMarketReportModule } from '../shared/components/shared-market-report/shared-market-report.module';
+
+/* Components */
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
-import { ClientDiscoverComponent } from './components/client-discover/client-discover.component';
-import { ClientLoginComponent } from './components/client-login/client-login.component';
 import { ClientSignupComponent } from './components/client-signup/client-signup.component';
-import { ClientLogoutComponent } from './components/client-logout/client-logout.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 import { DiscoverSummaryPipe } from '../../pipes/DiscoverSummaryPipe';
 import { ClientForgetPasswordComponent } from './components/client-forget-password/client-forget-password.component';
-import { ClientDiscoverDescriptionComponent } from './components/client-discover-description/client-discover-description.component';
+import { ClientDiscoverPageComponent } from './components/client-discover-page/client-discover-page.component';
+import { DiscoverDescriptionComponent } from './components/client-discover-page/discover-description/discover-description.component';
+import { GlobalModule } from '../global/global.module';
+import { LoginPageComponent } from '../base/component/login-page/login-page.component';
+import { LogoutPageComponent } from '../base/component/logout-page/logout-page.component';
+
 
 @NgModule({
   imports: [
@@ -26,20 +30,21 @@ import { ClientDiscoverDescriptionComponent } from './components/client-discover
     SharedModule,
     GlobalModule,
     TranslateModule.forChild(),
-    SharedMarketReportModule
+    SharedMarketReportModule,
+    SharedModule
   ],
   declarations: [
     ClientComponent,
     ClientMyAccountComponent,
-    ClientDiscoverComponent,
     ClientWelcomeComponent,
-    ClientLoginComponent,
     ClientSignupComponent,
-    ClientLogoutComponent,
     ClientResetPasswordComponent,
     DiscoverSummaryPipe,
     ClientForgetPasswordComponent,
-    ClientDiscoverDescriptionComponent
+    ClientDiscoverPageComponent,
+    DiscoverDescriptionComponent,
+    LoginPageComponent,
+    LogoutPageComponent
   ]
 })
 

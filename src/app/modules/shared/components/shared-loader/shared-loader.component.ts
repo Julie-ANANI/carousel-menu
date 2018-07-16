@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-shared-loader',
   template: '<div class="loading loading-lg"></div>'
 })
+
 export class SharedLoaderComponent {
   constructor() {}
 }

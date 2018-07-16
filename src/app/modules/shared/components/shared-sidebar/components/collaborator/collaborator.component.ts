@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../../../../../models/user.model';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-collaborator',
@@ -10,11 +11,11 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
   styleUrls: ['./collaborator.component.scss']
 })
 
-export class CollaboratorComponent implements OnInit, OnChanges {
+export class CollaboratorComponent implements OnInit {
 
   @Input() projectId: string;
   @Input() collaborator: Array<User>;
-  @Input() sidebarState: string;
+  @Input() sidebarState: Subject<string>;
 
   @Output() collaboratorAdded = new EventEmitter<any>();
 
@@ -35,6 +36,15 @@ export class CollaboratorComponent implements OnInit, OnChanges {
     this.formData = this.formBuilder.group({
       collaboratorEmail: ['', [Validators.required, Validators.email]]
     });
+
+    this.sidebarState.subscribe((state) => {
+      if (state) {
+        setTimeout (() => {
+          this.formData.reset();
+        }, 700);
+      }
+    });
+
   }
 
 
@@ -106,12 +116,6 @@ export class CollaboratorComponent implements OnInit, OnChanges {
       this.translateNotificationsService.success('PROJECT_MODULE.COLLABORATOR_DELETED.TITLE', 'PROJECT_MODULE.COLLABORATOR_DELETED.CONTENT');
     });
 
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.sidebarState.currentValue && changes.sidebarState.previousValue) {
-      this.formData.reset();
-    }
   }
 
 }
