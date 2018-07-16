@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Template } from './interfaces/template';
 
@@ -33,7 +33,7 @@ import { Template } from './interfaces/template';
   ]
 })
 
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnChanges {
 
   @Input() set template(value: Template) {
     this.setTemplate(value);
@@ -62,6 +62,14 @@ export class SidebarComponent implements OnInit {
       this.state = 'inactive';
       this.closeSidebar.emit(this.state);
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+    if (changes.template.currentValue) {
+      console.log(document.getElementById('sidebar').scrollTop);
+    }
+
   }
 
 }
