@@ -1,10 +1,14 @@
-<app-shared-table [config]="config" [data]="tableInfos" (configChange)="loadPros($event)" (editRow)="editPro($event)" (removeRows)="deleteProsModal($event)">
+<app-shared-table [config]="config"
+                  [data]="tableInfos"
+                  (configChange)="loadPros($event)"
+                  (editRow)="editPro($event)"
+                  (removeRows)="deleteProsModal($event)">
 </app-shared-table>
 
 <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-user-form [sidebarState]="more.animate_state"
                  [type]="more.type"
-                 [pro]="currentPro"
+                 [pro]="currentPro" [campaign]="campaign ? campaign: null"
                  (professionalUserData)="updatePro($event)">
   </app-user-form>
 </app-sidebar>
@@ -15,11 +19,11 @@
   <div class="modal-container">
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-      <div class="modal-title">{{ 'USERS.DELETE' | translate }}</div>
+      <div class="modal-title">{{ 'COMMON.PROFESSIONAL.DELETE' | translate }}</div>
     </div>
     <div class="modal-body">
       <div class="content">
-        {{ 'USERS.PITCH-DELETE' | translate }}
+        {{ 'COMMON.PROFESSIONAL.PITCH-DELETE' | translate }}
         <ul>
           <li *ngFor="let pro of prosToRemove">{{pro.firstName}} {{pro.lastName}}</li>
         </ul>

@@ -28,7 +28,6 @@ export class UserAnswerComponent implements OnInit {
 
   modalAnswer: Answer;
   floor: any;
-  displayEmail = false;
   editJob = false;
   editCompany = false;
   editCountry = false;
@@ -115,11 +114,6 @@ export class UserAnswerComponent implements OnInit {
   updateStatus(event: Event, status: any) {
     event.preventDefault();
     this.modalAnswer.status = status;
-    if (status === 'VALIDATED' || status === 'VALIDATED_NO_MAIL') {
-      this.displayEmail = true;
-    } else {
-      this.displayEmail = false;
-    }
   }
 
   sendEmail(event: Event, status: any) {

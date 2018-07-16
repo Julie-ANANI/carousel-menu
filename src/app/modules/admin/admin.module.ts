@@ -26,8 +26,9 @@ import { AdminUserDetailsComponent } from './components/admin-users/admin-user-d
 import { AdminProjectsListComponent } from './components/admin-projects-list/admin-projects-list.component';
 
 // Pipes
+import { EllipsisModule } from '../../pipes/ellipsis/ellipsis.module';
 import { DateFormatPipe } from '../../pipes/DateFormatPipe';
-import {GlobalModule} from '../global/global.module';
+import { GlobalModule } from '../global/global.module';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import {GlobalModule} from '../global/global.module';
     AdminProjectModule,
     SharedModule,
     GlobalModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    EllipsisModule
   ],
   declarations: [
     AdminComponent,
@@ -57,5 +59,4 @@ import {GlobalModule} from '../global/global.module';
     DateFormatPipe
   ]
 })
-export class AdminModule {
-}
+export class AdminModule {}
