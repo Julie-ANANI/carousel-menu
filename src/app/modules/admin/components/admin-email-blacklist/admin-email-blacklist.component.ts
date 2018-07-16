@@ -121,13 +121,30 @@ export class AdminEmailBlacklistComponent implements OnInit {
       };
   }
 
-  addEmails() {
+  excludeEmails() {
     this._more = {
       animate_state: 'active',
-      title: 'COMMON.ADD-EMAIL',
-      type: 'addEmail'
+      title: 'COMMON.EXCLUDE-EMAILS',
+      type: 'excludeEmails'
     };
   }
+
+  excludeDomains() {
+    this._more = {
+      animate_state: 'active',
+      title: 'COMMON.EXCLUDE-DOMAINS',
+      type: 'excludeDomains'
+    };
+  }
+
+  excludeCountries() {
+    this._more = {
+      animate_state: 'active',
+      title: 'COMMON.EXCLUDE-COUNTRIES',
+      type: 'excludeCountries'
+    };
+  }
+
   closeSidebar(value: string) {
     this.more.animate_state = value;
   }
@@ -158,6 +175,19 @@ export class AdminEmailBlacklistComponent implements OnInit {
           this._notificationsService.error('Error', error);
         });
     });
+  }
+
+  addDomainsToBlacklistFinish(domains: Array<string>) {
+    /*domains.forEach((value: any) => {
+      this._emailService.addToBlacklist({domain: value.text})
+        .subscribe(result => {
+          this._notificationsService.success('Blacklist', 'ERROR.ACCOUNT.UPDATE');
+          this._more = {animate_state: 'inactive', title: this._more.title};
+          this.loadData(this._config);
+        }, error => {
+          this._notificationsService.error('Error', error);
+        });
+    });*/
   }
 
   public addEntry() {
