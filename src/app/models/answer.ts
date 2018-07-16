@@ -4,7 +4,7 @@ import { Tag } from './tag';
 
 export interface Answer {
   readonly _id: string;
-  status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED';
+  status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED';
   quizReference: string;
   originalAnswerReference: string;
   tags: Array<Tag>;
