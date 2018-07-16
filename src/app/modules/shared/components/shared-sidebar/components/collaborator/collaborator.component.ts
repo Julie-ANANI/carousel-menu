@@ -109,9 +109,9 @@ export class CollaboratorComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-   if (changes.sidebarState.currentValue !== changes.sidebarState.previousValue) {
-     this.formData.reset();
-   }
+    if (changes.sidebarState.currentValue && changes.sidebarState.previousValue) {
+      this.formData.reset();
+    }
   }
 
 }

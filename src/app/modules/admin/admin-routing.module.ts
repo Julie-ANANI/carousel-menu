@@ -120,20 +120,9 @@ const adminRoutes: Routes = [
         path: 'presets',
         component: AdminPresetComponent,
         children: [
-          ...presetsRoutes
-        ]
-      },
-      {
-        path: 'questions',
-        component: AdminPresetComponent,
-        children: [
-          ...questionsRoutes
-        ]
-      },
-      {
-        path: 'sections',
-        component: AdminPresetComponent,
-        children: [
+          { path: '', redirectTo: 'presets', pathMatch: 'full' },
+          ...presetsRoutes,
+          ...questionsRoutes,
           ...sectionsRoutes
         ]
       },

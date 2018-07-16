@@ -1,7 +1,16 @@
 import { EmailTemplate } from './email-template';
+
 export interface CampaignSettings {
+  defaultWorkflow: string;
   clonedInfo: boolean;
   emails?: Array<EmailTemplate>,
+  ABsettings?: {
+    batchA: string,
+    batchB: string,
+    status: number,
+    nameWorkflowA: string,
+    nameWorkflowB: string,
+  },
   readonly emailTemplates: {
     readonly launching: {
       readonly en: {

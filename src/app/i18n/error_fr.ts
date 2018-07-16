@@ -1,12 +1,13 @@
 export const ERROR = {
   'ERROR': 'Oups...',
   'SUCCESS': 'Succès',
-  'CANNOT_REACH': 'Le serveur ne répond pas.',
+  'CANNOT_REACH': 'Le serveur ne répond pas...',
   'FORM_ERROR': 'Erreur de formulaire',
 
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',
-  'INVALID_FORM_DATA': 'La combinaison e-mail / mot de passe n\'est pas valide.',
-  'PAGE_NOT_FOUND': 'La page n\'a pas pu être trouvée.',
+  'INVALID_FORM_DATA': 'L\'e-mail ou le mot de passe n\'est pas valide.',
+  'PAGE_NOT_FOUND': 'Pas de page par ici...',
+  'INVALID_DOMAIN': 'On peut pas créer un compte super-admin dans cette instance.',
 
   'FORM': {
     'PITCH_FORM': 'Veuillez remplir tous les champs avant de soumettre votre projet. Merci !',
@@ -15,7 +16,7 @@ export const ERROR = {
 
   'LOGIN': {
     'WELCOME': 'Bienvenue !',
-    'LOGGED_IN': 'Vous avez été connecté(e) avec succès.',
+    'LOGGED_IN': 'Bienvenue chez nous !',
     'EMPTY_EMAIL': 'Champ email vide',
     'EMAIL_PLEASE': 'Veuillez entrer votre adresse e-mail dans le champ prévu à cet effet.',
     'EMAIL_SENT': 'Email envoyé',
@@ -51,29 +52,30 @@ export const ERROR = {
 
   'TAGS': {
     'UPDATE': 'Tag',
-    'ADDED': 'Le tag a bien été ajouté.',
-    'UPDATED': 'Le tag a bien été modifié.',
-    'REMOVED': 'Le tag a bien été supprimé.'
+    'ADDED': 'Le tag a été ajouté.',
+    'UPDATED': 'Le tag a été modifié.',
+    'REMOVED': 'Le tag a été supprimé.',
+    'ALREADY_ADDED': 'Le tag a déjà été ajoutée.'
   },
 
   'PRESET': {
-    'UPDATED': 'Configuration bien mise à jour'
+    'UPDATED': 'Configuration mise à jour'
   },
 
   'SECTION': {
-    'UPDATED': 'Section bien mise à jour'
+    'UPDATED': 'Section mise à jour'
   },
 
   'QUESTION': {
-    'UPDATED': 'Question bien mise à jour'
+    'UPDATED': 'Question  mise à jour'
   },
 
   'ANSWER': {
-    'UPDATED': 'Réponse bien mise à jour'
+    'UPDATED': 'Réponse mise à jour'
   },
 
   'QUIZ': {
-    'CREATED': 'Le quiz a bien été créé'
+    'CREATED': 'Le quiz a été créé'
   }
 
 };

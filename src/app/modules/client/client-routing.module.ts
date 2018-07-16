@@ -32,7 +32,7 @@ const clientRoutes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: '/projects'
+        redirectTo: '/project'
       },
       {
         path: 'welcome',

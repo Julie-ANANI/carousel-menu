@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { User } from '../../../../../../models/user.model';
-import {Professional} from '../../../../../../models/professional';
+import { Professional } from '../../../../../../models/professional';
+import { AuthService } from '../../../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-user-form',
@@ -12,11 +13,9 @@ import {Professional} from '../../../../../../models/professional';
 
 export class UserFormComponent implements OnInit, OnChanges {
 
-  @Input() sidebarState: string;
-
   /*
-      For type 'editUser', put the data into the attribute user and patch it to the formData
-   */
+     For type 'editUser', put the data into the attribute user and patch it to the formData
+  */
   @Input() set user(value: User) {
     this._user = value;
     this.loadEditUser();
@@ -29,6 +28,8 @@ export class UserFormComponent implements OnInit, OnChanges {
     this._pro = value;
     this.loadProfessional();
   };
+
+  @Input() sidebarState: string;
 
   @Input() set type(type: string) {
     if (type === 'signUp') {
@@ -43,27 +44,48 @@ export class UserFormComponent implements OnInit, OnChanges {
   isSignUp = false;
   isEditUser = false;
   isProfessional = false;
+  isSelf =  false;
   userForm: FormGroup;
   countriesSuggestion: Array<string> = [];
   displayCountrySuggestion = false;
-  private _user: User = null;
+  private _user: User;
   private _pro: Professional = null;
+  private _editInstanceDomain = false;
+
+  private _updateInstanceDomainConfig: {
+    placeholder: string,
+    initialData: Array<string>,
+    type: string,
+    identifier: string,
+    canOrder: boolean
+  } = {
+    placeholder: 'Partners domain list',
+    initialData: [],
+    type: 'domain',
+    identifier: 'name',
+    canOrder: false
+  };
 
   constructor(private formBuilder: FormBuilder,
-              private autoCompleteService: AutocompleteService) { }
+              private autoCompleteService: AutocompleteService,
+              private _authService: AuthService) {}
 
   ngOnInit() {
     this.userForm = this.formBuilder.group( {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      company: ['', [Validators.required]],
+      companyName: ['', [Validators.required]],
       jobTitle: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       country: ['', [Validators.required]],
+      roles: '',
       operator: [false],
       url: [null],
+      domain: ['']
     });
+
+    this._user = new User();
   }
 
   loadSignUp() {
@@ -72,14 +94,18 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   loadEditUser() {
     this.isEditUser = true;
+
     if (this._user) {
+      this.isSelf = this._authService.userId === this._user.id;
       this.userForm.patchValue(this._user);
     }
+
   }
 
   loadProfessional() {
     this.isProfessional = true;
     if (this._pro) {
+      this.userForm.get('companyName').setValue(this._pro.company);
       this.userForm.patchValue(this._pro);
     }
   }
@@ -94,6 +120,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     } else if (this.isProfessional) {
       const pro = this.userForm.value;
       pro._id = this._pro._id;
+      pro.company = this.userForm.get('companyName').value;
       this.professionalUserData.emit(pro);
     }
   }
@@ -129,10 +156,48 @@ export class UserFormComponent implements OnInit, OnChanges {
         this.userForm.reset();
       }
     }
-
   }
 
-  get user(): User { return this._user; }
-  get pro(): Professional { return this._pro; }
+  public startEditInstanceDomain(event: Event): void {
+      this._editInstanceDomain = true;
+  }
+
+  public endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
+      this._editInstanceDomain = false;
+      this.userForm.get('domain').setValue(event.value[0].name || 'umi');
+  }
+
+  public buildInstanceDomainListConfig(): any {
+      this._updateInstanceDomainConfig.initialData = [];
+      return this._updateInstanceDomainConfig;
+  }
+
+  public updateInstanceDomain(event: any): void {
+      this.endEditInstanceDomain(event);
+  }
+
+  affectAsAdmin(check: boolean) {
+    if (check === true) {
+      this.userForm.get('roles').setValue('admin');
+    } else {
+      this.userForm.get('roles').setValue('user');
+    }
+  }
+
+  get editInstanceDomain() {
+    return this._editInstanceDomain;
+  }
+
+  get user(): User {
+    return this._user;
+  }
+
+  get pro(): Professional {
+    return this._pro;
+  }
+
+  get authService(): AuthService {
+    return this._authService;
+  }
 
 }

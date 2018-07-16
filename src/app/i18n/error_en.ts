@@ -5,6 +5,7 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
   'FORM_ERROR': 'Form error',
 
   'INVALID_FORM': 'There are errors in your form please correct them and try again.',
+  'INVALID_DOMAIN': 'Cannot create a super-admin account in this instance.',
   'INVALID_FORM_DATA': 'The email/password combination is not valid.',
   'PAGE_NOT_FOUND': 'Page could not be found.',
 
@@ -48,11 +49,13 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'SUBMITTED_TEXT': 'Your project has been sent to validate.',
     'NOT_ALLOWED': 'You are not allowed to perform this action anymore.'
   },
+
   'TAGS': {
     'UPDATE': 'Tag update',
     'ADDED': 'The tag has been successfully added.',
     'UPDATED': 'The tag has been successfully updated.',
-    'REMOVED': 'The tag has been successfully removed.'
+    'REMOVED': 'The tag has been successfully removed.',
+    'ALREADY_ADDED': 'The tag has been already added.'
   },
 
   'PRESET': {

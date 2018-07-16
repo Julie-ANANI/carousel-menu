@@ -1,27 +1,59 @@
 <div class="user-form-wrapper">
-  <div class="column col-11 col-mx-auto">
+  <div class="column col-xs-12 col-11 col-mx-auto">
 
     <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
       <!-- Operator -->
-      <div *ngIf="isEditUser" class="form-group-inline-space operator-wrapper">
-        <label class="form-switch" for="operator">
-          <input
-            type="checkbox"
-            name="operator"
-            id="operator"
-            formControlName="operator">
-          <i class="form-icon"></i>
-          {{ 'PROJECT_LIST.OPERATOR' | translate }}
-        </label>
+      <div *ngIf="isEditUser || isProfessional" class="form-group-inline-space operator-wrapper">
+        <div class="input-group">
+          <label class="form-switch" for="operator" *ngIf="authService.userId != user.id && isEditUser">
+            <input
+              type="checkbox"
+              name="operator"
+              id="operator"
+              formControlName="operator">
+            <i class="form-icon"></i>
+            {{ 'PROJECT_LIST.OPERATOR' | translate }}
+          </label>
+
+          <label
+            class="form-switch"
+            for="role"
+            *ngIf="authService.adminLevel > 2 && authService.userId != user.id && isEditUser"
+            [ngStyle]="{ 'margin-top': '10px' }">
+            <input
+              type="checkbox"
+              name="role"
+              id="role"
+              [checked]="userForm.value.roles === 'admin'"
+              (change)="affectAsAdmin($event.srcElement.checked)" >
+            <i class="form-icon"></i>
+            {{ 'USERS.ADMIN' | translate }}
+          </label>
+        </div>
         <button type="submit" class="btn btn-primary">{{'COMMON.SAVE' | translate}}</button>
       </div>
 
-      <!-- Save only -->
-      <div class="text-right operator-wrapper" *ngIf="isProfessional">
-        <button type="submit" class="btn btn-primary">
-          {{'COMMON.SAVE' | translate}}
-        </button>
+      <!-- Domain management -->
+      <div *ngIf="isEditUser" class="domain-wrapper">
+        <h6>Domain Management</h6>
+        <div *ngIf="!editInstanceDomain" [ngStyle]="{ 'padding-bottom': '30px' }">
+          <label class="form-label">Actual domain:
+            <span>{{ userForm.get('domain').value }}</span>
+            <a (click)="startEditInstanceDomain($event)">
+              <span *ngIf="!isSelf"><i class="fas fa-pencil-alt"></i></span>
+            </a>
+          </label>
+        </div>
+        <div *ngIf="editInstanceDomain" [ngStyle]="{ 'padding-bottom': '30px' }">
+          <label class="form-label">New domain:</label>
+          <app-autocomplete-input
+            id="domain"
+            (update)="updateInstanceDomain($event)"
+            [onlyOne]="true"
+            [config]="buildInstanceDomainListConfig()">
+          </app-autocomplete-input>
+        </div>
       </div>
 
       <!-- First name -->
@@ -98,15 +130,15 @@
 
       <!-- Company -->
       <div class="form-group">
-        <label class="form-label" for="company">{{ 'COMMON.COMPANY' | translate }}</label>
+        <label class="form-label" for="companyName">{{ 'COMMON.COMPANY' | translate }}</label>
         <input
           class="form-default"
-          formControlName="company"
-          id="company"
+          formControlName="companyName"
+          id="companyName"
           type="text"
           [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
-        <div class="form-error" *ngIf="userForm.get('company').touched && userForm.get('company').invalid">
-          <span *ngIf="userForm.get('company').hasError('required')">{{ 'COMMON.REQUIRED.COMPANY' | translate }}</span>
+        <div class="form-error" *ngIf="userForm.get('companyName').touched && userForm.get('companyName').invalid">
+          <span *ngIf="userForm.get('companyName').hasError('required')">{{ 'COMMON.REQUIRED.COMPANY' | translate }}</span>
         </div>
       </div>
 

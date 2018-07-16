@@ -25,7 +25,6 @@
       border-radius: 3px;
       padding: 35px;
       margin-right: 25px;
-      flex: 1 0 auto;
 
       .section-heading {
         color: white;
@@ -52,6 +51,7 @@
     }
 
     .comment-wrapper {
+      flex: 1;
 
       div {
         padding-top: 25px;

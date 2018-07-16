@@ -12,8 +12,10 @@ import { Answer } from '../../../../models/answer';
 import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
+import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
+import { Template } from '../shared-sidebar/interfaces/template';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -27,6 +29,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   @Input() public adminMode: boolean;
 
   adminSide: boolean;
+  sidebarTemplateValue: Template = {};
 
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
@@ -51,17 +54,20 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private answerService: AnswerService,
               private translateNotificationsService: TranslateNotificationsService,
               private location: Location,
-              private innovationService: InnovationService) { }
+              private innovationService: InnovationService) {}
 
   ngOnInit() {
 
     this.adminSide = this.location.path().slice(0, 6) === '/admin';
 
     this.today = Date.now();
+
     this._innoid = this.project._id;
+
     this.resetMap();
 
     this.loadAnswers();
+
     if (this.project.preset && this.project.preset.sections) {
       this.project.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions);
@@ -79,26 +85,29 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     }
 
     this._modalAnswer = null;
+
     PageScrollConfig.defaultDuration = 800;
 
   }
 
   ngAfterViewInit() {
-    const sections = Array.from(
-      document
-        .getElementById('answer-wrapper')
-        .querySelectorAll('section')
-    );
-    window.onscroll = () => {
-      const scrollPosY = document.body.scrollTop;
-      const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
-      this.activeSection = section ? section.id : '';
-    };
+    const wrapper = document
+      .getElementById('answer-wrapper');
+    if(wrapper) {
+      const sections = Array.from(
+        wrapper.querySelectorAll('section')
+      );
+      window.onscroll = () => {
+        const scrollPosY = document.body.scrollTop;
+        const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
+        this.activeSection = section ? section.id : '';
+      };
+    }
   }
 
   private loadAnswers() {
-    this.answerService.getInnovationValidAnswers(this._innoid)
-      .first().subscribe((results) => {
+    this.answerService.getInnovationValidAnswers(this._innoid).first()
+      .subscribe((results) => {
         this._answers = results.answers.sort((a, b) => {
             return b.profileQuality - a.profileQuality;
           });
@@ -136,6 +145,17 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   public seeAnswer(answer: Answer): void {
     this._modalAnswer = answer;
+
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: this.adminSide ? 'COMMON.EDIT_INSIGHT' : 'MARKET_REPORT.INSIGHT',
+      size: '726px'
+    };
+
+  }
+
+  closeSidebar(value: string) {
+    this.sidebarTemplateValue.animate_state = value;
   }
 
   public filterAnswers(): void {
@@ -143,6 +163,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     Object.keys(this._filters).forEach((filterKey) => {
       const filter = this._filters[filterKey];
       switch (filter.status) {
+        case 'TAG':
+          filteredAnswers = filteredAnswers.filter((answer) => {
+            return answer.tags.some((t: Tag) => t._id === filter.value);
+          });
+          break;
         case 'CHECKBOX':
           filteredAnswers = filteredAnswers.filter((answer) => {
             return answer.answers[filter.questionId] && answer.answers[filter.questionId][filter.value];

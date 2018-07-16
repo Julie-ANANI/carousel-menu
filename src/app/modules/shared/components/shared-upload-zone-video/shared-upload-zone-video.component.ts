@@ -1,6 +1,6 @@
 import { Component, Output, OnInit, EventEmitter } from '@angular/core';
-import { videoDomainRegEx, videoIdRegEx } from '../../../../utils/regex';
-import { Video } from '../../../../models/media';
+import { videoDomainRegEx, vimeoVideoId, youtubeVideoId } from '../../../../utils/regex';
+import { environment } from '../../../../../environments/environment';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -20,7 +20,16 @@ export class SharedUploadZoneVideoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._videoParameters = ['showinfo=0', 'color=white', 'rel=0', 'autohide=1', 'playsinline=1', 'modestbranding=1', 'iv_load_policy=3'];
+    this._videoParameters = [
+      'showinfo=0',
+      'color=white',
+      'rel=0',
+      'autohide=1',
+      'playsinline=1',
+      'modestbranding=1',
+      'iv_load_policy=3',
+      'origin=' + environment.innovationUrl
+    ];
   }
 
   addVideo(event: Event): void {
@@ -36,33 +45,30 @@ export class SharedUploadZoneVideoComponent implements OnInit {
 
 
     if (videoProvider) {
-      const videoKey = videoIdRegEx.exec(givenUrl)[0]; // videoIdRegEx.exec(givenUrl)[1] || videoIdRegEx.exec(givenUrl)[2]; // ID de la vidéo chez le provider
-
-      let returnValue: Video;
-
       switch (videoProvider) {
         case 'vimeo': {
+          const videoKey = vimeoVideoId.exec(givenUrl)[0]; // ID de la vidéo chez le provider
           const embeddableUrl = 'https://player.vimeo.com/video/' + videoKey + this._getUrlArgs();
-          returnValue = {
+          this.cbFn.emit({
             url: givenUrl,
             public_id: videoKey,
             embeddableUrl: embeddableUrl,
             provider: 'vimeo',
             thumbnail: ''
-          };
+          });
         } break;
-        default: {
+        case 'youtube': {
+          const videoKey = youtubeVideoId.exec(givenUrl)[1]; // ID de la vidéo chez le provider
           const embeddableUrl = 'https://www.youtube.com/embed/' + videoKey + this._getUrlArgs();
-          returnValue = {
+          this.cbFn.emit({
             url: givenUrl,
             public_id: videoKey,
             embeddableUrl: embeddableUrl,
             provider: 'youtube',
             thumbnail: 'https://i.ytimg.com/vi/' + videoKey + '/hqdefault.jpg'
-          };
+          });
         }
       }
-      this.cbFn.emit(returnValue);
     } else {
       console.error(`${givenUrl} is not a valid video input`);
     }

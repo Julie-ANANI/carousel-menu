@@ -1,5 +1,5 @@
 <!-- We show the number of results -->
-<h1 *ngIf="isHeadable">{{total}} {{ title | translate }}</h1>
+<div *ngIf="isHeadable" class="table-title">{{total}} {{ title | translate }}</div>
 
 
 <!-- If we want to filter by columns -->
@@ -33,6 +33,7 @@
                 (mouseleave)="hoverColumn(getAttrs(column)[0])" >
 
               <sq-sort [config]="config"
+                       class="activeHeader"
                        *ngIf="isSortable(column) && (isHover(column) || isSelected(column))"
                        (configChange)="changeConfig($event)"
                        [prop]="getAttrs(column)[0]">
@@ -120,7 +121,7 @@
                   <span *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) === ''"
                         [class]="getChoiceClass(getChoice(column, (getContentValue(key, getAttrs(column)[0]) || '')))">
 
-                    {{(getContentValue(key, getAttrs(column)[0])|| " - ").toString()}}
+                    {{(getChoiceAlias(getChoice(column, getContentValue(key, getAttrs(column)[0])|| " - ")))}}
 
                   </span>
 

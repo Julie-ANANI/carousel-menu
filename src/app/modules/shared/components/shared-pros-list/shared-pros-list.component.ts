@@ -58,14 +58,16 @@ export class SharedProsListComponent {
           _title: 'COMMON.PROFESSIONALS',
           _content: this._pros,
           _total: this._total,
-          _isFiltrable: true,
           _isHeadable: true,
+          _isFiltrable: true,
+          _isDeletable: true,
+          _isSelectable: true,
           _isEditable: true,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
             {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
-            {_attrs: ['company.name'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+            {_attrs: ['company.name'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
             {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
         };
 
@@ -82,6 +84,8 @@ export class SharedProsListComponent {
           _total: this._total,
           _isFiltrable: true,
           _isHeadable: true,
+          _isDeletable: true,
+          _isSelectable: true,
           _isEditable: true,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},

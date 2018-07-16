@@ -68,7 +68,7 @@ export class AdminSectionsListComponent implements OnInit {
     this._presetService.createSection(clonedSection)
       .first()
       .subscribe(section => {
-        this._router.navigate(['/admin/sections/' + section._id])
+        this._router.navigate(['/admin/presets/sections/' + section._id])
       });
   }
 

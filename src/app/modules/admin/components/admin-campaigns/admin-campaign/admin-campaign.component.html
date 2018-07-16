@@ -1,69 +1,67 @@
-<div class="container section-container">
-  <h5><a [routerLink]="'/admin/projects/project/' + campaign.innovation._id + '/campaigns'">Retour au projet</a></h5>
-  <h2>{{ campaign.title }}</h2>
+<h5><a [routerLink]="'/admin/projects/project/' + campaign.innovation._id + '/campaigns'">Retour au projet</a></h5>
+<h2>{{ campaign.title }}</h2>
 
-  <ul class="tab tab-block">
-    <li class="tab-item" *ngFor="let tab of authorizedTabs">
-      <a [routerLink]="baseUrl + tab" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        {{ 'CAMPAIGNS.' + tab.toUpperCase() | translate }}
-      </a>
-    </li>
-  </ul>
+<ul class="tab tab-block">
+  <li class="tab-item" *ngFor="let tab of authorizedTabs">
+    <a [routerLink]="baseUrl + tab" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      {{ 'CAMPAIGNS.' + tab.toUpperCase() | translate }}
+    </a>
+  </li>
+</ul>
 
-  <div class="tabs">
-    <div class="tab-content">
-      <div class="toolbar" *ngIf="campaign.stats">
-        <div class="block" *ngIf="autorizedActions(2)">
-          <i class="fas fa-sync c-hand" (click)="updateStats()"></i>
-        </div>
-        <div class="block">
-          <strong>{{campaign.stats.nbPros}}</strong>
-          <span>pros ajoutés</span>
-        </div>
-
-        <div class="block">
-          <strong>{{campaign.stats.nbPros90}}</strong>
-          <span>à contacter</span>
-          <span> ({{ratio(campaign.stats.nbPros90, campaign.stats.nbPros)}}%)</span>
-        </div>
-
-        <div class="block">
-          <strong>{{campaign.stats.nbProsSent}}</strong>
-          <span>contactés</span>
-          <span> ({{ratio(campaign.stats.nbProsSent, campaign.stats.nbPros90)}}%)</span>
-        </div>
-
-        <div class="block">
-          <strong>{{campaign.stats.nbProsOpened}}</strong>
-          <span>emails ouverts</span>
-          <span> ({{ratio(campaign.stats.nbProsOpened, campaign.stats.nbProsSent)}}%)</span>
-        </div>
-
-        <div class="block">
-          <strong>{{campaign.stats.nbProsClicked}}</strong>
-          <span>emails cliqués</span>
-          <span> ({{ratio(campaign.stats.nbProsClicked, campaign.stats.nbProsOpened || 1)}}%)</span>
-        </div>
-
-        <div class="block">
-          <strong>{{campaign.stats.nbStartedAnswers}}</strong>
-          <span>rép. entamées</span>
-          <span> ({{ratio(campaign.stats.nbStartedAnswers, campaign.stats.nbProsClicked || 1)}}%)</span>
-        </div>
-
-        <div class="block">
-          <strong>{{campaign.stats.nbSubmittedAnswers}}</strong>
-          <span>rép. envoyées</span>
-          <span> ({{ratio(campaign.stats.nbSubmittedAnswers, campaign.stats.nbStartedAnswers)}}%)</span>
-        </div>
-
-        <div class="block">
-          <strong>{{campaign.stats.nbValidatedAnswers}}</strong>
-          <span>rép. validées</span>
-          <span> ({{ratio(campaign.stats.nbValidatedAnswers, campaign.stats.nbSubmittedAnswers)}}%)</span>
-        </div>
+<div class="tabs">
+  <div class="tab-content">
+    <div class="toolbar" *ngIf="campaign.stats">
+      <div class="block" *ngIf="autorizedActions(2)">
+        <i class="fas fa-sync c-hand" (click)="updateStats()"></i>
       </div>
-      <router-outlet></router-outlet>
+      <div class="block">
+        <strong>{{campaign.stats.nbPros}}</strong>
+        <span>pros ajoutés</span>
+      </div>
+
+      <div class="block">
+        <strong>{{campaign.stats.nbPros90}}</strong>
+        <span>à contacter</span>
+        <span> ({{ratio(campaign.stats.nbPros90, campaign.stats.nbPros)}}%)</span>
+      </div>
+
+      <div class="block">
+        <strong>{{campaign.stats.nbProsSent}}</strong>
+        <span>contactés</span>
+        <span> ({{ratio(campaign.stats.nbProsSent, campaign.stats.nbPros90)}}%)</span>
+      </div>
+
+      <div class="block">
+        <strong>{{campaign.stats.nbProsOpened}}</strong>
+        <span>emails ouverts</span>
+        <span> ({{ratio(campaign.stats.nbProsOpened, campaign.stats.nbProsSent)}}%)</span>
+      </div>
+
+      <div class="block">
+        <strong>{{campaign.stats.nbProsClicked}}</strong>
+        <span>emails cliqués</span>
+        <span> ({{ratio(campaign.stats.nbProsClicked, campaign.stats.nbProsOpened || 1)}}%)</span>
+      </div>
+
+      <div class="block">
+        <strong>{{campaign.stats.nbStartedAnswers}}</strong>
+        <span>rép. entamées</span>
+        <span> ({{ratio(campaign.stats.nbStartedAnswers, campaign.stats.nbProsClicked || 1)}}%)</span>
+      </div>
+
+      <div class="block">
+        <strong>{{campaign.stats.nbSubmittedAnswers}}</strong>
+        <span>rép. envoyées</span>
+        <span> ({{ratio(campaign.stats.nbSubmittedAnswers, campaign.stats.nbStartedAnswers)}}%)</span>
+      </div>
+
+      <div class="block">
+        <strong>{{campaign.stats.nbValidatedAnswers}}</strong>
+        <span>rép. validées</span>
+        <span> ({{ratio(campaign.stats.nbValidatedAnswers, campaign.stats.nbSubmittedAnswers)}}%)</span>
+      </div>
     </div>
+    <router-outlet></router-outlet>
   </div>
 </div>

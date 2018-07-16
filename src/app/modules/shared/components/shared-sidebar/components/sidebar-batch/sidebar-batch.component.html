@@ -1,19 +1,31 @@
-<form novalidate [formGroup]="formData">
-  <div class="form-group">
-    <button (click)="onSubmit()" class="btn btn-primary">
-      {{'COMMON.SAVE' | translate}}
-    </button>
-  </div>
-  <div class="form-group">
-    <label class="form-label" for="firstName">{{ "COMMON.FIRSTNAME" | translate }}</label>
-    <input class="form-default" id="firstName" name="firstName" formControlName="firstName" type="text"
-           placeholder="John">
-  </div>
-  <div class="form-group">
-    <label class="form-label" for="lastName">{{ "COMMON.LASTNAME" | translate }}</label>
-    <input class="form-default" id="lastName" name="lastName" formControlName="lastName" type="text"
-           placeholder="Doe">
-  </div>
+<div *ngIf="this.row">
+    <form [hidden]="this.formHidden" novalidate [formGroup]="formData" >
+      <div class="form-group">
+        <button (click)="onSubmit()" class="btn btn-primary">
+          {{'COMMON.SAVE' | translate}}
+        </button>
+      </div>
+      <div class="form-group">
+        <label class="form-label"> DATE </label>
+        <input class="form-default" id="dateMail" name="dateMail" formControlName="dateMail" type="date"
+               [value]="this.getdateMail | date:'yyyy-MM-dd'">
+      </div>
+      <div class="form-group">
+        <label class="form-label"> TIME </label>
+        <input class="form-default" id="timeMail" name="timeMail" formControlName="timeMail" type="time"
+        [value]="this.gettimeMail">
+      </div>
+    </form>
 
-</form>
-
+  <!--<div *ngIf="thereIsContent"> -->
+  <label class="text-ellipsis"> EN </label>
+  <text-zone [elementId]="'en'"
+             [readonly]="true"
+             [data]="this.content.en"
+  ></text-zone>
+  <label class="text-ellipsis"> FR </label>
+  <text-zone [elementId]="'fr'"
+             [readonly]="true"
+             [data]="this.content.fr"
+  ></text-zone>
+</div>

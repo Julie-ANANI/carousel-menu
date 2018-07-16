@@ -74,20 +74,14 @@
 
   }
 
+  .delete-link {
+    color: #EA5858;
+    font-size: 14px;
+  }
+
   .action-wrapper {
     padding-top: 30px;
     padding-left: 170px;
-
-    .separator {
-      color: #97A4B1;
-      padding-left: 2.5px;
-      padding-right: 2.5px;
-    }
-
-    .delete-link {
-      color: #EA5858;
-    }
-
   }
 
   .project-data {
@@ -110,20 +104,20 @@
   }
 
   .media-content {
-    display: inline-block;
-    margin-right: 10px;
+    display: inline-flex;
+
+    .media {
+      display: inline-flex;
+      margin-right: 10px;
+      flex-direction: column;
+    }
+
   }
 
   .media-action {
     padding-top: 10px;
     padding-bottom: 16px;
-    font-size: 0.7rem;
-    word-wrap: break-word;
-
-    .delete-link {
-      color: #EA5858;
-    }
-
+    font-size: 14px;
   }
 
   .upload-wrapper {
@@ -143,7 +137,7 @@
 
       .para {
         color: #97A4B1;
-        font-size: 0.7rem;
+        font-size: 14px;
         margin: 25px;
       }
 

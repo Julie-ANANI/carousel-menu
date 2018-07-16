@@ -8,7 +8,7 @@ export const PROJECT_MODULE = {
   'ADD_COLLABORATORS': 'Ajoutez l\'email d\'un collègue',
   'ADD_COLLABORATORS_PLACEHOLDER': 'Ajoutez l\'email d\'un collègue',
 
-  'COLLABORATORS': 'collaborateurs',
+  'COLLABORATORS': 'collaborateur(s)',
 
   'COLLABORATOR_ADDED': {
     'TITLE': 'Ajouté',

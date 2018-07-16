@@ -3,8 +3,8 @@
   [pieChart]="pieChart"
   [question]="question"
   [readonly]="readonly"
-  [stats]="stats">
-</app-question-conclusion>
+  [stats]="stats"
+></app-question-conclusion>
 
 <div class="bar-chart-component">
 
@@ -22,7 +22,7 @@
           <i class="icon" aria-hidden="true" [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
         </div>
       </div>
-      <button class="btn btn-secondary" (click)="filterAnswer(barData, $event)">
+      <button class="btn-round btn-secondary" (click)="filterAnswer(barData, $event)">
         <i class="fas fa-filter"></i>
       </button>
     </div>
@@ -33,6 +33,7 @@
         <market-comment
           [answer]="answer"
           [questionId]="question.identifier+'Comment'"
+          (addFilter)="newFilter($event)"
           (modalAnswerChange)="seeAnswer($event)">
         </market-comment>
       </li>

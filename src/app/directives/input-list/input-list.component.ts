@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { TranslateNotificationsService } from '../../services/notifications/notifications.service';
 
 @Component({
   moduleId: module.id,
@@ -9,35 +10,41 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 export class InputListComponent {
 
-  _placeholder: string;
-
-  @Output() update = new EventEmitter<any>();
-
-  @Input() canEdit = true;
-  @Input() adminMode = false;
-
-  answer: string;
-  answerList: Array<any>;
-
-  @Input()
-  set config(config: any) {
+  @Input() set config(config: any) {
     if (config) {
       this._placeholder = config.placeholder || '';
       this.answerList = config.initialData || [];
     }
   }
+  @Input() canEdit = true;
+  @Input() adminMode = false;
+  @Input() isEmail = false;
 
-  constructor() {}
+  @Output() update = new EventEmitter<any>();
 
-  get placeholder(): string {
-    return this._placeholder;
-  }
+  answer: string;
+  answerList: Array<any>;
+  _placeholder: string;
+
+  constructor(private _notificationsService: TranslateNotificationsService) {}
 
   addProposition(val: string): void {
     if (this.answerList.findIndex(t => {return t === val}) === -1) {
-      this.answerList.push({text: val});
-      this.answer = '';
-      this.update.emit({value: this.answerList});
+      // if we want to test if it's an email
+      if (this.isEmail) {
+        const testValue = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if (testValue.test(val)) {
+          this.answerList.push({text: val});
+          this.answer = '';
+          this.update.emit({value: this.answerList});
+        } else {
+          this._notificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
+        }
+      } else {
+        this.answerList.push({text: val});
+        this.answer = '';
+        this.update.emit({value: this.answerList});
+      }
     }
   }
 
@@ -74,5 +81,10 @@ export class InputListComponent {
     event.preventDefault();
     this.update.emit({value: this.answerList});
   }
+
+  get placeholder(): string {
+    return this._placeholder;
+  }
+
 
 }

@@ -6,7 +6,7 @@ export interface Professional {
   readonly firstName: string;
   readonly lastName: string;
   readonly jobTitle: string;
-  readonly company: string;
+  company: string;
   readonly email: string;
   readonly tags: Array<Tag>;
   readonly profileUrl: string;

@@ -3,7 +3,7 @@
   .hero-light-container {
     background-color: #4F5D6B;
 
-    h1, p {
+    h1, p, h6 {
       color: white;
     }
 
@@ -29,7 +29,7 @@
     li {
       color: #5D5D5D;
       font-size: 0.8rem;
-      padding: 6px 8px;
+      padding: 6px 8px 6px 3px;
     }
 
     li:last-child {

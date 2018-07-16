@@ -7,7 +7,7 @@ import { AdminSectionsNewComponent } from './admin-sections-new/admin-sections-n
 
 export const sectionsRoutes: Routes = [
   {
-    path: '',
+    path: 'sections',
     component: AdminSectionsComponent,
     children: [
       { path: '', component: AdminSectionsListComponent, pathMatch: 'full' },

@@ -4,7 +4,7 @@
     <ul>
       <li *ngFor="let answer of answers; let i = index">
 
-        <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+        <app-pro-tag [answer]="answer" (addFilter)="newFilter($event)" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
 
       </li>
     </ul>

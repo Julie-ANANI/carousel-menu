@@ -9,6 +9,7 @@ export const DASHBOARD = {
     'EVALUATING_DONE': 'Terminé'
   },
   'STATS': {
-    "ALL_OPERATORS": "Tous opérateurs"
-  }
+    'ALL_OPERATORS': 'Tous opérateurs'
+  },
+  'SENDINGDATE' : 'Envoi prévu le :'
 };

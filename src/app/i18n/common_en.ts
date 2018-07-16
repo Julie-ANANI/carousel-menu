@@ -19,6 +19,8 @@ export const COMMON = {
   'UPDATED': 'Updated on',
   'LAUNCHED': 'Launched on',
   'EXPIRATION' : 'Expires on',
+  'EXPIRATION-SPECIFY': 'Or specify a date',
+  'REASON': 'Reason',
   'CLOSE': 'Close',
   'CLONE': 'Clone',
   'PREVIEW': 'Preview',
@@ -41,6 +43,10 @@ export const COMMON = {
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
   'BLACKLIST': 'Blacklisted e-mails',
+  'EDIT-BLACKLIST': 'Edit blacklisted e-mail',
+  'ADD-EMAIL': 'Add email',
+  'NEVER': 'Never',
+  'COMMENT': 'Comment',
 
   'NAME': 'Name',
   'FIRSTNAME': 'First name',
@@ -88,6 +94,12 @@ export const COMMON = {
     'NO-RESULTS': 'No results'
   },
 
+  'PROJECT': {
+    'OWNER': 'Owner',
+    'TITLE': 'Title',
+    'DOMAIN': 'Domain'
+  },
+
   'PROJECT_STATE': {
     'EDITING': 'Description',
     'SUBMITTED': 'Submitted',
@@ -119,6 +131,10 @@ export const COMMON = {
 
   'USERS': 'Users',
   'PROFESSIONALS': 'Professionals',
+  'PROFESSIONAL': {
+    'PITCH-DELETE': 'Are you sure you want to delete the professionnal(s)?',
+    'DELETE': 'Delete professionnal(s)',
+  },
   'HOME': 'Home',
   'ADMIN': 'Admin',
   'MY_PROJECT': 'My project',
@@ -129,10 +145,12 @@ export const COMMON = {
   'CAMPAIGNS': 'Campaigns',
   'DISCOVER': 'Discover',
   'PRESET': 'Preset',
-  'PRESETS': 'Presets',
-  'CLIENT_SIDE': 'Client Side',
-  'EDIT_USER': 'Edit user',
-  'EDIT_PROFESSIONAL': 'Edit professional',
+  'EDIT_USER': 'Edit User',
+  'EDIT_PROFESSIONAL': 'Edit Professional',
+  'EDIT_INSIGHT': 'Edit Insight',
+  'PRESETS': 'Settings',
+  'QUESTIONNAIRE': 'Questionnaire(s)',
+  'CLIENT_SIDE': 'Client',
 
   'SORT': {
     'BY_NAME': 'By name',

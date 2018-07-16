@@ -19,6 +19,8 @@ export const COMMON = {
   'UPDATED': 'Modifié le',
   'LAUNCHED': 'Lancé le',
   'EXPIRATION' : 'Expire le',
+  'EXPIRATION-SPECIFY': 'Ou renseigner une date d\'expiration',
+  'REASON': 'Raison',
   'CLOSE': 'Fermer',
   'CLONE': 'Clôner',
   'PREVIEW': 'Prévisualiser',
@@ -41,11 +43,15 @@ export const COMMON = {
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
   'BLACKLIST': 'Emails blacklistés',
+  'EDIT-BLACKLIST': 'Modifier email blacklisté',
+  'ADD-EMAIL': 'Ajouter des emails',
+  'NEVER': 'Jamais',
+  'COMMENT': 'Commentaire',
 
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
   'LASTNAME': 'Nom',
-  'EMAIL': 'Email adresse',
+  'EMAIL': 'Adresse e-mail',
   'PHONE': 'Téléphone',
   'PASSWORD': 'Mot de passe',
   'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',
@@ -83,6 +89,12 @@ export const COMMON = {
     'SIGN_UP': 'Continuer',
   },
 
+  'PROJECT': {
+    'OWNER': 'Propriétaire',
+    'TITLE': 'Titre',
+    'DOMAIN': 'Domaine'
+  },
+
   'PROJECT_STATE': {
     'EDITING': 'Description',
     'SUBMITTED': 'Soumis',
@@ -103,7 +115,7 @@ export const COMMON = {
   },
 
   'INVALID': {
-    'EMAIL': 'S\'il vous plaît, mettez une adresse email valide',
+    'EMAIL': 'Veuillez renseigner une adresse email valide',
     'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court.'
   },
 
@@ -119,6 +131,10 @@ export const COMMON = {
 
   'USERS': 'Utilisateurs',
   'PROFESSIONALS': 'Professionnels',
+  'PROFESSIONAL': {
+    'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
+    'DELETE': 'Supprimer le(s) professionnel(s)',
+  },
   'HOME': 'Accueil',
   'ADMIN': 'Admin',
   'MY_PROJECT': 'Mon projet',
@@ -129,10 +145,12 @@ export const COMMON = {
   'CAMPAIGNS': 'Campagnes',
   'DISCOVER': 'Découvrir',
   'PRESET': 'Configuration',
-  'PRESETS': 'Configurations',
-  'CLIENT_SIDE': 'Interface Client',
+  'PRESETS': 'Settings',
+  'QUESTIONNAIRE': 'Questionnaire(s)',
+  'CLIENT_SIDE': 'Client',
   'EDIT_USER': 'Modifier l\'utilisateur',
-  'EDIT_PROFESSIONAL': 'Modifier professionnel',
+  'EDIT_PROFESSIONAL': 'Modifier Professionnel',
+  'EDIT_INSIGHT': 'Modifier l\'aperçu',
 
   'SORT': {
     'BY_NAME': 'Nom',

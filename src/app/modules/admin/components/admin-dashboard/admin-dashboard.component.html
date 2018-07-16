@@ -9,6 +9,7 @@
   <div *ngIf="operatorData.nbProjectsToValidate !== 'undefined'"><span>{{ operatorData.nbProjectsToValidate }}</span> projet{{ operatorData.nbProjectsToValidate>1?'s':'' }} à valider</div>
   <div *ngIf="operatorData.nbProjectsToTreat !== 'undefined'"><span>{{ operatorData.nbProjectsToTreat }}</span> réponse{{ operatorData.nbProjectsToTreat>1?'s':'' }} à traiter</div>
 </div>
+<!--
 <div class="emails-stats" *ngIf="adminLevel > 2">
   <select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="getPeriodStats()">
     <option [value]="1">Comparer...</option>
@@ -19,34 +20,49 @@
   <div>Emails trouvés : <span>{{ statistics.percentFoundEmails }}%</span></div>
   <div>Emails OK : <span>{{ statistics.percentOkEmails }}%</span></div>
   <div>Emails reçus : <span>{{ statistics.percentReceivedEmails }}%</span></div>
-</div>
+</div>-->
 
-<div class="content">
-  <app-admin-projects-list [operatorId]="operatorId" [operators]="operators" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
+<app-admin-projects-list [operatorId]="operatorId" [operators]="operators" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
-  <app-admin-projects-list [status]="'PREPARING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
+<app-admin-projects-list [status]="'PREPARING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
-  <app-admin-projects-list [status]="'EVALUATING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
+<app-admin-projects-list [status]="'EVALUATING'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
-  <app-admin-projects-list [status]="'DONE'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
-</div>
+<app-admin-projects-list [status]="'DONE'" [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
 <div class="list-table">
-  <div> <i class="fa fa-arrow-circle-left" style="font-size:36px"(click)="getLastWeek()"></i></div>
+  <div>
+    <i class="fa fa-arrow-circle-left" style="font-size:36px"(click)="getLastWeek()"></i>
+    <br>
+    <br>
+    <label class="label-1st">
+      First Mail
+    </label>
+    <br>
+    <br>
+    <label class="label-2nd" >
+      Second Mail
+    </label>
+    <br>
+    <br>
+    <label class="label-3rd">
+      Third Mail
+    </label>
+  </div>
   <div *ngFor="let days of this.weekBatches; let i1 = index">
     <ul *ngFor="let batches of days; let i2 = index">
       <span *ngIf="i2==0">
-        {{batches}}
+        {{getDateString(batches)}}
       </span>
       <span *ngIf="i2 != 0">
       <li *ngIf="i2 < 4">
-          <label class="label-1st" *ngIf="batches.status == 0" (click)="showPreview($event, batches)">
+          <label class="label-1st" *ngIf="getState(batches) == 0" (click)="showPreview($event, batches)">
             {{batches.innovation.name}}  {{batches.size}}
           </label>
-          <label class="label-2nd" *ngIf="batches.status == 1" (click)="showPreview($event, batches)">
+          <label class="label-2nd" *ngIf="getState(batches) == 1" (click)="showPreview($event, batches)">
             {{batches.innovation.name}}  {{batches.size}}
           </label>
-          <label class="label-3rd" *ngIf="batches.status == 2" (click)="showPreview($event, batches)">
+          <label class="label-3rd" *ngIf="getState(batches) == 2" (click)="showPreview($event, batches)">
             {{batches.innovation.name}}  {{batches.size}}
           </label>
       </li>
@@ -61,17 +77,14 @@
               </div>
               <div class="card-body">
                 <ul *ngFor="let batchesOver of days; let i3 = index">
-                  <li>
-                    <label class="label-1st" *ngIf="batchesOver.status == 0" (click)="showPreview($event, batchesOver)">
+                  <li *ngIf="i3 > 0">
+                    <label class="label-1st" *ngIf="getState(batchesOver) == 0" (click)="showPreview($event, batchesOver)">
                       {{batchesOver.innovation.name}}  {{batchesOver.size}}
                     </label>
-                    <label class="label-2nd" *ngIf="batchesOver.status == 1" (click)="showPreview($event, batchesOver)">
+                    <label class="label-2nd" *ngIf="getState(batchesOver) == 1" (click)="showPreview($event, batchesOver)">
                       {{batchesOver.innovation.name}}  {{batchesOver.size}}
                     </label>
-                    <label class="label-3rd" *ngIf="batchesOver.status == 2" (click)="showPreview($event, batchesOver)">
-                      {{batchesOver.innovation.name}}  {{batchesOver.size}}
-                    </label>
-                    <label class="label-4th" *ngIf="batchesOver.status == 3" (click)="showPreview($event, batchesOver)">
+                    <label class="label-3rd" *ngIf="getState(batchesOver) == 2" (click)="showPreview($event, batchesOver)">
                       {{batchesOver.innovation.name}}  {{batchesOver.size}}
                     </label>
                   </li>
@@ -85,7 +98,6 @@
       </li>
         </span>
     </ul>
-
   </div>
   <div> <i class="fa fa-arrow-circle-right" style="font-size:36px" (click)="getNextWeek()"></i></div>
 </div>
@@ -97,7 +109,8 @@
   [template]="sidebarTemplateValue"
   (closeSidebar)="closeSidebar($event)">
   <app-innovation-preview
-    [innovation]="this.selectedInnovation">
+    [innovation]="this.selectedInnovation"
+    [batchInfo]="{batchSelected:this.selectedBatch,date: this.dateNow}">
   </app-innovation-preview>
 </app-sidebar>
 

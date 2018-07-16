@@ -33,6 +33,7 @@ $header-background: #4F5D6B;
           padding: 40px 0;
 
           a {
+            opacity: 0.5;
             letter-spacing: 0.66px;
             color: #FFFFFF;
             text-decoration: none;
@@ -42,8 +43,14 @@ $header-background: #4F5D6B;
           }
 
           a:hover {
-            color: #F6BC32;
+            opacity: 1;
+            color: #FFB300;
             cursor: pointer;
+          }
+
+          a.active {
+            opacity: 1;
+            color: #FFB300;
           }
 
         }
@@ -54,10 +61,6 @@ $header-background: #4F5D6B;
 
   }
 
-}
-
-.active {
-  color: #F6BC32 !important;
 }
 
 

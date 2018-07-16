@@ -25,6 +25,8 @@ export class ClientWelcomeComponent implements OnInit {
     this._user = this._authService.user;
     if (!this._user) {
       this._router.navigate(['/logout']);
+    } else if( this._user.emailVerified ) {
+      this._router.navigate(['/projects']);
     }
   }
 

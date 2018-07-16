@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 // import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import 'rxjs/add/operator/filter';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder  } from '@angular/forms';
+
 
 @Component({
   selector: 'app-sidebar-batch',
@@ -11,61 +12,66 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 export class SidebarBatchComponent implements OnInit {
 
   public formData: FormGroup;
+  private _row: any;
+  private _formHidden = false;
 
-  @Input() set batchId(value: string) {
-    this.loadBatch(value);
+  @Input() set rowBatch(value: any) {
+    this.load(value);
+  }
+
+  @Input() set content(content: {}) {
+    this._content = content;
   }
 
   @Output() batchChange = new EventEmitter <any>();
 
-  private _batchId = '';
-
-  // TODO : profile picture, location
+  private _content = {};
+  private _dateMail: Date;
+  private _timeMail = '';
 
   constructor(// private _notificationsService: TranslateNotificationsService,
-              private _formBuilder: FormBuilder) {}
+              private _formBuilder: FormBuilder
+              ) {}
 
   ngOnInit(): void {
-
-    this._batchId = '';
-
     this.formData = this._formBuilder.group({
-      isOperator: false,
-      firstName: '',
-      lastName: '',
-      email: ['', [Validators.email]],
-      companyName: '',
-      jobTitle: '',
-      language: ''
+      dateMail: ['', [Validators.required]],
+      timeMail: ['', [Validators.required]],
     });
   }
 
   public onSubmit() {
-    /*if (this.formData.valid) {
-      const user = new User(this.formData.value);
-      user.id = this._userId;
-      this._userService.updateOther(user)
-        .first()
-        .subscribe(
-          data => {
-            this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
-            this.formData.patchValue(data);
-            this.userChange.emit();
-          },
-          error => {
-            this._notificationsService.error('ERROR.ERROR', error.message);
-          });
+    if (this.formData.valid) {
+      this.formData.value.dateMail = new Date(this.formData.value.dateMail);
+      this._dateMail = this.formData.value.dateMail;
+      this._timeMail = this.formData.value.timeMail;
+      this.batchChange.emit({date: this._dateMail, time: this._timeMail});
     }
-    else {
-      this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
-    }*/
   }
 
-  loadBatch(id: string) {
-    this._batchId = id;
-    // this._userService.get(this._userId).subscribe(user => {
-    //  this.formData.patchValue(user);
-    // });
+  load(row: any) {
+    this._row = row;
+    if (row.Date) {
+      this._dateMail = new Date(row.Date);
+      this._timeMail = row.Time;
+      this.formData.patchValue({dateMail: this._dateMail, timeMail: this._timeMail});
+    }
+    this.thanks();
   }
+
+  public thanks() {
+    if (this._row.Step === '04 - Thanks') {
+      this._formHidden = true;
+    } else {
+      this._formHidden = false;
+    }
+  }
+
+
+  get getdateMail() { return this._dateMail; }
+  get formHidden() { return this._formHidden; }
+  get gettimeMail() {return this._timeMail; }
+  get content() { return this._content; }
+  get row() { return this._row;}
 
 }
