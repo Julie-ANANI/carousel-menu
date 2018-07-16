@@ -16,6 +16,7 @@ import { AdminTagsModule } from './components/admin-tags/admin-tags.module';
 import { AdminProjectModule } from './components/admin-project/admin-project.module';
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
+import { SidebarModule } from '../shared/components/shared-sidebar/sidebar.module';
 
 // Components
 import { AdminComponent } from './admin.component';
@@ -29,6 +30,7 @@ import { AdminProjectsListComponent } from './components/admin-projects-list/adm
 import { EllipsisModule } from '../../pipes/ellipsis/ellipsis.module';
 import { DateFormatPipe } from '../../pipes/DateFormatPipe';
 import { GlobalModule } from '../global/global.module';
+
 
 @NgModule({
   imports: [
@@ -47,7 +49,8 @@ import { GlobalModule } from '../global/global.module';
     SharedModule,
     GlobalModule,
     TranslateModule.forChild(),
-    EllipsisModule
+    EllipsisModule,
+    SidebarModule
   ],
   declarations: [
     AdminComponent,

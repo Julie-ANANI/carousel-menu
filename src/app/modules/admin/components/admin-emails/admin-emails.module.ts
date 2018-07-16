@@ -6,13 +6,15 @@ import { AdminEmailsComponent } from './admin-emails.component';
 import { AdminEmailQueueComponent } from './admin-emails-queue/admin-emails-queue.component';
 import { AdminEmailsTemplatesModule } from './admin-emails-templates/admin-emails-templates.module';
 import { AdminBatchInformationComponent } from './admin-batch-information/admin-batch-information.component';
+import { SidebarModule } from '../../../shared/components/shared-sidebar/sidebar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     TranslateModule.forChild(),
-    AdminEmailsTemplatesModule
+    AdminEmailsTemplatesModule,
+    SidebarModule
   ],
   declarations: [
     AdminEmailsComponent,
