@@ -152,6 +152,16 @@ export class QuestionSectionComponent implements OnInit {
     this.addFilter.emit(filter);
   }
 
+  public createTagFilter(event: Event, tag: Tag) {
+    event.preventDefault();
+    this.addFilter.emit({
+      status: 'TAG',
+      questionTitle: tag.label,
+      questionId: this.question.identifier,
+      value: tag._id
+    });
+  }
+
   get answers() { return this._answers; }
   get readonly(): boolean { return this._readonly; }
   get domSectionId(): string { return this._domSectionId; }

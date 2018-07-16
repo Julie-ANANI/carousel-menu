@@ -158,7 +158,7 @@
       </div>
 
       <!-- Email -->
-      <div *ngIf="displayEmail || modalAnswer.status === 'VALIDATED'" class="status-email">
+      <div *ngIf="modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL'" class="status-email">
         <label class="form-switch" for="email">
           <input
             type="checkbox"
