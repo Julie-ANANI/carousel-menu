@@ -1,0 +1,118 @@
+#login {
+
+  .cover-image {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left top;
+    min-height: 100vh;
+  }
+
+  .login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+    padding-bottom: 15px;
+    min-height: 100vh;
+
+    .form-wrapper {
+      flex: 1 0 auto;
+      justify-content: center;
+      align-items: center;
+      display: inline-flex;
+      flex-direction: column;
+
+      .social-wrapper {
+
+        .btn {
+          background: #1680B9;
+          border-color: #1680B9;
+          color: white;
+        }
+
+        .btn:hover {
+          background: lighten(#1680B9, 10%);
+          border-color: lighten(#1680B9, 10%);
+          color: white;
+        }
+
+      }
+
+      .or-wrapper {
+        padding-top: 25px;
+      }
+
+      .credentials-wrapper {
+        padding-top: 20px;
+
+        .form-default {
+          width: 300px;
+        }
+
+      }
+
+      .submit-wrapper {
+        padding-top: 20px;
+
+        .login-button {
+          padding-bottom: 14px;
+        }
+
+        .text-link {
+          font-size: 0.7rem;
+        }
+
+      }
+    }
+
+    .create-wrapper {
+
+      .btn-sm {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+      }
+
+    }
+
+  }
+
+}
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  #login {
+
+    .cover-image {
+      display: none;
+    }
+
+    .login-wrapper {
+      padding-bottom: 25px !important;
+    }
+
+    .heading {
+      padding-top: 25px;
+    }
+
+    .submit-wrapper {
+      padding-bottom: 25px;
+    }
+
+  }
+
+}
+
+@media (min-width: 840px) {
+
+  #login {
+
+    .form-default {
+      width: 350px !important;
+    }
+
+  }
+
+}
