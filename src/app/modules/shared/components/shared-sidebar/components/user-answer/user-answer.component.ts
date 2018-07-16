@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit } from '@angular/core';
 import { Question } from '../../../../../../models/question';
 import { Answer } from '../../../../../../models/answer';
 import { TranslateService } from '@ngx-translate/core';
@@ -6,6 +6,7 @@ import { Tag } from '../../../../../../models/tag';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-user-answer',
@@ -18,6 +19,8 @@ export class UserAnswerComponent implements OnInit {
   @Input() innovationId: string;
   @Input() questions: Array<Question>;
   @Input() adminMode: boolean;
+
+  @Input() mode: Subject<boolean>;
 
   @Input() set userAnswer(value: Answer) {
     this.modalAnswer = value;
@@ -41,6 +44,10 @@ export class UserAnswerComponent implements OnInit {
 
   ngOnInit() {
     // this.adminMode = this.adminMode && this.authService.adminLevel > 2;
+
+    this.mode.subscribe((res) => {
+      this.editMode = res;
+    });
 
     this.floor = Math.floor;
 
@@ -86,7 +93,12 @@ export class UserAnswerComponent implements OnInit {
   }
 
   changeMode(event: Event) {
-    this.editMode = event.target['checked'];
+    if (event.target['checked']) {
+      this.editMode = true;
+    } else {
+      this.editMode = false;
+      this.resetEdit();
+    }
   }
 
   save(event: Event) {

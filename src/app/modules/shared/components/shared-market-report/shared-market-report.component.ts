@@ -16,6 +16,7 @@ import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
 import { Template } from '../shared-sidebar/interfaces/template';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -25,10 +26,11 @@ import { Template } from '../shared-sidebar/interfaces/template';
 
 export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
-  @Input() public project: Innovation;
-  @Input() public adminMode: boolean;
+  @Input() project: Innovation;
+  @Input() adminMode: boolean;
 
   adminSide: boolean;
+  editMode = new Subject<boolean>();
   sidebarTemplateValue: Template = {};
 
   private _questions: Array<Question> = [];
@@ -93,7 +95,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     const wrapper = document
       .getElementById('answer-wrapper');
-    if(wrapper) {
+    if (wrapper) {
       const sections = Array.from(
         wrapper.querySelectorAll('section')
       );
@@ -156,6 +158,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
+    this.editMode.next(false);
   }
 
   public filterAnswers(): void {

@@ -18,7 +18,7 @@
           <div class="country">
             <div *ngIf="!editCountry" [ngStyle]="{ 'display': 'inline-flex' }">
               <country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></country-flag>
-              <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCountry = true; notifyChanges($event)" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
+              <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCountry = true;" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
             </div>
           </div>
           <div class="editMode">
@@ -27,7 +27,8 @@
                 type="checkbox"
                 name="editMode"
                 id="editMode"
-                (change)="changeMode($event)">
+                (change)="changeMode($event)"
+                [checked]="editMode">
               <i class="form-icon"></i>
               {{ 'Edit user' }}
             </label>
