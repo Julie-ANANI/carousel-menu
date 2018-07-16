@@ -179,6 +179,13 @@
         </div>
       </div>
 
+      <!-- Link to quiz URI -->
+      <div *ngIf="isProfessional && campaign" class="form-group">
+        <a (click)="openQuizUri(pro, $event)">
+        <label class="text-link">{{ 'COMMON.QUESTIONNAIRE' | translate }}</label>
+        </a>
+      </div>
+
       <!-- Terms -->
       <div *ngIf="isSignUp" class="terms-wrapper text-center">
         {{ 'COMMON.TERMS.A' | translate }} {{companyName}}{{'\'s'}}
