@@ -16,7 +16,6 @@ import { ScaleComponent } from './components/scale/scale.component';
 import { ItemListComponent } from './components/item-list/item-list.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { StarsComponent } from './components/stars/stars.component';
-import { AdminStatstModule } from './components/admin-stats/admin-stats.module';
 import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
 import { SharedModule } from '../../shared.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
@@ -27,7 +26,6 @@ import { CommonService } from '../../../../services/common/common.service';
   imports: [
     CommonModule,
     ChartsModule,
-    AdminStatstModule,
     EllipsisModule,
     MultilingModule,
     SharedModule,

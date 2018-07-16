@@ -2,15 +2,6 @@
 
   <h3>{{ question.title | multiling:lang }}</h3>
 
-  <span *ngIf="!readonly" class="flex">
-    <i class="fas fa-info-circle" aria-hidden="true" (click)="showStats = !showStats"></i>
-    <app-admin-stats
-      *ngIf="showStats"
-      [answers]="answers"
-      [question]="question">
-    </app-admin-stats>
-  </span>
-
   <div class="tags-list" *ngIf="tags?.length > 0">
     <i class="fa fa-tag"></i>
     <span
