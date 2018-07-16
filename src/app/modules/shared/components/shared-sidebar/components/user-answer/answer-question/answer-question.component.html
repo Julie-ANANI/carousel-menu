@@ -7,7 +7,7 @@
    <!-- Radio case -->
     <ng-container *ngSwitchCase="'radio'">
 
-      <div class="response-wrapper div-top">
+      <div *ngIf="fullAnswer." class="response-wrapper div-top">
 
           <ng-container *ngIf="!editMode">
             {{ optionLabel(fullAnswer.answers[question.identifier]) }}

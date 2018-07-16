@@ -32,6 +32,7 @@ export class UserAnswerComponent implements OnInit {
   editJob = false;
   editCompany = false;
   editCountry = false;
+  editMode = false;
 
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
@@ -84,6 +85,10 @@ export class UserAnswerComponent implements OnInit {
     this.editCountry = false;
   }
 
+  changeMode(event: Event) {
+    this.editMode = event.target['checked'];
+  }
+
   save(event: Event) {
     event.preventDefault();
     this.resetEdit();
@@ -114,12 +119,17 @@ export class UserAnswerComponent implements OnInit {
 
   updateStatus(event: Event, status: any) {
     event.preventDefault();
-    this.modalAnswer.status = status;
-    if (status === 'VALIDATED' || status === 'VALIDATED_NO_MAIL') {
-      this.displayEmail = true;
+    if (this.editMode) {
+      this.modalAnswer.status = status;
+      if (status === 'VALIDATED' || status === 'VALIDATED_NO_MAIL') {
+        this.displayEmail = true;
+      } else {
+        this.displayEmail = false;
+      }
     } else {
-      this.displayEmail = false;
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.NOT_MODIFIED.USER_ANSWER');
     }
+
   }
 
   sendEmail(event: Event, status: any) {
