@@ -4,7 +4,7 @@
 <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-user-form [sidebarState]="more.animate_state"
                  [type]="more.type"
-                 [pro]="currentPro"
+                 [pro]="currentPro" [campaign]="campaign ? campaign: null"
                  (professionalUserData)="updatePro($event)">
   </app-user-form>
 </app-sidebar>
