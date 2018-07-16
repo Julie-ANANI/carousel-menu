@@ -13,9 +13,13 @@
 
   <div class="tags-list" *ngIf="tags?.length > 0">
     <i class="fa fa-tag"></i>
-    <span *ngFor="let t of tags" class="label label-rounded label-primary tag-label">
+    <span
+      *ngFor="let t of tags"
+      class="label label-rounded label-primary tag-label"
+      (click)="createTagFilter($event, t)">
       <span *ngIf="t?.count > 1">(x{{t?.count}})</span>
       {{t?.label | multiling:lang}}
+      <i class="fas fa-filter"></i>
     </span>
   </div>
 
