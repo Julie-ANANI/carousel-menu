@@ -156,19 +156,19 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public removeOK(batch: Batch) {
-    if (batch.status === 0) {
+    if (batch.status == 0) {
       this.selectedBatchToBeDeleted = batch;
     }
   }
 
   public poubelle(batch: Batch) {
     if (this._campaign.settings.ABsettings.status == 0) {
-      return batch.status === 0;
+      return batch.status == 0;
     } else {
       if (batch._id == this._campaign.settings.ABsettings.batchA || batch._id == this._campaign.settings.ABsettings.batchB) {
         return false;
       } else {
-        return batch.status === 0;
+        return batch.status == 0;
       }
     }
   }
@@ -371,7 +371,7 @@ export class AdminCampaignMailsComponent implements OnInit {
     const workflowname = this.getWorkflowName(index);
     const content = {en: '', fr: ''}
     this.campaign.settings.emails.forEach( mail => {
-      if (mail.step === step && workflowname === mail.nameWorkflow) {
+      if (mail.step == step && workflowname == mail.nameWorkflow) {
        if (mail.language == 'en') {
          content.en = mail.content;
        } else {

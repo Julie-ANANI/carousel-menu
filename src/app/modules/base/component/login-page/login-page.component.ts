@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NavigationExtras, Router } from '@angular/router';
+import { TranslateTitleService } from '../../../../services/title/title.service';
+import { User } from '../../../../models/user.model';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
-import { User } from '../../../../models/user.model';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { TranslateTitleService } from '../../../../services/title/title.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-client-login',
-  templateUrl: './client-login.component.html',
-  styleUrls: ['./client-login.component.scss']
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.scss']
 })
-
-export class ClientLoginComponent implements OnInit {
+export class LoginPageComponent implements OnInit {
 
   private _formData: FormGroup;
 
@@ -42,26 +41,26 @@ export class ClientLoginComponent implements OnInit {
       this._authService.login(user)
         .first()
         .subscribe(() => {
-          if (this._authService.isAuthenticated) {
-            // Get the redirect URL from our auth service
-            // If no redirect has been set, use the default
-            const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : '/';
+            if (this._authService.isAuthenticated) {
+              // Get the redirect URL from our auth service
+              // If no redirect has been set, use the default
+              const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : '/';
 
-            // Set our navigation extras object
-            // that passes on our global query params and fragment
-            const navigationExtras: NavigationExtras = {
-              preserveQueryParams: true,
-              preserveFragment: true
-            };
+              // Set our navigation extras object
+              // that passes on our global query params and fragment
+              const navigationExtras: NavigationExtras = {
+                preserveQueryParams: true,
+                preserveFragment: true
+              };
 
-            this.translateNotificationsService.success('ERROR.LOGIN.WELCOME', 'ERROR.LOGIN.LOGGED_IN');
-            // Redirect the user
-            this.router.navigate([redirect], navigationExtras);
-          }
-        },
-        err => {
-          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
-        });
+              this.translateNotificationsService.success('ERROR.LOGIN.WELCOME', 'ERROR.LOGIN.LOGGED_IN');
+              // Redirect the user
+              this.router.navigate([redirect], navigationExtras);
+            }
+          },
+          err => {
+            this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+          });
     } else {
       if (this._formData.untouched && this._formData.pristine) {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
@@ -101,7 +100,7 @@ export class ClientLoginComponent implements OnInit {
   }
 
   public getCompanyUrl(): string {
-    return environment.companyURL || "";
+    return environment.companyURL || '';
   }
 
   // getting the logo of the company

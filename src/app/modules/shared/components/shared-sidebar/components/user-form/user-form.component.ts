@@ -4,6 +4,9 @@ import { AutocompleteService } from '../../../../../../services/autocomplete/aut
 import { User } from '../../../../../../models/user.model';
 import { Professional } from '../../../../../../models/professional';
 import { AuthService } from '../../../../../../services/auth/auth.service';
+import {Campaign} from '../../../../../../models/campaign';
+import {environment} from '../../../../../../../environments/environment';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-form',
@@ -29,6 +32,10 @@ export class UserFormComponent implements OnInit, OnChanges {
     this.loadProfessional();
   };
 
+  @Input() set campaign(value: Campaign) {
+    this._campaign = value;
+  }
+
   @Input() sidebarState: string;
 
   @Input() set type(type: string) {
@@ -50,6 +57,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   displayCountrySuggestion = false;
   private _user: User;
   private _pro: Professional = null;
+  private _campaign: Campaign = null;
   private _editInstanceDomain = false;
 
   private _updateInstanceDomainConfig: {
@@ -68,6 +76,7 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
+              private _translateService: TranslateService,
               private _authService: AuthService) {}
 
   ngOnInit() {
@@ -149,6 +158,13 @@ export class UserFormComponent implements OnInit, OnChanges {
     this.displayCountrySuggestion = false;
   }
 
+  openQuizUri(pro: Professional, event: Event): void {
+    event.preventDefault();
+    const baseUri = environment.quizUrl + '/quiz/' + this.campaign.innovation.quizId + '/' + this.campaign._id;
+    const parameters = '?pro=' + pro._id + '&lang=' + this._translateService.currentLang;
+    window.open(baseUri + parameters);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
 
     if (this.isSignUp) {
@@ -194,6 +210,10 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   get pro(): Professional {
     return this._pro;
+  }
+
+  get campaign(): Campaign {
+    return this._campaign;
   }
 
   get authService(): AuthService {

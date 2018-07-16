@@ -24,26 +24,28 @@ export class ProjectFormComponent implements OnInit, OnChanges {
   @Input() sidebarState: string;
 
   @Input() set type(type: string) {
-    if (type === 'addEmail') {
-      this.isBlacklist = false;
-      this.isAddEmail = true;
-      this.isShowCampaignInfos = false;
+    this.reinitialiseForm();
+    if (type === 'excludeEmails') {
+      this.isExcludeEmails = true;
     } else if (type === 'editBlacklist') {
       this.isBlacklist = true;
-      this.isAddEmail = false;
-      this.isShowCampaignInfos = false;
     } else if (type === 'showCampaignInfos') {
       this.isShowCampaignInfos = true;
-      this.isBlacklist = false;
-      this.isAddEmail = false;
+    } else if (type === 'excludeDomains') {
+      this.isExcludeDomains = true;
+    } else if (type === 'excludeCountries') {
+      this.isExcludeCountries = true;
     }
   }
 
   @Output() editBlacklist = new EventEmitter<any>();
-  @Output() addBlacklists = new EventEmitter<Array<string>>();
+  @Output() emailsToBlacklists = new EventEmitter<Array<string>>();
+  @Output() domainsToBlacklists = new EventEmitter<Array<string>>();
 
   isBlacklist = false;
-  isAddEmail = false;
+  isExcludeEmails = false;
+  isExcludeDomains = false;
+  isExcludeCountries = false;
   isShowCampaignInfos = false;
 
   private _tableInfos: Table = null;
@@ -58,6 +60,7 @@ export class ProjectFormComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.formData = this.formBuilder.group( {
       email: ['', [Validators.required, Validators.email]],
+      domain: ['', Validators.required],
       expiration: ''
     });
   }
@@ -88,14 +91,24 @@ export class ProjectFormComponent implements OnInit, OnChanges {
     }
   }
 
+  reinitialiseForm() {
+    this.isBlacklist = false;
+    this.isExcludeEmails = false;
+    this.isShowCampaignInfos = false;
+    this.isExcludeDomains = false;
+    this.isExcludeCountries = false;
+  }
+
   onSubmit() {
     if (this.isBlacklist) {
       const blacklist = this.formData.value;
       blacklist.expiration === '' ? blacklist.expiration = 0 : blacklist.expiration = blacklist.expiration;
       blacklist._id = this.emailToEdit._id;
       this.editBlacklist.emit(blacklist);
-    } else if (this.isAddEmail) {
-      this.addBlacklists.emit(this.formData.value.email);
+    } else if (this.isExcludeEmails) {
+      this.emailsToBlacklists.emit(this.formData.value.email);
+    } else if (this.isExcludeDomains) {
+      this.domainsToBlacklists.emit(this.formData.value.domain);
     }
   }
 
@@ -111,8 +124,12 @@ export class ProjectFormComponent implements OnInit, OnChanges {
     this.formData.get('email')!.setValue(event.value)
   }
 
+  addDomain(event: {value: Array<any>}) {
+    this.formData.get('domain')!.setValue(event.value)
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.isAddEmail) {
+    if (this.isExcludeEmails) {
       if (changes.sidebarState.currentValue !== changes.sidebarState.previousValue) {
         this.formData.reset();
       }

@@ -32,8 +32,8 @@
                   {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
                 </span>
                 <div class="pd-input">
-                  <div *ngFor="let country of settings.geography.exclude; let i = index;" class="pd-bottom">
-                    <p>{{ i + 1 + '.' }}&nbsp;{{ country.name }}</p>
+                  <div *ngFor="let country of settings.geography.exclude" class="answer-wrapper">
+                    {{ country.name }}
                   </div>
                 </div>
               </div>
@@ -146,8 +146,8 @@
                     {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}
                   </span>
                   <div class="pd-input">
-                    <div *ngFor="let companyInclude of settings.companies.include; let i = index;" class="pd-bottom">
-                      <p>{{ i + 1 + '.' }}&nbsp;{{ companyInclude.name }}</p>
+                    <div *ngFor="let companyInclude of settings.companies.include" class="answer-wrapper">
+                      {{ companyInclude.name }}
                     </div>
                   </div>
                 </div>
@@ -174,8 +174,8 @@
                     {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}
                   </span>
                   <div class="pd-input">
-                    <div *ngFor="let companyExclude of settings.companies.exclude; let i = index;" class="pd-bottom">
-                      <p>{{ i + 1 + '.' }}&nbsp;{{  companyExclude.name }}</p>
+                    <div *ngFor="let companyExclude of settings.companies.exclude" class="answer-wrapper">
+                      {{  companyExclude.name }}
                     </div>
                   </div>
                 </div>
@@ -271,8 +271,8 @@
                   <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</span>
                 </p>
                 <div class="pd-input">
-                  <div *ngFor="let professionalExclude of settings.professionals.exclude; let i = index;" class="pd-bottom">
-                    <p>{{ i + 1 + '.' }}&nbsp;{{ professionalExclude.text }}</p>
+                  <div *ngFor="let professionalExclude of settings.professionals.exclude" class="answer-wrapper">
+                    {{ professionalExclude.text }}
                   </div>
                 </div>
               </div>

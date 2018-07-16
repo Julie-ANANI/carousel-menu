@@ -44,7 +44,9 @@ export const COMMON = {
   'PROFILE-URL': 'Profil Linkedin',
   'BLACKLIST': 'Emails blacklistés',
   'EDIT-BLACKLIST': 'Modifier email blacklisté',
-  'ADD-EMAIL': 'Ajouter des emails',
+  'EXCLUDE-EMAILS': 'Exclure des emails',
+  'EXCLUDE-DOMAINS': 'Exclure des domaines',
+  'EXCLUDE-COUNTRIES': 'Exclure des pays',
   'NEVER': 'Jamais',
   'COMMENT': 'Commentaire',
 

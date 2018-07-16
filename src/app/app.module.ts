@@ -48,11 +48,6 @@ import { ScenarioResolver } from './resolvers/scenario.resolver';
 import { SignatureResolver } from './resolvers/signature.resolver';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FooterComponent,
-    HeaderComponent,
-  ],
   imports: [
     BrowserModule.withServerTransition({
       appId: 'umi-application-front'
@@ -69,6 +64,11 @@ import { SignatureResolver } from './resolvers/signature.resolver';
     }),
     ChartsModule,
     Ng2AutoCompleteModule
+  ],
+  declarations: [
+    AppComponent,
+    FooterComponent,
+    HeaderComponent
   ],
   providers: [
     Title,

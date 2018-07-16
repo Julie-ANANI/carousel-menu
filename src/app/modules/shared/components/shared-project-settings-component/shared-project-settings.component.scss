@@ -47,19 +47,17 @@
     text-decoration: none;
   }
 
-}
-
-/********************************** Media ***************************************/
-
-/*@media (max-width: 840px) {
-
-  #project-setting{
-
-    .help-wrapper {
-      display: none;
-    }
-
+  .answer-wrapper {
+    background: #F8F4F4;
+    color: #333333;
+    padding: 8px 15px;
+    border-radius: 5px;
+    display: inline-flex;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
   }
 
-}*/
+}
+
 
