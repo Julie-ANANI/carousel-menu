@@ -11,5 +11,5 @@ export const DASHBOARD = {
   'STATS': {
     "ALL_OPERATORS": "All operators"
   },
-  'SENDINGDATE' : 'Planned the :'
+  'SENDINGDATE' : 'Planned :'
 };
