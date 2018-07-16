@@ -17,7 +17,7 @@
   'text-error': googleQuota < 5000}">
     {{ googleQuota }} requêtes google restantes  <i (click)="getGoogleQuota()" class="c-hand fa fa-refresh"></i></span>
   </h6>
-  <sqFilter [config]="config" (configChange)="loadHistory()" prop="keywords.original"></sqFilter><i class="icon icon-search"></i>
+  <sqFilter [config]="config" (configChange)="loadHistory()" prop="keywords"></sqFilter><i class="icon icon-search"></i>
   <table class="table">
     <thead>
     <tr>
