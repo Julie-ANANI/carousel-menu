@@ -10,6 +10,7 @@
         <div class="title">
          <h6>{{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}</h6>
           <app-rating-item
+            *ngIf="editMode"
             [editMode]="adminMode"
             [prop]="profile"
             [rating]="modalAnswer.profileQuality"
@@ -44,7 +45,7 @@
           </app-autocomplete-input>
         </div>
 
-        <!-- Linkedin && (modalAnswer.professional?.profileUrl)-->
+        <!-- Linkedin -->
         <div *ngIf="adminMode && modalAnswer.professional?.profileUrl" class="profile">
           <p><i class="fab fa-linkedin-in"></i> <span class="text-link" [ngStyle]="{ 'padding-left': '3px' }">{{ modalAnswer.professional.profileUrl }}</span></p>
         </div>
