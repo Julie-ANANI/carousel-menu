@@ -168,7 +168,13 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       switch (filter.status) {
         case 'TAG':
           filteredAnswers = filteredAnswers.filter((answer) => {
-            return answer.tags.some((t: Tag) => t._id === filter.value);
+            if (filter.questionId && Array.isArray(answer.answerTags[filter.questionId])) {
+              return answer.answerTags[filter.questionId].some((t: Tag) => t._id === filter.value);
+            } else if (!filter.questionId) {
+              return answer.tags.some((t: Tag) => t._id === filter.value);
+            } else {
+              return false;
+            }
           });
           break;
         case 'CHECKBOX':
