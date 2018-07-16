@@ -74,6 +74,10 @@ export const ERROR = {
     'UPDATED': 'Réponse mise à jour'
   },
 
+  'NOT_MODIFIED': {
+    'USER_ANSWER': 'Vous n\'êtes pas autorisé à effectuer des modifications en mode d\'affichage.'
+  },
+
   'QUIZ': {
     'CREATED': 'Le quiz a été créé'
   }

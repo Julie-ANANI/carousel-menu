@@ -9,6 +9,7 @@ import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import {Template} from '../../../../shared/components/shared-sidebar/interfaces/template';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -29,6 +30,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer;
+  editMode = new Subject<boolean>();
   sidebarTemplateValue: Template = {};
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -52,7 +54,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     this._campaignService.getAnswers(this._campaign._id).first().subscribe((result: {answers: {localAnswers: Array<Answer>, draftAnswers: Array<Answer>}}) => {
       this._answers = result.answers.localAnswers;
       this._total = this._answers.length + result.answers.draftAnswers.length;
-      this._validatedAnswers = this.filterByStatus('VALIDATED');
+      this._validatedAnswers = this._answers.filter(answer => answer.status === 'VALIDATED' || answer.status === 'VALIDATED_NO_MAIL');
       this._submittedAnswers = this.filterByStatus('SUBMITTED');
       this._toCompleteAnswers = this.filterByStatus('TO_COMPLETE');
       this._draftAnswers = result.answers.draftAnswers;
@@ -65,7 +67,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     return adminLevel > level;
   }
 
-  public filterByStatus(status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED') {
+  public filterByStatus(status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED') {
     return this._answers.filter(answer => answer.status === status);
   }
 
@@ -98,6 +100,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   public closeSidebar(state: string) {
     this.sidebarTemplateValue.animate_state = state;
+    this.editMode.next(false);
   }
 
   get questions() { return this._questions; }

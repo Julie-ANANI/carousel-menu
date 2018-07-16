@@ -33,10 +33,22 @@
           display: flex;
         }
 
+        .editMode {
+          padding-left: 15px;
+        }
+
       }
 
       p {
         padding-bottom: 6px;
+      }
+
+      .profile {
+
+        .fab {
+          color: #1680B9;
+        }
+
       }
 
       .email {

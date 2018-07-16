@@ -15,10 +15,11 @@ import { Tag } from '../../../../../../../models/tag';
 
 export class AnswerQuestionComponent implements OnInit {
 
-  @Input() public innoid: string;
-  @Input() public question: Question;
-  @Input() public fullAnswer: Answer;
-  @Input() public editMode: boolean;
+  @Input() innoid: string;
+  @Input() question: Question;
+  @Input() fullAnswer: Answer;
+  @Input() editMode: boolean;
+  @Input() adminMode: boolean;
 
   _commenting: boolean;
 

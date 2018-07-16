@@ -10,6 +10,7 @@
         <div class="title">
          <h6>{{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}</h6>
           <app-rating-item
+            *ngIf="editMode"
             [editMode]="adminMode"
             [prop]="profile"
             [rating]="modalAnswer.profileQuality"
@@ -18,8 +19,20 @@
           <div class="country">
             <div *ngIf="!editCountry" [ngStyle]="{ 'display': 'inline-flex' }">
               <country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></country-flag>
-              <i *ngIf="adminMode" class="fas fa-pencil-alt" (click)="editCountry = true; notifyChanges($event)" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
+              <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCountry = true;" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
             </div>
+          </div>
+          <div class="editMode">
+            <label class="form-switch" for="editMode">
+              <input
+                type="checkbox"
+                name="editMode"
+                id="editMode"
+                (change)="changeMode($event)"
+                [checked]="editMode">
+              <i class="form-icon"></i>
+              {{ 'Edit user' }}
+            </label>
           </div>
         </div>
 
@@ -32,10 +45,15 @@
           </app-autocomplete-input>
         </div>
 
+        <!-- Linkedin -->
+        <div *ngIf="adminMode && modalAnswer.professional?.profileUrl" class="profile">
+          <p><i class="fab fa-linkedin-in"></i> <span class="text-link" [ngStyle]="{ 'padding-left': '3px' }">{{ modalAnswer.professional.profileUrl }}</span></p>
+        </div>
+
         <!-- Job -->
         <div *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle">
           <p *ngIf="!editJob">
-            {{ modalAnswer.job || modalAnswer.professional?.jobTitle }} <i *ngIf="adminMode" class="fas fa-pencil-alt" (click)="editJob = true; notifyChanges($event)"></i>
+            {{ modalAnswer.job || modalAnswer.professional?.jobTitle }} <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editJob = true; notifyChanges($event)"></i>
           </p>
           <div *ngIf="editJob" class="form-group">
             <input
@@ -52,7 +70,7 @@
         <div *ngIf="adminMode && (modalAnswer.company.name || modalAnswer.professional?.company || modalAnswer.company?.name === '')">
           <p *ngIf="!editCompany">
             {{ modalAnswer.company.name || modalAnswer.professional?.company ||  'COMMON.COMPANY' | translate }}
-            <i *ngIf="adminMode" class="fas fa-pencil-alt" (click)="editCompany = true; notifyChanges($event)"></i>
+            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCompany = true; notifyChanges($event)"></i>
           </p>
           <div *ngIf="editCompany" class="form-group">
             <input
@@ -65,7 +83,7 @@
           </div>
         </div>
 
-        <!-- Professional -->
+        <!-- Email -->
         <div *ngIf="adminMode && (modalAnswer.professional?.email)" class="email">
           <a [href]="'mailto:'+modalAnswer.professional.email">
             {{ modalAnswer.professional.email }}
@@ -95,7 +113,7 @@
 
       <!-- Save button -->
       <div *ngIf="adminMode" class="save">
-        <button class="btn btn-primary" (click)="save($event)">
+        <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)">
           {{'COMMON.SAVE' | translate}}
         </button>
       </div>
@@ -140,7 +158,7 @@
       </div>
 
       <!-- Email -->
-      <div *ngIf="displayEmail || modalAnswer.status === 'VALIDATED'" class="status-email">
+      <div *ngIf="modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL'" class="status-email">
         <label class="form-switch" for="email">
           <input
             type="checkbox"
@@ -157,7 +175,7 @@
     <!-- /Status -->
 
     <!-- Tags section -->
-    <div *ngIf="adminMode" class="tag-wrapper">
+    <div *ngIf="adminMode && editMode" class="tag-wrapper">
       <label class="form-label">Tag</label>
       <app-shared-tag-item
         [tags]="modalAnswer.tags"
@@ -173,7 +191,8 @@
     <div class="ques-wrapper">
       <div *ngFor="let question of questions">
         <app-answer-question
-          [editMode]="adminMode"
+          [editMode]="editMode"
+          [adminMode]="adminMode"
           [question]="question"
           [fullAnswer]="modalAnswer"
           [innoid]="innovationId">

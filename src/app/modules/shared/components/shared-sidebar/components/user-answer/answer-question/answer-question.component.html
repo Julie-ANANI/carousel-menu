@@ -1,4 +1,4 @@
-<div *ngIf="fullAnswer.answers && (fullAnswer.answers[question.identifier] || fullAnswer.answers[question.identifier+'Comment'] || editMode)">
+<div *ngIf="fullAnswer.answers && (fullAnswer.answers[question.identifier].length > 0 || fullAnswer.answers[question.identifier+'Comment'] || editMode)">
 
   <p class="ques-label" [ngStyle]="{'padding-top': editMode ? '50px' : '30px' }">{{ question.label | multiling:lang }}</p>
 
