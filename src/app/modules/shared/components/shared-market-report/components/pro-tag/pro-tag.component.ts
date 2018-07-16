@@ -30,7 +30,6 @@ export class ProfessionalTagComponent {
       questionTitle: tag.label,
       value: tag._id
     });
-
   }
 
 }

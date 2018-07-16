@@ -44,7 +44,9 @@ export const COMMON = {
   'PROFILE-URL': 'Linkedin profile',
   'BLACKLIST': 'Blacklisted e-mails',
   'EDIT-BLACKLIST': 'Edit blacklisted e-mail',
-  'ADD-EMAIL': 'Add email',
+  'EXCLUDE-EMAILS': 'Exclude emails',
+  'EXCLUDE-DOMAINS': 'Exclude domains',
+  'EXCLUDE-COUNTRIES': 'Exclude countries',
   'NEVER': 'Never',
   'COMMENT': 'Comment',
 
@@ -131,6 +133,10 @@ export const COMMON = {
 
   'USERS': 'Users',
   'PROFESSIONALS': 'Professionals',
+  'PROFESSIONAL': {
+    'PITCH-DELETE': 'Are you sure you want to delete the professionnal(s)?',
+    'DELETE': 'Delete professionnal(s)',
+  },
   'HOME': 'Home',
   'ADMIN': 'Admin',
   'MY_PROJECT': 'My project',

@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
-import { NonAuthGuard } from './non-auth-guard.service';
-import { AuthGuard } from './auth-guard.service';
+
+/* Guards */
 import { AdminAuthGuard } from './admin-auth-guard.service';
 import { PendingChangesGuard } from './pending-changes-guard.service';
+import { NonAuthGuard } from './non-auth-guard.service';
+import { AuthGuard } from './auth-guard.service';
 
 const appRoutes: Routes = [
   {

@@ -10,12 +10,11 @@ import { Innovation } from '../../../../models/innovation';
 import { InnovCard } from '../../../../models/innov-card';
 
 @Component({
-  selector: 'app-client-discover',
-  templateUrl: './client-discover.component.html',
-  styleUrls: ['./client-discover.component.scss']
+  selector: 'app-client-discover-page',
+  templateUrl: './client-discover-page.component.html',
+  styleUrls: ['./client-discover-page.component.scss']
 })
-
-export class ClientDiscoverComponent implements OnInit {
+export class ClientDiscoverPageComponent implements OnInit {
 
   private innovations: Array<Innovation>;
   private _innovationCards: InnovCard[];
@@ -130,6 +129,3 @@ export class ClientDiscoverComponent implements OnInit {
   }
 
 }
-
-
-

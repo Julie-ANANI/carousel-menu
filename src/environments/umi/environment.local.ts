@@ -9,5 +9,5 @@ export const environment = {
   companyURL: 'https://www.umi.us',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/v1524744845/app/companies-logo/logo-umi.svg',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1524744845/app/companies-logo/logo-umi.svg',
-  background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg'
+  background: 'https://res.cloudinary.com/umi/image/upload/v1527583034/app/default-images/cover-image.jpg'
 };
