@@ -52,6 +52,7 @@
   (closeSidebar)="closeSidebar($event)">
   <app-user-answer
     [adminMode]="true"
+    [mode]="editMode"
     [(userAnswer)]="modalAnswer"
     [innovationId]="campaign.innovation._id"
     [questions]="questions">

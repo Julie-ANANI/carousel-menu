@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit } from '@angular/core';
 import { Question } from '../../../../../../models/question';
 import { Answer } from '../../../../../../models/answer';
 import { TranslateService } from '@ngx-translate/core';
@@ -6,6 +6,7 @@ import { Tag } from '../../../../../../models/tag';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-user-answer',
@@ -19,6 +20,8 @@ export class UserAnswerComponent implements OnInit {
   @Input() questions: Array<Question>;
   @Input() adminMode: boolean;
 
+  @Input() mode: Subject<boolean>;
+
   @Input() set userAnswer(value: Answer) {
     this.modalAnswer = value;
     if (this.modalAnswer && !this.modalAnswer.company) {
@@ -28,9 +31,11 @@ export class UserAnswerComponent implements OnInit {
 
   modalAnswer: Answer;
   floor: any;
+  displayEmail = false;
   editJob = false;
   editCompany = false;
   editCountry = false;
+  editMode = false;
 
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
@@ -39,6 +44,10 @@ export class UserAnswerComponent implements OnInit {
 
   ngOnInit() {
     // this.adminMode = this.adminMode && this.authService.adminLevel > 2;
+
+    this.mode.subscribe((res) => {
+      this.editMode = res;
+    });
 
     this.floor = Math.floor;
 
@@ -83,6 +92,15 @@ export class UserAnswerComponent implements OnInit {
     this.editCountry = false;
   }
 
+  changeMode(event: Event) {
+    if (event.target['checked']) {
+      this.editMode = true;
+    } else {
+      this.editMode = false;
+      this.resetEdit();
+    }
+  }
+
   save(event: Event) {
     event.preventDefault();
     this.resetEdit();
@@ -113,7 +131,17 @@ export class UserAnswerComponent implements OnInit {
 
   updateStatus(event: Event, status: any) {
     event.preventDefault();
-    this.modalAnswer.status = status;
+    if (this.editMode) {
+      this.modalAnswer.status = status;
+      if (status === 'VALIDATED' || status === 'VALIDATED_NO_MAIL') {
+        this.displayEmail = true;
+      } else {
+        this.displayEmail = false;
+      }
+    } else {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.NOT_MODIFIED.USER_ANSWER');
+    }
+
   }
 
   sendEmail(event: Event, status: any) {

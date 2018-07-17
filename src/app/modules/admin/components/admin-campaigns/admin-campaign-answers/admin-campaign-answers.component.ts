@@ -9,6 +9,7 @@ import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import {Template} from '../../../../shared/components/shared-sidebar/interfaces/template';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-admin-campaign-answers',
@@ -29,6 +30,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer;
+  editMode = new Subject<boolean>();
   sidebarTemplateValue: Template = {};
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -98,6 +100,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   public closeSidebar(state: string) {
     this.sidebarTemplateValue.animate_state = state;
+    this.editMode.next(false);
   }
 
   get questions() { return this._questions; }
