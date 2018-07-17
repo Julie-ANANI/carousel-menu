@@ -45,8 +45,8 @@ export class AdminCampaignComponent implements OnInit {
       // Campaign
       this._campaign.stats['nbPros'] = this._campaign.stats['campaign'] ? this._campaign.stats['campaign']['nbProfessionals'] || 0 : 0;
       this._campaign.stats['nbPros90'] = this._campaign.stats['campaign'] ? this._campaign.stats['campaign']['nbFirstTierMails'] || 0 : 0;
+      this._campaign.stats['nbAnswers'] = this._campaign.stats['campaign'] ? this._campaign.stats['campaign']['nbResp'] || 0 : 0;
       this._campaign.stats['nbValidatedAnswers'] = this._campaign.stats['campaign'] ? this._campaign.stats['campaign']['nbValidatedResp'] || 0 : 0;
-      this._campaign.stats['nbSubmittedAnswers'] = this._campaign.stats['campaign'] ? this._campaign.stats['campaign']['nbToValidateResp'] || 0 : 0;
     } else {
       this.updateStats();
     }

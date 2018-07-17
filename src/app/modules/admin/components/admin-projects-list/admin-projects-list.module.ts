@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedSortModule } from '../../../shared/components/shared-sort/shared-sort.module';
-import { SharedFilterInputModule } from '../../../shared/components/shared-filter-input/filter-input.module';
+import { SharedFilterInputModule } from '../../../shared/components/shared-filter-input/shared-filter-input.module';
 import { SharedPaginationModule } from '../../../shared/components/shared-pagination/shared-pagination.module';
 
 // Components
