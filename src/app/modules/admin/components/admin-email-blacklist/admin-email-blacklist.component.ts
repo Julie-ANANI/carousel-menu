@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { EmailService } from '../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import {Template} from '../../../sidebar/interfaces/template';
-import {Table} from '../../../table/models/table';
+import { Table } from '../../../table/models/table';
+import { Template } from '../../../sidebar/interfaces/template';
 
 
 @Component({
