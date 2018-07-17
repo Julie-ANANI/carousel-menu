@@ -5,7 +5,7 @@ import { environment } from '../../../../../../environments/environment';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import {Batch} from '../../../../../models/batch';
-import {Table} from '../../../../shared/components/shared-table/models/table';
+import {Table} from '../../../../table/models/table';
 import {Template} from '../../../../sidebar/interfaces/template';
 
 @Component({
