@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { TagsService } from '../../../../services/tags/tags.service';
-import { MultilingPipe } from '../../../../pipe/pipes/multiling/multiling.pipe';
+import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Tag } from '../../../../models/tag';
 import { Observable } from 'rxjs/Observable';
 

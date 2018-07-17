@@ -35,6 +35,7 @@ import { AutocompleteInputModule } from '../../directives/autocomplete-input/aut
 import { SharedTagItemModule } from './components/shared-tag-item/shared-tag-item.module';
 import { SharedTextZoneModule } from './components/shared-text-zone/shared-text-zone.module';
 import { SharedLoaderModule } from './components/shared-loader/shared-loader.module';
+import { PipeModule } from '../../pipe/pipe.module';
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import { SharedLoaderModule } from './components/shared-loader/shared-loader.mod
     SharedWorldmapModule,
     AutocompleteInputModule,
     GlobalModule,
-    SharedLoaderModule
+    SharedLoaderModule,
+    PipeModule,
   ],
   declarations: [
     // Directives

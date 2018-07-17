@@ -8,7 +8,7 @@ import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../../models/tag';
 import { Observable } from 'rxjs/Observable';
-import { MultilingPipe } from '../../../../../pipe/pipes/multiling/multiling.pipe';
+import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 
 @Component({
   selector: 'app-admin-project-tags-pool',

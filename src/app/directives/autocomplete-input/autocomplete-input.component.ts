@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { AutocompleteService } from '../../services/autocomplete/autocomplete.service';
-import { MultilingPipe } from '../../pipe/pipes/multiling/multiling.pipe';
+import { MultilingPipe } from '../../pipe/pipes/multiling.pipe';
 import { Observable } from 'rxjs/Observable';
 
 @Component({

@@ -4,10 +4,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ChartsModule } from 'ng2-charts';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
 import { SidebarModule } from '../shared-sidebar/sidebar.module';
-import { MultilingModule } from '../../../../pipe/pipes/multiling/multiling.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { SharedModule } from '../../shared.module';
-import { EllipsisModule } from '../../../../pipe/pipes/ellipsis/ellipsis.module';
+import { PipeModule } from '../../../../pipe/pipe.module';
 
 /* Component */
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
@@ -29,8 +28,7 @@ import { CommonService } from '../../../../services/common/common.service';
   imports: [
     CommonModule,
     ChartsModule,
-    EllipsisModule,
-    MultilingModule,
+    PipeModule,
     SharedModule,
     SharedTextZoneModule,
     SharedWorldmapModule,
