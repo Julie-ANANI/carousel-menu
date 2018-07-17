@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {EmailQueueModel} from '../../../../models/mail.queue.model';
-import {Table} from '../../../shared/components/shared-table/models/table';
+import {Table} from '../../../table/models/table';
 
 @Component({
   selector: 'app-project-form',

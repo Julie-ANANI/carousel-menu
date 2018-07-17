@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Campaign } from '../../../../../models/campaign';
-import {Table} from '../../../../shared/components/shared-table/models/table';
+import {Table} from '../../../../table/models/table';
 import {Batch} from '../../../../../models/batch';
 
 @Component({

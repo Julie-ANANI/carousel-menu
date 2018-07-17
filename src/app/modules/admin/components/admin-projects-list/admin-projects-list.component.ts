@@ -5,7 +5,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { Subject } from 'rxjs/Subject';
 import { Innovation } from '../../../../models/innovation';
 import { User } from '../../../../models/user.model';
-import {Table} from '../../../shared/components/shared-table/models/table';
+import {Table} from '../../../table/models/table';
 
 @Component({
   selector: 'app-admin-projects-list',

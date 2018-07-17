@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedTableModule } from '../../../shared/components/shared-table/table.module';
+import { SharedTableModule } from '../../../table/table.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { AdminProjectsComponent } from './admin-projects.component';
 
