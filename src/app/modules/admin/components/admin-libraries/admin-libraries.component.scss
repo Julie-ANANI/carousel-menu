@@ -1,4 +1,4 @@
-#admin-emails {
+#admin-libraries {
 
   .tabs {
     border-bottom: 1px solid #CDCDCD;
@@ -27,6 +27,21 @@
   .tabs li a.active {
     color:  #FFB300;
     border-bottom-color: #FFB300;
+  }
+
+}
+
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  .tabs {
+    border-bottom: none;
+  }
+
+  .tabs li {
+    flex: 1 0 auto;
+    border-bottom: 1px solid #CDCDCD;
   }
 
 }

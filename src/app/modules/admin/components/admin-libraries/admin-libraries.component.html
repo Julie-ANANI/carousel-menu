@@ -1,21 +1,20 @@
-<div class="main-container" id="admin-emails">
+<div class="main-container" id="admin-libraries">
   <div class="columns">
     <div class="column col-12 col-mx-auto">
 
       <div class="hero-light-container">
         <div class="column col-xs-12 col-11 col-mx-auto">
-          Emails
+          <h1>Libraries</h1>
         </div>
       </div>
 
       <div class="column col-xs-12 col-11 col-mx-auto">
         <ul class="tabs">
-          <li><a [routerLink]="'/admin/emails/queue'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            File d'attente
-          </a></li>
-          <li><a [routerLink]="'/admin/emails/blacklist'" routerLinkActive="active">
-            Blacklist
-          </a></li>
+          <li *ngFor="let tab of tabs">
+            <a routerLinkActive="active" [routerLink]="tab" [routerLinkActiveOptions]="{ exact: true }">
+              {{ 'LIBRARIES.' + tab.toUpperCase() | translate }}
+            </a>
+          </li>
         </ul>
       </div>
 

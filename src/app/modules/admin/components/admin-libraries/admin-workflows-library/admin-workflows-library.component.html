@@ -1,0 +1,14 @@
+<div class="section-container">
+  <div class="columns">
+    <div class="column col-12 col-mx-auto">
+      <h3>Scénario de mails <i class="fas fa-sync c-hand" (click)="getScenarios()"></i></h3>
+      <ul>
+        <li *ngFor="let scenario of scenarios">
+          <a [routerLink]="'/admin/emails/templates/scenario/' + scenario._id">
+            {{ scenario.name }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

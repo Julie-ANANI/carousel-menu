@@ -36,6 +36,8 @@ import { sectionsRoutes } from './components/admin-preset/admin-sections/admin-s
 import { searchRoutes } from './components/admin-search/admin-search-routing.module';
 import { emailsRoutes } from './components/admin-emails/admin-emails-routing.module';
 import { projectRoutes } from './components/admin-project/admin-project-routing.module';
+import {AdminLibrariesComponent} from "./components/admin-libraries/admin-libraries.component";
+import {librariesRoutes} from "./components/admin-libraries/admin-libraries-routing.module";
 
 const adminRoutes: Routes = [
   {
@@ -102,6 +104,13 @@ const adminRoutes: Routes = [
         component: AdminEmailsComponent,
         children: [
           ...emailsRoutes
+        ]
+      },
+      {
+        path: 'libraries',
+        component: AdminLibrariesComponent,
+        children: [
+          ...librariesRoutes
         ]
       },
       {
