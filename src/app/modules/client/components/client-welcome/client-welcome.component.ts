@@ -26,7 +26,7 @@ export class ClientWelcomeComponent implements OnInit {
     if (!this._user) {
       this._router.navigate(['/logout']);
     } else if( this._user.emailVerified ) {
-      this._router.navigate(['/projects']);
+      this._router.navigate(['/project']);
     }
   }
 
@@ -40,7 +40,7 @@ export class ClientWelcomeComponent implements OnInit {
           this._authService.emailVerified = true;
         }
         this._authService.isConfirmed = true;
-        this._router.navigate(['/projects']);
+        this._router.navigate(['/project']);
       }, error => {
         console.error(error);
         this._router.navigate(['/logout']);
