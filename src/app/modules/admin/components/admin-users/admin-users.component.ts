@@ -3,7 +3,7 @@ import { UserService } from '../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
-import { Table } from '../../../shared/components/shared-table/models/table';
+import { Table } from '../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import {Template} from '../../../sidebar/interfaces/template';
 

@@ -4,7 +4,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
-import {Table} from '../shared-table/models/table';
+import {Table} from '../../../table/models/table';
 import {Template} from '../../../sidebar/interfaces/template';
 
 export interface SelectedProfessional extends Professional {

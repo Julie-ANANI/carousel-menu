@@ -7,7 +7,7 @@ import { AdminEmailsTemplatesModule } from './admin-emails-templates/admin-email
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { AdminBatchInformationComponent } from './admin-batch-information/admin-batch-information.component';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
-import { SharedTableModule } from '../../../shared/components/shared-table/table.module';
+import { SharedTableModule } from '../../../table/table.module';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
