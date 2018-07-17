@@ -67,6 +67,10 @@ export class AdminCampaignAnswersComponent implements OnInit {
     return adminLevel > level;
   }
 
+  public adminMode(): boolean {
+    return this._authService.adminLevel > 2;
+  }
+
   public filterByStatus(status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED') {
     return this._answers.filter(answer => answer.status === status);
   }

@@ -51,7 +51,7 @@
   [template]="sidebarTemplateValue"
   (closeSidebar)="closeSidebar($event)">
   <app-user-answer
-    [adminMode]="true"
+    [adminMode]="adminMode()"
     [mode]="editMode"
     [(userAnswer)]="modalAnswer"
     [innovationId]="campaign.innovation._id"
