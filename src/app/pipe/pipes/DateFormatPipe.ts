@@ -1,22 +1,20 @@
-/**
- * Created by juandavidcruzgomez on 13/02/2018.
- */
 import { Pipe, PipeTransform } from '@angular/core';
 
 
 @Pipe({name: 'dateTransform'})
+
 export class DateFormatPipe implements PipeTransform {
 
-    YEAR_DAYS: number = 365;
-    YEAR_MONTHS: number = 12;
-    MONTH_DAYS: number = 30;
-    DAY_HOURS: number = 24;
+    YEAR_DAYS = 365;
+    YEAR_MONTHS = 12;
+    MONTH_DAYS = 30;
+    DAY_HOURS = 24;
 
 
     transform(value: number, format: string): string{
-        let years = "";
-        let months = "";
-        let days = "";
+        let years = '';
+        let months = '';
+        let days = '';
         value = Math.abs(value);
         if(value >= this.YEAR_DAYS) {
             years = `${Math.floor(value / this.YEAR_DAYS)}`;
@@ -27,7 +25,7 @@ export class DateFormatPipe implements PipeTransform {
             value = value % this.MONTH_DAYS;
         }
         days = `${value}`;
-        return '-'+(years?`${years} y,`:'') + (months?` ${months} m,`:'') + (days?` ${days} d`:'0d');
+        return '-' + (years ? `${years} y,` : '') + (months ? ` ${months} m,` : '') + (days ? ` ${days} d` : '0d');
     }
 
 }

@@ -4,6 +4,7 @@ import { Multiling } from '../../models/multiling';
 @Pipe({
   name: 'multiling'
 })
+
 export class MultilingPipe implements PipeTransform {
 
   transform(value: Multiling, lang: string = 'en'): string {
@@ -13,7 +14,7 @@ export class MultilingPipe implements PipeTransform {
       if (lang !== 'en' && value['en']) {
         return value['en'];
       } else {
-        for (var a in value) return value[a];
+        for (const a in value) return value[a];
       }
     } else {
       return '';

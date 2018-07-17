@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 // Pipes
-import { MultilingModule } from '../../pipes/multiling/multiling.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
@@ -14,7 +13,6 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 @NgModule({
     imports: [
         CommonModule,
-        MultilingModule,
         FormsModule,
         ReactiveFormsModule,
         TranslateModule.forChild(),

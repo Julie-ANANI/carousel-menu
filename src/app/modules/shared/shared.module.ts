@@ -25,12 +25,6 @@ import { SharedMarketReportExampleComponent } from './components/shared-market-r
 import { SharedProjectEditCardsComponent } from './components/shared-project-edit-cards-component/shared-project-edit-cards.component';
 import { GlobalModule } from '../global/global.module';
 
-// Pipes
-import { DomSanitizerPipe } from '../../pipes/DomSanitizer';
-import { FilterPipe } from '../../pipes/TableFilterPipe';
-import { LimitsPipe } from '../../pipes/TableLimitsPipe';
-import { CharacterCountdown } from '../../pipes/CharacterCountdown';
-import { MultilingModule } from '../../pipes/multiling/multiling.module';
 
 // Internal Modules
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
@@ -62,7 +56,6 @@ import { SharedLoaderModule } from './components/shared-loader/shared-loader.mod
     SidebarModule,
     SharedWorldmapModule,
     AutocompleteInputModule,
-    MultilingModule,
     GlobalModule,
     SharedLoaderModule
   ],
@@ -78,11 +71,7 @@ import { SharedLoaderModule } from './components/shared-loader/shared-loader.mod
     SharedProjectSettingsComponent,
     SharedSearchMailComponent,
     SharedMarketReportExampleComponent,
-    SharedProjectEditCardsComponent,
-    DomSanitizerPipe,
-    FilterPipe,
-    LimitsPipe,
-    CharacterCountdown
+    SharedProjectEditCardsComponent
   ],
   exports: [
     // Modules
@@ -105,10 +94,7 @@ import { SharedLoaderModule } from './components/shared-loader/shared-loader.mod
     SharedLatexManagerComponent,
     SharedProjectSettingsComponent,
     SharedSearchMailComponent,
-    SharedProjectEditCardsComponent,
-    FilterPipe,
-    LimitsPipe,
-    CharacterCountdown
+    SharedProjectEditCardsComponent
   ]
 })
 

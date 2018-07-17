@@ -17,6 +17,10 @@ import { AdminProjectModule } from './components/admin-project/admin-project.mod
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
 import { SidebarModule } from '../shared/components/shared-sidebar/sidebar.module';
+import { HeaderModule } from '../base/component/header/header.module';
+import { GlobalModule } from '../global/global.module';
+import { FooterModule } from '../base/component/footer/footer.module';
+import { PipeModule } from '../../pipe/pipe.module';
 
 // Components
 import { AdminComponent } from './admin.component';
@@ -25,11 +29,6 @@ import { AdminIndexComponent } from './components/admin-index/admin-index.compon
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
 import { AdminProjectsListComponent } from './components/admin-projects-list/admin-projects-list.component';
-
-// Pipes
-import { EllipsisModule } from '../../pipes/ellipsis/ellipsis.module';
-import { DateFormatPipe } from '../../pipes/DateFormatPipe';
-import { GlobalModule } from '../global/global.module';
 
 
 @NgModule({
@@ -49,8 +48,10 @@ import { GlobalModule } from '../global/global.module';
     SharedModule,
     GlobalModule,
     TranslateModule.forChild(),
-    EllipsisModule,
-    SidebarModule
+    SidebarModule,
+    HeaderModule,
+    FooterModule,
+    PipeModule
   ],
   declarations: [
     AdminComponent,
@@ -58,8 +59,8 @@ import { GlobalModule } from '../global/global.module';
     AdminIndexComponent,
     AdminPatentsComponent,
     AdminUserDetailsComponent,
-    AdminProjectsListComponent,
-    DateFormatPipe
+    AdminProjectsListComponent
   ]
 })
+
 export class AdminModule {}

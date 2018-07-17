@@ -8,8 +8,8 @@ import { InputListModule } from '../../../../directives/input-list/input-list.mo
 import { SharedTableModule } from '../shared-table/table.module';
 import { AutocompleteInputModule } from '../../../../directives/autocomplete-input/autocomplete-input.module';
 import { SharedTagItemModule } from '../shared-tag-item/shared-tag-item.module';
-import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module'
+import { PipeModule } from '../../../../pipe/pipe.module';
 
 // Components
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
@@ -34,8 +34,8 @@ import { RatingItemComponent } from './components/user-answer/rating-item/rating
     SharedTableModule,
     AutocompleteInputModule,
     SharedTagItemModule,
-    MultilingModule,
-    SharedTextZoneModule
+    SharedTextZoneModule,
+    PipeModule
   ],
   declarations: [
     SidebarBatchComponent,

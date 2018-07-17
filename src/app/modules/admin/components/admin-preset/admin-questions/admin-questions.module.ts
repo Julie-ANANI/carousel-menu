@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { AdminQuestionsComponent } from './admin-questions.component';
-import { AdminQuestionsEditComponent } from './admin-questions-edit/admin-questions-edit.component';
-import { AdminQuestionsListComponent } from './admin-questions-list/admin-questions-list.component';
-import { AdminQuestionsNewComponent } from './admin-questions-new/admin-questions-new.component';
 import { SharedSortModule} from '../../../../shared/components/shared-sort/sort.module';
 import { SharedPaginationModule } from '../../../../shared/components/shared-pagination/pagination.module';
 import { SharedFilterInputModule } from '../../../../shared/components/shared-filter-input/filter-input.module';
 import { SharedModule } from '../../../../shared/shared.module';
 import { SharedLoaderModule } from '../../../../shared/components/shared-loader/shared-loader.module';
+import { PipeModule } from '../../../../../pipe/pipe.module';
+
+import { AdminQuestionsComponent } from './admin-questions.component';
+import { AdminQuestionsEditComponent } from './admin-questions-edit/admin-questions-edit.component';
+import { AdminQuestionsListComponent } from './admin-questions-list/admin-questions-list.component';
+import { AdminQuestionsNewComponent } from './admin-questions-new/admin-questions-new.component';
 
 @NgModule({
   imports: [
@@ -19,7 +21,8 @@ import { SharedLoaderModule } from '../../../../shared/components/shared-loader/
     SharedPaginationModule,
     SharedFilterInputModule,
     TranslateModule.forChild(),
-    SharedLoaderModule
+    SharedLoaderModule,
+    PipeModule
   ],
   declarations: [
     AdminQuestionsComponent,

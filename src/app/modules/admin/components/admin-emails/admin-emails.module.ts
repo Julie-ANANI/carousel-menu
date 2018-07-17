@@ -5,8 +5,10 @@ import { SharedModule } from '../../../shared/shared.module';
 import { AdminEmailsComponent } from './admin-emails.component';
 import { AdminEmailQueueComponent } from './admin-emails-queue/admin-emails-queue.component';
 import { AdminEmailsTemplatesModule } from './admin-emails-templates/admin-emails-templates.module';
-import { AdminBatchInformationComponent } from './admin-batch-information/admin-batch-information.component';
 import { SidebarModule } from '../../../shared/components/shared-sidebar/sidebar.module';
+import { PipeModule } from '../../../../pipe/pipe.module';
+
+import { AdminBatchInformationComponent } from './admin-batch-information/admin-batch-information.component';
 
 @NgModule({
   imports: [
@@ -14,7 +16,8 @@ import { SidebarModule } from '../../../shared/components/shared-sidebar/sidebar
     SharedModule,
     TranslateModule.forChild(),
     AdminEmailsTemplatesModule,
-    SidebarModule
+    SidebarModule,
+    PipeModule
   ],
   declarations: [
     AdminEmailsComponent,

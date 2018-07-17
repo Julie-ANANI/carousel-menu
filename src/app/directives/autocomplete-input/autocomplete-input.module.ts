@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AutocompleteInputComponent } from './autocomplete-input.component';
-import { MultilingModule } from '../../pipes/multiling/multiling.module';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { RouterModule } from '@angular/router';
+import { PipeModule } from '../../pipe/pipe.module';
+
+import { AutocompleteInputComponent } from './autocomplete-input.component';
 
 @NgModule({
   imports: [
@@ -13,9 +14,9 @@ import { RouterModule } from '@angular/router';
     TranslateModule.forChild(),
     FormsModule,
     ReactiveFormsModule,
-    MultilingModule,
     Ng2AutoCompleteModule,
-    RouterModule
+    RouterModule,
+    PipeModule
   ],
   declarations: [
    AutocompleteInputComponent

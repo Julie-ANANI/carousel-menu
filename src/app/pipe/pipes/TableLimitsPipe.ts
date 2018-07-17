@@ -1,7 +1,3 @@
-/**
- * Created by juandavidcruzgomez on 13/04/2018.
- */
-
 import { Pipe, PipeTransform, Injectable } from '@angular/core';
 
 @Pipe({ name: 'limits' })
@@ -17,10 +13,8 @@ export class LimitsPipe implements PipeTransform {
             return items;
         }
 
-        let start = (field === 'offset') ? (value || 0) : 0;
-        let limit = (field === 'limit') ? (value || items.length) : items.length;
-
-
+        const start = (field === 'offset') ? (value || 0) : 0;
+        const limit = (field === 'limit') ? (value || items.length) : items.length;
 
         return items.slice(start, (start + limit));
     }

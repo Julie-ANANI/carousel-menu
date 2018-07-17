@@ -9,17 +9,9 @@
 
 <div *ngIf="displayLoading === false" class="body">
 
-  <!-- Showing when client is authenticated -->
-  <app-header *ngIf="authService.isAuthenticated"></app-header>
-
-  <div class="main">
-    <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
-    <progress class="progress" max="100" *ngIf="displayLoader"></progress>
-    <router-outlet></router-outlet>
-  </div>
-
-  <!-- Showing when client is not authenticated -->
-  <app-footer *ngIf="authService.isAuthenticated"></app-footer>
+  <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
+  <progress class="progress" max="100" *ngIf="displayLoader"></progress>
+  <router-outlet></router-outlet>
 
 </div>
 

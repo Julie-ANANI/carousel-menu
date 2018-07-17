@@ -5,8 +5,6 @@ import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/en';
 import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/en';
 import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/en';
 import { WELCOME } from '../modules/client/components/client-welcome/i18n/en';
-import { HEADER } from '../directives/header/i18n/en';
-import { FOOTER } from '../directives/footer/i18n/en';
 import { EXPORT } from '../modules/shared/components/shared-latex-manager/i18n/en';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/en';
 import { PAGINATION } from '../modules/shared/components/shared-pagination/i18n/en';
@@ -25,6 +23,8 @@ import { DISCOVERDESCRIPTION } from '../modules/client/components/client-discove
 import { LOG_IN } from '../modules/base/component/login-page/i18n/en';
 import { FORGET_PASSWORD } from '../modules/base/component/forget-password-page/i18n/en';
 import { SIGN_UP } from '../modules/base/component/signup-page/i18n/en';
+import { HEADER } from '../modules/base/component/header/i18n/en';
+import { FOOTER } from '../modules/base/component/footer/i18n/en';
 
 export const en = {
   'COMMON': COMMON,

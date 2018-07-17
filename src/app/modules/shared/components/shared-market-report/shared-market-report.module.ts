@@ -4,10 +4,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ChartsModule } from 'ng2-charts';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
 import { SidebarModule } from '../shared-sidebar/sidebar.module';
-import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
+import { MultilingModule } from '../../../../pipe/pipes/multiling/multiling.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { SharedModule } from '../../shared.module';
-import { EllipsisModule } from '../../../../pipes/ellipsis/ellipsis.module';
+import { EllipsisModule } from '../../../../pipe/pipes/ellipsis/ellipsis.module';
 
 /* Component */
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';

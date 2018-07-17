@@ -8,9 +8,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedProsListModule } from '../../../shared/components/shared-pros-list/pros-list.module';
 import { SharedAnswerListModule } from '../../../shared/components/shared-answers-list/shared-answer-list.module';
 import { SharedSearchHistoryModule} from '../../../shared/components/shared-search-history/search-history.module';
-import {SharedSearchProsModule} from '../../../shared/components/shared-search-pros/shared-search-pros.module';
-import {SharedSearchResultsModule} from '../../../shared/components/shared-search-results/search-results.module';
-import {SharedEditScenarioModule} from '../../../shared/components/shared-edit-scenario/shared-edit-scenario.module';
+import { SharedSearchProsModule } from '../../../shared/components/shared-search-pros/shared-search-pros.module';
+import { SharedSearchResultsModule } from '../../../shared/components/shared-search-results/search-results.module';
+import { SharedEditScenarioModule } from '../../../shared/components/shared-edit-scenario/shared-edit-scenario.module';
+import { PipeModule } from '../../../../pipe/pipe.module';
 
 // Components
 import { AdminCampaignsComponent } from './admin-campaigns.component';
@@ -23,9 +24,10 @@ import { AdminCampaignProsComponent } from './admin-campaign-pros/admin-campaign
 import { AdminCampaignSearchComponent } from './admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignSearchResultsComponent } from './admin-campaign-search-results/admin-campaign-search-results.component';
 import { AdminCampaignTemplatesComponent } from './admin-campaign-templates/admin-campaign-templates.component';
-import {SidebarModule} from '../../../shared/components/shared-sidebar/sidebar.module';
-import {SharedTableModule} from '../../../shared/components/shared-table/table.module';
-import {AdminCampaignAbtestingComponent} from './admin-campaign-abtesting/admin-campaign-abtesting.component';
+import { SidebarModule } from '../../../shared/components/shared-sidebar/sidebar.module';
+import { SharedTableModule } from '../../../shared/components/shared-table/table.module';
+import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admin-campaign-abtesting.component';
+
 
 @NgModule({
   imports: [
@@ -42,7 +44,7 @@ import {AdminCampaignAbtestingComponent} from './admin-campaign-abtesting/admin-
     TranslateModule.forChild(),
     SidebarModule,
     SharedTableModule,
-
+    PipeModule
   ],
   declarations: [
     AdminCampaignsComponent,
