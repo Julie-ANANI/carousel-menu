@@ -31,12 +31,13 @@ const clientRoutes: Routes = [
     children: [
       {
         path: '',
+        canActivate: [AuthGuard],
         pathMatch: 'full',
         redirectTo: '/project'
       },
       {
         path: 'welcome',
-        /*canActivate: '',*/
+        canActivate: [AuthGuard],
         children: [
           { path: '', component: ClientWelcomeComponent, pathMatch: 'full' }
         ]
