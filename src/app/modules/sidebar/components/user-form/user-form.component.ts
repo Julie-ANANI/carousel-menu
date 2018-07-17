@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {User} from '../../../../models/user.model';
@@ -7,6 +7,7 @@ import {Campaign} from '../../../../models/campaign';
 import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
 import {AuthService} from '../../../../services/auth/auth.service';
 import {environment} from '../../../../../environments/environment';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-user-form',
@@ -14,7 +15,7 @@ import {environment} from '../../../../../environments/environment';
   styleUrls: ['./user-form.component.scss']
 })
 
-export class UserFormComponent implements OnInit, OnChanges {
+export class UserFormComponent implements OnInit {
 
   /*
      For type 'editUser', put the data into the attribute user and patch it to the formData
@@ -36,13 +37,13 @@ export class UserFormComponent implements OnInit, OnChanges {
     this._campaign = value;
   }
 
-  @Input() sidebarState: string;
-
   @Input() set type(type: string) {
     if (type === 'signUp') {
       this.loadSignUp();
     }
   }
+
+  @Input() sidebarState: Subject<string>;
 
   @Output() userSignUpData = new EventEmitter<FormGroup>();
   @Output() editUserData = new EventEmitter<User>();
@@ -95,6 +96,17 @@ export class UserFormComponent implements OnInit, OnChanges {
     });
 
     this._user = new User();
+
+    if (this.sidebarState) {
+      this.sidebarState.subscribe((state) => {
+        if (state === 'inactive') {
+          setTimeout (() => {
+            this.userForm.reset();
+          }, 700);
+        }
+      })
+    }
+
   }
 
   loadSignUp() {
@@ -163,15 +175,6 @@ export class UserFormComponent implements OnInit, OnChanges {
     const baseUri = environment.quizUrl + '/quiz/' + this.campaign.innovation.quizId + '/' + this.campaign._id;
     const parameters = '?pro=' + pro._id + '&lang=' + this._translateService.currentLang;
     window.open(baseUri + parameters);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-
-    if (this.isSignUp) {
-      if (changes.sidebarState.currentValue !== changes.sidebarState.previousValue) {
-        this.userForm.reset();
-      }
-    }
   }
 
   public startEditInstanceDomain(event: Event): void {

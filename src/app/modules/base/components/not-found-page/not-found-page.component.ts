@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-not-found-page',
@@ -19,7 +19,7 @@ export class NotFoundPageComponent implements OnInit {
     /**
      * Go somewhere else
      */
-    setTimeout(()=>{
+    setTimeout(() => {
       this._router.navigate(['/'] );
     }, 2000);
   }
