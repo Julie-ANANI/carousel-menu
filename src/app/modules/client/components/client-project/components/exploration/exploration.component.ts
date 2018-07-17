@@ -7,7 +7,7 @@ import { Clearbit } from '../../../../../../models/clearbit';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
-import { Table } from '../../../../../shared/components/shared-table/models/table';
+import { Table } from '../../../../../table/models/table';
 import {Template} from '../../../../../sidebar/interfaces/template';
 import {Subject} from 'rxjs/Subject';
 

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {Column, types} from '../shared-table/models/column';
-import {Choice} from '../shared-table/models/choice';
+import {Column, types} from '../../../table/models/column';
+import {Choice} from '../../../table/models/choice';
 
 @Component({
   selector: 'sqFilterMulti',
