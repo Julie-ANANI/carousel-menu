@@ -5,7 +5,7 @@ import { environment } from '../../../../../../environments/environment';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import {Batch} from '../../../../../models/batch';
-import {Table} from '../../../../shared/components/shared-table/models/table';
+import {Table} from '../../../../table/models/table';
 import {Template} from '../../../../sidebar/interfaces/template';
 
 @Component({
@@ -162,7 +162,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public poubelle(batch: Batch) {
-    if (this._campaign.settings.ABsettings.status === 0) {
+    if (this._campaign.settings.ABsettings.status === '0') {
       return batch.status === 0;
     } else {
       if (batch._id === this._campaign.settings.ABsettings.batchA || batch._id === this._campaign.settings.ABsettings.batchB) {
@@ -179,7 +179,7 @@ export class AdminCampaignMailsComponent implements OnInit {
       this.innoReady &&
       this.templateImported &&
       this.defaultWorkflow &&
-      (this.statusAB !== 1)
+      (this.statusAB !== '1')
     );
   }
 
@@ -190,7 +190,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public getWorkflowName(index: number) {
-    if (this.campaign.settings.ABsettings.status !== 0) {
+    if (this.campaign.settings.ABsettings.status !== '0') {
       if (index === 0) {
         return this.campaign.settings.ABsettings.nameWorkflowA;
       }

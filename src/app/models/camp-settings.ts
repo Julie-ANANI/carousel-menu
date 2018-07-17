@@ -7,7 +7,7 @@ export interface CampaignSettings {
   ABsettings?: {
     batchA: string,
     batchB: string,
-    status: number,
+    status: string,
     nameWorkflowA: string,
     nameWorkflowB: string,
   },
