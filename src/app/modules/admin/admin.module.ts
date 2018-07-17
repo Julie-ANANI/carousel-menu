@@ -12,6 +12,9 @@ import { AdminTagModule } from './components/admin-tags/admin-tag.module';
 import { AdminProjectModule } from './components/admin-project/admin-project.module';
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
+import { AdminLibrariesModule } from "./components/admin-libraries/admin-libraries.module";
+
+// Components
 import { PipeModule } from '../../pipe/pipe.module';
 import { BaseModule } from '../base/base.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
@@ -36,6 +39,7 @@ import { RouterModule } from '@angular/router';
     AdminProjectsModule,
     AdminProfessionalsModule,
     AdminEmailBlacklistModule,
+    AdminLibrariesModule,
     AdminTagModule,
     AdminCampaignsModule,
     AdminProjectModule,

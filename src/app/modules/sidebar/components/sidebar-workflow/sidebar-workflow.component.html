@@ -1,0 +1,29 @@
+<div class="card email" *ngIf="email">
+  <div class="card-header">
+    <div class="d-flex">
+      <span (click)="changeLanguage('en')" [ngClass]="{active: language === 'en'}">English</span>
+      <span (click)="changeLanguage('fr')" [ngClass]="{active: language === 'fr'}">Français</span>
+      <label class="form-switch" *ngIf="email.content != null">
+        <input type="checkbox" (change)="(editionMode = !editionMode) && $event.preventDefault()">
+        <i class="form-icon"></i>Preview
+      </label>
+    </div>
+    <div class="d-flex">
+      <div class="card-title h5" *ngIf="!editionMode">{{ email.subject }}</div>
+      <div class="card-title h5" *ngIf="editionMode">
+        <div class="form-group d-flex">Objet: <input type="text" [(ngModel)]="email.subject" name="subject" class="form-input"/></div>
+      </div>
+    </div>
+    <i class="fas fa-check" *ngIf="email.modified && inCampaign"></i>
+    <i class="fas fa-times" *ngIf="!email.modified && inCampaign"></i>
+  </div>
+  <div class="card-body">
+    <h4 *ngIf="editionMode">Contenu</h4>
+    <text-zone [elementId]="email.language + email.step + email.profile"
+               [readonly]="!editionMode"
+               [data]="email.content || ''"
+               (onEditorKeyup)="updateContent($event)"></text-zone>
+    <button *ngIf="editionMode" type="submit" class="btn btn-primary centered" (click)="save()">Sauvegarder</button>
+    <p *ngIf="editionMode">Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*, *|DOMAIN|*</p>
+  </div>
+</div>

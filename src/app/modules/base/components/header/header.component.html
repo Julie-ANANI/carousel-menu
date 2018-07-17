@@ -109,6 +109,16 @@
                   Emails
                 </a>
               </li>
+              <!-- Back office libraries page -->
+              <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
+                <a
+                  routerLinkActive="active"
+                  [routerLink]="'/admin/libraries'"
+                  title=""
+                  (click)="onClickLink()">
+                  Libraries
+                </a>
+              </li>
               <!-- Back office presets page -->
               <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
                 <a

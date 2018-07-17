@@ -10,6 +10,7 @@ import { SharedPaginationModule } from '../shared/components/shared-pagination/s
 import {InputModule} from '../input/input.module';
 
 // Components
+import { PipeModule } from '../../pipe/pipe.module';
 import { TableComponent } from './components/table.component';
 
 @NgModule({
@@ -21,7 +22,9 @@ import { TableComponent } from './components/table.component';
     SharedPaginationModule,
     FormsModule,
     TranslateModule.forChild(),
-    InputModule
+    InputModule,
+    TranslateModule.forChild(),
+    PipeModule
   ],
   declarations: [
     TableComponent
