@@ -8,10 +8,10 @@ import {MultiLabel} from '../models/multi-label';
 
 @Component({
   selector: 'app-shared-table',
-  templateUrl: './shared-table.component.html',
-  styleUrls: ['./shared-table.component.scss']
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss']
 })
-export class SharedTableComponent {
+export class TableComponent {
 
   @Input() set config(value: any) {
     this.loadConfig(value);
