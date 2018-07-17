@@ -99,6 +99,10 @@ export class AnswerQuestionComponent implements OnInit {
       });
   }
 
+  public answerTags(identifier: string): Array<any> {
+    return this.fullAnswer.answerTags && this.fullAnswer.answerTags[identifier] ? this.fullAnswer.answerTags[identifier] : [];
+  }
+
   get lang (): string {
     return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
