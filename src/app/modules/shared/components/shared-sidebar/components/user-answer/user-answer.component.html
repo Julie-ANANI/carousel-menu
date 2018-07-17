@@ -22,7 +22,7 @@
               <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCountry = true;" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
             </div>
           </div>
-          <div class="editMode">
+          <div *ngIf="adminMode" class="editMode">
             <label class="form-switch" for="editMode">
               <input
                 type="checkbox"
