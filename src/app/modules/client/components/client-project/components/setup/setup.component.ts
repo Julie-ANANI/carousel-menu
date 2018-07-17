@@ -130,7 +130,7 @@ export class SetupProjectComponent implements OnInit {
       .first().subscribe(data => {
        this.project.status = 'SUBMITTED';
        this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
-       this.router.navigate(['projects']);
+       this.router.navigate(['project']);
       }, err => {
         this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
