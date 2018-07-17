@@ -16,13 +16,13 @@ import { NonAuthGuard } from '../../non-auth-guard.service';
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
-import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 import { ClientDiscoverPageComponent } from './components/client-discover-page/client-discover-page.component';
 import { DiscoverDescriptionComponent } from './components/client-discover-page/discover-description/discover-description.component';
 import { LoginPageComponent } from '../base/component/login-page/login-page.component';
 import { LogoutPageComponent } from '../base/component/logout-page/logout-page.component';
 import { ForgetPasswordPageComponent } from '../base/component/forget-password-page/forget-password-page.component';
 import { SignupPageComponent } from '../base/component/signup-page/signup-page.component';
+import { WelcomePageComponent } from '../base/component/welcome-page/welcome-page.component';
 
 const clientRoutes: Routes = [
   {
@@ -38,7 +38,7 @@ const clientRoutes: Routes = [
         path: 'welcome',
         /*canActivate: '',*/
         children: [
-          { path: '', component: ClientWelcomeComponent, pathMatch: 'full' }
+          { path: '', component: WelcomePageComponent, pathMatch: 'full' }
         ]
       },
       {

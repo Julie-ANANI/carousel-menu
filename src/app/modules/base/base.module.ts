@@ -14,6 +14,7 @@ import { LoginPageComponent } from './component/login-page/login-page.component'
 import { LogoutPageComponent } from './component/logout-page/logout-page.component';
 import { SignupPageComponent } from './component/signup-page/signup-page.component';
 import { ForgetPasswordPageComponent } from './component/forget-password-page/forget-password-page.component';
+import { WelcomePageComponent } from './component/welcome-page/welcome-page.component';
 
 @NgModule({
   imports: [
@@ -31,13 +32,10 @@ import { ForgetPasswordPageComponent } from './component/forget-password-page/fo
     ForgetPasswordPageComponent,
     SignupPageComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    WelcomePageComponent
   ],
   exports: [
-    LoginPageComponent,
-    LogoutPageComponent,
-    ForgetPasswordPageComponent,
-    SignupPageComponent,
     FooterComponent,
     HeaderComponent
   ]

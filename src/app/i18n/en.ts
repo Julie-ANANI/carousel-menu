@@ -4,7 +4,6 @@ import { ANSWER } from '../modules/shared/components/shared-sidebar/components/u
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/en';
 import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/en';
 import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/en';
-import { WELCOME } from '../modules/client/components/client-welcome/i18n/en';
 import { EXPORT } from '../modules/shared/components/shared-latex-manager/i18n/en';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/en';
 import { PAGINATION } from '../modules/shared/components/shared-pagination/i18n/en';
@@ -25,6 +24,7 @@ import { FORGET_PASSWORD } from '../modules/base/component/forget-password-page/
 import { SIGN_UP } from '../modules/base/component/signup-page/i18n/en';
 import { HEADER } from '../modules/base/component/header/i18n/en';
 import { FOOTER } from '../modules/base/component/footer/i18n/en';
+import { WELCOME } from '../modules/base/component/welcome-page/i18n/en';
 
 export const en = {
   'COMMON': COMMON,

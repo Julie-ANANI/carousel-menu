@@ -18,7 +18,6 @@ import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
-import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
 import { ClientDiscoverPageComponent } from './components/client-discover-page/client-discover-page.component';
 import { DiscoverDescriptionComponent } from './components/client-discover-page/discover-description/discover-description.component';
 
@@ -42,7 +41,6 @@ import { DiscoverDescriptionComponent } from './components/client-discover-page/
   declarations: [
     ClientComponent,
     ClientMyAccountComponent,
-    ClientWelcomeComponent,
     ClientResetPasswordComponent,
     ClientDiscoverPageComponent,
     DiscoverDescriptionComponent,
