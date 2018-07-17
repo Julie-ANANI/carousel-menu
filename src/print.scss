@@ -189,7 +189,7 @@
         border-radius: 0 !important;
         margin-bottom: 0 !important;
 
-        country-flag img {
+        app-country-flag img {
           position: relative;
           top: 4px;
         }
@@ -221,7 +221,7 @@
       page-break-before: always;
     }
 
-    ul.comments-bar li country-flag img {
+    ul.comments-bar li app-country-flag img {
       position: relative;
       top: -4px;
     }

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-
 import { EmailService } from '../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import {Table} from '../../../shared/components/shared-table/models/table';
-import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
+import {Template} from '../../../sidebar/interfaces/template';
 
 
 @Component({
@@ -80,17 +79,17 @@ export class AdminEmailBlacklistComponent implements OnInit {
                 {_attrs: ['reason'], _name: 'COMMON.REASON', _type: 'MULTI-CHOICES',
                   _choices: [
                     {
-                      _name: "MANUALLY_ADDED",
+                      _name: 'MANUALLY_ADDED',
                       _class: 'label-progress'
                     }, {
-                      _name: "USER_SUPPRESSION",
+                      _name: 'USER_SUPPRESSION',
                       _class: 'label-validate'
                     }, {
-                      _name: "PROFESSIONAL_SUPPRESSION",
+                      _name: 'PROFESSIONAL_SUPPRESSION',
                       _class: 'label-alert'
                     },
                     {
-                      _name: "MAIL_EVENT",
+                      _name: 'MAIL_EVENT',
                       _class: 'label-editing'
                     }
                     ]}]
@@ -121,13 +120,30 @@ export class AdminEmailBlacklistComponent implements OnInit {
       };
   }
 
-  addEmails() {
+  excludeEmails() {
     this._more = {
       animate_state: 'active',
-      title: 'COMMON.ADD-EMAIL',
-      type: 'addEmail'
+      title: 'COMMON.EXCLUDE-EMAILS',
+      type: 'excludeEmails'
     };
   }
+
+  excludeDomains() {
+    this._more = {
+      animate_state: 'active',
+      title: 'COMMON.EXCLUDE-DOMAINS',
+      type: 'excludeDomains'
+    };
+  }
+
+  excludeCountries() {
+    this._more = {
+      animate_state: 'active',
+      title: 'COMMON.EXCLUDE-COUNTRIES',
+      type: 'excludeCountries'
+    };
+  }
+
   closeSidebar(value: string) {
     this.more.animate_state = value;
   }
@@ -160,8 +176,21 @@ export class AdminEmailBlacklistComponent implements OnInit {
     });
   }
 
+  addDomainsToBlacklistFinish(domains: Array<string>) {
+    /*domains.forEach((value: any) => {
+      this._emailService.addToBlacklist({domain: value.text})
+        .subscribe(result => {
+          this._notificationsService.success('Blacklist', 'ERROR.ACCOUNT.UPDATE');
+          this._more = {animate_state: 'inactive', title: this._more.title};
+          this.loadData(this._config);
+        }, error => {
+          this._notificationsService.error('Error', error);
+        });
+    });*/
+  }
+
   public addEntry() {
-    this._emailService.addToBlacklist({email:this.addressToBL})
+    this._emailService.addToBlacklist({email: this.addressToBL})
         .subscribe(result => {
           this.addressToBL = '';
           this.resetSearch();
@@ -189,20 +218,20 @@ export class AdminEmailBlacklistComponent implements OnInit {
   }
 
   public reasonFormat(datum: any): string {
-    let result = "";
-    switch(datum.reason || "") {
-      case( "USER_SUPPRESSION" ):
-        result = "Deleted user";
+    let result = '';
+    switch (datum.reason || '') {
+      case( 'USER_SUPPRESSION' ):
+        result = 'Deleted user';
         break;
-      case("PROFESSIONAL_SUPPRESSION"):
-          result = "Deleted professional";
+      case('PROFESSIONAL_SUPPRESSION'):
+          result = 'Deleted professional';
         break;
       case('MAIL_EVENT'):
-        result = "Unsubscribe event";
+        result = 'Unsubscribe event';
         break;
-      case("MANUALLY_ADDED"):
+      case('MANUALLY_ADDED'):
       default:
-        result = "Added by operator";
+        result = 'Added by operator';
     }
     return result;
   }

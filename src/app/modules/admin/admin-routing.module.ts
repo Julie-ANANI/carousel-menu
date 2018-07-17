@@ -13,7 +13,6 @@ import { AdminEmailsComponent } from './components/admin-emails/admin-emails.com
 import { AdminComponent } from './admin.component';
 import { AdminAuthGuard } from '../../admin-auth-guard.service';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
-import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
 import { AdminCampaignComponent } from './components/admin-campaigns/admin-campaign/admin-campaign.component';
 import { AdminCampaignMailsComponent } from './components/admin-campaigns/admin-campaign-mails/admin-campaign-mails.component';
 import { AdminCampaignTemplatesComponent } from './components/admin-campaigns/admin-campaign-templates/admin-campaign-templates.component';
@@ -28,6 +27,7 @@ import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { RequestResolver } from '../../resolvers/request.resolver';
 import { AdminPresetComponent } from './components/admin-preset/admin-preset.component';
 import { AdminTagsComponent } from './components/admin-tags/admin-tags.component';
+import { NotFoundPageComponent } from '../base/components/not-found-page/not-found-page.component';
 
 import { tagsRoutes } from './components/admin-tags/admin-tags-routing.module';
 import { presetsRoutes } from './components/admin-preset/admin-presets/admin-presets-routing.module';
@@ -142,7 +142,7 @@ const adminRoutes: Routes = [
           ...tagsRoutes
         ]
       },
-      { path: '**', component: SharedNotFoundComponent }
+      { path: '**', component: NotFoundPageComponent }
     ]
   }
 ];

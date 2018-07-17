@@ -42,9 +42,15 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
-  'BLACKLIST': 'Emails blacklistés',
+  'BLACKLIST': {
+    'EMAILS': 'E-mails blacklistés',
+    'DOMAINS': 'Domaines blacklistés',
+    'COUNTRIES': 'Pays blacklistés'
+  },
   'EDIT-BLACKLIST': 'Modifier email blacklisté',
-  'ADD-EMAIL': 'Ajouter des emails',
+  'EXCLUDE-EMAILS': 'Exclure des emails',
+  'EXCLUDE-DOMAINS': 'Exclure des domaines',
+  'EXCLUDE-COUNTRIES': 'Exclure des pays',
   'NEVER': 'Jamais',
   'COMMENT': 'Commentaire',
 
@@ -131,6 +137,10 @@ export const COMMON = {
 
   'USERS': 'Utilisateurs',
   'PROFESSIONALS': 'Professionnels',
+  'PROFESSIONAL': {
+    'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
+    'DELETE': 'Supprimer le(s) professionnel(s)',
+  },
   'HOME': 'Accueil',
   'ADMIN': 'Admin',
   'MY_PROJECT': 'Mon projet',

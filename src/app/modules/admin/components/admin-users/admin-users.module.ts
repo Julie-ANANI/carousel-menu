@@ -1,13 +1,12 @@
-// Modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedTableModule } from '../../../shared/components/shared-table/table.module';
-import { SidebarModule } from '../../../shared/components/shared-sidebar/sidebar.module';
-
-// Components
-import {AdminUsersComponent} from './admin-users.component';
+import { PipeModule } from '../../../../pipe/pipe.module';
+import { AdminUsersComponent } from './admin-users.component';
+import { SidebarModule } from '../../../sidebar/sidebar.module';
+import { InputModule } from '../../../input/input.module';
 
 @NgModule({
   imports: [
@@ -15,7 +14,10 @@ import {AdminUsersComponent} from './admin-users.component';
     ReactiveFormsModule,
     SidebarModule,
     SharedTableModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    PipeModule,
+    InputModule,
+    FormsModule
   ],
   declarations: [
     AdminUsersComponent

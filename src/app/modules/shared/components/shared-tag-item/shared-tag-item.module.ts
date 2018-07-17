@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { RouterModule } from '@angular/router';
 import { SharedTagItemComponent } from './shared-tag-item.component';
-import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
+import { PipeModule } from '../../../../pipe/pipe.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
     ReactiveFormsModule,
     Ng2AutoCompleteModule,
     RouterModule,
-    MultilingModule
+    PipeModule
   ],
   declarations: [
     SharedTagItemComponent

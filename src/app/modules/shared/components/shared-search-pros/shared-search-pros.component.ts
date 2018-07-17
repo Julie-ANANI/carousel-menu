@@ -4,8 +4,8 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Campaign } from '../../../../models/campaign';
 import { InnovationSettings } from '../../../../models/innov-settings';
-import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
-import { COUNTRIES } from'./COUNTRIES'
+import { COUNTRIES } from './COUNTRIES'
+import { Template } from '../../../sidebar/interfaces/template';
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -16,8 +16,8 @@ export class SharedSearchProsComponent implements OnInit {
 
   private _params: any;
   private _more: Template = {};
-  private _googleQuota: number = 30000;
-  private _estimatedNumberOfGoogleRequests: number = 0;
+  private _googleQuota = 30000;
+  private _estimatedNumberOfGoogleRequests = 0;
   private _countriesSettings: any[] = [];
 
   @Input() campaign: Campaign;
@@ -116,12 +116,12 @@ export class SharedSearchProsComponent implements OnInit {
     searchParams.websites = Object.keys(searchParams.websites).filter(key => searchParams.websites[key]).join(' ');
     this._searchService.search(searchParams).first().subscribe(_ => {
       this._initParams();
-      this._notificationsService.success("Requête ajoutée", "La requête a bien été ajoutée à la file d'attente");
+      this._notificationsService.success('Requête ajoutée', 'La requête a bien été ajoutée à la file d\'attente');
     });
   }
 
   public estimateNumberOfGoogleRequests() {
-    const numberOfSearches = this._params.keywords.split("\n").length;
+    const numberOfSearches = this._params.keywords.split('\n').length;
     let numberOfRequests = 0;
     const selectedCountries = this._params.countries;
     let smartCountries = 0;

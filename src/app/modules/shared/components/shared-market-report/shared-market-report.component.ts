@@ -1,6 +1,3 @@
-/**
- * Created by juandavidcruzgomez on 11/09/2017.
- */
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { PageScrollConfig } from 'ng2-page-scroll';
@@ -15,7 +12,8 @@ import { Section } from '../../../../models/section';
 import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
-import { Template } from '../shared-sidebar/interfaces/template';
+import { Subject } from 'rxjs/Subject';
+import {Template} from '../../../sidebar/interfaces/template';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -25,10 +23,11 @@ import { Template } from '../shared-sidebar/interfaces/template';
 
 export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
-  @Input() public project: Innovation;
-  @Input() public adminMode: boolean;
+  @Input() project: Innovation;
+  @Input() adminMode: boolean;
 
   adminSide: boolean;
+  editMode = new Subject<boolean>();
   sidebarTemplateValue: Template = {};
 
   private _questions: Array<Question> = [];
@@ -93,7 +92,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     const wrapper = document
       .getElementById('answer-wrapper');
-    if(wrapper) {
+    if (wrapper) {
       const sections = Array.from(
         wrapper.querySelectorAll('section')
       );
@@ -156,6 +155,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
+    this.editMode.next(false);
   }
 
   public filterAnswers(): void {
@@ -165,7 +165,13 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       switch (filter.status) {
         case 'TAG':
           filteredAnswers = filteredAnswers.filter((answer) => {
-            return answer.tags.some((t: Tag) => t._id === filter.value);
+            if (filter.questionId && Array.isArray(answer.answerTags[filter.questionId])) {
+              return answer.answerTags[filter.questionId].some((t: Tag) => t._id === filter.value);
+            } else if (!filter.questionId) {
+              return answer.tags.some((t: Tag) => t._id === filter.value);
+            } else {
+              return false;
+            }
           });
           break;
         case 'CHECKBOX':

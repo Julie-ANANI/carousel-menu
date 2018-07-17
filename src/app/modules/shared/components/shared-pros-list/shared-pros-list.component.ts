@@ -1,13 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
-import { environment } from '../../../../../environments/environment';
 import {Table} from '../shared-table/models/table';
-import {Template} from '../shared-sidebar/interfaces/template';
+import {Template} from '../../../sidebar/interfaces/template';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -42,7 +40,6 @@ export class SharedProsListComponent {
 
   constructor(private _professionalService: ProfessionalsService,
               private _notificationsService: TranslateNotificationsService,
-              private _translateService: TranslateService,
               private _searchService: SearchService) { }
 
   loadPros(config: any): void {
@@ -58,8 +55,10 @@ export class SharedProsListComponent {
           _title: 'COMMON.PROFESSIONALS',
           _content: this._pros,
           _total: this._total,
-          _isFiltrable: true,
           _isHeadable: true,
+          _isFiltrable: true,
+          _isDeletable: true,
+          _isSelectable: true,
           _isEditable: true,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
@@ -82,6 +81,8 @@ export class SharedProsListComponent {
           _total: this._total,
           _isFiltrable: true,
           _isHeadable: true,
+          _isDeletable: true,
+          _isSelectable: true,
           _isEditable: true,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
@@ -136,13 +137,6 @@ export class SharedProsListComponent {
       pros: 'all',
       query: config
     });
-  }
-
-  openQuizUri(pro: Professional, event: Event): void {
-    event.preventDefault();
-    const baseUri = environment.quizUrl + '/quiz/' + this.campaign.innovation.quizId + '/' + this.campaign._id;
-    const parameters = '?pro=' + pro._id + '&lang=' + this._translateService.currentLang;
-    window.open(baseUri + parameters);
   }
 
   get nbSelected(): number {

@@ -74,6 +74,10 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'UPDATED': 'The answer has been updated'
   },
 
+  'NOT_MODIFIED': {
+    'USER_ANSWER': 'You are not allowed to make changes in the view mode.'
+  },
+
   'QUIZ': {
     'CREATED': 'The quiz has been created'
   }

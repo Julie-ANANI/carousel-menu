@@ -33,7 +33,7 @@ export class AdminProjectsComponent implements OnInit {
               private _titleService: TranslateTitleService) {}
 
   ngOnInit(): void {
-    this._titleService.setTitle('MY_PROJECTS.TITLE');
+    this._titleService.setTitle('COMMON.PROJECTS');
     this.loadProjects(this._config);
   }
 

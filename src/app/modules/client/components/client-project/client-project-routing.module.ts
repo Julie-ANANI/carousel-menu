@@ -15,14 +15,9 @@ import { AuthGuard } from '../../../../auth-guard.service';
 
 export const clientProjectRoutes: any = [
   {
-    path: 'projects',
-    children: [
-      { path: '', component: ProjectsListComponent, pathMatch: 'full', canActivate: [AuthGuard] }
-    ]
-  },
-  {
     path: 'project',
     children: [
+      { path: '', component: ProjectsListComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'new', component: NewProjectComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       {
         path: ':projectId', resolve: { innovation : InnovationResolver }, runGuardsAndResolvers: 'always', component: ClientProjectComponent,
@@ -40,7 +35,7 @@ export const clientProjectRoutes: any = [
                 path: 'targeting', component: TargetingComponent, canActivate: [AuthGuard], pathMatch: 'full'
               }
             ]
-            // canDeactivate: [PendingChangesGuard] TODO: uncomment
+            //canDeactivate: [PendingChangesGuard] //TODO: uncomment
           },
           {
             path: 'exploration', component: ExplorationProjectComponent, canActivate: [AuthGuard], pathMatch: 'full'
