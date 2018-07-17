@@ -11,6 +11,7 @@ import { ObjectKeysPipe } from './pipes/objectKeys.pipe';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { DiscoverSummaryPipe } from './pipes/DiscoverSummaryPipe';
 
+
 @NgModule({
   imports: [
     CommonModule

@@ -4,13 +4,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InputListComponent} from './input-list.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { PipeModule } from '../../pipe/pipe.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     FormsModule,
-    RouterModule
+    RouterModule,
+    PipeModule
   ],
   declarations: [
     InputListComponent

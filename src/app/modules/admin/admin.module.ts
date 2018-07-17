@@ -12,7 +12,7 @@ import { AdminUsersModule } from './components/admin-users/admin-users.module';
 import { AdminProfessionalsModule } from './components/admin-professionals/admin-professionals.module';
 import { AdminEmailBlacklistModule } from './components/admin-email-blacklist/admin-email-blacklist.module';
 import { AdminEmailsModule } from './components/admin-emails/admin-emails.module';
-import { AdminTagsModule } from './components/admin-tags/admin-tags.module';
+import { AdminTagModule } from './components/admin-tags/admin-tag.module';
 import { AdminProjectModule } from './components/admin-project/admin-project.module';
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
@@ -42,7 +42,7 @@ import { AdminProjectsListComponent } from './components/admin-projects-list/adm
     AdminProjectsModule,
     AdminProfessionalsModule,
     AdminEmailBlacklistModule,
-    AdminTagsModule,
+    AdminTagModule,
     AdminCampaignsModule,
     AdminProjectModule,
     SharedModule,
