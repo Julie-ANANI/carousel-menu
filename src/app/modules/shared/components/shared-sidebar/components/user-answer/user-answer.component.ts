@@ -19,7 +19,6 @@ export class UserAnswerComponent implements OnInit {
   @Input() innovationId: string;
   @Input() questions: Array<Question>;
   @Input() adminMode: boolean;
-
   @Input() mode: Subject<boolean>;
 
   @Input() set userAnswer(value: Answer) {
@@ -45,9 +44,11 @@ export class UserAnswerComponent implements OnInit {
   ngOnInit() {
     // this.adminMode = this.adminMode && this.authService.adminLevel > 2;
 
-    this.mode.subscribe((res) => {
-      this.editMode = res;
-    });
+    if (this.mode) {
+      this.mode.subscribe((res) => {
+        this.editMode = res;
+      });
+    }
 
     this.floor = Math.floor;
 
