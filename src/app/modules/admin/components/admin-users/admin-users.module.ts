@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedTableModule } from '../../../shared/components/shared-table/table.module';
 import { SidebarModule } from '../../../shared/components/shared-sidebar/sidebar.module';
+import { PipeModule } from '../../../../pipe/pipe.module';
 
 // Components
 import {AdminUsersComponent} from './admin-users.component';
@@ -15,7 +16,8 @@ import {AdminUsersComponent} from './admin-users.component';
     ReactiveFormsModule,
     SidebarModule,
     SharedTableModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    PipeModule
   ],
   declarations: [
     AdminUsersComponent

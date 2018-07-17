@@ -1,0 +1,44 @@
+/* Module */
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
+import { SidebarModule } from '../shared/components/shared-sidebar/sidebar.module';
+
+/* Components */
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { LoginPageComponent } from './components/login-page/login-page.component';
+import { LogoutPageComponent } from './components/logout-page/logout-page.component';
+import { SignupPageComponent } from './components/signup-page/signup-page.component';
+import { ForgetPasswordPageComponent } from './components/forget-password-page/forget-password-page.component';
+import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    TranslateModule.forChild(),
+    ReactiveFormsModule,
+    SharedLoaderModule,
+    SidebarModule
+  ],
+  declarations: [
+    LoginPageComponent,
+    LogoutPageComponent,
+    ForgetPasswordPageComponent,
+    SignupPageComponent,
+    FooterComponent,
+    HeaderComponent,
+    WelcomePageComponent
+  ],
+  exports: [
+    FooterComponent,
+    HeaderComponent
+  ]
+})
+
+export class BaseModule {}

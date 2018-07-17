@@ -10,6 +10,7 @@ import { SharedPaginationModule } from '../../../shared/components/shared-pagina
 import { SharedAnswerListModule } from '../../../shared/components/shared-answers-list/shared-answer-list.module';
 import { SidebarModule } from '../../../shared/components/shared-sidebar/sidebar.module';
 import { SharedLoaderModule } from '../../../shared/components/shared-loader/shared-loader.module';
+import { PipeModule } from '../../../../pipe/pipe.module';
 
 /* Components */
 import { ClientProjectComponent } from './client-project.component';
@@ -35,7 +36,8 @@ import { TargetingComponent } from './components/setup/components/targeting/targ
     SharedWorldmapModule,
     TranslateModule.forChild(),
     SidebarModule,
-    SharedLoaderModule
+    SharedLoaderModule,
+    PipeModule
   ],
   declarations: [
     ClientProjectComponent,

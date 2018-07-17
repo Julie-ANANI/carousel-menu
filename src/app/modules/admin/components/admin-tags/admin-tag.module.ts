@@ -22,12 +22,12 @@ import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/a
     ReactiveFormsModule,
     SharedSortModule,
     SharedPaginationModule,
-    PipeModule,
     SharedModule,
     TranslateModule.forChild(),
     AutocompleteInputModule,
     GlobalModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    PipeModule
   ],
   declarations: [
     AdminTagsComponent,
@@ -42,4 +42,4 @@ import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/a
   ]
 })
 
-export class AdminTagsModule {}
+export class AdminTagModule {}

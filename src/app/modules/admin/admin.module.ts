@@ -12,15 +12,14 @@ import { AdminUsersModule } from './components/admin-users/admin-users.module';
 import { AdminProfessionalsModule } from './components/admin-professionals/admin-professionals.module';
 import { AdminEmailBlacklistModule } from './components/admin-email-blacklist/admin-email-blacklist.module';
 import { AdminEmailsModule } from './components/admin-emails/admin-emails.module';
-import { AdminTagsModule } from './components/admin-tags/admin-tags.module';
+import { AdminTagModule } from './components/admin-tags/admin-tag.module';
 import { AdminProjectModule } from './components/admin-project/admin-project.module';
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
 import { SidebarModule } from '../shared/components/shared-sidebar/sidebar.module';
-import { HeaderModule } from '../base/component/header/header.module';
 import { GlobalModule } from '../global/global.module';
-import { FooterModule } from '../base/component/footer/footer.module';
 import { PipeModule } from '../../pipe/pipe.module';
+import { BaseModule } from '../base/base.module';
 
 // Components
 import { AdminComponent } from './admin.component';
@@ -42,16 +41,15 @@ import { AdminProjectsListComponent } from './components/admin-projects-list/adm
     AdminProjectsModule,
     AdminProfessionalsModule,
     AdminEmailBlacklistModule,
-    AdminTagsModule,
+    AdminTagModule,
     AdminCampaignsModule,
     AdminProjectModule,
     SharedModule,
     GlobalModule,
     TranslateModule.forChild(),
     SidebarModule,
-    HeaderModule,
-    FooterModule,
-    PipeModule
+    PipeModule,
+    BaseModule
   ],
   declarations: [
     AdminComponent,

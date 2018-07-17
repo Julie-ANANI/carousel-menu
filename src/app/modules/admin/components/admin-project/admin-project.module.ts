@@ -5,7 +5,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { SharedModule } from '../../../shared/shared.module';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedSortModule } from '../../../shared/components/shared-sort/sort.module';
-import {AutocompleteInputModule} from '../../../../directives/autocomplete-input/autocomplete-input.module';
+import { AutocompleteInputModule } from '../../../../directives/autocomplete-input/autocomplete-input.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { GlobalModule } from '../../../global/global.module';
 

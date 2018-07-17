@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../../services/auth/auth.service';
-import { UserService } from '../../../../services/user/user.service';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../../../../../environments/environment';
+import { UserService } from '../../../../services/user/user.service';
 import { User } from '../../../../models/user.model';
+import { environment } from '../../../../../environments/environment';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
-  selector: 'app-client-welcome',
-  templateUrl: 'client-welcome.component.html',
-  styleUrls: ['client-welcome.component.scss']
+  selector: 'app-welcome-page',
+  templateUrl: './welcome-page.component.html',
+  styleUrls: ['./welcome-page.component.scss']
 })
-export class ClientWelcomeComponent implements OnInit {
+
+export class WelcomePageComponent implements OnInit {
 
   private _user: User;
   public tokenEmail: string;
@@ -25,8 +26,8 @@ export class ClientWelcomeComponent implements OnInit {
     this._user = this._authService.user;
     if (!this._user) {
       this._router.navigate(['/logout']);
-    } else if( this._user.emailVerified ) {
-      this._router.navigate(['/projects']);
+    } else if ( this._user.emailVerified ) {
+      this._router.navigate(['/project']);
     }
   }
 
@@ -40,7 +41,7 @@ export class ClientWelcomeComponent implements OnInit {
           this._authService.emailVerified = true;
         }
         this._authService.isConfirmed = true;
-        this._router.navigate(['/projects']);
+        this._router.navigate(['/project']);
       }, error => {
         console.error(error);
         this._router.navigate(['/logout']);
@@ -67,4 +68,5 @@ export class ClientWelcomeComponent implements OnInit {
   public isMainDomain(): boolean {
     return environment.domain === 'umi';
   }
+
 }
