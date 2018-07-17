@@ -51,9 +51,11 @@
         </div>
 
         <!-- Job -->
-        <div *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle">
+        <div class="job" *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle || editMode">
+          <i class="far fa-address-card" aria-hidden="true"></i>
           <p *ngIf="!editJob">
-            {{ modalAnswer.job || modalAnswer.professional?.jobTitle }} <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editJob = true; notifyChanges($event)"></i>
+            {{ modalAnswer.job || modalAnswer.professional?.jobTitle }}
+            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editJob = true; notifyChanges($event)"></i>
           </p>
           <div *ngIf="editJob" class="form-group">
             <input
@@ -67,9 +69,10 @@
         </div>
 
         <!-- Company -->
-        <div *ngIf="adminMode && (modalAnswer.company.name || modalAnswer.professional?.company || modalAnswer.company?.name === '')">
+        <div class="company" *ngIf="modalAnswer.company.name || modalAnswer.professional?.company || editMode">
+          <i class="far fa-building" aria-hidden="true"></i>
           <p *ngIf="!editCompany">
-            {{ modalAnswer.company.name || modalAnswer.professional?.company ||  'COMMON.COMPANY' | translate }}
+            {{ modalAnswer.company.name || modalAnswer.professional?.company }}
             <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCompany = true; notifyChanges($event)"></i>
           </p>
           <div *ngIf="editCompany" class="form-group">
