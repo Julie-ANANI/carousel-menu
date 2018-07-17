@@ -8,13 +8,13 @@ import { SharedLoaderModule } from '../shared/components/shared-loader/shared-lo
 import { SidebarModule } from '../shared/components/shared-sidebar/sidebar.module';
 
 /* Components */
-import { FooterComponent } from './component/footer/footer.component';
-import { HeaderComponent } from './component/header/header.component';
-import { LoginPageComponent } from './component/login-page/login-page.component';
-import { LogoutPageComponent } from './component/logout-page/logout-page.component';
-import { SignupPageComponent } from './component/signup-page/signup-page.component';
-import { ForgetPasswordPageComponent } from './component/forget-password-page/forget-password-page.component';
-import { WelcomePageComponent } from './component/welcome-page/welcome-page.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { LoginPageComponent } from './components/login-page/login-page.component';
+import { LogoutPageComponent } from './components/logout-page/logout-page.component';
+import { SignupPageComponent } from './components/signup-page/signup-page.component';
+import { ForgetPasswordPageComponent } from './components/forget-password-page/forget-password-page.component';
+import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 
 @NgModule({
   imports: [

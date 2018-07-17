@@ -19,12 +19,12 @@ import { PROJECT_MODULE } from '../modules/client/components/client-project/i18n
 import { PROFESSIONALS } from '../modules/admin/components/admin-professionals/i18n/en';
 import { DISCOVER } from '../modules/client/components/client-discover-page/i18n/en';
 import { DISCOVERDESCRIPTION } from '../modules/client/components/client-discover-page/discover-description/i18n/en';
-import { LOG_IN } from '../modules/base/component/login-page/i18n/en';
-import { FORGET_PASSWORD } from '../modules/base/component/forget-password-page/i18n/en';
-import { SIGN_UP } from '../modules/base/component/signup-page/i18n/en';
-import { HEADER } from '../modules/base/component/header/i18n/en';
-import { FOOTER } from '../modules/base/component/footer/i18n/en';
-import { WELCOME } from '../modules/base/component/welcome-page/i18n/en';
+import { LOG_IN } from '../modules/base/components/login-page/i18n/en';
+import { FORGET_PASSWORD } from '../modules/base/components/forget-password-page/i18n/en';
+import { SIGN_UP } from '../modules/base/components/signup-page/i18n/en';
+import { HEADER } from '../modules/base/components/header/i18n/en';
+import { FOOTER } from '../modules/base/components/footer/i18n/en';
+import { WELCOME } from '../modules/base/components/welcome-page/i18n/en';
 
 export const en = {
   'COMMON': COMMON,

@@ -18,11 +18,11 @@ import { ClientMyAccountComponent } from './components/client-my-account/client-
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientDiscoverPageComponent } from './components/client-discover-page/client-discover-page.component';
 import { DiscoverDescriptionComponent } from './components/client-discover-page/discover-description/discover-description.component';
-import { LoginPageComponent } from '../base/component/login-page/login-page.component';
-import { LogoutPageComponent } from '../base/component/logout-page/logout-page.component';
-import { ForgetPasswordPageComponent } from '../base/component/forget-password-page/forget-password-page.component';
-import { SignupPageComponent } from '../base/component/signup-page/signup-page.component';
-import { WelcomePageComponent } from '../base/component/welcome-page/welcome-page.component';
+import { LoginPageComponent } from '../base/components/login-page/login-page.component';
+import { LogoutPageComponent } from '../base/components/logout-page/logout-page.component';
+import { ForgetPasswordPageComponent } from '../base/components/forget-password-page/forget-password-page.component';
+import { SignupPageComponent } from '../base/components/signup-page/signup-page.component';
+import { WelcomePageComponent } from '../base/components/welcome-page/welcome-page.component';
 
 const clientRoutes: Routes = [
   {
