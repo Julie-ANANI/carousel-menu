@@ -4,5 +4,5 @@ export const phoneRegEx = /^\+?[0-9 \.\-\(\)]+$/;
 
 export const videoDomainRegEx = /youtu\.?be|vimeo/;
 
-export const vimeoVideoId = /([^vimeo\.com\/]+)(\d+)(?=\/?)/; //Javascript does not support positive lookbehinds
+export const vimeoVideoId = /([^vimeo\.com\/]+)(\d+)(?=\/?)/; // Javascript does not support positive lookbehinds
 export const youtubeVideoId = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;

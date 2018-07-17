@@ -9,10 +9,10 @@ import { AuthService } from '../../services/auth/auth.service';
 
 export class ClientComponent {
 
-  constructor (private authService1: AuthService) {}
+  constructor (private _authService: AuthService) {}
 
   get authService(): AuthService {
-    return this.authService1;
+    return this._authService;
   }
 
 }

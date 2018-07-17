@@ -11,7 +11,7 @@ export class AdminComponent {
 
   private _scrollButton = false;
 
-  constructor(private authService1: AuthService) {}
+  constructor(private _authService: AuthService) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -39,7 +39,7 @@ export class AdminComponent {
   }
 
   get authService(): AuthService {
-    return this.authService1;
+    return this._authService;
   }
 
 }
