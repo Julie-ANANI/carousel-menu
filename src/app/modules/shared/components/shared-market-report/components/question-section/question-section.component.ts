@@ -104,7 +104,7 @@ export class QuestionSectionComponent implements OnInit {
       switch (this.question.controlType) {
         case 'checkbox':
           this._answersWithComment = this._answers.filter(function(a) {
-            return !Object.keys(a.answers[id]).some((k) => a.answers[id][k])
+            return !(a.answers[id] && Object.keys(a.answers[id]).some((k) => a.answers[id][k]))
               && a.answers[id + 'Comment']
               && a.answers[id + 'CommentQuality'] !== 0;
           });
