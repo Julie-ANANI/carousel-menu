@@ -131,6 +131,13 @@ export class ExplorationProjectComponent implements OnInit {
 
   }
 
+  public formatCompanyName(name: string) {
+    if(name) {
+      return `${name[0].toUpperCase()}${name.slice(1)}`;
+    }
+    return "--";
+  }
+
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
   }
