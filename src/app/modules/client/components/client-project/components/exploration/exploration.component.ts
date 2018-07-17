@@ -9,6 +9,7 @@ import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
 import { Table } from '../../../../../shared/components/shared-table/models/table';
 import { Template } from '../../../../../shared/components/shared-sidebar/interfaces/template';
+import {Subject} from "rxjs/Subject";
 
 @Component({
   selector: 'app-client-exploration-project',
@@ -32,6 +33,7 @@ export class ExplorationProjectComponent implements OnInit {
   private _questions: Array<Question>;
   private _modalAnswer: Answer;
   sidebarTemplateValue: Template = {};
+  editMode = new Subject<boolean>();
 
   tableInfos: Table = null;
 
