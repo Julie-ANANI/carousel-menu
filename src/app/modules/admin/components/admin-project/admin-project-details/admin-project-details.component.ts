@@ -21,6 +21,8 @@ export class AdminProjectDetailsComponent implements OnInit {
   private _domain = {fr: '', en: ''};
   private _editInstanceDomain = false;
 
+  private _preset = {};
+
   private _updateInstanceDomainConfig: {
       placeholder: string,
       initialData: Array<string>,
@@ -104,8 +106,27 @@ export class AdminProjectDetailsComponent implements OnInit {
 
 
   public updatePreset(event: {value: Array<Preset>}): void {
-    this._project.preset = event.value[0];
-    this._dirty = true;
+    if (event.value.length) {
+      this._preset = event.value[0];
+      this._innovationService.updatePreset(this._project._id, this._preset).first().subscribe(data => {
+        this._project = data;
+        //  this._dirty = false;
+        console.log("whu?")
+      }, (err) => {
+        console.log(err);
+        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+      });
+      // this._dirty = true;
+    } else {
+      this._innovationService.updatePreset(this._project._id, {}).first().subscribe(data => {
+        this._project = data;
+        //  this._dirty = false;
+        console.log("whuazs?")
+      }, (err) => {
+        console.log(err);
+        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+      });
+    }
   }
 
   public updateSettings(value: InnovationSettings): void {
@@ -136,6 +157,7 @@ export class AdminProjectDetailsComponent implements OnInit {
       .first()
       .subscribe(data => {
         this._project = data;
+        console.log(this._project);
         this._dirty = false;
       }, err => {
         this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);

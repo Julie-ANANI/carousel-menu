@@ -117,6 +117,11 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public updatePreset(innovationId: string, data: any): Observable<any> {
+    return this._http.put('/innovation/' + innovationId + '/updatePreset', {data})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
   public updateSettingsDomain(innovationId: string, domain: any): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/updateSettingsDomain', {domain})
       .map((res: Response) => res.json())

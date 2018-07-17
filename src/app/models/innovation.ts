@@ -2,7 +2,7 @@ import { InnovationSettings } from './innov-settings';
 import { InnovCard } from './innov-card';
 import { QuestionReport } from './market-report';
 import { Media } from './media';
-import { Preset } from './preset';
+// import { Preset } from './preset';
 import { Tag } from './tag';
 import { User } from './user.model';
 
@@ -22,7 +22,7 @@ export interface Innovation {
   readonly principalMedia?: Media;
   innovationCards?: Array<InnovCard>;
   tags?: Array<Tag>;
-  preset?: Preset;
+  preset?: any; // This isn't preset anymore -> we don't have ObjectID.
   readonly quizId?: string;
   marketReport?: {[prop: string]: QuestionReport};
   collaborators?: Array<User>;
