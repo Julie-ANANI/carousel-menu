@@ -8,8 +8,8 @@ import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
 import { Table } from '../../../../../shared/components/shared-table/models/table';
-import { Template } from '../../../../../shared/components/shared-sidebar/interfaces/template';
-import {Subject} from "rxjs/Subject";
+import {Template} from '../../../../../sidebar/interfaces/template';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-client-exploration-project',
@@ -95,7 +95,7 @@ export class ExplorationProjectComponent implements OnInit {
                 }
                 if (campaign.stats.mail) {
                   acc.nbProsSent += (campaign.stats.mail.totalPros ||  0);
-                  if(campaign.stats.mail.statuses) {
+                  if (campaign.stats.mail.statuses) {
                     acc.nbProsOpened += (campaign.stats.mail.statuses.opened || 0);
                     acc.nbProsClicked += (campaign.stats.mail.statuses.clicked ||  0);
                   }
@@ -132,10 +132,10 @@ export class ExplorationProjectComponent implements OnInit {
   }
 
   public formatCompanyName(name: string) {
-    if(name) {
+    if (name) {
       return `${name[0].toUpperCase()}${name.slice(1)}`;
     }
-    return "--";
+    return '--';
   }
 
   closeSidebar(value: string) {

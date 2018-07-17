@@ -1,4 +1,3 @@
-// Modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -8,8 +7,6 @@ import { AdminPresetsModule } from './admin-presets/admin-presets.module';
 import { AdminQuestionsModule } from './admin-questions/admin-questions.module';
 import { AdminSectionsModule } from './admin-sections/admin-sections.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
-
-// Components
 import { AdminPresetComponent } from './admin-preset.component';
 
 @NgModule({

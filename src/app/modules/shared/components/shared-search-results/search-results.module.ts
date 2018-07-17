@@ -3,21 +3,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import {SharedProsListModule} from '../shared-pros-list/pros-list.module';
-import {AutocompleteInputModule} from '../../../../directives/autocomplete-input/autocomplete-input.module';
-import { CountryFlagModule } from '../../../../directives/country-flag/country-flag.module';
+import {SharedProsListModule} from '../shared-pros-list/shared-pros-list.module';
 
 // Components
 import {SharedSearchResultsComponent} from './shared-search-results.component';
 import {SharedProsListOldModule} from '../shared-pros-list-old/shared-pros-list-old.module';
+import {InputModule} from '../../../input/input.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    AutocompleteInputModule,
+    InputModule,
     SharedProsListModule,
-    CountryFlagModule,
     TranslateModule.forChild(),
     SharedProsListOldModule
   ],

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 /* Shared */
-import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
 import { SharedMarketReportExampleComponent } from '../shared/components/shared-market-report-example/shared-market-report-example.component';
 
 /* SubModules */
@@ -18,11 +17,12 @@ import { ClientMyAccountComponent } from './components/client-my-account/client-
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
 import { ClientDiscoverPageComponent } from './components/client-discover-page/client-discover-page.component';
 import { DiscoverDescriptionComponent } from './components/client-discover-page/discover-description/discover-description.component';
+import { WelcomePageComponent } from '../base/components/welcome-page/welcome-page.component';
 import { LoginPageComponent } from '../base/components/login-page/login-page.component';
 import { LogoutPageComponent } from '../base/components/logout-page/logout-page.component';
-import { ForgetPasswordPageComponent } from '../base/components/forget-password-page/forget-password-page.component';
 import { SignupPageComponent } from '../base/components/signup-page/signup-page.component';
-import { WelcomePageComponent } from '../base/components/welcome-page/welcome-page.component';
+import { ForgetPasswordPageComponent } from '../base/components/forget-password-page/forget-password-page.component';
+import { NotFoundPageComponent } from '../base/components/not-found-page/not-found-page.component';
 
 const clientRoutes: Routes = [
   {
@@ -100,7 +100,7 @@ const clientRoutes: Routes = [
       ...clientProjectRoutes,
       {
         path: '**',
-        component: SharedNotFoundComponent
+        component: NotFoundPageComponent
       }
     ]
   }

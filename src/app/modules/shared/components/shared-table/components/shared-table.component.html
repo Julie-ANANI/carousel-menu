@@ -91,7 +91,7 @@
                 </span>
 
                   <!-- If column type is COUNTRY -->
-                  <country-flag *ngSwitchCase="'COUNTRY'" [country]="(getContentValue(key, getAttrs(column)[0]) || '')"></country-flag>
+                  <app-country-flag *ngSwitchCase="'COUNTRY'" [country]="(getContentValue(key, getAttrs(column)[0]) || '')"></app-country-flag>
 
                   <!-- If column type is PICTURE -->
                   <div class="picture" *ngSwitchCase="'PICTURE'">

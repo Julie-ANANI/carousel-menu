@@ -12,8 +12,8 @@ import { Section } from '../../../../models/section';
 import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
-import { Template } from '../shared-sidebar/interfaces/template';
 import { Subject } from 'rxjs/Subject';
+import {Template} from '../../../sidebar/interfaces/template';
 
 @Component({
   selector: 'app-shared-market-report',

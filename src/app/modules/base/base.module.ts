@@ -1,20 +1,18 @@
-/* Module */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
-import { SidebarModule } from '../shared/components/shared-sidebar/sidebar.module';
-
-/* Components */
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
+import { SidebarModule } from '../sidebar/sidebar.module';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { LogoutPageComponent } from './components/logout-page/logout-page.component';
-import { SignupPageComponent } from './components/signup-page/signup-page.component';
 import { ForgetPasswordPageComponent } from './components/forget-password-page/forget-password-page.component';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { SignupPageComponent } from './components/signup-page/signup-page.component';
+import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 
 @NgModule({
   imports: [
@@ -33,11 +31,12 @@ import { WelcomePageComponent } from './components/welcome-page/welcome-page.com
     SignupPageComponent,
     FooterComponent,
     HeaderComponent,
-    WelcomePageComponent
+    WelcomePageComponent,
+    NotFoundPageComponent
   ],
   exports: [
-    FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ]
 })
 

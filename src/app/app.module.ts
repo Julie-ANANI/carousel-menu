@@ -10,6 +10,7 @@ import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-transla
 import { Observable } from 'rxjs/Observable';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
@@ -61,7 +62,8 @@ import { SignatureResolver } from './resolvers/signature.resolver';
       }
     }),
     ChartsModule,
-    Ng2AutoCompleteModule
+    Ng2AutoCompleteModule,
+    Angular2FontawesomeModule
   ],
   declarations: [
     AppComponent

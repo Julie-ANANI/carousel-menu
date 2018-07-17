@@ -5,10 +5,10 @@ import { FormGroup } from '@angular/forms';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { User } from '../../../../models/user.model';
 import { UserService } from '../../../../services/user/user.service';
-import { Template } from '../../../shared/components/shared-sidebar/interfaces/template';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
+import { Template } from '../../../sidebar/interfaces/template';
 
 @Component({
   selector: 'app-signup-page',

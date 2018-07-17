@@ -8,8 +8,8 @@ import { Campaign } from '../../../../../models/campaign';
 import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 import { AuthService } from '../../../../../services/auth/auth.service';
-import {Template} from '../../../../shared/components/shared-sidebar/interfaces/template';
 import { Subject } from 'rxjs/Subject';
+import {Template} from '../../../../sidebar/interfaces/template';
 
 @Component({
   selector: 'app-admin-campaign-answers',

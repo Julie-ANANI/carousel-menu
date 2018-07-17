@@ -5,7 +5,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import {Table} from '../shared-table/models/table';
-import {Template} from '../shared-sidebar/interfaces/template';
+import {Template} from '../../../sidebar/interfaces/template';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;

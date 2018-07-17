@@ -2,8 +2,8 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { Innovation } from '../../../../models/innovation';
-import { Template } from '../../../shared/components/shared-sidebar/interfaces/template';
 import { Subject } from 'rxjs/Subject';
+import {Template} from '../../../sidebar/interfaces/template';
 
 const DEFAULT_PAGE = 'setup';
 

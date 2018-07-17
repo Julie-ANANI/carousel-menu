@@ -5,7 +5,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
 import { Subject } from 'rxjs/Subject';
-import { Template } from '../../../../../shared/components/shared-sidebar/interfaces/template';
+import {Template} from '../../../../../sidebar/interfaces/template';
 
 const DEFAULT_TAB = 'pitch';
 

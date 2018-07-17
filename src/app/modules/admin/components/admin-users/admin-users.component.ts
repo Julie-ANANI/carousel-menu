@@ -4,8 +4,8 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
 import { Table } from '../../../shared/components/shared-table/models/table';
-import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import {Template} from '../../../sidebar/interfaces/template';
 
 @Component({
   selector: 'app-admin-users',

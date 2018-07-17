@@ -6,7 +6,7 @@ import { CampaignService } from '../../../../../services/campaign/campaign.servi
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import {Batch} from '../../../../../models/batch';
 import {Table} from '../../../../shared/components/shared-table/models/table';
-import {Template} from '../../../../shared/components/shared-sidebar/interfaces/template';
+import {Template} from '../../../../sidebar/interfaces/template';
 
 @Component({
   selector: 'app-admin-campaign-mails',
@@ -141,9 +141,9 @@ export class AdminCampaignMailsComponent implements OnInit {
 
   private _computeDate(date: string, time: string) {
     // Calcule d'une date d'envoi à partir des inputs de la date et heure
-    let computedDate = new Date(date);
-    const hours = parseInt(time.split(':')[0]);
-    const minutes = parseInt(time.split(':')[1]);
+    const computedDate = new Date(date);
+    const hours = parseInt(time.split(':')[0], 10);
+    const minutes = parseInt(time.split(':')[1], 10);
     computedDate.setHours(hours);
     computedDate.setMinutes(minutes);
     return computedDate;
@@ -151,24 +151,24 @@ export class AdminCampaignMailsComponent implements OnInit {
 
   public sendTestEmails(batchStatus: number) {
     this._campaignService.sendTestEmails(this._campaign._id, batchStatus).first().subscribe(_ => {
-      console.log("OK");
+      console.log('OK');
     });
   }
 
   public removeOK(batch: Batch) {
-    if (batch.status == 0) {
+    if (batch.status === 0) {
       this.selectedBatchToBeDeleted = batch;
     }
   }
 
   public poubelle(batch: Batch) {
-    if (this._campaign.settings.ABsettings.status == 0) {
-      return batch.status == 0;
+    if (this._campaign.settings.ABsettings.status === 0) {
+      return batch.status === 0;
     } else {
-      if (batch._id == this._campaign.settings.ABsettings.batchA || batch._id == this._campaign.settings.ABsettings.batchB) {
+      if (batch._id === this._campaign.settings.ABsettings.batchA || batch._id === this._campaign.settings.ABsettings.batchB) {
         return false;
       } else {
-        return batch.status == 0;
+        return batch.status === 0;
       }
     }
   }
@@ -179,7 +179,7 @@ export class AdminCampaignMailsComponent implements OnInit {
       this.innoReady &&
       this.templateImported &&
       this.defaultWorkflow &&
-      (this.statusAB != 1)
+      (this.statusAB !== 1)
     );
   }
 
@@ -190,11 +190,11 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public getWorkflowName(index: number) {
-    if (this.campaign.settings.ABsettings.status != 0) {
-      if (index == 0) {
+    if (this.campaign.settings.ABsettings.status !== 0) {
+      if (index === 0) {
         return this.campaign.settings.ABsettings.nameWorkflowA;
       }
-      if (index == 1) {
+      if (index === 1) {
         return this.campaign.settings.ABsettings.nameWorkflowB;
       }
     }
@@ -371,8 +371,8 @@ export class AdminCampaignMailsComponent implements OnInit {
     const workflowname = this.getWorkflowName(index);
     const content = {en: '', fr: ''}
     this.campaign.settings.emails.forEach( mail => {
-      if (mail.step == step && workflowname == mail.nameWorkflow) {
-       if (mail.language == 'en') {
+      if (mail.step === step && workflowname === mail.nameWorkflow) {
+       if (mail.language === 'en') {
          content.en = mail.content;
        } else {
          content.fr = mail.content;
@@ -412,7 +412,7 @@ export class AdminCampaignMailsComponent implements OnInit {
 
   get statusAB() { return this._campaign.settings.ABsettings ? this._campaign.settings.ABsettings.status : null }
   get defaultWorkflow() { return  this._campaign.settings.defaultWorkflow }
-  get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""); }
+  get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ''); }
   get campaign() { return this._campaign }
   get quizLinks() {return this._quizLinks }
   get stats() {return this._stats }

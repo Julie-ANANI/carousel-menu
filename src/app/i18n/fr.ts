@@ -1,6 +1,5 @@
 import { COMMON } from './common_fr';
 import { ERROR } from './error_fr';
-import { ANSWER } from '../modules/shared/components/shared-sidebar/components/user-answer/i18n/fr';
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/fr';
 import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/fr';
 import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/fr';
@@ -19,12 +18,13 @@ import { PROJECT_MODULE } from '../modules/client/components/client-project/i18n
 import { PROFESSIONALS } from '../modules/admin/components/admin-professionals/i18n/fr';
 import { DISCOVER } from '../modules/client/components/client-discover-page/i18n/fr';
 import { DISCOVERDESCRIPTION } from '../modules/client/components/client-discover-page/discover-description/i18n/fr';
-import { LOG_IN } from '../modules/base/components/login-page/i18n/fr';
-import { FORGET_PASSWORD } from '../modules/base/components/forget-password-page/i18n/fr';
-import { SIGN_UP } from '../modules/base/components/signup-page/i18n/fr';
-import { HEADER } from '../modules/base/components/header/i18n/fr';
+import { ANSWER } from '../modules/sidebar/components/user-answer/i18n/fr';
 import { FOOTER } from '../modules/base/components/footer/i18n/fr';
+import { LOG_IN } from '../modules/base/components/login-page/i18n/fr';
+import { SIGN_UP } from '../modules/base/components/signup-page/i18n/fr';
+import { FORGET_PASSWORD } from '../modules/base/components/forget-password-page/i18n/fr';
 import { WELCOME } from '../modules/base/components/welcome-page/i18n/fr';
+import { HEADER } from '../modules/base/components/header/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
