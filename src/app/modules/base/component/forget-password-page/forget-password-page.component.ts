@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateTitleService } from '../../../../services/title/title.service';
-import { environment } from '../../../../../environments/environment';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateTitleService } from '../../../../services/title/title.service';
 import { UserService } from '../../../../services/user/user.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
-  selector: 'app-client-forget-password',
-  templateUrl: './client-forget-password.component.html',
-  styleUrls: ['./client-forget-password.component.scss']
+  selector: 'app-forget-password-page',
+  templateUrl: './forget-password-page.component.html',
+  styleUrls: ['./forget-password-page.component.scss']
 })
-
-export class ClientForgetPasswordComponent implements OnInit {
+export class ForgetPasswordPageComponent implements OnInit {
 
   private _formData: FormGroup;
   private _companyName: string = environment.companyShortName;

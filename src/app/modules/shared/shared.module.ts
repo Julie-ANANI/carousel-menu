@@ -16,7 +16,6 @@ import { Ng2PageScrollModule } from 'ng2-page-scroll';
 import { SharedNotFoundComponent } from './components/shared-not-found/shared-not-found.component';
 import { SharedUploadZonePhotoComponent } from './components/shared-upload-zone-photo/shared-upload-zone-photo.component';
 import { SharedUploadZoneVideoComponent } from './components/shared-upload-zone-video/shared-upload-zone-video.component';
-import { SharedLoaderComponent } from './components/shared-loader/shared-loader.component';
 import { SharedVideoComponent } from './components/shared-video/shared-video.component';
 import { SharedProjectDescriptionComponent } from './components/shared-project-description/shared-project-description.component';
 import { SharedLatexManagerComponent } from './components/shared-latex-manager/shared-latex-manager.component';
@@ -33,8 +32,6 @@ import { LimitsPipe } from '../../pipes/TableLimitsPipe';
 import { CharacterCountdown } from '../../pipes/CharacterCountdown';
 import { MultilingModule } from '../../pipes/multiling/multiling.module';
 
-// Directives
-import { SearchInputComponent } from '../../directives/search-input/search-input.component';
 // Internal Modules
 import { SharedWorldmapModule } from './components/shared-worldmap/shared-worldmap.module';
 import { SidebarModule } from './components/shared-sidebar/sidebar.module';
@@ -43,6 +40,7 @@ import { CountryFlagModule } from '../../directives/country-flag/country-flag.mo
 import { AutocompleteInputModule } from '../../directives/autocomplete-input/autocomplete-input.module';
 import { SharedTagItemModule } from './components/shared-tag-item/shared-tag-item.module';
 import { SharedTextZoneModule } from './components/shared-text-zone/shared-text-zone.module';
+import { SharedLoaderModule } from './components/shared-loader/shared-loader.module';
 
 @NgModule({
   imports: [
@@ -65,7 +63,8 @@ import { SharedTextZoneModule } from './components/shared-text-zone/shared-text-
     SharedWorldmapModule,
     AutocompleteInputModule,
     MultilingModule,
-    GlobalModule
+    GlobalModule,
+    SharedLoaderModule
   ],
   declarations: [
     // Directives
@@ -73,12 +72,10 @@ import { SharedTextZoneModule } from './components/shared-text-zone/shared-text-
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
-    SharedLoaderComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedVideoComponent,
     SharedProjectSettingsComponent,
-    SearchInputComponent,
     SharedSearchMailComponent,
     SharedMarketReportExampleComponent,
     SharedProjectEditCardsComponent,
@@ -94,7 +91,6 @@ import { SharedTextZoneModule } from './components/shared-text-zone/shared-text-
     RouterModule,
     Ng2FileDropModule,
     Ng2PageScrollModule,
-    SidebarModule,
     CountryFlagModule,
     SharedTableModule,
     InputListModule,
@@ -105,11 +101,9 @@ import { SharedTextZoneModule } from './components/shared-text-zone/shared-text-
     SharedNotFoundComponent,
     SharedUploadZonePhotoComponent,
     SharedUploadZoneVideoComponent,
-    SharedLoaderComponent,
     SharedProjectDescriptionComponent,
     SharedLatexManagerComponent,
     SharedProjectSettingsComponent,
-    SearchInputComponent,
     SharedSearchMailComponent,
     SharedProjectEditCardsComponent,
     FilterPipe,

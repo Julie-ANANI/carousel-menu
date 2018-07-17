@@ -6,6 +6,12 @@ import { SharedSortModule } from '../../../shared/components/shared-sort/sort.mo
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { SharedProjectsListModule } from '../../../admin/components/admin-projects-list/admin-projects-list.module';
+import { SharedPaginationModule } from '../../../shared/components/shared-pagination/pagination.module';
+import { SharedAnswerListModule } from '../../../shared/components/shared-answers-list/shared-answer-list.module';
+import { SidebarModule } from '../../../shared/components/shared-sidebar/sidebar.module';
+import { SharedLoaderModule } from '../../../shared/components/shared-loader/shared-loader.module';
+
+/* Components */
 import { ClientProjectComponent } from './client-project.component';
 import { ExplorationProjectComponent } from './components/exploration/exploration.component';
 import { HistoryProjectComponent } from './components/history/history.component';
@@ -16,8 +22,6 @@ import { SetupProjectComponent } from './components/setup/setup.component';
 import { PitchComponent } from './components/setup/components/pitch/pitch.component';
 import { SurveyComponent } from './components/setup/components/survey/survey.component';
 import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
-import {SharedPaginationModule} from '../../../shared/components/shared-pagination/pagination.module';
-import { SharedAnswerListModule } from '../../../shared/components/shared-answers-list/shared-answer-list.module';
 
 @NgModule({
   imports: [
@@ -29,7 +33,9 @@ import { SharedAnswerListModule } from '../../../shared/components/shared-answer
     SharedAnswerListModule,
     SharedProjectsListModule,
     SharedWorldmapModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    SidebarModule,
+    SharedLoaderModule
   ],
   declarations: [
     ClientProjectComponent,

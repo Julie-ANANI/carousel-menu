@@ -7,10 +7,11 @@ import { AdminPresetsListComponent } from './admin-presets-list/admin-presets-li
 import { AdminPresetsNewComponent } from './admin-presets-new/admin-presets-new.component';
 import { SharedFilterInputModule } from '../../../../shared/components/shared-filter-input/filter-input.module';
 import { SharedModule } from '../../../../shared/shared.module';
-import {AutocompleteInputModule} from '../../../../../directives/autocomplete-input/autocomplete-input.module';
+import { AutocompleteInputModule } from '../../../../../directives/autocomplete-input/autocomplete-input.module';
 import { SharedSortModule} from '../../../../shared/components/shared-sort/sort.module';
 import { SharedPaginationModule } from '../../../../shared/components/shared-pagination/pagination.module';
 import { GlobalModule } from '../../../../global/global.module';
+import { SharedLoaderModule } from '../../../../shared/components/shared-loader/shared-loader.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { GlobalModule } from '../../../../global/global.module';
     SharedSortModule,
     SharedPaginationModule,
     TranslateModule.forChild(),
-    AutocompleteInputModule
+    AutocompleteInputModule,
+    SharedLoaderModule
   ],
   declarations: [
     AdminPresetsComponent,

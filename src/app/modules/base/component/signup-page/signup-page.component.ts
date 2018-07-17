@@ -1,24 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Location } from '@angular/common';
 import { FormGroup } from '@angular/forms';
+import { TranslateTitleService } from '../../../../services/title/title.service';
+import { User } from '../../../../models/user.model';
+import { UserService } from '../../../../services/user/user.service';
+import { Template } from '../../../shared/components/shared-sidebar/interfaces/template';
 import { ActivatedRoute, Params } from '@angular/router';
-import 'rxjs/add/operator/filter';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { TranslateTitleService } from '../../../../services/title/title.service';
-import { UserService } from '../../../../services/user/user.service';
-import { User } from '../../../../models/user.model';
-import { Template } from '../../../shared/components/shared-sidebar/interfaces/template';
-
 
 @Component({
-  selector: 'app-client-signup',
-  templateUrl: './client-signup.component.html',
-  styleUrls: ['./client-signup.component.scss']
+  selector: 'app-signup-page',
+  templateUrl: './signup-page.component.html',
+  styleUrls: ['./signup-page.component.scss']
 })
-
-export class ClientSignupComponent implements OnInit {
+export class SignupPageComponent implements OnInit {
 
   public isInvitation = false;
   sidebarTemplateValue: Template = {};
@@ -46,12 +43,12 @@ export class ClientSignupComponent implements OnInit {
     const domain = environment.domain;
 
     this._authService.linkedinLogin(domain).first().subscribe(url => {
-          window.location.href = url;
-        },
-        error => {
-          this.translateNotificationsService.error('ERROR.ERROR', error.message);
-        }
-      );
+        window.location.href = url;
+      },
+      error => {
+        this.translateNotificationsService.error('ERROR.ERROR', error.message);
+      }
+    );
 
   }
 
@@ -61,7 +58,7 @@ export class ClientSignupComponent implements OnInit {
 
       user.domain = environment.domain;
 
-      if(user.email.match(/umi.us/gi) && user.domain !== 'umi') {
+      if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
       }else {
         this.userService.create(user).first().subscribe(_ => {
@@ -126,5 +123,6 @@ export class ClientSignupComponent implements OnInit {
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
   }
+
 
 }

@@ -11,6 +11,7 @@ import { SharedFilterInputModule } from '../../../../shared/components/shared-fi
 import { SharedModule } from '../../../../shared/shared.module';
 import {AutocompleteInputModule} from '../../../../../directives/autocomplete-input/autocomplete-input.module';
 import {GlobalModule} from '../../../../global/global.module';
+import {SharedLoaderModule} from '../../../../shared/components/shared-loader/shared-loader.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {GlobalModule} from '../../../../global/global.module';
     TranslateModule.forChild(),
     AutocompleteInputModule,
     GlobalModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    SharedLoaderModule
   ],
   declarations: [
     AdminSectionsComponent,

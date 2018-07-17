@@ -4,7 +4,6 @@ import { ANSWER } from '../modules/shared/components/shared-sidebar/components/u
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/en';
 import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/en';
 import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/en';
-import { SIGN_UP } from '../modules/client/components/client-signup/i18n/en';
 import { WELCOME } from '../modules/client/components/client-welcome/i18n/en';
 import { HEADER } from '../directives/header/i18n/en';
 import { FOOTER } from '../directives/footer/i18n/en';
@@ -20,11 +19,12 @@ import { BLACKLISTS } from '../modules/admin/components/admin-email-blacklist/i1
 import { TAGS } from '../modules/admin/components/admin-tags/i18n/en';
 import { PROJECT_LIST } from '../modules/admin/components/admin-projects-list/i18n/en';
 import { PROJECT_MODULE } from '../modules/client/components/client-project/i18n/en';
-import { FORGET_PASSWORD } from '../modules/client/components/client-forget-password/i18n/en';
 import { PROFESSIONALS } from '../modules/admin/components/admin-professionals/i18n/en';
 import { DISCOVER } from '../modules/client/components/client-discover-page/i18n/en';
 import { DISCOVERDESCRIPTION } from '../modules/client/components/client-discover-page/discover-description/i18n/en';
 import { LOG_IN } from '../modules/base/component/login-page/i18n/en';
+import { FORGET_PASSWORD } from '../modules/base/component/forget-password-page/i18n/en';
+import { SIGN_UP } from '../modules/base/component/signup-page/i18n/en';
 
 export const en = {
   'COMMON': COMMON,

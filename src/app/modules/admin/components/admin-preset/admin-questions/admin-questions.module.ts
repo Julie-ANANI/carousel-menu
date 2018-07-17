@@ -9,6 +9,7 @@ import { SharedSortModule} from '../../../../shared/components/shared-sort/sort.
 import { SharedPaginationModule } from '../../../../shared/components/shared-pagination/pagination.module';
 import { SharedFilterInputModule } from '../../../../shared/components/shared-filter-input/filter-input.module';
 import { SharedModule } from '../../../../shared/shared.module';
+import { SharedLoaderModule } from '../../../../shared/components/shared-loader/shared-loader.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { SharedModule } from '../../../../shared/shared.module';
     SharedSortModule,
     SharedPaginationModule,
     SharedFilterInputModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    SharedLoaderModule
   ],
   declarations: [
     AdminQuestionsComponent,
