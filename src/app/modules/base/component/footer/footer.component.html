@@ -1,0 +1,53 @@
+<footer class="main-container">
+  <div class="columns">
+    <div class="column col-12">
+
+      <!-- Translate Section -->
+      <div class="column col-xs-12 col-11 col-mx-auto lang-wrapper text-left">
+        <div class="dropdown" [ngClass]="{ 'active': displayLangChoices }">
+          <div class="btn-group">
+            <button class="btn dropdown-toggle btn-lang" (click)="(displayLangChoices = !displayLangChoices)">
+              <span class="icon-global"><i class="fas fa-globe"></i></span>
+              {{ 'COMMON.LANG.'+translate.currentLang.toUpperCase() | translate }}
+              <span class="icon-footer"><i class="icon icon-arrow-down"></i></span>
+            </button>
+            <ul class="menu" (click)="(displayLangChoices = false)">
+              <li *ngIf="translate.currentLang !== 'fr'">
+                <a (click)="propagateTranslation('fr') && $event.preventDefault()">
+                  {{ 'COMMON.LANG.FR' | translate }}
+                </a>
+              </li>
+              <li *ngIf="translate.currentLang !== 'en'">
+                <a (click)="propagateTranslation('en') && $event.preventDefault()">
+                  {{ 'COMMON.LANG.EN' | translate }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hr Section -->
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <hr class="footer-hr"/>
+      </div>
+
+      <!-- Info Section -->
+      <div class="column col-xs-12 col-11 col-mx-auto information-wrapper text-center">
+        {{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}
+        <span *ngIf="checkIsMainDomain()">
+          |
+          <a [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')" target="_blank">
+            {{ 'FOOTER.LEGAL_NOTICE' | translate }}
+          </a>
+          |
+          <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">
+            {{ 'FOOTER.TERMS' | translate }}
+          </a>
+        </span>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
