@@ -1,6 +1,3 @@
-/**
- * Created by juandavidcruzgomez on 11/09/2017.
- */
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { PageScrollConfig } from 'ng2-page-scroll';
