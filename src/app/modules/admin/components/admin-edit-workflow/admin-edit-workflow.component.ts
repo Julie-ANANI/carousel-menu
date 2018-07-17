@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EmailScenario } from '../../../../models/email-scenario';
 import { EmailTemplate } from '../../../../models/email-template';
 import { Template } from '../../../shared/components/shared-sidebar/interfaces/template';
@@ -13,7 +13,9 @@ import { TemplatesService } from '../../../../services/templates/templates.servi
 export class AdminEditWorkflowComponent implements OnInit {
 
   @Input() scenario: EmailScenario;
+  @Output() deletedScenario = new EventEmitter<string>();
 
+  public deleteModal: boolean = null;
   private _emails: Array<any> = [];
   private _total: number = 0;
   private _emailToEdit: any;
@@ -51,10 +53,9 @@ export class AdminEditWorkflowComponent implements OnInit {
     }
     this._tableInfos = {
       _selector: 'admin-scenario',
-      _title: 'COMMON.EMAILS',
       _content: this._emails,
       _total: this._total,
-      _isHeadable: true,
+      _isHeadable: false,
       _isFiltrable: false,
       _isDeletable: false,
       _isSelectable: false,
@@ -64,7 +65,7 @@ export class AdminEditWorkflowComponent implements OnInit {
     };
   }
 
-  closeSidebar(value: string) {
+  public closeSidebar(value: string) {
     this.more.animate_state = value;
   }
 
@@ -91,15 +92,9 @@ export class AdminEditWorkflowComponent implements OnInit {
       this._notificationsService.error('ERROR', err);
     });
   }
-
-  /**
-   * Suppression et mise à jour de la vue
-   */
-  public removeScenario() {
-    event.preventDefault();
-    this._templatesService.remove(this.scenario._id).first().subscribe(_ => {
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-    });
+  
+  public deleteScenario() {
+    this.deletedScenario.emit(this.scenario._id);
   }
 
   get tableInfos(): any {
