@@ -1,1 +1,9 @@
-<app-shared-table [data]="tableInfos" (editRow)="editEmail($event)" [config]="config"></app-shared-table>
+<div>
+  <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
+    <app-sidebar-workflow
+      [emailsObject]="emailToEdit"
+      (emailChange)="updateEmail($event)">
+    </app-sidebar-workflow>
+  </app-sidebar>
+  <app-shared-table [data]="tableInfos" (editRow)="editEmail($event)" [config]="config"></app-shared-table>
+</div>
