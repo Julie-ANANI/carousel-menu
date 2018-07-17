@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { EmailService } from '../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Table } from '../../../table/models/table';
@@ -35,7 +34,6 @@ export class AdminEmailBlacklistComponent implements OnInit {
   private _currentEmailToBlacklist: any = {};
 
   constructor( private _emailService: EmailService,
-               private _translateService: TranslateService,
                private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
@@ -46,7 +44,6 @@ export class AdminEmailBlacklistComponent implements OnInit {
       }
     };
     this.loadData(null);
-    console.log(this._translateService);
   }
 
   public loadData(config: any) {

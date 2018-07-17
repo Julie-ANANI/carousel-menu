@@ -51,15 +51,15 @@
       </div>
 
       <div class="block">
-        <strong>{{campaign.stats.nbSubmittedAnswers}}</strong>
+        <strong>{{campaign.stats.nbAnswers}}</strong>
         <span>rép. envoyées</span>
-        <span> ({{ratio(campaign.stats.nbSubmittedAnswers, campaign.stats.nbStartedAnswers)}}%)</span>
+        <span> ({{ratio(campaign.stats.nbAnswers, campaign.stats.nbStartedAnswers)}}%)</span>
       </div>
 
       <div class="block">
         <strong>{{campaign.stats.nbValidatedAnswers}}</strong>
         <span>rép. validées</span>
-        <span> ({{ratio(campaign.stats.nbValidatedAnswers, campaign.stats.nbSubmittedAnswers)}}%)</span>
+        <span> ({{ratio(campaign.stats.nbValidatedAnswers, campaign.stats.nbStartedAnswers)}}%)</span>
       </div>
     </div>
     <router-outlet></router-outlet>

@@ -6,6 +6,7 @@ import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import {Table} from '../../../table/models/table';
 import {Template} from '../../../sidebar/interfaces/template';
+import {Subject} from 'rxjs/Subject';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -22,6 +23,7 @@ export class SharedProsListComponent {
   public smartSelect: any = null;
   public editUser: {[propString: string]: boolean} = {};
   private _tableInfos: Table = null;
+  sidebarState = new Subject<string>();
 
   @Input() public requestId: string;
   @Input() public campaign: Campaign;
@@ -161,6 +163,7 @@ export class SharedProsListComponent {
 
   closeSidebar(value: string) {
     this._more.animate_state = value;
+    this.sidebarState.next(this._more.animate_state);
   }
 
   deleteProModal(pro: Professional) {

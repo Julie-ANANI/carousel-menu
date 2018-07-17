@@ -17,7 +17,7 @@
 <app-sidebar
   [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-user-form
-    [sidebarState]="this.more.animate_state"
+    [sidebarState]="sidebarState"
     [type]="more.type"
     [user]="currentUser"
     (editUserData)="userEditionFinish($event)">
