@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EmailScenario } from '../../../../models/email-scenario';
 import { EmailTemplate } from '../../../../models/email-template';
-import { Template } from '../../../shared/components/shared-sidebar/interfaces/template';
+import { Template } from '../../../sidebar/interfaces/template';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TemplatesService } from '../../../../services/templates/templates.service';
 
@@ -92,7 +92,7 @@ export class AdminEditWorkflowComponent implements OnInit {
       this._notificationsService.error('ERROR', err);
     });
   }
-  
+
   public deleteScenario() {
     this.deletedScenario.emit(this.scenario._id);
   }

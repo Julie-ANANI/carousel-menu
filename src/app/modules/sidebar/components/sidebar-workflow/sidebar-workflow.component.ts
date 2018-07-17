@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import { EmailTemplate } from '../../../../../../models/email-template';
+import { EmailTemplate } from '../../../../models/email-template';
 
 
 @Component({

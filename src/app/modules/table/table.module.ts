@@ -10,8 +10,7 @@ import { SharedPaginationModule } from '../shared/components/shared-pagination/s
 import {InputModule} from '../input/input.module';
 
 // Components
-import { SharedTableComponent } from './components/shared-table.component';
-import { EllipsisModule } from "../../../../pipes/ellipsis/ellipsis.module";
+import { PipeModule } from '../../pipe/pipe.module';
 import { TableComponent } from './components/table.component';
 
 @NgModule({
@@ -23,9 +22,9 @@ import { TableComponent } from './components/table.component';
     SharedPaginationModule,
     FormsModule,
     TranslateModule.forChild(),
-    InputModule
+    InputModule,
     TranslateModule.forChild(),
-    EllipsisModule
+    PipeModule
   ],
   declarations: [
     TableComponent
