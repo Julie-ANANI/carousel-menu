@@ -6,7 +6,7 @@
 </app-shared-table>
 
 <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
-  <app-user-form [sidebarState]="more.animate_state"
+  <app-user-form [sidebarState]="sidebarState"
                  [type]="more.type"
                  [pro]="currentPro" [campaign]="campaign ? campaign: null"
                  (professionalUserData)="updatePro($event)">

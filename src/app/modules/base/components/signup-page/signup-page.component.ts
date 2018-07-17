@@ -9,16 +9,19 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 import { Template } from '../../../sidebar/interfaces/template';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-signup-page',
   templateUrl: './signup-page.component.html',
   styleUrls: ['./signup-page.component.scss']
 })
+
 export class SignupPageComponent implements OnInit {
 
   public isInvitation = false;
   sidebarTemplateValue: Template = {};
+  sidebarState = new Subject<string>();
 
   constructor(private _authService: AuthService,
               private userService: UserService,
@@ -122,6 +125,7 @@ export class SignupPageComponent implements OnInit {
 
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
+    this.sidebarState.next(this.sidebarTemplateValue.animate_state);
   }
 
 
