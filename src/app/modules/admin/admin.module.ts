@@ -17,10 +17,9 @@ import { AdminProjectModule } from './components/admin-project/admin-project.mod
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
 import { SidebarModule } from '../shared/components/shared-sidebar/sidebar.module';
-import { HeaderModule } from '../base/component/header/header.module';
 import { GlobalModule } from '../global/global.module';
-import { FooterModule } from '../base/component/footer/footer.module';
 import { PipeModule } from '../../pipe/pipe.module';
+import { BaseModule } from '../base/base.module';
 
 // Components
 import { AdminComponent } from './admin.component';
@@ -49,9 +48,8 @@ import { AdminProjectsListComponent } from './components/admin-projects-list/adm
     GlobalModule,
     TranslateModule.forChild(),
     SidebarModule,
-    HeaderModule,
-    FooterModule,
-    PipeModule
+    PipeModule,
+    BaseModule
   ],
   declarations: [
     AdminComponent,
