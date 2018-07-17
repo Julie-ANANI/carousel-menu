@@ -11,6 +11,7 @@ import { SharedPaginationModule } from '../shared-pagination/pagination.module';
 
 // Components
 import { SharedTableComponent } from './components/shared-table.component';
+import { EllipsisModule } from "../../../../pipes/ellipsis/ellipsis.module";
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { SharedTableComponent } from './components/shared-table.component';
     SharedSortModule,
     SharedPaginationModule,
     FormsModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    EllipsisModule
   ],
   declarations: [
     SharedTableComponent

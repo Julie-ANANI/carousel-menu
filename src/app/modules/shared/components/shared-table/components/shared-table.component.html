@@ -87,7 +87,7 @@
 
                   <!-- If column type is  TEXT -->
                   <span *ngSwitchDefault>
-                  <span *ngFor="let attr of getAttrs(column)">{{(getContentValue(key, attr)|| " - ").toString()}} </span>
+                  <span *ngFor="let attr of getAttrs(column)">{{(getContentValue(key, attr)|| " - ").toString() | ellipsis:50}} </span>
                 </span>
 
                   <!-- If column type is COUNTRY -->
