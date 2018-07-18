@@ -18,16 +18,20 @@
 
   .job {
     display: flex;
+
     i {
-      margin-right: 10px;
+      margin-right: 5px;
     }
+
   }
 
   .company {
     display: flex;
+
     i {
-      margin-right: 10px;
+      margin-right: 5px;
     }
+
   }
 
     .detail {
@@ -61,12 +65,16 @@
 
         .fab {
           color: #1680B9;
+          margin-right: 5px;
         }
 
       }
 
       .email {
-        padding-bottom: 6px;
+
+        .fa-envelope {
+          margin-right: 3px;
+        }
 
         a {
           color: #FFB300;

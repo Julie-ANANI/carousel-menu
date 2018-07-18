@@ -1,7 +1,7 @@
 <div
   class="main-container sidebar-wrapper"
   id="sidebar-wrapper"
-  (click)="toggleState($event)"
+  (click)="toggleState($event, content)"
   [@animateWrapper]="state">
 
   <div
@@ -9,7 +9,7 @@
     [@animateContent]="state"
     [ngStyle]="{ 'width': size ? size : '452px' }">
 
-    <div class="columns">
+    <div class="columns" #content>
       <div class="column col-12 col-mx-auto">
 
         <!-- Heading -->
@@ -17,7 +17,7 @@
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="header-content">
               <span>{{ title | translate }}</span>
-              <span><i class="icon icon-cross" id="close" (click)="toggleState($event)"></i></span>
+              <span><i class="icon icon-cross" id="close" (click)="toggleState($event, content)"></i></span>
             </div>
           </div>
         </div>
