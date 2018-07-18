@@ -1,1 +1,16 @@
-
+<div class="heading">
+  <h2>{{this.innovation.preset.name}}</h2>
+</div>
+<div class="body">
+  <div *ngFor="let section of sections; let i=index">
+    <h3>{{section.name}}</h3>
+    <div *ngFor="let question of section.questions">
+        FR :{{question.label.fr}}
+        EN :{{question.label.en}}
+    </div>
+    <div> Ajouter question </div>
+    <div *ngIf="(i + 1)==sections.length">
+          Ajouter Section
+    </div>
+  </div>
+</div>

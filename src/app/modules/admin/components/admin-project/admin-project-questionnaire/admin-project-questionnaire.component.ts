@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../models/innovation';
 import { ActivatedRoute } from '@angular/router';
+import {Section} from '../../../../../models/section';
 // import {InnovationService} from '../../../../../services/innovation/innovation.service';
 
 @Component({
@@ -11,12 +12,24 @@ import { ActivatedRoute } from '@angular/router';
 export class AdminProjectQuestionnaireComponent implements OnInit {
 
   private _project: Innovation;
+  private _sections: Section;
 
-  constructor(  private _activatedRoute: ActivatedRoute,
+  constructor( private _activatedRoute: ActivatedRoute,
                ) {}
 
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
+    this._sections = this._project.preset.sections;
+    console.log(this._sections);
   }
 
+
+  get sections() {
+    console.log(this._sections);
+    return this._sections;
+  }
+
+  get innovation() {
+    return this._project;
+  }
 }
