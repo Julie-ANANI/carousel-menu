@@ -57,10 +57,13 @@ export class SidebarComponent implements OnInit {
     this.size = value.size;
   }
 
-  toggleState(event: Event) {
+  toggleState(event: Event, target: any) {
     if (event.target['id'] === 'sidebar-wrapper' || event.target['id'] === 'close') {
       this.state = 'inactive';
       this.closeSidebar.emit(this.state);
+      setTimeout(() => {
+        target.scrollIntoView();
+      }, 500);
     }
   }
 
