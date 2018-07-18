@@ -111,4 +111,8 @@ export class AnswerQuestionComponent implements OnInit {
     return this._commenting;
   }
 
+  set commenting(val: boolean) {
+    this._commenting = val;
+  }
+
 }
