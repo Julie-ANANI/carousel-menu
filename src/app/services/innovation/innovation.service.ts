@@ -118,7 +118,7 @@ export class InnovationService {
   }
 
   public updatePreset(innovationId: string, data: any): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/updatePreset', {data})
+    return this._http.put('/innovation/' + innovationId + '/updatePreset', {preset: data})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
