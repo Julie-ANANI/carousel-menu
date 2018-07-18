@@ -23,6 +23,14 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
   }
 
 
+
+  public sectionUpdated(event: any) {
+    console.log("youlou");
+    console.log(event);
+  }
+
+
+
   get sections() {
     return this._sections;
   }

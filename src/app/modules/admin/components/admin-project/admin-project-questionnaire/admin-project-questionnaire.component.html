@@ -3,7 +3,10 @@
 </div>
 <div class="body">
   <div *ngFor="let section of sections; let i=index">
-    <app-admin-project-questionnaire-section [section]="section">
+    <app-admin-project-questionnaire-section
+      [section]="section"
+      (sectionUpdated)="sectionUpdated($event)"
+    >
     </app-admin-project-questionnaire-section>
     <div *ngIf="(i + 1)==sections.length">
           Ajouter Section

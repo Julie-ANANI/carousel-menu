@@ -1,5 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Section} from '../../../../../../models/section';
+///<reference path="../../../../../../../../node_modules/@angular/forms/src/form_builder.d.ts"/>
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+// import {Section} from '../../../../../../models/section';
 
 
 @Component({
@@ -8,13 +10,36 @@ import {Section} from '../../../../../../models/section';
   styleUrls: ['./admin-project-questionnaire-section.component.scss']
 })
 export class AdminProjectQuestionnaireSectionComponent implements OnInit {
-  @Input() private section: Section;
 
-  constructor() { }
+  @Input() set section(sec) {
+    this._section = sec;
+  }
+  @Output() sectionUpdated = new EventEmitter<any>();
+
+
+  private _section: any;
+  public formData: FormGroup;
+
+  constructor( private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    console.log(this.section);
+    this.formData = this._formBuilder.group({
+      description: [this._section.description]
+    });
+  }
+
+
+  public updateDescription(event: any) {
+    this._section.description = event;
+    this.sectionUpdated.emit(this._section);
+  }
+
+  public updateQuestion(event: any) {
 
   }
 
+
+  get section() {
+    return this._section;
+  }
 }
