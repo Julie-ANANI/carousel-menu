@@ -215,6 +215,7 @@
           <!-- Insight section -->
           <div class="section-light-container">
             <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h2>
+
             <app-shared-table
               [data]="tableInfos"
               [config]="config"
@@ -236,7 +237,7 @@
   (closeSidebar)="closeSidebar($event)">
   <app-user-answer
     [adminMode]="false"
-    [mode]="editMode"
+    [mode]="false"
     [(userAnswer)]="modalAnswer"
     [questions]="questions"
     [innovationId]="project._id">

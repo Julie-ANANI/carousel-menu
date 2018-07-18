@@ -328,6 +328,7 @@ p {
 /*
     a default style
  */
-a {
-  color: $secondary-color;
+a, a:focus, a:hover, a:active, a.active {
+  color: $primary-color;
+  text-decoration: none;
 }
