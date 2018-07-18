@@ -10,6 +10,7 @@ import { InnovCard } from '../../../../models/innov-card';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslationService } from '../../../../services/translation/translation.service';
@@ -256,9 +257,18 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     const target_card = this.project.innovationCards[this.innovationCardEditingIndex];
     const from_card = this.project.innovationCards[this.innovationCardEditingIndex === 0 ? 1 : 0];
-    this.translationService.translate(from_card[model], target_card.lang).first().subscribe((o) => {
-      target_card[model] = o.translation;
-    });
+    switch (model) {
+      case 'advantages':
+        const subs = from_card[model].map((a) => this.translationService.translate(a.text, target_card.lang));
+        forkJoin(subs).subscribe(results => {
+          target_card[model] = results.map((r) => { return {text: r.translation}; });
+        });
+        break;
+      default:
+        this.translationService.translate(from_card[model], target_card.lang).first().subscribe((o) => {
+          target_card[model] = o.translation;
+        });
+    }
   }
 
   closeModal(event: Event) {

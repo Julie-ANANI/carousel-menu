@@ -231,6 +231,13 @@
                     </div>
 
                     <div *ngIf="projectStatus" class="pd-input" [ngStyle]="{ 'margin-top': '8px' }">
+                      <button
+                        *ngIf="isAdmin && project.innovationCards.length > 1"
+                        class="btn ghot-primary"
+                        [ngClass]="{'disabled': project.innovationCards[i].advantages?.length}"
+                        (click)="importTranslation($event, 'advantages')">
+                        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+                      </button>
                       <app-input-list
                         (update)="addAdvantageToInventionCard($event, i)"
                         [config]="getConfig('advantages')">
