@@ -16,6 +16,7 @@ export class AdminEditWorkflowComponent implements OnInit {
   @Output() deletedScenario = new EventEmitter<string>();
 
   public deleteModal: boolean = null;
+  public language = 'en';
   private _emails: Array<any> = [];
   private _total: number = 0;
   private _emailToEdit: any;
@@ -32,6 +33,10 @@ export class AdminEditWorkflowComponent implements OnInit {
               private _templatesService: TemplatesService) {}
 
   ngOnInit() {
+    this._initTable();
+  }
+
+  private _initTable() {
     const steps = {
       FIRST: {step: "01 - "},
       SECOND: {step: "02 -"},
@@ -43,13 +48,11 @@ export class AdminEditWorkflowComponent implements OnInit {
     });
     this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
     this._total = this.scenario.emails.length;
-    let columns = [{_attrs: ['step', 'en.subject'], _name: 'Step', _type: 'TEXT', _isSortable: false},
-      {_attrs: ['en.content'], _name: 'Contenu', _type: 'TEXT', _isSortable: false},
-      {_attrs: ['en.signature'], _name: 'Signature', _type: 'TEXT', _isSortable: false}];
+    let columns = [{_attrs: ['step', `${this.language}.subject`], _name: 'Step', _type: 'TEXT', _isSortable: false},
+      {_attrs: [`${this.language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false},
+      {_attrs: [`${this.language}.signature`], _name: 'Signature', _type: 'TEXT', _isSortable: false}];
     if (this.scenario.emails[0] && this.scenario.emails[0].modified != undefined) {
-      columns = columns.concat([
-        {_attrs: ['en.modified'], _name: 'EN', _type: 'BOOLEAN', _isSortable: false},
-        {_attrs: ['fr.modified'], _name: 'FR', _type: 'BOOLEAN', _isSortable: false}]);
+      columns.push({_attrs: [`${this.language}.modified`], _name: 'Modified', _type: 'BOOLEAN', _isSortable: false});
     }
     this._tableInfos = {
       _selector: 'admin-scenario',
@@ -61,6 +64,7 @@ export class AdminEditWorkflowComponent implements OnInit {
       _isSelectable: false,
       _isNotPaginable: true,
       _isEditable: true,
+      _reloadColumns: true,
       _columns: columns
     };
   }
@@ -96,6 +100,11 @@ export class AdminEditWorkflowComponent implements OnInit {
 
   public deleteScenario() {
     this.deletedScenario.emit(this.scenario._id);
+  }
+
+  public changeLanguage(value: string) {
+    this.language = value;
+    this._initTable();
   }
 
   get tableInfos(): any {
