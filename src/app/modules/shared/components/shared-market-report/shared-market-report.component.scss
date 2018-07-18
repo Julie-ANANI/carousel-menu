@@ -446,6 +446,29 @@ body.sample-infographic {
 
 }
 
+.synthesis-wrapper {
+  padding-top: 0;
+
+  .ss-sticky-wrapper {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: white;
+    box-shadow: none;
+    z-index: 1;
+    transition: all 0.35s ease-in-out;
+  }
+
+  .ss-scroll-sticky {
+    position: sticky;
+    top: 0;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
+    z-index: 3;
+  }
+
+}
+
+
+
 /********************************** Media ***************************************/
 
 @media (max-width: 600px) {
@@ -518,6 +541,16 @@ body.sample-infographic {
     #answer-wrapper {
       max-width: 78%;
     }
+
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .synthesis-wrapper {
+
+
 
   }
 

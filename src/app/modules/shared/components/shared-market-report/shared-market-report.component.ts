@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { PageScrollConfig } from 'ng2-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -29,6 +29,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   adminSide: boolean;
   editMode = new Subject<boolean>();
   sidebarTemplateValue: Template = {};
+  scrollOn = false;
 
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
@@ -103,6 +104,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       };
     }
   }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (window.scrollY !== 0) {
+      this.scrollOn = true;
+    } else {
+      this.scrollOn = false;
+    }
+
+    console.log(this.scrollOn);
+  }
+
 
   private loadAnswers() {
     this.answerService.getInnovationValidAnswers(this._innoid).first()
