@@ -38,6 +38,7 @@ export class TableComponent {
   private _isDeletable = false;
   private _isFiltrable = false;
   private _isNotPaginable = false;
+  private _reloadColumns = false;
   private _content: Row[] = [];
   private _total = 0;
   private _columns: Column[] = [];
@@ -63,10 +64,11 @@ export class TableComponent {
       this._isDeletable = value._isDeletable || false;
       this._isFiltrable = value._isFiltrable || false;
       this._isNotPaginable = value._isNotPaginable || false;
+      this._reloadColumns = value._reloadColumns || false;
 
       this._total = value._total;
 
-      if (this._columns.length === 0) {
+      if (this._columns.length === 0 || this._reloadColumns) {
         // Si on a plus de 10 colonnes, on ne prends que les 10 premières
         value._columns.length > 10
           ? this._columns = value._columns.slice(0, 10)

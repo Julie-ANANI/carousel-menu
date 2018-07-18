@@ -60,7 +60,7 @@
           <p><i class="far fa-address-card" aria-hidden="true"></i></p>
           <p *ngIf="!editJob">
             {{ modalAnswer.job || modalAnswer.professional?.jobTitle }}
-            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editJob = true; notifyChanges($event)"></i>
+            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editJob = true;"></i>
           </p>
           <div *ngIf="editJob" class="form-group">
             <input
@@ -78,7 +78,7 @@
           <p><i class="far fa-building" aria-hidden="true"></i></p>
           <p *ngIf="!editCompany">
             {{ modalAnswer.company.name || modalAnswer.professional?.company }}
-            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCompany = true; notifyChanges($event)"></i>
+            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCompany = true;"></i>
           </p>
           <div *ngIf="editCompany" class="form-group">
             <input
