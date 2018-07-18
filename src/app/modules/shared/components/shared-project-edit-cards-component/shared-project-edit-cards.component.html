@@ -65,6 +65,13 @@
                     </div>
 
                     <div *ngIf="projectStatus" class="form-group pd-input">
+                      <button
+                        *ngIf="isAdmin && project.innovationCards.length > 1"
+                        class="btn ghot-primary"
+                        [ngClass]="{'disabled': project.innovationCards[i].title}"
+                        (click)="importTranslation($event, 'title')">
+                        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+                      </button>
                       <input
                         type="text"
                         id="innovation-title"
@@ -95,6 +102,13 @@
                     </div>
 
                     <div *ngIf="projectStatus" class="form-group pd-input">
+                      <button
+                        *ngIf="isAdmin && project.innovationCards.length > 1"
+                        class="btn ghot-primary"
+                        [ngClass]="{'disabled': project.innovationCards[i].summary}"
+                        (click)="importTranslation($event, 'summary')">
+                        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+                      </button>
                     <textarea
                       [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
                       rows="8"
@@ -129,6 +143,13 @@
                     </div>
 
                     <div *ngIf="projectStatus" class="form-group pd-input">
+                      <button
+                        *ngIf="isAdmin && project.innovationCards.length > 1"
+                        class="btn ghot-primary"
+                        [ngClass]="{'disabled': project.innovationCards[i].problem}"
+                        (click)="importTranslation($event, 'problem')">
+                        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+                      </button>
                     <textarea
                       [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
                       rows="8"
@@ -165,19 +186,26 @@
                     </div>
 
                     <div *ngIf="projectStatus" class="form-group pd-input">
-                    <textarea
-                      [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
-                      rows="8"
-                      id="innovation-solution"
-                      class="form-default"
-                      name="solution"
-                      #solution="ngModel"
-                      [(ngModel)]="project.innovationCards[i].solution"
-                      (ngModelChange)="notifyModelChanges($event)"
-                      required
-                      [ngClass]="{'borderRed': showSolutionError}"
-                      (keyup)="showSolutionError = false">
-                    </textarea>
+                      <button
+                        *ngIf="isAdmin && project.innovationCards.length > 1"
+                        class="btn ghot-primary"
+                        [ngClass]="{'disabled': project.innovationCards[i].solution}"
+                        (click)="importTranslation($event, 'solution')">
+                        {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
+                      </button>
+                      <textarea
+                        [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
+                        rows="8"
+                        id="innovation-solution"
+                        class="form-default"
+                        name="solution"
+                        #solution="ngModel"
+                        [(ngModel)]="project.innovationCards[i].solution"
+                        (ngModelChange)="notifyModelChanges($event)"
+                        required
+                        [ngClass]="{'borderRed': showSolutionError}"
+                        (keyup)="showSolutionError = false">
+                      </textarea>
                       <div class="charRemaining">
                       <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:1000)}">
                         {{ project.innovationCards[i].solution.length | characterCountdown:1000 }}

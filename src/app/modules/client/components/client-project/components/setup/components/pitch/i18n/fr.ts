@@ -2,6 +2,8 @@ export const PITCH = {
   'DESCRIPTION': {
     'SUBMIT_BUTTON': 'Soumettre',
 
+    'IMPORT_TRANSLATION': 'Importer une traduction',
+
     'LANGUAGE': {
       'HEADING': 'Je décris mon projet en :',
       'UPDATE_TEXT': 'Actualiser la langue du projet',

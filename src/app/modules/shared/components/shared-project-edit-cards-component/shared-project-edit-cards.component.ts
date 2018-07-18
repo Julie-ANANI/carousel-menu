@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
@@ -11,7 +12,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { Location } from '@angular/common';
+import { TranslationService } from '../../../../services/translation/translation.service';
 
 @Component({
   selector: 'app-shared-project-edit-cards',
@@ -53,6 +54,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private domSanitizer1: DomSanitizer,
               private translateService: TranslateService,
+              private translationService: TranslationService,
               private translateNotificationsService: TranslateNotificationsService,
               private location: Location) {
   }
@@ -248,7 +250,15 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       this._showDeleteModal = false;
     });
+  }
 
+  importTranslation(event: Event, model: string) {
+    event.preventDefault();
+    const target_card = this.project.innovationCards[this.innovationCardEditingIndex];
+    const from_card = this.project.innovationCards[this.innovationCardEditingIndex === 0 ? 1 : 0];
+    this.translationService.translate(from_card[model], target_card.lang).first().subscribe((o) => {
+      target_card[model] = o.translation;
+    });
   }
 
   closeModal(event: Event) {
