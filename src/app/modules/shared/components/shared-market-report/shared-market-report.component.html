@@ -3,23 +3,167 @@
     <div class="column col-12 col-mx-auto">
 
       <!-- Sticky bar -->
-      <div *ngIf="!adminSide" class="ss-sticky-wrapper" [ngClass]="{ 'ss-scroll-sticky': scrollOn }">
-        <div class="column col-11 col-mx-auto ss-content-wrapper">
+      <div *ngIf="!adminSide" class="sc-sticky-wrapper" [ngClass]="{ 'sc-scroll-sticky': scrollOn }">
+        <div class="column col-11 col-mx-auto sc-content-wrapper">
+
           <!-- Detail view -->
-          <div class="ss-detail-wrapper">
-            dsfsdfyuiyuiyui
+          <div class="sc-detail-wrapper">
+            <label class="form-switch" for="showDetails">
+              <input
+                type="checkbox"
+                name="showDetails"
+                id="showDetails"
+                (change)="toggleDetails($event)"
+                [checked]="showDetails">
+              <i class="form-icon"></i>
+              {{ 'MARKET_REPORT.STICKY_BAR.DETAIL_VIEW' | translate }}
+            </label>
           </div>
+
           <!-- Filter view -->
-          <div class="ss-filter-wrapper">
-dsfsdfs'é"'é"
+          <div class="sc-filter-wrapper">
+            <p>{{ 'MARKET_REPORT.STICKY_BAR.FILTER' | translate }}</p>
           </div>
+
           <!-- Buttons -->
-          <div class="ss-button-wrapper">
-sdfsdfhth'é"'é"
+          <div class="sc-button-wrapper">
+            <button class="btn ghost-primary">{{ 'MARKET_REPORT.STICKY_BAR.BUTTON_CSV' | translate }}</button>
+            <button class="btn btn-primary">{{ 'MARKET_REPORT.STICKY_BAR.BUTTON_DOWNLOAD' | translate }}</button>
           </div>
+
         </div>
       </div>
-      <!-- /Sticky bar -->
+
+      <!--Main page -->
+      <div *ngIf="!adminSide" class="section-container sc-front-wrapper">
+        <div class="column col-11 col-mx-auto section-inline-container white-background">
+
+          <!-- Logo -->
+          <div class="sc-header-wrapper">
+            <img src="{{ getLogo() }}" alt="UMI" height="35px">
+          </div>
+
+          <!-- Project name -->
+          <div class="sc-body-wrapper">
+            <h1>{{ project.name }}</h1>
+            <h6>{{ project.created | date }}</h6>
+          </div>
+
+          <!-- Link -->
+          <div class="sc-footer-wrapper">
+            <a href="https://www.umi.us/" class="text-link">www.umi.us</a>
+            <p>UMI, Campus Verrazzano, 1 place Giovanni da Verrazzano, 69009 Lyon, France</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Innovation detail -->
+      <div *ngIf="!adminSide" class="section-light-container">
+        <div class="column col-11 col-mx-auto section-inline-container sc-innovation-wrapper white-background">
+
+          <!-- Column 1 -->
+          <div class="sc-summary-wrapper">
+            <h1 class="main-heading">{{ project.innovationCards[0].title }}</h1>
+            <p>{{ project.innovationCards[0].summary }}</p>
+            <div *ngIf="project.principalMedia?.type === 'PHOTO'" [ngStyle]="{ 'padding-bottom': '20px' }">
+              <img
+                [src]="project.principalMedia.url"
+                [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+                height="146" width="220px">
+            </div>
+            <div *ngIf="project.principalMedia?.type === 'VIDEO'" [ngStyle]="{ 'padding-bottom': '20px' }">
+              <iframe
+                [src]="domSanitizer.bypassSecurityTrustResourceUrl(project.principalMedia.video.embeddableUrl)"
+                height="148" width="220px">
+              </iframe>
+            </div>
+            <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
+            <ul class="sc-advantage">
+              <li *ngFor="let advantage of project.innovationCards[0].advantages;">
+                {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 2 -->
+          <div class="sc-issue-wrapper">
+            <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
+            <p>{{ project.innovationCards[0].problem }}</p>
+          </div>
+
+          <!-- Column 3 -->
+          <div class="sc-solution-wrapper">
+            <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
+            <p>{{ project.innovationCards[0].solution }}</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Innovation targeting -->
+      <div *ngIf="!adminSide" class="section-light-container">
+        <div class="column col-11 col-mx-auto section-inline-container sc-targeting-wrapper white-background">
+
+          <!-- Column 1 -->
+          <div class="sc-map-wrapper">
+            <h1 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}</h1>
+            <app-worldmap
+              [countries]="countries"
+              [countriesColor]="'#2ECC71'"
+              [isEditable]="false">
+            </app-worldmap>
+            <div *ngIf="project.settings.geography.exclude.length > 0" class="sc-question-wrapper">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</p>
+              <div *ngFor="let country of project.settings.geography.exclude" class="sc-answer-wrapper">
+                {{ country.name }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2 -->
+          <div class="sc-t-answer-wrapper">
+
+            <div *ngIf="project.settings.market.comments.length > 0">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}</p>
+              <p>{{ project.settings.market.comments }}</p>
+            </div>
+
+            <div *ngIf="project.settings.companies.include.length > 0" class="sc-question-wrapper">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}</p>
+              <div *ngFor="let companyInclude of project.settings.companies.include" class="sc-answer-wrapper">
+                {{ companyInclude.name }}
+              </div>
+            </div>
+
+            <div *ngIf="project.settings.companies.exclude.length > 0" class="sc-question-wrapper">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}</p>
+              <div *ngFor="let companyExclude of project.settings.companies.exclude" class="sc-answer-wrapper">
+                {{ companyExclude.name }}
+              </div>
+            </div>
+
+            <div *ngIf="project.settings.professionals.description.length > 0" class="sc-question-wrapper">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate }}</p>
+              <p>{{ project.settings.professionals.description }}</p>
+            </div>
+
+            <div *ngIf="project.settings.professionals.exclude.length > 0" class="sc-question-wrapper">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</p>
+              <div *ngFor="let professionalExclude of project.settings.professionals.exclude" class="sc-answer-wrapper">
+                {{ professionalExclude.text }}
+              </div>
+            </div>
+
+            <div *ngIf="project.settings.comments.length > 0" class="sc-question-wrapper">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</p>
+              <p>{{ project.settings.comments }}</p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
 
     </div>
   </div>

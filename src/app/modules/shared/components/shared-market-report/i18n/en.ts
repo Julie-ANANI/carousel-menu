@@ -31,6 +31,13 @@ export const MARKET_REPORT = {
 
   'INSIGHT': 'Insight',
 
+  'STICKY_BAR': {
+    'DETAIL_VIEW': 'Detail view',
+    'FILTER': 'Filters',
+    'BUTTON_CSV': 'Export CSV',
+    'BUTTON_DOWNLOAD': 'Download synthesis'
+  },
+
 
  // 'TITLE': 'Exploring market potential',
   'COLLAPSE': 'Collapse',

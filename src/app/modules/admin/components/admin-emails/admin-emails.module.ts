@@ -6,7 +6,7 @@ import { AdminEmailQueueComponent } from './admin-emails-queue/admin-emails-queu
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { AdminBatchInformationComponent } from './admin-batch-information/admin-batch-information.component';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
-import { SharedTableModule } from '../../../table/table.module';
+import { TableModule } from '../../../table/table.module';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
     TranslateModule.forChild(),
     SidebarModule,
     PipeModule,
-    SharedTableModule,
+    TableModule,
     RouterModule
   ],
   declarations: [

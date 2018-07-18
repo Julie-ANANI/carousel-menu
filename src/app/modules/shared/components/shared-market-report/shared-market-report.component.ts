@@ -30,6 +30,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   editMode = new Subject<boolean>();
   sidebarTemplateValue: Template = {};
   scrollOn = false;
+  activeSection: string;
+  today: Number;
+  objectKeys = Object.keys;
+  mapInitialConfiguration: {[continent: string]: boolean};
 
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
@@ -40,12 +44,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   private _showListProfessional = true;
   private _showDetails = true;
   private _innoid: string;
-
-  public activeSection: string;
-  public today: Number;
-  public objectKeys = Object.keys;
-  public mapInitialConfiguration: {[continent: string]: boolean};
-
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer;
@@ -112,8 +110,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     } else {
       this.scrollOn = false;
     }
-
-    console.log(this.scrollOn);
   }
 
 
@@ -326,6 +322,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   get lang(): string {
     return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
+  }
+
+  getLogo(): string {
+    return environment.logoURL;
   }
 
 }

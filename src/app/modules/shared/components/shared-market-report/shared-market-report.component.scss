@@ -448,43 +448,190 @@ body.sample-infographic {
 
 .synthesis-wrapper {
   padding-top: 0;
+  background-color: #F5F5F5;
+  color: #484848;
 
-  .ss-sticky-wrapper {
-    padding-top: 50px;
-    padding-bottom: 50px;
+  .white-background {
+    background-color: white;
+    border-radius: 3px;
+  }
+
+  .sc-sticky-wrapper {
+    padding-top: 10px;
+    padding-bottom: 10px;
     background-color: white;
     box-shadow: none;
     z-index: 1;
     transition: all 0.35s ease-in-out;
 
-    .ss-content-wrapper {
+    .sc-content-wrapper {
       display: flex;
+      font-weight: 600;
+      font-size: 14px;
 
-      .ss-detail-wrapper {
+      .sc-detail-wrapper {
         flex: 1;
+        padding: 15px 15px 15px 0;
+        color: #97A4B1;
       }
 
-      .ss-filter-wrapper {
+      .sc-filter-wrapper {
         border-left: 1px solid #D8D8D8;
         border-right: 1px solid #D8D8D8;
-        flex: 2;
+        flex: 3;
+        padding: 15px;
       }
 
-      .ss-button-wrapper {
-        flex: 1;
+      .sc-button-wrapper {
+        flex: 2;
+        padding: 15px 0 0 0;
+        text-align: right;
+
+        .btn {
+          margin-bottom: 15px;
+          margin-left: 15px;
+        }
+
       }
 
     }
 
   }
 
-  .ss-scroll-sticky {
+  .sc-scroll-sticky {
     position: sticky;
     top: 0;
     box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
     z-index: 3;
   }
 
+  .sc-front-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding-bottom: 25px;
+
+    .sc-body-wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      justify-content: center;
+
+      h1 {
+        color: #484848;
+        font-size: 42px;
+        margin-bottom: 10px;
+      }
+
+      h6 {
+        color: #97A4B1;
+        font-size: 21px;
+      }
+
+    }
+
+    .sc-footer-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      .text-link {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 12px;
+        padding-bottom: 0;
+      }
+
+    }
+
+  }
+
+  .sc-innovation-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .sc-summary-wrapper {
+      padding-right: 15px;
+      flex: 1;
+
+      p {
+        padding-bottom: 25px;
+      }
+
+      .section-heading {
+        margin-bottom: 15px;
+      }
+
+      .sc-advantage {
+        margin: 0;
+
+        li {
+          margin: 0;
+          padding: 6px 8px 6px 4px;
+        }
+
+        li:last-child {
+          padding-bottom: 0;
+        }
+
+      }
+
+    }
+
+    .sc-issue-wrapper {
+      padding-left: 15px;
+      padding-right: 15px;
+      flex: 1;
+    }
+
+    .sc-solution-wrapper {
+      padding-left: 15px;
+      flex: 1;
+    }
+
+  }
+
+  .sc-targeting-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .sc-map-wrapper {
+      padding-right: 15px;
+      flex: 1;
+    }
+
+    .sc-question-wrapper {
+      padding-top: 25px;
+    }
+
+    p {
+      padding-bottom: 0;
+    }
+
+    .sc-ques {
+      font-weight: 600;
+      padding-bottom: 25px;
+    }
+
+    .sc-answer-wrapper {
+      background: #F8F4F4;
+      color: #333333;
+      padding: 8px 15px;
+      border-radius: 5px;
+      display: inline-flex;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .sc-t-answer-wrapper {
+      padding-left: 15px;
+      flex: 1;
+    }
+
+  }
 
 }
 

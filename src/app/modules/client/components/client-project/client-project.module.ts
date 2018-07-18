@@ -25,6 +25,7 @@ import { SharedProjectSettingsModule } from '../../../shared/components/shared-p
 import { SharedProjectDescriptionModule } from '../../../shared/components/shared-project-description/shared-project-description.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableModule } from '../../../table/table.module';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     SharedProjectEditCardsModule,
     SharedProjectSettingsModule,
-    SharedProjectDescriptionModule
+    SharedProjectDescriptionModule,
+    TableModule
   ],
   declarations: [
     ClientProjectComponent,
