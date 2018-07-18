@@ -47,7 +47,12 @@
 
         <!-- Linkedin -->
         <div *ngIf="adminMode && modalAnswer.professional?.profileUrl" class="profile">
-          <p><i class="fab fa-linkedin-in"></i> <span class="text-link" [ngStyle]="{ 'padding-left': '3px' }">{{ modalAnswer.professional.profileUrl }}</span></p>
+          <p>
+            <i class="fab fa-linkedin-in"></i>
+            <a [href]="modalAnswer.professional.profileUrl" target="_blank">
+              <span class="text-link">{{ modalAnswer.professional.profileUrl }}</span>
+            </a>
+          </p>
         </div>
 
         <!-- Job -->
@@ -88,9 +93,12 @@
 
         <!-- Email -->
         <div *ngIf="adminMode && (modalAnswer.professional?.email)" class="email">
-          <a [href]="'mailto:'+modalAnswer.professional.email">
-            {{ modalAnswer.professional.email }}
-          </a>
+          <p>
+            <i class="far fa-envelope"></i>
+            <a [href]="'mailto:'+modalAnswer.professional.email">
+              {{ modalAnswer.professional.email }}
+            </a>
+          </p>
         </div>
 
         <!-- Received date and time, and time spent -->
