@@ -73,7 +73,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   }
 
-  notifyModelChanges(_event: any) {
+  notifyModelChanges(_event?: any) {
     this.changesSaved = false;
     this.saveChanges.emit(true);
     this.projectChange.emit(this.project);
@@ -262,11 +262,13 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         const subs = from_card[model].map((a) => this.translationService.translate(a.text, target_card.lang));
         forkJoin(subs).subscribe(results => {
           target_card[model] = results.map((r) => { return {text: r.translation}; });
+          this.notifyModelChanges();
         });
         break;
       default:
         this.translationService.translate(from_card[model], target_card.lang).first().subscribe((o) => {
           target_card[model] = o.translation;
+          this.notifyModelChanges();
         });
     }
   }
