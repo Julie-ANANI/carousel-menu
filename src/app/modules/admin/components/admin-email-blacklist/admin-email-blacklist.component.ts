@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-
 import { EmailService } from '../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import {Table} from '../../../shared/components/shared-table/models/table';
-import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
+import { Table } from '../../../table/models/table';
+import { Template } from '../../../sidebar/interfaces/template';
 
 
 @Component({
@@ -36,7 +34,6 @@ export class AdminEmailBlacklistComponent implements OnInit {
   private _currentEmailToBlacklist: any = {};
 
   constructor( private _emailService: EmailService,
-               private _translateService: TranslateService,
                private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
@@ -47,7 +44,6 @@ export class AdminEmailBlacklistComponent implements OnInit {
       }
     };
     this.loadData(null);
-    console.log(this._translateService);
   }
 
   public loadData(config: any) {
@@ -80,17 +76,17 @@ export class AdminEmailBlacklistComponent implements OnInit {
                 {_attrs: ['reason'], _name: 'COMMON.REASON', _type: 'MULTI-CHOICES',
                   _choices: [
                     {
-                      _name: "MANUALLY_ADDED",
+                      _name: 'MANUALLY_ADDED',
                       _class: 'label-progress'
                     }, {
-                      _name: "USER_SUPPRESSION",
+                      _name: 'USER_SUPPRESSION',
                       _class: 'label-validate'
                     }, {
-                      _name: "PROFESSIONAL_SUPPRESSION",
+                      _name: 'PROFESSIONAL_SUPPRESSION',
                       _class: 'label-alert'
                     },
                     {
-                      _name: "MAIL_EVENT",
+                      _name: 'MAIL_EVENT',
                       _class: 'label-editing'
                     }
                     ]}]
@@ -191,7 +187,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
   }
 
   public addEntry() {
-    this._emailService.addToBlacklist({email:this.addressToBL})
+    this._emailService.addToBlacklist({email: this.addressToBL})
         .subscribe(result => {
           this.addressToBL = '';
           this.resetSearch();
@@ -219,20 +215,20 @@ export class AdminEmailBlacklistComponent implements OnInit {
   }
 
   public reasonFormat(datum: any): string {
-    let result = "";
-    switch(datum.reason || "") {
-      case( "USER_SUPPRESSION" ):
-        result = "Deleted user";
+    let result = '';
+    switch (datum.reason || '') {
+      case( 'USER_SUPPRESSION' ):
+        result = 'Deleted user';
         break;
-      case("PROFESSIONAL_SUPPRESSION"):
-          result = "Deleted professional";
+      case('PROFESSIONAL_SUPPRESSION'):
+          result = 'Deleted professional';
         break;
       case('MAIL_EVENT'):
-        result = "Unsubscribe event";
+        result = 'Unsubscribe event';
         break;
-      case("MANUALLY_ADDED"):
+      case('MANUALLY_ADDED'):
       default:
-        result = "Added by operator";
+        result = 'Added by operator';
     }
     return result;
   }

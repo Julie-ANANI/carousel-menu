@@ -5,7 +5,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
 import { Subject } from 'rxjs/Subject';
-import { Template } from '../../../../../shared/components/shared-sidebar/interfaces/template';
+import {Template} from '../../../../../sidebar/interfaces/template';
 
 const DEFAULT_TAB = 'pitch';
 
@@ -130,7 +130,7 @@ export class SetupProjectComponent implements OnInit {
       .first().subscribe(data => {
        this.project.status = 'SUBMITTED';
        this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
-       this.router.navigate(['projects']);
+       this.router.navigate(['project']);
       }, err => {
         this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });

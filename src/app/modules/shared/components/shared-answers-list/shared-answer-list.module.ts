@@ -4,17 +4,17 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { CountryFlagModule } from '../../../../directives/country-flag/country-flag.module';
 
 // Components
 import { SharedAnswersListComponent } from './shared-answers-list.component';
+import {InputModule} from '../../../input/input.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    CountryFlagModule,
+    InputModule,
     TranslateModule.forChild()
   ],
   declarations: [

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 /* Shared */
-import { SharedNotFoundComponent } from '../shared/components/shared-not-found/shared-not-found.component';
 import { SharedMarketReportExampleComponent } from '../shared/components/shared-market-report-example/shared-market-report-example.component';
 
 /* SubModules */
@@ -14,15 +13,16 @@ import { NonAuthGuard } from '../../non-auth-guard.service';
 
 /* Components */
 import { ClientComponent } from './client.component';
-import { ClientSignupComponent } from './components/client-signup/client-signup.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
-import { ClientWelcomeComponent } from './components/client-welcome/client-welcome.component';
-import { ClientForgetPasswordComponent } from './components/client-forget-password/client-forget-password.component';
 import { ClientDiscoverPageComponent } from './components/client-discover-page/client-discover-page.component';
 import { DiscoverDescriptionComponent } from './components/client-discover-page/discover-description/discover-description.component';
-import { LoginPageComponent } from '../base/component/login-page/login-page.component';
-import { LogoutPageComponent } from '../base/component/logout-page/logout-page.component';
+import { WelcomePageComponent } from '../base/components/welcome-page/welcome-page.component';
+import { LoginPageComponent } from '../base/components/login-page/login-page.component';
+import { LogoutPageComponent } from '../base/components/logout-page/logout-page.component';
+import { SignupPageComponent } from '../base/components/signup-page/signup-page.component';
+import { ForgetPasswordPageComponent } from '../base/components/forget-password-page/forget-password-page.component';
+import { NotFoundPageComponent } from '../base/components/not-found-page/not-found-page.component';
 
 const clientRoutes: Routes = [
   {
@@ -31,14 +31,15 @@ const clientRoutes: Routes = [
     children: [
       {
         path: '',
+        canActivate: [AuthGuard],
         pathMatch: 'full',
         redirectTo: '/project'
       },
       {
         path: 'welcome',
-        /*canActivate: '',*/
+        canActivate: [AuthGuard],
         children: [
-          { path: '', component: ClientWelcomeComponent, pathMatch: 'full' }
+          { path: '', component: WelcomePageComponent, pathMatch: 'full' }
         ]
       },
       {
@@ -59,14 +60,14 @@ const clientRoutes: Routes = [
         path: 'signup',
         canActivate: [NonAuthGuard],
         children: [
-          { path: '', component: ClientSignupComponent, pathMatch: 'full' }
+          { path: '', component: SignupPageComponent, pathMatch: 'full' }
         ]
       },
       {
         path: 'forget',
         canActivate: [NonAuthGuard],
         children: [
-          { path: '', component: ClientForgetPasswordComponent, pathMatch: 'full' }
+          { path: '', component: ForgetPasswordPageComponent, pathMatch: 'full' }
         ]
       },
       {
@@ -99,7 +100,7 @@ const clientRoutes: Routes = [
       ...clientProjectRoutes,
       {
         path: '**',
-        component: SharedNotFoundComponent
+        component: NotFoundPageComponent
       }
     ]
   }

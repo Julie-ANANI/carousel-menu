@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { ChartsModule } from 'ng2-charts';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
-
+import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
+import { PipeModule } from '../../../../pipe/pipe.module';
+import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { BluesquareComponent } from './components/bluesquare/bluesquare.component';
 import { PiechartComponent } from './components/piechart/piechart.component';
@@ -16,22 +18,19 @@ import { ScaleComponent } from './components/scale/scale.component';
 import { ItemListComponent } from './components/item-list/item-list.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { StarsComponent } from './components/stars/stars.component';
-import { MultilingModule } from '../../../../pipes/multiling/multiling.module';
-import { SharedModule } from '../../shared.module';
-import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
-import { EllipsisModule } from '../../../../pipes/ellipsis/ellipsis.module';
 import { CommonService } from '../../../../services/common/common.service';
+import { InputModule } from '../../../input/input.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ChartsModule,
-    EllipsisModule,
-    MultilingModule,
-    SharedModule,
+    PipeModule,
     SharedTextZoneModule,
     SharedWorldmapModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    SidebarModule,
+    InputModule
   ],
   providers: [
     CommonService

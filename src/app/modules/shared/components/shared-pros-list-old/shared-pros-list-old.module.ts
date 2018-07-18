@@ -4,11 +4,11 @@ import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import {SharedProsListOldComponent} from './shared-pros-list-old.component';
-import {SharedSortModule} from '../shared-sort/sort.module';
-import {SharedFilterInputModule} from '../shared-filter-input/filter-input.module';
+import {SharedSortModule} from '../shared-sort/shared-sort.module';
+import {SharedFilterInputModule} from '../shared-filter-input/shared-filter-input.module';
 import {SharedSmartSelectModule} from '../shared-smart-select/shared-smart-select.module';
-import {CountryFlagModule} from '../../../../directives/country-flag/country-flag.module';
-import {SharedPaginationModule} from '../shared-pagination/pagination.module';
+import {SharedPaginationModule} from '../shared-pagination/shared-pagination.module';
+import {InputModule} from '../../../input/input.module';
 
 // Components
 
@@ -20,7 +20,7 @@ import {SharedPaginationModule} from '../shared-pagination/pagination.module';
     SharedSortModule,
     SharedFilterInputModule,
     SharedSmartSelectModule,
-    CountryFlagModule,
+    InputModule,
     SharedPaginationModule,
     FormsModule
 

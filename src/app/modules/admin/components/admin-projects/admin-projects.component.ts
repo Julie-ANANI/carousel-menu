@@ -3,7 +3,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Innovation } from '../../../../models/innovation';
-import {Table} from '../../../shared/components/shared-table/models/table';
+import {Table} from '../../../table/models/table';
 import {Router} from '@angular/router';
 
 @Component({
@@ -33,7 +33,7 @@ export class AdminProjectsComponent implements OnInit {
               private _titleService: TranslateTitleService) {}
 
   ngOnInit(): void {
-    this._titleService.setTitle('MY_PROJECTS.TITLE');
+    this._titleService.setTitle('COMMON.PROJECTS');
     this.loadProjects(this._config);
   }
 

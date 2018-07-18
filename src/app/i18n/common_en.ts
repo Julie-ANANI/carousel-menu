@@ -42,7 +42,11 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Media not available',
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
-  'BLACKLIST': 'Blacklisted e-mails',
+  'BLACKLIST': {
+    'EMAILS': 'Blacklisted e-mails',
+    'DOMAINS': 'Blacklisted domains',
+    'COUNTRIES': 'Blacklisted countries'
+  },
   'EDIT-BLACKLIST': 'Edit blacklisted e-mail',
   'EXCLUDE-EMAILS': 'Exclude emails',
   'EXCLUDE-DOMAINS': 'Exclude domains',

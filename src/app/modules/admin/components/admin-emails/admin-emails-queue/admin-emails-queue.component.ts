@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { EmailQueueModel } from '../../../../../models/mail.queue.model';
 import { EmailService } from '../../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
-import {Table} from '../../../../shared/components/shared-table/models/table';
-import {Template} from '../../../../shared/components/shared-sidebar/interfaces/template';
+import {Table} from '../../../../table/models/table';
+import {Template} from '../../../../sidebar/interfaces/template';
 
 @Component({
   selector: 'app-admin-email-queue',

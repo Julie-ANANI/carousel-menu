@@ -3,7 +3,7 @@
     <i class="fas fa-envelope text-warning" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
     <i class="fas fa-envelope text-success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
     <i class="fas fa-check-square text-success" *ngIf="request.flag==='PROS_ADDED'"></i>
-    <country-flag *ngIf="request.country" [country]="request.country" [width]="30" [height]="20"></country-flag>
+    <app-country-flag *ngIf="request.country" [country]="request.country" [width]="30" [height]="20"></app-country-flag>
     {{request.keywords}}
   </h2>
   <ul class="toolbar-fixed">

@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedPaginationModule } from '../shared-pagination/pagination.module';
-import {SharedFilterInputModule} from '../shared-filter-input/filter-input.module';
-import {CountryFlagModule} from '../../../../directives/country-flag/country-flag.module';
+import { SharedPaginationModule } from '../shared-pagination/shared-pagination.module';
+import {SharedFilterInputModule} from '../shared-filter-input/shared-filter-input.module';
+import {InputModule} from '../../../input/input.module';
 
 // Components
 import { SharedSearchHistoryComponent} from './shared-search-history.component';
@@ -15,11 +15,11 @@ import { SharedSearchHistoryComponent} from './shared-search-history.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    CountryFlagModule,
     RouterModule,
     SharedFilterInputModule,
     SharedPaginationModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    InputModule
   ],
   declarations: [
     SharedSearchHistoryComponent

@@ -1,13 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
-import { environment } from '../../../../../environments/environment';
-import {Table} from '../shared-table/models/table';
-import {Template} from '../shared-sidebar/interfaces/template';
+import {Table} from '../../../table/models/table';
+import {Template} from '../../../sidebar/interfaces/template';
+import {Subject} from 'rxjs/Subject';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -24,6 +23,7 @@ export class SharedProsListComponent {
   public smartSelect: any = null;
   public editUser: {[propString: string]: boolean} = {};
   private _tableInfos: Table = null;
+  sidebarState = new Subject<string>();
 
   @Input() public requestId: string;
   @Input() public campaign: Campaign;
@@ -42,7 +42,6 @@ export class SharedProsListComponent {
 
   constructor(private _professionalService: ProfessionalsService,
               private _notificationsService: TranslateNotificationsService,
-              private _translateService: TranslateService,
               private _searchService: SearchService) { }
 
   loadPros(config: any): void {
@@ -142,13 +141,6 @@ export class SharedProsListComponent {
     });
   }
 
-  openQuizUri(pro: Professional, event: Event): void {
-    event.preventDefault();
-    const baseUri = environment.quizUrl + '/quiz/' + this.campaign.innovation.quizId + '/' + this.campaign._id;
-    const parameters = '?pro=' + pro._id + '&lang=' + this._translateService.currentLang;
-    window.open(baseUri + parameters);
-  }
-
   get nbSelected(): number {
     if (this.smartSelect) {
       return (this.smartSelect.limit + this.smartSelect.offset) > this.total ?
@@ -171,6 +163,7 @@ export class SharedProsListComponent {
 
   closeSidebar(value: string) {
     this._more.animate_state = value;
+    this.sidebarState.next(this._more.animate_state);
   }
 
   deleteProModal(pro: Professional) {

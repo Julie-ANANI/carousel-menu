@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Campaign } from '../../../../../models/campaign';
-import {Table} from '../../../../shared/components/shared-table/models/table';
+import {Table} from '../../../../table/models/table';
 import {Batch} from '../../../../../models/batch';
 
 @Component({
@@ -103,7 +103,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     });
     this.form.disable();
 
-    if (this._campaign.settings.ABsettings && this._campaign.settings.ABsettings.status != 0) {
+    if (this._campaign.settings.ABsettings && this._campaign.settings.ABsettings.status !== '0') {
       this._nameWorkflowA = this._campaign.settings.ABsettings.nameWorkflowA;
       this._nameWorkflowB = this._campaign.settings.ABsettings.nameWorkflowB;
       this.getStatsBatch();
@@ -124,7 +124,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
   public validateABtesting() {
-    this._campaign.settings.ABsettings.status = 2;
+    this._campaign.settings.ABsettings.status = '2';
     this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     }, (err: any) => {

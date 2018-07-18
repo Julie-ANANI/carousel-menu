@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {Column, types} from '../shared-table/models/column';
-import {Choice} from '../shared-table/models/choice';
+import {Column, types} from '../../../table/models/column';
+import {Choice} from '../../../table/models/choice';
 
 @Component({
   selector: 'sqFilterMulti',
@@ -22,7 +22,7 @@ export class SharedFilterMultiComponent {
   constructor() {}
 
   filterText(event: any) {
-
+    this.config.offset = 0;
     this.config.search = {};
     const value = event.value;
       if (value === '') {
@@ -34,7 +34,8 @@ export class SharedFilterMultiComponent {
   }
 
   filterOther(prop: Column) {
-      if (this.config[prop._attrs[0]] === null) {
+    this.config.offset = 0;
+    if (this.config[prop._attrs[0]] === null) {
         delete this.config[prop._attrs[0]];
     }
     this.configChange.emit(this.config);

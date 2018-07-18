@@ -5,10 +5,10 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { User } from '../../../../models/user.model';
 import { Subject } from 'rxjs/Subject';
-import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
-import {InnovCard} from '../../../../models/innov-card';
-import {TranslateService} from '@ngx-translate/core';
+import { InnovCard } from '../../../../models/innov-card';
+import { TranslateService } from '@ngx-translate/core';
+import { Template } from '../../../sidebar/interfaces/template';
 
 
 @Component({
