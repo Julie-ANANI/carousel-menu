@@ -13,6 +13,8 @@
       <option [value]="'toggle'">{{ "PRESETS.QUESTION.TYPE.TOGGLE" | translate }}</option>
     </select>
   </div>
+
+
   <button type="button"
           class="btn btn-outline-primary"
           (click)="isCollapsed = !isCollapsed"
@@ -20,13 +22,43 @@
           aria-controls = "collapseMails">
     <h4>{{question.label.en}}</h4>
   </button>
+
+
+
   <div *ngIf="!isCollapsed">
+
+    <button (click)="languageEN()">
+      EN
+    </button>
+
+    <button (click)="languageFR()">
+      FR
+    </button>
+
     <label class="form-switch">
       <input type="checkbox" (change)="comment()" [ngModel]="question.canComment" >
       <i class="form-icon"></i>
     </label>
 
+    <label class="form-label h3">{{ "PRESETS.QUESTION.EDIT.LABEL" | translate }}</label>
+    <div class="form-group text-center">
+      {{language()}}: <input class="form-input" id="label{{language()}}" name="{{language()}}" type="text"
+                             [(ngModel)]="question.label[language()]">
+    </div>
 
+    <label class="form-label h3">{{ "PRESETS.QUESTION.EDIT.TITLE" | translate }}</label>
+    <div class="form-group text-center">
+      {{language()}}: <input class="form-input" id="title{{language()}}" name="{{language()}}"type="text"
+                             [(ngModel)]="question.title[language()]">
+    </div>
 
+    <label class="form-label h3">{{ "PRESETS.QUESTION.EDIT.SUBTITLE" | translate }}</label>
+    <div class="form-group text-center">
+      {{language()}}: <input class="form-input" id="subtitle{{language()}}" name="{{language()}}"type="text"
+                             [(ngModel)]="question.subtitle[language()]">
+    </div>
   </div>
+
+  <!-- </div> -->
+
 </div>

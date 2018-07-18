@@ -15,6 +15,7 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
 
   public isCollapsed = true;
   public formData: FormGroup;
+  private _language = 'en';
 
   constructor( private _formBuilder: FormBuilder
   ) { }
@@ -25,13 +26,37 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     });
   }
 
-
   public updateType(event: any) {
     this.question.controlType = event;
-
+    this._emit();
   }
 
+  public comment() {
+    this.question.canComment = !this.question.canComment;
+    this._emit()
+  }
 
+  private _emit() {
+    this.questionChange.emit(this.question);
+  }
 
+  public language() {
+    return this._language;
+  }
+
+  public changeLanguage() {
+    if (this._language === 'en') {
+      this._language = 'fr';
+    } else {
+      this._language = 'en'
+    }
+  }
+
+  public languageEN() {
+    this._language = 'en';
+  }
+  public languageFR() {
+    this._language = 'fr'
+  }
 
 }
