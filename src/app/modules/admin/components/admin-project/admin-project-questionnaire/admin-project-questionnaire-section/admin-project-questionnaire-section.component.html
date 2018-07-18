@@ -1,0 +1,7 @@
+<h3>{{section.name}}</h3>
+<div *ngFor="let question of section.questions">
+<app-admin-project-questionnaire-question
+  [question]="question">
+</app-admin-project-questionnaire-question>
+  <div> Ajouter question </div>
+</div>

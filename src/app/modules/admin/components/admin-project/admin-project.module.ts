@@ -18,6 +18,8 @@ import { SharedTagItemModule } from '../../../shared/components/shared-tag-item/
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminProjectQuestionnaireComponent } from './admin-project-questionnaire/admin-project-questionnaire.component';
+import { AdminProjectQuestionnaireSectionComponent } from './admin-project-questionnaire/admin-project-questionnaire-section/admin-project-questionnaire-section.component';
+import { AdminProjectQuestionnaireQuestionComponent } from './admin-project-questionnaire/admin-project-questionnaire-question/admin-project-questionnaire-question.component';
 
 @NgModule({
   imports: [
@@ -42,7 +44,9 @@ import { AdminProjectQuestionnaireComponent } from './admin-project-questionnair
     AdminProjectCampaignsComponent,
     AdminProjectSynthesisComponent,
     AdminProjectTagsPoolComponent,
-    AdminProjectQuestionnaireComponent
+    AdminProjectQuestionnaireComponent,
+    AdminProjectQuestionnaireSectionComponent,
+    AdminProjectQuestionnaireQuestionComponent
   ],
   exports: [
     AdminProjectComponent

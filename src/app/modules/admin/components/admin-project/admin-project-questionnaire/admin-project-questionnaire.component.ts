@@ -20,12 +20,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this._sections = this._project.preset.sections;
-    console.log(this._sections);
   }
 
 
   get sections() {
-    console.log(this._sections);
     return this._sections;
   }
 
