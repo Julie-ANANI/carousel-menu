@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Question} from '../../../../../../models/question';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-admin-project-questionnaire-question',
@@ -12,9 +13,21 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
 
   @Output() questionChange = new EventEmitter<any>();
 
-  constructor() { }
+  public isCollapsed = true;
+  public formData: FormGroup;
+
+  constructor( private _formBuilder: FormBuilder
+  ) { }
 
   ngOnInit() {
+    this.formData = this._formBuilder.group({
+      description: [this.question.controlType]
+    });
+  }
+
+
+  public updateType(event: any) {
+    console.log(event);
   }
 
 }
