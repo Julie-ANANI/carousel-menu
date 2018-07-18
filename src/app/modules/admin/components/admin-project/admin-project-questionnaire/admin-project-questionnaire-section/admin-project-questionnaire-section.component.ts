@@ -19,7 +19,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
 
   private _section: any;
   public formData: FormGroup;
-
+  public isCollapsed = true;
   constructor( private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
