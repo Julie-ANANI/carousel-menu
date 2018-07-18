@@ -457,8 +457,8 @@ body.sample-infographic {
   }
 
   .sc-sticky-wrapper {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 25px;
+    padding-bottom: 25px;
     background-color: white;
     box-shadow: none;
     z-index: 1;
@@ -471,7 +471,7 @@ body.sample-infographic {
 
       .sc-detail-wrapper {
         flex: 1;
-        padding: 15px 15px 15px 0;
+        padding: 20px 15px 15px 0;
         color: #97A4B1;
       }
 
@@ -479,12 +479,12 @@ body.sample-infographic {
         border-left: 1px solid #D8D8D8;
         border-right: 1px solid #D8D8D8;
         flex: 3;
-        padding: 15px;
+        padding: 20px 15px 15px 15px;
       }
 
       .sc-button-wrapper {
         flex: 2;
-        padding: 15px 0 0 0;
+        padding: 20px 0 0 0;
         text-align: right;
 
         .btn {
