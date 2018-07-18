@@ -74,7 +74,7 @@
         </div>
 
         <!-- Company -->
-        <div class="company" *ngIf="modalAnswer.company.name || modalAnswer.professional?.company || editMode">
+        <div class="company" *ngIf="adminMode && (modalAnswer.company.name || modalAnswer.professional?.company || editMode)">
           <p *ngIf="!editCompany">
             <i class="far fa-building" aria-hidden="true"></i>
             {{ modalAnswer.company.name || modalAnswer.professional?.company }}
