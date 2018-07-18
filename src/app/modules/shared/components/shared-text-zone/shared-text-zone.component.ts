@@ -41,7 +41,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
       selector: '#' + this._htmlId,
       plugins: ['link', 'paste', 'table'],
       default_link_target: '_blank',
-      width: 700,
+      width: 600,
       height: 250,
       statusbar: false,
       menubar: false,

@@ -72,6 +72,7 @@ export class AdminEditWorkflowComponent implements OnInit {
   public editEmail(email: any) {
     this._emailToEdit = email;
     this._more = {
+      size: '650px',
       animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
       title: this.scenario.name
     };
