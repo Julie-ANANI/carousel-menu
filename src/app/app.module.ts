@@ -38,6 +38,7 @@ import { ProfessionalsService } from './services/professionals/professionals.ser
 import { DownloadService } from './services/download/download.service';
 import { TagsService } from './services/tags/tags.service';
 import { TemplatesService } from './services/templates/templates.service';
+import { TranslationService } from './services/translation/translation.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -105,6 +106,7 @@ import { SignatureResolver } from './resolvers/signature.resolver';
     ScenarioResolver,
     SignatureResolver,
     RequestResolver,
+    TranslationService,
     TagsService
   ],
   bootstrap: [AppComponent]
