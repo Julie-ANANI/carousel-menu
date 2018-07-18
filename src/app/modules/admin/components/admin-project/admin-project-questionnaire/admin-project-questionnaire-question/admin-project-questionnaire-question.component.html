@@ -1,26 +1,32 @@
+<div class="question-header">
+  <div class="form-group">
+    <select class="form-select" id="questionType" name="question" (ngModelChange)="this.updateType($event)" [(ngModel)]="question.controlType">
+      <option [value]="null">...</option>
+      <option [value]="'checkbox'">{{ "PRESETS.QUESTION.TYPE.CHECKBOX" | translate }}</option>
+      <option [value]="'list'">{{ "PRESETS.QUESTION.TYPE.LIST" | translate }}</option>
+      <option [value]="'clearbit'">{{ "PRESETS.QUESTION.TYPE.CLEARBIT" | translate }}</option>
+      <option [value]="'radio'">{{ "PRESETS.QUESTION.TYPE.RADIO" | translate }}</option>
+      <option [value]="'scale'">{{ "PRESETS.QUESTION.TYPE.SCALE" | translate }}</option>
+      <option [value]="'stars'">{{ "PRESETS.QUESTION.TYPE.STARS" | translate }}</option>
+      <option [value]="'textarea'">{{ "PRESETS.QUESTION.TYPE.TEXTAREA" | translate }}</option>
+      <option [value]="'textbox'">{{ "PRESETS.QUESTION.TYPE.TEXTBOX" | translate }}</option>
+      <option [value]="'toggle'">{{ "PRESETS.QUESTION.TYPE.TOGGLE" | translate }}</option>
+    </select>
+  </div>
+  <button type="button"
+          class="btn btn-outline-primary"
+          (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed"
+          aria-controls = "collapseMails">
+    <h4>{{question.label.en}}</h4>
+  </button>
+  <div *ngIf="!isCollapsed">
+    <label class="form-switch">
+      <input type="checkbox" (change)="comment()" [ngModel]="question.canComment" >
+      <i class="form-icon"></i>
+    </label>
 
-<div class="form-group">
-  <select class="form-select" id="questionType" name="question" (ngModelChange)="this.updateType($event)" [(ngModel)]="question.controlType">
-    <option [value]="null">...</option>
-    <option [value]="'checkbox'">{{ "PRESETS.QUESTION.TYPE.CHECKBOX" | translate }}</option>
-    <option [value]="'list'">{{ "PRESETS.QUESTION.TYPE.LIST" | translate }}</option>
-    <option [value]="'clearbit'">{{ "PRESETS.QUESTION.TYPE.CLEARBIT" | translate }}</option>
-    <option [value]="'radio'">{{ "PRESETS.QUESTION.TYPE.RADIO" | translate }}</option>
-    <option [value]="'scale'">{{ "PRESETS.QUESTION.TYPE.SCALE" | translate }}</option>
-    <option [value]="'stars'">{{ "PRESETS.QUESTION.TYPE.STARS" | translate }}</option>
-    <option [value]="'textarea'">{{ "PRESETS.QUESTION.TYPE.TEXTAREA" | translate }}</option>
-    <option [value]="'textbox'">{{ "PRESETS.QUESTION.TYPE.TEXTBOX" | translate }}</option>
-    <option [value]="'toggle'">{{ "PRESETS.QUESTION.TYPE.TOGGLE" | translate }}</option>
-  </select>
+
+
+  </div>
 </div>
-<button type="button"
-        class="btn btn-outline-primary"
-        (click)="isCollapsed = !isCollapsed"
-        [attr.aria-expanded]="!isCollapsed"
-        aria-controls = "collapseMails">
-  <h4>{{question.label.en}}</h4>
-</button>
-<div *ngIf="!isCollapsed">
-
-</div>
-

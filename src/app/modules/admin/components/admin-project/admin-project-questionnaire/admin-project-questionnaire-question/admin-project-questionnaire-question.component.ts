@@ -21,13 +21,17 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
 
   ngOnInit() {
     this.formData = this._formBuilder.group({
-      description: [this.question.controlType]
+      controlType: [this.question.controlType]
     });
   }
 
 
   public updateType(event: any) {
-    console.log(event);
+    this.question.controlType = event;
+
   }
+
+
+
 
 }
