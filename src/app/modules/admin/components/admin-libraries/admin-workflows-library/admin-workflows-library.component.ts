@@ -58,7 +58,6 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
    * Suppression et mise à jour de la vue
    */
   public deleteScenario(scenarioId: string) {
-    event.preventDefault();
     this._templatesService.remove(scenarioId).first().subscribe(_ => {
       const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id == scenarioId);
       this._scenarios.splice(scenarioIndex, 1);
