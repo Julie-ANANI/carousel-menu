@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { ChartsModule } from 'ng2-charts';
+import { Ng2PageScrollModule } from 'ng2-page-scroll';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
 
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
@@ -31,7 +32,8 @@ import { CommonService } from '../../../../services/common/common.service';
     SharedModule,
     SharedTextZoneModule,
     SharedWorldmapModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    Ng2PageScrollModule
   ],
   providers: [
     CommonService
