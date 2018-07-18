@@ -1,0 +1,59 @@
+<div class="card signature" *ngIf="signature">
+  <div class="card-header">
+    <div class="d-flex">
+      <label class="form-switch" *ngIf="signature.content != null">
+        <input type="checkbox" (change)="(editionMode = !editionMode) && $event.preventDefault()">
+        <i class="form-icon"></i>Preview
+      </label>
+    </div>
+    <div class="d-flex">
+      <div class="card-title h5" *ngIf="editionMode">
+        <div class="form-group">
+          <label class="form-label" for="language">Language</label>
+          <select
+            class="form-default"
+            [(ngModel)]="signature.language"
+            id="language">
+            <option value="en" name="en">en</option>
+            <option value="fr" name="fr">fr</option>
+            </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="name">Signature name</label>
+          <input
+            class="form-default"
+            [(ngModel)]="signature.name"
+            id="name"
+            type="text"
+            placeholder="Karine - Ambassador">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="from">From name</label>
+          <input
+            class="form-default"
+            [(ngModel)]="signature.from"
+            id="from"
+            type="text"
+            placeholder="Karine Caulfield">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">From email</label>
+          <input
+            class="form-default"
+            [(ngModel)]="signature.email"
+            id="email"
+            type="text"
+            placeholder="kcaulfield@umi.us">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <h4 *ngIf="editionMode">Contenu</h4>
+    <text-zone [elementId]="signature.language + signature.name"
+               [readonly]="!editionMode"
+               [data]="signature.content || ''"
+               (onEditorKeyup)="updateContent($event)"></text-zone>
+    <button *ngIf="editionMode" type="submit" class="btn btn-primary centered" (click)="save()">Sauvegarder</button>
+  </div>
+</div>

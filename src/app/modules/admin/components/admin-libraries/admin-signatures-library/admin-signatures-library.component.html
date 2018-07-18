@@ -1,12 +1,53 @@
 <div class="section-container">
+  <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
+    <app-sidebar-signature
+      [signature]="signatureToEdit"
+      (signatureChange)="updateSignature($event)">
+    </app-sidebar-signature>
+  </app-sidebar>
   <div class="columns">
     <div class="column col-12 col-mx-auto">
-      <h3>Signatures <i class="fas fa-sync c-hand" (click)="getSignatures()"></i></h3>
-      <ul>
-        <li *ngFor="let signature of signatures">
-            {{ signature.name }}
-        </li>
-      </ul>
+      <h3>Signatures</h3>
+      <div class="empty" *ngIf="!signatures.length">
+        <div class="empty-action">
+          <button (click)="newSignatureName = 'signature'" class="btn btn-primary">
+            Créer une nouvelle signature <i class="icon icon-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+      <div>
+        <button *ngIf="signatures.length" (click)="newSignatureName = 'signature'" class="btn btn-primary">
+          Créer une nouvelle signature <i class="icon icon-arrow-right"></i>
+        </button>
+      </div>
+      <app-shared-table
+        [config]="config"
+        (configChange)="getSignatures($event)"
+        [data]="tableInfos"
+        (editRow)="editSignature($event)"
+        (removeRows)="removeSignatures($event)">
+      </app-shared-table>
     </div>
   </div>
+
+  <!-- MODAL : Création d'une nouvelle signature -->
+  <div class="modal" [ngClass]="{'active': newSignatureName != null}">
+    <div class="modal-overlay" (click)="(newSignatureName = null) && $event.preventDefault()"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title h5">Créer une nouvelle signature</div>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          Choisissez un nom la nouvelle signature
+          <input class="form-input" type="text" [(ngModel)]="newSignatureName"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" (click)="createSignature()">Créer</button>
+        <button class="btn btn-link" (click)="(newSignatureName = null) && $event.preventDefault()">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
+      </div>
+    </div>
 </div>
