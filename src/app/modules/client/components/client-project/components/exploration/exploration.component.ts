@@ -58,9 +58,7 @@ export class ExplorationProjectComponent implements OnInit {
         _total: response.answers.length,
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
-          {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT', _isSortable: false},
-          {_attrs: ['progress'], _name: 'COMMON.PROGRESS', _type: 'PROGRESS', _isSortable: false},
-          {_attrs: ['professional.company'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false},
+          {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT', _isSortable: false}
         ]
       };
 
