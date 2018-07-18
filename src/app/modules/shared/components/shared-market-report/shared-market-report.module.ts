@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { ChartsModule } from 'ng2-charts';
+import { Ng2PageScrollModule } from 'ng2-page-scroll';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
@@ -29,6 +30,7 @@ import { InputModule } from '../../../input/input.module';
     SharedTextZoneModule,
     SharedWorldmapModule,
     TranslateModule.forChild(),
+    Ng2PageScrollModule,
     SidebarModule,
     InputModule
   ],
