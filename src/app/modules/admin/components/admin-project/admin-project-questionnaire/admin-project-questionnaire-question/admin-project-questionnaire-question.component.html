@@ -59,13 +59,45 @@
     </div>
 
     <div *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')" class="form-group text-center">
-      <div *ngFor="">
-
+      <div *ngFor="let option of question.options;let i = index">
+        <button
+                (click)="deleteOption(i)" class="btn btn-lg btn-primary" type="button">
+          <i class="icon icon-cross"></i>
+        </button>
+        <label> {{option.label[language()]}}</label>
+        <label> {{option.color}}</label>
+        <label class="form-switch">
+          <input type="checkbox" (change)="option.positive = !option.positive" [ngModel]="option.positive" >
+          <i class="form-icon"> positive answer </i>
+        </label>
       </div>
-      <button *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')"
-              (click)="addOption($event)" class="btn btn-lg btn-primary" type="button">
+      <button *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox') && !modalAddOption"
+              (click)="modalAddOption = true" class="btn btn-lg btn-primary" type="button">
         {{ 'PRESETS.QUESTION.EDIT.ADD' | translate }} <i class="icon icon-plus"></i>
       </button>
+      <div *ngIf="modalAddOption">
+        <div class="form-group text-center">
+          <label for="positive" *ngIf="question.controlType === 'radio'">
+            Réponse Positive ?
+            <input type="checkbox" name="positive" formControlName="positive" id="positive">
+          </label>
+          <label for="color" *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'">
+            Couleur d'affichage
+            <select class="form-select" id="color" name="color" formControlName="color">
+              <option [value]="'#ffffff'">...</option>
+              <option [value]="'#34AC01'">Vert foncé</option>
+              <option [value]="'#82CD30'">Vert clair</option>
+              <option [value]="'#F2C500'">Jaune</option>
+              <option [value]="'#C0210F'">Rouge</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <a class="delete c-hand" aria-label="Close" role="button" (click)="removeOption($event, i)">
+            <i class="icon icon-delete"></i>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -16,6 +16,7 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
   public isCollapsed = true;
   public formData: FormGroup;
   private _language = 'en';
+  public modalAddOption = false;
 
   constructor( private _formBuilder: FormBuilder
   ) { }
@@ -38,6 +39,11 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
 
   public addOption(event: any) {
     this.question.options.push(event);
+    this._emit();
+  }
+
+  public deleteOption(index: any) {
+    this.question.options.splice(index, 1);
     this._emit();
   }
 
@@ -68,6 +74,16 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     if (this.question.subtitle[lang] === '') {
       missing ++;
     }
+
+    /*
+    if (this.question.controlType == 'radio' || this.question.controlType == 'checkbox') {
+      this.question.options.forEach( opt => {
+        if (opt.label[lang] == '') {
+          missing ++;
+        }
+      })
+    }
+    */
     return missing;
   }
 
