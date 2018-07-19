@@ -33,7 +33,12 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
 
   public comment() {
     this.question.canComment = !this.question.canComment;
-    this._emit()
+    this._emit();
+  }
+
+  public addOption(event: any) {
+    this.question.options.push(event);
+    this._emit();
   }
 
   private _emit() {

@@ -28,7 +28,6 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
     });
   }
 
-
   private _findQuestionIndex(question: any): number {
     let k = 0;
     for (const q of this._section.questions) {

@@ -57,7 +57,19 @@
       {{language()}}: <input class="form-input" id="subtitle{{language()}}" name="{{language()}}"type="text"
                              [(ngModel)]="question.subtitle[language()]">
     </div>
+
+    <div *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')" class="form-group text-center">
+      <div *ngFor="">
+
+      </div>
+      <button *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')"
+              (click)="addOption($event)" class="btn btn-lg btn-primary" type="button">
+        {{ 'PRESETS.QUESTION.EDIT.ADD' | translate }} <i class="icon icon-plus"></i>
+      </button>
+    </div>
   </div>
+
+
 
   <!-- </div> -->
 
