@@ -26,13 +26,16 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
 
   public indexSection(sec: any) {
-    this._project.preset.sections.forEach((section: any, index: number) => {
-      if (section.name == sec.name) {
-        return index;
+    let k = 0;
+    for (const section of this._project.preset.sections) {
+      if (section.name === sec.name) {
+        return k;
       }
-    });
-    return this._project.preset.sections.length;
+      k++;
+    }
   }
+
+
 
 
   public sectionUpdated(event: any) {
