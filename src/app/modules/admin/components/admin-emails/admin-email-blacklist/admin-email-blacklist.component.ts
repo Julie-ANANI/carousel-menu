@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { EmailService } from '../../../../services/email/email.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { Table } from '../../../table/models/table';
-import { Template } from '../../../sidebar/interfaces/template';
+import {Subject} from 'rxjs/Subject';
+import {Table} from '../../../../table/models/table';
+import {Template} from '../../../../sidebar/interfaces/template';
+import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import {EmailService} from '../../../../../services/email/email.service';
 
 
 @Component({
@@ -21,32 +22,35 @@ export class AdminEmailBlacklistComponent implements OnInit {
     }
   };
 
-  private _dataset: {blacklists: Array<any>, _metadata: any};
+  private _emailDataset: {blacklists: Array<any>, _metadata: any};
 
   private _searchConfiguration = '';
   private _addressToBL = '';
 
   public editDatum: {[propString: string]: boolean} = {};
 
-  private _tableInfos: Table = null;
+  private _emailInfos: Table = null;
 
   private _more: Template = {};
+  sidebarState = new Subject<string>();
   private _currentEmailToBlacklist: any = {};
 
   constructor( private _emailService: EmailService,
                private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    this._dataset = {
+    this._emailDataset = {
       blacklists: [],
       _metadata: {
         totalCount: 0
       }
     };
-    this.loadData(null);
+
+    this.loadEmails(null);
+
   }
 
-  public loadData(config: any) {
+  public loadEmails(config: any) {
     this._config = config || this._config;
     this._emailService.getBlacklist(this._config)
         .subscribe(result => {
@@ -54,17 +58,17 @@ export class AdminEmailBlacklistComponent implements OnInit {
             // The server may be busy...
             this._notificationsService.error('Warning', 'The server is busy, try again in 1 minute.');
           } else {
-            this._dataset._metadata = result._metadata;
-              this._dataset.blacklists = result.blacklists.map((entry: any) => {
+            this._emailDataset._metadata = result._metadata;
+              this._emailDataset.blacklists = result.blacklists.map((entry: any) => {
                 entry.expiration = new Date(entry.expiration).getTime() ? entry.expiration : '';
                 return entry;
               });
 
-            this._tableInfos = {
-              _selector: 'shared-blacklist',
-              _title: 'COMMON.BLACKLIST',
-              _content: this._dataset.blacklists,
-              _total: this._dataset._metadata.totalCount,
+            this._emailInfos = {
+              _selector: 'shared-blacklisted-emails',
+              _title: 'COMMON.BLACKLIST.EMAILS',
+              _content: this._emailDataset.blacklists,
+              _total: this._emailDataset._metadata.totalCount,
               _isHeadable: true,
               _isFiltrable: true,
               _isSelectable: true,
@@ -77,19 +81,28 @@ export class AdminEmailBlacklistComponent implements OnInit {
                   _choices: [
                     {
                       _name: 'MANUALLY_ADDED',
+                      _alias: this.reasonFormat('MANUALLY_ADDED'),
                       _class: 'label-progress'
                     }, {
                       _name: 'USER_SUPPRESSION',
+                      _alias: this.reasonFormat('USER_SUPPRESSION'),
                       _class: 'label-validate'
                     }, {
                       _name: 'PROFESSIONAL_SUPPRESSION',
+                      _alias: this.reasonFormat('PROFESSIONAL_SUPPRESSION'),
                       _class: 'label-alert'
                     },
                     {
                       _name: 'MAIL_EVENT',
+                      _alias: this.reasonFormat('MAIL_EVENT'),
                       _class: 'label-editing'
                     }
-                    ]}]
+                    ]},
+                {_attrs: ['type'], _name: 'COMMON.TYPE', _type: 'MULTI-CHOICES',
+                  _choices: [
+                    {_name: 'EMAIL', _alias: 'COMMON.EMAIL', _class: 'label-progress'},
+                    {_name: 'GLOBAL', _alias: 'COMMON.DOMAIN', _class: 'label-editing'}
+                  ]}]
             };
           }
         }, error => {
@@ -99,17 +112,17 @@ export class AdminEmailBlacklistComponent implements OnInit {
 
   public configureSearch() {
     this._config.search['email'] = this.searchConfiguration;
-    this.loadData(null);
+    this.loadEmails(null);
   }
 
   public resetSearch() {
     this._config.search = {};
     this.searchConfiguration = '';
-    this.loadData(null);
+    this.loadEmails(null);
   }
 
   editBlacklist(email: any) {
-    this._currentEmailToBlacklist = this._dataset.blacklists.find(value => value._id === email._id);
+    this._currentEmailToBlacklist = this._emailDataset.blacklists.find(value => value._id === email._id);
       this._more = {
         animate_state: 'active',
         title: 'COMMON.EDIT-BLACKLIST',
@@ -123,26 +136,17 @@ export class AdminEmailBlacklistComponent implements OnInit {
       title: 'COMMON.EXCLUDE-EMAILS',
       type: 'excludeEmails'
     };
-  }
 
-  excludeDomains() {
-    this._more = {
-      animate_state: 'active',
-      title: 'COMMON.EXCLUDE-DOMAINS',
-      type: 'excludeDomains'
-    };
-  }
-
-  excludeCountries() {
-    this._more = {
-      animate_state: 'active',
-      title: 'COMMON.EXCLUDE-COUNTRIES',
-      type: 'excludeCountries'
-    };
+    this._emailDataset.blacklists.forEach(value => {this._emailService.updateBlacklistEntry(value._id, value)
+      .subscribe(result => {
+      }, error => {
+        this._notificationsService.error('Error', error);
+      }); });
   }
 
   closeSidebar(value: string) {
     this.more.animate_state = value;
+    this.sidebarState.next(this.more.animate_state);
   }
 
   blacklistEditionFinish(email: any) {
@@ -153,7 +157,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
         data => {
           this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
           this._more = {animate_state: 'inactive', title: this._more.title};
-          this.loadData(this._config);
+          this.loadEmails(this._config);
         },
         error => {
           this._notificationsService.error('ERROR.ERROR', error.message);
@@ -164,37 +168,13 @@ export class AdminEmailBlacklistComponent implements OnInit {
     emails.forEach((value: any) => {
       this._emailService.addToBlacklist({email: value.text})
         .subscribe(result => {
-          this._notificationsService.success('Blacklist', 'ERROR.ACCOUNT.UPDATE');
+          this._notificationsService.success('Blacklist', `The address ${value.text} has been added successfully to the blacklist`);
           this._more = {animate_state: 'inactive', title: this._more.title};
-          this.loadData(this._config);
+          this.loadEmails(this._config);
         }, error => {
           this._notificationsService.error('Error', error);
         });
     });
-  }
-
-  addDomainsToBlacklistFinish(domains: Array<string>) {
-    /*domains.forEach((value: any) => {
-      this._emailService.addToBlacklist({domain: value.text})
-        .subscribe(result => {
-          this._notificationsService.success('Blacklist', 'ERROR.ACCOUNT.UPDATE');
-          this._more = {animate_state: 'inactive', title: this._more.title};
-          this.loadData(this._config);
-        }, error => {
-          this._notificationsService.error('Error', error);
-        });
-    });*/
-  }
-
-  public addEntry() {
-    this._emailService.addToBlacklist({email: this.addressToBL})
-        .subscribe(result => {
-          this.addressToBL = '';
-          this.resetSearch();
-          this._notificationsService.success('Blacklist', `The address ${this.addressToBL} has been added successfully to the blacklist`);
-        }, error => {
-          this._notificationsService.error('Error', error);
-        });
   }
 
   public updateEntry(datum: any, event: Event) {
@@ -209,14 +189,9 @@ export class AdminEmailBlacklistComponent implements OnInit {
         });
   }
 
-  public canAdd(): boolean {
-    const EMAIL_REGEXP = /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
-    return this.addressToBL !== '' && !!this.addressToBL.match(EMAIL_REGEXP);
-  }
-
-  public reasonFormat(datum: any): string {
+  public reasonFormat(reason: string): string {
     let result = '';
-    switch (datum.reason || '') {
+    switch (reason || '') {
       case( 'USER_SUPPRESSION' ):
         result = 'Deleted user';
         break;
@@ -233,12 +208,12 @@ export class AdminEmailBlacklistComponent implements OnInit {
     return result;
   }
 
-  get tableInfos(): Table { return this._tableInfos; }
-  get data(): Array<any> { return this._dataset.blacklists; };
-  get metadata(): any { return this._dataset._metadata; };
+  get emailInfos(): Table { return this._emailInfos; }
+  get data(): Array<any> { return this._emailDataset.blacklists; };
+  get metadata(): any { return this._emailDataset._metadata; };
   get config(): any { return this._config; };
   set config(value: any) { this._config = value; };
-  get total(): number { return this._dataset._metadata.totalCount; };
+  get total(): number { return this._emailDataset._metadata.totalCount; };
   get searchConfiguration(): string { return this._searchConfiguration; };
   get addressToBL(): string { return this._addressToBL; };
   get more(): Template { return this._more; }

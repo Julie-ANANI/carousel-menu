@@ -2,14 +2,15 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {EmailQueueModel} from '../../../../models/mail.queue.model';
 import {Table} from '../../../table/models/table';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
-  selector: 'app-project-form',
-  templateUrl: './project-form.component.html',
-  styleUrls: ['./project-form.component.scss']
+  selector: 'app-emails-form',
+  templateUrl: './emails-form.component.html',
+  styleUrls: ['./emails-form.component.scss']
 })
 
-export class ProjectFormComponent implements OnInit, OnChanges {
+export class EmailsFormComponent implements OnInit, OnChanges {
 
   @Input() set editBlacklistEmail(value: any) {
     this.emailToEdit = value;
@@ -21,7 +22,7 @@ export class ProjectFormComponent implements OnInit, OnChanges {
     this.loadCampaignInfos();
   }
 
-  @Input() sidebarState: string;
+  @Input() sidebarState: Subject<string>;
 
   @Input() set type(type: string) {
     this.reinitialiseForm();
@@ -31,22 +32,19 @@ export class ProjectFormComponent implements OnInit, OnChanges {
       this.isBlacklist = true;
     } else if (type === 'showCampaignInfos') {
       this.isShowCampaignInfos = true;
-    } else if (type === 'excludeDomains') {
-      this.isExcludeDomains = true;
-    } else if (type === 'excludeCountries') {
-      this.isExcludeCountries = true;
+    }else if (type === 'excludeCountry') {
+      this.isFilterCountry = true;
     }
   }
 
   @Output() editBlacklist = new EventEmitter<any>();
   @Output() emailsToBlacklists = new EventEmitter<Array<string>>();
-  @Output() domainsToBlacklists = new EventEmitter<Array<string>>();
+  @Output() countryToFilter = new EventEmitter<any>();
 
   isBlacklist = false;
   isExcludeEmails = false;
-  isExcludeDomains = false;
-  isExcludeCountries = false;
   isShowCampaignInfos = false;
+  isFilterCountry = false;
 
   private _tableInfos: Table = null;
 
@@ -55,14 +53,27 @@ export class ProjectFormComponent implements OnInit, OnChanges {
   emailToEdit: any = null;
   campaignInfosToShow: EmailQueueModel = null;
 
+  private _country: {flag: string, domain: string, name: string} = null;
+
   constructor (private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.formData = this.formBuilder.group( {
       email: ['', [Validators.required, Validators.email]],
       domain: ['', Validators.required],
-      expiration: ''
+      expiration: '',
+      accept: [80, [Validators.required, Validators.max(100), Validators.min(0)]]
     });
+
+    if (this.sidebarState) {
+      this.sidebarState.subscribe((state) => {
+        if (state === 'inactive') {
+          setTimeout (() => {
+            this.formData.reset();
+          }, 700);
+        }
+      })
+    }
   }
 
   loadBlacklist() {
@@ -95,8 +106,7 @@ export class ProjectFormComponent implements OnInit, OnChanges {
     this.isBlacklist = false;
     this.isExcludeEmails = false;
     this.isShowCampaignInfos = false;
-    this.isExcludeDomains = false;
-    this.isExcludeCountries = false;
+    this.isFilterCountry = false;
   }
 
   onSubmit() {
@@ -107,8 +117,7 @@ export class ProjectFormComponent implements OnInit, OnChanges {
       this.editBlacklist.emit(blacklist);
     } else if (this.isExcludeEmails) {
       this.emailsToBlacklists.emit(this.formData.value.email);
-    } else if (this.isExcludeDomains) {
-      this.domainsToBlacklists.emit(this.formData.value.domain);
+      this.emailsToBlacklists.emit(this.formData.value.domain);
     }
   }
 
@@ -128,16 +137,14 @@ export class ProjectFormComponent implements OnInit, OnChanges {
     this.formData.get('domain')!.setValue(event.value)
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.isExcludeEmails) {
-      if (changes.sidebarState.currentValue !== changes.sidebarState.previousValue) {
-        this.formData.reset();
-      }
-    }
+  updateCountry(event: {value: Array<any>}) {
+    this._country = event.value[0] || null;
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
   }
 
   get tableInfos(): Table { return this._tableInfos; }
-
+  get country(): { flag: string; domain: string; name: string } { return this._country; }
 
 }

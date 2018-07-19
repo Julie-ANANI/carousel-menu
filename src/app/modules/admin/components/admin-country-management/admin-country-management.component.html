@@ -1,0 +1,11 @@
+<div class="form-group-inline-right">
+  <button class="btn btn-primary" (click)="filterCountry()">{{'COMMON.EXCLUDE-COUNTRIES' | translate}}</button>
+</div>
+
+<app-sidebar
+  [template]="more" (closeSidebar)="closeSidebar($event)">
+  <app-emails-form
+    [sidebarState]="sidebarState"
+    [type]="more.type">
+  </app-emails-form>
+</app-sidebar>

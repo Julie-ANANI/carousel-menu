@@ -10,7 +10,7 @@ import { InputModule } from '../input/input.module';
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
 import { SidebarComponent } from './sidebar.component';
 import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.component';
-import { ProjectFormComponent } from './components/project-form/project-form.component';
+import { EmailsFormComponent } from './components/emails-form/emails-form.component';
 import { InnovationPreviewComponent } from './components/innovation-preview/innovation-preview.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
@@ -40,7 +40,7 @@ import { SidebarWorkflowComponent } from './components/sidebar-workflow/sidebar-
     UserFormComponent,
     SidebarSearchComponent,
     UserAnswerComponent,
-    ProjectFormComponent,
+    EmailsFormComponent,
     AnswerQuestionComponent,
     RatingItemComponent
   ],
@@ -53,7 +53,7 @@ import { SidebarWorkflowComponent } from './components/sidebar-workflow/sidebar-
     UserFormComponent,
     SidebarSearchComponent,
     UserAnswerComponent,
-    ProjectFormComponent,
+    EmailsFormComponent,
   ]
 })
 
