@@ -8,8 +8,8 @@ import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/cor
 
 export class SharedWorldmapComponent {
 
-  @Input() public width = '800px';
-  @Input() public countriesColor: string;
+  @Input() width = '800px';
+  @Input() countriesColor: string;
   @Input() isEditable = true;
 
   @Input() set countries(value: Array<string>) {
@@ -27,8 +27,7 @@ export class SharedWorldmapComponent {
     }
   }
 
-  @Input()
-  set initialConfiguration(initialConfiguration: any) {
+  @Input() set initialConfiguration(initialConfiguration: any) {
     this._continents = initialConfiguration || {
           africa: false,
           americaNord: false,
@@ -40,8 +39,8 @@ export class SharedWorldmapComponent {
         };
   }
 
-  @Output() public updateContinent = new EventEmitter<any>();
-  @Output() public updateCountries = new EventEmitter<{countries: Array<string>, allChecked: boolean}>();
+  @Output() updateContinent = new EventEmitter<any>();
+  @Output() updateCountries = new EventEmitter<{countries: Array<string>, allChecked: boolean}>();
 
   private _continents = {
     africa: false,

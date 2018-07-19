@@ -14,6 +14,8 @@ import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
 import { Subject } from 'rxjs/Subject';
 import { Template } from '../../../sidebar/interfaces/template';
+import { Clearbit } from '../../../../models/clearbit';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -30,6 +32,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   editMode = new Subject<boolean>();
   sidebarTemplateValue: Template = {};
   scrollOn = false;
+  companies: Array<Clearbit>;
   activeSection: string;
   today: Number;
   objectKeys = Object.keys;
@@ -52,13 +55,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private answerService: AnswerService,
               private translateNotificationsService: TranslateNotificationsService,
               private location: Location,
-              private innovationService: InnovationService) {}
+              private innovationService: InnovationService,
+              private authService: AuthService) {}
 
   ngOnInit() {
 
     this.adminSide = this.location.path().slice(0, 6) === '/admin';
 
-    /*this.adminMode = this.authService.adminLevel > 2;*/
+    this.adminMode = this.authService.adminLevel > 2;
 
     this.today = Date.now();
 
@@ -123,6 +127,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
           });
 
         this._filteredAnswers = this._answers;
+
+        this.companies = results.answers.map((answer: any) => answer.company || {
+          name: answer.professional.company
+        }).filter(function(item: any, pos: any, self: any) {
+          return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
+        });
 
         this._countries = results.answers.reduce((acc, answer) => {
             if (acc.indexOf(answer.country.flag) === -1) {
@@ -272,6 +282,16 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return this.project.status;
   }
 
+  get continentTarget(): any {
+    return this.project.settings ? this.project.settings.geography.continentTarget : {};
+  }
+
+  formatCompanyName(name: string) {
+    if (name) {
+      return `${name[0].toUpperCase()}${name.slice(1)}`;
+    }
+    return '--';
+  }
 
   get answers(): Array<Answer> {
     return this._answers;

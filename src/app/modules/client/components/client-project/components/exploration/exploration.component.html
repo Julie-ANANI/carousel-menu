@@ -50,7 +50,8 @@
 
               <div class="ce-info-status">
                 <p>
-                  <i class="fas fa-check"></i>&nbsp;&nbsp;<span class="text-white">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.CREATED' | translate }}</span>
+                  <i class="fas fa-check"></i>
+                  <span class="text-white">{{ 'PROJECT_MODULE.EXPLORATION.STATUS_TEXT.CREATED' | translate }}</span>
                 </p>
                 <p><span class="text-white">{{ project.created | date }}</span></p>
               </div>
@@ -58,7 +59,7 @@
               <ng-container *ngFor="let action of project.statusLogs">
                 <div class="ce-info-status">
                   <p>
-                    <i class="fas" [ngClass]="(action.action === 'REJECT') ? 'fa-times' : 'fa-check'"></i>&nbsp;&nbsp;
+                    <i class="fas" [ngClass]="(action.action === 'REJECT') ? 'fa-times' : 'fa-check'"></i>
                     <span class="text-white">
                       {{ ('PROJECT_MODULE.EXPLORATION.STATUS_TEXT.' + action.action) | translate }}
                     </span>

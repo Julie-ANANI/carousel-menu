@@ -635,6 +635,61 @@ body.sample-infographic {
 
   }
 
+  .sc-exploration-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 40px;
+
+    .sc-analytic-wrapper {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .pd-top {
+        padding-top: 22px;
+      }
+
+      .cs-info-analytic {
+        margin-bottom: 25px;
+
+        p {
+          color: #97A4B1;
+        }
+
+        .svg-text {
+          font-size: 14px;
+          font-weight: 600;
+          fill: #FFFFFF;
+        }
+
+      }
+
+    }
+
+    .sc-rate-wrapper {
+      padding-bottom: 25px;
+    }
+
+    .sc-company-wrapper {
+
+      .sc-comp-name-wrapper {
+        list-style: none;
+
+        li {
+          padding-top: 0;
+          padding-left: 0;
+          display: inline-flex;
+          width: 25%;
+        }
+
+      }
+
+    }
+
+  }
+
+
+
 }
 
 .na-synthesis {
