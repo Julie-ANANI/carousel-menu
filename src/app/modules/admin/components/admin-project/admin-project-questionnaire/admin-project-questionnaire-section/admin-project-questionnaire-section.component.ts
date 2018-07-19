@@ -45,7 +45,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   }
 
   public updateQuestion(event: any) {
-    this._section.question[this._findQuestionIndex(event)] = event;
+    this._section.questions[this._findQuestionIndex(event)] = event;
     this._emit();
   }
 

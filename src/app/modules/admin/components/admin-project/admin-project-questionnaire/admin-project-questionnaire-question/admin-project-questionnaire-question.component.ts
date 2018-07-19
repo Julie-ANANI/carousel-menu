@@ -52,6 +52,20 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     }
   }
 
+  public count(lang: string) {
+    let missing = 0;
+    if (this.question.label[lang] === '') {
+      missing ++;
+    }
+    if (this.question.title[lang] === '') {
+      missing ++;
+    }
+    if (this.question.subtitle[lang] === '') {
+      missing ++;
+    }
+    return missing;
+  }
+
   public languageEN() {
     this._language = 'en';
   }

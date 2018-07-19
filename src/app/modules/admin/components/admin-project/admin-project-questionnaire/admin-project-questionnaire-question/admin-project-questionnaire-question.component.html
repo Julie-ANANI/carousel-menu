@@ -28,11 +28,11 @@
   <div *ngIf="!isCollapsed">
 
     <button (click)="languageEN()">
-      EN
+      EN {{count('en')}}
     </button>
 
     <button (click)="languageFR()">
-      FR
+      FR {{count('fr')}}
     </button>
 
     <label class="form-switch">
