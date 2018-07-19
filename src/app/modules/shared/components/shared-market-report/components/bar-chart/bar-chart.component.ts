@@ -57,10 +57,26 @@ export class BarChartComponent implements OnInit {
       this._barsData = this.question.options.map((q) => {
         let answers: Array<Answer> = [];
         if (this.question.controlType === 'checkbox') {
-          answers = this._answers.filter((a) => a.answers[this.question.identifier] && a.answers[this.question.identifier][q.identifier]);
+          answers = this._answers.filter((a) =>
+            a.answers[this.question.identifier]
+            && a.answers[this.question.identifier][q.identifier]
+            && a.answers[this.question.identifier + 'Quality'] !== 0);
+
         } else if (this.question.controlType === 'radio')  {
-          answers = this._answers.filter((a) => a.answers[this.question.identifier] === q.identifier);
+          answers = this._answers.filter((a) =>
+            a.answers[this.question.identifier] === q.identifier
+            && a.answers[this.question.identifier + 'Quality'] !== 0 )
+
         }
+        answers = answers.sort((a, b) => {
+          if ((b.answers[this.question.identifier + 'Quality'] || 1) - (a.answers[this.question.identifier + 'Quality'] || 1) === 0) {
+            const a_length = a.answers[this.question.identifier + 'Comment'] ? a.answers[this.question.identifier + 'Comment'].length : 0;
+            const b_length = b.answers[this.question.identifier + 'Comment'] ? b.answers[this.question.identifier + 'Comment'].length : 0;
+            return b_length - a_length;
+          } else {
+            return (b.answers[this.question.identifier + 'Quality'] || 1) - (a.answers[this.question.identifier + 'Quality'] || 1);
+          }
+        });
         return {
           label: q.label,
           answers: answers,
