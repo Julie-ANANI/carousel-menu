@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../models/innovation';
 import { ActivatedRoute } from '@angular/router';
 import {Section} from '../../../../../models/section';
+import {InnovationService} from '../../../../../services/innovation/innovation.service';
 // import {InnovationService} from '../../../../../services/innovation/innovation.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
   private _sections: Section;
 
   constructor( private _activatedRoute: ActivatedRoute,
+               private _innovationService: InnovationService
                ) {}
 
   ngOnInit(): void {
@@ -35,6 +37,11 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   public sectionUpdated(event: any) {
     this._project.preset.sections[this.indexSection(event)] = event;
+    console.log(this._project.preset);
+    this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
+      this._project = result;
+      console.log("j'ai update tranquillou");
+    });
   }
 
 

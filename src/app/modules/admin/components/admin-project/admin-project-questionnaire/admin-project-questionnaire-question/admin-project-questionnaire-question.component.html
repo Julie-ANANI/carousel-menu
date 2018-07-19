@@ -39,23 +39,22 @@
       <input type="checkbox" (change)="comment()" [ngModel]="question.canComment" >
       <i class="form-icon"></i>
     </label>
-
     <label class="form-label h3">{{ "PRESETS.QUESTION.EDIT.LABEL" | translate }}</label>
     <div class="form-group text-center">
       {{language()}}: <input class="form-input" id="label{{language()}}" name="{{language()}}" type="text"
-                             [(ngModel)]="question.label[language()]">
+                             [(ngModel)]="question.label[language()]" (keyup.enter)="update()">
     </div>
 
     <label class="form-label h3">{{ "PRESETS.QUESTION.EDIT.TITLE" | translate }}</label>
     <div class="form-group text-center">
       {{language()}}: <input class="form-input" id="title{{language()}}" name="{{language()}}"type="text"
-                             [(ngModel)]="question.title[language()]">
+                             [(ngModel)]="question.title[language()]" (keyup.enter)="update()">
     </div>
 
     <label class="form-label h3">{{ "PRESETS.QUESTION.EDIT.SUBTITLE" | translate }}</label>
     <div class="form-group text-center">
       {{language()}}: <input class="form-input" id="subtitle{{language()}}" name="{{language()}}"type="text"
-                             [(ngModel)]="question.subtitle[language()]">
+                             [(ngModel)]="question.subtitle[language()]" (keyup.enter)="update()">
     </div>
 
     <div *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')" class="form-group text-center">

@@ -115,4 +115,8 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     this._language = 'fr'
   }
 
+  public update() {
+    this._emit();
+  }
+
 }
