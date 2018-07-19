@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Question} from '../../../../../../models/question';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-admin-project-questionnaire-question',
@@ -15,6 +15,7 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
 
   public isCollapsed = true;
   public formData: FormGroup;
+  public formQuestion: FormGroup;
   private _language = 'en';
   public modalAddOption = false;
 
@@ -24,6 +25,12 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
   ngOnInit() {
     this.formData = this._formBuilder.group({
       controlType: [this.question.controlType]
+    });
+    this.formQuestion = this._formBuilder.group( {
+      labelFR: ['', [Validators.required]],
+      labelEN: ['', [Validators.required]],
+      color: ['', [Validators.required]],
+      positive: []
     });
   }
 
@@ -37,11 +44,19 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     this._emit();
   }
 
-  public addOption(event: any) {
-    this.question.options.push(event);
+  public addOption() {
+    const opt = {
+      identifier: this.question.options.length.toString(),
+      label: {
+        en: this.formQuestion.value.labelEN,
+        fr: this.formQuestion.value.labelFR
+      },
+      color: this.formQuestion.value.color,
+      positive: this.formQuestion.value.positive
+    };
+    this.question.options.push(opt);
     this._emit();
-  }
-
+    }
   public deleteOption(index: any) {
     this.question.options.splice(index, 1);
     this._emit();
@@ -85,6 +100,12 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     }
     */
     return missing;
+  }
+
+
+  public positiveChange(opt: any) {
+    opt.positive = !opt.positive;
+    this._emit();
   }
 
   public languageEN() {

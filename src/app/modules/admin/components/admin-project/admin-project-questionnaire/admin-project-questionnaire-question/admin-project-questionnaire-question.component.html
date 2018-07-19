@@ -60,14 +60,13 @@
 
     <div *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')" class="form-group text-center">
       <div *ngFor="let option of question.options;let i = index">
-        <button
-                (click)="deleteOption(i)" class="btn btn-lg btn-primary" type="button">
+        <button (click)="deleteOption(i)" class="btn btn-lg btn-primary" type="button">
           <i class="icon icon-cross"></i>
         </button>
         <label> {{option.label[language()]}}</label>
         <label> {{option.color}}</label>
         <label class="form-switch">
-          <input type="checkbox" (change)="option.positive = !option.positive" [ngModel]="option.positive" >
+          <input type="checkbox" (change)="positiveChange(option)">
           <i class="form-icon"> positive answer </i>
         </label>
       </div>
@@ -76,11 +75,13 @@
         {{ 'PRESETS.QUESTION.EDIT.ADD' | translate }} <i class="icon icon-plus"></i>
       </button>
       <div *ngIf="modalAddOption">
-        <div class="form-group text-center">
+        <div class="form-group text-center" [formGroup]="formQuestion">
           <label for="positive" *ngIf="question.controlType === 'radio'">
             Réponse Positive ?
             <input type="checkbox" name="positive" formControlName="positive" id="positive">
           </label>
+          FR <input type="text" name="labelFR" formControlName="labelFR" id="labelFR">
+          EN <input type="text" name="labelEN" formControlName="labelEN" id="labelEN">
           <label for="color" *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'">
             Couleur d'affichage
             <select class="form-select" id="color" name="color" formControlName="color">
@@ -93,10 +94,16 @@
           </label>
         </div>
         <div>
-          <a class="delete c-hand" aria-label="Close" role="button" (click)="removeOption($event, i)">
+          <button (click)="addOption()" class="btn btn-primary">
+            {{'COMMON.SAVE' | translate}}
+          </button>
+        </div>
+        <div>
+          <a class="delete c-hand" aria-label="Close" role="button" (click)="modalAddOption = !modalAddOption">
             <i class="icon icon-delete"></i>
           </a>
         </div>
+
       </div>
     </div>
   </div>
