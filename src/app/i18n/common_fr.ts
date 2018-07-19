@@ -48,6 +48,7 @@ export const COMMON = {
     'COUNTRIES': 'Pays blacklistés'
   },
   'EDIT-BLACKLIST': 'Modifier email blacklisté',
+  'EXCLUDE': 'Exclure',
   'EXCLUDE-EMAILS': 'Exclure des emails',
   'EXCLUDE-DOMAINS': 'Exclure des domaines',
   'EXCLUDE-COUNTRIES': 'Exclure des pays',
@@ -57,7 +58,7 @@ export const COMMON = {
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
   'LASTNAME': 'Nom',
-  'EMAIL': 'Adresse e-mail',
+  'EMAIL': 'E-mail',
   'PHONE': 'Téléphone',
   'PASSWORD': 'Mot de passe',
   'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',
@@ -68,7 +69,7 @@ export const COMMON = {
   'JOBTITLE': 'Poste',
   'JOBTITLE_PLACEHOLDER': 'Entrez votre titre de poste',
   'TYPE': 'Type',
-  'DOMAIN': 'Domain',
+  'DOMAIN': 'Domaine',
   'COUNTRY': 'Pays',
   'COUNTRY_PLACEHOLDER': 'Entrez votre pays',
   'TERMS': {

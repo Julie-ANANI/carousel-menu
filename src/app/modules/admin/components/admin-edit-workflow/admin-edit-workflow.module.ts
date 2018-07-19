@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { RouterModule } from "@angular/router";
-import { AdminEditWorkflowComponent } from "./admin-edit-workflow.component";
-import { SharedTableModule } from "../../../table/table.module";
-import { SidebarModule } from "../../../sidebar/sidebar.module";
+import { RouterModule } from '@angular/router';
+import { AdminEditWorkflowComponent } from './admin-edit-workflow.component';
+import { TableModule } from '../../../table/table.module';
+import { SidebarModule } from '../../../sidebar/sidebar.module';
 
 
 @NgModule({
@@ -12,7 +12,7 @@ import { SidebarModule } from "../../../sidebar/sidebar.module";
     CommonModule,
     TranslateModule.forChild(),
     RouterModule,
-    SharedTableModule,
+    TableModule,
     SidebarModule
   ],
   declarations: [
