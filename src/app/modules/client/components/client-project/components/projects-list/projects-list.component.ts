@@ -63,8 +63,10 @@ export class ProjectsListComponent implements OnInit {
     const link = ['/project', project._id];
     switch (project.status) {
       case 'DONE':
-      case 'EVALUATING':
         link.push('synthesis');
+        break;
+      case 'EVALUATING':
+        link.push('exploration');
         break;
       case 'SUBMITTED':
         link.push('exploration');

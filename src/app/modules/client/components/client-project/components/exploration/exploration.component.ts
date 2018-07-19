@@ -112,10 +112,6 @@ export class ExplorationProjectComponent implements OnInit {
 
   }
 
-  get projectStatus(): string {
-    return this.project.status;
-  }
-
   seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
 
@@ -127,15 +123,15 @@ export class ExplorationProjectComponent implements OnInit {
 
   }
 
+  closeSidebar(value: string) {
+    this.sidebarTemplateValue.animate_state = value;
+  }
+
   public formatCompanyName(name: string) {
     if (name) {
       return `${name[0].toUpperCase()}${name.slice(1)}`;
     }
     return '--';
-  }
-
-  closeSidebar(value: string) {
-    this.sidebarTemplateValue.animate_state = value;
   }
 
   get campaignStats() {
@@ -166,6 +162,8 @@ export class ExplorationProjectComponent implements OnInit {
     return this._questions;
   }
 
-
+  get projectStatus(): string {
+    return this.project.status;
+  }
 
 }

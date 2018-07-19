@@ -14,7 +14,7 @@
   padding-top: 20px;
 }
 
-.comment-wrapper {
+.ce-comment-wrapper {
   display: flex;
   justify-content: space-between;
 
@@ -147,12 +147,24 @@
   color: #5d5d5d;
 }
 
+.sa-thumbs-up {
+  margin-left: 15px;
+  color: #2ECC71;
+  vertical-align: 2px;
+}
+
+.sa-thumbs-down {
+  margin-left: 15px;
+  color: #EA5858;
+  vertical-align: -2px;
+}
+
 
 /********************************** Media ***************************************/
 
 @media (max-width: 600px) {
 
-  .comment-wrapper {
+  .ce-comment-wrapper {
     flex-direction: column;
 
     .form-default {

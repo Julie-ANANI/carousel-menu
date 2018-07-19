@@ -13,7 +13,7 @@ import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
 import { Subject } from 'rxjs/Subject';
-import {Template} from '../../../sidebar/interfaces/template';
+import { Template } from '../../../sidebar/interfaces/template';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -57,6 +57,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   ngOnInit() {
 
     this.adminSide = this.location.path().slice(0, 6) === '/admin';
+
+    /*this.adminMode = this.authService.adminLevel > 2;*/
 
     this.today = Date.now();
 

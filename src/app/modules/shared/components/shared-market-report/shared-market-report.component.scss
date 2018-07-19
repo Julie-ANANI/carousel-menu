@@ -338,7 +338,7 @@ body.sample-infographic {
     width: 300px;
   }
 
-  .title-wrapper {
+  .ce-title-wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -447,9 +447,11 @@ body.sample-infographic {
 }
 
 .synthesis-wrapper {
-  padding-top: 0;
-  background-color: #F5F5F5;
   color: #484848;
+
+  .bot-rect {
+    width: 300px;
+  }
 
   .white-background {
     background-color: white;
@@ -633,6 +635,11 @@ body.sample-infographic {
 
   }
 
+}
+
+.na-synthesis {
+  background-color: #F5F5F5;
+  padding-top: 0;
 }
 
 

@@ -2,7 +2,7 @@ export const MARKET_REPORT = {
   'TITLE': {
     'EDITING': 'Lancement de votre étude imminent...',
     'SUBMITTED': 'En attente de validation de votre projet...',
-    'EVALUATING': 'Collecte des insights marché en cours'
+    'EVALUATING': 'En attente de validation de votre projet...'
   },
 
   'MESSAGE': {
