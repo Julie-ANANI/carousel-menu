@@ -25,7 +25,7 @@
     </app-admin-project-questionnaire-question>
   </div>
   <button class="btn-round btn-primary" (click)="addQuestion()"><span> </span><i class="icon icon-plus"  ></i></button>
-  <div> Ajouter question </div>
+  <div *ngIf="!modalQuestionBuild"> Ajouter question </div>
   <div *ngIf="modalQuestionBuild">
     <app-admin-project-questionnaire-question
       [question]="newQuestion"

@@ -120,4 +120,7 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     this._emit();
   }
 
+  public Coolapse() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 }

@@ -55,21 +55,23 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   public addQuestion() {
     this._newQuestion = {
       label: {
-        en: 'ezfe',
-        fr: 'zefzfez'
+        en: 'BUILD',
+        fr: ''
       },
       title: {
-        en: 'dqsdq',
-        fr: 'fezfzefz'
+        en: '',
+        fr: ''
       },
       subtitle: {
-        en: 'fezfze',
-        fr: 'dezdzed'
+        en: '',
+        fr: ''
       },
       identifier: this._section.length,
       controlType: 'checkbox',
       canComment: true,
     };
+    this._section.questions.push(this._newQuestion);
+    this._emit();
     this.modalQuestionBuild = true;
   }
 
