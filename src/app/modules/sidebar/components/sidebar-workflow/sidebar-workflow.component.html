@@ -14,8 +14,6 @@
         <div class="form-group d-flex">Objet: <input type="text" [(ngModel)]="email.subject" name="subject" class="form-input"/></div>
       </div>
     </div>
-    <i class="fas fa-check" *ngIf="email.modified && inCampaign"></i>
-    <i class="fas fa-times" *ngIf="!email.modified && inCampaign"></i>
   </div>
   <div class="card-body">
     <h4 *ngIf="editionMode">Contenu</h4>
@@ -25,5 +23,14 @@
                (onEditorKeyup)="updateContent($event)"></text-zone>
     <button *ngIf="editionMode" type="submit" class="btn btn-primary centered" (click)="save()">Sauvegarder</button>
     <p *ngIf="editionMode">Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*, *|DOMAIN|*</p>
+    <div class="form-group">
+      <label class="form-label" for="signature">Signature</label>
+      <select
+        class="form-default"
+        [(ngModel)]="email.signature"
+        id="signature">
+        <option *ngFor="let s of signatures" [value]="s._id">{{ s.name }}</option>
+      </select>
+    </div>
   </div>
 </div>

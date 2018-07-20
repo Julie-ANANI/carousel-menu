@@ -3,6 +3,7 @@ import { TemplatesService } from '../../../../../services/templates/templates.se
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { EmailScenario } from '../../../../../models/email-scenario';
 import {EmailTemplate} from "../../../../../models/email-template";
+import { EmailSignature } from '../../../../../models/email-signature';
 
 @Component({
   selector: 'app-admin-workflows-library',
@@ -12,6 +13,7 @@ import {EmailTemplate} from "../../../../../models/email-template";
 export class AdminWorkflowsLibraryComponent implements OnInit {
 
   private _newScenarioName: string = null;
+  private _signatures: Array<EmailSignature> = [];
   private _scenarios: Array<EmailScenario> = [];
 
   constructor(private _templatesService: TemplatesService,
@@ -19,6 +21,9 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
 
   ngOnInit() {
     this.getScenarios();
+    this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
+      this._signatures = signatures.result;
+    });
   }
 
   public getScenarios() {
@@ -65,6 +70,7 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
     });
   }
 
+  get signatures(): Array<EmailSignature> { return this._signatures; }
   get scenarios(): Array<EmailScenario> { return this._scenarios; }
   get newScenarioName(): string { return this._newScenarioName; }
   set newScenarioName(name: string) { this._newScenarioName = name; }

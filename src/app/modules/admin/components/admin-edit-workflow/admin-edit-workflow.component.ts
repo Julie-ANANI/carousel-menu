@@ -4,6 +4,7 @@ import { EmailTemplate } from '../../../../models/email-template';
 import { Template } from '../../../sidebar/interfaces/template';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TemplatesService } from '../../../../services/templates/templates.service';
+import { EmailSignature } from '../../../../models/email-signature';
 
 @Component({
   selector: 'app-admin-edit-workflow',
@@ -13,10 +14,14 @@ import { TemplatesService } from '../../../../services/templates/templates.servi
 export class AdminEditWorkflowComponent implements OnInit {
 
   @Input() scenario: EmailScenario;
+  @Input() set signatures(value: Array<EmailSignature> ){
+    this._signatures = value;
+  }
   @Output() deletedScenario = new EventEmitter<string>();
 
   public deleteModal: boolean = null;
   public language = 'en';
+  private _signatures: Array<EmailSignature> = [];
   private _emails: Array<any> = [];
   private _total: number = 0;
   private _emailToEdit: any;
@@ -50,7 +55,7 @@ export class AdminEditWorkflowComponent implements OnInit {
     this._total = this.scenario.emails.length;
     let columns = [{_attrs: ['step', `${this.language}.subject`], _name: 'Step', _type: 'TEXT', _isSortable: false},
       {_attrs: [`${this.language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false},
-      {_attrs: [`${this.language}.signature`], _name: 'Signature', _type: 'TEXT', _isSortable: false}];
+      {_attrs: [`${this.language}.signature.name`], _name: 'Signature', _type: 'TEXT', _isSortable: false}];
     if (this.scenario.emails[0] && this.scenario.emails[0].modified != undefined) {
       columns.push({_attrs: [`${this.language}.modified`], _name: 'Modified', _type: 'BOOLEAN', _isSortable: false});
     }
@@ -107,9 +112,8 @@ export class AdminEditWorkflowComponent implements OnInit {
     this._initTable();
   }
 
-  get tableInfos(): any {
-    return this._tableInfos;
-  }
+  get tableInfos(): any { return this._tableInfos; }
+  get signatures(): Array<EmailSignature> { return this._signatures; }
   get emailToEdit(): any { return this._emailToEdit; }
   get more(): any { return this._more; }
   set emailToEdit(value: any) { this._emailToEdit = value; }

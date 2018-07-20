@@ -16,7 +16,11 @@
       </button>
 
       <div *ngFor="let scenario of scenarios">
-        <app-admin-edit-workflow [scenario]="scenario" (deletedScenario)="deleteScenario($event)"></app-admin-edit-workflow>
+        <app-admin-edit-workflow
+          [scenario]="scenario"
+          [signatures]="signatures"
+          (deletedScenario)="deleteScenario($event)">
+        </app-admin-edit-workflow>
       </div>
     </div>
   </div>
