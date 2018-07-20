@@ -79,8 +79,7 @@ export class ExplorationProjectComponent implements OnInit {
       this.notificationService.error('ERROR.ERROR', error.message);
     });
 
-    this.innovationService.campaigns(this.project._id).first()
-      .subscribe((results) => {
+    this.innovationService.campaigns(this.project._id).first().subscribe((results) => {
         if (results && Array.isArray(results.result)) {
           this._campaignsStats = results.result
             .reduce(function(acc, campaign) {

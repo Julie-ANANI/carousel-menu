@@ -32,21 +32,29 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   editMode = new Subject<boolean>();
   sidebarTemplateValue: Template = {};
   scrollOn = false;
-  companies: Array<Clearbit>;
+  private _companies: Array<Clearbit>;
   activeSection: string;
+  private _campaignsStats: {
+    nbPros: number,
+    nbProsSent: number,
+    nbProsOpened: number,
+    nbProsClicked: number,
+    nbValidatedResp: number
+  };
+  private _countries: Array<string> = [];
+  private _answers: Array<Answer> = [];
+  private _filteredAnswers: Array<Answer> = [];
+  private _innoid: string;
   today: Number;
   objectKeys = Object.keys;
   mapInitialConfiguration: {[continent: string]: boolean};
 
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
-  private _answers: Array<Answer> = [];
   private _filters: {[questionId: string]: Filter} = {};
-  private _filteredAnswers: Array<Answer> = [];
-  private _countries: Array<string> = [];
   private _showListProfessional = true;
   private _showDetails = true;
-  private _innoid: string;
+
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer;
@@ -59,18 +67,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private authService: AuthService) {}
 
   ngOnInit() {
-
-    this.adminSide = this.location.path().slice(0, 6) === '/admin';
-
-    this.adminMode = this.authService.adminLevel > 2;
-
+    this.isAdmin();
     this.today = Date.now();
-
     this._innoid = this.project._id;
-
     this.resetMap();
-
     this.loadAnswers();
+    this.loadCampaign();
 
     if (this.project.preset && this.project.preset.sections) {
       this.project.preset.sections.forEach((section: Section) => {
@@ -94,22 +96,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
-    const wrapper = document.getElementById('answer-wrapper');
-
-    if (wrapper) {
-      const sections = Array.from(
-        wrapper.querySelectorAll('section')
-      );
-      window.onscroll = () => {
-        const scrollPosY = document.body.scrollTop;
-        const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
-        this.activeSection = section ? section.id : '';
-      };
-    }
-
-  }
-
   @HostListener('window:scroll', [])
   onWindowScroll() {
     if (window.scrollY !== 0) {
@@ -119,70 +105,64 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-  private loadAnswers() {
-    this.answerService.getInnovationValidAnswers(this._innoid).first().subscribe((results) => {
-        this._answers = results.answers.sort((a, b) => {
-            return b.profileQuality - a.profileQuality;
-          });
-
-        this._filteredAnswers = this._answers;
-
-        this.companies = results.answers.map((answer: any) => answer.company || {
-          name: answer.professional.company
-        }).filter(function(item: any, pos: any, self: any) {
-          return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
-        });
-
-        this._countries = results.answers.reduce((acc, answer) => {
-            if (acc.indexOf(answer.country.flag) === -1) {
-              acc.push(answer.country.flag);
-            }
-            return acc;
-          }, []);
-
-      }, (error) => {
-        this.translateNotificationsService.error('ERROR.ERROR', error.message);
-      });
-
-
-
+  isAdmin() {
+    this.adminSide = this.location.path().slice(0, 6) === '/admin';
+    this.adminMode = this.authService.adminLevel > 2;
   }
 
-  public changeStatus(event: Event, status: 'EVALUATING' | 'DONE'): void {
-    this.innovationService
-      .updateStatus(this.innoid, status)
-      .first().subscribe((results) => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', '');
-      }, (error) => {
-        this.translateNotificationsService.error('ERROR.ERROR', error.message);
-      });
-  }
-
-  public toggleDetails(event: Event): void {
-    event.preventDefault();
-    const value = !this._showDetails;
-    this._showDetails = value;
-    this._showListProfessional = value;
-  }
-
-  public seeAnswer(answer: Answer): void {
-    this._modalAnswer = answer;
-
-    this.sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: this.adminSide ? 'COMMON.EDIT_INSIGHT' : 'MARKET_REPORT.INSIGHT',
-      size: '726px'
+  resetMap() {
+    this.mapInitialConfiguration = {
+      africa: true,
+      americaNord: true,
+      americaSud: true,
+      asia: true,
+      europe: true,
+      oceania: true,
+      russia: true
     };
+  }
+
+  loadAnswers() {
+    this.answerService.getInnovationValidAnswers(this._innoid).first().subscribe((results) => {
+      this._answers = results.answers.sort((a, b) => {
+        return b.profileQuality - a.profileQuality;
+      });
+
+      this._filteredAnswers = this._answers;
+
+      this._companies = results.answers.map((answer: any) => answer.company || {
+        name: answer.professional.company
+      }).filter(function(item: any, pos: any, self: any) {
+        return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
+      });
+
+      this._countries = results.answers.reduce((acc, answer) => {
+        if (acc.indexOf(answer.country.flag) === -1) {
+          acc.push(answer.country.flag);
+        }
+        return acc;
+      }, []);
+
+    }, (error) => {
+      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+    });
 
   }
 
-  closeSidebar(value: string) {
-    this.sidebarTemplateValue.animate_state = value;
-    this.editMode.next(false);
+  filterByCountries(event: {countries: Array<string>, allChecked: boolean}): void {
+    if (!event.allChecked) {
+      this._filters['worldmap'] = {
+        status: 'COUNTRIES',
+        value: event.countries,
+        questionTitle: {en: 'worldmap', fr: 'mappemonde'}
+      };
+    } else {
+      delete this._filters['worldmap'];
+    }
+    this.filterAnswers();
   }
 
-  public filterAnswers(): void {
+  filterAnswers(): void {
     let filteredAnswers = this._answers;
     Object.keys(this._filters).forEach((filterKey) => {
       const filter = this._filters[filterKey];
@@ -233,37 +213,85 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this._filteredAnswers = filteredAnswers;
   }
 
-  public resetMap() {
-    this.mapInitialConfiguration = {
-      africa: true,
-      americaNord: true,
-      americaSud: true,
-      asia: true,
-      europe: true,
-      oceania: true,
-      russia: true
-    };
+  loadCampaign() {
+    this.innovationService.campaigns(this._innoid).first().subscribe((results) => {
+      if (results && Array.isArray(results.result)) {
+        this._campaignsStats = results.result.reduce(function(acc, campaign) {
+          if (campaign.stats) {
+            if (campaign.stats.campaign) {
+              acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
+              acc.nbValidatedResp += (campaign.stats.campaign.nbValidatedResp || 0);
+            }
+            if (campaign.stats.mail) {
+              acc.nbProsSent += (campaign.stats.mail.totalPros ||  0);
+              if (campaign.stats.mail.statuses) {
+                acc.nbProsOpened += (campaign.stats.mail.statuses.opened || 0);
+                acc.nbProsClicked += (campaign.stats.mail.statuses.clicked ||  0);
+              }
+            }
+          }
+          return acc;
+        }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0});
+      }
+    }, (error) => {
+      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+    });
+
   }
 
-  public filterByCountries(event: {countries: Array<string>, allChecked: boolean}): void {
-    if (!event.allChecked) {
-      this._filters['worldmap'] = {
-        status: 'COUNTRIES',
-        value: event.countries,
-        questionTitle: {en: 'worldmap', fr: 'mappemonde'}
+  ngAfterViewInit() {
+    const wrapper = document.getElementById('answer-wrapper');
+
+    if (wrapper) {
+      const sections = Array.from(
+        wrapper.querySelectorAll('section')
+      );
+      window.onscroll = () => {
+        const scrollPosY = document.body.scrollTop;
+        const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
+        this.activeSection = section ? section.id : '';
       };
-    } else {
-      delete this._filters['worldmap'];
     }
-    this.filterAnswers();
+
   }
 
-  public addFilter(event: Filter) {
+  changeStatus(event: Event, status: 'EVALUATING' | 'DONE'): void {
+    this.innovationService.updateStatus(this._innoid, status).first().subscribe((results) => {
+        this.translateNotificationsService.success('ERROR.SUCCESS', '');
+      }, (error) => {
+        this.translateNotificationsService.error('ERROR.ERROR', error.message);
+      });
+  }
+
+  toggleDetails(event: Event): void {
+    event.preventDefault();
+    const value = !this._showDetails;
+    this._showDetails = value;
+    this._showListProfessional = value;
+  }
+
+  seeAnswer(answer: Answer): void {
+    this._modalAnswer = answer;
+
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: this.adminSide ? 'COMMON.EDIT_INSIGHT' : 'MARKET_REPORT.INSIGHT',
+      size: '726px'
+    };
+
+  }
+
+  closeSidebar(value: string) {
+    this.sidebarTemplateValue.animate_state = value;
+    this.editMode.next(false);
+  }
+
+  addFilter(event: Filter) {
     this._filters[event.questionId] = event;
     this.filterAnswers();
   }
 
-  public deleteFilter(key: string, event: Event) {
+  deleteFilter(key: string, event: Event) {
     event.preventDefault();
     delete this._filters[key];
     if (key === 'worldmap') {
@@ -275,6 +303,30 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   public print(event: Event): void {
     event.preventDefault();
     window.print();
+  }
+
+  get innoid(): string {
+    return this._innoid;
+  }
+
+  get countries(): Array<string> {
+    return this._countries;
+  }
+
+  get campaignStats() {
+    return this._campaignsStats;
+  }
+
+  get companies() {
+    return this._companies;
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
+  }
+
+  get filteredAnswers(): Array<Answer> {
+    return this._filteredAnswers;
   }
 
   get logoName(): string {
@@ -296,22 +348,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return '--';
   }
 
-  get answers(): Array<Answer> {
-    return this._answers;
-  }
-
   get filters() {
     return this._filters;
   }
 
-  get filteredAnswers(): Array<Answer> {
-    return this._filteredAnswers;
-  }
-
-
-  get countries(): Array<string> {
-    return this._countries;
-  }
 
   get cleaned_questions(): Array<Question> {
     return this._cleaned_questions;
@@ -335,10 +375,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   set showListProfessional(val: boolean) {
     this._showListProfessional = val;
-  }
-
-  get innoid(): string {
-    return this._innoid;
   }
 
   get showDetails (): boolean {

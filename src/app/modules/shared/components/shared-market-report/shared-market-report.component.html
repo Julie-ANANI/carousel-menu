@@ -211,7 +211,7 @@
               <!-- Professionals -->
               <div class="cs-info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate }}</p>
-                <h5 class="text-center"></h5>
+                <h5 class="text-center">{{ campaignStats?.nbPros || 0 }}</h5>
               </div>
 
               <div class="cs-info-analytic pd-top">
@@ -232,7 +232,7 @@
               <!-- Reached -->
               <div class="cs-info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
-                <h5 class="text-center"></h5>
+                <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>
               </div>
 
               <div class="cs-info-analytic pd-top">
@@ -253,7 +253,7 @@
               <!-- Emails -->
               <div class="cs-info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
-                <h5 class="text-center"></h5>
+                <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>
               </div>
 
               <div class="cs-info-analytic pd-top">
@@ -274,7 +274,7 @@
               <!-- Clicks -->
               <div class="cs-info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
-                <h5 class="text-center"></h5>
+                <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>
               </div>
 
               <div class="cs-info-analytic pd-top">
@@ -295,7 +295,7 @@
               <!-- Answers -->
               <div class="cs-info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
-                <!-- <h5 class="text-center">{{ answers?.length || 0 }}</h5> -->
+                <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>
               </div>
 
             </div>
@@ -325,7 +325,17 @@
 
 
         <!-- Responses -->
-
+        <div class="section-light-container">
+          <div class="column col-11 col-mx-auto sac-origin-wrapper">
+            <!-- Operator comment -->
+            <div class="section-inline-light-container sac-origin-comment-wrapper">
+              <div class="sac-comment">
+                <h1 class="main-heading">{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h1>
+              </div>
+              fsdfds
+            </div>
+          </div>
+        </div>
 
       </div>
 
