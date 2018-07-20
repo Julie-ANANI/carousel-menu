@@ -10,7 +10,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
 
   @Input() question: any;
-  @Input() creationmode: boolean;
   @Output() questionChange = new EventEmitter<any>();
   @Output() remove = new EventEmitter<any>();
 
@@ -24,8 +23,6 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.creationmode) {
-    }
     this.formData = this._formBuilder.group({
       controlType: [this.question.controlType]
     });

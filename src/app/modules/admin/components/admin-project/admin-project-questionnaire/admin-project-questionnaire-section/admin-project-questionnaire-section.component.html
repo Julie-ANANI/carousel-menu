@@ -19,14 +19,13 @@
   <div *ngFor="let question of section.questions">
     <app-admin-project-questionnaire-question
       [question]="question"
-      [creationmode]="false"
       (questionChange)="updateQuestion($event)"
       (remove)="removeQuestion(question)"
     >
     </app-admin-project-questionnaire-question>
   </div>
   <button class="btn-round btn-primary" (click)="addQuestion()"><span> </span><i class="icon icon-plus"  ></i></button>
-  <div *ngIf="!modalQuestionBuild"> Ajouter question </div>
+  <!--
   <div *ngIf="modalQuestionBuild">
     <app-admin-project-questionnaire-question
       [question]="newQuestion"
@@ -36,5 +35,6 @@
     >
     </app-admin-project-questionnaire-question>
   </div>
+  -->
 </div>
 
