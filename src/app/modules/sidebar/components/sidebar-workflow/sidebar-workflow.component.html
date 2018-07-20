@@ -29,7 +29,7 @@
         class="form-default"
         [(ngModel)]="email.signature"
         id="signature">
-        <option *ngFor="let s of signatures" [value]="s._id">{{ s.name }}</option>
+        <option *ngFor="let s of signatures" [value]="s._id">{{ s.name }} - <span>{{ s.language }}</span></option>
       </select>
     </div>
   </div>

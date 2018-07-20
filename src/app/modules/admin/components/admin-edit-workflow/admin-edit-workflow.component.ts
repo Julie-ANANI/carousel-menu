@@ -16,6 +16,7 @@ export class AdminEditWorkflowComponent implements OnInit {
   @Input() scenario: EmailScenario;
   @Input() set signatures(value: Array<EmailSignature> ){
     this._signatures = value;
+    this._initTable();
   }
   @Output() deletedScenario = new EventEmitter<string>();
 
@@ -49,13 +50,17 @@ export class AdminEditWorkflowComponent implements OnInit {
       THANKS: {step: "04 - "}
     };
     this.scenario.emails.forEach((email: EmailTemplate) => {
+      if (email.signature) {
+        const fullSignature = this._signatures.find(s => s._id === email.signature.toString());
+        if (fullSignature) email.signatureName = fullSignature.name;  
+      }
       steps[email.step][email.language] = email;
     });
     this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
     this._total = this.scenario.emails.length;
     let columns = [{_attrs: ['step', `${this.language}.subject`], _name: 'Step', _type: 'TEXT', _isSortable: false},
       {_attrs: [`${this.language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false},
-      {_attrs: [`${this.language}.signature.name`], _name: 'Signature', _type: 'TEXT', _isSortable: false}];
+      {_attrs: [`${this.language}.signatureName`], _name: 'Signature', _type: 'TEXT', _isSortable: false}];
     if (this.scenario.emails[0] && this.scenario.emails[0].modified != undefined) {
       columns.push({_attrs: [`${this.language}.modified`], _name: 'Modified', _type: 'BOOLEAN', _isSortable: false});
     }
