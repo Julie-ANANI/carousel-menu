@@ -25,7 +25,8 @@ export class ExplorationProjectComponent implements OnInit {
     nbPros: number,
     nbProsSent: number,
     nbProsOpened: number,
-    nbProsClicked: number
+    nbProsClicked: number,
+    nbValidatedResp: number
   };
   private _companies: Array<Clearbit>;
   private _countries: Array<string>;
@@ -78,8 +79,6 @@ export class ExplorationProjectComponent implements OnInit {
       this.notificationService.error('ERROR.ERROR', error.message);
     });
 
-    this._campaignsStats = {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0};
-
     this.innovationService.campaigns(this.project._id).first()
       .subscribe((results) => {
         if (results && Array.isArray(results.result)) {
@@ -88,6 +87,7 @@ export class ExplorationProjectComponent implements OnInit {
               if (campaign.stats) {
                 if (campaign.stats.campaign) {
                   acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
+                  acc.nbValidatedResp += (campaign.stats.campaign.nbValidatedResp || 0);
                 }
                 if (campaign.stats.mail) {
                   acc.nbProsSent += (campaign.stats.mail.totalPros ||  0);
@@ -98,7 +98,7 @@ export class ExplorationProjectComponent implements OnInit {
                 }
               }
               return acc;
-            }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0});
+            }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0});
         }
       }, (error) => {
         this.notificationService.error('ERROR.ERROR', error.message);
