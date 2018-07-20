@@ -16,8 +16,10 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   @Input() set section(sec) {
     this._section = sec;
   }
+  @Input() state: any;
   @Output() sectionUpdated = new EventEmitter<any>();
   @Output() sectionRemoved = new EventEmitter<any>();
+  @Output() stateOut = new EventEmitter<any>();
 
   public editName = false;
   private _newQuestion: Question;
@@ -27,6 +29,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   constructor( private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
+    console.log("hello");
     this.formData = this._formBuilder.group({
       description: [this._section.description]
     });
@@ -70,7 +73,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   public addQuestion() {
     this._newQuestion = {
       label: {
-        en: 'BUILD',
+        en: 'Question',
         fr: ''
       },
       title: {
@@ -81,10 +84,12 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
         en: '',
         fr: ''
       },
-      identifier: this._section.length,
+      identifier: this._section.questions.length,
       controlType: 'checkbox',
       canComment: true,
     };
+    this.state.quest.push(false);
+    this._emitState();
     this._section.questions.push(this._newQuestion);
     this._emit();
   }
@@ -95,6 +100,21 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
 
   get section() {
     return this._section;
+  }
+
+  public questionState(event: any) {
+    this.state.quest = event;
+    this._emitState();
+  }
+
+  public coolapse() {
+    this.isCollapsed = !this.isCollapsed;
+    this.state.sec = !this.isCollapsed;
+    this._emitState();
+  }
+
+  private _emitState() {
+    this.stateOut.emit(this.state);
   }
 
   get newQuestion() {

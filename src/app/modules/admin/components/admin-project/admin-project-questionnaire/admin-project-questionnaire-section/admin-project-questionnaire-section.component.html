@@ -6,11 +6,9 @@
       <option [value]="'2nd'">{{ "PRESETS.SECTION.DESCRIPTION.SECOND" | translate }}</option>
     </select>
   </div>
-  <button type="button"
+ <button type="button"
           class="btn btn-outline-primary"
-          (click)="isCollapsed = !isCollapsed"
-          [attr.aria-expanded]="!isCollapsed"
-          aria-controls = "collapseMails"
+          (click)="coolapse()"
           *ngIf="!editName"
   >
     <h3>{{section.label.en}}</h3>
@@ -29,12 +27,15 @@
 
 </div>
 
-<div *ngIf="!isCollapsed">
-  <div *ngFor="let question of section.questions">
+<div [hidden]="!state.sec">
+  <div *ngFor="let question of section.questions; let i1 = index;">
     <app-admin-project-questionnaire-question
       [question]="question"
+      [stateIN]="state.quest"
+      [index]="i1"
       (questionChange)="updateQuestion($event)"
       (remove)="removeQuestion(question)"
+      (stateOUT)="questionState($event)"
     >
     </app-admin-project-questionnaire-question>
   </div>

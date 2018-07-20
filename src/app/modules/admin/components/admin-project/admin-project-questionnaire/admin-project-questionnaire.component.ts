@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../models/innovation';
 import { ActivatedRoute } from '@angular/router';
-import {Section} from '../../../../../models/section';
+// import {Section} from '../../../../../models/section';
 import {InnovationService} from '../../../../../services/innovation/innovation.service';
 // import {InnovationService} from '../../../../../services/innovation/innovation.service';
 
@@ -13,7 +13,9 @@ import {InnovationService} from '../../../../../services/innovation/innovation.s
 export class AdminProjectQuestionnaireComponent implements OnInit {
 
   private _project: Innovation;
-  private _sections: Section;
+  private _sections: any;
+  private _state: Array<any> = [];
+
 
   constructor( private _activatedRoute: ActivatedRoute,
                private _innovationService: InnovationService
@@ -22,6 +24,18 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this._sections = this._project.preset.sections;
+
+    this._sections.forEach((sec: any, index: number) => {
+      const tab: Array<boolean> = [];
+      sec.questions.forEach((quest: any) => {
+        tab.push(false);
+      });
+      this._state.push({
+        sec: false,
+        quest: tab
+      })
+    });
+    console.log(this._state);
   }
 
 
@@ -35,6 +49,9 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     }
   }
 
+  public updateState(event: any,index: number) {
+    this._state[index] = event;
+  }
   public sectionUpdated(event: any) {
     this._project.preset.sections[this.indexSection(event)] = event;
     console.log('UPDATE:');
@@ -48,9 +65,9 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
   public addSection() {
     let name;
     if (this._project.preset && this._project.preset.sections) {
-      name = 'BUILD' + this._project.preset.sections.length;
+      name = 'Section' + this._project.preset.sections.length;
     } else {
-      name = 'BUILD';
+      name = 'Section';
     }
     this._project.preset.sections.push({
       name: name,
@@ -59,6 +76,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
         en: name,
         fr: name
       }
+    });
+    this._state.push({
+      sec: false,
+      quest: []
     });
     this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
       this._project = result;
@@ -72,6 +93,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
       this._project = result;
       this._sections = this._project.preset.sections;
     });
+  }
+
+  public getState(index: number) {
+    return this._state[index];
   }
 
   get sections() {

@@ -17,7 +17,7 @@
 
   <button type="button"
           class="btn btn-outline-primary"
-          (click)="isCollapsed = !isCollapsed"
+          (click)="coolapseQuestion()"
           [attr.aria-expanded]="!isCollapsed"
           aria-controls = "collapseMails">
     <h4>{{question.label.en}}</h4>
@@ -29,7 +29,7 @@
 
 
 
-  <div *ngIf="!isCollapsed">
+  <div *ngIf="stateIN[index]">
 
     <button (click)="languageEN()">
       EN {{count('en')}}

@@ -10,8 +10,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
 
   @Input() question: any;
+  @Input() public stateIN: any;
+  @Input() public index: number;
   @Output() questionChange = new EventEmitter<any>();
   @Output() remove = new EventEmitter<any>();
+  @Output() stateOUT= new EventEmitter<any>();
 
   public isCollapsed = true;
   public formData: FormGroup;
@@ -23,6 +26,7 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log("trop de generation")
     this.formData = this._formBuilder.group({
       controlType: [this.question.controlType]
     });
@@ -126,7 +130,13 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     this._emit();
   }
 
-  public Coolapse() {
+  private _emitState() {
+    this.stateOUT.emit(this.stateIN);
+  }
+
+  public coolapseQuestion() {
     this.isCollapsed = !this.isCollapsed;
+    this.stateIN[this.index] = !this.stateIN[this.index];
+    this._emitState();
   }
 }
