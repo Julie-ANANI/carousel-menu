@@ -34,6 +34,11 @@ export class AdminProjectCardsComponent implements OnInit {
       });
   }
 
+  commentKeyupHandlerFunction(event: { content: string }) {
+    this.project.comments = event['content'];
+    this.shouldSave = true;
+  }
+
   public updateProject(event: Innovation) {
     this.project = event;
     this.shouldSave = true;

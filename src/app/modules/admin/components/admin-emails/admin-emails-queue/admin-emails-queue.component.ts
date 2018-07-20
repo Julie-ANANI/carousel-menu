@@ -4,6 +4,7 @@ import { EmailService } from '../../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import {Table} from '../../../../table/models/table';
 import {Template} from '../../../../sidebar/interfaces/template';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-admin-email-queue',
@@ -29,6 +30,7 @@ export class AdminEmailQueueComponent implements OnInit {
 
   private _tableInfos: Table = null;
   private _more: Template = {};
+  sidebarState = new Subject<string>();
   private _currentQueue: EmailQueueModel = null;
 
   constructor(private _emailService: EmailService,
@@ -65,10 +67,10 @@ export class AdminEmailQueueComponent implements OnInit {
               {_attrs: ['payload.metadata.campaignName'], _name: 'CAMPAIGNS.CAMPAIGN-NAME', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
               {_attrs: ['payload.queueSize'], _name: 'COMMON.PROFESSIONALS', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
               {_attrs: ['status'], _name: 'PROJECT_LIST.STATUS', _type: 'MULTI-CHOICES', _isSortable: false, _choices: [
-                  {_name: 'QUEUED', _class: 'label-draft'},
-                  {_name: 'PROCESSING', _class: 'label-progress'},
-                  {_name: 'CANCELED', _class: 'label-editing'},
-                  {_name: 'DONE', _class: 'label-validate'}
+                  {_name: 'QUEUED', _alias: 'Queued', _class: 'label-draft'},
+                  {_name: 'PROCESSING', _alias: 'Processing', _class: 'label-progress'},
+                  {_name: 'CANCELED', _alias: 'Canceled', _class: 'label-editing'},
+                  {_name: 'DONE', _alias: 'Done', _class: 'label-validate'}
                 ]}]
           };
         },
@@ -107,6 +109,7 @@ export class AdminEmailQueueComponent implements OnInit {
 
   closeSidebar(value: string) {
     this.more.animate_state = value;
+    this.sidebarState.next(this.more.animate_state);
   }
 
   set config(value: any) { this._config = value; }

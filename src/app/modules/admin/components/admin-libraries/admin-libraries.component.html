@@ -1,26 +1,15 @@
 <div class="main-container" id="admin-libraries">
-  <div class="columns">
-    <div class="column col-12 col-mx-auto">
 
-      <div class="hero-light-container">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <h1>Libraries</h1>
-        </div>
-      </div>
+  <h1>Libraries</h1>
 
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <ul class="tabs">
-          <li *ngFor="let tab of tabs">
-            <a routerLinkActive="active" [routerLink]="tab" [routerLinkActiveOptions]="{ exact: true }">
-              {{ tab[0].toUpperCase() + tab.slice(1) | translate }}
-            </a>
-          </li>
-        </ul>
-      </div>
+  <ul class="tabs">
+    <li *ngFor="let tab of tabs">
+      <a routerLinkActive="active" [routerLink]="tab" [routerLinkActiveOptions]="{ exact: true }">
+        {{ tab[0].toUpperCase() + tab.slice(1) | translate }}
+      </a>
+    </li>
+  </ul>
 
-      <div class="container">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
-  </div>
+  <router-outlet></router-outlet>
+
 </div>

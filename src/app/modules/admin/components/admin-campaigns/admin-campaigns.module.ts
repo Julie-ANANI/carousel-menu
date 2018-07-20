@@ -22,7 +22,7 @@ import { AdminCampaignProsComponent } from './admin-campaign-pros/admin-campaign
 import { AdminCampaignSearchComponent } from './admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignSearchResultsComponent } from './admin-campaign-search-results/admin-campaign-search-results.component';
 import { AdminCampaignTemplatesComponent } from './admin-campaign-templates/admin-campaign-templates.component';
-import { SharedTableModule } from '../../../table/table.module';
+import { TableModule } from '../../../table/table.module';
 import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admin-campaign-abtesting.component';
 
 @NgModule({
@@ -39,7 +39,7 @@ import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admi
     RouterModule,
     TranslateModule.forChild(),
     SidebarModule,
-    SharedTableModule,
+    TableModule,
     PipeModule
   ],
   declarations: [
