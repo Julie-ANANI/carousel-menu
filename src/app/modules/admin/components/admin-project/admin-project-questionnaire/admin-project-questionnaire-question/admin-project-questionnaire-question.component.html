@@ -17,10 +17,14 @@
 
   <button type="button"
           class="btn btn-outline-primary"
-          (click)="Coolapse"
+          (click)="isCollapsed = !isCollapsed"
           [attr.aria-expanded]="!isCollapsed"
           aria-controls = "collapseMails">
     <h4>{{question.label.en}}</h4>
+  </button>
+  <button type="button" class="btn-danger" (click)="removeQuestion()">
+    <i class="fa-trash">
+    </i>
   </button>
 
 

@@ -12,6 +12,8 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
   @Input() question: any;
   @Input() creationmode: boolean;
   @Output() questionChange = new EventEmitter<any>();
+  @Output() remove = new EventEmitter<any>();
+
   public isCollapsed = true;
   public formData: FormGroup;
   public formQuestion: FormGroup;
@@ -103,6 +105,9 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     return missing;
   }
 
+  public removeQuestion() {
+    this.remove.emit();
+  }
 
   public positiveChange(opt: any) {
     opt.positive = !opt.positive;
