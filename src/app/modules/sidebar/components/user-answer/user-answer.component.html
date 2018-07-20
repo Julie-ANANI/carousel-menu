@@ -47,15 +47,20 @@
 
         <!-- Linkedin -->
         <div *ngIf="adminMode && modalAnswer.professional?.profileUrl" class="profile">
-          <p><i class="fab fa-linkedin-in"></i> <span class="text-link" [ngStyle]="{ 'padding-left': '3px' }">{{ modalAnswer.professional.profileUrl }}</span></p>
+          <p>
+            <i class="fab fa-linkedin-in"></i>
+            <a [href]="modalAnswer.professional.profileUrl" target="_blank">
+              <span class="text-link">{{ modalAnswer.professional.profileUrl }}</span>
+            </a>
+          </p>
         </div>
 
         <!-- Job -->
         <div class="job" *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle || editMode">
-          <i class="far fa-address-card" aria-hidden="true"></i>
           <p *ngIf="!editJob">
+            <i class="far fa-address-card" aria-hidden="true"></i>
             {{ modalAnswer.job || modalAnswer.professional?.jobTitle }}
-            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editJob = true; notifyChanges($event)"></i>
+            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editJob = true;"></i>
           </p>
           <div *ngIf="editJob" class="form-group">
             <input
@@ -70,10 +75,10 @@
 
         <!-- Company -->
         <div class="company" *ngIf="modalAnswer.company.name || modalAnswer.professional?.company || editMode">
-          <i class="far fa-building" aria-hidden="true"></i>
           <p *ngIf="!editCompany">
+            <i class="far fa-building" aria-hidden="true"></i>
             {{ modalAnswer.company.name || modalAnswer.professional?.company }}
-            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCompany = true; notifyChanges($event)"></i>
+            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCompany = true;"></i>
           </p>
           <div *ngIf="editCompany" class="form-group">
             <input
@@ -88,9 +93,12 @@
 
         <!-- Email -->
         <div *ngIf="adminMode && (modalAnswer.professional?.email)" class="email">
-          <a [href]="'mailto:'+modalAnswer.professional.email">
-            {{ modalAnswer.professional.email }}
-          </a>
+          <p>
+            <i class="far fa-envelope"></i>
+            <a [href]="'mailto:'+modalAnswer.professional.email">
+              {{ modalAnswer.professional.email }}
+            </a>
+          </p>
         </div>
 
         <!-- Received date and time, and time spent -->

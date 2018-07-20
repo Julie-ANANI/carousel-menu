@@ -8,8 +8,7 @@ import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
 import { Table } from '../../../../../table/models/table';
-import {Template} from '../../../../../sidebar/interfaces/template';
-import {Subject} from 'rxjs/Subject';
+import { Template } from '../../../../../sidebar/interfaces/template';
 
 @Component({
   selector: 'app-client-exploration-project',
@@ -33,7 +32,6 @@ export class ExplorationProjectComponent implements OnInit {
   private _questions: Array<Question>;
   private _modalAnswer: Answer;
   sidebarTemplateValue: Template = {};
-  editMode = new Subject<boolean>();
 
   tableInfos: Table = null;
 
@@ -59,8 +57,6 @@ export class ExplorationProjectComponent implements OnInit {
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
           {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT', _isSortable: false},
-          {_attrs: ['progress'], _name: 'COMMON.PROGRESS', _type: 'PROGRESS', _isSortable: false},
-          {_attrs: ['professional.company'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false},
         ]
       };
 

@@ -60,10 +60,10 @@ export class AdminProjectsComponent implements OnInit {
             {_attrs: ['created'], _name: 'COMMON.SORT.BY_CREATION_DATE', _type: 'DATE'},
             {_attrs: ['updated'], _name: 'COMMON.SORT.BY_UPDATE_DATE', _type: 'DATE'},
             {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _choices: [
-                {_name: 'EDITING', _class: 'label-editing'},
-                {_name: 'SUBMITTED', _class: 'label-draft'},
-                {_name: 'EVALUATING', _class: 'label-progress'},
-                {_name: 'DONE', _class: 'label-validate'},
+                {_name: 'EDITING', _alias: 'Editing', _class: 'label-editing'},
+                {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label-draft'},
+                {_name: 'EVALUATING', _alias: 'Evaluating',  _class: 'label-progress'},
+                {_name: 'DONE', _alias: 'Done', _class: 'label-validate'},
               ]}
           ]
         };

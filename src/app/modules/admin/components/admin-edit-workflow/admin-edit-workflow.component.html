@@ -2,11 +2,14 @@
   <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
     <app-sidebar-workflow
       [emailsObject]="emailToEdit"
-      (emailChange)="updateEmail($event)">
+      (emailChange)="updateEmail($event)"
+      [inputLanguage]="language">
     </app-sidebar-workflow>
   </app-sidebar>
   <p class="workflow-header">
     <span class="workflow-name">{{ scenario.name }}</span> -
+    <a [ngClass]="{'text-warning': language === 'en'}" (click)="changeLanguage('en')">EN</a> |
+    <a [ngClass]="{'text-warning': language === 'fr'}" (click)="changeLanguage('fr')">FR</a> -
     <a class="text-error" (click)="deleteModal = true"><i class="fas fa-trash"></i> {{ 'COMMON.DELETE' | translate }}</a>
   </p>
   <app-shared-table [data]="tableInfos" (editRow)="editEmail($event)" [config]="config"></app-shared-table>

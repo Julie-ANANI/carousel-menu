@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedTableModule } from '../../../table/table.module';
+import { TableModule } from '../../../table/table.module';
 import {SidebarModule} from '../../../sidebar/sidebar.module';
 
 
@@ -14,7 +14,7 @@ import {SidebarModule} from '../../../sidebar/sidebar.module';
     CommonModule,
     ReactiveFormsModule,
     SidebarModule,
-    SharedTableModule,
+    TableModule,
     TranslateModule.forChild()
   ],
   declarations: [

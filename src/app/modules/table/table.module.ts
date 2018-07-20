@@ -34,4 +34,4 @@ import { TableComponent } from './components/table.component';
   ]
 })
 
-export class SharedTableModule { }
+export class TableModule { }
