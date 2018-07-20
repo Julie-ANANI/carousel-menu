@@ -21,7 +21,7 @@
       [question]="question"
       [creationmode]="false"
       (questionChange)="updateQuestion($event)"
-      (remove)="removeQuestion()"
+      (remove)="removeQuestion(question)"
     >
     </app-admin-project-questionnaire-question>
   </div>
@@ -32,7 +32,7 @@
       [question]="newQuestion"
       [creationmode]="true"
       (questionChange)="updateQuestion($event)"
-      (remove)="removeQuestion()"
+      (remove)="removeQuestion(newQuestion)"
     >
     </app-admin-project-questionnaire-question>
   </div>

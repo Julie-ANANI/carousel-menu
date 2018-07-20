@@ -52,6 +52,11 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
     this._emit();
   }
 
+  public removeQuestion(quest: any) {
+    this._section.questions.splice(this._findQuestionIndex(quest), 1);
+    this._emit();
+  }
+
   public addQuestion() {
     this._newQuestion = {
       label: {
