@@ -9,8 +9,6 @@
       (sectionRemoved)="sectionRemoved($event)"
     >
     </app-admin-project-questionnaire-section>
-    <div *ngIf="(i + 1)==sections.length">
-          Ajouter Section
-    </div>
   </div>
+  <button class="btn-round btn-primary" (click)="addSection()"><span> </span><i class="icon icon-plus"  > ADD SECTION </i></button>
 </div>

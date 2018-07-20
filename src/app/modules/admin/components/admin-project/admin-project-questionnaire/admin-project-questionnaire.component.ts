@@ -43,6 +43,22 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     });
   }
 
+  public addSection() {
+    let name;
+    if (this._project.preset && this._project.preset.sections) {
+      name = 'BUILD' + this._project.preset.sections.length;
+    } else {
+      name = 'BUILD';
+    }
+    this._project.preset.sections.push({
+      name: name,
+      questions: []
+    });
+    this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
+      this._project = result;
+    });
+  }
+
   public sectionRemoved(event: any) {
     this._project.preset.sections.splice(this.indexSection(event), 1);
     this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
