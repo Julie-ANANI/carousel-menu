@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedTableModule } from '../../../table/table.module';
+import { TableModule } from '../../../table/table.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { AdminUsersComponent } from './admin-users.component';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
@@ -13,7 +13,7 @@ import { InputModule } from '../../../input/input.module';
     CommonModule,
     ReactiveFormsModule,
     SidebarModule,
-    SharedTableModule,
+    TableModule,
     TranslateModule.forChild(),
     PipeModule,
     InputModule,

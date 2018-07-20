@@ -25,7 +25,7 @@ import { TargetingComponent } from './components/setup/components/targeting/targ
 import { SharedProjectEditCardsModule } from '../../../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
 import { SharedProjectSettingsModule } from '../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 import { SharedProjectDescriptionModule } from '../../../shared/components/shared-project-description/shared-project-description.module';
-import { SharedTableModule } from '../../../table/table.module';
+import { TableModule } from '../../../table/table.module';
 
 @NgModule({
   imports: [
@@ -36,7 +36,7 @@ import { SharedTableModule } from '../../../table/table.module';
     SharedAnswerListModule,
     SharedProjectsListModule,
     SharedWorldmapModule,
-    SharedTableModule,
+    TableModule,
     TranslateModule.forChild(),
     SidebarModule,
     SharedLoaderModule,

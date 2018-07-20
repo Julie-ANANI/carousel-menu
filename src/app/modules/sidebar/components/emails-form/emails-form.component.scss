@@ -1,0 +1,28 @@
+$success-color: #2ECC71;
+$disabled-color: #DBDBDB;
+
+.project-form-wrapper {
+  padding-top: 30px;
+
+  .submit-wrapper {
+    padding-bottom: 30px;
+  }
+
+}
+
+.accept {
+  width: 100%;
+  margin: 13.8px 0;
+  background-color: $success-color;
+  -webkit-appearance: none;
+  height: 5px;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+.country-wrapper {
+  span{
+    color: #97A4B1;
+  }
+}
+
