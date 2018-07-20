@@ -13,18 +13,18 @@ import { Subject } from 'rxjs/Subject';
 
 export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
-  @Input() public readonly = true;
-  @Input() public pieChart: any;
-  @Input() public innovation: Innovation;
-  @Input() public question: Question;
-  @Input() public stats: {nbAnswers: number, percentage: number};
+  @Input() readonly = true;
+  @Input() pieChart: any;
+  @Input() innovation: Innovation;
+  @Input() question: Question;
+  @Input() stats: {nbAnswers: number, percentage: number};
 
   private ngUnsubscribe: Subject<any> = new Subject();
   private _domSectionId: string;
   private _lang: string;
 
   constructor(private innovationService: InnovationService,
-              private translateService: TranslateService) { }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     this._domSectionId = `${this.question.identifier.replace(/\\s/g, '')}-conclusion`;

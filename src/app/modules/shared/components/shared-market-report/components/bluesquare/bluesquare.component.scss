@@ -1,3 +1,40 @@
+.bluesquare-response-wrapper {
+  min-width: 280px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+
+  .number-answers {
+    font-size: 99px;
+    font-weight: 300;
+    color: white;
+
+    .subtitle {
+      font-size: 14px;
+      padding-bottom: 0;
+      font-weight: 600;
+    }
+
+  }
+
+  hr {
+    margin: 25px;
+    width: 80%;
+    border-color: white;
+    border-radius: 5px;
+  }
+
+  .number-ratio {
+    text-align: center;
+
+    p {
+      padding-bottom: 0;
+    }
+
+  }
+
+}
+
 .big-blue-synthesis {
   display: flex;
   justify-content: center;
@@ -39,15 +76,7 @@
 
   }
 
-  .number-ratio {
-    color: white;
-    text-align: center;
 
-    span {
-      font-size: 1.6rem;
-    }
-
-  }
 
   .total-score {
     font-size: 27px;

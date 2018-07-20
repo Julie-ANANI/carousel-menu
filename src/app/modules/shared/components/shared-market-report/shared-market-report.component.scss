@@ -690,23 +690,12 @@ body.sample-infographic {
 
   .sac-origin-wrapper {
     background-color: #4F5D6B;
-    min-height: 300px;
     border-radius: 3px;
 
-    .sac-origin-comment-wrapper {
-      display: flex;
-      justify-content: space-between;
+    h1 {
       color: white;
-
-      .sac-comment {
-
-        h1 {
-          color: white;
-        }
-
-      }
+      margin-bottom: 0;
     }
-
 
   }
 

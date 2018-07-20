@@ -1,21 +1,38 @@
 .ques-conclusion-wrapper {
   display: flex;
-}
+  justify-content: space-between;
 
-.pieChart-wrapper, .blueSquare-wrapper{
-  margin: 0 25px 25px 0;
-}
+  .umi-synthesis {
+    flex: 2;
 
-.umi-synthesis {
-  margin-bottom: 25px;
+    p {
+      padding-top: 0;
+      color: #EA5858;
+      font-weight: bold;
+    }
 
-  p {
-    padding-top: 0;
-    color: #EA5858;
-    font-weight: bold;
+    .op-text {
+      color: #FFB300;
+      font-weight: 600;
+      padding-bottom: 0;
+    }
+
+  }
+
+  .divider-wrapper {
+    margin: 0 25px;
+    border: 1px solid white;
+    border-radius: 5px;
+  }
+
+  .stat-wrapper {
+    display: flex;
+    justify-content: center;
+    text-align: center;
   }
 
 }
+
 
 
 /********************************** Media ***************************************/
@@ -23,12 +40,16 @@
 @media (max-width: 840px) {
 
   .ques-conclusion-wrapper {
-    flex-wrap: wrap;
-  }
+    flex-direction: column;
 
-  .pieChart-wrapper, .blueSquare-wrapper {
-    margin-right: auto;
-    margin-left: auto;
+    .divider-wrapper {
+      display: none;
+    }
+
+    .stat-wrapper {
+      justify-content: flex-start;
+    }
+
   }
 
 }

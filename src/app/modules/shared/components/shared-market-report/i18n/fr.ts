@@ -28,8 +28,11 @@ export const MARKET_REPORT = {
     'DETAIL_VIEW': 'Vue détaillée',
     'FILTER': 'Filtres',
     'BUTTON_CSV': 'Exporter CSV',
-    'BUTTON_DOWNLOAD': 'Télécharger la synthèse'
+    'BUTTON_DOWNLOAD': 'Télécharger la synthèse',
+    'BUTTON_ADMIN': 'Finaliser la synthèse',
   },
+
+  'MESSAGE_SYNTHESIS': 'La synthèse a été finalisée avec succès.',
 
   // 'TITLE': 'Exploration du potentiel marché',
   'COLLAPSE': 'Tout plier',

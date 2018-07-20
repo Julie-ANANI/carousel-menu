@@ -142,6 +142,7 @@ export const COMMON = {
     'PITCH-DELETE': 'Are you sure you want to delete the professionnal(s)?',
     'DELETE': 'Delete professionnal(s)',
   },
+
   'HOME': 'Home',
   'ADMIN': 'Admin',
   'MY_PROJECT': 'My project',
@@ -158,6 +159,7 @@ export const COMMON = {
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
   'CLIENT_SIDE': 'Client',
+  'UMI_WORD': 'A word from UMI',
 
   'SORT': {
     'BY_NAME': 'By name',

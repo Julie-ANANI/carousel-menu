@@ -1,36 +1,38 @@
 <div class="ques-conclusion-wrapper">
 
-  <ng-container [ngSwitch]="question.controlType">
-
-    <!-- Pie chart -->
-    <div *ngSwitchCase="'radio'" class="pieChart-wrapper">
-      <piechart [pieChart]="pieChart"></piechart>
-    </div>
-
-    <!-- ou encadré bleu -->
-    <div *ngSwitchDefault class="blueSquare-wrapper">
-      <market-report-bluesquare
-        [numberFocus]="stats.nbAnswers"
-        [percentage]="stats.percentage"
-        [subtitle]="question.subtitle | multiling:lang">
-      </market-report-bluesquare>
-    </div>
-
-  </ng-container>
-
   <!-- Conclusion -->
-  <div class="umi-synthesis">
+  <div class="umi-synthesis section-light-container">
 
-    <!--<h4>{{ question.label | multiling:lang }}</h4>-->
-
-    <text-zone
+    <app-text-zone
       [elementId]="domSectionId"
       [readonly]="readonly"
       [data]="innovation?.marketReport[question.identifier]?.conclusion"
       (onEditorKeyup)="keyupHandlerFunction($event)">
-    </text-zone>
+    </app-text-zone>
+
+    <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
 
   </div>
   <!-- /Conclusion -->
+
+  <div class="divider-wrapper"></div>
+
+  <ng-container [ngSwitch]="question.controlType">
+
+    <!-- Pie chart -->
+    <div *ngSwitchCase="'radio'" class="stat-wrapper section-light-container">
+      <piechart [pieChart]="pieChart"></piechart>
+    </div>
+
+    <!-- ou encadré bleu -->
+    <div *ngSwitchDefault class="stat-wrapper section-light-container">
+      <app-market-report-bluesquare
+        [numberFocus]="stats.nbAnswers"
+        [percentage]="stats.percentage"
+        [subtitle]="question.subtitle | multiling:lang">
+      </app-market-report-bluesquare>
+    </div>
+
+  </ng-container>
 
 </div>

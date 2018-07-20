@@ -1,18 +1,18 @@
-/**
- * Created by juandavidcruzgomez on 11/09/2017.
- */
 import { Component, OnDestroy, AfterViewInit, EventEmitter, Input, Output, OnInit } from '@angular/core';
 
 declare const tinymce: any;
 
 @Component({
-  selector: 'text-zone',
+  selector: 'app-text-zone',
   templateUrl: 'shared-text-zone.component.html',
   styleUrls: ['shared-text-zone.component.scss']
 })
 
 export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit {
+
   @Input() readonly: boolean;
+  @Input() elementId: String;
+
   @Input() set data(value: string) {
     this._data = value;
     if (this.editor) {
@@ -20,7 +20,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
       this.contentHash();
     }
   }
-  @Input() elementId: String;
+
   @Output() onEditorKeyup = new EventEmitter<any>();
 
   private _contentHash: number;
@@ -89,7 +89,12 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
     }
   }
 
-  public get htmlId(): string { return this._htmlId; }
-  public get text(): string { return this._data; }
+  public get htmlId(): string {
+    return this._htmlId;
+  }
+
+  public get text(): string {
+    return this._data;
+  }
 
 }

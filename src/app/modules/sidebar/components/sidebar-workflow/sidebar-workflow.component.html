@@ -19,10 +19,10 @@
   </div>
   <div class="card-body">
     <h4 *ngIf="editionMode">Contenu</h4>
-    <text-zone [elementId]="email.language + email.step + email.profile"
-               [readonly]="!editionMode"
-               [data]="email.content || ''"
-               (onEditorKeyup)="updateContent($event)"></text-zone>
+    <app-text-zone [elementId]="email.language + email.step + email.profile"
+                   [readonly]="!editionMode"
+                   [data]="email.content || ''"
+                   (onEditorKeyup)="updateContent($event)"></app-text-zone>
     <button *ngIf="editionMode" type="submit" class="btn btn-primary centered" (click)="save()">Sauvegarder</button>
     <p *ngIf="editionMode">Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*, *|DOMAIN|*</p>
   </div>

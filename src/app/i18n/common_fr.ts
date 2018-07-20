@@ -142,6 +142,7 @@ export const COMMON = {
     'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
     'DELETE': 'Supprimer le(s) professionnel(s)',
   },
+
   'HOME': 'Accueil',
   'ADMIN': 'Admin',
   'MY_PROJECT': 'Mon projet',
@@ -158,6 +159,7 @@ export const COMMON = {
   'EDIT_USER': 'Modifier l\'utilisateur',
   'EDIT_PROFESSIONAL': 'Modifier Professionnel',
   'EDIT_INSIGHT': 'Modifier l\'aperçu',
+  'UMI_WORD': 'Le mot d’UMI',
 
   'SORT': {
     'BY_NAME': 'Nom',
