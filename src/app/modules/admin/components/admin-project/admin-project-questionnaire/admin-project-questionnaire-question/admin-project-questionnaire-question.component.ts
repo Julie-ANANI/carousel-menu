@@ -45,8 +45,12 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
   }
 
   public addOption() {
+    let id = 0;
+    if (this.question && this.question.options && this.question.options.length) {
+      id = this.question.options.length;
+    }
     const opt = {
-      identifier: this.question.options.length.toString(),
+      identifier: id.toString(),
       label: {
         en: this.formQuestion.value.labelEN,
         fr: this.formQuestion.value.labelFR
