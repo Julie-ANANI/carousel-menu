@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Question} from '../../../../../../models/question';
+ // import {Question} from '../../../../../../models/question';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -9,10 +9,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
 
-  @Input() question: Question;
-
+  @Input() question: any;
+  @Input() creationmode: boolean;
   @Output() questionChange = new EventEmitter<any>();
-
   public isCollapsed = true;
   public formData: FormGroup;
   public formQuestion: FormGroup;
@@ -23,6 +22,8 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.creationmode) {
+    }
     this.formData = this._formBuilder.group({
       controlType: [this.question.controlType]
     });

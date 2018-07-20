@@ -8,7 +8,7 @@ export interface Option {
 }
 
 export interface Question {
-  _id: string;
+  _id?: string;
   readonly label: Multiling;
   readonly title: Multiling;
   readonly subtitle: Multiling;

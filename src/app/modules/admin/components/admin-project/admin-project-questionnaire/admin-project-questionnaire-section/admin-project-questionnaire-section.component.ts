@@ -1,6 +1,8 @@
 ///<reference path="../../../../../../../../node_modules/@angular/forms/src/form_builder.d.ts"/>
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {Question} from '../../../../../../models/question';
+// import {Multiling} from '../../../../../../models/multiling';
 // import {Section} from '../../../../../../models/section';
 
 
@@ -16,7 +18,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   }
   @Output() sectionUpdated = new EventEmitter<any>();
 
-
+  private _newQuestion: Question;
   private _section: any;
   public formData: FormGroup;
   public isCollapsed = true;
@@ -37,6 +39,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
       }
       k++;
     }
+    return k;
   }
 
   public updateDescription(event: any) {
@@ -50,6 +53,23 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   }
 
   public addQuestion() {
+    this._newQuestion = {
+      label: {
+        en: 'ezfe',
+        fr: 'zefzfez'
+      },
+      title: {
+        en: 'dqsdq',
+        fr: 'fezfzefz'
+      },
+      subtitle: {
+        en: 'fezfze',
+        fr: 'dezdzed'
+      },
+      identifier: this._section.length,
+      controlType: 'checkbox',
+      canComment: true,
+    };
     this.modalQuestionBuild = true;
   }
 
@@ -59,5 +79,9 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
 
   get section() {
     return this._section;
+  }
+
+  get newQuestion() {
+    return this._newQuestion;
   }
 }
