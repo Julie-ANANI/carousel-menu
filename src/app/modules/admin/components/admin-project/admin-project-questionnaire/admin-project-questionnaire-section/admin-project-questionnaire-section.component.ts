@@ -17,6 +17,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
     this._section = sec;
   }
   @Output() sectionUpdated = new EventEmitter<any>();
+  @Output() sectionRemoved = new EventEmitter<any>();
 
   private _newQuestion: Question;
   private _section: any;
@@ -44,6 +45,10 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   public updateDescription(event: any) {
     this._section.description = event;
     this._emit();
+  }
+
+  public removeSection() {
+    this.sectionRemoved.emit(this._section);
   }
 
   public updateQuestion(event: any) {

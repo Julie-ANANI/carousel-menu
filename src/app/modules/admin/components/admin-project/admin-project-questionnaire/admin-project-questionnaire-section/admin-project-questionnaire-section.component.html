@@ -13,6 +13,12 @@
           aria-controls = "collapseMails">
     <h3>{{section.name}}</h3>
   </button>
+
+  <button type="button" class="btn-danger" (click)="removeSection()">
+    <i class="fas fa-trash">
+    </i>
+  </button>
+
 </div>
 
 <div *ngIf="!isCollapsed">

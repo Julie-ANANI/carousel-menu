@@ -6,6 +6,7 @@
     <app-admin-project-questionnaire-section
       [section]="section"
       (sectionUpdated)="sectionUpdated($event)"
+      (sectionRemoved)="sectionRemoved($event)"
     >
     </app-admin-project-questionnaire-section>
     <div *ngIf="(i + 1)==sections.length">

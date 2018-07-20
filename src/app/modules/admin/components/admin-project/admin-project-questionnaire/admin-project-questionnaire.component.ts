@@ -43,6 +43,13 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     });
   }
 
+  public sectionRemoved(event: any) {
+    this._project.preset.sections.splice(this.indexSection(event), 1);
+    this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
+      this._project = result;
+    });
+  }
+
   get sections() {
     return this._sections;
   }
