@@ -37,9 +37,11 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   public sectionUpdated(event: any) {
     this._project.preset.sections[this.indexSection(event)] = event;
+    console.log('UPDATE:');
     console.log(this._project.preset);
     this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
       this._project = result;
+      this._sections = this._project.preset.sections;
     });
   }
 
@@ -52,10 +54,15 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     }
     this._project.preset.sections.push({
       name: name,
-      questions: []
+      questions: [],
+      label: {
+        en: name,
+        fr: name
+      }
     });
     this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
       this._project = result;
+      this._sections = this._project.preset.sections;
     });
   }
 
@@ -63,6 +70,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     this._project.preset.sections.splice(this.indexSection(event), 1);
     this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
       this._project = result;
+      this._sections = this._project.preset.sections;
     });
   }
 

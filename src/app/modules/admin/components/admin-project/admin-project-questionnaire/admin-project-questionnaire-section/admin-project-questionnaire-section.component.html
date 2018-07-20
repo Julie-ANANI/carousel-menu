@@ -10,14 +10,22 @@
           class="btn btn-outline-primary"
           (click)="isCollapsed = !isCollapsed"
           [attr.aria-expanded]="!isCollapsed"
-          aria-controls = "collapseMails">
-    <h3>{{section.name}}</h3>
+          aria-controls = "collapseMails"
+          *ngIf="!editName"
+  >
+    <h3>{{section.label.en}}</h3>
   </button>
+  <input type="text" *ngIf="editName" [(ngModel)]="section.label.en" (keyup.enter)="update()"/>
+  <input type="text" *ngIf="editName" [(ngModel)]="section.label.fr" (keyup.enter)="update()"/>
 
   <button type="button" class="btn-danger" (click)="removeSection()">
     <i class="fas fa-trash">
     </i>
   </button>
+  <button type="button" class="btn-action" (click)="editName = !editName">
+  <i class="fas fa-pencil-alt">
+  </i>
+</button>
 
 </div>
 

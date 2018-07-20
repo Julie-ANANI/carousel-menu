@@ -19,6 +19,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   @Output() sectionUpdated = new EventEmitter<any>();
   @Output() sectionRemoved = new EventEmitter<any>();
 
+  public editName = false;
   private _newQuestion: Question;
   private _section: any;
   public formData: FormGroup;
@@ -58,6 +59,11 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
 
   public removeQuestion(quest: any) {
     this._section.questions.splice(this._findQuestionIndex(quest), 1);
+    this._emit();
+  }
+
+  public update() {
+    console.log(this._section);
     this._emit();
   }
 
