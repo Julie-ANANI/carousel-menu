@@ -84,7 +84,7 @@
             <!-- Comment -->
             <div class="comment-wrapper">
               <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMMENTS' | translate }}</h2>
-              <p></p>
+              <div [innerHtml]="project.comments"></div>
               <div>
                 <span [ngStyle]="{ 'color': '#333333' }">{{ 'PROJECT_MODULE.EXPLORATION.ACCOUNT_MANAGER' | translate }}</span> {{ project.owner.name }}
               </div>
