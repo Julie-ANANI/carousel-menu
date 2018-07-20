@@ -53,6 +53,14 @@ sqFilterMulti {
     span {
       font-size: 0.7rem;
     }
+
+    .label-editing,
+    .label-progress,
+    .label-validate,
+    .label-alert,
+    .label-draft {
+      font-size: 0.6rem;
+    }
   }
 
   i.icon.icon-cross {

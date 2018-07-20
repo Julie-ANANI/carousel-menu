@@ -10,7 +10,7 @@ export const COMMON = {
   'SIGN_UP': 'Sign up',
   'LOG_OUT': 'Logout',
   'CANCEL': 'Cancel',
-  'MORE': 'See more',
+  'MORE': 'Show',
   'OF': 'of',
   'ADD': 'Add',
   'ALL': 'All',
