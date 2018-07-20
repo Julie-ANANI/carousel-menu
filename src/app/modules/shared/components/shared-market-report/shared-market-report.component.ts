@@ -95,8 +95,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const wrapper = document
-      .getElementById('answer-wrapper');
+    const wrapper = document.getElementById('answer-wrapper');
+
     if (wrapper) {
       const sections = Array.from(
         wrapper.querySelectorAll('section')
@@ -107,6 +107,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
         this.activeSection = section ? section.id : '';
       };
     }
+
   }
 
   @HostListener('window:scroll', [])
@@ -120,8 +121,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
 
   private loadAnswers() {
-    this.answerService.getInnovationValidAnswers(this._innoid).first()
-      .subscribe((results) => {
+    this.answerService.getInnovationValidAnswers(this._innoid).first().subscribe((results) => {
         this._answers = results.answers.sort((a, b) => {
             return b.profileQuality - a.profileQuality;
           });
@@ -144,6 +144,9 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       }, (error) => {
         this.translateNotificationsService.error('ERROR.ERROR', error.message);
       });
+
+
+
   }
 
   public changeStatus(event: Event, status: 'EVALUATING' | 'DONE'): void {

@@ -103,7 +103,9 @@ export class ExplorationProjectComponent implements OnInit {
       }, (error) => {
         this.notificationService.error('ERROR.ERROR', error.message);
       });
+
     this._questions = [];
+
     if (this.project.preset && Array.isArray(this.project.preset.sections)) {
       this.project.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions || []);
