@@ -35,19 +35,13 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     }
   }
 
-
-
-
   public sectionUpdated(event: any) {
     this._project.preset.sections[this.indexSection(event)] = event;
     console.log(this._project.preset);
     this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
       this._project = result;
-      console.log("j'ai update tranquillou");
     });
   }
-
-
 
   get sections() {
     return this._sections;

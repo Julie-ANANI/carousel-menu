@@ -20,6 +20,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   private _section: any;
   public formData: FormGroup;
   public isCollapsed = true;
+  public modalQuestionBuild = false;
   constructor( private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
@@ -46,6 +47,10 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   public updateQuestion(event: any) {
     this._section.questions[this._findQuestionIndex(event)] = event;
     this._emit();
+  }
+
+  public addQuestion() {
+    this.modalQuestionBuild = true;
   }
 
   private _emit() {
