@@ -3,7 +3,7 @@
     <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit()">
 
       <!-- Save only -->
-      <div class="text-right submit-wrapper" *ngIf="isBlacklist || isExcludeEmails || isExcludeDomains || isExcludeCountries">
+      <div class="text-right submit-wrapper" *ngIf="isBlacklist || isExcludeEmails || isFilterCountry">
         <button type="submit" class="btn btn-primary">
           {{'COMMON.SAVE' | translate}}
         </button>
@@ -45,30 +45,40 @@
       <div class="form-group" *ngIf="isExcludeEmails">
         <label class="form-label">{{ 'COMMON.EXCLUDE-EMAILS' | translate }}</label>
         <div class="input-group">
-          <app-input-list [isEmail]="true" (update)="addEmail($event)" [config]="{initialData: formData.get('email').value}">
+          <app-input-list [isEmail]="true" (update)="addEmail($event)" [config]="{initialData: formData.get('email').value, placeholder: 'john@catco.com'}">
           </app-input-list>
         </div>
       </div>
 
       <!-- Add domains -->
-      <div class="form-group" *ngIf="isExcludeDomains">
+      <div class="form-group" *ngIf="isExcludeEmails">
         <label class="form-label">{{ 'COMMON.EXCLUDE-DOMAINS' | translate }}</label>
         <div class="input-group">
-          <app-input-list (update)="addDomain($event)" [config]="{initialData: formData.get('domain').value}">
+          <app-input-list [isDomain]="true" (update)="addDomain($event)" [config]="{initialData: formData.get('domain').value, placeholder: '*@catco.com'}">
           </app-input-list>
         </div>
       </div>
 
-      <!-- Add countries -->
-      <div class="form-group" *ngIf="isExcludeCountries">
-        <label class="form-label">{{ 'COMMON.EXCLUDE-COUNTRIES' | translate }}</label>
-        <div class="input-group">
-          <app-input-list [isEmail]="true" (update)="addEmail($event)" [config]="{initialData: formData.get('email').value}">
-          </app-input-list>
-        </div>
-      </div>
-
+      <!-- Show all professionnals related to a campaign -->
       <app-shared-table [data]="tableInfos" *ngIf="isShowCampaignInfos"></app-shared-table>
+
+      <!-- Create new filter on a country -->
+      <app-autocomplete-input
+        *ngIf="isFilterCountry"
+        (update)="updateCountry($event)"
+        [onlyOne]="true"
+        [config]="{ placeholder: 'COMMON.COUNTRY_PLACEHOLDER', type: 'countries' }">
+      </app-autocomplete-input>
+
+      <!-- If a country is selected we show the settings -->
+      <div class="form-group country-wrapper" *ngIf="country !== null" style="margin-top: 50px">
+        <label class="form-label" for="accept">{{'COMMON.BLACKLIST.ACCEPTATION' | translate}}
+          <span>{{formData.get('accept').value}}</span>
+        </label>
+        <div class="input-group">
+          <input type="range" id="accept" formControlName="accept" class="accept" name="accept" min="0" max="100" />
+        </div>
+      </div>
 
     </form>
   </div>

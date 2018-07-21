@@ -1,26 +1,19 @@
 <div class="main-container" id="admin-emails">
-  <div class="columns">
-    <div class="column col-12 col-mx-auto">
 
-      <div class="hero-light-container">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          Emails
-        </div>
-      </div>
+  <h1>Emails</h1>
 
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <ul class="tabs">
-          <li><a [routerLink]="'/admin/emails/queue'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            File d'attente
-          </a></li>
-          <li><a [routerLink]="'/admin/emails/blacklist'" routerLinkActive="active">
-            Blacklist
-          </a></li>
-        </ul>
-      </div>
+  <ul class="tabs">
+    <li><a [routerLink]="'/admin/emails/queue'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      File d'attente
+    </a></li>
+    <li><a [routerLink]="'/admin/emails/blacklist'" routerLinkActive="active">
+      Blacklist
+    </a></li>
+    <li><a [routerLink]="'/admin/emails/countries'" routerLinkActive="active">
+      Countries management
+    </a></li>
+  </ul>
 
-      <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 
-    </div>
-  </div>
 </div>

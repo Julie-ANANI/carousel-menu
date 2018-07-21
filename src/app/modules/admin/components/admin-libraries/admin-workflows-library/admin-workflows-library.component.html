@@ -1,7 +1,6 @@
 <div class="section-container">
   <div class="columns">
     <div class="column col-12 col-mx-auto">
-      <h3>Scénario de mails</h3>
 
       <div class="empty" *ngIf="!scenarios.length">
         <div class="empty-action">
@@ -11,9 +10,11 @@
         </div>
       </div>
 
-      <button (click)="newScenarioName = 'scenario'" class="btn btn-primary" *ngIf="scenarios.length">
-        Créer un nouveau scénario <i class="icon icon-arrow-right"></i>
-      </button>
+      <div class="text-right">
+        <button (click)="newScenarioName = 'scenario'" class="btn btn-primary" *ngIf="scenarios.length">
+          Créer un scénario
+        </button>
+      </div>
 
       <div *ngFor="let scenario of scenarios">
         <app-admin-edit-workflow [scenario]="scenario" (deletedScenario)="deleteScenario($event)"></app-admin-edit-workflow>
@@ -25,7 +26,7 @@
     <div class="modal-overlay" (click)="(newScenarioName = null) && $event.preventDefault()"></div>
     <div class="modal-container">
       <div class="modal-header">
-        <div class="modal-title h5">Créer un nouveau scénario</div>
+        <div class="modal-title h5">Créer un scénario</div>
       </div>
       <div class="modal-body">
         <div class="content">

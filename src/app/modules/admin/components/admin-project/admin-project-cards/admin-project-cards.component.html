@@ -2,6 +2,18 @@
   <div class="columns">
     <div class="column col-12 col-mx-auto">
 
+      <div class="columns operator-comment">
+        <div class="column col-8 centered">
+          <h6>Commentaire pour le client :</h6>
+          <text-zone
+            [elementId]="'comments'"
+            [readonly]="false"
+            [data]="project?.comments"
+            (onEditorKeyup)="commentKeyupHandlerFunction($event)">
+          </text-zone>
+        </div>
+      </div>
+
       <div class="button-sticky">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="func-button">

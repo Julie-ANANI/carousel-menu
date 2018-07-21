@@ -6,13 +6,13 @@ import { AdminPresetModule } from './components/admin-preset/admin-preset.module
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
 import { AdminUsersModule } from './components/admin-users/admin-users.module';
 import { AdminProfessionalsModule } from './components/admin-professionals/admin-professionals.module';
-import { AdminEmailBlacklistModule } from './components/admin-email-blacklist/admin-email-blacklist.module';
 import { AdminEmailsModule } from './components/admin-emails/admin-emails.module';
 import { AdminTagModule } from './components/admin-tags/admin-tag.module';
 import { AdminProjectModule } from './components/admin-project/admin-project.module';
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
-import { AdminLibrariesModule } from "./components/admin-libraries/admin-libraries.module";
+import { AdminLibrariesModule } from './components/admin-libraries/admin-libraries.module';
+import { AdminCountryManagementModule } from './components/admin-country-management/admin-country-management.module';
 
 // Components
 import { PipeModule } from '../../pipe/pipe.module';
@@ -38,7 +38,6 @@ import { RouterModule } from '@angular/router';
     AdminUsersModule,
     AdminProjectsModule,
     AdminProfessionalsModule,
-    AdminEmailBlacklistModule,
     AdminLibrariesModule,
     AdminTagModule,
     AdminCampaignsModule,
@@ -48,6 +47,7 @@ import { RouterModule } from '@angular/router';
     PipeModule,
     BaseModule,
     InputModule,
+    AdminCountryManagementModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule

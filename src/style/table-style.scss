@@ -53,6 +53,14 @@ sqFilterMulti {
     span {
       font-size: 0.7rem;
     }
+
+    .label-editing,
+    .label-progress,
+    .label-validate,
+    .label-alert,
+    .label-draft {
+      font-size: 0.6rem;
+    }
   }
 
   i.icon.icon-cross {
@@ -67,6 +75,9 @@ sqFilterMulti {
     position: absolute;
     opacity: 0;
     cursor: pointer;
+    width: 30px;
+    height: 30px;
+    z-index: 10;
   }
 
   input ~ .square-check{

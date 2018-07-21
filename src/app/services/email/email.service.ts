@@ -43,15 +43,6 @@ export class EmailService {
           .catch((error: Response) => Observable.throw(error.json()));
   }
 
-  public getOneBlacklist(id: string): Observable<any> {
-      return this._http.get('/mail/blacklist/' + id)
-          .map((res: Response) => {
-              const response = res.json();
-              return response;
-          })
-          .catch((error: Response) => Observable.throw(error.json()));
-  }
-
   public addToBlacklist(config: any): Observable<any> {
       return this._http.post('/mail/blacklist', config)
           .map((res: Response) => {
@@ -62,12 +53,30 @@ export class EmailService {
   }
 
   public updateBlacklistEntry(entryId: string, data: any): Observable<any> {
-      return this._http.put('/mail/blacklist/'+entryId, data)
+      return this._http.put('/mail/blacklist/' + entryId, data)
           .map((res: Response) => {
               const response = res.json();
               return response;
           })
           .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+  public getCountries(config: any): Observable<any> {
+    return this._http.get('/mail/filteredCountries', {params: config})
+      .map((res: Response) => {
+        const response = res.json();
+        return response;
+      })
+      .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+  public addCountry(config: any): Observable<any> {
+    return this._http.post('/mail/filteredCountries', config)
+      .map((res: Response) => {
+        const response = res.json();
+        return response;
+      })
+      .catch((error: Response) => Observable.throw(error.json()));
   }
 
   public getRawMessages(config: any): Observable<any> {
