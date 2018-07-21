@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 import { Question } from '../../../../../../../models/question';
@@ -13,23 +13,24 @@ import { Tag } from '../../../../../../../models/tag';
   styleUrls: ['answer-question.component.scss']
 })
 
-export class AnswerQuestionComponent implements OnInit {
+export class AnswerQuestionComponent {
 
   @Input() innoid: string;
   @Input() question: Question;
-  @Input() fullAnswer: Answer;
   @Input() editMode: boolean;
   @Input() adminMode: boolean;
 
+  @Input() set fullAnswer(value: Answer) {
+    this._fullAnswer = value;
+    this._commenting = !!(this.fullAnswer.answers && this.fullAnswer.answers[this.question.identifier + 'Comment'])
+  }
+
   _commenting: boolean;
+  _fullAnswer: Answer;
 
   constructor(private _translateService: TranslateService,
               private _notificationsService: TranslateNotificationsService,
               private _answerService: AnswerService) { }
-
-  ngOnInit() {
-    this._commenting = !!(this.fullAnswer.answers && this.fullAnswer.answers[this.question.identifier + 'Comment']);
-  }
 
   updateQuality(object: {key: string, value: 0 | 1 | 2}) {
     this.fullAnswer.answers[object.key + 'Quality'] = object.value;
@@ -64,17 +65,6 @@ export class AnswerQuestionComponent implements OnInit {
     this.fullAnswer.answers[this.question.identifier] = event.value;
   }
 
-  addComment(event: Event) {
-    event.preventDefault();
-    this._commenting = true;
-    this.fullAnswer.answers[this.question.identifier + 'Comment'] = '';
-  }
-
-  deleteComment(event: Event) {
-    event.preventDefault();
-    delete this.fullAnswer.answers[this.question.identifier + 'Comment'];
-  }
-
   public addTag(tag: Tag, q_identifier: string): void {
     this._answerService
       .addTag(this.fullAnswer._id, tag._id, q_identifier)
@@ -107,8 +97,14 @@ export class AnswerQuestionComponent implements OnInit {
     return this._translateService.currentLang || this._translateService.getBrowserLang() || 'en';
   }
 
+  get fullAnswer() { return this._fullAnswer; }
+
   get commenting() {
     return this._commenting;
+  }
+
+  set commenting(val: boolean) {
+    this._commenting = val;
   }
 
 }
