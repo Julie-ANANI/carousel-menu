@@ -37,7 +37,6 @@ const clientRoutes: Routes = [
       },
       {
         path: 'welcome',
-        canActivate: [AuthGuard],
         children: [
           { path: '', component: ClientWelcomeComponent, pathMatch: 'full' }
         ]
