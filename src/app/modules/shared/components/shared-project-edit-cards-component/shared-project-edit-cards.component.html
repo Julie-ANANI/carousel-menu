@@ -61,14 +61,14 @@
                     </span>
 
                     <div *ngIf="!projectStatus" class="pd-input">
-                      <p>{{project.innovationCards[i].title}}</p>
+                      <p>{{innovationCards.title}}</p>
                     </div>
 
                     <div *ngIf="projectStatus" class="form-group pd-input">
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
                         class="btn ghot-primary"
-                        [ngClass]="{'disabled': project.innovationCards[i].title}"
+                        [ngClass]="{'disabled': innovationCards.title}"
                         (click)="importTranslation($event, 'title')">
                         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
                       </button>
@@ -78,7 +78,7 @@
                         class="form-default"
                         name="title"
                         #title="ngModel"
-                        [(ngModel)]="project.innovationCards[i].title"
+                        [(ngModel)]="innovationCards.title"
                         [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
                         (ngModelChange)="notifyModelChanges($event)"
                         required
@@ -98,27 +98,31 @@
                     </span>
 
                     <div *ngIf="!projectStatus" class="pd-input">
-                      <p>{{project.innovationCards[i].summary}}</p>
+                      <p>{{innovationCards.summary}}</p>
                     </div>
 
                     <div *ngIf="projectStatus" class="form-group pd-input">
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
                         class="btn ghot-primary"
-                        [ngClass]="{'disabled': project.innovationCards[i].summary}"
+                        [ngClass]="{'disabled': innovationCards.summary}"
                         (click)="importTranslation($event, 'summary')">
                         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
                       </button>
-                    <textarea
-                      [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
-                      class="form-default editable"
-                      id="summary"
-                      [ngClass]="{'borderRed': showSummaryError}"
-                      (keyup)="showSummaryError = false">
-                    </textarea>
+                      <text-zone
+                        [readonly]="!canEdit"
+                        [data]="innovationCards.summary"
+                        [elementId]="'summary'"
+                        [ngClass]="{'borderRed': showSummaryError}"
+                        (onTextChange)="updateData($event)"
+                      >
+                      </text-zone>
+                      <!-- todo: add placeholders
+                        [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
+                      -->
                       <div class="charRemaining">
-                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].summary.length | characterCountdown:500)}">
-                        {{ project.innovationCards[i].summary.length | characterCountdown:500 }}</span>
+                      <span [ngStyle]="{'color': getColor(innovationCards.summary.length | characterCountdown:500)}">
+                        {{ innovationCards.summary.length | characterCountdown:500 }}</span>
                       </div>
                       <div class="form-error" *ngIf="showSummaryError">
                         <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.ERROR' | translate }}</span>
@@ -134,27 +138,31 @@
                     </span>
 
                     <div *ngIf="!projectStatus" class="pd-input">
-                      <p>{{project.innovationCards[i].problem}}</p>
+                      <p>{{innovationCards.problem}}</p>
                     </div>
 
                     <div *ngIf="projectStatus" class="form-group pd-input">
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
                         class="btn ghot-primary"
-                        [ngClass]="{'disabled': project.innovationCards[i].problem}"
+                        [ngClass]="{'disabled': innovationCards.problem}"
                         (click)="importTranslation($event, 'problem')">
                         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
                       </button>
-                    <textarea
-                      [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
-                      id="problem"
-                      class="form-default editable"
-                      [ngClass]="{'borderRed': showProblemError}"
-                      (keyup)="showProblemError = false">
-                    </textarea>
+                      <text-zone
+                        [readonly]="!canEdit"
+                        [data]="innovationCards.problem"
+                        [elementId]="'problem'"
+                        [ngClass]="{'borderRed': showProblemError}"
+                        (onTextChange)="updateData($event)"
+                      >
+                      </text-zone>
+                      <!-- todo: add placeholders
+                        [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
+                      -->
                       <div class="charRemaining">
-                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].problem.length | characterCountdown:1000)}">
-                        {{ project.innovationCards[i].problem.length | characterCountdown:1000 }}
+                      <span [ngStyle]="{'color': getColor(innovationCards.problem.length | characterCountdown:1000)}">
+                        {{ innovationCards.problem.length | characterCountdown:1000 }}
                       </span>
                       </div>
                       <div class="form-error" *ngIf="showProblemError">
@@ -171,31 +179,30 @@
                     </span>
 
                     <div *ngIf="!projectStatus" class="pd-input">
-                      <p>{{ project.innovationCards[i].solution }}</p>
+                      <p>{{ innovationCards.solution }}</p>
                     </div>
 
                     <div *ngIf="projectStatus" class="form-group pd-input">
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
                         class="btn ghot-primary"
-                        [ngClass]="{'disabled': project.innovationCards[i].solution}"
+                        [ngClass]="{'disabled': innovationCards.solution}"
                         (click)="importTranslation($event, 'solution')">
                         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
                       </button>
                       <text-zone
                         [readonly]="!canEdit"
-                        [data]="project.innovationCards[i].solution"
+                        [data]="innovationCards.solution"
                         [elementId]="'solution'"
                         [ngClass]="{'borderRed': showSolutionError}"
                         (onTextChange)="updateData($event)"
                       >
-                        <!-- [placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
-                              [ngClass]="{'borderRed': showSolutionError}"
-                              (keyup)="showSolutionError = false"
-                              -->
                       </text-zone>
+                      <!-- todo: add placeholders
+                        [placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
+                       -->
                       <div class="charRemaining">
-                      <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:1000)}">
+                      <span [ngStyle]="{'color': getColor(innovationCards.solution.length | characterCountdown:1000)}">
                         {{ project.innovationCards[i].solution.length | characterCountdown:1000 }}
                       </span>
                       </div>
@@ -213,7 +220,7 @@
                     </span>
 
                     <div *ngIf="!projectStatus" class="pd-input">
-                      <div *ngFor="let advantage of project.innovationCards[i].advantages; let i = index;" class="answer-wrapper adv-padding">
+                      <div *ngFor="let advantage of innovationCards.advantages; let i = index;" class="answer-wrapper adv-padding">
                         {{ advantage.text }}
                       </div>
                     </div>
@@ -222,7 +229,7 @@
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
                         class="btn ghot-primary"
-                        [ngClass]="{'disabled': project.innovationCards[i].advantages?.length}"
+                        [ngClass]="{'disabled': innovationCards.advantages?.length}"
                         (click)="importTranslation($event, 'advantages')">
                         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
                       </button>

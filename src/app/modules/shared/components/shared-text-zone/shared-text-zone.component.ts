@@ -49,7 +49,6 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
       skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json (apps > assets) : on importe les fichiers depuis le module (node_modules) "tinymce"
       setup: (editor: any) => {
         this.editor = editor;
-        editor.setContent(this._data);
         this._contentHash = this.hashString(this._data);
         editor.on('Blur', () => {
           const actualHash = this._contentHash;
@@ -61,6 +60,9 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
         });
       },
     });
+    if (this._data && this.editor) {
+      this.editor.setContent(this._data);
+    }
   }
 
   ngOnDestroy() {

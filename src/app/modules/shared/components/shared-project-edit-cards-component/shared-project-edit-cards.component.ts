@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,7 +23,7 @@ declare const tinymce: any;
   styleUrls: ['shared-project-edit-cards.component.scss']
 })
 
-export class SharedProjectEditCardsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Input() project: Innovation;
   @Input() canEdit = true;
@@ -74,27 +74,6 @@ export class SharedProjectEditCardsComponent implements OnInit, AfterViewInit, O
         }
       });
     }
-  }
-
-  ngAfterViewInit() {
-    /*
-    tinymce.init({
-      selector: 'textarea.editable',
-      plugins: ['link', 'paste', 'table'],
-      default_link_target: '_blank',
-      statusbar: false,
-      menubar: false,
-      skin_url: '/assets/skins/lightgray',
-      setup: (editor: any) => {
-        console.log(editor.id);
-        editor.setContent(this.project.innovationCards[this.innovationCardEditingIndex][editor.id]);
-        this._editors.push(editor);
-        editor.on('Blur', () => {
-          const content = editor.getContent();
-          console.log(content)
-        });
-      },
-    });*/
   }
 
   notifyModelChanges(_event?: any) {
@@ -175,7 +154,6 @@ export class SharedProjectEditCardsComponent implements OnInit, AfterViewInit, O
   }
 
   updateData(event: {id: string, content: string}) {
-    console.log(event.content);
     this.project.innovationCards[this.innovationCardEditingIndex][event.id] = event.content;
     this.notifyModelChanges();
   }
