@@ -49,9 +49,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     }
   }
 
-  public updateState(event: any,index: number) {
+  public updateState(event: any, index: number) {
     this._state[index] = event;
   }
+
   public sectionUpdated(event: any) {
     this._project.preset.sections[this.indexSection(event)] = event;
     console.log('UPDATE:');

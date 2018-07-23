@@ -25,7 +25,13 @@ export class AdminPresetsListComponent implements OnInit {
     }
   };
 
-  private _newPreset: any;
+  private _newPreset: any = {
+    name: '',
+    sections: []
+  };
+  public nameCreated = false;
+  private _state: Array<any> = [];
+
 
   constructor(private _presetService: PresetService,
               private _router: Router) {}
@@ -74,32 +80,94 @@ export class AdminPresetsListComponent implements OnInit {
     });
   }
 
-  public goToEditionMode(){
+
+
+
+
+
+
+
+
+
+  public goToEditionMode() {
     this.editionMode = !this.editionMode;
-    this._newPreset = {
-      name: '',
-      sections: []
-    }
   }
 
-  public goToListMode(){
+  public goToListMode() {
     this.editionMode = !this.editionMode;
   }
 
-  public nameOK() {
-    return this._newPreset.name !== '';
-  }
-
-  public savePreset() {
-    console.log(this._newPreset);
+  public createPreset(event: any) {
+    this.nameCreated = true;
     this._presetService.create(this._newPreset).first().subscribe(preset => {
       this._newPreset = preset;
     })
   }
 
+  public indexSection(sec: any) {
+    let k = 0;
+    for (const section of this._newPreset.sections) {
+      if (section.name === sec.name) {
+        return k;
+      }
+      k++;
+    }
+  }
+
+  public sectionUpdated(event: any) {
+    this._newPreset.sections[this.indexSection(event)] = event;
+    console.log('UPDATE:');
+    console.log(this._newPreset);
+    this._presetService.save(this._newPreset._id, this._newPreset).first().subscribe(pres => {
+      this._newPreset = pres;
+    })
+  }
+
+  public updateState(event: any, index: number) {
+    this._state[index] = event;
+  }
+
+  public sectionRemoved(event: any) {
+    this._newPreset.sections.splice(this.indexSection(event), 1);
+    this._presetService.save(this._newPreset._id, this._newPreset).first().subscribe( result => {
+      this._newPreset = result;
+    });
+  }
+
+  public getState(index: number) {
+    return this._state[index];
+  }
+
   get newPreset(): any {
     return this._newPreset;
   }
+
+
+  public addSection() {
+    let name;
+    if (this._newPreset && this._newPreset.sections) {
+      name = 'Section' + this._newPreset.sections.length;
+    } else {
+      name = 'Section';
+    }
+    this._newPreset.sections.push({
+      name: name,
+      questions: [],
+      label: {
+        en: name,
+        fr: name
+      }
+    });
+    this._state.push({
+      sec: false,
+      quest: []
+    });
+    this._presetService.save(this._newPreset._id, this._newPreset).first().subscribe( result => {
+      this._newPreset = result;
+    });
+  }
+
+
 
   set config(value: any) { this._config = value; }
   get config(): any { return this._config; }

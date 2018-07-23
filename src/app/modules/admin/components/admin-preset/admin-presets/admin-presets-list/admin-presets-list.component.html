@@ -10,10 +10,10 @@
     </span>
     </button>
   </div>
-    <div *ngIf="!nameOK()">
-      <input type="text" [ngModel]="newPreset.name" (keyup.enter)="savePreset()">
+    <div *ngIf="!nameCreated">
+      <input type="text" [(ngModel)]="newPreset.name" (keyup.enter)="createPreset($event)">
     </div>
-    <div *ngIf="nameOK()">
+    <div *ngIf="nameCreated">
       <div class="heading">
         <h2>{{newPreset.name}}</h2>
       </div>
