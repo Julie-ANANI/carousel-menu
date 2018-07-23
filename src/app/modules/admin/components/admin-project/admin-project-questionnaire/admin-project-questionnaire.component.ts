@@ -118,6 +118,11 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
         const tempState = JSON.parse(JSON.stringify(this._state[index]));
         this._state[index] = JSON.parse(JSON.stringify(this._state[index + 1]));
         this._state[index + 1] = tempState;
+        this._project.preset.sections = this._sections;
+        this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
+          this._project = result;
+          this._sections = this._project.preset.sections;
+        });
       }
     }
     if (event === 'up') {
@@ -130,13 +135,14 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
         const tempState = JSON.parse(JSON.stringify(this._state[index]));
         this._state[index] = JSON.parse(JSON.stringify(this._state[index - 1]));
         this._state[index - 1] = tempState;
+        this._project.preset.sections = this._sections;
+        this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
+          this._project = result;
+          this._sections = this._project.preset.sections;
+        });
       }
     }
-    this._project.preset.sections = this._sections;
-    this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
-      this._project = result;
-      this._sections = this._project.preset.sections;
-    });
+
   }
 
 }
