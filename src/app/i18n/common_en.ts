@@ -156,6 +156,7 @@ export const COMMON = {
   'EDIT_USER': 'Edit User',
   'EDIT_PROFESSIONAL': 'Edit Professional',
   'EDIT_INSIGHT': 'Edit Insight',
+  'EDIT-COUNTRY': 'Edit country\'s filter',
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
   'CLIENT_SIDE': 'Client',

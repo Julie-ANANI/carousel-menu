@@ -3,13 +3,42 @@
     <button class="btn btn-primary" (click)="filterCountry()">{{'COMMON.EXCLUDE-COUNTRIES' | translate}}</button>
   </div>
 
-  <app-shared-table [data]="countriesTable" [config]="config" (configChange)="loadCountries($event)"></app-shared-table>
+  <app-shared-table [data]="countriesTable"
+                    [config]="config"
+                    (configChange)="loadCountries($event)"
+                    (editRow)="editCountry($event)"
+                    (removeRows)="deleteCountriesModal($event)"></app-shared-table>
 
   <app-sidebar
     [template]="more" (closeSidebar)="closeSidebar($event)">
     <app-emails-form
       [sidebarState]="sidebarState"
-      [type]="more.type" (countryToFilter)="addCountry($event)">
+      [type]="more.type" (countryToFilter)="addCountry($event)"
+      [countryInfos]="currentCountry" (editCountry)="countryEditionFinish($event)">
     </app-emails-form>
   </app-sidebar>
+</div>
+
+<!-- Modal to ask admin to sure about deleting the user -->
+<div class="modal" [ngClass]="{ 'active': showDeleteModal }">
+  <div class="modal-overlay" (click)="closeModal($event)"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+      <div class="modal-title">{{ 'USERS.DELETE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        {{ 'USERS.PITCH-DELETE' | translate }}
+        <ul>
+          <li *ngFor="let country of countriesToRemove">{{country.name}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-sm ghost-delete" (click)="removeCountries()">
+        {{ 'COMMON.DELETE' | translate }}
+      </button>
+    </div>
+  </div>
 </div>
