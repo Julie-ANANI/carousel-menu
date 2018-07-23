@@ -18,7 +18,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
 
   constructor( private _activatedRoute: ActivatedRoute,
-               private _innovationService: InnovationService
+               private _innovationService: InnovationService,
                ) {}
 
   ngOnInit(): void {
