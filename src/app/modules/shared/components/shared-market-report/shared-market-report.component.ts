@@ -15,6 +15,7 @@ import { environment} from '../../../../../environments/environment';
 import { Template } from '../../../sidebar/interfaces/template';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -46,6 +47,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   selectedTag: any;
   today: Number;
   objectKeys = Object.keys;
+  editMode = new Subject<boolean>(); // this is for the admin side.
   mapInitialConfiguration: {[continent: string]: boolean};
 
   private _questions: Array<Question> = [];
@@ -282,6 +284,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
+    this.editMode.next(false);
   }
 
   addFilter(event: Filter) {

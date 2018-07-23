@@ -1,3 +1,7 @@
+
+
+
+<!--
 <section [id]=domSectionId>
 
   <h3>{{ question.label | multiling:lang }}</h3>
@@ -16,7 +20,7 @@
 
   <div>
 
-    <!-- Header section (UMI synthesis) -->
+    &lt;!&ndash; Header section (UMI synthesis) &ndash;&gt;
     <app-question-conclusion
       *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'
       && question.controlType !== 'list' && question.controlType !== 'clearbit'"
@@ -26,9 +30,9 @@
       [stats]="stats">
     </app-question-conclusion>
 
-    <!-- Answers -->
+    &lt;!&ndash; Answers &ndash;&gt;
 
-    <!-- Bar chart -->
+    &lt;!&ndash; Bar chart &ndash;&gt;
     <app-bar-chart
       *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'"
       [answers]="answersToShow"
@@ -40,7 +44,7 @@
       (modalAnswerChange)="seeAnswer($event)">
     </app-bar-chart>
 
-    <!-- Liste d'items (applications, concurrents, partenaires potentiels) -->
+    &lt;!&ndash; Liste d'items (applications, concurrents, partenaires potentiels) &ndash;&gt;
     <app-item-list
       *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
       [answers]="answersToShow"
@@ -54,9 +58,9 @@
       (modalAnswerChange)="seeAnswer($event)">
     </app-item-list>
 
-    <!-- Answer section -->
+    &lt;!&ndash; Answer section &ndash;&gt;
 
-    <!-- Answer button -->
+    &lt;!&ndash; Answer button &ndash;&gt;
     <div *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'&& question.controlType !== 'list' && question.controlType !== 'clearbit'" class="answer-btn-wrapper">
       <button
         type="button"
@@ -72,25 +76,25 @@
       </button>
     </div>
 
-    <!-- Show answers -->
+    &lt;!&ndash; Show answers &ndash;&gt;
     <div
       *ngIf="showDetails && question.controlType !== 'checkbox' && question.controlType !== 'radio'
       && question.controlType !== 'list' && question.controlType !== 'clearbit'"
       class="answer-show-wrapper">
-      <!-- Scale -->
+      &lt;!&ndash; Scale &ndash;&gt;
       <app-scale
         *ngIf="question.controlType === 'scale'"
         [answers]="answersToShow"
         [question]="question">
       </app-scale>
-      <!-- Avantages Clés -->
+      &lt;!&ndash; Avantages Clés &ndash;&gt;
       <app-stars
         *ngIf="question.controlType === 'stars'"
         [answers]="answersToShow"
         [innovation]="innovation"
         [question]="question">
       </app-stars>
-      <!-- Textarea -->
+      &lt;!&ndash; Textarea &ndash;&gt;
       <ul *ngIf="question.controlType === 'textarea'" class="comments">
         <li *ngFor="let answer of answersToShow">
           <market-comment
@@ -101,7 +105,7 @@
           </market-comment>
         </li>
       </ul>
-      <!-- Toggle -->
+      &lt;!&ndash; Toggle &ndash;&gt;
       <div *ngIf="question.controlType === 'toggle'" class="prosList">
         <div *ngFor="let answer of answersToShow" class="white-frame professional-item">
           <app-pro-tag
@@ -113,13 +117,13 @@
       </div>
     </div>
 
-    <!--************************************************
+    &lt;!&ndash;************************************************
                  COMMENTS SECTION
-      **************************************************-->
+      **************************************************&ndash;&gt;
     <ng-container *ngIf="(showDetails || question.controlType === 'list' || question.controlType === 'clearbit')
                           && answersWithComment.length > 0">
 
-      <!-- Show comments button -->
+      &lt;!&ndash; Show comments button &ndash;&gt;
       <div class="comment-btn-wrapper">
         <button
           type="button"
@@ -134,7 +138,7 @@
         </button>
       </div>
 
-      <!-- Show comments -->
+      &lt;!&ndash; Show comments &ndash;&gt;
       <div class="comment-show-wrapper" *ngIf="showComments">
         <ul class="comments">
           <li *ngFor="let answer of answersWithComment">
@@ -149,7 +153,8 @@
       </div>
 
     </ng-container>
-    <!-- /Comments section -->
+    &lt;!&ndash; /Comments section &ndash;&gt;
 
   </div>
 </section>
+-->

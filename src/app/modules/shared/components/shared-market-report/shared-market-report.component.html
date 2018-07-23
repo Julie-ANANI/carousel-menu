@@ -359,6 +359,22 @@
           </div>
         </div>
 
+        <!-- Other question and answers -->
+        <div class="column col-11 col-mx-auto">
+          <div *ngFor="let question of questions">
+            <app-question-section
+              [innovation]="project"
+              [question]="question"
+              [answers]="filteredAnswers"
+              [showComments]="showDetails"
+              [showDetails]="showDetails"
+              [readonly]="!adminMode"
+              (addFilter)="addFilter($event)"
+              (modalAnswerChange)="seeAnswer($event)">
+            </app-question-section>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -518,6 +534,7 @@
   (closeSidebar)="closeSidebar($event)">
   <app-user-answer
     [adminMode]="adminSide"
+    [mode]="editMode"
     [(userAnswer)]="modalAnswer"
     [innovationId]="innoid"
     [questions]="questions">
