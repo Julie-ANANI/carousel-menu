@@ -17,9 +17,12 @@ export class AdminEditWorkflowComponent implements OnInit {
     this._initTable();
   }
   @Output() scenarioChange = new EventEmitter<EmailScenario>();
-  @Output() deletedScenario = new EventEmitter<string>();
+  @Output() deletedScenario = new EventEmitter<EmailScenario>();
 
   public deleteModal: boolean = null;
+  public isModifiedEn: boolean = false;
+  public isModifiedFr: boolean = false;
+  public inCampaign: boolean = false;
   public language = 'en';
   private _signatures: Array<EmailSignature> = [];
   private _emails: Array<any> = [];
@@ -37,6 +40,8 @@ export class AdminEditWorkflowComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.inCampaign = this.scenario.emails[0] && this.scenario.emails[0].modified != undefined;
+    this._setModified();
     this._initTable();
   }
 
@@ -50,7 +55,7 @@ export class AdminEditWorkflowComponent implements OnInit {
     this.scenario.emails.forEach((email: EmailTemplate) => {
       if (email.signature) {
         const fullSignature = this._signatures.find(s => s._id === email.signature.toString());
-        if (fullSignature) email.signatureName = fullSignature.name;  
+        if (fullSignature) email.signatureName = fullSignature.name;
       }
       steps[email.step][email.language] = email;
     });
@@ -59,8 +64,8 @@ export class AdminEditWorkflowComponent implements OnInit {
     let columns = [{_attrs: ['step', `${this.language}.subject`], _name: 'Step', _type: 'TEXT', _isSortable: false},
       {_attrs: [`${this.language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false},
       {_attrs: [`${this.language}.signatureName`], _name: 'Signature', _type: 'TEXT', _isSortable: false}];
-    if (this.scenario.emails[0] && this.scenario.emails[0].modified != undefined) {
-      columns.push({_attrs: [`${this.language}.modified`], _name: 'Modified', _type: 'BOOLEAN', _isSortable: false});
+    if (this.inCampaign) {
+      columns.push({_attrs: [`${this.language}.modified`], _name: 'Modified', _type: 'CHECK', _isSortable: false});
     }
     this._tableInfos = {
       _selector: 'admin-scenario',
@@ -91,23 +96,34 @@ export class AdminEditWorkflowComponent implements OnInit {
   }
 
   public updateEmail(emailsObject: any) {
+    this._setModified();
     this.scenario.emails = this.scenario.emails.map((email: EmailTemplate) => {
       if(emailsObject.step === email.step) {
         email = emailsObject[email.language];
       }
       return email;
     });
-    
     this.scenarioChange.emit(this.scenario);
   }
 
   public deleteScenario() {
-    this.deletedScenario.emit(this.scenario._id);
+    this.deletedScenario.emit(this.scenario);
   }
 
   public changeLanguage(value: string) {
     this.language = value;
     this._initTable();
+  }
+
+  private _setModified() {
+    this.isModifiedEn = this._isModified('en');
+    this.isModifiedFr = this._isModified('fr');
+  }
+  
+  private _isModified(language: string) {
+    return this.scenario.emails.reduce((acc, current) => {
+      return (acc && (current.language != language || current.modified));
+    }, true);
   }
 
   get tableInfos(): any { return this._tableInfos; }
