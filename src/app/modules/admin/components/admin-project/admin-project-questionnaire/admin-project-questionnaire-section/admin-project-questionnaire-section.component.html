@@ -6,6 +6,12 @@
       <option [value]="'2nd'">{{ "PRESETS.SECTION.DESCRIPTION.SECOND" | translate }}</option>
     </select>
   </div>
+  <div>
+    <i class="fa fa-caret-up" (click)="up()">
+    </i>
+    <i class="fa fa-caret-down" (click)="down()">
+    </i>
+  </div>
  <button type="button"
           class="btn btn-outline-primary"
           (click)="coolapse()"
@@ -36,6 +42,8 @@
       (questionChange)="updateQuestion($event)"
       (remove)="removeQuestion(question)"
       (stateOUT)="questionState($event)"
+      (clone)="cloneQuestion($event)"
+      (move)="moveQuestion($event, i1)"
     >
     </app-admin-project-questionnaire-question>
   </div>

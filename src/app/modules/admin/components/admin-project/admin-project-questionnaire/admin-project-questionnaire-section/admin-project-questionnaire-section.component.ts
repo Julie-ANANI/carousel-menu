@@ -20,6 +20,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   @Output() sectionUpdated = new EventEmitter<any>();
   @Output() sectionRemoved = new EventEmitter<any>();
   @Output() stateOut = new EventEmitter<any>();
+  @Output() move = new EventEmitter<any>();
 
   public editName = false;
   private _newQuestion: Question;
@@ -29,7 +30,6 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   constructor( private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    console.log("hello");
     this.formData = this._formBuilder.group({
       description: [this._section.description]
     });
@@ -113,8 +113,55 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
     this._emitState();
   }
 
+  public cloneQuestion(event: any) {
+
+    delete event._id;
+    event.identifier += ' Cloned';
+    this._section.questions.push(event);
+    this.state.quest.push(true); //UX
+    this._emitState();
+    this._emit();
+  }
   private _emitState() {
     this.stateOut.emit(this.state);
+  }
+
+  public moveQuestion(event: any, index: number) {
+    if (event === 'down') {
+      if (index + 1 === this._section.questions.length) {
+        console.log('changement de section ?')
+      } else {
+        const tempquest = JSON.parse(JSON.stringify(this._section.questions[index]));
+        this._section.questions[index] = JSON.parse(JSON.stringify(this._section.questions[index + 1]));
+        this._section.questions[index + 1] = tempquest;
+        const tempstate = JSON.parse(JSON.stringify(this.state.quest[index]));
+        this.state.quest[index] = JSON.parse(JSON.stringify(this.state.quest[index + 1]));
+        this.state.quest[index + 1] = tempstate;
+        this._emitState();
+        this._emit();
+      }
+    }
+    if (event === 'up') {
+      if (index === 0) {
+        console.log('changement de section ?')
+      } else {
+        const tempquest = JSON.parse(JSON.stringify(this._section.questions[index]));
+        this._section.questions[index] = JSON.parse(JSON.stringify(this._section.questions[index - 1]));
+        this._section.questions[index - 1] = tempquest;
+        const tempstate = JSON.parse(JSON.stringify(this.state.quest[index]));
+        this.state.quest[index] = JSON.parse(JSON.stringify(this.state.quest[index - 1]));
+        this.state.quest[index - 1] = tempstate;
+        this._emitState();
+        this._emit();
+      }
+    }
+  }
+
+  public up() {
+    this.move.emit('up');
+  }
+  public down() {
+    this.move.emit('down');
   }
 
   get newQuestion() {

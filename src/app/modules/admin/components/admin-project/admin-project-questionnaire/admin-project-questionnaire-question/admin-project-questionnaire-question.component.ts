@@ -15,6 +15,8 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
   @Output() questionChange = new EventEmitter<any>();
   @Output() remove = new EventEmitter<any>();
   @Output() stateOUT= new EventEmitter<any>();
+  @Output() clone = new EventEmitter<any>();
+  @Output() move = new EventEmitter<any>();
 
   public isCollapsed = true;
   public formData: FormGroup;
@@ -139,4 +141,16 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     this.stateIN[this.index] = !this.stateIN[this.index];
     this._emitState();
   }
+
+  public cloneQuestion() {
+    this.clone.emit(this.question);
+  }
+
+  public up() {
+    this.move.emit('up');
+  }
+  public down() {
+    this.move.emit('down');
+  }
+
 }

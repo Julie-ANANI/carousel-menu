@@ -13,7 +13,12 @@
       <option [value]="'toggle'">{{ "PRESETS.QUESTION.TYPE.TOGGLE" | translate }}</option>
     </select>
   </div>
-
+  <div>
+    <i class="fa fa-caret-up" (click)="up()">
+    </i>
+    <i class="fa fa-caret-down" (click)="down()">
+    </i>
+  </div>
 
   <button type="button"
           class="btn btn-outline-primary"
@@ -24,6 +29,11 @@
   </button>
   <button type="button" class="btn-danger" (click)="removeQuestion()">
     <i class="fas fa-trash">
+    </i>
+  </button>
+  <button type="button" class="btn-action" (click)="cloneQuestion()">
+    <i class="fa-arrow-circle-right">
+
     </i>
   </button>
 
