@@ -10,8 +10,22 @@
   border-style: solid;
   border-color: #c8c8c8;
   margin-left: 100px;
+  border-width: 2px;
 }
 
 .question-body {
 
 }
+
+.options {
+  display: block;
+  border-style:solid;
+  border-color: #757575;
+  border-width: 2px;
+}
+
+#optionsWrap {
+  display: flex;
+  justify-content: space-between;
+}
+

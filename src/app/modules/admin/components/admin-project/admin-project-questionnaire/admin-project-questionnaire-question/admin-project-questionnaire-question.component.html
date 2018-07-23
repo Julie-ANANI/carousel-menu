@@ -76,9 +76,9 @@
                                [(ngModel)]="question.subtitle[language()]" (keyup.enter)="update()">
       </div>
 
-      <div *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')" class="form-group text-center">
-        <div *ngFor="let option of question.options;let i = index">
-          <button (click)="deleteOption(i)" class="btn btn-lg btn-primary" type="button">
+      <div *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')" class="form-group" id="optionsWrap">
+        <div *ngFor="let option of question.options;let i = index" class="options">
+          <button (click)="deleteOption(i)" class="btn" type="button">
             <i class="icon icon-cross"></i>
           </button>
           <label> {{option.label[language()]}}</label>
@@ -89,10 +89,10 @@
           </label>
         </div>
         <button *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox') && !modalAddOption"
-                (click)="modalAddOption = true" class="btn btn-lg btn-primary" type="button">
+                (click)="modalAddOption = true" class="btn" type="button">
           {{ 'PRESETS.QUESTION.EDIT.ADD' | translate }} <i class="icon icon-plus"></i>
         </button>
-        <div *ngIf="modalAddOption">
+        <div *ngIf="modalAddOption" class="options">
           <div class="form-group text-center" [formGroup]="formQuestion">
             <label for="positive" *ngIf="question.controlType === 'radio'">
               Réponse Positive ?
