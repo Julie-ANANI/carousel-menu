@@ -10,10 +10,10 @@
     <option [value]="'2nd'">{{ "PRESETS.SECTION.DESCRIPTION.SECOND" | translate }}</option>
   </select>
 
-  <div>{{section.label.en}}</div>
+  <div *ngIf="!editName">{{section.label.en}}</div>
 
-  <input type="text" *ngIf="editName" [(ngModel)]="section.label.en" (keyup.enter)="update()"/>
-  <input type="text" *ngIf="editName" [(ngModel)]="section.label.fr" (keyup.enter)="update()"/>
+  <input type="text" *ngIf="editName" [(ngModel)]="section.label.en" (keyup.enter)="update()" class="form-default">
+  <input type="text" *ngIf="editName" [(ngModel)]="section.label.fr" (keyup.enter)="update()" class="form-default">
 
   <div class="button-actions">
     <!--<button type="button"
@@ -23,11 +23,15 @@
       Edit
     </button>-->
 
-    <button type="button" class="btn btn-xs ghost-edit" (click)="editName = !editName">
+    <button type="button" class="btn btn-xs ghost-edit" (click)="editName = !editName" *ngIf="editName">
+      Save
+    </button>
+
+    <button type="button" class="btn btn-xs ghost-edit" (click)="editName = !editName" *ngIf="!editName">
       Rename
     </button>
 
-    <button type="button" class="btn btn-xs ghost-delete" (click)="removeSection()">
+    <button type="button" class="btn btn-xs ghost-delete" (click)="removeSection()" *ngIf="!editName">
       Delete
     </button>
   </div>

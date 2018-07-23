@@ -1,5 +1,6 @@
 .section-header {
   display: flex;
+  min-height: 70px;
   align-items: center;
   padding: 5px 15px;
   font-weight: 600;
@@ -32,9 +33,11 @@
     display: none;
   }
 
-  .form-select {
+  .form-select,
+  .form-default {
     width: inherit;
     margin-right: 15px;
+    margin-top: 0;
   }
 }
 

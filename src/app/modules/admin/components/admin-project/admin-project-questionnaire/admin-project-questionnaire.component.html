@@ -2,7 +2,17 @@
   <div class="columns">
     <div class="column col-11 col-mx-auto">
 
-      <div>{{this.innovation.preset.name}}</div>
+      <div class="text-right">
+        <button class="btn btn-primary ghost-primary">
+          Save as template
+        </button>
+
+        <button class="btn btn-primary">
+          Preview
+        </button>
+      </div>
+
+      {{this.innovation.preset.name}}
 
       <div *ngFor="let section of sections; let i=index">
         <app-admin-project-questionnaire-section
