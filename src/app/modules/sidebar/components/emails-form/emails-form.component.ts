@@ -118,6 +118,8 @@ export class EmailsFormComponent implements OnInit, OnChanges {
     } else if (this.isExcludeEmails) {
       this.emailsToBlacklists.emit(this.formData.value.email);
       this.emailsToBlacklists.emit(this.formData.value.domain);
+    } else if (this.isFilterCountry) {
+      this.countryToFilter.emit({accept: this.formData.value.accept, name: this._country.name});
     }
   }
 

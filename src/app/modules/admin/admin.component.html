@@ -3,7 +3,13 @@
   <app-header *ngIf="authService.isAuthenticated"></app-header>
 
   <div class="main">
-    <router-outlet></router-outlet>
+    <div class="container">
+      <div class="columns">
+        <div class="column col-11 col-mx-auto">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
   </div>
 
   <app-footer *ngIf="authService.isAuthenticated"></app-footer>
