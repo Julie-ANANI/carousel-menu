@@ -1,17 +1,25 @@
-<div class="heading">
-  <h2>{{this.innovation.preset.name}}</h2>
-</div>
-<div class="body">
-  <div *ngFor="let section of sections; let i=index">
-    <app-admin-project-questionnaire-section
-      [section]="section"
-      [state]="getState(i)"
-      (stateOut)="updateState($event, i)"
-      (sectionUpdated)="sectionUpdated($event)"
-      (sectionRemoved)="sectionRemoved($event)"
-      (move)="moveSection($event,i)"
-    >
-    </app-admin-project-questionnaire-section>
+<div class="container">
+  <div class="columns">
+    <div class="column col-11 col-mx-auto">
+
+      <div>{{this.innovation.preset.name}}</div>
+
+      <div *ngFor="let section of sections; let i=index">
+        <app-admin-project-questionnaire-section
+          [section]="section"
+          [state]="getState(i)"
+          (stateOut)="updateState($event, i)"
+          (sectionUpdated)="sectionUpdated($event)"
+          (sectionRemoved)="sectionRemoved($event)"
+          (move)="moveSection($event,i)">
+        </app-admin-project-questionnaire-section>
+      </div>
+
+      <div class="add-section" (click)="addSection()">
+        <button class="btn-round btn-primary"><i class="icon icon-plus"></i></button>
+        <div>Add section</div>
+      </div>
+
+    </div>
   </div>
-  <button class="btn-round btn-primary" (click)="addSection()"><i class="icon icon-plus"> </i>  </button><span> ADD SECTION</span>
 </div>

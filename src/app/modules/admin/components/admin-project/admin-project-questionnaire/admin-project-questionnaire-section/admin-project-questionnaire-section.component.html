@@ -1,40 +1,40 @@
 <div class="section-header">
-  <div>
-    <i class="fa fa-caret-up" (click)="up()">
-    </i>
-    <i class="fa fa-caret-down" (click)="down()">
-    </i>
-  </div>
-  <div class="form-group">
-    <select class="form-select" id="sectionType" name="section" (ngModelChange)="this.updateDescription($event)" [(ngModel)]="section.description">
-      <option [value]="'nothing'">{{ "PRESETS.SECTION.DESCRIPTION.NOTHING" | translate }}</option>
-      <option [value]="'1st'">{{ "PRESETS.SECTION.DESCRIPTION.FIRST" | translate }}</option>
-      <option [value]="'2nd'">{{ "PRESETS.SECTION.DESCRIPTION.SECOND" | translate }}</option>
-    </select>
+  <div class="move-element">
+    <i class="fa fa-caret-up" (click)="up()"></i>
+    <i class="fa fa-caret-down" (click)="down()"></i>
   </div>
 
- <button type="button"
-          class="btn btn-outline-primary"
-          (click)="coolapse()"
-          *ngIf="!editName"
-  >
-    <h3>{{section.label.en}}</h3>
-  </button>
+  <select class="form-select" id="sectionType" name="section" (ngModelChange)="this.updateDescription($event)" [(ngModel)]="section.description">
+    <option [value]="'nothing'">{{ "PRESETS.SECTION.DESCRIPTION.NOTHING" | translate }}</option>
+    <option [value]="'1st'">{{ "PRESETS.SECTION.DESCRIPTION.FIRST" | translate }}</option>
+    <option [value]="'2nd'">{{ "PRESETS.SECTION.DESCRIPTION.SECOND" | translate }}</option>
+  </select>
+
+  <div>{{section.label.en}}</div>
+
   <input type="text" *ngIf="editName" [(ngModel)]="section.label.en" (keyup.enter)="update()"/>
   <input type="text" *ngIf="editName" [(ngModel)]="section.label.fr" (keyup.enter)="update()"/>
 
-  <button type="button" class="btn-danger" (click)="removeSection()">
-    <i class="fas fa-trash">
-    </i>
-  </button>
-  <button type="button" class="btn-action" (click)="editName = !editName">
-  <i class="fas fa-pencil-alt">
-  </i>
-</button>
+  <div class="button-actions">
+    <!--<button type="button"
+            class="btn btn-xs ghost-edit"
+            (click)="coolapse()"
+            *ngIf="!editName">
+      Edit
+    </button>-->
+
+    <button type="button" class="btn btn-xs ghost-edit" (click)="editName = !editName">
+      Rename
+    </button>
+
+    <button type="button" class="btn btn-xs ghost-delete" (click)="removeSection()">
+      Delete
+    </button>
+  </div>
 
 </div>
 
-<div [hidden]="!state.sec">
+<div [hidden]="state.sec">
   <div *ngFor="let question of section.questions; let i1 = index;">
     <app-admin-project-questionnaire-question
       [question]="question"
@@ -44,10 +44,14 @@
       (remove)="removeQuestion(question)"
       (stateOUT)="questionState($event)"
       (clone)="cloneQuestion($event)"
-      (move)="moveQuestion($event, i1)"
-    >
+      (move)="moveQuestion($event, i1)">
     </app-admin-project-questionnaire-question>
   </div>
-  <button class="btn-round btn-primary" (click)="addQuestion()"><i class="icon icon-plus"  ></i></button> <span> ADD QUESTION </span>
+
+  <div class="add-question" (click)="addQuestion()">
+    <button class="btn-round btn-primary"><i class="icon icon-plus"></i></button>
+    <div>Add question</div>
+  </div>
+
 </div>
 
