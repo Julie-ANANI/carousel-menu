@@ -2,8 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EmailScenario } from '../../../../models/email-scenario';
 import { EmailTemplate } from '../../../../models/email-template';
 import { Template } from '../../../sidebar/interfaces/template';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { TemplatesService } from '../../../../services/templates/templates.service';
 import { EmailSignature } from '../../../../models/email-signature';
 
 @Component({
@@ -18,6 +16,7 @@ export class AdminEditWorkflowComponent implements OnInit {
     this._signatures = value;
     this._initTable();
   }
+  @Output() scenarioChange = new EventEmitter<EmailScenario>();
   @Output() deletedScenario = new EventEmitter<string>();
 
   public deleteModal: boolean = null;
@@ -35,8 +34,7 @@ export class AdminEditWorkflowComponent implements OnInit {
     sort: {}
   };
 
-  constructor(private _notificationsService: TranslateNotificationsService,
-              private _templatesService: TemplatesService) {}
+  constructor() {}
 
   ngOnInit() {
     this._initTable();
@@ -99,13 +97,8 @@ export class AdminEditWorkflowComponent implements OnInit {
       }
       return email;
     });
-
-    this._templatesService.save(this.scenario).first().subscribe(updatedScenario => {
-      this.scenario = updatedScenario;
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-    }, (err: any) => {
-      this._notificationsService.error('ERROR', err);
-    });
+    
+    this.scenarioChange.emit(this.scenario);
   }
 
   public deleteScenario() {

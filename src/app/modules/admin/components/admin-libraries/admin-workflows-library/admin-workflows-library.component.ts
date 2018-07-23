@@ -58,6 +58,16 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
       this._scenarios.unshift(newScenario);
     });
   }
+  
+  public updateScenario(changedScenario: EmailScenario) {
+    this._templatesService.save(changedScenario).first().subscribe(updatedScenario => {
+      const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id == changedScenario._id);
+      this._scenarios[scenarioIndex] = updatedScenario;
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+    }, (err: any) => {
+      this._notificationsService.error('ERROR', err);
+    });
+  }
 
   /**
    * Suppression et mise à jour de la vue

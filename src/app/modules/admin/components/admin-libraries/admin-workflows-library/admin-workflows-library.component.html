@@ -18,6 +18,7 @@
       <div *ngFor="let scenario of scenarios">
         <app-admin-edit-workflow
           [scenario]="scenario"
+          (scenarioChange)="updateScenario($event)"
           [signatures]="signatures"
           (deletedScenario)="deleteScenario($event)">
         </app-admin-edit-workflow>
