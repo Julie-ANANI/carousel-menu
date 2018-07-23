@@ -23,7 +23,7 @@
         <!-- If there are no selected rows we show columns name in the header-->
         <ng-container *ngIf="selectedRows==0">
           <tr>
-            <th *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)"/>
+            <th *ngIf="isSelectable" width="50"><input type="checkbox" (change)="selectAll($event)"/>
               <div class="square-check"><i class="icon icon-check"></i></div></th>
 
             <th *ngFor="let column of columns"
@@ -70,6 +70,8 @@
                 {{'COMMON.DELETE' | translate }}
               </button>
             </th>
+            <th></th>
+            <th></th>
           </tr>
         </ng-container>
     </thead>
