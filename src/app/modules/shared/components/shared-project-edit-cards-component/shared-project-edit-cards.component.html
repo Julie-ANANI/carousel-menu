@@ -111,13 +111,8 @@
                       </button>
                     <textarea
                       [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.PLACEHOLDER' | translate"
-                      rows="8"
-                      class="form-default"
-                      name="summary"
-                      #summary="ngModel"
-                      [(ngModel)]="project.innovationCards[i].summary"
-                      (ngModelChange)="notifyModelChanges($event)"
-                      required
+                      class="form-default editable"
+                      id="summary"
                       [ngClass]="{'borderRed': showSummaryError}"
                       (keyup)="showSummaryError = false">
                     </textarea>
@@ -125,7 +120,7 @@
                       <span [ngStyle]="{'color': getColor(project.innovationCards[i].summary.length | characterCountdown:500)}">
                         {{ project.innovationCards[i].summary.length | characterCountdown:500 }}</span>
                       </div>
-                      <div class="form-error" *ngIf="summary.touched && summary.invalid || showSummaryError">
+                      <div class="form-error" *ngIf="showSummaryError">
                         <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.ERROR' | translate }}</span>
                       </div>
                     </div>
@@ -152,14 +147,8 @@
                       </button>
                     <textarea
                       [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
-                      rows="8"
-                      id="innovation-problem"
-                      class="form-default"
-                      name="problem"
-                      #problem="ngModel"
-                      [(ngModel)]="project.innovationCards[i].problem"
-                      (ngModelChange)="notifyModelChanges($event)"
-                      required
+                      id="problem"
+                      class="form-default editable"
                       [ngClass]="{'borderRed': showProblemError}"
                       (keyup)="showProblemError = false">
                     </textarea>
@@ -168,7 +157,7 @@
                         {{ project.innovationCards[i].problem.length | characterCountdown:1000 }}
                       </span>
                       </div>
-                      <div class="form-error" *ngIf="problem.touched && problem.invalid || showProblemError">
+                      <div class="form-error" *ngIf="showProblemError">
                         <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.ERROR' | translate }}</span>
                       </div>
                     </div>
@@ -193,25 +182,24 @@
                         (click)="importTranslation($event, 'solution')">
                         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
                       </button>
-                      <textarea
-                        [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
-                        rows="8"
-                        id="innovation-solution"
-                        class="form-default"
-                        name="solution"
-                        #solution="ngModel"
-                        [(ngModel)]="project.innovationCards[i].solution"
-                        (ngModelChange)="notifyModelChanges($event)"
-                        required
+                      <text-zone
+                        [readonly]="!canEdit"
+                        [data]="project.innovationCards[i].solution"
+                        [elementId]="'solution'"
                         [ngClass]="{'borderRed': showSolutionError}"
-                        (keyup)="showSolutionError = false">
-                      </textarea>
+                        (onTextChange)="updateData($event)"
+                      >
+                        <!-- [placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
+                              [ngClass]="{'borderRed': showSolutionError}"
+                              (keyup)="showSolutionError = false"
+                              -->
+                      </text-zone>
                       <div class="charRemaining">
                       <span [ngStyle]="{'color': getColor(project.innovationCards[i].solution.length | characterCountdown:1000)}">
                         {{ project.innovationCards[i].solution.length | characterCountdown:1000 }}
                       </span>
                       </div>
-                      <div class="form-error" *ngIf="solution.touched && solution.invalid || showSolutionError">
+                      <div class="form-error" *ngIf="showSolutionError">
                         <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.ERROR' | translate }}</span>
                       </div>
                     </div>

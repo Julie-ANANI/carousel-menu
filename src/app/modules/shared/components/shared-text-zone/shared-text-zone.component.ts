@@ -15,13 +15,13 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   @Input() readonly: boolean;
   @Input() set data(value: string) {
     this._data = value;
+    this._contentHash = this.hashString(value);
     if (this.editor) {
       this.editor.setContent(this._data);
-      this.contentHash();
     }
   }
   @Input() elementId: String;
-  @Output() onEditorKeyup = new EventEmitter<any>();
+  @Output() onTextChange = new EventEmitter<any>();
 
   private _contentHash: number;
   private _data: string;
@@ -45,25 +45,22 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
       height: 250,
       statusbar: false,
       menubar: false,
+      toolbar : 'undo redo | styleselect | bold italic | bullist numlist | table | bulllist numlist link',
       skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json (apps > assets) : on importe les fichiers depuis le module (node_modules) "tinymce"
       setup: (editor: any) => {
         this.editor = editor;
+        editor.setContent(this._data);
+        this._contentHash = this.hashString(this._data);
         editor.on('Blur', () => {
           const actualHash = this._contentHash;
           const content = editor.getContent();
-          this.contentHash();
+          this._contentHash = this.hashString(content);
           if (this._contentHash !== actualHash) {
-            this.onEditorKeyup.emit({id: this.elementId, content: content});
-          } else {
-            console.log('There\'s nothing new to save');
+            this.onTextChange.emit({id: this.elementId, content: content});
           }
         });
       },
     });
-    if (this._data && this.editor) {
-      this.editor.setContent(this._data);
-      this.contentHash();
-    }
   }
 
   ngOnDestroy() {
@@ -73,20 +70,13 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   private hashString(content: string): number {
     let hash = 0;
     let chr;
-    if (content.length === 0) { return hash; }
+    if (!content || content.length === 0) { return hash; }
     for (let i = 0; i < content.length; i++) {
       chr   = content.charCodeAt(i);
       hash  = ((hash << 5) - hash) + chr;
       hash |= 0; // Convert to 32bit integer
     }
     return hash;
-  }
-
-  private contentHash() {
-    if (this.editor) {
-      const content = this.editor.getContent();
-      this._contentHash = this.hashString(content);
-    }
   }
 
   public get htmlId(): string { return this._htmlId; }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,15 +15,18 @@ import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslationService } from '../../../../services/translation/translation.service';
 
+declare const tinymce: any;
+
 @Component({
   selector: 'app-shared-project-edit-cards',
   templateUrl: 'shared-project-edit-cards.component.html',
   styleUrls: ['shared-project-edit-cards.component.scss']
 })
 
-export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
+export class SharedProjectEditCardsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() project: Innovation;
+  @Input() canEdit = true;
   @Input() changesSaved: boolean;
   @Input() showPitchFieldError: Subject<boolean>;
 
@@ -46,6 +49,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   private _deleteInnovCardId = '';
   private _langDelete = '';
 
+  private _editors: Array<any> = [];
+
   /*
    * Gestion de l'affichage
    */
@@ -62,7 +67,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.changesSaved = true;
-
     if (this.location.path().slice(0, 6) !== '/admin') {
       this.showPitchFieldError.subscribe(value => {
         if (value) {
@@ -70,7 +74,27 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
 
+  ngAfterViewInit() {
+    /*
+    tinymce.init({
+      selector: 'textarea.editable',
+      plugins: ['link', 'paste', 'table'],
+      default_link_target: '_blank',
+      statusbar: false,
+      menubar: false,
+      skin_url: '/assets/skins/lightgray',
+      setup: (editor: any) => {
+        console.log(editor.id);
+        editor.setContent(this.project.innovationCards[this.innovationCardEditingIndex][editor.id]);
+        this._editors.push(editor);
+        editor.on('Blur', () => {
+          const content = editor.getContent();
+          console.log(content)
+        });
+      },
+    });*/
   }
 
   notifyModelChanges(_event?: any) {
@@ -150,6 +174,12 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   }
 
+  updateData(event: {id: string, content: string}) {
+    console.log(event.content);
+    this.project.innovationCards[this.innovationCardEditingIndex][event.id] = event.content;
+    this.notifyModelChanges();
+  }
+
   /**
    * Add an advantage to the invention card
    * @param event the resulting value sent from the components directive
@@ -158,11 +188,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   addAdvantageToInventionCard (event: {value: Array<{text: string}>}, cardIdx: number): void {
     this.project.innovationCards[cardIdx].advantages = event.value;
     this.notifyModelChanges(event.value);
-    if (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0) {
-      this.showAdvantageError = true;
-    } else {
-      this.showAdvantageError = false;
-    }
+    this.showAdvantageError = (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0);
   }
 
   setAsPrincipal (innovationCardId: string): void {
@@ -293,6 +319,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (Array.isArray(this._editors) && this._editors.length > 0) {
+      this._editors.forEach((ed) => tinymce.remove(ed));
+    }
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
