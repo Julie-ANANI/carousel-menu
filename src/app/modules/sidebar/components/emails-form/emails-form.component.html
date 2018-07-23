@@ -72,7 +72,7 @@
 
       <!-- If a country is selected we show the settings -->
       <div class="form-group country-wrapper" *ngIf="country !== null" style="margin-top: 50px">
-        <label class="form-label" for="accept">Pourcentage d'acceptation de mails :
+        <label class="form-label" for="accept">{{'COMMON.BLACKLIST.ACCEPTATION' | translate}}
           <span>{{formData.get('accept').value}}</span>
         </label>
         <div class="input-group">
