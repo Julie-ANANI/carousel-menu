@@ -1,10 +1,56 @@
 <h1>{{total}} {{ 'COMMON.QUESTIONNAIRE' | translate }}</h1>
 
-<div class="text-right">
-  <button [routerLink]="'/admin/presets/presets/new'" class="btn btn-primary" (click)="$event.preventDefault()">
-    {{ 'PRESETS.PRESET.ADD' | translate }}
-  </button>
+
+
+<div *ngIf="editionMode">
+  <div class="text-right">
+    <button class="btn btn-primary" (click)="goToEditionMode()">
+    <span *ngIf="editionMode">
+          {{ 'COMMON.SAVE' | translate }}
+    </span>
+    </button>
+  </div>
+    <div *ngIf="!nameOK()">
+      <input type="text" [ngModel]="newPreset.name" (keyup.enter)="savePreset()">
+    </div>
+    <div *ngIf="nameOK()">
+      <div class="heading">
+        <h2>{{newPreset.name}}</h2>
+      </div>
+      <div class="body">
+        <div *ngFor="let section of newPreset.sections; let i=index">
+          <app-admin-project-questionnaire-section
+            [section]="section"
+            [state]="getState(i)"
+            (stateOut)="updateState($event, i)"
+            (sectionUpdated)="sectionUpdated($event)"
+            (sectionRemoved)="sectionRemoved($event)"
+            (move)="moveSection($event,i)"
+          >
+          </app-admin-project-questionnaire-section>
+        </div>
+        <button class="btn-round btn-primary" (click)="addSection()"><i class="icon icon-plus"> </i>  </button><span> ADD SECTION</span>
+      </div>
+
+
+
+
+
+    </div>
 </div>
+
+
+
+
+<div *ngIf="!editionMode">
+
+  <div class="text-right">
+    <button class="btn btn-primary" (click)="goToListMode()">
+    <span *ngIf="!editionMode">
+          {{ 'PRESETS.PRESET.ADD' | translate }}
+    </span>
+    </button>
+  </div>
 
 <label>{{ 'PRESETS.PRESET.FILTER' | translate }} : <sqFilter [config]="config" (configChange)="loadPresets($event)" [prop]="'name'"></sqFilter></label>
 
@@ -101,4 +147,5 @@
       </button>
     </div>
   </div>
+</div>
 </div>

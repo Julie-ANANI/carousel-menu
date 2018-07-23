@@ -13,6 +13,7 @@ export class AdminPresetsListComponent implements OnInit {
   private _presets: Array<Preset>;
   public selectedPresetIdToBeDeleted: string = null;
   public selectedPresetToBeCloned: Preset = null;
+  public editionMode = false;
   private _total: number;
   private _config = {
     fields: '',
@@ -23,6 +24,8 @@ export class AdminPresetsListComponent implements OnInit {
       created: -1
     }
   };
+
+  private _newPreset: any;
 
   constructor(private _presetService: PresetService,
               private _router: Router) {}
@@ -69,6 +72,33 @@ export class AdminPresetsListComponent implements OnInit {
     this._presetService.create(clonedPreset).first().subscribe(preset => {
       this._router.navigate(['/admin/presets/presets/' + preset._id])
     });
+  }
+
+  public goToEditionMode(){
+    this.editionMode = !this.editionMode;
+    this._newPreset = {
+      name: '',
+      sections: []
+    }
+  }
+
+  public goToListMode(){
+    this.editionMode = !this.editionMode;
+  }
+
+  public nameOK() {
+    return this._newPreset.name !== '';
+  }
+
+  public savePreset() {
+    console.log(this._newPreset);
+    this._presetService.create(this._newPreset).first().subscribe(preset => {
+      this._newPreset = preset;
+    })
+  }
+
+  get newPreset(): any {
+    return this._newPreset;
   }
 
   set config(value: any) { this._config = value; }

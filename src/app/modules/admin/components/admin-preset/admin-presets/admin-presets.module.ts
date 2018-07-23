@@ -13,6 +13,7 @@ import { AdminPresetsListComponent } from './admin-presets-list/admin-presets-li
 import { AdminPresetsNewComponent } from './admin-presets-new/admin-presets-new.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {AdminProjectQuestionnaireModule} from '../../admin-project/admin-project-questionnaire/admin-project-questionnaire.module';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PipeModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AdminProjectQuestionnaireModule
   ],
   declarations: [
     AdminPresetsComponent,

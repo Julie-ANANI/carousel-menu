@@ -17,9 +17,7 @@ import { SharedProjectSettingsModule } from '../../../shared/components/shared-p
 import { SharedTagItemModule } from '../../../shared/components/shared-tag-item/shared-tag-item.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AdminProjectQuestionnaireComponent } from './admin-project-questionnaire/admin-project-questionnaire.component';
-import { AdminProjectQuestionnaireSectionComponent } from './admin-project-questionnaire/admin-project-questionnaire-section/admin-project-questionnaire-section.component';
-import { AdminProjectQuestionnaireQuestionComponent } from './admin-project-questionnaire/admin-project-questionnaire-question/admin-project-questionnaire-question.component';
+import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/admin-project-questionnaire.module';
 
 @NgModule({
   imports: [
@@ -35,7 +33,8 @@ import { AdminProjectQuestionnaireQuestionComponent } from './admin-project-ques
     SharedTagItemModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AdminProjectQuestionnaireModule
   ],
   declarations: [
     AdminProjectComponent,
@@ -43,10 +42,7 @@ import { AdminProjectQuestionnaireQuestionComponent } from './admin-project-ques
     AdminProjectCardsComponent,
     AdminProjectCampaignsComponent,
     AdminProjectSynthesisComponent,
-    AdminProjectTagsPoolComponent,
-    AdminProjectQuestionnaireComponent,
-    AdminProjectQuestionnaireSectionComponent,
-    AdminProjectQuestionnaireQuestionComponent
+    AdminProjectTagsPoolComponent
   ],
   exports: [
     AdminProjectComponent
