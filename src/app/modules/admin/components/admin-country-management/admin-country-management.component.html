@@ -1,11 +1,15 @@
-<div class="form-group-inline-right">
-  <button class="btn btn-primary" (click)="filterCountry()">{{'COMMON.EXCLUDE-COUNTRIES' | translate}}</button>
-</div>
+<div class="country-management-wrapper">
+  <div class="form-group-inline-right">
+    <button class="btn btn-primary" (click)="filterCountry()">{{'COMMON.EXCLUDE-COUNTRIES' | translate}}</button>
+  </div>
 
-<app-sidebar
-  [template]="more" (closeSidebar)="closeSidebar($event)">
-  <app-emails-form
-    [sidebarState]="sidebarState"
-    [type]="more.type">
-  </app-emails-form>
-</app-sidebar>
+  <app-shared-table [data]="countriesTable" [config]="config" (configChange)="loadCountries($event)"></app-shared-table>
+
+  <app-sidebar
+    [template]="more" (closeSidebar)="closeSidebar($event)">
+    <app-emails-form
+      [sidebarState]="sidebarState"
+      [type]="more.type" (countryToFilter)="addCountry($event)">
+    </app-emails-form>
+  </app-sidebar>
+</div>

@@ -10,7 +10,7 @@ export const COMMON = {
   'SIGN_UP': 'Sign up',
   'LOG_OUT': 'Logout',
   'CANCEL': 'Cancel',
-  'MORE': 'See more',
+  'MORE': 'Show',
   'OF': 'of',
   'ADD': 'Add',
   'ALL': 'All',
@@ -45,7 +45,8 @@ export const COMMON = {
   'BLACKLIST': {
     'EMAILS': 'Blacklisted e-mails',
     'DOMAINS': 'Blacklisted domains',
-    'COUNTRIES': 'Blacklisted countries'
+    'COUNTRIES': 'Blacklisted countries',
+    'ACCEPTATION': 'Acceptance mails percentage'
   },
   'EDIT-BLACKLIST': 'Edit blacklisted e-mail',
   'EXCLUDE': 'Exclude',

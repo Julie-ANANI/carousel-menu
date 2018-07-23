@@ -45,7 +45,8 @@ export const COMMON = {
   'BLACKLIST': {
     'EMAILS': 'E-mails blacklistés',
     'DOMAINS': 'Domaines blacklistés',
-    'COUNTRIES': 'Pays blacklistés'
+    'COUNTRIES': 'Pays blacklistés',
+    'ACCEPTATION': 'Pourcentage d\'acceptation de mails'
   },
   'EDIT-BLACKLIST': 'Modifier email blacklisté',
   'EXCLUDE': 'Exclure',
