@@ -27,6 +27,9 @@ export class AdminCountryManagementComponent implements OnInit {
   };
 
   private _countryList: {filteredCountries: Array<any>, _metadata: any};
+  private _currentCountry: any = null;
+  public countriesToRemove: any[] = null;
+  public showDeleteModal = false;
 
   constructor(private _emailService: EmailService,
               private _notificationsService: TranslateNotificationsService) { }
@@ -39,6 +42,8 @@ export class AdminCountryManagementComponent implements OnInit {
         totalCount: 0
       }
     };
+
+    this.showDeleteModal = false;
 
     this.loadCountries(null);
   }
@@ -72,6 +77,7 @@ export class AdminCountryManagementComponent implements OnInit {
             _total: this._countryList._metadata.totalCount,
             _isHeadable: true,
             _isFiltrable: true,
+            _isDeletable: true,
             _isSelectable: true,
             _isEditable: true,
             _columns: [
@@ -96,14 +102,64 @@ export class AdminCountryManagementComponent implements OnInit {
       });
   }
 
+  editCountry(country: any) {
+    this._more = {
+      animate_state: 'active',
+      title: 'COMMON.EDIT-COUNTRY',
+      type: 'editCountry'
+    };
+    this._currentCountry = country;
+  }
+
+  countryEditionFinish(country: any) {
+    this._emailService.updateCountry(country._id, country)
+      .first()
+      .subscribe(
+        (data: any) => {
+          this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+          this._more = {animate_state: 'inactive', title: this._more.title};
+          this.loadCountries(this._config);
+        },
+        error => {
+          this._notificationsService.error('ERROR.ERROR', error.message);
+        });
+  }
+
   closeSidebar(value: string) {
     this.more.animate_state = value;
     this.sidebarState.next(this.more.animate_state);
+  }
+
+  deleteCountriesModal(countries: any) {
+    this.countriesToRemove = [];
+    this.showDeleteModal = true;
+    countries.forEach((value: any) => this.countriesToRemove.push(value));
+  }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this.showDeleteModal = false;
+  }
+
+  removeCountries() {
+    for (const country of this.countriesToRemove) {
+      this.removeCountry(country._id);
+    }
+    this.countriesToRemove = [];
+    this.showDeleteModal = false;
+  }
+
+  removeCountry(countryId: string) {
+    this._emailService.deleteCountry(countryId).first()
+      .subscribe((foo: any) => {
+        this.loadCountries(this._config);
+      });
   }
 
   get more(): Template { return this._more; }
   get countriesTable(): Table { return this._countriesTable; }
   get config(): any { return this._config; }
   get data(): Array<any> { return this._countryList.filteredCountries; };
+  get currentCountry(): any { return this._currentCountry; }
   get metadata(): any { return this._countryList._metadata; };
 }

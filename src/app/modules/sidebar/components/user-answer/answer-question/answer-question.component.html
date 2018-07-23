@@ -230,7 +230,7 @@
 
   <div *ngIf="editMode" [ngStyle]="{ 'padding-top': '15px' }">
 
-    <p *ngIf="!commenting" class="comment-text c-hand" (click)="comment = true">
+    <p *ngIf="!commenting" class="comment-text c-hand" (click)="commenting = true">
       {{ 'COMMON.COMMENT' | translate }} <i class="icon icon-arrow-right"></i>
     </p>
 

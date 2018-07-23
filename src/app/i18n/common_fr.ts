@@ -161,6 +161,7 @@ export const COMMON = {
   'EDIT_USER': 'Modifier l\'utilisateur',
   'EDIT_PROFESSIONAL': 'Modifier Professionnel',
   'EDIT_INSIGHT': 'Modifier l\'aperçu',
+  'EDIT-COUNTRY': 'Modifier le filtre du pays',
   'UMI_WORD': 'Le mot d’UMI',
 
   'SORT': {

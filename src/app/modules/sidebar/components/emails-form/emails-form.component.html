@@ -3,7 +3,7 @@
     <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit()">
 
       <!-- Save only -->
-      <div class="text-right submit-wrapper" *ngIf="isBlacklist || isExcludeEmails || isFilterCountry">
+      <div class="text-right submit-wrapper" *ngIf="isBlacklist || isExcludeEmails || isFilterCountry || isEditCountry">
         <button type="submit" class="btn btn-primary">
           {{'COMMON.SAVE' | translate}}
         </button>
@@ -25,7 +25,7 @@
       </div>
 
       <!-- Expiration Date -->
-      <div class="form-group" *ngIf="isBlacklist">
+      <div class="form-group" *ngIf="isBlacklist || isEditCountry">
         <label class="form-label" for="expirationDate">{{ 'COMMON.EXPIRATION' | translate }}</label>
         <div class="form-group-inline-left">
           <input type="checkbox" [checked]="formData.value.expiration === ''"
@@ -67,16 +67,16 @@
         *ngIf="isFilterCountry"
         (update)="updateCountry($event)"
         [onlyOne]="true"
-        [config]="{ placeholder: 'COMMON.COUNTRY_PLACEHOLDER', type: 'countries' }">
+        [config]="getConfig('countries')">
       </app-autocomplete-input>
 
       <!-- If a country is selected we show the settings -->
-      <div class="form-group country-wrapper" *ngIf="country !== null" style="margin-top: 50px">
+      <div class="form-group country-wrapper" *ngIf="(country !== null) || (isEditCountry)" style="margin-top: 50px">
         <label class="form-label" for="accept">{{'COMMON.BLACKLIST.ACCEPTATION' | translate}}
-          <span>{{formData.get('accept').value}}</span>
+          <span>{{formData.get('acceptation').value}}</span>
         </label>
         <div class="input-group">
-          <input type="range" id="accept" formControlName="accept" class="accept" name="accept" min="0" max="100" />
+          <input type="range" id="accept" formControlName="acceptation" class="accept" name="accept" min="0" max="100" />
         </div>
       </div>
 
