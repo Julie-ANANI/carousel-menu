@@ -112,7 +112,7 @@
                       <text-zone
                         [readonly]="!canEdit"
                         [data]="innovationCards.summary"
-                        [elementId]="'summary'"
+                        [elementId]="'summary'+i"
                         [ngClass]="{'borderRed': showSummaryError}"
                         (onTextChange)="updateData($event)"
                       >
@@ -152,7 +152,7 @@
                       <text-zone
                         [readonly]="!canEdit"
                         [data]="innovationCards.problem"
-                        [elementId]="'problem'"
+                        [elementId]="'problem'+i"
                         [ngClass]="{'borderRed': showProblemError}"
                         (onTextChange)="updateData($event)"
                       >
@@ -193,7 +193,7 @@
                       <text-zone
                         [readonly]="!canEdit"
                         [data]="innovationCards.solution"
-                        [elementId]="'solution'"
+                        [elementId]="'solution'+i"
                         [ngClass]="{'borderRed': showSolutionError}"
                         (onTextChange)="updateData($event)"
                       >
@@ -203,7 +203,7 @@
                        -->
                       <div class="charRemaining">
                       <span [ngStyle]="{'color': getColor(innovationCards.solution.length | characterCountdown:1000)}">
-                        {{ project.innovationCards[i].solution.length | characterCountdown:1000 }}
+                        {{ innovationCards.solution.length | characterCountdown:1000 }}
                       </span>
                       </div>
                       <div class="form-error" *ngIf="showSolutionError">

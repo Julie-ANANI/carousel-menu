@@ -154,7 +154,13 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   updateData(event: {id: string, content: string}) {
-    this.project.innovationCards[this.innovationCardEditingIndex][event.id] = event.content;
+    if (event.id.indexOf('summary') !== -1) {
+      this.project.innovationCards[this.innovationCardEditingIndex].summary = event.content;
+    } else if (event.id.indexOf('problem') !== -1) {
+      this.project.innovationCards[this.innovationCardEditingIndex].problem = event.content;
+    } else if (event.id.indexOf('solution') !== -1) {
+      this.project.innovationCards[this.innovationCardEditingIndex].solution = event.content;
+    }
     this.notifyModelChanges();
   }
 
