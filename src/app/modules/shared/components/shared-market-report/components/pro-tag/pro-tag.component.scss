@@ -1,61 +1,135 @@
-.pro-info {
+.pro-tag-wrapper {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  font-size: 0.7rem;
+  font-size: 14px;
   height: 100%;
 
-  .user {
-    display: inline-flex;
+  .filter-wrapper {
+    visibility: hidden;
+    height: 19px;
+
+    .filter-tag {
+      position: absolute;
+      background: white;
+      visibility: hidden;
+      box-shadow: 0 0 24px 0 rgba(0,0,0,0.5);
+      border-radius: 3px;
+      z-index: 4;
+      width: 150px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+
+      ul {
+        list-style: none;
+      }
+
+      ul:hover {
+        background-color: #FFB300;
+        cursor: pointer;
+
+        li {
+          color: white;
+        }
+
+      }
+
+    }
+
+  }
+
+  .filter-wrapper:hover {
+
+    .filter-tag, .filter-tag:hover {
+      animation-name: fadeIn;
+      animation-duration: 1s;
+      animation-timing-function: ease-in-out;
+      visibility: visible;
+    }
+
+  }
+
+  .detail-wrapper {
+    display: flex;
     flex-direction: column;
+    text-align: center;
+    justify-content: space-between;
+    padding-left: 5px;
+    padding-right: 5px;
 
-    .detail {
+    .quality-wrapper {
+      height: 26.4px;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 94.6px;
+      margin-bottom: 20px;
 
-      .flag {
-        margin-right: 10px;
-        margin-bottom: 10px;
-        float: left;
+      p {
+        padding: 5px 14.5px;
+        font-size: 12px;
+        background-color: #2ECC71;
+        color: white;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 3px;
       }
 
     }
 
-    .profile, .email {
-      margin-bottom: 10px;
+    .user-wrapper {
+      margin-bottom: 20px;
+      height: 100%;
 
-      a {
-        color: #0B90C6;
+      .name-wrapper {
+        font-size: 16px;
+        font-weight: 600;
       }
 
-      a:hover {
-        color: #0B90C6;
-        text-decoration: underline;
-      }
-
-    }
-
-    .job, .company {
-      margin-bottom: 10px;
-
-      i {
+      .job-wrapper {
         font-size: 15px;
-        margin: auto 8px auto 5px;
+        color: #4F5D6B;
+      }
+
+      .company-wrapper {
+        font-size: 14px;
+        color: #97A4B1;
+        font-weight: 600;
+      }
+
+    }
+
+    .tag-wrapper {
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: -1px;
+
+      p {
+        background-color: #4F5D6B;
+        padding: 5px 15px;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 25px;
+        color: white;
       }
 
     }
 
   }
 
-  .answer {
-    text-decoration: underline;
-    cursor: pointer;
+  .flag-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
   }
 
-  .tag-wrapper {
-    padding-bottom: 10px;
-    .tag-label {
-      margin-left: 10px;
-      cursor: pointer;
-    }
+}
+
+.pro-tag-wrapper:hover {
+
+  .filter-wrapper {
+    visibility: visible;
   }
 
 }

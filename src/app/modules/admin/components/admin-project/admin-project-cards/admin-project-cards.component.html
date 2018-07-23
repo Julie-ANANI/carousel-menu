@@ -5,12 +5,12 @@
       <div class="columns operator-comment">
         <div class="column col-8 centered">
           <h6>Commentaire pour le client :</h6>
-          <text-zone
+          <app-text-zone
             [elementId]="'comments'"
             [readonly]="false"
             [data]="project?.comments"
             (onEditorKeyup)="commentKeyupHandlerFunction($event)">
-          </text-zone>
+          </app-text-zone>
         </div>
       </div>
 

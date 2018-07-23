@@ -78,6 +78,7 @@ export const COMMON = {
     'B': 'termes et conditions d\'utilisation.',
   },
   'PROFILE_URL': 'Profile URL',
+  'TOP_PROFILE': 'Profil haut',
 
   'REQUIRED': {
     'FIRSTNAME': 'Le prénom est requis.',

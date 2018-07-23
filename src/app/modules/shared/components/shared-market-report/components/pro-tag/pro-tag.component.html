@@ -1,51 +1,71 @@
-<div class="pro-info">
+<div class="pro-tag-wrapper">
 
-  <div class="user">
+  <!-- Filter -->
+  <div  class="filter-wrapper">
 
-    <div class="detail">
-      <div class="flag">
-        <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
+    <!-- Filter icon -->
+    <div *ngIf="answer.tags?.length > 0">
+      <svg width="20px" height="14px" viewBox="0 0 20 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Synthesis-v3" transform="translate(-756.000000, -4076.000000)">
+            <rect fill="white" x="0" y="0" width="1440" height="10458"></rect>
+            <text id="filter_list---material-copy" font-family="material" font-size="26" font-weight="normal" fill="#97A4B1">
+              <tspan x="753" y="4092"></tspan>
+            </text>
+          </g>
+        </g>
+      </svg>
+
+      <!-- Filter menu -->
+      <div class="filter-tag">
+        <ul *ngFor="let t of answer.tags">
+          <li (click)="newFilter($event, t)">
+            {{ t?.label | multiling:lang }}
+          </li>
+        </ul>
       </div>
-      <div class="name">
-        {{ answer.professional?.firstName[0] | uppercase }}{{ answer.professional?.firstName | slice:1 }} {{ answer.professional?.lastName }}
-      </div>
-    </div>
 
-    <div *ngIf="answer.professional?.profileUrl" class="profile">
-      <a [href]="answer.professional?.profileUrl" target="_blank">
-        {{ answer.professional?.profileUrl }}
-      </a>
-    </div>
-
-    <div *ngIf="answer.job || answer.professional?.jobTitle" class="job">
-      <i class="fas fa-user" aria-hidden="true"></i> {{ answer.job || answer.professional?.jobTitle }}
-    </div>
-
-    <div *ngIf="answer.company?.name || answer.professional?.company" class="company">
-      <i class="fas fa-building"></i> {{ answer.company?.name || answer.professional?.company }}
-    </div>
-
-    <div *ngIf="answer.professional?.email" class="email">
-      <a [href]="'mailto:'+answer.professional.email">
-        {{ answer.professional.email }}
-      </a>
     </div>
 
   </div>
 
-  <div class="answer">
-    <span (click)="seeAnswer($event, answer)">{{ 'MARKET_REPORT.SEE_ANSWERS' | translate }}</span>
+  <!-- Detail -->
+  <div class="detail-wrapper">
+
+    <!-- Top profile -->
+    <div class="quality-wrapper">
+      <p *ngIf="answer.profileQuality === 2">{{ 'COMMON.TOP_PROFILE' | translate }}</p>
+    </div>
+
+    <!-- User -->
+    <div class="user-wrapper">
+
+      <!-- Name -->
+      <p class="name-wrapper">
+        <span class="text-link" (click)="seeAnswer($event, answer)">
+          {{ answer.professional?.firstName[0] | uppercase }}{{ answer.professional?.firstName | slice:1 }} {{ answer.professional?.lastName }}
+        </span>
+      </p>
+
+      <!-- Job -->
+      <p *ngIf="answer.job || answer.professional?.jobTitle" class="job-wrapper">{{ answer.job || answer.professional?.jobTitle }}</p>
+
+      <!-- Company -->
+      <p *ngIf="answer.company?.name || answer.professional?.company" class="company-wrapper">{{ answer.company?.name || answer.professional?.company }}</p>
+    </div>
+
+    <!-- Tag -->
+    <div *ngIf="answer.tags?.length > 0" class="tag-wrapper">
+      <p *ngIf="selectedTag">#{{ selectedTag | multiling:lang }}</p>
+      <p *ngIf="!selectedTag">#{{ answer.tags[0].label | multiling:lang }}</p>
+    </div>
+
   </div>
 
-  <div class="tag-wrapper" *ngIf="answer.tags?.length > 0">
-    <i class="fa fa-tag"></i>
-    <span *ngFor="let t of answer.tags"
-          class="label label-rounded label-primary tag-label"
-          (click)="newFilter($event, t)">
-      {{t?.label | multiling:lang}}
-      <i class="fas fa-filter"></i>
-    </span>
+  <!-- Flag -->
+  <div class="flag-wrapper">
+    <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
   </div>
-
 
 </div>
+

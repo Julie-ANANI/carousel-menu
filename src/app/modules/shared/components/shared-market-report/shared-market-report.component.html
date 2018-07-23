@@ -78,271 +78,258 @@
 
         <!--Main page -->
         <div *ngIf="!adminSide" class="section-container sc-front-wrapper">
-          <div class="column col-11 col-mx-auto section-inline-container white-background">
+          <div class="column col-11 col-mx-auto">
+            <div class="section-inline-container white-background">
 
-            <!-- Logo -->
-            <div class="sc-header-wrapper">
-              <img src="{{ getLogo() }}" alt="UMI" height="35px">
+              <!-- Logo -->
+              <div class="sc-header-wrapper">
+                <img src="{{ getLogo() }}" alt="UMI" height="35px">
+              </div>
+
+              <!-- Project name -->
+              <div class="sc-body-wrapper">
+                <h1>{{ project.name }}</h1>
+                <h6>{{ project.created | date }}</h6>
+              </div>
+
+              <!-- Link -->
+              <div class="sc-footer-wrapper">
+                <a href="https://www.umi.us/" class="text-link">www.umi.us</a>
+                <p>UMI, Campus Verrazzano, 1 place Giovanni da Verrazzano, 69009 Lyon, France</p>
+              </div>
+
             </div>
-
-            <!-- Project name -->
-            <div class="sc-body-wrapper">
-              <h1>{{ project.name }}</h1>
-              <h6>{{ project.created | date }}</h6>
-            </div>
-
-            <!-- Link -->
-            <div class="sc-footer-wrapper">
-              <a href="https://www.umi.us/" class="text-link">www.umi.us</a>
-              <p>UMI, Campus Verrazzano, 1 place Giovanni da Verrazzano, 69009 Lyon, France</p>
-            </div>
-
           </div>
         </div>
 
         <!-- Innovation detail -->
         <div *ngIf="!adminSide" class="section-light-container">
-          <div class="column col-11 col-mx-auto section-inline-container sc-innovation-wrapper white-background">
+          <div class="column col-11 col-mx-auto">
+            <div class="section-inline-container sc-innovation-wrapper white-background">
 
-            <!-- Column 1 -->
-            <div class="sc-summary-wrapper">
-              <h1 class="main-heading">{{ project.innovationCards[0].title }}</h1>
-              <p>{{ project.innovationCards[0].summary }}</p>
-              <div *ngIf="project.principalMedia?.type === 'PHOTO'" [ngStyle]="{ 'padding-bottom': '20px' }">
-                <img
-                  [src]="project.principalMedia.url"
-                  [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
-                  height="146" width="220px">
+              <!-- Column 1 -->
+              <div class="sc-summary-wrapper">
+                <h1 class="main-heading">{{ project.innovationCards[0].title }}</h1>
+                <p>{{ project.innovationCards[0].summary }}</p>
+                <div *ngIf="project.principalMedia?.type === 'PHOTO'" [ngStyle]="{ 'padding-bottom': '20px' }">
+                  <img
+                    [src]="project.principalMedia.url"
+                    [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+                    height="146" width="220px">
+                </div>
+                <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
+                <ul class="sc-advantage">
+                  <li *ngFor="let advantage of project.innovationCards[0].advantages;">
+                    {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
+                  </li>
+                </ul>
               </div>
-              <div *ngIf="project.principalMedia?.type === 'VIDEO'" [ngStyle]="{ 'padding-bottom': '20px' }">
-                <iframe
-                  [src]="domSanitizer.bypassSecurityTrustResourceUrl(project.principalMedia.video.embeddableUrl)"
-                  height="148" width="220px">
-                </iframe>
+
+              <!-- Column 2 -->
+              <div class="sc-issue-wrapper">
+                <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
+                <p>{{ project.innovationCards[0].problem }}</p>
               </div>
-              <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
-              <ul class="sc-advantage">
-                <li *ngFor="let advantage of project.innovationCards[0].advantages;">
-                  {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
-                </li>
-              </ul>
-            </div>
 
-            <!-- Column 2 -->
-            <div class="sc-issue-wrapper">
-              <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
-              <p>{{ project.innovationCards[0].problem }}</p>
-            </div>
+              <!-- Column 3 -->
+              <div class="sc-solution-wrapper">
+                <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
+                <p>{{ project.innovationCards[0].solution }}</p>
+              </div>
 
-            <!-- Column 3 -->
-            <div class="sc-solution-wrapper">
-              <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
-              <p>{{ project.innovationCards[0].solution }}</p>
             </div>
-
           </div>
         </div>
 
         <!-- Innovation targeting -->
         <div *ngIf="!adminSide" class="section-light-container">
-          <div class="column col-11 col-mx-auto section-inline-container sc-targeting-wrapper white-background">
+          <div class="column col-11 col-mx-auto">
+            <div class="section-inline-container sc-targeting-wrapper white-background">
 
-            <!-- Column 1 -->
-            <div class="sc-map-wrapper">
-              <h1 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}</h1>
-              <app-worldmap
-                [initialConfiguration]="continentTarget"
-                [countriesColor]="'#2ECC71'"
-                [isEditable]="false">
-              </app-worldmap>
-              <div *ngIf="project.settings.geography.exclude.length > 0" class="sc-question-wrapper">
-                <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</p>
-                <div *ngFor="let country of project.settings.geography.exclude" class="sc-answer-wrapper">
-                  {{ country.name }}
-                </div>
-              </div>
-            </div>
-
-            <!-- Column 2 -->
-            <div class="sc-t-answer-wrapper">
-
-              <div *ngIf="project.settings.market.comments.length > 0">
-                <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}</p>
-                <p>{{ project.settings.market.comments }}</p>
-              </div>
-
-              <div *ngIf="project.settings.companies.include.length > 0" class="sc-question-wrapper">
-                <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}</p>
-                <div *ngFor="let companyInclude of project.settings.companies.include" class="sc-answer-wrapper">
-                  {{ companyInclude.name }}
+              <!-- Column 1 -->
+              <div class="sc-map-wrapper">
+                <h1 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}</h1>
+                <app-worldmap
+                  [initialConfiguration]="continentTarget"
+                  [countriesColor]="'#2ECC71'"
+                  [isEditable]="false">
+                </app-worldmap>
+                <div *ngIf="project.settings.geography.exclude.length > 0" class="sc-question-wrapper">
+                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</p>
+                  <div *ngFor="let country of project.settings.geography.exclude" class="sc-answer-wrapper">
+                    {{ country.name }}
+                  </div>
                 </div>
               </div>
 
-              <div *ngIf="project.settings.companies.exclude.length > 0" class="sc-question-wrapper">
-                <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}</p>
-                <div *ngFor="let companyExclude of project.settings.companies.exclude" class="sc-answer-wrapper">
-                  {{ companyExclude.name }}
+              <!-- Column 2 -->
+              <div class="sc-t-answer-wrapper">
+                <div *ngIf="project.settings.market.comments.length > 0">
+                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}</p>
+                  <p>{{ project.settings.market.comments }}</p>
                 </div>
-              </div>
-
-              <div *ngIf="project.settings.professionals.description.length > 0" class="sc-question-wrapper">
-                <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate }}</p>
-                <p>{{ project.settings.professionals.description }}</p>
-              </div>
-
-              <div *ngIf="project.settings.professionals.exclude.length > 0" class="sc-question-wrapper">
-                <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</p>
-                <div *ngFor="let professionalExclude of project.settings.professionals.exclude" class="sc-answer-wrapper">
-                  {{ professionalExclude.text }}
+                <div *ngIf="project.settings.companies.include.length > 0" class="sc-question-wrapper">
+                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}</p>
+                  <div *ngFor="let companyInclude of project.settings.companies.include" class="sc-answer-wrapper">
+                    {{ companyInclude.name }}
+                  </div>
                 </div>
-              </div>
-
-              <div *ngIf="project.settings.comments.length > 0" class="sc-question-wrapper">
-                <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</p>
-                <p>{{ project.settings.comments }}</p>
+                <div *ngIf="project.settings.companies.exclude.length > 0" class="sc-question-wrapper">
+                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}</p>
+                  <div *ngFor="let companyExclude of project.settings.companies.exclude" class="sc-answer-wrapper">
+                    {{ companyExclude.name }}
+                  </div>
+                </div>
+                <div *ngIf="project.settings.professionals.description.length > 0" class="sc-question-wrapper">
+                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate }}</p>
+                  <p>{{ project.settings.professionals.description }}</p>
+                </div>
+                <div *ngIf="project.settings.professionals.exclude.length > 0" class="sc-question-wrapper">
+                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</p>
+                  <div *ngFor="let professionalExclude of project.settings.professionals.exclude" class="sc-answer-wrapper">
+                    {{ professionalExclude.text }}
+                  </div>
+                </div>
+                <div *ngIf="project.settings.comments.length > 0" class="sc-question-wrapper">
+                  <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</p>
+                  <p>{{ project.settings.comments }}</p>
+                </div>
               </div>
 
             </div>
-
           </div>
         </div>
 
         <!-- Innovation analytics -->
         <div *ngIf="!adminSide" class="section-light-container">
-          <div class="column col-11 col-mx-auto section-inline-container sc-exploration-wrapper white-background">
+          <div class="column col-11 col-mx-auto">
+            <div class="section-inline-container sc-exploration-wrapper white-background">
 
-            <!-- Heading -->
-            <h1 class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate }}</h1>
+              <!-- Heading -->
+              <h1 class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate }}</h1>
 
-            <!-- Analytic -->
-            <div class="sc-analytic-wrapper">
-
-              <!-- Professionals -->
-              <div class="cs-info-analytic">
-                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats?.nbPros || 0 }}</h5>
-              </div>
-
-              <div class="cs-info-analytic pd-top">
-                <svg width="80px" height="38px" viewBox="0 0 80 38">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g transform="translate(-701.000000, -810.000000)">
-                      <g transform="translate(701.000000, 810.000000)">
-                        <polygon fill="#97A4B1" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
-                        <text class="svg-text">
-                          <tspan x="27.4760742" y="24"></tspan>
-                        </text>
+              <!-- Analytic -->
+              <div class="sc-analytic-wrapper">
+                <!-- Professionals -->
+                <div class="cs-info-analytic">
+                  <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate }}</p>
+                  <h5 class="text-center">{{ campaignStats?.nbPros || 0 }}</h5>
+                </div>
+                <div class="cs-info-analytic pd-top">
+                  <svg width="80px" height="38px" viewBox="0 0 80 38">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <g transform="translate(-701.000000, -810.000000)">
+                        <g transform="translate(701.000000, 810.000000)">
+                          <polygon fill="#97A4B1" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                          <text class="svg-text">
+                            <tspan x="27.4760742" y="24"></tspan>
+                          </text>
+                        </g>
                       </g>
                     </g>
-                  </g>
-                </svg>
-              </div>
-
-              <!-- Reached -->
-              <div class="cs-info-analytic">
-                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>
-              </div>
-
-              <div class="cs-info-analytic pd-top">
-                <svg width="80px" height="38px" viewBox="0 0 80 38">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g transform="translate(-701.000000, -810.000000)">
-                      <g transform="translate(701.000000, 810.000000)">
-                        <polygon fill="#2ECC71" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
-                        <text class="svg-text">
-                          <tspan x="27.4760742" y="24"></tspan>
-                        </text>
+                  </svg>
+                </div>
+                <!-- Reached -->
+                <div class="cs-info-analytic">
+                  <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
+                  <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>
+                </div>
+                <div class="cs-info-analytic pd-top">
+                  <svg width="80px" height="38px" viewBox="0 0 80 38">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <g transform="translate(-701.000000, -810.000000)">
+                        <g transform="translate(701.000000, 810.000000)">
+                          <polygon fill="#2ECC71" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                          <text class="svg-text">
+                            <tspan x="27.4760742" y="24"></tspan>
+                          </text>
+                        </g>
                       </g>
                     </g>
-                  </g>
-                </svg>
-              </div>
-
-              <!-- Emails -->
-              <div class="cs-info-analytic">
-                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>
-              </div>
-
-              <div class="cs-info-analytic pd-top">
-                <svg width="80px" height="38px" viewBox="0 0 80 38">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g transform="translate(-701.000000, -810.000000)">
-                      <g transform="translate(701.000000, 810.000000)">
-                        <polygon fill="#EA5858" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
-                        <text class="svg-text">
-                          <tspan x="27.4760742" y="24"></tspan>
-                        </text>
+                  </svg>
+                </div>
+                <!-- Emails -->
+                <div class="cs-info-analytic">
+                  <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
+                  <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>
+                </div>
+                <div class="cs-info-analytic pd-top">
+                  <svg width="80px" height="38px" viewBox="0 0 80 38">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <g transform="translate(-701.000000, -810.000000)">
+                        <g transform="translate(701.000000, 810.000000)">
+                          <polygon fill="#EA5858" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                          <text class="svg-text">
+                            <tspan x="27.4760742" y="24"></tspan>
+                          </text>
+                        </g>
                       </g>
                     </g>
-                  </g>
-                </svg>
-              </div>
-
-              <!-- Clicks -->
-              <div class="cs-info-analytic">
-                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>
-              </div>
-
-              <div class="cs-info-analytic pd-top">
-                <svg width="80px" height="38px" viewBox="0 0 80 38">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g transform="translate(-701.000000, -810.000000)">
-                      <g transform="translate(701.000000, 810.000000)">
-                        <polygon fill="#F79323" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
-                        <text class="svg-text">
-                          <tspan x="27.4760742" y="24"></tspan>
-                        </text>
+                  </svg>
+                </div>
+                <!-- Clicks -->
+                <div class="cs-info-analytic">
+                  <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
+                  <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>
+                </div>
+                <div class="cs-info-analytic pd-top">
+                  <svg width="80px" height="38px" viewBox="0 0 80 38">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <g transform="translate(-701.000000, -810.000000)">
+                        <g transform="translate(701.000000, 810.000000)">
+                          <polygon fill="#F79323" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                          <text class="svg-text">
+                            <tspan x="27.4760742" y="24"></tspan>
+                          </text>
+                        </g>
                       </g>
                     </g>
-                  </g>
-                </svg>
+                  </svg>
+                </div>
+                <!-- Answers -->
+                <div class="cs-info-analytic">
+                  <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
+                  <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>
+                </div>
               </div>
 
-              <!-- Answers -->
-              <div class="cs-info-analytic">
-                <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>
+              <!-- Click rate -->
+              <div class="sc-rate-wrapper">
+                <h1 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.CLICK_MAP_TITLE' | translate }}</h1>
+                <app-worldmap
+                  [countries]="countries"
+                  [countriesColor]="'#2ECC71'"
+                  [isEditable]="false">
+                </app-worldmap>
+              </div>
+
+              <!-- Companies contact -->
+              <div class="sc-company-wrapper">
+                <h1 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h1>
+                <ul class="sc-comp-name-wrapper">
+                  <li *ngFor="let company of companies; let i = index;">
+                    {{ i + 1 + '.'}} {{ formatCompanyName(company.name) }}
+                  </li>
+                </ul>
               </div>
 
             </div>
-
-            <!-- Click rate -->
-            <div class="sc-rate-wrapper">
-              <h1 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.CLICK_MAP_TITLE' | translate }}</h1>
-              <app-worldmap
-                [countries]="countries"
-                [countriesColor]="'#2ECC71'"
-                [isEditable]="false">
-              </app-worldmap>
-            </div>
-
-            <!-- Companies contact -->
-            <div class="sc-company-wrapper">
-              <h1 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h1>
-              <ul class="sc-comp-name-wrapper">
-                <li *ngFor="let company of companies; let i = index;">
-                  {{ i + 1 + '.'}} {{ formatCompanyName(company.name) }}
-                </li>
-              </ul>
-            </div>
-
           </div>
         </div>
 
         <!-- Origin Comment and Professional Responses -->
         <div class="section-light-container">
-          <div class="column col-11 col-mx-auto sac-origin-wrapper">
-            <div class="section-inline-light-container">
-              <h1 class="main-heading">{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h1>
-              <app-question-conclusion
-                [innovation]="project"
-                [question]="{identifier: 'professionals', subtitle: {en: 'professionals', fr: 'professionnels'}}"
-                [readonly]="!adminSide"
-                [stats]="{nbAnswers: answers.length, percentage: 0}">
-              </app-question-conclusion>
+          <div class="column col-11 col-mx-auto">
+            <div class="sac-origin-wrapper">
+              <div class="section-inline-light-container">
+                <h1 class="main-heading">{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h1>
+                <app-question-conclusion
+                  [innovation]="project"
+                  [question]="{identifier: 'professionals', subtitle: {en: 'professionals', fr: 'professionnels'}}"
+                  [readonly]="!adminSide"
+                  [stats]="{nbAnswers: answers.length, percentage: 0}">
+                </app-question-conclusion>
+              </div>
             </div>
           </div>
         </div>
@@ -364,7 +351,11 @@
         <!-- Professionals -->
         <div class="section-light-container" id="professionals">
           <div class="column col-11 col-mx-auto">
-
+            <div class="professional-wrapper">
+              <div *ngFor="let answer of filteredAnswers" class="profile">
+                <app-pro-tag [answer]="answer" [selectedTag]="selectedTag" (addFilter)="addFilter($event)" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -526,8 +517,7 @@
   [template]="sidebarTemplateValue"
   (closeSidebar)="closeSidebar($event)">
   <app-user-answer
-    [adminMode]="adminMode"
-    [mode]="editMode"
+    [adminMode]="adminSide"
     [(userAnswer)]="modalAnswer"
     [innovationId]="innoid"
     [questions]="questions">

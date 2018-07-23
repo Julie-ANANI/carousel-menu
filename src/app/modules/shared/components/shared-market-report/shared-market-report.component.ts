@@ -12,7 +12,6 @@ import { Section } from '../../../../models/section';
 import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
-import { Subject } from 'rxjs/Subject';
 import { Template } from '../../../sidebar/interfaces/template';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
@@ -29,7 +28,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   @Input() adminMode: boolean;
 
   adminSide: boolean;
-  editMode = new Subject<boolean>();
   sidebarTemplateValue: Template = {};
   scrollOn = false;
   private _companies: Array<Clearbit>;
@@ -45,6 +43,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   private _answers: Array<Answer> = [];
   private _filteredAnswers: Array<Answer> = [];
   private _innoid: string;
+  selectedTag: any;
   today: Number;
   objectKeys = Object.keys;
   mapInitialConfiguration: {[continent: string]: boolean};
@@ -283,11 +282,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
-    this.editMode.next(false);
   }
 
   addFilter(event: Filter) {
     this._filters[event.questionId] = event;
+    this.selectedTag = event.questionTitle;
     this.filterAnswers();
   }
 

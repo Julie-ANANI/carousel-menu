@@ -12,6 +12,7 @@ import { Tag } from '../../../../../../models/tag';
 export class ProfessionalTagComponent {
 
   @Input() answer: Answer;
+  @Input() selectedTag: any;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Output() addFilter = new EventEmitter<Filter>();
@@ -25,6 +26,9 @@ export class ProfessionalTagComponent {
 
   public newFilter(event: Event, tag: Tag) {
     event.preventDefault();
+
+    this.selectedTag = tag.label;
+
     this.addFilter.emit({
       status: 'TAG',
       questionTitle: tag.label,

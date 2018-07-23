@@ -504,7 +504,7 @@ body.sample-infographic {
     position: sticky;
     top: 0;
     box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
-    z-index: 3;
+    z-index: 11;
   }
 
   .sc-front-wrapper {
@@ -695,6 +695,27 @@ body.sample-infographic {
     h1 {
       color: white;
       margin-bottom: 0;
+    }
+
+  }
+
+  .professional-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-right: -20px;
+
+    .profile {
+      background: white;
+      border: 1px solid #D7D7D7;
+      min-height: 190px;
+      padding: 15px 16px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+      margin-right: 20px;
+      min-width: 300px;
+      max-width: 420px;
+      flex: 1 0 calc(20% - 1rem);
     }
 
   }
