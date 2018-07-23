@@ -1,13 +1,8 @@
 <h1>{{total}} {{ 'COMMON.QUESTIONNAIRE' | translate }}</h1>
-
-
-
 <div *ngIf="editionMode">
   <div class="text-right">
     <button class="btn btn-primary" (click)="goToEditionMode()">
-    <span *ngIf="editionMode">
           {{ 'COMMON.SAVE' | translate }}
-    </span>
     </button>
   </div>
     <div *ngIf="!nameCreated">
@@ -45,10 +40,8 @@
 <div *ngIf="!editionMode">
 
   <div class="text-right">
-    <button class="btn btn-primary" (click)="goToListMode()">
-    <span *ngIf="!editionMode">
+    <button class="btn btn-primary" (click)="goToEditionMode()">
           {{ 'PRESETS.PRESET.ADD' | translate }}
-    </span>
     </button>
   </div>
 

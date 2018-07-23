@@ -168,6 +168,45 @@ export class AdminPresetsListComponent implements OnInit {
   }
 
 
+  public moveSection(event: any, index: number) {
+    if (event === 'down') {
+      if (index + 1 === this._newPreset.sections.length) {
+        console.log("on ne peut pas descendre plus");
+      } else {
+        const tempSec = JSON.parse(JSON.stringify(this._newPreset.sections[index]));
+        this._newPreset.sections[index] = JSON.parse(JSON.stringify(this._newPreset.sections[index + 1]));
+        this._newPreset.sections[index + 1] = tempSec;
+        const tempState = JSON.parse(JSON.stringify(this._state[index]));
+        this._state[index] = JSON.parse(JSON.stringify(this._state[index + 1]));
+        this._state[index + 1] = tempState;
+        this._newPreset.sections = this._newPreset.sections;
+        this._presetService.save(this._newPreset._id, this._newPreset).first().subscribe( result => {
+          this._newPreset = result;
+          this._newPreset.sections = this._newPreset.sections;
+        });
+      }
+    }
+    if (event === 'up') {
+      if (index === 0) {
+        console.log("on ne peut pas monter plus");
+      } else {
+        const tempSec = JSON.parse(JSON.stringify(this._newPreset.sections[index]));
+        this._newPreset.sections[index] = JSON.parse(JSON.stringify(this._newPreset.sections[index - 1]));
+        this._newPreset.sections[index - 1] = tempSec;
+        const tempState = JSON.parse(JSON.stringify(this._state[index]));
+        this._state[index] = JSON.parse(JSON.stringify(this._state[index - 1]));
+        this._state[index - 1] = tempState;
+        this._newPreset.sections = this._newPreset.sections;
+        this._presetService.save(this._newPreset._id, this._newPreset).first().subscribe( result => {
+          this._newPreset = result;
+          this._newPreset.sections = this._newPreset.sections;
+        });
+      }
+    }
+
+  }
+
+
 
   set config(value: any) { this._config = value; }
   get config(): any { return this._config; }
