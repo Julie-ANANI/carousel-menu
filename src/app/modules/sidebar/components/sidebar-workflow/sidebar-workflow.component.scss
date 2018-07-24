@@ -1,8 +1,23 @@
-.card-header {
-  .d-flex {
-    justify-content: space-between;
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  color: #97A4B1;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-bottom: 30px;
+
+  .discreet-link {
+    display: inline-block;
+    margin-right: 15px;
   }
-  .active {
-    color: #FFB300;
+
+  .sidebar-main-action {
+    text-align: right;
+    flex: 1;
   }
+}
+
+.variable-tiny-mce {
+  font-size: 0.7rem;
 }

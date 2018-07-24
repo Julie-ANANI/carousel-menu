@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <label class="form-label" for="email" *ngIf="editionMode">Signature</label>
+    <label class="form-label" *ngIf="editionMode">Signature</label>
     <text-zone [elementId]="signature.language + signature.name"
                [readonly]="!editionMode"
                [data]="signature.content || ''"
