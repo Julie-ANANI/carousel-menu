@@ -21,6 +21,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   @Output() sectionRemoved = new EventEmitter<any>();
   @Output() stateOut = new EventEmitter<any>();
   @Output() move = new EventEmitter<any>();
+  @Output() questionAdded = new EventEmitter<any>();
 
   public editName = false;
   private _newQuestion: Question;
@@ -85,15 +86,21 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
         en: '',
         fr: ''
       },
-      identifier: this._section.questions.length,
+      identifier: this._section.name + this._section.questions.length.toString(),
       controlType: 'checkbox',
-      canComment: true,
+      canComment: true
     };
+
+    this.questionAdded.emit(this._newQuestion);
+   /*
     this.state.quest.push(false);
     this._emitState();
     this._section.questions.push(this._newQuestion);
     this._emit();
+    */
   }
+
+
 
   private _emit() {
     this.sectionUpdated.emit(this._section);

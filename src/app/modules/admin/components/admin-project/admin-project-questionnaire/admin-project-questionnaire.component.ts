@@ -63,6 +63,16 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     });
   }
 
+  public addQuestion(event: any, index: number) {
+    this._state[index].quest.push(false);
+    this._sections[index].questions.push(event);
+    this._project.preset.sections = this._sections;
+    this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
+      this._project = result;
+      //    this._sections = this._project.preset.sections;
+    });
+  }
+
   public addSection() {
     let name;
     if (this._project.preset && this._project.preset.sections) {

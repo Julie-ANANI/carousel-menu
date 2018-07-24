@@ -5,9 +5,6 @@
           {{ 'COMMON.SAVE' | translate }}
     </button>
   </div>
-    <div *ngIf="!nameCreated">
-      <input type="text" [(ngModel)]="newPreset.name" (keyup.enter)="createPreset($event)">
-    </div>
     <div *ngIf="nameCreated">
       <div class="heading">
         <h2>{{newPreset.name}}</h2>
@@ -24,13 +21,8 @@
           >
           </app-admin-project-questionnaire-section>
         </div>
-        <button class="btn-round btn-primary" (click)="addSection()"><i class="icon icon-plus"> </i>  </button><span> ADD SECTION</span>
+        <button class="btn-round btn-primary" (click)="modalsection = true"><i class="icon icon-plus"> </i>  </button><span> ADD SECTION</span>
       </div>
-
-
-
-
-
     </div>
 </div>
 
@@ -73,7 +65,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let preset of presets">
-        <td><a [routerLink]="['/admin/presets/presets/' + preset._id]">{{preset.name}}</a></td>
+        <td><a (click)="linkeditionMode(preset)">{{preset.name}}</a></td>
         <td>{{preset.sections ? preset.sections.length : 0}}</td>
         <td>{{preset.domain}}</td>
         <td>{{preset.created | date : dateFormat}}</td>
@@ -141,4 +133,52 @@
     </div>
   </div>
 </div>
+</div>
+
+
+
+<!-- Modal de création de questionnaire-->
+<div class="modal" [ngClass]="{'active': (modalquestionnaire && !nameCreated)}">
+  <div class="modal-overlay" (click)="(modalquestionnaire = !modalquestionnaire); (editionMode = !editionMode)"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(modalquestionnaire = !modalquestionnaire); (editionMode = !editionMode)"></button>
+      <div class="modal-title h5"> CHOISIR UN NOM UNIQUE </div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        Appuyer sur entrée après avoir écris le nom du questionnaire.
+        <input type="text" [(ngModel)]="newPreset.name" (keyup.enter)="createPreset($event)">
+        <span *ngIf="errorquestionnaire"> Ce nom est deja pris, veuillez en choisir un nouveau</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="(modalquestionnaire = !modalquestionnaire); (editionMode = !editionMode)">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de création de section-->
+<div class="modal" [ngClass]="{'active': (modalsection)}">
+  <div class="modal-overlay" (click)="(modalsection = !modalsection)"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(modalsection = !modalsection)"></button>
+      <div class="modal-title h5"> CHOISIR UN NOM UNIQUE </div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        Appuyer sur entrée après avoir écris le nom de la section.
+        <input type="text" (keyup.enter)="addSection($event)">
+        <span *ngIf="errorsection"> Ce nom est deja pris, veuillez en choisir un nouveau</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="(modalsection = !modalsection)">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
 </div>
