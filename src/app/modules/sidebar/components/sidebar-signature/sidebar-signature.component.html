@@ -1,4 +1,5 @@
 <div class="card signature" *ngIf="signature">
+  <button *ngIf="editionMode" type="submit" class="btn btn-primary centered" (click)="save()">Save</button>
   <div class="card-header">
     <div class="d-flex">
       <label class="form-switch" *ngIf="signature.content != null">
@@ -19,13 +20,13 @@
             </select>
         </div>
         <div class="form-group">
-          <label class="form-label" for="name">Signature name</label>
+          <label class="form-label" for="name">Internal name</label>
           <input
             class="form-default"
             [(ngModel)]="signature.name"
             id="name"
             type="text"
-            placeholder="Karine - Ambassador">
+            placeholder="">
         </div>
         <div class="form-group">
           <label class="form-label" for="from">From name</label>
@@ -34,7 +35,7 @@
             [(ngModel)]="signature.from"
             id="from"
             type="text"
-            placeholder="Karine Caulfield">
+            placeholder="">
         </div>
         <div class="form-group">
           <label class="form-label" for="email">From email</label>
@@ -43,7 +44,7 @@
             [(ngModel)]="signature.email"
             id="email"
             type="text"
-            placeholder="kcaulfield@umi.us">
+            placeholder="">
         </div>
       </div>
     </div>
@@ -54,6 +55,5 @@
                [readonly]="!editionMode"
                [data]="signature.content || ''"
                (onEditorKeyup)="updateContent($event)"></text-zone>
-    <button *ngIf="editionMode" type="submit" class="btn btn-primary centered" (click)="save()">Sauvegarder</button>
   </div>
 </div>
