@@ -187,6 +187,11 @@ export class AdminPresetsListComponent implements OnInit {
     });
   }
 
+  public questionUpdated(event: any) {
+    this._presetService.saveQuestion(event._id,event).first().subscribe(result => {
+
+    })
+  }
 
   public removeQuestion(event: any, index: number) {
     this._presetService.removeQuestion(event._id).first().subscribe(result => {
