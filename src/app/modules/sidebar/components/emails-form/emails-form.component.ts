@@ -140,7 +140,7 @@ export class EmailsFormComponent implements OnInit, OnChanges {
       this.emailsToBlacklists.emit(this.formData.value.email);
       this.emailsToBlacklists.emit(this.formData.value.domain);
     } else if (this.isFilterCountry) {
-      this.countryToFilter.emit({acceptation: this.formData.value.acceptation, name: this.country.name});
+      this.countryToFilter.emit({acceptation: this.formData.value.acceptation, name: this.country.name, flag: this.country.flag});
     } else if (this.isEditCountry) {
       const newCountry = this.formData.value;
       newCountry.expiration === '' ? newCountry.expiration = 0 : newCountry.expiration = newCountry.expiration;
