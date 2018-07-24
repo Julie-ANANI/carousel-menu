@@ -4,16 +4,16 @@ import { PageScrollConfig } from 'ng2-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
+import { FilterService } from './services/filters.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Answer } from '../../../../models/answer';
 import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
-import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
 import { Subject } from 'rxjs/Subject';
-import {Template} from '../../../sidebar/interfaces/template';
+import { Template } from '../../../sidebar/interfaces/template';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -33,7 +33,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
   private _answers: Array<Answer> = [];
-  private _filters: {[questionId: string]: Filter} = {};
   private _filteredAnswers: Array<Answer> = [];
   private _countries: Array<string> = [];
   private _showListProfessional = true;
@@ -53,7 +52,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private answerService: AnswerService,
               private translateNotificationsService: TranslateNotificationsService,
               private location: Location,
-              private innovationService: InnovationService) {}
+              private innovationService: InnovationService,
+              public filterService: FilterService) {
+    this.filterService.reset();
+  }
 
   ngOnInit() {
 
@@ -158,57 +160,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.editMode.next(false);
   }
 
-  public filterAnswers(): void {
-    let filteredAnswers = this._answers;
-    Object.keys(this._filters).forEach((filterKey) => {
-      const filter = this._filters[filterKey];
-      switch (filter.status) {
-        case 'TAG':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            if (filter.questionId && Array.isArray(answer.answerTags[filter.questionId])) {
-              return answer.answerTags[filter.questionId].some((t: Tag) => t._id === filter.value);
-            } else if (!filter.questionId) {
-              return answer.tags.some((t: Tag) => t._id === filter.value);
-            } else {
-              return false;
-            }
-          });
-          break;
-        case 'CHECKBOX':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            return answer.answers[filter.questionId] && answer.answers[filter.questionId][filter.value];
-          });
-          break;
-        case 'CLEARBIT':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            return Array.isArray(answer.answers[filter.questionId]) &&
-              answer.answers[filter.questionId].some((item: any) => item.name === filter.value);
-          });
-          break;
-        case 'COUNTRIES':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            const country = answer.country.flag || answer.professional.country;
-            return filter.value.some((c: string) => c === country);
-          });
-          break;
-        case 'LIST':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            return Array.isArray(answer.answers[filter.questionId]) &&
-              answer.answers[filter.questionId].some((item: any) => item.text === filter.value);
-          });
-          break;
-        case 'RADIO':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            return answer.answers[filter.questionId] === filter.value;
-          });
-          break;
-        default:
-          console.log(`Unknown filter type: ${filter.status}.`);
-      }
-    });
-    this._filteredAnswers = filteredAnswers;
-  }
-
   public resetMap() {
     this.mapInitialConfiguration = {
       africa: true,
@@ -223,29 +174,32 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   public filterByCountries(event: {countries: Array<string>, allChecked: boolean}): void {
     if (!event.allChecked) {
-      this._filters['worldmap'] = {
-        status: 'COUNTRIES',
-        value: event.countries,
-        questionTitle: {en: 'worldmap', fr: 'mappemonde'}
-      };
+      this.filterService.addFilter(
+        {
+          status: 'COUNTRIES',
+          value: event.countries,
+          questionId: 'worldmap',
+          questionTitle: {en: 'worldmap', fr: 'mappemonde'}
+        }
+      );
     } else {
-      delete this._filters['worldmap'];
+      this.filterService.deleteFilter('worldmap');
     }
-    this.filterAnswers();
+    this._filteredAnswers = this.filterService.filter(this._answers);
   }
 
   public addFilter(event: Filter) {
-    this._filters[event.questionId] = event;
-    this.filterAnswers();
+    this.filterService.addFilter(event);
+    this._filteredAnswers = this.filterService.filter(this._answers);
   }
 
   public deleteFilter(key: string, event: Event) {
     event.preventDefault();
-    delete this._filters[key];
     if (key === 'worldmap') {
       this.resetMap();
     }
-    this.filterAnswers();
+    this.filterService.deleteFilter(key);
+    this._filteredAnswers = this.filterService.filter(this._answers);
   }
 
   public print(event: Event): void {
@@ -261,19 +215,17 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return this.project.status;
   }
 
-
   get answers(): Array<Answer> {
     return this._answers;
   }
 
   get filters() {
-    return this._filters;
+    return this.filterService.filters;
   }
 
   get filteredAnswers(): Array<Answer> {
     return this._filteredAnswers;
   }
-
 
   get countries(): Array<string> {
     return this._countries;
@@ -293,14 +245,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   set modalAnswer(modalAnswer: Answer) {
     this._modalAnswer = modalAnswer;
-  }
-
-  get showListProfessional(): boolean {
-    return this._showListProfessional;
-  }
-
-  set showListProfessional(val: boolean) {
-    this._showListProfessional = val;
   }
 
   get innoid(): string {
