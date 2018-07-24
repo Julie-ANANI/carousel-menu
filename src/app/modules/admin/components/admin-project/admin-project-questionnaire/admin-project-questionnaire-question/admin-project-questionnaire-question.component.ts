@@ -40,6 +40,7 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
   }
 
   public updateType(event: any) {
+    console.log(event);
     this.question.controlType = event;
     this._emit();
   }

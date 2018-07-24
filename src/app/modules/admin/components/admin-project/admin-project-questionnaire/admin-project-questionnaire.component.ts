@@ -59,7 +59,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     console.log(this._sections);
     this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
       this._project = result;
-      this._sections = this._project.preset.sections;
+  //    this._sections = this._project.preset.sections;
     });
   }
 

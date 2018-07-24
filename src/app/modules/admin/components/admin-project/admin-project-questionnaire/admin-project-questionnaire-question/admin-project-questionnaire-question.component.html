@@ -9,7 +9,12 @@
         <i class="fa fa-caret-down" (click)="down()"></i>
       </div>
 
-      <select class="form-select" id="questionType" name="question" (ngModelChange)="this.updateType($event)" [(ngModel)]="question.controlType">
+      <select class="form-select"
+              id="questionType"
+              name="question"
+              [value]="question.controlType"
+              (ngModelChange)="this.updateType($event)"
+              [(ngModel)]="question.controlType">
         <option [value]="null">...</option>
         <option [value]="'checkbox'">{{ "PRESETS.QUESTION.TYPE.CHECKBOX" | translate }}</option>
         <option [value]="'list'">{{ "PRESETS.QUESTION.TYPE.LIST" | translate }}</option>
