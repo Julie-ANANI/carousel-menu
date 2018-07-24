@@ -15,7 +15,7 @@
             [section]="section"
             [state]="getState(i)"
             (stateOut)="updateState($event, i)"
-            (sectionUpdated)="sectionUpdated($event)"
+            (sectionUpdated)="sectionUpdated($event,i)"
             (questionAdded)="addQuestion($event,i)"
             (sectionRemoved)="sectionRemoved($event)"
             (move)="moveSection($event,i)"

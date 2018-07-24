@@ -144,8 +144,11 @@ export class AdminPresetsListComponent implements OnInit {
 
 
 
-  public sectionUpdated(event: any) {
-
+  public sectionUpdated(event: any, index: number) {
+    this._newPreset.sections[index] = event;
+    this._presetService.saveSection(this._newPreset.sections[index]._id, this._newPreset.sections[index]).first().subscribe( result => {
+      this._newPreset.sections[index] = result;
+    });
   }
 
   public linkeditionMode(preset: any) {
@@ -216,6 +219,7 @@ export class AdminPresetsListComponent implements OnInit {
         console.log('Preset save, la section est dedans');
         this.modalsection = false;
         this.errorsection = false;
+        this._newPreset.__v = pres.__v;
       });
     }, error => {
       this.errorsection = true;
@@ -225,6 +229,8 @@ export class AdminPresetsListComponent implements OnInit {
 
 
   public moveSection(event: any, index: number) {
+      //  todo
+    console.log(this._newPreset);
     if (event === 'down') {
       if (index + 1 === this._newPreset.sections.length) {
         console.log('on ne peut pas descendre plus');
@@ -235,10 +241,9 @@ export class AdminPresetsListComponent implements OnInit {
         const tempState = JSON.parse(JSON.stringify(this._state[index]));
         this._state[index] = JSON.parse(JSON.stringify(this._state[index + 1]));
         this._state[index + 1] = tempState;
-        this._newPreset.sections = this._newPreset.sections;
         this._presetService.save(this._newPreset._id, this._newPreset).first().subscribe( result => {
-          this._newPreset = result;
-          this._newPreset.sections = this._newPreset.sections;
+          this._newPreset.__v = result.__v;
+          console.log(result);
         });
       }
     }
@@ -246,16 +251,17 @@ export class AdminPresetsListComponent implements OnInit {
       if (index === 0) {
         console.log('on ne peut pas monter plus');
       } else {
+
         const tempSec = JSON.parse(JSON.stringify(this._newPreset.sections[index]));
         this._newPreset.sections[index] = JSON.parse(JSON.stringify(this._newPreset.sections[index - 1]));
         this._newPreset.sections[index - 1] = tempSec;
         const tempState = JSON.parse(JSON.stringify(this._state[index]));
         this._state[index] = JSON.parse(JSON.stringify(this._state[index - 1]));
         this._state[index - 1] = tempState;
-        this._newPreset.sections = this._newPreset.sections;
+
         this._presetService.save(this._newPreset._id, this._newPreset).first().subscribe( result => {
-          this._newPreset = result;
-          this._newPreset.sections = this._newPreset.sections;
+          this._newPreset.__v = result.__v;
+          console.log(result);
         });
       }
     }
