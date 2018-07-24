@@ -49,6 +49,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     }
   }
 
+  public removeQuestion(event: any, index: number) {
+
+  }
+
   public updateState(event: any, index: number) {
     this._state[index] = event;
   }

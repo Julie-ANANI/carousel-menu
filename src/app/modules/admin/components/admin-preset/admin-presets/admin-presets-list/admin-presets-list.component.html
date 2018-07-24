@@ -17,8 +17,9 @@
             (stateOut)="updateState($event, i)"
             (sectionUpdated)="sectionUpdated($event,i)"
             (questionAdded)="addQuestion($event,i)"
-            (sectionRemoved)="sectionRemoved($event)"
+            (sectionRemoved)="sectionRemoved($event,i)"
             (move)="moveSection($event,i)"
+            (questionRemoved)="removeQuestion($event, i)"
           >
           </app-admin-project-questionnaire-section>
         </div>

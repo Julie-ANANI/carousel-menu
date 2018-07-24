@@ -136,6 +136,7 @@ export class AdminPresetsListComponent implements OnInit {
       this._state[index].quest.push(false);
       this._newPreset.sections[index].questions.push(result);
       this._presetService.saveSection(this._newPreset.sections[index]._id, this._newPreset.sections[index]).first().subscribe(sec => {
+        this._newPreset.sections[index].__v = sec.__v;
         console.log('section updated')
         console.log(sec);
       })
@@ -145,6 +146,7 @@ export class AdminPresetsListComponent implements OnInit {
 
 
   public sectionUpdated(event: any, index: number) {
+    console.log("hello world")
     this._newPreset.sections[index] = event;
     this._presetService.saveSection(this._newPreset.sections[index]._id, this._newPreset.sections[index]).first().subscribe( result => {
       this._newPreset.sections[index] = result;
@@ -173,12 +175,23 @@ export class AdminPresetsListComponent implements OnInit {
     this._state[index] = event;
   }
 
-  public sectionRemoved(event: any) {
-    this._newPreset.sections.splice(this.indexSection(event), 1);
-    //todo: suppresion section
+  public sectionRemoved(event: any, index: number) {
+    const ID = this._newPreset.sections[index]._id;
+    this._newPreset.sections.splice(index, 1);
     this._presetService.save(this._newPreset._id, this._newPreset).first().subscribe( result => {
-      this._newPreset = result;
+      this._newPreset.__v = result.__v;
+      this._presetService.removeSection(ID).first().subscribe(res => {
+
+        console.log('supprimé')
+      })
     });
+  }
+
+
+  public removeQuestion(event: any, index: number) {
+    this._presetService.removeQuestion(event._id).first().subscribe(result => {
+      console.log('supprimé');
+    })
   }
 
   public getState(index: number) {

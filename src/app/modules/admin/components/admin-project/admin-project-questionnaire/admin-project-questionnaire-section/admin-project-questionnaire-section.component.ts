@@ -22,6 +22,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   @Output() stateOut = new EventEmitter<any>();
   @Output() move = new EventEmitter<any>();
   @Output() questionAdded = new EventEmitter<any>();
+  @Output() questionRemoved = new EventEmitter<any>();
 
   public editName = false;
   private _newQuestion: Question;
@@ -63,6 +64,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   }
 
   public removeQuestion(quest: any) {
+    this.questionRemoved.emit(quest);
     this._section.questions.splice(this._findQuestionIndex(quest), 1);
     this._emit();
   }
