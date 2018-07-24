@@ -10,14 +10,19 @@ import { Subject } from 'rxjs/Subject';
 
 export class PitchComponent implements OnInit {
 
-  @Input() project: Innovation;
+  @Input() set project(value: Innovation) {
+    this._project = value;
+    this._canEdit = value.status === 'EDITING' || value.status === 'SUBMITTED';
+  }
   @Input() changesSaved: boolean;
   @Input() showPitchFieldError: Subject<boolean>;
 
   @Output() saveChanges = new EventEmitter<boolean>();
   @Output() innovationToPreview = new EventEmitter<number>();
 
-  showFieldError: Subject<boolean> = new Subject();
+  private _project: Innovation;
+  private _showFieldError: Subject<boolean> = new Subject();
+  private _canEdit = false;
 
   constructor() {}
 
@@ -31,8 +36,12 @@ export class PitchComponent implements OnInit {
 
   ngOnInit(): void {
     this.showPitchFieldError.subscribe( value => {
-      this.showFieldError.next(value);
+      this._showFieldError.next(value);
     });
   }
+
+  get project() { return this._project; }
+  get showFieldError() { return this._showFieldError; }
+  get canEdit() { return this._canEdit; }
 
 }

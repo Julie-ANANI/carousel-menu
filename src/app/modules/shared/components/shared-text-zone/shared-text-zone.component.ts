@@ -12,7 +12,7 @@ declare const tinymce: any;
 })
 
 export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit {
-  @Input() readonly: boolean;
+  @Input() readonly = false;
   @Input() set data(value: string) {
     this._data = value;
     this._contentHash = this.hashString(value);
