@@ -55,7 +55,7 @@ export class TableComponent {
       this._selector = value._selector;
 
       this._content = [];
-      value._content.forEach(value1 => this._content.push({_isHover: false, _isSelected: false, _content: value1}));
+      value._content.forEach(value1 => this._content.push({_isSelected: false, _content: value1}));
 
       this._isHeadable = value._isHeadable || false;
       this._isSelectable = value._isSelectable || false;
@@ -256,10 +256,6 @@ export class TableComponent {
     }
   }
 
-  hoverRow(key: string): void {
-    this._content[key]._isHover = !(this._content[key]._isHover);
-  }
-
   initialiseColumns() {
     this._columns.forEach((value1, index) => {
       this._columns[index]._isSelected = false,
@@ -272,17 +268,8 @@ export class TableComponent {
     this._columns[index]._isSelected = true;
   }
 
-  hoverColumn(key: string) {
-    const index = this._columns.findIndex(value => value._attrs[0] === key);
-    this._columns[index]._isHover = !(this._columns[index]._isHover);
-  }
-
   isSelected(content: any): boolean {
     return content._isSelected;
-  }
-
-  isHover(content: any): boolean {
-    return content._isHover;
   }
 
   isSortable(column: Column) {
