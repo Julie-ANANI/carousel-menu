@@ -207,7 +207,7 @@
             <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h2>
             <ul class="com-nme">
               <li *ngFor="let company of companies; let i = index;">
-               {{ i + 1 + '.'}} {{ formatCompanyName(company.name) }}
+               {{ i + 1 + '.'}} {{company.name}}
               </li>
             </ul>
           </div>

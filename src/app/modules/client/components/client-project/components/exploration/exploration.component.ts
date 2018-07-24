@@ -61,13 +61,6 @@ export class ExplorationProjectComponent implements OnInit {
         ]
       };
 
-      this._companies = response.answers.map((answer: any) => answer.company || {
-        name: answer.professional.company
-      }).filter(function(item: any, pos: any, self: any) {
-        // this is here to remove duplicate
-        return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
-      });
-
       this._countries = response.answers.reduce((acc: any, answer: any) => {
         if (acc.indexOf(answer.country.flag) === -1) {
           acc.push(answer.country.flag);
@@ -103,6 +96,12 @@ export class ExplorationProjectComponent implements OnInit {
       }, (error) => {
         this.notificationService.error('ERROR.ERROR', error.message);
       });
+
+    if (this.project.settings && this.project.settings.companies
+        && Array.isArray(this.project.settings.companies.include)) {
+      this._companies = this.project.settings.companies.include;
+    }
+
     this._questions = [];
     if (this.project.preset && Array.isArray(this.project.preset.sections)) {
       this.project.preset.sections.forEach((section: Section) => {
@@ -125,13 +124,6 @@ export class ExplorationProjectComponent implements OnInit {
       size: '726px'
     };
 
-  }
-
-  public formatCompanyName(name: string) {
-    if (name) {
-      return `${name[0].toUpperCase()}${name.slice(1)}`;
-    }
-    return '--';
   }
 
   closeSidebar(value: string) {
