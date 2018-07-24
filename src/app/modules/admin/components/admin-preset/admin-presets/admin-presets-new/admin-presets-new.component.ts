@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { environment } from '../../../../../../../environments/environment';
+// import { Router } from '@angular/router';
+// import { environment } from '../../../../../../../environments/environment';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { noSpacesValidator } from '../../directives/no-spaces.validator';
@@ -17,23 +17,43 @@ export class AdminPresetsNewComponent {
   });
 
 
-  constructor(private _router: Router,
+  public errorquestionnaire = false;
+  private _newPreset: {
+    name: string,
+    sections: Array<any>
+  } = {
+    name: '',
+    sections: []
+  }
+
+  constructor(// private _router: Router,
               private _formBuilder: FormBuilder,
-              private _presetService: PresetService) { }
-
-  public onSubmit({value}: { value: any }) {
-    const newPreset = {
-      domain: environment.domain,
-      name: value.name
-    };
-
-    this._presetService.create(newPreset)
-      .first()
-      .subscribe(preset => {
-        this._router.navigate(['/admin/presets/presets/' + preset._id])
-      });
+              private _presetService: PresetService) {
 
   }
 
-  get name(): AbstractControl { return this.formData.get('name'); }
+
+
+  public createPreset() {
+    this._presetService.create(this._newPreset).first().subscribe( (preset) => {
+      console.log('OK questionnaire');
+      console.log(preset);
+      this._newPreset = preset;
+      this.errorquestionnaire = false;
+    }, (error) => {
+      console.log('error:')
+      console.log(error);
+      error = JSON.parse(error);
+      this.errorquestionnaire = true;
+    });
+  }
+
+/*
+  ngOnInit() {
+
+  }
+*/
+
+  get newPreset(): any { return this._newPreset;}
+   get name(): AbstractControl { return this.formData.get('name'); }
 }

@@ -1,21 +1,26 @@
 <app-shared-loader *ngIf="!preset"></app-shared-loader>
-
-<div *ngIf="preset">
-
-  <div class="container">
-    <div class="columns">
-      <div class="column col-10 col-mx-auto">
-        <h2>{{ preset.name }}</h2>
-        <form novalidate [formGroup]="formData" class="form-horizontal">
-          <div class="form-group text-center">
-            <label class="form-label h3">{{ "PRESETS.PRESET.EDIT.ADD" | translate }}</label>
-            <app-autocomplete-input (update)="addSection($event)"
-                                    [forceSelection]="true"
-                                    [config]="addSectionConfig"></app-autocomplete-input>
-          </div>
-          <button type="submit" class="btn btn-primary centered" (click)="save($event)">{{ 'PRESETS.PRESET.EDIT.SAVE' | translate }}</button>
-        </form>
-      </div>
+<div *ngIf="nameCreated">
+  <div class="heading">
+    <h2>{{newPreset.name}}</h2>
+  </div>
+  <div class="body">
+    <div *ngFor="let section of newPreset.sections; let i=index">
+      <app-admin-project-questionnaire-section
+        [section]="section"
+        [state]="getState(i)"
+        (stateOut)="updateState($event, i)"
+        (sectionUpdated)="sectionUpdated($event,i)"
+        (questionAdded)="addQuestion($event,i)"
+        (sectionRemoved)="sectionRemoved($event,i)"
+        (questionUpdated)="questionUpdated($event,i)"
+        (move)="moveSection($event,i)"
+        (questionRemoved)="removeQuestion($event, i)"
+      >
+      </app-admin-project-questionnaire-section>
     </div>
+    <button class="btn-round btn-primary" (click)="modalsection = true"><i class="icon icon-plus"> </i>  </button><span> ADD SECTION</span>
   </div>
 </div>
+
+
+

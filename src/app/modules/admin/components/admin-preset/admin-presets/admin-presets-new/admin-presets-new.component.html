@@ -1,3 +1,4 @@
+<!--
 <div class="container">
   <div class="columns">
     <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit(formData)" class="column col-10 col-mx-auto">
@@ -22,3 +23,25 @@
     </form>
   </div>
 </div>
+
+<!-- Modal de création de questionnaire-->
+<div class="modal" [ngClass]="{'active': true}">
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-title h5"> CHOISIR UN NOM UNIQUE </div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        Appuyer sur entrée après avoir écris le nom du questionnaire.
+        <input type="text" [(ngModel)]="newPreset.name" (keyup.enter)="createPreset($event)">
+        <span *ngIf="errorquestionnaire"> Ce nom est deja pris, veuillez en choisir un nouveau</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="newPreset"></div>

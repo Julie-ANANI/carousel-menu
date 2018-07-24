@@ -18,64 +18,20 @@ import 'rxjs/add/operator/debounceTime';
 })
 export class AdminPresetsEditComponent implements OnInit {
 
-  private _preset: Preset;
-  public formData: FormGroup;
-  private _addSectionConfig: {
-    placeholder: string,
-    canOrder: boolean,
-    initialData: Array<Section>,
-    type: string
-  } = {
-    placeholder: 'PRESETS.PRESET.EDIT.SECTION_PLACEHOLDER',
-    canOrder: true,
-    initialData: [],
-    type: 'sections'
-  };
+  private _state: Array<any> = [];
+  private _preset: any;
+
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _presetService: PresetService,
               private _authService: AuthService,
-              private _translateService: TranslateService,
-              private _notificationsService: TranslateNotificationsService,
-              private _formBuilder: FormBuilder) {}
+              private _translateService: TranslateService) {}
 
   ngOnInit() {
-    this._activatedRoute.params.subscribe(params => {
-      const presetId = params['presetId'];
-      this._presetService.get(presetId)
-        .first()
-        .subscribe(preset => {
-          this._preset = preset;
-          this._addSectionConfig.initialData = preset.sections || [];
-          this.formData = this._formBuilder.group({
-            sections: [preset.sections || []]
-          });
-      });
-    });
+   this._preset = this._activatedRoute.snapshot.data['preset'];
+
   }
 
-  /**
-   * Sauvegarde
-   * @param callback
-   */
-  public save(event: Event): void {
-    event.preventDefault();
-    this._presetService
-      .save(this._preset._id, this.formData.value)
-      .first()
-      .subscribe(data => {
-        this._preset = data;
-        this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.PRESET.UPDATED');
-      }, err => {
-        this._notificationsService.error('ERROR.PRESET.UNFORBIDDEN', err);
-      });
-  }
-
-  public addSection(event: any): void {
-    this.formData.get('sections').setValue(event.value);
-  }
-
-  get addSectionConfig() { return this._addSectionConfig; }
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }
   get preset() { return this._preset; }
   get isAdmin(): boolean { return (this._authService.adminLevel & 3) === 3; }
