@@ -449,10 +449,6 @@ body.sample-infographic {
 .synthesis-wrapper {
   color: #484848;
 
-  .bot-rect {
-    width: 300px;
-  }
-
   .white-background {
     background-color: white;
     border-radius: 3px;
@@ -462,8 +458,6 @@ body.sample-infographic {
     padding-top: 25px;
     padding-bottom: 25px;
     background-color: white;
-    box-shadow: none;
-    z-index: 1;
     transition: all 0.35s ease-in-out;
 
     .sc-content-wrapper {
@@ -498,13 +492,6 @@ body.sample-infographic {
 
     }
 
-  }
-
-  .sc-scroll-sticky {
-    position: sticky;
-    top: 0;
-    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
-    z-index: 11;
   }
 
   .sc-front-wrapper {
@@ -734,13 +721,92 @@ body.sample-infographic {
 
 /********************************** Media ***************************************/
 
+@media (max-width: 840px) {
+
+  .sc-innovation-wrapper {
+    flex-direction: column;
+
+    .sc-summary-wrapper {
+      padding-right: 0 !important;
+    }
+
+    .sc-issue-wrapper {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      padding-top: 25px;
+    }
+
+    .sc-solution-wrapper {
+      padding-left: 0 !important;
+      padding-top: 15px;
+    }
+
+  }
+
+  .sc-targeting-wrapper {
+    flex-direction: column;
+
+    .sc-t-answer-wrapper {
+      padding-left: 0 !important;
+      padding-top: 15px;
+    }
+
+  }
+
+  .sc-exploration-wrapper {
+
+    .sc-company-wrapper .sc-comp-name-wrapper li {
+      width: 50% !important;
+    }
+
+  }
+
+}
+
 @media (max-width: 600px) {
+
+  .sc-content-wrapper {
+    flex-direction: column;
+
+    .sc-filter-wrapper {
+      border-top: 1px solid #D8D8D8;
+      border-bottom: 1px solid #D8D8D8;
+      border-left: none !important;
+      border-right: none !important;
+      padding-left: 0 !important;
+    }
+
+  }
+
+  .sc-exploration-wrapper {
+
+    .sc-company-wrapper .sc-comp-name-wrapper li {
+      width: 100% !important;
+    }
+
+  }
+
+}
+
+@media (min-width: 840px) {
+
+  .sc-scroll-sticky {
+    position: sticky;
+    top: 0;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
+    z-index: 11;
+  }
+
+}
+
+/*@media (max-width: 600px) {
 
   #project-synthesis {
 
     .question-wrapper {
       display: none;
     }
+
 
     #answer-wrapper {
       max-width: 100%;
@@ -817,4 +883,4 @@ body.sample-infographic {
 
   }
 
-}
+}*/

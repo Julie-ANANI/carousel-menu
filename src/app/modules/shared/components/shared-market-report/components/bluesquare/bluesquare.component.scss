@@ -35,7 +35,7 @@
 
 }
 
-.big-blue-synthesis {
+/*.big-blue-synthesis {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,5 +99,14 @@
     margin-bottom: 10px;
   }
 
-}
+}*/
 
+/********************************** Media ***************************************/
+
+@media (max-width: 840px) {
+
+  .bluesquare-response-wrapper {
+    min-width: unset;
+  }
+
+}

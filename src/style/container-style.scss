@@ -68,3 +68,17 @@
 .section-inline-light-container {
   padding: 25px;
 }
+
+
+/********************************** Media ***************************************/
+@media (max-width: 600px) {
+
+  .section-inline-container {
+    padding: 25px;
+  }
+
+  .section-inline-light-container {
+    padding: 12.5px;
+  }
+
+}

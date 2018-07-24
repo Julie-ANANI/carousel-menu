@@ -1,6 +1,3 @@
-/**
- * Created by bastien on 16/11/2017.
- */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';

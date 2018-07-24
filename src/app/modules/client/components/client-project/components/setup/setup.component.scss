@@ -2,7 +2,6 @@
   padding-top: 0;
 
   .msg-wrapper {
-    padding-top: 50px;
 
     .content {
       background-color: #2ECC71;
@@ -10,7 +9,7 @@
       font-weight: 600;
       font-size: 18px;
       padding: 15px;
-      border-radius: 5px;
+      border-radius: 3px;
     }
 
     .text-link {
@@ -152,7 +151,7 @@
 
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
 
   .setup-section-1-wrapper {
     position: sticky;
