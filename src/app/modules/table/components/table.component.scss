@@ -12,3 +12,16 @@ i {
     font-size: 28px;
   }
 }
+
+
+button.visibleOnHover {
+  visibility: hidden;
+}
+
+tr:hover {
+  button.visibleOnHover {
+    visibility: visible;
+  }
+}
+
+

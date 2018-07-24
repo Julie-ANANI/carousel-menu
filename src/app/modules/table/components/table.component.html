@@ -28,19 +28,17 @@
 
             <th *ngFor="let column of columns"
                 [ngClass]="{'active': isSelected(column)}"
-                (click)="selectColumn(getAttrs(column)[0])"
-                (mouseenter)="hoverColumn(getAttrs(column)[0])"
-                (mouseleave)="hoverColumn(getAttrs(column)[0])" >
+                (click)="selectColumn(getAttrs(column)[0])">
 
               <sq-sort [config]="config"
                        class="activeHeader"
-                       *ngIf="isSortable(column) && (isHover(column) || isSelected(column))"
+                       *ngIf="isSortable(column)"
                        (configChange)="changeConfig($event)"
                        [prop]="getAttrs(column)[0]">
                 {{getName(column) | translate }}
               </sq-sort>
 
-              <span *ngIf="!isSortable(column) || (!isHover(column) && !isSelected(column))">{{getName(column) | translate }}</span>
+              <span *ngIf="!isSortable(column)">{{getName(column) | translate }}</span>
             </th>
           </tr>
         </ng-container>
@@ -70,17 +68,13 @@
                 {{'COMMON.DELETE' | translate }}
               </button>
             </th>
-            <th></th>
-            <th></th>
           </tr>
         </ng-container>
     </thead>
     <tbody>
 
         <tr *ngFor="let key of getRowsKeys()"
-            [ngClass]="{'active': isSelected(content[key])}"
-            (mouseenter)="hoverRow(key)"
-            (mouseleave)="hoverRow(key)">
+            [ngClass]="{'active': isSelected(content[key])}">
 
           <td *ngIf="isSelectable" (click)="selectRow(key)"><input type="checkbox" [checked]="isSelected(content[key])"/>
             <div class="square-check primary"><i class="icon icon-check"></i></div></td>
@@ -161,9 +155,8 @@
               </span>
 
               <!-- If isEditable we show a button onHover the row -->
-              <button class="btn btn-xs ghost-edit"
+              <button class="btn btn-xs ghost-edit visibleOnHover"
                       *ngIf="columns.indexOf(column) == 0 && (isEditable || isShowable)"
-                      [ngClass]="isHover(content[key]) ? 'visible' : 'invisible'"
                       (click)="edit(content[key])">
                 {{isEditable ? ('COMMON.EDIT' | translate) : ('COMMON.MORE' | translate) }}
               </button>

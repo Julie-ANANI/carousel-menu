@@ -1,0 +1,9 @@
+.visibleOnHover {
+  visibility: hidden;
+}
+
+.form-group-inline-left:hover {
+  .visibleOnHover {
+    visibility: visible;
+  }
+}

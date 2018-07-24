@@ -7,7 +7,7 @@
       [elementId]="domSectionId"
       [readonly]="readonly"
       [data]="innovation?.marketReport[question.identifier]?.conclusion"
-      (onEditorKeyup)="keyupHandlerFunction($event)">
+      (onTextChange)="keyupHandlerFunction($event)">
     </app-text-zone>
 
     <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>

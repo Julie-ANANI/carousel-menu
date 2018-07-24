@@ -4,12 +4,12 @@ import { PageScrollConfig } from 'ng2-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
+import { FilterService } from './services/filters.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Answer } from '../../../../models/answer';
 import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
-import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
 import { Template } from '../../../sidebar/interfaces/template';
@@ -40,10 +40,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     nbProsClicked: number,
     nbValidatedResp: number
   };
-  private _countries: Array<string> = [];
-  private _answers: Array<Answer> = [];
-  private _filteredAnswers: Array<Answer> = [];
-  private _innoid: string;
   selectedTag: any;
   today: Number;
   objectKeys = Object.keys;
@@ -52,9 +48,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
+  private _answers: Array<Answer> = [];
+  private _filteredAnswers: Array<Answer> = [];
+  private _countries: Array<string> = [];
   private _filters: {[questionId: string]: Filter} = {};
   private _showListProfessional = true;
   private _showDetails = true;
+  private _innoid: string;
+
+  public activeSection: string;
+  public today: Number;
+  public objectKeys = Object.keys;
+  public mapInitialConfiguration: {[continent: string]: boolean};
 
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
@@ -65,7 +70,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private translateNotificationsService: TranslateNotificationsService,
               private location: Location,
               private innovationService: InnovationService,
-              private authService: AuthService) {}
+              private authService: AuthService,
+              public filterService: FilterService) {
+    this.filterService.reset();
+  }
 
   ngOnInit() {
     this.isAdmin();
@@ -256,12 +264,28 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   }
 
+  public filterByCountries(event: {countries: Array<string>, allChecked: boolean}): void {
+    if (!event.allChecked) {
+      this.filterService.addFilter(
+        {
+          status: 'COUNTRIES',
+          value: event.countries,
+          questionId: 'worldmap',
+          questionTitle: {en: 'worldmap', fr: 'mappemonde'}
+        }
+      );
+    } else {
+      this.filterService.deleteFilter('worldmap');
+    }
+    this._filteredAnswers = this.filterService.filter(this._answers);
+  }
+
   changeStatus(event: Event, status: 'DONE'): void {
     this.innovationService.updateStatus(this._innoid, status).first().subscribe((results) => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
-      }, (error) => {
-        this.translateNotificationsService.error('ERROR.ERROR', error.message);
-      });
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
+    }, (error) => {
+      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+    });
   }
 
   toggleDetails(event: Event): void {
@@ -287,32 +311,24 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.editMode.next(false);
   }
 
-  addFilter(event: Filter) {
-    this._filters[event.questionId] = event;
+  public addFilter(event: Filter) {
+    this.filterService.addFilter(event);
     this.selectedTag = event.questionTitle;
-    this.filterAnswers();
+    this._filteredAnswers = this.filterService.filter(this._answers);
   }
 
-  deleteFilter(key: string, event: Event) {
+  public deleteFilter(key: string, event: Event) {
     event.preventDefault();
-    delete this._filters[key];
     if (key === 'worldmap') {
       this.resetMap();
     }
-    this.filterAnswers();
+    this.filterService.deleteFilter(key);
+    this._filteredAnswers = this.filterService.filter(this._answers);
   }
 
   public print(event: Event): void {
     event.preventDefault();
     window.print();
-  }
-
-  get innoid(): string {
-    return this._innoid;
-  }
-
-  get countries(): Array<string> {
-    return this._countries;
   }
 
   get campaignStats() {
@@ -323,20 +339,28 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return this._companies;
   }
 
-  get answers(): Array<Answer> {
-    return this._answers;
-  }
-
-  get filteredAnswers(): Array<Answer> {
-    return this._filteredAnswers;
-  }
-
   get logoName(): string {
     return environment.logoSynthURL;
   }
 
   get projectStatus(): string {
     return this.project.status;
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
+  }
+
+  get filters() {
+    return this.filterService.filters;
+  }
+
+  get filteredAnswers(): Array<Answer> {
+    return this._filteredAnswers;
+  }
+
+  get countries(): Array<string> {
+    return this._countries;
   }
 
   get continentTarget(): any {
@@ -349,11 +373,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     }
     return '--';
   }
-
-  get filters() {
-    return this._filters;
-  }
-
 
   get cleaned_questions(): Array<Question> {
     return this._cleaned_questions;
@@ -369,6 +388,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   set modalAnswer(modalAnswer: Answer) {
     this._modalAnswer = modalAnswer;
+  }
+
+  get innoid(): string {
+    return this._innoid;
   }
 
   get showListProfessional(): boolean {

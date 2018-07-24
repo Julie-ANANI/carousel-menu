@@ -8,12 +8,12 @@ import { Media, Video } from '../../../../models/media';
 import { Innovation } from '../../../../models/innovation';
 import { InnovCard } from '../../../../models/innov-card';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/debounceTime';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslationService } from '../../../../services/translation/translation.service';
+
+declare const tinymce: any;
 
 @Component({
   selector: 'app-shared-project-edit-cards',
@@ -24,6 +24,7 @@ import { TranslationService } from '../../../../services/translation/translation
 export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Input() project: Innovation;
+  @Input() canEdit: Boolean;
   @Input() changesSaved: boolean;
   @Input() showPitchFieldError: Subject<boolean>;
 
@@ -46,6 +47,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   private _deleteInnovCardId = '';
   private _langDelete = '';
 
+  private _editors: Array<any> = [];
+
   /*
    * Gestion de l'affichage
    */
@@ -62,7 +65,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.changesSaved = true;
-
     if (this.location.path().slice(0, 6) !== '/admin') {
       this.showPitchFieldError.subscribe(value => {
         if (value) {
@@ -70,7 +72,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         }
       });
     }
-
   }
 
   notifyModelChanges(_event?: any) {
@@ -130,8 +131,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   createInnovationCard(event: Event, lang: string): void {
     event.preventDefault();
-
-    if (this.projectStatus) {
+    if (this.canEdit) {
       if (this.changesSaved) {
         if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
           this.innovationService.createInnovationCard(this.project._id, {
@@ -150,6 +150,17 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   }
 
+  updateData(event: {id: string, content: string}) {
+    if (event.id.indexOf('summary') !== -1) {
+      this.project.innovationCards[this.innovationCardEditingIndex].summary = event.content;
+    } else if (event.id.indexOf('problem') !== -1) {
+      this.project.innovationCards[this.innovationCardEditingIndex].problem = event.content;
+    } else if (event.id.indexOf('solution') !== -1) {
+      this.project.innovationCards[this.innovationCardEditingIndex].solution = event.content;
+    }
+    this.notifyModelChanges();
+  }
+
   /**
    * Add an advantage to the invention card
    * @param event the resulting value sent from the components directive
@@ -158,11 +169,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   addAdvantageToInventionCard (event: {value: Array<{text: string}>}, cardIdx: number): void {
     this.project.innovationCards[cardIdx].advantages = event.value;
     this.notifyModelChanges(event.value);
-    if (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0) {
-      this.showAdvantageError = true;
-    } else {
-      this.showAdvantageError = false;
-    }
+    this.showAdvantageError = (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0);
   }
 
   setAsPrincipal (innovationCardId: string): void {
@@ -227,7 +234,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   deleteModal(innovcardID: string, lang: string) {
-    if (this.projectStatus) {
+    if (this.canEdit) {
       if (this.changesSaved) {
         this._deleteInnovCardId = innovcardID;
         this._langDelete = lang;
@@ -293,6 +300,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (Array.isArray(this._editors) && this._editors.length > 0) {
+      this._editors.forEach((ed) => tinymce.remove(ed));
+    }
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
@@ -311,10 +321,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   get langDelete(): string {
     return this._langDelete;
-  }
-
-  get projectStatus(): boolean {
-    return this.project.status === 'EDITING' || this.project.status === 'SUBMITTED' || this.isAdmin;
   }
 
   get dateFormat(): string {

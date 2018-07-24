@@ -12,7 +12,7 @@
       </h6>
 
       <!-- Summary -->
-      <p>{{ innovation.summary }}</p>
+      <div class="summary" [innerHtml]="innovation.summary"></div>
 
       <!-- Media -->
       <div class="media-wrapper">
@@ -55,7 +55,7 @@
   <div class="section-container">
     <div class="column col-xs-12 col-11 col-mx-auto">
       <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h2>
-      <p>{{ innovation.problem }}</p>
+      <div [innerHtml]="innovation.problem"></div>
     </div>
   </div>
 
@@ -63,7 +63,7 @@
   <div class="section-container">
     <div class="column col-xs-12 col-11 col-mx-auto">
       <h2 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h2>
-      <p>{{ innovation.solution }}</p>
+      <div [innerHtml]="innovation.solution"></div>
     </div>
   </div>
 
