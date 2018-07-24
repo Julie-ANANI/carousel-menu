@@ -24,6 +24,7 @@ export class AdminPresetsEditComponent implements OnInit {
 
   ngOnInit() {
    this._preset = this._activatedRoute.snapshot.data['preset'];
+   console.log(this._preset);
    this._preset.sections.forEach( (sec: any) => {
      const tab: Array<any> = [];
      sec.questions.forEach(( q: any) => {

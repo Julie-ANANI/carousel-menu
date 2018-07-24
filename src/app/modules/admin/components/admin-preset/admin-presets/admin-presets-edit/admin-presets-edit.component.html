@@ -1,10 +1,9 @@
 <app-shared-loader *ngIf="!preset"></app-shared-loader>
-<div *ngIf="nameCreated">
   <div class="heading">
-    <h2>{{newPreset.name}}</h2>
+    <h2>{{preset.name}}</h2>
   </div>
   <div class="body">
-    <div *ngFor="let section of newPreset.sections; let i=index">
+    <div *ngFor="let section of preset.sections; let i=index">
       <app-admin-project-questionnaire-section
         [section]="section"
         [state]="getState(i)"
@@ -18,9 +17,8 @@
       >
       </app-admin-project-questionnaire-section>
     </div>
-    <button class="btn-round btn-primary" (click)="modalsection = true"><i class="icon icon-plus"> </i>  </button><span> ADD SECTION</span>
+    <button class="btn-round btn-primary" (click)="addSection()"><i class="icon icon-plus"> </i>  </button><span> ADD SECTION</span>
   </div>
-</div>
 
 
 
