@@ -150,17 +150,13 @@
     </div>
     <!-- /Innovation detail -->
 
-  </div>
-
-  <!--&lt;!&ndash;  &ndash;&gt;
-
-    &lt;!&ndash; Innovation targeting &ndash;&gt;
+    <!-- Innovation targeting -->
     <div *ngIf="!adminSide" class="section-light-container">
       <div class="container">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="section-inline-container sc-targeting-wrapper white-background">
 
-            &lt;!&ndash; Column 1 &ndash;&gt;
+            <!-- Column 1 -->
             <div class="sc-map-wrapper">
               <h1 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}</h1>
               <app-worldmap
@@ -176,7 +172,7 @@
               </div>
             </div>
 
-            &lt;!&ndash; Column 2 &ndash;&gt;
+            <!-- Column 2 -->
             <div class="sc-t-answer-wrapper">
               <div *ngIf="project.settings.market.comments.length > 0">
                 <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}</p>
@@ -214,20 +210,21 @@
         </div>
       </div>
     </div>
+    <!-- /Innovation targeting -->
 
-    &lt;!&ndash; Innovation analytics &ndash;&gt;
+    <!-- Innovation analytics -->
     <div *ngIf="!adminSide" class="section-light-container">
       <div class="container">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="section-inline-container sc-exploration-wrapper white-background">
 
-            &lt;!&ndash; Heading &ndash;&gt;
+            <!-- Heading -->
             <h1 class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate }}</h1>
 
-            &lt;!&ndash; Analytic &ndash;&gt;
+            <!-- Analytic -->
             <div class="sc-analytic-wrapper">
 
-              &lt;!&ndash; Professionals &ndash;&gt;
+              <!-- Professionals -->
               <div class="cs-info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate }}</p>
                 <h5 class="text-center">{{ campaignStats?.nbPros || 0 }}</h5>
@@ -247,7 +244,7 @@
                 </svg>
               </div>
 
-              &lt;!&ndash; Reached &ndash;&gt;
+              <!-- Reached -->
               <div class="cs-info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
                 <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>
@@ -267,7 +264,7 @@
                 </svg>
               </div>
 
-              &lt;!&ndash; Emails &ndash;&gt;
+              <!-- Emails -->
               <div class="cs-info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
                 <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>
@@ -287,7 +284,7 @@
                 </svg>
               </div>
 
-              &lt;!&ndash; Clicks &ndash;&gt;
+              <!-- Clicks -->
               <div class="cs-info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
                 <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>
@@ -307,14 +304,15 @@
                 </svg>
               </div>
 
-              &lt;!&ndash; Answers &ndash;&gt;
+              <!-- Answers -->
               <div class="cs-info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
                 <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>
               </div>
+
             </div>
 
-            &lt;!&ndash; Click rate &ndash;&gt;
+            <!-- Click rate -->
             <div class="sc-rate-wrapper">
               <h1 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.CLICK_MAP_TITLE' | translate }}</h1>
               <app-worldmap
@@ -324,7 +322,7 @@
               </app-worldmap>
             </div>
 
-            &lt;!&ndash; Companies contact &ndash;&gt;
+            <!-- Companies contact -->
             <div class="sc-company-wrapper">
               <h1 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h1>
               <ul class="sc-comp-name-wrapper">
@@ -338,8 +336,9 @@
         </div>
       </div>
     </div>
+    <!-- /Innovation analytics -->
 
-    &lt;!&ndash; Origin Comment and Professional Responses &ndash;&gt;
+    <!-- Origin Comment and Professional Responses -->
     <div class="section-light-container">
       <div class="container">
         <div class="column col-xs-12 col-11 col-mx-auto">
@@ -357,8 +356,9 @@
         </div>
       </div>
     </div>
+    <!-- /Origin Comment and Professional Responses -->
 
-    &lt;!&ndash; Map &ndash;&gt;
+    <!-- Map -->
     <div class="section-light-container">
       <div class="container">
         <div class="column col-xs-12 col-11 col-mx-auto">
@@ -373,11 +373,12 @@
         </div>
       </div>
     </div>
+    <!-- /Map -->
 
-    &lt;!&ndash; Professionals &ndash;&gt;
+    <!-- Professionals -->
     <div class="section-light-container" id="professionals">
       <div class="container">
-        <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="column col-xs-12 col-11 col-mx-auto prof">
           <div class="professional-wrapper">
             <div *ngFor="let answer of filteredAnswers" class="profile">
               <app-pro-tag [answer]="answer" [selectedTag]="selectedTag" (addFilter)="addFilter($event)" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
@@ -385,7 +386,13 @@
           </div>
         </div>
       </div>
-    </div>-->
+    </div>
+    <!-- /Professionals -->
+
+  </div>
+  <!-- /Project status done -->
+
+  <!--&lt;!&ndash;  &ndash;&gt;
 
     <!-- Other question and answers
     <div class="column col-11 col-mx-auto">
