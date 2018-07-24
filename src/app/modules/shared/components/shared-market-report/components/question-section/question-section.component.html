@@ -1,12 +1,40 @@
+<section class="question-section" [id]=domSectionId>
+
+  <!-- Question -->
+  <div class="header-wrapper">
+    <div class="section-inline-light-container">
+
+      <h1 class="main-heading">{{ question.label | multiling:lang }}</h1>
+
+      <!-- Header section (UMI synthesis) -->
+      <app-question-conclusion
+        *ngIf="question.controlType !== 'checkbox'
+        && question.controlType !== 'radio' && question.controlType !== 'list'
+        && question.controlType !== 'clearbit'"
+        [innovation]="innovation"
+        [question]="question"
+        [readonly]="readonly"
+        [stats]="stats">
+      </app-question-conclusion>
+
+      <!-- Bar chart -->
+      <app-bar-chart
+        *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'"
+        [answers]="answersToShow"
+        [innovation]="innovation"
+        [question]="question"
+        [readonly]="readonly"
+        [stats]="stats"
+        (addFilter)="newFilter($event)"
+        (modalAnswerChange)="seeAnswer($event)">
+      </app-bar-chart>
+
+    </div>
+  </div>
 
 
 
-<!--
-<section [id]=domSectionId>
-
-  <h3>{{ question.label | multiling:lang }}</h3>
-
-  <div class="tags-list" *ngIf="tags?.length > 0">
+  <!--<div class="tags-list" *ngIf="tags?.length > 0">
     <i class="fa fa-tag"></i>
     <span
       *ngFor="let t of tags"
@@ -16,35 +44,17 @@
       {{t?.label | multiling:lang}}
       <i class="fas fa-filter"></i>
     </span>
-  </div>
+  </div>-->
 
   <div>
 
-    &lt;!&ndash; Header section (UMI synthesis) &ndash;&gt;
-    <app-question-conclusion
-      *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'
-      && question.controlType !== 'list' && question.controlType !== 'clearbit'"
-      [innovation]="innovation"
-      [question]="question"
-      [readonly]="readonly"
-      [stats]="stats">
-    </app-question-conclusion>
 
-    &lt;!&ndash; Answers &ndash;&gt;
 
-    &lt;!&ndash; Bar chart &ndash;&gt;
-    <app-bar-chart
-      *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'"
-      [answers]="answersToShow"
-      [innovation]="innovation"
-      [question]="question"
-      [readonly]="readonly"
-      [stats]="stats"
-      (addFilter)="newFilter($event)"
-      (modalAnswerChange)="seeAnswer($event)">
-    </app-bar-chart>
+    <!-- Answers -->
 
-    &lt;!&ndash; Liste d'items (applications, concurrents, partenaires potentiels) &ndash;&gt;
+
+
+    <!-- Liste d'items (applications, concurrents, partenaires potentiels) -->
     <app-item-list
       *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
       [answers]="answersToShow"
@@ -58,9 +68,9 @@
       (modalAnswerChange)="seeAnswer($event)">
     </app-item-list>
 
-    &lt;!&ndash; Answer section &ndash;&gt;
+    <!-- Answer section -->
 
-    &lt;!&ndash; Answer button &ndash;&gt;
+    <!-- Answer button -->
     <div *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'&& question.controlType !== 'list' && question.controlType !== 'clearbit'" class="answer-btn-wrapper">
       <button
         type="button"
@@ -76,25 +86,25 @@
       </button>
     </div>
 
-    &lt;!&ndash; Show answers &ndash;&gt;
+    <!-- Show answers -->
     <div
       *ngIf="showDetails && question.controlType !== 'checkbox' && question.controlType !== 'radio'
       && question.controlType !== 'list' && question.controlType !== 'clearbit'"
       class="answer-show-wrapper">
-      &lt;!&ndash; Scale &ndash;&gt;
+      <!-- Scale -->
       <app-scale
         *ngIf="question.controlType === 'scale'"
         [answers]="answersToShow"
         [question]="question">
       </app-scale>
-      &lt;!&ndash; Avantages Clés &ndash;&gt;
+      <!-- Avantages Clés -->
       <app-stars
         *ngIf="question.controlType === 'stars'"
         [answers]="answersToShow"
         [innovation]="innovation"
         [question]="question">
       </app-stars>
-      &lt;!&ndash; Textarea &ndash;&gt;
+      <!-- Textarea -->
       <ul *ngIf="question.controlType === 'textarea'" class="comments">
         <li *ngFor="let answer of answersToShow">
           <market-comment
@@ -105,7 +115,7 @@
           </market-comment>
         </li>
       </ul>
-      &lt;!&ndash; Toggle &ndash;&gt;
+      <!-- Toggle -->
       <div *ngIf="question.controlType === 'toggle'" class="prosList">
         <div *ngFor="let answer of answersToShow" class="white-frame professional-item">
           <app-pro-tag
@@ -117,13 +127,13 @@
       </div>
     </div>
 
-    &lt;!&ndash;************************************************
+    <!--************************************************
                  COMMENTS SECTION
-      **************************************************&ndash;&gt;
+      **************************************************-->
     <ng-container *ngIf="(showDetails || question.controlType === 'list' || question.controlType === 'clearbit')
                           && answersWithComment.length > 0">
 
-      &lt;!&ndash; Show comments button &ndash;&gt;
+      <!-- Show comments button -->
       <div class="comment-btn-wrapper">
         <button
           type="button"
@@ -138,7 +148,7 @@
         </button>
       </div>
 
-      &lt;!&ndash; Show comments &ndash;&gt;
+      <!-- Show comments -->
       <div class="comment-show-wrapper" *ngIf="showComments">
         <ul class="comments">
           <li *ngFor="let answer of answersWithComment">
@@ -153,8 +163,7 @@
       </div>
 
     </ng-container>
-    &lt;!&ndash; /Comments section &ndash;&gt;
+    <!-- /Comments section -->
 
   </div>
 </section>
--->

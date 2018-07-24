@@ -389,28 +389,29 @@
     </div>
     <!-- /Professionals -->
 
-  </div>
-  <!-- /Project status done -->
-
-  <!--&lt;!&ndash;  &ndash;&gt;
-
-    <!-- Other question and answers
-    <div class="column col-11 col-mx-auto">
-      <div *ngFor="let question of questions">
-        <app-question-section
-          [innovation]="project"
-          [question]="question"
-          [answers]="filteredAnswers"
-          [showComments]="showDetails"
-          [showDetails]="showDetails"
-          [readonly]="!adminMode"
-          (addFilter)="addFilter($event)"
-          (modalAnswerChange)="seeAnswer($event)">
-        </app-question-section>
+    <!-- Other question and answers -->
+    <div class="container">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div *ngFor="let question of questions">
+          <div class="section-light-container">
+            <app-question-section
+              [innovation]="project"
+              [question]="question"
+              [answers]="filteredAnswers"
+              [showComments]="showDetails"
+              [showDetails]="showDetails"
+              [readonly]="!adminSide"
+              (addFilter)="addFilter($event)"
+              (modalAnswerChange)="seeAnswer($event)">
+            </app-question-section>
+          </div>
+        </div>
       </div>
     </div>
+    <!-- /Other question and answers -->
 
-  </div>-->
+  </div>
+  <!-- /Project status done -->
 
 </div>
 <!--

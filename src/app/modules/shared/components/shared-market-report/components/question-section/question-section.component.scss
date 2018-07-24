@@ -67,7 +67,7 @@ ul li {
   }
 }
 
-h1 {
+/*h1 {
   font-size: 36px;
   color: #4C4C4C;
   line-height: 53px;
@@ -76,7 +76,7 @@ h1 {
 
 h1::after {
   display: none;
-}
+}*/
 
 h2 {
   color: #AAB2BD;
@@ -345,6 +345,22 @@ ul.items {
   h2 {
     text-align: center;
     margin-left: 0;
+  }
+
+}
+
+.question-section {
+
+  .header-wrapper {
+    background-color: #4F5D6B;
+    border-radius: 3px;
+    color: white;
+
+    h1 {
+      color: white;
+      margin-bottom: 0;
+    }
+
   }
 
 }

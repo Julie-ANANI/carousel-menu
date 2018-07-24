@@ -56,8 +56,8 @@
 
     <!-- Tag -->
     <div *ngIf="answer.tags?.length > 0" class="tag-wrapper">
-      <p *ngIf="selectedTag">#{{ selectedTag | multiling:lang }}</p>
-      <p *ngIf="!selectedTag">#{{ answer.tags[0].label | multiling:lang }}</p>
+      <p *ngIf="selectedTag" (click)="newFilter($event, selectedTag)">#{{ selectedTag | multiling:lang }}</p>
+      <p *ngIf="!selectedTag" (click)="newFilter($event, answer.tags[0])">#{{ answer.tags[0].label | multiling:lang }}</p>
     </div>
 
   </div>
