@@ -66,7 +66,9 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     };
     this.question.options.push(opt);
     this._emit();
-    }
+  }
+
+
   public deleteOption(index: any) {
     this.question.options.splice(index, 1);
     this._emit();

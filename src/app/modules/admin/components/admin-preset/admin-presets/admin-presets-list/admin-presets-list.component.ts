@@ -146,7 +146,6 @@ export class AdminPresetsListComponent implements OnInit {
 
 
   public sectionUpdated(event: any, index: number) {
-    console.log("hello world")
     this._newPreset.sections[index] = event;
     this._presetService.saveSection(this._newPreset.sections[index]._id, this._newPreset.sections[index]).first().subscribe( result => {
       this._newPreset.sections[index] = result;
@@ -187,10 +186,25 @@ export class AdminPresetsListComponent implements OnInit {
     });
   }
 
-  public questionUpdated(event: any) {
-    this._presetService.saveQuestion(event._id,event).first().subscribe(result => {
+  private _findQuestionIndex(question: any, i: number): number {
+    let k = 0;
+    for (const q of this._newPreset.sections[i].questions) {
+      if (q.identifier === question.identifier) {
+        return k;
+      }
+      k++;
+    }
+    return k;
+  }
 
-    })
+  public questionUpdated(event: any, index: number) {
+    console.log('kikoou');
+    console.log(this._newPreset.sections[index].questions[this._findQuestionIndex(event, index)]);
+    this._presetService.saveQuestion(event._id, event).first().subscribe(result => {
+      console.log('hello u')
+      console.log(result);
+      this._newPreset.sections[index].questions[this._findQuestionIndex(result, index)] = result;
+    });
   }
 
   public removeQuestion(event: any, index: number) {
@@ -247,7 +261,6 @@ export class AdminPresetsListComponent implements OnInit {
 
 
   public moveSection(event: any, index: number) {
-      //  todo
     console.log(this._newPreset);
     if (event === 'down') {
       if (index + 1 === this._newPreset.sections.length) {

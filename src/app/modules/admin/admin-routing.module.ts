@@ -31,8 +31,7 @@ import { NotFoundPageComponent } from '../base/components/not-found-page/not-fou
 
 import { tagsRoutes } from './components/admin-tags/admin-tags-routing.module';
 import { presetsRoutes } from './components/admin-preset/admin-presets/admin-presets-routing.module';
-import { questionsRoutes } from './components/admin-preset/admin-questions/admin-questions-routing.module';
-import { sectionsRoutes } from './components/admin-preset/admin-sections/admin-sections-routing.module';
+
 import { searchRoutes } from './components/admin-search/admin-search-routing.module';
 import { emailsRoutes } from './components/admin-emails/admin-emails-routing.module';
 import { projectRoutes } from './components/admin-project/admin-project-routing.module';
@@ -131,8 +130,6 @@ const adminRoutes: Routes = [
         children: [
           { path: '', redirectTo: 'presets', pathMatch: 'full' },
           ...presetsRoutes,
-          ...questionsRoutes,
-          ...sectionsRoutes
         ]
       },
       {
