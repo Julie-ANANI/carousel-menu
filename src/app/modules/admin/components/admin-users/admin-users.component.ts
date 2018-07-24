@@ -55,9 +55,7 @@ export class AdminUsersComponent implements OnInit {
   loadUsers(config: any): void
   {
     this._config = config;
-    this._userService.getAll(this._config)
-      .first()
-      .subscribe(users => {
+    this._userService.getAll(this._config).first().subscribe(users => {
         this._users = users.result;
         this._total = users._metadata.totalCount;
 

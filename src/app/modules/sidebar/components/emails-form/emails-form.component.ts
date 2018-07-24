@@ -22,6 +22,11 @@ export class EmailsFormComponent implements OnInit, OnChanges {
     this.loadCampaignInfos();
   }
 
+  @Input() set countryInfos(value: any) {
+    this.countryInfo = value;
+    this.loadCountry();
+  }
+
   @Input() sidebarState: Subject<string>;
 
   @Input() set type(type: string) {
@@ -34,17 +39,21 @@ export class EmailsFormComponent implements OnInit, OnChanges {
       this.isShowCampaignInfos = true;
     }else if (type === 'excludeCountry') {
       this.isFilterCountry = true;
+    } else if (type === 'editCountry') {
+      this.isEditCountry = true;
     }
   }
 
   @Output() editBlacklist = new EventEmitter<any>();
   @Output() emailsToBlacklists = new EventEmitter<Array<string>>();
   @Output() countryToFilter = new EventEmitter<any>();
+  @Output() editCountry = new EventEmitter<any>();
 
   isBlacklist = false;
   isExcludeEmails = false;
   isShowCampaignInfos = false;
   isFilterCountry = false;
+  isEditCountry = false;
 
   private _tableInfos: Table = null;
 
@@ -52,8 +61,9 @@ export class EmailsFormComponent implements OnInit, OnChanges {
 
   emailToEdit: any = null;
   campaignInfosToShow: EmailQueueModel = null;
+  countryInfo: any = null;
 
-  private _country: {flag: string, domain: string, name: string} = null;
+  public country: {flag: string, domain: string, name: string} = null;
 
   constructor (private formBuilder: FormBuilder) {}
 
@@ -62,7 +72,7 @@ export class EmailsFormComponent implements OnInit, OnChanges {
       email: ['', [Validators.required, Validators.email]],
       domain: ['', Validators.required],
       expiration: '',
-      accept: [80, [Validators.required, Validators.max(100), Validators.min(0)]]
+      acceptation: [80, [Validators.required, Validators.max(100), Validators.min(0)]]
     });
 
     if (this.sidebarState) {
@@ -70,6 +80,7 @@ export class EmailsFormComponent implements OnInit, OnChanges {
         if (state === 'inactive') {
           setTimeout (() => {
             this.formData.reset();
+            this.country = null;
           }, 700);
         }
       })
@@ -82,6 +93,15 @@ export class EmailsFormComponent implements OnInit, OnChanges {
         ? this.emailToEdit.expiration = ''
         : this.emailToEdit.expiration = new Date(this.emailToEdit.expiration);
       this.formData.patchValue(this.emailToEdit);
+    }
+  }
+
+  loadCountry() {
+    if (this.countryInfo && this.formData) {
+      this.countryInfo.expiration === ''
+        ? this.countryInfo.expiration = ''
+        : this.countryInfo.expiration = new Date(this.countryInfo.expiration);
+      this.formData.patchValue(this.countryInfo);
     }
   }
 
@@ -107,6 +127,7 @@ export class EmailsFormComponent implements OnInit, OnChanges {
     this.isExcludeEmails = false;
     this.isShowCampaignInfos = false;
     this.isFilterCountry = false;
+    this.isEditCountry = false;
   }
 
   onSubmit() {
@@ -119,8 +140,27 @@ export class EmailsFormComponent implements OnInit, OnChanges {
       this.emailsToBlacklists.emit(this.formData.value.email);
       this.emailsToBlacklists.emit(this.formData.value.domain);
     } else if (this.isFilterCountry) {
-      this.countryToFilter.emit({accept: this.formData.value.accept, name: this._country.name});
+      this.countryToFilter.emit({acceptation: this.formData.value.acceptation, name: this.country.name});
+    } else if (this.isEditCountry) {
+      const newCountry = this.formData.value;
+      newCountry.expiration === '' ? newCountry.expiration = 0 : newCountry.expiration = newCountry.expiration;
+      newCountry._id = this.countryInfo._id;
+      this.editCountry.emit(newCountry);
     }
+  }
+
+  public getConfig(type: string): any {
+    const _inputConfig = {
+        'countries': {
+          placeholder: 'COMMON.COUNTRY_PLACEHOLDER',
+          initialData: this.country || null,
+          type: 'countries',
+        }
+    };
+    return _inputConfig[type] || {
+        placeholder: 'Input',
+        initialData: ''
+    };
   }
 
   resetExpirationDate(check: boolean) {
@@ -140,13 +180,13 @@ export class EmailsFormComponent implements OnInit, OnChanges {
   }
 
   updateCountry(event: {value: Array<any>}) {
-    this._country = event.value[0] || null;
+    this.country = event.value[0] || null;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
   }
 
   get tableInfos(): Table { return this._tableInfos; }
-  get country(): { flag: string; domain: string; name: string } { return this._country; }
 
 }
