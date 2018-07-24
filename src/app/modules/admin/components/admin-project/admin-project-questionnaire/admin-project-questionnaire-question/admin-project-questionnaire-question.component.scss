@@ -20,6 +20,7 @@
       i {
         cursor: pointer;
         font-size: 1.2rem;
+        color: #d1dee9;
       }
 
       i:hover {
@@ -76,6 +77,15 @@
 
       .form-group:nth-child(2) {
         margin: 0 30px;
+      }
+    }
+
+    .add-item-language {
+      display: flex;
+      justify-content: space-between;
+
+      .form-group:first-child {
+        margin-right: 15px;
       }
     }
 
