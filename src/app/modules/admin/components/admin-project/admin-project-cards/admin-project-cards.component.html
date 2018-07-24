@@ -9,7 +9,7 @@
             [elementId]="'comments'"
             [readonly]="false"
             [data]="project?.comments"
-            (onEditorKeyup)="commentKeyupHandlerFunction($event)">
+            (onTextChange)="commentKeyupHandlerFunction($event)">
           </text-zone>
         </div>
       </div>
