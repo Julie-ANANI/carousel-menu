@@ -45,6 +45,7 @@ import { InnovationResolver } from './resolvers/innovation.resolver';
 import { RequestResolver } from './resolvers/request.resolver';
 import { ScenarioResolver } from './resolvers/scenario.resolver';
 import { SignatureResolver } from './resolvers/signature.resolver';
+import { PresetResolver } from './resolvers/preset.resolver';
 
 @NgModule({
   imports: [
@@ -105,6 +106,7 @@ import { SignatureResolver } from './resolvers/signature.resolver';
     ScenarioResolver,
     SignatureResolver,
     RequestResolver,
+    PresetResolver,
     TagsService
   ],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-// import { Router } from '@angular/router';
+ import { Router } from '@angular/router';
 // import { environment } from '../../../../../../../environments/environment';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -24,9 +24,10 @@ export class AdminPresetsNewComponent {
   } = {
     name: '',
     sections: []
-  }
+  };
+  public created = false;
 
-  constructor(// private _router: Router,
+  constructor(private _router: Router,
               private _formBuilder: FormBuilder,
               private _presetService: PresetService) {
 
@@ -40,6 +41,8 @@ export class AdminPresetsNewComponent {
       console.log(preset);
       this._newPreset = preset;
       this.errorquestionnaire = false;
+      this.created = true;
+      this._router.navigate(['/admin/presets/presets/' + preset._id])
     }, (error) => {
       console.log('error:')
       console.log(error);

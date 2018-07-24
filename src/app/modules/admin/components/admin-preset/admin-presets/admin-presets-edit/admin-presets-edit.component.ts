@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { PresetService } from '../../../../../../services/preset/preset.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
-import { Preset } from '../../../../../../models/preset';
-import { Section } from '../../../../../../models/section';
 
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
@@ -23,13 +18,22 @@ export class AdminPresetsEditComponent implements OnInit {
 
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _presetService: PresetService,
+             // private _presetService: PresetService,
               private _authService: AuthService,
               private _translateService: TranslateService) {}
 
   ngOnInit() {
    this._preset = this._activatedRoute.snapshot.data['preset'];
-
+   this._preset.sections.forEach( (sec: any) => {
+     const tab: Array<any> = [];
+     sec.questions.forEach(( q: any) => {
+        tab.push(false);
+     });
+     this._state.push({
+       sec: false,
+       quest: tab
+     });
+   });
   }
 
   get dateFormat(): string { return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd'; }

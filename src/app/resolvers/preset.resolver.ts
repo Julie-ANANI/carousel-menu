@@ -13,6 +13,6 @@ export class PresetResolver implements Resolve<any> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this._presetService.get(route.params.projectId);
+    return this._presetService.get(route.params.presetId);
   }
 }
