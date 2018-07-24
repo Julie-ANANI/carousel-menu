@@ -17,7 +17,7 @@
   </div>
   <div class="card-body">
     <h4 *ngIf="editionMode">Contenu</h4>
-    <text-zone [elementId]="email.language + email.step + email.profile"
+    <text-zone [elementId]="language"
                [readonly]="!editionMode"
                [data]="email.content || ''"
                (onEditorKeyup)="updateContent($event)"></text-zone>
