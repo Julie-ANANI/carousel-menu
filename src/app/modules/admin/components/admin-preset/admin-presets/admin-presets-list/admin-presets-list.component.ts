@@ -129,43 +129,27 @@ export class AdminPresetsListComponent implements OnInit {
     }
   }
 
-  public sectionUpdated(event: any) {
-    console.log(event);
-    console.log(this._newPreset);
-
-
-
-
-
-
-
-    console.log(this.indexSection(event));
-    console.log(this._newPreset.sections[this.indexSection(event)].questions[this._newPreset.sections[this.indexSection(event)].questions.length - 1]);
-    if (this._newPreset.sections[this.indexSection(event)].questions.length !== event.questions.length) {
-      console.log("question caszaszaréee");
-      this._presetService.createQuestion((this._newPreset.sections[this.indexSection(event)].questions[this._newPreset.sections[this.indexSection(event)].questions.length - 1])).first().subscribe(result => {
-        this._newPreset.sections[this.indexSection(event)] = event;
-        console.log('question crée');
-        console.log(result);
-        this._presetService.saveSection(this._newPreset.sections[this.indexSection(event)]._id, this._newPreset.sections[this.indexSection(event)]).first().subscribe(result => {
-          console.log('section updated')
-          console.log(result);
-        })
-      })
-    } else {
-      console.log('é"djidze')
-      this._newPreset.sections[this.indexSection(event)] = event;
-      this._presetService.saveSection(this._newPreset.sections[this.indexSection(event)]._id, this._newPreset.sections[this.indexSection(event)]).first().subscribe(result => {
+  public addQuestion(event: any, index: number){
+    this._presetService.createQuestion(event).first().subscribe((result ) => {
+      console.log("question added");
+      console.log(result);
+      this._state[index].quest.push(false);
+      this._newPreset.sections[index].questions.push(result);
+      this._presetService.saveSection(this._newPreset.sections[index]._id, this._newPreset.sections[index]).first().subscribe(sec => {
         console.log('section updated')
-        console.log(result);
+        console.log(sec);
       })
-    }
+    });
+  }
+
+
+
+  public sectionUpdated(event: any) {
+
   }
 
   public linkeditionMode(preset: any) {
     this._presetService.populatePreset(preset._id).first().subscribe(result => {
-      console.log("getter");
-      console.log(result);
       this._newPreset = result;
       this._newPreset.sections.forEach( (sec: any) => {
         const tab: Array<boolean> = [];

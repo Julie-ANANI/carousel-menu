@@ -92,12 +92,6 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
     };
 
     this.questionAdded.emit(this._newQuestion);
-   /*
-    this.state.quest.push(false);
-    this._emitState();
-    this._section.questions.push(this._newQuestion);
-    this._emit();
-    */
   }
 
 
