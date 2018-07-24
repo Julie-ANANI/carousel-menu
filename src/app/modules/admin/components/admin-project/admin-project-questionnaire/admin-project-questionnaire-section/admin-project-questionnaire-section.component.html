@@ -4,7 +4,11 @@
     <i class="fa fa-caret-down" (click)="down()"></i>
   </div>
 
-  <select class="form-select" id="sectionType" name="section" (ngModelChange)="this.updateDescription($event)" [(ngModel)]="section.description">
+  <select class="form-select"
+          id="sectionType"
+          name="section"
+          (ngModelChange)="this.updateDescription($event)"
+          [(ngModel)]="section.description">
     <option [value]="'nothing'">{{ "PRESETS.SECTION.DESCRIPTION.NOTHING" | translate }}</option>
     <option [value]="'1st'">{{ "PRESETS.SECTION.DESCRIPTION.FIRST" | translate }}</option>
     <option [value]="'2nd'">{{ "PRESETS.SECTION.DESCRIPTION.SECOND" | translate }}</option>

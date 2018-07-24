@@ -47,6 +47,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   }
 
   public updateDescription(event: any) {
+    console.log(event);
     this._section.description = event;
     this._emit();
   }

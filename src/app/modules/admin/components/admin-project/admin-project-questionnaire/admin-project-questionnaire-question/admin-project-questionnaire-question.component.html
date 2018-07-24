@@ -10,9 +10,8 @@
       </div>
 
       <select class="form-select"
-              id="questionType"
               name="question"
-              [value]="question.controlType"
+              id="questionType"
               (ngModelChange)="this.updateType($event)"
               [(ngModel)]="question.controlType">
         <option [value]="null">...</option>
@@ -50,7 +49,7 @@
 
 
     <!-- Question edition -->
-    <div class="question-body" *ngIf="!stateIN[index]">
+    <div class="question-body" *ngIf="stateIN[index]">
 
       <div class="question-toolbar">
         <div (click)="languageEN()" *ngIf="language() == 'fr'" href="" class="question-language">
