@@ -331,3 +331,16 @@ p {
 a {
   color: $secondary-color;
 }
+
+.discreet-link {
+  color: #97A4B1;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.discreet-link:hover,
+.discreet-link.active {
+  color: $primary-color;
+}
