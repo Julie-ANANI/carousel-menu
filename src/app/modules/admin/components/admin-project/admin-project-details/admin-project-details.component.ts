@@ -153,7 +153,6 @@ export class AdminProjectDetailsComponent implements OnInit {
       .first()
       .subscribe(data => {
         this._project = data;
-        console.log(this._project);
         this._dirty = false;
       }, err => {
         this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);

@@ -28,7 +28,6 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log("trop de generation")
     this.formData = this._formBuilder.group({
       controlType: [this.question.controlType]
     });

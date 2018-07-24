@@ -48,16 +48,21 @@
     <div class="question-body" *ngIf="!stateIN[index]">
 
       <div class="question-toolbar">
-        <div (click)="languageEN()" href="" class="question-language active">
+        <div (click)="languageEN()" *ngIf="language() == 'fr'" href="" class="question-language">
           English
         </div>
-
-        <div (click)="languageFR()" href="" class="question-language">
+        <div (click)="languageFR()" *ngIf="language() == 'fr'" href="" class="question-language active">
+          French
+        </div>
+        <div (click)="languageEN()"  *ngIf="language() == 'en'" href="" class="question-language active">
+          English
+        </div>
+        <div (click)="languageFR()" *ngIf="language() == 'en'" href="" class="question-language">
           French
         </div>
 
-        <label class="form-switch" for="addcomment">
-          <input type="checkbox" (change)="comment()" [ngModel]="question.canComment" id="addcomment">
+        <label class="form-switch" >
+          <input type="checkbox" (click)="comment()" [ngModel]="question.canComment"  >
           <i class="form-icon"></i> Add comment
         </label>
       </div>
@@ -110,7 +115,10 @@
           <!--<div class="color-option">{{option.color}}</div>-->
 
           <label class="form-switch">
-            <input type="checkbox" (change)="positiveChange(option)">
+            <input type="checkbox"
+                   (click)="positiveChange(option)"
+                   [ngModel]="option.positive"
+                    id="{{i}}">
             <i class="form-icon"></i>
           </label>
 
