@@ -15,7 +15,8 @@ import { environment} from '../../../../../environments/environment';
 import { Template } from '../../../sidebar/interfaces/template';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
-import {Subject} from 'rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
+import { Tag } from '../../../../models/tag';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -32,7 +33,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   sidebarTemplateValue: Template = {};
   scrollOn = false;
   private _companies: Array<Clearbit>;
-  activeSection: string;
   private _campaignsStats: {
     nbPros: number,
     nbProsSent: number,
@@ -41,10 +41,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     nbValidatedResp: number
   };
   selectedTag: any;
-  today: Number;
-  objectKeys = Object.keys;
   editMode = new Subject<boolean>(); // this is for the admin side.
-  mapInitialConfiguration: {[continent: string]: boolean};
 
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
@@ -156,19 +153,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       this.translateNotificationsService.error('ERROR.ERROR', error.message);
     });
 
-  }
-
-  filterByCountries(event: {countries: Array<string>, allChecked: boolean}): void {
-    if (!event.allChecked) {
-      this._filters['worldmap'] = {
-        status: 'COUNTRIES',
-        value: event.countries,
-        questionTitle: {en: 'worldmap', fr: 'mappemonde'}
-      };
-    } else {
-      delete this._filters['worldmap'];
-    }
-    this.filterAnswers();
   }
 
   filterAnswers(): void {
