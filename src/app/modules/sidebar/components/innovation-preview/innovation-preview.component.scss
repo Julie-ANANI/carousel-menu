@@ -3,12 +3,13 @@
   .hero-light-container {
     background-color: #4F5D6B;
 
-    h1, p, h6 {
+    h1, h6 {
       color: white;
     }
 
-    p {
+    .summary {
       padding-left: 4px;
+      color: white;
     }
 
     .media-wrapper {

@@ -8,8 +8,7 @@ import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
 import { Table } from '../../../../../table/models/table';
-import {Template} from '../../../../../sidebar/interfaces/template';
-import {Subject} from 'rxjs/Subject';
+import { Template } from '../../../../../sidebar/interfaces/template';
 
 @Component({
   selector: 'app-client-exploration-project',
@@ -26,14 +25,14 @@ export class ExplorationProjectComponent implements OnInit {
     nbPros: number,
     nbProsSent: number,
     nbProsOpened: number,
-    nbProsClicked: number
+    nbProsClicked: number,
+    nbValidatedResp: number
   };
   private _companies: Array<Clearbit>;
   private _countries: Array<string>;
   private _questions: Array<Question>;
   private _modalAnswer: Answer;
   sidebarTemplateValue: Template = {};
-  editMode = new Subject<boolean>();
 
   tableInfos: Table = null;
 
@@ -59,17 +58,8 @@ export class ExplorationProjectComponent implements OnInit {
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
           {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT', _isSortable: false},
-          {_attrs: ['progress'], _name: 'COMMON.PROGRESS', _type: 'PROGRESS', _isSortable: false},
-          {_attrs: ['professional.company'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false},
         ]
       };
-
-      this._companies = response.answers.map((answer: any) => answer.company || {
-        name: answer.professional.company
-      }).filter(function(item: any, pos: any, self: any) {
-        // this is here to remove duplicate
-        return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
-      });
 
       this._countries = response.answers.reduce((acc: any, answer: any) => {
         if (acc.indexOf(answer.country.flag) === -1) {
@@ -82,8 +72,6 @@ export class ExplorationProjectComponent implements OnInit {
       this.notificationService.error('ERROR.ERROR', error.message);
     });
 
-    this._campaignsStats = {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0};
-
     this.innovationService.campaigns(this.project._id).first()
       .subscribe((results) => {
         if (results && Array.isArray(results.result)) {
@@ -92,6 +80,7 @@ export class ExplorationProjectComponent implements OnInit {
               if (campaign.stats) {
                 if (campaign.stats.campaign) {
                   acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
+                  acc.nbValidatedResp += (campaign.stats.campaign.nbValidatedResp || 0);
                 }
                 if (campaign.stats.mail) {
                   acc.nbProsSent += (campaign.stats.mail.totalPros ||  0);
@@ -102,11 +91,17 @@ export class ExplorationProjectComponent implements OnInit {
                 }
               }
               return acc;
-            }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0});
+            }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0});
         }
       }, (error) => {
         this.notificationService.error('ERROR.ERROR', error.message);
       });
+
+    if (this.project.settings && this.project.settings.companies
+        && Array.isArray(this.project.settings.companies.include)) {
+      this._companies = this.project.settings.companies.include;
+    }
+
     this._questions = [];
     if (this.project.preset && Array.isArray(this.project.preset.sections)) {
       this.project.preset.sections.forEach((section: Section) => {
@@ -129,13 +124,6 @@ export class ExplorationProjectComponent implements OnInit {
       size: '726px'
     };
 
-  }
-
-  public formatCompanyName(name: string) {
-    if (name) {
-      return `${name[0].toUpperCase()}${name.slice(1)}`;
-    }
-    return '--';
   }
 
   closeSidebar(value: string) {

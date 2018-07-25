@@ -99,6 +99,16 @@
                   {{ 'COMMON.PROJECTS' | translate }}
                 </a>
               </li>
+              <!-- Back office libraries page -->
+              <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
+                <a
+                  routerLinkActive="active"
+                  [routerLink]="'/admin/libraries'"
+                  title=""
+                  (click)="onClickLink()">
+                  Libraries
+                </a>
+              </li>
               <!-- Back office emails page -->
               <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
                 <a
@@ -119,7 +129,7 @@
                   {{ 'COMMON.PRESETS' | translate }}
                 </a>
               </li>
-              <!-- Back office search page -->
+              <!-- Back office search page
               <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
                 <a
                   routerLinkActive="active"
@@ -128,7 +138,7 @@
                   (click)="onClickLink()">
                   {{ 'COMMON.SEARCH' | translate }}
                 </a>
-              </li>
+              </li>-->
               <!-- Back office client side page -->
               <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
                 <a

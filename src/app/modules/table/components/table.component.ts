@@ -38,6 +38,7 @@ export class TableComponent {
   private _isDeletable = false;
   private _isFiltrable = false;
   private _isNotPaginable = false;
+  private _reloadColumns = false;
   private _content: Row[] = [];
   private _total = 0;
   private _columns: Column[] = [];
@@ -54,7 +55,7 @@ export class TableComponent {
       this._selector = value._selector;
 
       this._content = [];
-      value._content.forEach(value1 => this._content.push({_isHover: false, _isSelected: false, _content: value1}));
+      value._content.forEach(value1 => this._content.push({_isSelected: false, _content: value1}));
 
       this._isHeadable = value._isHeadable || false;
       this._isSelectable = value._isSelectable || false;
@@ -63,10 +64,11 @@ export class TableComponent {
       this._isDeletable = value._isDeletable || false;
       this._isFiltrable = value._isFiltrable || false;
       this._isNotPaginable = value._isNotPaginable || false;
+      this._reloadColumns = value._reloadColumns || false;
 
       this._total = value._total;
 
-      if (this._columns.length === 0) {
+      if (this._columns.length === 0 || this._reloadColumns) {
         // Si on a plus de 10 colonnes, on ne prends que les 10 premières
         value._columns.length > 10
           ? this._columns = value._columns.slice(0, 10)
@@ -254,10 +256,6 @@ export class TableComponent {
     }
   }
 
-  hoverRow(key: string): void {
-    this._content[key]._isHover = !(this._content[key]._isHover);
-  }
-
   initialiseColumns() {
     this._columns.forEach((value1, index) => {
       this._columns[index]._isSelected = false,
@@ -270,17 +268,8 @@ export class TableComponent {
     this._columns[index]._isSelected = true;
   }
 
-  hoverColumn(key: string) {
-    const index = this._columns.findIndex(value => value._attrs[0] === key);
-    this._columns[index]._isHover = !(this._columns[index]._isHover);
-  }
-
   isSelected(content: any): boolean {
     return content._isSelected;
-  }
-
-  isHover(content: any): boolean {
-    return content._isHover;
   }
 
   isSortable(column: Column) {

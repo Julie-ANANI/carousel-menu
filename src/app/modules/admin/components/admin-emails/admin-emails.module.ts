@@ -3,27 +3,27 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { AdminEmailsComponent } from './admin-emails.component';
 import { AdminEmailQueueComponent } from './admin-emails-queue/admin-emails-queue.component';
-import { AdminEmailsTemplatesModule } from './admin-emails-templates/admin-emails-templates.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { AdminBatchInformationComponent } from './admin-batch-information/admin-batch-information.component';
+import { AdminEmailBlacklistComponent } from './admin-email-blacklist/admin-email-blacklist.component';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
-import { SharedTableModule } from '../../../table/table.module';
+import { TableModule } from '../../../table/table.module';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
-    AdminEmailsTemplatesModule,
     SidebarModule,
     PipeModule,
-    SharedTableModule,
+    TableModule,
     RouterModule
   ],
   declarations: [
     AdminEmailsComponent,
     AdminEmailQueueComponent,
-    AdminBatchInformationComponent
+    AdminBatchInformationComponent,
+    AdminEmailBlacklistComponent
   ],
   exports: [
     AdminEmailsComponent

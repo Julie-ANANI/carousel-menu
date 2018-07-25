@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import {domainRegEx, emailRegEx} from '../../../../utils/regex';
 
 @Component({
   moduleId: module.id,
@@ -20,6 +21,7 @@ export class InputListComponent {
   @Input() canEdit = true;
   @Input() adminMode = false;
   @Input() isEmail = false;
+  @Input() isDomain = false;
 
   @Output() update = new EventEmitter<any>();
 
@@ -33,7 +35,16 @@ export class InputListComponent {
     if (this.answerList.findIndex(t => {return t === val}) === -1) {
       // if we want to test if it's an email
       if (this.isEmail) {
-        const testValue = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        const testValue = emailRegEx;
+        if (testValue.test(val)) {
+          this.answerList.push({text: val});
+          this.answer = '';
+          this.update.emit({value: this.answerList});
+        } else {
+          this.translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
+        }
+      } else if (this.isDomain) {
+        const testValue = domainRegEx;
         if (testValue.test(val)) {
           this.answerList.push({text: val});
           this.answer = '';

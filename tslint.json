@@ -24,7 +24,7 @@
     "interface-over-type-literal": true,
     "label-position": true,
     "max-line-length": [
-      true,
+      false,
       200
     ],
     "member-access": false,
@@ -34,7 +34,7 @@
       "variables-before-functions"
     ],
     "no-arg": true,
-    "no-bitwise": true,
+    "no-bitwise": false,
     "no-console": [
       true,
       "debug",
