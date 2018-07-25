@@ -6,7 +6,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
 import { AdminUsersModule } from './components/admin-users/admin-users.module';
 import { AdminProfessionalsModule } from './components/admin-professionals/admin-professionals.module';
-import { AdminEmailsModule } from './components/admin-emails/admin-emails.module';
+import { AdminMonitoringModule } from './components/admin-monitoring/admin-monitoring.module';
 import { AdminTagModule } from './components/admin-tags/admin-tag.module';
 import { AdminProjectModule } from './components/admin-project/admin-project.module';
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
@@ -35,7 +35,7 @@ import { AdminSettingsComponent } from './components/admin-settings/admin-settin
     AdminRoutingModule,
   //  AdminPresetModule,
     AdminSearchModule,
-    AdminEmailsModule,
+    AdminMonitoringModule,
     AdminUsersModule,
     AdminProjectsModule,
     AdminProfessionalsModule,

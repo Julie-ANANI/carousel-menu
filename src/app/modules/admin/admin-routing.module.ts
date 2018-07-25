@@ -9,7 +9,7 @@ import { AdminCampaignsComponent } from './components/admin-campaigns/admin-camp
 import { AdminIndexComponent } from './components/admin-index/admin-index.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminSearchComponent } from './components/admin-search/admin-search.component';
-import { AdminEmailsComponent } from './components/admin-emails/admin-emails.component';
+import { AdminMonitoringComponent } from './components/admin-monitoring/admin-monitoring.component';
 import { AdminComponent } from './admin.component';
 import { AdminAuthGuard } from '../../admin-auth-guard.service';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
@@ -33,7 +33,7 @@ import { tagsRoutes } from './components/admin-tags/admin-tags-routing.module';
 // import { presetsRoutes } from './components/admin-preset/admin-presets/admin-presets-routing.module';
 
 import { searchRoutes } from './components/admin-search/admin-search-routing.module';
-import { emailsRoutes } from './components/admin-emails/admin-emails-routing.module';
+import {monitoringRoutes} from './components/admin-monitoring/admin-monitoring-routing.module';
 import { projectRoutes } from './components/admin-project/admin-project-routing.module';
 import {AdminLibrariesComponent} from './components/admin-libraries/admin-libraries.component';
 import {librariesRoutes} from './components/admin-libraries/admin-libraries-routing.module';
@@ -103,10 +103,10 @@ const adminRoutes: Routes = [
         ]
       },
       {
-        path: 'emails',
-        component: AdminEmailsComponent,
+        path: 'monitoring',
+        component: AdminMonitoringComponent,
         children: [
-          ...emailsRoutes
+          ...monitoringRoutes
         ]
       },
       {
