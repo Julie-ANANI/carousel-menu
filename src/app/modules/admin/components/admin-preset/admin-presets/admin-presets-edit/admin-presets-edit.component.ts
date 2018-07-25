@@ -108,7 +108,28 @@ export class AdminPresetsEditComponent implements OnInit {
 
   }
 
-
+  public canimove($event: any, index: number) {
+    const indexques = $event[0];
+    const moove = $event[1];
+    if (moove === 'up' && index !== 0) {
+      const tempSec = this._preset.sections[index].questions[indexques];
+      this._preset.sections[index].questions.splice(indexques, 1);
+      this._preset.sections[index - 1].questions.push(tempSec);
+      const tempState = this._state[index].quest[indexques];
+      this._state[index].quest.splice(indexques, 1);
+      this._state[index - 1].quest.push(tempState);
+      this._save();
+    }
+    if (moove === 'down' && index !== (this._preset.sections.length - 1)) {
+      const tempSec = this._preset.sections[index].questions[indexques];
+      this._preset.sections[index].questions.splice(indexques, 1);
+      this._preset.sections[index + 1].questions.splice(0, 0, tempSec);
+      const tempState = this._state[index].quest[indexques];
+      this._state[index].quest.splice(indexques, 1);
+      this._state[index + 1].quest.splice(0, 0, tempState);
+      this._save();
+    }
+  }
 
 
 
