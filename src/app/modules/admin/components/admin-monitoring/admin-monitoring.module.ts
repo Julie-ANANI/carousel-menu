@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { AdminEmailsComponent } from './admin-emails.component';
+import { AdminMonitoringComponent } from './admin-monitoring.component';
 import { AdminEmailQueueComponent } from './admin-emails-queue/admin-emails-queue.component';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { AdminBatchInformationComponent } from './admin-batch-information/admin-batch-information.component';
@@ -19,13 +19,13 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ],
   declarations: [
-    AdminEmailsComponent,
+    AdminMonitoringComponent,
     AdminEmailQueueComponent,
     AdminBatchInformationComponent,
   ],
   exports: [
-    AdminEmailsComponent
+    AdminMonitoringComponent
   ]
 })
 
-export class AdminEmailsModule {}
+export class AdminMonitoringModule {}
