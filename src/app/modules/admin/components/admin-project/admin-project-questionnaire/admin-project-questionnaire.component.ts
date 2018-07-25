@@ -60,8 +60,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
       this._project.preset.sections[index].questions.splice(indexques, 1);
       this._project.preset.sections[index - 1].questions.push(tempSec);
       const tempState = this._state[index].quest[indexques];
-      this._state[index].quest.splice(indexques, 0);
-      this._state[index - 1].quest.push(tempState)
+      this._state[index].quest.splice(indexques, 1);
+      this._state[index - 1].quest.push(tempState);
       this._sections = this._project.preset.sections;
       this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
         this._project = result;
@@ -73,8 +73,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
       this._project.preset.sections[index].questions.splice(indexques, 1);
       this._project.preset.sections[index + 1].questions.splice(0, 0, tempSec);
       const tempState = this._state[index].quest[indexques];
-      this._state[index].quest.splice(indexques, 0);
-      this._state[index + 1].quest.push(tempState)
+      this._state[index].quest.splice(indexques, 1);
+      this._state[index + 1].quest.splice(0, 0, tempState);
       this._sections = this._project.preset.sections;
       this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
         this._project = result;
