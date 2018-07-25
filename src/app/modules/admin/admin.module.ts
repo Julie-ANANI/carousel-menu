@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { AdminRoutingModule } from './admin-routing.module';
-import { AdminPresetModule } from './components/admin-preset/admin-preset.module';
+// import { AdminPresetModule } from './components/admin-preset/admin-preset.module';
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
 import { AdminUsersModule } from './components/admin-users/admin-users.module';
 import { AdminProfessionalsModule } from './components/admin-professionals/admin-professionals.module';
@@ -32,7 +32,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     AdminRoutingModule,
-    AdminPresetModule,
+  //  AdminPresetModule,
     AdminSearchModule,
     AdminEmailsModule,
     AdminUsersModule,

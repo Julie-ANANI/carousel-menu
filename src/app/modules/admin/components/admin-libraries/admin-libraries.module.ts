@@ -8,6 +8,7 @@ import { AdminLibrariesComponent } from "./admin-libraries.component";
 import { AdminWorkflowsLibraryModule } from "./admin-workflows-library/admin-workflows-library.module";
 import { AdminSignaturesLibraryModule } from "./admin-signatures-library/admin-signatures-library.module";
 import { RouterModule } from "@angular/router";
+import { AdminPresetComponent } from './admin-preset/admin-preset.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { RouterModule } from "@angular/router";
     Ng2AutoCompleteModule,
     PipeModule,
     AdminWorkflowsLibraryModule,
-    AdminSignaturesLibraryModule
+    AdminSignaturesLibraryModule,
+    AdminPresetComponent
   ],
   declarations: [
     AdminLibrariesComponent
