@@ -24,6 +24,8 @@ export class QuestionSectionComponent implements OnInit {
   private _tags: Array<Tag>;
   private _stats: {nbAnswers?: number, percentage?: number};
 
+  @Input() selectedTag: any;
+
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
     this.updateAnswersData();
@@ -146,6 +148,7 @@ export class QuestionSectionComponent implements OnInit {
   }
 
   public newFilter(filter: Filter) {
+    this.selectedTag = filter.questionTitle;
     this.addFilter.emit(filter);
   }
 

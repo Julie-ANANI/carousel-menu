@@ -48,7 +48,7 @@
         <div class="progress-outer-wrapper">
           <div class="progress-inner-wrapper" [ngStyle]="{'background-color': barData.color, 'width': barData.absolutePercentage,
            'min-width': '25px' }">
-            <span *ngIf="barData.absolutePercentage !== '0%'">{{ barData.absolutePercentage }}</span>
+            <span>{{ barData.absolutePercentage }}</span>
           </div>
         </div>
       </div>
@@ -59,8 +59,10 @@
         <div *ngFor="let answer of barData.answers">
           <app-market-comment
             [answer]="answer"
+            [ngStyle]="{ 'width': '100%' }"
             [questionId]="question.identifier+'Comment'"
             (addFilter)="newFilter($event)"
+            [selectedTag]="selectedTag"
             (modalAnswerChange)="seeAnswer($event)">
           </app-market-comment>
         </div>

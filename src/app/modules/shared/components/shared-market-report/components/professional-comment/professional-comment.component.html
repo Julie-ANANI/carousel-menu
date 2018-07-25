@@ -1,3 +1,4 @@
+<!--
 <div class="professional-comment">
 
   <div class="flex-container">
@@ -29,5 +30,25 @@
   </div>
 
   <strong class="comment-desc">{{answer.answers[questionId]}}</strong>
+
+</div>
+-->
+
+<div class="professional-comment">
+
+  <div class="content-wrapper">
+
+    <app-pro-tag
+      [answer]="answer"
+      (addFilter)="newFilter($event)"
+      (modalAnswerChange)="seeAnswer($event)"
+      [selectedTag]="selectedTag">
+    </app-pro-tag>
+
+    <div class="comment-wrapper">
+dfsd
+    </div>
+
+  </div>
 
 </div>

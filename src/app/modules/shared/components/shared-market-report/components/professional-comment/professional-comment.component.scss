@@ -1,4 +1,4 @@
-div.professional-comment {
+/*div.professional-comment {
   color: #5d5d5d;
   padding: 12px;
 
@@ -12,5 +12,15 @@ div.professional-comment {
     margin-left: 15px;
   }
 
-}
+}*/
 
+.professional-comment {
+  display: inline;
+
+  .content-wrapper {
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+}

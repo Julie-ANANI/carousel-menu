@@ -29,6 +29,7 @@ export class BarChartComponent implements OnInit {
     this._answers = value;
     this.updateAnswersData();
   }
+  @Input() selectedTag: any;
   @Input() public innovation: Innovation;
   @Input() public question: Question;
   @Input() public readonly: boolean;
@@ -136,6 +137,7 @@ export class BarChartComponent implements OnInit {
   }
 
   public newFilter(filter: Filter) {
+    this.selectedTag = filter.questionTitle;
     this.addFilter.emit(filter);
   }
 
