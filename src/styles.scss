@@ -134,6 +134,23 @@ ul.list-filter {
 }
 
 
+
+/* For Admin : to move into the right place */
+
+.admin .page-header {
+  background: white;
+  border-bottom: 1px solid #CDCDCD;
+
+  h1 {
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 23px;
+    color: #4F5D6B;
+  }
+}
+
+
+
 /* On décale les notifications vers le bas pour ne pas qu'elles cachent le menu principal*/
 .simple-notification-wrapper.top {
   top: 80px !important;

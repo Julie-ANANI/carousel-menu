@@ -36,7 +36,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   ngAfterViewInit() {
     tinymce.init({
       selector: '#' + this._htmlId,
-      plugins: ['link', 'paste', 'table', 'lists', 'advlist'],
+      plugins: ['link', 'paste', 'lists', 'advlist'], // Voir .angular-cli.json
       default_link_target: '_blank',
       width: 600,
       height: 250,
@@ -50,8 +50,8 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
       paste_remove_styles: true,
       paste_text_sticky: true,
       convert_fonts_to_spans: false,
-      toolbar : 'undo redo | bold italic | bullist numlist | table | link',
-      skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json (apps > assets) : on importe les fichiers depuis le module (node_modules) "tinymce"
+      toolbar : 'undo redo | bold italic | bullist numlist | link',
+      skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
       setup: (editor: any) => {
         this.editor = editor;
         this._contentHash = this.hashString(this._data);
