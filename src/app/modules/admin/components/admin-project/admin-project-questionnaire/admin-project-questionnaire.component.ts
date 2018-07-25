@@ -35,7 +35,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
         quest: tab
       })
     });
-    console.log(this._state);
   }
 
 
@@ -47,10 +46,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
       }
       k++;
     }
-  }
-
-  public removeQuestion(event: any, index: number) {
-
   }
 
   public updateState(event: any, index: number) {

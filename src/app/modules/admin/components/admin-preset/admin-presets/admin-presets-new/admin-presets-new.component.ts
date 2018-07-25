@@ -34,7 +34,6 @@ export class AdminPresetsNewComponent {
   }
 
 
-
   public createPreset() {
     this._presetService.create(this._newPreset).first().subscribe( (preset) => {
       console.log('OK questionnaire');

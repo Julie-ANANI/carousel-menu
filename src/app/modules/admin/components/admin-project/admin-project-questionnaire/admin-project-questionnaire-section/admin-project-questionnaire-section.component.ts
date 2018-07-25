@@ -92,7 +92,8 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
       },
       identifier: this._section.name + this._section.questions.length.toString(),
       controlType: 'checkbox',
-      canComment: true
+      canComment: true,
+      options: []
     };
 
     this.questionAdded.emit(this._newQuestion);

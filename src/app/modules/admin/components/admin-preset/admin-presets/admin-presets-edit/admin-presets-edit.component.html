@@ -1,24 +1,21 @@
 <app-shared-loader *ngIf="!preset"></app-shared-loader>
-  <div class="heading">
-    <h2>{{preset.name}}</h2>
+<div class="heading">
+  <h2>{{preset.name}}</h2>
+</div>
+<div class="body">
+  <div *ngFor="let section of preset.sections; let i=index">
+    <app-admin-project-questionnaire-section
+      [section]="section"
+      [state]="getState(i)"
+      (stateOut)="updateState($event, i)"
+      (sectionUpdated)="sectionUpdated($event, i)"
+      (sectionRemoved)="sectionRemoved($event, i)"
+      (questionAdded)="addQuestion($event,i)"
+      (move)="moveSection($event,i)">
+    </app-admin-project-questionnaire-section>
   </div>
-  <div class="body">
-    <div *ngFor="let section of preset.sections; let i=index">
-      <app-admin-project-questionnaire-section
-        [section]="section"
-        [state]="getState(i)"
-        (stateOut)="updateState($event, i)"
-        (sectionUpdated)="sectionUpdated($event,i)"
-        (questionAdded)="addQuestion($event,i)"
-        (sectionRemoved)="sectionRemoved($event,i)"
-        (questionUpdated)="questionUpdated($event,i)"
-        (move)="moveSection($event,i)"
-        (questionRemoved)="removeQuestion($event, i)"
-      >
-      </app-admin-project-questionnaire-section>
-    </div>
-    <button class="btn-round btn-primary" (click)="addSection()"><i class="icon icon-plus"> </i>  </button><span> ADD SECTION</span>
-  </div>
+  <button class="btn-round btn-primary" (click)="addSection()"><i class="icon icon-plus"> </i>  </button><span> ADD SECTION</span>
+</div>
 
 
 
