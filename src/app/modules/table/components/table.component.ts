@@ -268,8 +268,16 @@ export class TableComponent {
     this._columns[index]._isSelected = true;
   }
 
+  isSort(content: Column): boolean {
+    if (content !== null && this._config.sort !== null) {
+      return this._config.sort[this.getAttrs(content)[0]];
+    } else {
+      return false;
+    }
+  }
+
   isSelected(content: any): boolean {
-    return content._isSelected;
+    return content._isSelected
   }
 
   isSortable(column: Column) {

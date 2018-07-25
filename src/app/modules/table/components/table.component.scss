@@ -13,7 +13,6 @@ i {
   }
 }
 
-
 button.visibleOnHover {
   visibility: hidden;
 }
@@ -24,4 +23,7 @@ tr:hover {
   }
 }
 
+th.pointable:hover {
+  cursor: pointer;
+}
 
