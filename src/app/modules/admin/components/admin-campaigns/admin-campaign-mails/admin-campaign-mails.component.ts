@@ -328,7 +328,7 @@ export class AdminCampaignMailsComponent implements OnInit {
 
   get innoReady() {
     return (
-      this._campaign.innovation.status === 'EVALUATING'
+      (this._campaign.innovation.status === 'EVALUATING' || this._campaign.innovation.status === 'DONE')
     );
   }
 
