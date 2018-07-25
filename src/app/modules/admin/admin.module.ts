@@ -12,7 +12,7 @@ import { AdminProjectModule } from './components/admin-project/admin-project.mod
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
 import { AdminLibrariesModule } from './components/admin-libraries/admin-libraries.module';
-import { AdminCountryManagementModule } from './components/admin-country-management/admin-country-management.module';
+import { AdminCountryManagementModule } from './components/admin-libraries/admin-country-management/admin-country-management.module';
 
 // Components
 import { PipeModule } from '../../pipe/pipe.module';

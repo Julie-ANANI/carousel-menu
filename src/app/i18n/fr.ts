@@ -11,7 +11,7 @@ import { DASHBOARD } from '../modules/admin/components/admin-dashboard/i18n/fr';
 import { PRESETS } from '../modules/admin/components/admin-libraries/admin-preset/i18n/fr';
 import { CAMPAIGNS } from '../modules/admin/components/admin-campaigns/i18n/fr';
 import { SEARCH } from '../modules/admin/components/admin-search/i18n/fr';
-import { BLACKLISTS } from '../modules/admin/components/admin-emails/admin-email-blacklist/i18n/fr';
+import { BLACKLISTS } from '../modules/admin/components/admin-libraries/admin-email-blacklist/i18n/fr';
 import { TAGS } from '../modules/admin/components/admin-tags/i18n/fr';
 import { PROJECT_LIST } from '../modules/admin/components/admin-projects-list/i18n/fr';
 import { PROJECT_MODULE } from '../modules/client/components/client-project/i18n/fr';

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
-import {Template} from '../../../sidebar/interfaces/template';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
-import {EmailService} from '../../../../services/email/email.service';
-import {Table} from '../../../table/models/table';
+import {Template} from '../../../../sidebar/interfaces/template';
+import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import {EmailService} from '../../../../../services/email/email.service';
+import {Table} from '../../../../table/models/table';
 
 
 @Component({
