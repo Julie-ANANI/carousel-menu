@@ -4,13 +4,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SharedSortModule } from '../../../shared/components/shared-sort/shared-sort.module';
-import { AdminLibrariesComponent } from "./admin-libraries.component";
-import { AdminWorkflowsLibraryModule } from "./admin-workflows-library/admin-workflows-library.module";
-import { AdminSignaturesLibraryModule } from "./admin-signatures-library/admin-signatures-library.module";
-import { RouterModule } from "@angular/router";
+import { AdminLibrariesComponent } from './admin-libraries.component';
+import { AdminWorkflowsLibraryModule } from './admin-workflows-library/admin-workflows-library.module';
+import { AdminSignaturesLibraryModule } from './admin-signatures-library/admin-signatures-library.module';
+import { RouterModule } from '@angular/router';
 import {AdminPresetsModule} from './admin-preset/admin-presets/admin-presets.module';
 import {AdminCountryManagementModule} from './admin-country-management/admin-country-management.module';
 import {AdminEmailBlacklistComponent} from './admin-email-blacklist/admin-email-blacklist.component';
+import {TableModule} from '../../../table/table.module';
+import {SidebarModule} from '../../../sidebar/sidebar.module';
 
 @NgModule({
   imports: [
@@ -24,10 +26,12 @@ import {AdminEmailBlacklistComponent} from './admin-email-blacklist/admin-email-
     AdminSignaturesLibraryModule,
     AdminPresetsModule,
     AdminCountryManagementModule,
-    AdminEmailBlacklistComponent
+    TableModule,
+    SidebarModule
   ],
   declarations: [
-    AdminLibrariesComponent
+    AdminLibrariesComponent,
+    AdminEmailBlacklistComponent
   ],
   exports: [
     AdminLibrariesComponent
