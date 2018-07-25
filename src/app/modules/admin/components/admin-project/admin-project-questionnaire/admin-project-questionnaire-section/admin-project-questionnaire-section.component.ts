@@ -24,6 +24,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   @Output() questionAdded = new EventEmitter<any>();
   @Output() questionRemoved = new EventEmitter<any>();
   @Output() questionUpdated = new EventEmitter<any>();
+  @Output() questionMoved = new EventEmitter<any>();
 
   public editName = false;
   private _newQuestion: Question;
@@ -136,7 +137,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
   public moveQuestion(event: any, index: number) {
     if (event === 'down') {
       if (index + 1 === this._section.questions.length) {
-        console.log('changement de section ?')
+        this.questionMoved.emit([index, 'down']);
       } else {
         const tempquest = JSON.parse(JSON.stringify(this._section.questions[index]));
         this._section.questions[index] = JSON.parse(JSON.stringify(this._section.questions[index + 1]));
@@ -151,6 +152,7 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
     if (event === 'up') {
       if (index === 0) {
         console.log('changement de section ?')
+        this.questionMoved.emit([index, 'up']);
       } else {
         const tempquest = JSON.parse(JSON.stringify(this._section.questions[index]));
         this._section.questions[index] = JSON.parse(JSON.stringify(this._section.questions[index - 1]));

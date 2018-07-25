@@ -52,6 +52,31 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     }
   }
 
+  public canimove($event: any, index: number) {
+    const indexques = $event[0];
+    const moove = $event[1];
+    if (moove === 'up' && index !== 0) {
+      const tempSec = this._project.preset.sections[index].questions[indexques];
+      this._project.preset.sections[index].questions.splice(indexques, 1);
+      this._project.preset.sections[index - 1].questions.push(tempSec);
+      this._sections = this._project.preset.sections;
+      this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
+        this._project = result;
+        //    this._sections = this._project.preset.sections;
+      });
+    }
+    if (moove === 'down' && index !== (this._project.preset.sections.length - 1)) {
+      const tempSec = this._project.preset.sections[index].questions[indexques];
+      this._project.preset.sections[index].questions.splice(indexques, 1);
+      this._project.preset.sections[index + 1].questions.push(tempSec);
+      this._sections = this._project.preset.sections;
+      this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
+        this._project = result;
+        //    this._sections = this._project.preset.sections;
+      });
+    }
+  }
+
   public updateState(event: any, index: number) {
     this._state[index] = event;
   }
