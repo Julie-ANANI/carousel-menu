@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../../../../services/auth/auth.service';
+import { AuthService } from '../../../../../../../services/auth/auth.service';
 
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
-import {PresetService} from '../../../../../../services/preset/preset.service';
+import {PresetService} from '../../../../../../../services/preset/preset.service';
 
 @Component({
   selector: 'app-admin-presets-edit',

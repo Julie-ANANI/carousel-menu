@@ -25,18 +25,18 @@ import { AdminCampaignSearchResultsComponent } from './components/admin-campaign
 import { CampaignResolver } from '../../resolvers/campaign.resolver';
 import { InnovationResolver } from '../../resolvers/innovation.resolver';
 import { RequestResolver } from '../../resolvers/request.resolver';
-import { AdminPresetComponent } from './components/admin-preset/admin-preset.component';
+// import { AdminPresetComponent } from './components/admin-preset/admin-preset.component';
 import { AdminTagsComponent } from './components/admin-tags/admin-tags.component';
 import { NotFoundPageComponent } from '../base/components/not-found-page/not-found-page.component';
 
 import { tagsRoutes } from './components/admin-tags/admin-tags-routing.module';
-import { presetsRoutes } from './components/admin-preset/admin-presets/admin-presets-routing.module';
+// import { presetsRoutes } from './components/admin-preset/admin-presets/admin-presets-routing.module';
 
 import { searchRoutes } from './components/admin-search/admin-search-routing.module';
 import { emailsRoutes } from './components/admin-emails/admin-emails-routing.module';
 import { projectRoutes } from './components/admin-project/admin-project-routing.module';
-import {AdminLibrariesComponent} from "./components/admin-libraries/admin-libraries.component";
-import {librariesRoutes} from "./components/admin-libraries/admin-libraries-routing.module";
+// import {AdminLibrariesComponent} from "./components/admin-libraries/admin-libraries.component";
+// import {librariesRoutes} from "./components/admin-libraries/admin-libraries-routing.module";
 
 const adminRoutes: Routes = [
   {
@@ -123,7 +123,7 @@ const adminRoutes: Routes = [
         children: [
           { path: '', component: AdminPatentsComponent, pathMatch: 'full' }
         ]
-      },
+      } /*,
       {
         path: 'presets',
         component: AdminPresetComponent,
@@ -131,7 +131,7 @@ const adminRoutes: Routes = [
           { path: '', redirectTo: 'presets', pathMatch: 'full' },
           ...presetsRoutes,
         ]
-      },
+      } */ ,
       {
         path: 'tags',
         component: AdminTagsComponent,

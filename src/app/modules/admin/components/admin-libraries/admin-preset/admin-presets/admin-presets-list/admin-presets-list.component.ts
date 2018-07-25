@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PresetService } from '../../../../../../services/preset/preset.service';
+import { PresetService } from '../../../../../../../services/preset/preset.service';
 import { Router } from '@angular/router';
-import { Preset } from '../../../../../../models/preset';
+import { Preset } from '../../../../../../../models/preset';
 
 @Component({
   selector: 'app-admin-presets-list',

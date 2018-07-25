@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AdminPresetsModule } from './admin-presets/admin-presets.module';
 
-import { PipeModule } from '../../../../pipe/pipe.module';
+import { PipeModule } from '../../../../../pipe/pipe.module';
 import { AdminPresetComponent } from './admin-preset.component';
 
 @NgModule({
