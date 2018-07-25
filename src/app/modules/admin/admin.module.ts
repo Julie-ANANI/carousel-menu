@@ -27,6 +27,7 @@ import { AdminUserDetailsComponent } from './components/admin-users/admin-user-d
 import { AdminProjectsListComponent } from './components/admin-projects-list/admin-projects-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import { RouterModule } from '@angular/router';
     AdminIndexComponent,
     AdminPatentsComponent,
     AdminUserDetailsComponent,
-    AdminProjectsListComponent
+    AdminProjectsListComponent,
+    AdminSettingsComponent
   ]
 })
 
