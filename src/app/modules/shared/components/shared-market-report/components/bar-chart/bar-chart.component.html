@@ -1,11 +1,79 @@
-<app-question-conclusion
-  [innovation]="innovation"
-  [pieChart]="pieChart"
-  [question]="question"
-  [readonly]="readonly"
-  [stats]="stats"
-></app-question-conclusion>
+<div class="bar-chart">
 
+  <div class="header-wrapper">
+    <div class="section-inline-light-container">
+      <h1 class="main-heading">{{ question.label | multiling:lang }}</h1>
+      <app-question-conclusion
+        [innovation]="innovation"
+        [pieChart]="pieChart"
+        [question]="question"
+        [readonly]="readonly"
+        [stats]="stats">
+      </app-question-conclusion>
+    </div>
+  </div>
+
+  <div class="content-wrapper">
+    <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i" class="data-wrapper">
+
+      <!-- Row 1 -->
+      <div class="row1-wrapper">
+
+        <div class="filter-name-wrapper">
+          <span class="bar-filter" (click)="filterAnswer(barData, $event)">
+            <svg width="20px" height="14px" viewBox="0 0 20 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Synthesis-v3" transform="translate(-756.000000, -4076.000000)">
+                <rect fill="#F5F5F5" x="0" y="0" width="1440" height="10458"></rect>
+                <text id="filter_list---material-copy" font-family="material" font-size="26" font-weight="normal" fill="#97A4B1">
+                  <tspan x="753" y="4092"></tspan>
+                </text>
+              </g>
+            </g>
+          </svg>
+          </span>
+          <span class="bar-name">{{ barData.label | multiling:lang }}</span>
+        </div>
+
+        <div class="response-arrow-wrapper" (click)="showAnswers[i] = !showAnswers[i]">
+          <span class="bar-count">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
+          <i class="icon" aria-hidden="true" [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
+        </div>
+
+      </div>
+      <!-- /Row 1 -->
+
+      <!-- Row 2 -->
+      <div class="row2-wrapper">
+        <div class="progress-outer-wrapper">
+          <div class="progress-inner-wrapper" [ngStyle]="{'background-color': barData.color, 'width': barData.absolutePercentage,
+           'min-width': '25px' }">
+            <span *ngIf="barData.absolutePercentage !== '0%'">{{ barData.absolutePercentage }}</span>
+          </div>
+        </div>
+      </div>
+      <!-- /Row 2 -->
+
+      <!-- Row 3 -->
+      <div *ngIf="showAnswers[i]" class="answer-wrapper">
+        <div *ngFor="let answer of barData.answers">
+          <app-market-comment
+            [answer]="answer"
+            [questionId]="question.identifier+'Comment'"
+            (addFilter)="newFilter($event)"
+            (modalAnswerChange)="seeAnswer($event)">
+          </app-market-comment>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+<!--
 <div class="bar-chart-component">
 
   <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i" class="page-break">
@@ -27,18 +95,18 @@
       </button>
     </div>
 
-    <!-- Textarea -->
+    &lt;!&ndash; Textarea &ndash;&gt;
     <ul *ngIf="showAnswers[i]" class="comments">
       <li *ngFor="let answer of barData.answers">
-        <market-comment
+        <app-market-comment
           [answer]="answer"
           [questionId]="question.identifier+'Comment'"
           (addFilter)="newFilter($event)"
           (modalAnswerChange)="seeAnswer($event)">
-        </market-comment>
+        </app-market-comment>
       </li>
     </ul>
 
   </div>
 
-</div>
+</div>-->

@@ -1,18 +1,24 @@
-<div class="big-synthesis">
+<div class="piechart">
+
+  <p class="percentage">{{percentage || 0}}% {{ 'MARKET_REPORT.PIE_CHART' | translate }}</p>
 
   <canvas
     class="chart chart-pie"
     baseChart
     [chartType]="'pie'"
     [datasets]="datasets"
-    [labels]="labels | multiling:lang"
     [legend]="false"
-    [colors]="colors">
+    [colors]="colors"
+    [labels]="labels | multiling:lang">
   </canvas>
 
-  <div class="number-ratio">
-    <span>{{percentage || 0}}%</span>
-    <p>{{ 'MARKET_REPORT.PIE_CHART' | translate }}</p>
+  <div *ngIf="labels" class="pie-data">
+    <div *ngFor="let l of (labels | multiling:lang); let i = index" class="data">
+      <span class="circle" [ngStyle]="{'background-color': colors[0].backgroundColor[i]}"></span>
+      <span class="response">{{ datasets[0].data[i] }}</span>
+      <span class="text">{{ l }}</span>
+      <span>({{ labelPercentage[0].percentage[i] }})</span>
+    </div>
   </div>
 
 </div>

@@ -58,7 +58,12 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
       });
   }
 
-  public get domSectionId(): string { return this._domSectionId; }
-  public get lang() { return this._lang; }
+  public get domSectionId(): string {
+    return this._domSectionId;
+  }
+
+  public get lang() {
+    return this._lang;
+  }
 
 }

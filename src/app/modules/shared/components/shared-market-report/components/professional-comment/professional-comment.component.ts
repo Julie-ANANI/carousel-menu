@@ -6,7 +6,7 @@ import { Answer } from '../../../../../../models/answer';
 import { Filter } from '../../models/filter';
 
 @Component({
-  selector: 'market-comment',
+  selector: 'app-market-comment',
   templateUrl: 'professional-comment.component.html',
   styleUrls: ['professional-comment.component.scss', '../../shared-market-report.component.scss']
 })
