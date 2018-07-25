@@ -37,6 +37,8 @@ import { emailsRoutes } from './components/admin-emails/admin-emails-routing.mod
 import { projectRoutes } from './components/admin-project/admin-project-routing.module';
 import {AdminLibrariesComponent} from './components/admin-libraries/admin-libraries.component';
 import {librariesRoutes} from './components/admin-libraries/admin-libraries-routing.module';
+import {AdminSettingsComponent} from './components/admin-settings/admin-settings.component';
+import {settingsRoutes} from './components/admin-settings/admin-settings-routing.module';
 // import {AdminLibrariesComponent} from "./components/admin-libraries/admin-libraries.component";
 // import {librariesRoutes} from "./components/admin-libraries/admin-libraries-routing.module";
 
@@ -125,15 +127,15 @@ const adminRoutes: Routes = [
         children: [
           { path: '', component: AdminPatentsComponent, pathMatch: 'full' }
         ]
-      } /*,
+      },
       {
-        path: 'presets',
-        component: AdminPresetComponent,
+        path: 'settings',
+        component: AdminSettingsComponent,
         children: [
-          { path: '', redirectTo: 'presets', pathMatch: 'full' },
-          ...presetsRoutes,
+          { path: '', redirectTo: 'blacklist', pathMatch: 'full' },
+          ...settingsRoutes,
         ]
-      } */ ,
+      },
       {
         path: 'tags',
         component: AdminTagsComponent,

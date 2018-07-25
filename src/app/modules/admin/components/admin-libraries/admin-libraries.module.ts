@@ -9,8 +9,8 @@ import { AdminWorkflowsLibraryModule } from './admin-workflows-library/admin-wor
 import { AdminSignaturesLibraryModule } from './admin-signatures-library/admin-signatures-library.module';
 import { RouterModule } from '@angular/router';
 import {AdminPresetsModule} from './admin-preset/admin-presets/admin-presets.module';
-import {AdminCountryManagementModule} from './admin-country-management/admin-country-management.module';
-import {AdminEmailBlacklistComponent} from './admin-email-blacklist/admin-email-blacklist.component';
+import {AdminCountryManagementModule} from '../admin-settings/admin-country-management/admin-country-management.module';
+import {AdminEmailBlacklistComponent} from '../admin-settings/admin-email-blacklist/admin-email-blacklist.component';
 import {TableModule} from '../../../table/table.module';
 import {SidebarModule} from '../../../sidebar/sidebar.module';
 
