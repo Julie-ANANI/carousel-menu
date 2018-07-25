@@ -1,15 +1,17 @@
 <div (click)="sort($event)" class="form-group-inline-left">
   <ng-content></ng-content>
-  <span *ngIf="order === -1" class="sort-icon">
-    <i class="icon c-hand icon-arrow-up"></i>
+  <div class="visibleOnHover">
+    <span *ngIf="order === -1" class="sort-icon" [ngClass]="{'clicked': order === -1}">
+    <i class="icon c-hand icon-arrow-up not-active"></i>
     <i class="icon c-hand icon-arrow-down primary"></i>
-  </span>
-  <span *ngIf="order === 1" class="sort-icon">
-    <i class="icon c-hand icon-arrow-up primary"></i>
-    <i class="icon c-hand icon-arrow-down"></i>
-  </span>
-  <span *ngIf="order === 0" class="sort-icon">
-    <i class="icon c-hand icon-arrow-up"></i>
-    <i class="icon c-hand icon-arrow-down"></i>
-  </span>
+    </span>
+      <span *ngIf="order === 1" class="sort-icon" [ngClass]="{'clicked': order === 1}">
+      <i class="icon c-hand icon-arrow-up primary"></i>
+      <i class="icon c-hand icon-arrow-down not-active"></i>
+    </span>
+    <span *ngIf="order === 0" class="sort-icon" [ngClass]="{'clicked': order === 0}">
+      <i class="icon c-hand icon-arrow-up"></i>
+      <i class="icon c-hand icon-arrow-down"></i>
+    </span>
+  </div>
 </div>

@@ -10,7 +10,7 @@ export const COMMON = {
   'SIGN_UP': 'Sign up',
   'LOG_OUT': 'Logout',
   'CANCEL': 'Cancel',
-  'MORE': 'See more',
+  'MORE': 'Show',
   'OF': 'of',
   'ADD': 'Add',
   'ALL': 'All',
@@ -45,9 +45,11 @@ export const COMMON = {
   'BLACKLIST': {
     'EMAILS': 'Blacklisted e-mails',
     'DOMAINS': 'Blacklisted domains',
-    'COUNTRIES': 'Blacklisted countries'
+    'COUNTRIES': 'Blacklisted countries',
+    'ACCEPTATION': 'Acceptance mails percentage'
   },
   'EDIT-BLACKLIST': 'Edit blacklisted e-mail',
+  'EXCLUDE': 'Exclude',
   'EXCLUDE-EMAILS': 'Exclude emails',
   'EXCLUDE-DOMAINS': 'Exclude domains',
   'EXCLUDE-COUNTRIES': 'Exclude countries',
@@ -57,7 +59,7 @@ export const COMMON = {
   'NAME': 'Name',
   'FIRSTNAME': 'First name',
   'LASTNAME': 'Last name',
-  'EMAIL': 'Email address',
+  'EMAIL': 'Email',
   'PHONE': 'Phone',
   'PASSWORD': 'Password',
   'PASSWORD_PLACEHOLDER': 'Enter your password',
@@ -154,6 +156,7 @@ export const COMMON = {
   'EDIT_USER': 'Edit User',
   'EDIT_PROFESSIONAL': 'Edit Professional',
   'EDIT_INSIGHT': 'Edit Insight',
+  'EDIT-COUNTRY': 'Edit country\'s filter',
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
   'CLIENT_SIDE': 'Client',

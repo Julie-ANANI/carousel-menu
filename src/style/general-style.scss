@@ -258,6 +258,61 @@ $border-color: #E0E0E0;
 
 
 /*
+    Progress bar styles
+ */
+.progressBar-progress {
+  width: 100%;
+  height: 20px;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 5px;
+  background: #F79323;
+}
+
+
+.progressBar-validate {
+  width: 100%;
+  height: 20px;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 5px;
+  background: $success-color;
+}
+
+.progressBar-alert{
+  width: 100%;
+  height: 20px;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 5px;
+  background: $error-color;
+}
+
+.progressBar-editing{
+  width: 100%;
+  height: 20px;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 5px;
+  background: $secondary-color;
+}
+
+.progressBar-draft{
+  width: 100%;
+  height: 20px;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 5px;
+  background: #4F5D6B;
+}
+
+
+/*
     Ng2 auto complete npm module style
  */
 .ng2-auto-complete-wrapper {
@@ -328,6 +383,8 @@ p {
 /*
     a default style
  */
-a {
+a, a:focus, a:hover, a:active, a.active {
   color: $primary-color;
+  text-decoration: none;
+  cursor: pointer;
 }

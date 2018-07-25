@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedSortModule } from '../../../shared/components/shared-sort/shared-sort.module';
+import { SharedTextZoneModule } from '../../../shared/components/shared-text-zone/shared-text-zone.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { AdminProjectComponent } from './admin-project.component';
 import { AdminProjectDetailsComponent } from './admin-project-details/admin-project-details.component';
@@ -23,6 +24,7 @@ import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/adm
   imports: [
     CommonModule,
     SharedSortModule,
+    SharedTextZoneModule,
     SharedMarketReportModule,
     TranslateModule.forChild(),
     Ng2AutoCompleteModule,

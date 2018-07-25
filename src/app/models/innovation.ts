@@ -24,6 +24,7 @@ export interface Innovation {
   tags?: Array<Tag>;
   preset?: any; // This isn't preset anymore -> we don't have ObjectID.
   readonly quizId?: string;
+  comments?: string;
   marketReport?: {[prop: string]: QuestionReport};
   collaborators?: Array<User>;
   settings?: InnovationSettings;
