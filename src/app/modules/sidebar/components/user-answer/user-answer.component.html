@@ -124,8 +124,13 @@
 
       <!-- Save button -->
       <div *ngIf="adminMode" class="save">
-        <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)">
+        <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngIf="modalAnswer.localStatus != 'draft'">
           {{'COMMON.SAVE' | translate}}
+        </button>
+      </div>
+      <div *ngIf="adminMode" class="save">
+        <button class="btn btn-primary" (click)="import($event)" *ngIf="modalAnswer.localStatus === 'draft'">
+          {{'COMMON.IMPORT' | translate}}
         </button>
       </div>
 

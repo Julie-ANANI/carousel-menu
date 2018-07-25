@@ -172,6 +172,12 @@ export class UserAnswerComponent implements OnInit {
         this.translateNotificationsService.error('ERROR.ERROR', err);
       });
   }
+  
+  import(): void {
+    this.answerService.importFromQuiz(this.modalAnswer).first().subscribe((res: any) => {
+      console.log(res);
+    });
+  }
 
   get lang(): string {
     return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
