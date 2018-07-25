@@ -13,6 +13,6 @@ export const librariesRoutes: Routes = [
   { path: 'questionnaire', children: [
       { path: '', component: AdminPresetsListComponent, pathMatch: 'full' },
       { path: 'new', component: AdminPresetsNewComponent, pathMatch: 'full' },
-      { path: ':presetId', component: AdminPresetsEditComponent, resolve: {preset: PresetResolver}, pathMatch: 'full' }
+      { path: '/:presetId', component: AdminPresetsEditComponent, resolve: {preset: PresetResolver}, pathMatch: 'full' }
     ], pathMatch: 'full' },
 ];
