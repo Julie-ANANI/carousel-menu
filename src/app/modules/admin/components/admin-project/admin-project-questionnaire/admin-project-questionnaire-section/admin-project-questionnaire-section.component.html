@@ -9,9 +9,9 @@
           name="section"
           (ngModelChange)="this.updateDescription($event)"
           [(ngModel)]="section.description">
-    <option [value]="'nothing'">{{ "PRESETS.SECTION.DESCRIPTION.NOTHING" | translate }}</option>
-    <option [value]="'1st'">{{ "PRESETS.SECTION.DESCRIPTION.FIRST" | translate }}</option>
-    <option [value]="'2nd'">{{ "PRESETS.SECTION.DESCRIPTION.SECOND" | translate }}</option>
+    <option [ngValue]="'nothing'">{{ "PRESETS.SECTION.DESCRIPTION.NOTHING" | translate }}</option>
+    <option [ngValue]="'1st'">{{ "PRESETS.SECTION.DESCRIPTION.FIRST" | translate }}</option>
+    <option [ngValue]="'2nd'">{{ "PRESETS.SECTION.DESCRIPTION.SECOND" | translate }}</option>
   </select>
 
   <div *ngIf="!editName">{{section.label.en}}</div>
