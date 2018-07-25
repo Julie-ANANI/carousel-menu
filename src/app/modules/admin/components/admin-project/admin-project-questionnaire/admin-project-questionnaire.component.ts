@@ -23,18 +23,22 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
-    this._sections = this._project.preset.sections;
+    if (this._project && this._project.preset) {
+      this._sections = this._project.preset.sections;
 
-    this._sections.forEach((sec: any, index: number) => {
-      const tab: Array<boolean> = [];
-      sec.questions.forEach((quest: any) => {
-        tab.push(false);
+      this._sections.forEach((sec: any, index: number) => {
+        const tab: Array<boolean> = [];
+        sec.questions.forEach((quest: any) => {
+          tab.push(false);
+        });
+        this._state.push({
+          sec: false,
+          quest: tab
+        })
       });
-      this._state.push({
-        sec: false,
-        quest: tab
-      })
-    });
+    } else {
+      this._sections = [];
+    }
   }
 
 

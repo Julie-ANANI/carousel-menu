@@ -186,6 +186,7 @@ export class AdminProjectDetailsComponent implements OnInit {
 
   public hasPreset(): boolean {
     const p = this._project.preset;
+
     return (p && p.constructor === Object && Object.keys(p).length > 0);
   }
 
