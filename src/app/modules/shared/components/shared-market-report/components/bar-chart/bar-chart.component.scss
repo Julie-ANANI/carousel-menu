@@ -181,7 +181,7 @@
           padding: 15px 16px;
           border-radius: 3px;
           margin-bottom: 20px;
-          flex: 0 1 calc(32% - 1rem);
+          flex: 0 1 calc(50% - 1rem);
         }
 
       }
@@ -195,23 +195,6 @@
 
 /********************************** Media ***************************************/
 @media (max-width: 840px) {
-
-  .bar-chart {
-
-    .answer-wrapper {
-
-      div {
-        flex: 0 1 calc(50% - 1rem) !important;
-      }
-
-    }
-
-  }
-
-
-}
-
-@media (max-width: 600px) {
 
   .bar-chart {
 

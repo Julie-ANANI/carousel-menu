@@ -693,13 +693,14 @@ body.sample-infographic {
     margin-bottom: -20px;
 
     .profile {
+      display: inline-flex;
       background: white;
       border: 1px solid #D7D7D7;
       min-height: 190px;
       padding: 15px 16px;
       border-radius: 3px;
       margin-bottom: 20px;
-      flex: 0 1 calc(32% - 1rem);
+      flex: 0 1 calc(50% - 1rem);
     }
 
   }
@@ -755,6 +756,10 @@ body.sample-infographic {
 
   }
 
+  .professional-wrapper {
+    flex-direction: column;
+  }
+
 }
 
 @media (max-width: 600px) {
@@ -780,10 +785,6 @@ body.sample-infographic {
 
   }
 
-  .professional-wrapper {
-    flex-direction: column;
-  }
-
 }
 
 @media (min-width: 840px) {
@@ -797,103 +798,14 @@ body.sample-infographic {
 
 }
 
-@media (min-width: 601px) and (max-width: 1280px) {
+@media (min-width: 1280px) {
 
   .professional-wrapper {
-    width: calc(89% - 1rem);
-    margin-left: auto;
-    margin-right: auto;
 
     .profile {
-      flex: 0 1 calc(50% - 1rem) !important;
+      flex: 0 1 calc(32% - 1rem) !important;
     }
 
   }
 
 }
-
-/*@media (max-width: 600px) {
-
-  #project-synthesis {
-
-    .question-wrapper {
-      display: none;
-    }
-
-
-    #answer-wrapper {
-      max-width: 100%;
-      padding-left: unset;
-      border-left: none;
-      width: 100%;
-    }
-
-  }
-
-}
-
-@media (min-width: 601px) and (max-width: 840px) {
-
-  #project-synthesis {
-
-    .question-wrapper ul li {
-      width: 180px;
-    }
-
-    #answer-wrapper {
-      max-width: 65%
-    }
-
-  }
-
-}
-
-@media (min-width: 841px) and (max-width: 960px) {
-
-  #project-synthesis {
-
-    .question-wrapper ul li {
-      width: 180px;
-    }
-
-    #answer-wrapper {
-      max-width: 66%;
-    }
-
-  }
-
-}
-
-@media (min-width: 961px) and (max-width: 1280px) {
-
-  #project-synthesis {
-
-    #answer-wrapper {
-      max-width: 70%;
-    }
-
-  }
-
-}
-
-@media (min-width: 1281px) and (max-width: 1440px) {
-
-  #project-synthesis {
-
-    #answer-wrapper {
-      max-width: 78%;
-    }
-
-  }
-
-}
-
-@media (max-width: 600px) {
-
-  .synthesis-wrapper {
-
-
-
-  }
-
-}*/

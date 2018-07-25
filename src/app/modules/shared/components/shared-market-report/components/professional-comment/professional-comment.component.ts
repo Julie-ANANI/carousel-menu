@@ -20,11 +20,12 @@ export class SharedMarketCommentComponent {
 
   constructor() { }
 
-  public seeAnswer(event: any) {
-    this.modalAnswerChange.emit(event);
+  public seeAnswer(event: any, answer: Answer) {
+    event.preventDefault();
+    this.modalAnswerChange.emit(answer);
   }
 
-  public newFilter(filter: Filter) {
+  public newFilter(filter: any) {
     this.selectedTag = filter.questionTitle;
     this.addFilter.emit(filter);
   }
