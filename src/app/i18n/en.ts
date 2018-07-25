@@ -8,7 +8,7 @@ import { MARKET_REPORT } from '../modules/shared/components/shared-market-report
 import { PAGINATION } from '../modules/shared/components/shared-pagination/i18n/en';
 import { PROJECT } from '../modules/shared/components/shared-project-description/i18n/en';
 import { DASHBOARD } from '../modules/admin/components/admin-dashboard/i18n/en';
-import { PRESETS } from '../modules/admin/components/admin-libraries/admin-preset/i18n/en';
+import { PRESETS } from '../modules/admin/components/admin-libraries/admin-presets/i18n/en';
 import { CAMPAIGNS } from '../modules/admin/components/admin-campaigns/i18n/en';
 import { SEARCH } from '../modules/admin/components/admin-search/i18n/en';
 import { BLACKLISTS } from '../modules/admin/components/admin-settings/admin-email-blacklist/i18n/en';

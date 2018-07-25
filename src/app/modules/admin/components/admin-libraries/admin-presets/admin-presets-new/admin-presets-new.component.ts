@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
  import { Router } from '@angular/router';
 // import { environment } from '../../../../../../../environments/environment';
-import { PresetService } from '../../../../../../../services/preset/preset.service';
+import { PresetService } from '../../../../../../services/preset/preset.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { noSpacesValidator } from '../../directives/no-spaces.validator';
+import { noSpacesValidator } from '../directives/no-spaces.validator';
 
 @Component({
   selector: 'app-admin-presets-new',
