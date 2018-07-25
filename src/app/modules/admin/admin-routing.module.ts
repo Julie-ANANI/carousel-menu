@@ -35,6 +35,8 @@ import { tagsRoutes } from './components/admin-tags/admin-tags-routing.module';
 import { searchRoutes } from './components/admin-search/admin-search-routing.module';
 import { emailsRoutes } from './components/admin-emails/admin-emails-routing.module';
 import { projectRoutes } from './components/admin-project/admin-project-routing.module';
+import {AdminLibrariesComponent} from './components/admin-libraries/admin-libraries.component';
+import {librariesRoutes} from './components/admin-libraries/admin-libraries-routing.module';
 // import {AdminLibrariesComponent} from "./components/admin-libraries/admin-libraries.component";
 // import {librariesRoutes} from "./components/admin-libraries/admin-libraries-routing.module";
 
