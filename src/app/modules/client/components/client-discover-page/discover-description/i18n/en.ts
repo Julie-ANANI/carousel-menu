@@ -4,7 +4,7 @@ export const DISCOVERDESCRIPTION = {
   'SHARE': 'Do you like the project? Share it, collect opinions and help it come to fruition!',
   'OPINION': 'Give my opinion on this project',
   'MEDIA': 'Media not available.',
-  'BENEFITS': 'Market benefits',
+  'BENEFITS': 'Benefits',
   'ISSUE': 'Issue',
   'SOLUTION': 'Solution',
   'MEDIAS': 'Medias',

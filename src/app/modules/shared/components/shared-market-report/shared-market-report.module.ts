@@ -21,6 +21,7 @@ import { SharedMarketReportPopoverComponent } from './components/shared-market-r
 import { StarsComponent } from './components/stars/stars.component';
 import { CommonService } from '../../../../services/common/common.service';
 import { InputModule } from '../../../input/input.module';
+import { FilterService } from './services/filters.service';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { InputModule } from '../../../input/input.module';
     InputModule
   ],
   providers: [
-    CommonService
+    CommonService,
+    FilterService
   ],
   declarations: [
     SharedMarketReportComponent,

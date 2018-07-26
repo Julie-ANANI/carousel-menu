@@ -9,7 +9,7 @@
             [elementId]="'comments'"
             [readonly]="false"
             [data]="project?.comments"
-            (onEditorKeyup)="commentKeyupHandlerFunction($event)">
+            (onTextChange)="commentKeyupHandlerFunction($event)">
           </text-zone>
         </div>
       </div>
@@ -50,6 +50,7 @@
 
       <app-shared-project-edit-cards
         [project]="project"
+        [canEdit]="true"
         (projectChange)="updateProject($event)">
       </app-shared-project-edit-cards>
 

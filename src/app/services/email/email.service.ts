@@ -79,6 +79,21 @@ export class EmailService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
+  public updateCountry(entryId: string, data: any): Observable<any> {
+    return this._http.put('/mail/filteredCountries/' + entryId, data)
+      .map((res: Response) => {
+        const response = res.json();
+        return response;
+      })
+      .catch((error: Response) => Observable.throw(error.json()));
+  }
+
+  public deleteCountry(countryId: any): Observable<any> {
+    return this._http.delete('/mail/filteredCountries/' + countryId)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public getRawMessages(config: any): Observable<any> {
       return this._http.get('/mail/blacklist', {params: config})
           .map((res: Response) => {

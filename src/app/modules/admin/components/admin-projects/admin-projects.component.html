@@ -120,8 +120,14 @@
 </div>
 -->
 
-<app-shared-table [config]="config"
-                  (configChange)="loadProjects($event)"
-                  [data]="tableInfos"
-                  (editRow)="goToProject($event)">
-</app-shared-table>
+<div class="container">
+  <div class="columns">
+    <div class="column col-11 col-mx-auto">
+      <app-shared-table [config]="config"
+                        (configChange)="loadProjects($event)"
+                        [data]="tableInfos"
+                        (editRow)="goToProject($event)">
+      </app-shared-table>
+    </div>
+  </div>
+</div>
