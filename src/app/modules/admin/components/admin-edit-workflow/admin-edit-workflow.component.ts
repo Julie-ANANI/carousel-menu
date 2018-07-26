@@ -62,8 +62,8 @@ export class AdminEditWorkflowComponent implements OnInit {
     this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
     this._total = this.scenario.emails.length;
     let columns = [{_attrs: ['step', `${this.language}.subject`], _name: 'Step', _type: 'TEXT', _isSortable: false},
-      {_attrs: [`${this.language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false},
-      {_attrs: [`${this.language}.signatureName`], _name: 'Signature', _type: 'TEXT', _isSortable: false}];
+      {_attrs: [`${this.language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false}/*TODO: à remettre,
+      {_attrs: [`${this.language}.signatureName`], _name: 'Signature', _type: 'TEXT', _isSortable: false}*/];
     if (this.inCampaign) {
       columns.push({_attrs: [`${this.language}.modified`], _name: 'Modified', _type: 'CHECK', _isSortable: false});
     }
