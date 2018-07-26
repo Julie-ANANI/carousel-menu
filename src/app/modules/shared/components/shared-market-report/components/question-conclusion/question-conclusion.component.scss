@@ -5,6 +5,10 @@
   .umi-synthesis {
     flex: 2;
 
+    .main-heading {
+      color: white;
+    }
+
     p {
       padding-top: 0;
       color: #EA5858;
@@ -23,6 +27,7 @@
     margin: 0 25px;
     border: 1px solid white;
     border-radius: 5px;
+    opacity: .5;
   }
 
   .stat-wrapper {
@@ -48,6 +53,7 @@
 
     .stat-wrapper {
       justify-content: center;
+      padding-bottom: 0;
     }
 
   }

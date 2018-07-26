@@ -1,6 +1,3 @@
-/**
- * Created by juandavidcruzgomez on 11/09/2017.
- */
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../../../models/answer';
 import { Filter } from '../../models/filter';
@@ -35,6 +32,8 @@ export class ItemListComponent implements OnInit {
     this._details = value;
   }
   @Input() public stats: any;
+  @Input() selectedTag: any;
+
   @Output() addFilter = new EventEmitter<Filter>();
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Output() updateNumberOfItems = new EventEmitter<number>();
@@ -108,6 +107,9 @@ export class ItemListComponent implements OnInit {
 
   public filterAnswer(item: Item, event: Event) {
     event.preventDefault();
+
+    this.selectedTag = this.question.title;
+
     this.addFilter.emit({
       status: this.question.controlType === 'clearbit' ? 'CLEARBIT' : 'LIST',
       questionId: this.question.identifier,
@@ -120,8 +122,16 @@ export class ItemListComponent implements OnInit {
     this.modalAnswerChange.emit(event);
   }
 
-  get listItems() { return this._listItems; }
-  get details() { return this._details; }
-  get maxToShow() { return this._maxToShow; }
+  get listItems() {
+    return this._listItems;
+  }
+
+  get details() {
+    return this._details;
+  }
+
+  get maxToShow() {
+    return this._maxToShow;
+  }
 
 }

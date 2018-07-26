@@ -1,13 +1,51 @@
-<app-question-conclusion
+<div class="item-list-wrapper">
+  <div class="items">
+    <div *ngFor="let item of listItems; let i = index"
+         [ngClass]="{'top-profil': item.rating === 2}" class="item">
+      <div class="content">
+
+        <!-- Filter icon -->
+        <div class="filter" (click)="filterAnswer(item, $event)">
+          <svg width="20px" height="14px" viewBox="0 0 20 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g transform="translate(-756.000000, -4076.000000)">
+                <rect fill="white" x="0" y="0" width="1440" height="10458"></rect>
+                <text font-family="material" font-size="26" font-weight="normal" fill="#97A4B1">
+                  <tspan x="753" y="4092"></tspan>
+                </text>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Value and count -->
+        <div class="value">
+          <div class="label-success">{{ item.count}}x</div>
+          <p>{{ item.value }}</p>
+        </div>
+
+        <!-- Respoand -->
+        <div class="popup">
+          <market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></market-report-popover>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!--<app-question-conclusion
   [innovation]="innovation"
   [question]="question"
   [readonly]="readonly"
   [stats]="stats">
-</app-question-conclusion>
-
+</app-question-conclusion>-->
+<!--
 <div class="items">
 
-  <div class="items-list">
+  <div>
     <div
       *ngFor="let item of (!details && listItems.length > maxToShow) ? listItems.slice(0, maxToShow) : listItems; let i = index"
       [ngClass]="{'top-profil': item.rating === 2}">
@@ -32,4 +70,4 @@
     more...
   </a>
 
-</div>
+</div>-->

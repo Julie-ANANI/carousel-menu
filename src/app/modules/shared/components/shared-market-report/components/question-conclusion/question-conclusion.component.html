@@ -1,7 +1,9 @@
 <div class="ques-conclusion-wrapper">
 
   <!-- Conclusion -->
-  <div class="umi-synthesis section-light-container">
+  <div class="umi-synthesis">
+
+    <h1 class="main-heading">{{ question.label | multiling:lang }}</h1>
 
     <app-text-zone
       [elementId]="domSectionId"

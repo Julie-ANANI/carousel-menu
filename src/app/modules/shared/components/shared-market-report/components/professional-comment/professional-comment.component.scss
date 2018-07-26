@@ -8,7 +8,6 @@
     justify-content: space-between;
     font-size: 14px;
     height: 100%;
-    width: 83%;
 
     .filter-wrapper {
       visibility: hidden;
@@ -173,8 +172,33 @@
       margin-left: 0;
       padding-left: 0;
       margin-top: 25px;
+      padding-bottom: 25px;
       padding-top: 25px;
       flex: unset !important;
+    }
+
+  }
+
+}
+
+@media (min-width: 601px) and (max-width: 840px) {
+
+  .professional-comment {
+
+    .pro-tag-wrapper {
+      width: 83%;
+    }
+
+  }
+
+}
+
+@media (min-width: 841px) and (max-width: 1280px) {
+
+  .professional-comment {
+
+    .pro-tag-wrapper {
+      width: 78%;
     }
 
   }

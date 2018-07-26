@@ -1,11 +1,18 @@
 <div class="popover popover-bottom">
-  <i class="fas fa-bars item-menu-sandwich" aria-hidden="true"></i>
+  <svg width="23px" height="24px" viewBox="0 0 23 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <g transform="translate(-1090.000000, -5210.000000)">
+        <rect fill="white" x="0" y="0" width="1440" height="10458"></rect>
+        <text font-family="simple-line-icons" font-size="23" font-weight="normal" fill="#97A4B1">
+          <tspan x="1090" y="5232"></tspan>
+        </text>
+      </g>
+    </g>
+  </svg>
   <div class="users-menu popover-container" *ngIf="answers && answers.length">
     <ul>
       <li *ngFor="let answer of answers; let i = index">
-
         <app-pro-tag [answer]="answer" (addFilter)="newFilter($event)" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
-
       </li>
     </ul>
   </div>
