@@ -44,6 +44,8 @@ export class TableComponent {
   private _columns: Column[] = [];
   private _actions: string[] = [];
 
+  editColumn = false;
+
   private _config: any = null;
 
   constructor(private _translateService: TranslateService) {}
@@ -253,6 +255,14 @@ export class TableComponent {
   selectRow(key: string): void {
     if (this._isSelectable) {
       this._content[key]._isSelected = !(this._content[key]._isSelected);
+    }
+  }
+
+  showEditButton(index: number, item: any) {
+    if ((index === 0)) {
+      this.editColumn = true;
+    } else {
+      this.editColumn = false;
     }
   }
 
