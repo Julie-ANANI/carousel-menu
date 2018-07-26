@@ -64,6 +64,11 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
       color: this.formQuestion.value.color,
       positive: this.formQuestion.value.positive
     };
+    this.formQuestion.value.labelEN = '';
+    this.formQuestion.value.labelFR = '';
+    this.formQuestion.value.color = '';
+    this.formQuestion.value.positive = '';
+    this.modalAddOption = false;
     this.question.options.push(opt);
     this._emit();
   }
