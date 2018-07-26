@@ -11,7 +11,6 @@ export const librariesRoutes: Routes = [
   { path: '', redirectTo: 'workflows', pathMatch: 'full'},
   { path: 'workflows', component: AdminWorkflowsLibraryComponent, pathMatch: 'full'},
   { path: 'emails', component: AdminEmailsLibraryComponent, pathMatch: 'full'},
-  { path: 'signatures', component: AdminSignaturesLibraryComponent, pathMatch: 'full'}
   { path: 'signatures', component: AdminSignaturesLibraryComponent, pathMatch: 'full'},
    /*{ path: 'questionnaire', children: [
       { path: '', component: AdminPresetsListComponent, pathMatch: 'full' },

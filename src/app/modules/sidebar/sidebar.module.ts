@@ -19,7 +19,6 @@ import { AnswerQuestionComponent } from './components/user-answer/answer-questio
 import { RatingItemComponent } from './components/user-answer/rating-item/rating-item.component';
 import { SidebarWorkflowComponent } from "./components/sidebar-workflow/sidebar-workflow.component";
 import { SidebarSignatureComponent } from "./components/sidebar-signature/sidebar-signature.component";
-import { SidebarWorkflowComponent } from './components/sidebar-workflow/sidebar-workflow.component';
 
 @NgModule({
   imports: [

@@ -39,7 +39,7 @@ import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workf
     TranslateModule.forChild(),
     SidebarModule,
     PipeModule,
-    AdminEditWorkflowModule
+    AdminEditWorkflowModule,
     TableModule,
     PipeModule
   ],
