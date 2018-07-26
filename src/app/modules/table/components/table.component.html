@@ -59,7 +59,7 @@
               <i class="icon icon-arrow-right"></i>
               <button *ngFor="let a of actions" class="btn btn-xs ghost-edit" style="margin-left: 10px;"
                       (click)="onActionClick(a)">
-                {{a}}
+                {{a | translate}}
               </button>
               <button class="btn btn-xs ghost-delete"
                       style="margin-left: 10px;"
