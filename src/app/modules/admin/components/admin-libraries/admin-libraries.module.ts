@@ -12,7 +12,7 @@ import { AdminEmailsLibraryModule } from "./admin-emails-library/admin-emails-li
 import { AdminPresetsModule } from './admin-presets/admin-presets.module';
 import { AdminCountryManagementModule } from '../admin-settings/admin-country-management/admin-country-management.module';
 import { AdminEmailBlacklistComponent } from '../admin-settings/admin-email-blacklist/admin-email-blacklist.component';
-import  {TableModule } from '../../../table/table.module';
+import { TableModule } from '../../../table/table.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 
 @NgModule({
