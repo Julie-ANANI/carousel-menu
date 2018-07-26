@@ -34,18 +34,14 @@
       </select>
     </form>
     <div *ngFor="let scenario of availableScenarios">
-      <br>
-      <app-shared-edit-scenario
-        *ngIf="scenario.emails && scenario.emails.length"
+      <app-admin-edit-workflow
         [scenario]="scenario"
-        [inCampaign]="true"
-        (scenarioChange)="updateAvailableScenario(scenario)"
-        (removeScenario)="removeScenario(scenario)"
-      ></app-shared-edit-scenario>
+        [signatures]="signatures"
+        (scenarioChange)="updateAvailableScenario($event)"
+        (deletedScenario)="removeScenario($event)">
+      </app-admin-edit-workflow>
     </div>
   </div>
-
-  <app-shared-edit-scenario *ngIf="scenario.emails && scenario.emails.length" [scenario]="scenario" (scenarioChange)="updateScenario($event)"></app-shared-edit-scenario>
 </div>
 
 

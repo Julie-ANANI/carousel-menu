@@ -67,4 +67,34 @@ export class TemplatesService {
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public createEmail(EmailObj: any): Observable<any> {
+    return this._http.post('/emailtemplate', EmailObj)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public getEmail(id: string): Observable<any> {
+    return this._http.get('/emailtemplate/' + id)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public getAllEmails(config: any): Observable<any> {
+    return this._http.get('/emailtemplate/', {params: config})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public removeEmail(emailId: string): Observable<any> {
+    return this._http.delete('/emailtemplate/' + emailId)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public saveEmail(emailObj: any): Observable<any> {
+    return this._http.put('/emailtemplate/' + emailObj._id, emailObj)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
 }

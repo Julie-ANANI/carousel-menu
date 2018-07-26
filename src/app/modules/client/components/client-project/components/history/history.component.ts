@@ -4,6 +4,7 @@ import { AuthService } from '../../../../../../services/auth/auth.service';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import {Question} from '../../../../../../models/question';
+import {Section} from '../../../../../../models/section';
 
 @Component({
   selector: 'app-client-history-project',
@@ -23,7 +24,7 @@ export class HistoryProjectComponent implements OnInit {
 
   ngOnInit() {
     this._events = this.sortEvents(this.getBaseEvents());
-    this._questions = this.project.preset.sections.reduce((acc, section) => { return acc.concat(section.questions); }, []);
+    this._questions = this.project.preset.sections.reduce((acc: Array<Question>, section: Section) => { return acc.concat(section.questions); }, []);
     this.answers
       .getInnovationValidAnswers(this.project._id)
       .first()

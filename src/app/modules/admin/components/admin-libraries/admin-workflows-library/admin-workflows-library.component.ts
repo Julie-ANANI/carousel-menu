@@ -3,6 +3,7 @@ import { TemplatesService } from '../../../../../services/templates/templates.se
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { EmailScenario } from '../../../../../models/email-scenario';
 import {EmailTemplate} from "../../../../../models/email-template";
+import { EmailSignature } from '../../../../../models/email-signature';
 
 @Component({
   selector: 'app-admin-workflows-library',
@@ -12,6 +13,7 @@ import {EmailTemplate} from "../../../../../models/email-template";
 export class AdminWorkflowsLibraryComponent implements OnInit {
 
   private _newScenarioName: string = null;
+  private _signatures: Array<EmailSignature> = [];
   private _scenarios: Array<EmailScenario> = [];
 
   constructor(private _templatesService: TemplatesService,
@@ -19,6 +21,9 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
 
   ngOnInit() {
     this.getScenarios();
+    this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
+      this._signatures = signatures.result;
+    });
   }
 
   public getScenarios() {
@@ -53,19 +58,29 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
       this._scenarios.unshift(newScenario);
     });
   }
+  
+  public updateScenario(changedScenario: EmailScenario) {
+    this._templatesService.save(changedScenario).first().subscribe(updatedScenario => {
+      const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id == changedScenario._id);
+      this._scenarios[scenarioIndex] = updatedScenario;
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+    }, (err: any) => {
+      this._notificationsService.error('ERROR', err);
+    });
+  }
 
   /**
    * Suppression et mise à jour de la vue
    */
-  public deleteScenario(scenarioId: string) {
-    event.preventDefault();
-    this._templatesService.remove(scenarioId).first().subscribe(_ => {
-      const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id == scenarioId);
+  public deleteScenario(scenarioToDelete: EmailScenario) {
+    this._templatesService.remove(scenarioToDelete._id).first().subscribe(_ => {
+      const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id == scenarioToDelete._id);
       this._scenarios.splice(scenarioIndex, 1);
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     });
   }
 
+  get signatures(): Array<EmailSignature> { return this._signatures; }
   get scenarios(): Array<EmailScenario> { return this._scenarios; }
   get newScenarioName(): string { return this._newScenarioName; }
   set newScenarioName(name: string) { this._newScenarioName = name; }

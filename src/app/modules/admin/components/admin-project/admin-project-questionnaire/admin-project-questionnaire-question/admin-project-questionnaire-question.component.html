@@ -1,0 +1,193 @@
+<div class="wrap">
+
+  <div class="question">
+
+    <!-- Question header -->
+    <div class="question-header">
+      <div class="move-element">
+        <i class="fa fa-caret-up" (click)="up()"></i>
+        <i class="fa fa-caret-down" (click)="down()"></i>
+      </div>
+
+      <select class="form-select"
+              name="question"
+              id="questionType"
+              (ngModelChange)="this.updateType($event)"
+              [(ngModel)]="question.controlType">
+        <option [value]="null">...</option>
+        <option [value]="'checkbox'">{{ "PRESETS.QUESTION.TYPE.CHECKBOX" | translate }}</option>
+        <option [value]="'list'">{{ "PRESETS.QUESTION.TYPE.LIST" | translate }}</option>
+        <option [value]="'clearbit'">{{ "PRESETS.QUESTION.TYPE.CLEARBIT" | translate }}</option>
+        <option [value]="'radio'">{{ "PRESETS.QUESTION.TYPE.RADIO" | translate }}</option>
+        <option [value]="'scale'">{{ "PRESETS.QUESTION.TYPE.SCALE" | translate }}</option>
+        <option [value]="'stars'">{{ "PRESETS.QUESTION.TYPE.STARS" | translate }}</option>
+        <option [value]="'textarea'">{{ "PRESETS.QUESTION.TYPE.TEXTAREA" | translate }}</option>
+        <option [value]="'textbox'">{{ "PRESETS.QUESTION.TYPE.TEXTBOX" | translate }}</option>
+        <option [value]="'toggle'">{{ "PRESETS.QUESTION.TYPE.TOGGLE" | translate }}</option>
+      </select>
+
+      <div>{{question.label.en}}</div>
+
+      <div class="button-actions">
+        <button type="button"
+                class="btn btn-xs ghost-edit"
+                (click)="coolapseQuestion()"
+                [attr.aria-expanded]="!isCollapsed"
+                aria-controls = "collapseMails">
+          Edit
+        </button>
+
+        <button type="button" class="btn btn-xs ghost-edit" (click)="cloneQuestion()">
+          Clone
+        </button>
+
+        <button type="button" class="btn btn-xs ghost-delete" (click)="removeQuestion()">
+          Delete
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Question edition -->
+    <div class="question-body" *ngIf="stateIN[index]">
+
+      <div class="question-toolbar">
+        <div (click)="languageEN()" *ngIf="language() == 'fr'" href="" class="question-language">
+          English <span class ="alert-badge"> {{count(language())}}</span>
+        </div>
+        <div (click)="languageFR()" *ngIf="language() == 'fr'" href="" class="question-language active">
+          French <span class ="alert-badge"> {{count(language())}}</span>
+        </div>
+        <div (click)="languageEN()"  *ngIf="language() == 'en'" href="" class="question-language active">
+          English <span class ="alert-badge"> {{count(language())}} </span>
+        </div>
+        <div (click)="languageFR()" *ngIf="language() == 'en'" href="" class="question-language">
+          French <span class ="alert-badge"> {{count(language())}}</span>
+        </div>
+
+        <label class="form-switch" >
+          <input type="checkbox" (click)="comment()" [ngModel]="question.canComment"  >
+          <i class="form-icon"></i> Add comment
+        </label>
+      </div>
+
+
+      <div class="labelling">
+        <div class="form-group">
+          <label class="form-label" for="label{{language()}}">{{ "PRESETS.QUESTION.EDIT.LABEL" | translate }}</label>
+          <input
+            type="text"
+            class="form-default"
+            name="{{language()}}"
+            id="label{{language()}}"
+            [(ngModel)]="question.label[language()]"
+            (keyup.enter)="update()">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="title{{language()}}">{{ "PRESETS.QUESTION.EDIT.TITLE" | translate }}</label>
+          <input
+            type="text"
+            class="form-default"
+            name="{{language()}}"
+            id="title{{language()}}"
+            [(ngModel)]="question.title[language()]"
+            (keyup.enter)="update()">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="subtitle{{language()}}">{{ "PRESETS.QUESTION.EDIT.SUBTITLE" | translate }}</label>
+          <input
+            type="text"
+            class="form-default"
+            name="{{language()}}"
+            id="subtitle{{language()}}"
+            [(ngModel)]="question.subtitle[language()]"
+            (keyup.enter)="update()">
+        </div>
+      </div>
+
+      <div *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox')" class="option-list" id="optionsWrap">
+
+        <div *ngFor="let option of question.options;let i = index" class="option">
+          <div (click)="deleteOption(i)" class="delete-option">
+            <i class="icon icon-cross"></i>
+          </div>
+
+          <div class="name-option">{{option.label[language()]}}</div>
+
+          <!--<div class="color-option">{{option.color}}</div>-->
+
+          <label class="form-switch">
+            <input type="checkbox"
+                   (click)="positiveChange(option)"
+                   [ngModel]="option.positive"
+                    id="{{i}}">
+            <i class="form-icon"></i>
+          </label>
+
+          <div class="legend-option">Positive answer</div>
+        </div>
+
+        <button *ngIf="question && (question.controlType === 'radio' || question.controlType === 'checkbox') && !modalAddOption"
+                (click)="modalAddOption = true" class="btn btn-primary ghost-primary" type="button">
+          Add item
+        </button>
+
+        <div *ngIf="modalAddOption">
+          <div [formGroup]="formQuestion">
+
+            <div class="add-item-language">
+              <div class="form-group">
+                <label class="form-label" for="labelFR">French</label>
+                <input
+                  type="text"
+                  class="form-default"
+                  name="labelFR"
+                  id="labelFR"
+                  formControlName="labelFR">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="labelEN">English</label>
+                <input
+                  type="text"
+                  class="form-default"
+                  name="labelEN"
+                  id="labelEN"
+                  formControlName="labelEN">
+              </div>
+            </div>
+
+            <label class="form-switch" for="positive" *ngIf="question.controlType === 'radio'">
+              <input type="checkbox" name="positive" formControlName="positive" id="positive">
+              <i class="form-icon"></i> Positive answer
+            </label>
+
+            <!--<label for="color" *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'">
+              Couleur d'affichage
+              <select class="form-select" id="color" name="color" formControlName="color">
+                <option [value]="'#ffffff'">...</option>
+                <option [value]="'#34AC01'">Vert foncé</option>
+                <option [value]="'#82CD30'">Vert clair</option>
+                <option [value]="'#F2C500'">Jaune</option>
+                <option [value]="'#C0210F'">Rouge</option>
+              </select>
+            </label>-->
+
+          </div>
+
+          <button (click)="addOption()" class="btn btn-primary">
+            {{'COMMON.SAVE' | translate}}
+          </button>
+
+          <button (click)="modalAddOption = !modalAddOption" class="btn btn-primary ghost-primary">
+            Cancel
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
