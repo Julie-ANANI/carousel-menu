@@ -3,9 +3,9 @@ export const DISCOVERDESCRIPTION = {
   'PATENT': 'Protégé par un brevet',
   'SHARE' : 'Vous aimez le projet? Partagez-le, récoltez des avis et aidez-le à se concrétiser!',
   'OPINION': 'Donner mon avis sur ce projet',
-  'MEDIA': 'Médias non disponible!',
-  'BENEFITS': 'Avantages',
-  'ISSUE': 'Problème',
+  'MEDIA': 'Médias non disponible !',
+  'BENEFITS': 'Avantages marché',
+  'ISSUE': 'Problématique',
   'SOLUTION': 'Solution',
-  'MEDIAS': 'Des médias',
+  'MEDIAS': 'Médias',
 };
