@@ -183,6 +183,11 @@ export class SetupProjectComponent implements OnInit {
     };
   }
 
+  public printInnovationCard(event: Event) {
+    event.preventDefault();
+    window.print();
+  }
+
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
   }

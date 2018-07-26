@@ -1,19 +1,5 @@
 @media print and (color) {
 
-  * {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  body {
-    font-size: 14px;
-  }
-
-  @page {
-    size: A4 landscape;
-    margin: 1.5cm 1.5cm;
-  }
-
   /*
   @page:first {
     size: 5.5in 8.5in;
@@ -41,7 +27,11 @@
       font-size: 8pt;
     }
   }
-*/
+
+  .page-footer:after {
+    counter-increment: page;
+    content: counter(page);
+   }
 
   .page-footer {
     display: none;
@@ -49,18 +39,100 @@
     bottom: 0;
     right: 0;
   }
+  */
 
-  /*
-  .page-footer:after {
-    counter-increment: page;
-    content: counter(page);
-  }*/
+
+  * {
+    print-color-adjust: exact;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 1.5cm 1.5cm;
+  }
+
+
+  /* =========================================================================
+    Innovation card
+    ========================================================================== */
+
+  #setup-project,
+  .header-project,
+  footer,
+  app-header {
+    display: none !important;
+  }
+
+  .innovation-card-print {
+    display: block !important;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+
+    .section-light-container {
+      padding: 0 !important;
+    }
+
+    .section-heading {
+      margin: 0 0 8px !important;
+    }
+
+    .sc-innovation-wrapper {
+      display: flex;
+      justify-content: space-between;
+
+      .main-media {
+        margin-bottom: 10px;
+      }
+
+      .sc-summary-wrapper {
+        padding-right: 0;
+        flex: 1.3;
+
+        p {
+          padding-bottom: 25px;
+        }
+
+        .section-heading {
+          margin-bottom: 15px;
+        }
+
+        .sc-advantage {
+          margin: 0;
+
+          li {
+            margin: 0;
+            padding: 3px 8px 3px 4px !important;
+          }
+
+          li:last-child {
+            padding-bottom: 0;
+          }
+
+        }
+
+      }
+
+      .sc-issue-wrapper {
+        padding-left: 15px;
+        padding-right: 0;
+        flex: 0.8;
+      }
+
+      .sc-solution-wrapper {
+        padding-left: 15px;
+        flex: 0.8;
+      }
+
+    }
+  }
 
 
   /* =========================================================================
     Market report
     ========================================================================== */
 
+  /*
   app-admin h2,
   .navbar,
   .admin-buttons,
@@ -245,7 +317,6 @@
       margin: 20px 5px 0px 5px !important;
       color: #333 !important;
       padding: 0 !important;
-      /* max-width: 220px !important; */
     }
 
     .prosList .professional-item:nth-child(9) {
@@ -321,6 +392,6 @@
     .professional-item.top-profil:before {
       top: -20px !important;
     }
-  }
+  }*/
 
 }
