@@ -82,25 +82,21 @@ export class AdminEmailBlacklistComponent implements OnInit {
                     {
                       _name: 'MANUALLY_ADDED',
                       _alias: this.reasonFormat('MANUALLY_ADDED'),
-                      _class: 'label-progress'
                     }, {
                       _name: 'USER_SUPPRESSION',
                       _alias: this.reasonFormat('USER_SUPPRESSION'),
-                      _class: 'label-validate'
                     }, {
                       _name: 'PROFESSIONAL_SUPPRESSION',
                       _alias: this.reasonFormat('PROFESSIONAL_SUPPRESSION'),
-                      _class: 'label-alert'
                     },
                     {
                       _name: 'MAIL_EVENT',
                       _alias: this.reasonFormat('MAIL_EVENT'),
-                      _class: 'label-editing'
                     }
                     ]},
                 {_attrs: ['type'], _name: 'COMMON.TYPE', _type: 'MULTI-CHOICES',
                   _choices: [
-                    {_name: 'EMAIL', _alias: 'COMMON.EMAIL', _class: 'label-progress'},
+                    {_name: 'EMAIL', _alias: 'COMMON.EMAIL', _class: 'label-draft'},
                     {_name: 'GLOBAL', _alias: 'COMMON.DOMAIN', _class: 'label-editing'}
                   ]}]
             };

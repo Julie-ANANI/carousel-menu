@@ -44,6 +44,8 @@ export class TableComponent {
   private _columns: Column[] = [];
   private _actions: string[] = [];
 
+  editColumn = false;
+
   private _config: any = null;
 
   constructor(private _translateService: TranslateService) {}
@@ -256,6 +258,14 @@ export class TableComponent {
     }
   }
 
+  showEditButton(index: number, item: any) {
+    if ((index === 0)) {
+      this.editColumn = true;
+    } else {
+      this.editColumn = false;
+    }
+  }
+
   initialiseColumns() {
     this._columns.forEach((value1, index) => {
       this._columns[index]._isSelected = false,
@@ -268,8 +278,16 @@ export class TableComponent {
     this._columns[index]._isSelected = true;
   }
 
+  isSort(content: Column): boolean {
+    if (content !== null && this._config.sort !== null) {
+      return this._config.sort[this.getAttrs(content)[0]];
+    } else {
+      return false;
+    }
+  }
+
   isSelected(content: any): boolean {
-    return content._isSelected;
+    return content._isSelected
   }
 
   isSortable(column: Column) {

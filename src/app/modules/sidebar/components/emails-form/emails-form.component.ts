@@ -14,40 +14,29 @@ export class EmailsFormComponent implements OnInit, OnChanges {
 
   @Input() set editBlacklistEmail(value: any) {
     this.emailToEdit = value;
-    this.loadBlacklist();
   };
 
   @Input() set campaignInfos(value: EmailQueueModel) {
     this.campaignInfosToShow = value;
-    this.loadCampaignInfos();
   }
 
   @Input() set countryInfos(value: any) {
     this.countryInfo = value;
-    this.loadCountry();
   }
 
   @Input() sidebarState: Subject<string>;
 
   @Input() set type(type: string) {
-    this.reinitialiseForm();
-    if (type === 'excludeEmails') {
-      this.isExcludeEmails = true;
-    } else if (type === 'editBlacklist') {
-      this.isBlacklist = true;
-    } else if (type === 'showCampaignInfos') {
-      this.isShowCampaignInfos = true;
-    }else if (type === 'excludeCountry') {
-      this.isFilterCountry = true;
-    } else if (type === 'editCountry') {
-      this.isEditCountry = true;
-    }
+    this._type = type;
+    this.loadTypes();
   }
 
   @Output() editBlacklist = new EventEmitter<any>();
   @Output() emailsToBlacklists = new EventEmitter<Array<string>>();
   @Output() countryToFilter = new EventEmitter<any>();
   @Output() editCountry = new EventEmitter<any>();
+
+  private _type = '';
 
   isBlacklist = false;
   isExcludeEmails = false;
@@ -79,11 +68,30 @@ export class EmailsFormComponent implements OnInit, OnChanges {
       this.sidebarState.subscribe((state) => {
         if (state === 'inactive') {
           setTimeout (() => {
-            this.formData.reset();
             this.country = null;
+            this.loadTypes();
           }, 700);
         }
       })
+    }
+  }
+
+  loadTypes() {
+    this.reinitialiseForm();
+    if (this._type === 'excludeEmails') {
+      this.isExcludeEmails = true;
+    } else if (this._type === 'editBlacklist') {
+      this.isBlacklist = true;
+      this.loadBlacklist();
+    } else if (this._type === 'showCampaignInfos') {
+      this.isShowCampaignInfos = true;
+      this.loadCampaignInfos();
+    }else if (this._type === 'excludeCountry') {
+      this.isFilterCountry = true;
+      this.initialiseCountryExclusion();
+    } else if (this._type === 'editCountry') {
+      this.isEditCountry = true;
+      this.loadCountry();
     }
   }
 
@@ -103,6 +111,10 @@ export class EmailsFormComponent implements OnInit, OnChanges {
         : this.countryInfo.expiration = new Date(this.countryInfo.expiration);
       this.formData.patchValue(this.countryInfo);
     }
+  }
+
+  initialiseCountryExclusion() {
+    this.formData.get('acceptation').setValue(80);
   }
 
   loadCampaignInfos() {

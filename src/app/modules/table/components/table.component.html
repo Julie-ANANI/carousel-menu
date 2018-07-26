@@ -26,8 +26,8 @@
             <th *ngIf="isSelectable" width="50"><input type="checkbox" (change)="selectAll($event)"/>
               <div class="square-check"><i class="icon icon-check"></i></div></th>
 
-            <th *ngFor="let column of columns"
-                [ngClass]="{'active': isSelected(column)}"
+            <th *ngFor="let column of columns" [class]="'column-' + i"
+                [ngClass]="{'active': isSort(column), 'pointable': isSortable(column)}"
                 (click)="selectColumn(getAttrs(column)[0])">
 
               <sq-sort [config]="config"
@@ -81,7 +81,7 @@
 
           <!-- Foreach columns -->
           <ng-container>
-            <td *ngFor="let column of columns">
+            <td *ngFor="let column of columns; let i = index" [ngClass]="{'col-wrapper': i === 0}">
               <span (click)="selectRow(key)">
                 <ng-container [ngSwitch]="getType(column)">
 
@@ -155,8 +155,7 @@
               </span>
 
               <!-- If isEditable we show a button onHover the row -->
-              <button class="btn btn-xs ghost-edit visibleOnHover"
-                      *ngIf="columns.indexOf(column) == 0 && (isEditable || isShowable)"
+              <button *ngIf="i === 0" class="btn btn-xs ghost-edit visibleOnHover"
                       (click)="edit(content[key])">
                 {{isEditable ? ('COMMON.EDIT' | translate) : ('COMMON.MORE' | translate) }}
               </button>

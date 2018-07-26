@@ -91,7 +91,7 @@ export class UserFormComponent implements OnInit {
       country: ['', [Validators.required]],
       roles: '',
       operator: [false],
-      url: [null],
+      profileUrl: [null],
       domain: ['']
     });
 

@@ -57,8 +57,8 @@ export class AdminProjectsComponent implements OnInit {
             {_attrs: ['name'], _name: 'COMMON.PROJECT.TITLE', _type: 'TEXT'},
             {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'COMMON.PROJECT.OWNER', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
             {_attrs: ['domain'], _name: 'COMMON.PROJECT.DOMAIN', _type: 'TEXT'},
-            {_attrs: ['created'], _name: 'COMMON.SORT.BY_CREATION_DATE', _type: 'DATE'},
-            {_attrs: ['updated'], _name: 'COMMON.SORT.BY_UPDATE_DATE', _type: 'DATE'},
+            {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'},
+            {_attrs: ['updated'], _name: 'COMMON.UPDATED', _type: 'DATE'},
             {_attrs: ['status'], _name: 'Status', _type: 'MULTI-CHOICES', _choices: [
                 {_name: 'EDITING', _alias: 'Editing', _class: 'label-editing'},
                 {_name: 'SUBMITTED', _alias: 'Submitted',  _class: 'label-draft'},
