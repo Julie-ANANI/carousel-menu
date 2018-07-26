@@ -8,12 +8,12 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 })
 export class AdminLibrariesComponent implements OnInit {
 
-  private _tabs: Array<string> = ['workflows', 'signatures'];
+  private _tabs: Array<string> = ['workflows', 'questionnaire', 'signatures'];
 
   constructor(private _titleService: TranslateTitleService) {}
 
   ngOnInit(): void {
-    this._titleService.setTitle("Libraries");
+    this._titleService.setTitle('Libraries');
   }
 
   public get tabs(): Array<string> { return this._tabs; }
