@@ -36,15 +36,11 @@ export class AdminPresetsNewComponent {
 
   public createPreset() {
     this._presetService.create(this._newPreset).first().subscribe( (preset) => {
-      console.log('OK questionnaire');
-      console.log(preset);
       this._newPreset = preset;
       this.errorquestionnaire = false;
       this.created = true;
-      this._router.navigate(['/admin/presets/presets/' + preset._id])
+      this._router.navigate(['/admin/libraries/questionnaire/' + preset._id])
     }, (error) => {
-      console.log('error:')
-      console.log(error);
       error = JSON.parse(error);
       this.errorquestionnaire = true;
     });
@@ -57,5 +53,5 @@ export class AdminPresetsNewComponent {
 */
 
   get newPreset(): any { return this._newPreset;}
-   get name(): AbstractControl { return this.formData.get('name'); }
+  get name(): AbstractControl { return this.formData.get('name'); }
 }

@@ -1,8 +1,6 @@
 <!--
 <div class="container">
   <div class="columns">
-    <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit(formData)" class="column col-10 col-mx-auto">
-
       <h1>{{ 'COMMON.PRESETS' | translate }}</h1>
 
       <div class="columns">
@@ -19,12 +17,10 @@
       </div>
 
       <button type="submit" class="btn btn-primary centered" [disabled]="formData.invalid">{{ 'PRESETS.PRESET.GO' | translate }}</button>
-
-    </form>
   </div>
 </div>
 
-<!-- Modal de création de questionnaire-->
+<!-- Modal de création de questionnaire -->
 <div class="modal" [ngClass]="{'active': true}">
   <div class="modal-container">
     <div class="modal-header">
@@ -33,7 +29,7 @@
     <div class="modal-body">
       <div class="content">
         Appuyer sur entrée après avoir écris le nom du questionnaire.
-        <input type="text" [(ngModel)]="newPreset.name" (keyup.enter)="createPreset($event)">
+        <input type="text"  [(ngModel)]="newPreset.name" (keyup.enter)="createPreset()">
         <span *ngIf="errorquestionnaire"> Ce nom est deja pris, veuillez en choisir un nouveau</span>
       </div>
     </div>
@@ -44,3 +40,4 @@
     </div>
   </div>
 </div>
+
