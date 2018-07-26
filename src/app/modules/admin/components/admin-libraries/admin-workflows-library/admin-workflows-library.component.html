@@ -2,24 +2,27 @@
   <div class="columns">
     <div class="column col-12 col-mx-auto">
 
-      <div class="empty" *ngIf="!scenarios.length">
-        <div class="empty-action">
-          <button (click)="newScenarioName = 'scenario'" class="btn btn-primary">
-            Créer un nouveau scénario <i class="icon icon-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="text-right">
-        <button (click)="newScenarioName = 'scenario'" class="btn btn-primary" *ngIf="scenarios.length">
-          Créer un scénario
-        </button>
-      </div>
-
-      <div *ngFor="let scenario of scenarios">
-        <app-admin-edit-workflow [scenario]="scenario" (deletedScenario)="deleteScenario($event)"></app-admin-edit-workflow>
-      </div>
+  <div class="empty" *ngIf="!scenarios.length">
+    <div class="empty-action">
+      <button (click)="newScenarioName = 'scenario'" class="btn btn-primary">
+        Créer un scénario
+      </button>
     </div>
+  </div>
+
+  <div class="text-right">
+    <button (click)="newScenarioName = 'scenario'" class="btn btn-primary" *ngIf="scenarios.length">
+      Créer un scénario
+    </button>
+  </div>
+
+  <div *ngFor="let scenario of scenarios">
+    <app-admin-edit-workflow
+      [scenario]="scenario"
+      (scenarioChange)="updateScenario($event)"
+      [signatures]="signatures"
+      (deletedScenario)="deleteScenario($event)">
+    </app-admin-edit-workflow>
   </div>
 
   <div class="modal" [ngClass]="{'active': newScenarioName != null}">
@@ -30,7 +33,7 @@
       </div>
       <div class="modal-body">
         <div class="content">
-          Choisissez un nom pour le nouveau scénario
+          Choisissez un nom pour le scénario
           <input class="form-input" type="text" [(ngModel)]="newScenarioName" name="scenarioName"/>
         </div>
       </div>
