@@ -141,15 +141,20 @@
 
   }
 
+  .divider-wrapper {
+    margin: 0 25px;
+    border: 1px solid #D7D7D7;
+    border-radius: 5px;
+  }
+
   .comment-wrapper {
-    border-left: 1px solid #D7D7D7;
-    margin-left: 25px;
-    padding-left: 25px;
     display: flex;
     align-items: center;
     font-size: 14px;
     color: #484848;
     flex: 1;
+    padding-top: 15px;
+    padding-bottom: 15px;
   }
 
 
@@ -160,21 +165,22 @@
 
   .professional-comment {
     flex-direction: column;
+    height: unset;
+    min-height: 100%;
 
     .pro-tag-wrapper {
       width: 100%;
-      flex: unset !important;
+      flex: unset;
+    }
+
+    .divider-wrapper {
+      margin: 25px 0;
     }
 
     .comment-wrapper {
-      border-left: none;
-      border-top: 1px solid #D7D7D7;
-      margin-left: 0;
-      padding-left: 0;
-      margin-top: 25px;
-      padding-bottom: 25px;
-      padding-top: 25px;
-      flex: unset !important;
+      flex: unset;
+      padding-top: unset;
+      padding-bottom: unset;
     }
 
   }

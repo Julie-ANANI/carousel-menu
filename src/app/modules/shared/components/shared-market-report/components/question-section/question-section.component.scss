@@ -436,14 +436,14 @@ ul.items {
 
   }
 
-  .comment-wrapper, .answer-wrapper {
+  .comment-wrapper, .textarea-answer-wrapper {
     margin-top: 25px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
   }
 
-  .comment-outer-wrapper {
+  .comment-outer-wrapper, .textarea-answer-outer-wrapper {
     display: flex;
     background: white;
     border: 1px solid #D7D7D7;
@@ -453,6 +453,10 @@ ul.items {
     flex: 1;
   }
 
+  .textarea-answer-outer-wrapper {
+    display: inline-flex;
+    flex: 0 1 calc(50% - 1rem);
+  }
 
 
 }
@@ -488,13 +492,17 @@ ul.items {
 
     }
 
+    .comment-wrapper, .textarea-answer-wrapper {
+      flex-direction: column;
+    }
+
   }
 
 }
 
 @media (max-width: 600px) {
 
-  .comment-outer-wrapper {
+  .comment-outer-wrapper, .textarea-answer-outer-wrapper {
     padding: 15px 16px !important;
   }
 

@@ -111,6 +111,8 @@
 
   </div>
 
+  <div *ngIf="answer.answers[questionId].length > 0" class="divider-wrapper"></div>
+
   <div *ngIf="answer.answers[questionId].length > 0" class="comment-wrapper">
     {{ answer.answers[questionId] }}
   </div>

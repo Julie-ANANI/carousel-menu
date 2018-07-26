@@ -226,10 +226,23 @@
       </button>
     </div>
 
-    <!-- Now showing the answers that we have -->
-    <div class="answer-wrapper">
+    <!-- Now showing the answers that we have for the textarea, scale, toggle and star type -->
+    <ng-container *ngIf="showDetails">
 
-    </div>
+      <!-- Textarea -->
+      <div *ngIf="question.controlType === 'textarea'" class="textarea-answer-wrapper">
+        <div *ngFor="let answer of answersToShow" class="textarea-answer-outer-wrapper">
+          <app-market-comment
+            [answer]="answer"
+            [questionId]="question.identifier"
+            (addFilter)="newFilter($event)"
+            (modalAnswerChange)="seeAnswer($event)"
+            [ngStyle]="{ 'width': '100%' }">
+          </app-market-comment>
+        </div>
+      </div>
+
+    </ng-container>
 
   </ng-container>
 
