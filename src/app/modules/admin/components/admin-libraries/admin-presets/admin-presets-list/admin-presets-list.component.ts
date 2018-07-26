@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
+import { AuthService } from '../../../../../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Preset } from '../../../../../../models/preset';
 
@@ -10,6 +11,7 @@ import { Preset } from '../../../../../../models/preset';
 })
 export class AdminPresetsListComponent implements OnInit {
 
+  public isBastien: boolean = false;
   private _presets: Array<Preset>;
   public selectedPresetIdToBeDeleted: string = null;
   public selectedPresetToBeCloned: Preset = null;
@@ -26,10 +28,13 @@ export class AdminPresetsListComponent implements OnInit {
 
 
   constructor(private _presetService: PresetService,
+              private _authService: AuthService,
               private _router: Router) {}
 
   ngOnInit(): void {
     this.loadPresets(this._config);
+    console.log(this._authService.getUserInfo());
+    this.isBastien = this._authService.getUserInfo().id === "5a2953592506340001d25b63";
   }
 
   loadPresets(config: any): void {
@@ -72,7 +77,12 @@ export class AdminPresetsListComponent implements OnInit {
     });
   }
 
-
+  //FIXME: à supprimer
+  public importAllPresets() {
+    this._presetService.importAllPresets().first().subscribe((answer: any) => {
+      console.log(answer);
+    });
+  }
 
   set config(value: any) { this._config = value; }
   get config(): any { return this._config; }

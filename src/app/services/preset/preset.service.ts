@@ -104,5 +104,10 @@ export class PresetService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-
+  //FIXME: à supprimer
+  public importAllPresets(): Observable<any> {
+    return this._http.get('/innovation/import/allPresets')
+      .map((res:Response) => res.json())
+      .catch((error:Response) => Observable.throw(error.text()));
+  }
 }
