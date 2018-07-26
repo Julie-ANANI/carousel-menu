@@ -39,7 +39,7 @@
       <text-zone [elementId]="language"
                  [readonly]="!editionMode"
                  [data]="email.content || ''"
-                 (onEditorKeyup)="updateContent($event)"></text-zone>
+                 (onTextChange)="updateContent($event)"></text-zone>
 
       <p *ngIf="editionMode" class="variable-tiny-mce">Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*, *|DOMAIN|*</p>
 

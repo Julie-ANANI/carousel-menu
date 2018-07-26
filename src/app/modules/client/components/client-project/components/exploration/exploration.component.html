@@ -84,7 +84,7 @@
             <!-- Comment -->
             <div class="comment-wrapper">
               <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMMENTS' | translate }}</h2>
-              <p></p>
+              <div [innerHtml]="project.comments"></div>
               <div>
                 <span [ngStyle]="{ 'color': '#333333' }">{{ 'PROJECT_MODULE.EXPLORATION.ACCOUNT_MANAGER' | translate }}</span> {{ project.owner.name }}
               </div>
@@ -101,7 +101,7 @@
               <!-- Professionals -->
               <div class="info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats.nbPros }}</h5>
+                <h5 class="text-center">{{ campaignStats?.nbPros || 0 }}</h5>
               </div>
 
               <div class="info-analytic pd-top">
@@ -122,7 +122,7 @@
               <!-- Reached -->
               <div class="info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats.nbProsSent }}</h5>
+                <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>
               </div>
 
               <div class="info-analytic pd-top">
@@ -143,7 +143,7 @@
               <!-- Emails -->
               <div class="info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats.nbProsOpened }}</h5>
+                <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>
               </div>
 
               <div class="info-analytic pd-top">
@@ -164,7 +164,7 @@
               <!-- Clicks -->
               <div class="info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats.nbProsClicked }}</h5>
+                <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>
               </div>
 
               <div class="info-analytic pd-top">
@@ -185,7 +185,7 @@
               <!-- Answers -->
               <div class="info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
-                <!-- <h5 class="text-center">{{ answers?.length || 0 }}</h5> -->
+                <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>
               </div>
 
             </div>
@@ -207,20 +207,21 @@
             <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h2>
             <ul class="com-nme">
               <li *ngFor="let company of companies; let i = index;">
-               {{ i + 1 + '.'}} {{ formatCompanyName(company.name) }}
+               {{ i + 1 + '.'}} {{company.name}}
               </li>
             </ul>
           </div>
 
-          <!-- Insight section
+          <!-- Insight section -->
           <div class="section-light-container">
             <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h2>
-            <app-table
+
+            <app-shared-table
               [data]="tableInfos"
               [config]="config"
               (configChange)="loadAnswers()"
-              (editRow)="seeAnswer($event)"></app-table>
-          </div>-->
+              (editRow)="seeAnswer($event)"></app-shared-table>
+          </div>
 
         </div>
         <!-- /Project under evaluating and evaluating done status-->
@@ -236,7 +237,7 @@
   (closeSidebar)="closeSidebar($event)">
   <app-user-answer
     [adminMode]="false"
-    [mode]="editMode"
+    [mode]="false"
     [(userAnswer)]="modalAnswer"
     [questions]="questions"
     [innovationId]="project._id">

@@ -21,7 +21,7 @@ import { AdminCampaignProsComponent } from './admin-campaign-pros/admin-campaign
 import { AdminCampaignSearchComponent } from './admin-campaign-search/admin-campaign-search.component';
 import { AdminCampaignSearchResultsComponent } from './admin-campaign-search-results/admin-campaign-search-results.component';
 import { AdminCampaignTemplatesComponent } from './admin-campaign-templates/admin-campaign-templates.component';
-import { SharedTableModule } from '../../../table/table.module';
+import { TableModule } from '../../../table/table.module';
 import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admin-campaign-abtesting.component';
 import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workflow.module";
 
@@ -38,9 +38,10 @@ import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workf
     RouterModule,
     TranslateModule.forChild(),
     SidebarModule,
-    SharedTableModule,
     PipeModule,
     AdminEditWorkflowModule
+    TableModule,
+    PipeModule
   ],
   declarations: [
     AdminCampaignsComponent,

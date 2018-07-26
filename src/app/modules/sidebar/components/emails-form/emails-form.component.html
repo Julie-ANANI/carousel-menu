@@ -1,0 +1,85 @@
+<div class="project-form-wrapper">
+  <div class="column col-11 col-mx-auto">
+    <form novalidate [formGroup]="formData" (ngSubmit)="onSubmit()">
+
+      <!-- Save only -->
+      <div class="text-right submit-wrapper" *ngIf="isBlacklist || isExcludeEmails || isFilterCountry || isEditCountry">
+        <button type="submit" class="btn btn-primary">
+          {{'COMMON.SAVE' | translate}}
+        </button>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group" *ngIf="isBlacklist">
+        <label class="form-label" for="email">{{ 'COMMON.EMAIL' | translate }}</label>
+        <input
+          class="form-default"
+          formControlName="email"
+          id="email"
+          type="email"
+          placeholder="john@catco.com">
+        <div class="form-error" *ngIf="formData.get('email').touched && formData.get('email').invalid">
+          <span *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+          <span *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">{{ 'COMMON.INVALID.EMAIL' | translate }}</span>
+        </div>
+      </div>
+
+      <!-- Expiration Date -->
+      <div class="form-group" *ngIf="isBlacklist || isEditCountry">
+        <label class="form-label" for="expirationDate">{{ 'COMMON.EXPIRATION' | translate }}</label>
+        <div class="form-group-inline-left">
+          <input type="checkbox" [checked]="formData.value.expiration === ''"
+                 (change)="resetExpirationDate($event.srcElement.checked)"/>
+          <label class="form-label">{{'COMMON.NEVER' | translate}}</label>
+        </div>
+        <label class="form-label" for="expirationDate">{{ 'COMMON.EXPIRATION-SPECIFY' | translate }}</label>
+        <input
+          class="form-default"
+          formControlName="expiration"
+          [value]="formData.value.expiration | date:'yyyy-MM-dd'"
+          id="expirationDate"
+          type="date">
+      </div>
+
+      <!-- Add email -->
+      <div class="form-group" *ngIf="isExcludeEmails">
+        <label class="form-label">{{ 'COMMON.EXCLUDE-EMAILS' | translate }}</label>
+        <div class="input-group">
+          <app-input-list [isEmail]="true" (update)="addEmail($event)" [config]="{initialData: formData.get('email').value, placeholder: 'john@catco.com'}">
+          </app-input-list>
+        </div>
+      </div>
+
+      <!-- Add domains -->
+      <div class="form-group" *ngIf="isExcludeEmails">
+        <label class="form-label">{{ 'COMMON.EXCLUDE-DOMAINS' | translate }}</label>
+        <div class="input-group">
+          <app-input-list [isDomain]="true" (update)="addDomain($event)" [config]="{initialData: formData.get('domain').value, placeholder: '*@catco.com'}">
+          </app-input-list>
+        </div>
+      </div>
+
+      <!-- Show all professionnals related to a campaign -->
+      <app-shared-table [data]="tableInfos" *ngIf="isShowCampaignInfos"></app-shared-table>
+
+      <!-- Create new filter on a country -->
+      <app-autocomplete-input
+        *ngIf="isFilterCountry"
+        (update)="updateCountry($event)"
+        [onlyOne]="true"
+        [config]="getConfig('countries')">
+      </app-autocomplete-input>
+
+      <!-- If a country is selected we show the settings -->
+      <div class="form-group country-wrapper" *ngIf="(country !== null) || (isEditCountry)" style="margin-top: 50px">
+        <label class="form-label" for="accept">{{'COMMON.BLACKLIST.ACCEPTATION' | translate}}
+          <span>{{formData.get('acceptation').value}}</span>
+        </label>
+        <div class="input-group">
+          <input type="range" id="accept" formControlName="acceptation" class="accept" name="accept" min="0" max="100" />
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

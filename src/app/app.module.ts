@@ -38,6 +38,7 @@ import { ProfessionalsService } from './services/professionals/professionals.ser
 import { DownloadService } from './services/download/download.service';
 import { TagsService } from './services/tags/tags.service';
 import { TemplatesService } from './services/templates/templates.service';
+import { TranslationService } from './services/translation/translation.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -45,6 +46,7 @@ import { InnovationResolver } from './resolvers/innovation.resolver';
 import { RequestResolver } from './resolvers/request.resolver';
 import { ScenarioResolver } from './resolvers/scenario.resolver';
 import { SignatureResolver } from './resolvers/signature.resolver';
+import { PresetResolver } from './resolvers/preset.resolver';
 
 @NgModule({
   imports: [
@@ -105,6 +107,8 @@ import { SignatureResolver } from './resolvers/signature.resolver';
     ScenarioResolver,
     SignatureResolver,
     RequestResolver,
+    PresetResolver,
+    TranslationService,
     TagsService
   ],
   bootstrap: [AppComponent]

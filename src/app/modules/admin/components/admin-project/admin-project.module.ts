@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedSortModule } from '../../../shared/components/shared-sort/shared-sort.module';
+import { SharedTextZoneModule } from '../../../shared/components/shared-text-zone/shared-text-zone.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { AdminProjectComponent } from './admin-project.component';
 import { AdminProjectDetailsComponent } from './admin-project-details/admin-project-details.component';
@@ -17,11 +18,13 @@ import { SharedProjectSettingsModule } from '../../../shared/components/shared-p
 import { SharedTagItemModule } from '../../../shared/components/shared-tag-item/shared-tag-item.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/admin-project-questionnaire.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedSortModule,
+    SharedTextZoneModule,
     SharedMarketReportModule,
     TranslateModule.forChild(),
     Ng2AutoCompleteModule,
@@ -32,7 +35,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SharedTagItemModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AdminProjectQuestionnaireModule
   ],
   declarations: [
     AdminProjectComponent,

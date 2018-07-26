@@ -99,16 +99,6 @@
                   {{ 'COMMON.PROJECTS' | translate }}
                 </a>
               </li>
-              <!-- Back office emails page -->
-              <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
-                <a
-                  routerLinkActive="active"
-                  [routerLink]="'/admin/emails'"
-                  title=""
-                  (click)="onClickLink()">
-                  Emails
-                </a>
-              </li>
               <!-- Back office libraries page -->
               <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
                 <a
@@ -119,17 +109,27 @@
                   Libraries
                 </a>
               </li>
+              <!-- Back office emails page -->
+              <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
+                <a
+                  routerLinkActive="active"
+                  [routerLink]="'/admin/monitoring'"
+                  title=""
+                  (click)="onClickLink()">
+                  Monitoring
+                </a>
+              </li>
               <!-- Back office presets page -->
               <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
                 <a
                   routerLinkActive="active"
-                  [routerLink]="'/admin/presets'"
+                  [routerLink]="'/admin/settings'"
                   title=""
                   (click)="onClickLink()">
                   {{ 'COMMON.PRESETS' | translate }}
                 </a>
               </li>
-              <!-- Back office search page -->
+              <!-- Back office search page
               <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
                 <a
                   routerLinkActive="active"
@@ -138,7 +138,7 @@
                   (click)="onClickLink()">
                   {{ 'COMMON.SEARCH' | translate }}
                 </a>
-              </li>
+              </li>-->
               <!-- Back office client side page -->
               <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
                 <a

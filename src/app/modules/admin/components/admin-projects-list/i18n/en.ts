@@ -19,5 +19,5 @@ export const PROJECT_LIST = {
   'OPERATOR': 'Operator',
   'TITLE': 'Name',
   'NONE': 'None',
-  'SEE_MORE': 'See more'
+  'SEE_MORE': 'Show'
 };
