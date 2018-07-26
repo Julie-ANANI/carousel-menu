@@ -10,9 +10,14 @@ export const librariesRoutes: Routes = [
   { path: '', redirectTo: 'workflows', pathMatch: 'full'},
   { path: 'workflows', component: AdminWorkflowsLibraryComponent, pathMatch: 'full'},
   { path: 'signatures', component: AdminSignaturesLibraryComponent, pathMatch: 'full'},
-  { path: 'questionnaire', children: [
+   /*{ path: 'questionnaire', children: [
       { path: '', component: AdminPresetsListComponent, pathMatch: 'full' },
-      { path: 'new', component: AdminPresetsNewComponent, pathMatch: 'full' },
+      { path: '/new', component: AdminPresetsNewComponent, pathMatch: 'full' },
       { path: '/:presetId', component: AdminPresetsEditComponent, resolve: {preset: PresetResolver}, pathMatch: 'full' }
-    ], pathMatch: 'full' },
+    ]},
+  */
+  {path: 'questionnaire', component: AdminPresetsListComponent, pathMatch: 'full' },
+  {path: 'questionnaire/new', component: AdminPresetsNewComponent, pathMatch: 'full' },
+  {path: 'questionnaire/:presetId', component: AdminPresetsEditComponent, resolve: {preset: PresetResolver}, pathMatch: 'full'}
+
 ];
