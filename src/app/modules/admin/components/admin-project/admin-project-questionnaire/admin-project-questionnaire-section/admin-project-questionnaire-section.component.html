@@ -48,10 +48,10 @@
       [question]="question"
       [stateIN]="state.quest"
       [index]="i1"
-      (questionChange)="updateQuestion($event)"
-      (remove)="removeQuestion(question)"
+      (questionChange)="updateQuestion($event, i1)"
+      (remove)="removeQuestion(question, i1)"
       (stateOUT)="questionState($event)"
-      (clone)="cloneQuestion($event)"
+      (clone)="cloneQuestion($event, i1)"
       (move)="moveQuestion($event, i1)">
     </app-admin-project-questionnaire-question>
   </div>
