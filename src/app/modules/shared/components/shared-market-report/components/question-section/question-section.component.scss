@@ -372,25 +372,6 @@ ul.items {
           border: 1px solid #D7D7D7;
           border-radius: 3px;
           margin-bottom: 20px;
-
-          .fcp {
-            display: flex;
-            color: #97A4B1;
-            font-size: 14px;
-            font-weight: 600;
-
-            .flag {
-              margin-top: 1px;
-              margin-right: 15px;
-            }
-
-          }
-
-          .p-comment {
-            font-size: 14px;
-            color: #484848;
-          }
-
         }
 
       }
@@ -433,11 +414,10 @@ ul.items {
           display: inline-flex;
           background: white;
           border: 1px solid #D7D7D7;
-          min-height: 190px;
-          padding: 15px 16px;
+          padding: 20px 30px;
           border-radius: 3px;
           margin-bottom: 20px;
-          flex: 0 1 calc(50% - 1rem);
+          flex: 0 1 calc(100% - 1rem);
         }
 
       }
@@ -445,6 +425,35 @@ ul.items {
     }
 
   }
+
+  .comment-button-wrapper, .answer-button-wrapper {
+    text-align: center;
+    margin-top: 25px;
+
+    .icon {
+      font-size: 14px;
+    }
+
+  }
+
+  .comment-wrapper, .answer-wrapper {
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .comment-outer-wrapper {
+    display: flex;
+    background: white;
+    border: 1px solid #D7D7D7;
+    padding: 20px 30px;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+
 
 }
 
@@ -479,6 +488,14 @@ ul.items {
 
     }
 
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .comment-outer-wrapper {
+    padding: 15px 16px !important;
   }
 
 }
