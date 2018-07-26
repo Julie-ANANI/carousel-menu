@@ -179,6 +179,9 @@
         </div>
       </div>
 
+      <!-- Add Tags -->
+      <app-shared-tag-item *ngIf="addTagsToProfessionals" [editMode]="true"></app-shared-tag-item>
+
       <!-- Link to quiz URI -->
       <div *ngIf="isProfessional && campaign" class="form-group">
         <a (click)="openQuizUri(pro, $event)">
@@ -194,7 +197,7 @@
 
       <!-- Submit button -->
       <div *ngIf="isSignUp" class="signUp-button-wrapper text-center">
-        <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid && userForm.get('url').value !== '' && userForm.get('operator').value !== false">{{'COMMON.BUTTON.SIGN_UP' | translate }}</button>
+        <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid && userForm.get('profileUrl').value !== '' && userForm.get('operator').value !== false">{{'COMMON.BUTTON.SIGN_UP' | translate }}</button>
       </div>
 
     </form>
