@@ -124,7 +124,7 @@
 
       <!-- Save button -->
       <div *ngIf="adminMode" class="save" [ngSwitch]="modalAnswer.localStatus">
-        <button class="btn btn-primary" (click)="import($event)" *ngSwitchCase="'draft'">
+        <button class="btn btn-primary" (click)="importAnswer($event)" *ngSwitchCase="'draft'">
           {{'COMMON.IMPORT' | translate}}
         </button>
         <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngSwitchDefault>

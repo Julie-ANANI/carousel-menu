@@ -172,10 +172,13 @@ export class UserAnswerComponent implements OnInit {
         this.translateNotificationsService.error('ERROR.ERROR', err);
       });
   }
-  
-  import(): void {
-    this.answerService.importFromQuiz(this.modalAnswer).first().subscribe((res: any) => {
-      console.log(res);
+
+  importAnswer(event: Event): void {
+    event.preventDefault();
+    this.answerService.importFromQuiz(this.modalAnswer).first().subscribe((_res: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.ANSWER.IMPORTED');
+    }, err => {
+      this.translateNotificationsService.error('ERROR.ERROR', err);
     });
   }
 
