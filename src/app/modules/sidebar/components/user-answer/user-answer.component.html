@@ -22,7 +22,7 @@
               <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCountry = true;" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
             </div>
           </div>
-          <div *ngIf="adminMode" class="editMode">
+          <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="editMode">
             <label class="form-switch" for="editMode">
               <input
                 type="checkbox"
@@ -124,7 +124,7 @@
 
       <!-- Save button -->
       <div *ngIf="adminMode" class="save">
-        <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngIf="modalAnswer.localStatus != 'draft'">
+        <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngIf="modalAnswer.localStatus !== 'draft'">
           {{'COMMON.SAVE' | translate}}
         </button>
       </div>
@@ -138,7 +138,7 @@
     <!-- /User detail -->
 
     <!-- Status section -->
-    <div *ngIf="adminMode" class="status-wrapper">
+    <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="status-wrapper">
 
       <!-- Rejected -->
       <div class="status-rejected">
