@@ -14,17 +14,17 @@ declare const tinymce: any;
 export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit {
   @Input() readonly = false;
   @Input() set data(value: string) {
-    this._data = value;
+    this._text = value;
     this._contentHash = this.hashString(value);
     if (this.editor) {
-      this.editor.setContent(this._data);
+      this.editor.setContent(this._text);
     }
   }
   @Input() elementId: String;
   @Output() onTextChange = new EventEmitter<any>();
 
   private _contentHash: number;
-  private _data: string;
+  private _text: string;
   private editor: any;
   private _htmlId: string;
 
@@ -57,7 +57,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
       skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
       setup: (editor: any) => {
         this.editor = editor;
-        this._contentHash = this.hashString(this._data);
+        this._contentHash = this.hashString(this._text);
         editor.on('Blur', () => {
           const actualHash = this._contentHash;
           const content = editor.getContent();
@@ -68,8 +68,8 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
         });
       },
     });
-    if (this._data && this.editor) {
-      this.editor.setContent(this._data);
+    if (this._text && this.editor) {
+      this.editor.setContent(this._text);
     }
   }
 
@@ -90,6 +90,11 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   }
 
   public get htmlId(): string { return this._htmlId; }
-  public get text(): string { return this._data; }
+
+  public get text(): string { return this._text; }
+  public set text(value: string) {
+    this._text = value; // This is in case tinymce fails, then we will be able to use the textarea
+    this.onTextChange.emit({id: this.elementId, content: value});
+  }
 
 }

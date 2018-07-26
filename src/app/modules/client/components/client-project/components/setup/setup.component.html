@@ -1,3 +1,46 @@
+<div class="innovation-card-print">
+
+  <!-- Innovation detail -->
+  <div class="section-light-container">
+    <div class="section-inline-container sc-innovation-wrapper white-background">
+
+      <!-- Column 1 -->
+      <div class="sc-summary-wrapper">
+        <h1 class="main-heading">{{ project.innovationCards[innovationPreviewIndex].title }}</h1>
+        <p>{{ project.innovationCards[innovationPreviewIndex].summary }}</p>
+
+        <div *ngIf="project.principalMedia?.type === 'PHOTO'" class="main-media">
+          <img
+            [src]="project.principalMedia.url"
+            [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+            width="150px" height="">
+        </div>
+
+        <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
+        <ul class="sc-advantage">
+          <li *ngFor="let advantage of project.innovationCards[innovationPreviewIndex].advantages;">
+            {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="sc-issue-wrapper">
+        <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
+        <p>{{ project.innovationCards[innovationPreviewIndex].problem }}</p>
+      </div>
+
+      <!-- Column 3 -->
+      <div class="sc-solution-wrapper">
+        <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
+        <p>{{ project.innovationCards[innovationPreviewIndex].solution }}</p>
+      </div>
+    </div>
+  </div>
+  <!-- /Innovation detail -->
+
+</div>
+
 <div class="section-container" id="setup-project">
   <div class="columns">
     <div class="column col-12 col-mx-auto">
@@ -40,6 +83,9 @@
             <h2 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h2>
             <!-- Buttons -->
             <div class="func-btn-wrapper">
+              <span>
+                <button class="btn ghost-primary" (click)="printInnovationCard($event)">Imprimer</button>
+              </span>
               <span>
                 <button class="btn ghost-primary" (click)="showInnovation($event)">{{ 'PROJECT_MODULE.SETUP.PREVIEW_BUTTON' | translate }}</button>
               </span>
