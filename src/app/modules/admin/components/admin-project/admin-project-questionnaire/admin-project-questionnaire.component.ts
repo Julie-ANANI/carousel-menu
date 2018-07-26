@@ -25,7 +25,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     if (this._project && this._project.preset) {
       this._sections = this._project.preset.sections;
-
       this._sections.forEach((sec: any, index: number) => {
         const tab: Array<boolean> = [];
         sec.questions.forEach((quest: any) => {
@@ -153,41 +152,24 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
   }
 
   public moveSection(event: any, index: number) {
-    if (event === 'down') {
-      if (index + 1 === this._sections.length) {
-        console.log("on ne peut pas descendre plus");
-      } else {
-        const tempSec = JSON.parse(JSON.stringify(this._sections[index]));
-        this._sections[index] = JSON.parse(JSON.stringify(this._sections[index + 1]));
-        this._sections[index + 1] = tempSec;
-        const tempState = JSON.parse(JSON.stringify(this._state[index]));
-        this._state[index] = JSON.parse(JSON.stringify(this._state[index + 1]));
-        this._state[index + 1] = tempState;
-        this._project.preset.sections = this._sections;
-        this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
-          this._project = result;
-          this._sections = this._project.preset.sections;
-        });
-      }
-    }
-    if (event === 'up') {
-      if (index === 0) {
-        console.log("on ne peut pas monter plus");
-      } else {
-        const tempSec = JSON.parse(JSON.stringify(this._sections[index]));
-        this._sections[index] = JSON.parse(JSON.stringify(this._sections[index - 1]));
-        this._sections[index - 1] = tempSec;
-        const tempState = JSON.parse(JSON.stringify(this._state[index]));
-        this._state[index] = JSON.parse(JSON.stringify(this._state[index - 1]));
-        this._state[index - 1] = tempState;
-        this._project.preset.sections = this._sections;
-        this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
-          this._project = result;
-          this._sections = this._project.preset.sections;
-        });
-      }
+    const newIndex = event === 'down' ? index + 1 : index - 1;
+    if (newIndex >= this._sections.length || newIndex < 0) {
+      console.log('déplacement impossible')
+    } else {
+      const tempSec = JSON.parse(JSON.stringify(this._sections[index]));
+      this._sections[index] = JSON.parse(JSON.stringify(this._sections[newIndex]));
+      this._sections[newIndex] = tempSec;
+      const tempState = JSON.parse(JSON.stringify(this._state[index]));
+      this._state[index] = JSON.parse(JSON.stringify(this._state[newIndex]));
+      this._state[newIndex] = tempState;
+      this._project.preset.sections = this._sections;
+      this._innovationService.save(this._project._id, this._project).first().subscribe( result => {
+        this._project = result;
+        this._sections = this._project.preset.sections;
+      });
     }
 
   }
+
 
 }

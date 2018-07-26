@@ -108,21 +108,16 @@ export class AdminProjectDetailsComponent implements OnInit {
   public updatePreset(event: {value: Array<Preset>}): void {
     if (event.value.length) {
       this._preset = event.value[0];
-      this._innovationService.updatePreset(this._project._id, this._preset).first().subscribe(data => {
-        this._project = data;
-          this._dirty = false;
-      }, (err) => {
-        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-      });
-      // this._dirty = true;
     } else {
-      this._innovationService.updatePreset(this._project._id, {}).first().subscribe(data => {
-        this._project = data;
-          this._dirty = false;
-      }, (err) => {
-        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-      });
+      this._preset = {};
     }
+    this._innovationService.updatePreset(this._project._id, this._preset).first().subscribe(data => {
+      this._project = data;
+      this._activatedRoute.snapshot.parent.data['innovation'] = data;
+      this._dirty = false;
+    }, (err) => {
+      this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+    });
   }
 
   public updateSettings(value: InnovationSettings): void {
