@@ -1,7 +1,5 @@
 <app-shared-loader *ngIf="!preset"></app-shared-loader>
-<div class="heading">
-  <h2>{{preset.name}}</h2>
-</div>
+<div>{{preset.name}}</div>
 <div class="body">
   <div *ngFor="let section of preset.sections; let i=index">
     <app-admin-project-questionnaire-section
@@ -15,7 +13,11 @@
       (move)="moveSection($event,i)">
     </app-admin-project-questionnaire-section>
   </div>
-  <button class="btn-round btn-primary" (click)="addSection()"><i class="icon icon-plus"> </i>  </button><span> ADD SECTION</span>
+
+  <div class="add-section" (click)="addSection()">
+    <button class="btn-round btn-primary"><i class="icon icon-plus"></i></button>
+    <div>Add section</div>
+  </div>
 </div>
 
 
