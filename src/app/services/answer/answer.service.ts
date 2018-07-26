@@ -79,4 +79,10 @@ export class AnswerService {
       .map((res: Response) => <string>res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public importFromQuiz(answer: any): Observable<any> {
+    return this._http.post(`/campaign/${answer.campaignId}/answer`, answer)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
 }

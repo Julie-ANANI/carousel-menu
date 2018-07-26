@@ -71,7 +71,8 @@ export const ERROR = {
   },
 
   'ANSWER': {
-    'UPDATED': 'Réponse mise à jour'
+    'UPDATED': 'Réponse mise à jour',
+    'IMPORTED': 'Réponse importeé',
   },
 
   'NOT_MODIFIED': {

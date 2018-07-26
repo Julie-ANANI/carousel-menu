@@ -8,7 +8,7 @@
 
         <!-- Name, flag and rating -->
         <div class="title">
-         <h6>{{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}</h6>
+          <h6>{{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}</h6>
           <app-rating-item
             *ngIf="editMode"
             [editMode]="adminMode"
@@ -22,7 +22,7 @@
               <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCountry = true;" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
             </div>
           </div>
-          <div *ngIf="adminMode" class="editMode">
+          <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="editMode">
             <label class="form-switch" for="editMode">
               <input
                 type="checkbox"
@@ -123,8 +123,11 @@
       </div>
 
       <!-- Save button -->
-      <div *ngIf="adminMode" class="save">
-        <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)">
+      <div *ngIf="adminMode" class="save" [ngSwitch]="modalAnswer.localStatus">
+        <button class="btn btn-primary" (click)="importAnswer($event)" *ngSwitchCase="'draft'">
+          {{'COMMON.IMPORT' | translate}}
+        </button>
+        <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngSwitchDefault>
           {{'COMMON.SAVE' | translate}}
         </button>
       </div>
@@ -133,7 +136,7 @@
     <!-- /User detail -->
 
     <!-- Status section -->
-    <div *ngIf="adminMode" class="status-wrapper">
+    <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="status-wrapper">
 
       <!-- Rejected -->
       <div class="status-rejected">
