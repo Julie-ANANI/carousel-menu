@@ -8,7 +8,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 })
 export class AdminLibrariesComponent implements OnInit {
 
-  private _tabs: Array<string> = ['workflows', 'questionnaire', 'signatures'];
+  private _tabs: Array<string> = ['workflows', 'emails', 'signatures', 'questionnaire'];
 
   constructor(private _titleService: TranslateTitleService) {}
 

@@ -273,7 +273,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         });
         break;
       default:
-        this.translationService.translate(from_card[model], target_card.lang).first().subscribe((o) => {
+        // remove html tags from text
+        const text = from_card[model].replace(/<[^>]*>/g, '');
+        this.translationService.translate(text, target_card.lang).first().subscribe((o) => {
           target_card[model] = o.translation;
           this.notifyModelChanges();
         });

@@ -113,7 +113,7 @@
                       </button>
                       <text-zone
                         [data]="innovationCards.summary"
-                        [elementId]="'summary'+i"
+                        [elementId]="'summary'+innovationCards.lang"
                         [ngClass]="{'borderRed': showSummaryError}"
                         (onTextChange)="updateData($event)"
                       >
@@ -153,7 +153,7 @@
                       </button>
                       <text-zone
                         [data]="innovationCards.problem"
-                        [elementId]="'problem'+i"
+                        [elementId]="'problem'+innovationCards.lang"
                         [ngClass]="{'borderRed': showProblemError}"
                         (onTextChange)="updateData($event)"
                       >
@@ -194,7 +194,7 @@
                       </button>
                       <text-zone
                         [data]="innovationCards.solution"
-                        [elementId]="'solution'+i"
+                        [elementId]="'solution'+innovationCards.lang"
                         [ngClass]="{'borderRed': showSolutionError}"
                         (onTextChange)="updateData($event)"
                       >

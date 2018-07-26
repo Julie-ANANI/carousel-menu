@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { AdminSignaturesLibraryComponent } from "./admin-signatures-library.component";
+import { AdminEmailsLibraryComponent } from "./admin-emails-library.component";
 import { SidebarModule } from "../../../../sidebar/sidebar.module";
 import { TableModule } from "../../../../table/table.module";
 import { FormsModule } from "@angular/forms";
@@ -16,11 +16,11 @@ import { FormsModule } from "@angular/forms";
     TableModule
   ],
   declarations: [
-    AdminSignaturesLibraryComponent
+    AdminEmailsLibraryComponent
   ],
   exports: [
-    AdminSignaturesLibraryComponent
+    AdminEmailsLibraryComponent
   ]
 })
 
-export class AdminSignaturesLibraryModule {}
+export class AdminEmailsLibraryModule {}

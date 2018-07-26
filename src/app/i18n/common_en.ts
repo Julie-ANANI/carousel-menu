@@ -163,11 +163,11 @@ export const COMMON = {
   'CLIENT_SIDE': 'Client',
 
   'SORT': {
-    'BY_NAME': 'By name',
-    'BY_COMPANY': 'By company',
-    'BY_AUTHOR': 'By author',
-    'BY_DOMAIN': 'By domain',
-    'BY_CREATION_DATE': 'By date',
-    'BY_UPDATE_DATE': 'By default'
+    'BY_NAME': 'Name',
+    'BY_COMPANY': 'Company',
+    'BY_AUTHOR': 'Author',
+    'BY_DOMAIN': 'Domain',
+    'BY_CREATION_DATE': 'Date',
+    'BY_UPDATE_DATE': 'Default'
   }
 };

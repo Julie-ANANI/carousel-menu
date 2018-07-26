@@ -17,7 +17,8 @@ import { SidebarSearchComponent } from './components/sidebar-search/sidebar-sear
 import { UserAnswerComponent } from './components/user-answer/user-answer.component';
 import { AnswerQuestionComponent } from './components/user-answer/answer-question/answer-question.component';
 import { RatingItemComponent } from './components/user-answer/rating-item/rating-item.component';
-import { SidebarWorkflowComponent } from './components/sidebar-workflow/sidebar-workflow.component';
+import { SidebarWorkflowComponent } from "./components/sidebar-workflow/sidebar-workflow.component";
+import { SidebarSignatureComponent } from "./components/sidebar-signature/sidebar-signature.component";
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { SidebarWorkflowComponent } from './components/sidebar-workflow/sidebar-
   declarations: [
     SidebarBatchComponent,
     SidebarWorkflowComponent,
+    SidebarSignatureComponent,
     CollaboratorComponent,
     SidebarComponent,
     InnovationPreviewComponent,
@@ -49,6 +51,7 @@ import { SidebarWorkflowComponent } from './components/sidebar-workflow/sidebar-
     SidebarComponent,
     SidebarBatchComponent,
     SidebarWorkflowComponent,
+    SidebarSignatureComponent,
     InnovationPreviewComponent,
     UserFormComponent,
     SidebarSearchComponent,
