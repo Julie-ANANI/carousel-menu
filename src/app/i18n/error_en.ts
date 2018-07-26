@@ -71,7 +71,8 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
   },
 
   'ANSWER': {
-    'UPDATED': 'The answer has been updated'
+    'UPDATED': 'The answer has been updated',
+    'IMPORTED': 'The answer has been imported',
   },
 
   'NOT_MODIFIED': {

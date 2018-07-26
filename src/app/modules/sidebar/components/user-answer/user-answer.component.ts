@@ -173,6 +173,15 @@ export class UserAnswerComponent implements OnInit {
       });
   }
 
+  importAnswer(event: Event): void {
+    event.preventDefault();
+    this.answerService.importFromQuiz(this.modalAnswer).first().subscribe((_res: any) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.ANSWER.IMPORTED');
+    }, err => {
+      this.translateNotificationsService.error('ERROR.ERROR', err);
+    });
+  }
+
   get lang(): string {
     return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
   }
