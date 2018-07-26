@@ -82,14 +82,6 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     return this._language;
   }
 
-  public changeLanguage() {
-    if (this._language === 'en') {
-      this._language = 'fr';
-    } else {
-      this._language = 'en'
-    }
-  }
-
   public count(lang: string) {
     let missing = 0;
     if (this.question.label[lang] === '') {
@@ -101,16 +93,6 @@ export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
     if (this.question.subtitle[lang] === '') {
       missing ++;
     }
-
-    /*
-    if (this.question.controlType == 'radio' || this.question.controlType == 'checkbox') {
-      this.question.options.forEach( opt => {
-        if (opt.label[lang] == '') {
-          missing ++;
-        }
-      })
-    }
-    */
     return missing;
   }
 

@@ -53,16 +53,16 @@
 
       <div class="question-toolbar">
         <div (click)="languageEN()" *ngIf="language() == 'fr'" href="" class="question-language">
-          English
+          English <span class ="alert-badge"> {{count(language())}}</span>
         </div>
         <div (click)="languageFR()" *ngIf="language() == 'fr'" href="" class="question-language active">
-          French
+          French <span class ="alert-badge"> {{count(language())}}</span>
         </div>
         <div (click)="languageEN()"  *ngIf="language() == 'en'" href="" class="question-language active">
-          English
+          English <span class ="alert-badge"> {{count(language())}} </span>
         </div>
         <div (click)="languageFR()" *ngIf="language() == 'en'" href="" class="question-language">
-          French
+          French <span class ="alert-badge"> {{count(language())}}</span>
         </div>
 
         <label class="form-switch" >
