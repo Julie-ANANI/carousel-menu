@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
-import { Filter } from '../../models/filter';
+import { Tag } from '../../../../../../models/tag';
 
 @Component({
   selector: 'app-market-comment',
@@ -14,21 +15,23 @@ export class SharedMarketCommentComponent {
   @Input() public questionId: string;
   @Input() selectedTag: any;
 
-  @Output() addFilter = new EventEmitter<Filter>();
   @Output() modalAnswerChange = new EventEmitter<any>();
 
 
-  constructor() { }
+  constructor(private filterService: FilterService) { }
 
   public seeAnswer(event: any, answer: Answer) {
     event.preventDefault();
     this.modalAnswerChange.emit(answer);
   }
 
-  public newFilter(event: any, filter: any) {
+  public newFilter(event: any, tag: Tag) {
     event.preventDefault();
-    this.selectedTag = filter.questionTitle;
-    this.addFilter.emit(filter);
+    this.filterService.addFilter({
+      status: 'TAG',
+      questionTitle: tag.label,
+      value: tag._id
+    });
   }
 
 }

@@ -133,6 +133,9 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       });
 
       this._filteredAnswers = this._answers;
+      this.filterService.filtersUpdate.subscribe((_) => {
+        this._filteredAnswers = this.filterService.filter(this._answers);
+      });
 
       this._companies = results.answers.map((answer: any) => answer.company || {
         name: answer.professional.company
@@ -242,21 +245,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.editMode.next(false);
   }
 
-  public addFilter(event: Filter) {
-    this.filterService.addFilter(event);
-    this.selectedTag = event.questionTitle;
-    this._filteredAnswers = this.filterService.filter(this._answers);
-  }
-
   public deleteFilter(key: string, event: Event) {
     event.preventDefault();
-
     if (key === 'worldmap') {
       this.resetMap();
     }
-
     this.filterService.deleteFilter(key);
-    this._filteredAnswers = this.filterService.filter(this._answers);
   }
 
   public print(event: Event): void {
@@ -284,7 +278,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return this._answers;
   }
 
-  get filters() {
+  get filters(): {[questionId: string]: Filter} {
     return this.filterService.filters;
   }
 

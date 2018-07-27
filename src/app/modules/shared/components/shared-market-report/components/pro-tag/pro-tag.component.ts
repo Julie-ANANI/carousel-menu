@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
-import { Filter } from '../../models/filter';
 import { Tag } from '../../../../../../models/tag';
 
 @Component({
@@ -15,9 +15,8 @@ export class ProfessionalTagComponent {
   @Input() selectedTag: any;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
-  @Output() addFilter = new EventEmitter<Filter>();
 
-  constructor() {}
+  constructor(private filterService: FilterService) {}
 
   seeAnswer(event: Event, answer: Answer) {
     event.preventDefault();
@@ -29,7 +28,7 @@ export class ProfessionalTagComponent {
 
     this.selectedTag = tag.label;
 
-    this.addFilter.emit({
+    this.filterService.addFilter({
       status: 'TAG',
       questionTitle: tag.label,
       value: tag._id

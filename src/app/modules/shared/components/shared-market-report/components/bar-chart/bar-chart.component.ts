@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
-import { Filter } from '../../models/filter';
 import { Innovation } from '../../../../../../models/innovation';
 import { Multiling } from '../../../../../../models/multiling';
 import { Question } from '../../../../../../models/question';
@@ -36,14 +36,14 @@ export class BarChartComponent implements OnInit {
   @Input() public stats: any;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
-  @Output() addFilter = new EventEmitter<Filter>();
 
   private _answers: Array<Answer>;
   private _barsData: Array<BarData> = [];
   private _pieChart: {data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number, labelPercentage?: Array<string>};
   public showAnswers: {[index: string]: string} = {};
 
-  constructor(private _translateService: TranslateService) { }
+  constructor(private _translateService: TranslateService,
+              private filterService: FilterService) { }
 
   ngOnInit() {
     this.updateAnswersData();
@@ -124,7 +124,7 @@ export class BarChartComponent implements OnInit {
 
   public filterAnswer(data: BarData, event: Event) {
     event.preventDefault();
-    this.addFilter.emit({
+    this.filterService.addFilter({
       status: this.question.controlType === 'radio' ? 'RADIO' : 'CHECKBOX',
       questionId: this.question.identifier,
       questionTitle: this.question.title,
@@ -134,11 +134,6 @@ export class BarChartComponent implements OnInit {
 
   public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
-  }
-
-  public newFilter(filter: Filter) {
-    this.selectedTag = filter.questionTitle;
-    this.addFilter.emit(filter);
   }
 
   get barsData(): Array<BarData> {

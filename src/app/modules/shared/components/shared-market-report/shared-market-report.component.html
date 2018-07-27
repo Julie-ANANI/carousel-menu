@@ -369,7 +369,6 @@
             <app-pro-tag
               [answer]="answer"
               [selectedTag]="selectedTag"
-              (addFilter)="addFilter($event)"
               (modalAnswerChange)="seeAnswer($event)"
               [ngStyle]="{ 'width': '100%' }">
             </app-pro-tag>
@@ -391,7 +390,6 @@
             [showDetails]="showDetails"
             [readonly]="!adminSide"
             [selectedTag]="selectedTag"
-            (addFilter)="addFilter($event)"
             (modalAnswerChange)="seeAnswer($event)">
           </app-question-section>
         </div>
@@ -519,7 +517,7 @@
               <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
               <div class="professional-wrapper">
                 <div *ngFor="let answer of filteredAnswers" class="profile">
-                  <app-pro-tag [answer]="answer" (addFilter)="addFilter($event)" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+                  <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
                 </div>
               </div>
             </div>
@@ -533,7 +531,6 @@
                 [showComments]="showDetails"
                 [showDetails]="showDetails"
                 [readonly]="!adminMode"
-                (addFilter)="addFilter($event)"
                 (modalAnswerChange)="seeAnswer($event)">
               </app-question-section>
             </div>
@@ -693,7 +690,6 @@
           [showComments]="showDetails"
           [showDetails]="showDetails"
           [readonly]="!adminMode"
-          (addFilter)="addFilter($event)"
           (modalAnswerChange)="seeAnswer($event)">
         </app-question-section>
       </section>

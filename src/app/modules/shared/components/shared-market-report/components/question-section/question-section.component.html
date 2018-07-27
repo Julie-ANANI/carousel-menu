@@ -206,7 +206,6 @@
       [readonly]="readonly"
       [stats]="stats"
       [selectedTag]="selectedTag"
-      (addFilter)="newFilter($event)"
       (modalAnswerChange)="seeAnswer($event)">
     </app-bar-chart>
   </ng-container>
@@ -248,7 +247,6 @@
             <app-market-comment-2
               [answer]="answer"
               [questionId]="question.identifier+'Comment'"
-              (addFilter)="newFilter($event)"
               (modalAnswerChange)="seeAnswer($event)">
             </app-market-comment-2>
           </div>
@@ -262,8 +260,6 @@
             [readonly]="readonly"
             [stats]="stats"
             (updateNumberOfItems)="updateNumberOfItems($event)"
-            (addFilter)="newFilter($event)"
-            [selectedTag]="selectedTag"
             (modalAnswerChange)="seeAnswer($event)">
           </app-item-list>
         </div>
@@ -297,7 +293,6 @@
           <app-market-comment-2
             [answer]="answer"
             [questionId]="question.identifier"
-            (addFilter)="newFilter($event)"
             (modalAnswerChange)="seeAnswer($event)"
             [ngStyle]="{ 'width': '100%' }">
           </app-market-comment-2>
@@ -330,7 +325,6 @@
         <app-market-comment-2
           [answer]="answer"
           [questionId]="question.identifier+'Comment'"
-          (addFilter)="newFilter($event)"
           (modalAnswerChange)="seeAnswer($event)">
         </app-market-comment-2>
       </div>

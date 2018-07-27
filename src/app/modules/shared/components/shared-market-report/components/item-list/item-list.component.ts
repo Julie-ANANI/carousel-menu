@@ -1,6 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
-import { Filter } from '../../models/filter';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 
@@ -32,9 +32,7 @@ export class ItemListComponent implements OnInit {
     this._details = value;
   }
   @Input() public stats: any;
-  @Input() selectedTag: any;
 
-  @Output() addFilter = new EventEmitter<Filter>();
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Output() updateNumberOfItems = new EventEmitter<number>();
 
@@ -43,7 +41,7 @@ export class ItemListComponent implements OnInit {
   private _listItems: Array<Item>;
   private _maxToShow = 6;
 
-  constructor() { }
+  constructor(private filterService: FilterService) { }
 
   ngOnInit() {
     this.updateAnswersData();
@@ -107,10 +105,7 @@ export class ItemListComponent implements OnInit {
 
   public filterAnswer(item: Item, event: Event) {
     event.preventDefault();
-
-    this.selectedTag = this.question.title;
-
-    this.addFilter.emit({
+    this.filterService.addFilter({
       status: this.question.controlType === 'clearbit' ? 'CLEARBIT' : 'LIST',
       questionId: this.question.identifier,
       questionTitle: this.question.title,
