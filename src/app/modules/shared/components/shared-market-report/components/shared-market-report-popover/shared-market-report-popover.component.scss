@@ -18,14 +18,19 @@
 
   ul li {
     border-bottom: 1px solid #E0E0E0;
-    padding: 20px 0 15px 0;
-    margin: 15px;
+    padding: 15px 0 15px 0;
+    margin: 0;
     list-style: none;
     color: #4A4A4A;
 
-    &:last-child {
+    /*&:last-child {
       border-bottom: 0;
       padding-bottom: 0;
+    }*/
+
+    &:last-child {
+      border-bottom: none;
     }
+
   }
 }

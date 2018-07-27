@@ -197,7 +197,7 @@
 
 <section class="question-section-wrapper" [id]=domSectionId>
 
-  <!-- If the question type is checkbox and radio -->
+  <!-- If the question type is checkbox or radio -->
   <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
     <app-bar-chart
       [answers]="answersToShow"
@@ -209,6 +209,68 @@
       (addFilter)="newFilter($event)"
       (modalAnswerChange)="seeAnswer($event)">
     </app-bar-chart>
+  </ng-container>
+
+  <!-- If the question type is not checkbox and radio -->
+  <ng-container *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'">
+    <div class="header">
+      <div class="section-inline-container">
+        <app-question-conclusion
+          [innovation]="innovation"
+          [question]="question"
+          [readonly]="readonly"
+          [stats]="stats">
+        </app-question-conclusion>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- If the question type is list or clearbit -->
+  <ng-container *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'">
+
+    <!-- Answer button -->
+    <div class="answer-button-wrapper">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="showDetails = !showDetails; $event.preventDefault()">
+        {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+        <i class="icon" aria-hidden="true" [ngClass]="showDetails ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
+      </button>
+    </div>
+
+    <!-- Now showing the answers, this contains both the answers to show and comments  -->
+    <ng-container *ngIf="showDetails">
+      <div class="clear-list-wrapper">
+
+        <div *ngIf="answersWithComment.length > 0" class="clc-wrapper">
+          <div *ngFor="let answer of answersWithComment" class="clco-wrapper">
+            <app-market-comment-2
+              [answer]="answer"
+              [questionId]="question.identifier+'Comment'"
+              (addFilter)="newFilter($event)"
+              (modalAnswerChange)="seeAnswer($event)">
+            </app-market-comment-2>
+          </div>
+        </div>
+
+        <div class="cli-wrapper">
+          <app-item-list
+            [answers]="answersToShow"
+            [innovation]="innovation"
+            [question]="question"
+            [readonly]="readonly"
+            [stats]="stats"
+            (updateNumberOfItems)="updateNumberOfItems($event)"
+            (addFilter)="newFilter($event)"
+            [selectedTag]="selectedTag"
+            (modalAnswerChange)="seeAnswer($event)">
+          </app-item-list>
+        </div>
+
+      </div>
+    </ng-container>
+
   </ng-container>
 
   <!-- Showing answers if the question type is not clearbit, radio, checkbox and list -->

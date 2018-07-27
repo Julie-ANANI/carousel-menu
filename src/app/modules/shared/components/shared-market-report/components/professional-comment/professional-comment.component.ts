@@ -25,7 +25,8 @@ export class SharedMarketCommentComponent {
     this.modalAnswerChange.emit(answer);
   }
 
-  public newFilter(filter: any) {
+  public newFilter(event: any, filter: any) {
+    event.preventDefault();
     this.selectedTag = filter.questionTitle;
     this.addFilter.emit(filter);
   }

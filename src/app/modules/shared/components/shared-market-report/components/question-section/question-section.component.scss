@@ -345,45 +345,7 @@ ul.items {
     margin-left: 0;
   }
 
-}*/
-
-.question-section-wrapper {
-
-  .header {
-    background-color: #4F5D6B;
-    border-radius: 3px;
-    color: white;
-  }
-
-  .question-section-item-list {
-
-    .content {
-      padding-top: 25px;
-      display: flex;
-      justify-content: space-between;
-
-      .comment {
-        flex: 1;
-        margin-right: 25px;
-
-        .answer {
-          background-color: white;
-          padding: 25px;
-          border: 1px solid #D7D7D7;
-          border-radius: 3px;
-          margin-bottom: 20px;
-        }
-
-      }
-
-      .items {
-        flex: 1;
-      }
-
-    }
-
-  }
-
+}
   .rest {
 
     .answer-btn-wrapper{
@@ -426,17 +388,100 @@ ul.items {
 
   }
 
+    .question-section-item-list {
+
+      .content {
+        flex-direction: column;
+
+        .comment {
+          margin-right: 0;
+        }
+
+      }
+
+    }
+
+    .rest {
+
+      .answer-show-wrapper {
+
+        .comments {
+          flex-direction: column;
+        }
+
+      }
+
+    }
+
+     .question-section-item-list {
+
+    .content {
+      padding-top: 25px;
+      display: flex;
+      justify-content: space-between;
+
+      .comment {
+        flex: 1;
+        margin-right: 25px;
+
+        .answer {
+          background-color: white;
+          padding: 25px;
+          border: 1px solid #D7D7D7;
+          border-radius: 3px;
+          margin-bottom: 20px;
+        }
+
+      }
+
+      .items {
+        flex: 1;
+      }
+
+    }
+
+  }
+
+*/
+
+.question-section-wrapper {
+
+  .header {
+    background-color: #4F5D6B;
+    border-radius: 3px;
+    color: white;
+  }
+
+  .clc-wrapper {
+    margin-right: 25px;
+    flex: 1;
+
+    .clco-wrapper {
+      background-color: white;
+      padding: 25px;
+      border: 1px solid #D7D7D7;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+
+  }
+
+  .cli-wrapper {
+    flex: 1;
+  }
+
   .comment-button-wrapper, .answer-button-wrapper {
     text-align: center;
     margin-top: 25px;
 
     .icon {
       font-size: 14px;
+      vertical-align: middle;
     }
 
   }
 
-  .comment-wrapper, .textarea-answer-wrapper {
+  .comment-wrapper, .textarea-answer-wrapper, .clear-list-wrapper {
     margin-top: 25px;
     display: flex;
     flex-wrap: wrap;
@@ -467,27 +512,11 @@ ul.items {
 
   .question-section-wrapper {
 
-    .question-section-item-list {
+    .clear-list-wrapper {
+      flex-direction: column;
 
-      .content {
-        flex-direction: column;
-
-        .comment {
-          margin-right: 0;
-        }
-
-      }
-
-    }
-
-    .rest {
-
-      .answer-show-wrapper {
-
-        .comments {
-          flex-direction: column;
-        }
-
+      .clc-wrapper {
+        margin-right: 0;
       }
 
     }
