@@ -1,67 +1,38 @@
+
+ <!-- <div class="flag-wrapper">
+    <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
+  </div>-->
+
 <div class="pro-tag-wrapper">
 
-  <!-- Filter -->
-  <div  class="filter-wrapper">
+  <!-- Top profile -->
+  <div *ngIf="answer.profileQuality === 2" class="label-validate">{{ 'COMMON.TOP_PROFILE' | translate }}</div>
 
-    <!-- Filter icon -->
-    <div *ngIf="answer.tags?.length > 0">
-      <img src="https://res.cloudinary.com/umi/image/upload/v1532697639/app/default-images/filter-icon.svg">
-
-      <!-- Filter menu -->
-      <div class="filter-tag">
-        <ul *ngFor="let t of answer.tags">
-          <li (click)="newFilter($event, t)">
-            {{ t?.label | multiling:lang }}
-          </li>
-        </ul>
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- Detail -->
+  <!-- Professional detail -->
   <div class="detail-wrapper">
 
-    <!-- Top profile -->
-    <div class="quality-wrapper">
-      <p *ngIf="answer.profileQuality === 2">{{ 'COMMON.TOP_PROFILE' | translate }}</p>
-    </div>
-
-    <!-- User -->
-    <div class="user-wrapper">
-
-      <!-- Name -->
-      <p class="name-wrapper">
+    <!-- Name -->
+    <p class="name-wrapper">
       <span class="text-link" (click)="seeAnswer($event, answer)">
         {{ answer.professional?.firstName[0] | uppercase }}{{ answer.professional?.firstName | slice:1 }} {{ answer.professional?.lastName }}
       </span>
-      </p>
+    </p>
 
-      <!-- Job -->
-      <p *ngIf="answer.job || answer.professional?.jobTitle" class="job-wrapper">
-        {{ answer.job || answer.professional?.jobTitle }}
-      </p>
+    <!-- Job -->
+    <p *ngIf="answer.job || answer.professional?.jobTitle" class="job-wrapper">
+      {{ answer.job || answer.professional?.jobTitle }}
+    </p>
 
-      <!-- Company -->
-      <p *ngIf="answer.company?.name || answer.professional?.company" class="company-wrapper">
-        {{ answer.company?.name || answer.professional?.company }}
-      </p>
-    </div>
-
-    <!-- Tag -->
-    <div *ngIf="answer.tags?.length > 0" class="tag-wrapper">
-      <p *ngIf="selectedTag" (click)="newFilter($event, selectedTag)">#{{ selectedTag | multiling:lang }}</p>
-      <p *ngIf="!selectedTag" (click)="newFilter($event, answer.tags[0])">#{{ answer.tags[0].label | multiling:lang }}</p>
-    </div>
+    <!-- Company -->
+    <p *ngIf="answer.company?.name || answer.professional?.company" class="company-wrapper">
+      {{ answer.company?.name || answer.professional?.company }}
+    </p>
 
   </div>
 
-  <!-- Flag -->
-  <div class="flag-wrapper">
-    <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
+  <!-- Tag -->
+  <div *ngIf="answer.tags?.length > 0">
+    <div *ngFor="let tag of answer.tags" class="tag-wrapper">#{{ tag.label | multiling:lang }}</div>
   </div>
 
 </div>
-
-

@@ -1,173 +1,56 @@
 .pro-tag-wrapper {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
   height: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  flex-direction: column;
 
-  .filter-wrapper {
-    visibility: hidden;
-    height: 19px;
-    width: 20px;
-
-    .filter-tag {
-      position: absolute;
-      background: white;
-      visibility: hidden;
-      box-shadow: 0 0 24px 0 rgba(0,0,0,0.5);
-      border-radius: 3px;
-      z-index: 4;
-      width: 150px;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 600;
-
-      ul {
-        list-style: none;
-        margin-left: 0;
-      }
-
-      ul:hover {
-        background-color: #FFB300;
-        cursor: pointer;
-
-        li {
-          color: white;
-        }
-
-      }
-
-    }
-
-  }
-
-  .filter-wrapper:hover {
-
-    .filter-tag, .filter-tag:hover {
-      animation-name: fadeIn;
-      animation-duration: 1s;
-      animation-timing-function: ease-in-out;
-      visibility: visible;
-    }
-
+  .label-validate {
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
   }
 
   .detail-wrapper {
-    display: flex;
-    flex-direction: column;
+    flex: 1 0 auto;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
     text-align: center;
-    justify-content: space-between;
-    padding-left: 5px;
-    padding-right: 5px;
+    flex-direction: column;
 
-    .quality-wrapper {
-      height: 26.4px;
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 94.6px;
-      margin-bottom: 20px;
-
-      p {
-        padding: 5px 14.5px;
-        font-size: 12px;
-        background-color: #2ECC71;
-        color: white;
-        font-weight: 600;
-        text-align: center;
-        border-radius: 3px;
-      }
-
+    .name-wrapper {
+      font-size: 16px;
+      font-weight: 600;
     }
 
-    .user-wrapper {
-      margin-bottom: 20px;
-      height: 100%;
-
-      .name-wrapper {
-        font-size: 16px;
-        font-weight: 600;
-      }
-
-      .job-wrapper {
-        font-size: 15px;
-        color: #4F5D6B;
-      }
-
-      .company-wrapper {
-        font-size: 14px;
-        color: #97A4B1;
-        font-weight: 600;
-      }
-
+    .job-wrapper {
+      font-size: 15px;
+      color: #4F5D6B;
     }
 
-    .tag-wrapper {
-      max-width: 100%;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: -1px;
-
-      p {
-        background-color: #4F5D6B;
-        padding: 5px 15px;
-        font-size: 11px;
-        font-weight: 600;
-        border-radius: 25px;
-        color: white;
-        cursor: pointer;
-      }
-
+    .company-wrapper {
+      color: #97A4B1;
+      font-weight: 600;
     }
 
   }
 
-  .flag-wrapper {
-    display: flex;
-    flex-direction: column-reverse;
+  .tag-wrapper {
+    display: inline-flex;
+    background-color: #4F5D6B;
+    padding: 5px 15px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
   }
 
-}
-
-.pro-tag-wrapper:hover {
-
-  .filter-wrapper {
-    visibility: visible;
-  }
-
-}
-
-/********************************** Media ***************************************/
-@media (max-width: 600px) {
-
-  .pro-tag-wrapper {
-    width: 100%;
-  }
-
-}
-
-@media (min-width: 601px) and (max-width: 840px) {
-
-  .pro-tag-wrapper {
-    width: 83%;
-  }
-
-}
-
-@media (min-width: 841px) and (max-width: 1280px) {
-
-  .pro-tag-wrapper {
-    width: 78%;
-  }
-
-}
-
-@media (min-width: 1281px) {
-
-  .pro-tag-wrapper {
-    width: 100%;
+  .tag-wrapper:hover {
+    text-decoration: underline;
   }
 
 }
