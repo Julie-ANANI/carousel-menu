@@ -16,7 +16,6 @@ import { Template } from '../../../sidebar/interfaces/template';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs/Subject';
-import { Tag } from '../../../../models/tag';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -48,7 +47,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   private _answers: Array<Answer> = [];
   private _filteredAnswers: Array<Answer> = [];
   private _countries: Array<string> = [];
-  private _filters: {[questionId: string]: Filter} = {};
   private _showListProfessional = true;
   private _showDetails = true;
   private _innoid: string;
@@ -155,57 +153,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   }
 
-  filterAnswers(): void {
-    let filteredAnswers = this._answers;
-    Object.keys(this._filters).forEach((filterKey) => {
-      const filter = this._filters[filterKey];
-      switch (filter.status) {
-        case 'TAG':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            if (filter.questionId && Array.isArray(answer.answerTags[filter.questionId])) {
-              return answer.answerTags[filter.questionId].some((t: Tag) => t._id === filter.value);
-            } else if (!filter.questionId) {
-              return answer.tags.some((t: Tag) => t._id === filter.value);
-            } else {
-              return false;
-            }
-          });
-          break;
-        case 'CHECKBOX':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            return answer.answers[filter.questionId] && answer.answers[filter.questionId][filter.value];
-          });
-          break;
-        case 'CLEARBIT':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            return Array.isArray(answer.answers[filter.questionId]) &&
-              answer.answers[filter.questionId].some((item: any) => item.name === filter.value);
-          });
-          break;
-        case 'COUNTRIES':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            const country = answer.country.flag || answer.professional.country;
-            return filter.value.some((c: string) => c === country);
-          });
-          break;
-        case 'LIST':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            return Array.isArray(answer.answers[filter.questionId]) &&
-              answer.answers[filter.questionId].some((item: any) => item.text === filter.value);
-          });
-          break;
-        case 'RADIO':
-          filteredAnswers = filteredAnswers.filter((answer) => {
-            return answer.answers[filter.questionId] === filter.value;
-          });
-          break;
-        default:
-          console.log(`Unknown filter type: ${filter.status}.`);
-      }
-    });
-    this._filteredAnswers = filteredAnswers;
-  }
-
   loadCampaign() {
     this.innovationService.campaigns(this._innoid).first().subscribe((results) => {
       if (results && Array.isArray(results.result)) {
@@ -303,9 +250,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   public deleteFilter(key: string, event: Event) {
     event.preventDefault();
+
     if (key === 'worldmap') {
       this.resetMap();
     }
+
     this.filterService.deleteFilter(key);
     this._filteredAnswers = this.filterService.filter(this._answers);
   }
