@@ -36,10 +36,10 @@
       </div>
 
       <label class="form-label" *ngIf="editionMode">Email</label>
-      <text-zone [elementId]="language"
+      <app-text-zone [elementId]="language"
                  [readonly]="!editionMode"
                  [data]="email.content || ''"
-                 (onTextChange)="updateContent($event)"></text-zone>
+                 (onTextChange)="updateContent($event)"></app-text-zone>
 
       <p *ngIf="editionMode" class="variable-tiny-mce">Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*, *|DOMAIN|*</p>
 

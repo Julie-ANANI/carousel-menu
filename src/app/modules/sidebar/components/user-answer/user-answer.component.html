@@ -129,14 +129,13 @@
         <div *ngIf="modalAnswer.ip" class="ip">
           <p><strong>{{ 'ANSWER.IP' | translate }} {{ modalAnswer.ip }}</strong></p>
         </div>
-      </div>
 
-      <!-- Save button -->
+   <!--   &lt;!&ndash; Save button &ndash;&gt;
       <div *ngIf="adminMode" class="save">
         <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)">
           {{'COMMON.SAVE' | translate}}
         </button>
-      </div>
+      </div>-->
 
     </div>
     <!-- /User detail -->
