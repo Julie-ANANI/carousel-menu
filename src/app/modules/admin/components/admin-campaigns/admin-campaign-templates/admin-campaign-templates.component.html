@@ -12,9 +12,9 @@
 </div>
 
 <div *ngIf="domain">
-    *|DOMAIN|* <br>
-    en :{{this.campaign.innovation.settings.domain.en}} <br>
-    fr :{{this.campaign.innovation.settings.domain.fr}}
+  *|DOMAIN|* <br>
+  en :{{this.campaign.innovation.settings.domain.en}} <br>
+  fr :{{this.campaign.innovation.settings.domain.fr}}
 </div>
 
 <div>
@@ -35,12 +35,17 @@
       </option>
     </select>
   </form>
+  <p class="text-error" *ngIf="modifiedScenarios.length === 0">
+    Vous devez avoir au moins un workflow avec tous les emails modifiés
+  </p>
   <div *ngFor="let scenario of availableScenarios">
     <app-admin-edit-workflow
       [scenario]="scenario"
       [signatures]="signatures"
       (scenarioChange)="updateAvailableScenario($event)"
-      (deletedScenario)="removeScenario($event)">
+      (deletedScenario)="removeScenario($event)"
+      [isDeletable]="campaign.settings.defaultWorkflow != scenario.name && campaign.settings.ABsettings.nameWorkflowA !=scenario.name && campaign.settings.ABsettings.nameWorkflowB !=scenario.name"
+    >
     </app-admin-edit-workflow>
   </div>
 </div>
@@ -96,11 +101,11 @@
       <button class="btn btn-clear float-right" (click)="(modalSelectDefault[0] = !modalSelectDefault[0])"></button>
       <div class="modal-title h5">{{ 'CAMPAIGNS.SELECT_DEFAULT.TITLE' | translate }}</div>
     </div>
-      <div class="modal-body">
-        <div class="content">
+    <div class="modal-body">
+      <div class="content">
         {{'CAMPAIGNS.SELECT_DEFAULT.CONTENT' | translate}}
-        </div>
       </div>
+    </div>
 
     <div class="modal-footer">
       <button class="btn btn-primary" (click)="changeDefaultWorkflow()">{{ 'COMMON.UPDATE' | translate }}</button>

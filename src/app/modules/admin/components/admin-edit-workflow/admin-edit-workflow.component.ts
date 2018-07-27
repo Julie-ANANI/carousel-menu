@@ -12,6 +12,7 @@ import { EmailSignature } from '../../../../models/email-signature';
 export class AdminEditWorkflowComponent implements OnInit {
 
   @Input() scenario: EmailScenario;
+  @Input() isDeletable: boolean = true;
   @Input() set signatures(value: Array<EmailSignature> ){
     this._signatures = value;
     this._initTable();
@@ -108,7 +109,9 @@ export class AdminEditWorkflowComponent implements OnInit {
   }
 
   public deleteScenario() {
-    this.deletedScenario.emit(this.scenario);
+    if (this.isDeletable) {
+      this.deletedScenario.emit(this.scenario);
+    }
   }
 
   public changeLanguage(value: string) {
