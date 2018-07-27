@@ -46,6 +46,9 @@ export class AdminPresetsNewComponent {
     });
   }
 
+  public goBack() {
+    this._router.navigate(['/admin/libraries/questionnaire/']);
+  }
 /*
   ngOnInit() {
 
