@@ -100,7 +100,7 @@ export const COMMON = {
 
   'TABLE' : {
     'SELECTED_ROWS': 'selected rows',
-    'NO-RESULTS': 'No results'
+    'NO-RESULTS': 'No data to display'
   },
 
   'PROJECT': {

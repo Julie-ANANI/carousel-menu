@@ -8,32 +8,24 @@
       [inputLanguage]="language">
     </app-sidebar-workflow>
   </app-sidebar>
-  <div class="columns">
-    <div class="column col-12 col-mx-auto">
-      <h3>Emails</h3>
-      <div class="empty" *ngIf="!emails.length">
-        <div class="empty-action">
-          <button (click)="newEmailName = 'email'" class="btn btn-primary">
-            Créer un nouvel email <i class="icon icon-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-      <div>
-        <button *ngIf="emails.length" (click)="newEmailName = 'email'" class="btn btn-primary">
-          Créer un nouvel email <i class="icon icon-arrow-right"></i>
-        </button>
-      </div>
-      <a [ngClass]="{'text-warning': language === 'en'}" (click)="changeLanguage('en')">EN</a>
-      <a [ngClass]="{'text-warning': language === 'fr'}" (click)="changeLanguage('fr')">FR</a>
-      <app-shared-table
-        [config]="config"
-        (configChange)="getEmails($event)"
-        [data]="tableInfos"
-        (editRow)="editEmail($event)"
-        (removeRows)="removeEmails($event)">
-      </app-shared-table>
-    </div>
+
+  <div class="text-right">
+    <button (click)="newEmailName = 'email'" class="btn btn-primary">
+      Créer un nouvel email
+    </button>
   </div>
+
+  <!--
+  <a [ngClass]="{'text-warning': language === 'en'}" (click)="changeLanguage('en')">EN</a>
+  <a [ngClass]="{'text-warning': language === 'fr'}" (click)="changeLanguage('fr')">FR</a>-->
+
+  <app-shared-table
+    [config]="config"
+    (configChange)="getEmails($event)"
+    [data]="tableInfos"
+    (editRow)="editEmail($event)"
+    (removeRows)="removeEmails($event)">
+  </app-shared-table>
 
   <!-- MODAL : Création d'un nouvel email -->
   <div class="modal" [ngClass]="{'active': newEmailName != null}">
