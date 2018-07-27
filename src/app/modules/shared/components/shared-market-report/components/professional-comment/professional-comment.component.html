@@ -36,7 +36,7 @@
 
 <div class="professional-comment">
 
-  <div class="pro-tag-wrapper" [ngStyle]="{ 'flex': answer.answers[questionId].length > 0 ? '1' : 'initial' }">
+  <div class="pro-tag-wrapper" [ngStyle]="{ 'flex': answer.answers[questionId]?.length > 0 ? '1' : 'initial' }">
 
     <!-- Filter -->
     <div  class="filter-wrapper">
@@ -111,9 +111,9 @@
 
   </div>
 
-  <div *ngIf="answer.answers[questionId].length > 0" class="divider-wrapper"></div>
+  <div *ngIf="answer.answers[questionId]?.length > 0" class="divider-wrapper"></div>
 
-  <div *ngIf="answer.answers[questionId].length > 0" class="comment-wrapper">
+  <div *ngIf="answer.answers[questionId]?.length > 0" class="comment-wrapper">
     {{ answer.answers[questionId] }}
   </div>
 

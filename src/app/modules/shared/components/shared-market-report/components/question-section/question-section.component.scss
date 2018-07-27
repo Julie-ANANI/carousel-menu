@@ -504,18 +504,12 @@ ul.items {
     border-radius: 3px;
     margin-bottom: 20px;
     flex: 1;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
   }
 
-  .textarea-answer-outer-wrapper {
+  .comment-wrapper, .textarea-answer-outer-wrapper {
     display: block;
     flex: unset;
   }
-
 
 }
 

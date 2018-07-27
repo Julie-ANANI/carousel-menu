@@ -22,12 +22,12 @@
 .synthesis-wrapper {
 
   path, g {
-    fill: #E2E2E2;
+    fill: #97A4B1;
     cursor: pointer;
   }
 
   g.selected, path.selected, .selected g, .selected path {
-    fill: #97A4B1 !important;
+    fill: #E2E2E2;
   }
 
 }

@@ -140,7 +140,7 @@ export class QuestionSectionComponent implements OnInit {
   }
 
   public updateNumberOfItems(event: number): void {
-    this._stats.nbAnswers = event;
+    this._stats = {...this._stats, nbAnswers: event};
   }
 
   public seeAnswer(event: Answer) {
