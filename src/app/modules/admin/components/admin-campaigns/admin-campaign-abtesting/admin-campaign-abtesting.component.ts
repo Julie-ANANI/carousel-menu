@@ -23,6 +23,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   public switchActivated: Boolean = false;
 
+  public modalABtesting = false;
   private _campaign: Campaign;
   private _modifiedScenarios: Array<EmailScenario> ;
   private _nameWorkflowA = '';
@@ -235,6 +236,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
   public statusSwitch() {
+    this.modalABtesting = true;
     this.switchActivated = !this.switchActivated;
     if (this.switchActivated) {
       this.form.enable();

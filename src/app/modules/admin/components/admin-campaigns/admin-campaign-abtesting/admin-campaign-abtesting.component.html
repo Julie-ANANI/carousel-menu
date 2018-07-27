@@ -6,6 +6,7 @@
       <input type="checkbox" [disabled]="ABDISPO()" (click)="statusSwitch()" >
       <i class="form-icon"></i>
     </label>
+    <div *ngIf="this.modalABtesting">
     <form class="form-horizontal" [formGroup]="form" >
 
 
@@ -47,8 +48,9 @@
         Submit
       </button>
 
-
     </form>
+
+    </div>
   </div>
 
 
