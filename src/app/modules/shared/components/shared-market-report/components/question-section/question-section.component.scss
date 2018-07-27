@@ -474,6 +474,10 @@ ul.items {
     text-align: center;
     margin-top: 25px;
 
+    .ghost-primary {
+      background-color: transparent !important;
+    }
+
     .icon {
       font-size: 14px;
       vertical-align: middle;
@@ -481,7 +485,11 @@ ul.items {
 
   }
 
-  .comment-wrapper, .textarea-answer-wrapper, .clear-list-wrapper {
+  .textarea-answer-wrapper {
+    margin-top: 25px;
+  }
+
+  .comment-wrapper, .clear-list-wrapper {
     margin-top: 25px;
     display: flex;
     flex-wrap: wrap;
@@ -496,11 +504,16 @@ ul.items {
     border-radius: 3px;
     margin-bottom: 20px;
     flex: 1;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
   }
 
   .textarea-answer-outer-wrapper {
-    display: inline-flex;
-    flex: 0 1 calc(50% - 1rem);
+    display: block;
+    flex: unset;
   }
 
 

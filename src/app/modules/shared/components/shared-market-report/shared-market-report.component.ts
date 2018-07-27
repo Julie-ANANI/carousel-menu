@@ -386,7 +386,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this._showListProfessional = val;
   }
 
-  get showDetails (): boolean {
+  get showDetails(): boolean {
     return this._showDetails;
   }
 

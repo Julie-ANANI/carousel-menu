@@ -232,7 +232,7 @@
     <div class="answer-button-wrapper">
       <button
         type="button"
-        class="btn btn-primary"
+        class="btn ghost-primary"
         (click)="showDetails = !showDetails; $event.preventDefault()">
         {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
         <i class="icon" aria-hidden="true" [ngClass]="showDetails ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
@@ -281,7 +281,7 @@
     <div class="answer-button-wrapper">
       <button
         type="button"
-        class="btn btn-primary"
+        class="btn ghost-primary"
         (click)="showDetails = !showDetails; $event.preventDefault()">
         {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
         <i class="icon" aria-hidden="true" [ngClass]="showDetails ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
@@ -294,13 +294,13 @@
       <!-- Textarea -->
       <div *ngIf="question.controlType === 'textarea'" class="textarea-answer-wrapper">
         <div *ngFor="let answer of answersToShow" class="textarea-answer-outer-wrapper">
-          <app-market-comment
+          <app-market-comment-2
             [answer]="answer"
             [questionId]="question.identifier"
             (addFilter)="newFilter($event)"
             (modalAnswerChange)="seeAnswer($event)"
             [ngStyle]="{ 'width': '100%' }">
-          </app-market-comment>
+          </app-market-comment-2>
         </div>
       </div>
 
@@ -316,7 +316,7 @@
     <div class="comment-button-wrapper">
       <button
         type="button"
-        class="btn btn-primary"
+        class="btn ghost-primary"
         (click)="showComments = !showComments; $event.preventDefault()">
         {{ (showComments ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN')
         | translate:({ length: answersWithComment.length }) }}

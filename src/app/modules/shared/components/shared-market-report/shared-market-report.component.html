@@ -78,7 +78,7 @@
     <!-- /Sticky bar -->
 
     <!-- Main page -->
-    <div *ngIf="!adminSide" class="section-container sc-front-wrapper">
+    <div *ngIf="!adminSide && showDetails" class="section-container sc-front-wrapper">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <div class="section-inline-container white-background">
 
@@ -105,7 +105,7 @@
     <!-- /Main page -->
 
     <!-- Innovation detail -->
-    <div *ngIf="!adminSide" class="section-light-container">
+    <div *ngIf="!adminSide && showDetails" class="section-light-container">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <div class="section-inline-container sc-innovation-wrapper white-background">
 
@@ -145,7 +145,7 @@
     <!-- /Innovation detail -->
 
     <!-- Innovation targeting -->
-    <div *ngIf="!adminSide" class="section-light-container">
+    <div *ngIf="!adminSide && showDetails" class="section-light-container">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <div class="section-inline-container sc-targeting-wrapper white-background">
 
@@ -205,7 +205,7 @@
     <!-- /Innovation targeting -->
 
     <!-- Innovation analytics -->
-    <div *ngIf="!adminSide" class="section-light-container">
+    <div *ngIf="!adminSide && showDetails" class="section-light-container">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <div class="section-inline-container sc-exploration-wrapper white-background">
 
