@@ -161,6 +161,7 @@ export const COMMON = {
   'EDIT_PROFESSIONAL': 'Modifier Professionnel',
   'EDIT_INSIGHT': 'Modifier l\'aperçu',
   'EDIT-COUNTRY': 'Modifier le filtre du pays',
+  'ADD-TAGS': 'Ajouter des tags',
 
   'SORT': {
     'BY_NAME': 'Nom',

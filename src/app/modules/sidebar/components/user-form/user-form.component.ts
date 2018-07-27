@@ -38,9 +38,7 @@ export class UserFormComponent implements OnInit {
   }
 
   @Input() set type(type: string) {
-    if (type === 'signUp') {
-      this.loadSignUp();
-    }
+    this._type = type;
   }
 
   @Input() sidebarState: Subject<string>;
@@ -52,6 +50,8 @@ export class UserFormComponent implements OnInit {
   isSignUp = false;
   isEditUser = false;
   isProfessional = false;
+  addTagsToProfessionals = false;
+
   isSelf =  false;
   userForm: FormGroup;
   countriesSuggestion: Array<string> = [];
@@ -60,6 +60,8 @@ export class UserFormComponent implements OnInit {
   private _pro: Professional = null;
   private _campaign: Campaign = null;
   private _editInstanceDomain = false;
+
+  private _type = '';
 
   private _updateInstanceDomainConfig: {
     placeholder: string,
@@ -103,19 +105,37 @@ export class UserFormComponent implements OnInit {
           setTimeout (() => {
             this.userForm.reset();
           }, 700);
+        } else if (state === 'active') {
+          this.loadTypes();
         }
       })
     }
 
   }
 
-  loadSignUp() {
-    this.isSignUp = true;
+  reinitialiseForm() {
+    this.isProfessional = false;
+    this.isEditUser = false;
+    this.isSignUp = false;
+    this.addTagsToProfessionals = false;
+  }
+
+  loadTypes() {
+    this.reinitialiseForm();
+    if (this._type === 'signUp') {
+      this.isSignUp = true;
+    } else if (this._type === 'editUser') {
+      this.isEditUser = true;
+      this.loadEditUser();
+    } else if (this._type === 'professional') {
+      this.isProfessional = true;
+      this.loadProfessional();
+    } else if (this._type === 'tagProfessional') {
+      this.addTagsToProfessionals = true;
+    }
   }
 
   loadEditUser() {
-    this.isEditUser = true;
-
     if (this._user) {
       this.isSelf = this._authService.userId === this._user.id;
       this.userForm.patchValue(this._user);
@@ -124,7 +144,6 @@ export class UserFormComponent implements OnInit {
   }
 
   loadProfessional() {
-    this.isProfessional = true;
     if (this._pro) {
       this.userForm.get('companyName').setValue(this._pro.company);
       this.userForm.patchValue(this._pro);

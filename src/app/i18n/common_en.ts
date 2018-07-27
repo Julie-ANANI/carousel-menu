@@ -158,6 +158,7 @@ export const COMMON = {
   'EDIT_PROFESSIONAL': 'Edit Professional',
   'EDIT_INSIGHT': 'Edit Insight',
   'EDIT-COUNTRY': 'Edit country\'s filter',
+  'ADD-TAGS': 'Add tags',
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
   'CLIENT_SIDE': 'Client',

@@ -14,14 +14,17 @@ export class EmailsFormComponent implements OnInit, OnChanges {
 
   @Input() set editBlacklistEmail(value: any) {
     this.emailToEdit = value;
+    this.loadBlacklist();
   };
 
   @Input() set campaignInfos(value: EmailQueueModel) {
     this.campaignInfosToShow = value;
+    this.loadCampaignInfos();
   }
 
   @Input() set countryInfos(value: any) {
     this.countryInfo = value;
+    this.loadCountry();
   }
 
   @Input() sidebarState: Subject<string>;
