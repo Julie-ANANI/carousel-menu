@@ -125,17 +125,10 @@
         </p>
       </div>
 
-        <!-- IP -->
-        <div *ngIf="modalAnswer.ip" class="ip">
-          <p><strong>{{ 'ANSWER.IP' | translate }} {{ modalAnswer.ip }}</strong></p>
-        </div>
-
-   <!--   &lt;!&ndash; Save button &ndash;&gt;
-      <div *ngIf="adminMode" class="save">
-        <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)">
-          {{'COMMON.SAVE' | translate}}
-        </button>
-      </div>-->
+      <!-- IP -->
+      <div *ngIf="modalAnswer.ip" class="ip">
+        <p><strong>{{ 'ANSWER.IP' | translate }} {{ modalAnswer.ip }}</strong></p>
+      </div>
 
     </div>
     <!-- /User detail -->
