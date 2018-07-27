@@ -1,5 +1,5 @@
 export interface EmailSignature {
-  _id: string;
-  name: string;
-  content: string;
+  _id?: string;
+  name?: string;
+  content?: string;
 }
