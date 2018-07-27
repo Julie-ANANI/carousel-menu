@@ -36,7 +36,6 @@
 
       <!-- Domain management -->
       <div *ngIf="isEditUser" class="domain-wrapper">
-        <h6>Domain Management</h6>
         <div *ngIf="!editInstanceDomain" [ngStyle]="{ 'padding-bottom': '30px' }">
           <label class="form-label">Actual domain:
             <span>{{ userForm.get('domain').value }}</span>
