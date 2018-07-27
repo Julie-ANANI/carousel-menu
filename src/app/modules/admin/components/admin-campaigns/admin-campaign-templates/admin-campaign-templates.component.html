@@ -33,6 +33,9 @@
         </option>
       </select>
     </form>
+    <p class="text-error" *ngIf="modifiedScenarios.length === 0">
+      Vous devez avoir au moins un workflow avec tous les emails modifiés
+    </p>
     <div *ngFor="let scenario of availableScenarios">
       <app-admin-edit-workflow
         [scenario]="scenario"
