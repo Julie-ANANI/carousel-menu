@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
-import { AuthService } from '../../../../../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Preset } from '../../../../../../models/preset';
 
@@ -11,7 +10,6 @@ import { Preset } from '../../../../../../models/preset';
 })
 export class AdminPresetsListComponent implements OnInit {
 
-  public isBastien: boolean = false;
   private _presets: Array<Preset>;
   public selectedPresetIdToBeDeleted: string = null;
   public selectedPresetToBeCloned: Preset = null;
@@ -28,13 +26,10 @@ export class AdminPresetsListComponent implements OnInit {
 
 
   constructor(private _presetService: PresetService,
-              private _authService: AuthService,
               private _router: Router) {}
 
   ngOnInit(): void {
     this.loadPresets(this._config);
-    console.log(this._authService.getUserInfo());
-    this.isBastien = this._authService.getUserInfo().name === "Bastien Scanu";
   }
 
   loadPresets(config: any): void {
