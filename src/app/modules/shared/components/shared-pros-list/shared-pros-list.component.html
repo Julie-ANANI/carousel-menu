@@ -10,7 +10,7 @@
   <app-user-form [sidebarState]="sidebarState"
                  [type]="more.type"
                  [pro]="currentPro" [campaign]="campaign ? campaign: null"
-                 (professionalUserData)="updatePro($event)">
+                 (professionalUserData)="updatePro($event)" (newTags)="addTagsToPro($event)">
   </app-user-form>
 </app-sidebar>
 
