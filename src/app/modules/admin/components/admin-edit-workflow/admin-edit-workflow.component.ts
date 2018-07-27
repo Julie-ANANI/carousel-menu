@@ -12,6 +12,7 @@ import { EmailSignature } from '../../../../models/email-signature';
 export class AdminEditWorkflowComponent implements OnInit {
 
   @Input() scenario: EmailScenario;
+  @Input() isDeletable: boolean = true;
   @Input() set signatures(value: Array<EmailSignature> ){
     this._signatures = value;
     this._initTable();
@@ -47,23 +48,20 @@ export class AdminEditWorkflowComponent implements OnInit {
 
   private _initTable() {
     const steps = {
-      FIRST: {step: "01 - "},
-      SECOND: {step: "02 -"},
-      THIRD: {step: "03 - "},
-      THANKS: {step: "04 - "}
+      FIRST: {step: "FIRST", num: "01 - "},
+      SECOND: {step: "SECOND", num: "02 - "},
+      THIRD: {step: "THIRD", num: "03 - "},
+      THANKS: {step: "THANKS", num: "04 - "}
     };
     this.scenario.emails.forEach((email: EmailTemplate) => {
-      if (email.signature) {
-        const fullSignature = this._signatures.find(s => s._id === email.signature.toString());
-        if (fullSignature) email.signatureName = fullSignature.name;
-      }
       steps[email.step][email.language] = email;
+      email.signature = email.signature || {};
     });
     this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
     this._total = this.scenario.emails.length;
-    let columns = [{_attrs: ['step', `${this.language}.subject`], _name: 'Step', _type: 'TEXT', _isSortable: false},
-      {_attrs: [`${this.language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false}/*TODO: à remettre,
-      {_attrs: [`${this.language}.signatureName`], _name: 'Signature', _type: 'TEXT', _isSortable: false}*/];
+    let columns = [{_attrs: ['num', `${this.language}.subject`], _name: 'Step', _type: 'TEXT', _isSortable: false},
+      {_attrs: [`${this.language}.content`], _name: 'Contenu', _type: 'TEXT', _isSortable: false},
+      {_attrs: [`${this.language}.signature.name`], _name: 'Signature', _type: 'TEXT', _isSortable: false}];
     if (this.inCampaign) {
       columns.push({_attrs: [`${this.language}.modified`], _name: 'Modified', _type: 'CHECK', _isSortable: false});
     }
@@ -100,6 +98,10 @@ export class AdminEditWorkflowComponent implements OnInit {
     this.scenario.emails = this.scenario.emails.map((email: EmailTemplate) => {
       if(emailsObject.step === email.step) {
         email = emailsObject[email.language];
+        if (emailsObject[email.language].signature) {
+          const fullSignature = this._signatures.find(s => s.name === email.signature.name);
+          email.signature = fullSignature || {};
+        }
       }
       return email;
     });
@@ -107,7 +109,9 @@ export class AdminEditWorkflowComponent implements OnInit {
   }
 
   public deleteScenario() {
-    this.deletedScenario.emit(this.scenario);
+    if (this.isDeletable) {
+      this.deletedScenario.emit(this.scenario);
+    }
   }
 
   public changeLanguage(value: string) {

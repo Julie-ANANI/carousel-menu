@@ -23,6 +23,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   public switchActivated: Boolean = false;
 
+  public modalABtesting = false;
   private _campaign: Campaign;
   private _modifiedScenarios: Array<EmailScenario> ;
   private _nameWorkflowA = '';
@@ -235,10 +236,12 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
   public statusSwitch() {
+    this.modalABtesting = true;
     this.switchActivated = !this.switchActivated;
     if (this.switchActivated) {
       this.form.enable();
     } else {
+      this.modalABtesting = false;
       this.form.disable();
     }
   }
@@ -260,7 +263,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
   public ABDISPO() {
-    return this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""  && this._modifiedScenarios.length > 2;
+    return this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""  && this._modifiedScenarios.length >= 2;
   }
 
 

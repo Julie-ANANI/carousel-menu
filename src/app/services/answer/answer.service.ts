@@ -40,12 +40,6 @@ export class AnswerService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public changeStatus(answerId: string, status: string): Observable<any> {
-    return this._http.post(`/answer/${answerId}/changeStatus`, { newStatus: status })
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
-  }
-
   public addTag(answerId: string, tagId: string, questionId?: string): Observable<Answer> {
     const params = {tag: tagId };
     if (questionId) { params['questionId'] = questionId; }
