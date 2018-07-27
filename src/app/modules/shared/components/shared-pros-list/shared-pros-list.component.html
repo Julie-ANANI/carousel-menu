@@ -2,7 +2,8 @@
                   [data]="tableInfos"
                   (configChange)="loadPros($event)"
                   (editRow)="editPro($event)"
-                  (removeRows)="deleteProsModal($event)">
+                  (removeRows)="deleteProsModal($event)"
+                  (performAction)="performActions($event)">
 </app-shared-table>
 
 <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">

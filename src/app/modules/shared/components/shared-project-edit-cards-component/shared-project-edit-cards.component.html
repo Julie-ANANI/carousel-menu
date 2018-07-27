@@ -67,6 +67,7 @@
                         *ngIf="isAdmin && project.innovationCards.length > 1"
                         class="btn ghot-primary"
                         [ngClass]="{'disabled': innovationCards.title}"
+                        [disabled]="innovationCards.title"
                         (click)="importTranslation($event, 'title')">
                         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
                       </button>
@@ -104,12 +105,13 @@
                         *ngIf="isAdmin && project.innovationCards.length > 1"
                         class="btn ghot-primary"
                         [ngClass]="{'disabled': innovationCards.summary}"
+                        [disabled]="innovationCards.summary"
                         (click)="importTranslation($event, 'summary')">
                         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
                       </button>
                       <app-text-zone
                         [data]="innovationCards.summary"
-                        [elementId]="'summary'+i"
+                        [elementId]="'summary'+innovationCards.lang"
                         [ngClass]="{'borderRed': showSummaryError}"
                         (onTextChange)="updateData($event)"
                       >
@@ -142,13 +144,14 @@
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
                         class="btn ghot-primary"
+                        [disabled]="innovationCards.problem"
                         [ngClass]="{'disabled': innovationCards.problem}"
                         (click)="importTranslation($event, 'problem')">
                         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
                       </button>
                       <app-text-zone
                         [data]="innovationCards.problem"
-                        [elementId]="'problem'+i"
+                        [elementId]="'problem'+innovationCards.lang"
                         [ngClass]="{'borderRed': showProblemError}"
                         (onTextChange)="updateData($event)"
                       >
@@ -182,13 +185,14 @@
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
                         class="btn ghot-primary"
+                        [disabled]="innovationCards.solution"
                         [ngClass]="{'disabled': innovationCards.solution}"
                         (click)="importTranslation($event, 'solution')">
                         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}
                       </button>
                       <app-text-zone
                         [data]="innovationCards.solution"
-                        [elementId]="'solution'+i"
+                        [elementId]="'solution'+innovationCards.lang"
                         [ngClass]="{'borderRed': showSolutionError}"
                         (onTextChange)="updateData($event)"
                       >
@@ -224,6 +228,7 @@
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
                         class="btn ghot-primary"
+                        [disabled]="innovationCards.advantages?.length"
                         [ngClass]="{'disabled': innovationCards.advantages?.length}"
                         (click)="importTranslation($event, 'advantages')">
                         {{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.IMPORT_TRANSLATION' | translate }}

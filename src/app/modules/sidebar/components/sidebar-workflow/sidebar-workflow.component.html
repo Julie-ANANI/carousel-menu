@@ -1,29 +1,59 @@
-<div class="card email" *ngIf="email">
-  <div class="card-header">
-    <div class="d-flex">
-      <span (click)="changeLanguage('en')" [ngClass]="{active: language === 'en'}">English</span>
-      <span (click)="changeLanguage('fr')" [ngClass]="{active: language === 'fr'}">Français</span>
+<div *ngIf="email">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <div class="sidebar-header">
+      <div class="language-choice">
+        <div (click)="changeLanguage('en')" [ngClass]="{active: language === 'en'}" class="discreet-link">English</div>
+        <div (click)="changeLanguage('fr')" [ngClass]="{active: language === 'fr'}" class="discreet-link">Français</div>
+      </div>
+
       <label class="form-switch" *ngIf="email.content != null">
         <input type="checkbox" (change)="(editionMode = !editionMode) && $event.preventDefault()">
-        <i class="form-icon"></i>Preview
+        <i class="form-icon"></i> Preview
       </label>
-    </div>
-    <div class="d-flex">
-      <div class="card-title h5" *ngIf="!editionMode">{{ email.subject }}</div>
-      <div class="card-title h5" *ngIf="editionMode">
-        <div class="form-group d-flex">Objet: <input type="text" [(ngModel)]="email.subject" name="subject" class="form-input"/></div>
+
+      <!-- Save button -->
+      <div class="sidebar-main-action">
+        <button *ngIf="editionMode" type="submit" class="btn btn-primary" (click)="save()">Save</button>
       </div>
     </div>
-    <i class="fas fa-check" *ngIf="email.modified && inCampaign"></i>
-    <i class="fas fa-times" *ngIf="!email.modified && inCampaign"></i>
-  </div>
-  <div class="card-body">
-    <h4 *ngIf="editionMode">Contenu</h4>
-    <app-text-zone [elementId]="email.language + email.step + email.profile"
-                   [readonly]="!editionMode"
-                   [data]="email.content || ''"
-                   (onTextChange)="updateContent($event)"></app-text-zone>
-    <button *ngIf="editionMode" type="submit" class="btn btn-primary centered" (click)="save()">Sauvegarder</button>
-    <p *ngIf="editionMode">Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*, *|DOMAIN|*</p>
+
+
+    <div class="sidebar-edit">
+      <div *ngIf="!editionMode"><strong>Object : {{ email.subject }}</strong></div>
+
+      <div *ngIf="editionMode">
+        <div class="form-group">
+          <label class="form-label" for="object">Objet</label>
+          <input
+            class="form-default"
+            [(ngModel)]="email.subject"
+            name="subject"
+            type="text"
+            id="object"
+            placeholder="">
+        </div>
+      </div>
+
+      <label class="form-label" *ngIf="editionMode">Email</label>
+      <text-zone [elementId]="language"
+                 [readonly]="!editionMode"
+                 [data]="email.content || ''"
+                 (onTextChange)="updateContent($event)"></text-zone>
+
+      <p *ngIf="editionMode" class="variable-tiny-mce">Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*, *|DOMAIN|*</p>
+
+      <!-- TODO : à mettre en place
+      <div class="form-group">
+        <label class="form-label" for="signature">Signature</label>
+        <select
+          class="form-default"
+          [(ngModel)]="email.signature"
+          id="signature">
+          <option *ngFor="let s of signatures" [value]="s._id">{{ s.name }} - <span>{{ s.language }}</span></option>
+        </select>
+      </div>-->
+    </div>
+
   </div>
 </div>

@@ -36,7 +36,6 @@
 
       <!-- Domain management -->
       <div *ngIf="isEditUser" class="domain-wrapper">
-        <h6>Domain Management</h6>
         <div *ngIf="!editInstanceDomain" [ngStyle]="{ 'padding-bottom': '30px' }">
           <label class="form-label">Actual domain:
             <span>{{ userForm.get('domain').value }}</span>
@@ -167,17 +166,20 @@
 
       <!-- Url -->
       <div *ngIf="isProfessional" class="form-group">
-        <label class="form-label" for="url">{{ 'COMMON.PROFILE_URL' | translate }}</label>
+        <label class="form-label" for="profileUrl">{{ 'COMMON.PROFILE_URL' | translate }}</label>
         <input
           class="form-default"
-          formControlName="url"
-          id="url"
+          formControlName="profileUrl"
+          id="profileUrl"
           type="text"
           placeholder="http://www.linkedin.com/in/johnsmith">
-        <div class="form-error" *ngIf="userForm.get('url').touched && userForm.get('url').invalid">
-          <span *ngIf="userForm.get('url').hasError('required')">{{ 'COMMON.REQUIRED.URL' | translate }}</span>
+        <div class="form-error" *ngIf="userForm.get('profileUrl').touched && userForm.get('profileUrl').invalid">
+          <span *ngIf="userForm.get('profileUrl').hasError('required')">{{ 'COMMON.REQUIRED.URL' | translate }}</span>
         </div>
       </div>
+
+      <!-- Add Tags -->
+      <app-shared-tag-item *ngIf="addTagsToProfessionals" [editMode]="true"></app-shared-tag-item>
 
       <!-- Link to quiz URI -->
       <div *ngIf="isProfessional && campaign" class="form-group">
@@ -194,7 +196,7 @@
 
       <!-- Submit button -->
       <div *ngIf="isSignUp" class="signUp-button-wrapper text-center">
-        <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid && userForm.get('url').value !== '' && userForm.get('operator').value !== false">{{'COMMON.BUTTON.SIGN_UP' | translate }}</button>
+        <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid && userForm.get('profileUrl').value !== '' && userForm.get('operator').value !== false">{{'COMMON.BUTTON.SIGN_UP' | translate }}</button>
       </div>
 
     </form>

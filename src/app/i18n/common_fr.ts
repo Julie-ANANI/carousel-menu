@@ -1,5 +1,6 @@
 export const COMMON = {
   'SAVE': 'Sauvegarder',
+  'IMPORT': 'Importer',
   'SAVE_DRAFT': 'Sauvegarder en brouillon',
   'LAST_SAVED_AT': 'Sauvegardé à',
   'UPDATE': 'Mettre à jour',
@@ -59,7 +60,7 @@ export const COMMON = {
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
   'LASTNAME': 'Nom',
-  'EMAIL': 'E-mail',
+  'EMAIL': 'Email',
   'PHONE': 'Téléphone',
   'PASSWORD': 'Mot de passe',
   'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',
@@ -120,7 +121,7 @@ export const COMMON = {
 
   'TABLE' : {
     'SELECTED_ROWS': 'lignes selectionnées',
-    'NO-RESULTS': 'Pas de résultats'
+    'NO-RESULTS': 'Aucune donnée à afficher'
   },
 
   'INVALID': {
@@ -162,6 +163,7 @@ export const COMMON = {
   'EDIT_PROFESSIONAL': 'Modifier Professionnel',
   'EDIT_INSIGHT': 'Modifier l\'aperçu',
   'EDIT-COUNTRY': 'Modifier le filtre du pays',
+  'ADD-TAGS': 'Ajouter des tags',
   'UMI_WORD': 'Le mot d’UMI',
 
   'SORT': {

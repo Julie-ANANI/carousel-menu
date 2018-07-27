@@ -1,19 +1,23 @@
+<!-- If there are no results -->
+<div class="bot-wrapper text-center" *ngIf="total === 0">
+  <span class="bot-rect">{{'COMMON.TABLE.NO-RESULTS' | translate}}</span>
+  <br>
+  <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+  <div><img src="http://res.cloudinary.com/umi/image/upload/app/default-images/juan-bot.svg" width="" height="120"></div>
+</div>
+
+
 <!-- We show the number of results -->
-<div *ngIf="isHeadable" class="table-title">{{total}} {{ title | translate }}</div>
+<div *ngIf="isHeadable && total !== 0" class="table-title">{{total}} {{ title | translate }}</div>
 
 
 <!-- If we want to filter by columns -->
-<sqFilterMulti *ngIf="isFiltrable"
+<sqFilterMulti *ngIf="isFiltrable && total !== 0"
                [config]="config"
                (configChange)="changeConfig($event)"
                [props]="columns">
 </sqFilterMulti>
 
-
-<!-- If there are no results -->
-<div *ngIf="total === 0">
-  <tr><td>{{'COMMON.TABLE.NO-RESULTS' | translate}}</td></tr>
-</div>
 
 <!-- Else we begin to create the table -->
 <span *ngIf="total !== 0">
@@ -26,7 +30,7 @@
             <th *ngIf="isSelectable" width="50"><input type="checkbox" (change)="selectAll($event)"/>
               <div class="square-check"><i class="icon icon-check"></i></div></th>
 
-            <th *ngFor="let column of columns; let i = index" [class]="'column-' + i"
+            <th *ngFor="let column of columns" [class]="'column-' + i"
                 [ngClass]="{'active': isSort(column), 'pointable': isSortable(column)}"
                 (click)="selectColumn(getAttrs(column)[0])">
 
@@ -59,7 +63,7 @@
               <i class="icon icon-arrow-right"></i>
               <button *ngFor="let a of actions" class="btn btn-xs ghost-edit" style="margin-left: 10px;"
                       (click)="onActionClick(a)">
-                {{a}}
+                {{a | translate}}
               </button>
               <button class="btn btn-xs ghost-delete"
                       style="margin-left: 10px;"
@@ -81,7 +85,7 @@
 
           <!-- Foreach columns -->
           <ng-container>
-            <td *ngFor="let column of columns">
+            <td *ngFor="let column of columns; let i = index" [ngClass]="{'col-wrapper': i === 0}">
               <span (click)="selectRow(key)">
                 <ng-container [ngSwitch]="getType(column)">
 
@@ -155,8 +159,7 @@
               </span>
 
               <!-- If isEditable we show a button onHover the row -->
-              <button class="btn btn-xs ghost-edit visibleOnHover"
-                      *ngIf="columns.indexOf(column) == 0 && (isEditable || isShowable)"
+              <button *ngIf="i === 0" class="btn btn-xs ghost-edit visibleOnHover"
                       (click)="edit(content[key])">
                 {{isEditable ? ('COMMON.EDIT' | translate) : ('COMMON.MORE' | translate) }}
               </button>

@@ -1,0 +1,27 @@
+<div class="main-container" id="admin-monitoring">
+
+  <div class="page-header">
+    <div class="container">
+      <div class="columns">
+        <div class="column col-11 col-mx-auto">
+          <h1>Monitoring</h1>
+
+          <ul class="tabs">
+            <li><a [routerLink]="'/admin/monitoring/queue'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              Mailgun
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="columns">
+      <div class="column col-11 col-mx-auto">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+</div>

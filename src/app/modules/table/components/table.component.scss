@@ -1,3 +1,9 @@
+.col-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 i {
   font-size: 20px;
   color: #adadad;
@@ -25,5 +31,9 @@ tr:hover {
 
 th.pointable:hover {
   cursor: pointer;
+}
+
+.table-title {
+  margin-bottom: 17px;
 }
 

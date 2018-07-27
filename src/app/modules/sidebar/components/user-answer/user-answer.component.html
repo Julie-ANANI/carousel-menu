@@ -2,8 +2,11 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <!-- Save button -->
-    <div *ngIf="adminMode" class="save text-right">
-      <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)">
+    <div *ngIf="adminMode" class="save text-right" [ngSwitch]="modalAnswer.localStatus">
+      <button class="btn btn-primary" (click)="importAnswer($event)" *ngSwitchCase="'draft'">
+        {{'COMMON.IMPORT' | translate}}
+      </button>
+      <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngSwitchDefault>
         {{'COMMON.SAVE' | translate}}
       </button>
     </div>
@@ -28,7 +31,7 @@
             <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCountry = true;" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
           </div>
         </div>
-        <div *ngIf="adminMode" class="editMode">
+        <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="editMode">
           <label class="form-switch" for="editMode">
             <input
               type="checkbox"
@@ -122,15 +125,24 @@
         </p>
       </div>
 
-      <!-- IP -->
-      <div *ngIf="modalAnswer.ip" class="ip">
-        <p><strong>{{ 'ANSWER.IP' | translate }} {{ modalAnswer.ip }}</strong></p>
+        <!-- IP -->
+        <div *ngIf="modalAnswer.ip" class="ip">
+          <p><strong>{{ 'ANSWER.IP' | translate }} {{ modalAnswer.ip }}</strong></p>
+        </div>
       </div>
+
+      <!-- Save button -->
+      <div *ngIf="adminMode" class="save">
+        <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)">
+          {{'COMMON.SAVE' | translate}}
+        </button>
+      </div>
+
     </div>
     <!-- /User detail -->
 
     <!-- Status section -->
-    <div *ngIf="adminMode" class="ce-status-wrapper">
+    <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="ce-status-wrapper">
 
       <!-- Rejected -->
       <div class="status-rejected">

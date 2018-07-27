@@ -21,6 +21,8 @@ export class AdminProjectDetailsComponent implements OnInit {
   private _domain = {fr: '', en: ''};
   private _editInstanceDomain = false;
 
+  private _preset = {};
+
   private _updateInstanceDomainConfig: {
       placeholder: string,
       initialData: Array<string>,
@@ -52,7 +54,7 @@ export class AdminProjectDetailsComponent implements OnInit {
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this.presetAutocomplete = {
-      placeholder: 'preset',
+      placeholder: 'Name of a template',
       initialData: this.hasPreset() ? [this.project.preset] : [],
       type: 'preset'
     };
@@ -104,8 +106,18 @@ export class AdminProjectDetailsComponent implements OnInit {
 
 
   public updatePreset(event: {value: Array<Preset>}): void {
-    this._project.preset = event.value[0];
-    this._dirty = true;
+    if (event.value.length) {
+      this._preset = event.value[0];
+    } else {
+      this._preset = {};
+    }
+    this._innovationService.updatePreset(this._project._id, this._preset).first().subscribe(data => {
+      this._project = data;
+      this._activatedRoute.snapshot.parent.data['innovation'] = data;
+      this._dirty = false;
+    }, (err) => {
+      this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+    });
   }
 
   public updateSettings(value: InnovationSettings): void {
@@ -169,6 +181,7 @@ export class AdminProjectDetailsComponent implements OnInit {
 
   public hasPreset(): boolean {
     const p = this._project.preset;
+
     return (p && p.constructor === Object && Object.keys(p).length > 0);
   }
 
