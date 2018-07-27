@@ -60,6 +60,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
       name: template.name,
       emails: template.emails.map( m => {
         m.nameWorkflow = template.name;
+        m.modified = false;
         return m;
       })
     };
