@@ -43,7 +43,9 @@
       [scenario]="scenario"
       [signatures]="signatures"
       (scenarioChange)="updateAvailableScenario($event)"
-      (deletedScenario)="removeScenario($event)">
+      (deletedScenario)="removeScenario($event)"
+      [isDeletable]="campaign.settings.defaultWorkflow != scenario.name && campaign.settings.ABsettings.nameWorkflowA !=scenario.name && campaign.settings.ABsettings.nameWorkflowB !=scenario.name"
+    >
     </app-admin-edit-workflow>
   </div>
 </div>
