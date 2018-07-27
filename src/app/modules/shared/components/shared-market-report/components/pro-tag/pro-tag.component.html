@@ -4,7 +4,7 @@
 
     <div class="detail">
       <div class="flag">
-        <country-flag [country]="answer.country" [width]="23" [height]="16"></country-flag>
+        <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
       </div>
       <div class="name">
         {{ answer.professional?.firstName[0] | uppercase }}{{ answer.professional?.firstName | slice:1 }} {{ answer.professional?.lastName }}

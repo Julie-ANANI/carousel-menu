@@ -11,7 +11,7 @@ export const COMMON = {
   'SIGN_UP': 'Sign up',
   'LOG_OUT': 'Logout',
   'CANCEL': 'Cancel',
-  'MORE': 'See more',
+  'MORE': 'Show',
   'OF': 'of',
   'ADD': 'Add',
   'ALL': 'All',
@@ -43,16 +43,24 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Media not available',
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
-  'BLACKLIST': 'Blacklisted e-mails',
+  'BLACKLIST': {
+    'EMAILS': 'Blacklisted e-mails',
+    'DOMAINS': 'Blacklisted domains',
+    'COUNTRIES': 'Blacklisted countries',
+    'ACCEPTATION': 'Acceptance mails percentage'
+  },
   'EDIT-BLACKLIST': 'Edit blacklisted e-mail',
-  'ADD-EMAIL': 'Add email',
+  'EXCLUDE': 'Exclude',
+  'EXCLUDE-EMAILS': 'Exclude emails',
+  'EXCLUDE-DOMAINS': 'Exclude domains',
+  'EXCLUDE-COUNTRIES': 'Exclude countries',
   'NEVER': 'Never',
   'COMMENT': 'Comment',
 
   'NAME': 'Name',
   'FIRSTNAME': 'First name',
   'LASTNAME': 'Last name',
-  'EMAIL': 'Email address',
+  'EMAIL': 'Email',
   'PHONE': 'Phone',
   'PASSWORD': 'Password',
   'PASSWORD_PLACEHOLDER': 'Enter your password',
@@ -92,7 +100,7 @@ export const COMMON = {
 
   'TABLE' : {
     'SELECTED_ROWS': 'selected rows',
-    'NO-RESULTS': 'No results'
+    'NO-RESULTS': 'Sorry, I can\'t display nothing'
   },
 
   'PROJECT': {
@@ -149,16 +157,18 @@ export const COMMON = {
   'EDIT_USER': 'Edit User',
   'EDIT_PROFESSIONAL': 'Edit Professional',
   'EDIT_INSIGHT': 'Edit Insight',
+  'EDIT-COUNTRY': 'Edit country\'s filter',
+  'ADD-TAGS': 'Add tags',
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
   'CLIENT_SIDE': 'Client',
 
   'SORT': {
-    'BY_NAME': 'By name',
-    'BY_COMPANY': 'By company',
-    'BY_AUTHOR': 'By author',
-    'BY_DOMAIN': 'By domain',
-    'BY_CREATION_DATE': 'By date',
-    'BY_UPDATE_DATE': 'By default'
+    'BY_NAME': 'Name',
+    'BY_COMPANY': 'Company',
+    'BY_AUTHOR': 'Author',
+    'BY_DOMAIN': 'Domain',
+    'BY_CREATION_DATE': 'Date',
+    'BY_UPDATE_DATE': 'Default'
   }
 };

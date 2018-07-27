@@ -57,13 +57,13 @@
       <span *ngIf="i2 != 0">
       <li *ngIf="i2 < 4">
           <label class="label-1st" *ngIf="getState(batches) == 0" (click)="showPreview($event, batches)">
-            {{batches.innovation.name}}  {{batches.size}}
+            {{batches.innovation.name  | ellipsis:10}}  {{batches.size}}
           </label>
           <label class="label-2nd" *ngIf="getState(batches) == 1" (click)="showPreview($event, batches)">
-            {{batches.innovation.name}}  {{batches.size}}
+            {{batches.innovation.name | ellipsis:10}}  {{batches.size}}
           </label>
           <label class="label-3rd" *ngIf="getState(batches) == 2" (click)="showPreview($event, batches)">
-            {{batches.innovation.name}}  {{batches.size}}
+            {{batches.innovation.name | ellipsis:10}}  {{batches.size}}
           </label>
       </li>
       <li *ngIf="i2 == 4">
@@ -79,13 +79,13 @@
                 <ul *ngFor="let batchesOver of days; let i3 = index">
                   <li *ngIf="i3 > 0">
                     <label class="label-1st" *ngIf="getState(batchesOver) == 0" (click)="showPreview($event, batchesOver)">
-                      {{batchesOver.innovation.name}}  {{batchesOver.size}}
+                      {{batchesOver.innovation.name | ellipsis:10}}  {{batchesOver.size}}
                     </label>
                     <label class="label-2nd" *ngIf="getState(batchesOver) == 1" (click)="showPreview($event, batchesOver)">
-                      {{batchesOver.innovation.name}}  {{batchesOver.size}}
+                      {{batchesOver.innovation.name | ellipsis:10}}  {{batchesOver.size}}
                     </label>
                     <label class="label-3rd" *ngIf="getState(batchesOver) == 2" (click)="showPreview($event, batchesOver)">
-                      {{batchesOver.innovation.name}}  {{batchesOver.size}}
+                      {{batchesOver.innovation.name | ellipsis:10}}  {{batchesOver.size}}
                     </label>
                   </li>
                 </ul>

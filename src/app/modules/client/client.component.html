@@ -1,2 +1,13 @@
-<router-outlet></router-outlet>
+<div class="body">
+
+  <app-header *ngIf="authService.isAuthenticated"></app-header>
+
+  <div class="main">
+    <router-outlet></router-outlet>
+  </div>
+
+  <app-footer *ngIf="authService.isAuthenticated"></app-footer>
+
+</div>
+
 

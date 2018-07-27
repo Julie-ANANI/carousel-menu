@@ -3,9 +3,10 @@ import { UserService } from '../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
-import { Table } from '../../../shared/components/shared-table/models/table';
-import {Template} from '../../../shared/components/shared-sidebar/interfaces/template';
+import { Table } from '../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import {Template} from '../../../sidebar/interfaces/template';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-admin-users',
@@ -20,6 +21,7 @@ export class AdminUsersComponent implements OnInit {
   private _more: Template = {};
   private _tableInfos: Table = null;
   private _showDeleteModal = false;
+  sidebarState = new Subject<string>();
   private _selfId = '';
   currentUser: User;
   private _total = 0;
@@ -53,9 +55,7 @@ export class AdminUsersComponent implements OnInit {
   loadUsers(config: any): void
   {
     this._config = config;
-    this._userService.getAll(this._config)
-      .first()
-      .subscribe(users => {
+    this._userService.getAll(this._config).first().subscribe(users => {
         this._users = users.result;
         this._total = users._metadata.totalCount;
 
@@ -73,7 +73,8 @@ export class AdminUsersComponent implements OnInit {
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
             {_attrs: ['companyName'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
-            {_attrs: ['domain'], _name: 'COMMON.DOMAIN', _type: 'TEXT'}]
+            {_attrs: ['domain'], _name: 'COMMON.DOMAIN', _type: 'TEXT'},
+            {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'}]
         };
       });
   }
@@ -97,6 +98,7 @@ export class AdminUsersComponent implements OnInit {
 
   closeSidebar(value: string) {
     this.more.animate_state = value;
+    this.sidebarState.next(this.more.animate_state);
   }
 
   userEditionFinish(user: User) {

@@ -3,7 +3,7 @@
   <div class="flex-container">
     <p class="flex-container pro-header">
 
-      <country-flag *ngIf="answer.country?.flag" [country]="answer.country.flag"></country-flag>
+      <app-country-flag *ngIf="answer.country?.flag" [country]="answer.country.flag"></app-country-flag>
       <span [ngStyle]=" { 'margin-left': '10px' }">
         {{(answer.professional?.firstName + ' ' + answer.professional?.lastName) | ellipsis:30}}
       </span>

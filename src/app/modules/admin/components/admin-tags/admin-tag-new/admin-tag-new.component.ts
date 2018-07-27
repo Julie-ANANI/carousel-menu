@@ -7,7 +7,7 @@ import { TagsService } from '../../../../../services/tags/tags.service';
 
 import { TagAttachment } from '../../../../../models/tag-attachment';
 import { Tag } from '../../../../../models/tag';
-import { MultilingPipe } from '../../../../../pipes/multiling/multiling.pipe';
+import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 
 
 @Component({

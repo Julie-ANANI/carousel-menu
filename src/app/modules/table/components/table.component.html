@@ -1,0 +1,181 @@
+<!-- If there are no results -->
+<div class="bot-wrapper text-center" *ngIf="total === 0">
+  <span class="bot-rect">{{'COMMON.TABLE.NO-RESULTS' | translate}}</span>
+  <br>
+  <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+  <div><img src="http://res.cloudinary.com/umi/image/upload/app/default-images/juan-bot.svg" width="" height="120"></div>
+</div>
+
+
+<!-- We show the number of results -->
+<div *ngIf="isHeadable && total !== 0" class="table-title">{{total}} {{ title | translate }}</div>
+
+
+<!-- If we want to filter by columns -->
+<sqFilterMulti *ngIf="isFiltrable && total !== 0"
+               [config]="config"
+               (configChange)="changeConfig($event)"
+               [props]="columns">
+</sqFilterMulti>
+
+
+<!-- Else we begin to create the table -->
+<span *ngIf="total !== 0">
+
+  <table class="table" wt-responsive-table>
+    <thead>
+        <!-- If there are no selected rows we show columns name in the header-->
+        <ng-container *ngIf="selectedRows==0">
+          <tr>
+            <th *ngIf="isSelectable" width="50"><input type="checkbox" (change)="selectAll($event)"/>
+              <div class="square-check"><i class="icon icon-check"></i></div></th>
+
+            <th *ngFor="let column of columns" [class]="'column-' + i"
+                [ngClass]="{'active': isSort(column), 'pointable': isSortable(column)}"
+                (click)="selectColumn(getAttrs(column)[0])">
+
+              <sq-sort [config]="config"
+                       class="activeHeader"
+                       *ngIf="isSortable(column)"
+                       (configChange)="changeConfig($event)"
+                       [prop]="getAttrs(column)[0]">
+                {{getName(column) | translate }}
+              </sq-sort>
+
+              <span *ngIf="!isSortable(column)">{{getName(column) | translate }}</span>
+            </th>
+          </tr>
+        </ng-container>
+
+        <!-- Else we show the number of selected rows, the several actions to perform and the button delete (if isDeletable) -->
+        <ng-container *ngIf="selectedRows > 0">
+          <tr>
+            <th *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)" [checked]="true"/>
+              <div class="square-check" *ngIf="getSelectedRows().length < content.length">
+                <i class="icon icon-minus"></i>
+              </div>
+              <div class="square-check primary" *ngIf="getSelectedRows().length === content.length">
+                <i class="icon icon-check"></i>
+              </div>
+            </th>
+            <th class="all" [attr.colspan]="isSelectable ? columns.length : columns.length -1">
+              <span>{{selectedRows}} {{'COMMON.TABLE.SELECTED_ROWS' | translate}} </span>
+              <i class="icon icon-arrow-right"></i>
+              <button *ngFor="let a of actions" class="btn btn-xs ghost-edit" style="margin-left: 10px;"
+                      (click)="onActionClick(a)">
+                {{a | translate}}
+              </button>
+              <button class="btn btn-xs ghost-delete"
+                      style="margin-left: 10px;"
+                      (click)="removeSelectedRows()"
+                      *ngIf="isDeletable">
+                {{'COMMON.DELETE' | translate }}
+              </button>
+            </th>
+          </tr>
+        </ng-container>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let key of getRowsKeys()"
+            [ngClass]="{'active': isSelected(content[key])}">
+
+          <td *ngIf="isSelectable" (click)="selectRow(key)"><input type="checkbox" [checked]="isSelected(content[key])"/>
+            <div class="square-check primary"><i class="icon icon-check"></i></div></td>
+
+          <!-- Foreach columns -->
+          <ng-container>
+            <td *ngFor="let column of columns; let i = index" [ngClass]="{'col-wrapper': i === 0}">
+              <span (click)="selectRow(key)">
+                <ng-container [ngSwitch]="getType(column)">
+
+                  <!-- If column type is  TEXT -->
+                  <span *ngSwitchDefault>
+                  <span *ngFor="let attr of getAttrs(column)">{{(getContentValue(key, attr)|| " - ").toString() | ellipsis:50}} </span>
+                </span>
+
+                  <!-- If column type is COUNTRY -->
+                  <app-country-flag *ngSwitchCase="'COUNTRY'" [country]="(getContentValue(key, getAttrs(column)[0]) || '')"></app-country-flag>
+
+                  <!-- If column type is PICTURE -->
+                  <div class="picture" *ngSwitchCase="'PICTURE'">
+                    <img [src]="getContentValue(key, getAttrs(column)[0]) || ''" class="img-fit-cover">
+                  </div>
+
+                  <!-- If column type is PROGRESS -->
+                  <progress class="progress tooltip"
+                            *ngSwitchCase="'PROGRESS'"
+                            [attr.data-tooltip]="getContentValue(key, getAttrs(column)[0]) || 0 + '%'"
+                            [value]="getContentValue(key, getAttrs(column)[0]) || 0" max="100">
+                  </progress>
+
+                  <!-- If column type is CHECK -->
+                  <div *ngSwitchCase="'CHECK'">
+                    <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 0" class="icon icon-cross"></i>
+                    <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 1" class="icon icon-check"></i>
+                  </div>
+
+                  <!-- If column type is LABEL -->
+                  <span *ngSwitchCase="'MULTI-CHOICES'">
+
+                  <img [src]="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || ''))"
+                       *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) !== ''"
+                       class="img-fit-cover">
+
+                  <span *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) === ''"
+                        [class]="getChoiceClass(getChoice(column, (getContentValue(key, getAttrs(column)[0]) || '')))">
+
+                    {{(getChoiceAlias(getChoice(column, getContentValue(key, getAttrs(column)[0])|| " - "))) | translate }}
+
+                  </span>
+
+                </span>
+
+                  <span *ngSwitchCase="'DATE'">
+                  {{(getContentValue(key, getAttrs(column)[0]).toString() | date:dateFormat)}}
+                </span>
+
+                  <span *ngSwitchCase="'ARRAY'">
+                  {{(getContentValue(key, getAttrs(column)[0]) || []).length.toString()}}
+                </span>
+
+                  <!-- If column type is MULTI-LABEL -->
+                  <span *ngSwitchCase="'MULTI-LABEL'">
+                    <span *ngFor="let attr of getAttrs(column)"
+                        [class]="getMultiLabelClass(getMultiLabel(column, attr)) || ''"
+                        [ngClass]="{
+                        'left-label': getAttrIndex(column, attr) === 0 && getAttrs(column).length !== 1,
+                         'right-label' : getAttrIndex(column, attr) === getAttrs(column).length-1 && getAttrs(column).length !== 1,
+                         'middle-label' : getAttrIndex(column, attr) !== 0 &&
+                         getAttrIndex(column, attr) !== getAttrs(column).length-1
+                         }">
+
+                      {{(getContentValue(key, attr) || " - ").toString()}}
+
+                    </span>
+                </span>
+
+                </ng-container>
+              </span>
+
+              <!-- If isEditable we show a button onHover the row -->
+              <button *ngIf="i === 0" class="btn btn-xs ghost-edit visibleOnHover"
+                      (click)="edit(content[key])">
+                {{isEditable ? ('COMMON.EDIT' | translate) : ('COMMON.MORE' | translate) }}
+              </button>
+
+            </td>
+          </ng-container>
+        </tr>
+    </tbody>
+  </table>
+
+  <!-- Behind the table we show the pagination -->
+  <sqPagination *ngIf="!isNotPaginable"
+                [config]="config"
+                (configChange)="changeConfig($event)"
+                [total]="total"
+                [propertyName]="selector">
+
+  </sqPagination>
+</span>

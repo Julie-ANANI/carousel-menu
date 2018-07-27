@@ -1,0 +1,43 @@
+<!--
+<div class="container">
+  <div class="columns">
+      <h1>{{ 'COMMON.PRESETS' | translate }}</h1>
+
+      <div class="columns">
+        <div class="column col-8 col-mx-auto">
+          <div class="form-group text-center">
+            <label class="form-label h3" for="name">{{ "PRESETS.PRESET.GIVE_NAME" | translate }}</label>
+            <input class="form-input" id="name" name="name" formControlName="name" type="text" placeholder="">
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="form-group has-error">
+              <p class="form-input-hint">{{ 'PRESETS.PRESET.DONT_USE_SPACES' | translate }}</p>
+            </div>
+            {{ 'PRESETS.PRESET.UNIQUE_NAME' | translate }}
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary centered" [disabled]="formData.invalid">{{ 'PRESETS.PRESET.GO' | translate }}</button>
+  </div>
+</div>
+
+<!-- Modal de création de questionnaire -->
+<div class="modal" [ngClass]="{'active': true}">
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-title h5"> CHOISIR UN NOM UNIQUE </div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        Appuyer sur entrée après avoir écris le nom du questionnaire.
+        <input type="text"  [(ngModel)]="newPreset.name" (keyup.enter)="createPreset()">
+        <span *ngIf="errorquestionnaire"> Ce nom est deja pris, veuillez en choisir un nouveau</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-link" (click)="goBack()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+

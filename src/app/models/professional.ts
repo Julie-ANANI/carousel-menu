@@ -8,7 +8,7 @@ export interface Professional {
   readonly jobTitle: string;
   company: string;
   readonly email: string;
-  readonly tags: Array<Tag>;
+  tags: Array<Tag>;
   readonly profileUrl: string;
   readonly country: string;
   readonly campaigns: Campaign[];

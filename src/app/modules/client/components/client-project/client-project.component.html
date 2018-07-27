@@ -5,7 +5,7 @@
     <div class="column col-12 col-mx-auto">
 
       <!-- Header -->
-      <div class="hero-light-container">
+      <div class="hero-light-container header-project">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <!-- Name -->
           <h1>{{ project.name[0] | uppercase }}{{ project.name | slice:1 }}</h1>
@@ -96,6 +96,6 @@
     (collaboratorAdded)="addCollaborators($event)"
     [collaborator]="project.collaborators"
     [projectId]="project._id"
-    [sidebarState]="sidebarTemplateValue.animate_state">
+    [sidebarState]="sidebarState">
   </app-collaborator>
 </app-sidebar>

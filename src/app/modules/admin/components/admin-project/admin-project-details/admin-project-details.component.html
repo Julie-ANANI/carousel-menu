@@ -1,113 +1,96 @@
 <div class="section-container" id="admin-setting">
+
+  <div class="text-right">
+    <button
+      [disabled]="!dirty"
+      class="btn btn-primary"
+      (click)="save($event)">
+      {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
+    </button>
+  </div>
+
   <div class="columns">
-    <div class="column col-12 col-mx-auto">
-      <div class="column col-xs-12 col-11 col-mx-auto">
+    <div class="column col-xs-12 col-md-12 col-6">
+      <h3>Targeting</h3>
+      <app-shared-project-settings
+        [settings]="project.settings"
+        (settingsChange)="updateSettings($event)"
+        [adminMode]="true">
+      </app-shared-project-settings>
+    </div>
 
-        <div class="columns">
 
-          <div class="column col-xs-12 col-md-12 col-7 col-mx-auto">
-            <app-shared-project-settings
-              [settings]="project.settings"
-              (settingsChange)="updateSettings($event)"
-              [adminMode]="true">
-            </app-shared-project-settings>
-          </div>
+    <div class="column col-xs-12 col-md-12 col-5 col-ml-auto">
+      <h3>Settings</h3>
 
-          <div class="column col-xs-12 col-md-12 col-5 col-mx-auto">
+      <h6>Domain</h6>
+      <div *ngIf="!editInstanceDomain">
+        Registered domain: {{project.domain}} <a (click)="startEditInstanceDomain($event)"><i class="fas fa-pencil-alt"></i></a>
+      </div>
+      <div *ngIf="editInstanceDomain">
+        New domain:  <app-autocomplete-input id="domains"
+                                             (update)="updateInstanceDomain($event)"
+                                             [onlyOne]="true"
+                                             [config]="buildInstanceDomainListConfig(project.domain)"></app-autocomplete-input>
+      </div>
 
-            <h3>Administration</h3>
+      <h6>Tags</h6>
 
-            <div class="domain-management-wrapper">
-              <h6>Domain management</h6>
-              <div *ngIf="!editInstanceDomain">
-                Registered domain: {{project.domain}} <a (click)="startEditInstanceDomain($event)"><i class="fas fa-pencil-alt"></i></a>
-              </div>
-              <div *ngIf="editInstanceDomain">
-                New domain:  <app-autocomplete-input id="domains"
-                                                     (update)="updateInstanceDomain($event)"
-                                                     [onlyOne]="true"
-                                                     [config]="buildInstanceDomainListConfig(project.domain)"></app-autocomplete-input>
-              </div>
-            </div>
+      <app-shared-tag-item
+        [editMode]="true"
+        [tags]="project.tags"
+        [projectId]="project._id"
+        (addTag)="addTag($event)"
+        (removeTag)="removeTag($event)">
+      </app-shared-tag-item>
 
-            <div class="tag-managment-wrapper">
-              <h6>Tags management</h6>
-              <app-shared-tag-item
-                [editMode]="true"
-                [tags]="project.tags"
-                [projectId]="project._id"
-                (addTag)="addTag($event)"
-                (removeTag)="removeTag($event)">
-              </app-shared-tag-item>
-            </div>
+      <h6>Questionnaire</h6>
 
-            <div class="preset-management-wrapper">
-              <h6>Presets management</h6>
-              <app-autocomplete-input
-                (update)="updatePreset($event)"
-                [onlyOne]="true"
-                [config]="presetAutocomplete">
-              </app-autocomplete-input>
-            </div>
+      <app-autocomplete-input
+        (update)="updatePreset($event)"
+        [onlyOne]="true"
+        [config]="presetAutocomplete">
+      </app-autocomplete-input>
 
-            <div class="quiz-management-wrapper">
-              <h6>Quiz management</h6>
-              <p *ngIf="!hasPreset()">To generate a quiz, you need to set a preset for the innovation.</p>
-              <button
-                *ngIf="hasPreset()"
-                type="button"
-                class="btn btn-primary"
-                [ngClass]="{'disabled': dirty}"
-                (click)="generateQuiz($event)">
-                Générer le quiz
-              </button>
-            </div>
+      <p *ngIf="!hasPreset()">To generate a questionnaire, you need to select a template from the libraries.</p>
+      <button
+        *ngIf="hasPreset()"
+        type="button"
+        class="btn btn-primary"
+        [ngClass]="{'disabled': dirty}"
+        (click)="generateQuiz($event)">
+        Generate questionnaire
+      </button>
 
-            <div class="domain-management-wrapper">
-              <h6>Domaine management</h6>
-              <form [formGroup]="formData">
-                <div class="form-group">
-                  <label class="form-label" for="en">En</label>
-                  <input
-                    type="text"
-                    class="form-default"
-                    name="domainen"
-                    id="en"
-                    [(ngModel)]="domain.en"
-                    placeholder="Domain name"
-                    formControlName="domainen">
-                </div>
-                <div class="form-group">
-                  <label class="form-label" for="fr">Fr</label>
-                  <input
-                    type="text"
-                    class="form-default"
-                    name="domainen"
-                    id="fr"
-                    [(ngModel)]="domain.fr"
-                    placeholder="Domain name"
-                    formControlName="domainfr">
-                </div>
-                  <button class="btn btn-primary" type="submit"(click)="updateDomain()">Valider</button>
-              </form>
-            </div>
+      <h6>Domain</h6>
 
-            <hr>
-
-            <div class="save-wrapper text-right">
-              <button
-                [disabled]="!dirty"
-                class="btn ghost-primary"
-                (click)="save($event)">
-                {{ 'PROJECT_MODULE.SETUP.SAVE_PROJECT' | translate }}
-              </button>
-            </div>
-
-          </div>
-
+      <form [formGroup]="formData">
+        <div class="form-group">
+          <label class="form-label" for="en">En</label>
+          <input
+            type="text"
+            class="form-default"
+            name="domainen"
+            id="en"
+            [(ngModel)]="domain.en"
+            placeholder="Domain name"
+            formControlName="domainen">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fr">Fr</label>
+          <input
+            type="text"
+            class="form-default"
+            name="domainen"
+            id="fr"
+            [(ngModel)]="domain.fr"
+            placeholder="Domain name"
+            formControlName="domainfr">
         </div>
 
-      </div>
+        <button class="btn ghost-primary btn-primary" type="submit"(click)="updateDomain()">Valider</button>
+        </form>
     </div>
+
   </div>
 </div>

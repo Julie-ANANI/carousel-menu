@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -10,7 +11,7 @@ export class AdminComponent {
 
   private _scrollButton = false;
 
-  constructor() {}
+  constructor(private _authService: AuthService) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -35,6 +36,10 @@ export class AdminComponent {
 
   get scrollButton(): boolean {
     return this._scrollButton;
+  }
+
+  get authService(): AuthService {
+    return this._authService;
   }
 
 }

@@ -1,51 +1,53 @@
-<div class="container col-10 col-mx-auto section-container">
-  <h2>Campagne : {{campaign.title}}</h2>
-  <div *ngIf="!domain">
-    <h4>
-      ATTENTION *|DOMAIN|* non défini
-    </h4>
-  </div>
-  <div *ngIf="domain">
-    <h5>
-      *|DOMAIN|* <br>
-      en :{{this.campaign.innovation.settings.domain.en}} <br>
-      fr :{{this.campaign.innovation.settings.domain.fr}}
-    </h5>
-  </div>
-  <h2>Templates de mails</h2>
-  <button class="btn btn-primary" (click)="importModal = true">Importer un template de la bibliothèque</button>
-  <br>
-  <div>
-    <app-admin-campaign-abtesting [modifiedScenarios]="modifiedScenarios" [campaign]="campaign"></app-admin-campaign-abtesting>
-  </div>
-<br>
-  <div>
-    <h3> Choix du Workflow par défault </h3>
-    <form>
-      <select class = "form-select"
-              [(ngModel)] = "modalSelectDefault[1]"
-              id = "workflow"
-              name = "quelquechose"
-              (ngModelChange) ="areYouSureYouWantToChange($event)">
-        <option *ngFor = "let scenario of modifiedScenarios"
-                [ngValue] = "scenario.name">
-          {{scenario.name}}
-        </option>
-      </select>
-    </form>
-    <div *ngFor="let scenario of availableScenarios">
-      <br>
-      <app-shared-edit-scenario
-        *ngIf="scenario.emails && scenario.emails.length"
-        [scenario]="scenario"
-        [inCampaign]="true"
-        (scenarioChange)="updateAvailableScenario(scenario)"
-        (removeScenario)="removeScenario(scenario)"
-      ></app-shared-edit-scenario>
-    </div>
-  </div>
+<div class="text-right">
+  <button class="btn btn-primary" (click)="importModal = true">Importer un Workflow</button>
+</div>
 
-  <app-shared-edit-scenario *ngIf="scenario.emails && scenario.emails.length" [scenario]="scenario" (scenarioChange)="updateScenario($event)"></app-shared-edit-scenario>
+<div *ngIf="!domain">
+  <div class="bot-wrapper text-center">
+    <span class="bot-rect">Attention, le domaine n'est pas défini. Modifiez-le dans le projet, onglet Settings.</span>
+    <br>
+    <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+    <div><img src="http://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width="" height="120"></div>
+  </div>
+</div>
+
+<div *ngIf="domain">
+  *|DOMAIN|* <br>
+  en :{{this.campaign.innovation.settings.domain.en}} <br>
+  fr :{{this.campaign.innovation.settings.domain.fr}}
+</div>
+
+<div>
+  <app-admin-campaign-abtesting [modifiedScenarios]="modifiedScenarios" [campaign]="campaign"></app-admin-campaign-abtesting>
+</div>
+<br>
+<div>
+  <h3> Choix du Workflow par défault </h3>
+  <form>
+    <select class = "form-select"
+            [(ngModel)] = "modalSelectDefault[1]"
+            id = "workflow"
+            name = "quelquechose"
+            (ngModelChange) ="areYouSureYouWantToChange($event)">
+      <option *ngFor = "let scenario of modifiedScenarios"
+              [ngValue] = "scenario.name">
+        {{scenario.name}}
+      </option>
+    </select>
+  </form>
+  <p class="text-error" *ngIf="modifiedScenarios.length === 0">
+    Vous devez avoir au moins un workflow avec tous les emails modifiés
+  </p>
+  <div *ngFor="let scenario of availableScenarios">
+    <app-admin-edit-workflow
+      [scenario]="scenario"
+      [signatures]="signatures"
+      (scenarioChange)="updateAvailableScenario($event)"
+      (deletedScenario)="removeScenario($event)"
+      [isDeletable]="campaign.settings.defaultWorkflow != scenario.name && campaign.settings.ABsettings.nameWorkflowA !=scenario.name && campaign.settings.ABsettings.nameWorkflowB !=scenario.name"
+    >
+    </app-admin-edit-workflow>
+  </div>
 </div>
 
 
@@ -99,11 +101,11 @@
       <button class="btn btn-clear float-right" (click)="(modalSelectDefault[0] = !modalSelectDefault[0])"></button>
       <div class="modal-title h5">{{ 'CAMPAIGNS.SELECT_DEFAULT.TITLE' | translate }}</div>
     </div>
-      <div class="modal-body">
-        <div class="content">
+    <div class="modal-body">
+      <div class="content">
         {{'CAMPAIGNS.SELECT_DEFAULT.CONTENT' | translate}}
-        </div>
       </div>
+    </div>
 
     <div class="modal-footer">
       <button class="btn btn-primary" (click)="changeDefaultWorkflow()">{{ 'COMMON.UPDATE' | translate }}</button>

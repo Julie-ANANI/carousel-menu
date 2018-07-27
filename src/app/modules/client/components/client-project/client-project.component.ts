@@ -2,7 +2,8 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { Innovation } from '../../../../models/innovation';
-import { Template } from '../../../shared/components/shared-sidebar/interfaces/template';
+import { Subject } from 'rxjs/Subject';
+import { Template } from '../../../sidebar/interfaces/template';
 
 const DEFAULT_PAGE = 'setup';
 
@@ -18,7 +19,9 @@ export class ClientProjectComponent implements OnInit {
   private _imgType: string;
   private _currentPage: string;
   private _scrollButton = false;
+
   sidebarTemplateValue: Template = {};
+  sidebarState = new Subject<string>();
 
   constructor(private activatedRoute: ActivatedRoute,
               private titleService: TranslateTitleService,
@@ -35,6 +38,7 @@ export class ClientProjectComponent implements OnInit {
     this._currentPage = url ? url[3] || DEFAULT_PAGE : DEFAULT_PAGE;
 
     this._project = this.activatedRoute.snapshot.data['innovation'];
+
     this.titleService.setTitle(this._project.name);
 
     // Getting the project type
@@ -58,14 +62,17 @@ export class ClientProjectComponent implements OnInit {
 
   editCollaborator(event: Event) {
     event.preventDefault();
+
     this.sidebarTemplateValue = {
       animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE'
-    }
+    };
+
   }
 
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
+    this.sidebarState.next(this.sidebarTemplateValue.animate_state);
   }
 
   @HostListener('window:scroll', [])

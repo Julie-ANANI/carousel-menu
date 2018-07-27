@@ -1,11 +1,14 @@
+<h3>A/B testing</h3>
 
-
-<div *ngIf="!(this.batchesLength)  || (campaign.settings.ABsettings.status !== 0) ">
-  <div *ngIf="this.campaign.settings.ABsettings?.status === 0">
+<div *ngIf="!(this.batchesLength)  || (campaign.settings.ABsettings.status != '0') ">
+  <div *ngIf="this.campaign.settings.ABsettings?.status == 0">
     <label class="form-switch" style="">
-      <input type="checkbox" [disabled]="ABDISPO()" (click)="statusSwitch()" >
-      <i class="form-icon"></i>
+      <input type="checkbox" [disabled]="!ABDISPO()" (click)="statusSwitch()" >
+      <i class="form-icon"></i> <span> Paramètres A/B testing</span>
     </label>
+    <p class="text-error" *ngIf="modifiedScenarios.length < 2">Il faut au moins 2 scénarios modifiés</p>
+    <p class="text-error" *ngIf="!campaign.innovation.quizId">Il faut générer le questionnaire</p>
+    <div *ngIf="this.modalABtesting">
     <form class="form-horizontal" [formGroup]="form" >
 
 
@@ -47,8 +50,9 @@
         Submit
       </button>
 
-
     </form>
+
+    </div>
   </div>
 
 

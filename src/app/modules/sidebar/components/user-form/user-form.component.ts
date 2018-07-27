@@ -1,0 +1,268 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {TranslateService} from '@ngx-translate/core';
+import {User} from '../../../../models/user.model';
+import {Professional} from '../../../../models/professional';
+import {Campaign} from '../../../../models/campaign';
+import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
+import {AuthService} from '../../../../services/auth/auth.service';
+import {environment} from '../../../../../environments/environment';
+import {Subject} from 'rxjs/Subject';
+import {Tag} from '../../../../models/tag';
+import {TagsService} from '../../../../services/tags/tags.service';
+
+@Component({
+  selector: 'app-user-form',
+  templateUrl: './user-form.component.html',
+  styleUrls: ['./user-form.component.scss']
+})
+
+export class UserFormComponent implements OnInit {
+
+  /*
+     For type 'editUser', put the data into the attribute user and patch it to the formData
+  */
+  @Input() set user(value: User) {
+    this._user = value;
+    this.loadEditUser();
+  };
+
+  /*
+      For type 'professional', put the data into the attribute user and patch it to the formData
+   */
+  @Input() set pro(value: Professional) {
+    this._pro = value;
+    this.loadProfessional();
+  };
+
+  @Input() set campaign(value: Campaign) {
+    this._campaign = value;
+  }
+
+  @Input() set type(type: string) {
+    this._type = type;
+    this.loadTypes();
+  }
+
+  @Input() sidebarState: Subject<string>;
+
+  @Output() userSignUpData = new EventEmitter<FormGroup>();
+  @Output() editUserData = new EventEmitter<User>();
+  @Output() professionalUserData = new EventEmitter<Professional>();
+  @Output() newTags = new EventEmitter<Tag[]>();
+
+  isSignUp = false;
+  isEditUser = false;
+  isProfessional = false;
+  addTagsToProfessionals = false;
+
+  isSelf =  false;
+  userForm: FormGroup;
+  countriesSuggestion: Array<string> = [];
+  displayCountrySuggestion = false;
+  private _user: User;
+  private _pro: Professional = null;
+  private _campaign: Campaign = null;
+  private _editInstanceDomain = false;
+  private _tags: Tag[] = [];
+
+  private _type = '';
+
+  private _updateInstanceDomainConfig: {
+    placeholder: string,
+    initialData: Array<string>,
+    type: string,
+    identifier: string,
+    canOrder: boolean
+  } = {
+    placeholder: 'Partners domain list',
+    initialData: [],
+    type: 'domain',
+    identifier: 'name',
+    canOrder: false
+  };
+
+  constructor(private formBuilder: FormBuilder,
+              private autoCompleteService: AutocompleteService,
+              private _translateService: TranslateService,
+              private _tagsService: TagsService,
+              private _authService: AuthService) {}
+
+  ngOnInit() {
+    this.userForm = this.formBuilder.group( {
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      companyName: ['', [Validators.required]],
+      jobTitle: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      country: ['', [Validators.required]],
+      roles: '',
+      operator: [false],
+      profileUrl: [null],
+      domain: [''],
+      tags: [[], Validators.required]
+    });
+
+    this._user = new User();
+
+    if (this.sidebarState) {
+      this.sidebarState.subscribe((state) => {
+        if (state === 'inactive') {
+          setTimeout (() => {
+            this.userForm.reset();
+          }, 700);
+        }
+      })
+    }
+
+  }
+
+  reinitialiseForm() {
+    this.isProfessional = false;
+    this.isEditUser = false;
+    this.isSignUp = false;
+    this.addTagsToProfessionals = false;
+  }
+
+  loadTypes() {
+    this.reinitialiseForm();
+    if (this._type === 'signUp') {
+      this.isSignUp = true;
+    } else if (this._type === 'editUser') {
+      this.isEditUser = true;
+      this.loadEditUser();
+    } else if (this._type === 'professional') {
+      this.isProfessional = true;
+      this.loadProfessional();
+    } else if (this._type === 'tagProfessional') {
+      this.addTagsToProfessionals = true;
+    }
+  }
+
+  loadEditUser() {
+    if (this._user) {
+      this.isSelf = this._authService.userId === this._user.id;
+      this.userForm.patchValue(this._user);
+    }
+
+  }
+
+  loadProfessional() {
+    if (this._pro) {
+      this.userForm.get('companyName').setValue(this._pro.company);
+      this._tags = this._pro.tags;
+      this.userForm.patchValue(this._pro);
+    }
+  }
+
+  onSubmit() {
+    if (this.isSignUp) {
+      this.userSignUpData.emit(this.userForm);
+    } else if (this.isEditUser) {
+      const user = new User(this.userForm.value);
+      user.id = this._user.id;
+      this.editUserData.emit(user);
+    } else if (this.isProfessional) {
+      const pro = this.userForm.value;
+      pro._id = this._pro._id;
+      pro.company = this.userForm.get('companyName').value;
+      pro.tags = this._tags;
+      this.professionalUserData.emit(pro);
+    } else if (this.addTagsToProfessionals) {
+      this.newTags.emit(this._tags);
+    }
+  }
+
+  onSuggestCountries() {
+    this.userForm.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
+      this.displayCountrySuggestion = true;
+      this.countriesSuggestion = [];
+      this.autoCompleteService.get({keyword: input, type: 'countries'}).subscribe(res => {
+        if (res.length === 0) {
+          this.displayCountrySuggestion = false;
+        } else {
+          res.forEach((items) => {
+            const valueIndex = this.countriesSuggestion.indexOf(items.name);
+            if (valueIndex === -1) { // if not exist then push into the array.
+              this.countriesSuggestion.push(items.name);
+            }
+          })
+        }
+      });
+    });
+  }
+
+  onValueSelect(value: string) {
+    this.userForm.get('country').setValue(value);
+    this.displayCountrySuggestion = false;
+  }
+
+  openQuizUri(pro: Professional, event: Event): void {
+    event.preventDefault();
+    const baseUri = environment.quizUrl + '/quiz/' + this.campaign.innovation.quizId + '/' + this.campaign._id;
+    const parameters = '?pro=' + pro._id + '&lang=' + this._translateService.currentLang;
+    window.open(baseUri + parameters);
+  }
+
+  public startEditInstanceDomain(event: Event): void {
+      this._editInstanceDomain = true;
+  }
+
+  public endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
+      this._editInstanceDomain = false;
+      this.userForm.get('domain').setValue(event.value[0].name || 'umi');
+  }
+
+  public buildInstanceDomainListConfig(): any {
+      this._updateInstanceDomainConfig.initialData = [];
+      return this._updateInstanceDomainConfig;
+  }
+
+  public updateInstanceDomain(event: any): void {
+      this.endEditInstanceDomain(event);
+  }
+
+  affectAsAdmin(check: boolean) {
+    if (check === true) {
+      this.userForm.get('roles').setValue('admin');
+    } else {
+      this.userForm.get('roles').setValue('user');
+    }
+  }
+
+  addTag(tag: any) {
+    this._tagsService.get(tag._id).first().subscribe(res => {
+      this._tags.push(res.tags[0]);
+    });
+  }
+
+  removeTag(tag: any) {
+    this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
+  }
+
+  get editInstanceDomain() {
+    return this._editInstanceDomain;
+  }
+
+  get user(): User {
+    return this._user;
+  }
+
+  get pro(): Professional {
+    return this._pro;
+  }
+
+  get campaign(): Campaign {
+    return this._campaign;
+  }
+
+  get authService(): AuthService {
+    return this._authService;
+  }
+
+  get tags(): Tag[] {
+    return this._tags;
+  }
+
+}

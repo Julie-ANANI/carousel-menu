@@ -10,14 +10,10 @@
           <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
           <span class="bot-rect">
             {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.A' | translate }}
-            <span [ngStyle]="{ 'color': '#FFB300' }">
-              {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.B' | translate }}
-            </span>
-            {{ 'PROJECT_MODULE.EXPLORATION.MESSAGE.EDITING.C' | translate }}
           </span>
             <br>
-            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+            <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+            <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" alt="Bot"></div>
           </div>
         </div>
 
@@ -84,7 +80,7 @@
             <!-- Comment -->
             <div class="comment-wrapper">
               <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMMENTS' | translate }}</h2>
-              <p></p>
+              <div [innerHtml]="project.comments"></div>
               <div>
                 <span [ngStyle]="{ 'color': '#333333' }">{{ 'PROJECT_MODULE.EXPLORATION.ACCOUNT_MANAGER' | translate }}</span> {{ project.owner.name }}
               </div>
@@ -101,7 +97,7 @@
               <!-- Professionals -->
               <div class="info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats.nbPros }}</h5>
+                <h5 class="text-center">{{ campaignStats?.nbPros || 0 }}</h5>
               </div>
 
               <div class="info-analytic pd-top">
@@ -122,7 +118,7 @@
               <!-- Reached -->
               <div class="info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats.nbProsSent }}</h5>
+                <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>
               </div>
 
               <div class="info-analytic pd-top">
@@ -143,7 +139,7 @@
               <!-- Emails -->
               <div class="info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats.nbProsOpened }}</h5>
+                <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>
               </div>
 
               <div class="info-analytic pd-top">
@@ -164,7 +160,7 @@
               <!-- Clicks -->
               <div class="info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
-                <h5 class="text-center">{{ campaignStats.nbProsClicked }}</h5>
+                <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>
               </div>
 
               <div class="info-analytic pd-top">
@@ -185,7 +181,7 @@
               <!-- Answers -->
               <div class="info-analytic">
                 <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
-                <!-- <h5 class="text-center">{{ answers?.length || 0 }}</h5> -->
+                <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>
               </div>
 
             </div>
@@ -207,7 +203,7 @@
             <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h2>
             <ul class="com-nme">
               <li *ngFor="let company of companies; let i = index;">
-               {{ i + 1 + '.'}} {{ formatCompanyName(company.name) }}
+               {{ i + 1 + '.'}} {{company.name}}
               </li>
             </ul>
           </div>

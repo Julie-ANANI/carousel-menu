@@ -1,6 +1,13 @@
-<!--<app-header [backOffice]="true"></app-header>-->
-<div class="container admin">
-  <router-outlet></router-outlet>
+<div class="body admin">
+
+  <app-header *ngIf="authService.isAuthenticated"></app-header>
+
+  <div class="main">
+    <router-outlet></router-outlet>
+  </div>
+
+  <app-footer *ngIf="authService.isAuthenticated"></app-footer>
+
 </div>
 
 <!-- Scroll to top button -->
@@ -8,4 +15,3 @@
   <i class="icon icon-upward"></i>
 </div>
 
-<!-- <li *ngIf="canShow(3)" routerLinkActive="active"><a [routerLink]="'/admin/tags'" title="">{{ 'COMMON.TAGS' | translate }}</a></li>-->

@@ -12,7 +12,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 export class AdminProjectComponent implements OnInit {
 
   private _project: Innovation;
-  private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis', 'tags'];
+  private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis', 'tags', 'questionnaire'];
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,
@@ -25,7 +25,7 @@ export class AdminProjectComponent implements OnInit {
 
   get authorizedTabs(): Array<string> {
     const adminLevel = this._authService.adminLevel;
-    if(adminLevel > 1) {
+    if (adminLevel > 1) {
       return this._tabs;
     } else {
       return ['cards', 'campaigns', 'synthesis'];

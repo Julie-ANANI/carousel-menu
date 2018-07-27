@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Campaign } from '../../../../../models/campaign';
-import {Table} from '../../../../shared/components/shared-table/models/table';
+import {Table} from '../../../../table/models/table';
 import {Batch} from '../../../../../models/batch';
 
 @Component({
@@ -23,6 +23,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   public switchActivated: Boolean = false;
 
+  public modalABtesting = false;
   private _campaign: Campaign;
   private _modifiedScenarios: Array<EmailScenario> ;
   private _nameWorkflowA = '';
@@ -103,7 +104,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     });
     this.form.disable();
 
-    if (this._campaign.settings.ABsettings && this._campaign.settings.ABsettings.status != 0) {
+    if (this._campaign.settings.ABsettings && this._campaign.settings.ABsettings.status !== '0') {
       this._nameWorkflowA = this._campaign.settings.ABsettings.nameWorkflowA;
       this._nameWorkflowB = this._campaign.settings.ABsettings.nameWorkflowB;
       this.getStatsBatch();
@@ -124,7 +125,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
   public validateABtesting() {
-    this._campaign.settings.ABsettings.status = 2;
+    this._campaign.settings.ABsettings.status = '2';
     this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     }, (err: any) => {
@@ -235,10 +236,12 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
   public statusSwitch() {
+    this.modalABtesting = true;
     this.switchActivated = !this.switchActivated;
     if (this.switchActivated) {
       this.form.enable();
     } else {
+      this.modalABtesting = false;
       this.form.disable();
     }
   }
@@ -260,7 +263,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
   public ABDISPO() {
-    return this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""  && this._modifiedScenarios.length > 2;
+    return this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""  && this._modifiedScenarios.length >= 2;
   }
 
 

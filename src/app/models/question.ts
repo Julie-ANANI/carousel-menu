@@ -8,13 +8,13 @@ export interface Option {
 }
 
 export interface Question {
-  _id: string;
+  _id?: string;
   readonly label: Multiling;
   readonly title: Multiling;
   readonly subtitle: Multiling;
   identifier: string;
-  readonly controlType: 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'textbox' | 'toggle';
-  readonly canComment: boolean;
+  controlType: 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'textbox' | 'toggle';
+  canComment: boolean;
   readonly parameters?: {
     type: 'color' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week';
     addon: string;

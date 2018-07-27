@@ -1,146 +1,136 @@
 <div class="section-container" id="project-synthesis">
-  <div class="columns">
-    <div class="column col-12 col-mx-auto">
-      <div class="column col-xs-12 col-11 col-mx-auto">
 
-        <!-- Bot messages -->
-        <div *ngIf="!adminSide && projectStatus !== 'DONE'">
-          <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + projectStatus) | translate }}</h1>
-          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
-            <span class="bot-rect" [ngSwitch]="projectStatus">
+<!-- Bot messages -->
+<div *ngIf="!adminSide && projectStatus !== 'DONE'">
+  <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + projectStatus) | translate }}</h1>
+  <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+    <span class="bot-rect" [ngSwitch]="projectStatus">
 
-              <ng-container *ngSwitchCase="'EDITING'">
-                <ng-container *ngIf="project.reviewing">
-                  {{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}
-                </ng-container>
-                <ng-container *ngIf="!project.reviewing">
-                  {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }}
-                  <span [ngStyle]="{ 'color': '#FFB300' }">
-                    {{ 'MARKET_REPORT.MESSAGE.EDITING.B' | translate }}
-                  </span>
-                  {{ 'MARKET_REPORT.MESSAGE.EDITING.C' | translate }}
-                </ng-container>
-              </ng-container>
+      <ng-container *ngSwitchCase="'EDITING'">
+        <ng-container *ngIf="project.reviewing">
+          {{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}
+        </ng-container>
+        <ng-container *ngIf="!project.reviewing">
+          {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }}
+        </ng-container>
+      </ng-container>
 
-              <ng-container *ngSwitchCase="'SUBMITTED'">
-                {{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}
-              </ng-container>
+      <ng-container *ngSwitchCase="'SUBMITTED'">
+        {{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}
+      </ng-container>
 
-              <ng-container *ngSwitchCase="'EVALUATING'">
-                {{ 'MARKET_REPORT.MESSAGE.EVALUATING' | translate }}
-              </ng-container>
+      <ng-container *ngSwitchCase="'EVALUATING'">
+        {{ 'MARKET_REPORT.MESSAGE.EVALUATING' | translate }}
+      </ng-container>
 
-            </span>
-            <br>
-            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
-          </div>
-        </div>
-        <!-- /Bot messages -->
+    </span>
+    <br>
+    <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+    <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+  </div>
+</div>
+<!-- /Bot messages -->
 
-        <!-- Project under DONE status -->
-        <div *ngIf="projectStatus === 'DONE' || adminSide">
+<!-- Project under DONE status -->
+<div *ngIf="projectStatus === 'DONE' || adminSide">
 
-          <!-- Title and download button section -->
-          <div class="title-wrapper">
-            <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.EVALUATING' | translate }}</h1>
+  <!-- Title and download button section -->
+  <div class="title-wrapper">
+    <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.EVALUATING' | translate }}</h1>
 
-            <ng-container [ngSwitch]="adminSide">
-              <ng-container *ngSwitchCase="true">
-                <button *ngIf="projectStatus === 'EVALUATING'" (click)="changeStatus($event, 'DONE')" class="btn btn-primary">
-                  {{ 'MARKET_REPORT.BUTTON.STATUS_TO_DONE' | translate }}
-                </button>
-                <button *ngIf="projectStatus === 'DONE'" (click)="changeStatus($event, 'EVALUATING')" class="btn btn-primary">
-                  {{ 'MARKET_REPORT.BUTTON.STATUS_TO_EVALUATING' | translate }}
-                </button>
-              </ng-container>
-             <!-- <button *ngSwitchDefault (click)="print($event)" class="btn btn-primary">
-                {{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }} &lt;!&ndash; We display the download button only client side &ndash;&gt;
-              </button>-->
-            </ng-container>
-          </div>
+    <ng-container [ngSwitch]="adminSide">
+      <ng-container *ngSwitchCase="true">
+        <button *ngIf="projectStatus === 'EVALUATING'" (click)="changeStatus($event, 'DONE')" class="btn btn-primary">
+          {{ 'MARKET_REPORT.BUTTON.STATUS_TO_DONE' | translate }}
+        </button>
+        <button *ngIf="projectStatus === 'DONE'" (click)="changeStatus($event, 'EVALUATING')" class="btn btn-primary">
+          {{ 'MARKET_REPORT.BUTTON.STATUS_TO_EVALUATING' | translate }}
+        </button>
+      </ng-container>
+     <!-- <button *ngSwitchDefault (click)="print($event)" class="btn btn-primary">
+        {{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }} &lt;!&ndash; We display the download button only client side &ndash;&gt;
+      </button>-->
+    </ng-container>
+  </div>
 
-          <!-- Menu -->
-          <div class="question-wrapper">
-            <ul>
-              <li [ngClass]="{'active': activeSection === 'professionals'}">
-                <a pageScroll href="#professionals">
-                  {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }} <i class="icon icon-arrow-right"></i>
-                </a>
-              </li>
-              <li *ngFor="let question of cleaned_questions"
-                  [ngClass]="{'active': activeSection === question.identifier}">
-                <a pageScroll [href]="'#' + question.identifier">
-                  {{ question.title | multiling:lang }} <i class="icon icon-arrow-right"></i>
-                </a>
-              </li>
-            </ul>
-            <div *ngIf="objectKeys(filters).length" class="filter-wrapper">
-              <p>{{'MARKET_REPORT.FILTERS' | translate}}</p>
-              <ul>
-                <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
-                  <a>{{filters[fKey].questionTitle | multiling:lang}} <i class="icon icon-cross"></i></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Answer section -->
-          <div id="answer-wrapper">
-
-            <!-- Origin of responses -->
-            <div class="section-container">
-              <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h2>
-              <app-question-conclusion
-                [innovation]="project"
-                [question]="{identifier: 'professionals'}"
-                [readonly]="!adminMode"
-                [stats]="{nbAnswers: answers.length, percentage: 0}">
-              </app-question-conclusion>
-              <div class="map-wrapper">
-                <app-worldmap
-                  (updateCountries)="filterByCountries($event)"
-                  [countries]="countries"
-                  [countriesColor]="'#FFB300'"
-                  [initialConfiguration]="mapInitialConfiguration"
-                  [isEditable]="true">
-                </app-worldmap>
-              </div>
-            </div>
-
-            <!-- Professionals -->
-            <div class="section-container" id="professionals">
-              <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
-              <div class="professional-wrapper">
-                <div *ngFor="let answer of filteredAnswers" class="profile">
-                  <app-pro-tag [answer]="answer" (addFilter)="addFilter($event)" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
-                </div>
-              </div>
-            </div>
-
-            <!-- Other questions -->
-            <div *ngFor="let question of questions" class="section-container">
-              <app-question-section
-                [innovation]="project"
-                [question]="question"
-                [answers]="filteredAnswers"
-                [showComments]="showDetails"
-                [showDetails]="showDetails"
-                [readonly]="!adminMode"
-                (addFilter)="addFilter($event)"
-                (modalAnswerChange)="seeAnswer($event)">
-              </app-question-section>
-            </div>
-
-          </div>
-          <!-- /Answer section -->
-
-        </div>
-        <!-- /Project under evaluating_done status -->
-
-      </div>
+  <!-- Menu -->
+  <div class="question-wrapper">
+    <ul>
+      <li [ngClass]="{'active': activeSection === 'professionals'}">
+        <a pageScroll href="#professionals">
+          {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }} <i class="icon icon-arrow-right"></i>
+        </a>
+      </li>
+      <li *ngFor="let question of cleaned_questions"
+          [ngClass]="{'active': activeSection === question.identifier}">
+        <a pageScroll [href]="'#' + question.identifier">
+          {{ question.title | multiling:lang }} <i class="icon icon-arrow-right"></i>
+        </a>
+      </li>
+    </ul>
+    <div *ngIf="objectKeys(filters).length" class="filter-wrapper">
+      <p>{{'MARKET_REPORT.FILTERS' | translate}}</p>
+      <ul>
+        <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
+          <a>{{filters[fKey].questionTitle | multiling:lang}} <i class="icon icon-cross"></i></a>
+        </li>
+      </ul>
     </div>
   </div>
+
+  <!-- Answer section -->
+  <div id="answer-wrapper">
+
+    <!-- Origin of responses -->
+    <div class="section-container">
+      <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h2>
+      <app-question-conclusion
+        [innovation]="project"
+        [question]="{identifier: 'professionals'}"
+        [readonly]="!adminMode"
+        [stats]="{nbAnswers: answers.length, percentage: 0}">
+      </app-question-conclusion>
+      <div class="map-wrapper">
+        <app-worldmap
+          (updateCountries)="filterByCountries($event)"
+          [countries]="countries"
+          [countriesColor]="'#FFB300'"
+          [initialConfiguration]="mapInitialConfiguration"
+          [isEditable]="true">
+        </app-worldmap>
+      </div>
+    </div>
+
+    <!-- Professionals -->
+    <div class="section-container" id="professionals">
+      <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
+      <div class="professional-wrapper">
+        <div *ngFor="let answer of filteredAnswers" class="profile">
+          <app-pro-tag [answer]="answer" (addFilter)="addFilter($event)" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other questions -->
+    <div *ngFor="let question of questions" class="section-container">
+      <app-question-section
+        [innovation]="project"
+        [question]="question"
+        [answers]="filteredAnswers"
+        [showComments]="showDetails"
+        [showDetails]="showDetails"
+        [readonly]="!adminMode"
+        (addFilter)="addFilter($event)"
+        (modalAnswerChange)="seeAnswer($event)">
+      </app-question-section>
+    </div>
+
+  </div>
+  <!-- /Answer section -->
+
+</div>
+<!-- /Project under evaluating_done status -->
+
 </div>
 
 

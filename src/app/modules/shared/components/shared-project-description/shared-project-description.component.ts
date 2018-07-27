@@ -13,6 +13,7 @@ import { Innovation } from '../../../../models/innovation';
 export class SharedProjectDescriptionComponent implements OnInit {
 
   @Input() project: Innovation;
+
   public idInnovationCard = 0;
   private _onEditingPage = false;
 

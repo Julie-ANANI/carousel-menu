@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../models/campaign';
 import { EmailScenario } from '../../../../../models/email-scenario';
+import { EmailSignature } from '../../../../../models/email-signature';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TemplatesService } from '../../../../../services/templates/templates.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
@@ -18,6 +19,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
   public importModal = false;
   public modalSelectDefault: Array<any> = [false, ''];
 
+  private _signatures: Array<EmailSignature> = [];
   private _scenario: EmailScenario = {
     name: '',
     emails: []
@@ -48,6 +50,9 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     this._templatesService.getAll(this._config).first().subscribe(templates => {
       this._templates = templates.result;
     });
+    this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
+      this._signatures = signatures.result;
+    });
   }
 
   public importTemplate(template: EmailScenario) {
@@ -55,6 +60,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
       name: template.name,
       emails: template.emails.map( m => {
         m.nameWorkflow = template.name;
+        m.modified = false;
         return m;
       })
     };
@@ -166,7 +172,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
   get modifiedScenarios(): Array<EmailScenario> { return this._modifiedScenarios };
   get templates(): Array<EmailScenario> { return this._templates; }
   get campaign(): Campaign { return this._campaign };
-
+  get signatures(): Array<EmailSignature> { return this._signatures; }
   set config(value: any) { this._config = value; }
   set scenario(value: EmailScenario) { this._scenario = value; }
   set templates(value: Array<EmailScenario>) { this._templates = value; }

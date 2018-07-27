@@ -4,8 +4,10 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
-import {Table} from '../shared-table/models/table';
-import {Template} from '../shared-sidebar/interfaces/template';
+import {Table} from '../../../table/models/table';
+import {Template} from '../../../sidebar/interfaces/template';
+import {Subject} from 'rxjs/Subject';
+import {Tag} from '../../../../models/tag';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -22,6 +24,8 @@ export class SharedProsListComponent {
   public smartSelect: any = null;
   public editUser: {[propString: string]: boolean} = {};
   private _tableInfos: Table = null;
+  private _actions: string[] = ['COMMON.ADD-TAGS'];
+  sidebarState = new Subject<string>();
 
   @Input() public requestId: string;
   @Input() public campaign: Campaign;
@@ -34,6 +38,8 @@ export class SharedProsListComponent {
   private _pros: Array <SelectedProfessional>;
 
   private _prosToRemove: Professional[] = [];
+  private _prosToTag: Professional[] = [];
+
   private _more: Template = {};
   private _showDeleteModal = false;
   private _currentPro: Professional = null;
@@ -60,6 +66,7 @@ export class SharedProsListComponent {
           _isDeletable: true,
           _isSelectable: true,
           _isEditable: true,
+          _actions: this._actions,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
@@ -84,6 +91,7 @@ export class SharedProsListComponent {
           _isDeletable: true,
           _isSelectable: true,
           _isEditable: true,
+          _actions: this._actions,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
@@ -104,6 +112,35 @@ export class SharedProsListComponent {
       total: this.nbSelected,
       pros: prosSelected
     });
+  }
+
+  performActions(action: any) {
+    switch (this._actions.findIndex(value => action._action === value)) {
+      case 0: {
+        this.editTags(action._rows);
+        break;
+      }
+    }
+  }
+
+  editTags(pros: Professional[]) {
+    this._more = {
+      animate_state: 'active',
+      title: 'COMMON.ADD-TAGS',
+      type: 'tagProfessional'
+    };
+    this._prosToTag = pros;
+  }
+
+  addTagsToPro(tags: Tag[]) {
+    this._prosToTag.forEach((value, index) => {
+      if (!this._prosToTag[index].tags) {
+        this._prosToTag[index].tags = [];
+      }
+      tags.forEach(value1 => this._prosToTag[index].tags.push(value1))
+    });
+
+    this._prosToTag.forEach(value => this.updatePro(value));
   }
 
   updatePro(pro: Professional): void {
@@ -161,6 +198,7 @@ export class SharedProsListComponent {
 
   closeSidebar(value: string) {
     this._more.animate_state = value;
+    this.sidebarState.next(this._more.animate_state);
   }
 
   deleteProModal(pro: Professional) {
@@ -200,6 +238,7 @@ export class SharedProsListComponent {
   get config() { return this._config; }
   get tableInfos(): Table { return this._tableInfos; }
   get prosToRemove(): Professional[] { return this._prosToRemove; }
+  get prosToTag(): Professional[] { return this._prosToTag; }
   get more(): any { return this._more; }
   get showDeleteModal(): boolean { return this._showDeleteModal; }
   get currentPro(): Professional { return this._currentPro; }

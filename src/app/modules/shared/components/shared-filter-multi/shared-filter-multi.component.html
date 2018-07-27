@@ -1,5 +1,5 @@
 <div class="form-group-inline-left">
-  <div class="input-group">
+  <div class="input-group" *ngIf="textProps.length > 0">
     <select (change)="changeCurrentTextProp($event); search.value = '';" class="input-group-addon form-select">
       <option *ngFor="let propName of textProps"
               [value]="getAttrs(propName)"
@@ -21,17 +21,17 @@
   <div *ngFor="let prop of otherProps">
     <div [ngSwitch]="getType(prop)" class="input-group">
       <label class="form-label" style="margin-right: 10px;">{{getName(prop) | translate}}</label>
-      <select (change)="filterOther(prop)" [(ngModel)]="config[getAttr(prop)]" class="form-select small-select primary" *ngSwitchCase="'CHECK'">
-        <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
+      <select (change)="filterOther(prop)" [(ngModel)]="config[getAttr(prop)]" class="form-select small-select" *ngSwitchCase="'CHECK'">
+        <option [ngValue]="undefined">{{'COMMON.ALL' | translate}}</option>
         <option [ngValue]="true">{{'COMMON.YES' | translate}}</option>
         <option [ngValue]="false">{{'COMMON.NO' | translate}}</option>
       </select>
 
       <select (change)="filterOther(prop)" [(ngModel)]="config[getAttrs(prop)]"
-              class="form-select small-select primary"
+              class="form-select small-select"
               style="margin-right: 10px;"
               *ngSwitchCase="'MULTI-CHOICES'" >
-        <option [ngValue]="null">{{'COMMON.ALL' | translate}}</option>
+        <option [ngValue]="undefined" selected>{{'COMMON.ALL' | translate}}</option>
         <option *ngFor="let choice of getChoices(prop)"
                 [ngValue]="getChoiceName(choice)">
           {{getChoiceAlias(choice) | translate}}</option>

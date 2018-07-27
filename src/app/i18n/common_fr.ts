@@ -43,16 +43,24 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
-  'BLACKLIST': 'Emails blacklistés',
+  'BLACKLIST': {
+    'EMAILS': 'E-mails blacklistés',
+    'DOMAINS': 'Domaines blacklistés',
+    'COUNTRIES': 'Pays blacklistés',
+    'ACCEPTATION': 'Pourcentage d\'acceptation de mails'
+  },
   'EDIT-BLACKLIST': 'Modifier email blacklisté',
-  'ADD-EMAIL': 'Ajouter des emails',
+  'EXCLUDE': 'Exclure',
+  'EXCLUDE-EMAILS': 'Exclure des emails',
+  'EXCLUDE-DOMAINS': 'Exclure des domaines',
+  'EXCLUDE-COUNTRIES': 'Exclure des pays',
   'NEVER': 'Jamais',
   'COMMENT': 'Commentaire',
 
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
   'LASTNAME': 'Nom',
-  'EMAIL': 'Adresse e-mail',
+  'EMAIL': 'Email',
   'PHONE': 'Téléphone',
   'PASSWORD': 'Mot de passe',
   'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',
@@ -63,7 +71,7 @@ export const COMMON = {
   'JOBTITLE': 'Poste',
   'JOBTITLE_PLACEHOLDER': 'Entrez votre titre de poste',
   'TYPE': 'Type',
-  'DOMAIN': 'Domain',
+  'DOMAIN': 'Domaine',
   'COUNTRY': 'Pays',
   'COUNTRY_PLACEHOLDER': 'Entrez votre pays',
   'TERMS': {
@@ -112,7 +120,7 @@ export const COMMON = {
 
   'TABLE' : {
     'SELECTED_ROWS': 'lignes selectionnées',
-    'NO-RESULTS': 'Pas de résultats'
+    'NO-RESULTS': 'Désolé, il n\'y a rien à afficher'
   },
 
   'INVALID': {
@@ -152,6 +160,8 @@ export const COMMON = {
   'EDIT_USER': 'Modifier l\'utilisateur',
   'EDIT_PROFESSIONAL': 'Modifier Professionnel',
   'EDIT_INSIGHT': 'Modifier l\'aperçu',
+  'EDIT-COUNTRY': 'Modifier le filtre du pays',
+  'ADD-TAGS': 'Ajouter des tags',
 
   'SORT': {
     'BY_NAME': 'Nom',

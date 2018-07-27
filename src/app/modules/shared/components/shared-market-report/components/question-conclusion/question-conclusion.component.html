@@ -27,7 +27,7 @@
       [elementId]="domSectionId"
       [readonly]="readonly"
       [data]="innovation?.marketReport[question.identifier]?.conclusion"
-      (onEditorKeyup)="keyupHandlerFunction($event)">
+      (onTextChange)="keyupHandlerFunction($event)">
     </text-zone>
 
   </div>

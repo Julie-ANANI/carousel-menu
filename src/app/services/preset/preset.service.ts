@@ -20,6 +20,12 @@ export class PresetService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public populatePreset(id: string): Observable<any> {
+    return this._http.get('/preset/' + id + '/populate')
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public getAll(config: any): Observable<any> {
     return this._http.get('/preset/', {params: config})
       .map((res: Response) => res.json())
@@ -96,5 +102,12 @@ export class PresetService {
     return this._http.put('/question/' + QuestionId, QuestionObj)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  //FIXME: à supprimer
+  public importAllPresets(): Observable<any> {
+    return this._http.get('/innovation/import/allPresets')
+      .map((res:Response) => res.json())
+      .catch((error:Response) => Observable.throw(error.text()));
   }
 }

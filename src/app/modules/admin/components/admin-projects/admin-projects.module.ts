@@ -1,21 +1,21 @@
-// Modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedTableModule } from '../../../shared/components/shared-table/table.module';
-
-// Components
-import {AdminProjectsComponent} from './admin-projects.component';
+import { TableModule } from '../../../table/table.module';
+import { PipeModule } from '../../../../pipe/pipe.module';
+import { AdminProjectsComponent } from './admin-projects.component';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    SharedTableModule,
+    TableModule,
     RouterModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    PipeModule,
+    RouterModule
   ],
   declarations: [
     AdminProjectsComponent

@@ -10,12 +10,11 @@ import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-transla
 import { Observable } from 'rxjs/Observable';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './directives/footer/footer.component';
-import { HeaderComponent } from './directives/header/header.component';
 
 // Services
 import { InnovationService } from './services/innovation/innovation.service';
@@ -39,6 +38,7 @@ import { ProfessionalsService } from './services/professionals/professionals.ser
 import { DownloadService } from './services/download/download.service';
 import { TagsService } from './services/tags/tags.service';
 import { TemplatesService } from './services/templates/templates.service';
+import { TranslationService } from './services/translation/translation.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -46,13 +46,9 @@ import { InnovationResolver } from './resolvers/innovation.resolver';
 import { RequestResolver } from './resolvers/request.resolver';
 import { ScenarioResolver } from './resolvers/scenario.resolver';
 import { SignatureResolver } from './resolvers/signature.resolver';
+import { PresetResolver } from './resolvers/preset.resolver';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FooterComponent,
-    HeaderComponent,
-  ],
   imports: [
     BrowserModule.withServerTransition({
       appId: 'umi-application-front'
@@ -68,7 +64,11 @@ import { SignatureResolver } from './resolvers/signature.resolver';
       }
     }),
     ChartsModule,
-    Ng2AutoCompleteModule
+    Ng2AutoCompleteModule,
+    Angular2FontawesomeModule
+  ],
+  declarations: [
+    AppComponent
   ],
   providers: [
     Title,
@@ -107,6 +107,8 @@ import { SignatureResolver } from './resolvers/signature.resolver';
     ScenarioResolver,
     SignatureResolver,
     RequestResolver,
+    PresetResolver,
+    TranslationService,
     TagsService
   ],
   bootstrap: [AppComponent]

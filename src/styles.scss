@@ -133,6 +133,27 @@ ul.list-filter {
 }
 
 
+
+/* For Admin : to move into the right place */
+
+.admin .page-header {
+  background: white;
+  border-bottom: 1px solid #CDCDCD;
+
+  h1 {
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 23px;
+    color: #97A4B1;
+
+    strong {
+      color: #4F5D6B;
+    }
+  }
+}
+
+
+
 /* On décale les notifications vers le bas pour ne pas qu'elles cachent le menu principal*/
 .simple-notification-wrapper.top {
   top: 80px !important;
@@ -167,49 +188,6 @@ ul.list-filter {
 @import "style/modal-style";
 @import "style/tooltip-style";
 @import "style/table-style";
-
-/********************************** Form Input Styles ***************************************/
-
-// Form slide button
-
-.form-switch .form-icon::before {
-  background: #97A4B1;
-  border-color: #97A4B1;
-}
-
-.form-switch .form-icon  {
-  border: 1px solid #D1D1D1;
-  border-radius: 11.5px;
-  background-color: #FFFFFF;
-}
-
-.form-switch input:checked + .form-icon::before {
-  background: $validation-element;
-}
-
-.form-switch input:checked + .form-icon  {
-  border-color: rgba(46,204,113,0.45) !important;
-  background: rgba(46,204,113,0.45);
-}
-
-.form-switch input:focus + .form-icon {
-  border-color: #D1D1D1;
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-}
-
-// Form switch
-
-.form-switch {
-  padding-left: 2rem;
-  padding-right: 0.2rem;
-}
-
-.form-switch-padding {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
 
 
 

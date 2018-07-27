@@ -1,0 +1,52 @@
+.innovation-wrapper {
+
+  .hero-light-container {
+    background-color: #4F5D6B;
+
+    h1, h6 {
+      color: white;
+    }
+
+    .summary {
+      padding-left: 4px;
+      color: white;
+    }
+
+    .media-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+
+      .gap {
+        margin-top: 15px;
+        margin-right: 25px;
+      }
+
+    }
+
+  }
+
+  .advantage {
+
+    li {
+      color: #5D5D5D;
+      font-size: 0.8rem;
+      padding: 6px 8px 6px 3px;
+    }
+
+    li:last-child {
+      padding-bottom: 0;
+    }
+
+  }
+
+  .section-container {
+    padding-top: 25px;
+    padding-bottom: 0;
+
+    p {
+      padding-bottom: 0;
+    }
+
+  }
+
+}

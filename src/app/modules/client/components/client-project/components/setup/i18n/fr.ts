@@ -5,7 +5,7 @@ import { TARGETING } from '../components/targeting/i18n/fr';
 export const SETUP = {
   'TITLE': 'Tout sur votre projet',
 
-  'SAVE_PROJECT': 'Sauvegarder le projet',
+  'SAVE_PROJECT': 'Sauvegarder',
   'SUBMIT_PROJECT': 'Soumettre le projet',
 
   'MESSAGE': {
@@ -33,6 +33,6 @@ export const SETUP = {
   'TARGETING': TARGETING,
 
   'PREVIEW': 'Aperçu',
-  'PREVIEW_BUTTON': 'Aperçu l\'innovation'
+  'PREVIEW_BUTTON': 'Prévisualiser'
 
 };

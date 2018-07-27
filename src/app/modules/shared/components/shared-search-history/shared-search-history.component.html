@@ -17,7 +17,7 @@
   'text-error': googleQuota < 5000}">
     {{ googleQuota }} requêtes google restantes  <i (click)="getGoogleQuota()" class="c-hand fa fa-refresh"></i></span>
   </h6>
-  <sqFilter [config]="config" (configChange)="loadHistory()" prop="keywords.original"></sqFilter><i class="icon icon-search"></i>
+  <sqFilter [config]="config" (configChange)="loadHistory()" prop="keywords"></sqFilter><i class="icon icon-search"></i>
   <table class="table">
     <thead>
     <tr>
@@ -55,7 +55,7 @@
         </td>
 
         <td class="text-center" *ngIf="!mails">
-          <country-flag *ngIf="request.country" [country]="request.country" [width]="30" [height]="20"></country-flag>
+          <app-country-flag *ngIf="request.country" [country]="request.country" [width]="30" [height]="20"></app-country-flag>
         </td>
 
         <td>
@@ -125,7 +125,7 @@
         </td>
 
         <td class="text-center" *ngIf="!mails">
-          <country-flag *ngIf="childRequest.country" [country]="childRequest.country" [width]="30" [height]="20"></country-flag>
+          <app-country-flag *ngIf="childRequest.country" [country]="childRequest.country" [width]="30" [height]="20"></app-country-flag>
         </td>
 
         <td>
