@@ -1,5 +1,5 @@
-<div>
-  <div class="column col-8 col-mx-auto">
+<div class="columns">
+  <div class="column col-5 col-ml-auto">
 
     <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
       <app-sidebar-search
@@ -9,32 +9,53 @@
       </app-sidebar-search>
     </app-sidebar>
 
-    <div class="input-group-lg" id="input-search">
-      <button
-        class="btn-secondary input-group-btn"
-        (click)="changeSettings() && $event.preventDefault()">
-        <i class="fas fa-cogs"></i>
-      </button>
+    <div class="flex-container" id="input-search">
+
       <textarea
         type="text"
         class="form-default input-lg"
         name="keywords"
+        rows="4"
         (ngModelChange)="estimateNumberOfGoogleRequests()"
         [(ngModel)]="params.keywords"
         required
         placeholder="Recherche 'Google-like', une requête par ligne"></textarea>
+
       <button
         (click)="search($event)"
-        class="btn-primary input-group-btn"
+        class="btn-round btn-primary"
         translate>
         <i class="fas fa-search"></i>
       </button>
+
     </div>
-    <h6> <span [ngClass]="{
-  'text-success': googleQuota > 10000,
-  'text-warning': googleQuota < 10000 && googleQuota > 5000,
-  'text-error': googleQuota < 5000}">
-      {{ googleQuota }} requêtes google restantes  <i (click)="getGoogleQuota()" class="c-hand fa fa-refresh"></i></span>
-      - Cette recherche utilisera au maximum {{estimatedNumberOfGoogleRequests}} requêtes</h6>
+
+    <div class="tips">
+      <a (click)="changeSettings() && $event.preventDefault()">Settings</a>
+
+      <div class="label-validate" *ngIf="googleQuota > 10000">{{ googleQuota }} remaining requests
+        <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
+      </div>
+
+      <div class="label-progress" *ngIf="googleQuota < 10000 && googleQuota > 5000">{{ googleQuota }} remaining requests
+        <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
+      </div>
+
+      <div class="label-alert" *ngIf="googleQuota < 5000">{{ googleQuota }} remaining requests
+        <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
+      </div>
+    </div>
+
   </div>
+
+  <div class="column col-2 col-mr-auto">
+    <div class="bot-wrapper text-center">
+      <span class="bot-rect" *ngIf="estimatedNumberOfGoogleRequests">This search will use {{estimatedNumberOfGoogleRequests}} requests max</span>
+      <span class="bot-rect" *ngIf="!estimatedNumberOfGoogleRequests">Nice day, what are you gonna search today?</span>
+      <br>
+      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+      <div><img src="http://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" width="" height="120"></div>
+    </div>
+  </div>
+
 </div>
