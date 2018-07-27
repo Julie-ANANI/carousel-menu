@@ -241,6 +241,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     if (this.switchActivated) {
       this.form.enable();
     } else {
+      this.modalABtesting = false;
       this.form.disable();
     }
   }
@@ -262,7 +263,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
   public ABDISPO() {
-    return this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""  && this._modifiedScenarios.length > 2;
+    return this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""  && this._modifiedScenarios.length >= 2;
   }
 
 
