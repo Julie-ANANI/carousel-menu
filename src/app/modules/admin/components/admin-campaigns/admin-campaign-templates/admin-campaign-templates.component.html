@@ -1,23 +1,25 @@
-<div class="container col-10 col-mx-auto section-container">
-  <h2>Campagne : {{campaign.title}}</h2>
-  <div *ngIf="!domain">
-    <h4>
-      ATTENTION *|DOMAIN|* non défini
-    </h4>
+<div class="text-right">
+  <button class="btn btn-primary" (click)="importModal = true">Importer un Workflow</button>
+</div>
+
+<div *ngIf="!domain">
+  <div class="bot-wrapper text-center">
+    <span class="bot-rect">Attention, le domaine n'est pas défini. Modifiez-le dans le projet, onglet Settings.</span>
+    <br>
+    <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+    <div><img src="http://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width="" height="120"></div>
   </div>
-  <div *ngIf="domain">
-    <h5>
-      *|DOMAIN|* <br>
-      en :{{this.campaign.innovation.settings.domain.en}} <br>
-      fr :{{this.campaign.innovation.settings.domain.fr}}
-    </h5>
-  </div>
-  <h2>Templates de mails</h2>
-  <button class="btn btn-primary" (click)="importModal = true">Importer un template de la bibliothèque</button>
-  <br>
-  <div>
-    <app-admin-campaign-abtesting [modifiedScenarios]="modifiedScenarios" [campaign]="campaign"></app-admin-campaign-abtesting>
-  </div>
+</div>
+
+<div *ngIf="domain">
+    *|DOMAIN|* <br>
+    en :{{this.campaign.innovation.settings.domain.en}} <br>
+    fr :{{this.campaign.innovation.settings.domain.fr}}
+</div>
+
+<div>
+  <app-admin-campaign-abtesting [modifiedScenarios]="modifiedScenarios" [campaign]="campaign"></app-admin-campaign-abtesting>
+</div>
 <br>
   <div>
     <h3> Choix du Workflow par défault </h3>
@@ -33,6 +35,9 @@
         </option>
       </select>
     </form>
+    <p class="text-error" *ngIf="modifiedScenarios.length === 0">
+      Vous devez avoir au moins un workflow avec tous les emails modifiés
+    </p>
     <div *ngFor="let scenario of availableScenarios">
       <app-admin-edit-workflow
         [scenario]="scenario"

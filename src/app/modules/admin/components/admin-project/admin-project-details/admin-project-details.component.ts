@@ -54,7 +54,7 @@ export class AdminProjectDetailsComponent implements OnInit {
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this.presetAutocomplete = {
-      placeholder: 'preset',
+      placeholder: 'Name of a template',
       initialData: this.hasPreset() ? [this.project.preset] : [],
       type: 'preset'
     };

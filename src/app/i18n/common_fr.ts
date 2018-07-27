@@ -120,7 +120,7 @@ export const COMMON = {
 
   'TABLE' : {
     'SELECTED_ROWS': 'lignes selectionnées',
-    'NO-RESULTS': 'Pas de résultats'
+    'NO-RESULTS': 'Désolé, il n\'y a rien à afficher'
   },
 
   'INVALID': {
