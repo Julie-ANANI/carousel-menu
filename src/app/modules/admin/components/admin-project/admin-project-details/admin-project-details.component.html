@@ -44,7 +44,7 @@
         (removeTag)="removeTag($event)">
       </app-shared-tag-item>
 
-      <h6>Presets</h6>
+      <h6>Questionnaire</h6>
 
       <app-autocomplete-input
         (update)="updatePreset($event)"
@@ -52,9 +52,7 @@
         [config]="presetAutocomplete">
       </app-autocomplete-input>
 
-      <h6>Questionnaire</h6>
-
-      <p *ngIf="!hasPreset()">To generate a quiz, you need to set a preset for the innovation.</p>
+      <p *ngIf="!hasPreset()">To generate a questionnaire, you need to select a template from the libraries.</p>
       <button
         *ngIf="hasPreset()"
         type="button"

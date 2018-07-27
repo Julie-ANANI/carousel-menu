@@ -15,6 +15,7 @@ export const PROJECT = {
   'CAMPAIGNS': 'Campaigns',
   'SETTINGS': 'Settings',
   'CARDS': 'Innovation Cards',
+  'QUESTIONNAIRE': 'Questionnaire',
   'SYNTHESIS': 'Synthesis',
   'TAGS': 'Tags',
   'MAIL_CONFIG': 'Email Configuration'

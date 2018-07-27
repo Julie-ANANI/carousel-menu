@@ -100,7 +100,7 @@ export const COMMON = {
 
   'TABLE' : {
     'SELECTED_ROWS': 'selected rows',
-    'NO-RESULTS': 'No results'
+    'NO-RESULTS': 'No data to display'
   },
 
   'PROJECT': {
@@ -158,16 +158,17 @@ export const COMMON = {
   'EDIT_PROFESSIONAL': 'Edit Professional',
   'EDIT_INSIGHT': 'Edit Insight',
   'EDIT-COUNTRY': 'Edit country\'s filter',
+  'ADD-TAGS': 'Add tags',
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
   'CLIENT_SIDE': 'Client',
 
   'SORT': {
-    'BY_NAME': 'By name',
-    'BY_COMPANY': 'By company',
-    'BY_AUTHOR': 'By author',
-    'BY_DOMAIN': 'By domain',
-    'BY_CREATION_DATE': 'By date',
-    'BY_UPDATE_DATE': 'By default'
+    'BY_NAME': 'Name',
+    'BY_COMPANY': 'Company',
+    'BY_AUTHOR': 'Author',
+    'BY_DOMAIN': 'Domain',
+    'BY_CREATION_DATE': 'Date',
+    'BY_UPDATE_DATE': 'Default'
   }
 };

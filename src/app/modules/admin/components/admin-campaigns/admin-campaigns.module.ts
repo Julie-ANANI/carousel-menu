@@ -9,7 +9,6 @@ import { SharedAnswerListModule } from '../../../shared/components/shared-answer
 import { SharedSearchHistoryModule} from '../../../shared/components/shared-search-history/search-history.module';
 import { SharedSearchProsModule } from '../../../shared/components/shared-search-pros/shared-search-pros.module';
 import { SharedSearchResultsModule } from '../../../shared/components/shared-search-results/search-results.module';
-import { SharedEditScenarioModule } from '../../../shared/components/shared-edit-scenario/shared-edit-scenario.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { AdminCampaignsComponent } from './admin-campaigns.component';
@@ -24,6 +23,7 @@ import { AdminCampaignSearchResultsComponent } from './admin-campaign-search-res
 import { AdminCampaignTemplatesComponent } from './admin-campaign-templates/admin-campaign-templates.component';
 import { TableModule } from '../../../table/table.module';
 import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admin-campaign-abtesting.component';
+import { AdminEditWorkflowModule } from "../admin-edit-workflow/admin-edit-workflow.module";
 
 @NgModule({
   imports: [
@@ -35,10 +35,11 @@ import { AdminCampaignAbtestingComponent } from './admin-campaign-abtesting/admi
     SharedSearchResultsModule,
     SharedAnswerListModule,
     SharedSearchHistoryModule,
-    SharedEditScenarioModule,
     RouterModule,
     TranslateModule.forChild(),
     SidebarModule,
+    PipeModule,
+    AdminEditWorkflowModule,
     TableModule,
     PipeModule
   ],

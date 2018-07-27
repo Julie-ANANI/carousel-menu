@@ -23,6 +23,7 @@ export class SharedProsListComponent {
   public smartSelect: any = null;
   public editUser: {[propString: string]: boolean} = {};
   private _tableInfos: Table = null;
+  private _actions: string[] = ['COMMON.ADD-TAGS'];
   sidebarState = new Subject<string>();
 
   @Input() public requestId: string;
@@ -62,6 +63,7 @@ export class SharedProsListComponent {
           _isDeletable: true,
           _isSelectable: true,
           _isEditable: true,
+          _actions: this._actions,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
@@ -86,6 +88,7 @@ export class SharedProsListComponent {
           _isDeletable: true,
           _isSelectable: true,
           _isEditable: true,
+          _actions: this._actions,
           _columns: [
             {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
@@ -106,6 +109,14 @@ export class SharedProsListComponent {
       total: this.nbSelected,
       pros: prosSelected
     });
+  }
+
+  performActions(action: any) {
+    switch (this._actions.findIndex(action)) {
+      case 0: {
+        
+      }
+    }
   }
 
   updatePro(pro: Professional): void {

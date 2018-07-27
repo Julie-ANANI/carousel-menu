@@ -2,17 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { AdminRoutingModule } from './admin-routing.module';
-import { AdminPresetModule } from './components/admin-preset/admin-preset.module';
+// import { AdminPresetModule } from './components/admin-preset/admin-preset.module';
 import { AdminSearchModule } from './components/admin-search/admin-search.module';
 import { AdminUsersModule } from './components/admin-users/admin-users.module';
 import { AdminProfessionalsModule } from './components/admin-professionals/admin-professionals.module';
-import { AdminEmailsModule } from './components/admin-emails/admin-emails.module';
+import { AdminMonitoringModule } from './components/admin-monitoring/admin-monitoring.module';
 import { AdminTagModule } from './components/admin-tags/admin-tag.module';
 import { AdminProjectModule } from './components/admin-project/admin-project.module';
 import { AdminProjectsModule } from './components/admin-projects/admin-projects.module';
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
 import { AdminLibrariesModule } from './components/admin-libraries/admin-libraries.module';
-import { AdminCountryManagementModule } from './components/admin-country-management/admin-country-management.module';
+import { AdminCountryManagementModule } from './components/admin-settings/admin-country-management/admin-country-management.module';
 
 // Components
 import { PipeModule } from '../../pipe/pipe.module';
@@ -27,14 +27,15 @@ import { AdminUserDetailsComponent } from './components/admin-users/admin-user-d
 import { AdminProjectsListComponent } from './components/admin-projects-list/admin-projects-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 
 @NgModule({
   imports: [
     CommonModule,
     AdminRoutingModule,
-    AdminPresetModule,
+  //  AdminPresetModule,
     AdminSearchModule,
-    AdminEmailsModule,
+    AdminMonitoringModule,
     AdminUsersModule,
     AdminProjectsModule,
     AdminProfessionalsModule,
@@ -58,7 +59,8 @@ import { RouterModule } from '@angular/router';
     AdminIndexComponent,
     AdminPatentsComponent,
     AdminUserDetailsComponent,
-    AdminProjectsListComponent
+    AdminProjectsListComponent,
+    AdminSettingsComponent
   ]
 })
 
