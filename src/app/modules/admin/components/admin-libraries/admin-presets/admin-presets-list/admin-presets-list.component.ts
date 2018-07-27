@@ -34,7 +34,7 @@ export class AdminPresetsListComponent implements OnInit {
   ngOnInit(): void {
     this.loadPresets(this._config);
     console.log(this._authService.getUserInfo());
-    this.isBastien = this._authService.getUserInfo().id === "5a2953592506340001d25b63";
+    this.isBastien = this._authService.getUserInfo().name === "Bastien Scanu";
   }
 
   loadPresets(config: any): void {
