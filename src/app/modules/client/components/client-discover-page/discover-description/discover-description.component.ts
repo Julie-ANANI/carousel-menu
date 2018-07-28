@@ -21,7 +21,10 @@ export class DiscoverDescriptionComponent implements OnInit {
   private twitterUrl: string;
   private facebookUrl: string;
   private googlePlusUrl: string;
+  private mailUrl: string;
   private quizButtonDisplay: string;
+  private _mediaModal: boolean;
+  private _mediaURL: string;
 
   constructor(private innovationService: InnovationService,
               private activatedRoute: ActivatedRoute,
@@ -59,6 +62,8 @@ export class DiscoverDescriptionComponent implements OnInit {
 
       this.googlePlusUrl = this.shareService.googleProjectShareLink(this.innovation, lang);
 
+      this.mailUrl = this.shareService.mailProjectShareLink(this.innovation, lang);
+
       const innovationCardIndex = response.innovationCards.findIndex( card => card.lang === lang);
 
       this._innovationCard.push(response.innovationCards[innovationCardIndex]);
@@ -67,12 +72,31 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   }
 
+  mediaToShow(event: Event, src: string) {
+    event.preventDefault();
+    this._mediaModal = true;
+    this._mediaURL = src;
+  }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._mediaModal = false;
+  }
+
   get innovationCard(): InnovCard[] {
     return this._innovationCard;
   }
 
   get domSanitizer() {
     return this.domSanitizer1;
+  }
+
+  get mediaModal(): boolean {
+    return this._mediaModal;
+  }
+
+  get mediaURL(): string {
+    return this._mediaURL;
   }
 
 }

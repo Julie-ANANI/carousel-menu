@@ -44,14 +44,14 @@
         color: #fff;
         width: 310px;
         flex: 1 0 auto;
-        height: 210.56px;
+        min-height: 210.56px;
         border-radius: 3px;
 
         .para {
           font-size: 0.8rem;
         }
 
-        .fab {
+        .fab, .far {
           margin: 5px 0 5px 2px;
           padding: 11.79px 11.82px;
           border-radius: 5px;
@@ -107,6 +107,15 @@
           color: #CC5441;
         }
 
+        #icon-mail {
+          background-color: #97A4B1;
+        }
+
+        #icon-mail:hover {
+          background-color: white;
+          color: #97A4B1;
+        }
+
       }
 
     }
@@ -155,6 +164,34 @@
 
 }
 
+
+.modal {
+
+  .modal-container {
+    background: transparent;
+    box-shadow: none;
+    overflow: unset;
+
+    .modal-header {
+      background: transparent;
+      padding-right: 10px;
+    }
+
+    .modal-body {
+      padding: 10px;
+      max-height: 80vh;
+
+      img {
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+    }
+
+  }
+
+}
+
 /********************************** Media ***************************************/
 
 @media (max-width: 320px) {
@@ -164,8 +201,7 @@
     .detail-wrapper {
 
       .share-wrapper {
-        max-width: 292px !important;
-        height: 276.13px !important;
+        max-width: 100% !important;
       }
 
     }
@@ -211,7 +247,6 @@
         margin-top: 25px;
         width: unset !important;
         max-width: 336px;
-        height: 188.56px;
       }
 
     }
