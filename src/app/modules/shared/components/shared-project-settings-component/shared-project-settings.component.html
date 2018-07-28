@@ -54,7 +54,7 @@
         <!-- Comment countries -->
         <div *ngIf="!_projectStatus && !!settings.geography.comments">
           <p class="pd-top">
-          <span [ngStyle]="{ 'color': '#FFB300' }">
+          <span [ngStyle]="{ 'color': '#0B90C6' }">
             {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.COMMENT' | translate }}
           </span>
           </p>
@@ -196,7 +196,7 @@
           <!-- Companies comment -->
           <div *ngIf="!_projectStatus && !!settings.companies.description">
             <p class="pd-top">
-              <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.COMMENT' | translate }}</span>
+              <span [ngStyle]="{ 'color': '#0B90C6' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.COMMENT' | translate }}</span>
             </p>
             <div *ngIf="!_projectStatus && settings.companies.description" class="pd-input">
               <p>{{ settings.companies.description }}</p>
@@ -266,7 +266,7 @@
           <!-- Exclude professional -->
           <div *ngIf="!_projectStatus && settings.professionals.exclude.length > 0">
             <p class="pd-para">
-              <span [ngStyle]="{ 'color': '#FFB300' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</span>
+              <span [ngStyle]="{ 'color': '#0B90C6' }">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</span>
             </p>
             <div class="pd-input">
               <div *ngFor="let professionalExclude of settings.professionals.exclude" class="answer-wrapper">

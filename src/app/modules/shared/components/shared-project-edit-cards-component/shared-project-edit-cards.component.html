@@ -103,7 +103,7 @@
                     <div *ngIf="canEdit" class="form-group pd-input">
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
-                        class="btn ghot-primary"
+                        class="btn ghost-primary"
                         [ngClass]="{'disabled': innovationCards.summary}"
                         [disabled]="innovationCards.summary"
                         (click)="importTranslation($event, 'summary')">
@@ -111,10 +111,9 @@
                       </button>
                       <app-text-zone
                         [data]="innovationCards.summary"
-                        [elementId]="'summary'+innovationCards.lang"
+                        [elementId]="'summary' + innovationCards.lang"
                         [ngClass]="{'borderRed': showSummaryError}"
-                        (onTextChange)="updateData($event)"
-                      >
+                        (onTextChange)="updateData($event)">
                       </app-text-zone>
                       <!-- todo: add placeholders
                         [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
@@ -143,7 +142,7 @@
                     <div *ngIf="canEdit" class="form-group pd-input">
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
-                        class="btn ghot-primary"
+                        class="btn ghost-primary"
                         [disabled]="innovationCards.problem"
                         [ngClass]="{'disabled': innovationCards.problem}"
                         (click)="importTranslation($event, 'problem')">
@@ -153,8 +152,7 @@
                         [data]="innovationCards.problem"
                         [elementId]="'problem'+innovationCards.lang"
                         [ngClass]="{'borderRed': showProblemError}"
-                        (onTextChange)="updateData($event)"
-                      >
+                        (onTextChange)="updateData($event)">
                       </app-text-zone>
                       <!-- todo: add placeholders
                         [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
@@ -184,7 +182,7 @@
                     <div *ngIf="canEdit" class="form-group pd-input">
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
-                        class="btn ghot-primary"
+                        class="btn ghost-primary"
                         [disabled]="innovationCards.solution"
                         [ngClass]="{'disabled': innovationCards.solution}"
                         (click)="importTranslation($event, 'solution')">
@@ -194,8 +192,7 @@
                         [data]="innovationCards.solution"
                         [elementId]="'solution'+innovationCards.lang"
                         [ngClass]="{'borderRed': showSolutionError}"
-                        (onTextChange)="updateData($event)"
-                      >
+                        (onTextChange)="updateData($event)">
                       </app-text-zone>
                       <!-- todo: add placeholders
                         [placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
@@ -227,7 +224,7 @@
                     <div *ngIf="canEdit" class="pd-input" [ngStyle]="{ 'margin-top': '8px' }">
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
-                        class="btn ghot-primary"
+                        class="btn ghost-primary"
                         [disabled]="innovationCards.advantages?.length"
                         [ngClass]="{'disabled': innovationCards.advantages?.length}"
                         (click)="importTranslation($event, 'advantages')">

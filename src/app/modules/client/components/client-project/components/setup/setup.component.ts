@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -28,6 +28,7 @@ export class SetupProjectComponent implements OnInit {
   targetingFormValid: boolean;
   showTargetingFieldError: Subject<boolean> = new Subject();
   surveyCreated: boolean;
+  scrollOn = false;
 
   innovationPreviewIndex = 0;
   sidebarTemplateValue: Template = {};
@@ -47,6 +48,15 @@ export class SetupProjectComponent implements OnInit {
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
     this.checkProjectStatus();
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (window.scrollY !== 0) {
+      this.scrollOn = true;
+    } else {
+      this.scrollOn = false;
+    }
   }
 
   /*

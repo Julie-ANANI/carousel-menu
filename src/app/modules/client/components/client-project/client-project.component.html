@@ -4,54 +4,52 @@
 
   <!-- Header -->
   <div class="hero-light-container header-project">
-    <div class="container">
-      <div class="column col-xs-12 col-11 col-mx-auto">
+    <div class="column col-xs-12 col-11 col-mx-auto">
 
-        <!-- Name -->
-        <h1>{{ project.name[0] | uppercase }}{{ project.name | slice:1 }}</h1>
+      <!-- Name -->
+      <h1>{{ project.name[0] | uppercase }}{{ project.name | slice:1 }}</h1>
 
-        <!-- Info -->
-        <div class="info-wrapper">
-          <img [src]="imgType">
-          <span class="project-info">
-        {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
-        &nbsp;•&nbsp;
-        {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
-        &nbsp;•&nbsp;
-        {{ project.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
-        <span class="text-link" (click)="editCollaborator($event)">
-          {{ 'COMMON.EDIT' | translate | lowercase}}
-        </span>
+      <!-- Info -->
+      <div class="info-wrapper">
+        <img [src]="imgType">
+        <span class="project-info">
+      {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
+      &nbsp;•&nbsp;
+      {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
+      &nbsp;•&nbsp;
+      {{ project.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
+      <span class="text-link" (click)="editCollaborator($event)">
+        {{ 'COMMON.EDIT' | translate | lowercase}}
       </span>
-        </div>
-
-        <!-- Tabs -->
-        <div class="tab-container">
-          <ul class="tabs">
-            <li>
-              <a [routerLink]="['setup']" [ngClass]="{'active': currentPage == 'setup'}">
-                <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
-              </a>
-            </li>
-            <li>
-              <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage == 'exploration'}">
-                <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
-              </a>
-            </li>
-            <li>
-              <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage == 'synthesis'}">
-                <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
-              </a>
-            </li>
-            <!--<li>
-              <a [routerLink]="['history']" [ngClass]="{'active': currentPage == 'history'}">
-                <i class="fas fa-history"></i>{{ 'PROJECT_MODULE.HISTORY_TAB' | translate }}
-              </a>
-            </li>-->
-          </ul>
-        </div>
-
+    </span>
       </div>
+
+      <!-- Tabs -->
+      <div class="tab-container">
+        <ul class="tabs">
+          <li>
+            <a [routerLink]="['setup']" [ngClass]="{'active': currentPage == 'setup'}">
+              <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage == 'exploration'}">
+              <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage == 'synthesis'}">
+              <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
+            </a>
+          </li>
+          <!--<li>
+            <a [routerLink]="['history']" [ngClass]="{'active': currentPage == 'history'}">
+              <i class="fas fa-history"></i>{{ 'PROJECT_MODULE.HISTORY_TAB' | translate }}
+            </a>
+          </li>-->
+        </ul>
+      </div>
+
     </div>
   </div>
 
@@ -91,9 +89,7 @@
 </div>
 
 <!-- Add collaborators -->
-<app-sidebar
-  [template]="sidebarTemplateValue"
-  (closeSidebar)="closeSidebar($event)">
+<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
   <app-collaborator
     (collaboratorAdded)="addCollaborators($event)"
     [collaborator]="project.collaborators"
