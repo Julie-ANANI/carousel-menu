@@ -1,12 +1,11 @@
 <div class="item-list-wrapper">
   <div class="items">
-    <div *ngFor="let item of listItems; let i = index"
-         [ngClass]="{'top-profil': item.rating === 2}" class="item">
+    <div *ngFor="let item of listItems; let i = index" [ngClass]="{'top-profil': item.rating === 2}" class="item">
       <div class="content">
 
         <!-- Filter icon -->
         <div class="filter" (click)="filterAnswer(item, $event)">
-          <img src="https://res.cloudinary.com/umi/image/upload/v1532700378/app/default-images/filter-icon.svg">
+          <img src="https://res.cloudinary.com/umi/image/upload/v1532816663/app/default-images/filter-wicon.svg">
         </div>
 
         <!-- Value and count -->
@@ -17,7 +16,7 @@
 
         <!-- Respoand -->
         <div class="popup">
-          <market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></market-report-popover>
+          <app-market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></app-market-report-popover>
         </div>
 
       </div>
@@ -48,7 +47,7 @@
           <a *ngIf="item.domain" [href]="item.domain" target="_blank"><i class="fas fa-link" aria-hidden="true"></i></a>
           <span (click)="filterAnswer(item, $event)"><i class="fas fa-filter" aria-hidden="true"></i></span>
         </strong>
-        <market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></market-report-popover>
+        <app-market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></app-market-report-popover>
       </div>
     </div>
   </div>

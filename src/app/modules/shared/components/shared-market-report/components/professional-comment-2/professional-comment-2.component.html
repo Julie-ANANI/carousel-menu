@@ -16,6 +16,6 @@
 </div>
 
 <!-- Professional comment -->
-<p *ngIf="answer.answers[questionId].length > 0" class="p-comment">
+<p *ngIf="answer.answers[questionId]?.length > 0" class="p-comment">
   {{ answer.answers[questionId] }}
 </p>

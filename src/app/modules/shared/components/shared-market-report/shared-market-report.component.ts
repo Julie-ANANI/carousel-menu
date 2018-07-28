@@ -39,7 +39,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     nbProsClicked: number,
     nbValidatedResp: number
   };
-  selectedTag: any;
   editMode = new Subject<boolean>(); // this is for the admin side.
 
   private _questions: Array<Question> = [];

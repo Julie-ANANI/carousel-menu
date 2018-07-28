@@ -119,6 +119,12 @@
                 [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
                 height="146" width="220px">
             </div>
+            <div *ngIf="project.principalMedia?.type !== 'PHOTO'" [ngStyle]="{ 'padding-bottom': '20px' }">
+              <img
+                [src]="project.innovationCards[0].media[0].url"
+                [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+                height="146" width="220px">
+            </div>
             <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
             <ul class="sc-advantage">
               <li *ngFor="let advantage of project.innovationCards[0].advantages;">
@@ -368,7 +374,6 @@
           <div *ngFor="let answer of filteredAnswers" class="profile">
             <app-pro-tag
               [answer]="answer"
-              [selectedTag]="selectedTag"
               (modalAnswerChange)="seeAnswer($event)"
               [ngStyle]="{ 'width': '100%' }">
             </app-pro-tag>
@@ -389,7 +394,6 @@
             [showComments]="showDetails"
             [showDetails]="showDetails"
             [readonly]="!adminSide"
-            [selectedTag]="selectedTag"
             (modalAnswerChange)="seeAnswer($event)">
           </app-question-section>
         </div>

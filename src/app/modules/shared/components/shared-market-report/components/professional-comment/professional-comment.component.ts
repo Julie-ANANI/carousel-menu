@@ -13,10 +13,8 @@ export class SharedMarketCommentComponent {
 
   @Input() public answer: Answer;
   @Input() public questionId: string;
-  @Input() selectedTag: any;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
-
 
   constructor(private filterService: FilterService) { }
 
