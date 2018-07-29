@@ -47,7 +47,16 @@ $edit-color: #97A4B1;
 
   i {
     margin-right: 10px;
-    font-size: 1rem;
+    font-size: 20px;
+  }
+
+  .icon {
+    font-size: 14px;
+    vertical-align: middle;
+  }
+
+  .icon-plus {
+    font-size: 14px;
   }
 
 }
@@ -76,7 +85,7 @@ $edit-color: #97A4B1;
               border-top-color 0.15s ease-in-out;
 
   i {
-    font-size: 0.6rem;
+    font-size: 14px;
   }
 
 }

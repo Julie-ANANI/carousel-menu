@@ -29,11 +29,12 @@ export class BarChartComponent implements OnInit {
     this._answers = value;
     this.updateAnswersData();
   }
-  @Input() selectedTag: any;
+
   @Input() public innovation: Innovation;
   @Input() public question: Question;
   @Input() public readonly: boolean;
   @Input() public stats: any;
+  @Input() showDetails: boolean;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 

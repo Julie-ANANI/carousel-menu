@@ -205,7 +205,7 @@
       [question]="question"
       [readonly]="readonly"
       [stats]="stats"
-      [selectedTag]="selectedTag"
+      [showDetails]="showDetails"
       (modalAnswerChange)="seeAnswer($event)">
     </app-bar-chart>
   </ng-container>
@@ -286,6 +286,11 @@
 
     <!-- Now showing the answers that we have for the textarea, scale, toggle and star type -->
     <ng-container *ngIf="showDetails">
+
+      <!-- Star -->
+      <div class="star-answer-wrapper">
+        <app-stars [answers]="answersToShow" [innovation]="innovation" [question]="question"></app-stars>
+      </div>
 
       <!-- Textarea -->
       <div *ngIf="question.controlType === 'textarea'" class="textarea-answer-wrapper">
