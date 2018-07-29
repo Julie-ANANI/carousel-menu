@@ -339,91 +339,123 @@
     </div>
     <!-- /Innovation analytics -->
 
-    <!-- Origin Comment and Professional Responses -->
-    <div class="section-light-container">
+    <!-- Answer wrapper -->
+    <div id="answer-wrapper">
+
+      <!-- Origin Comment and Professional Responses -->
+      <div class="section-light-container">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="sac-origin-wrapper">
+            <div class="section-inline-container">
+              <app-question-conclusion
+                [innovation]="project"
+                [question]="{identifier: 'professionals', subtitle: {en: 'professionals', fr: 'professionnels'}, label: {en: 'Origin of responses', fr: 'Origine des réponses'}}"
+                [readonly]="!adminSide"
+                [stats]="{nbAnswers: answers.length, percentage: 0}">
+              </app-question-conclusion>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Origin Comment and Professional Responses -->
+
+      <!-- Map -->
+      <div class="section-light-container">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="map-wrapper">
+            <app-worldmap
+              (updateCountries)="filterByCountries($event)"
+              [countries]="countries"
+              [countriesColor]="'#2ECC71'"
+              [initialConfiguration]="mapInitialConfiguration"
+              [synthesis]="true">
+            </app-worldmap>
+          </div>
+        </div>
+      </div>
+      <!-- /Map -->
+
+      <!-- Menu button -->
+      <div class="menu-wrapper" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
+        <div
+          class="menu-item-wrapper"
+          [ngStyle]="{ 'visibility': displayMenuWrapper ? 'visible' : 'hidden' }"
+          (mouseenter)="displayMenu($event)"
+          (mouseleave)="hideMenu($event)">
+          <ul>
+            <li [ngClass]="{'active': activeSection === 'professionals'}" pageScroll href="#professionals">
+              {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
+            </li>
+            <li
+              *ngFor="let question of cleaned_questions"
+              pageScroll [href]="'#' + question.identifier"
+              [ngClass]="{'active': activeSection === question.identifier}">
+              {{ question.title | multiling:lang }}
+            </li>
+            <li [ngClass]="{'active': activeSection === 'conclusion'}" pageScroll href="#conclusion">
+              {{ 'MARKET_REPORT.CONCLUSION' | translate }}
+            </li>
+          </ul>
+        </div>
+        <button class="btn btn-primary" (mouseenter)="displayMenu($event)" (mouseleave)="hideMenu($event)">Menu</button>
+      </div>
+      <!-- /Menu button -->
+
+      <!-- Professionals -->
+      <section class="section-light-container" id="professionals">
+        <div class="column col-xs-12 col-11 col-mx-auto prof">
+          <div class="professional-wrapper">
+            <div *ngFor="let answer of filteredAnswers" class="profile">
+              <app-pro-tag
+                [answer]="answer"
+                (modalAnswerChange)="seeAnswer($event)"
+                [ngStyle]="{ 'width': '100%' }">
+              </app-pro-tag>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /Professionals -->
+
+      <!-- Other question and answers -->
       <div class="column col-xs-12 col-11 col-mx-auto">
-        <div class="sac-origin-wrapper">
-          <div class="section-inline-container">
-            <app-question-conclusion
+        <div *ngFor="let question of questions">
+          <div class="section-light-container">
+            <app-question-section
               [innovation]="project"
-              [question]="{identifier: 'professionals', subtitle: {en: 'professionals', fr: 'professionnels'}, label: {en: 'Origin of responses', fr: 'Origine des réponses'}}"
+              [question]="question"
+              [answers]="filteredAnswers"
+              [showComments]="showDetails"
+              [showDetails]="showDetails"
               [readonly]="!adminSide"
-              [stats]="{nbAnswers: answers.length, percentage: 0}">
-            </app-question-conclusion>
+              (modalAnswerChange)="seeAnswer($event)">
+            </app-question-section>
           </div>
         </div>
       </div>
-    </div>
-    <!-- /Origin Comment and Professional Responses -->
+      <!-- /Other question and answers -->
 
-    <!-- Map -->
-    <div class="section-light-container">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <div class="map-wrapper">
-          <app-worldmap
-            (updateCountries)="filterByCountries($event)"
-            [countries]="countries"
-            [countriesColor]="'#2ECC71'"
-            [initialConfiguration]="mapInitialConfiguration"
-            [synthesis]="true">
-          </app-worldmap>
-        </div>
-      </div>
-    </div>
-    <!-- /Map -->
-
-    <!-- Professionals -->
-    <div class="section-light-container" id="professionals">
-      <div class="column col-xs-12 col-11 col-mx-auto prof">
-        <div class="professional-wrapper">
-          <div *ngFor="let answer of filteredAnswers" class="profile">
-            <app-pro-tag
-              [answer]="answer"
-              (modalAnswerChange)="seeAnswer($event)"
-              [ngStyle]="{ 'width': '100%' }">
-            </app-pro-tag>
+      <!-- Conclusion -->
+      <section class="section-light-container" id="conclusion">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="conclusion-wrapper">
+            <div class="section-inline-container">
+              <h1 class="main-heading">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h1>
+              <app-text-zone
+                [elementId]="'comments'"
+                [readonly]="!adminSide"
+                [data]="project?.comments"
+                (onTextChange)="commentKeyupHandlerFunction($event)">
+              </app-text-zone>
+              <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <!-- /Professionals -->
+      </section>
+      <!-- /Conclusion -->
 
-    <!-- Other question and answers -->
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <div *ngFor="let question of questions">
-        <div class="section-light-container">
-          <app-question-section
-            [innovation]="project"
-            [question]="question"
-            [answers]="filteredAnswers"
-            [showComments]="showDetails"
-            [showDetails]="showDetails"
-            [readonly]="!adminSide"
-            (modalAnswerChange)="seeAnswer($event)">
-          </app-question-section>
-        </div>
-      </div>
     </div>
-    <!-- /Other question and answers -->
-
-    <!-- Conclusion -->
-    <div class="section-light-container">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <div class="conclusion-wrapper">
-          <div class="section-inline-container">
-            <h1 class="main-heading">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h1>
-            <app-text-zone
-              [elementId]="'comments'"
-              [readonly]="!adminSide"
-              [data]="project?.comments"
-              (onTextChange)="commentKeyupHandlerFunction($event)">
-            </app-text-zone>
-            <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /Conclusion -->
+    <!-- /Answer wrapper -->
 
   </div>
   <!-- /Project status done -->

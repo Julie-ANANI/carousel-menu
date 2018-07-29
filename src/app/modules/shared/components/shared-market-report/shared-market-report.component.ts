@@ -31,6 +31,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   adminSide: boolean;
   sidebarTemplateValue: Template = {};
   scrollOn = false;
+  menuButton = false;
+  displayMenuWrapper = false;
   private _companies: Array<Clearbit>;
   private _campaignsStats: {
     nbPros: number,
@@ -106,7 +108,17 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     } else {
       this.scrollOn = false;
     }
+
+    this.menuButton = (this.getCurrentScroll() > 10);
+
   }
+
+  getCurrentScroll() {
+    if (typeof window.scrollY !== 'undefined' && window.scrollY >= 0) {
+      return window.scrollY;
+    }
+    return 0;
+  };
 
   isAdmin() {
     this.adminSide = this.location.path().slice(0, 6) === '/admin';
@@ -226,6 +238,16 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     const value = !this._showDetails;
     this._showDetails = value;
     this._showListProfessional = value;
+  }
+
+  displayMenu(event: Event) {
+    event.preventDefault();
+    this.displayMenuWrapper = true;
+  }
+
+  hideMenu(event: Event) {
+    event.preventDefault();
+    this.displayMenuWrapper = false;
   }
 
   seeAnswer(answer: Answer): void {
