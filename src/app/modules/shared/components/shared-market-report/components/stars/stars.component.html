@@ -21,7 +21,8 @@
   <div *ngFor="let note of notesData">
     <div class="note-label">
       <span>{{ note.label | multiling:lang }}</span>
-      <span class="vote-wrapper">{{ note.count }} {{ 'MARKET_REPORT.PEOPLE_VOTED' | translate }}</span>
+      <span class="vote-wrapper">
+        {{ note.count }} {{ 'MARKET_REPORT.PEOPLE_VOTED' | translate }} | {{ 'MARKET_REPORT.GRADE' | translate }}: {{ note.percentage }}</span>
     </div>
     <ng-container *ngIf="note.count">
       <app-progress-bar
