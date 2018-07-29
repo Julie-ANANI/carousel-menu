@@ -309,6 +309,19 @@
         </div>
       </div>
 
+      <!-- Toggle -->
+      <div *ngIf="question.controlType === 'toggle'" class="toggle-answer-wrapper">
+        <div class="prof-list-wrapper">
+          <div *ngFor="let answer of answersToShow" class="profile-wrapper">
+            <app-pro-tag
+              [answer]="answer"
+              (modalAnswerChange)="seeAnswer($event)"
+              [ngStyle]="{ 'width': '100%' }">
+            </app-pro-tag>
+          </div>
+        </div>
+      </div>
+
     </ng-container>
 
   </ng-container>
