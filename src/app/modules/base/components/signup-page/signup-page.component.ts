@@ -28,8 +28,7 @@ export class SignupPageComponent implements OnInit {
               private _location: Location,
               private activatedRoute: ActivatedRoute,
               private translateTitleService: TranslateTitleService,
-              private translateNotificationsService: TranslateNotificationsService) {
-  }
+              private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit(): void {
     this.translateTitleService.setTitle('COMMON.SIGN_UP');
@@ -86,6 +85,22 @@ export class SignupPageComponent implements OnInit {
 
   }
 
+  onSignUpClick(event: Event) {
+    event.preventDefault();
+
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'SIGN_UP.HEADING_SIDEBAR',
+      type: 'isSignUp'
+    };
+
+  }
+
+  closeSidebar(value: string) {
+    this.sidebarTemplateValue.animate_state = value;
+    this.sidebarState.next('inactive');
+  }
+
   get domainCompanyName(): string {
     return environment.companyName;
   }
@@ -111,22 +126,5 @@ export class SignupPageComponent implements OnInit {
   public getLogoWBG(): string {
     return environment.logoSynthURL;
   }
-
-  onSignUpClick(event: Event) {
-    event.preventDefault();
-
-    this.sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'SIGN_UP.HEADING_SIDEBAR',
-      type: 'signUp'
-    }
-
-  }
-
-  closeSidebar(value: string) {
-    this.sidebarTemplateValue.animate_state = value;
-    this.sidebarState.next(this.sidebarTemplateValue.animate_state);
-  }
-
 
 }

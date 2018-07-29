@@ -9,7 +9,7 @@
 
       <!-- Logo -->
       <div class="text-center">
-        <a href="{{getCompanyUrl()}}"><img src="{{ getLogoWBG() }}" alt="UMI" height="35px"></a>
+        <a href="{{ getCompanyUrl() }}"><img src="{{ getLogoWBG() }}" alt="UMI" height="35px"></a>
       </div>
 
       <div class="register-wrapper">
@@ -40,9 +40,7 @@
         </div>
 
         <!-- Sign up sidebar -->
-        <app-sidebar
-          [template]="sidebarTemplateValue"
-          (closeSidebar)="closeSidebar($event)">
+        <app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
           <app-user-form
             [type]="sidebarTemplateValue.type"
             (userSignUpData)="onSubmit($event)"
@@ -54,7 +52,7 @@
 
       <!-- Sign in -->
       <div class="signin-wrapper text-center">
-        <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '10px' }">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
+        <span [ngStyle]="{ 'font-size': '14px', 'padding-right': '10px' }">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
         <a class="btn btn-sm ghost-primary" routerLink="/login">{{ 'COMMON.LOG_IN' | translate }}</a>
       </div>
 
