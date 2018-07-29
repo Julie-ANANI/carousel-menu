@@ -401,10 +401,41 @@
     </div>
     <!-- /Other question and answers -->
 
+    <!-- Conclusion -->
+    <div class="section-light-container">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="conclusion-wrapper">
+          <div class="section-inline-container">
+            <h1 class="main-heading">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h1>
+            <app-text-zone
+              [elementId]="'comments'"
+              [readonly]="!adminSide"
+              [data]="project?.comments"
+              (onTextChange)="commentKeyupHandlerFunction($event)">
+            </app-text-zone>
+            <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Conclusion -->
+
   </div>
   <!-- /Project status done -->
 
 </div>
+
+<!-- Insight preview -->
+<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+  <app-user-answer
+    [adminMode]="adminSide"
+    [mode]="editMode"
+    [(userAnswer)]="modalAnswer"
+    [innovationId]="innoid"
+    [questions]="questions">
+  </app-user-answer>
+</app-sidebar>
+
 <!--
 <div class="section-container" id="project-synthesis">
   <div class="columns">
@@ -550,19 +581,6 @@
   </div>
 </div>
 -->
-
-
-<!-- Insight preview -->
-<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
-  <app-user-answer
-    [adminMode]="adminSide"
-    [mode]="editMode"
-    [(userAnswer)]="modalAnswer"
-    [innovationId]="innoid"
-    [questions]="questions">
-  </app-user-answer>
-</app-sidebar>
-
 
 <!--
 <shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>

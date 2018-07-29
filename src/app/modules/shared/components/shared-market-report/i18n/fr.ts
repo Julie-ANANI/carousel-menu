@@ -24,6 +24,8 @@ export const MARKET_REPORT = {
 
   'INSIGHT': 'Des idées',
 
+  'CONCLUSION': 'Conclusion',
+
   'STICKY_BAR': {
     'DETAIL_VIEW': 'Vue détaillée',
     'FILTER': 'Filtres',

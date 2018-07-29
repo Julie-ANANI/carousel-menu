@@ -72,7 +72,7 @@
           <!-- Comment -->
           <div class="ce-comment-wrapper">
             <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMMENTS' | translate }}</h2>
-            <div [innerHtml]="project.comments"></div>
+            <p [innerHtml]="project.comments"></p>
             <div>
               <span [ngStyle]="{ 'color': '#333333' }">{{ 'PROJECT_MODULE.EXPLORATION.ACCOUNT_MANAGER' | translate }}</span>
               {{ project.owner.name }}
@@ -203,12 +203,12 @@
         <!-- Insight section -->
         <div class="section-light-container" [ngStyle]="{ 'padding-bottom': '0' }">
           <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.INSIGHTS_TITLE' | translate }}</h2>
-          <app-shared-table
+         <!-- <app-shared-table
             [data]="tableInfos"
             [config]="config"
             (configChange)="loadAnswers()"
             (editRow)="seeAnswer($event)">
-          </app-shared-table>
+          </app-shared-table>-->
         </div>
 
       </div>

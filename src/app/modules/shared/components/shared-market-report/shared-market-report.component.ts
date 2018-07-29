@@ -244,6 +244,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.editMode.next(false);
   }
 
+  commentKeyupHandlerFunction(event: { content: string }) {
+    this.project.comments = event['content'];
+  }
+
   public deleteFilter(key: string, event: Event) {
     event.preventDefault();
     if (key === 'worldmap') {
