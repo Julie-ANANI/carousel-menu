@@ -460,6 +460,7 @@ body.sample-infographic {
     padding-bottom: 25px;
     background-color: white;
     transition: all 0.35s ease-in-out;
+    height: 136px;
 
     .sc-content-wrapper {
       display: flex;
@@ -476,7 +477,38 @@ body.sample-infographic {
         border-left: 1px solid #D8D8D8;
         border-right: 1px solid #D8D8D8;
         flex: 3;
-        padding: 20px 15px 15px 15px;
+        padding: 20px 15px 10px 15px;
+        height: 86px;
+        overflow: auto;
+
+        ul {
+          display: inline-flex;
+          flex-wrap: wrap;
+          list-style: none;
+          text-decoration: none;
+
+          li {
+            padding: 5px;
+
+            a {
+              color: #484848;
+
+              .icon {
+                font-size: 14px;
+                margin-right: 5px;
+                color: #97A4B1;
+              }
+
+            }
+
+            a:hover {
+              text-decoration: underline;
+            }
+
+          }
+
+        }
+
       }
 
       .sc-button-wrapper {
@@ -728,6 +760,10 @@ body.sample-infographic {
 /********************************** Media ***************************************/
 
 @media (max-width: 840px) {
+
+  .sc-sticky-wrapper {
+    height: unset;
+  }
 
   .sc-innovation-wrapper {
     flex-direction: column;

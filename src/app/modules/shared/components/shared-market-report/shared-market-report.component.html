@@ -58,6 +58,11 @@
         <!-- Filter view -->
         <div class="sc-filter-wrapper">
           <p>{{ 'MARKET_REPORT.STICKY_BAR.FILTER' | translate }}</p>
+          <ul>
+            <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
+              <a><i class="icon icon-cross"></i>{{ filters[fKey].questionTitle | multiling:lang }}</a>
+            </li>
+          </ul>
         </div>
 
         <!-- Buttons -->

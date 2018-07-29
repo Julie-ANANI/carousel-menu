@@ -21,8 +21,4 @@ export class SharedMarketReportPopoverComponent {
     this.modalAnswerChange.emit(event);
   }
 
-  public newFilter(filter: Filter) {
-    this.addFilter.emit(filter);
-  }
-
 }

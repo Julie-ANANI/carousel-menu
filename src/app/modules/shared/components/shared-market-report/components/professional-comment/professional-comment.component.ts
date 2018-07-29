@@ -25,11 +25,13 @@ export class SharedMarketCommentComponent {
 
   public newFilter(event: any, tag: Tag) {
     event.preventDefault();
+
     this.filterService.addFilter({
       status: 'TAG',
       questionTitle: tag.label,
       value: tag._id
     });
+
   }
 
 }
