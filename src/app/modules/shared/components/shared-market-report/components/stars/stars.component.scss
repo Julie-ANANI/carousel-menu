@@ -1,3 +1,4 @@
+/*
 .stars-component {
   width: 100%;
 
@@ -49,5 +50,37 @@
     }
 
   }
+
+}
+*/
+
+.star-wrapper {
+
+  div {
+    margin-bottom: 25px;
+
+    .note-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      color: #4F5D6B;
+      margin-bottom: 25px;
+      font-weight: 600;
+
+      .vote-wrapper {
+        font-size: 14px;
+        color: #97A4B1;
+      }
+
+    }
+
+    .no-grade-wrapper {
+      font-size: 14px;
+      color: #97A4B1;
+    }
+
+  }
+
+
 
 }

@@ -1,4 +1,4 @@
-<table class="stars-component">
+<!--<table class="stars-component">
   <tr *ngFor="let note of notesData">
     <td>{{note.label | multiling:lang}}</td>
     <td>
@@ -15,4 +15,21 @@
       </div>
     </td>
   </tr>
-</table>
+</table>-->
+
+<div class="star-wrapper">
+  <div *ngFor="let note of notesData">
+    <div class="note-label">
+      <span>{{ note.label | multiling:lang }}</span>
+      <span class="vote-wrapper">{{ note.count }} {{ 'MARKET_REPORT.PEOPLE_VOTED' | translate }}</span>
+    </div>
+    <ng-container *ngIf="note.count">
+      <app-progress-bar
+        [width]="note.percentage"
+        [backgroundColor]="'#2ECC71'"
+        [value]="note.percentage">
+      </app-progress-bar>
+    </ng-container>
+    <span *ngIf="!note.count" class="no-grade-wrapper">{{ 'MARKET_REPORT.NO_GRADE' | translate }}</span>
+  </div>
+</div>
