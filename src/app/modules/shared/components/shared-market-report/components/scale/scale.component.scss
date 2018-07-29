@@ -1,3 +1,4 @@
+/*
 .scale-component {
 
   .flex-container {
@@ -94,6 +95,77 @@
       font-size: 14px;
       color: #AEAEAE;
       font-weight: bold;
+    }
+
+  }
+
+}
+
+*/
+
+.scale-component-wrapper {
+
+  .scale-score-wrapper {
+    font-size: 18px;
+    color: #4F5D6B;
+    margin-bottom: 25px;
+  }
+
+  .scale-progress-outer-wrapper {
+    width: 100%;
+    border-radius: 25px;
+    background-color: #D8D8D8;
+    height: 16px;
+    margin-bottom: 25px;
+    transition: all 0.35s ease-in-out;
+
+    .scale-progress-inner-wrapper {
+      height: 16px;
+      border-radius: 25px;
+      text-align: center;
+      font-size: 11px;
+      color: white;
+      font-weight: 600;
+    }
+
+    &.number1 .scale-progress-inner-wrapper {
+      background-image: linear-gradient(-180deg, #CE392D 0%, #B0261B 100%);
+    }
+
+    &.number2 .scale-progress-inner-wrapper {
+      background-image: linear-gradient(-180deg, #D75A3E 0%, #C14023 100%);
+    }
+
+    &.number3 .scale-progress-inner-wrapper {
+      background-image: linear-gradient(-180deg, #E68034 0%, #CA681E 100%);
+    }
+
+    &.number4 .scale-progress-inner-wrapper {
+      background-image: linear-gradient(-180deg, #F4B11B 0%, #C18601 100%);
+    }
+
+    &.number5 .scale-progress-inner-wrapper {
+      background-image: linear-gradient(-180deg, #EFD622 0%, #CBB515 100%);
+    }
+
+    &.number6 .scale-progress-inner-wrapper {
+      background-image: linear-gradient(-180deg, #D6D556 0%, #B9B837 98%);
+    }
+
+    &.number7 .scale-progress-inner-wrapper {
+      background-image: linear-gradient(-180deg, #CBDD51 0%, #99AA24 100%);
+    }
+
+    &.number8 .scale-progress-inner-wrapper {
+      background-image: linear-gradient(-180deg, #A8CD4C 0%, #799C24 100%);
+    }
+
+    &.number9 .scale-progress-inner-wrapper {
+      background-image: linear-gradient(-180deg, #95C84F 0%, #659C19 100%);
+    }
+
+    &.number10 .scale-progress-inner-wrapper {
+      background-image: linear-gradient(-180deg, #9ADA43 2%, #64971C 100%);
     }
 
   }

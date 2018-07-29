@@ -299,6 +299,11 @@
         </div>
       </div>
 
+      <!-- Rating -->
+      <div *ngIf="question.controlType === 'scale'" class="rating-answer-wrapper">
+        <app-scale [answers]="answersToShow" [question]="question"></app-scale>
+      </div>
+
     </ng-container>
 
   </ng-container>

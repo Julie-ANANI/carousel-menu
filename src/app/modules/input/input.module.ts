@@ -9,6 +9,7 @@ import { AutocompleteInputComponent } from './component/autocomplete-input/autoc
 import { InputListComponent } from './component/input-list/input-list.component';
 import { SearchInputComponent } from './component/search-input/search-input.component';
 import { CountryFlagComponent } from './component/country-flag/country-flag.component';
+import { ProgressBarComponent } from './component/progress-bar/progress-bar.component';
 
 
 @NgModule({
@@ -25,13 +26,15 @@ import { CountryFlagComponent } from './component/country-flag/country-flag.comp
   AutocompleteInputComponent,
   InputListComponent,
   SearchInputComponent,
-  CountryFlagComponent
+  CountryFlagComponent,
+  ProgressBarComponent
   ],
   exports: [
     AutocompleteInputComponent,
     InputListComponent,
     SearchInputComponent,
-    CountryFlagComponent
+    CountryFlagComponent,
+    ProgressBarComponent
   ]
 })
 

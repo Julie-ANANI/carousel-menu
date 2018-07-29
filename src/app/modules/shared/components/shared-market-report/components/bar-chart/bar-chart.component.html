@@ -35,12 +35,11 @@
 
       <!-- Row 2 -->
       <div class="row2-wrapper">
-        <div class="progress-outer-wrapper">
-          <div class="progress-inner-wrapper" [ngStyle]="{'background-color': barData.color, 'width': barData.absolutePercentage,
-           'min-width': '25px' }">
-            <span>{{ barData.absolutePercentage }}</span>
-          </div>
-        </div>
+        <app-progress-bar
+          [width]="barData.absolutePercentage"
+          [value]="barData.absolutePercentage"
+          [backgroundColor]="barData.color">
+        </app-progress-bar>
       </div>
       <!-- /Row 2 -->
 
