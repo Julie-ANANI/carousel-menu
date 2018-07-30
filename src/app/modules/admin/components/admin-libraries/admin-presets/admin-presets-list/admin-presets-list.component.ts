@@ -72,13 +72,6 @@ export class AdminPresetsListComponent implements OnInit {
     });
   }
 
-  //FIXME: à supprimer
-  public importAllPresets() {
-    this._presetService.importAllPresets().first().subscribe((answer: any) => {
-      console.log(answer);
-    });
-  }
-
   set config(value: any) { this._config = value; }
   get config(): any { return this._config; }
   get total () { return this._total; }
