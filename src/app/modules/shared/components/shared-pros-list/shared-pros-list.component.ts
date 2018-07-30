@@ -7,6 +7,7 @@ import { Professional } from '../../../../models/professional';
 import {Table} from '../../../table/models/table';
 import {Template} from '../../../sidebar/interfaces/template';
 import {Subject} from 'rxjs/Subject';
+import {Tag} from '../../../../models/tag';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -37,6 +38,8 @@ export class SharedProsListComponent {
   private _pros: Array <SelectedProfessional>;
 
   private _prosToRemove: Professional[] = [];
+  private _prosToTag: Professional[] = [];
+
   private _more: Template = {};
   private _showDeleteModal = false;
   private _currentPro: Professional = null;
@@ -112,11 +115,32 @@ export class SharedProsListComponent {
   }
 
   performActions(action: any) {
-    switch (this._actions.findIndex(action)) {
+    switch (this._actions.findIndex(value => action._action === value)) {
       case 0: {
-        
+        this.editTags(action._rows);
+        break;
       }
     }
+  }
+
+  editTags(pros: Professional[]) {
+    this._more = {
+      animate_state: 'active',
+      title: 'COMMON.ADD-TAGS',
+      type: 'tagProfessional'
+    };
+    this._prosToTag = pros;
+  }
+
+  addTagsToPro(tags: Tag[]) {
+    this._prosToTag.forEach((value, index) => {
+      if (!this._prosToTag[index].tags) {
+        this._prosToTag[index].tags = [];
+      }
+      tags.forEach(value1 => this._prosToTag[index].tags.push(value1))
+    });
+
+    this._prosToTag.forEach(value => this.updatePro(value));
   }
 
   updatePro(pro: Professional): void {
@@ -214,6 +238,7 @@ export class SharedProsListComponent {
   get config() { return this._config; }
   get tableInfos(): Table { return this._tableInfos; }
   get prosToRemove(): Professional[] { return this._prosToRemove; }
+  get prosToTag(): Professional[] { return this._prosToTag; }
   get more(): any { return this._more; }
   get showDeleteModal(): boolean { return this._showDeleteModal; }
   get currentPro(): Professional { return this._currentPro; }

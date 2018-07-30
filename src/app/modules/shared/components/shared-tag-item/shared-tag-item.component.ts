@@ -6,6 +6,7 @@ import { TagsService } from '../../../../services/tags/tags.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Tag } from '../../../../models/tag';
 import { Observable } from 'rxjs/Observable';
+import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
 
 @Component({
   selector: 'app-shared-tag-item',
@@ -15,8 +16,10 @@ import { Observable } from 'rxjs/Observable';
 
 export class SharedTagItemComponent implements OnInit {
 
-  @Input() tags: Array<Tag>;
-  @Input() projectId: string;
+  @Input() tags: Array<any>;
+  @Input() set projectId(project: string) {
+    this._projectId = project;
+  };
   @Input() editMode: boolean;
 
   @Output() addTag: EventEmitter<Tag> = new EventEmitter();
@@ -24,10 +27,13 @@ export class SharedTagItemComponent implements OnInit {
 
   private _tagForm: FormGroup;
 
+  private _projectId = '';
+
   constructor(private translateService: TranslateService,
               private formBuilder: FormBuilder,
               private sanitizer: DomSanitizer,
-              private tagsService: TagsService) {}
+              private tagsService: TagsService,
+              private autocompleteService: AutocompleteService) {}
 
   ngOnInit() {
     this._tagForm = this.formBuilder.group({
@@ -36,16 +42,28 @@ export class SharedTagItemComponent implements OnInit {
   }
 
   public tagSuggestions(keyword: string): Observable<Array<any>> {
-    return this.tagsService.searchTagInPool(this.projectId, keyword);
+    if (this._projectId !== '') {
+      return this.tagsService.searchTagInPool(this.projectId, keyword);
+    } else {
+      const queryConf = {
+        keyword: keyword,
+        type: 'tags'
+      };
+      return this.autocompleteService.get(queryConf);
+    }
   }
 
-  public autocompleListFormatter = (data: Tag) : SafeHtml => {
+  public autocompleListFormatter = (data: any) : SafeHtml => {
     const text = this.autocompleValueFormatter(data);
     return this.sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
-  public autocompleValueFormatter = (data: Tag) : string => {
-    return MultilingPipe.prototype.transform(data.label, this.translateService.currentLang);
+  public autocompleValueFormatter = (data: any) : string => {
+    if (this._projectId === '') {
+      return MultilingPipe.prototype.transform(data.name, this.translateService.currentLang);
+    } else {
+      return MultilingPipe.prototype.transform(data.label, this.translateService.currentLang);
+    }
   };
 
   public addTagEmitter(event: Event): void {
@@ -65,6 +83,10 @@ export class SharedTagItemComponent implements OnInit {
 
   get tagForm() {
     return this._tagForm;
+  }
+
+  get projectId(): string{
+    return this._projectId;
   }
 
 }

@@ -8,6 +8,8 @@ import { AutocompleteService } from '../../../../services/autocomplete/autocompl
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs/Subject';
+import {Tag} from '../../../../models/tag';
+import {TagsService} from '../../../../services/tags/tags.service';
 
 @Component({
   selector: 'app-user-form',
@@ -47,6 +49,7 @@ export class UserFormComponent implements OnInit {
   @Output() userSignUpData = new EventEmitter<FormGroup>();
   @Output() editUserData = new EventEmitter<User>();
   @Output() professionalUserData = new EventEmitter<Professional>();
+  @Output() newTags = new EventEmitter<Tag[]>();
 
   isSignUp = false;
   isEditUser = false;
@@ -62,6 +65,7 @@ export class UserFormComponent implements OnInit {
   private _pro: Professional = null;
   private _campaign: Campaign = null;
   private _editInstanceDomain = false;
+  private _tags: Tag[] = [];
 
   private _type = '';
 
@@ -82,7 +86,8 @@ export class UserFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
               private translateService: TranslateService,
-              private _authService: AuthService) {}
+              private _authService: AuthService,
+              private _tagsService: TagsService,) {}
 
   ngOnInit() {
     this.userForm = this.formBuilder.group( {
@@ -96,7 +101,8 @@ export class UserFormComponent implements OnInit {
       roles: '',
       operator: [false],
       profileUrl: [null],
-      domain: ['']
+      domain: [''],
+      tags: [[], Validators.required]
     });
 
     this._user = new User();
@@ -107,8 +113,6 @@ export class UserFormComponent implements OnInit {
           setTimeout (() => {
             this.userForm.reset();
           }, 500);
-        } else if (state === 'active') {
-          this.loadTypes();
         }
       })
     }
@@ -150,6 +154,7 @@ export class UserFormComponent implements OnInit {
   loadProfessional() {
     if (this._pro) {
       this.userForm.get('companyName').setValue(this._pro.company);
+      this._tags = this._pro.tags;
       this.userForm.patchValue(this._pro);
     }
   }
@@ -165,7 +170,10 @@ export class UserFormComponent implements OnInit {
       const pro = this.userForm.value;
       pro._id = this._pro._id;
       pro.company = this.userForm.get('companyName').value;
+      pro.tags = this._tags;
       this.professionalUserData.emit(pro);
+    } else if (this.addTagsToProfessionals) {
+      this.newTags.emit(this._tags);
     }
   }
 
@@ -226,6 +234,16 @@ export class UserFormComponent implements OnInit {
     }
   }
 
+  addTag(tag: any) {
+    this._tagsService.get(tag._id).first().subscribe(res => {
+      this._tags.push(res.tags[0]);
+    });
+  }
+
+  removeTag(tag: any) {
+    this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
+  }
+
   get editInstanceDomain() {
     return this._editInstanceDomain;
   }
@@ -248,6 +266,10 @@ export class UserFormComponent implements OnInit {
 
   get companyName(): string {
     return environment.companyShortName;
+  }
+
+  get tags(): Tag[] {
+    return this._tags;
   }
 
 }

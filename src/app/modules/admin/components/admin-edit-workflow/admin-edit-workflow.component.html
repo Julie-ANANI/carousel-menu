@@ -15,7 +15,7 @@
     <a [ngClass]="{'text-warning': language === 'fr'}" (click)="changeLanguage('fr')">FR</a>
     <span  class="text-success"><i class="fas fa-check" *ngIf="inCampaign && isModifiedFr"></i></span>
     <span  class="text-error"><i class="fas fa-times" *ngIf="inCampaign && !isModifiedFr"></i></span> -
-    <a class="text-error" (click)="deleteModal = true"><i class="fas fa-trash"></i> {{ 'COMMON.DELETE' | translate }}</a>
+    <a class="text-error" (click)="deleteModal = true" *ngIf="isDeletable"><i class="fas fa-trash"></i> {{ 'COMMON.DELETE' | translate }}</a>
   </p>
   <app-shared-table [data]="tableInfos" (editRow)="editEmail($event)" [config]="config"></app-shared-table>
 

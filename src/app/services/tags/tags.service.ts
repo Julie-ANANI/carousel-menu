@@ -15,8 +15,8 @@ export class TagsService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public get(id: string): Observable<Tag> {
-    return this._http.get('/tags/entity' + id)
+  public get(id: string): Observable<any> {
+    return this._http.get('/tags/entity/' + id)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

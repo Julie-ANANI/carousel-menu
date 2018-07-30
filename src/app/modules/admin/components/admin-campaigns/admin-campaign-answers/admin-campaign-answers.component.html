@@ -2,18 +2,17 @@
 <shared-answer-modal [(modalAnswer)]="modalAnswer" [innoid]="campaign.innovation._id" [adminMode]="true" [questions]="questions"></shared-answer-modal>
 -->
 
-<h2>{{ total }} {{ 'CAMPAIGNS.ANSWERS' | translate }}</h2>
+<!--<h2>{{ total }} {{ 'CAMPAIGNS.ANSWERS' | translate }}</h2>-->
 
-<div *ngIf="autorizedActions(2)">
-  <button class="btn btn-default" (click)="exportAnswers($event)">
-    {{ 'CAMPAIGNS.EXPORT-ANSWERS' | translate }}
-  </button>
-
-  <label>
+<div *ngIf="autorizedActions(2)" class="text-right">
+  <label class="btn ghost-primary btn-primary">
     <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
-    <span class="btn btn-default">{{ 'CAMPAIGNS.IMPORT-ANSWERS' | translate }}</span>
+   {{ 'CAMPAIGNS.IMPORT-ANSWERS' | translate }}
   </label>
 
+  <button class="btn btn-primary" (click)="exportAnswers($event)">
+    {{ 'CAMPAIGNS.EXPORT-ANSWERS' | translate }}
+  </button>
 </div>
 
 <div class="bg-success answers-header">
