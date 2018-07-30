@@ -266,8 +266,15 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.editMode.next(false);
   }
 
-  commentKeyupHandlerFunction(event: { content: string }) {
-    this.project.comments = event['content'];
+  public keyupHandlerFunction(event: any) {
+    const objToSave = {};
+    objToSave['finalConclusion'] = {
+      conclusion: event['content']
+    };
+    this.innovationService.updateMarketReport(this.project._id, objToSave)
+      .first().subscribe((data) => {
+        this.project.marketReport = data;
+      });
   }
 
   public deleteFilter(key: string, event: Event) {

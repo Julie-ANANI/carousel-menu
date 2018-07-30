@@ -442,10 +442,10 @@
             <div class="section-inline-container">
               <h1 class="main-heading">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h1>
               <app-text-zone
-                [elementId]="'comments'"
+                [elementId]="'finalConclusion'"
                 [readonly]="!adminSide"
-                [data]="project?.comments"
-                (onTextChange)="commentKeyupHandlerFunction($event)">
+                [data]="project?.marketReport.finalConclusion?.conclusion"
+                (onTextChange)="keyupHandlerFunction($event)">
               </app-text-zone>
               <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
             </div>
