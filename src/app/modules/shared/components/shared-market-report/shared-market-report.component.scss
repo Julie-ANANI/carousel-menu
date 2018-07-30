@@ -814,7 +814,12 @@ body.sample-infographic {
 @media (max-width: 840px) {
 
   .sc-sticky-wrapper {
-    height: unset;
+    height: unset !important;
+
+    .sc-filter-wrapper {
+      height: 112px !important;
+    }
+
   }
 
   .sc-innovation-wrapper {

@@ -5,6 +5,9 @@
 
 <div class="pro-tag-wrapper">
 
+  <!-- Flag -->
+  <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
+
   <!-- Top profile -->
   <div *ngIf="answer.profileQuality === 2" class="label-validate">{{ 'COMMON.TOP_PROFILE' | translate }}</div>
 

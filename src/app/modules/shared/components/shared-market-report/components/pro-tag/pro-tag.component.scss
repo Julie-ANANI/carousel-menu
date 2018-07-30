@@ -5,6 +5,14 @@
   align-items: center;
   font-size: 14px;
   flex-direction: column;
+  overflow: hidden;
+  position: relative;
+
+  app-country-flag {
+    position: absolute;
+    top: 5px;
+    right: 9px;
+  }
 
   .label-validate {
     margin-right: auto;
