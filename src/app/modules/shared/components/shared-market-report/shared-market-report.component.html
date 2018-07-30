@@ -1,148 +1,765 @@
-<div class="section-container" id="project-synthesis">
+<div
+  class="synthesis-wrapper section-container s-print"
+  [ngStyle]="{ 'background-color': (projectStatus !== 'DONE' && !adminSide) ? 'white' : '#F5F5F5', 'padding-top': !adminSide ? '0' : '0' }">
 
-<!-- Bot messages -->
-<div *ngIf="!adminSide && projectStatus !== 'DONE'">
-  <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + projectStatus) | translate }}</h1>
-  <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
-    <span class="bot-rect" [ngSwitch]="projectStatus">
-
-      <ng-container *ngSwitchCase="'EDITING'">
-        <ng-container *ngIf="project.reviewing">
-          {{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}
+  <!-- Project status not done -->
+  <div *ngIf="projectStatus !== 'DONE' && !adminSide">
+    <div  class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '50px' }">
+      <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + projectStatus)  | translate }}</h1>
+      <div class="text-center" [ngStyle]="{ 'padding-top': '25px' }">
+      <span class="bot-rect" [ngSwitch]="projectStatus">
+        <ng-container *ngSwitchCase="'EDITING'">
+           <ng-container *ngIf="project.reviewing">
+              {{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}
+            </ng-container>
+            <ng-container *ngIf="!project.reviewing">
+              {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }}
+              <span [ngStyle]="{ 'color': '#FFB300' }">
+                {{ 'MARKET_REPORT.MESSAGE.EDITING.B' | translate }}
+              </span>
+              {{ 'MARKET_REPORT.MESSAGE.EDITING.C' | translate }}
+            </ng-container>
         </ng-container>
-        <ng-container *ngIf="!project.reviewing">
-          {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }}
+        <ng-container *ngSwitchCase="'SUBMITTED'">
+            {{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}
         </ng-container>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="'SUBMITTED'">
-        {{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}
-      </ng-container>
-
-      <ng-container *ngSwitchCase="'EVALUATING'">
-        {{ 'MARKET_REPORT.MESSAGE.EVALUATING' | translate }}
-      </ng-container>
-
-    </span>
-    <br>
-    <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-    <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
-  </div>
-</div>
-<!-- /Bot messages -->
-
-<!-- Project under DONE status -->
-<div *ngIf="projectStatus === 'DONE' || adminSide">
-
-  <!-- Title and download button section -->
-  <div class="title-wrapper">
-    <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.EVALUATING' | translate }}</h1>
-
-    <ng-container [ngSwitch]="adminSide">
-      <ng-container *ngSwitchCase="true">
-        <button *ngIf="projectStatus === 'EVALUATING'" (click)="changeStatus($event, 'DONE')" class="btn btn-primary">
-          {{ 'MARKET_REPORT.BUTTON.STATUS_TO_DONE' | translate }}
-        </button>
-        <button *ngIf="projectStatus === 'DONE'" (click)="changeStatus($event, 'EVALUATING')" class="btn btn-primary">
-          {{ 'MARKET_REPORT.BUTTON.STATUS_TO_EVALUATING' | translate }}
-        </button>
-      </ng-container>
-     <!-- <button *ngSwitchDefault (click)="print($event)" class="btn btn-primary">
-        {{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }} &lt;!&ndash; We display the download button only client side &ndash;&gt;
-      </button>-->
-    </ng-container>
-  </div>
-
-  <!-- Menu -->
-  <div class="question-wrapper">
-    <ul>
-      <li [ngClass]="{'active': activeSection === 'professionals'}">
-        <a pageScroll href="#professionals">
-          {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }} <i class="icon icon-arrow-right"></i>
-        </a>
-      </li>
-      <li *ngFor="let question of cleaned_questions"
-          [ngClass]="{'active': activeSection === question.identifier}">
-        <a pageScroll [href]="'#' + question.identifier">
-          {{ question.title | multiling:lang }} <i class="icon icon-arrow-right"></i>
-        </a>
-      </li>
-    </ul>
-    <div *ngIf="objectKeys(filters).length" class="filter-wrapper">
-      <p>{{'MARKET_REPORT.FILTERS' | translate}}</p>
-      <ul>
-        <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
-          <a>{{filters[fKey].questionTitle | multiling:lang}} <i class="icon icon-cross"></i></a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Answer section -->
-  <div id="answer-wrapper">
-
-    <!-- Origin of responses -->
-    <div class="section-container">
-      <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h2>
-      <app-question-conclusion
-        [innovation]="project"
-        [question]="{identifier: 'professionals'}"
-        [readonly]="!adminMode"
-        [stats]="{nbAnswers: answers.length, percentage: 0}">
-      </app-question-conclusion>
-      <div class="map-wrapper">
-        <app-worldmap
-          (updateCountries)="filterByCountries($event)"
-          [countries]="countries"
-          [countriesColor]="'#FFB300'"
-          [initialConfiguration]="mapInitialConfiguration"
-          [isEditable]="true">
-        </app-worldmap>
+        <ng-container *ngSwitchCase="'EVALUATING'">
+            {{ 'MARKET_REPORT.MESSAGE.EVALUATING' | translate }}
+        </ng-container>
+      </span>
+        <br>
+        <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+        <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot" class="bot-image"></div>
       </div>
     </div>
+  </div>
 
-    <!-- Professionals -->
-    <div class="section-container" id="professionals">
-      <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
-      <div class="professional-wrapper">
-        <div *ngFor="let answer of filteredAnswers" class="profile">
-          <app-pro-tag [answer]="answer" (addFilter)="addFilter($event)" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+  <!-- Project status done -->
+  <div *ngIf="projectStatus === 'DONE' || adminSide">
+
+    <!-- Sticky bar -->
+    <div class="sc-sticky-wrapper" [ngClass]="{ 'sc-scroll-sticky': scrollOn }">
+      <div class="column col-xs-12 col-11 col-mx-auto sc-content-wrapper">
+
+        <!-- Detail view -->
+        <div class="sc-detail-wrapper">
+          <label class="form-switch" for="showDetails">
+            <input
+              type="checkbox"
+              name="showDetails"
+              id="showDetails"
+              (change)="toggleDetails($event)"
+              [checked]="showDetails">
+            <i class="form-icon"></i>
+            {{ 'MARKET_REPORT.STICKY_BAR.DETAIL_VIEW' | translate }}
+          </label>
+        </div>
+
+        <!-- Filter view -->
+        <div class="sc-filter-wrapper">
+          <p>{{ 'MARKET_REPORT.STICKY_BAR.FILTER' | translate }}</p>
+          <ul>
+            <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
+              <a><i class="icon icon-cross"></i>{{ filters[fKey].questionTitle | multiling:lang }}</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Buttons -->
+        <div class="sc-button-wrapper">
+          <ng-container [ngSwitch]="adminSide">
+            <ng-container *ngSwitchCase="true">
+              <button class="btn btn-primary" (click)="changeStatus($event, 'DONE')">
+                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_ADMIN' | translate }}
+              </button>
+            </ng-container>
+            <ng-container *ngSwitchCase="false">
+              <!--<button class="btn ghost-primary">{{ 'MARKET_REPORT.STICKY_BAR.BUTTON_CSV' | translate }}</button>-->
+              <button class="btn btn-primary" (click)="printSynthesis($event)">
+                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_DOWNLOAD' | translate }}
+              </button>
+            </ng-container>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+    <!-- /Sticky bar -->
+
+    <!-- Main page -->
+    <div *ngIf="!adminSide && showDetails" class="section-container sc-front-wrapper s-frontPage-print">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="section-inline-container white-background">
+
+          <!-- Logo -->
+          <div class="sc-header-wrapper">
+            <img src="{{ getLogo() }}" alt="UMI" height="35px">
+          </div>
+
+          <!-- Project name -->
+          <div class="sc-body-wrapper">
+            <h1>{{ project.name }}</h1>
+            <h6>{{ project.created | date }}</h6>
+          </div>
+
+          <!-- Link -->
+          <div class="sc-footer-wrapper">
+            <a href="https://www.umi.us/" class="text-link">www.umi.us</a>
+            <p>UMI, Campus Verrazzano, 1 place Giovanni da Verrazzano, 69009 Lyon, France</p>
+          </div>
+
         </div>
       </div>
     </div>
+    <!-- /Main page -->
 
-    <!-- Other questions -->
-    <div *ngFor="let question of questions" class="section-container">
-      <app-question-section
-        [innovation]="project"
-        [question]="question"
-        [answers]="filteredAnswers"
-        [showComments]="showDetails"
-        [showDetails]="showDetails"
-        [readonly]="!adminMode"
-        (addFilter)="addFilter($event)"
-        (modalAnswerChange)="seeAnswer($event)">
-      </app-question-section>
+    <!-- Innovation detail -->
+    <div *ngIf="!adminSide && showDetails" class="section-light-container s-innovationPage-print">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="section-inline-container sc-innovation-wrapper white-background">
+
+          <!-- Column 1 -->
+          <div class="sc-summary-wrapper">
+            <h1 class="main-heading">{{ project.innovationCards[0].title }}</h1>
+            <p>{{ project.innovationCards[0].summary }}</p>
+            <div *ngIf="project.principalMedia?.type === 'PHOTO'" [ngStyle]="{ 'padding-bottom': '20px' }">
+              <img
+                [src]="project.principalMedia.url"
+                [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+                height="146" width="220px">
+            </div>
+            <div *ngIf="project.principalMedia?.type !== 'PHOTO'" [ngStyle]="{ 'padding-bottom': '20px' }">
+              <img
+                [src]="project.innovationCards[0].media[0]?.url"
+                [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
+                height="146" width="220px">
+            </div>
+            <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
+            <ul class="sc-advantage">
+              <li *ngFor="let advantage of project.innovationCards[0].advantages;">
+                {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 2 -->
+          <div class="sc-issue-wrapper">
+            <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
+            <p>{{ project.innovationCards[0].problem }}</p>
+          </div>
+
+          <!-- Column 3 -->
+          <div class="sc-solution-wrapper">
+            <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
+            <p>{{ project.innovationCards[0].solution }}</p>
+          </div>
+
+        </div>
+      </div>
     </div>
+    <!-- /Innovation detail -->
+
+    <!-- Innovation targeting -->
+    <div *ngIf="!adminSide && showDetails" class="section-light-container s-targeting-print">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="section-inline-container sc-targeting-wrapper white-background">
+
+          <!-- Column 1 -->
+          <div class="sc-map-wrapper">
+            <h1 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}</h1>
+            <app-worldmap
+              [initialConfiguration]="continentTarget"
+              [countriesColor]="'#2ECC71'"
+              [isEditable]="false">
+            </app-worldmap>
+            <div *ngIf="project.settings.geography.exclude.length > 0" class="sc-question-wrapper">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</p>
+              <div *ngFor="let country of project.settings.geography.exclude" class="sc-answer-wrapper">
+                {{ country.name }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2 -->
+          <div class="sc-t-answer-wrapper">
+            <div *ngIf="project.settings.market.comments.length > 0">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}</p>
+              <p>{{ project.settings.market.comments }}</p>
+            </div>
+            <div *ngIf="project.settings.companies.include.length > 0" class="sc-question-wrapper">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}</p>
+              <div *ngFor="let companyInclude of project.settings.companies.include" class="sc-answer-wrapper">
+                {{ companyInclude.name }}
+              </div>
+            </div>
+            <div *ngIf="project.settings.companies.exclude.length > 0" class="sc-question-wrapper">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}</p>
+              <div *ngFor="let companyExclude of project.settings.companies.exclude" class="sc-answer-wrapper">
+                {{ companyExclude.name }}
+              </div>
+            </div>
+            <div *ngIf="project.settings.professionals.description.length > 0" class="sc-question-wrapper">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate }}</p>
+              <p>{{ project.settings.professionals.description }}</p>
+            </div>
+            <div *ngIf="project.settings.professionals.exclude.length > 0" class="sc-question-wrapper">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</p>
+              <div *ngFor="let professionalExclude of project.settings.professionals.exclude" class="sc-answer-wrapper">
+                {{ professionalExclude.text }}
+              </div>
+            </div>
+            <div *ngIf="project.settings.comments.length > 0" class="sc-question-wrapper">
+              <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</p>
+              <p>{{ project.settings.comments }}</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- /Innovation targeting -->
+
+    <!-- Innovation analytics -->
+    <div *ngIf="!adminSide && showDetails" class="section-light-container s-analytics-print">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="section-inline-container sc-exploration-wrapper white-background">
+
+          <!-- Heading -->
+          <h1 class="main-heading">{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.TITLE' | translate }}</h1>
+
+          <!-- Analytic -->
+          <div class="sc-analytic-wrapper">
+
+            <!-- Professionals -->
+            <div class="cs-info-analytic">
+              <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate }}</p>
+              <h5 class="text-center">{{ campaignStats?.nbPros || 0 }}</h5>
+            </div>
+            <div class="cs-info-analytic pd-top">
+              <svg width="80px" height="38px" viewBox="0 0 80 38">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-701.000000, -810.000000)">
+                    <g transform="translate(701.000000, 810.000000)">
+                      <polygon fill="#97A4B1" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                      <text class="svg-text">
+                        <tspan x="27.4760742" y="24"></tspan>
+                      </text>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Reached -->
+            <div class="cs-info-analytic">
+              <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
+              <h5 class="text-center">{{ campaignStats?.nbProsSent || 0 }}</h5>
+            </div>
+            <div class="cs-info-analytic pd-top">
+              <svg width="80px" height="38px" viewBox="0 0 80 38">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-701.000000, -810.000000)">
+                    <g transform="translate(701.000000, 810.000000)">
+                      <polygon fill="#2ECC71" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                      <text class="svg-text">
+                        <tspan x="27.4760742" y="24"></tspan>
+                      </text>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Emails -->
+            <div class="cs-info-analytic">
+              <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.EMAILS_OPENED' | translate }}</p>
+              <h5 class="text-center">{{ campaignStats?.nbProsOpened || 0 }}</h5>
+            </div>
+            <div class="cs-info-analytic pd-top">
+              <svg width="80px" height="38px" viewBox="0 0 80 38">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-701.000000, -810.000000)">
+                    <g transform="translate(701.000000, 810.000000)">
+                      <polygon fill="#EA5858" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                      <text class="svg-text">
+                        <tspan x="27.4760742" y="24"></tspan>
+                      </text>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Clicks -->
+            <div class="cs-info-analytic">
+              <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.CLICKS' | translate }}</p>
+              <h5 class="text-center">{{ campaignStats?.nbProsClicked || 0 }}</h5>
+            </div>
+            <div class="cs-info-analytic pd-top">
+              <svg width="80px" height="38px" viewBox="0 0 80 38">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g transform="translate(-701.000000, -810.000000)">
+                    <g transform="translate(701.000000, 810.000000)">
+                      <polygon fill="#F79323" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
+                      <text class="svg-text">
+                        <tspan x="27.4760742" y="24"></tspan>
+                      </text>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Answers -->
+            <div class="cs-info-analytic">
+              <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.ANSWERS' | translate }}</p>
+              <h5 class="text-center">{{ campaignStats?.nbValidatedResp || 0 }}</h5>
+            </div>
+
+          </div>
+
+          <!-- Click rate -->
+          <div class="sc-rate-wrapper">
+            <h1 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.CLICK_MAP_TITLE' | translate }}</h1>
+            <app-worldmap
+              [countries]="countries"
+              [countriesColor]="'#2ECC71'"
+              [isEditable]="false">
+            </app-worldmap>
+          </div>
+
+          <!-- Companies contact -->
+          <div class="sc-company-wrapper">
+            <h1 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h1>
+            <ul class="sc-comp-name-wrapper">
+              <li *ngFor="let company of companies; let i = index;">
+                {{ i + 1 + '.'}} {{ formatCompanyName(company.name) }}
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- /Innovation analytics -->
+
+    <!-- Answer wrapper -->
+    <div id="answer-wrapper">
+
+      <!-- Origin Comment and Professional Responses -->
+      <div class="section-light-container s-origin-print">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="sac-origin-wrapper">
+            <div class="section-inline-container">
+              <app-question-conclusion
+                [innovation]="project"
+                [question]="{identifier: 'professionals', subtitle: {en: 'professionals', fr: 'professionnels'}, title: {en: 'Origin of responses', fr: 'Origine des réponses'}}"
+                [readonly]="!adminSide"
+                [stats]="{nbAnswers: answers.length, percentage: 0}">
+              </app-question-conclusion>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Origin Comment and Professional Responses -->
+
+      <!-- Map -->
+      <div class="section-light-container s-map-print">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="map-wrapper">
+            <app-worldmap
+              (updateCountries)="filterByCountries($event)"
+              [countries]="countries"
+              [countriesColor]="'#2ECC71'"
+              [initialConfiguration]="mapInitialConfiguration"
+              [synthesis]="true">
+            </app-worldmap>
+          </div>
+        </div>
+      </div>
+      <!-- /Map -->
+
+      <!-- Menu button -->
+      <div class="menu-wrapper s-menuButton-print" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
+        <div
+          class="menu-item-wrapper"
+          [ngStyle]="{ 'visibility': displayMenuWrapper ? 'visible' : 'hidden' }"
+          (mouseenter)="displayMenu($event)"
+          (mouseleave)="hideMenu($event)">
+          <ul>
+            <li [ngClass]="{'active': activeSection === 'professionals'}" pageScroll href="#professionals">
+              {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
+            </li>
+            <li
+              *ngFor="let question of cleaned_questions"
+              pageScroll [href]="'#' + question.identifier"
+              [ngClass]="{'active': activeSection === question.identifier}">
+              {{ question.title | multiling:lang }}
+            </li>
+            <li [ngClass]="{'active': activeSection === 'conclusion'}" pageScroll href="#conclusion">
+              {{ 'MARKET_REPORT.CONCLUSION' | translate }}
+            </li>
+          </ul>
+        </div>
+        <button class="btn btn-primary" (mouseenter)="displayMenu($event)" (mouseleave)="hideMenu($event)">Menu</button>
+      </div>
+      <!-- /Menu button -->
+
+      <!-- Professionals -->
+      <section class="section-light-container s-professional-print " id="professionals">
+        <div class="column col-xs-12 col-11 col-mx-auto prof">
+          <div class="professional-wrapper">
+            <div *ngFor="let answer of filteredAnswers" class="profile">
+              <app-pro-tag
+                [answer]="answer"
+                (modalAnswerChange)="seeAnswer($event)"
+                [ngStyle]="{ 'width': '100%', 'height': '100%' }">
+              </app-pro-tag>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /Professionals -->
+
+      <!-- Other question and answers -->
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div *ngFor="let question of questions">
+          <div class="section-light-container s-questions-print">
+            <app-question-section
+              [innovation]="project"
+              [question]="question"
+              [answers]="filteredAnswers"
+              [showComments]="showDetails"
+              [showDetails]="showDetails"
+              [readonly]="!adminSide"
+              (modalAnswerChange)="seeAnswer($event)">
+            </app-question-section>
+          </div>
+        </div>
+      </div>
+      <!-- /Other question and answers -->
+
+      <!-- Conclusion -->
+      <section class="section-light-container s-conclusion-print" id="conclusion">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="conclusion-wrapper">
+            <div class="section-inline-container">
+              <h1 class="main-heading">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h1>
+              <app-text-zone
+                [elementId]="'finalConclusion'"
+                [readonly]="!adminSide"
+                [data]="project?.marketReport.finalConclusion?.conclusion"
+                (onTextChange)="keyupHandlerFunction($event)">
+              </app-text-zone>
+              <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /Conclusion -->
+
+    </div>
+    <!-- /Answer wrapper -->
 
   </div>
-  <!-- /Answer section -->
+  <!-- /Project status done -->
 
 </div>
-<!-- /Project under evaluating_done status -->
-
-</div>
-
 
 <!-- Insight preview -->
-<app-sidebar
-  [template]="sidebarTemplateValue"
-  (closeSidebar)="closeSidebar($event)">
+<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
   <app-user-answer
-    [adminMode]="adminMode"
+    [adminMode]="adminSide"
     [mode]="editMode"
     [(userAnswer)]="modalAnswer"
     [innovationId]="innoid"
     [questions]="questions">
   </app-user-answer>
 </app-sidebar>
+
+<!--
+<div class="section-container" id="project-synthesis">
+  <div class="columns">
+    <div class="column col-12 col-mx-auto">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+
+        &lt;!&ndash; Bot messages &ndash;&gt;
+        <div *ngIf="!adminSide && projectStatus !== 'DONE'">
+          <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + projectStatus) | translate }}</h1>
+          <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '25px' }">
+            <span class="bot-rect" [ngSwitch]="projectStatus">
+
+              <ng-container *ngSwitchCase="'EDITING'">
+                <ng-container *ngIf="project.reviewing">
+                  {{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}
+                </ng-container>
+                <ng-container *ngIf="!project.reviewing">
+                  {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }}
+                  <span [ngStyle]="{ 'color': '#FFB300' }">
+                    {{ 'MARKET_REPORT.MESSAGE.EDITING.B' | translate }}
+                  </span>
+                  {{ 'MARKET_REPORT.MESSAGE.EDITING.C' | translate }}
+                </ng-container>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'SUBMITTED'">
+                {{ 'MARKET_REPORT.MESSAGE.SUBMITTED' | translate }}
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'EVALUATING'">
+                {{ 'MARKET_REPORT.MESSAGE.EVALUATING' | translate }}
+              </ng-container>
+
+            </span>
+            <br>
+            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+            <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+          </div>
+        </div>
+        &lt;!&ndash; /Bot messages &ndash;&gt;
+
+        &lt;!&ndash; Project under DONE status &ndash;&gt;
+        <div *ngIf="projectStatus === 'DONE' || adminSide">
+
+          &lt;!&ndash; Title and download button section &ndash;&gt;
+          <div class="title-wrapper">
+            <h1 class="main-heading">{{ 'MARKET_REPORT.TITLE.EVALUATING' | translate }}</h1>
+
+            <ng-container [ngSwitch]="adminSide">
+              <ng-container *ngSwitchCase="true">
+                <button *ngIf="projectStatus === 'EVALUATING'" (click)="changeStatus($event, 'DONE')" class="btn btn-primary">
+                  {{ 'MARKET_REPORT.BUTTON.STATUS_TO_DONE' | translate }}
+                </button>
+                <button *ngIf="projectStatus === 'DONE'" (click)="changeStatus($event, 'EVALUATING')" class="btn btn-primary">
+                  {{ 'MARKET_REPORT.BUTTON.STATUS_TO_EVALUATING' | translate }}
+                </button>
+              </ng-container>
+             &lt;!&ndash; <button *ngSwitchDefault (click)="print($event)" class="btn btn-primary">
+                {{ 'MARKET_REPORT.BUTTON.DOWNLOAD' | translate }} &lt;!&ndash; We display the download button only client side &ndash;&gt;
+              </button>&ndash;&gt;
+            </ng-container>
+          </div>
+
+          &lt;!&ndash; Menu &ndash;&gt;
+          <div class="question-wrapper">
+            <ul>
+              <li [ngClass]="{'active': activeSection === 'professionals'}">
+                <a pageScroll href="#professionals">
+                  {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }} <i class="icon icon-arrow-right"></i>
+                </a>
+              </li>
+              <li *ngFor="let question of cleaned_questions"
+                  [ngClass]="{'active': activeSection === question.identifier}">
+                <a pageScroll [href]="'#' + question.identifier">
+                  {{ question.title | multiling:lang }} <i class="icon icon-arrow-right"></i>
+                </a>
+              </li>
+            </ul>
+            <div *ngIf="objectKeys(filters).length" class="filter-wrapper">
+              <p>{{'MARKET_REPORT.FILTERS' | translate}}</p>
+              <ul>
+                <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
+                  <a>{{filters[fKey].questionTitle | multiling:lang}} <i class="icon icon-cross"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          &lt;!&ndash; Answer section &ndash;&gt;
+          <div id="answer-wrapper">
+
+            &lt;!&ndash; Origin of responses &ndash;&gt;
+            <div class="section-container">
+              <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.QUESTION' | translate }}</h2>
+              <app-question-conclusion
+                [innovation]="project"
+                [question]="{identifier: 'professionals'}"
+                [readonly]="!adminMode"
+                [stats]="{nbAnswers: answers.length, percentage: 0}">
+              </app-question-conclusion>
+              <div class="map-wrapper">
+                <app-worldmap
+                  (updateCountries)="filterByCountries($event)"
+                  [countries]="countries"
+                  [countriesColor]="'#FFB300'"
+                  [initialConfiguration]="mapInitialConfiguration"
+                  [isEditable]="true">
+                </app-worldmap>
+              </div>
+            </div>
+
+            &lt;!&ndash; Professionals &ndash;&gt;
+            <div class="section-container" id="professionals">
+              <h2 class="section-heading">{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
+              <div class="professional-wrapper">
+                <div *ngFor="let answer of filteredAnswers" class="profile">
+                  <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+                </div>
+              </div>
+            </div>
+
+            &lt;!&ndash; Other questions &ndash;&gt;
+            <div *ngFor="let question of questions" class="section-container">
+              <app-question-section
+                [innovation]="project"
+                [question]="question"
+                [answers]="filteredAnswers"
+                [showComments]="showDetails"
+                [showDetails]="showDetails"
+                [readonly]="!adminMode"
+                (modalAnswerChange)="seeAnswer($event)">
+              </app-question-section>
+            </div>
+
+          </div>
+          &lt;!&ndash; /Answer section &ndash;&gt;
+
+        </div>
+        &lt;!&ndash; /Project under evaluating_done status &ndash;&gt;
+
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+<!--
+<shared-answer-modal [adminMode]="adminMode" [(modalAnswer)]="modalAnswer" [innoid]="innoid" [questions]="questions"></shared-answer-modal>
+<div class="market-report">
+
+  <!-- *********************************************************
+        Header
+  **************************************************************
+
+  <div class="frontcover">
+    <img src="{{ 'https://res.cloudinary.com/umi/image/upload/app/'+logoName }}" alt="Logo UMI" height="40" class="centered">
+    <h1 id="title">{{project.name}}</h1>
+    <p class="subtitle">{{today | date: 'fullDate'}}</p>
+  </div>
+
+  <!--
+  <div class="admin-buttons">
+    <button type="button" *ngIf="adminMode"
+            class="btn btn-lg btn-primary"
+            (click)="recalculateSynthesis($event)"
+            [disabled]="calculating"
+            [ngClass]="{'loading': calculating, '': !calculating}"
+    >
+      {{'MARKET_REPORT.BTN_RECOMPUTE' | translate}}
+      <i class="fas fa-sync" aria-hidden="true"></i>
+    </button>
+    <pdf-generator class="btn btn-lg btn-primary" [model]="getModel()" style="margin:10px;">
+    </pdf-generator>
+  </div>
+  -->
+
+<!-- *********************************************************
+      Sidebar
+**************************************************************
+<div class="d-flex">
+  <div class="sidebar">
+    <div class="sidebarIsSticky">
+      <div (click)="toggleDetails($event)" class="toggle-sections">
+        {{ (showDetails ? 'MARKET_REPORT.COLLAPSE' : 'MARKET_REPORT.EXPAND') | translate}}
+        <i class="fas fa-angle-right" aria-hidden="true"
+           [ngClass]="{'fa-plus-square-o': !showDetails, 'fa-minus-square-o': showDetails}"></i>
+      </div>
+      <ul>
+        <li>
+          <a pageScroll href="#professionals">
+            {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
+            <i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li *ngFor="let question of cleaned_questions">
+          <a pageScroll [href]="'#' + question.identifier">
+            {{ question.title | multiling:lang }}
+            <i class="fas fa-angle-right float-right" aria-hidden="true"></i>
+          </a>
+        </li>
+      </ul>
+      <div *ngIf="objectKeys(filters).length">
+        <span>{{'MARKET_REPORT.FILTERS' | translate}}</span>
+        <ul>
+          <li *ngFor="let fKey of objectKeys(filters)">
+            <button class="btn btn-secondary btn-sm" (click)="deleteFilter(fKey, $event)">
+              {{filters[fKey].questionTitle | multiling:lang}} <i class="icon icon-cross"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- *********************************************************
+        Synthesis
+  **************************************************************
+
+  <div class="flex-container">
+    <div class="content">
+
+      <!-- *********************************************************
+            World Map and professionals cards
+      **************************************************************
+      <section id="professionals">
+        <h2>{{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}</h2>
+        <div class="white-frame">
+
+        <app-question-conclusion
+          [innovation]="project"
+          [infographic]="infographics?.professionals"
+          [question]="{identifier: 'professionals'}"
+          [readonly]="!adminMode"
+          [stats]="{nbAnswers: answers.length, percentage: 0}"
+        ></app-question-conclusion>
+
+          <div class="bloc">
+            <!--======= Carte du monde =======-
+            <div class="map centered" width="684" height="339">
+              <app-worldmap (updateCountries)="filterByCountries($event)"
+                            [countries]="countries"
+                            [countriesColor]="'#0B90C6'"
+                            [initialConfiguration]="mapInitialConfiguration"
+                            [width]="'800px'">
+              </app-worldmap>
+            </div>
+          </div>
+
+          <!-- ========= showListProfessional button ==============-
+          <button type="button" class="market-report-btn centered"
+                  [ngClass]="{'active': showListProfessional}"
+                  (click)="showListProfessional = !showListProfessional; $event.preventDefault()">
+            {{(showListProfessional ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate}}
+            <i class="fas" aria-hidden="true"
+               [ngClass]="showListProfessional ? 'fa-angle-up' : 'fa-angle-down'"></i>
+          </button>
+
+          <div *ngIf="showListProfessional" class="bloc details prosList">
+            <!--======= Liste des pros =======-
+            <div *ngFor="let answer of filteredAnswers" class="professional-item" [ngClass]="{'top-profil': answer.profileQuality === 2}">
+              <app-pro-tag [answer]="answer" (modalAnswerChange)="seeAnswer($event)"></app-pro-tag>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Les autres questions --
+      <section *ngFor="let question of questions">
+        <app-question-section
+          [infographic]="getInfo(question)"
+          [innovation]="project"
+          [question]="question"
+          [answers]="filteredAnswers"
+          [showComments]="showDetails"
+          [showDetails]="showDetails"
+          [readonly]="!adminMode"
+          (modalAnswerChange)="seeAnswer($event)">
+        </app-question-section>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="page-footer">UMI - contact@umi.us - www.umi.us</div>
+</div>
+-->

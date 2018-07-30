@@ -1,66 +1,78 @@
-<section [id]=domSectionId>
+<!--<section class="question-section-wrapper" [id]=domSectionId>
 
-  <h3>{{ question.label | multiling:lang }}</h3>
+  &lt;!&ndash; Question type &ndash;&gt;
 
-  <div class="tags-list" *ngIf="tags?.length > 0">
-    <i class="fa fa-tag"></i>
-    <span
-      *ngFor="let t of tags"
-      class="label label-rounded label-primary tag-label"
-      (click)="createTagFilter($event, t)">
-      <span *ngIf="t?.count > 1">(x{{t?.count}})</span>
-      {{t?.label | multiling:lang}}
-      <i class="fas fa-filter"></i>
-    </span>
-  </div>
-
-  <div>
-
-    <!-- Header section (UMI synthesis) -->
-    <app-question-conclusion
-      *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'
-      && question.controlType !== 'list' && question.controlType !== 'clearbit'"
-      [innovation]="innovation"
-      [question]="question"
-      [readonly]="readonly"
-      [stats]="stats">
-    </app-question-conclusion>
-
-    <!-- Answers -->
-
-    <!-- Bar chart -->
+  &lt;!&ndash; Type checkbox and radio &ndash;&gt;
+  <div *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
     <app-bar-chart
-      *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'"
       [answers]="answersToShow"
       [innovation]="innovation"
       [question]="question"
       [readonly]="readonly"
       [stats]="stats"
+      [selectedTag]="selectedTag"
       (addFilter)="newFilter($event)"
       (modalAnswerChange)="seeAnswer($event)">
     </app-bar-chart>
+  </div>
 
-    <!-- Liste d'items (applications, concurrents, partenaires potentiels) -->
-    <app-item-list
-      *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'"
-      [answers]="answersToShow"
-      [innovation]="innovation"
-      [question]="question"
-      [readonly]="readonly"
-      [stats]="stats"
-      [showDetails]="showDetails"
-      (updateNumberOfItems)="updateNumberOfItems($event)"
-      (addFilter)="newFilter($event)"
-      (modalAnswerChange)="seeAnswer($event)">
-    </app-item-list>
+  &lt;!&ndash; Type clearbit and list &ndash;&gt;
 
-    <!-- Answer section -->
+  <div *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'">
+    <div class="header">
+      <div class="section-inline-container">
+        <app-question-conclusion
+          [innovation]="innovation"
+          [question]="question"
+          [readonly]="readonly"
+          [stats]="stats">
+        </app-question-conclusion>
+      </div>
+    </div>
+  </div>
 
-    <!-- Answer button -->
-    <div *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'&& question.controlType !== 'list' && question.controlType !== 'clearbit'" class="answer-btn-wrapper">
+  <div *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'" class="question-section-item-list">
+
+    <div *ngIf="showDetails" class="content">
+
+      <div *ngIf="answersWithComment.length > 0" class="comment">
+        <div *ngFor="let answer of answersWithComment" class="answer">
+          <app-market-comment-2
+            [answer]="answer"
+            [questionId]="question.identifier+'Comment'"
+            (addFilter)="newFilter($event)"
+            (modalAnswerChange)="seeAnswer($event)"
+            [ngStyle]="{ 'width': '100%' }">
+          </app-market-comment-2>
+        </div>
+      </div>
+
+      <div class="items">
+        <app-item-list
+          [answers]="answersToShow"
+          [innovation]="innovation"
+          [question]="question"
+          [readonly]="readonly"
+          [stats]="stats"
+          (updateNumberOfItems)="updateNumberOfItems($event)"
+          (addFilter)="newFilter($event)"
+          [selectedTag]="selectedTag"
+          (modalAnswerChange)="seeAnswer($event)">
+        </app-item-list>
+      </div>
+
+    </div>
+
+  </div>
+
+  &lt;!&ndash; Rest type &ndash;&gt;
+  <div class="rest">
+
+    &lt;!&ndash; Answer button &ndash;&gt;
+    <div *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio' && question.controlType !== 'list' && question.controlType !== 'clearbit'" class="answer-btn-wrapper">
       <button
         type="button"
-        class="btn btn-secondary"
+        class="btn btn-primary"
         [ngClass]="{'active': showDetails}"
         (click)="showDetails = !showDetails; $event.preventDefault()">
         {{(showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate}}
@@ -72,36 +84,37 @@
       </button>
     </div>
 
-    <!-- Show answers -->
-    <div
-      *ngIf="showDetails && question.controlType !== 'checkbox' && question.controlType !== 'radio'
-      && question.controlType !== 'list' && question.controlType !== 'clearbit'"
-      class="answer-show-wrapper">
-      <!-- Scale -->
+    &lt;!&ndash; Show answers &ndash;&gt;
+    <div *ngIf="showDetails && question.controlType !== 'checkbox' && question.controlType !== 'radio' && question.controlType !== 'list' && question.controlType !== 'clearbit'" class="answer-show-wrapper">
+
+      &lt;!&ndash; Scale &ndash;&gt;
       <app-scale
         *ngIf="question.controlType === 'scale'"
         [answers]="answersToShow"
         [question]="question">
       </app-scale>
-      <!-- Avantages Clés -->
+
+      &lt;!&ndash; Avantages Clés &ndash;&gt;
       <app-stars
         *ngIf="question.controlType === 'stars'"
         [answers]="answersToShow"
         [innovation]="innovation"
         [question]="question">
       </app-stars>
-      <!-- Textarea -->
-      <ul *ngIf="question.controlType === 'textarea'" class="comments">
-        <li *ngFor="let answer of answersToShow">
-          <market-comment
+
+      &lt;!&ndash; Textarea &ndash;&gt;
+      <div *ngIf="question.controlType === 'textarea'" class="comments">
+        <div *ngFor="let answer of answersToShow">
+          <app-market-comment-2
             [answer]="answer"
             [questionId]="question.identifier"
             (addFilter)="newFilter($event)"
             (modalAnswerChange)="seeAnswer($event)">
-          </market-comment>
-        </li>
-      </ul>
-      <!-- Toggle -->
+          </app-market-comment-2>
+        </div>
+      </div>
+
+      &lt;!&ndash; Toggle &ndash;&gt;
       <div *ngIf="question.controlType === 'toggle'" class="prosList">
         <div *ngFor="let answer of answersToShow" class="white-frame professional-item">
           <app-pro-tag
@@ -111,45 +124,235 @@
           </app-pro-tag>
         </div>
       </div>
+
     </div>
 
-    <!--************************************************
-                 COMMENTS SECTION
-      **************************************************-->
-    <ng-container *ngIf="(showDetails || question.controlType === 'list' || question.controlType === 'clearbit')
-                          && answersWithComment.length > 0">
+  </div>
 
-      <!-- Show comments button -->
-      <div class="comment-btn-wrapper">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          [ngClass]="{'active': showComments}"
-          (click)="showComments = !showComments; $event.preventDefault()">
-          {{ (showComments ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN') | translate:({length: answersWithComment.length}) }}
-          <i
-            class="icon"
-            aria-hidden="true"
-            [ngClass]="showComments ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
-        </button>
+  <div *ngIf="answersWithComment.length > 0 && question.controlType !== 'list' && question.controlType !== 'clearbit'" class="comment">
+    <div *ngFor="let answer of answersWithComment" class="answer">
+      <app-market-comment-2
+        [answer]="answer"
+        [questionId]="question.identifier+'Comment'"
+        (addFilter)="newFilter($event)"
+        (modalAnswerChange)="seeAnswer($event)"
+        [ngStyle]="{ 'width': '100%' }">
+      </app-market-comment-2>
+    </div>
+  </div>
+
+</section>-->
+
+
+<!--<div class="tags-list" *ngIf="tags?.length > 0">
+  <i class="fa fa-tag"></i>
+  <span
+    *ngFor="let t of tags"
+    class="label label-rounded label-primary tag-label"
+    (click)="createTagFilter($event, t)">
+    <span *ngIf="t?.count > 1">(x{{t?.count}})</span>
+    {{t?.label | multiling:lang}}
+    <i class="fas fa-filter"></i>
+  </span>
+</div>-->
+
+<!--************************************************
+             COMMENTS SECTION
+  **************************************************-->
+<!-- <ng-container *ngIf="(showDetails || question.controlType === 'list' || question.controlType === 'clearbit')
+                       && answersWithComment.length > 0">-->
+<!-- <ng-container *ngIf="(showDetails && question.controlType !== 'list' || question.controlType !== 'clearbit') && answersWithComment.length > 0">
+
+   &lt;!&ndash; Show comments button &ndash;&gt;
+   <div class="comment-btn-wrapper">
+     <button
+       type="button"
+       class="btn btn-secondary"
+       [ngClass]="{'active': showComments}"
+       (click)="showComments = !showComments; $event.preventDefault()">
+       {{ (showComments ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN') | translate:({length: answersWithComment.length}) }}
+       <i
+         class="icon"
+         aria-hidden="true"
+         [ngClass]="showComments ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
+     </button>
+   </div>
+
+   &lt;!&ndash; Show comments &ndash;&gt;
+   <div class="comment-show-wrapper" *ngIf="showComments">
+     <ul class="comments">
+       <li *ngFor="let answer of answersWithComment">
+         <app-market-comment
+           [answer]="answer"
+           [questionId]="question.identifier+'Comment'"
+           (addFilter)="newFilter($event)"
+           (modalAnswerChange)="seeAnswer($event)">
+         </app-market-comment>
+       </li>
+     </ul>
+   </div>
+
+ </ng-container>-->
+<!-- /Comments section -->
+
+<section class="question-section-wrapper s-question-print" [id]=domSectionId>
+
+  <!-- If the question type is checkbox or radio -->
+  <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
+    <app-bar-chart
+      [answers]="answersToShow"
+      [innovation]="innovation"
+      [question]="question"
+      [readonly]="readonly"
+      [stats]="stats"
+      [showDetails]="showDetails"
+      (modalAnswerChange)="seeAnswer($event)">
+    </app-bar-chart>
+  </ng-container>
+
+  <!-- If the question type is not checkbox and radio -->
+  <ng-container *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'">
+    <div class="header">
+      <div class="section-inline-container">
+        <app-question-conclusion
+          [innovation]="innovation"
+          [question]="question"
+          [readonly]="readonly"
+          [stats]="stats">
+        </app-question-conclusion>
       </div>
+    </div>
+  </ng-container>
 
-      <!-- Show comments -->
-      <div class="comment-show-wrapper" *ngIf="showComments">
-        <ul class="comments">
-          <li *ngFor="let answer of answersWithComment">
-            <market-comment
+  <!-- If the question type is list or clearbit -->
+  <ng-container *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'">
+
+    <!-- Answer button -->
+    <div class="answer-button-wrapper">
+      <button
+        type="button"
+        class="btn ghost-primary"
+        (click)="showDetails = !showDetails; $event.preventDefault()">
+        {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+        <i class="icon" aria-hidden="true" [ngClass]="showDetails ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
+      </button>
+    </div>
+
+    <!-- Now showing the answers, this contains both the answers to show and comments  -->
+    <ng-container *ngIf="showDetails">
+      <div class="clear-list-wrapper">
+
+        <div *ngIf="answersWithComment.length > 0" class="clc-wrapper">
+          <div *ngFor="let answer of answersWithComment" class="clco-wrapper">
+            <app-market-comment-2
               [answer]="answer"
               [questionId]="question.identifier+'Comment'"
-              (addFilter)="newFilter($event)"
               (modalAnswerChange)="seeAnswer($event)">
-            </market-comment>
-          </li>
-        </ul>
+            </app-market-comment-2>
+          </div>
+        </div>
+
+        <div class="cli-wrapper">
+          <app-item-list
+            [answers]="answersToShow"
+            [innovation]="innovation"
+            [question]="question"
+            [readonly]="readonly"
+            [stats]="stats"
+            (updateNumberOfItems)="updateNumberOfItems($event)"
+            (modalAnswerChange)="seeAnswer($event)">
+          </app-item-list>
+        </div>
+
+      </div>
+    </ng-container>
+
+  </ng-container>
+
+  <!-- Showing answers if the question type is not clearbit, radio, checkbox and list -->
+  <ng-container *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'
+  && question.controlType !== 'list' && question.controlType !== 'clearbit'">
+
+    <!-- Answer button -->
+    <div class="answer-button-wrapper">
+      <button
+        type="button"
+        class="btn ghost-primary"
+        (click)="showDetails = !showDetails; $event.preventDefault()">
+        {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
+        <i class="icon" aria-hidden="true" [ngClass]="showDetails ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
+      </button>
+    </div>
+
+    <!-- Now showing the answers that we have for the textarea, scale, toggle and star type -->
+    <ng-container *ngIf="showDetails">
+
+      <!-- Star -->
+      <div *ngIf="question.controlType === 'stars'" class="star-answer-wrapper">
+        <app-stars [answers]="answersToShow" [innovation]="innovation" [question]="question"></app-stars>
+      </div>
+
+      <!-- Rating -->
+      <div *ngIf="question.controlType === 'scale'" class="rating-answer-wrapper">
+        <app-scale [answers]="answersToShow" [question]="question"></app-scale>
+      </div>
+
+      <!-- Textarea or textbox-->
+      <div *ngIf="question.controlType === 'textarea' || question.controlType === 'textbox'" class="textarea-answer-wrapper">
+        <div *ngFor="let answer of answersToShow" class="textarea-answer-outer-wrapper">
+          <app-market-comment-2
+            [answer]="answer"
+            [questionId]="question.identifier"
+            (modalAnswerChange)="seeAnswer($event)"
+            [ngStyle]="{ 'width': '100%' }">
+          </app-market-comment-2>
+        </div>
+      </div>
+
+      <!-- Toggle -->
+      <div *ngIf="question.controlType === 'toggle'" class="toggle-answer-wrapper">
+        <div class="prof-list-wrapper">
+          <div *ngFor="let answer of answersToShow" class="profile-wrapper">
+            <app-pro-tag
+              [answer]="answer"
+              (modalAnswerChange)="seeAnswer($event)"
+              [ngStyle]="{ 'width': '100%', 'height': '100%' }">
+            </app-pro-tag>
+          </div>
+        </div>
       </div>
 
     </ng-container>
-    <!-- /Comments section -->
 
-  </div>
+  </ng-container>
+
+  <!-- Comments that are not related to answers like general comments but not for list and clearbit question type -->
+  <ng-container *ngIf="showDetails && question.controlType !== 'list' && question.controlType !== 'clearbit'
+  && answersWithComment.length > 0">
+
+    <!-- Comment button -->
+    <div class="comment-button-wrapper">
+      <button
+        type="button"
+        class="btn ghost-primary"
+        (click)="showComments = !showComments; $event.preventDefault()">
+        {{ (showComments ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN')
+        | translate:({ length: answersWithComment.length }) }}
+        <i class="icon" aria-hidden="true" [ngClass]="showComments ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
+      </button>
+    </div>
+
+    <!-- Showing the comments when click on comment button -->
+    <div *ngIf="showComments" class="comment-wrapper">
+      <div *ngFor="let answer of answersWithComment" class="comment-outer-wrapper">
+        <app-market-comment-2
+          [answer]="answer"
+          [questionId]="question.identifier+'Comment'"
+          (modalAnswerChange)="seeAnswer($event)">
+        </app-market-comment-2>
+      </div>
+    </div>
+
+  </ng-container>
+
 </section>

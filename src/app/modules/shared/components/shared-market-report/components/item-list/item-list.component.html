@@ -1,13 +1,41 @@
-<app-question-conclusion
+<div class="item-list-wrapper">
+  <div class="items">
+    <div *ngFor="let item of listItems; let i = index" [ngClass]="{'top-profil': item.rating === 2}" class="item s-item-print">
+      <div class="content">
+
+        <!-- Filter icon -->
+        <div class="filter" (click)="filterAnswer(item, $event)">
+          <img src="https://res.cloudinary.com/umi/image/upload/v1532816663/app/default-images/filter-wicon.svg">
+        </div>
+
+        <!-- Value and count -->
+        <div class="value">
+          <div class="label-success">{{ item.count}}x</div>
+          <p>{{ item.value }}</p>
+        </div>
+
+        <!-- Respoand -->
+        <div class="popup">
+          <app-market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></app-market-report-popover>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!--<app-question-conclusion
   [innovation]="innovation"
   [question]="question"
   [readonly]="readonly"
   [stats]="stats">
-</app-question-conclusion>
-
+</app-question-conclusion>-->
+<!--
 <div class="items">
 
-  <div class="items-list">
+  <div>
     <div
       *ngFor="let item of (!details && listItems.length > maxToShow) ? listItems.slice(0, maxToShow) : listItems; let i = index"
       [ngClass]="{'top-profil': item.rating === 2}">
@@ -19,7 +47,7 @@
           <a *ngIf="item.domain" [href]="item.domain" target="_blank"><i class="fas fa-link" aria-hidden="true"></i></a>
           <span (click)="filterAnswer(item, $event)"><i class="fas fa-filter" aria-hidden="true"></i></span>
         </strong>
-        <market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></market-report-popover>
+        <app-market-report-popover [answers]="item.answers" (modalAnswerChange)="seeAnswer($event)"></app-market-report-popover>
       </div>
     </div>
   </div>
@@ -32,4 +60,4 @@
     more...
   </a>
 
-</div>
+</div>-->

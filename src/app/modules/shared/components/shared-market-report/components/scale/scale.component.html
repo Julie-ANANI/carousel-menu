@@ -1,4 +1,4 @@
-<div class="scale-component">
+<!--<div class="scale-component">
 
   <div class="column-graph flex-container">
     <div *ngFor="let bar of bars" class="vertical-bar number{{bar}}">
@@ -9,6 +9,21 @@
       </ng-container>
       <div class="bar-score">{{bar}}</div>
     </div>
+  </div>
+
+</div>-->
+
+<div class="scale-component-wrapper">
+
+  <div *ngFor="let bar of bars">
+    <div class="scale-score-wrapper">{{ bar }}</div>
+      <div class="scale-progress-outer-wrapper number{{ bar }}">
+        <ng-container *ngIf="barsData[bar]">
+          <div class="scale-progress-inner-wrapper" [ngStyle]="{ 'width': barsData[bar]?.percentage, 'min-width': '25px' }">
+            <span>{{ barsData[bar]?.count }}</span>
+          </div>
+        </ng-container>
+      </div>
   </div>
 
 </div>

@@ -1,12 +1,9 @@
-/**
- * Created by juandavidcruzgomez on 11/09/2017.
- */
 import { Component, OnDestroy, AfterViewInit, EventEmitter, Input, Output, OnInit } from '@angular/core';
 
 declare const tinymce: any;
 
 @Component({
-  selector: 'text-zone',
+  selector: 'app-text-zone',
   templateUrl: 'shared-text-zone.component.html',
   styleUrls: ['shared-text-zone.component.scss']
 })

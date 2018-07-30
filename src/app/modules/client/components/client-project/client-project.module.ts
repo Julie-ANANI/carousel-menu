@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedSortModule } from '../../../shared/components/shared-sort/shared-sort.module';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
@@ -26,6 +24,8 @@ import { SharedProjectEditCardsModule } from '../../../shared/components/shared-
 import { SharedProjectSettingsModule } from '../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 import { SharedProjectDescriptionModule } from '../../../shared/components/shared-project-description/shared-project-description.module';
 import { TableModule } from '../../../table/table.module';
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [

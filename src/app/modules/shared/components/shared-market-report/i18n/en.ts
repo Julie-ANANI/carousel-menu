@@ -2,7 +2,7 @@ export const MARKET_REPORT = {
   'TITLE': {
     'EDITING': 'Market potential of your project will be available soon',
     'SUBMITTED': 'Exploring market potential of your project',
-    'EVALUATING': 'Fresh market insights of your project'
+    'EVALUATING': 'Exploring market potential of your project'
   },
 
   'MESSAGE': {
@@ -31,6 +31,17 @@ export const MARKET_REPORT = {
 
   'INSIGHT': 'Insight',
 
+  'CONCLUSION': 'Conclusion',
+
+  'STICKY_BAR': {
+    'DETAIL_VIEW': 'Detail view',
+    'FILTER': 'Filters',
+    'BUTTON_CSV': 'Export CSV',
+    'BUTTON_DOWNLOAD': 'Download synthesis',
+    'BUTTON_ADMIN': 'Finalize synthesis',
+  },
+
+  'MESSAGE_SYNTHESIS': 'The synthesis has been successfully finalized.',
 
  // 'TITLE': 'Exploring market potential',
   'COLLAPSE': 'Collapse',

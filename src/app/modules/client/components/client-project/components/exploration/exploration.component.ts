@@ -58,6 +58,8 @@ export class ExplorationProjectComponent implements OnInit {
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
           {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT', _isSortable: false},
+          {_attrs: ['company.name'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false},
+          {_attrs: ['created'], _name: 'COMMON.DATE', _type: 'DATE', _isSortable: false},
         ]
       };
 
@@ -72,8 +74,7 @@ export class ExplorationProjectComponent implements OnInit {
       this.notificationService.error('ERROR.ERROR', error.message);
     });
 
-    this.innovationService.campaigns(this.project._id).first()
-      .subscribe((results) => {
+    this.innovationService.campaigns(this.project._id).first().subscribe((results) => {
         if (results && Array.isArray(results.result)) {
           this._campaignsStats = results.result
             .reduce(function(acc, campaign) {
@@ -97,22 +98,20 @@ export class ExplorationProjectComponent implements OnInit {
         this.notificationService.error('ERROR.ERROR', error.message);
       });
 
+
     if (this.project.settings && this.project.settings.companies
         && Array.isArray(this.project.settings.companies.include)) {
       this._companies = this.project.settings.companies.include;
     }
 
     this._questions = [];
+
     if (this.project.preset && Array.isArray(this.project.preset.sections)) {
       this.project.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions || []);
       });
     }
 
-  }
-
-  get projectStatus(): string {
-    return this.project.status;
   }
 
   seeAnswer(answer: Answer) {
@@ -128,6 +127,13 @@ export class ExplorationProjectComponent implements OnInit {
 
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
+  }
+
+  public formatCompanyName(name: string) {
+    if (name) {
+      return `${name[0].toUpperCase()}${name.slice(1)}`;
+    }
+    return '--';
   }
 
   get campaignStats() {
@@ -158,6 +164,8 @@ export class ExplorationProjectComponent implements OnInit {
     return this._questions;
   }
 
-
+  get projectStatus(): string {
+    return this.project.status;
+  }
 
 }

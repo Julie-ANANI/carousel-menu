@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { PageScrollConfig } from 'ng2-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -12,8 +12,10 @@ import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
 import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
-import { Subject } from 'rxjs/Subject';
 import { Template } from '../../../sidebar/interfaces/template';
+import { Clearbit } from '../../../../models/clearbit';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -27,8 +29,19 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   @Input() adminMode: boolean;
 
   adminSide: boolean;
-  editMode = new Subject<boolean>();
   sidebarTemplateValue: Template = {};
+  scrollOn = false;
+  menuButton = false;
+  displayMenuWrapper = false;
+  private _companies: Array<Clearbit>;
+  private _campaignsStats: {
+    nbPros: number,
+    nbProsSent: number,
+    nbProsOpened: number,
+    nbProsClicked: number,
+    nbValidatedResp: number
+  };
+  editMode = new Subject<boolean>(); // this is for the admin side.
 
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
@@ -53,21 +66,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private translateNotificationsService: TranslateNotificationsService,
               private location: Location,
               private innovationService: InnovationService,
+              private authService: AuthService,
               public filterService: FilterService) {
     this.filterService.reset();
   }
 
   ngOnInit() {
-
-    this.adminSide = this.location.path().slice(0, 6) === '/admin';
-
+    this.isAdmin();
     this.today = Date.now();
-
     this._innoid = this.project._id;
-
     this.resetMap();
-
     this.loadAnswers();
+    this.loadCampaign();
 
     if (this.project.preset && this.project.preset.sections) {
       this.project.preset.sections.forEach((section: Section) => {
@@ -91,9 +101,101 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   }
 
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (window.scrollY !== 0) {
+      this.scrollOn = true;
+    } else {
+      this.scrollOn = false;
+    }
+
+    this.menuButton = (this.getCurrentScroll() > 10);
+
+  }
+
+  getCurrentScroll() {
+    if (typeof window.scrollY !== 'undefined' && window.scrollY >= 0) {
+      return window.scrollY;
+    }
+    return 0;
+  };
+
+  isAdmin() {
+    this.adminSide = this.location.path().slice(0, 6) === '/admin';
+    this.adminMode = this.authService.adminLevel > 2;
+  }
+
+  resetMap() {
+    this.mapInitialConfiguration = {
+      africa: true,
+      americaNord: true,
+      americaSud: true,
+      asia: true,
+      europe: true,
+      oceania: true,
+      russia: true
+    };
+  }
+
+  loadAnswers() {
+    this.answerService.getInnovationValidAnswers(this._innoid).first().subscribe((results) => {
+      this._answers = results.answers.sort((a, b) => {
+        return b.profileQuality - a.profileQuality;
+      });
+
+      this._filteredAnswers = this._answers;
+      this.filterService.filtersUpdate.subscribe((_) => {
+        this._filteredAnswers = this.filterService.filter(this._answers);
+      });
+
+      this._companies = results.answers.map((answer: any) => answer.company || {
+        name: answer.professional.company
+      }).filter(function(item: any, pos: any, self: any) {
+        return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
+      });
+
+      this._countries = results.answers.reduce((acc, answer) => {
+        if (acc.indexOf(answer.country.flag) === -1) {
+          acc.push(answer.country.flag);
+        }
+        return acc;
+      }, []);
+
+    }, (error) => {
+      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+    });
+
+  }
+
+  loadCampaign() {
+    this.innovationService.campaigns(this._innoid).first().subscribe((results) => {
+      if (results && Array.isArray(results.result)) {
+        this._campaignsStats = results.result.reduce(function(acc, campaign) {
+          if (campaign.stats) {
+            if (campaign.stats.campaign) {
+              acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
+              acc.nbValidatedResp += (campaign.stats.campaign.nbValidatedResp || 0);
+            }
+            if (campaign.stats.mail) {
+              acc.nbProsSent += (campaign.stats.mail.totalPros ||  0);
+              if (campaign.stats.mail.statuses) {
+                acc.nbProsOpened += (campaign.stats.mail.statuses.opened || 0);
+                acc.nbProsClicked += (campaign.stats.mail.statuses.clicked ||  0);
+              }
+            }
+          }
+          return acc;
+        }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0});
+      }
+    }, (error) => {
+      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+    });
+
+  }
+
   ngAfterViewInit() {
-    const wrapper = document
-      .getElementById('answer-wrapper');
+    const wrapper = document.getElementById('answer-wrapper');
+
     if (wrapper) {
       const sections = Array.from(
         wrapper.querySelectorAll('section')
@@ -104,72 +206,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
         this.activeSection = section ? section.id : '';
       };
     }
-  }
 
-  private loadAnswers() {
-    this.answerService.getInnovationValidAnswers(this._innoid).first()
-      .subscribe((results) => {
-        this._answers = results.answers.sort((a, b) => {
-            return b.profileQuality - a.profileQuality;
-          });
-
-        this._filteredAnswers = this._answers;
-
-        this._countries = results.answers.reduce((acc, answer) => {
-            if (acc.indexOf(answer.country.flag) === -1) {
-              acc.push(answer.country.flag);
-            }
-            return acc;
-          }, []);
-
-      }, (error) => {
-        this.translateNotificationsService.error('ERROR.ERROR', error.message);
-      });
-  }
-
-  public changeStatus(event: Event, status: 'EVALUATING' | 'DONE'): void {
-    this.innovationService
-      .updateStatus(this.innoid, status)
-      .first().subscribe((results) => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', '');
-      }, (error) => {
-        this.translateNotificationsService.error('ERROR.ERROR', error.message);
-      });
-  }
-
-  public toggleDetails(event: Event): void {
-    event.preventDefault();
-    const value = !this._showDetails;
-    this._showDetails = value;
-    this._showListProfessional = value;
-  }
-
-  public seeAnswer(answer: Answer): void {
-    this._modalAnswer = answer;
-
-    this.sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: this.adminSide ? 'COMMON.EDIT_INSIGHT' : 'MARKET_REPORT.INSIGHT',
-      size: '726px'
-    };
-
-  }
-
-  closeSidebar(value: string) {
-    this.sidebarTemplateValue.animate_state = value;
-    this.editMode.next(false);
-  }
-
-  public resetMap() {
-    this.mapInitialConfiguration = {
-      africa: true,
-      americaNord: true,
-      americaSud: true,
-      asia: true,
-      europe: true,
-      oceania: true,
-      russia: true
-    };
   }
 
   public filterByCountries(event: {countries: Array<string>, allChecked: boolean}): void {
@@ -188,9 +225,56 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this._filteredAnswers = this.filterService.filter(this._answers);
   }
 
-  public addFilter(event: Filter) {
-    this.filterService.addFilter(event);
-    this._filteredAnswers = this.filterService.filter(this._answers);
+  changeStatus(event: Event, status: 'DONE'): void {
+    this.innovationService.updateStatus(this._innoid, status).first().subscribe((results) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
+    }, (error) => {
+      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+    });
+  }
+
+  toggleDetails(event: Event): void {
+    event.preventDefault();
+    const value = !this._showDetails;
+    this._showDetails = value;
+    this._showListProfessional = value;
+  }
+
+  displayMenu(event: Event) {
+    event.preventDefault();
+    this.displayMenuWrapper = true;
+  }
+
+  hideMenu(event: Event) {
+    event.preventDefault();
+    this.displayMenuWrapper = false;
+  }
+
+  seeAnswer(answer: Answer): void {
+    this._modalAnswer = answer;
+
+    this.sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: this.adminSide ? 'COMMON.EDIT_INSIGHT' : 'MARKET_REPORT.INSIGHT',
+      size: '726px'
+    };
+
+  }
+
+  closeSidebar(value: string) {
+    this.sidebarTemplateValue.animate_state = value;
+    this.editMode.next(false);
+  }
+
+  public keyupHandlerFunction(event: any) {
+    const objToSave = {};
+    objToSave['finalConclusion'] = {
+      conclusion: event['content']
+    };
+    this.innovationService.updateMarketReport(this.project._id, objToSave)
+      .first().subscribe((data) => {
+        this.project.marketReport = data;
+      });
   }
 
   public deleteFilter(key: string, event: Event) {
@@ -199,12 +283,19 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       this.resetMap();
     }
     this.filterService.deleteFilter(key);
-    this._filteredAnswers = this.filterService.filter(this._answers);
   }
 
-  public print(event: Event): void {
+  public printSynthesis(event: Event): void {
     event.preventDefault();
     window.print();
+  }
+
+  get campaignStats() {
+    return this._campaignsStats;
+  }
+
+  get companies() {
+    return this._companies;
   }
 
   get logoName(): string {
@@ -219,7 +310,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return this._answers;
   }
 
-  get filters() {
+  get filters(): {[questionId: string]: Filter} {
     return this.filterService.filters;
   }
 
@@ -229,6 +320,17 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   get countries(): Array<string> {
     return this._countries;
+  }
+
+  get continentTarget(): any {
+    return this.project.settings ? this.project.settings.geography.continentTarget : {};
+  }
+
+  formatCompanyName(name: string) {
+    if (name) {
+      return `${name[0].toUpperCase()}${name.slice(1)}`;
+    }
+    return '--';
   }
 
   get cleaned_questions(): Array<Question> {
@@ -251,12 +353,24 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return this._innoid;
   }
 
-  get showDetails (): boolean {
+  get showListProfessional(): boolean {
+    return this._showListProfessional;
+  }
+
+  set showListProfessional(val: boolean) {
+    this._showListProfessional = val;
+  }
+
+  get showDetails(): boolean {
     return this._showDetails;
   }
 
   get lang(): string {
     return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
+  }
+
+  getLogo(): string {
+    return environment.logoURL;
   }
 
 }

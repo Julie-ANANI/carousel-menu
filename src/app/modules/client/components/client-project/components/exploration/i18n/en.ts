@@ -3,7 +3,7 @@ export const EXPLORATION = {
     'EDITING': 'Market insights of your project will be available soon',
     'SUBMITTED': 'Collecting market insights of your project',
     'EVALUATING': 'Collecting market insights of your project',
-    'EVALUATING_DONE': 'Market insights of your project'
+    'DONE': 'Market insights of your project'
   },
 
   'MESSAGE': {

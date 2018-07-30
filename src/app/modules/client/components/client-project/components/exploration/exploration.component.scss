@@ -1,6 +1,6 @@
-#project-exploration {
+#exploration {
 
-  .title-wrapper {
+  .ce-title-wrapper {
     display: flex;
     justify-content: space-between;
     padding-bottom: 25px;
@@ -12,16 +12,16 @@
 
   }
 
-  .sts_comm-wrapper {
+  .ce-comm-wrapper {
     display: flex;
     padding-top: 0;
 
-    .status-wrapper {
-      height: 236px;
+    .ce-status-wrapper {
+      min-height: 236px;
       width: 330px;
       background-color: #4F5D6B;
       border-radius: 3px;
-      padding: 35px;
+      padding: 25px;
       margin-right: 25px;
 
       .section-heading {
@@ -30,10 +30,12 @@
 
       .fa-check {
         color: #2ECC71;
+        margin-right: 3px;
       }
 
       .fa-times {
-        color: #ff6666;
+        color: #EA5858;
+        margin-right: 3px;
       }
 
       .text-white {
@@ -41,14 +43,14 @@
         font-size: 0.7rem;
       }
 
-      .info-status {
+      .ce-info-status {
         display: flex;
         justify-content: space-between;
       }
 
     }
 
-    .comment-wrapper {
+    .ce-comment-wrapper {
       flex: 1;
 
       div {
@@ -64,16 +66,16 @@
 
   }
 
-  .analytic-wrapper {
+  .ce-analytic-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
 
     .pd-top {
       padding-top: 22px;
     }
 
-    .info-analytic {
+    .ce-info-analytic {
       margin-bottom: 25px;
 
       p {
@@ -90,7 +92,7 @@
 
   }
 
-  .com-nme {
+  .ce-comp-name-wrapper {
     list-style: none;
 
     li {
@@ -102,20 +104,41 @@
 
   }
 
-  .bot-rect {
-    width: 300px;
-  }
-
-
 }
 
 /********************************** Media ***************************************/
+@media (max-width: 840px) {
+
+  #exploration {
+
+    .ce-comm-wrapper {
+      flex-direction: column;
+
+      .ce-status-wrapper {
+        width: 310px;
+        margin-right: 0;
+        margin-bottom: 25px;
+      }
+
+    }
+
+    .ce-comp-name-wrapper {
+
+      li {
+        width: 50%;
+      }
+
+    }
+
+  }
+
+}
 
 @media (max-width: 600px) {
 
-  #project-exploration {
+  #exploration {
 
-    .title-wrapper {
+    .ce-title-wrapper {
       flex-direction: column;
 
       .btn {
@@ -128,25 +151,15 @@
 
 }
 
-@media (max-width: 800px) {
 
-  #project-exploration {
+@media (max-width: 320px) {
 
-    .sts_comm-wrapper {
-      flex-direction: column;
+  #exploration {
 
-      .status-wrapper {
-        width: 310px;
-        margin-right: 0;
-        margin-bottom: 25px;
-      }
+    .ce-comm-wrapper {
 
-    }
-
-    .com-nme {
-
-      li {
-        width: 50%;
+      .ce-status-wrapper {
+        width: 290px;
       }
 
     }

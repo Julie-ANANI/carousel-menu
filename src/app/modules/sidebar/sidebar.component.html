@@ -10,23 +10,21 @@
     id="sidebar"
     [ngStyle]="{ 'width': size ? size : '452px' }">
 
-    <div class="columns" #content>
-      <div class="column col-12 col-mx-auto">
+    <div #content>
 
-        <!-- Heading -->
-        <div class="sidebar-header">
-          <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="header-content">
-              <span>{{ title | translate }}</span>
-              <span><i class="icon icon-cross" id="close" (click)="toggleState($event, content)"></i></span>
-            </div>
+      <!-- Heading -->
+      <div class="sidebar-header">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="header-content">
+            <span>{{ title | translate }}</span>
+            <span><i class="icon icon-cross" id="close" (click)="toggleState($event, content)"></i></span>
           </div>
         </div>
-
-        <!-- Content -->
-        <ng-content></ng-content>
-
       </div>
+
+      <!-- Content -->
+      <ng-content></ng-content>
+
     </div>
 
   </div>

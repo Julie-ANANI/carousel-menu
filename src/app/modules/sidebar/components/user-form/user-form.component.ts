@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {TranslateService} from '@ngx-translate/core';
-import {User} from '../../../../models/user.model';
-import {Professional} from '../../../../models/professional';
-import {Campaign} from '../../../../models/campaign';
-import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
-import {AuthService} from '../../../../services/auth/auth.service';
-import {environment} from '../../../../../environments/environment';
-import {Subject} from 'rxjs/Subject';
+import { TranslateService } from '@ngx-translate/core';
+import { User } from '../../../../models/user.model';
+import { Professional } from '../../../../models/professional';
+import { Campaign } from '../../../../models/campaign';
+import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { environment } from '../../../../../environments/environment';
+import { Subject } from 'rxjs/Subject';
 import {Tag} from '../../../../models/tag';
 import {TagsService} from '../../../../services/tags/tags.service';
 
@@ -60,6 +60,7 @@ export class UserFormComponent implements OnInit {
   userForm: FormGroup;
   countriesSuggestion: Array<string> = [];
   displayCountrySuggestion = false;
+
   private _user: User;
   private _pro: Professional = null;
   private _campaign: Campaign = null;
@@ -84,9 +85,9 @@ export class UserFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
-              private _translateService: TranslateService,
-              private _tagsService: TagsService,
-              private _authService: AuthService) {}
+              private translateService: TranslateService,
+              private _authService: AuthService,
+              private _tagsService: TagsService) {}
 
   ngOnInit() {
     this.userForm = this.formBuilder.group( {
@@ -100,8 +101,7 @@ export class UserFormComponent implements OnInit {
       roles: '',
       operator: [false],
       profileUrl: [null],
-      domain: [''],
-      tags: [[], Validators.required]
+      domain: ['']
     });
 
     this._user = new User();
@@ -111,7 +111,7 @@ export class UserFormComponent implements OnInit {
         if (state === 'inactive') {
           setTimeout (() => {
             this.userForm.reset();
-          }, 700);
+          }, 500);
         }
       })
     }
@@ -127,7 +127,8 @@ export class UserFormComponent implements OnInit {
 
   loadTypes() {
     this.reinitialiseForm();
-    if (this._type === 'signUp') {
+
+    if (this._type === 'isSignUp') {
       this.isSignUp = true;
     } else if (this._type === 'editUser') {
       this.isEditUser = true;
@@ -138,6 +139,7 @@ export class UserFormComponent implements OnInit {
     } else if (this._type === 'tagProfessional') {
       this.addTagsToProfessionals = true;
     }
+
   }
 
   loadEditUser() {
@@ -201,7 +203,7 @@ export class UserFormComponent implements OnInit {
   openQuizUri(pro: Professional, event: Event): void {
     event.preventDefault();
     const baseUri = environment.quizUrl + '/quiz/' + this.campaign.innovation.quizId + '/' + this.campaign._id;
-    const parameters = '?pro=' + pro._id + '&lang=' + this._translateService.currentLang;
+    const parameters = '?pro=' + pro._id + '&lang=' + this.translateService.currentLang;
     window.open(baseUri + parameters);
   }
 
@@ -259,6 +261,10 @@ export class UserFormComponent implements OnInit {
 
   get authService(): AuthService {
     return this._authService;
+  }
+
+  get companyName(): string {
+    return environment.companyShortName;
   }
 
   get tags(): Tag[] {

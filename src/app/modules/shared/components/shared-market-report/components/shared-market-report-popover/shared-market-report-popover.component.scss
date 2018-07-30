@@ -8,7 +8,6 @@
 .item-menu-sandwich:hover {
   opacity: 1;
 }
-/* === Menu hover détails utilisateurs === */
 
 .users-menu {
   background: white;
@@ -17,15 +16,16 @@
   z-index: 3;
 
   ul li {
-    border-bottom: 1px solid #E0E0E0;
-    padding: 20px 0 15px 0;
-    margin: 15px;
+    border-bottom: 1px solid #D7D7D7;
+    padding: 15px 0;
+    margin: 0;
     list-style: none;
     color: #4A4A4A;
 
     &:last-child {
-      border-bottom: 0;
-      padding-bottom: 0;
+      border-bottom: none;
     }
+
   }
+
 }

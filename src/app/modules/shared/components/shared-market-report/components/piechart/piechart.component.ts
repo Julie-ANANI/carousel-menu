@@ -1,12 +1,9 @@
-/**
- * Created by bastien on 16/11/2017.
- */
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
-  selector: 'piechart',
+  selector: 'app-piechart',
   templateUrl: 'piechart.component.html',
   styleUrls: ['piechart.component.scss']
 })
@@ -18,6 +15,7 @@ export class PiechartComponent implements OnInit, OnDestroy {
     this._labels = value.labels || {};
     this._datasets = [{data: value.data || []}];
     this._percentage = value.percentage;
+    this._labelPercentage = [{percentage: value.labelPercentage || []}];
   }
 
   private _datasets: Array<{data: Array<number>}>;
@@ -25,6 +23,7 @@ export class PiechartComponent implements OnInit, OnDestroy {
   private _labels: {[prop: string]: Array<string>};
   private _lang: string;
   private _percentage: number;
+  private _labelPercentage: Array<{percentage: Array<string>}>;
   private ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private translateService: TranslateService) { }
@@ -41,9 +40,28 @@ export class PiechartComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  get datasets() { return this._datasets; }
-  get colors() { return this._colors; }
-  get labels() { return this._labels; }
-  get lang() { return this._lang; }
-  get percentage() { return this._percentage; }
+  get datasets() {
+    return this._datasets;
+  }
+
+  get colors() {
+    return this._colors;
+  }
+
+  get labels() {
+    return this._labels;
+  }
+
+  get lang() {
+    return this._lang;
+  }
+
+  get percentage() {
+    return this._percentage;
+  }
+
+  get labelPercentage(): Array<{ percentage: Array<string> }> {
+    return this._labelPercentage;
+  }
+
 }

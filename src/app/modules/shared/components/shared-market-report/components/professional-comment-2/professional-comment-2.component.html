@@ -1,0 +1,21 @@
+<!-- Name -->
+<p class="name">
+  <span class="text-link" (click)="seeAnswer($event, answer)">
+    {{ answer.professional?.firstName[0] | uppercase }}{{ answer.professional?.firstName | slice:1 }} {{ answer.professional?.lastName }}
+  </span>
+</p>
+
+<!-- Flag, Company and position -->
+<div class="fcp">
+  <span class="flag"><app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag></span>
+  <p *ngIf="answer.job || answer.professional?.jobTitle || answer.company?.name || answer.professional?.company">
+    <span *ngIf="answer.job || answer.professional?.jobTitle">{{ answer.job || answer.professional?.jobTitle }}</span>
+    <span *ngIf="answer.job || answer.professional?.jobTitle && answer.company?.name || answer.professional?.company">-</span>
+    <span *ngIf="answer.company?.name || answer.professional?.company">{{ answer.company?.name || answer.professional?.company }}</span>
+  </p>
+</div>
+
+<!-- Professional comment -->
+<p *ngIf="answer.answers[questionId]?.length > 0" class="p-comment">
+  {{ answer.answers[questionId] }}
+</p>

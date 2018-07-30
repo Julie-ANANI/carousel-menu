@@ -132,7 +132,7 @@
                 </span>
 
                   <span *ngSwitchCase="'DATE'">
-                  {{(getContentValue(key, getAttrs(column)[0]).toString() | date:dateFormat)}}
+                  {{(getContentValue(key, getAttrs(column)[0])?.toString() | date:dateFormat)}}
                 </span>
 
                   <span *ngSwitchCase="'ARRAY'">
