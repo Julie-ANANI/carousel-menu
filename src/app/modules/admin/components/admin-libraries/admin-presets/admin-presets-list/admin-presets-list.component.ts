@@ -68,7 +68,7 @@ export class AdminPresetsListComponent implements OnInit {
     event.preventDefault();
     delete clonedPreset._id;
     this._presetService.create(clonedPreset).first().subscribe(preset => {
-      this._router.navigate(['/admin/presets/presets/' + preset._id])
+      this._router.navigate(['/admin/libraries/questionnaire/' + preset._id])
     });
   }
 
