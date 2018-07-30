@@ -285,7 +285,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.filterService.deleteFilter(key);
   }
 
-  public print(event: Event): void {
+  public printSynthesis(event: Event): void {
     event.preventDefault();
     window.print();
   }

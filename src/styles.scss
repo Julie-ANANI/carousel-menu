@@ -3,17 +3,14 @@ $body-font-color: #878787 !default;
 $base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
 $primary-color: #3498DB !default;
 
-
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 @import "../node_modules/spectre.css/src/spectre.scss";
 @import "../node_modules/spectre.css/src/spectre-icons.scss";
 @import "../node_modules/spectre.css/src/spectre-exp.scss";
-@import "print.scss";
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-regular.css";
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css";
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css";
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
-
 
 
 /********************************** Default Styles ***************************************/
@@ -189,6 +186,7 @@ ul.list-filter {
 @import "style/modal-style";
 @import "style/tooltip-style";
 @import "style/table-style";
+@import "style/print";
 
 
 

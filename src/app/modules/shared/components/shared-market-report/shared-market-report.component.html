@@ -1,5 +1,5 @@
 <div
-  class="synthesis-wrapper section-container"
+  class="synthesis-wrapper section-container s-print"
   [ngStyle]="{ 'background-color': (projectStatus !== 'DONE' && !adminSide) ? 'white' : '#F5F5F5', 'padding-top': !adminSide ? '0' : '0' }">
 
   <!-- Project status not done -->
@@ -69,11 +69,15 @@
         <div class="sc-button-wrapper">
           <ng-container [ngSwitch]="adminSide">
             <ng-container *ngSwitchCase="true">
-              <button class="btn btn-primary" (click)="changeStatus($event, 'DONE')">{{ 'MARKET_REPORT.STICKY_BAR.BUTTON_ADMIN' | translate }}</button>
+              <button class="btn btn-primary" (click)="changeStatus($event, 'DONE')">
+                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_ADMIN' | translate }}
+              </button>
             </ng-container>
             <ng-container *ngSwitchCase="false">
               <!--<button class="btn ghost-primary">{{ 'MARKET_REPORT.STICKY_BAR.BUTTON_CSV' | translate }}</button>-->
-              <button class="btn btn-primary">{{ 'MARKET_REPORT.STICKY_BAR.BUTTON_DOWNLOAD' | translate }}</button>
+              <button class="btn btn-primary" (click)="printSynthesis($event)">
+                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_DOWNLOAD' | translate }}
+              </button>
             </ng-container>
           </ng-container>
         </div>
@@ -83,7 +87,7 @@
     <!-- /Sticky bar -->
 
     <!-- Main page -->
-    <div *ngIf="!adminSide && showDetails" class="section-container sc-front-wrapper">
+    <div *ngIf="!adminSide && showDetails" class="section-container sc-front-wrapper s-frontPage-print">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <div class="section-inline-container white-background">
 
@@ -110,7 +114,7 @@
     <!-- /Main page -->
 
     <!-- Innovation detail -->
-    <div *ngIf="!adminSide && showDetails" class="section-light-container">
+    <div *ngIf="!adminSide && showDetails" class="section-light-container s-innovationPage-print">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <div class="section-inline-container sc-innovation-wrapper white-background">
 
@@ -156,7 +160,7 @@
     <!-- /Innovation detail -->
 
     <!-- Innovation targeting -->
-    <div *ngIf="!adminSide && showDetails" class="section-light-container">
+    <div *ngIf="!adminSide && showDetails" class="section-light-container s-targeting-print">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <div class="section-inline-container sc-targeting-wrapper white-background">
 
@@ -216,7 +220,7 @@
     <!-- /Innovation targeting -->
 
     <!-- Innovation analytics -->
-    <div *ngIf="!adminSide && showDetails" class="section-light-container">
+    <div *ngIf="!adminSide && showDetails" class="section-light-container s-analytics-print">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <div class="section-inline-container sc-exploration-wrapper white-background">
 
@@ -343,13 +347,13 @@
     <div id="answer-wrapper">
 
       <!-- Origin Comment and Professional Responses -->
-      <div class="section-light-container">
+      <div class="section-light-container s-origin-print">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="sac-origin-wrapper">
             <div class="section-inline-container">
               <app-question-conclusion
                 [innovation]="project"
-                [question]="{identifier: 'professionals', subtitle: {en: 'professionals', fr: 'professionnels'}, label: {en: 'Origin of responses', fr: 'Origine des réponses'}}"
+                [question]="{identifier: 'professionals', subtitle: {en: 'professionals', fr: 'professionnels'}, title: {en: 'Origin of responses', fr: 'Origine des réponses'}}"
                 [readonly]="!adminSide"
                 [stats]="{nbAnswers: answers.length, percentage: 0}">
               </app-question-conclusion>
@@ -360,7 +364,7 @@
       <!-- /Origin Comment and Professional Responses -->
 
       <!-- Map -->
-      <div class="section-light-container">
+      <div class="section-light-container s-map-print">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="map-wrapper">
             <app-worldmap
@@ -376,7 +380,7 @@
       <!-- /Map -->
 
       <!-- Menu button -->
-      <div class="menu-wrapper" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
+      <div class="menu-wrapper s-menuButton-print" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
         <div
           class="menu-item-wrapper"
           [ngStyle]="{ 'visibility': displayMenuWrapper ? 'visible' : 'hidden' }"
@@ -402,7 +406,7 @@
       <!-- /Menu button -->
 
       <!-- Professionals -->
-      <section class="section-light-container" id="professionals">
+      <section class="section-light-container s-professional-print " id="professionals">
         <div class="column col-xs-12 col-11 col-mx-auto prof">
           <div class="professional-wrapper">
             <div *ngFor="let answer of filteredAnswers" class="profile">
@@ -420,7 +424,7 @@
       <!-- Other question and answers -->
       <div class="column col-xs-12 col-11 col-mx-auto">
         <div *ngFor="let question of questions">
-          <div class="section-light-container">
+          <div class="section-light-container s-questions-print">
             <app-question-section
               [innovation]="project"
               [question]="question"
@@ -436,7 +440,7 @@
       <!-- /Other question and answers -->
 
       <!-- Conclusion -->
-      <section class="section-light-container" id="conclusion">
+      <section class="section-light-container s-conclusion-print" id="conclusion">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="conclusion-wrapper">
             <div class="section-inline-container">

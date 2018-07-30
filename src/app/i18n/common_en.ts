@@ -15,6 +15,7 @@ export const COMMON = {
   'OF': 'of',
   'ADD': 'Add',
   'ALL': 'All',
+  'DATE': 'Date',
   'ADDED': 'Added on',
   'CREATED': 'Created on',
   'UPDATED': 'Updated on',

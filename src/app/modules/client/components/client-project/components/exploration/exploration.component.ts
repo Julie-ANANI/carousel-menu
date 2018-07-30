@@ -58,6 +58,8 @@ export class ExplorationProjectComponent implements OnInit {
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
           {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT', _isSortable: false},
+          {_attrs: ['company.name'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false},
+          {_attrs: ['created'], _name: 'COMMON.DATE', _type: 'DATE', _isSortable: false},
         ]
       };
 

@@ -15,6 +15,7 @@ export const COMMON = {
   'MORE': 'Voir Plus',
   'ALL': 'Tous',
   'OF': 'de',
+  'DATE': 'Date',
   'ADDED': 'Ajouté le',
   'CREATED': 'Créé le',
   'UPDATED': 'Modifié le',

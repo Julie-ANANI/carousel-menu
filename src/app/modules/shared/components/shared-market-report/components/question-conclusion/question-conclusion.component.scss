@@ -5,8 +5,15 @@
   .umi-synthesis {
     flex: 2;
 
+    .section-heading {
+      font-size: 18px;
+      color: white;
+      font-weight: 600;
+    }
+
     .main-heading {
       color: white;
+      opacity: .5;
     }
 
     p {

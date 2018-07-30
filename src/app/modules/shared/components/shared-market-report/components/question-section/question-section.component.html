@@ -195,7 +195,7 @@
  </ng-container>-->
 <!-- /Comments section -->
 
-<section class="question-section-wrapper" [id]=domSectionId>
+<section class="question-section-wrapper s-question-print" [id]=domSectionId>
 
   <!-- If the question type is checkbox or radio -->
   <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
@@ -297,8 +297,8 @@
         <app-scale [answers]="answersToShow" [question]="question"></app-scale>
       </div>
 
-      <!-- Textarea -->
-      <div *ngIf="question.controlType === 'textarea'" class="textarea-answer-wrapper">
+      <!-- Textarea or textbox-->
+      <div *ngIf="question.controlType === 'textarea' || question.controlType === 'textbox'" class="textarea-answer-wrapper">
         <div *ngFor="let answer of answersToShow" class="textarea-answer-outer-wrapper">
           <app-market-comment-2
             [answer]="answer"

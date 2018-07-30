@@ -3,7 +3,9 @@
   <!-- Conclusion -->
   <div class="umi-synthesis">
 
-    <h1 class="main-heading">{{ question.label | multiling:lang }}</h1>
+    <h1 *ngIf="question.title" class="main-heading">{{ question.title | multiling:lang }}</h1>
+
+    <h2 *ngIf="question.label" class="section-heading">{{ question.label | multiling:lang }}</h2>
 
     <app-text-zone
       [elementId]="domSectionId"
