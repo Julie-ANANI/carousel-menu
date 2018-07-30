@@ -9,7 +9,7 @@
   <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
 
   <!-- Top profile -->
-  <div *ngIf="answer.profileQuality === 2" class="label-validate">{{ 'COMMON.TOP_PROFILE' | translate }}</div>
+  <div class="label-validate" [ngStyle]="{ 'visibility': answer.profileQuality === 2 ? 'visible' : 'hidden' }">{{ 'COMMON.TOP_PROFILE' | translate }}</div>
 
   <!-- Professional detail -->
   <div class="detail-wrapper">

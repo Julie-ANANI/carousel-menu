@@ -38,4 +38,5 @@ export interface Innovation {
   readonly launched?: Date;
   readonly created?: Date;
   readonly updated?: Date;
+  readonly operator?: User;
 }

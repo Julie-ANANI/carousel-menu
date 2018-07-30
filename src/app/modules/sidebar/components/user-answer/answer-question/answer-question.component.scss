@@ -62,7 +62,7 @@
   background: #F8F4F4;
   color: #333333;
   padding: 8px 15px;
-  border-radius: 5px;
+  border-radius: 3px;
   display: inline-flex;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -88,15 +88,15 @@
 }
 
 .checkbox-wrapper {
-  background: #F8F4F4;
   color: #333333;
-  border-radius: 5px;
   display: inline-flex;
-  margin-right: 10px;
-  margin-bottom: 10px;
 
   li {
     padding: 10px 15px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background: #F8F4F4;
+    border-radius: 3px;
   }
 
 }
@@ -106,6 +106,10 @@
 
   li {
     padding: 0 0 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background: #F8F4F4;
+    border-radius: 3px;
   }
 
 }
