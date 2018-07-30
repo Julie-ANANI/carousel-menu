@@ -126,7 +126,7 @@
             </div>
             <div *ngIf="project.principalMedia?.type !== 'PHOTO'" [ngStyle]="{ 'padding-bottom': '20px' }">
               <img
-                [src]="project.innovationCards[0].media[0].url"
+                [src]="project.innovationCards[0].media[0]?.url"
                 [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
                 height="146" width="220px">
             </div>
