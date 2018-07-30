@@ -205,7 +205,7 @@
 
       <!-- Submit button -->
       <div *ngIf="isSignUp" class="signUp-button-wrapper text-center">
-        <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid && userForm.get('profileUrl').value !== '' && userForm.get('operator').value !== false">{{ 'COMMON.BUTTON.SIGN_UP' | translate }}</button>
+        <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid && userForm.get('profileUrl').value === null && userForm.get('operator').value === false">{{ 'COMMON.BUTTON.SIGN_UP' | translate }}</button>
       </div>
 
     </form>

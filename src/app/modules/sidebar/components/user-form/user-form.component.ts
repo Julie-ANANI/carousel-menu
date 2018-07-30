@@ -87,7 +87,7 @@ export class UserFormComponent implements OnInit {
               private autoCompleteService: AutocompleteService,
               private translateService: TranslateService,
               private _authService: AuthService,
-              private _tagsService: TagsService,) {}
+              private _tagsService: TagsService) {}
 
   ngOnInit() {
     this.userForm = this.formBuilder.group( {
@@ -101,8 +101,7 @@ export class UserFormComponent implements OnInit {
       roles: '',
       operator: [false],
       profileUrl: [null],
-      domain: [''],
-      tags: [[], Validators.required]
+      domain: ['']
     });
 
     this._user = new User();
