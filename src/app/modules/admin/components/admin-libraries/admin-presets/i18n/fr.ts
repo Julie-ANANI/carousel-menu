@@ -37,10 +37,9 @@ export const PRESETS = {
       'CONTENT': 'Donnez un nouveau nom à la section clônée'
     },
     'DESCRIPTION': {
-      'NOTHING': 'Rien',
-      'FIRST': 'Problème',
-      'SECOND': 'Solution',
-      'LIST': 'Avantages'
+      'nothing': 'Rien',
+      '1st': 'Problème',
+      '2nd': 'Solution'
     },
     'NONE': {
       'TITLE': 'Vous n\'avez pas encore de section',

@@ -1,7 +1,6 @@
 .section-header {
   display: flex;
   min-height: 70px;
-  align-items: center;
   padding: 5px 15px;
   font-weight: 600;
   font-size: 0.8rem;
@@ -25,6 +24,11 @@
     i:hover {
       color: #FFB300;
     }
+  }
+
+  .form-group {
+    display: flex;
+    align-items: center;
   }
 
   .button-actions {

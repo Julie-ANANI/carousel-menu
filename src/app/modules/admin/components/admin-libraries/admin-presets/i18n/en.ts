@@ -38,10 +38,9 @@ export const PRESETS = {
       'CONTENT': 'Please give a new name to the cloned section'
     },
     'DESCRIPTION': {
-      'NOTHING': 'Nothing',
-      'FIRST': 'Problem',
-      'SECOND': 'Solution',
-      'LIST': 'Benefits'
+      'nothing': 'Nothing',
+      '1st': 'Problem',
+      '2nd': 'Solution'
     },
     'NONE': {
       'TITLE': 'You have no section yet',

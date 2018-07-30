@@ -17,7 +17,6 @@ export class AdminPresetsEditComponent implements OnInit {
   private _state: Array<any> = [];
   private _preset: any;
 
-
   constructor(private _activatedRoute: ActivatedRoute,
               private _presetService: PresetService,
               private _authService: AuthService,

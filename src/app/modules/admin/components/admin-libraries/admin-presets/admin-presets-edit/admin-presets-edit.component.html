@@ -4,13 +4,7 @@
   <div *ngFor="let section of preset.sections; let i=index">
     <app-admin-project-questionnaire-section
       [section]="section"
-      [state]="getState(i)"
-      (stateOut)="updateState($event, i)"
-      (sectionUpdated)="sectionUpdated($event, i)"
-      (sectionRemoved)="sectionRemoved($event, i)"
-      (questionAdded)="addQuestion($event,i)"
-      (questionMoved)="canimove($event,i)"
-      (move)="moveSection($event,i)">
+      (updateSection)="updateSection($event, i)">
     </app-admin-project-questionnaire-section>
   </div>
 

@@ -49,21 +49,21 @@
 
 
     <!-- Question edition -->
-    <div class="question-body" *ngIf="stateIN[index]">
+    <div class="question-body" *ngIf="true">
 
       <div class="question-toolbar">
-        <div (click)="languageEN()" *ngIf="language() == 'fr'" href="" class="question-language">
+        <button (click)="languageEN()" *ngIf="language() == 'fr'" href="" class="btn-link">
           English <span class ="alert-badge" *ngIf="count('en') !== 0"> {{count('en')}}</span>
-        </div>
-        <div (click)="languageFR()" *ngIf="language() == 'fr'" href="" class="question-language active">
+        </button>
+        <button (click)="languageFR()" *ngIf="language() == 'fr'" href="" class="btn-link active">
           French <span class ="alert-badge" *ngIf="count('fr') !== 0"> {{count('fr')}}</span>
-        </div>
-        <div (click)="languageEN()"  *ngIf="language() == 'en'" href="" class="question-language active">
+        </button>
+        <button (click)="languageEN()"  *ngIf="language() == 'en'" href="" class="btn-link active">
           English <span class ="alert-badge" *ngIf="count('en') !== 0"> {{count('en')}} </span>
-        </div>
-        <div (click)="languageFR()" *ngIf="language() == 'en'" href="" class="question-language">
+        </button>
+        <button (click)="languageFR()" *ngIf="language() == 'en'" href="" class="btn-link">
           French <span class ="alert-badge" *ngIf="count('fr') !== 0"> {{count('fr')}}</span>
-        </div>
+        </button>
 
         <label class="form-switch" >
           <input type="checkbox" (click)="comment()" [ngModel]="question.canComment"  >

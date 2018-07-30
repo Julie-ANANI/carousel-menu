@@ -19,17 +19,12 @@
           Preview coming soon
         </button>
       </div>
-      {{this.innovation.preset.name}}
-      <div *ngFor="let section of sections; let i=index">
+      {{ innovation.preset.name }}
+      <div *ngFor="let section of innovation.preset?.sections; let i=index">
         <app-admin-project-questionnaire-section
           [section]="section"
-          [state]="getState(i)"
-          (stateOut)="updateState($event, i)"
-          (sectionUpdated)="sectionUpdated($event)"
-          (sectionRemoved)="sectionRemoved($event)"
-          (questionAdded)="addQuestion($event,i)"
-          (questionMoved)="canimove($event,i)"
-          (move)="moveSection($event,i)">
+          (move)="moveSection($event, i)"
+          (updateSection)="updateSection($event, i)">
         </app-admin-project-questionnaire-section>
       </div>
 

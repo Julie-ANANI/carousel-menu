@@ -1,73 +1,47 @@
 ///<reference path="../../../../../../../../node_modules/@angular/forms/src/form_builder.d.ts"/>
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {Question} from '../../../../../../models/question';
-
-
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Question } from '../../../../../../models/question';
+import { Section } from '../../../../../../models/section';
 
 @Component({
   selector: 'app-admin-project-questionnaire-section',
   templateUrl: './admin-project-questionnaire-section.component.html',
   styleUrls: ['./admin-project-questionnaire-section.component.scss']
 })
-export class AdminProjectQuestionnaireSectionComponent implements OnInit {
+export class AdminProjectQuestionnaireSectionComponent {
 
-  @Input() set section(sec) {
-    this._section = sec;
-  }
-  @Input() state: any;
-  @Output() sectionUpdated = new EventEmitter<any>();
-  @Output() sectionRemoved = new EventEmitter<any>();
-  @Output() stateOut = new EventEmitter<any>();
-  @Output() move = new EventEmitter<any>();
-  @Output() questionAdded = new EventEmitter<any>();
-  @Output() questionRemoved = new EventEmitter<any>();
-  @Output() questionUpdated = new EventEmitter<any>();
-  @Output() questionMoved = new EventEmitter<any>();
-
-  public editName = false;
-  private _newQuestion: Question;
-  private _section: any;
-  public formData: FormGroup;
-  constructor( private _formBuilder: FormBuilder) {}
-
-  ngOnInit() {
-    this.formData = this._formBuilder.group({
-      description: [this._section.description]
+  @Input() set section(section: Section) {
+    this._section = section;
+    this._formData = this._formBuilder.group({
+      label: this._formBuilder.group({
+        en: new FormControl(this._section.label ? this._section.label.en : ''),
+        fr: new FormControl(this._section.label ? this._section.label.fr : '')
+      }),
+      description: new FormControl(this._section.description),
     });
   }
 
-  public updateDescription(event: any) {
-    console.log(event);
-    this._section.description = event;
-    this._emit();
-  }
+  @Output() move = new EventEmitter<number>();
+  @Output() updateSection = new EventEmitter<Section>();
 
-  public removeSection() {
-    this.sectionRemoved.emit(this._section);
-  }
+  private _section: any;
+  private _formData: FormGroup;
 
-  public updateQuestion(event: any, index: number) {
-    this._section.questions[index] = event;
-    this.questionUpdated.emit(this._section.questions[index]);
-    this._emit();
-  }
+  public editSection = false;
 
-  public removeQuestion(quest: any, index: number) {
-    this.questionRemoved.emit(quest);
-    this._section.questions.splice(index, 1);
-    this._emit();
-  }
+  constructor( private _formBuilder: FormBuilder) {}
 
-  public update() {
-    this._emit();
+  save(event: Event) {
+    event.preventDefault();
+    this.updateSection.emit({...this._section, ...this._formData.value});
   }
 
   public addQuestion() {
-    this._newQuestion = {
+    const newQuestion: Question = {
       label: {
         en: 'Question',
-        fr: ''
+        fr: 'Question'
       },
       title: {
         en: '',
@@ -82,58 +56,43 @@ export class AdminProjectQuestionnaireSectionComponent implements OnInit {
       canComment: true,
       options: []
     };
-
-    this.questionAdded.emit(this._newQuestion);
+    console.log(newQuestion);
   }
 
-
-
-  private _emit() {
-    this.sectionUpdated.emit(this._section);
+  public up(): void {
+    this.move.emit(-1);
   }
 
-  get section() {
-    return this._section;
+  public down(): void {
+    this.move.emit(+1);
   }
 
-  public questionState(event: any) {
-    this.state.quest = event;
-    this._emitState();
+  public removeSection(): void {
+    this._section = null;
+    this.updateSection.emit(this._section);
   }
 
   public cloneQuestion(event: any, index: number) {
     delete event._id;
-    event.identifier += ' Cloned';
+    event.identifier += 'Cloned';
     this._section.questions.splice(index + 1, 0, event);
-    this.state.quest.splice(index + 1, 0, true); //UX
-    this._emitState();
-    this._emit();
-  }
-  private _emitState() {
-    this.stateOut.emit(this.state);
+    // this.state.quest.splice(index + 1, 0, true);
   }
 
   public moveQuestion(event: any, index: number) {
-
     const newIndex = event === 'down' ? index + 1 : index - 1;
     if (newIndex >= this._section.questions.length || newIndex < 0) {
-      this.questionMoved.emit([index, event]);
+      // this.questionMoved.emit([index, event]);
     } else {
       const tempSec = JSON.parse(JSON.stringify(this._section.questions[index]));
       this._section.questions[index] = JSON.parse(JSON.stringify(this._section.questions[newIndex]));
       this._section.questions[newIndex] = tempSec;
-      const tempState = JSON.parse(JSON.stringify(this.state.quest[index]));
-      this.state.quest[index] = JSON.parse(JSON.stringify(this.state.quest[newIndex]));
-      this.state.quest[newIndex] = tempState
-      this._emitState();
-      this._emit();
+      // const tempState = JSON.parse(JSON.stringify(this.state.quest[index]));
+      // this.state.quest[index] = JSON.parse(JSON.stringify(this.state.quest[newIndex]));
+      // this.state.quest[newIndex] = tempState;
     }
   }
 
-  public up() {
-    this.move.emit('up');
-  }
-  public down() {
-    this.move.emit('down');
-  }
+  public get questions() { return this._section.questions; }
+  public get formData() { return this._formData; }
 }
