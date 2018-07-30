@@ -456,11 +456,11 @@ body.sample-infographic {
   }
 
   .sc-sticky-wrapper {
-    padding-top: 25px;
+    padding-top: 10px;
     padding-bottom: 25px;
     background-color: white;
     transition: all 0.35s ease-in-out;
-    height: 136px;
+    height: 110px;
 
     .sc-content-wrapper {
       display: flex;
@@ -480,6 +480,10 @@ body.sample-infographic {
         padding: 20px 15px 10px 15px;
         height: 86px;
         overflow: auto;
+
+        p {
+          padding-bottom: 6px;
+        }
 
         ul {
           display: inline-flex;
