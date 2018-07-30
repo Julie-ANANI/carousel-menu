@@ -279,7 +279,7 @@ export class TableComponent {
   }
 
   isSort(content: Column): boolean {
-    if (content !== null && this.config !== null && this._config.sort !== null) {
+    if (content !== null && this.config && this.config.sort !== null) {
       return this._config.sort[this.getAttrs(content)[0]];
     } else {
       return false;
