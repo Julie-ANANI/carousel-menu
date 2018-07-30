@@ -4,13 +4,12 @@
       class="form-input form-control"
       type="search"
       [attr.placeholder]= "'COMMON.SEARCHINNOVATION' | translate "
-      [formControl]="searchField"
-    >
+      [formControl]="searchField">
     <i class="form-icon icon icon-search" *ngIf="searchIcon"></i>
     <i class="form-icon icon icon-cross" *ngIf="crossIcon" (click)="clearInput()"></i>
   </div>
 
-  <ul *ngIf="searchField.value" [ngStyle]="{'display': displaySuggestion ? 'block' : 'none' }" class="form-suggestion">
+  <ul *ngIf="searchField.value" [ngStyle]="{'display': displaySuggestion ? 'block' : 'none' }" class="suggestion">
     <li *ngFor="let suggestion of suggestions">
       <a (click)="onValueSelect(suggestion)">
         <span>{{ suggestion.text }}</span>

@@ -127,8 +127,8 @@
     margin: 8px 8px 8px 0;
 
     img {
-      max-width: 336px;
-      max-height: 250px;
+      width: 318px;
+      height: 230px;
       display: inline-block;
     }
 
@@ -184,6 +184,7 @@
       img {
         margin-right: auto;
         margin-left: auto;
+        max-height: 600px;
       }
 
     }

@@ -50,14 +50,13 @@
           <div *ngIf="media?.type === 'VIDEO'">
             <iframe
               [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
-              width="336" height="250"
+              width="318" height="230"
               (click)="mediaToShow($event, media.video.embeddableUrl)">
             </iframe>
           </div>
           <a *ngIf="media?.type === 'PHOTO'">
             <img
               [src]="media.url"
-              class="img-responsive"
               [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate"
               (click)="mediaToShow($event, media.url)">
           </a>

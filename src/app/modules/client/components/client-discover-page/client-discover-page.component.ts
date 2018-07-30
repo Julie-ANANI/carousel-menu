@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 // Services
 import { TranslateTitleService } from '../../../../services/title/title.service';
@@ -14,6 +14,7 @@ import { InnovCard } from '../../../../models/innov-card';
   templateUrl: './client-discover-page.component.html',
   styleUrls: ['./client-discover-page.component.scss']
 })
+
 export class ClientDiscoverPageComponent implements OnInit {
 
   private innovations: Array<Innovation>;
@@ -31,7 +32,6 @@ export class ClientDiscoverPageComponent implements OnInit {
     offset: 0,
     search: {
       isPublic: 1,
-      status: 'DONE' || 'EVALUATING',
     },
     sort: {
       created: -1
@@ -45,6 +45,8 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialize();
+
+    this._config.search['status'] = 'EVALUATING' || 'DONE';
 
     this._translateService.onLangChange.subscribe((event: LangChangeEvent) => {
       if (this.userDefaultLang !== this._translateService.currentLang) {
