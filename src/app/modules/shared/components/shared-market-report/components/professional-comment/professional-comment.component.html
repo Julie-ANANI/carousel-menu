@@ -1,3 +1,4 @@
+<!--
 <div class="professional-comment">
 
   <div class="flex-container">
@@ -20,14 +21,36 @@
 
     </p>
 
-    <market-report-popover
+    <app-market-report-popover
       [answers]="[answer]"
       (addFilter)="newFilter($event)"
       (modalAnswerChange)="seeAnswer($event)">
-    </market-report-popover>
+    </app-market-report-popover>
 
   </div>
 
   <strong class="comment-desc">{{answer.answers[questionId]}}</strong>
+
+</div>
+-->
+
+<div class="professional-comment-wrapper">
+
+  <!-- User details -->
+  <app-pro-tag
+    [answer]="answer"
+    (modalAnswerChange)="seeAnswer($event, answer)"
+    [ngStyle]="{ 'width': '100%', 'height': '100%' }">
+  </app-pro-tag>
+
+  <!-- Comments and divider -->
+
+  <!-- Divider -->
+  <div *ngIf="answer.answers[questionId]?.length > 0" class="divider-wrapper"></div>
+
+  <!-- Comment -->
+  <div *ngIf="answer.answers[questionId]?.length > 0" class="comment-wrapper">
+    {{ answer.answers[questionId] }}
+  </div>
 
 </div>

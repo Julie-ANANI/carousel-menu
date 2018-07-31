@@ -1,4 +1,4 @@
-#project-setting {
+.project-setting-wrapper {
   padding-top: 25px;
   padding-bottom: 0;
 
@@ -12,8 +12,8 @@
   }
 
   .icon-arrow-right, .icon-arrow-down {
-    margin-left: 2px;
-    font-size: 13px;
+    vertical-align: -.5px;
+    font-size: 14px;
   }
 
   .help-wrapper {

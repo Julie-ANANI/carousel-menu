@@ -1,61 +1,64 @@
-.pro-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-size: 0.7rem;
+.pro-tag-wrapper {
   height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
 
-  .user {
-    display: inline-flex;
-    flex-direction: column;
-
-    .detail {
-
-      .flag {
-        margin-right: 10px;
-        margin-bottom: 10px;
-        float: left;
-      }
-
-    }
-
-    .profile, .email {
-      margin-bottom: 10px;
-
-      a {
-        color: #0B90C6;
-      }
-
-      a:hover {
-        color: #0B90C6;
-        text-decoration: underline;
-      }
-
-    }
-
-    .job, .company {
-      margin-bottom: 10px;
-
-      i {
-        font-size: 15px;
-        margin: auto 8px auto 5px;
-      }
-
-    }
-
+  app-country-flag {
+    position: absolute;
+    top: 5px;
+    right: 9px;
   }
 
-  .answer {
-    text-decoration: underline;
-    cursor: pointer;
+  .label-validate {
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
+  }
+
+  .detail-wrapper {
+    flex: 1 0 auto;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+    text-align: center;
+    flex-direction: column;
+
+    .name-wrapper {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .job-wrapper {
+      font-size: 15px;
+      color: #4F5D6B;
+    }
+
+    .company-wrapper {
+      color: #97A4B1;
+      font-weight: 600;
+    }
+
   }
 
   .tag-wrapper {
-    padding-bottom: 10px;
-    .tag-label {
-      margin-left: 10px;
-      cursor: pointer;
-    }
+    display: inline-flex;
+    background-color: #4F5D6B;
+    padding: 5px 15px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+  }
+
+  .tag-wrapper:hover {
+    text-decoration: underline;
   }
 
 }

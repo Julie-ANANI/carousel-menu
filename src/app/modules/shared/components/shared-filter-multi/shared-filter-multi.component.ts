@@ -10,10 +10,11 @@ import {Choice} from '../../../table/models/choice';
 export class SharedFilterMultiComponent {
 
   @Input() config: any;
-  @Output() configChange = new EventEmitter <any>();
   @Input() set props(value: Column[]) {
     this.loadProps(value);
   }
+
+  @Output() configChange = new EventEmitter <any>();
 
   private _currentTextProp: Column = {_attrs: [''], _name: '', _type: 'TEXT'};
   private _textProps: Column[] = [];
@@ -21,6 +22,7 @@ export class SharedFilterMultiComponent {
 
   constructor() {}
 
+  // For values linked with config
   filterText(event: any) {
     this.config.offset = 0;
     this.config.search = {};

@@ -34,6 +34,7 @@ export class TableComponent {
   private _isHeadable = false;
   private _isSelectable = false;
   private _isEditable = false;
+  private _isLocal = false;
   private _isShowable = false;
   private _isDeletable = false;
   private _isFiltrable = false;
@@ -43,6 +44,8 @@ export class TableComponent {
   private _total = 0;
   private _columns: Column[] = [];
   private _actions: string[] = [];
+
+  private _filteredContent: Row[] = [];
 
   editColumn = false;
 
@@ -59,6 +62,8 @@ export class TableComponent {
       this._content = [];
       value._content.forEach(value1 => this._content.push({_isSelected: false, _content: value1}));
 
+      this._filteredContent = this._content;
+
       this._isHeadable = value._isHeadable || false;
       this._isSelectable = value._isSelectable || false;
       this._isEditable = value._isEditable || false;
@@ -67,6 +72,7 @@ export class TableComponent {
       this._isFiltrable = value._isFiltrable || false;
       this._isNotPaginable = value._isNotPaginable || false;
       this._reloadColumns = value._reloadColumns || false;
+      this._isLocal = value._isLocal || false;
 
       this._total = value._total;
 
@@ -89,7 +95,11 @@ export class TableComponent {
 
   changeConfig(value: any): void {
     this._config = value;
-    this.configChange.emit(this._config);
+    if (!this._isLocal) {
+      this.configChange.emit(this._config);
+    } else {
+      Promise.resolve(null).then(() => this.changeLocalConfig());
+    }
   }
 
   edit(row: Row) {
@@ -101,20 +111,30 @@ export class TableComponent {
   }
 
   getRowsKeys(): string[] {
-    return Object.keys(this._content);
+    if (this._isLocal) {
+      return Object.keys(this._filteredContent);
+    } else {
+      return Object.keys(this._content);
+    }
   }
 
   getContentValue(rowKey: string, columnAttr: string): any  {
     if (columnAttr.split('.').length > 1) {
       let newColumnAttr = columnAttr.split('.');
-      let tmpContent = this._content[rowKey]._content[newColumnAttr[0]];
+      let tmpContent = this._isLocal
+        ? this._filteredContent[rowKey]._content[newColumnAttr[0]]
+        : this._content[rowKey]._content[newColumnAttr[0]];
       newColumnAttr = newColumnAttr.splice(1);
       for (const i of newColumnAttr){
         tmpContent = tmpContent ? tmpContent[i] : '-';
       }
       return tmpContent;
     }else {
-      return this._content[rowKey]._content[columnAttr];
+      if (this._isLocal) {
+        return this._filteredContent[rowKey]._content[columnAttr];
+      } else {
+        return this._content[rowKey]._content[columnAttr];
+      }
     }
   }
 
@@ -178,6 +198,160 @@ export class TableComponent {
     return multiLabel._attr;
   }
 
+  getSelectedRows(): Row[] {
+    return this._content.filter(value => value._isSelected === true);
+  }
+
+  getSelectedRowsContent(): any[] {
+    const content: any[] = [];
+    this.getSelectedRows().forEach(value => content.push(value._content));
+    return content;
+  }
+
+  removeSelectedRows() {
+    this.removeRows.emit(this.getSelectedRowsContent());
+  }
+
+  selectRow(key: string): void {
+    if (this._isSelectable) {
+      this._content[key]._isSelected = !(this._content[key]._isSelected);
+    }
+  }
+
+  initialiseColumns() {
+    this._columns.forEach((value1, index) => {
+      this._columns[index]._isSelected = false,
+        this._columns[index]._isHover = false});
+  }
+
+  selectColumn(key: string) {
+    this.initialiseColumns();
+    const index = this._columns.findIndex(value => value._attrs[0] === key);
+    this._columns[index]._isSelected = true;
+  }
+
+  isSort(content: Column): boolean {
+    if (content !== null && this.config && this.config.sort !== null) {
+      return this._config.sort[this.getAttrs(content)[0]];
+    } else {
+      return false;
+    }
+  }
+
+  filterTextLocal(event: {prop: Column, text: string}) {
+    if (event.text !== '') {
+      if (event.prop._attrs[0].split('.').length > 1) {
+        this._filteredContent = this._filteredContent.filter(value => {
+          let attr = event.prop._attrs[0].split('.');
+          let realContent = value._content[attr[0]];
+          attr = attr.splice(1);
+          for (const i of attr) {
+            realContent = realContent[i];
+          }
+          return realContent.toLowerCase().includes(event.text);
+        });
+      } else {
+        this._filteredContent = this._filteredContent.filter(value => {
+          if (event.prop._type === 'COUNTRY') {
+            return value._content[event.prop._attrs[0]].flag.toLowerCase().includes(event.text);
+          } else {
+            return value._content[event.prop._attrs[0]].toLowerCase().includes(event.text);
+          }
+        });
+      }
+    } else {
+      this._filteredContent = this._content;
+    }
+  }
+
+  changeLocalConfig() {
+    this._filteredContent = this._content;
+    for (const key of Object.keys(this._config)) {
+      switch (key) {
+        case('limit') : {
+          break;
+        }
+        case('offset'): {
+          break;
+        }
+        case ('search'): {
+          for (const search of Object.keys(this._config['search'])) {
+            this.filterAttribute(search, true);
+          }
+          break;
+        }
+        case('sort'): {
+            for (const sortKey of Object.keys(this._config['sort'])) {
+              this.sortColumn(sortKey);
+            }
+            break;
+        } default : {
+          this.filterAttribute(key, false);
+          break;
+        }
+      }
+    }
+
+    this._total = this._filteredContent.length;
+    if (!this._isNotPaginable) {
+      this._filteredContent = this._filteredContent.slice(this._config.offset, this._config.offset + Number(this._config.limit));
+    }
+  }
+
+  sortColumn(key: string) {
+    if ((this._columns.find(value => value._attrs[0] === key))) {
+      const sortArray = this._filteredContent.slice();
+      this._filteredContent = sortArray.sort((a, b) => {
+        const valueA = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(a._content)).toString() , key).toString();
+        const valueB = this.getContentValue(this._filteredContent.findIndex(value => JSON.stringify(value._content) === JSON.stringify(b._content)).toString() , key).toString();
+        return this._config.sort[key] * (valueA.localeCompare(valueB));
+      });
+    }
+  }
+
+  filterAttribute(key: string, isSearch: boolean) {
+    if ((this._columns.find(value => value._attrs[0] === key))) {
+      let word: RegExp = null;
+      if (isSearch) {
+        word = new RegExp(this._config.search[key], 'gi');
+      } else {
+        word = new RegExp(this._config[key], 'gi');
+      }
+
+      const columnToFilter = this._columns.find(value => value._attrs[0] === key);
+
+      this._filteredContent = this._filteredContent.filter((value, index) => {
+        if (columnToFilter._type === 'COUNTRY') {
+          return !this.getContentValue(index.toString(), key).flag.toLowerCase().search(word);
+        } else {
+          return !this.getContentValue(index.toString(), key).toLowerCase().search(word);
+        }
+      });
+    }
+  }
+
+  filterOtherLocal(event: {prop: Column, text: string}) {
+    if (event.text !== '') {
+      this._filteredContent = this._filteredContent.filter(value => {
+        return value._content[event.prop._attrs[0]] === event.text;
+      })
+    } else {
+      this._filteredContent = this._content;
+    }
+  }
+
+  isSelected(content: any): boolean {
+    return content._isSelected
+  }
+
+  isSortable(column: Column) {
+    return column._isSortable === undefined ? true : column._isSortable;
+  }
+
+  selectAll(e: any): void  {
+    this._content.forEach(value => { value._isSelected = e.srcElement.checked; });
+  }
+
   get selector(): string {
     return this._selector;
   }
@@ -196,6 +370,10 @@ export class TableComponent {
 
   get isEditable(): boolean {
     return this._isEditable;
+  }
+
+  get isLocal(): boolean {
+    return this._isLocal;
   }
 
   get isShowable(): boolean {
@@ -238,68 +416,17 @@ export class TableComponent {
     return this.getSelectedRows().length;
   }
 
-  getSelectedRows(): Row[] {
-    return this._content.filter(value => value._isSelected === true);
-  }
-
-  getSelectedRowsContent(): any[] {
-    const content: any[] = [];
-    this.getSelectedRows().forEach(value => content.push(value._content));
-    return content;
-  }
-
-  removeSelectedRows() {
-    this.removeRows.emit(this.getSelectedRowsContent());
-  }
-
-  selectRow(key: string): void {
-    if (this._isSelectable) {
-      this._content[key]._isSelected = !(this._content[key]._isSelected);
-    }
-  }
-
-  showEditButton(index: number, item: any) {
-    if ((index === 0)) {
-      this.editColumn = true;
-    } else {
-      this.editColumn = false;
-    }
-  }
-
-  initialiseColumns() {
-    this._columns.forEach((value1, index) => {
-      this._columns[index]._isSelected = false,
-      this._columns[index]._isHover = false});
-  }
-
-  selectColumn(key: string) {
-    this.initialiseColumns();
-    const index = this._columns.findIndex(value => value._attrs[0] === key);
-    this._columns[index]._isSelected = true;
-  }
-
-  isSort(content: Column): boolean {
-    if (content !== null && this.config && this.config.sort !== null) {
-      return this._config.sort[this.getAttrs(content)[0]];
-    } else {
-      return false;
-    }
-  }
-
-  isSelected(content: any): boolean {
-    return content._isSelected
-  }
-
-  isSortable(column: Column) {
-    return column._isSortable === undefined ? true : column._isSortable;
-  }
-
-  selectAll(e: any): void  {
-      this._content.forEach(value => { value._isSelected = e.srcElement.checked; });
-  }
-
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+  }
+
+  get filteredContent(): Row[] {
+    return this._filteredContent;
+  }
+
+
+  set content(value: Row[]) {
+    this._content = value;
   }
 
 }

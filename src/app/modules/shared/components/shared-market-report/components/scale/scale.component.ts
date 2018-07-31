@@ -14,6 +14,7 @@ export class ScaleComponent implements OnInit {
     this._answers = value;
     this.updateAnswersData();
   }
+
   @Input() public question: Question;
 
   private _answers: Array<Answer>;
@@ -62,7 +63,12 @@ export class ScaleComponent implements OnInit {
     }
   }
 
-  get barsData() { return this._barsData };
-  get bars() { return this._bars };
+  get barsData() {
+    return this._barsData
+  };
+
+  get bars() {
+    return this._bars
+  };
 
 }

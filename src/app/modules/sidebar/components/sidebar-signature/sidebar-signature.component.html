@@ -64,10 +64,10 @@
     </div>
 
     <label class="form-label" *ngIf="editionMode">Signature</label>
-    <text-zone [elementId]="signature.language + signature.name"
+    <app-text-zone [elementId]="signature.language + signature.name"
                [readonly]="!editionMode"
                [data]="signature.content || ''"
-               (onTextChange)="updateContent($event)"></text-zone>
+               (onTextChange)="updateContent($event)"></app-text-zone>
 
   </div>
 </div>

@@ -1,16 +1,41 @@
-div.professional-comment {
-  color: #5d5d5d;
-  padding: 12px;
+.professional-comment-wrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  font-size: 14px;
 
-  .flex-container {
-    display: flex;
-    justify-content: space-between;
+  .divider-wrapper {
+    margin: 0 25px;
+    border: 1px solid #D7D7D7;
+    border-radius: 5px;
+    height: 80%;
   }
 
-  .fa-star {
-    color: #FEBE34;
-    margin-left: 15px;
+  .comment-wrapper {
+    justify-content: center;
+    max-width: 50%;
   }
 
 }
+
+/********************************** Media ***************************************/
+@media (max-width: 840px) {
+
+  .professional-comment-wrapper {
+    flex-direction: column;
+
+    .divider-wrapper {
+      margin: 25px 0;
+      width: 90%;
+    }
+
+    .comment-wrapper {
+      max-width: 100%;
+    }
+
+  }
+
+}
+
 

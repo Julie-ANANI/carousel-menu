@@ -1,3 +1,14 @@
+<!-- We show the number of results -->
+<div *ngIf="isHeadable" class="table-title">{{total}} {{ title | translate }}</div>
+
+
+<!-- If we want to filter by columns (not local) -->
+<sqFilterMulti *ngIf="isFiltrable"
+               [config]="config"
+               (configChange)="changeConfig($event)"
+               [props]="columns">
+</sqFilterMulti>
+
 <!-- If there are no results -->
 <div class="bot-wrapper text-center" *ngIf="total === 0">
   <span class="bot-rect">{{'COMMON.TABLE.NO-RESULTS' | translate}}</span>
@@ -5,19 +16,6 @@
   <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
   <div><img src="http://res.cloudinary.com/umi/image/upload/app/default-images/juan-bot.svg" width="" height="120"></div>
 </div>
-
-
-<!-- We show the number of results -->
-<div *ngIf="isHeadable && total !== 0" class="table-title">{{total}} {{ title | translate }}</div>
-
-
-<!-- If we want to filter by columns -->
-<sqFilterMulti *ngIf="isFiltrable && total !== 0"
-               [config]="config"
-               (configChange)="changeConfig($event)"
-               [props]="columns">
-</sqFilterMulti>
-
 
 <!-- Else we begin to create the table -->
 <span *ngIf="total !== 0">
@@ -132,7 +130,7 @@
                 </span>
 
                   <span *ngSwitchCase="'DATE'">
-                  {{(getContentValue(key, getAttrs(column)[0]).toString() | date:dateFormat)}}
+                  {{(getContentValue(key, getAttrs(column)[0])?.toString() | date:dateFormat)}}
                 </span>
 
                   <span *ngSwitchCase="'ARRAY'">
@@ -171,11 +169,10 @@
   </table>
 
   <!-- Behind the table we show the pagination -->
-  <sqPagination *ngIf="!isNotPaginable"
+  <app-pagination *ngIf="!isNotPaginable"
                 [config]="config"
                 (configChange)="changeConfig($event)"
                 [total]="total"
                 [propertyName]="selector">
-
-  </sqPagination>
+  </app-pagination>
 </span>

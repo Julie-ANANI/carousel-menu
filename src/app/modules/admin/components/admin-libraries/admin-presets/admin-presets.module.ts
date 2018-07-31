@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedFilterInputModule } from '../../../../shared/components/shared-filter-input/shared-filter-input.module';
 import { SharedSortModule} from '../../../../shared/components/shared-sort/shared-sort.module';
-import { SharedPaginationModule } from '../../../../shared/components/shared-pagination/shared-pagination.module';
 import { SharedLoaderModule } from '../../../../shared/components/shared-loader/shared-loader.module';
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { InputModule } from '../../../../input/input.module';
@@ -20,7 +19,6 @@ import { AdminProjectQuestionnaireModule } from '../../admin-project/admin-proje
     TranslateModule.forChild(),
     SharedFilterInputModule,
     SharedSortModule,
-    SharedPaginationModule,
     TranslateModule.forChild(),
     InputModule,
     SharedLoaderModule,

@@ -33,8 +33,15 @@ export class ExplorationProjectComponent implements OnInit {
   private _questions: Array<Question>;
   private _modalAnswer: Answer;
   sidebarTemplateValue: Template = {};
-
   tableInfos: Table = null;
+  config = {
+    limit: 10,
+    offset: 0,
+    search: {},
+    sort: {
+      created: -1
+    }
+  };
 
   constructor(private answerService: AnswerService,
               private innovationService: InnovationService,
@@ -53,11 +60,13 @@ export class ExplorationProjectComponent implements OnInit {
         _selector: 'client-answer',
         _content: response.answers,
         _isShowable: true,
-        _isNotPaginable: true,
+        _isLocal: true,
         _total: response.answers.length,
         _columns: [
-          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
-          {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT', _isSortable: false},
+          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+          {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
+          {_attrs: ['company.name'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+          {_attrs: ['created'], _name: 'COMMON.DATE', _type: 'DATE'},
         ]
       };
 
@@ -72,8 +81,7 @@ export class ExplorationProjectComponent implements OnInit {
       this.notificationService.error('ERROR.ERROR', error.message);
     });
 
-    this.innovationService.campaigns(this.project._id).first()
-      .subscribe((results) => {
+    this.innovationService.campaigns(this.project._id).first().subscribe((results) => {
         if (results && Array.isArray(results.result)) {
           this._campaignsStats = results.result
             .reduce(function(acc, campaign) {
@@ -97,22 +105,20 @@ export class ExplorationProjectComponent implements OnInit {
         this.notificationService.error('ERROR.ERROR', error.message);
       });
 
+
     if (this.project.settings && this.project.settings.companies
         && Array.isArray(this.project.settings.companies.include)) {
       this._companies = this.project.settings.companies.include;
     }
 
     this._questions = [];
+
     if (this.project.preset && Array.isArray(this.project.preset.sections)) {
       this.project.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions || []);
       });
     }
 
-  }
-
-  get projectStatus(): string {
-    return this.project.status;
   }
 
   seeAnswer(answer: Answer) {
@@ -128,6 +134,13 @@ export class ExplorationProjectComponent implements OnInit {
 
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
+  }
+
+  public formatCompanyName(name: string) {
+    if (name) {
+      return `${name[0].toUpperCase()}${name.slice(1)}`;
+    }
+    return '--';
   }
 
   get campaignStats() {
@@ -158,6 +171,8 @@ export class ExplorationProjectComponent implements OnInit {
     return this._questions;
   }
 
-
+  get projectStatus(): string {
+    return this.project.status;
+  }
 
 }

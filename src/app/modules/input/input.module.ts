@@ -9,6 +9,8 @@ import { AutocompleteInputComponent } from './component/autocomplete-input/autoc
 import { InputListComponent } from './component/input-list/input-list.component';
 import { SearchInputComponent } from './component/search-input/search-input.component';
 import { CountryFlagComponent } from './component/country-flag/country-flag.component';
+import { ProgressBarComponent } from './component/progress-bar/progress-bar.component';
+import { PaginationComponent } from './component/pagination/pagination.component';
 
 
 @NgModule({
@@ -22,16 +24,20 @@ import { CountryFlagComponent } from './component/country-flag/country-flag.comp
     PipeModule
   ],
   declarations: [
-  AutocompleteInputComponent,
-  InputListComponent,
-  SearchInputComponent,
-  CountryFlagComponent
+    AutocompleteInputComponent,
+    InputListComponent,
+    SearchInputComponent,
+    CountryFlagComponent,
+    ProgressBarComponent,
+    PaginationComponent
   ],
   exports: [
     AutocompleteInputComponent,
     InputListComponent,
     SearchInputComponent,
-    CountryFlagComponent
+    CountryFlagComponent,
+    ProgressBarComponent,
+    PaginationComponent
   ]
 })
 

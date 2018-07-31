@@ -5,7 +5,6 @@ import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/
 import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/fr';
 import { EXPORT } from '../modules/shared/components/shared-latex-manager/i18n/fr';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
-import { PAGINATION } from '../modules/shared/components/shared-pagination/i18n/fr';
 import { PROJECT } from '../modules/shared/components/shared-project-description/i18n/fr';
 import { DASHBOARD } from '../modules/admin/components/admin-dashboard/i18n/fr';
 import { PRESETS } from '../modules/admin/components/admin-libraries/admin-presets/i18n/fr';
@@ -25,6 +24,7 @@ import { SIGN_UP } from '../modules/base/components/signup-page/i18n/fr';
 import { FORGET_PASSWORD } from '../modules/base/components/forget-password-page/i18n/fr';
 import { WELCOME } from '../modules/base/components/welcome-page/i18n/fr';
 import { HEADER } from '../modules/base/components/header/i18n/fr';
+import { PAGINATION } from '../modules/input/component/pagination/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,

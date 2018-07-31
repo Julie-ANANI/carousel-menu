@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
-import {Question} from '../../../../../models/question';
-import {Answer} from '../../../../../models/answer';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
-import {AnswerService} from '../../../../../services/answer/answer.service';
-import {Tag} from '../../../../../models/tag';
+import { Question } from '../../../../../models/question';
+import { Answer } from '../../../../../models/answer';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { AnswerService } from '../../../../../services/answer/answer.service';
+import { Tag } from '../../../../../models/tag';
 
 @Component({
   selector: 'app-answer-question',

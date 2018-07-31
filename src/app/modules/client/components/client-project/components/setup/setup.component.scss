@@ -6,7 +6,6 @@
   padding-top: 0;
 
   .msg-wrapper {
-    padding-top: 50px;
 
     .content {
       background-color: #2ECC71;
@@ -14,7 +13,7 @@
       font-weight: 600;
       font-size: 18px;
       padding: 15px;
-      border-radius: 5px;
+      border-radius: 3px;
     }
 
     .text-link {
@@ -156,13 +155,9 @@
 
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
 
   .setup-section-1-wrapper {
-    position: sticky;
-    top: 0;
-    background-color: white;
-    z-index: 11;
 
     .row-1-wrapper {
 
@@ -180,6 +175,18 @@
 
     }
 
+  }
+
+}
+
+@media (min-width: 840px) {
+
+  .setup-scroll-sticky {
+    position: sticky;
+    background-color: white;
+    top: 0;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
+    z-index: 11;
   }
 
 }

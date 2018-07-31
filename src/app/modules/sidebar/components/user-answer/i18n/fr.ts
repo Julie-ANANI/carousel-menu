@@ -10,7 +10,7 @@ export const ANSWER = {
   'STATUS': {
     'REJECTED': 'Rejeté',
     'VALIDATED': 'Validé',
-    'SUBMITTED': 'Soumis',
+    'SUBMITTED': 'A regarder',
     'EMAIL': 'Envoyer email'
   },
 

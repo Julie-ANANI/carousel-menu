@@ -15,6 +15,7 @@ export const COMMON = {
   'OF': 'of',
   'ADD': 'Add',
   'ALL': 'All',
+  'DATE': 'Date',
   'ADDED': 'Added on',
   'CREATED': 'Created on',
   'UPDATED': 'Updated on',
@@ -43,12 +44,15 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Media not available',
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
+  'PAGE_NOT_FOUND': 'This is not the web page you are looking for.',
+
   'BLACKLIST': {
     'EMAILS': 'Blacklisted e-mails',
     'DOMAINS': 'Blacklisted domains',
     'COUNTRIES': 'Blacklisted countries',
     'ACCEPTATION': 'Acceptance mails percentage'
   },
+
   'EDIT-BLACKLIST': 'Edit blacklisted e-mail',
   'EXCLUDE': 'Exclude',
   'EXCLUDE-EMAILS': 'Exclude emails',
@@ -79,6 +83,7 @@ export const COMMON = {
     'B': 'terms and conditions of use.',
   },
   'PROFILE_URL': 'Profile URL',
+  'TOP_PROFILE': 'Top profile',
 
   'REQUIRED': {
     'FIRSTNAME': 'First name is required.',
@@ -144,6 +149,7 @@ export const COMMON = {
     'PITCH-DELETE': 'Are you sure you want to delete the professionnal(s)?',
     'DELETE': 'Delete professionnal(s)',
   },
+
   'HOME': 'Home',
   'ADMIN': 'Admin',
   'MY_PROJECT': 'My project',
@@ -162,6 +168,7 @@ export const COMMON = {
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
   'CLIENT_SIDE': 'Client',
+  'UMI_WORD': 'A word from UMI',
 
   'SORT': {
     'BY_NAME': 'Name',

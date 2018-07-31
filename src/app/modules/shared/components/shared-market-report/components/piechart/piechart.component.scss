@@ -1,32 +1,64 @@
-.big-synthesis {
-  position: relative;
-  background: white;
-  padding: 0;
-  text-align: center;
-  min-width: 220px;
+.piechart {
+  font-size: 14px;
   font-weight: 600;
-  font-size: 0.7rem;
-  color: #FFFFFF;
-  max-width: 220px;
+  max-width: 320px;
 
-  .chart-pie {
-    height: auto !important;
-    width: 150px !important;
-    margin: 0 auto 30px auto;
+  .percentage {
+    padding-bottom: 0;
+    margin-bottom: 25px;
   }
 
-  .number-ratio {
-    // color: #8E8E8E;
+  .chart-pie {
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto !important;
+    width: 220px !important;
+  }
 
-    span {
-      font-size: 1.6rem;
-      color: #0B90C6;
+  .pie-data {
+    display: inline-block;
+    margin-bottom: -10px;
+
+    .data {
+      display: inline-flex;
+      margin-bottom: 10px;
+      margin-right: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+
+      .circle {
+        width: 13px;
+        height: 13px;
+        margin-top: 1.2px;
+      }
+
+      .response, .circle, .text{
+        margin-right: 8px;
+      }
+
     }
 
-    p {
-      color: #0B90C6;
-    }
+  }
 
+
+}
+
+/********************************** Media ***************************************/
+
+@media (max-width: 840px) {
+
+  .piechart {
+    max-width: 100% !important;
+  }
+
+}
+
+@media (max-width: 320px) {
+
+  .pie-data {
+    display: flex !important;
+    flex-direction: column;
   }
 
 }
