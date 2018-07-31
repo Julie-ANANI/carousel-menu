@@ -12,8 +12,8 @@ export class ProfessionalsService {
   constructor(private _http: Http) {
   }
 
-  public create(professionalObj: Professional): Observable<any> {
-    return this._http.post('/professional', professionalObj)
+  public create(professionalArray: Array<Professional>, campaignId: string, innovationId: string): Observable<any> {
+    return this._http.post(`/professional/create/${campaignId}/${innovationId}`, {professionals: professionalArray})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
