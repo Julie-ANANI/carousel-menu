@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedSortModule } from '../../../shared/components/shared-sort/shared-sort.module';
-import { SharedPaginationModule } from '../../../shared/components/shared-pagination/shared-pagination.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { AdminTagsComponent } from './admin-tags.component';
 import { AdminTagListComponent } from './admin-tag-list/admin-tag-list.component';
@@ -18,7 +17,6 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     SharedSortModule,
-    SharedPaginationModule,
     TranslateModule.forChild(),
     PipeModule,
     InputModule,

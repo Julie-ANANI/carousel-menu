@@ -33,8 +33,15 @@ export class ExplorationProjectComponent implements OnInit {
   private _questions: Array<Question>;
   private _modalAnswer: Answer;
   sidebarTemplateValue: Template = {};
-
   tableInfos: Table = null;
+  config = {
+    limit: 10,
+    offset: 0,
+    search: {},
+    sort: {
+      created: -1
+    }
+  };
 
   constructor(private answerService: AnswerService,
               private innovationService: InnovationService,
@@ -53,13 +60,13 @@ export class ExplorationProjectComponent implements OnInit {
         _selector: 'client-answer',
         _content: response.answers,
         _isShowable: true,
-        _isNotPaginable: true,
+        _isLocal: true,
         _total: response.answers.length,
         _columns: [
-          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
-          {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT', _isSortable: false},
-          {_attrs: ['company.name'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false},
-          {_attrs: ['created'], _name: 'COMMON.DATE', _type: 'DATE', _isSortable: false},
+          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+          {_attrs: ['job'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
+          {_attrs: ['company.name'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
+          {_attrs: ['created'], _name: 'COMMON.DATE', _type: 'DATE'},
         ]
       };
 

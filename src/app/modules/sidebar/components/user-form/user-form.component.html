@@ -56,12 +56,9 @@
       </div>
 
       <!-- Show Tags -->
-      <div class="form-group">
+      <div *ngIf="isProfessional && tags.length > 0" class="form-group">
         <label class="form-label">Tags</label>
-        <app-shared-tag-item *ngIf="isProfessional"
-                             [tags]="tags"
-                             (removeTag)="removeTag($event)">
-        </app-shared-tag-item>
+        <app-shared-tag-item [tags]="tags" (removeTag)="removeTag($event)"></app-shared-tag-item>
       </div>
 
       <!-- First name -->
@@ -188,11 +185,12 @@
       </div>
 
       <!-- Add Tags -->
-      <app-shared-tag-item *ngIf="addTagsToProfessionals"
-                           [tags]="tags"
-                           [editMode]="true"
-                           (addTag)="addTag($event)"
-                           (removeTag)="removeTag($event)"></app-shared-tag-item>
+      <app-shared-tag-item
+        *ngIf="addTagsToProfessionals"
+        [tags]="tags"
+        [editMode]="true"
+        (addTag)="addTag($event)"
+        (removeTag)="removeTag($event)"></app-shared-tag-item>
 
       <!-- Link to quiz URI -->
       <div *ngIf="isProfessional && campaign" class="form-group">

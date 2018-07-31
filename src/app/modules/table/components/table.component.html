@@ -169,11 +169,10 @@
   </table>
 
   <!-- Behind the table we show the pagination -->
-  <sqPagination *ngIf="!isNotPaginable"
+  <app-pagination *ngIf="!isNotPaginable"
                 [config]="config"
                 (configChange)="changeConfig($event)"
                 [total]="total"
                 [propertyName]="selector">
-
-  </sqPagination>
+  </app-pagination>
 </span>
