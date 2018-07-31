@@ -24,7 +24,7 @@
   <ng-container [ngSwitch]="question.controlType">
 
     <!-- Pie chart -->
-    <div *ngSwitchCase="'radio'" class="stat-wrapper section-light-container">
+    <div *ngSwitchCase="'radio'" class="stat-wrapper pie-chart-print section-light-container">
       <app-piechart [pieChart]="pieChart"></app-piechart>
     </div>
 

@@ -488,6 +488,19 @@
       padding-bottom: 25px !important;
     }
 
+    .pie-chart-print {
+      flex: 1 !important;
+      padding-top: 50px !important;
+    }
+
+  }
+
+  .bar-chart {
+
+    .answer-wrapper {
+      flex-direction: row !important;
+    }
+
   }
 
   .s-origin-print {

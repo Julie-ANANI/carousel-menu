@@ -1,4 +1,4 @@
-<div class="section-container" id="project-setting">
+<div class="section-container project-setting-wrapper">
   <div class="column col-xs-12 col-mx-auto" [ngClass]="{ 'col-11': !adminMode, 'col-12': adminMode }">
 
     <!-- Geography -->
@@ -8,8 +8,8 @@
         <app-worldmap
           (updateContinent)="continentModificationDrain($event)"
           [initialConfiguration]="continentTarget"
-          [width]="'400px'"
-          [isEditable]="_projectStatus">
+          [isEditable]="_projectStatus"
+          [width]="'100%'">
         </app-worldmap>
       </div>
     </div>
@@ -297,7 +297,7 @@
 
         <!-- Keywords and other stuffs -->
         <div
-          class="ce-comment-wrapper"
+          class="e-comment-wrapper"
           [ngStyle]="{ 'padding-top': settings.professionals.exclude.length === 0 && _projectStatus ? '40px' : '25px' }">
           <span class="num-rect">5</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</span>
 

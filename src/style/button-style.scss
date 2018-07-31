@@ -167,14 +167,14 @@ $edit-color: #97A4B1;
 
 .ghost-primary:not(:disabled), .ghost-primary:not(:disabled):focus, .ghost-primary:not(:disabled):active {
   color: $primary-color;
-  background-color: white;
+  background-color: transparent;
   border-color: $primary-color;
   border-width: 2px;
 }
 
 .ghost-primary:not(:disabled):hover {
   color: lighten($primary-color, 15%);
-  background-color: white;
+  background-color: transparent;
   border-color: lighten($primary-color, 15%);
 }
 
@@ -186,14 +186,14 @@ $edit-color: #97A4B1;
 
 .ghost-delete:not(:disabled), .ghost-delete:not(:disabled):focus, .ghost-delete:not(:disabled):active {
   color: $error-color;
-  background-color: white;
+  background-color: transparent;
   border-color: $error-color;
   border-width: 2px;
 }
 
 .ghost-delete:not(:disabled):hover {
   color: lighten($error-color, 15%);
-  background-color: white;
+  background-color: transparent;
   border-color: lighten($error-color, 15%);
 }
 
@@ -205,14 +205,14 @@ $edit-color: #97A4B1;
 
 .ghost-edit:not(:disabled), .ghost-edit:not(:disabled):focus, .ghost-edit:not(:disabled):active {
   color: $edit-color;
-  background-color: white;
+  background-color: transparent;
   border-color: $edit-color;
   border-width: 2px;
 }
 
 .ghost-edit:not(:disabled):hover {
   color: lighten($edit-color, 15%);
-  background-color: white;
+  background-color: transparent;
   border-color: lighten($edit-color, 15%);
 }
 

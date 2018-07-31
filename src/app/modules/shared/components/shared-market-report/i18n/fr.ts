@@ -30,7 +30,7 @@ export const MARKET_REPORT = {
     'DETAIL_VIEW': 'Vue détaillée',
     'FILTER': 'Filtres',
     'BUTTON_CSV': 'Exporter CSV',
-    'BUTTON_DOWNLOAD': 'Télécharger la synthèse',
+    'BUTTON_PRINT': 'Imprimer la synthèse',
     'BUTTON_ADMIN': 'Finaliser la synthèse',
   },
 

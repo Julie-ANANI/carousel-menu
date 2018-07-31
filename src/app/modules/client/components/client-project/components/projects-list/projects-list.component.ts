@@ -68,9 +68,6 @@ export class ProjectsListComponent implements OnInit {
       case 'EVALUATING':
         link.push('exploration');
         break;
-      case 'SUBMITTED':
-        link.push('exploration');
-        break;
       default:
         link.push('setup');
     }
