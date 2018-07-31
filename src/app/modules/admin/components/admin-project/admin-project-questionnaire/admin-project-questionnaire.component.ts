@@ -12,18 +12,22 @@ import { Section } from '../../../../../models/section';
 export class AdminProjectQuestionnaireComponent implements OnInit {
 
   private _project: Innovation;
+  private _presetState: 'TO_BE_SAVED' | 'SAVED';
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService) {}
 
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
+    this._presetState = 'SAVED';
   }
 
-  private saveInno(): void {
+  public saveInno(event: Event): void {
+    event.preventDefault();
     const project = { preset: this._project.preset };
     this._innovationService.save(this._project._id, project).first().subscribe( result => {
       this._project = result;
+      this._presetState = 'SAVED';
     });
   }
 
@@ -35,7 +39,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
       // delete section
       this._project.preset.sections.splice(index);
     }
-    this.saveInno();
+    this._presetState = 'TO_BE_SAVED';
   }
 
   public addSection() {
@@ -51,20 +55,19 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
         fr: name
       }
     });
-    this.saveInno();
+    this._presetState = 'TO_BE_SAVED';
   }
 
   public moveSection(move: number, index: number) {
     const new_place = index + move;
     const sections = this._project.preset.sections;
-    if (new_place >= 0 && new_place < this._project.preset.sections.length) {
+    if (new_place >= 0 && new_place < sections.length) {
       sections[new_place] = sections.splice(index, 1, sections[new_place])[0];
-      this.saveInno();
+      this._presetState = 'TO_BE_SAVED';
     }
   }
 
-  get innovation() {
-    return this._project;
-  }
+  get innovation() { return this._project; }
+  get presetState() { return this._presetState; }
 
 }

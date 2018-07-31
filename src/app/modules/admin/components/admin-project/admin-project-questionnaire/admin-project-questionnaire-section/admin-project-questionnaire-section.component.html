@@ -5,8 +5,7 @@
   </div>
 
   <form *ngIf="editSection" class="form-group" [formGroup]="formData" novalidate>
-    <select class="form-select"
-            formControlName="description">
+    <select class="form-select" formControlName="description">
       <option [ngValue]="'nothing'">{{ "PRESETS.SECTION.DESCRIPTION.nothing" | translate }}</option>
       <option [ngValue]="'1st'">{{ "PRESETS.SECTION.DESCRIPTION.1st" | translate }}</option>
       <option [ngValue]="'2nd'">{{ "PRESETS.SECTION.DESCRIPTION.2nd" | translate }}</option>
@@ -28,7 +27,7 @@
   <div class="button-actions">
     <button type="button" class="btn btn-xs ghost-edit"
             (click)="(editSection = !editSection) || save($event)"
-            [innerHtml]="editSection ? 'Save' : 'Edit'">
+            [innerHtml]="editSection ? 'Validate' : 'Edit'">
     </button>
     <button *ngIf="!editSection"
             type="button" class="btn btn-xs btn-error"
@@ -40,16 +39,13 @@
 </div>
 
 <div *ngIf="true">
-  <div *ngFor="let question of questions; let i1 = index;">
-    {{ question.label?.en }}
-    <!--
+  <div *ngFor="let question of questions; let i = index;">
     <app-admin-project-questionnaire-question
       [question]="question"
-      [index]="i1"
-      (remove)="removeQuestion(question, i1)"
-      (clone)="cloneQuestion($event, i1)"
-      (move)="moveQuestion($event, i1)">
-    </app-admin-project-questionnaire-question>-->
+      (remove)="removeQuestion(question, i)"
+      (clone)="cloneQuestion($event, i)"
+      (move)="moveQuestion($event, i)">
+    </app-admin-project-questionnaire-question>
   </div>
 
   <div class="add-question" (click)="addQuestion()">

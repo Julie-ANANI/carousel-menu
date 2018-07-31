@@ -10,13 +10,11 @@
     </div>
     <div class="column col-11 col-mx-auto" *ngIf="this.innovation.preset?.name">
       <div class="text-right">
-        <!--
-        <button class="btn btn-primary ghost-primary">
-          Save as template
-        </button>
-        -->
-        <button class="btn btn-primary">
-          Preview coming soon
+
+        <button class="btn btn-primary"
+                [disabled]="presetState === 'SAVED'"
+                (click)="saveInno($event)">
+          Save
         </button>
       </div>
       {{ innovation.preset.name }}

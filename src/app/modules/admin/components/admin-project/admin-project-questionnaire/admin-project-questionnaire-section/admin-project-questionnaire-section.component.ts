@@ -1,4 +1,3 @@
-///<reference path="../../../../../../../../node_modules/@angular/forms/src/form_builder.d.ts"/>
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Question } from '../../../../../../models/question';
@@ -25,7 +24,7 @@ export class AdminProjectQuestionnaireSectionComponent {
   @Output() move = new EventEmitter<number>();
   @Output() updateSection = new EventEmitter<Section>();
 
-  private _section: any;
+  private _section: Section;
   private _formData: FormGroup;
 
   public editSection = false;
@@ -38,25 +37,7 @@ export class AdminProjectQuestionnaireSectionComponent {
   }
 
   public addQuestion() {
-    const newQuestion: Question = {
-      label: {
-        en: 'Question',
-        fr: 'Question'
-      },
-      title: {
-        en: '',
-        fr: ''
-      },
-      subtitle: {
-        en: '',
-        fr: ''
-      },
-      identifier: this._section.name + this._section.questions.length.toString(),
-      controlType: 'checkbox',
-      canComment: true,
-      options: []
-    };
-    console.log(newQuestion);
+    console.log('TODO');
   }
 
   public up(): void {
@@ -67,7 +48,8 @@ export class AdminProjectQuestionnaireSectionComponent {
     this.move.emit(+1);
   }
 
-  public removeSection(): void {
+  public removeSection(event: Event): void {
+    event.preventDefault();
     this._section = null;
     this.updateSection.emit(this._section);
   }
@@ -76,23 +58,17 @@ export class AdminProjectQuestionnaireSectionComponent {
     delete event._id;
     event.identifier += 'Cloned';
     this._section.questions.splice(index + 1, 0, event);
-    // this.state.quest.splice(index + 1, 0, true);
   }
 
-  public moveQuestion(event: any, index: number) {
-    const newIndex = event === 'down' ? index + 1 : index - 1;
-    if (newIndex >= this._section.questions.length || newIndex < 0) {
-      // this.questionMoved.emit([index, event]);
-    } else {
-      const tempSec = JSON.parse(JSON.stringify(this._section.questions[index]));
-      this._section.questions[index] = JSON.parse(JSON.stringify(this._section.questions[newIndex]));
-      this._section.questions[newIndex] = tempSec;
-      // const tempState = JSON.parse(JSON.stringify(this.state.quest[index]));
-      // this.state.quest[index] = JSON.parse(JSON.stringify(this.state.quest[newIndex]));
-      // this.state.quest[newIndex] = tempState;
+  public moveQuestion(move: number, index: number) {
+    const new_place = index + move;
+    const questions = this._section.questions;
+    if (new_place >= 0 && new_place < questions.length) {
+      questions[new_place] = questions.splice(index, 1, questions[new_place])[0];
+      this.updateSection.emit(this._section);
     }
   }
 
-  public get questions() { return this._section.questions; }
+  public get questions(): Array<Question> { return this._section.questions; }
   public get formData() { return this._formData; }
 }

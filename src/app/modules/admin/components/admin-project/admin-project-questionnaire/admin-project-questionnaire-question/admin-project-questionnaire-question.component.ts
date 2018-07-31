@@ -1,145 +1,102 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
- // import {Question} from '../../../../../../models/question';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import { Question } from '../../../../../../models/question';
 
 @Component({
   selector: 'app-admin-project-questionnaire-question',
   templateUrl: './admin-project-questionnaire-question.component.html',
   styleUrls: ['./admin-project-questionnaire-question.component.scss']
 })
-export class AdminProjectQuestionnaireQuestionComponent implements OnInit {
+export class AdminProjectQuestionnaireQuestionComponent {
 
-  @Input() question: any;
-  @Input() public stateIN: any;
-  @Input() public index: number;
-  @Output() questionChange = new EventEmitter<any>();
-  @Output() remove = new EventEmitter<any>();
-  @Output() stateOUT= new EventEmitter<any>();
-  @Output() clone = new EventEmitter<any>();
-  @Output() move = new EventEmitter<any>();
-
-  public isCollapsed = true;
-  public formData: FormGroup;
-  public formQuestion: FormGroup;
-  private _language = 'en';
-  public modalAddOption = false;
-
-  constructor( private _formBuilder: FormBuilder
-  ) { }
-
-  ngOnInit() {
-    this.formData = this._formBuilder.group({
-      controlType: [this.question.controlType]
-    });
-    this.formQuestion = this._formBuilder.group( {
-      labelFR: ['', [Validators.required]],
-      labelEN: ['', [Validators.required]],
-      color: ['', [Validators.required]],
-      positive: []
+  @Input() set question(question: Question) {
+    this._question = question;
+    this._formData = this.formBuilder.group({
+      identifier: new FormControl(question.identifier),
+      controlType: new FormControl(question.controlType),
+      label: this.formBuilder.group({
+        en: new FormControl(question.label ? question.label.en : ''),
+        fr: new FormControl(question.label ? question.label.fr : '')
+      }),
+      title: this.formBuilder.group({
+        en: new FormControl(question.title ? question.title.en : ''),
+        fr: new FormControl(question.title ? question.title.fr : '')
+      }),
+      subtitle: this.formBuilder.group({
+        en: new FormControl(question.subtitle ? question.subtitle.en : ''),
+        fr: new FormControl(question.subtitle ? question.subtitle.fr : '')
+      }),
+      canComment: new FormControl(question.canComment),
+      options: this.formBuilder.array([])
     });
   }
 
-  public updateType(event: any) {
-    console.log(event);
-    this.question.controlType = event;
-    this._emit();
+  @Output() updateQuestion = new EventEmitter<Question>();
+  @Output() clone = new EventEmitter<Question>();
+  @Output() move = new EventEmitter<number>();
+
+  private _question: Question;
+  private _formData: FormGroup;
+
+  private _language: 'en' | 'fr' = 'en';
+
+  constructor(private formBuilder: FormBuilder) { }
+
+  public removeQuestion(event: Event) {
+    event.preventDefault();
+    this._question = null;
+    this.updateQuestion.emit(this._question);
   }
 
-  public comment() {
-    this.question.canComment = !this.question.canComment;
-    this._emit();
-  }
-
-  public addOption() {
-    let id = 0;
-    if (this.question && this.question.options && this.question.options.length) {
-      id = this.question.options.length;
-    }
-    const opt = {
-      identifier: id.toString(),
-      label: {
-        en: this.formQuestion.value.labelEN,
-        fr: this.formQuestion.value.labelFR
-      },
-      color: this.formQuestion.value.color,
-      positive: this.formQuestion.value.positive
-    };
-    this.formQuestion.value.labelEN = '';
-    this.formQuestion.value.labelFR = '';
-    this.formQuestion.value.color = '';
-    this.formQuestion.value.positive = '';
-    this.modalAddOption = false;
-    this.question.options.push(opt);
-    this._emit();
-  }
-
-
-  public deleteOption(index: any) {
-    this.question.options.splice(index, 1);
-    this._emit();
-  }
-
-  private _emit() {
-    this.questionChange.emit(this.question);
-  }
-
-  public language() {
-    return this._language;
-  }
-
-  public count(lang: string) {
-    let missing = 0;
-    if (this.question.label[lang] === '') {
-      missing ++;
-    }
-    if (this.question.title[lang] === '') {
-      missing ++;
-    }
-    if (this.question.subtitle[lang] === '') {
-      missing ++;
-    }
-    return missing;
-  }
-
-  public removeQuestion() {
-    this.remove.emit();
-  }
-
-  public positiveChange(opt: any) {
-    opt.positive = !opt.positive;
-    this._emit();
-  }
-
-  public languageEN() {
-    this._language = 'en';
-  }
-  public languageFR() {
-    this._language = 'fr'
-  }
-
-  public update() {
-    this._emit();
-  }
-
-  private _emitState() {
-    this.stateOUT.emit(this.stateIN);
-  }
-
-  public coolapseQuestion() {
-    this.isCollapsed = !this.isCollapsed;
-    this.stateIN[this.index] = !this.stateIN[this.index];
-    this._emitState();
-  }
-
-  public cloneQuestion() {
+  public cloneQuestion(event: Event) {
+    event.preventDefault();
     this.clone.emit(this.question);
   }
 
+  public addOption() {
+    const optionsArray = this._formData.get('options') as FormArray;
+    const stringId = Array.isArray(optionsArray.value) ? optionsArray.value.length.toString() : '0';
+    const newOption = this.formBuilder.group( {
+      identifier: new FormControl(stringId),
+      label: this.formBuilder.group({
+        en: new FormControl('Option' + stringId),
+        fr: new FormControl('Option' + stringId)
+      }),
+      color: new FormControl(),
+      positive: new FormControl(false)
+    });
+    optionsArray.push(newOption);
+  }
+
+  public deleteOption(event: Event, index: number) {
+    event.preventDefault();
+    const optionsArray = this._formData.get('options') as FormArray;
+    optionsArray.removeAt(index);
+    // re-index options to keep a count from 0 to X
+    for (let i = index; i < optionsArray.value.length ; i++) {
+      optionsArray.at(i).get('identifier').setValue(i.toString());
+    }
+  }
+
+  public countErrors(lang: string) {
+    let missing = 0;
+    if (!this._formData.get('label.' + lang).value) { missing ++; }
+    if (!this._formData.get('title.' + lang).value) { missing ++; }
+    if (!this._formData.get('subtitle.' + lang).value) { missing ++; }
+    return missing;
+  }
+
   public up() {
-    this.move.emit('up');
+    this.move.emit(-1);
   }
+
   public down() {
-    this.move.emit('down');
+    this.move.emit(+1);
   }
+
+  public get formData() { return this._formData; }
+
+  get language() { return this._language; }
+  set language(value: 'en' | 'fr') { this._language = value; }
 
 }
