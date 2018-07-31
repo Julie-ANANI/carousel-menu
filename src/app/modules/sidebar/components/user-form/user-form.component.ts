@@ -101,7 +101,7 @@ export class UserFormComponent implements OnInit {
       operator: [false],
       profileUrl: [null],
       domain: [''],
-      tags: [[], Validators.required]
+      tags: [[]]
     });
 
     this._user = new User();
