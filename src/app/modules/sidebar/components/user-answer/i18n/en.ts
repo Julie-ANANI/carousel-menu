@@ -11,6 +11,7 @@ export const ANSWER = {
     'REJECTED': 'Rejected',
     'VALIDATED': 'Validated',
     'SUBMITTED': 'To look at',
+    'VALIDATED_NO_MAIL': 'Validate without sending mail',
     'EMAIL': 'Send email'
   },
 

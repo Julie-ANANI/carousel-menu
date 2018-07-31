@@ -47,7 +47,7 @@ export class SharedAnswersListComponent {
         {_attrs: ['professional.jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
         {_attrs: ['status'], _name: 'PROJECT_LIST.STATUS', _type: 'MULTI-CHOICES', _choices: [
             {_name: 'VALIDATED', _alias: 'ANSWER.STATUS.VALIDATED', _class: 'label-validate'},
-            {_name: 'VALIDATED_NO_MAIL', _alias: 'ANSWER.STATUS.VALIDATED', _class: 'label-validate'},
+            {_name: 'VALIDATED_NO_MAIL', _alias: 'ANSWER.STATUS.VALIDATED_NO_MAIL', _class: 'label-validate'},
             {_name: 'SUBMITTED', _alias: 'ANSWER.STATUS.SUBMITTED', _class: 'label-progress'},
             {_name: 'REJECTED', _alias: 'ANSWER.STATUS.REJECTED', _class: 'label-alert'},
           ]},
