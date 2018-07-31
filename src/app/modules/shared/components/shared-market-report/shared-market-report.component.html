@@ -170,7 +170,8 @@
             <app-worldmap
               [initialConfiguration]="continentTarget"
               [countriesColor]="'#2ECC71'"
-              [isEditable]="false">
+              [isEditable]="false"
+              [width]="auto">
             </app-worldmap>
             <div *ngIf="project.settings.geography.exclude.length > 0" class="sc-question-wrapper">
               <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</p>
@@ -325,15 +326,15 @@
               [countries]="countries"
               [countriesColor]="'#2ECC71'"
               [isEditable]="false"
-              [width]="'100%'">
+              [width]="auto">
             </app-worldmap>
           </div>
 
           <!-- Companies contact -->
-          <div class="sc-company-wrapper">
+          <div *ngIf="project.settings.companies.include.length > 0" class="sc-company-wrapper">
             <h1 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h1>
             <ul class="sc-comp-name-wrapper">
-              <li *ngFor="let company of companies; let i = index;">
+              <li *ngFor="let company of project.settings.companies.include; let i = index;">
                 {{ i + 1 + '.'}} {{ formatCompanyName(company.name) }}
               </li>
             </ul>
@@ -374,7 +375,7 @@
               [countriesColor]="'#2ECC71'"
               [initialConfiguration]="mapInitialConfiguration"
               [synthesis]="true"
-              [width]="'100%'">
+              [width]="auto">
             </app-worldmap>
           </div>
         </div>

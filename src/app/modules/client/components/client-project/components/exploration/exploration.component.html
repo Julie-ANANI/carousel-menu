@@ -186,12 +186,12 @@
           [countries]="countries"
           [countriesColor]="'#2ECC71'"
           [isEditable]="false"
-          [width]="'100%'">
+          [width]="auto">
         </app-worldmap>
       </div>
 
       <!-- Company section -->
-      <div class="section-light-container" [ngStyle]="{ 'padding-bottom': '15px' }">
+      <div *ngIf="companies.length > 0" class="section-light-container" [ngStyle]="{ 'padding-bottom': '15px' }">
         <h2 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h2>
         <ul class="e-comp-name-wrapper">
           <li *ngFor="let company of companies; let i = index;">
