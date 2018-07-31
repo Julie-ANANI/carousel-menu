@@ -1,0 +1,85 @@
+<div class="section-container" id="admin-followed">
+
+  <h6>Preparation</h6>
+
+  <div class="project-preparation">
+
+    <!-- Project owner -->
+    <div class="project-line">
+      <label class="form-switch" for="editOwner">
+        <input
+          type="checkbox"
+          name="editOwner"
+          id="editOwner"
+          [checked]="true">
+        <i class="form-icon"></i>
+        {{ 'Project owner' }}
+      </label>
+      <label class="form-label">{{project.owner.name}}</label>
+      <button class="btn btn-xs ghost-edit">{{'COMMON.EDIT' | translate}}</button>
+    </div>
+
+    <!-- Project operator -->
+    <div class="project-line">
+
+      <label class="form-switch" for="seeOperator">
+        <input
+          type="checkbox"
+          name="seeOperator"
+          id="seeOperator"
+          [checked]="true">
+        <i class="form-icon"></i>
+        {{ 'Operator' }}
+      </label>
+
+      <select class="form-select"
+              name="editOperator"
+              id="editOperator">
+        <option>None</option>
+      </select>
+      <button class="btn btn-xs ghost-edit">{{'COMMON.EDIT' | translate}}</button>
+    </div>
+
+    <div class="project-line">
+      <label class="form-switch" for="editMode">
+        <input
+          type="checkbox"
+          name="editMode"
+          id="editMode"
+          [checked]="true">
+        <i class="form-icon"></i>
+        {{ 'Project owner' }}
+      </label>
+      <label class="form-label">{{project.owner.name}}</label>
+      <button class="btn btn-xs ghost-edit">{{'COMMON.EDIT' | translate}}</button>
+    </div>
+
+    <div class="project-line">
+      <label class="form-switch" for="editMode">
+        <input
+          type="checkbox"
+          name="editMode"
+          id="editMode"
+          [checked]="true">
+        <i class="form-icon"></i>
+        {{ 'Project owner' }}
+      </label>
+      <label class="form-label">{{project.owner.name}}</label>
+      <button class="btn btn-xs ghost-edit">{{'COMMON.EDIT' | translate}}</button>
+    </div>
+
+    <div class="project-line">
+      <label class="form-switch" for="editMode">
+        <input
+          type="checkbox"
+          name="editMode"
+          id="editMode"
+          [checked]="true">
+        <i class="form-icon"></i>
+        {{ 'Project owner' }}
+      </label>
+      <label class="form-label">{{project.owner.name}}</label>
+      <button class="btn btn-xs ghost-edit">{{'COMMON.EDIT' | translate}}</button>
+    </div>
+  </div>
+</div>
