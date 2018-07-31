@@ -171,7 +171,7 @@
               [initialConfiguration]="continentTarget"
               [countriesColor]="'#2ECC71'"
               [isEditable]="false"
-              [width]="auto">
+              [width]="'auto'">
             </app-worldmap>
             <div *ngIf="project.settings.geography.exclude.length > 0" class="sc-question-wrapper">
               <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</p>
@@ -326,7 +326,7 @@
               [countries]="countries"
               [countriesColor]="'#2ECC71'"
               [isEditable]="false"
-              [width]="auto">
+              [width]="'auto'">
             </app-worldmap>
           </div>
 
@@ -375,7 +375,7 @@
               [countriesColor]="'#2ECC71'"
               [initialConfiguration]="mapInitialConfiguration"
               [synthesis]="true"
-              [width]="auto">
+              [width]="'auto'">
             </app-worldmap>
           </div>
         </div>

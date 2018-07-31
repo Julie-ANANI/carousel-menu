@@ -61,20 +61,20 @@ export const ERROR = {
   },
 
   'PRESET': {
-    'UPDATED': 'Configuration mise à jour'
+    'UPDATED': 'Configuration mise à jour.'
   },
 
   'SECTION': {
-    'UPDATED': 'Section mise à jour'
+    'UPDATED': 'Section mise à jour.'
   },
 
   'QUESTION': {
-    'UPDATED': 'Question  mise à jour'
+    'UPDATED': 'Question  mise à jour.'
   },
 
   'ANSWER': {
-    'UPDATED': 'Réponse mise à jour',
-    'IMPORTED': 'Réponse importeé',
+    'UPDATED': 'Réponse mise à jour.',
+    'IMPORTED': 'Réponse importeé.',
   },
 
   'NOT_MODIFIED': {
