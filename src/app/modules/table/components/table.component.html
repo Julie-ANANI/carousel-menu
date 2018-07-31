@@ -158,7 +158,7 @@
 
               <!-- If isEditable we show a button onHover the row -->
               <button *ngIf="i === 0" class="btn btn-xs ghost-edit visibleOnHover"
-                      (click)="edit(content[key])">
+                      (click)="isLocal ? edit(filteredContent[key]) : edit(content[key])">
                 {{isEditable ? ('COMMON.EDIT' | translate) : ('COMMON.MORE' | translate) }}
               </button>
 
