@@ -12,95 +12,103 @@
     width: 400px;
   }
 
-  .user-wrapper {
-    display: flex;
-    justify-content: space-between;
+  .save {
+    padding-top: 30px;
+  }
+
+
+
+  .detail {
+    padding-top: 30px;
+
+    .title {
+      display: inline-flex;
+      vertical-align: middle;
+      flex-wrap: wrap;
+
+      h6 {
+        margin-right: 30px;
+        margin-bottom: 10px;
+      }
+
+
+      .app-rating {
+        margin-right: 30px;
+        margin-bottom: 10px;
+      }
+
+      .country {
+        display: flex;
+        margin-right: 30px;
+        margin-bottom: 10px;
+      }
+
+      .editMode {
+        margin-bottom: 10px;
+      }
+
+    }
+
+    p {
+      padding-bottom: 6px;
+    }
+
+    .profile {
+
+      .fab {
+        color: #1680B9;
+        margin-right: 3px;
+      }
+
+    }
+
+    .email {
+
+       .fa-envelope {
+        margin-right: 1px;
+      }
+
+      a {
+        color: #FFB300;
+      }
+
+      a:hover {
+        color: #FFB300;
+        text-decoration: underline;
+      }
+
+    }
+
+    .time, .ip {
+      color: #97a4b1;
+    }
+
 
     .job {
       display: flex;
-      i {
-        margin-right: 10px;
+
+      .fa-address-card {
+        margin-right: 4.5px;
       }
+
     }
 
     .company {
       display: flex;
-      i {
-        margin-right: 10px;
-      }
-    }
 
-    .detail {
-      padding-top: 30px;
-
-      .title {
-        display: inline-flex;
-        vertical-align: middle;
-
-        h6 {
-          margin-right: 15px;
-          margin-bottom: 10px;
-        }
-
-        .country {
-          margin-left: 15px;
-          display: flex;
-        }
-
-        .editMode {
-          padding-left: 30px;
-        }
-
+      .fa-building {
+        margin-right: 5px;
       }
 
-      p {
-        padding-bottom: 6px;
-      }
-
-      .profile {
-
-        .fab {
-          color: #1680B9;
-          margin-right: 5px;
-        }
-
-      }
-
-      .email {
-
-        .fa-envelope {
-          margin-right: 4px;
-        }
-
-        a {
-          color: #FFB300;
-        }
-
-        a:hover {
-          color: #FFB300;
-          text-decoration: underline;
-        }
-
-      }
-
-      .time, .ip {
-        color: #97a4b1;
-      }
-
-    }
-
-    .save {
-      display: inline-flex;
-      padding-top: 30px;
     }
 
   }
 
-  .status-wrapper {
+  .e-status-wrapper {
     padding-top: 44px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
 
     .status-rejected, .status-validated, .status-submitted, .status-email {
       margin-bottom: 25px;
@@ -161,20 +169,10 @@
 
 /********************************** Media ***************************************/
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
 
-  .user-wrapper {
+  .detail .title {
     flex-direction: column;
-
-    .detail {
-      order: 1;
-    }
-
-    .save {
-      order: 0;
-      justify-content: flex-end;
-    }
-
   }
 
 }

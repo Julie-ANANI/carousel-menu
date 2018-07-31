@@ -2,7 +2,7 @@ export const MARKET_REPORT = {
   'TITLE': {
     'EDITING': 'Lancement de votre étude imminent...',
     'SUBMITTED': 'En attente de validation de votre projet...',
-    'EVALUATING': 'Collecte des insights marché en cours'
+    'EVALUATING': 'En attente de validation de votre projet...'
   },
 
   'MESSAGE': {
@@ -23,6 +23,18 @@ export const MARKET_REPORT = {
   },
 
   'INSIGHT': 'Des idées',
+
+  'CONCLUSION': 'Conclusion',
+
+  'STICKY_BAR': {
+    'DETAIL_VIEW': 'Vue détaillée',
+    'FILTER': 'Filtres',
+    'BUTTON_CSV': 'Exporter CSV',
+    'BUTTON_PRINT': 'Imprimer la synthèse',
+    'BUTTON_ADMIN': 'Finaliser la synthèse',
+  },
+
+  'MESSAGE_SYNTHESIS': 'La synthèse a été finalisée avec succès.',
 
   // 'TITLE': 'Exploration du potentiel marché',
   'COLLAPSE': 'Tout plier',

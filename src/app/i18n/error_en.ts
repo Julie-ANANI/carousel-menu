@@ -14,6 +14,8 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
     'TARGETING_FORM': 'Please answer the fields of the targeting form.'
   },
 
+  'BACK_TO_HOME': 'Back to homepage.',
+
   'LOGIN': {
     'WELCOME': 'Welcome back!',
     'LOGGED_IN': 'You have been successfully logged in.',
@@ -59,20 +61,20 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
   },
 
   'PRESET': {
-    'UPDATED': 'The configuration has been updated'
+    'UPDATED': 'The configuration has been updated.'
   },
 
   'SECTION': {
-    'UPDATED': 'The section has been updated'
+    'UPDATED': 'The section has been updated.'
   },
 
   'QUESTION': {
-    'UPDATED': 'The question has been updated'
+    'UPDATED': 'The question has been updated.'
   },
 
   'ANSWER': {
-    'UPDATED': 'The answer has been updated',
-    'IMPORTED': 'The answer has been imported',
+    'UPDATED': 'The answer has been updated.',
+    'IMPORTED': 'The answer has been imported.',
   },
 
   'NOT_MODIFIED': {

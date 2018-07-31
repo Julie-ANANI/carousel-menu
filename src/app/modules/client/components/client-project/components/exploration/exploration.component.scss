@@ -1,6 +1,6 @@
-#project-exploration {
+.exploration-wrapper {
 
-  .title-wrapper {
+  .e-title-wrapper {
     display: flex;
     justify-content: space-between;
     padding-bottom: 25px;
@@ -12,16 +12,16 @@
 
   }
 
-  .sts_comm-wrapper {
+  .e-comm-wrapper {
     display: flex;
     padding-top: 0;
 
-    .status-wrapper {
-      height: 236px;
+    .e-status-wrapper {
+      min-height: 236px;
       width: 330px;
       background-color: #4F5D6B;
       border-radius: 3px;
-      padding: 35px;
+      padding: 25px;
       margin-right: 25px;
 
       .section-heading {
@@ -30,10 +30,12 @@
 
       .fa-check {
         color: #2ECC71;
+        margin-right: 3px;
       }
 
       .fa-times {
-        color: #ff6666;
+        color: #EA5858;
+        margin-right: 3px;
       }
 
       .text-white {
@@ -41,15 +43,19 @@
         font-size: 0.7rem;
       }
 
-      .info-status {
+      .e-info-status {
         display: flex;
         justify-content: space-between;
       }
 
     }
 
-    .comment-wrapper {
+    .e-comment-wrapper {
       flex: 1;
+
+      p {
+        padding-bottom: 0;
+      }
 
       div {
         padding-top: 25px;
@@ -64,16 +70,16 @@
 
   }
 
-  .analytic-wrapper {
+  .e-analytic-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
 
     .pd-top {
       padding-top: 22px;
     }
 
-    .info-analytic {
+    .e-info-analytic {
       margin-bottom: 25px;
 
       p {
@@ -90,7 +96,7 @@
 
   }
 
-  .com-nme {
+  .e-comp-name-wrapper {
     list-style: none;
 
     li {
@@ -102,20 +108,41 @@
 
   }
 
-  .bot-rect {
-    width: 300px;
-  }
-
-
 }
 
 /********************************** Media ***************************************/
+@media (max-width: 840px) {
+
+  .exploration-wrapper {
+
+    .e-comm-wrapper {
+      flex-direction: column;
+
+      .e-status-wrapper {
+        width: 310px;
+        margin-right: 0;
+        margin-bottom: 25px;
+      }
+
+    }
+
+    .e-comp-name-wrapper {
+
+      li {
+        width: 50%;
+      }
+
+    }
+
+  }
+
+}
 
 @media (max-width: 600px) {
 
-  #project-exploration {
+  .exploration-wrapper {
 
-    .title-wrapper {
+    .e-title-wrapper {
       flex-direction: column;
 
       .btn {
@@ -128,25 +155,15 @@
 
 }
 
-@media (max-width: 800px) {
 
-  #project-exploration {
+@media (max-width: 320px) {
 
-    .sts_comm-wrapper {
-      flex-direction: column;
+  .exploration-wrapper {
 
-      .status-wrapper {
-        width: 310px;
-        margin-right: 0;
-        margin-bottom: 25px;
-      }
+    .e-comm-wrapper {
 
-    }
-
-    .com-nme {
-
-      li {
-        width: 50%;
+      .e-status-wrapper {
+        width: 290px;
       }
 
     }

@@ -14,7 +14,7 @@
   padding-top: 20px;
 }
 
-.comment-wrapper {
+.e-comment-wrapper {
   display: flex;
   justify-content: space-between;
 
@@ -31,6 +31,11 @@
   color: #5d5d5d;
   padding-top: 15px;
   padding-bottom: 0;
+}
+
+.icon-arrow-right {
+  font-size: 14px;
+  vertical-align: -2px;
 }
 
 .answer {
@@ -62,7 +67,7 @@
   background: #F8F4F4;
   color: #333333;
   padding: 8px 15px;
-  border-radius: 5px;
+  border-radius: 3px;
   display: inline-flex;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -88,15 +93,15 @@
 }
 
 .checkbox-wrapper {
-  background: #F8F4F4;
   color: #333333;
-  border-radius: 5px;
   display: inline-flex;
-  margin-right: 10px;
-  margin-bottom: 10px;
 
   li {
     padding: 10px 15px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background: #F8F4F4;
+    border-radius: 3px;
   }
 
 }
@@ -106,6 +111,9 @@
 
   li {
     padding: 0 0 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 3px;
   }
 
 }
@@ -144,7 +152,20 @@
 
 .toggle-wrapper {
   margin-top: 15px;
+  margin-bottom: 15px;
   color: #5d5d5d;
+}
+
+.sa-thumbs-up {
+  margin-left: 15px;
+  color: #2ECC71;
+  vertical-align: 2px;
+}
+
+.sa-thumbs-down {
+  margin-left: 15px;
+  color: #EA5858;
+  vertical-align: -2px;
 }
 
 
@@ -152,7 +173,7 @@
 
 @media (max-width: 600px) {
 
-  .comment-wrapper {
+  .e-comment-wrapper {
     flex-direction: column;
 
     .form-default {

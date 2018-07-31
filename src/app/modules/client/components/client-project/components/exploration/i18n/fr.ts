@@ -3,7 +3,7 @@ export const EXPLORATION = {
     'EDITING': 'Lancement de votre étude imminent...',
     'SUBMITTED': 'En attente de validation de votre projet...',
     'EVALUATING': 'Collecte des insights marché en cours',
-    'EVALUATING_DONE': 'Synthèse de vos insights marché'
+    'DONE': 'Synthèse de vos insights marché'
   },
 
   'MESSAGE': {

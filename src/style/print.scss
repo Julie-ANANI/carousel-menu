@@ -43,7 +43,8 @@
 
 
   * {
-    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   @page {
@@ -126,7 +127,6 @@
 
     }
   }
-
 
   /* =========================================================================
     Market report
@@ -393,5 +393,173 @@
       top: -20px !important;
     }
   }*/
+
+  /*
+      Market report
+  */
+
+  .s-print {
+    background-color: white !important;
+  }
+
+  .sc-sticky-wrapper, .s-menuButton-print, .scrollButton-print, .answer-button-wrapper, .comment-button-wrapper {
+    display: none !important;
+  }
+
+  .s-frontPage-print, .s-innovationPage-print, .s-targeting-print, .s-analytics-print, .s-origin-print, .s-map-print,
+  .s-professional-print, .s-conclusion-print {
+    padding-top: 0;
+    padding-bottom: 0 !important;
+    page-break-after: always;
+  }
+
+
+  .s-frontPage-print {
+
+    .section-inline-container {
+      padding: 0 !important;
+    }
+
+    .sc-body-wrapper {
+      min-height: 85vh !important;
+    }
+
+  }
+
+  .s-innovationPage-print {
+
+    .section-inline-container {
+      padding: 0 !important;
+    }
+
+    .sc-innovation-wrapper {
+      flex-direction: column;
+
+      .sc-issue-wrapper {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-top: 25px;
+      }
+
+      .sc-solution-wrapper {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-top: 25px;
+      }
+
+    }
+
+  }
+
+  .s-targeting-print {
+
+    .section-inline-container {
+      padding: 0 !important;
+    }
+
+    .sc-answer-wrapper {
+      background: #4F5D6B !important;
+      color: white !important;
+    }
+
+  }
+
+  .s-analytics-print {
+
+    .section-inline-container {
+      padding: 0 !important;
+    }
+
+    .sc-comp-name-wrapper li {
+      width: 50% !important;
+    }
+
+  }
+
+  .ques-conclusion-wrapper {
+    flex-direction: row !important;
+
+    .divider-wrapper {
+      display: block !important;
+    }
+
+    .stat-wrapper {
+      padding-top: 0 !important;
+      padding-bottom: 25px !important;
+    }
+
+    .pie-chart-print {
+      flex: 1 !important;
+      padding-top: 50px !important;
+    }
+
+  }
+
+  .bar-chart {
+
+    .answer-wrapper {
+      flex-direction: row !important;
+    }
+
+  }
+
+  .s-origin-print {
+
+    .section-inline-container {
+      padding-top: 25px !important;
+      padding-bottom: 25px !important;
+    }
+
+  }
+
+  .s-map-print {
+    align-items: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+
+  .s-professional-print {
+    page-break-inside: avoid;
+
+    .professional-wrapper {
+      flex-direction: row !important;
+
+      .profile {
+        flex: 0 1 calc(32% - 1rem) !important;
+        height: 150px !important;
+      }
+
+    }
+
+  }
+
+  .s-questions-print {
+    padding-top: 0;
+    padding-bottom: 0 !important;
+  }
+
+  .s-question-print {
+    page-break-after: always;
+  }
+
+  .s-item-print {
+    flex: 0 1 calc(32% - 1rem) !important;
+    min-height: 100px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+
+    .value {
+
+      p {
+        padding-top: 15px !important;
+        font-size: 15px !important;
+
+      }
+
+    }
+
+  }
+
 
 }

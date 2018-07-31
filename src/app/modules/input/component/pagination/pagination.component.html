@@ -18,9 +18,7 @@
     </a>
 
     <div class="">
-      {{(perPage * currentPage) - perPage+1}}-{{(perPage * currentPage <= total)
-      ? perPage * currentPage
-      : total}} {{'COMMON.OF' | translate}} {{total}}
+      {{ (perPage * currentPage) - perPage+1 }}-{{ (perPage * currentPage <= total) ? perPage * currentPage : total }} {{ 'COMMON.OF' | translate }} {{ total }}
     </div>
 
     <a *ngIf="currentPage < numPages" (click)="(currentPage = currentPage + 1) && $event.preventDefault()" href="#">

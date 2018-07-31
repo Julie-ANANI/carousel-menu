@@ -15,6 +15,7 @@ export const COMMON = {
   'MORE': 'Voir Plus',
   'ALL': 'Tous',
   'OF': 'de',
+  'DATE': 'Date',
   'ADDED': 'Ajouté le',
   'CREATED': 'Créé le',
   'UPDATED': 'Modifié le',
@@ -43,6 +44,8 @@ export const COMMON = {
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
+  'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
+
   'BLACKLIST': {
     'EMAILS': 'E-mails blacklistés',
     'DOMAINS': 'Domaines blacklistés',
@@ -79,6 +82,7 @@ export const COMMON = {
     'B': 'termes et conditions d\'utilisation.',
   },
   'PROFILE_URL': 'Profile URL',
+  'TOP_PROFILE': 'Profil haut',
 
   'REQUIRED': {
     'FIRSTNAME': 'Le prénom est requis.',
@@ -144,6 +148,7 @@ export const COMMON = {
     'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
     'DELETE': 'Supprimer le(s) professionnel(s)',
   },
+
   'HOME': 'Accueil',
   'ADMIN': 'Admin',
   'MY_PROJECT': 'Mon projet',
@@ -162,6 +167,7 @@ export const COMMON = {
   'EDIT_INSIGHT': 'Modifier l\'aperçu',
   'EDIT-COUNTRY': 'Modifier le filtre du pays',
   'ADD-TAGS': 'Ajouter des tags',
+  'UMI_WORD': 'Le mot d’UMI',
 
   'SORT': {
     'BY_NAME': 'Nom',

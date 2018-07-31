@@ -1,142 +1,140 @@
 <div *ngIf="modalAnswer" class="answer-wrapper">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
+    <!-- Save button -->
+    <div *ngIf="adminMode" class="save text-right" [ngSwitch]="modalAnswer.localStatus">
+      <button class="btn btn-primary" (click)="importAnswer($event)" *ngSwitchCase="'draft'">
+        {{'COMMON.IMPORT' | translate}}
+      </button>
+      <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngSwitchDefault>
+        {{'COMMON.SAVE' | translate}}
+      </button>
+    </div>
+
     <!-- User detail section -->
-    <div class="user-wrapper">
+    <div class="detail">
 
-      <div class="detail">
-
-        <!-- Name, flag and rating -->
-        <div class="title">
-          <h6>{{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}</h6>
+      <!-- Name, flag and rating -->
+      <div class="title">
+       <h6>{{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}</h6>
+        <div *ngIf="editMode" class="app-rating">
           <app-rating-item
-            *ngIf="editMode"
             [editMode]="adminMode"
             [prop]="profile"
             [rating]="modalAnswer.profileQuality"
             (ratingChange)="updateProfileQuality($event)">
           </app-rating-item>
-          <div class="country">
-            <div *ngIf="!editCountry" [ngStyle]="{ 'display': 'inline-flex' }">
-              <app-country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></app-country-flag>
-              <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCountry = true;" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
-            </div>
-          </div>
-          <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="editMode">
-            <label class="form-switch" for="editMode">
-              <input
-                type="checkbox"
-                name="editMode"
-                id="editMode"
-                (change)="changeMode($event)"
-                [checked]="editMode">
-              <i class="form-icon"></i>
-              {{ 'Edit user' }}
-            </label>
+        </div>
+        <div class="country">
+          <div *ngIf="!editCountry" [ngStyle]="{ 'display': 'inline-flex' }">
+            <app-country-flag [country]="modalAnswer.country" [width]="50" [height]="35"></app-country-flag>
+            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCountry = true;" [ngStyle]="{ 'margin-left': '5px', 'margin-top': '22px' }"></i>
           </div>
         </div>
-
-        <!-- Edit country -->
-        <div *ngIf="editCountry" class="form-group">
-          <app-autocomplete-input
-            (update)="updateCountry($event)"
-            [onlyOne]="true"
-            [config]="{ placeholder: 'COMMON.COUNTRY_PLACEHOLDER', type: 'countries' }">
-          </app-autocomplete-input>
-        </div>
-
-        <!-- Linkedin -->
-        <div *ngIf="adminMode && modalAnswer.professional?.profileUrl" class="profile">
-          <p>
-            <i class="fab fa-linkedin-in"></i>
-            <a [href]="modalAnswer.professional.profileUrl" target="_blank">
-              <span class="text-link">{{ modalAnswer.professional.profileUrl }}</span>
-            </a>
-          </p>
-        </div>
-
-        <!-- Job -->
-        <div class="job" *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle || editMode">
-          <p *ngIf="!editJob">
-            <i class="far fa-address-card" aria-hidden="true"></i>
-            {{ modalAnswer.job || modalAnswer.professional?.jobTitle }}
-            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editJob = true;"></i>
-          </p>
-          <div *ngIf="editJob" class="form-group">
+        <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="editMode">
+          <label class="form-switch" for="editMode">
             <input
-              type="text"
-              [(ngModel)]="modalAnswer.job"
-              id="jobTitle"
-              alt="Job title"
-              class="form-default"
-              [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
-          </div>
-        </div>
-
-        <!-- Company -->
-        <div class="company" *ngIf="modalAnswer.company.name || modalAnswer.professional?.company || editMode">
-          <p *ngIf="!editCompany">
-            <i class="far fa-building" aria-hidden="true"></i>
-            {{ modalAnswer.company.name || modalAnswer.professional?.company }}
-            <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCompany = true;"></i>
-          </p>
-          <div *ngIf="editCompany" class="form-group">
-            <input
-              type="text"
-              [(ngModel)]="modalAnswer.company.name"
-              id="company"
-              alt="Company"
-              class="form-default"
-              [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
-          </div>
-        </div>
-
-        <!-- Email -->
-        <div *ngIf="adminMode && (modalAnswer.professional?.email)" class="email">
-          <p>
-            <i class="far fa-envelope"></i>
-            <a [href]="'mailto:'+modalAnswer.professional.email">
-              {{ modalAnswer.professional.email }}
-            </a>
-          </p>
-        </div>
-
-        <!-- Received date and time, and time spent -->
-        <div *ngIf="modalAnswer.created || modalAnswer.time_elapsed" class="time">
-          <p>
-            <strong>
-              <span *ngIf="modalAnswer.created">
-                {{ 'ANSWER.RECEIVED.A' | translate }} {{ modalAnswer.created | date }} {{ 'ANSWER.RECEIVED.B' | translate }} {{ modalAnswer.created | slice: 11 : 16  }}
-              </span>
-              <span *ngIf="adminMode && modalAnswer.created && modalAnswer.time_elapsed">&nbsp; • &nbsp;</span>
-              <span *ngIf="adminMode && modalAnswer.time_elapsed">
-                {{ 'ANSWER.RECEIVED.C' | translate }} {{ floor(modalAnswer.time_elapsed/60) }} min. {{ floor(modalAnswer.time_elapsed%60) }} sec.
-              </span>
-            </strong>
-          </p>
-        </div>
-
-        <!-- IP -->
-        <div *ngIf="modalAnswer.ip" class="ip">
-          <p><strong>{{ 'ANSWER.IP' | translate }} {{ modalAnswer.ip }}</strong></p>
+              type="checkbox"
+              name="editMode"
+              id="editMode"
+              (change)="changeMode($event)"
+              [checked]="editMode">
+            <i class="form-icon"></i>
+            {{ 'Edit user' }}
+          </label>
         </div>
       </div>
 
-      <!-- Save button -->
-      <div *ngIf="adminMode" class="save" [ngSwitch]="modalAnswer.localStatus">
-        <button class="btn btn-primary" (click)="importAnswer($event)" *ngSwitchCase="'draft'">
-          {{'COMMON.IMPORT' | translate}}
-        </button>
-        <button class="btn btn-primary" [disabled]="!editMode" (click)="save($event)" *ngSwitchDefault>
-          {{'COMMON.SAVE' | translate}}
-        </button>
+      <!-- Edit country -->
+      <div *ngIf="editCountry" class="form-group">
+        <app-autocomplete-input
+          (update)="updateCountry($event)"
+          [onlyOne]="true"
+          [config]="{ placeholder: 'COMMON.COUNTRY_PLACEHOLDER', type: 'countries' }">
+        </app-autocomplete-input>
+      </div>
+
+      <!-- Linkedin -->
+      <div *ngIf="adminMode && modalAnswer.professional?.profileUrl" class="profile">
+        <p>
+          <i class="fab fa-linkedin-in"></i>
+          <a [href]="modalAnswer.professional.profileUrl" target="_blank">
+            <span class="text-link">{{ modalAnswer.professional.profileUrl }}</span>
+          </a>
+        </p>
+      </div>
+
+      <!-- Job -->
+      <div class="job" *ngIf="modalAnswer.job || modalAnswer.professional?.jobTitle || editMode">
+        <p><i class="far fa-address-card" aria-hidden="true"></i></p>
+        <p *ngIf="!editJob">
+          {{ modalAnswer.job || modalAnswer.professional?.jobTitle }}
+          <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editJob = true;"></i>
+        </p>
+        <div *ngIf="editJob" class="form-group">
+          <input
+            type="text"
+            [(ngModel)]="modalAnswer.job"
+            id="jobTitle"
+            alt="Job title"
+            class="form-default"
+            [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
+        </div>
+      </div>
+
+      <!-- Company -->
+      <div class="company" *ngIf="modalAnswer.company.name || modalAnswer.professional?.company || editMode">
+        <p><i class="far fa-building" aria-hidden="true"></i></p>
+        <p *ngIf="!editCompany">
+          {{ modalAnswer.company.name || modalAnswer.professional?.company }}
+          <i *ngIf="adminMode && editMode" class="fas fa-pencil-alt" (click)="editCompany = true;"></i>
+        </p>
+        <div *ngIf="editCompany" class="form-group">
+          <input
+            type="text"
+            [(ngModel)]="modalAnswer.company.name"
+            id="company"
+            alt="Company"
+            class="form-default"
+            [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div *ngIf="adminMode && (modalAnswer.professional?.email)" class="email">
+        <p>
+          <i class="far fa-envelope"></i>
+          <a [href]="'mailto:'+modalAnswer.professional.email">
+            {{ modalAnswer.professional.email }}
+          </a>
+        </p>
+      </div>
+
+      <!-- Received date and time, and time spent -->
+      <div *ngIf="modalAnswer.created || modalAnswer.time_elapsed" class="time">
+        <p>
+          <strong>
+            <span *ngIf="modalAnswer.created">
+              {{ 'ANSWER.RECEIVED.A' | translate }} {{ modalAnswer.created | date }} {{ 'ANSWER.RECEIVED.B' | translate }} {{ modalAnswer.created | slice: 11 : 16  }}
+            </span>
+            <span *ngIf="adminMode && modalAnswer.created && modalAnswer.time_elapsed">&nbsp; • &nbsp;</span>
+            <span *ngIf="adminMode && modalAnswer.time_elapsed">
+              {{ 'ANSWER.RECEIVED.C' | translate }} {{ floor(modalAnswer.time_elapsed/60) }} min. {{ floor(modalAnswer.time_elapsed%60) }} sec.
+            </span>
+          </strong>
+        </p>
+      </div>
+
+      <!-- IP -->
+      <div *ngIf="modalAnswer.ip" class="ip">
+        <p><strong>{{ 'ANSWER.IP' | translate }} {{ modalAnswer.ip }}</strong></p>
       </div>
 
     </div>
     <!-- /User detail -->
 
     <!-- Status section -->
-    <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="status-wrapper">
+    <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="e-status-wrapper">
 
       <!-- Rejected -->
       <div class="status-rejected">

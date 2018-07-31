@@ -1,16 +1,19 @@
-import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'sqPagination',
-  templateUrl: './shared-smallPagination.component.html',
-  styleUrls: ['./shared-pagination.component.scss']
+  selector: 'app-pagination',
+  templateUrl: './pagination.component.html',
+  styleUrls: ['./pagination.component.scss']
 })
-export class SharedPaginationComponent implements OnChanges, OnInit {
+
+export class PaginationComponent implements OnInit, OnChanges {
+
   @Input() config: any;
-  @Output() configChange = new EventEmitter <any>();
   @Input() perPageValues: Array<number>;
   @Input() total: number;
   @Input() propertyName: string;
+
+  @Output() configChange = new EventEmitter <any>();
 
   private _numPages: number;
   private _initialized = false;
@@ -70,4 +73,6 @@ export class SharedPaginationComponent implements OnChanges, OnInit {
     this._update();
     this._numPages = Math.ceil(this.total / this.perPage);
   }
+
+
 }

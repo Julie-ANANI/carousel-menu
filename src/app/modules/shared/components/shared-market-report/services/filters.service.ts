@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { Answer } from '../../../../../models/answer';
 import { Filter } from '../models/filter';
 import { Tag } from '../../../../../models/tag';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class FilterService {
 
   private _filters: {[questionId: string]: Filter} = {};
+  private _filtersUpdate = new Subject<null>();
 
   constructor() {
     this.reset();
@@ -14,14 +16,17 @@ export class FilterService {
 
   reset(): void {
     this._filters = {};
+    this._filtersUpdate.next();
   }
 
   public addFilter(filter: Filter) {
     this._filters[filter.questionId] = filter;
+    this._filtersUpdate.next();
   }
 
   public deleteFilter(key: string) {
     delete this._filters[key];
+    this._filtersUpdate.next();
   }
 
   public filter(answers: Array<Answer>): Array<Answer> {
@@ -76,5 +81,5 @@ export class FilterService {
   }
 
   get filters() { return this._filters; }
-
+  get filtersUpdate() { return this._filtersUpdate; }
 }

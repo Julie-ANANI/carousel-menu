@@ -3,7 +3,7 @@ export const EXPLORATION = {
     'EDITING': 'Market insights of your project will be available soon',
     'SUBMITTED': 'Collecting market insights of your project',
     'EVALUATING': 'Collecting market insights of your project',
-    'EVALUATING_DONE': 'Market insights of your project'
+    'DONE': 'Market insights of your project'
   },
 
   'MESSAGE': {
@@ -35,18 +35,18 @@ export const EXPLORATION = {
   'ACCOUNT_MANAGER': 'Your account manager:',
 
   'ANALYTICS': {
-    'TITLE': 'Analytics',
-    'PROFESSIONALS_REACHED': 'Professionals Reached',
+    'TITLE': 'Analytics of your study',
+    'PROFESSIONALS_REACHED': 'Professionals reached',
     'EMAILS_OPENED': 'Emails opened',
     'CLICKS': 'Visits',
     'ANSWERS': 'Validated answers'
   },
 
-  'CLICK_MAP_TITLE': 'Responses mapping',
+  'CLICK_MAP_TITLE': 'Where your insights came from',
 
-  'COMPANIES_LIST_TITLE': 'Companies to contact',
+  'COMPANIES_LIST_TITLE': 'Companies you asked to contact',
 
-  'INSIGHTS_TITLE': 'Insights',
+  'INSIGHTS_TITLE': 'Insights of your study',
 
   'STATUS': {
     'STARTED': 'Started',

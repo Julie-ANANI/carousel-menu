@@ -1,14 +1,12 @@
-/**
- * Created by juandavidcruzgomez on 11/09/2017.
- */
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
-import { Filter } from '../../models/filter';
+import { Tag } from '../../../../../../models/tag';
 
 @Component({
-  selector: 'market-comment',
+  selector: 'app-market-comment',
   templateUrl: 'professional-comment.component.html',
-  styleUrls: ['professional-comment.component.scss', '../../shared-market-report.component.scss']
+  styleUrls: ['professional-comment.component.scss']
 })
 
 export class SharedMarketCommentComponent {
@@ -16,17 +14,24 @@ export class SharedMarketCommentComponent {
   @Input() public answer: Answer;
   @Input() public questionId: string;
 
-  @Output() addFilter = new EventEmitter<Filter>();
   @Output() modalAnswerChange = new EventEmitter<any>();
 
-  constructor() { }
+  constructor(private filterService: FilterService) { }
 
-  public seeAnswer(event: any) {
-    this.modalAnswerChange.emit(event);
+  public seeAnswer(event: any, answer: Answer) {
+    event.preventDefault();
+    this.modalAnswerChange.emit(answer);
   }
 
-  public newFilter(filter: Filter) {
-    this.addFilter.emit(filter);
+  public newFilter(event: any, tag: Tag) {
+    event.preventDefault();
+
+    this.filterService.addFilter({
+      status: 'TAG',
+      questionTitle: tag.label,
+      value: tag._id
+    });
+
   }
 
 }
