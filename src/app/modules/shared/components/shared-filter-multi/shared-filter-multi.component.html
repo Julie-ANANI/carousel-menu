@@ -1,5 +1,5 @@
 <div class="form-group-inline-left">
-  <div class="input-group" *ngIf="textProps.length > 0">
+  <div class="input-group" *ngIf="textProps.length > 0" style="width: 100%;">
     <select (change)="changeCurrentTextProp($event); search.value = '';" class="input-group-addon form-select">
       <option *ngFor="let propName of textProps"
               [value]="getAttrs(propName)"
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <div *ngFor="let prop of otherProps" class="input-group">
+  <div *ngFor="let prop of otherProps" class="input-group" style="width: 100%;">
     <label class="form-label" style="margin-right: 10px;">{{getName(prop) | translate}}</label>
       <div [ngSwitch]="getType(prop)">
         <select (change)="filterOther(prop)"
