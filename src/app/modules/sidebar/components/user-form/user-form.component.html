@@ -56,11 +56,13 @@
       </div>
 
       <!-- Show Tags -->
-      <app-shared-tag-item
-        *ngIf="isProfessional"
-        [tags]="tags"
-        (removeTag)="removeTag($event)">
-      </app-shared-tag-item>
+      <div class="form-group">
+        <label class="form-label">Tags</label>
+        <app-shared-tag-item *ngIf="isProfessional"
+                             [tags]="tags"
+                             (removeTag)="removeTag($event)">
+        </app-shared-tag-item>
+      </div>
 
       <!-- First name -->
       <div class="form-group" *ngIf="!addTagsToProfessionals">

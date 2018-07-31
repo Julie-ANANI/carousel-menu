@@ -20,11 +20,6 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private _campaign: Campaign;
   private _answers: Array<Answer> = [];
-  private _validatedAnswers: Array<Answer> = [];
-  private _submittedAnswers: Array<Answer> = [];
-  private _toCompleteAnswers: Array<Answer> = [];
-  private _draftAnswers: Array<Answer> = [];
-  private _rejectedAnswers: Array<Answer> = [];
   private _total = 0;
   private _questions: Array<Question> = [];
   // modalAnswer : null si le modal est fermé,
@@ -53,12 +48,6 @@ export class AdminCampaignAnswersComponent implements OnInit {
   loadAnswers(): void {
     this._campaignService.getAnswers(this._campaign._id).first().subscribe((result: {answers: {localAnswers: Array<Answer>, draftAnswers: Array<Answer>}}) => {
       this._answers = result.answers.localAnswers;
-      this._total = this._answers.length + result.answers.draftAnswers.length;
-      this._validatedAnswers = this._answers.filter(answer => answer.status === 'VALIDATED' || answer.status === 'VALIDATED_NO_MAIL');
-      this._submittedAnswers = this.filterByStatus('SUBMITTED');
-      this._toCompleteAnswers = this.filterByStatus('TO_COMPLETE');
-      this._draftAnswers = result.answers.draftAnswers;
-      this._rejectedAnswers = this.filterByStatus('REJECTED');
     });
   }
 
@@ -69,10 +58,6 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   public adminMode(): boolean {
     return this._authService.adminLevel > 2;
-  }
-
-  public filterByStatus(status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED') {
-    return this._answers.filter(answer => answer.status === status);
   }
 
   public seeAnswer(answer: Answer) {
@@ -112,9 +97,5 @@ export class AdminCampaignAnswersComponent implements OnInit {
   set modalAnswer(modalAnswer: Answer) { this._modalAnswer = modalAnswer; }
   get total() { return this._total; }
   get campaign() { return this._campaign; }
-  get validatedAnswers() { return this._validatedAnswers; }
-  get submittedAnswers() { return this._submittedAnswers; }
-  get toCompleteAnswers() { return this._toCompleteAnswers; }
-  get draftAnswers() { return this._draftAnswers; }
-  get rejectedAnswers() { return this._rejectedAnswers; }
+  get answers() { return this._answers; }
 }
