@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../models/campaign';
+import { ProfessionalsService } from '../../../../../services/professionals/professionals.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { Professional } from '../../../../../models/professional';
 
 @Component({
   selector: 'app-admin-campaign-pros',
@@ -9,10 +12,19 @@ import { Campaign } from '../../../../../models/campaign';
 })
 export class AdminCampaignProsComponent implements OnInit {
 
+  public newPro: any = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    emailConfidence: 100
+  };
+  private _addProModal: boolean = false;
   private _campaign: Campaign;
   private _config: any;
 
-  constructor(private _activatedRoute: ActivatedRoute) { }
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _notificationsService: TranslateNotificationsService,
+              private _professionalsService: ProfessionalsService) { }
 
   ngOnInit() {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
@@ -27,7 +39,26 @@ export class AdminCampaignProsComponent implements OnInit {
       }
     };
   }
+  
+  addPro(value: boolean) {
+    this._addProModal = value;
+    this.newPro = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      emailConfidence: 100
+    };
+  }
 
+  createPro() {
+    if (!this.newPro.email || !this.newPro.firstName || !this.newPro.lastName) {
+      this._professionalsService.create([this.newPro], this.campaign._id, this.campaign.innovation._id).first().subscribe((createdPro:Professional) => {
+        this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+      });
+    }
+  }
+  set addProModal(value: boolean) { this._addProModal = value; }
+  get addProModal(): boolean  { return this._addProModal; }
   set config(value: any) { this._config = value; }
   get config() { return this._config; }
   get campaign() { return this._campaign; }
