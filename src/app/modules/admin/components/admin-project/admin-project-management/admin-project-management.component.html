@@ -1,8 +1,33 @@
-<div class="section-container" id="admin-followed">
+<div class="section-container" id="admin-followed" [formGroup]="formData">
 
   <h6>Preparation</h6>
 
   <div class="project-preparation">
+
+    <!-- Project operator -->
+    <div class="project-line">
+
+      <label class="form-switch" for="seeDomain">
+        <input
+          type="checkbox"
+          name="seeDomain"
+          id="seeDomain"
+          [checked]="project.domain !== null">
+        <i class="form-icon"></i>
+        {{ 'COMMON.DOMAIN' | translate}}
+      </label>
+
+      <select class="form-select"
+              name="setDomain"
+              id="setDomain"
+              [ngModel]="project.domain"
+              (ngModelChange)="changeProjectDomain($event)"
+              [ngModelOptions]="{standalone: true}">
+        <option *ngFor="let d of projectDomains" [ngValue]="d.name">{{d.name}}</option>
+      </select>
+      <div>
+      </div>
+    </div>
 
     <!-- Project owner -->
     <div class="project-line">
@@ -13,11 +38,41 @@
           id="editOwner"
           [checked]="true">
         <i class="form-icon"></i>
-        {{ 'Project owner' }}
+        {{ 'COMMON.PROJECT.OWNER' | translate }}
       </label>
-      <label class="form-label">{{project.owner.name}}</label>
-      <button class="btn btn-xs ghost-edit">{{'COMMON.EDIT' | translate}}</button>
+      <label *ngIf="!isEditOwner" class="form-label">{{project.owner.name}}</label>
+
+      <!-- if we click on update we show an autoComplete of all users -->
+      <div class="form-group" style="position: relative" *ngIf="isEditOwner">
+        <input
+          class="form-default"
+          formControlName="owner"
+          id="user"
+          type="text"
+          [attr.placeholder]="'USERS.SEARCH' | translate"
+          (click)="onSuggestUsers()">
+        <ul
+          *ngIf="formData.get('owner').value"
+          class="suggestion"
+          [ngStyle]="{ 'display': displayUserSuggestion ? 'block' : 'none' }">
+          <li *ngFor="let suggestion of usersSuggestion" (click)="onValueSelect(suggestion)">
+            <a><span>{{ suggestion.name }}</span></a>
+          </li>
+        </ul>
+        <div class="form-error" *ngIf="formData.get('owner').touched && formData.get('owner').invalid">
+          <span *ngIf="formData.get('owner').hasError('required')">{{ 'COMMON.REQUIRED.COUNTRY' | translate }}</span>
+        </div>
+      </div>
+
+      <button class="btn btn-xs ghost-edit"
+              [ngClass]="{'showOnHover': !isEditOwner}"
+              (click)="isEditOwner ? ownerEditionFinished() : editOwner()">
+        {{(isEditOwner ? 'COMMON.SAVE' : 'COMMON.CHANGE') | translate}}
+      </button>
+
     </div>
+
+
 
     <!-- Project operator -->
     <div class="project-line">
@@ -27,59 +82,28 @@
           type="checkbox"
           name="seeOperator"
           id="seeOperator"
-          [checked]="true">
+          [checked]="project.operator !== undefined">
         <i class="form-icon"></i>
-        {{ 'Operator' }}
+        {{ 'PROJECT_LIST.OPERATOR' | translate }}
       </label>
 
       <select class="form-select"
-              name="editOperator"
-              id="editOperator">
-        <option>None</option>
+              name="setOperator"
+              id="setOperator"
+              [ngModel]="project.operator"
+              (ngModelChange)="changeProjectOperator($event)"
+              [ngModelOptions]="{standalone: true}">
+        <option [ngValue]="undefined" selected>{{'COMMON.NO' | translate}}</option>
+        <option *ngFor="let op of operators" [ngValue]="op._id">
+          {{op.firstName + ' ' + op.lastName}}
+        </option>
       </select>
-      <button class="btn btn-xs ghost-edit">{{'COMMON.EDIT' | translate}}</button>
-    </div>
-
-    <div class="project-line">
-      <label class="form-switch" for="editMode">
-        <input
-          type="checkbox"
-          name="editMode"
-          id="editMode"
-          [checked]="true">
-        <i class="form-icon"></i>
-        {{ 'Project owner' }}
-      </label>
-      <label class="form-label">{{project.owner.name}}</label>
-      <button class="btn btn-xs ghost-edit">{{'COMMON.EDIT' | translate}}</button>
-    </div>
-
-    <div class="project-line">
-      <label class="form-switch" for="editMode">
-        <input
-          type="checkbox"
-          name="editMode"
-          id="editMode"
-          [checked]="true">
-        <i class="form-icon"></i>
-        {{ 'Project owner' }}
-      </label>
-      <label class="form-label">{{project.owner.name}}</label>
-      <button class="btn btn-xs ghost-edit">{{'COMMON.EDIT' | translate}}</button>
-    </div>
-
-    <div class="project-line">
-      <label class="form-switch" for="editMode">
-        <input
-          type="checkbox"
-          name="editMode"
-          id="editMode"
-          [checked]="true">
-        <i class="form-icon"></i>
-        {{ 'Project owner' }}
-      </label>
-      <label class="form-label">{{project.owner.name}}</label>
-      <button class="btn btn-xs ghost-edit">{{'COMMON.EDIT' | translate}}</button>
+      <div></div>
     </div>
   </div>
 </div>
+
+<!-- Sidebars -->
+<app-sidebar
+  [template]="more" (closeSidebar)="closeSidebar($event)">
+</app-sidebar>

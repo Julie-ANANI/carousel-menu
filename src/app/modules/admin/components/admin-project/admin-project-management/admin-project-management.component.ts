@@ -8,6 +8,11 @@ import {Innovation} from '../../../../../models/innovation';
 import {InnovationSettings} from '../../../../../models/innov-settings';
 import {Preset} from '../../../../../models/preset';
 import {ActivatedRoute} from '@angular/router';
+import {Template} from '../../../../sidebar/interfaces/template';
+import {Subject} from 'rxjs/Subject';
+import {AutocompleteService} from '../../../../../services/autocomplete/autocomplete.service';
+import {DashboardService} from '../../../../../services/dashboard/dashboard.service';
+import {User} from '../../../../../models/user.model';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -16,12 +21,28 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class AdminProjectManagementComponent implements OnInit {
 
+
   private _project: Innovation;
   private _dirty = false;
   private _domain = {fr: '', en: ''};
   private _editInstanceDomain = false;
 
+  private _more: Template = {};
+  sidebarState = new Subject<string>();
+
   private _preset = {};
+
+  // Owner edition
+  isEditOwner = false;
+  usersSuggestion: Array<any> = [];
+  owner: any = {};
+  displayUserSuggestion = false;
+
+  // Domain edition
+  projectDomains: Array<any> = [];
+
+  // Operator edition
+  operators: Array<User> = [];
 
   private _updateInstanceDomainConfig: {
     placeholder: string,
@@ -40,14 +61,17 @@ export class AdminProjectManagementComponent implements OnInit {
 
   public formData: FormGroup = this._formBuilder.group({
     domainen: ['', [Validators.required]],
-    domainfr: ['', [Validators.required]]
+    domainfr: ['', [Validators.required]],
+    owner: '',
   });
 
   public presetAutocomplete: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
+              private _autoCompleteService: AutocompleteService,
               private _notificationsService: TranslateNotificationsService,
+              private _dashboardService: DashboardService,
               private _translateService: TranslateService,
               private _formBuilder: FormBuilder) {}
 
@@ -58,7 +82,62 @@ export class AdminProjectManagementComponent implements OnInit {
       initialData: this.hasPreset() ? [this.project.preset] : [],
       type: 'preset'
     };
+
+    this.projectDomains = [{name: 'umi'}, {name: 'dynergie'}, {name: 'novanexia'}, {name: 'inomer'}, {name: 'multivalente'}];
+
     this._domain = this._project.settings.domain;
+
+    this._dashboardService.getOperators().first().subscribe((operators) => this.operators = operators.result);
+  }
+
+  resetData() {
+    this._dirty = false;
+    this.isEditOwner = false;
+    this.formData.reset();
+  }
+
+  editOwner() {
+    this.isEditOwner = true;
+  }
+
+  onSuggestUsers() {
+    this.formData.get('owner').valueChanges.distinctUntilChanged().subscribe(input => {
+      this.displayUserSuggestion = true;
+      this.usersSuggestion = [];
+      this._autoCompleteService.get({keyword: input, type: 'users'}).subscribe(res => {
+        if (res.length === 0) {
+          this.displayUserSuggestion = false;
+        } else {
+          res.forEach((items) => {
+            const valueIndex = this.usersSuggestion.indexOf(items._id);
+            if (valueIndex === -1) { // if not exist then push into the array.
+              this.usersSuggestion.push({name: items.name, _id: items._id});
+            }
+          })
+        }
+      });
+    });
+  }
+
+  onValueSelect(value: any) {
+    this.formData.get('owner').setValue(value.name);
+    this.owner = value;
+    this.displayUserSuggestion = false;
+  }
+
+  ownerEditionFinished() {
+    this._project.owner = this.owner;
+    this.save(event, 'Le propriétaire à été mis à jour avec succès !');
+  }
+
+  changeProjectDomain(value: string) {
+    this._project.domain = value;
+    this.save(event, 'le domaine a été mis à jour avec succès !');
+  }
+
+  changeProjectOperator(value: any) {
+    this._project.operator = value || undefined;
+    this.save(event, 'L\'opérateur à été mis à jour avec succès');
   }
 
   public addTag(tag: Tag): void {
@@ -141,14 +220,15 @@ export class AdminProjectManagementComponent implements OnInit {
   /**
    * Sauvegarde
    */
-  public save(event: Event): void {
+  public save(event: Event, notification: string): void {
     event.preventDefault();
     this._innovationService
       .save(this._project._id, this._project)
       .first()
       .subscribe(data => {
-        this._project = data;
-        this._dirty = false;
+        this._project.__v = data.__v;
+        this.resetData();
+        this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , notification);
       }, err => {
         this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
@@ -205,6 +285,12 @@ export class AdminProjectManagementComponent implements OnInit {
       this._notificationsService.error('ERROR', error);
     });
   }
+
+  closeSidebar(value: string) {
+    this.more.animate_state = value;
+    this.sidebarState.next(this.more.animate_state);
+  }
+
   set domain(domain: {en: string, fr: string}) { this._domain = domain; }
 
 
@@ -214,6 +300,10 @@ export class AdminProjectManagementComponent implements OnInit {
 
   get project() {
     return this._project;
+  }
+
+  get more() {
+    return this._more;
   }
 
   get dirty() {

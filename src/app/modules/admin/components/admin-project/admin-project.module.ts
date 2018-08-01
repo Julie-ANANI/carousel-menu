@@ -20,6 +20,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/admin-project-questionnaire.module';
 import { AdminProjectManagementComponent } from './admin-project-management/admin-project-management.component';
+import {SidebarModule} from '../../../sidebar/sidebar.module';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { AdminProjectManagementComponent } from './admin-project-management/admi
     SharedProjectSettingsModule,
     SharedTagItemModule,
     RouterModule,
+    SidebarModule,
     FormsModule,
     ReactiveFormsModule,
     AdminProjectQuestionnaireModule

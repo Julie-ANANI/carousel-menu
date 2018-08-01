@@ -7,8 +7,9 @@ import { Tag } from './tag';
 import { User } from './user.model';
 
 export interface Innovation {
+  __v?: number;
   readonly _id?: string;
-  readonly owner?: User;
+  owner?: User;
   readonly campaigns?: Array<any>;
   status?: 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
   statusLogs?: Array<{
@@ -38,5 +39,5 @@ export interface Innovation {
   readonly launched?: Date;
   readonly created?: Date;
   readonly updated?: Date;
-  readonly operator?: User;
+  operator?: User;
 }

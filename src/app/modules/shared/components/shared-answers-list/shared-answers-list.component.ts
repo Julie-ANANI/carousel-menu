@@ -38,6 +38,7 @@ export class SharedAnswersListComponent {
       _isHeadable: true,
       _isLocal: true,
       _isFiltrable: true,
+      _isSelectable: true,
       _isEditable: true,
       _reloadColumns: true,
       _columns: [
