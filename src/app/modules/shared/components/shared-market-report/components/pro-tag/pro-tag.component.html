@@ -1,15 +1,10 @@
-
- <!-- <div class="flag-wrapper">
-    <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
-  </div>-->
-
 <div class="pro-tag-wrapper">
 
   <!-- Flag -->
   <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
 
   <!-- Top profile -->
-  <div class="label-validate" [ngStyle]="{ 'visibility': answer.profileQuality === 2 ? 'visible' : 'hidden' }">{{ 'COMMON.TOP_PROFILE' | translate }}</div>
+  <div class="label-validate" [ngStyle]="{ 'visibility': answer.profileQuality === 2 ? 'visible' : 'hidden' }">Top profile</div>
 
   <!-- Professional detail -->
   <div class="detail-wrapper">
