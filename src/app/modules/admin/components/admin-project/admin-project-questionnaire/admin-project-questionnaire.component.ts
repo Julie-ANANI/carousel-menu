@@ -37,7 +37,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
       this._project.preset.sections[index] = event;
     } else {
       // delete section
-      this._project.preset.sections.splice(index);
+      this._project.preset.sections.splice(index, 1);
     }
     this._presetState = 'TO_BE_SAVED';
   }

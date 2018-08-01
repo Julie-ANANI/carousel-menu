@@ -42,13 +42,13 @@
   <div *ngFor="let question of questions; let i = index;">
     <app-admin-project-questionnaire-question
       [question]="question"
-      (remove)="removeQuestion(question, i)"
+      (updateQuestion)="updateQuestion($event, i)"
       (clone)="cloneQuestion($event, i)"
       (move)="moveQuestion($event, i)">
     </app-admin-project-questionnaire-question>
   </div>
 
-  <div class="add-question" (click)="addQuestion()">
+  <div class="add-question" (click)="addNewQuestion($event)">
     <button class="btn-round btn-primary"><i class="icon icon-plus"></i></button>
     <div>Add question</div>
   </div>
