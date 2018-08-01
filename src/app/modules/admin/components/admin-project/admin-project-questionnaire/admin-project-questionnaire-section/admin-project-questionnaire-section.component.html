@@ -23,16 +23,21 @@
     <div [innerHtml]="formData.get('label.en').value"></div>
   </ng-container>
 
-
-  <div class="button-actions">
+  <div *ngIf="editSection" class="save-button">
     <button type="button" class="btn btn-xs ghost-edit"
-            (click)="(editSection = !editSection) || save($event)"
-            [innerHtml]="editSection ? 'Save' : 'Edit'">
+            (click)="(editSection = false) || save($event)">
+      Save
     </button>
-    <button *ngIf="!editSection"
-            type="button" class="btn btn-xs btn-error"
-            (click)="removeSection($event)"
-            [innerHtml]="'Delete'">
+  </div>
+
+  <div *ngIf="!editSection" class="button-actions">
+    <button type="button" class="btn btn-xs ghost-edit"
+            (click)="editSection = true">
+      Edit
+    </button>
+    <button type="button" class="btn btn-xs btn-error"
+            (click)="removeSection($event)">
+      Delete
     </button>
   </div>
 

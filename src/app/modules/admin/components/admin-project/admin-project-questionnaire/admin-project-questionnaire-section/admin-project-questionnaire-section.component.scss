@@ -37,6 +37,11 @@
     display: none;
   }
 
+  .save-button {
+    flex: 1;
+    text-align: right;
+  }
+
   .form-select,
   .form-default {
     color: #333333;

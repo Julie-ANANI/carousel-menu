@@ -53,7 +53,7 @@ export class AdminProjectQuestionnaireQuestionComponent {
 
   public removeQuestion(event: Event) {
     event.preventDefault();
-    this.updateQuestion.emit(this._formData.value);
+    this.updateQuestion.emit(null);
     this._formData.reset();
   }
 
@@ -87,7 +87,6 @@ export class AdminProjectQuestionnaireQuestionComponent {
       positive: false
     });
     optionsArray.push(newOption);
-    this.updateQuestion.emit(this._formData.value);
   }
 
   public deleteOption(event: Event, index: number) {
@@ -98,7 +97,6 @@ export class AdminProjectQuestionnaireQuestionComponent {
     for (let i = index; i < optionsArray.value.length ; i++) {
       optionsArray.at(i).get('identifier').setValue(i.toString());
     }
-    this.updateQuestion.emit(this._formData.value);
   }
 
   public countErrors(lang: string) {

@@ -26,22 +26,25 @@
 
     <p>{{formData.get('label').value | multiling:lang}}</p>
 
-    <div class="button-actions">
-      <button type="button"
-              class="btn btn-xs ghost-edit"
-              (click)="(editMode = !editMode) || save($event)"
-              aria-controls = "collapseMails"
-              [innerHtml]="editMode ? 'Save' : 'Edit'">
+    <div *ngIf="editMode" class="save-button">
+      <button type="button" class="btn btn-xs ghost-edit"
+              (click)="(editMode = false) || save($event)">
+        Save
+      </button>
+    </div>
+
+    <div *ngIf="!editMode" class="button-actions">
+      <button type="button" class="btn btn-xs ghost-edit"
+              (click)="editMode = true">
+        Edit
       </button>
 
       <button type="button" class="btn btn-xs ghost-edit"
-              *ngIf="!editMode"
               (click)="cloneQuestion($event)">
         Clone
       </button>
 
       <button type="button" class="btn btn-xs ghost-delete"
-              *ngIf="!editMode"
               (click)="removeQuestion($event)">
         Delete
       </button>
