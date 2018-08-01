@@ -255,7 +255,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
     this.sidebarTemplateValue = {
       animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: this.adminSide ? 'COMMON.EDIT_INSIGHT' : 'MARKET_REPORT.INSIGHT',
+      title: this.adminSide ? 'COMMON.EDIT_INSIGHT' : 'Insight',
       size: '726px'
     };
 
@@ -266,13 +266,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.editMode.next(false);
   }
 
-  public keyupHandlerFunction(event: any) {
+  public keyupHandlerFunction(event: any, ob: string) {
     const objToSave = {};
-    objToSave['finalConclusion'] = {
+    objToSave[ob] = {
       conclusion: event['content']
     };
-    this.innovationService.updateMarketReport(this.project._id, objToSave)
-      .first().subscribe((data) => {
+    this.innovationService.updateMarketReport(this.project._id, objToSave).first().subscribe((data) => {
         this.project.marketReport = data;
       });
   }
@@ -288,6 +287,16 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   public printSynthesis(event: Event): void {
     event.preventDefault();
     window.print();
+  }
+
+  public percentageCalculataion(value1: number, value2: number) {
+    let percentage = (value2 / value1) * 100;
+
+    if (percentage === Infinity) {
+      percentage = 0;
+    }
+
+    return Math.floor(percentage);
   }
 
   get campaignStats() {

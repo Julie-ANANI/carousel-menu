@@ -5,18 +5,14 @@
   align-items: center;
   font-size: 14px;
   flex-direction: column;
-  overflow: hidden;
-  position: relative;
-
-  app-country-flag {
-    position: absolute;
-    top: 5px;
-    right: 9px;
-  }
 
   .label-validate {
     margin-right: auto;
     margin-left: auto;
+    margin-bottom: 10px;
+  }
+
+  .flag-wrapper {
     margin-bottom: 10px;
   }
 
@@ -55,10 +51,12 @@
     color: white;
     cursor: pointer;
     margin: 5px;
+    transition: all .15s ease-in-out;
   }
 
   .tag-wrapper:hover {
-    text-decoration: underline;
+    background-color: #FFB300;
+    color: white;
   }
 
 }

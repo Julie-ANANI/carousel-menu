@@ -167,6 +167,7 @@
           <!-- Column 1 -->
           <div class="sc-map-wrapper">
             <h1 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}</h1>
+            <p class="sc-ques">{{ 'MARKET_REPORT.TARGET_COUNTRIES' | translate }}</p>
             <app-worldmap
               [initialConfiguration]="continentTarget"
               [countriesColor]="'#2ECC71'"
@@ -231,26 +232,6 @@
           <!-- Analytic -->
           <div class="sc-analytic-wrapper">
 
-            <!-- Professionals -->
-            <div class="cs-info-analytic">
-              <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS' | translate }}</p>
-              <h5 class="text-center">{{ campaignStats?.nbPros || 0 }}</h5>
-            </div>
-            <div class="cs-info-analytic pd-top">
-              <svg width="80px" height="38px" viewBox="0 0 80 38">
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <g transform="translate(-701.000000, -810.000000)">
-                    <g transform="translate(701.000000, 810.000000)">
-                      <polygon fill="#97A4B1" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
-                      <text class="svg-text">
-                        <tspan x="27.4760742" y="24"></tspan>
-                      </text>
-                    </g>
-                  </g>
-                </g>
-              </svg>
-            </div>
-
             <!-- Reached -->
             <div class="cs-info-analytic">
               <p>{{ 'PROJECT_MODULE.EXPLORATION.ANALYTICS.PROFESSIONALS_REACHED' | translate }}</p>
@@ -263,7 +244,7 @@
                     <g transform="translate(701.000000, 810.000000)">
                       <polygon fill="#2ECC71" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
                       <text class="svg-text">
-                        <tspan x="27.4760742" y="24"></tspan>
+                        <tspan x="27.4760742" y="24">{{ percentageCalculataion(campaignStats?.nbProsSent, campaignStats?.nbProsOpened) || 0 }}%</tspan>
                       </text>
                     </g>
                   </g>
@@ -283,7 +264,7 @@
                     <g transform="translate(701.000000, 810.000000)">
                       <polygon fill="#EA5858" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
                       <text class="svg-text">
-                        <tspan x="27.4760742" y="24"></tspan>
+                        <tspan x="27.4760742" y="24">{{ percentageCalculataion(campaignStats?.nbProsOpened, campaignStats?.nbProsClicked) || 0 }}%</tspan>
                       </text>
                     </g>
                   </g>
@@ -303,7 +284,7 @@
                     <g transform="translate(701.000000, 810.000000)">
                       <polygon fill="#F79323" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
                       <text class="svg-text">
-                        <tspan x="27.4760742" y="24"></tspan>
+                        <tspan x="27.4760742" y="24">{{ percentageCalculataion(campaignStats?.nbProsClicked, campaignStats?.nbValidatedResp) || 0 }}%</tspan>
                       </text>
                     </g>
                   </g>
@@ -319,7 +300,7 @@
 
           </div>
 
-          <!-- Click rate -->
+          <!-- Click rate
           <div class="sc-rate-wrapper">
             <h1 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.CLICK_MAP_TITLE' | translate }}</h1>
             <app-worldmap
@@ -328,7 +309,7 @@
               [isEditable]="false"
               [width]="'auto'">
             </app-worldmap>
-          </div>
+          </div>-->
 
           <!-- Companies contact -->
           <div *ngIf="project.settings.companies.include.length > 0" class="sc-company-wrapper">
@@ -347,6 +328,25 @@
 
     <!-- Answer wrapper -->
     <div id="answer-wrapper">
+
+      <!-- Key learning section -->
+      <section *ngIf="project.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" class="section-light-container s-keyLearning-print" id="key-learning">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="keyLearning-wrapper">
+            <div class="section-inline-container">
+              <h1 class="main-heading">{{ 'MARKET_REPORT.KEY_LEARNING' | translate }}</h1>
+              <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
+              <app-text-zone
+                [elementId]="'keyLearning'"
+                [readonly]="!adminSide"
+                [data]="project.marketReport?.keyLearning?.conclusion"
+                (onTextChange)="keyupHandlerFunction($event, 'keyLearning')">
+              </app-text-zone>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /Key learning section -->
 
       <!-- Origin Comment and Professional Responses -->
       <div class="section-light-container s-origin-print">
@@ -390,6 +390,9 @@
           (mouseenter)="displayMenu($event)"
           (mouseleave)="hideMenu($event)">
           <ul>
+            <li *ngIf="project.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" [ngClass]="{'active': activeSection === 'key-learning'}" pageScroll href="#key-learning">
+              {{ 'MARKET_REPORT.KEY_LEARNING' | translate }}
+            </li>
             <li [ngClass]="{'active': activeSection === 'professionals'}" pageScroll href="#professionals">
               {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
             </li>
@@ -399,12 +402,12 @@
               [ngClass]="{'active': activeSection === question.identifier}">
               {{ question.title | multiling:lang }}
             </li>
-            <li [ngClass]="{'active': activeSection === 'conclusion'}" pageScroll href="#conclusion">
+            <li *ngIf="project.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" [ngClass]="{'active': activeSection === 'conclusion'}" pageScroll href="#conclusion">
               {{ 'MARKET_REPORT.CONCLUSION' | translate }}
             </li>
           </ul>
         </div>
-        <button class="btn btn-primary" (mouseenter)="displayMenu($event)" (mouseleave)="hideMenu($event)">Menu</button>
+        <button class="btn btn-secondary" (mouseenter)="displayMenu($event)" (mouseleave)="hideMenu($event)">Menu</button>
       </div>
       <!-- /Menu button -->
 
@@ -443,18 +446,18 @@
       <!-- /Other question and answers -->
 
       <!-- Conclusion -->
-      <section class="section-light-container s-conclusion-print" id="conclusion">
+      <section *ngIf="project.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" class="section-light-container s-conclusion-print" id="conclusion">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="conclusion-wrapper">
             <div class="section-inline-container">
               <h1 class="main-heading">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h1>
+              <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
               <app-text-zone
                 [elementId]="'finalConclusion'"
                 [readonly]="!adminSide"
-                [data]="project?.marketReport.finalConclusion?.conclusion"
-                (onTextChange)="keyupHandlerFunction($event)">
+                [data]="project.marketReport?.finalConclusion?.conclusion"
+                (onTextChange)="keyupHandlerFunction($event, 'finalConclusion')">
               </app-text-zone>
-              <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
             </div>
           </div>
         </div>

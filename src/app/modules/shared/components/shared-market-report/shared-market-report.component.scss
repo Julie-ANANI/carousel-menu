@@ -519,7 +519,8 @@ body.sample-infographic {
       .sc-button-wrapper {
         flex: 2;
         padding: 20px 0 0 0;
-        text-align: right;
+        justify-content: flex-end;
+        display: inline-flex;
 
         .btn {
           margin-bottom: 15px;
@@ -724,6 +725,10 @@ body.sample-infographic {
       border-radius: 3px;
     }
 
+    .btn-secondary:hover {
+      background-color: #0B90C6;
+    }
+
     .menu-item-wrapper {
       background-color: white;
       width: 250px;
@@ -782,19 +787,18 @@ body.sample-infographic {
 
   }
 
-  .conclusion-wrapper {
+  .conclusion-wrapper, .keyLearning-wrapper {
     background-color: #4F5D6B;
     border-radius: 3px;
 
     .main-heading {
       color: white;
-      opacity: .5;
     }
 
     .op-text {
       color: #FFB300;
       font-weight: 600;
-      padding-bottom: 0;
+      padding-bottom: 25px;
     }
 
   }

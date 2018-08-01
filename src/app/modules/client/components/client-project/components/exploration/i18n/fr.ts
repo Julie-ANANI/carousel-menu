@@ -42,7 +42,6 @@ export const EXPLORATION = {
 
   'ANALYTICS': {
     'TITLE': 'Analytics',
-    'PROFESSIONALS': 'Professionnels ciblés',
     'PROFESSIONALS_REACHED': 'Professionnels contactés',
     'EMAILS_OPENED': 'Emails ouverts',
     'CLICKS': 'Visites',

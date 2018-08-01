@@ -9,11 +9,11 @@
       display: inline-flex;
       background: white;
       border: 1px solid #D7D7D7;
-      padding: 20px 30px;
+      padding: 10px;
       border-radius: 3px;
-      min-height: 180px;
+      min-height: 120px;
       margin-bottom: 20px;
-      flex: 0 1 calc(50% - 1rem);
+      flex: 0 1 calc(32% - 1rem);
 
       .content {
         display: inline-flex;
@@ -46,7 +46,7 @@
 
           p {
             padding-top: 25px;
-            font-size: 18px;
+            font-size: 16px;
             color: #4F5D6B;
           }
 

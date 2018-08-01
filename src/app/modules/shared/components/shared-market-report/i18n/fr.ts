@@ -24,7 +24,9 @@ export const MARKET_REPORT = {
 
   'INSIGHT': 'Des idées',
 
-  'CONCLUSION': 'Conclusion',
+  'CONCLUSION': 'Conclusion finale',
+
+  'KEY_LEARNING': 'Connaissances clés',
 
   'STICKY_BAR': {
     'DETAIL_VIEW': 'Vue détaillée',
@@ -35,6 +37,8 @@ export const MARKET_REPORT = {
   },
 
   'MESSAGE_SYNTHESIS': 'La synthèse a été finalisée avec succès.',
+
+  'TARGET_COUNTRIES': 'Pays ciblés',
 
   // 'TITLE': 'Exploration du potentiel marché',
   'COLLAPSE': 'Tout plier',
@@ -48,9 +52,9 @@ export const MARKET_REPORT = {
   'SEE_ANSWERS': 'Voir la réponse',
   'BTN_EDITION_MODE': 'Passer en mode édition',
   'BTN_VIEW_MODE': 'Passer en mode visualisation',
-  'BTN_ANSWERS_OPEN': 'Voir les réponses.',
-  'BTN_ANSWERS_CLOSE': 'Masquer les réponses.',
-  'BTN_COMMENTS_OPEN': 'Voir les commentaires ({{length}})',
+  'BTN_ANSWERS_OPEN': 'Voir les réponses',
+  'BTN_ANSWERS_CLOSE': 'Masquer les réponses',
+  'BTN_COMMENTS_OPEN': 'Commentaires',
   'BTN_COMMENTS_CLOSE': 'Masquer les commentaires ({{length}})',
   'BTN_RECOMPUTE': 'Recalculer l\'infographie',
   'PEOPLE_VOTED': 'personnes ont voté',

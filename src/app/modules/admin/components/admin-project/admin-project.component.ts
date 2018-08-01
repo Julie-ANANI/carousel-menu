@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { Innovation } from '../../../../models/innovation';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
@@ -9,18 +9,27 @@ import { AuthService } from '../../../../services/auth/auth.service';
   templateUrl: './admin-project.component.html',
   styleUrls: ['./admin-project.component.scss']
 })
+
 export class AdminProjectComponent implements OnInit {
 
   private _project: Innovation;
   private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis', 'tags', 'questionnaire'];
+  clientSideUrl: string;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,
-              private _authService: AuthService) {}
+              private _authService: AuthService,
+              private router: Router) {}
 
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.data['innovation'];
     this._titleService.setTitle(this._project.name);
+  }
+
+  goClientSide(event: Event) {
+    event.preventDefault();
+    this.clientSideUrl = 'project/' + this.project._id;
+    this.router.navigateByUrl(this.clientSideUrl);
   }
 
   get authorizedTabs(): Array<string> {
