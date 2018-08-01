@@ -27,7 +27,7 @@
   <div class="button-actions">
     <button type="button" class="btn btn-xs ghost-edit"
             (click)="(editSection = !editSection) || save($event)"
-            [innerHtml]="editSection ? 'Validate' : 'Edit'">
+            [innerHtml]="editSection ? 'Save' : 'Edit'">
     </button>
     <button *ngIf="!editSection"
             type="button" class="btn btn-xs btn-error"

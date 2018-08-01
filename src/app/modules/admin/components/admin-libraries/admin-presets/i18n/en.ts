@@ -81,15 +81,15 @@ export const PRESETS = {
     'UNIQUE_NAME': 'Be careful, this name must be different from the already existing questions',
     'TYPE': {
       'CHOOSE': 'Choose the type of question',
-      'LIST': 'List of items',
-      'CLEARBIT': 'List of companies',
-      'RADIO': 'Radio question',
-      'SCALE': 'Rating',
-      'STARS': 'Stars rating',
-      'TEXTAREA': 'Text area',
-      'TEXTBOX': 'Text box',
-      'TOGGLE': 'Toggle',
-      'CHECKBOX': 'Checkbox question'
+      'list': 'List of items',
+      'clearbit': 'List of companies',
+      'radio': 'Radio question',
+      'scale': 'Rating',
+      'stars': 'Stars rating',
+      'textarea': 'Text area',
+      'textbox': 'Text box',
+      'toggle': 'Toggle',
+      'checkbox': 'Checkbox question'
     },
     'EDIT': {
       'SAVE': 'Save the question',

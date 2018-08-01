@@ -7,33 +7,42 @@
       <i class="fa fa-caret-down" (click)="down()"></i>
     </div>
 
-    <select class="form-select" formControlName="controlType">
-      <option [value]="'checkbox'">{{ "PRESETS.QUESTION.TYPE.CHECKBOX" | translate }}</option>
-      <option [value]="'list'">{{ "PRESETS.QUESTION.TYPE.LIST" | translate }}</option>
-      <option [value]="'clearbit'">{{ "PRESETS.QUESTION.TYPE.CLEARBIT" | translate }}</option>
-      <option [value]="'radio'">{{ "PRESETS.QUESTION.TYPE.RADIO" | translate }}</option>
-      <option [value]="'scale'">{{ "PRESETS.QUESTION.TYPE.SCALE" | translate }}</option>
-      <option [value]="'stars'">{{ "PRESETS.QUESTION.TYPE.STARS" | translate }}</option>
-      <option [value]="'textarea'">{{ "PRESETS.QUESTION.TYPE.TEXTAREA" | translate }}</option>
-      <option [value]="'textbox'">{{ "PRESETS.QUESTION.TYPE.TEXTBOX" | translate }}</option>
-      <option [value]="'toggle'">{{ "PRESETS.QUESTION.TYPE.TOGGLE" | translate }}</option>
-    </select>
+    <ng-container [ngSwitch]="editMode">
+      <select *ngSwitchCase="true" class="form-select" formControlName="controlType">
+        <option value="checkbox">{{ "PRESETS.QUESTION.TYPE.checkbox" | translate }}</option>
+        <option value="list">{{ "PRESETS.QUESTION.TYPE.list" | translate }}</option>
+        <option value="clearbit">{{ "PRESETS.QUESTION.TYPE.clearbit" | translate }}</option>
+        <option value="radio">{{ "PRESETS.QUESTION.TYPE.radio" | translate }}</option>
+        <option value="scale">{{ "PRESETS.QUESTION.TYPE.scale" | translate }}</option>
+        <option value="stars">{{ "PRESETS.QUESTION.TYPE.stars" | translate }}</option>
+        <option value="textarea">{{ "PRESETS.QUESTION.TYPE.textarea" | translate }}</option>
+        <option value="textbox">{{ "PRESETS.QUESTION.TYPE.textbox" | translate }}</option>
+        <option value="toggle">{{ "PRESETS.QUESTION.TYPE.toggle" | translate }}</option>
+      </select>
+      <select *ngSwitchDefault class="form-select" disabled>
+        <option [innerHtml]="'PRESETS.QUESTION.TYPE.' + formData.get('controlType').value" translate></option>
+      </select>
+    </ng-container>
 
-    <p [innerHtml]="formData.get('label.en').value"></p>
+    <p>{{formData.get('label').value | multiling:lang}}</p>
 
     <div class="button-actions">
       <button type="button"
               class="btn btn-xs ghost-edit"
-              [attr.aria-expanded]="true"
-              aria-controls = "collapseMails">
-        Edit
+              (click)="(editMode = !editMode) || save($event)"
+              aria-controls = "collapseMails"
+              [innerHtml]="editMode ? 'Save' : 'Edit'">
       </button>
 
-      <button type="button" class="btn btn-xs ghost-edit" (click)="cloneQuestion($event)">
+      <button type="button" class="btn btn-xs ghost-edit"
+              *ngIf="!editMode"
+              (click)="cloneQuestion($event)">
         Clone
       </button>
 
-      <button type="button" class="btn btn-xs ghost-delete" (click)="removeQuestion($event)">
+      <button type="button" class="btn btn-xs ghost-delete"
+              *ngIf="!editMode"
+              (click)="removeQuestion($event)">
         Delete
       </button>
     </div>
@@ -41,7 +50,7 @@
 
 
   <!-- Question edition -->
-  <div class="question-body" *ngIf="true">
+  <div class="question-body" *ngIf="editMode">
     <div class="question-toolbar">
       <button (click)="language = 'en'" class="btn btn-link" [ngClass]="{'active': language === 'en'}">
         English

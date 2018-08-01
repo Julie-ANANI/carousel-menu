@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import {AdminProjectQuestionnaireQuestionComponent} from './admin-project-questionnaire-question/admin-project-questionnaire-question.component';
 import {AdminProjectQuestionnaireComponent} from './admin-project-questionnaire.component';
 import {AdminProjectQuestionnaireSectionComponent} from './admin-project-questionnaire-section/admin-project-questionnaire-section.component';
+import { PipeModule } from '../../../../../pipe/pipe.module';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {AdminProjectQuestionnaireSectionComponent} from './admin-project-questio
     TranslateModule.forChild(),
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipeModule
   ],
   declarations: [
     AdminProjectQuestionnaireQuestionComponent,

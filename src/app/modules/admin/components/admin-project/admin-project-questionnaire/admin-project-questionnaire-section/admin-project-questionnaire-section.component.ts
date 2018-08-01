@@ -31,9 +31,13 @@ export class AdminProjectQuestionnaireSectionComponent {
 
   constructor( private _formBuilder: FormBuilder) {}
 
-  save(event: Event) {
-    event.preventDefault();
+  private update() {
     this.updateSection.emit({...this._formData.value, questions: this._questions});
+  }
+
+  public save(event: Event) {
+    event.preventDefault();
+    this.update();
   }
 
   private generateQuestionId(): string {
@@ -62,6 +66,7 @@ export class AdminProjectQuestionnaireSectionComponent {
       options: []
     };
     this._questions.push(newQuestion);
+    this.update();
   }
 
   public up(): void {
@@ -86,12 +91,14 @@ export class AdminProjectQuestionnaireSectionComponent {
       // delete question
       this._questions.splice(index, 1);
     }
+    this.update();
   }
 
   public cloneQuestion(question: Question, index: number) {
     // avoid getting twice the same question id
     const newQuestion = {...question, identifier: this.generateQuestionId()};
     this._questions.splice(index + 1, 0, newQuestion);
+    this.update();
   }
 
   public moveQuestion(move: number, index: number) {
@@ -99,6 +106,7 @@ export class AdminProjectQuestionnaireSectionComponent {
     const questions = this._questions;
     if (new_place >= 0 && new_place < questions.length) {
       questions[new_place] = questions.splice(index, 1, questions[new_place])[0];
+      this.update();
     }
   }
 

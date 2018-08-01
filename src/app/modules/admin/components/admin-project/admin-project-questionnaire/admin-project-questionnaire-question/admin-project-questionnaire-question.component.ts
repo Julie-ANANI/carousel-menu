@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Question, Option } from '../../../../../../models/question';
 
 @Component({
@@ -39,14 +40,20 @@ export class AdminProjectQuestionnaireQuestionComponent {
   @Output() move = new EventEmitter<number>();
 
   private _formData: FormGroup;
-
   private _language: 'en' | 'fr' = 'en';
+  private _editMode = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private translateService: TranslateService) { }
+
+  public save(event: Event) {
+    event.preventDefault();
+    this.updateQuestion.emit(this._formData.value);
+  }
 
   public removeQuestion(event: Event) {
     event.preventDefault();
-    this.updateQuestion.emit(null);
+    this.updateQuestion.emit(this._formData.value);
     this._formData.reset();
   }
 
@@ -80,6 +87,7 @@ export class AdminProjectQuestionnaireQuestionComponent {
       positive: false
     });
     optionsArray.push(newOption);
+    this.updateQuestion.emit(this._formData.value);
   }
 
   public deleteOption(event: Event, index: number) {
@@ -90,6 +98,7 @@ export class AdminProjectQuestionnaireQuestionComponent {
     for (let i = index; i < optionsArray.value.length ; i++) {
       optionsArray.at(i).get('identifier').setValue(i.toString());
     }
+    this.updateQuestion.emit(this._formData.value);
   }
 
   public countErrors(lang: string) {
@@ -112,5 +121,10 @@ export class AdminProjectQuestionnaireQuestionComponent {
 
   get language() { return this._language; }
   set language(value: 'en' | 'fr') { this._language = value; }
+
+  get editMode() { return this._editMode; }
+  set editMode(value: boolean) { this._editMode = value; }
+
+  get lang() { return this.translateService.currentLang; }
 
 }

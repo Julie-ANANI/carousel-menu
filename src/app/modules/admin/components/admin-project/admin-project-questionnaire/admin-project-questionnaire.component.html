@@ -1,6 +1,6 @@
 <div class="container">
   <div class="columns">
-    <div class="column col-11 col-mx-auto" *ngIf="!this.innovation.preset?.name">
+    <div class="column col-11 col-mx-auto" *ngIf="!innovation.preset?.name">
       <div class="bot-wrapper text-center">
         <span class="bot-rect">Importez d'abord un questionnaire dans l'onglet Settings avant de pouvoir le modifier.</span>
         <br>
@@ -8,7 +8,7 @@
         <div><img src="http://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width="" height="120"></div>
       </div>
     </div>
-    <div class="column col-11 col-mx-auto" *ngIf="this.innovation.preset?.name">
+    <div class="column col-11 col-mx-auto" *ngIf="innovation.preset?.name">
       <div class="text-right">
 
         <button class="btn btn-primary"
