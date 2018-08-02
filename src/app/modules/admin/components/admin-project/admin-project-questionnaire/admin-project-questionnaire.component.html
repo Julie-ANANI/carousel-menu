@@ -10,18 +10,10 @@
     </div>
     <div class="column col-11 col-mx-auto" *ngIf="innovation.preset">
 
-      <div *ngFor="let section of innovation.preset?.sections; let i=index">
-        <app-admin-project-questionnaire-section
-          [section]="section"
-          (move)="moveSection($event, i)"
-          (updateSection)="updateSection($event, i)">
-        </app-admin-project-questionnaire-section>
-      </div>
-
-      <div class="add-section" (click)="addSection()">
-        <button class="btn-round btn-primary"><i class="icon icon-plus"></i></button>
-        <div>Add section</div>
-      </div>
+      <app-shared-preset
+        [preset]="innovation.preset"
+        (save)="savePreset($event)">
+      </app-shared-preset>
 
     </div>
   </div>

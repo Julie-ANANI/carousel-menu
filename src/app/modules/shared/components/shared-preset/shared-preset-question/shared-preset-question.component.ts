@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Question, Option } from '../../../../../../models/question';
+import { Question, Option } from '../../../../../models/question';
 
 @Component({
-  selector: 'app-admin-project-questionnaire-question',
-  templateUrl: './admin-project-questionnaire-question.component.html',
-  styleUrls: ['./admin-project-questionnaire-question.component.scss']
+  selector: 'app-shared-preset-question',
+  templateUrl: './shared-preset-question.component.html',
+  styleUrls: ['./shared-preset-question.component.scss']
 })
-export class AdminProjectQuestionnaireQuestionComponent {
+export class SharedPresetQuestionComponent {
 
   @Input() set question(question: Question) {
     this._formData = this.formBuilder.group({

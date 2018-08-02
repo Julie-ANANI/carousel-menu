@@ -1,22 +1,4 @@
-<app-shared-loader *ngIf="!preset"></app-shared-loader>
-
-<ng-container *ngIf="preset">
-
-  <h1>{{preset.name}}</h1>
-
-  <div class="body">
-    <div *ngFor="let section of preset.sections; let i=index">
-      <app-admin-project-questionnaire-section
-        [section]="section"
-        (move)="moveSection($event, i)"
-        (updateSection)="updateSection($event, i)">
-      </app-admin-project-questionnaire-section>
-    </div>
-
-    <div class="add-section" (click)="addSection()">
-      <button class="btn-round btn-primary"><i class="icon icon-plus"></i></button>
-      <div>Add section</div>
-    </div>
-  </div>
-
-</ng-container>
+<app-shared-preset
+  [preset]="preset"
+  (save)="savePreset($event)">
+</app-shared-preset>

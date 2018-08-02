@@ -45,12 +45,12 @@
 
 <div *ngIf="true">
   <div *ngFor="let question of questions; let i = index;">
-    <app-admin-project-questionnaire-question
+    <app-shared-preset-question
       [question]="question"
       (updateQuestion)="updateQuestion($event, i)"
       (clone)="cloneQuestion($event, i)"
       (move)="moveQuestion($event, i)">
-    </app-admin-project-questionnaire-question>
+    </app-shared-preset-question>
   </div>
 
   <div class="add-question" (click)="addNewQuestion($event)">

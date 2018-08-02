@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Question } from '../../../../../../models/question';
-import { Section } from '../../../../../../models/section';
+import { Question } from '../../../../../models/question';
+import { Section } from '../../../../../models/section';
 
 @Component({
-  selector: 'app-admin-project-questionnaire-section',
-  templateUrl: './admin-project-questionnaire-section.component.html',
-  styleUrls: ['./admin-project-questionnaire-section.component.scss']
+  selector: 'app-shared-preset-section',
+  templateUrl: './shared-preset-section.component.html',
+  styleUrls: ['./shared-preset-section.component.scss']
 })
-export class AdminProjectQuestionnaireSectionComponent {
+export class SharedPresetSectionComponent {
 
   @Input() set section(section: Section) {
     this._formData = this._formBuilder.group({
