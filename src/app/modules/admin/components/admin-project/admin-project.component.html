@@ -5,7 +5,7 @@
 
       <div class="title-button-wrapper">
         <h1>{{ this.project.name }}</h1>
-        <button class="btn ghost-primary" (click)="goClientSide($event)">View client side</button>
+        <a [href]="clientSideUrl" target="_blank"><button class="btn ghost-primary">View client side</button></a>
       </div>
 
 

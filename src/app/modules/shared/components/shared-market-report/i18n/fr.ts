@@ -36,7 +36,15 @@ export const MARKET_REPORT = {
     'BUTTON_ADMIN': 'Finaliser la synthèse',
   },
 
-  'MESSAGE_SYNTHESIS': 'La synthèse a été finalisée avec succès.',
+  'MESSAGE_SYNTHESIS_VISIBLE': 'La synthèse est visible pour le client.',
+
+  'MESSAGE_SYNTHESIS_NOT_VISIBLE': 'La synthèse n\'est pas visible pour le client.',
+
+  'MESSAGE_SYNTHESIS': 'Le projet a été terminé avec succès.',
+
+  'MODAL_TITLE': 'Comité de confirmation',
+
+  'MODAL_CONTENT': 'Voulez-vous terminer ce projet ?',
 
   'TARGET_COUNTRIES': 'Pays ciblés',
 

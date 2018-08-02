@@ -1,9 +1,9 @@
 <div
   class="synthesis-wrapper section-container s-print"
-  [ngStyle]="{ 'background-color': (projectStatus !== 'DONE' && !adminSide) ? 'white' : '#F5F5F5', 'padding-top': !adminSide ? '0' : '0' }">
+  [ngStyle]="{ 'background-color': (projectStatus !== 'DONE' && !adminSide && !previewMode) ? 'white' : '#F5F5F5', 'padding-top': !adminSide ? '0' : '0' }">
 
   <!-- Project status not done -->
-  <div *ngIf="projectStatus !== 'DONE' && !adminSide">
+  <div *ngIf="projectStatus !== 'DONE' && !adminSide && !project.previewMode">
     <div  class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '50px' }">
       <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + projectStatus)  | translate }}</h1>
       <div class="text-center" [ngStyle]="{ 'padding-top': '25px' }">
@@ -35,7 +35,12 @@
   </div>
 
   <!-- Project status done -->
-  <div *ngIf="projectStatus === 'DONE' || adminSide">
+  <div *ngIf="projectStatus === 'DONE' || adminSide || previewMode">
+
+    <!-- Message -->
+    <div *ngIf="project.previewMode && projectStatus !== 'DONE' && !adminSide" class="column col-xs-12 col-11 col-mx-auto msg-wrapper">
+      <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE' | translate }}</div>
+    </div>
 
     <!-- Sticky bar -->
     <div class="sc-sticky-wrapper" [ngClass]="{ 'sc-scroll-sticky': scrollOn }">
@@ -66,12 +71,23 @@
         </div>
 
         <!-- Buttons -->
-        <div class="sc-button-wrapper">
+        <div class="sc-button-wrapper" [ngStyle]="{ 'flex': adminSide === true ? '2' : '1' }">
           <ng-container [ngSwitch]="adminSide">
             <ng-container *ngSwitchCase="true">
-              <button class="btn btn-primary" (click)="changeStatus($event, 'DONE')">
-                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_ADMIN' | translate }}
-              </button>
+              <div class="preview-button-wrapper">
+                <label class="form-switch" for="previewMode">
+                  <input
+                    type="checkbox"
+                    name="previewMode"
+                    id="previewMode"
+                    (change)="toggleMode($event)"
+                    [checked]="previewMode"
+                    [disabled]="disableButton === 'DONE'">
+                  <i class="form-icon"></i>
+                  Make it visible to client
+                </label>
+              </div>
+              <button class="btn btn-primary" [disabled]="disableButton === 'DONE'" (click)="confirmModal($event)">End project</button>
             </ng-container>
             <ng-container *ngSwitchCase="false">
               <!--<button class="btn ghost-primary">{{ 'MARKET_REPORT.STICKY_BAR.BUTTON_CSV' | translate }}</button>-->
@@ -99,7 +115,7 @@
           <!-- Project name -->
           <div class="sc-body-wrapper">
             <h1>{{ project.name }}</h1>
-            <h6>{{ project.created | date }}</h6>
+            <h6 *ngIf="projectStatus === 'DONE'">{{ endDate | date }}</h6>
           </div>
 
           <!-- Link -->
@@ -121,7 +137,7 @@
           <!-- Column 1 -->
           <div class="sc-summary-wrapper">
             <h1 class="main-heading">{{ project.innovationCards[0].title }}</h1>
-            <p>{{ project.innovationCards[0].summary }}</p>
+            <p [innerHtml]="project.innovationCards[0].summary"></p>
             <div *ngIf="project.principalMedia?.type === 'PHOTO'" [ngStyle]="{ 'padding-bottom': '20px' }">
               <img
                 [src]="project.principalMedia.url"
@@ -145,13 +161,13 @@
           <!-- Column 2 -->
           <div class="sc-issue-wrapper">
             <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
-            <p>{{ project.innovationCards[0].problem }}</p>
+            <p [innerHtml]="project.innovationCards[0].problem"></p>
           </div>
 
           <!-- Column 3 -->
           <div class="sc-solution-wrapper">
             <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
-            <p>{{ project.innovationCards[0].solution }}</p>
+            <p [innerHtml]="project.innovationCards[0].solution"></p>
           </div>
 
         </div>
@@ -470,6 +486,23 @@
   </div>
   <!-- /Project status done -->
 
+</div>
+
+<!-- Modal to ask operator to sure about ending the project -->
+<div class="modal" [ngClass]="{'active': projectToBeFinished}">
+  <div class="modal-overlay" (click)="closeModal($event)"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+      <div class="modal-title">{{ 'MARKET_REPORT.MODAL_TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">{{ 'MARKET_REPORT.MODAL_CONTENT' | translate }}</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary btn-sm" (click)="changeStatus($event, 'DONE')">Confirm</button>
+    </div>
+  </div>
 </div>
 
 <!-- Insight preview -->

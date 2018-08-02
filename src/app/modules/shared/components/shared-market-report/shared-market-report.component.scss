@@ -455,12 +455,25 @@ body.sample-infographic {
     border-radius: 3px;
   }
 
+  .msg-wrapper {
+
+    .content {
+      background-color: #2ECC71;
+      color: white;
+      font-weight: 600;
+      font-size: 18px;
+      padding: 15px;
+      border-radius: 3px;
+    }
+
+  }
+
   .sc-sticky-wrapper {
     padding-top: 10px;
     padding-bottom: 25px;
     background-color: white;
     transition: all 0.35s ease-in-out;
-    height: 110px;
+    min-height: 110px;
 
     .sc-content-wrapper {
       display: flex;
@@ -517,14 +530,23 @@ body.sample-infographic {
       }
 
       .sc-button-wrapper {
-        flex: 2;
-        padding: 20px 0 0 0;
         justify-content: flex-end;
         display: inline-flex;
+        flex-wrap: wrap;
 
         .btn {
           margin-bottom: 15px;
           margin-left: 15px;
+          margin-top: 15px;
+        }
+
+        .preview-button-wrapper {
+          color: #97A4B1;
+
+          .form-switch {
+            margin-top: 20px;
+          }
+
         }
 
       }

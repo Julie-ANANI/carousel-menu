@@ -33,6 +33,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   scrollOn = false;
   menuButton = false;
   displayMenuWrapper = false;
+  editMode = new Subject<boolean>(); // this is for the admin side.
+  previewMode: boolean;
+  disableButton: any;
+  projectToBeFinished: boolean;
+  endDate: Date;
+
   private _companies: Array<Clearbit>;
   private _campaignsStats: {
     nbPros: number,
@@ -41,8 +47,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     nbProsClicked: number,
     nbValidatedResp: number
   };
-  editMode = new Subject<boolean>(); // this is for the admin side.
-
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
   private _answers: Array<Answer> = [];
@@ -99,6 +103,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
     PageScrollConfig.defaultDuration = 800;
 
+    this.previewMode = this.project.previewMode;
+
+    this.disableButton = this.project.status;
+
+    this.projectFinishDate();
+
   }
 
   @HostListener('window:scroll', [])
@@ -123,6 +133,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   isAdmin() {
     this.adminSide = this.location.path().slice(0, 6) === '/admin';
     this.adminMode = this.authService.adminLevel > 2;
+  }
+
+  projectFinishDate() {
+    const index = this.project.statusLogs.findIndex(action => action.action === 'FINISH');
+    this.endDate = index === -1 ? null : this.project.statusLogs[index].date;
   }
 
   resetMap() {
@@ -225,12 +240,26 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this._filteredAnswers = this.filterService.filter(this._answers);
   }
 
+  confirmModal(event: Event) {
+    event.preventDefault();
+    this.projectToBeFinished = true;
+  }
+
   changeStatus(event: Event, status: 'DONE'): void {
+    this.projectToBeFinished = false;
+    this.project.endDate = new Date();
+
     this.innovationService.updateStatus(this._innoid, status).first().subscribe((results) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
+      this.disableButton = results.status;
     }, (error) => {
       this.translateNotificationsService.error('ERROR.ERROR', error.message);
     });
+  }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this.projectToBeFinished = false;
   }
 
   toggleDetails(event: Event): void {
@@ -238,6 +267,22 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     const value = !this._showDetails;
     this._showDetails = value;
     this._showListProfessional = value;
+  }
+
+  toggleMode(event: Event): void {
+    event.preventDefault();
+   this.previewMode =  this.project.previewMode = event.target['checked'] === true;
+
+    if (event.target['checked']) {
+      this.innovationService.save(this._innoid, this.project).first().subscribe( (data) => {
+        this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
+      });
+    } else {
+      this.innovationService.save(this._innoid, this.project).first().subscribe( (data) => {
+        this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
+      });
+    }
+
   }
 
   displayMenu(event: Event) {
