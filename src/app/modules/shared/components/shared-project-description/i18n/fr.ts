@@ -15,6 +15,10 @@ export const PROJECT = {
   'CAMPAIGNS': 'Campagnes',
   'SETTINGS': 'Paramètres',
   'QUESTIONNAIRE': 'Questionnaire',
+  'PREPARATION': {
+    'CHOOSE_PRESET': 'Choisir un questionnaire',
+    'EDIT_PRESET': 'Editer le questionnaire'
+  },
   'CARDS': 'Innovation Cards',
   'SYNTHESIS': 'Synthèse',
   'TAGS': 'Tags',

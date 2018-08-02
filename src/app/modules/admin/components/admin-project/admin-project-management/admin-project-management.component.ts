@@ -7,7 +7,7 @@ import {TranslateNotificationsService} from '../../../../../services/notificatio
 import {Innovation} from '../../../../../models/innovation';
 import {InnovationSettings} from '../../../../../models/innov-settings';
 import {Preset} from '../../../../../models/preset';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Template} from '../../../../sidebar/interfaces/template';
 import {Subject} from 'rxjs/Subject';
 import {AutocompleteService} from '../../../../../services/autocomplete/autocomplete.service';
@@ -85,6 +85,7 @@ export class AdminProjectManagementComponent implements OnInit {
               private _innovationService: InnovationService,
               private _autoCompleteService: AutocompleteService,
               private _authService: AuthService,
+              private _router: Router,
               private _presetService: PresetService,
               private _notificationsService: TranslateNotificationsService,
               private _dashboardService: DashboardService,
@@ -167,6 +168,27 @@ export class AdminProjectManagementComponent implements OnInit {
     this.save(event, 'L\'offre à été mise à jour avec succès');
   }
 
+  public updatePreset(presetName: string): void {
+    let preset: any = {sections: []};
+    if (presetName) {
+      preset = this.presets.find(value => value.name === presetName);
+      this._innovationService.updatePreset(this._project._id, preset).first().subscribe(data => {
+        this._activatedRoute.snapshot.parent.data['innovation'] = data;
+        this._project = data;
+        this.save(event, 'Le questionnaire a bien été affecté au projet');
+      }, (err) => {
+        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+      });
+    } else {
+      this.project.preset = preset;
+      this.save(event, 'Il n\'existe plus de questionnaire correspondant à ce projet');
+    }
+  }
+
+  goToPresetEdition() {
+    this._router.navigate(['/admin/projects/project/' + this._project._id + '/questionnaire']);
+  }
+
   public addTag(tag: Tag): void {
     this._innovationService
       .addTag(this._project._id, tag._id)
@@ -208,22 +230,6 @@ export class AdminProjectManagementComponent implements OnInit {
 
   public updateInstanceDomain(event: any): void {
     this.endEditInstanceDomain(event);
-  }
-
-  public updatePreset(presetName: string): void {
-    let preset: any = {sections: []};
-    if (presetName) {
-      preset = this.presets.find(value => value.name === presetName);
-      this._innovationService.updatePreset(this._project._id, preset).first().subscribe(data => {
-        this._project = data;
-        this.save(event, 'Le questionnaire a bien été affecté au projet');
-      }, (err) => {
-        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-      });
-    } else {
-      this.project.preset = preset;
-      this.save(event, 'Il n\'existe plus de questionnaire correspondant à ce projet');
-    }
   }
 
   public updateSettings(value: InnovationSettings): void {

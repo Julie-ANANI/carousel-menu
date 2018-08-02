@@ -125,17 +125,17 @@
       <div></div>
     </div>
 
-    <!-- Project presets -->
+    <!-- Project preset choice -->
     <div class="project-line" [ngClass]="{disabled: authService.userId != operatorId}">
 
-      <label class="form-switch" for="seePreset">
+      <label class="form-switch" for="choosePreset">
         <input
           type="checkbox"
-          name="seePreset"
-          id="seePreset"
+          name="choosePreset"
+          id="choosePreset"
           [checked]="hasPreset()">
         <i class="form-icon"></i>
-        {{ 'COMMON.PRESET'| translate }}
+        {{ 'PROJECT.PREPARATION.CHOOSE_PRESET'| translate }}
       </label>
 
       <select class="form-select"
@@ -150,6 +150,24 @@
         </option>
       </select>
       <div></div>
+    </div>
+
+    <!-- Project owner -->
+    <div class="project-line" [ngClass]="{disabled: ((authService.userId !== operatorId) || (!hasPreset()))}">
+      <label class="form-switch" for="editPreset">
+        <input
+          type="checkbox"
+          name="editPreset"
+          id="editPreset">
+        <i class="form-icon"></i>
+        {{ 'PROJECT.PREPARATION.EDIT_PRESET' | translate }}
+      </label>
+
+      <button class="showOnHover btn btn-xs ghost-edit"
+              (click)="goToPresetEdition()">
+        {{'COMMON.EDIT' | translate}}
+      </button>
+
     </div>
 
   </div>
