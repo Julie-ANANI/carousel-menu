@@ -57,8 +57,11 @@
         <span *ngIf="catResult.advice">
           {{ 'SEARCH.ROBOT.' + catResult.advice.toUpperCase() | translate }} <br/>
         </span>
-        <span *ngIf="estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.SEARCH_USE' | translate }} <strong>{{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} max</strong>.
-        <a *ngIf="!catResult.advice" (click)="cat()">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a> </span>
+        <span *ngIf="estimatedNumberOfGoogleRequests">
+          {{ 'SEARCH.ROBOT.SEARCH_USE' | translate }}
+          <strong> <span *ngIf="catResult.totalResults">{{ 'SEARCH.ROBOT.APPROX' | translate }}</span> {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} <span *ngIf="catResult.totalResults">max</span></strong>.
+        <a *ngIf="!catResult.advice" (click)="cat()">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a>
+        </span>
         <span *ngIf="!estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.HELLO' | translate }}</span>
       </span>
       <br>
@@ -67,7 +70,9 @@
     </div>
 
     <div class="bot-wrapper text-center" *ngSwitchCase="'ok'">
-      <span class="bot-rect">{{ 'SEARCH.ROBOT.OK' | translate }}</span>
+      <span class="bot-rect">{{ 'SEARCH.ROBOT.OK' | translate }}<br/>
+        <span *ngIf="estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.SEARCH_USE' | translate }} <strong>{{ 'SEARCH.ROBOT.APPROX' | translate }} {{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }}</strong>.</span>
+      </span>
       <br>
       <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
       <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" width="" height="120"></div>
@@ -80,5 +85,4 @@
       <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width="" height="120"></div>
     </div>
   </div>
-
 </div>

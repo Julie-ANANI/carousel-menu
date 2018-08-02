@@ -32,7 +32,7 @@ export const SEARCH = {
   "ROBOT": {
     "HELLO": "Bonjour, quelle recherche pour aujourd'hui ?",
     "SPARSE": "Attention : ne pas faire davantage de requêtes pour ce domaine !",
-    "OK": "Ces requêtes m'ont l'air bonnes !",
+    "OK": "Ces requêtes m'ont l'air bien !",
     "ERROR": "Il n'y a pas assez de requêtes pour que CAT fonctionne correctement.",
     "OVEREXPLOITED": "Il y a trop de requêtes similaires, supprimez-en !",
     "SEARCH_USE": "La recherche utilisera",
