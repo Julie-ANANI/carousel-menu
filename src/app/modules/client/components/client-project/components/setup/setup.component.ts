@@ -7,7 +7,7 @@ import { InnovationSettings } from '../../../../../../models/innov-settings';
 import { Subject } from 'rxjs/Subject';
 import {Template} from '../../../../../sidebar/interfaces/template';
 
-const DEFAULT_TAB = 'pitch';
+const DEFAULT_TAB = 'targeting';
 
 @Component({
   selector: 'app-client-setup-project',
@@ -27,7 +27,6 @@ export class SetupProjectComponent implements OnInit {
   showPitchFieldError: Subject<boolean> = new Subject();
   targetingFormValid: boolean;
   showTargetingFieldError: Subject<boolean> = new Subject();
-  surveyCreated: boolean;
   scrollOn = false;
 
   innovationPreviewIndex = 0;
@@ -84,8 +83,6 @@ export class SetupProjectComponent implements OnInit {
     } else {
       this.targetingFormValid = false;
     }
-
-    this.surveyCreated = !!this.project.quizId;
 
   }
 
