@@ -330,7 +330,19 @@
   <ng-container *ngIf="showDetails && question.controlType !== 'list' && question.controlType !== 'clearbit'
   && answersWithComment.length > 0">
 
-    <!-- Comment button -->
+    <!-- Comment button
+    <div class="comment-button-wrapper">
+      <button
+        type="button"
+        class="btn ghost-primary"
+        (click)="showComments = !showComments; $event.preventDefault()">
+        {{ (showComments ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN')
+        | translate:({ length: answersWithComment.length }) }}
+        <i class="icon" aria-hidden="true" [ngClass]="showComments ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
+      </button>
+    </div>-->
+
+    <!-- Comment Heading -->
     <div class="comment-button-wrapper">
       <button
         type="button"
@@ -343,7 +355,7 @@
     </div>
 
     <!-- Showing the comments when click on comment button -->
-    <div *ngIf="showComments" class="comment-wrapper">
+    <div class="comment-wrapper">
       <div *ngFor="let answer of answersWithComment" class="comment-outer-wrapper">
         <app-market-comment-2
           [answer]="answer"

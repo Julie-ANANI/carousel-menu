@@ -1,6 +1,6 @@
 <div class="container">
   <div class="columns">
-    <div class="column col-11 col-mx-auto" *ngIf="!this.innovation.preset?.name">
+    <div class="column col-11 col-mx-auto" *ngIf="!innovation.preset">
       <div class="bot-wrapper text-center">
         <span class="bot-rect">Importez d'abord un questionnaire dans l'onglet Settings avant de pouvoir le modifier.</span>
         <br>
@@ -8,35 +8,12 @@
         <div><img src="http://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width="" height="120"></div>
       </div>
     </div>
-    <div class="column col-11 col-mx-auto" *ngIf="this.innovation.preset?.name">
-      <div class="text-right">
-        <!--
-        <button class="btn btn-primary ghost-primary">
-          Save as template
-        </button>
-        -->
-        <button class="btn btn-primary">
-          Preview coming soon
-        </button>
-      </div>
-      {{this.innovation.preset.name}}
-      <div *ngFor="let section of sections; let i=index">
-        <app-admin-project-questionnaire-section
-          [section]="section"
-          [state]="getState(i)"
-          (stateOut)="updateState($event, i)"
-          (sectionUpdated)="sectionUpdated($event)"
-          (sectionRemoved)="sectionRemoved($event)"
-          (questionAdded)="addQuestion($event,i)"
-          (questionMoved)="canimove($event,i)"
-          (move)="moveSection($event,i)">
-        </app-admin-project-questionnaire-section>
-      </div>
+    <div class="column col-11 col-mx-auto" *ngIf="innovation.preset">
 
-      <div class="add-section" (click)="addSection()">
-        <button class="btn-round btn-primary"><i class="icon icon-plus"></i></button>
-        <div>Add section</div>
-      </div>
+      <app-shared-preset
+        [preset]="innovation.preset"
+        (save)="savePreset($event)">
+      </app-shared-preset>
 
     </div>
   </div>

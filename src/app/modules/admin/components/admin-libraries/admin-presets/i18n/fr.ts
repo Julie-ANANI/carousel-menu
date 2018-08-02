@@ -37,10 +37,9 @@ export const PRESETS = {
       'CONTENT': 'Donnez un nouveau nom à la section clônée'
     },
     'DESCRIPTION': {
-      'NOTHING': 'Rien',
-      'FIRST': 'Problème',
-      'SECOND': 'Solution',
-      'LIST': 'Avantages'
+      'nothing': 'Rien',
+      '1st': 'Problème',
+      '2nd': 'Solution'
     },
     'NONE': {
       'TITLE': 'Vous n\'avez pas encore de section',
@@ -82,15 +81,15 @@ export const PRESETS = {
     'TAKEN_NAME': 'Ce nom est déjà utilisé, merci d\'en choisir un autre',
     'TYPE': {
       'CHOOSE': 'Choisissez le type de question',
-      'LIST': 'List d\'items',
-      'CLEARBIT': 'List d\'entreprises',
-      'RADIO': 'Question radio',
-      'SCALE': 'Note',
-      'STARS': 'Note étoiles',
-      'TEXTAREA': 'Zone de texte',
-      'TEXTBOX': 'Input de texte',
-      'TOGGLE': 'Toggle',
-      'CHECKBOX': 'Question checkbox'
+      'list': 'List d\'items',
+      'clearbit': 'List d\'entreprises',
+      'radio': 'Question radio',
+      'scale': 'Note',
+      'stars': 'Note étoiles',
+      'textarea': 'Zone de texte',
+      'textbox': 'Input de texte',
+      'toggle': 'Toggle',
+      'checkbox': 'Question checkbox'
     },
     'EDIT': {
       'TITLE': 'Titre dans l\'infographie',
