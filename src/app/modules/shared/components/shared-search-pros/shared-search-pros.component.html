@@ -10,16 +10,19 @@
     </app-sidebar>
 
     <div class="flex-container" id="input-search">
-
-      <textarea
-        type="text"
-        class="form-default input-lg"
-        name="keywords"
-        rows="4"
-        (ngModelChange)="estimateNumberOfGoogleRequests()"
-        [(ngModel)]="params.keywords"
-        required
-        placeholder="Recherche 'Google-like', une requête par ligne"></textarea>
+      <div class="flex-column">
+        <p *ngIf="suggestion" class="suggestedRequests" [innerHTML]="suggestion"></p>
+        <textarea
+          type="text"
+          class="form-default input-lg"
+          name="keywords"
+          rows="4"
+          (ngModelChange)="estimateNumberOfGoogleRequests()"
+          [(ngModel)]="params.keywords"
+          required
+          [placeholder]="'SEARCH.INPUT' | translate ">
+        </textarea>
+      </div>
 
       <button
         (click)="search($event)"
@@ -31,30 +34,50 @@
     </div>
 
     <div class="tips">
-      <a (click)="changeSettings() && $event.preventDefault()">Settings</a>
+      <a (click)="changeSettings() && $event.preventDefault()">{{ 'SEARCH.SETTINGS' | translate }}</a>
 
-      <div class="label-validate" *ngIf="googleQuota > 10000">{{ googleQuota }} remaining requests
+      <div class="label-validate" *ngIf="googleQuota > 10000">{{ googleQuota }} {{ 'SEARCH.REMAINING_REQUESTS' | translate }}
         <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
       </div>
 
-      <div class="label-progress" *ngIf="googleQuota < 10000 && googleQuota > 5000">{{ googleQuota }} remaining requests
+      <div class="label-progress" *ngIf="googleQuota < 10000 && googleQuota > 5000">{{ googleQuota }} {{ 'SEARCH.REMAINING_REQUESTS' | translate }}
         <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
       </div>
 
-      <div class="label-alert" *ngIf="googleQuota < 5000">{{ googleQuota }} remaining requests
+      <div class="label-alert" *ngIf="googleQuota < 5000">{{ googleQuota }} {{ 'SEARCH.REMAINING_REQUESTS' | translate }}
         <i (click)="getGoogleQuota()" class="fas fa-sync c-hand"></i>
       </div>
     </div>
 
   </div>
 
-  <div class="column col-2 col-mr-auto">
-    <div class="bot-wrapper text-center">
-      <span class="bot-rect" *ngIf="estimatedNumberOfGoogleRequests">This search will use <strong>{{estimatedNumberOfGoogleRequests}} requests max</strong></span>
-      <span class="bot-rect" *ngIf="!estimatedNumberOfGoogleRequests">Nice day, what are you gonna search today?</span>
+  <div class="column col-2 col-mr-auto" [ngSwitch]="catResult.type">
+    <div class="bot-wrapper text-center" *ngSwitchCase="'info'">
+      <span class="bot-rect">
+        <span *ngIf="catResult.advice">
+          {{ 'SEARCH.ROBOT.' + catResult.advice.toUpperCase() | translate }} <br/>
+        </span>
+        <span *ngIf="estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.SEARCH_USE' | translate }} <strong>{{estimatedNumberOfGoogleRequests}} {{ 'SEARCH.REQUESTS' | translate }} max</strong>.
+        <a *ngIf="!catResult.advice" (click)="cat()">{{ 'SEARCH.ROBOT.MORE_INFO' | translate }}</a> </span>
+        <span *ngIf="!estimatedNumberOfGoogleRequests">{{ 'SEARCH.ROBOT.HELLO' | translate }}</span>
+      </span>
       <br>
       <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-      <div><img src="http://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" width="" height="120"></div>
+      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-advice.svg" width="" height="120"></div>
+    </div>
+
+    <div class="bot-wrapper text-center" *ngSwitchCase="'ok'">
+      <span class="bot-rect">{{ 'SEARCH.ROBOT.OK' | translate }}</span>
+      <br>
+      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-1.svg" width="" height="120"></div>
+    </div>
+
+    <div class="bot-wrapper text-center" *ngSwitchCase="'error'">
+      <span class="bot-rect"> {{ 'SEARCH.ROBOT.ERROR' | translate }}</span>
+      <br>
+      <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+      <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/error-bot.svg" width="" height="120"></div>
     </div>
   </div>
 

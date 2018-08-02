@@ -14,6 +14,8 @@ import { Template } from '../../../sidebar/interfaces/template';
 })
 export class SharedSearchProsComponent implements OnInit {
 
+  public catResult: any;
+  private _suggestion: string = "";
   private _params: any;
   private _more: Template = {};
   private _googleQuota = 30000;
@@ -64,6 +66,9 @@ export class SharedSearchProsComponent implements OnInit {
         this._params.countries = this.getTargetCountries(this.campaign.innovation.settings);
       }
     }
+    this.catResult = {
+      type: "info"
+    };
     this.estimateNumberOfGoogleRequests();
   }
 
@@ -120,8 +125,25 @@ export class SharedSearchProsComponent implements OnInit {
     });
   }
 
-  public estimateNumberOfGoogleRequests() {
-    const numberOfSearches = this._params.keywords.split('\n').length;
+  public cat() {
+    this._searchService.cat(this.campaign._id, this._params.keywords).first().subscribe((answer: any) => {
+      this.catResult = answer;
+      this.estimateNumberOfGoogleRequests(answer.totalResults);
+      this._params.keywords.split("\n").forEach((request: string) => {
+        if (answer.requestsToDelete.indexOf(request) > -1) {
+          this._suggestion += (`<span class="text-error">${request}</span><br/>`);
+        } else {
+          answer.warningKeywords.forEach((warningWord: string) => {
+            request = request.replace(`"${warningWord}"`, `<span class="text-warning">"${warningWord}"</span>`);
+          });
+          this._suggestion += `${request}<br/>`;
+        }
+      });
+      console.log(answer);
+    });
+  }
+
+  private _estimateNumberOfGoogleRequestsForOneSearch(totalResults: number): number {
     let numberOfRequests = 0;
     const selectedCountries = this._params.countries;
     let smartCountries = 0;
@@ -129,10 +151,12 @@ export class SharedSearchProsComponent implements OnInit {
       this._countriesSettings.forEach((country: any) => {
         if (selectedCountries.indexOf(country.code) > -1) {
           smartCountries++;
-          if (this._params.options.regions && country.regions.length) {
-            numberOfRequests += country.regions.length
-          } else {
-            numberOfRequests++;
+          if (!this._params.options.smart || country.threshold < totalResults) {
+            if (this._params.options.regions && country.regions.length) {
+              numberOfRequests += country.regions.length
+            } else {
+              numberOfRequests++;
+            }
           }
         }
       });
@@ -140,14 +164,20 @@ export class SharedSearchProsComponent implements OnInit {
     if (!this._params.options.smart) {
       numberOfRequests += ((selectedCountries.length || 1) - smartCountries);
     }
-    this._estimatedNumberOfGoogleRequests = numberOfSearches * numberOfRequests * this._params.count / 10;
+    return (numberOfRequests || 1) * this._params.count / 10;
   }
 
+  public estimateNumberOfGoogleRequests(totalResultsArray?: Array<number>) {
+    totalResultsArray = totalResultsArray || this._params.keywords.split('\n').filter((k: string) => k).fill(1000000);
+    this._estimatedNumberOfGoogleRequests = totalResultsArray.reduce((acc: number, curr: number) => {
+      return acc + this._estimateNumberOfGoogleRequestsForOneSearch(curr);
+    }, 0);
+  }
+
+  get suggestion(): string { return this._suggestion; }
   get params(): any { return this._params; }
   get more(): any { return this._more; }
   get googleQuota(): number { return this._googleQuota; }
   get estimatedNumberOfGoogleRequests(): number { return this._estimatedNumberOfGoogleRequests; }
-  get countriesSettings(): any { return this._countriesSettings; }
-  set countriesSettings(value: any) { this._countriesSettings = value; }
   set params(value: any) { this._params = value; }
 }

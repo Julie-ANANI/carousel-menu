@@ -3,10 +3,10 @@
  */
 export const SEARCH = {
   "COUNTRY_LIST": "Liste de pays",
+  "REQUESTS": "requêtes",
   "NORESULT": "Pas de résultat :-(",
   "PRO": "Professionnel",
   "SELECTED": "sélectionné",
-  "COMPUTEMAILS": "Recalculer emails",
   "ADDTOCAMPAIGN": "Ajouter à une campagne",
   "ADDTOCAMPAIGN2": "Ajouter à la campagne",
   "SEARCHMAILS": "Chercher les mails",
@@ -21,24 +21,23 @@ export const SEARCH = {
   "NEW": "Nouvelle recherche",
   "ADDTOQUEUE": "Mettre en file d'attente",
   "STOPREQUEST": "Stopper la requête",
-  "ADVANCEDSEARCH": "Recherche Avancée",
+  "SETTINGS": "Paramètres",
   "COUNTRY": "Pays",
   "LANGUAGE": "Langue",
   "NUMBER": "Rechercher :",
   "SMART": "Smart Search",
   "REGIONS": "Régions",
   "ENGINE": "Engine :",
-  "HELP": {
-    "TITLE": "Aide",
-    "SUBTITLE": "Pour une recherche plus précise",
-    "EXCLUDE": "Utilisez \"-\" pour exclure un mot clé",
-    "EXCLUDEEXAMPLE": "drone -tournage",
-    "IMPORTANT": "Utilisez \"!\" pour forcer la présence d'un mot clé dans les résultats",
-    "IMPORTANTEXAMPLE": "drone !filaire",
-    "OR": "Utilisez \"OR\" pour chercher l'un ou l'autre des mots clés",
-    "OREXAMPLE": "drone OR système de surveillance aérien",
-    "EXACT": "Utilisez les guillemets pour chercher une expression exacte",
-    "EXACTEXAMPLE": "\"Conception assistée par ordinateur pour l'électronique\""
+  "REMAINING_REQUESTS": "requêtes restantes",
+  "ROBOT": {
+    "HELLO": "Bonjour, quelle recherche pour aujourd'hui ?",
+    "SPARSE": "Attention : ne pas faire davantage de requêtes pour ce domaine !",
+    "OK": "Ces requêtes m'ont l'air bonnes !",
+    "ERROR": "Il n'y a pas assez de requêtes pour que CAT fonctionne correctement.",
+    "OVEREXPLOITED": "Il y a trop de requêtes similaires, supprimez-en !",
+    "SEARCH_USE": "La recherche utilisera",
+    "APPROX": "environ",
+    "MORE_INFO": "Plus d'info"
   },
   "PERSON": {
     "FULLNAME": "Nom",
@@ -57,7 +56,7 @@ export const SEARCH = {
     "PROFILE": "Profil",
     "PATTERNS": "Patterns"
   },
-  "INPUT": "Recherche 'Google-like'",
+  "INPUT": "Recherche 'Google-like', une requête par ligne",
   "TOOLTIPS": {
     "EDITCOMPANY": "Editer l'entreprise",
     "EDITPRO": "Editer",

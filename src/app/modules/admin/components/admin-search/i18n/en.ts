@@ -3,10 +3,10 @@
  */
 export const SEARCH = {
   "COUNTRY_LIST": "Country list",
+  "REQUESTS": "requests",
   "NORESULT": "No result :-(",
   "PRO": "Professional",
   "SELECTED": "selected",
-  "COMPUTEMAILS": "Recompute emails",
   "ADDTOCAMPAIGN": "Add to a campaign",
   "ADDTOCAMPAIGN2": "Add to the campaign",
   "SEARCHMAILS": "Search emails",
@@ -21,24 +21,23 @@ export const SEARCH = {
   "NEW": "New search",
   "ADDTOQUEUE": "Add to queue",
   "STOPREQUEST": "Stop the request",
-  "ADVANCEDSEARCH": "Advanced Search",
+  "SETTINGS": "Settings",
   "COUNTRY": "Country",
   "LANGUAGE": "Language",
   "NUMBER": "Search :",
   "SMART": "Smart Search",
   "REGIONS": "Regions",
   "ENGINE": "Use :",
-  "HELP": {
-    "TITLE": "Help",
-    "SUBTITLE": "For a more accurate search",
-    "EXCLUDE": "Use \"-\" to exclude a keyword",
-    "EXCLUDEEXAMPLE": "drone -shooting",
-    "IMPORTANT": "Use \"!\" pour ensure a keyword is present in the results",
-    "IMPORTANTEXAMPLE": "drone !wired",
-    "OR": "Use \"OR\" to search for one keyword or the other",
-    "OREXAMPLE": "drone OR aerial security system",
-    "EXACT": "Use the double quotes to search for an exact expression",
-    "EXACTEXAMPLE": "\"Computer Aided Design for electronics\""
+  "REMAINING_REQUESTS": "remaining requests",
+  "ROBOT": {
+    "HELLO": "Nice day, what are you gonna search today?",
+    "SPARSE": "Warning: do not do more requests in this field!",
+    "OK": "These requests look nice!",
+    "ERROR": "There is not enough request for CAT to function properly",
+    "OVEREXPLOITED": "There are too many similar requests, delete some !",
+    "SEARCH_USE": "This search will use",
+    "APPROX": "approximatively",
+    "MORE_INFO": "Get more info"
   },
   "PERSON": {
     "FULLNAME": "Full Name",
@@ -57,7 +56,7 @@ export const SEARCH = {
     "PROFILE": "Profile",
     "PATTERNS": "Patterns"
   },
-  "INPUT": "'Google-like' Search",
+  "INPUT": "'Google-like' Search, on request per line",
   "TOOLTIPS": {
     "EDITCOMPANY": "Edit company",
     "EDITPRO": "Edit",
