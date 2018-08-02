@@ -5,14 +5,14 @@
   <div class="project-preparation">
 
     <!-- Project operator -->
-    <div class="project-line">
+    <div class="project-line" [ngClass]="{disabled: authService.adminLevel < 3}">
 
       <label class="form-switch" for="seeDomain">
         <input
           type="checkbox"
           name="seeDomain"
           id="seeDomain"
-          [checked]="project.domain !== null">
+          checked>
         <i class="form-icon"></i>
         {{ 'COMMON.DOMAIN' | translate}}
       </label>
@@ -29,14 +29,41 @@
       </div>
     </div>
 
+    <!-- Project operator -->
+    <div class="project-line" [ngClass]="{disabled: authService.adminLevel < 3}">
+
+      <label class="form-switch" for="seeOperator">
+        <input
+          type="checkbox"
+          name="seeOperator"
+          id="seeOperator"
+          [checked]="project.operator !== undefined">
+        <i class="form-icon"></i>
+        {{ 'PROJECT_LIST.OPERATOR' | translate }}
+      </label>
+
+      <select class="form-select"
+              name="setOperator"
+              id="setOperator"
+              [ngModel]="project.operator"
+              (ngModelChange)="changeProjectOperator($event)"
+              [ngModelOptions]="{standalone: true}">
+        <option [ngValue]="undefined" selected>{{'COMMON.NO' | translate}}</option>
+        <option *ngFor="let op of operators" [ngValue]="op._id">
+          {{op.firstName + ' ' + op.lastName}}
+        </option>
+      </select>
+      <div></div>
+    </div>
+
     <!-- Project owner -->
-    <div class="project-line">
+    <div class="project-line" [ngClass]="{disabled: authService.userId !== operatorId}">
       <label class="form-switch" for="editOwner">
         <input
           type="checkbox"
           name="editOwner"
           id="editOwner"
-          [checked]="true">
+          checked>
         <i class="form-icon"></i>
         {{ 'COMMON.PROJECT.OWNER' | translate }}
       </label>
@@ -72,34 +99,59 @@
 
     </div>
 
+    <!-- Project offer -->
+    <div class="project-line" [ngClass]="{disabled: authService.userId != operatorId}">
 
-
-    <!-- Project operator -->
-    <div class="project-line">
-
-      <label class="form-switch" for="seeOperator">
+      <label class="form-switch" for="seeOffer">
         <input
           type="checkbox"
-          name="seeOperator"
-          id="seeOperator"
-          [checked]="project.operator !== undefined">
+          name="seeOffer"
+          id="seeOffer"
+          checked>
         <i class="form-icon"></i>
-        {{ 'PROJECT_LIST.OPERATOR' | translate }}
+        {{ 'PROJECT_LIST.OFFER'| translate }}
       </label>
 
       <select class="form-select"
-              name="setOperator"
-              id="setOperator"
-              [ngModel]="project.operator"
-              (ngModelChange)="changeProjectOperator($event)"
+              name="setOffer"
+              id="setOffer"
+              [ngModel]="project.type"
+              (ngModelChange)="changeProjectOffer($event)"
               [ngModelOptions]="{standalone: true}">
-        <option [ngValue]="undefined" selected>{{'COMMON.NO' | translate}}</option>
-        <option *ngFor="let op of operators" [ngValue]="op._id">
-          {{op.firstName + ' ' + op.lastName}}
+        <option *ngFor="let offer of offers" [ngValue]="offer.name">
+          {{offer.alias}}
         </option>
       </select>
       <div></div>
     </div>
+
+    <!-- Project presets -->
+    <div class="project-line" [ngClass]="{disabled: authService.userId != operatorId}">
+
+      <label class="form-switch" for="seePreset">
+        <input
+          type="checkbox"
+          name="seePreset"
+          id="seePreset"
+          [checked]="hasPreset()">
+        <i class="form-icon"></i>
+        {{ 'COMMON.PRESET'| translate }}
+      </label>
+
+      <select class="form-select"
+              name="setPreset"
+              id="setPreset"
+              [ngModel]="project.preset ? project.preset.name : undefined"
+              (ngModelChange)="updatePreset($event)"
+              [ngModelOptions]="{standalone: true}">
+        <option [ngValue]="undefined" selected>{{'COMMON.NO' | translate}}</option>
+        <option *ngFor="let p of presets;" [ngValue]="p.name">
+          {{p.name}}
+        </option>
+      </select>
+      <div></div>
+    </div>
+
   </div>
 </div>
 

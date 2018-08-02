@@ -13,6 +13,8 @@ import {Subject} from 'rxjs/Subject';
 import {AutocompleteService} from '../../../../../services/autocomplete/autocomplete.service';
 import {DashboardService} from '../../../../../services/dashboard/dashboard.service';
 import {User} from '../../../../../models/user.model';
+import {AuthService} from '../../../../../services/auth/auth.service';
+import {PresetService} from '../../../../../services/preset/preset.service';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -30,8 +32,6 @@ export class AdminProjectManagementComponent implements OnInit {
   private _more: Template = {};
   sidebarState = new Subject<string>();
 
-  private _preset = {};
-
   // Owner edition
   isEditOwner = false;
   usersSuggestion: Array<any> = [];
@@ -43,6 +43,13 @@ export class AdminProjectManagementComponent implements OnInit {
 
   // Operator edition
   operators: Array<User> = [];
+  operatorId = '';
+
+  // Offer edition
+  offers: Array<any> = [];
+
+  // Preset edition
+  presets: Array<Preset> = [];
 
   private _updateInstanceDomainConfig: {
     placeholder: string,
@@ -58,6 +65,13 @@ export class AdminProjectManagementComponent implements OnInit {
     canOrder: false
   };
 
+  private _config = {
+    search: {},
+    sort: {
+      created: -1
+    }
+  };
+
 
   public formData: FormGroup = this._formBuilder.group({
     domainen: ['', [Validators.required]],
@@ -70,6 +84,8 @@ export class AdminProjectManagementComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _autoCompleteService: AutocompleteService,
+              private _authService: AuthService,
+              private _presetService: PresetService,
               private _notificationsService: TranslateNotificationsService,
               private _dashboardService: DashboardService,
               private _translateService: TranslateService,
@@ -77,17 +93,22 @@ export class AdminProjectManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
-    this.presetAutocomplete = {
-      placeholder: 'Name of a template',
-      initialData: this.hasPreset() ? [this.project.preset] : [],
-      type: 'preset'
-    };
 
     this.projectDomains = [{name: 'umi'}, {name: 'dynergie'}, {name: 'novanexia'}, {name: 'inomer'}, {name: 'multivalente'}];
 
     this._domain = this._project.settings.domain;
 
+    this.offers = [{name: 'insights', alias: 'GetInsights'}, {name: 'apps', alias: 'GetApps'}, {name: 'leads', alias: 'GetLeads'}];
+
     this._dashboardService.getOperators().first().subscribe((operators) => this.operators = operators.result);
+
+    this.operatorId = this._project.operator ? this._project.operator.toString() : '';
+
+    this._presetService.getAll(this._config)
+      .first()
+      .subscribe(p => {
+        this.presets = p.result;
+      });
   }
 
   resetData() {
@@ -137,7 +158,13 @@ export class AdminProjectManagementComponent implements OnInit {
 
   changeProjectOperator(value: any) {
     this._project.operator = value || undefined;
+    this.operatorId = value || '';
     this.save(event, 'L\'opérateur à été mis à jour avec succès');
+  }
+
+  changeProjectOffer(value: any) {
+    this._project.type = value;
+    this.save(event, 'L\'offre à été mise à jour avec succès');
   }
 
   public addTag(tag: Tag): void {
@@ -183,20 +210,20 @@ export class AdminProjectManagementComponent implements OnInit {
     this.endEditInstanceDomain(event);
   }
 
-
-  public updatePreset(event: {value: Array<Preset>}): void {
-    if (event.value.length) {
-      this._preset = event.value[0];
+  public updatePreset(presetName: string): void {
+    let preset: any = {sections: []};
+    if (presetName) {
+      preset = this.presets.find(value => value.name === presetName);
+      this._innovationService.updatePreset(this._project._id, preset).first().subscribe(data => {
+        this._project = data;
+        this.save(event, 'Le questionnaire a bien été affecté au projet');
+      }, (err) => {
+        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+      });
     } else {
-      this._preset = {};
+      this.project.preset = preset;
+      this.save(event, 'Il n\'existe plus de questionnaire correspondant à ce projet');
     }
-    this._innovationService.updatePreset(this._project._id, this._preset).first().subscribe(data => {
-      this._project = data;
-      this._activatedRoute.snapshot.parent.data['innovation'] = data;
-      this._dirty = false;
-    }, (err) => {
-      this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
-    });
   }
 
   public updateSettings(value: InnovationSettings): void {
@@ -262,7 +289,7 @@ export class AdminProjectManagementComponent implements OnInit {
   public hasPreset(): boolean {
     const p = this._project.preset;
 
-    return (p && p.constructor === Object && Object.keys(p).length > 0);
+    return (p && p.sections && p.constructor === Object && Object.keys(p.sections).length > 0);
   }
 
   public notifyClass(): string {
@@ -304,6 +331,10 @@ export class AdminProjectManagementComponent implements OnInit {
 
   get more() {
     return this._more;
+  }
+
+  get authService() {
+    return this._authService;
   }
 
   get dirty() {

@@ -19,7 +19,7 @@ export interface Innovation {
   }>
   readonly name?: string;
   domain?: string;
-  readonly type?: 'insights' | 'apps' | 'leads';
+  type?: 'insights' | 'apps' | 'leads';
   readonly principalMedia?: Media;
   innovationCards?: Array<InnovCard>;
   tags?: Array<Tag>;

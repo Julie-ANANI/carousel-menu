@@ -17,6 +17,7 @@ export const PROJECT_LIST = {
   'THANKS': 'Remerciment',
   'ANSWERS': 'Réponses',
   'OPERATOR': 'Opérateur',
+  'OFFER': 'Offre',
   'TITLE': 'Nom',
   'NONE': 'Aucun',
   'SEE_MORE': 'Voir'

@@ -31,4 +31,9 @@
   .form-select {
     width: 40%;
   }
+
+  .disabled {
+    opacity: .5;
+    pointer-events: none;
+  }
 }
