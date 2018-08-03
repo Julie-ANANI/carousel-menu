@@ -1,4 +1,4 @@
-<div class="main-container" id="login">
+<section class="main-container login-page">
   <div class="columns col-gapless">
 
     <div
@@ -7,25 +7,25 @@
     </div>
 
 
-    <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto login-wrapper">
+    <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto login-wrapper section-light-container">
 
       <!-- Logo -->
       <div class="text-center">
-        <a href="{{getCompanyUrl()}}"><img src="{{ getLogoWBG() }}" alt="UMI" height="35px"></a>
+        <a href="{{ getCompanyUrl() }}"><img src="{{ getLogoWBG() }}" alt="UMI" height="35px"></a>
       </div>
 
-      <div class="form-wrapper">
+      <div class="form-wrapper section-light-container">
 
         <!-- Heading -->
         <div class="heading text-center">
-          <h1>{{ 'LOG_IN.HEADING' | translate }}</h1>
+          <h1 class="main-heading">{{ 'LOG_IN.HEADING' | translate }}</h1>
         </div>
 
         <!-- LinkedIn -->
         <div class="social-wrapper text-center" *ngIf="checkIsMainDomain()">
-          <button class="btn" (click)="linkedInSignIn($event)">
+          <a [href]="linkedInLink" class="btn">
             <i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
-          </button>
+          </a>
 
 
           <!-- Or -->
@@ -35,7 +35,7 @@
 
         </div>
 
-        <form novalidate (submit)="onSubmit()" [formGroup]="formData">
+        <form novalidate (submit)="onSubmit()" [formGroup]="formData" [ngStyle]="{ 'width': '100%' }">
 
           <!-- Credentials -->
           <div class="credentials-wrapper">
@@ -66,8 +66,8 @@
               <span
                 class="form-error"
                 *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
-              {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
-            </span>
+                {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+              </span>
             </div>
           </div>
 
@@ -81,7 +81,7 @@
                 {{ 'LOG_IN.LOG_IN_BTN' | translate }}
               </button>
             </div>
-            <span [ngStyle]="{ 'font-size': '0.7rem' }">{{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }}</span>
+            <span [ngStyle]="{ 'font-size': '0.85rem' }">{{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }}</span>
             <a class="text-link" routerLink="/forget">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</a>
           </div>
 
@@ -90,13 +90,13 @@
 
       <!-- Sign up -->
       <div class="create-wrapper text-center">
-        <span [ngStyle]="{ 'font-size': '0.7rem', 'padding-right': '10px' }">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
+        <span [ngStyle]="{ 'font-size': '0.85rem', 'padding-right': '.6rem' }">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
         <a class="btn btn-sm ghost-primary" routerLink="/signup">{{ 'LOG_IN.SIGN_UP' | translate }}</a>
       </div>
     </div>
 
   </div>
-</div>
+</section>
 
 
 

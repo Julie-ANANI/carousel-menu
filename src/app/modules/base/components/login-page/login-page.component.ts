@@ -12,9 +12,11 @@ import { environment } from '../../../../../environments/environment';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
+
 export class LoginPageComponent implements OnInit {
 
   private _formData: FormGroup;
+  private _linkedInLink: string;
 
   constructor(private _authService: AuthService,
               private router: Router,
@@ -30,6 +32,8 @@ export class LoginPageComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
+
+    this.linkedInUrl();
 
   }
 
@@ -69,16 +73,12 @@ export class LoginPageComponent implements OnInit {
 
   }
 
-  linkedInSignIn(event: Event) {
-    event.preventDefault();
-
+  linkedInUrl() {
     const domain = environment.domain;
 
-    this._authService.linkedinLogin(domain)
-      .first()
-      .subscribe(
+    this._authService.linkedinLogin(domain).first().subscribe(
         url => {
-          window.location.href = url;
+          this._linkedInLink = url;
         },
         error => {
           this.translateNotificationsService.error('ERROR.ERROR', error.message);
@@ -115,6 +115,10 @@ export class LoginPageComponent implements OnInit {
   // getting the background image of the company
   public getBackgroundImage(): string {
     return environment.background;
+  }
+
+  get linkedInLink(): string {
+    return this._linkedInLink;
   }
 
 }

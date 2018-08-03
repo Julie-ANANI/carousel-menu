@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
-import { LoginPageComponent } from './components/login-page/login-page.component';
 import { LogoutPageComponent } from './components/logout-page/logout-page.component';
 import { ForgetPasswordPageComponent } from './components/forget-password-page/forget-password-page.component';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
@@ -25,7 +24,6 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
     SidebarModule
   ],
   declarations: [
-    LoginPageComponent,
     LogoutPageComponent,
     ForgetPasswordPageComponent,
     SignupPageComponent,

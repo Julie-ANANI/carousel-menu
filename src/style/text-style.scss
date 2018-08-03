@@ -1,3 +1,5 @@
+@import "variables";
+
 /*
     This stylesheet contains all the styles related to the text on our platform.
     Like: headings, text-link etc.
@@ -5,24 +7,14 @@
 
 
 /*
-    Color variables for text.
- */
-
-$primary-color: #333333;
-$secondary-color: #0B90C6;
-$link-color: #FFB300;
-$ques-color: #333333;
-$para-color: #5D5D5D;
-
-/*
     h1, h2, h3, h4, h5, and h6 common style
  */
 
 h1, h2, h3, h4, h5, h6 {
-  color: $primary-color;
+  color: $hero-heading;
   font-weight: 600;
-  line-height: 1.4;
-  margin: 0 0 25px;
+  line-height: 1.5;
+  margin: 0 0 1.57rem;
 }
 
 
@@ -85,14 +77,14 @@ h6 {
  */
 
 .text-link, .text-link:active, .text-link:focus, .text-link:visited {
-  color: $link-color;
+  color: $primary-color;
   outline: none;
   text-decoration: none;
   cursor: pointer;
 }
 
 .text-link:hover {
-  color: $link-color;
+  color: $primary-color;
   text-decoration: underline;
 }
 
@@ -102,7 +94,7 @@ h6 {
  */
 .ques {
   font-size: 18px;
-  color: $ques-color;
+  color: $hero-heading;
 }
 
 
@@ -111,7 +103,7 @@ h6 {
  */
 .para {
   font-size: 18px;
-  color: $para-color;
+  color: $paragraph-color;
   padding: 16px 0;
   margin: 0;
 }
@@ -132,11 +124,7 @@ h6 {
     Page heading
  */
 .main-heading {
-  font-size: 27px;
-  font-weight: 600;
-  line-height: 1.4;
-  margin: 0 0 25px;
-  color: $primary-color;
+  font-size: 1.7rem;
 }
 
 

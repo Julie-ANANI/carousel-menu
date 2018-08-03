@@ -16,6 +16,7 @@ import { ClientResetPasswordComponent } from './components/client-reset-password
 import { ClientDiscoverPageComponent } from './components/client-discover-page/client-discover-page.component';
 import { DiscoverDescriptionComponent } from './components/client-discover-page/discover-description/discover-description.component';
 import { SharedMarketReportExampleModule } from '../shared/components/shared-market-report-example/shared-market-report-example.module';
+import { LoginPageModule } from '../base/components/login-page/login-page.module';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { SharedMarketReportExampleModule } from '../shared/components/shared-mar
     InputModule,
     PipeModule,
     BaseModule,
+    LoginPageModule,
     SharedMarketReportExampleModule
   ],
   declarations: [

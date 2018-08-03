@@ -1,180 +1,69 @@
-$body-font-color-darker: #333333 !default;
-$body-font-color: #878787 !default;
-$base-font-family: 'Open Sans', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto !default;
-$primary-color: #3498DB !default;
-
+/*
+    Google fonts
+ */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+
+/*
+    Spectre framework
+ */
+
 @import "../node_modules/spectre.css/src/spectre.scss";
 @import "../node_modules/spectre.css/src/spectre-icons.scss";
 @import "../node_modules/spectre.css/src/spectre-exp.scss";
+
+/*
+    Fontawesome icons
+ */
+
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-regular.css";
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css";
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css";
 @import "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
 
 
+/*
+    Print style
+ */
+
+@import "style/print";
+
+
+/*
+    Color variable file
+ */
+
+@import "style/variables";
+
+
 /********************************** Default Styles ***************************************/
 
+html {
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  font-size: 1rem;
+}
+
+
 body {
-  font-size: 16px;
-  line-height: 1.4;
+  font-size: 1rem;
+  line-height: 1.5;
   word-break: break-word;
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #5d5d5d;
+  color: $dark-color;
+  background-color: #ffffff;
+  font-weight: 400;
 }
 
 .tab-content {
   width: 100%;
 }
 
-
-/********************************** Color ***************************************/
-
-// Elements color
-$primary-element: #FFB300;
-$secondary-element: #0B90C6;
-$meta-element: #97A4B1;
-$validation-element: #2ECC71;
-$alert-element: #EA5858;
-
-$primary-hover: #246a99;
-$primary-dark: #333333;
-
-// Text color
-$para-color: #5D5D5D;
-$proj-info: #97A4B1;
-$ques-color: #333333;
-$text-color: #333333;
-
-// Backgrounds
-$page-background: #333333;
-$header-background: #4F5D6B;
-
-//Primary button
-$button-color: #ffb300;
-$button-disabled-color: #dbdbdb;
-
-
-/* Typographie*/
-
-h1 {
-  font-weight: 300;
-  font-size: 2.6rem;
-  color: $body-font-color-darker;
-  letter-spacing: 0;
-  //margin-top: 110px;
-}
-
-
-h2 {
-  font-weight: 400;
-  font-size: 1.5rem;
-  color: $body-font-color-darker;
-  letter-spacing: 0;
-  //margin-top: 60px;
-  margin-bottom: 40px;
-}
-
-h3, .h3 {
-  font-size: 1.1rem;
-  color: $body-font-color-darker;
-  letter-spacing: 0;
-}
-
-
-/* Formulaires */
-
-.form-group:not(:last-child) {
-  margin-bottom: 40px;
-}
-
-.form-input {
-  border: 0.05rem solid #E0E0E0;
-  border-radius: 3px;
-  padding: 0.6rem 0.7rem;
-  margin-bottom: 8px;
-  color: $body-font-color-darker;
-}
-
-.btn.btn-xxl {
-  font-size: 1.6rem;
-  height: 4rem;
-  padding: 0.9rem 1rem;
-  width: 80%;
-}
-
-.form-radio {
-  color: $body-font-color-darker;
-}
-
-
-
-/* Barre de tri*/
-
-ul.list-filter {
-  text-align: right;
-  margin: 0;
-
-  li {
-    display: inline-block;
-    margin-left: 20px;
-    a {
-      color: #878787;
-    }
-    a:hover {
-      color: $primary-color;
-      text-decoration: none;
-    }
-  }
-}
-
-
-
-/* For Admin : to move into the right place */
-
-.admin .page-header {
-  background: white;
-  border-bottom: 1px solid #CDCDCD;
-
-  h1 {
-    margin-top: 20px;
-    font-weight: 500;
-    font-size: 23px;
-    color: #97A4B1;
-
-    strong {
-      color: #4F5D6B;
-    }
-  }
-}
-
-
-
-/* On décale les notifications vers le bas pour ne pas qu'elles cachent le menu principal*/
-.simple-notification-wrapper.top {
-  top: 80px !important;
-}
-
-.sq-sort-ascent:after {
-  transform: translate(-50%, -25%) rotate(45deg);
-  border: 0.1rem solid currentColor;
-  border-bottom: 0;
-  border-right: 0;
-  content: "";
-  height: .65em;
-  width: .65em;
-}
-
-.sq-sort-descent:after {
-  content: '\25BC';
-  margin-left: 5px;
-  top: 1px;
-  font-size: 12px;
-  position: relative;
-}
-
+/*
+    Rest style file
+ */
 
 @import "style/animation";
 @import "style/container-style";
@@ -186,7 +75,7 @@ ul.list-filter {
 @import "style/modal-style";
 @import "style/tooltip-style";
 @import "style/table-style";
-@import "style/print";
+
 
 
 

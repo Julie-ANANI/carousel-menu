@@ -1,21 +1,9 @@
+@import "variables";
+
 /*
     This stylesheet contains all the form related class
     on our platform.
  */
-
-
-/*
-    Color variables for form.
- */
-
-$primary-color: #FFB300;
-$error-color: #EA5858;
-$disabled-color: #DBDBDB;
-$input-color: #262831;
-$dark-color: #333333;
-$border-default-color: #E0E0E0;
-$placeholder-color: #AAB2BD;
-$success-color: #2ECC71;
 
 
 /*
@@ -28,6 +16,28 @@ $success-color: #2ECC71;
 }
 
 
+
+/*
+    Form group style
+*/
+
+.form-group {
+  margin-bottom: 1.2rem !important;
+}
+
+
+/*
+    Form label style
+ */
+
+.form-label {
+  color: $dark-color;
+  font-weight: 600;
+  font-size: .85rem;
+  line-height: 1.5;
+  display: block;
+}
+
 /*
     Form input style. Just add this class when you are
     defining the input of the form or any other. Class
@@ -35,19 +45,19 @@ $success-color: #2ECC71;
  */
 
 .form-default {
-  border: 1px solid $border-default-color;
-  font-size: 14px;
+  border: 1px solid $border-color;
+  font-size: .85rem;
   color: $input-color;
-  border-radius: 5px;
+  border-radius: .35rem;
   display: block;
   width: 100%;
   outline: none;
-  min-height: 51px;
+  min-height: 3.125rem;
   position: relative;
   background: white none;
-  padding: 15px;
+  padding: .9rem;
   transition: all 0.15s ease-in-out;
-  margin-top: 8px;
+  margin-top: .5rem;
 }
 
 
@@ -74,7 +84,7 @@ $success-color: #2ECC71;
  */
 
 .form-default.ng-touched.ng-invalid{
-  border-color: $error-color;
+  border-color: $alert-color;
 }
 
 
@@ -83,21 +93,14 @@ $success-color: #2ECC71;
  */
 
 .form-default:disabled, .form-default.disabled {
-  background: $disabled-color none;
-  color: #a9a9a9;
+  background: $disabled-color;
+  color: $disabled-text-color;
   border-color: $disabled-color;
   cursor: not-allowed;
   opacity: 1;
 }
 
 
-/*
-    Form group style
-*/
-
-.form-group {
-  margin-bottom: 20px !important;
-}
 
 /*
     Form group inline styles
@@ -130,17 +133,7 @@ $success-color: #2ECC71;
 }
 
 
-/*
-    Form label style
- */
 
-.form-label {
-  color: $dark-color;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 1.4;
-  display: block;
-}
 
 
 /*
@@ -149,9 +142,9 @@ $success-color: #2ECC71;
  */
 
 .form-error {
-  color: $error-color;
-  font-size: 12px;
-  padding: 4px 0;
+  color: $alert-color;
+  font-size: .65rem;
+  padding: .3rem 0;
 }
 
 
@@ -164,7 +157,7 @@ $success-color: #2ECC71;
 
 .form-radio input:checked + .form-icon {
   border-color: rgba(46,204,113,0.45);
-  background: $success-color;
+  background: $validation-color;
 }
 
 
@@ -240,7 +233,7 @@ textarea {
 }
 
 .form-switch input:checked + .form-icon::before {
-  background: $success-color;
+  background: $validation-color;
 }
 
 .form-switch input:checked + .form-icon  {
