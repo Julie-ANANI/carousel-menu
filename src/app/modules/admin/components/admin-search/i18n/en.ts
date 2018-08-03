@@ -22,6 +22,8 @@ export const SEARCH = {
   "ADDTOQUEUE": "Add to queue",
   "STOPREQUEST": "Stop the request",
   "SETTINGS": "Settings",
+  "APPLY": "Apply",
+  "IGNORE": "Ignore",
   "STAR_PROFILES": "Stars Profiles",
   "COUNTRY": "Country",
   "LANGUAGE": "Language",

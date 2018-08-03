@@ -9,9 +9,15 @@
       </app-sidebar-search>
     </app-sidebar>
 
-    <div class="flex-container" id="input-search">
-      <div class="flex-column">
-        <p *ngIf="suggestion" class="suggestedRequests" [innerHTML]="suggestion"></p>
+    <div>
+      <div *ngIf="suggestion" class="suggestedRequests">
+        <p [innerHTML]="suggestion"></p>
+        <p>
+          <a class="text-success" (click)="applySuggestion()">{{ 'SEARCH.APPLY' | translate }}</a><br/>
+          <a class="text-error" (click)="ignoreSuggestion()">{{ 'SEARCH.IGNORE' | translate }}</a>
+        </p>
+      </div>
+      <div id="input-search">
         <textarea
           type="text"
           class="form-default input-lg"
@@ -22,14 +28,14 @@
           required
           [placeholder]="'SEARCH.INPUT' | translate ">
         </textarea>
-      </div>
 
-      <button
-        (click)="search($event)"
-        class="btn-round btn-primary"
-        translate>
-        <i class="fas fa-search"></i>
-      </button>
+        <button
+          (click)="search($event)"
+          class="btn-round btn-primary"
+          translate>
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
 
     </div>
 

@@ -140,8 +140,20 @@ export class SharedSearchProsComponent implements OnInit {
           this._suggestion += `${request}<br/>`;
         }
       });
-      console.log(answer);
     });
+  }
+
+  public applySuggestion() {
+    this.catResult.requestsToDelete.forEach((request: string) => {
+      this._params.keywords = this._params.keywords.replace(`${request}\n`, "");
+    });
+    this._suggestion = "";
+    this.catResult.advice = "";
+  }
+
+  public ignoreSuggestion() {
+    this._suggestion = "";
+    this.catResult.advice = "";
   }
 
   private _estimateNumberOfGoogleRequestsForOneSearch(totalResults: number): number {

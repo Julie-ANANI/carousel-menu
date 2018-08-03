@@ -33,6 +33,14 @@
 }
 
 .suggestedRequests {
+  display: flex;
+  align-items: center;
   font-size: 13px;
   margin: 5px;
+  justify-content: space-around;
+}
+
+#input-search {
+  display: flex;
+  align-items: center;
 }
