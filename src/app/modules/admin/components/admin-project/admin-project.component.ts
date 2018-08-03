@@ -9,10 +9,12 @@ import { AuthService } from '../../../../services/auth/auth.service';
   templateUrl: './admin-project.component.html',
   styleUrls: ['./admin-project.component.scss']
 })
+
 export class AdminProjectComponent implements OnInit {
 
   private _project: Innovation;
-  private _tabs: Array<string> = ['settings', 'cards', 'campaigns', 'synthesis', 'tags', 'questionnaire'];
+  private _tabs: Array<string> = ['settings', 'cards', 'tags', 'questionnaire', 'campaigns', 'synthesis' ];
+  clientSideUrl: string;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,
@@ -21,6 +23,7 @@ export class AdminProjectComponent implements OnInit {
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.data['innovation'];
     this._titleService.setTitle(this._project.name);
+    this.clientSideUrl = 'project/' + this.project._id;
   }
 
   get authorizedTabs(): Array<string> {

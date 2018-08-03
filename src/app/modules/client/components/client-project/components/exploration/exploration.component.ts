@@ -83,8 +83,7 @@ export class ExplorationProjectComponent implements OnInit {
 
     this.innovationService.campaigns(this.project._id).first().subscribe((results) => {
         if (results && Array.isArray(results.result)) {
-          this._campaignsStats = results.result
-            .reduce(function(acc, campaign) {
+          this._campaignsStats = results.result.reduce(function(acc, campaign) {
               if (campaign.stats) {
                 if (campaign.stats.campaign) {
                   acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
@@ -134,6 +133,16 @@ export class ExplorationProjectComponent implements OnInit {
 
   closeSidebar(value: string) {
     this.sidebarTemplateValue.animate_state = value;
+  }
+
+  public percentageCalculataion(value1: number, value2: number) {
+    let percentage = (value2 / value1) * 100;
+
+    if (percentage === Infinity) {
+      percentage = 0;
+    }
+
+    return Math.floor(percentage);
   }
 
   public formatCompanyName(name: string) {

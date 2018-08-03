@@ -116,15 +116,10 @@
 
     .answer-button-wrapper {
       margin-top: 25px;
-
-      .ghost-primary {
-        background-color: transparent;
-      }
-
     }
 
     .data-wrapper {
-      padding-top: 25px;
+      padding-top: 50px;
 
       .row1-wrapper {
         display: flex;
@@ -147,15 +142,21 @@
         }
 
         .response-arrow-wrapper {
-          font-size: 14px;
+          font-size: 16px;
           color: #97A4B1;
           cursor: pointer;
+
+          .icon {
+            font-size: 14px;
+          }
+
         }
 
       }
 
       .row2-wrapper {
-        margin-top: 25px;
+        margin-top: 15px;
+        cursor: pointer;
       }
 
       .answer-wrapper {

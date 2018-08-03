@@ -33,7 +33,7 @@
 
           <div class="filter-name-wrapper">
           <span class="bar-filter" (click)="filterAnswer(barData, $event)">
-            <img src="https://res.cloudinary.com/umi/image/upload/v1532700378/app/default-images/filter-icon.svg">
+            <img src="https://res.cloudinary.com/umi/image/upload/v1533115302/app/default-images/filter-icon.png" height="16px" width="24px">
           </span>
             <span class="bar-name">{{ barData.label | multiling:lang }}</span>
           </div>
@@ -47,10 +47,9 @@
         <!-- /Row 1 -->
 
         <!-- Row 2 -->
-        <div class="row2-wrapper">
+        <div class="row2-wrapper" (click)="showAnswers[i] = !showAnswers[i]">
           <app-progress-bar
             [width]="barData.absolutePercentage"
-            [value]="barData.absolutePercentage"
             [backgroundColor]="barData.color">
           </app-progress-bar>
         </div>
