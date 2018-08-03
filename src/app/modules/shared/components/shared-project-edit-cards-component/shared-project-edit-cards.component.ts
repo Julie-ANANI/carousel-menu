@@ -134,9 +134,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     if (this.canEdit) {
       if (this.changesSaved) {
         if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
-          this.innovationService.createInnovationCard(this.project._id, {
+          this.innovationService.createInnovationCard(this.project._id, new InnovCard({
             lang: lang
-          }).first().subscribe((data: InnovCard) => {
+          })).first().subscribe((data: InnovCard) => {
             this.project.innovationCards.push(data);
             this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
             this.notifyModelChanges(event);

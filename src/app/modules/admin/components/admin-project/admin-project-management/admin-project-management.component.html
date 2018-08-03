@@ -57,7 +57,7 @@
     </div>
 
     <!-- Project owner -->
-    <div class="project-line" [ngClass]="{disabled: authService.userId !== operatorId}">
+    <div class="project-line"> <!-- [ngClass]="{disabled: authService.userId !== operatorId}" -->
       <label class="form-switch" for="editOwner">
         <input
           type="checkbox"
@@ -100,7 +100,7 @@
     </div>
 
     <!-- Project offer -->
-    <div class="project-line" [ngClass]="{disabled: authService.userId != operatorId}">
+    <div class="project-line">
 
       <label class="form-switch" for="seeOffer">
         <input
@@ -126,7 +126,7 @@
     </div>
 
     <!-- Project preset choice -->
-    <div class="project-line" [ngClass]="{disabled: authService.userId != operatorId}">
+    <div class="project-line">
 
       <label class="form-switch" for="choosePreset">
         <input
@@ -152,8 +152,8 @@
       <div></div>
     </div>
 
-    <!-- Project owner -->
-    <div class="project-line" [ngClass]="{disabled: ((authService.userId !== operatorId) || (!hasPreset()))}">
+    <!-- Project preset edition -->
+    <div class="project-line" [ngClass]="{disabled: !hasPreset()}">
       <label class="form-switch" for="editPreset">
         <input
           type="checkbox"
@@ -165,6 +165,59 @@
 
       <button class="showOnHover btn btn-xs ghost-edit"
               (click)="goToPresetEdition()">
+        {{'COMMON.EDIT' | translate}}
+      </button>
+
+    </div>
+
+    <!-- Project preset edition -->
+    <div class="project-line">
+      <label class="form-switch" for="editProjectDescription">
+        <input
+          type="checkbox"
+          name="editProjectDescription"
+          id="editProjectDescription">
+        <i class="form-icon"></i>
+        {{ 'PROJECT.PREPARATION.EDIT_DESCRIPTION' | translate }}
+      </label>
+
+      <button class="showOnHover btn btn-xs ghost-edit">
+        {{'COMMON.EDIT' | translate}}
+      </button>
+
+    </div>
+
+    <!-- Project translation -->
+    <div class="project-line">
+      <label class="form-switch" for="seeTranslation">
+        <input
+          type="checkbox"
+          name="seeTranslation"
+          id="seeTranslation">
+        <i class="form-icon"></i>
+        {{ 'PROJECT.PREPARATION.TRANSLATION' | translate }}
+      </label>
+      <div *ngFor="let lang of innovCards">
+        <label class="form-label">
+          {{lang.lang == 'fr' ? ('COMMON.LANG.FR' | translate) : ('COMMON.LANG.EN' | translate) }}
+          <span>{{lang.completionPercentage.toString()}} %</span>
+        </label>
+      </div>
+      <div></div>
+    </div>
+
+    <!-- Project preset edition -->
+    <div class="project-line">
+      <label class="form-switch" for="editMarketTargeting">
+        <input
+          type="checkbox"
+          name="editMarketTargeting"
+          id="editMarketTargeting">
+        <i class="form-icon"></i>
+        {{ 'PROJECT.PREPARATION.EDIT_MARKET_TARGETING' | translate }}
+      </label>
+
+      <button class="showOnHover btn btn-xs ghost-edit">
         {{'COMMON.EDIT' | translate}}
       </button>
 

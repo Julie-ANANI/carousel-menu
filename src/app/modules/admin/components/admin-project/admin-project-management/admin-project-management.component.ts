@@ -15,6 +15,7 @@ import {DashboardService} from '../../../../../services/dashboard/dashboard.serv
 import {User} from '../../../../../models/user.model';
 import {AuthService} from '../../../../../services/auth/auth.service';
 import {PresetService} from '../../../../../services/preset/preset.service';
+import {InnovCard} from '../../../../../models/innov-card';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -50,6 +51,9 @@ export class AdminProjectManagementComponent implements OnInit {
 
   // Preset edition
   presets: Array<Preset> = [];
+
+  // Translate view
+  innovCards: Array<InnovCard> = [];
 
   private _updateInstanceDomainConfig: {
     placeholder: string,
@@ -110,6 +114,8 @@ export class AdminProjectManagementComponent implements OnInit {
       .subscribe(p => {
         this.presets = p.result;
       });
+
+    this._project.innovationCards.forEach(value => this.innovCards.push(new InnovCard(value)));
   }
 
   resetData() {

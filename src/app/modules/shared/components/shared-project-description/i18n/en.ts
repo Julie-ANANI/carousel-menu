@@ -16,7 +16,10 @@ export const PROJECT = {
   'SETTINGS': 'Settings',
   'PREPARATION': {
     'CHOOSE_PRESET': 'Choose questionnaire',
-    'EDIT_PRESET': 'Edit questionnaire'
+    'EDIT_PRESET': 'Edit questionnaire',
+    'EDIT_DESCRIPTION': 'Edit project description',
+    'TRANSLATION': 'Translate project',
+    'EDIT_MARKET_TARGETING': 'Edit market targeting',
   },
   'CARDS': 'Innovation Cards',
   'QUESTIONNAIRE': 'Questionnaire',

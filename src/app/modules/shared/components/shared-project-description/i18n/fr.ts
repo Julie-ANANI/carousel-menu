@@ -17,7 +17,10 @@ export const PROJECT = {
   'QUESTIONNAIRE': 'Questionnaire',
   'PREPARATION': {
     'CHOOSE_PRESET': 'Choisir un questionnaire',
-    'EDIT_PRESET': 'Editer le questionnaire'
+    'EDIT_PRESET': 'Editer le questionnaire',
+    'EDIT_DESCRIPTION': 'Editer la description du projet',
+    'TRANSLATION': 'Traduction du projet',
+    'EDIT_MARKET_TARGETING': 'Editer le ciblage marché',
   },
   'CARDS': 'Innovation Cards',
   'SYNTHESIS': 'Synthèse',
