@@ -181,7 +181,7 @@
         {{ 'PROJECT.PREPARATION.EDIT_DESCRIPTION' | translate }}
       </label>
 
-      <button class="showOnHover btn btn-xs ghost-edit">
+      <button class="showOnHover btn btn-xs ghost-edit" (click)="editProjectDescription()">
         {{'COMMON.EDIT' | translate}}
       </button>
 
@@ -217,7 +217,7 @@
         {{ 'PROJECT.PREPARATION.EDIT_MARKET_TARGETING' | translate }}
       </label>
 
-      <button class="showOnHover btn btn-xs ghost-edit">
+      <button class="showOnHover btn btn-xs ghost-edit" (click)="editProjectTargeting()">
         {{'COMMON.EDIT' | translate}}
       </button>
 
@@ -229,4 +229,10 @@
 <!-- Sidebars -->
 <app-sidebar
   [template]="more" (closeSidebar)="closeSidebar($event)">
+  <app-innovation-form
+    [sidebarState]="sidebarState"
+    [type]="more.type"
+    [project]="project"
+    (projectChange)="changeProject($event)">
+  </app-innovation-form>
 </app-sidebar>

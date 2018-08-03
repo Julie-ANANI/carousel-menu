@@ -17,8 +17,11 @@ import { SidebarSearchComponent } from './components/sidebar-search/sidebar-sear
 import { UserAnswerComponent } from './components/user-answer/user-answer.component';
 import { AnswerQuestionComponent } from './components/user-answer/answer-question/answer-question.component';
 import { RatingItemComponent } from './components/user-answer/rating-item/rating-item.component';
-import { SidebarWorkflowComponent } from "./components/sidebar-workflow/sidebar-workflow.component";
-import { SidebarSignatureComponent } from "./components/sidebar-signature/sidebar-signature.component";
+import { SidebarWorkflowComponent } from './components/sidebar-workflow/sidebar-workflow.component';
+import { SidebarSignatureComponent } from './components/sidebar-signature/sidebar-signature.component';
+import { InnovationFormComponent } from './components/innovation-form/innovation-form.component';
+import {SharedProjectEditCardsModule} from '../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
+import {SharedProjectSettingsModule} from '../shared/components/shared-project-settings-component/shared-project-settings.module';
 
 @NgModule({
   imports: [
@@ -28,6 +31,8 @@ import { SidebarSignatureComponent } from "./components/sidebar-signature/sideba
     TranslateModule.forChild(),
     TableModule,
     SharedTagItemModule,
+    SharedProjectEditCardsModule,
+    SharedProjectSettingsModule,
     SharedTextZoneModule,
     PipeModule,
     InputModule
@@ -44,7 +49,8 @@ import { SidebarSignatureComponent } from "./components/sidebar-signature/sideba
     UserAnswerComponent,
     EmailsFormComponent,
     AnswerQuestionComponent,
-    RatingItemComponent
+    RatingItemComponent,
+    InnovationFormComponent,
   ],
   exports: [
     CollaboratorComponent,
@@ -54,6 +60,7 @@ import { SidebarSignatureComponent } from "./components/sidebar-signature/sideba
     SidebarSignatureComponent,
     InnovationPreviewComponent,
     UserFormComponent,
+    InnovationFormComponent,
     SidebarSearchComponent,
     UserAnswerComponent,
     EmailsFormComponent,

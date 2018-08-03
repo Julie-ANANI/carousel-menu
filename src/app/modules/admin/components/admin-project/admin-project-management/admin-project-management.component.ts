@@ -195,6 +195,30 @@ export class AdminProjectManagementComponent implements OnInit {
     this._router.navigate(['/admin/projects/project/' + this._project._id + '/questionnaire']);
   }
 
+  editProjectDescription() {
+    this._more = {
+      animate_state: 'active',
+      title: 'PROJECT.PREPARATION.EDIT_DESCRIPTION',
+      type: 'pitch',
+      size: '726px'
+    };
+  }
+
+  editProjectTargeting() {
+    this._more = {
+      animate_state: 'active',
+      title: 'PROJECT.PREPARATION.EDIT_MARKET_TARGETING',
+      type: 'targeting',
+      size: '726px'
+    };
+  }
+
+  changeProject(value: Innovation) {
+    this._project = value;
+    this.save(event, 'Le projet a bien été mise à jour !');
+    this._more = {animate_state: 'inactive', title: this._more.title};
+  }
+
   public addTag(tag: Tag): void {
     this._innovationService
       .addTag(this._project._id, tag._id)
@@ -328,6 +352,7 @@ export class AdminProjectManagementComponent implements OnInit {
   closeSidebar(value: string) {
     this.more.animate_state = value;
     this.sidebarState.next(this.more.animate_state);
+    this._project = this._activatedRoute.snapshot.parent.data['innovation'];
   }
 
   set domain(domain: {en: string, fr: string}) { this._domain = domain; }
