@@ -22,6 +22,7 @@ export const SEARCH = {
   "ADDTOQUEUE": "Mettre en file d'attente",
   "STOPREQUEST": "Stopper la requête",
   "SETTINGS": "Paramètres",
+  "STAR_PROFILES": "Profils Stars",
   "COUNTRY": "Pays",
   "LANGUAGE": "Langue",
   "NUMBER": "Rechercher :",

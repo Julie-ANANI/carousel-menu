@@ -23,3 +23,12 @@ h4 {
   display: flex;
   flex-wrap: wrap;
 }
+
+.form-group-flex {
+  display: flex;
+  align-items: baseline;
+
+  select {
+    margin-left: 20px;
+  }
+}

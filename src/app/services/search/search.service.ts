@@ -17,8 +17,8 @@ export class SearchService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public cat(campaignId: string, requests: any): Observable<any> {
-    return this._http.post('/search/cat', {campaignId: campaignId, keywords: requests})
+  public cat(campaignId: string, requests: string, starProfiles: number): Observable<any> {
+    return this._http.post('/search/cat', {campaignId: campaignId, keywords: requests, starProfiles: starProfiles})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

@@ -45,7 +45,8 @@ export class SharedSearchProsComponent implements OnInit {
         kompass: false,
         xing: false
       },
-      count: '10',
+      count: 10,
+      starProfiles: 2,
       country: '',
       countries: [],
       options: {
@@ -75,7 +76,7 @@ export class SharedSearchProsComponent implements OnInit {
   changeSettings() {
     this._more = {
       animate_state: this._more.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'SEARCH.ADVANCEDSEARCH'
+      title: 'SEARCH.SETTINGS'
     };
   }
 
@@ -126,7 +127,7 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
   public cat() {
-    this._searchService.cat(this.campaign._id, this._params.keywords).first().subscribe((answer: any) => {
+    this._searchService.cat(this.campaign._id, this._params.keywords, this._params.starProfiles).first().subscribe((answer: any) => {
       this.catResult = answer;
       this.estimateNumberOfGoogleRequests(answer.totalResults);
       this._params.keywords.split("\n").forEach((request: string) => {
