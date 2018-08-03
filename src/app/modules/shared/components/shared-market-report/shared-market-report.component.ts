@@ -247,7 +247,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   changeStatus(event: Event, status: 'DONE'): void {
     this.projectToBeFinished = false;
-    this.project.endDate = new Date();
 
     this.innovationService.updateStatus(this._innoid, status).first().subscribe((results) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
