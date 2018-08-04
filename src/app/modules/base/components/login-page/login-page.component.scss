@@ -1,6 +1,6 @@
 @import "../../../../../style/variables";
 
-.login-page {
+#login-page {
 
   .cover-image {
     background-attachment: fixed;
@@ -73,7 +73,7 @@
 
 @media (max-width: 600px) {
 
-  .login-page {
+  #login-page {
 
     .cover-image {
       display: none;

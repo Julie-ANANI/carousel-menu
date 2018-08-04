@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { LogoutPageComponent } from './components/logout-page/logout-page.component';
-import { ForgetPasswordPageComponent } from './components/forget-password-page/forget-password-page.component';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -25,7 +24,6 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
   ],
   declarations: [
     LogoutPageComponent,
-    ForgetPasswordPageComponent,
     SignupPageComponent,
     FooterComponent,
     HeaderComponent,

@@ -22,8 +22,7 @@ export class LoginPageComponent implements OnInit {
               private router: Router,
               private formBuilder: FormBuilder,
               private translateTitleService: TranslateTitleService,
-              private translateNotificationsService: TranslateNotificationsService) {
-  }
+              private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit(): void {
     this.translateTitleService.setTitle('LOG_IN.TITLE');
