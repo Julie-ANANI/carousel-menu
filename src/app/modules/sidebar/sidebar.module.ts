@@ -12,13 +12,13 @@ import { SidebarComponent } from './sidebar.component';
 import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.component';
 import { EmailsFormComponent } from './components/emails-form/emails-form.component';
 import { InnovationPreviewComponent } from './components/innovation-preview/innovation-preview.component';
-import { UserFormComponent } from './components/user-form/user-form.component';
 import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
 import { UserAnswerComponent } from './components/user-answer/user-answer.component';
 import { AnswerQuestionComponent } from './components/user-answer/answer-question/answer-question.component';
 import { RatingItemComponent } from './components/user-answer/rating-item/rating-item.component';
-import { SidebarWorkflowComponent } from "./components/sidebar-workflow/sidebar-workflow.component";
-import { SidebarSignatureComponent } from "./components/sidebar-signature/sidebar-signature.component";
+import { SidebarWorkflowComponent } from './components/sidebar-workflow/sidebar-workflow.component';
+import { SidebarSignatureComponent } from './components/sidebar-signature/sidebar-signature.component';
+import { AutocompleteInputModule } from '../input/component/autocomplete-input/autocomplete-input.module';
 
 @NgModule({
   imports: [
@@ -30,7 +30,8 @@ import { SidebarSignatureComponent } from "./components/sidebar-signature/sideba
     SharedTagItemModule,
     SharedTextZoneModule,
     PipeModule,
-    InputModule
+    InputModule,
+    AutocompleteInputModule,
   ],
   declarations: [
     SidebarBatchComponent,
@@ -39,7 +40,6 @@ import { SidebarSignatureComponent } from "./components/sidebar-signature/sideba
     CollaboratorComponent,
     SidebarComponent,
     InnovationPreviewComponent,
-    UserFormComponent,
     SidebarSearchComponent,
     UserAnswerComponent,
     EmailsFormComponent,
@@ -53,7 +53,6 @@ import { SidebarSignatureComponent } from "./components/sidebar-signature/sideba
     SidebarWorkflowComponent,
     SidebarSignatureComponent,
     InnovationPreviewComponent,
-    UserFormComponent,
     SidebarSearchComponent,
     UserAnswerComponent,
     EmailsFormComponent,

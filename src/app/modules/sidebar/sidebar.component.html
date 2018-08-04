@@ -1,10 +1,10 @@
-<div
+<main
   class="main-container sidebar-wrapper"
   id="sidebar-wrapper"
   (click)="toggleState($event, content)"
   [@animateWrapper]="state">
 
-  <div
+  <section
     class="sidebar-content"
     [@animateContent]="state"
     id="sidebar"
@@ -13,20 +13,20 @@
     <div #content>
 
       <!-- Heading -->
-      <div class="sidebar-header">
+      <header class="sidebar-header">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="header-content">
             <span>{{ title | translate }}</span>
             <span><i class="icon icon-cross" id="close" (click)="toggleState($event, content)"></i></span>
           </div>
         </div>
-      </div>
+      </header>
 
       <!-- Content -->
       <ng-content></ng-content>
 
     </div>
 
-  </div>
+  </section>
 
-</div>
+</main>

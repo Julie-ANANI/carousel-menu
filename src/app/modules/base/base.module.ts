@@ -9,7 +9,6 @@ import { LogoutPageComponent } from './components/logout-page/logout-page.compon
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { SignupPageComponent } from './components/signup-page/signup-page.component';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 
 @NgModule({
@@ -24,7 +23,6 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
   ],
   declarations: [
     LogoutPageComponent,
-    SignupPageComponent,
     FooterComponent,
     HeaderComponent,
     WelcomePageComponent,

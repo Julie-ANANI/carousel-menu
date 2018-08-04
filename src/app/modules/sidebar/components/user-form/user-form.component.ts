@@ -8,8 +8,8 @@ import { AutocompleteService } from '../../../../services/autocomplete/autocompl
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs/Subject';
-import {Tag} from '../../../../models/tag';
-import {TagsService} from '../../../../services/tags/tags.service';
+import { Tag } from '../../../../models/tag';
+import { TagsService } from '../../../../services/tags/tags.service';
 
 @Component({
   selector: 'app-user-form',
@@ -85,8 +85,8 @@ export class UserFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
-              private _translateService: TranslateService,
-              private _tagsService: TagsService,
+              private translateService: TranslateService,
+              private tagsService: TagsService,
               private _authService: AuthService) {}
 
   ngOnInit() {
@@ -204,7 +204,7 @@ export class UserFormComponent implements OnInit {
   openQuizUri(pro: Professional, event: Event): void {
     event.preventDefault();
     const baseUri = environment.quizUrl + '/quiz/' + this.campaign.innovation.quizId + '/' + this.campaign._id;
-    const parameters = '?pro=' + pro._id + '&lang=' + this._translateService.currentLang;
+    const parameters = '?pro=' + pro._id + '&lang=' + this.translateService.currentLang;
     window.open(baseUri + parameters);
   }
 
@@ -235,7 +235,7 @@ export class UserFormComponent implements OnInit {
   }
 
   addTag(tag: any) {
-    this._tagsService.get(tag._id).first().subscribe(res => {
+    this.tagsService.get(tag._id).first().subscribe(res => {
       this._tags.push(res.tags[0]);
     });
   }
