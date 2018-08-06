@@ -18,8 +18,9 @@ export const PROJECT = {
     'CHOOSE_PRESET': 'Choose questionnaire',
     'EDIT_PRESET': 'Edit questionnaire',
     'EDIT_DESCRIPTION': 'Edit project description',
-    'TRANSLATION': 'Translate project',
+    'DESCRIPTION_TRANSLATION': 'Description translation',
     'EDIT_MARKET_TARGETING': 'Edit market targeting',
+    'BLACKLIST_DOMAINS_EMAILS': 'Blacklist Emails / Domains'
   },
   'CARDS': 'Innovation Cards',
   'QUESTIONNAIRE': 'Questionnaire',

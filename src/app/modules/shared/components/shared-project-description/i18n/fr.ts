@@ -19,8 +19,9 @@ export const PROJECT = {
     'CHOOSE_PRESET': 'Choisir un questionnaire',
     'EDIT_PRESET': 'Editer le questionnaire',
     'EDIT_DESCRIPTION': 'Editer la description du projet',
-    'TRANSLATION': 'Traduction du projet',
+    'DESCRIPTION_TRANSLATION': 'Traduction de la description',
     'EDIT_MARKET_TARGETING': 'Editer le ciblage marché',
+    'BLACKLIST_DOMAINS_EMAILS': 'Blacklister Emails / Domaines'
   },
   'CARDS': 'Innovation Cards',
   'SYNTHESIS': 'Synthèse',

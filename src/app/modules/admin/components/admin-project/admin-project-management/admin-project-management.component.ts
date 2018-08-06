@@ -16,6 +16,7 @@ import {User} from '../../../../../models/user.model';
 import {AuthService} from '../../../../../services/auth/auth.service';
 import {PresetService} from '../../../../../services/preset/preset.service';
 import {InnovCard} from '../../../../../models/innov-card';
+import {domainRegEx, emailRegEx} from '../../../../../utils/regex';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -52,8 +53,14 @@ export class AdminProjectManagementComponent implements OnInit {
   // Preset edition
   presets: Array<Preset> = [];
 
+  // Innovation edition
+  isInnovationSidebar = false;
+
   // Translate view
   innovCards: Array<InnovCard> = [];
+
+  // Emails / Domains edition
+  isEmailsDomainsSidebar = false;
 
   private _updateInstanceDomainConfig: {
     placeholder: string,
@@ -116,6 +123,10 @@ export class AdminProjectManagementComponent implements OnInit {
       });
 
     this._project.innovationCards.forEach(value => this.innovCards.push(new InnovCard(value)));
+
+    this.isInnovationSidebar = false;
+
+    this.isEmailsDomainsSidebar = false;
   }
 
   resetData() {
@@ -196,6 +207,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   editProjectDescription() {
+    this.isInnovationSidebar = true;
     this._more = {
       animate_state: 'active',
       title: 'PROJECT.PREPARATION.EDIT_DESCRIPTION',
@@ -205,6 +217,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   editProjectTargeting() {
+    this.isInnovationSidebar = true;
     this._more = {
       animate_state: 'active',
       title: 'PROJECT.PREPARATION.EDIT_MARKET_TARGETING',
@@ -217,6 +230,38 @@ export class AdminProjectManagementComponent implements OnInit {
     this._project = value;
     this.save(event, 'Le projet a bien été mise à jour !');
     this._more = {animate_state: 'inactive', title: this._more.title};
+  }
+
+  editBlacklist() {
+    this.isEmailsDomainsSidebar = true;
+    this._more = {
+      animate_state: 'active',
+      title: 'PROJECT.PREPARATION.EDIT_MARKET_TARGETING',
+      type: 'excludeEmails',
+    };
+  }
+
+  addBlacklists(values: Array<any>) {
+    if (values.length > 0) {
+      const domainExp = domainRegEx;
+      const emailExp = emailRegEx;
+
+      // We test if it's an array of domains or emails and we clean the corresponding array
+      domainExp.test(values[0].text)
+        ? this._project.settings.blacklist.domains = []
+        : this._project.settings.blacklist.emails = [];
+
+      // We insert all the domains or emails in the corresponding array
+      values.forEach((value: any) => {
+        if (domainExp.test(value.text)) {
+          this._project.settings.blacklist.domains.push(value.text.split('@')[1]);
+        } else if (emailExp.test(value.text)) {
+          this._project.settings.blacklist.emails.push(value.text);
+        }
+      });
+      this.save(event, 'Les emails / domaines ont bien été blaklistés');
+      this._more = {animate_state: 'inactive', title: this._more.title};
+    }
   }
 
   public addTag(tag: Tag): void {

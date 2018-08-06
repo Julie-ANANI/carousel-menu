@@ -170,7 +170,7 @@
 
     </div>
 
-    <!-- Project preset edition -->
+    <!-- Project description edition -->
     <div class="project-line">
       <label class="form-switch" for="editProjectDescription">
         <input
@@ -195,7 +195,7 @@
           name="seeTranslation"
           id="seeTranslation">
         <i class="form-icon"></i>
-        {{ 'PROJECT.PREPARATION.TRANSLATION' | translate }}
+        {{ 'PROJECT.PREPARATION.DESCRIPTION_TRANSLATION' | translate }}
       </label>
       <div *ngFor="let lang of innovCards">
         <label class="form-label">
@@ -206,7 +206,7 @@
       <div></div>
     </div>
 
-    <!-- Project preset edition -->
+    <!-- Project targeting edition -->
     <div class="project-line">
       <label class="form-switch" for="editMarketTargeting">
         <input
@@ -223,6 +223,31 @@
 
     </div>
 
+    <!-- add emails / domains to blacklist -->
+    <div class="project-line">
+      <label class="form-switch" for="blacklistDomainsAndEmails">
+        <input
+          type="checkbox"
+          name="blacklistDomainsAndEmails"
+          id="blacklistDomainsAndEmails">
+        <i class="form-icon"></i>
+        {{ 'PROJECT.PREPARATION.BLACKLIST_DOMAINS_EMAILS' | translate }}
+      </label>
+
+      <label class="form-label">
+        {{project.settings.blacklist.domains.length.toString()}} {{'COMMON.DOMAIN' | translate}}(s)
+      </label>
+
+      <label class="form-label">
+        {{project.settings.blacklist.emails.length.toString()}} Email(s)
+      </label>
+
+      <button class="showOnHover btn btn-xs ghost-edit" (click)="editBlacklist()">
+        {{'COMMON.EDIT' | translate}}
+      </button>
+
+    </div>
+
   </div>
 </div>
 
@@ -230,9 +255,18 @@
 <app-sidebar
   [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-innovation-form
+    *ngIf="isInnovationSidebar"
     [sidebarState]="sidebarState"
     [type]="more.type"
     [project]="project"
     (projectChange)="changeProject($event)">
   </app-innovation-form>
+  <app-emails-form
+    *ngIf="isEmailsDomainsSidebar"
+    [sidebarState]="sidebarState"
+    [type]="more.type"
+    [initialDomains]="project.settings.blacklist.domains"
+    [initialEmails]="project.settings.blacklist.emails"
+    (emailsToBlacklists)="addBlacklists($event)">
+  </app-emails-form>
 </app-sidebar>

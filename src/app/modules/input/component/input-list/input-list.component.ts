@@ -32,7 +32,7 @@ export class InputListComponent {
   constructor(private translateNotificationsService: TranslateNotificationsService) {}
 
   addProposition(val: string): void {
-    if (this.answerList.findIndex(t => {return t === val}) === -1) {
+    if (this.answerList.findIndex(t => {return t.text === val}) === -1) {
       // if we want to test if it's an email
       if (this.isEmail) {
         const testValue = emailRegEx;
