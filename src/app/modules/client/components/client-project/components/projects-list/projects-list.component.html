@@ -39,7 +39,19 @@
           </div>
         </div>
       </div>
+
+      <!-- Pagination -->
+      <div class="pagination-wrapper">
+        <app-pagination
+          [config]="config"
+          (configChange)="loadProjects($event)"
+          [total]="total"
+          [propertyName]="'client-projects'">
+        </app-pagination>
+      </div>
+
     </div>
 
   </div>
 </section>
+

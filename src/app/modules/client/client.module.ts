@@ -46,7 +46,7 @@ import { LogoutPageModule } from '../base/components/logout-page/logout-page.mod
     FooterModule,
     HeaderModule,
     NotFoundPageModule,
-    LogoutPageModule
+    LogoutPageModule,
   ],
   declarations: [
     ClientComponent,

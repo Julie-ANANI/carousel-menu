@@ -7,6 +7,7 @@ import { SharedSortModule } from '../../../shared/components/shared-sort/shared-
 import { SharedFilterInputModule } from '../../../shared/components/shared-filter-input/shared-filter-input.module';
 import {ProjectsListComponent} from '../../../client/components/client-project/components/projects-list/projects-list.component';
 import { InputModule } from '../../../input/input.module';
+import { PaginationModule } from '../../../input/component/pagination/pagination.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { InputModule } from '../../../input/input.module';
     RouterModule,
     SharedFilterInputModule,
     InputModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    PaginationModule
   ],
   declarations: [
     ProjectsListComponent
@@ -26,4 +28,4 @@ import { InputModule } from '../../../input/input.module';
   ]
 })
 
-export class SharedProjectsListModule { }
+export class AdminProjectsListModule { }

@@ -48,10 +48,11 @@
 
       }
 
-      &:last-child {
-        margin-bottom: 0;
-      }
+    }
 
+    .pagination-wrapper {
+      display: flex;
+      justify-content: flex-end;
     }
 
   }
