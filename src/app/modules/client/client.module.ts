@@ -21,6 +21,7 @@ import { ForgetPasswordPageModule } from '../base/components/forget-password-pag
 import { SignupPageModule } from '../base/components/signup-page/signup-page.module';
 import { WelcomePageModule } from '../base/components/welcome-page/welcome-page.module';
 import { FooterModule } from '../base/components/footer/footer.module';
+import { HeaderModule } from '../base/components/header/header.module';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { FooterModule } from '../base/components/footer/footer.module';
     ForgetPasswordPageModule,
     SignupPageModule,
     WelcomePageModule,
-    FooterModule
+    FooterModule,
+    HeaderModule
   ],
   declarations: [
     ClientComponent,
