@@ -105,6 +105,7 @@
 /*
     Form group inline styles
 */
+
 .form-group-inline-left{
   display: flex;
   justify-content: flex-start;
@@ -133,9 +134,6 @@
 }
 
 
-
-
-
 /*
     Form error style.  Add this class to show the error related to the
     input. Class name: form-error
@@ -143,7 +141,7 @@
 
 .form-error {
   color: $alert-color;
-  font-size: .65rem;
+  font-size: .75rem;
   padding: .3rem 0;
 }
 
@@ -151,15 +149,20 @@
 /*
     Form input radio button
  */
+
 .form-radio {
   color: $dark-color;
+}
+
+.form-radio .form-icon {
+  height: .9rem;
+  width: .9rem;
 }
 
 .form-radio input:checked + .form-icon {
   border-color: rgba(46,204,113,0.45);
   background: $validation-color;
 }
-
 
 /*
     Form input radio button disabled
@@ -212,7 +215,7 @@
  */
 textarea {
   resize: none;
-  padding-right: 30px !important;
+  padding-right: 1.87rem !important;
 
 }
 
@@ -221,13 +224,13 @@ textarea {
   */
 
 .form-switch .form-icon::before {
-  background: #97A4B1;
-  border-color: #97A4B1;
+  background: $meta-color;
+  border-color: $meta-color;
 }
 
 .form-switch .form-icon  {
-  border: 1px solid #D1D1D1;
-  border-radius: 11.5px;
+  border: .06rem solid $border-color;
+  border-radius: .71rem;
   background-color: #FFFFFF;
 }
 
@@ -241,7 +244,7 @@ textarea {
 }
 
 .form-switch input:focus + .form-icon {
-  border-color: #D1D1D1;
+  border-color: $border-color;
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
 }
@@ -257,8 +260,8 @@ textarea {
 }
 
 .form-switch-padding {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
 }
 
 
