@@ -28,6 +28,7 @@ import { RouterModule } from '@angular/router';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
 import { FooterModule } from '../base/components/footer/footer.module';
 import { HeaderModule } from '../base/components/header/header.module';
+import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { HeaderModule } from '../base/components/header/header.module';
     ReactiveFormsModule,
     RouterModule,
     FooterModule,
-    HeaderModule
+    HeaderModule,
+    NotFoundPageModule
   ],
   declarations: [
     AdminComponent,

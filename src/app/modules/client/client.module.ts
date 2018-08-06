@@ -22,6 +22,7 @@ import { SignupPageModule } from '../base/components/signup-page/signup-page.mod
 import { WelcomePageModule } from '../base/components/welcome-page/welcome-page.module';
 import { FooterModule } from '../base/components/footer/footer.module';
 import { HeaderModule } from '../base/components/header/header.module';
+import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { HeaderModule } from '../base/components/header/header.module';
     SignupPageModule,
     WelcomePageModule,
     FooterModule,
-    HeaderModule
+    HeaderModule,
+    NotFoundPageModule
   ],
   declarations: [
     ClientComponent,

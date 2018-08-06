@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { LogoutPageComponent } from './components/logout-page/logout-page.component';
-import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 
 @NgModule({
   imports: [
@@ -19,8 +18,7 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
     SidebarModule
   ],
   declarations: [
-    LogoutPageComponent,
-    NotFoundPageComponent
+    LogoutPageComponent
   ],
   exports: [
   ]
