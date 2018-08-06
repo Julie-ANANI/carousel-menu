@@ -14,7 +14,6 @@ import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaig
 import { AdminLibrariesModule } from './components/admin-libraries/admin-libraries.module';
 import { AdminCountryManagementModule } from './components/admin-settings/admin-country-management/admin-country-management.module';
 import { PipeModule } from '../../pipe/pipe.module';
-import { BaseModule } from '../base/base.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { InputModule } from '../input/input.module';
 import { AdminComponent } from './admin.component';
@@ -29,6 +28,7 @@ import { AdminSettingsComponent } from './components/admin-settings/admin-settin
 import { FooterModule } from '../base/components/footer/footer.module';
 import { HeaderModule } from '../base/components/header/header.module';
 import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
+import { LogoutPageModule } from '../base/components/logout-page/logout-page.module';
 
 @NgModule({
   imports: [
@@ -47,7 +47,6 @@ import { NotFoundPageModule } from '../base/components/not-found-page/not-found-
     TranslateModule.forChild(),
     SidebarModule,
     PipeModule,
-    BaseModule,
     InputModule,
     AdminCountryManagementModule,
     FormsModule,
@@ -55,7 +54,8 @@ import { NotFoundPageModule } from '../base/components/not-found-page/not-found-
     RouterModule,
     FooterModule,
     HeaderModule,
-    NotFoundPageModule
+    NotFoundPageModule,
+    LogoutPageModule
   ],
   declarations: [
     AdminComponent,

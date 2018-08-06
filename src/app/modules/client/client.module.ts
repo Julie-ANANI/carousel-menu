@@ -6,7 +6,6 @@ import { ClientProjectModule } from './components/client-project/client-project.
 import { SharedMarketReportModule } from '../shared/components/shared-market-report/shared-market-report.module';
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 import { PipeModule } from '../../pipe/pipe.module';
-import { BaseModule } from '../base/base.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { InputModule } from '../input/input.module';
 import { ClientRoutingModule } from './client-routing.module';
@@ -23,6 +22,7 @@ import { WelcomePageModule } from '../base/components/welcome-page/welcome-page.
 import { FooterModule } from '../base/components/footer/footer.module';
 import { HeaderModule } from '../base/components/header/header.module';
 import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
+import { LogoutPageModule } from '../base/components/logout-page/logout-page.module';
 
 
 @NgModule({
@@ -38,7 +38,6 @@ import { NotFoundPageModule } from '../base/components/not-found-page/not-found-
     SidebarModule,
     InputModule,
     PipeModule,
-    BaseModule,
     LoginPageModule,
     SharedMarketReportExampleModule,
     ForgetPasswordPageModule,
@@ -46,7 +45,8 @@ import { NotFoundPageModule } from '../base/components/not-found-page/not-found-
     WelcomePageModule,
     FooterModule,
     HeaderModule,
-    NotFoundPageModule
+    NotFoundPageModule,
+    LogoutPageModule
   ],
   declarations: [
     ClientComponent,
