@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { LogoutPageComponent } from './components/logout-page/logout-page.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 
@@ -22,13 +21,11 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
   ],
   declarations: [
     LogoutPageComponent,
-    FooterComponent,
     HeaderComponent,
     NotFoundPageComponent
   ],
   exports: [
-    HeaderComponent,
-    FooterComponent
+    HeaderComponent
   ]
 })
 

@@ -13,8 +13,6 @@ import { AdminProjectsModule } from './components/admin-projects/admin-projects.
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
 import { AdminLibrariesModule } from './components/admin-libraries/admin-libraries.module';
 import { AdminCountryManagementModule } from './components/admin-settings/admin-country-management/admin-country-management.module';
-
-// Components
 import { PipeModule } from '../../pipe/pipe.module';
 import { BaseModule } from '../base/base.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
@@ -28,6 +26,7 @@ import { AdminProjectsListComponent } from './components/admin-projects-list/adm
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
+import { FooterModule } from '../base/components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -51,7 +50,8 @@ import { AdminSettingsComponent } from './components/admin-settings/admin-settin
     AdminCountryManagementModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    FooterModule
   ],
   declarations: [
     AdminComponent,

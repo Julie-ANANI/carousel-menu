@@ -23,7 +23,7 @@ h1, h2, h3, h4, h5, h6 {
  */
 
 h1 {
-  font-size: 34px;
+  font-size: 2rem;
 }
 
 
@@ -32,7 +32,7 @@ h1 {
  */
 
 h2 {
-  font-size: 32px;
+  font-size: 1.9rem;
 }
 
 
@@ -41,7 +41,7 @@ h2 {
  */
 
 h3 {
-  font-size: 30px;
+  font-size: 1.8rem;
 }
 
 
@@ -50,7 +50,7 @@ h3 {
  */
 
 h4 {
-  font-size: 28px;
+  font-size: 1.7rem;
 }
 
 
@@ -59,7 +59,7 @@ h4 {
  */
 
 h5 {
-  font-size: 26px;
+  font-size: 1.6rem;
 }
 
 
@@ -68,7 +68,7 @@ h5 {
  */
 
 h6 {
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 
 
@@ -93,7 +93,7 @@ h6 {
     Question style
  */
 .ques {
-  font-size: 18px;
+  font-size: 1.1rem;
   color: $hero-heading;
 }
 
@@ -102,9 +102,9 @@ h6 {
     Para style
  */
 .para {
-  font-size: 18px;
+  font-size: 1.1rem;
   color: $paragraph-color;
-  padding: 16px 0;
+  padding: 1rem 0;
   margin: 0;
 }
 
@@ -116,7 +116,7 @@ h6 {
   width: 125px;
   border: 2px solid white;
   border-radius: .25rem;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 
@@ -132,9 +132,7 @@ h6 {
     Section heading
  */
 .section-heading {
-  font-size: 26px;
+  font-size: 1.625rem;
   font-weight: 300;
-  line-height: 1.4;
-  margin: 0 0 25px;
   color: $secondary-color;
 }

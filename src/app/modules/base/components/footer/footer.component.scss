@@ -1,8 +1,6 @@
-.main-container {
+#footer {
   background: #4F5D6B;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  font-size: 0.65rem;
+  font-size: 0.85rem;
   color: white;
 
   .lang-wrapper {
@@ -15,7 +13,7 @@
       border-color: #97A4B1;
 
       i {
-        font-size: 0.6rem;
+        font-size: .8rem;
       }
 
     }
@@ -31,7 +29,7 @@
     .menu {
       min-width: 6.5rem;
       border-radius: 0.25rem;
-      transition: all 0.3s ease;
+      transition: all 0.15s ease;
       text-align: left;
     }
 
@@ -54,13 +52,13 @@
   }
 
   .footer-hr {
-    margin-top: 50px;
+    margin-top: 3.15rem;
     border: .5px solid white;
     border-radius: .25rem;
   }
 
   .information-wrapper {
-    padding-top: 50px;
+    padding-top: 3.15rem;
     transition: all 0.35s ease-in-out;
 
     a{
@@ -70,4 +68,5 @@
   }
 
 }
+
 
