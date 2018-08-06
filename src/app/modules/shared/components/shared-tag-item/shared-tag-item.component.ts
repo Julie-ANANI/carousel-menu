@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
-import { ModalService } from '../../../../services/modal/modal.service';
 import { TagsService } from '../../../../services/tags/tags.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Tag } from '../../../../models/tag';
@@ -24,9 +23,11 @@ export class SharedTagItemComponent implements OnInit {
   @Input() editMode: boolean;
 
   @Output() addTag: EventEmitter<Tag> = new EventEmitter();
+  @Output() createTag: EventEmitter<Tag> = new EventEmitter();
   @Output() removeTag: EventEmitter<Tag> = new EventEmitter();
 
   private _tagForm: FormGroup;
+  private _showModal = false;
 
   private _projectId = '';
 
@@ -34,7 +35,6 @@ export class SharedTagItemComponent implements OnInit {
               private formBuilder: FormBuilder,
               private sanitizer: DomSanitizer,
               private tagsService: TagsService,
-              private modalService: ModalService,
               private autocompleteService: AutocompleteService) {}
 
   ngOnInit() {
@@ -74,13 +74,23 @@ export class SharedTagItemComponent implements OnInit {
       this.addTag.emit(this._tagForm.get('tag').value);
       this._tagForm.get('tag').reset();
     } else {
-      this.modalService.open('confirm-tag-creation-modal');
+      this._showModal = true;
     }
   }
 
-  public closeModal(event: Event, id: string): void {
-    event.preventDefault();
-    this.modalService.close(id);
+  public closeModal(): void {
+    this._showModal = false;
+  }
+
+  public createNewTag(): void {
+    const name = this._tagForm.get('tag').value;
+    this._tagForm.get('tag').reset();
+    if (typeof name === 'string') {
+      this.createTag.emit({
+        label: { en: name, fr: name }
+      });
+    }
+    this._showModal = false;
   }
 
   public removeTagEmitter(event: Event, tag: Tag): void {
@@ -96,8 +106,12 @@ export class SharedTagItemComponent implements OnInit {
     return this._tagForm;
   }
 
-  get projectId(): string{
+  get projectId(): string {
     return this._projectId;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
   }
 
 }

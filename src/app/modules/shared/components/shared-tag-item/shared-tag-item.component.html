@@ -27,8 +27,9 @@
 
 </div>
 
-<app-modal id="confirm-tag-creation-modal">
-  <h1>Home</h1>
-  <p>trololololo</p>
-  <button type="button" (click)="closeModal($event, 'confirm-tag-creation-modal');">Close</button>
+<app-modal *ngIf="showModal" (close)="closeModal();">
+  <h1>Create a new Tag</h1>
+  <p>Do you want to create a new tag: "{{tagForm.get('tag').value}}" ?</p>
+  <button type="button" (click)="createNewTag();">Create new tag</button>
+  <button type="button" (click)="closeModal();">Close</button>
 </app-modal>

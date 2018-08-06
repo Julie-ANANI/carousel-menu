@@ -163,6 +163,16 @@ export class UserAnswerComponent implements OnInit {
       });
   }
 
+  createTag(tag: Tag): void {
+    this.answerService.createTag(this.modalAnswer._id, tag).first()
+      .subscribe((a) => {
+        this.modalAnswer.tags.push(tag);
+        this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
+      }, err => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
+      });
+  }
+
   removeTag(tag: Tag): void {
     this.answerService.removeTag(this.modalAnswer._id, tag._id).first()
       .subscribe((a) => {

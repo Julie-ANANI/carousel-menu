@@ -39,7 +39,6 @@ import { DownloadService } from './services/download/download.service';
 import { TagsService } from './services/tags/tags.service';
 import { TemplatesService } from './services/templates/templates.service';
 import { TranslationService } from './services/translation/translation.service';
-import { ModalService } from './services/modal/modal.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -86,7 +85,6 @@ import { PresetResolver } from './resolvers/preset.resolver';
     IndexService,
     DashboardService,
     LatexService,
-    ModalService,
     EmailService,
     ShareService,
     SearchService,

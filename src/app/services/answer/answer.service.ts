@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '../http';
 import { Observable } from 'rxjs/Observable';
 import { Answer } from '../../models/answer';
+import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
@@ -44,6 +45,14 @@ export class AnswerService {
     const params = {tag: tagId };
     if (questionId) { params['questionId'] = questionId; }
     return this._http.post('/answer/' + answerId + '/tag', { params: params})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public createTag(answerId: string, tag: Tag, questionId?: string): Observable<Answer> {
+    const params = {tag: tag };
+    if (questionId) { params['questionId'] = questionId; }
+    return this._http.post('/answer/' + answerId + '/new-tag', { params: params})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
