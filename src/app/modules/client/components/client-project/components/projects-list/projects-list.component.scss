@@ -1,33 +1,59 @@
-$primary-color: #3498DB;
-$body-font-color-darker: #333333;
+@import "../../../../../../../style/variables";
 
-.project {
-  display: flex;
-  border-bottom: 1px solid #D3D3D3;
-  margin-top: 20px;
+#projects-list {
 
-  .description {
-    padding: 0 0 0 20px;
-    width: 100%;
+  .no-project-wrapper {
+    padding-top: 3.15rem;
+
+    .bot-rect {
+      width: 300px;
+    }
+
   }
 
-  .title a {
-    color: $body-font-color-darker;
-    font-size: 1.2rem;
+  .project-wrapper {
+    padding-top: 3.15rem;
+
+    .content-outer-wrapper {
+      margin-bottom: 1.57rem;
+
+      .content-wrapper {
+        display: inline-flex;
+        width: 100%;
+        cursor: pointer;
+
+        img {
+          border-radius: .25rem;
+          width: 120px;
+          height: 100px;
+          margin-right: 1.2rem;
+        }
+
+        .project-description {
+          border-bottom: .06rem solid $border-color;
+          width: 100%;
+
+          h6 {
+            font-size: 1.4rem;
+            margin-bottom: 0.95rem;
+          }
+
+          .date-text-wrapper {
+            font-size: 0.85rem;
+            color: $meta-color;
+            font-weight: 600;
+          }
+
+        }
+
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+    }
+
   }
 
-  .title a:hover {
-    text-decoration: none;
-    color: $primary-color;
-  }
-
-  .metas {
-    font-size: 0.7rem;
-    margin-top: 10px;
-    margin-bottom: 30px;
-  }
-
-  .step .step-item a {
-    font-size: 0.8rem;
-  }
 }

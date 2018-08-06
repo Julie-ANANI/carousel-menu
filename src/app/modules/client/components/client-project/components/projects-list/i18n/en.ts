@@ -1,7 +1,7 @@
 export const PROJECTS_LIST = {
   'TITLE': 'My projects',
 
-  'ADD_PROJECT': 'Add a project',
+  'ADD_PROJECT': 'Add project',
 
   'DELETE_PROJECT_MODAL': {
     'TITLE': 'Are you sure?',
@@ -11,7 +11,7 @@ export const PROJECTS_LIST = {
   'UNTITLED': 'Untitled project',
 
   'NO_PROJECT': {
-    'TITLE': 'You have no project',
-    'CONTENT': 'Click the button to create your first project.'
+    'TITLE': 'Don\'t have any project? ',
+    'CONTENT': 'Create your first project by clicking on Add project button!'
   }
 };

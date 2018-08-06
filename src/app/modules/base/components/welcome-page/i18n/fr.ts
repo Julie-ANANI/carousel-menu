@@ -1,6 +1,6 @@
 export const WELCOME = {
   'WELCOME': 'Bienvenue',
-  'I_UNDERSTAND': 'Je comprends et j\'accepte les',
+  'I_UNDERSTAND': 'Je comprends, et j\'accepte les',
   'TERMS': 'conditions générales d\'utilisation :',
   'ADMIN_SENTENCE': 'Attendez ! Vous êtes administrateur-trice. Vous avez donc de super pouvoirs, et "With great power comes great responsibility", ' +
   'faites attention à ce que vous ferez ici. Veuillez entrer le code que nous vous avons envoyé par email afin de vérifier votre identité :',
