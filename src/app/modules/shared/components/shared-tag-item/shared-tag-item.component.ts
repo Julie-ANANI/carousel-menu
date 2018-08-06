@@ -2,11 +2,12 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
+import { ModalService } from '../../../../services/modal/modal.service';
 import { TagsService } from '../../../../services/tags/tags.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Tag } from '../../../../models/tag';
 import { Observable } from 'rxjs/Observable';
-import {AutocompleteService} from '../../../../services/autocomplete/autocomplete.service';
 
 @Component({
   selector: 'app-shared-tag-item',
@@ -33,6 +34,7 @@ export class SharedTagItemComponent implements OnInit {
               private formBuilder: FormBuilder,
               private sanitizer: DomSanitizer,
               private tagsService: TagsService,
+              private modalService: ModalService,
               private autocompleteService: AutocompleteService) {}
 
   ngOnInit() {
@@ -68,8 +70,17 @@ export class SharedTagItemComponent implements OnInit {
 
   public addTagEmitter(event: Event): void {
     event.preventDefault();
-    this.addTag.emit(this._tagForm.get('tag').value);
-    this._tagForm.get('tag').reset();
+    if (typeof this._tagForm.get('tag').value !== 'string') {
+      this.addTag.emit(this._tagForm.get('tag').value);
+      this._tagForm.get('tag').reset();
+    } else {
+      this.modalService.open('confirm-tag-creation-modal');
+    }
+  }
+
+  public closeModal(event: Event, id: string): void {
+    event.preventDefault();
+    this.modalService.close(id);
   }
 
   public removeTagEmitter(event: Event, tag: Tag): void {
@@ -78,7 +89,7 @@ export class SharedTagItemComponent implements OnInit {
   }
 
   get canAdd(): boolean {
-    return (this._tagForm.get('tag').value && typeof this._tagForm.get('tag').value !== 'string');
+    return !!this._tagForm.get('tag').value;
   }
 
   get tagForm() {
