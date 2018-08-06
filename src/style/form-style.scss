@@ -186,12 +186,11 @@
   outline: none;
 
   li {
-    padding: 8px 10px;
+    padding: .5rem .6rem;
     transition: all .15s ease-in-out;
     cursor: pointer;
     margin-top: 2px;
     margin-bottom: 2px;
-    border-radius: 2px;
 
     a{
       color: $dark-color;

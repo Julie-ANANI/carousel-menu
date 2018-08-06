@@ -16,7 +16,7 @@ import { Template } from './interfaces/template';
       state('active', style({
         display: 'block',
         opacity: 1,
-        background: 'rgba(58, 55, 48, 0.78)'
+        background: 'rgba(0,0,0,0.65)'
       })),
       transition('inactive => active', animate('.5ms ease-in-out')),
       transition('active => inactive', animate('700.5ms ease-in-out'))

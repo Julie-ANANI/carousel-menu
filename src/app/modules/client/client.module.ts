@@ -19,6 +19,7 @@ import { SharedMarketReportExampleModule } from '../shared/components/shared-mar
 import { LoginPageModule } from '../base/components/login-page/login-page.module';
 import { ForgetPasswordPageModule } from '../base/components/forget-password-page/forget-password-page.module';
 import { SignupPageModule } from '../base/components/signup-page/signup-page.module';
+import { WelcomePageModule } from '../base/components/welcome-page/welcome-page.module';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { SignupPageModule } from '../base/components/signup-page/signup-page.mod
     LoginPageModule,
     SharedMarketReportExampleModule,
     ForgetPasswordPageModule,
-    SignupPageModule
+    SignupPageModule,
+    WelcomePageModule
   ],
   declarations: [
     ClientComponent,
