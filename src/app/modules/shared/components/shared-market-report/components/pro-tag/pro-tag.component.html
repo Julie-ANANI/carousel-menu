@@ -1,10 +1,12 @@
 <div class="pro-tag-wrapper">
 
-  <!-- Flag -->
-  <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
-
   <!-- Top profile -->
-  <div class="label-validate" [ngStyle]="{ 'visibility': answer.profileQuality === 2 ? 'visible' : 'hidden' }">Top profile</div>
+  <div *ngIf="answer.profileQuality === 2" class="label-validate">Top profile</div>
+
+  <!-- Flag -->
+  <div *ngIf="answer.country.flag" class="flag-wrapper">
+    <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
+  </div>
 
   <!-- Professional detail -->
   <div class="detail-wrapper">

@@ -24,7 +24,9 @@ export const MARKET_REPORT = {
 
   'INSIGHT': 'Des idées',
 
-  'CONCLUSION': 'Conclusion',
+  'CONCLUSION': 'Conclusion finale',
+
+  'KEY_LEARNING': 'Connaissances clés',
 
   'STICKY_BAR': {
     'DETAIL_VIEW': 'Vue détaillée',
@@ -34,7 +36,17 @@ export const MARKET_REPORT = {
     'BUTTON_ADMIN': 'Finaliser la synthèse',
   },
 
-  'MESSAGE_SYNTHESIS': 'La synthèse a été finalisée avec succès.',
+  'MESSAGE_SYNTHESIS_VISIBLE': 'La synthèse est visible pour le client.',
+
+  'MESSAGE_SYNTHESIS_NOT_VISIBLE': 'La synthèse n\'est pas visible pour le client.',
+
+  'MESSAGE_SYNTHESIS': 'Le projet a été terminé avec succès.',
+
+  'MODAL_TITLE': 'Comité de confirmation',
+
+  'MODAL_CONTENT': 'Voulez-vous terminer ce projet ?',
+
+  'TARGET_COUNTRIES': 'Pays ciblés',
 
   // 'TITLE': 'Exploration du potentiel marché',
   'COLLAPSE': 'Tout plier',
@@ -48,9 +60,9 @@ export const MARKET_REPORT = {
   'SEE_ANSWERS': 'Voir la réponse',
   'BTN_EDITION_MODE': 'Passer en mode édition',
   'BTN_VIEW_MODE': 'Passer en mode visualisation',
-  'BTN_ANSWERS_OPEN': 'Voir les réponses.',
-  'BTN_ANSWERS_CLOSE': 'Masquer les réponses.',
-  'BTN_COMMENTS_OPEN': 'Voir les commentaires ({{length}})',
+  'BTN_ANSWERS_OPEN': 'Voir les réponses',
+  'BTN_ANSWERS_CLOSE': 'Masquer les réponses',
+  'BTN_COMMENTS_OPEN': 'Commentaires',
   'BTN_COMMENTS_CLOSE': 'Masquer les commentaires ({{length}})',
   'BTN_RECOMPUTE': 'Recalculer l\'infographie',
   'PEOPLE_VOTED': 'personnes ont voté',

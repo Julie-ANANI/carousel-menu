@@ -12,6 +12,7 @@ export const ANSWER = {
     'VALIDATED': 'Validé',
     'VALIDATED_NO_MAIL': 'Validé sans mail',
     'SUBMITTED': 'A regarder',
+    'VALIDATED_NO_MAIL': 'Validé sans envoi de mail',
     'EMAIL': 'Envoyer email'
   },
 

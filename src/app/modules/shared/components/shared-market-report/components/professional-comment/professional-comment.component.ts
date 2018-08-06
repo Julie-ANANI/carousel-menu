@@ -18,14 +18,11 @@ export class SharedMarketCommentComponent {
 
   constructor(private filterService: FilterService) { }
 
-  public seeAnswer(event: any, answer: Answer) {
-    event.preventDefault();
+  public seeAnswer(answer: Answer) {
     this.modalAnswerChange.emit(answer);
   }
 
-  public newFilter(event: any, tag: Tag) {
-    event.preventDefault();
-
+  public newFilter(tag: Tag) {
     this.filterService.addFilter({
       status: 'TAG',
       questionTitle: tag.label,

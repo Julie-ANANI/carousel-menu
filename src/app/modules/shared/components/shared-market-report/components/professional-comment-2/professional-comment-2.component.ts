@@ -14,11 +14,9 @@ export class SharedMarketComment2Component {
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
-
   constructor() { }
 
-  public seeAnswer(event: any, answer: Answer) {
-    event.preventDefault();
+  public seeAnswer(answer: Answer) {
     this.modalAnswerChange.emit(answer);
   }
 
