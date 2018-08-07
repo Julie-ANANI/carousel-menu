@@ -1,1 +1,3 @@
-<app-shared-table [config]="config" [data]="tableInfos" (editRow)="seeAnswer($event)"></app-shared-table>
+<app-shared-table [config]="config"
+                  [data]="tableInfos"
+                  (editRow)="seeAnswer($event)" (performAction)="performActions($event)"></app-shared-table>
