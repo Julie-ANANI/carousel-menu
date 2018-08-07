@@ -87,7 +87,8 @@ export class SharedTagItemComponent implements OnInit {
     this._tagForm.get('tag').reset();
     if (typeof name === 'string') {
       this.createTag.emit({
-        label: { en: name, fr: name }
+        label: { en: name, fr: name },
+        description: { en: '', fr: ''}
       });
     }
     this._showModal = false;

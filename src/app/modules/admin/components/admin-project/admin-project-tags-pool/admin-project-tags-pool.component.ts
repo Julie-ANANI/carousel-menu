@@ -96,7 +96,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   public removeTag(event: Event, tag: Tag): void {
     event.preventDefault();
     this.tagService
-      .removeTagFromPool(this._projectId, tag._id)
+      .removeTagFromPool(this._projectId, tag)
       .first()
       .subscribe((data) => {
         this._tags = data;

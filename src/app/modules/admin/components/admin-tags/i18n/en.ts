@@ -21,6 +21,7 @@ export const TAGS = {
     "TYPE": {
       "LABEL": "Type",
       "UNKNOWN": "",
+      "undefined": "",
       "SECTOR": "Sector",
       "VALUE_CHAIN": "Value Chain",
       "SOLUTION_TYPE": "Solution Type",
