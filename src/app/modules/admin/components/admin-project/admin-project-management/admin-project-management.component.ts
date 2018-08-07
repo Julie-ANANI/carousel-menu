@@ -106,7 +106,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
-
+    console.log(this._project._metadata);
     this.projectDomains = [{name: 'umi'}, {name: 'dynergie'}, {name: 'novanexia'}, {name: 'inomer'}, {name: 'multivalente'}];
 
     this._domain = this._project.settings.domain;
@@ -129,6 +129,30 @@ export class AdminProjectManagementComponent implements OnInit {
 
     this.isEmailsDomainsSidebar = false;
   }
+
+  public setMetadata(level: string, name: string, event: any) {
+    if(this._project._metadata && this._project._metadata[level][name] !== undefined) {
+      this._project._metadata[level][name] = event.currentTarget.checked;
+      this.save(event, 'Successfully saved.');
+    }
+  }
+
+  public getMetadata(level: string, name: string) {
+    return !!this._project._metadata && this._project._metadata[level][name];
+  }
+
+  /*
+  _metadata: {
+    preparation: {
+      questionnaire: { type: Boolean, default: false},
+      description: { type: Boolean, default: false},
+      translations: { type: Boolean, default: false},
+      target: { type: Boolean, default: false},
+      blacklist: { type: Boolean, default: false},
+      statusupdate: { type: Boolean, default: false}
+    }
+  }
+   */
 
   resetData() {
     this._dirty = false;
@@ -449,3 +473,11 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
 }
+
+
+/*
+seeDomain
+seeOperator
+editOwner
+
+ */

@@ -158,7 +158,9 @@
         <input
           type="checkbox"
           name="editPreset"
-          id="editPreset">
+          id="editPreset"
+          [checked]="getMetadata('preparation', 'questionnaire')"
+          (change)="setMetadata('preparation', 'questionnaire', $event)">
         <i class="form-icon"></i>
         {{ 'PROJECT.PREPARATION.EDIT_PRESET' | translate }}
       </label>
@@ -176,7 +178,9 @@
         <input
           type="checkbox"
           name="editProjectDescription"
-          id="editProjectDescription">
+          id="editProjectDescription"
+          [checked]="getMetadata('preparation', 'description')"
+          (change)="setMetadata('preparation', 'description', $event)">
         <i class="form-icon"></i>
         {{ 'PROJECT.PREPARATION.EDIT_DESCRIPTION' | translate }}
       </label>
@@ -193,7 +197,9 @@
         <input
           type="checkbox"
           name="seeTranslation"
-          id="seeTranslation">
+          id="seeTranslation"
+          [checked]="getMetadata('preparation', 'translations')"
+          (change)="setMetadata('preparation', 'translations', $event)">
         <i class="form-icon"></i>
         {{ 'PROJECT.PREPARATION.DESCRIPTION_TRANSLATION' | translate }}
       </label>
@@ -212,7 +218,9 @@
         <input
           type="checkbox"
           name="editMarketTargeting"
-          id="editMarketTargeting">
+          id="editMarketTargeting"
+          [checked]="getMetadata('preparation', 'target')"
+          (change)="setMetadata('preparation', 'target', $event)">
         <i class="form-icon"></i>
         {{ 'PROJECT.PREPARATION.EDIT_MARKET_TARGETING' | translate }}
       </label>
@@ -229,7 +237,9 @@
         <input
           type="checkbox"
           name="blacklistDomainsAndEmails"
-          id="blacklistDomainsAndEmails">
+          id="blacklistDomainsAndEmails"
+          [checked]="getMetadata('preparation', 'blacklist')"
+          (change)="setMetadata('preparation', 'blacklist', $event)">
         <i class="form-icon"></i>
         {{ 'PROJECT.PREPARATION.BLACKLIST_DOMAINS_EMAILS' | translate }}
       </label>
@@ -250,7 +260,9 @@
         <input
           type="checkbox"
           name="updateStatus"
-          id="updateStatus">
+          id="updateStatus"
+          [checked]="getMetadata('preparation', 'statusupdate')"
+          (change)="setMetadata('preparation', 'statusupdate', $event)">
         <i class="form-icon"></i>
         {{ 'PROJECT.PREPARATION.UPDATE_STATUS' | translate }}
       </label>
