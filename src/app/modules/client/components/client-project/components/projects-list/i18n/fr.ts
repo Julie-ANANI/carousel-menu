@@ -8,6 +8,6 @@ export const PROJECTS_LIST = {
   'UNTITLED': 'Projet sans nom',
   'NO_PROJECT': {
     'TITLE': 'Vous n\'avez pas de projet ?',
-    'CONTENT': 'Cliquez sur le bouton Ajouter un projet pour créer votre premier projet!'
+    'CONTENT': 'Cliquez sur le bouton Ajouter un projet pour créer votre premier projet.'
   }
 };

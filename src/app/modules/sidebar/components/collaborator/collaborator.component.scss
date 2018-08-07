@@ -1,12 +1,8 @@
-.collaborator-wrapper {
-  padding-top: 30px;
-
-  .bot-rect {
-    width: 245px;
-  }
+#collaborator-wrapper {
+  padding-top: 1.875rem;
 
   .pd-top {
-    padding-top: 30px;
+    padding-top: 1.875rem;
   }
 
   .collaborator {
@@ -20,7 +16,7 @@
 
     li {
       padding-left: 0;
-      margin-bottom: 20px;
+      margin-bottom: 1.2rem;
     }
 
   }
@@ -39,11 +35,11 @@
 
   .ghost-delete {
     visibility: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 1.2rem;
   }
 
   .ghost-primary {
-    margin-bottom: 20px;
+    margin-bottom: 1.2rem;
   }
 
 }
@@ -52,11 +48,15 @@
 
 @media (max-width: 600px) {
 
-  .ghost-delete, .ghost-primary {
-    width: 78px;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    visibility: visible !important;
+  #collaborator-wrapper {
+
+    .ghost-delete, .ghost-primary {
+      width: 78px;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      visibility: visible !important;
+    }
+
   }
 
 }

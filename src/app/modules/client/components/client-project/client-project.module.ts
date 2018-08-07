@@ -27,6 +27,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputModule } from '../../../input/input.module';
 import { PaginationModule } from '../../../input/component/pagination/pagination.module';
+import { SidebarCollaboratorModule } from '../../../sidebar/components/collaborator/sidebar-collaborator.module';
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import { PaginationModule } from '../../../input/component/pagination/pagination
     SharedProjectSettingsModule,
     SharedProjectDescriptionModule,
     InputModule,
-    PaginationModule
+    PaginationModule,
+    SidebarCollaboratorModule
   ],
   declarations: [
     ClientProjectComponent,

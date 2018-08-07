@@ -7,7 +7,6 @@ import { SharedTagItemModule } from '../shared/components/shared-tag-item/shared
 import { SharedTextZoneModule } from '../shared/components/shared-text-zone/shared-text-zone.module';
 import { PipeModule } from '../../pipe/pipe.module';
 import { InputModule } from '../input/input.module';
-import { CollaboratorComponent } from './components/collaborator/collaborator.component';
 import { SidebarComponent } from './sidebar.component';
 import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.component';
 import { EmailsFormComponent } from './components/emails-form/emails-form.component';
@@ -37,7 +36,6 @@ import { AutocompleteInputModule } from '../input/component/autocomplete-input/a
     SidebarBatchComponent,
     SidebarWorkflowComponent,
     SidebarSignatureComponent,
-    CollaboratorComponent,
     SidebarComponent,
     InnovationPreviewComponent,
     SidebarSearchComponent,
@@ -47,7 +45,6 @@ import { AutocompleteInputModule } from '../input/component/autocomplete-input/a
     RatingItemComponent
   ],
   exports: [
-    CollaboratorComponent,
     SidebarComponent,
     SidebarBatchComponent,
     SidebarWorkflowComponent,
