@@ -5,7 +5,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
 import { Subject } from 'rxjs/Subject';
-import {Template} from '../../../../../sidebar/interfaces/template';
+import { Template } from '../../../../../sidebar/interfaces/template';
 
 const DEFAULT_TAB = 'targeting';
 
@@ -23,30 +23,32 @@ export class SetupProjectComponent implements OnInit {
   private _saveChanges: boolean;
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
 
-  pitchFormValid: boolean;
-  showPitchFieldError: Subject<boolean> = new Subject();
-  targetingFormValid: boolean;
-  showTargetingFieldError: Subject<boolean> = new Subject();
+  private _pitchFormValid: boolean;
+  private _showPitchFieldError: Subject<boolean> = new Subject();
+  private _targetingFormValid: boolean;
+  private _showTargetingFieldError: Subject<boolean> = new Subject();
   scrollOn = false;
 
-  innovationPreviewIndex = 0;
-  sidebarTemplateValue: Template = {};
+  private _innovationPreviewIndex = 0;
+  private _sidebarTemplateValue: Template = {};
 
   private _currentTab: string;
   private _projectToBeSubmitted: boolean;
 
   constructor(private innovationService: InnovationService,
-              private notificationService: TranslateNotificationsService,
-              private router: Router) {
-  }
+              private translateNotificationsService: TranslateNotificationsService,
+              private router: Router) {}
 
   ngOnInit() {
     const url = this.router.routerState.snapshot.url.split('/');
     this._currentTab = url ? url[4] || DEFAULT_TAB : DEFAULT_TAB;
+
     this._saveChanges = false;
     this._changesSaved = false;
     this._saveButtonClass = 'disabled';
+
     this.checkProjectStatus();
+    this.completionCalculation();
   }
 
   @HostListener('window:scroll', [])
@@ -62,15 +64,16 @@ export class SetupProjectComponent implements OnInit {
       Here we are checking the fields that are required to submit or validate the form.
    */
   checkProjectStatus() {
+
     for (let i = 0; i < this.project.innovationCards.length; i++ ) {
       if (this.project.innovationCards[i].title === '' || this.project.innovationCards[i].summary === ''
         || this.project.innovationCards[i].problem === '' || this.project.innovationCards[i].solution === ''
         || this.project.innovationCards[i].advantages.length === 0 || this.project.external_diffusion === null
         || this.project.patented === null) {
-        this.pitchFormValid = false;
+        this._pitchFormValid = false;
         break;
       } else {
-        this.pitchFormValid = true;
+        this._pitchFormValid = true;
       }
     }
 
@@ -79,11 +82,74 @@ export class SetupProjectComponent implements OnInit {
       || this.project.settings.geography.continentTarget.oceania || this.project.settings.geography.continentTarget.europe
       || this.project.settings.geography.continentTarget.asia || this.project.settings.geography.continentTarget.americaSud
       || this.project.settings.geography.continentTarget.americaNord || this.project.settings.geography.continentTarget.africa) ) {
-      this.targetingFormValid = true;
+      this._targetingFormValid = true;
     } else {
-      this.targetingFormValid = false;
+      this._targetingFormValid = false;
     }
 
+  }
+
+  completionCalculation() {
+    let temporaryProjectPercentage = 0;
+    let temporarySettingPercentage = 0;
+    let temporaryInnovCardPercentage = 0;
+    let totalInnovCardPercentage = 0;
+
+    const totalProjectField = 10;
+    const totalTargetingField = 2;
+    const totalInnovCardField = 5;
+
+    if (this.project.external_diffusion !== null) {
+      temporaryProjectPercentage++;
+    }
+
+    if (this.project.projectStatus !== null) {
+      temporaryProjectPercentage++;
+    }
+
+    if (this.project.patented !== null) {
+      temporaryProjectPercentage++;
+    }
+
+    if (this.project.settings.market.comments.length) {
+      temporarySettingPercentage++;
+    }
+
+    if (this.project.settings.geography.exclude.length || this.project.settings.geography.comments.length || this.project.settings.geography.continentTarget.russia
+      || this.project.settings.geography.continentTarget.oceania || this.project.settings.geography.continentTarget.europe || this.project.settings.geography.continentTarget.asia
+      || this.project.settings.geography.continentTarget.americaSud || this.project.settings.geography.continentTarget.americaNord
+      || this.project.settings.geography.continentTarget.africa) {
+      temporarySettingPercentage++;
+    }
+
+    for (let i = 0; i < this.project.innovationCards.length; i++ ) {
+      if (this.project.innovationCards[i].title.length) {
+        temporaryInnovCardPercentage++;
+        totalInnovCardPercentage++;
+      }
+      if (this.project.innovationCards[i].summary.length) {
+        temporaryInnovCardPercentage++;
+        totalInnovCardPercentage++;
+      }
+      if (this.project.innovationCards[i].problem.length) {
+        temporaryInnovCardPercentage++;
+        totalInnovCardPercentage++;
+      }
+      if (this.project.innovationCards[i].solution.length) {
+        temporaryInnovCardPercentage++;
+        totalInnovCardPercentage++;
+      }
+      if (this.project.innovationCards[i].advantages.length) {
+        temporaryInnovCardPercentage++;
+        totalInnovCardPercentage++;
+      }
+
+      this.project.innovationCards[i].completion = (temporaryInnovCardPercentage * 100) / totalInnovCardField;
+      temporaryInnovCardPercentage = 0;
+    }
+
+    this.project.settings.completion = (temporarySettingPercentage * 100) / totalTargetingField;
+    this.project.completion = (((temporaryProjectPercentage + temporarySettingPercentage + (totalInnovCardPercentage / this.project.innovationCards.length)) * 100) / totalProjectField) ;
   }
 
   saveProject(event: Event): void {
@@ -92,13 +158,13 @@ export class SetupProjectComponent implements OnInit {
      if (this._saveChanges) {
         this.innovationService.save(this.project._id, this.project).first().subscribe(data => {
             this.project = data;
-            this.notificationService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
+            this.translateNotificationsService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
             this._changesSaved = true;
             this._saveChanges = false;
             this._saveButtonClass = 'disabled';
             this.checkProjectStatus();
           }, err => {
-            this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+            this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
         });
      }
 
@@ -112,18 +178,18 @@ export class SetupProjectComponent implements OnInit {
     event.preventDefault();
 
     if (this._saveChanges) {
-      this.notificationService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.SAVE_ERROR');
     } else {
-      if (this.pitchFormValid) {
-        if (this.targetingFormValid) {
+      if (this._targetingFormValid) {
+        if (this._pitchFormValid) {
           this._projectToBeSubmitted = true; // open the modal to ask the confirmation.
         } else {
-          this.showTargetingFieldError.next(true);
-          this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.TARGETING_FORM');
+          this._showPitchFieldError.next(true);
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FORM.PITCH_FORM');
         }
       } else {
-        this.showPitchFieldError.next(true);
-        this.notificationService.error('ERROR.ERROR', 'ERROR.FORM.PITCH_FORM');
+        this._showTargetingFieldError.next(true);
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FORM.TARGETING_FORM');
       }
     }
 
@@ -136,10 +202,10 @@ export class SetupProjectComponent implements OnInit {
     this.innovationService.submitProjectToValidation(this.project._id)
       .first().subscribe(data => {
        this.project.status = 'SUBMITTED';
-       this.notificationService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
+       this.translateNotificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
        this.router.navigate(['project']);
       }, err => {
-        this.notificationService.error('ERROR.PROJECT.UNFORBIDDEN', err);
+        this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
 
   }
@@ -150,6 +216,7 @@ export class SetupProjectComponent implements OnInit {
   updateSettings(value: InnovationSettings): void {
     if (this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED') {
       this.project.settings = value;
+      this.completionCalculation();
       this._saveChanges = true;
       this._saveButtonClass = 'save-project';
     } else {
@@ -164,6 +231,7 @@ export class SetupProjectComponent implements OnInit {
   saveInnovation(value: boolean) {
     if (this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED') {
       this.checkProjectStatus();
+      this.completionCalculation();
       this._saveChanges = value;
       this._changesSaved = false;
       this._saveButtonClass = 'save-project';
@@ -178,13 +246,13 @@ export class SetupProjectComponent implements OnInit {
   }
 
   innovationIndex(value: number) {
-    this.innovationPreviewIndex = value;
+    this._innovationPreviewIndex = value;
   }
 
   showInnovation(event: Event) {
     event.preventDefault();
-    this.sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+    this._sidebarTemplateValue = {
+      animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'PROJECT_MODULE.SETUP.PREVIEW',
       size: '726px'
     };
@@ -196,7 +264,7 @@ export class SetupProjectComponent implements OnInit {
   }
 
   closeSidebar(value: string) {
-    this.sidebarTemplateValue.animate_state = value;
+    this._sidebarTemplateValue.animate_state = value;
   }
 
   get currentTab() {
@@ -221,6 +289,38 @@ export class SetupProjectComponent implements OnInit {
 
   get projectStatus(): string {
     return this.project.status;
+  }
+
+  get pitchFormValid(): boolean {
+    return this._pitchFormValid;
+  }
+
+  get showPitchFieldError(): Subject<boolean> {
+    return this._showPitchFieldError;
+  }
+
+  get targetingFormValid(): boolean {
+    return this._targetingFormValid;
+  }
+
+  get showTargetingFieldError(): Subject<boolean> {
+    return this._showTargetingFieldError;
+  }
+
+  set showTargetingFieldError(value: Subject<boolean>) {
+    this._showTargetingFieldError = value;
+  }
+
+  get innovationPreviewIndex(): number {
+    return this._innovationPreviewIndex;
+  }
+
+  get sidebarTemplateValue(): Template {
+    return this._sidebarTemplateValue;
+  }
+
+  set sidebarTemplateValue(value: Template) {
+    this._sidebarTemplateValue = value;
   }
 
 }

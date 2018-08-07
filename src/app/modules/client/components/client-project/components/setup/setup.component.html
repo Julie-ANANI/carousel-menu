@@ -41,7 +41,7 @@
 
 </div>
 
-<div class="section-container" id="setup-project">
+<section class="section-container" id="setup">
 
   <!-- Messages -->
   <div class="column col-xs-12 col-11 col-mx-auto">
@@ -73,9 +73,9 @@
   </div>
 
   <!-- Buttons -->
-  <div class="setup-section-1-wrapper" [ngClass]="{ 'setup-scroll-sticky': scrollOn }">
+  <div class="heading-button-wrapper" [ngClass]="{ 'setup-scroll-sticky': scrollOn }">
     <div class="column col-xs-12 col-11 col-mx-auto">
-      <div class="row-1-wrapper">
+      <div class="content-wrapper">
 
         <!-- Heading -->
         <h2 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h2>
@@ -166,7 +166,7 @@
     </app-project-survey>
   </div>
 
-</div>
+</section>
 
 <!-- Modal to ask user to sure about submitting the project -->
 <div class="modal" [ngClass]="{'active': projectToBeSubmitted}">

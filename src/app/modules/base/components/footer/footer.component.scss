@@ -1,5 +1,7 @@
+@import "../../../../../style/variables";
+
 #footer {
-  background: #4F5D6B;
+  background: $background-color;
   font-size: 0.85rem;
   color: white;
 
@@ -7,10 +9,10 @@
 
     .btn-lang {
       background-color: white;
-      color: #333333;
+      color: $dark-color;
       padding: 0.4rem 0.7rem;
-      height: 2.4rem;
-      border-color: #97A4B1;
+      height: 3rem;
+      border-color: $meta-color;
 
       i {
         font-size: .8rem;
@@ -44,7 +46,7 @@
       a:hover {
         text-decoration: none;
         cursor: pointer;
-        color: #FFB300;
+        color: $primary-color;
       }
 
     }

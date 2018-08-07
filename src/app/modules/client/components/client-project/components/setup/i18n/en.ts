@@ -35,7 +35,7 @@ export const SETUP = {
 
   'PREVIEW': 'Preview',
   'PREVIEW_BUTTON': 'Preview innovation',
-  'PRINT_BUTTON': 'Print'
+  'PRINT_BUTTON': 'Print innovation'
 
 
 };
