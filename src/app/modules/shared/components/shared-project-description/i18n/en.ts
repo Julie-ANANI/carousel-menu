@@ -20,7 +20,8 @@ export const PROJECT = {
     'EDIT_DESCRIPTION': 'Edit project description',
     'DESCRIPTION_TRANSLATION': 'Description translation',
     'EDIT_MARKET_TARGETING': 'Edit market targeting',
-    'BLACKLIST_DOMAINS_EMAILS': 'Blacklist Emails / Domains'
+    'BLACKLIST_DOMAINS_EMAILS': 'Blacklist Emails / Domains',
+    'UPDATE_STATUS': 'Update status'
   },
   'CARDS': 'Innovation Cards',
   'QUESTIONNAIRE': 'Questionnaire',

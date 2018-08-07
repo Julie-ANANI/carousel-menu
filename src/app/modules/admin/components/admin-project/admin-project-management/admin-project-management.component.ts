@@ -33,6 +33,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
   private _more: Template = {};
   sidebarState = new Subject<string>();
+  projectSubject = new Subject<Innovation>();
 
   // Owner edition
   isEditOwner = false;
@@ -207,6 +208,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   editProjectDescription() {
+    this.isEmailsDomainsSidebar = false;
     this.isInnovationSidebar = true;
     this._more = {
       animate_state: 'active',
@@ -217,6 +219,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   editProjectTargeting() {
+    this.isEmailsDomainsSidebar = false;
     this.isInnovationSidebar = true;
     this._more = {
       animate_state: 'active',
@@ -262,6 +265,17 @@ export class AdminProjectManagementComponent implements OnInit {
       this.save(event, 'Les emails / domaines ont bien été blaklistés');
       this._more = {animate_state: 'inactive', title: this._more.title};
     }
+  }
+
+  editStatus() {
+    this.isEmailsDomainsSidebar = false;
+    this.isInnovationSidebar = true;
+    this._more = {
+      animate_state: 'active',
+      title: 'PROJECT.PREPARATION.UPDATE_STATUS',
+      type: 'status',
+      size: '650px',
+    };
   }
 
   public addTag(tag: Tag): void {
@@ -381,9 +395,15 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
+  formatText(text: string) {
+    return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
+  }
+
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
+
+
 
   public updateDomain() {
     this._innovationService.updateSettingsDomain(this._project._id, this._domain).first().subscribe( x => {
@@ -398,6 +418,7 @@ export class AdminProjectManagementComponent implements OnInit {
     this.more.animate_state = value;
     this.sidebarState.next(this.more.animate_state);
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
+    this.projectSubject.next(this._project);
   }
 
   set domain(domain: {en: string, fr: string}) { this._domain = domain; }

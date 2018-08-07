@@ -235,14 +235,31 @@
       </label>
 
       <label class="form-label">
-        {{project.settings.blacklist.domains.length.toString()}} {{'COMMON.DOMAIN' | translate}}(s)
-      </label>
-
-      <label class="form-label">
-        {{project.settings.blacklist.emails.length.toString()}} Email(s)
+        {{project.settings.blacklist.domains.length.toString()}} {{'COMMON.DOMAIN' | translate}}(s) - {{project.settings.blacklist.emails.length.toString()}} Email(s)
       </label>
 
       <button class="showOnHover btn btn-xs ghost-edit" (click)="editBlacklist()">
+        {{'COMMON.EDIT' | translate}}
+      </button>
+
+    </div>
+
+    <!-- update status -->
+    <div class="project-line">
+      <label class="form-switch" for="updateStatus">
+        <input
+          type="checkbox"
+          name="updateStatus"
+          id="updateStatus">
+        <i class="form-icon"></i>
+        {{ 'PROJECT.PREPARATION.UPDATE_STATUS' | translate }}
+      </label>
+
+      <label class="form-label">
+        {{ formatText(project?.status) }} - {{project?.updated | date:dateFormat}}
+      </label>
+
+      <button class="showOnHover btn btn-xs ghost-edit" (click)="editStatus()" *ngIf="project.status !== 'DONE'">
         {{'COMMON.EDIT' | translate}}
       </button>
 
@@ -258,7 +275,8 @@
     *ngIf="isInnovationSidebar"
     [sidebarState]="sidebarState"
     [type]="more.type"
-    [project]="project"
+    [initialProject]="project"
+    [setProject]="projectSubject"
     (projectChange)="changeProject($event)">
   </app-innovation-form>
   <app-emails-form

@@ -2,6 +2,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Innovation} from '../../../../models/innovation';
 import {InnovationSettings} from '../../../../models/innov-settings';
+import {TemplatesService} from '../../../../services/templates/templates.service';
+import {EmailSignature} from '../../../../models/email-signature';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-innovation-form',
@@ -10,9 +13,11 @@ import {InnovationSettings} from '../../../../models/innov-settings';
 })
 export class InnovationFormComponent implements OnInit {
 
-  @Input() set project(value: Innovation) {
-    this._project = value;
-  };
+  @Input() setProject: Subject<Innovation>;
+
+  @Input() set initialProject(value: Innovation) {
+    this._project = JSON.parse(JSON.stringify(value));
+  }
 
   @Input() set type(type: string) {
     this._type = type;
@@ -25,30 +30,60 @@ export class InnovationFormComponent implements OnInit {
 
   isPitch = false;
   isTargeting = false;
+  isStatus = false;
 
   private _type = '';
 
-  private _project: Innovation = null;
+  private _project: Innovation = {};
   private _isChange = false;
 
-  constructor() { }
+  private _email = {};
+  status = [
+    {name: 'EDITING', alias: 'Editing'},
+    {name: 'SUBMITTED', alias: 'Submitted'},
+    {name: 'EVALUATING', alias: 'Evaluating'},
+    {name: 'DONE', alias: 'Done'}];
+  statusValid = true;
+  private _signatures: Array<EmailSignature> = [];
+
+  constructor(private _templatesService: TemplatesService, private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
+
+    this._email = {
+      en: {language: 'en', subject: '', content: ''},
+      fr: {language: 'fr', subject: '', content: ''}
+    };
+
+    this._isChange = false;
+    this.statusValid = true;
 
     if (this.sidebarState) {
       this.sidebarState.subscribe((state) => {
         if (state === 'inactive') {
           setTimeout (() => {
-            this.isChange = false;
+            this._isChange = false;
+            this._email = {
+              en: {language: 'en', subject: '', content: ''},
+              fr: {language: 'fr', subject: '', content: ''}
+            };
+            this.statusValid = true;
           }, 500);
         }
+      })
+    }
+
+    if (this.setProject) {
+      this.setProject.subscribe((project) => {
+        this._project = JSON.parse(JSON.stringify(project));
       })
     }
   }
 
   reinitialiseForm() {
     this.isPitch = false;
-    this.isTargeting = false
+    this.isTargeting = false;
+    this.isStatus = false;
   }
 
   loadTypes() {
@@ -63,6 +98,12 @@ export class InnovationFormComponent implements OnInit {
         break;
       } case('preview'): {
         break;
+      }case('status'): {
+        this.isStatus = true;
+        this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
+          this._signatures = signatures.result;
+        });
+        break;
       } default: {
         break;
       }
@@ -76,6 +117,9 @@ export class InnovationFormComponent implements OnInit {
         this.projectChange.emit(this._project);
         break;
       } case('targeting'): {
+        this.projectChange.emit(this._project);
+        break;
+      } case('status'): {
         this.projectChange.emit(this._project);
         break;
       } case('preview'): {
@@ -95,6 +139,30 @@ export class InnovationFormComponent implements OnInit {
     this.project.settings = value;
   }
 
+  checkStatus(event: string) {
+    this._isChange = true;
+    this.statusValid = true;
+    switch (this._project.status) {
+      case 'SUBMITTED': {
+        if (event === 'EDITING') {
+          this.statusValid = false;
+        }
+        break;
+      } case 'EVALUATING' : {
+        if (event === 'SUBMITTED' || event === 'EDITING') {
+          this.statusValid = false;
+        }
+        break;
+      } default : {
+        break;
+      }
+    }
+
+    if (this.statusValid === false) {
+      this._notificationsService.error('PROJECT_LIST.STATUS' , 'Vous ne pouvez pas revenir à ce status');
+    }
+  }
+
   get type(): string {
     return this._type;
   }
@@ -109,5 +177,18 @@ export class InnovationFormComponent implements OnInit {
 
   set isChange(value: boolean) {
     this._isChange = value;
+  }
+
+  get email(): {} {
+    return this._email;
+  }
+
+  set email(value: {}) {
+    this._email = value;
+    this.isChange = true;
+  }
+
+  get signatures(): Array<EmailSignature> {
+    return this._signatures;
   }
 }

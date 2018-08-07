@@ -68,7 +68,7 @@ import { PresetResolver } from './resolvers/preset.resolver';
     Angular2FontawesomeModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   providers: [
     Title,

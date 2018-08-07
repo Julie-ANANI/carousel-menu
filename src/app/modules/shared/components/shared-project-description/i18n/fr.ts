@@ -21,7 +21,8 @@ export const PROJECT = {
     'EDIT_DESCRIPTION': 'Editer la description du projet',
     'DESCRIPTION_TRANSLATION': 'Traduction de la description',
     'EDIT_MARKET_TARGETING': 'Editer le ciblage marché',
-    'BLACKLIST_DOMAINS_EMAILS': 'Blacklister Emails / Domaines'
+    'BLACKLIST_DOMAINS_EMAILS': 'Blacklister Emails / Domaines',
+    'UPDATE_STATUS': 'Mettre à jour le status'
   },
   'CARDS': 'Innovation Cards',
   'SYNTHESIS': 'Synthèse',

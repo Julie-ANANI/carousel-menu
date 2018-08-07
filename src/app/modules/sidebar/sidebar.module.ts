@@ -22,6 +22,7 @@ import { SidebarSignatureComponent } from './components/sidebar-signature/sideba
 import { InnovationFormComponent } from './components/innovation-form/innovation-form.component';
 import {SharedProjectEditCardsModule} from '../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
 import {SharedProjectSettingsModule} from '../shared/components/shared-project-settings-component/shared-project-settings.module';
+import {SharedMailEditorModule} from '../shared/components/shared-mail-editor/shared-mail-editor.module';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import {SharedProjectSettingsModule} from '../shared/components/shared-project-s
     SharedTagItemModule,
     SharedProjectEditCardsModule,
     SharedProjectSettingsModule,
+    SharedMailEditorModule,
     SharedTextZoneModule,
     PipeModule,
     InputModule

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TemplatesService } from '../../../../../services/templates/templates.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { EmailScenario } from '../../../../../models/email-scenario';
-import {EmailTemplate} from "../../../../../models/email-template";
+import {EmailTemplate} from '../../../../../models/email-template';
 import { EmailSignature } from '../../../../../models/email-signature';
 
 @Component({
@@ -58,10 +58,10 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
       this._scenarios.unshift(newScenario);
     });
   }
-  
+
   public updateScenario(changedScenario: EmailScenario) {
     this._templatesService.save(changedScenario).first().subscribe(updatedScenario => {
-      const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id == changedScenario._id);
+      const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id === changedScenario._id);
       this._scenarios[scenarioIndex] = updatedScenario;
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     }, (err: any) => {
@@ -74,7 +74,7 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
    */
   public deleteScenario(scenarioToDelete: EmailScenario) {
     this._templatesService.remove(scenarioToDelete._id).first().subscribe(_ => {
-      const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id == scenarioToDelete._id);
+      const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id === scenarioToDelete._id);
       this._scenarios.splice(scenarioIndex, 1);
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     });

@@ -1,7 +1,20 @@
 <form novalidate (ngSubmit)="onSubmit()">
 
-  <div class="text-right">
-    <button type="submit" class="btn btn-primary" [disabled]="!isChange">{{'COMMON.SAVE' | translate}}</button>
+  <div class="form-group-inline-space">
+    <div class="input-group">
+      <select class="form-select"
+              *ngIf="isStatus"
+              [(ngModel)]="project.status"
+              (ngModelChange)="checkStatus($event)"
+              [ngModelOptions]="{standalone: true}">
+        <option *ngFor="let stat of status" [ngValue]="stat.name">{{stat.alias}}</option>
+      </select>
+    </div>
+    <button type="submit"
+            class="btn btn-primary"
+            [disabled]="(!isChange) || (!statusValid)">
+      {{isStatus ? ('COMMON.SEND' | translate) : ('COMMON.SAVE' | translate) }}
+    </button>
   </div>
 
   <app-shared-project-edit-cards
@@ -20,4 +33,7 @@
     *ngIf="isTargeting"
     [adminMode]="true">
   </app-shared-project-settings>
+
+  <app-shared-mail-editor *ngIf="isStatus" [signatures]="signatures" [emailsObject]="email" (emailChange)="email = $event"></app-shared-mail-editor>
+
 </form>

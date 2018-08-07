@@ -1,3 +1,15 @@
 .text-right {
   margin: 20px;
 }
+
+.form-group-inline-space {
+  margin: 30px;
+
+  div.input-group {
+    width: 50%;
+
+    .form-select {
+      width: 100%;
+    }
+  }
+}
