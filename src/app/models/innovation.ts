@@ -40,4 +40,5 @@ export interface Innovation {
   readonly created?: Date;
   readonly updated?: Date;
   operator?: User;
+  previewMode?: boolean;
 }

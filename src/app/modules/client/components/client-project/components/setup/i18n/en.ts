@@ -21,6 +21,7 @@ export const SETUP = {
       'B': 'reads',
       'C': 'our comments.'
     },
+    'PREVIEW_MODE': 'The partial synthesis of your project is available.',
     'DONE': 'Synthesis of your project is available. You can\'t make changes in your project anymore.'
   },
 

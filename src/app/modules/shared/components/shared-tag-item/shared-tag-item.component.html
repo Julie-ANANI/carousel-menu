@@ -1,7 +1,5 @@
 <div class="shared-tag-item">
 
-  <div [ngSwitch]="editMode">
-
     <form *ngIf="editMode" [formGroup]="tagForm" (ngSubmit)="addTagEmitter($event)">
       <div [ngStyle]="{ 'display': 'flex' }">
         <input
@@ -21,10 +19,10 @@
     <div *ngIf="tags?.length > 0" [ngStyle]="{ 'margin-top': '10px' }">
       <div *ngFor="let t of tags" class="tags">
         <div class="tags-wrapper">
-          {{ t?.label | multiling:lang }} <i class="icon icon-cross" (click)="removeTagEmitter($event, t)"></i>
+          {{ t?.label | multiling:lang }}
+          <i *ngIf="editMode" class="icon icon-cross" (click)="removeTagEmitter($event, t)"></i>
         </div>
       </div>
     </div>
 
-  </div>
 </div>

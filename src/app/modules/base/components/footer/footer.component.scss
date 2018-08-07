@@ -1,14 +1,14 @@
 .main-container {
-  background: #f2f2f2;
+  background: #4F5D6B;
   padding-top: 50px;
   padding-bottom: 50px;
   font-size: 0.65rem;
-  color: #333333;
+  color: white;
 
   .lang-wrapper {
 
     .btn-lang {
-      background-color: #FAFAFA;
+      background-color: white;
       color: #333333;
       padding: 0.4rem 0.7rem;
       height: 2.4rem;
@@ -55,7 +55,7 @@
 
   .footer-hr {
     margin-top: 50px;
-    border: .5px solid #97A4B1;
+    border: .5px solid white;
     border-radius: .25rem;
   }
 
@@ -64,7 +64,7 @@
     transition: all 0.35s ease-in-out;
 
     a{
-      color: #333333;
+      color: white;
     }
 
   }

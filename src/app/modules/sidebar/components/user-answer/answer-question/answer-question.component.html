@@ -58,6 +58,16 @@
         </app-autocomplete-input>
       </div>
 
+      <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
+        <app-shared-tag-item
+          [tags]="answerTags(question.identifier)"
+          [editMode]="editMode"
+          [projectId]="innoid"
+          (addTag)="addTag($event, question.identifier)"
+          (removeTag)="removeTag($event, question.identifier)">
+        </app-shared-tag-item>
+      </div>
+
     </ng-container>
 
     <!-- List case -->
@@ -81,6 +91,16 @@
          [config]="{ placeholder: 'Enter your response', initialData: fullAnswer.answers[question.identifier] || [] }"
          [adminMode]="editMode">
        </app-input-list>
+     </div>
+
+     <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
+       <app-shared-tag-item
+         [tags]="answerTags(question.identifier)"
+         [editMode]="editMode"
+         [projectId]="innoid"
+         (addTag)="addTag($event, question.identifier)"
+         (removeTag)="removeTag($event, question.identifier)">
+       </app-shared-tag-item>
      </div>
 
    </ng-container>
@@ -136,9 +156,7 @@
         </div>
       </form>
 
-      <div
-        *ngIf="editMode"
-        [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
+      <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
         <app-shared-tag-item
           [tags]="answerTags(question.identifier)"
           [editMode]="editMode"
@@ -169,16 +187,6 @@
           [rating]="fullAnswer.answers[question.identifier + 'Quality']"
           (ratingChange)="updateQuality($event)">
         </app-rating-item>
-      </div>
-
-      <div *ngIf="editMode" class="pd-top">
-        <app-shared-tag-item
-          [tags]="fullAnswer.answerTags[question.identifier]"
-          [editMode]="editMode"
-          [projectId]="innoid"
-          (addTag)="addTag($event, question.identifier)"
-          (removeTag)="removeTag($event, question.identifier)">
-        </app-shared-tag-item>
       </div>
 
     </ng-container>
@@ -226,6 +234,15 @@
   <div *ngIf="fullAnswer.answers[question.identifier + 'Comment'] && !editMode" [ngStyle]="{ 'padding-top': '15px' }">
     <p class="comment-text" [ngStyle]="{ 'color': '#0B90C6' }" >{{ 'COMMON.COMMENT' | translate }}</p>
     <p class="comment-answer">{{fullAnswer.answers[question.identifier + 'Comment']}}</p>
+    <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
+      <app-shared-tag-item
+        [tags]="answerTags(question.identifier + 'Comment')"
+        [editMode]="false"
+        [projectId]="innoid"
+        (addTag)="addTag($event, question.identifier + 'Comment')"
+        (removeTag)="removeTag($event, question.identifier + 'Comment')">
+      </app-shared-tag-item>
+    </div>
   </div>
 
   <div *ngIf="editMode" [ngStyle]="{ 'padding-top': '15px' }">
@@ -253,6 +270,17 @@
         </div>
         <!--<i class="fas fa-trash" (click)="deleteComment($event)"></i>-->
       </div>
+
+      <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
+        <app-shared-tag-item
+          [tags]="answerTags(question.identifier + 'Comment')"
+          [editMode]="true"
+          [projectId]="innoid"
+          (addTag)="addTag($event, question.identifier + 'Comment')"
+          (removeTag)="removeTag($event, question.identifier + 'Comment')">
+        </app-shared-tag-item>
+      </div>
+
     </form>
 
   </div>

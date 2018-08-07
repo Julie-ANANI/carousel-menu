@@ -31,7 +31,9 @@ export const MARKET_REPORT = {
 
   'INSIGHT': 'Insight',
 
-  'CONCLUSION': 'Conclusion',
+  'CONCLUSION': 'Final conclusion',
+
+  'KEY_LEARNING': 'Key learnings',
 
   'STICKY_BAR': {
     'DETAIL_VIEW': 'Detail view',
@@ -41,7 +43,19 @@ export const MARKET_REPORT = {
     'BUTTON_ADMIN': 'Finalize synthesis',
   },
 
-  'MESSAGE_SYNTHESIS': 'The synthesis has been successfully finalized.',
+  'MESSAGE_SYNTHESIS_VISIBLE': 'The synthesis is visible to client.',
+
+  'MESSAGE_SYNTHESIS_NOT_VISIBLE': 'The synthesis is not visible to client.',
+
+  'MESSAGE_SYNTHESIS': 'The project has been successfully ended.',
+
+  'CLIENT_SYNTHESIS_MESSAGE': 'The partial synthesis of your project is available.',
+
+  'MODAL_TITLE': 'Confirmation Board',
+
+  'MODAL_CONTENT': 'Do you want to end this project?',
+
+  'TARGET_COUNTRIES': 'Targeted countries',
 
  // 'TITLE': 'Exploring market potential',
   'COLLAPSE': 'Collapse',
@@ -57,7 +71,7 @@ export const MARKET_REPORT = {
   'BTN_VIEW_MODE': 'Go to view mode',
   'BTN_ANSWERS_OPEN': 'Show answers',
   'BTN_ANSWERS_CLOSE': 'Hide answers',
-  'BTN_COMMENTS_OPEN': 'Show comments ({{length}})',
+  'BTN_COMMENTS_OPEN': 'Comments',
   'BTN_COMMENTS_CLOSE': 'Hide comments ({{length}})',
   'BTN_RECOMPUTE': 'Recompute infographics',
   'PEOPLE_VOTED': 'people voted',

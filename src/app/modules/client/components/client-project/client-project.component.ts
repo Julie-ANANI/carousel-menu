@@ -42,17 +42,7 @@ export class ClientProjectComponent implements OnInit {
     this.titleService.setTitle(this._project.name);
 
     // Getting the project type
-    switch (this._project.type) {
-      case 'leads':
-        this._imgType = 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-leads.svg';
-        break;
-      case 'apps':
-        this._imgType = 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-apps.svg';
-        break;
-      case 'insights':
-        this._imgType = 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-insights.svg';
-        break;
-    }
+    this._imgType = `https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-${this._project.type}.svg`;
 
   }
 

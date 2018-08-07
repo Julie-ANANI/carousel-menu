@@ -27,8 +27,7 @@
     <ng-container *ngIf="note.count">
       <app-progress-bar
         [width]="note.percentage"
-        [backgroundColor]="'#2ECC71'"
-        [value]="note.percentage">
+        [backgroundColor]="'#2ECC71'">
       </app-progress-bar>
     </ng-container>
     <span *ngIf="!note.count" class="no-grade-wrapper">{{ 'MARKET_REPORT.NO_GRADE' | translate }}</span>
