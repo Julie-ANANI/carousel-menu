@@ -20,25 +20,30 @@
       .content-wrapper {
         display: inline-flex;
         width: 100%;
-        cursor: pointer;
 
         img {
           border-radius: .25rem;
           width: 120px;
           height: 100px;
           margin-right: 1.2rem;
+          cursor: pointer;
         }
 
         .project-description {
           border-bottom: .06rem solid $border-color;
           width: 100%;
 
-          h6 {
+          span {
             font-size: 1.4rem;
-            margin-bottom: 0.95rem;
+          }
+
+          span:hover {
+            color: $primary-color;
+            cursor: pointer;
           }
 
           .date-text-wrapper {
+            margin-top: 0.95rem;
             font-size: 0.85rem;
             color: $meta-color;
             font-weight: 600;

@@ -22,6 +22,9 @@
       align-items: center;
       display: inline-flex;
       flex-direction: column;
+      width: 70%;
+      margin-right: auto;
+      margin-left: auto;
 
       .main-heading {
         font-size: 2.15rem;
@@ -77,6 +80,10 @@
 
     .cover-image {
       display: none;
+    }
+
+    .form-wrapper {
+      width: 90%;
     }
 
     .heading {
