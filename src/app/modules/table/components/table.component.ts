@@ -214,7 +214,9 @@ export class TableComponent {
 
   selectRow(key: string): void {
     if (this._isSelectable) {
-      this._content[key]._isSelected = !(this._content[key]._isSelected);
+      this._isLocal
+        ? this._filteredContent[key]._isSelected = !(this._filteredContent[key]._isSelected)
+        : this._content[key]._isSelected = !(this._content[key]._isSelected);
     }
   }
 
@@ -349,7 +351,9 @@ export class TableComponent {
   }
 
   selectAll(e: any): void  {
-    this._content.forEach(value => { value._isSelected = e.srcElement.checked; });
+    this._isLocal
+      ? this._filteredContent.forEach(value => { value._isSelected = e.srcElement.checked; })
+      : this._content.forEach(value => { value._isSelected = e.srcElement.checked; });
   }
 
   get selector(): string {
