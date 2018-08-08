@@ -9,7 +9,6 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs/Subject';
 import {Tag} from '../../../../models/tag';
-import {TagsService} from '../../../../services/tags/tags.service';
 
 @Component({
   selector: 'app-user-form',
@@ -49,12 +48,10 @@ export class UserFormComponent implements OnInit {
   @Output() userSignUpData = new EventEmitter<FormGroup>();
   @Output() editUserData = new EventEmitter<User>();
   @Output() professionalUserData = new EventEmitter<Professional>();
-  @Output() newTags = new EventEmitter<Tag[]>();
 
   isSignUp = false;
   isEditUser = false;
   isProfessional = false;
-  addTagsToProfessionals = false;
 
   isSelf =  false;
   userForm: FormGroup;
@@ -86,7 +83,6 @@ export class UserFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
               private _translateService: TranslateService,
-              private _tagsService: TagsService,
               private _authService: AuthService) {}
 
   ngOnInit() {
@@ -102,7 +98,6 @@ export class UserFormComponent implements OnInit {
       operator: [false],
       profileUrl: [null],
       domain: [''],
-      tags: [[]]
     });
 
     this._user = new User();
@@ -123,7 +118,6 @@ export class UserFormComponent implements OnInit {
     this.isProfessional = false;
     this.isEditUser = false;
     this.isSignUp = false;
-    this.addTagsToProfessionals = false;
   }
 
   loadTypes() {
@@ -137,8 +131,6 @@ export class UserFormComponent implements OnInit {
     } else if (this._type === 'professional') {
       this.isProfessional = true;
       this.loadProfessional();
-    } else if (this._type === 'tagProfessional') {
-      this.addTagsToProfessionals = true;
     }
 
   }
@@ -172,8 +164,6 @@ export class UserFormComponent implements OnInit {
       pro.company = this.userForm.get('companyName').value;
       pro.tags = this._tags;
       this.professionalUserData.emit(pro);
-    } else if (this.addTagsToProfessionals) {
-      this.newTags.emit(this._tags);
     }
   }
 
@@ -232,12 +222,6 @@ export class UserFormComponent implements OnInit {
     } else {
       this.userForm.get('roles').setValue('user');
     }
-  }
-
-  addTag(tag: any) {
-    this._tagsService.get(tag._id).first().subscribe(res => {
-      this._tags.push(res.tags[0]);
-    });
   }
 
   removeTag(tag: any) {

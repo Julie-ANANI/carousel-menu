@@ -5,6 +5,10 @@
 
       <div class="title-button-wrapper">
         <h1>{{ this.project.name }}</h1>
+        <div class="project-progress">
+          <label class="form-label">Preparation</label>
+          <app-progress-bar class="progress" [width]="calculatePercentage('preparation')+'%'" [backgroundColor]="getColor(calculatePercentage('preparation'))"></app-progress-bar>
+        </div>
         <a [href]="clientSideUrl" target="_blank"><button class="btn ghost-primary">View client side</button></a>
       </div>
 

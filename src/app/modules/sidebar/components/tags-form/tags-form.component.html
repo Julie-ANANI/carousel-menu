@@ -1,0 +1,18 @@
+<div class="user-form-wrapper">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+      <!-- Add Tags -->
+      <app-shared-tag-item
+        *ngIf="addTags"
+        [tags]="tags"
+        [editMode]="true"
+        (addTag)="addTag($event)"
+        (removeTag)="removeTag($event)">
+      </app-shared-tag-item>
+
+    </form>
+
+  </div>
+</div>

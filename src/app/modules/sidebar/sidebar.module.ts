@@ -23,6 +23,7 @@ import { InnovationFormComponent } from './components/innovation-form/innovation
 import {SharedProjectEditCardsModule} from '../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
 import {SharedProjectSettingsModule} from '../shared/components/shared-project-settings-component/shared-project-settings.module';
 import {SharedMailEditorModule} from '../shared/components/shared-mail-editor/shared-mail-editor.module';
+import { TagsFormComponent } from './components/tags-form/tags-form.component';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import {SharedMailEditorModule} from '../shared/components/shared-mail-editor/sh
     AnswerQuestionComponent,
     RatingItemComponent,
     InnovationFormComponent,
+    TagsFormComponent,
   ],
   exports: [
     CollaboratorComponent,
@@ -65,6 +67,7 @@ import {SharedMailEditorModule} from '../shared/components/shared-mail-editor/sh
     InnovationFormComponent,
     SidebarSearchComponent,
     UserAnswerComponent,
+    TagsFormComponent,
     EmailsFormComponent,
   ]
 })

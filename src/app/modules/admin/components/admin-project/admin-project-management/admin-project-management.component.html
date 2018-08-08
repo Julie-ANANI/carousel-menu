@@ -278,6 +278,32 @@
     </div>
 
   </div>
+
+  <h6>{{'PROJECT.CAMPAIGN' | translate}}</h6>
+
+  <div class="project-preparation">
+
+    <!-- Project operator -->
+    <div class="project-line">
+
+      <label class="form-switch" for="seeDomain">
+        <input
+          type="checkbox"
+          name="seeTags"
+          id="seeTags">
+          <!--[checked]="getMetadata('campaign', 'tags')"
+          (change)="setMetadata('campaign', 'tags', $event)"-->
+        <i class="form-icon"></i>
+        Tags
+      </label>
+      <label class="form-label">{{project.tags.length}} tags</label>
+      <button class="showOnHover btn btn-xs ghost-edit" (click)="editBlacklist()">
+        {{'COMMON.EDIT' | translate}}
+      </button>
+      <div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Sidebars -->

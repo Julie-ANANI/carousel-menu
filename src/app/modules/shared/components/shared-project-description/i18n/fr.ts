@@ -12,6 +12,7 @@ export const PROJECT = {
     'FACEBOOK': 'Partager sur Facebook',
     'MAIL': 'Partager par email',
   },
+  'CAMPAIGN': 'Campagne',
   'CAMPAIGNS': 'Campagnes',
   'SETTINGS': 'Paramètres',
   'QUESTIONNAIRE': 'Questionnaire',

@@ -44,6 +44,9 @@ export class SharedProsListComponent {
   private _showDeleteModal = false;
   private _currentPro: Professional = null;
 
+  isUserForm = false;
+  isTagsForm = false;
+
   constructor(private _professionalService: ProfessionalsService,
               private _notificationsService: TranslateNotificationsService,
               private _searchService: SearchService) { }
@@ -127,8 +130,9 @@ export class SharedProsListComponent {
     this._more = {
       animate_state: 'active',
       title: 'COMMON.ADD-TAGS',
-      type: 'tagProfessional'
+      type: 'addTag'
     };
+    this.isTagsForm = true;
     this._prosToTag = pros;
   }
 
@@ -192,6 +196,7 @@ export class SharedProsListComponent {
         title: 'COMMON.EDIT_PROFESSIONAL',
         type: 'professional'
       };
+      this.isUserForm = true;
       this._currentPro = professional;
     });
   }

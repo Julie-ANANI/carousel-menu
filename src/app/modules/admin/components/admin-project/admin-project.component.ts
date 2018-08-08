@@ -35,6 +35,21 @@ export class AdminProjectComponent implements OnInit {
     }
   }
 
+  calculatePercentage(level: string) {
+    const keys = Object.keys(this._project._metadata[level]);
+    return ((keys.filter(value => this._project._metadata[level][value] === true).length) * 100) / keys.length;
+  }
+
+  getColor(length: number) {
+    if (length < 34) {
+      return '#EA5858';
+    } else if (length >= 34 && length < 67) {
+      return '#f0ad4e';
+    } else {
+      return '#2ECC71';
+    }
+  }
+
   public get project(): Innovation { return this._project; }
   public get tabs(): Array<string> { return this._tabs; }
   public get baseUrl(): string { return `/admin/projects/project/${this._project._id}/`; }

@@ -12,6 +12,7 @@ export const PROJECT = {
     'FACEBOOK': 'Share on Facebook',
     'MAIL': 'Share by email',
   },
+  'CAMPAIGN': 'Campaign',
   'CAMPAIGNS': 'Campaigns',
   'SETTINGS': 'Settings',
   'PREPARATION': {
