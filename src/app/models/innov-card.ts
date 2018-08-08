@@ -15,6 +15,7 @@ export class InnovCard extends Model {
   solution?: string;
   advantages?: Array<{text: string}>;
   readonly principal?: boolean;
+  completion?: number;
 
   constructor(innov?: any) {
     super(innov);

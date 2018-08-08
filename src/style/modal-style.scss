@@ -1,3 +1,5 @@
+@import "variables";
+
 /*
     This stylesheet contains the style related to the modal.
  */
@@ -12,38 +14,38 @@
 
   .modal-container {
     padding: 0;
-    border-radius: 5px;
+    border-radius: .35rem;
     text-align: unset;
     overflow: auto;
   }
 
   .modal-header {
-    min-height: 74px;
+    min-height: 4.625rem;
     background: $secondary-color;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    padding: 21px 26px;
+    border-top-left-radius: .35rem;
+    border-top-right-radius: .35rem;
+    padding: 1.312rem 1.625rem;
   }
 
   .btn-clear {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: white;
-    line-height: 1.4;
+    line-height: 1.5;
   }
 
   .modal-title {
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     color: white;
-    line-height: 1.4;
+    line-height: 1.5;
   }
 
   .modal-body {
-    padding: 30px 26px;
+    padding: 1.875rem 1.625rem;
   }
 
   .modal-footer {
-    padding: 0 26px 25px;
+    padding: 0 1.625rem 1.57rem;
     text-align: unset;
     display: flex;
     justify-content: flex-end;

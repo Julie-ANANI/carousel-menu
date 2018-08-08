@@ -35,7 +35,14 @@ export const SETUP = {
 
   'PREVIEW': 'Preview',
   'PREVIEW_BUTTON': 'Preview innovation',
-  'PRINT_BUTTON': 'Print'
+  'PRINT_BUTTON': 'Print innovation',
+
+  'DELETE_BUTTON': 'Delete project',
+
+  'DELETE_PROJECT_MODAL': {
+    'TITLE': 'Delete Board',
+    'CONTENT': 'Do you really want to delete this project?'
+  },
 
 
 };

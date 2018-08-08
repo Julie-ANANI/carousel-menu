@@ -1,36 +1,38 @@
-#project-description {
+@import "../../../../../style/variables";
+
+#client-project {
 
   .hero-light-container {
-    background-color: #4F5D6B;
+    background-color: $background-color;
     padding-bottom: 0;
 
     h1 {
       color: white;
-      margin-bottom: 20px;
+      margin-bottom: 1.2rem;
     }
 
     .info-wrapper {
 
       img {
         vertical-align: middle;
-        margin-bottom: 5px;
+        margin-bottom: .35rem;
       }
 
       .project-info {
-        color: #97A4B1;
+        color: $meta-color;
         font-weight: 600;
-        padding-left: 15px;
-        font-size: 14px;
+        padding-left: .95rem;
+        font-size: .85rem;
       }
 
     }
 
     .tab-container {
-      padding-top: 35px;
+      padding-top: 2.187rem;
 
       .tabs li a {
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
+        border-top-right-radius: .35rem;
+        border-top-left-radius: .35rem;
       }
 
     }
@@ -39,7 +41,7 @@
 
   .active {
     background: white;
-    color: #333333;
+    color: $dark-color;
   }
 
 }
@@ -49,15 +51,15 @@
 @media (max-width: 600px) {
 
   .tabs li a {
-    border-radius: 5px;
+    border-radius: .35rem;
   }
 
 }
 
-@media (min-width: 768px) {
+@media (min-width: 601px) {
 
   .tabs li {
-    margin-right: 15px;
+    margin-right: .95rem;
   }
 
   .tabs li:last-child {

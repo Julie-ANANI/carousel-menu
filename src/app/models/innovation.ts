@@ -41,5 +41,6 @@ export interface Innovation {
   readonly updated?: Date;
   operator?: User;
   previewMode?: boolean;
+  completion?: number;
   _metadata?: any;
 }

@@ -1,14 +1,37 @@
-ul {
-  list-style: none;
-  text-align: center;
+@import "../../../../../style/variables";
 
-  li {
-    display: inline-block;
-    padding: 10px;
-    border-radius: 5px;
+.pagination-wrapper {
+  display: inline-flex;
+  width: 100%;
+  font-size: 0.85rem;
+  font-weight: 600;
+  align-items: center;
 
-    &:hover {
-      background-color: #DDD;
-    }
+  .page-selector-wrapper {
+    margin-left: .6rem;
   }
+
+  select {
+    border: .06rem solid $border-color;
+    height: 2rem;
+  }
+
+  .page-number-wrapper {
+    margin-left: .6rem;
+
+    .fa-angle-double-left, .fa-angle-left, .fa-angle-right, .fa-angle-double-right {
+      color: $meta-color;
+      margin-right: .6rem;
+    }
+
+    .text-wrapper {
+      margin-right: .6rem;
+    }
+
+    .fa-angle-double-left:hover, .fa-angle-left:hover, .fa-angle-right:hover, .fa-angle-double-right:hover {
+      color: $primary-color;
+    }
+
+  }
+
 }

@@ -1,19 +1,20 @@
-.project-setting-wrapper {
-  padding-top: 25px;
+@import "../../../../../style/variables";
+
+#project-settings {
+  padding-top: 1.57rem;
   padding-bottom: 0;
 
   .pd-ques {
-    padding-top: 40px;
+    padding-top: 2.5rem;
   }
 
   .pd-para, .pd-input {
     margin: 0;
-    padding-top: 20px;
+    padding-top: 1.2rem;
   }
 
   .icon-arrow-right, .icon-arrow-down {
-    vertical-align: -.5px;
-    font-size: 14px;
+    vertical-align: -3px;
   }
 
   .help-wrapper {
@@ -24,7 +25,7 @@
   }
 
   .borderRed {
-    border-color: #EA5858;
+    border-color: $alert-color;
   }
 
   .inp-disabled {
@@ -36,11 +37,11 @@
   }
 
   .pd-bottom {
-    padding-bottom: 15px;
+    padding-bottom: .95rem;
   }
 
   .pd-top {
-    padding-top: 5px;
+    padding-top: .35rem;
   }
 
   .text-link:hover {
@@ -49,13 +50,13 @@
 
   .answer-wrapper {
     background: #F8F4F4;
-    color: #333333;
-    padding: 8px 15px;
-    border-radius: 5px;
+    color: $dark-color;
+    padding: .5rem .95rem;
+    border-radius: .18rem;
     display: inline-flex;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    font-size: 14px;
+    margin-right: .6rem;
+    margin-bottom: .6rem;
+    font-size: .85rem;
   }
 
 }

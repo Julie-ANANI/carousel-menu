@@ -8,7 +8,7 @@ import { AutocompleteService } from '../../../../services/autocomplete/autocompl
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs/Subject';
-import {Tag} from '../../../../models/tag';
+import { Tag } from '../../../../models/tag';
 
 @Component({
   selector: 'app-user-form',
@@ -82,7 +82,7 @@ export class UserFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
-              private _translateService: TranslateService,
+              private translateService: TranslateService,
               private _authService: AuthService) {}
 
   ngOnInit() {
@@ -194,7 +194,7 @@ export class UserFormComponent implements OnInit {
   openQuizUri(pro: Professional, event: Event): void {
     event.preventDefault();
     const baseUri = environment.quizUrl + '/quiz/' + this.campaign.innovation.quizId + '/' + this.campaign._id;
-    const parameters = '?pro=' + pro._id + '&lang=' + this._translateService.currentLang;
+    const parameters = '?pro=' + pro._id + '&lang=' + this.translateService.currentLang;
     window.open(baseUri + parameters);
   }
 

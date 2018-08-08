@@ -1,22 +1,8 @@
+@import "variables";
 /*
     This stylesheet contains all the styles that are common
     for everywhere on the platform.
  */
-
-
-/*
-    Color variables.
- */
-
-$primary-color: #FFB300;
-$secondary-color: #0B90C6;
-$success-color: #2ECC71;
-$error-color: #EA5858;
-$disabled-color: #DBDBDB;
-$meta-color: #97A4B1;
-$background-color: #4F5D6B;
-$dark-color: #333333;
-$border-color: #E0E0E0;
 
 
 /*
@@ -30,12 +16,49 @@ $border-color: #E0E0E0;
 
 
 /*
+    ul and li default style
+ */
+
+ul {
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin: 0;
+    padding: .6rem;
+  }
+
+}
+
+
+/*
+    Paragraph default style
+ */
+
+p {
+  margin: 0;
+  padding: 0 0 .6rem 0;
+}
+
+
+/*
+    a default style
+ */
+
+a, a:focus, a:hover, a:active, a.active {
+  color: $primary-color;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/*
     This is the style that are related to the notification that we see.
  */
 
 .simple-notification {
   border: 1px solid transparent !important;
-  border-radius: 5px !important;
+  border-radius: .18rem !important;
   word-wrap: break-word !important;
 }
 
@@ -44,30 +67,30 @@ $border-color: #E0E0E0;
 }
 
 .simple-notification .sn-title {
-  font-size: 20px !important;
-  line-height: 1.4 !important;
+  font-size: 1.1rem !important;
+  line-height: 1.5 !important;
   padding-right: 0 !important;
   font-weight: bold;
-  padding-bottom: 8px !important;
+  padding-bottom: .5rem !important;
 }
 
 .simple-notification .sn-content {
-  font-size: 16px !important;
-  line-height: 1.4 !important;
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
   padding-right: 0 !important;
-  padding-bottom: 10px !important;
+  padding-bottom: .6rem !important;
 }
 
 .simple-notification.success {
-  background: $success-color !important;
+  background: $validation-color !important;
   color: white !important;
-  border-color: $success-color !important;
+  border-color: $validation-color !important;
 }
 
 .simple-notification.error {
-  background: $error-color !important;
+  background: $alert-color !important;
   color: white !important;
-  border-color: $error-color !important;
+  border-color: $alert-color !important;
 }
 
 
@@ -89,7 +112,7 @@ $border-color: #E0E0E0;
 
 .or-divider {
   color: $meta-color;
-  font-size: 14px;
+  font-size: .85rem;
 }
 
 .or-divider::before {
@@ -117,13 +140,13 @@ $border-color: #E0E0E0;
  */
 
 .bot-rect {
-  padding: 20px 15px;
-  border-radius: 5px;
+  padding: 1.2rem .95rem;
+  border-radius: .18rem;
   color: $dark-color;
-  border: 1px solid $border-color;
+  border: .06rem solid $border-color;
   display: inline-block;
   width: 273px;
-  font-size: 16px;
+  font-size: 1rem;
   text-align: center;
   animation-name: fadeIn;
   animation-duration: 2s;
@@ -140,7 +163,7 @@ $border-color: #E0E0E0;
 }
 
 .bot-image {
-  height: 150px;
+  height: 9.37rem;
 }
 
 
@@ -151,13 +174,13 @@ $border-color: #E0E0E0;
 
 .num-rect {
   color: white;
-  border-radius: 5px;
-  font-size: 20px;
+  border-radius: .35rem;
+  font-size: 1.1rem;
   font-weight: 600;
   font-style: normal;
-  padding: 7px 15px;
+  padding: .45rem .95rem;
   background: $background-color;
-  margin-right: 20px;
+  margin-right: 1.2rem;
   display: inline-block;
 }
 
@@ -166,6 +189,7 @@ $border-color: #E0E0E0;
     This is to show the circle with icon check. Just add this class to div and
     icon check.
  */
+
 .circle-check {
   border-radius: 50%;
   height: 30px;
@@ -188,6 +212,7 @@ $border-color: #E0E0E0;
 /*
     This is to show the remaining characters length in form.
  */
+
 .charRemaining {
   text-align: right;
 
@@ -195,7 +220,7 @@ $border-color: #E0E0E0;
     position: absolute;
     margin-top: -20px;
     margin-left: -37px;
-    font-size: 12px;
+    font-size: .75rem;
     color: $meta-color;
   }
 
@@ -205,54 +230,54 @@ $border-color: #E0E0E0;
 /*
     Label styles
  */
+
 .label-progress {
-  border-radius: 5px;
-  background: #F79323;
+  border-radius: .18rem;
+  background: $progress-color;
   color: white;
-  font-size: 12px;
-  padding: 6px 15px;
-  margin-right: 10px;
+  font-size: .75rem;
+  padding: .375rem .95rem;
+  margin-right: .5rem;
   font-weight: 600;
 }
 
-
 .label-validate {
-  border-radius: 5px;
-  background: $success-color;
+  border-radius: .18rem;
+  background: $validation-color;
   color: white;
-  font-size: 12px;
-  padding: 6px 15px;
-  margin-right: 10px;
+  font-size: .75rem;
+  padding: .375rem .95rem;
+  margin-right: .5rem;
   font-weight: 600;
 }
 
 .label-alert{
-  border-radius: 5px;
-  background: $error-color;
+  border-radius: .18rem;
+  background: $alert-color;
   color: white;
-  font-size: 12px;
-  padding: 6px 15px;
-  margin-right: 10px;
+  font-size: .75rem;
+  padding: .375rem .95rem;
+  margin-right: .5rem;
   font-weight: 600;
 }
 
 .label-editing{
-  border-radius: 5px;
+  border-radius: .18rem;
   background: $secondary-color;
   color: white;
-  font-size: 12px;
-  padding: 6px 15px;
-  margin-right: 10px;
+  font-size: .75rem;
+  padding: .375rem .95rem;
+  margin-right: .5rem;
   font-weight: 600;
 }
 
 .label-draft{
-  border-radius: 5px;
-  background: #4F5D6B;
+  border-radius: .18rem;
+  background: $background-color;
   color: white;
-  font-size: 12px;
-  padding: 6px 15px;
-  margin-right: 10px;
+  font-size: .75rem;
+  padding: .375rem .95rem;
+  margin-right: .5rem;
   font-weight: 600;
 }
 
@@ -278,7 +303,7 @@ $border-color: #E0E0E0;
   border-radius: 5px;
   font-size: 12px;
   padding: 5px;
-  background: $success-color;
+  background: $validation-color;
 }
 
 .progressBar-alert{
@@ -315,6 +340,7 @@ $border-color: #E0E0E0;
 /*
     Ng2 auto complete npm module style
  */
+
 .ng2-auto-complete-wrapper {
   display: inline-flex;
   flex: 1;
@@ -332,12 +358,12 @@ $border-color: #E0E0E0;
 }
 
 .ng2-auto-complete > ul li {
-  padding: 8px 10px !important;
+  padding: .5rem .6rem !important;
   transition: all .35s ease-in-out;
   cursor: pointer;
-  margin-top: 2px !important;
-  margin-bottom: 2px !important;
-  border-radius: 2px !important;
+  margin-top: .125rem !important;
+  margin-bottom: .125rem !important;
+  border-radius: .125rem !important;
   border-bottom: none !important;
   color: $dark-color !important;
 }
@@ -356,38 +382,7 @@ $border-color: #E0E0E0;
 }
 
 
-/*
-    ul and li default style
- */
-ul {
-  margin: 0;
-  padding: 0;
 
-  li {
-    margin: 0;
-    padding: 10px;
-  }
-
-}
-
-
-/*
-    Paragraph default style
- */
-p {
-  margin: 0;
-  padding: 0 0 10px 0;
-}
-
-
-/*
-    a default style
- */
-a, a:focus, a:hover, a:active, a.active {
-  color: $primary-color;
-  text-decoration: none;
-  cursor: pointer;
-}
 
 .discreet-link {
   color: #97A4B1;

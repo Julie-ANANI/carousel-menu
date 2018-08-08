@@ -19,9 +19,8 @@ export class ClientProjectComponent implements OnInit {
   private _imgType: string;
   private _currentPage: string;
   private _scrollButton = false;
-
-  sidebarTemplateValue: Template = {};
-  sidebarState = new Subject<string>();
+  private _sidebarTemplateValue: Template = {};
+  private _sidebarState = new Subject<string>();
 
   constructor(private activatedRoute: ActivatedRoute,
               private titleService: TranslateTitleService,
@@ -53,16 +52,16 @@ export class ClientProjectComponent implements OnInit {
   editCollaborator(event: Event) {
     event.preventDefault();
 
-    this.sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+    this._sidebarTemplateValue = {
+      animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'PROJECT_MODULE.ADD_COLLABORATORS_MODAL.TITLE'
     };
 
   }
 
   closeSidebar(value: string) {
-    this.sidebarTemplateValue.animate_state = value;
-    this.sidebarState.next(this.sidebarTemplateValue.animate_state);
+    this._sidebarTemplateValue.animate_state = value;
+    this._sidebarState.next(this._sidebarTemplateValue.animate_state);
   }
 
   @HostListener('window:scroll', [])
@@ -96,6 +95,22 @@ export class ClientProjectComponent implements OnInit {
 
   get imgType(): string {
     return this._imgType;
+  }
+
+  get sidebarTemplateValue(): Template {
+    return this._sidebarTemplateValue;
+  }
+
+  set sidebarTemplateValue(value: Template) {
+    this._sidebarTemplateValue = value;
+  }
+
+  get sidebarState(): Subject<string> {
+    return this._sidebarState;
+  }
+
+  set sidebarState(value: Subject<string>) {
+    this._sidebarState = value;
   }
 
 }

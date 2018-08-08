@@ -6,6 +6,9 @@ import { InnovationSettings } from '../../../../models/innov-settings';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs/Subject';
 import { Location } from '@angular/common';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { Router } from '@angular/router';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-shared-project-settings',
@@ -19,11 +22,14 @@ export class SharedProjectSettingsComponent implements OnInit {
   @Input() adminMode: boolean;
   @Input() showTargetingFieldError: Subject<boolean>;
   @Input() projectStatus: string;
+  @Input() innovId: string;
 
   @Output() settingsChange = new EventEmitter<any>();
 
-  showMarketError: boolean;
-  showGeographyError: boolean;
+  private _showMarketError: boolean;
+  private _showGeographyError: boolean;
+  private _adminSide: boolean;
+  private _deleteModal = false;
 
   private _displayCountriesToExcludeSection = false;
   private _displayCountriesCommentSection = false;
@@ -34,36 +40,40 @@ export class SharedProjectSettingsComponent implements OnInit {
   private _displayCompanyCommentSection = false;
 
   constructor(private translateService: TranslateService,
-              private _authService: AuthService,
+              private authService: AuthService,
               public shareService: ShareService,
-              private location: Location) {
-  }
+              private location: Location,
+              private innovationService: InnovationService,
+              private router: Router,
+              private translateNotificationsService: TranslateNotificationsService) {}
 
 
   ngOnInit() {
-    this.adminMode = this.adminMode && this._authService.adminLevel >= 1;
+    this.isAdmin();
 
     if (this.settings) {
-      // this._displayCountriesToExcludeSection = this.settings.geography && this.settings.geography.exclude && this.settings.geography.exclude.length > 0;
       this._displayCountriesCommentSection = this.settings.geography && this.settings.geography.comments && this.settings.geography.comments.length > 0;
       this._displayCompanyCommentSection = this.settings.companies.description.length > 0;
-      // this._displayCompanyToExcludeSection = this.settings.companies && this.settings.companies.exclude && this.settings.companies.exclude.length > 0;
-      // this._displayCompanyToIncludeSection = this.settings.companies && this.settings.companies.include && this.settings.companies.include.length > 0;
       this._displayPersonsToExcludeSection = this.settings.professionals && this.settings.professionals.exclude && this.settings.professionals.exclude.length > 0;
       this._displayKeywordsSection = this.settings.keywords.length > 0;
     }
 
-    if (this.location.path().slice(0, 6) !== '/admin') {
+    if (!this._adminSide) {
       this.showTargetingFieldError.subscribe(value => {
         if (value) {
-          this.showMarketError = this.settings.market.comments.length === 0;
+          this._showMarketError = this.settings.market.comments.length === 0;
           this.checkGeographyError();
         } else {
-          this.showMarketError = false;
+          this._showMarketError = false;
         }
       });
     }
 
+  }
+
+  isAdmin() {
+    this.adminMode = this.adminMode && this.authService.adminLevel >= 1;
+    this._adminSide = this.location.path().slice(0, 6) === '/admin';
   }
 
   /**
@@ -137,7 +147,7 @@ export class SharedProjectSettingsComponent implements OnInit {
    */
   public addCountryToExclude(event: {value: Array<string>}): void {
     this.settings.geography.exclude = event.value;
-    this.showGeographyError = this.settings.geography.exclude.length === 0;
+    this._showGeographyError = this.settings.geography.exclude.length === 0;
     this.checkGeographyError();
     this.updateSettings();
   }
@@ -272,9 +282,9 @@ export class SharedProjectSettingsComponent implements OnInit {
       && !this.settings.geography.continentTarget.europe && !this.settings.geography.continentTarget.asia
       && !this.settings.geography.continentTarget.americaSud && !this.settings.geography.continentTarget.americaNord
       && !this.settings.geography.continentTarget.africa) {
-      this.showGeographyError = true;
+      this._showGeographyError = true;
     } else {
-      this.showGeographyError = false;
+      this._showGeographyError = false;
     }
   }
 
@@ -288,12 +298,56 @@ export class SharedProjectSettingsComponent implements OnInit {
     }
   }
 
+
+  showDeleteModal(event: Event) {
+    event.preventDefault();
+    this._deleteModal = true;
+  }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._deleteModal = false;
+  }
+
+  deleteProject(event: Event) {
+    event.preventDefault();
+
+    this.innovationService.remove(this.innovId).first().subscribe((res) => {
+      this.router.navigate(['/project']);
+      this.translateNotificationsService.success('ERROR.PROJECT.DELETED', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
+    }, err => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
+    })
+  }
+
   get lang() {
     return this.translateService.currentLang;
   }
 
   get _projectStatus(): boolean {
-    return this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED' || this.adminMode;
+    return this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED' || this._adminSide;
+  }
+
+  get showMarketError(): boolean {
+    return this._showMarketError;
+  }
+
+  set showMarketError(value: boolean) {
+    this._showMarketError = value;
+  }
+
+  get showGeographyError(): boolean {
+    return this._showGeographyError;
+  }
+
+
+  get adminSide(): boolean {
+    return this._adminSide;
+  }
+
+
+  get deleteModal(): boolean {
+    return this._deleteModal;
   }
 
 }
