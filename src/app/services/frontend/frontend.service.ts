@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Innovation } from '../../models/innovation';
-import { Subject } from 'rxjs/Subject';
 
 export interface Values {
   settingPercentage?: number;
@@ -13,8 +12,6 @@ export interface Values {
 
 @Injectable()
 export class FrontendService {
-  calculatedPercentages = new Subject<Values>();
-
   totalFieldsPresent: number;
   totalFieldsRequired: number;
 
@@ -26,7 +23,7 @@ export class FrontendService {
   innovCardFieldsRequired: number;
   innovCardFieldsPresent: number;
 
-  calculatedValues: Values = {};
+  private _calculatedValues: Values = {};
 
   constructor() {}
 
@@ -37,7 +34,7 @@ export class FrontendService {
     this.innovCardFieldsRequired = 0;
     this.innovCardFieldsPresent = 0;
     this.totalFieldsPresent = 0;
-    this.calculatedValues.innovationCardsPercentage = [];
+    this._calculatedValues.innovationCardsPercentage = [];
 
     /*
       method to calculate the percentage at project level.
@@ -59,9 +56,7 @@ export class FrontendService {
     /*
       now calculating the total project completion percentage.
      */
-    this.calculatedValues.totalPercentage = (this.totalFieldsPresent * 100) / this.totalFieldsRequired;
-
-    this.calculatedPercentages.next(this.calculatedValues);
+    this._calculatedValues.totalPercentage = (this.totalFieldsPresent * 100) / this.totalFieldsRequired;
 
   }
 
@@ -112,7 +107,7 @@ export class FrontendService {
     /*
       calculating the percentage at setting level.
      */
-    this.calculatedValues.settingPercentage = (this.settingsFieldsPresent * 100) / this.settingsFieldsRequired;
+    this._calculatedValues.settingPercentage = (this.settingsFieldsPresent * 100) / this.settingsFieldsRequired;
 
   }
 
@@ -150,7 +145,7 @@ export class FrontendService {
         this.innovCardFieldsPresent++;
       }
 
-      this.calculatedValues.innovationCardsPercentage.push({
+      this._calculatedValues.innovationCardsPercentage.push({
         lang: value.innovationCards[i].lang,
         percentage: (this.innovCardFieldsPresent * 100) / 5
       });
@@ -161,9 +156,8 @@ export class FrontendService {
 
   }
 
-    getProjectCompletedValues(): Subject<Values> {
-      return this.calculatedPercentages;
-    }
-
+  get calculatedPercentages(): Values {
+    return this._calculatedValues;
+  }
 
   }

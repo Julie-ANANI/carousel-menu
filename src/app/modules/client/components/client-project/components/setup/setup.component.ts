@@ -51,22 +51,6 @@ export class SetupProjectComponent implements OnInit {
 
     this.checkProjectStatus();
 
-    this.frontendService.completionCalculation(this.project);
-
-    this.frontendService.getProjectCompletedValues().subscribe( (res) => {
-      if (res !== null) {
-        this.project.settings.completion = res.settingPercentage;
-        this.project.completion = res.totalPercentage;
-
-        res.innovationCardsPercentage.forEach((item) => {
-          const index = this.project.innovationCards.findIndex(card => card.lang === item.lang);
-          this.project.innovationCards[index].completion = item.percentage;
-        });
-
-      }
-
-    });
-
   }
 
   @HostListener('window:scroll', [])
@@ -111,6 +95,17 @@ export class SetupProjectComponent implements OnInit {
     event.preventDefault();
 
     this.frontendService.completionCalculation(this.project);
+
+    const percentages = this.frontendService.calculatedPercentages;
+
+    if (percentages) {
+      this.project.settings.completion = percentages.settingPercentage;
+      this.project.completion = percentages.totalPercentage;
+      percentages.innovationCardsPercentage.forEach((item: any) => {
+        const index = this.project.innovationCards.findIndex(card => card.lang === item.lang);
+        this.project.innovationCards[index].completion = item.percentage;
+      });
+    }
 
      if (this._saveChanges) {
         this.innovationService.save(this.project._id, this.project).first().subscribe(data => {
