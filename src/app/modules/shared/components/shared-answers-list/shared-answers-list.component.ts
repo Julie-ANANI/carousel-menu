@@ -22,15 +22,20 @@ export class SharedAnswersListComponent {
     this._answers = value;
     this.loadAnswers();
   };
+
   @Output() modalAnswerChange = new EventEmitter<any>();
+  @Output() validateAnswers = new EventEmitter<Answer[]>();
+  @Output() rejectAnswers = new EventEmitter<Answer[]>();
 
   private _answers: Array<Answer> = [];
   private _tableInfos: Table = null;
+  private _actions: string[] = [];
 
   constructor() {
   }
 
   loadAnswers() {
+    this._actions = ['ANSWER.VALID_ANSWER', 'ANSWER.REJECT_ANSWER'];
     this._tableInfos = {
       _selector: 'admin-answers',
       _content: this._answers,
@@ -41,6 +46,7 @@ export class SharedAnswersListComponent {
       _isSelectable: true,
       _isEditable: true,
       _reloadColumns: true,
+      _actions: this._actions,
       _columns: [
         {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
         {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY', _isSortable: false},
@@ -59,6 +65,17 @@ export class SharedAnswersListComponent {
   public seeAnswer(answer: Answer) {
     event.preventDefault();
     this.modalAnswerChange.emit(answer);
+  }
+
+  public performActions(action: any) {
+    switch (this._actions.findIndex(value => action._action === value)) {
+      case 0: {
+        this.validateAnswers.emit(action._rows);
+        break;
+      } case 1: {
+        this.rejectAnswers.emit(action._rows);
+      }
+    }
   }
 
   get answers(): Array<Answer> {
