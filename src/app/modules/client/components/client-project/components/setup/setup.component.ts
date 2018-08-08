@@ -6,6 +6,7 @@ import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
 import { Subject } from 'rxjs/Subject';
 import { Template } from '../../../../../sidebar/interfaces/template';
+import { FrontendService } from '../../../../../../services/frontend/frontend.service';
 
 const DEFAULT_TAB = 'targeting';
 
@@ -37,7 +38,8 @@ export class SetupProjectComponent implements OnInit {
 
   constructor(private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService,
-              private router: Router) {}
+              private router: Router,
+              private frontendService: FrontendService) {}
 
   ngOnInit() {
     const url = this.router.routerState.snapshot.url.split('/');
@@ -48,7 +50,23 @@ export class SetupProjectComponent implements OnInit {
     this._saveButtonClass = 'disabled';
 
     this.checkProjectStatus();
-    this.completionCalculation();
+
+    this.frontendService.completionCalculation(this.project);
+
+    this.frontendService.getProjectCompletedValues().subscribe( (res) => {
+      if (res !== null) {
+        this.project.settings.completion = res.settingPercentage;
+        this.project.completion = res.totalPercentage;
+
+        res.innovationCardsPercentage.forEach((item) => {
+          const index = this.project.innovationCards.findIndex(card => card.lang === item.lang);
+          this.project.innovationCards[index].completion = item.percentage;
+        });
+
+      }
+
+    });
+
   }
 
   @HostListener('window:scroll', [])
@@ -89,71 +107,10 @@ export class SetupProjectComponent implements OnInit {
 
   }
 
-  completionCalculation() {
-    let temporaryProjectPercentage = 0;
-    let temporarySettingPercentage = 0;
-    let temporaryInnovCardPercentage = 0;
-    let totalInnovCardPercentage = 0;
-
-    const totalProjectField = 10;
-    const totalTargetingField = 2;
-    const totalInnovCardField = 5;
-
-    if (this.project.external_diffusion !== null) {
-      temporaryProjectPercentage++;
-    }
-
-    if (this.project.projectStatus !== null) {
-      temporaryProjectPercentage++;
-    }
-
-    if (this.project.patented !== null) {
-      temporaryProjectPercentage++;
-    }
-
-    if (this.project.settings.market.comments.length) {
-      temporarySettingPercentage++;
-    }
-
-    if (this.project.settings.geography.exclude.length || this.project.settings.geography.comments.length || this.project.settings.geography.continentTarget.russia
-      || this.project.settings.geography.continentTarget.oceania || this.project.settings.geography.continentTarget.europe || this.project.settings.geography.continentTarget.asia
-      || this.project.settings.geography.continentTarget.americaSud || this.project.settings.geography.continentTarget.americaNord
-      || this.project.settings.geography.continentTarget.africa) {
-      temporarySettingPercentage++;
-    }
-
-    for (let i = 0; i < this.project.innovationCards.length; i++ ) {
-      if (this.project.innovationCards[i].title.length) {
-        temporaryInnovCardPercentage++;
-        totalInnovCardPercentage++;
-      }
-      if (this.project.innovationCards[i].summary.length) {
-        temporaryInnovCardPercentage++;
-        totalInnovCardPercentage++;
-      }
-      if (this.project.innovationCards[i].problem.length) {
-        temporaryInnovCardPercentage++;
-        totalInnovCardPercentage++;
-      }
-      if (this.project.innovationCards[i].solution.length) {
-        temporaryInnovCardPercentage++;
-        totalInnovCardPercentage++;
-      }
-      if (this.project.innovationCards[i].advantages.length) {
-        temporaryInnovCardPercentage++;
-        totalInnovCardPercentage++;
-      }
-
-      this.project.innovationCards[i].completion = (temporaryInnovCardPercentage * 100) / totalInnovCardField;
-      temporaryInnovCardPercentage = 0;
-    }
-
-    this.project.settings.completion = (temporarySettingPercentage * 100) / totalTargetingField;
-    this.project.completion = (((temporaryProjectPercentage + temporarySettingPercentage + (totalInnovCardPercentage / this.project.innovationCards.length)) * 100) / totalProjectField) ;
-  }
-
   saveProject(event: Event): void {
     event.preventDefault();
+
+    this.frontendService.completionCalculation(this.project);
 
      if (this._saveChanges) {
         this.innovationService.save(this.project._id, this.project).first().subscribe(data => {
@@ -216,7 +173,7 @@ export class SetupProjectComponent implements OnInit {
   updateSettings(value: InnovationSettings): void {
     if (this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED') {
       this.project.settings = value;
-      this.completionCalculation();
+      // this.completionCalculation();
       this._saveChanges = true;
       this._saveButtonClass = 'save-project';
     } else {
@@ -231,7 +188,6 @@ export class SetupProjectComponent implements OnInit {
   saveInnovation(value: boolean) {
     if (this.projectStatus === 'EDITING' || this.projectStatus === 'SUBMITTED') {
       this.checkProjectStatus();
-      this.completionCalculation();
       this._saveChanges = value;
       this._changesSaved = false;
       this._saveButtonClass = 'save-project';

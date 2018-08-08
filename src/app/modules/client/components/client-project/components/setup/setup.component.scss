@@ -138,7 +138,6 @@
   #setup {
 
     .tabs {
-      border-bottom: .06rem solid $tabs-border-color;
 
       li {
         flex: unset;
@@ -181,6 +180,15 @@
 
         }
 
+      }
+
+    }
+
+    .tabs {
+      border-bottom: .06rem solid $tabs-border-color;
+
+      li {
+        border-bottom: none !important;
       }
 
     }
