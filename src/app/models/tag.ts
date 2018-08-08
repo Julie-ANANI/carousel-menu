@@ -6,6 +6,7 @@ import { TagAttachment } from './tag-attachment';
  */
 export interface Tag {
   _id?: string;
+  readonly originalTagId?: string;
   readonly label: Multiling;
   readonly description?: Multiling;
   readonly type?: 'UNKNOWN' | 'SECTOR' | 'VALUE_CHAIN' | 'SOLUTION_TYPE' | 'QUALIFICATION';

@@ -22,6 +22,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   private _tagForm: FormGroup;
 
   public editDatum = {};
+  public attachTagDatum = {};
   private _config = {
     limit: 10,
     offset: 0,
@@ -65,6 +66,11 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   public autocompleValueFormatter = (data: {name: string, _id: string}) : string => {
       return MultilingPipe.prototype.transform(data.name, this.translateService.currentLang);
   };
+
+  public log(event: Event, data: any): void {
+    event.preventDefault();
+    console.log(data);
+  }
 
   public addTag(event: Event): void {
     event.preventDefault();
