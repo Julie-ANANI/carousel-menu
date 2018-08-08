@@ -1,14 +1,12 @@
-// Modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import {SharedFilterInputModule} from '../shared-filter-input/shared-filter-input.module';
-import {InputModule} from '../../../input/input.module';
-
-// Components
+import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-input.module';
+import { InputModule } from '../../../input/input.module';
 import { SharedSearchHistoryComponent} from './shared-search-history.component';
+import { PaginationModule } from '../../../input/component/pagination/pagination.module';
 
 @NgModule({
   imports: [
@@ -17,10 +15,11 @@ import { SharedSearchHistoryComponent} from './shared-search-history.component';
     RouterModule,
     SharedFilterInputModule,
     TranslateModule.forChild(),
-    InputModule
+    InputModule,
+    PaginationModule
   ],
   declarations: [
-    SharedSearchHistoryComponent
+    SharedSearchHistoryComponent,
   ],
   exports: [
     SharedSearchHistoryComponent

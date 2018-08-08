@@ -53,7 +53,7 @@ export class SetupProjectComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    if (window.scrollY !== 0) {
+    if (window.scrollY > 150) {
       this.scrollOn = true;
     } else {
       this.scrollOn = false;

@@ -35,6 +35,13 @@ export const SETUP = {
 
   'PREVIEW': 'Aperçu',
   'PREVIEW_BUTTON': 'Prévisualiser',
-  'PRINT_BUTTON': 'Imprimer'
+  'PRINT_BUTTON': 'Imprimer',
+
+  'DELETE_BUTTON': 'Supprimer le projet',
+
+  'DELETE_PROJECT_MODAL': {
+    'TITLE': 'Supprimer le forum',
+    'CONTENT': 'Voulez-vous vraiment supprimer ce projet ?'
+  },
 
 };

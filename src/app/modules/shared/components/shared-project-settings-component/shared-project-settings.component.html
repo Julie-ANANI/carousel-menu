@@ -1,4 +1,4 @@
-<div class="section-container project-setting-wrapper">
+<section class="section-container" id="project-settings">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <!-- Geography -->
@@ -19,14 +19,14 @@
     <div class="columns">
 
       <!-- Question wrapper -->
-      <div class="column col-md-12 col-6 col-mx-auto ques-wrapper" [ngClass]="{ 'col-6': !adminMode, 'col-12': adminMode }">
+      <div class="column col-md-12 col-mx-auto ques-wrapper" [ngClass]="adminSide ? 'col-12' : 'col-6' ">
 
         <!-- Geography input -->
 
         <!-- Exclude countries -->
         <div *ngIf="!_projectStatus && settings.geography.exclude.length > 0">
           <div class="pd-para">
-          <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">
+          <span class="ques" [ngStyle]=" { 'font-size': '1rem' }">
             {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
           </span>
             <div class="pd-input">
@@ -39,7 +39,7 @@
 
         <div *ngIf="_projectStatus">
           <div class="pd-para">
-          <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">
+          <span class="ques" [ngStyle]=" { 'font-size': '1rem' }">
             {{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
           </span>
             <div class="pd-input">
@@ -140,7 +140,7 @@
           <!-- Companies include -->
           <div *ngIf="!_projectStatus && settings.companies.include.length > 0">
             <div class="pd-para">
-            <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">
+            <span class="ques" [ngStyle]=" { 'font-size': '1rem' }">
               {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}
             </span>
               <div class="pd-input">
@@ -153,7 +153,7 @@
 
           <div *ngIf="_projectStatus">
             <div class="pd-para">
-            <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">
+            <span class="ques" [ngStyle]=" { 'font-size': '1rem' }">
               {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}
             </span>
               <div class="pd-input">
@@ -168,7 +168,7 @@
           <!-- Companies exclude -->
           <div *ngIf="!_projectStatus && settings.companies.exclude.length > 0">
             <div class="pd-para">
-            <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">
+            <span class="ques" [ngStyle]=" { 'font-size': '1rem' }">
               {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}
             </span>
               <div class="pd-input">
@@ -181,7 +181,7 @@
 
           <div *ngIf="_projectStatus">
             <div class="pd-para">
-            <span class="ques" [ngStyle]=" { 'font-size': '0.8rem' }">
+            <span class="ques" [ngStyle]=" { 'font-size': '1rem' }">
               {{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}
             </span>
               <div class="pd-input">
@@ -374,12 +374,12 @@
       <!-- /Question wrapper -->
 
       <!-- Help wrapper -->
-      <div *ngIf="!adminMode" class="column col-mx-auto col-6 hide-md help-wrapper">
+      <div *ngIf="!adminSide" class="column col-mx-auto col-6 hide-md help-wrapper">
         <div class="bot-wrapper text-center">
           <span class="bot-rect">{{ 'PROJECT_MODULE.SETUP.PITCH.BOT.HELP' | translate }}</span>
           <br>
           <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-          <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
+          <div><img src="http://res.cloudinary.com/umi/image/upload/v1533567512/app/default-images/info-bot.svg" alt="Bot"></div>
         </div>
       </div>
       <!-- /Help wrapper -->
@@ -387,46 +387,28 @@
     </div>
     <!-- Ques and help section -->
 
+    <!--Delete project button -->
+    <div class="delete-project-wrapper pd-ques">
+      <button class="btn btn-sm ghost-delete" (click)="showDeleteModal($event)">{{ 'PROJECT_MODULE.SETUP.DELETE_BUTTON' | translate }}</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- Delete project confirmation modal -->
+<div class="modal" [ngClass]="{'active': deleteModal}">
+  <div class="modal-overlay" (click)="closeModal($event)"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+      <div class="modal-title">{{ 'PROJECT_MODULE.SETUP.DELETE_PROJECT_MODAL.TITLE' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">{{ 'PROJECT_MODULE.SETUP.DELETE_PROJECT_MODAL.CONTENT' | translate }}</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-primary" (click)="deleteProject($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
+    </div>
   </div>
 </div>
 
-
-<!--Personnes à exclure
-  <app-input-list (update)="addKeywordToExclude($event)"
-                  [canEdit]="true"
-                  [config]="getConfig('peopleBL')"></app-input-list>-->
-
-<!--<div class="columns">
-
-         &lt;!&ndash;<div class="column col-md-12 col-6">
-           <p class="pd-para">
-            <span class="text-link" (click)="(displayCountriesToExcludeSection = !displayCountriesToExcludeSection) && $event.preventDefault()">
-               {{ 'PROJECT_MODULE.SETUP.TARGETING.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}
-               <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayCountriesToExcludeSection, 'icon-arrow-right' : !displayCountriesToExcludeSection  }"></i>
-             </span>
-           </p>
-
-         </div>&ndash;&gt;
-
-         &lt;!&ndash;<div class="column col-md-12 col-6">
-           <p class="pd-para">
-            <span class="text-link" (click)="(displayCountriesCommentSection = !displayCountriesCommentSection) && $event.preventDefault()">
-               {{ 'PROJECT_MODULE.SETUP.TARGETING.SPECIFIC_REQUEST' | translate }}
-               <i class="icon" [ngClass]="{ 'icon-arrow-down' : displayCountriesCommentSection, 'icon-arrow-right' : !displayCountriesCommentSection  }"></i>
-             </span>
-           </p>
-           <div *ngIf="displayCountriesCommentSection" class="pd-input">
-             <textarea
-               class="form-input-default"
-               id="countries-comments"
-               [attr.placeholder]="'PROJECT_MODULE.SETUP.TARGETING.SPECIFIC_REQUEST_PLACEHOLDER' | translate"
-               rows="5"
-               [(ngModel)]="settings.geography.comments"
-               (change)="updateSettings()">
-             </textarea>
-           </div>
-         </div>
-
-       </div>&ndash;&gt;
-
-     </div>-->
