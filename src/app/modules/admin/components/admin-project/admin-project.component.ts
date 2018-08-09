@@ -13,7 +13,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 export class AdminProjectComponent implements OnInit {
 
   private _project: Innovation;
-  private _tabs: Array<string> = ['settings', 'cards', 'tags', 'questionnaire', 'campaigns', 'synthesis' ];
+  private _tabs: Array<string> = ['settings', 'cards', 'answer_tags', 'questionnaire', 'campaigns', 'synthesis' ];
   clientSideUrl: string;
 
   constructor(private _activatedRoute: ActivatedRoute,

@@ -1,13 +1,17 @@
 <div class="user-form-wrapper">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <form novalidate (ngSubmit)="onSubmit()">
+      <div class="text-right">
+        <button type="submit" class="btn btn-primary">{{'COMMON.SAVE' | translate}}</button>
+      </div>
 
       <!-- Add Tags -->
       <app-shared-tag-item
         *ngIf="addTags"
         [tags]="tags"
         [editMode]="true"
+        [projectId]="projectId"
         (addTag)="addTag($event)"
         (removeTag)="removeTag($event)">
       </app-shared-tag-item>

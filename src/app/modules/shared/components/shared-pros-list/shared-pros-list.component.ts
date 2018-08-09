@@ -130,8 +130,9 @@ export class SharedProsListComponent {
     this._more = {
       animate_state: 'active',
       title: 'COMMON.ADD-TAGS',
-      type: 'addTag'
+      type: 'addTags'
     };
+    this.isUserForm = false;
     this.isTagsForm = true;
     this._prosToTag = pros;
   }
@@ -141,7 +142,10 @@ export class SharedProsListComponent {
       if (!this._prosToTag[index].tags) {
         this._prosToTag[index].tags = [];
       }
-      tags.forEach(value1 => this._prosToTag[index].tags.push(value1))
+      tags.forEach(value1 => {
+        if (!(value.tags.find(value2 => {return value2._id === value1._id}))) {
+          this._prosToTag[index].tags.push(value1);
+        }})
     });
 
     this._prosToTag.forEach(value => this.updatePro(value));
@@ -197,6 +201,7 @@ export class SharedProsListComponent {
         type: 'professional'
       };
       this.isUserForm = true;
+      this.isTagsForm = false;
       this._currentPro = professional;
     });
   }

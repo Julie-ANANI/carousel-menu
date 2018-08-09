@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TagsService} from '../../../../services/tags/tags.service';
 import {Subject} from 'rxjs/Subject';
 import {Tag} from '../../../../models/tag';
+import {Innovation} from '../../../../models/innovation';
 
 @Component({
   selector: 'app-tags-form',
@@ -15,6 +16,14 @@ export class TagsFormComponent implements OnInit {
     this.loadTypes();
   }
 
+  @Input() set tags(tags: Array<Tag>) {
+    this._tags = [...tags];
+  }
+
+  @Input() set project(value: Innovation) {
+    this._projectId = value._id;
+  }
+
   @Input() sidebarState: Subject<string>;
 
   @Output() newTags = new EventEmitter<Tag[]>();
@@ -22,6 +31,7 @@ export class TagsFormComponent implements OnInit {
   addTags = false;
 
   private _tags: Tag[] = [];
+  private _projectId = '';
 
   private _type = '';
 
@@ -47,7 +57,7 @@ export class TagsFormComponent implements OnInit {
 
   loadTypes() {
     this.reinitialiseForm();
-    if (this._type === 'addTag') {
+    if (this._type === 'addTags') {
       this.addTags = true;
     }
 
@@ -60,7 +70,8 @@ export class TagsFormComponent implements OnInit {
   }
 
   addTag(tag: any) {
-    this._tagsService.get(tag._id).first().subscribe(res => {
+    const id = tag.tag ? tag.tag : tag._id;
+    this._tagsService.get(id).first().subscribe(res => {
       this._tags.push(res.tags[0]);
     });
   }
@@ -71,5 +82,9 @@ export class TagsFormComponent implements OnInit {
 
   get tags(): Tag[] {
     return this._tags;
+  }
+
+  get projectId(): string {
+    return this._projectId;
   }
 }

@@ -16,6 +16,7 @@
   <app-tags-form [sidebarState]="sidebarState"
                  *ngIf="isTagsForm"
                  [type]="more.type"
+                 [project]="project"
                  (newTags)="addTagsToPro($event)">
   </app-tags-form>
 </app-sidebar>

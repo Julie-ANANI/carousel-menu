@@ -102,6 +102,8 @@ export class UserFormComponent implements OnInit {
 
     this._user = new User();
 
+    this.loadTypes();
+
     if (this.sidebarState) {
       this.sidebarState.subscribe((state) => {
         if (state === 'inactive') {
@@ -144,7 +146,7 @@ export class UserFormComponent implements OnInit {
   }
 
   loadProfessional() {
-    if (this._pro) {
+    if (this._pro && this.userForm) {
       this.userForm.get('companyName').setValue(this._pro.company);
       this._tags = this._pro.tags;
       this.userForm.patchValue(this._pro);

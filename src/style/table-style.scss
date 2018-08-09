@@ -14,7 +14,7 @@ $border-color: #E0E0E0;
  */
 
 .table-title {
-  font-size: 16px;
+  font-size: 1rem;
   color: #97A4B1;
   display: inline-block;
   margin-top: 30px;
@@ -39,7 +39,7 @@ sqFilterMulti {
     span,
     .activeHeader {
       font-weight: 600;
-      font-size: 0.7rem;
+      font-size: 0.85rem;
       color: $dark-color;
     }
 
@@ -53,15 +53,7 @@ sqFilterMulti {
     }
 
     span {
-      font-size: 0.7rem;
-    }
-
-    .label-editing,
-    .label-progress,
-    .label-validate,
-    .label-alert,
-    .label-draft {
-      font-size: 0.6rem;
+      font-size: 0.85rem;
     }
   }
 

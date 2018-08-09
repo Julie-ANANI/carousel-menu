@@ -1,8 +1,10 @@
+$secondary-color: #0B90C6;
+
 #admin-followed {
   margin-top: 20px;
   margin-left: 50px;
 
-  .project-preparation {
+  .project-section {
     background-color: white;
     margin-bottom: 30px;
     width: 50%;
@@ -14,6 +16,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .project-campaigns {
+    display: flex;
+    flex-direction: row;
+
+    .tags {
+      background-color: lighten($secondary-color, 10%);
+      padding: 20px;
+      margin-left: 5%;
+      margin-right: 5%;
+      width: 40%;
+      overflow: auto;
+      height: 150px;
+    }
   }
 
   .project-line:hover {

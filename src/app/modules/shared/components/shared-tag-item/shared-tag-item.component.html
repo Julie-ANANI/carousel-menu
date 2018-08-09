@@ -20,7 +20,7 @@
       <div *ngFor="let t of tags" class="tags">
         <div class="tags-wrapper">
           {{ t?.label | multiling:lang }}
-          <i *ngIf="editMode" class="icon icon-cross" (click)="removeTagEmitter($event, t)"></i>
+          <i *ngIf="editMode || isAdmin" class="icon icon-cross" (click)="removeTagEmitter($event, t)"></i>
         </div>
       </div>
     </div>

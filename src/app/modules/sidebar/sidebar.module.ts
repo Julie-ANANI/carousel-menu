@@ -18,8 +18,6 @@ import { RatingItemComponent } from './components/user-answer/rating-item/rating
 import { SidebarWorkflowComponent } from './components/sidebar-workflow/sidebar-workflow.component';
 import { SidebarSignatureComponent } from './components/sidebar-signature/sidebar-signature.component';
 import { AutocompleteInputModule } from '../input/component/autocomplete-input/autocomplete-input.module';
-import { SidebarWorkflowComponent } from './components/sidebar-workflow/sidebar-workflow.component';
-import { SidebarSignatureComponent } from './components/sidebar-signature/sidebar-signature.component';
 import { InnovationFormComponent } from './components/innovation-form/innovation-form.component';
 import {SharedProjectEditCardsModule} from '../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
 import {SharedProjectSettingsModule} from '../shared/components/shared-project-settings-component/shared-project-settings.module';
@@ -62,7 +60,6 @@ import { TagsFormComponent } from './components/tags-form/tags-form.component';
     SidebarWorkflowComponent,
     SidebarSignatureComponent,
     InnovationPreviewComponent,
-    UserFormComponent,
     InnovationFormComponent,
     SidebarSearchComponent,
     UserAnswerComponent,

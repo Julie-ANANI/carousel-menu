@@ -12,9 +12,8 @@ export const PROJECT = {
     'FACEBOOK': 'Share on Facebook',
     'MAIL': 'Share by email',
   },
-  'CAMPAIGN': 'Campaign',
-  'CAMPAIGNS': 'Campaigns',
   'SETTINGS': 'Settings',
+  'CAMPAIGNS': 'Campaigns',
   'PREPARATION': {
     'CHOOSE_PRESET': 'Choose questionnaire',
     'EDIT_PRESET': 'Edit questionnaire',
@@ -24,9 +23,14 @@ export const PROJECT = {
     'BLACKLIST_DOMAINS_EMAILS': 'Blacklist Emails / Domains',
     'UPDATE_STATUS': 'Update status'
   },
+  'CAMPAIGN': {
+    'CAMPAIGN': 'Campaign',
+    'EDIT_ANSWER_TAGS': 'Edit answer tags',
+  },
   'CARDS': 'Innovation Cards',
   'QUESTIONNAIRE': 'Questionnaire',
   'SYNTHESIS': 'Synthesis',
-  'TAGS': 'Tags',
+  'PROJECT_TAGS': 'Project tags',
+  'ANSWER_TAGS': 'Answer tags',
   'MAIL_CONFIG': 'Email Configuration'
 };

@@ -12,6 +12,6 @@ export const projectRoutes: Routes = [
   { path: 'cards', component: AdminProjectCardsComponent, pathMatch: 'full'},
   { path: 'synthesis', component: AdminProjectSynthesisComponent, pathMatch: 'full'},
   { path: 'campaigns', component: AdminProjectCampaignsComponent, pathMatch: 'full'},
-  { path: 'tags', component: AdminProjectTagsPoolComponent, pathMatch: 'full'},
+  { path: 'answer_tags', component: AdminProjectTagsPoolComponent, pathMatch: 'full'},
   { path: 'questionnaire', component: AdminProjectQuestionnaireComponent, pathMatch: 'full'}
 ];

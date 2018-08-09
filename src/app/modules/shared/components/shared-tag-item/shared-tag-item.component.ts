@@ -21,6 +21,7 @@ export class SharedTagItemComponent implements OnInit {
     this._projectId = project;
   };
   @Input() editMode: boolean;
+  @Input() isAdmin: boolean;
 
   @Output() addTag: EventEmitter<Tag> = new EventEmitter();
   @Output() removeTag: EventEmitter<Tag> = new EventEmitter();

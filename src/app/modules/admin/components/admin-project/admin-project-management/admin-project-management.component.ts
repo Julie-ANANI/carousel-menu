@@ -63,6 +63,9 @@ export class AdminProjectManagementComponent implements OnInit {
   // Emails / Domains edition
   isEmailsDomainsSidebar = false;
 
+  // Campaign tags
+  isTagsSidebar = false;
+
   private _updateInstanceDomainConfig: {
     placeholder: string,
     initialData: Array<string>,
@@ -131,7 +134,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   public setMetadata(level: string, name: string, event: any) {
-    if(this._project._metadata && this._project._metadata[level][name] !== undefined) {
+    if (this._project._metadata && this._project._metadata[level][name] !== undefined) {
       this._project._metadata[level][name] = event.currentTarget.checked;
       this.save(event, 'Successfully saved.');
     }
@@ -145,6 +148,30 @@ export class AdminProjectManagementComponent implements OnInit {
     this._dirty = false;
     this.isEditOwner = false;
     this.formData.reset();
+  }
+
+  resetAllSidebar() {
+    this.isEmailsDomainsSidebar = false;
+    this.isInnovationSidebar = false;
+    this.isTagsSidebar = false;
+  }
+
+  changeSidebar(name: string) {
+    this.resetAllSidebar();
+    switch (name) {
+      case('innovation-form') : {
+        this.isInnovationSidebar = true;
+        break;
+      } case('blacklist-emails-domains'): {
+        this.isEmailsDomainsSidebar = true;
+        break;
+      } case('tags-form') : {
+        this.isTagsSidebar = true;
+        break;
+      } default : {
+        break;
+      }
+    }
   }
 
   editOwner() {
@@ -219,8 +246,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   editProjectDescription() {
-    this.isEmailsDomainsSidebar = false;
-    this.isInnovationSidebar = true;
+    this.changeSidebar('innovation-form');
     this._more = {
       animate_state: 'active',
       title: 'PROJECT.PREPARATION.EDIT_DESCRIPTION',
@@ -230,8 +256,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   editProjectTargeting() {
-    this.isEmailsDomainsSidebar = false;
-    this.isInnovationSidebar = true;
+    this.changeSidebar('innovation-form');
     this._more = {
       animate_state: 'active',
       title: 'PROJECT.PREPARATION.EDIT_MARKET_TARGETING',
@@ -247,7 +272,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   editBlacklist() {
-    this.isEmailsDomainsSidebar = true;
+    this.changeSidebar('blacklist-emails-domains');
     this._more = {
       animate_state: 'active',
       title: 'PROJECT.PREPARATION.EDIT_MARKET_TARGETING',
@@ -279,8 +304,7 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   editStatus() {
-    this.isEmailsDomainsSidebar = false;
-    this.isInnovationSidebar = true;
+    this.changeSidebar('innovation-form');
     this._more = {
       animate_state: 'active',
       title: 'PROJECT.PREPARATION.UPDATE_STATUS',
@@ -289,28 +313,28 @@ export class AdminProjectManagementComponent implements OnInit {
     };
   }
 
-  public addTag(tag: Tag): void {
-    this._innovationService
-      .addTag(this._project._id, tag._id)
-      .first()
-      .subscribe((p) => {
-        this._project.tags.push(tag);
-        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
-      }, err => {
-        this._notificationsService.error('ERROR.ERROR', err);
-      });
+  editProjectTags() {
+    this.changeSidebar('tags-form');
+    this._more = {
+      animate_state: 'active',
+      title: 'COMMON.ADD-TAGS',
+      type: 'addTags',
+    };
   }
 
-  public removeTag(tag: Tag): void {
-    this._innovationService
-      .removeTag(this._project._id, tag._id)
-      .first()
-      .subscribe((p) => {
-        this._project.tags = this._project.tags.filter(t => t._id !== tag._id);
-        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
-      }, err => {
-        this._notificationsService.error('ERROR.ERROR', err);
-      });
+  addTags(tags: Tag[]) {
+    this._project.tags = [];
+    tags.forEach(tag => {
+      if (!this._project.tags.find(value => {return value._id === tag._id})) {
+        this._project.tags.push(tag);
+      };
+    });
+    this.save(event, 'Les tags ont bien été mis à jour ');
+    this._more = {animate_state: 'inactive', title: this._more.title};
+  }
+
+  goToAnswerTagsEdition() {
+    this._router.navigate(['/admin/projects/project/' + this._project._id + '/answer_tags']);
   }
 
   public startEditInstanceDomain(event: Event): void {

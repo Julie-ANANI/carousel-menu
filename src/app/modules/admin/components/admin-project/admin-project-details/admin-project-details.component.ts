@@ -7,7 +7,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../models/innov-settings';
 import { Preset } from '../../../../../models/preset';
-import { Tag } from '../../../../../models/tag';
+// import { Tag } from '../../../../../models/tag';
 
 @Component({
   selector: 'app-admin-project-details',
@@ -61,7 +61,7 @@ export class AdminProjectDetailsComponent implements OnInit {
     this._domain = this._project.settings.domain;
   }
 
-  public addTag(tag: Tag): void {
+/*  public addTag(tag: Tag): void {
     this._innovationService
       .addTag(this._project._id, tag._id)
       .first()
@@ -83,7 +83,7 @@ export class AdminProjectDetailsComponent implements OnInit {
       }, err => {
         this._notificationsService.error('ERROR.ERROR', err);
       });
-  }
+  }*/
 
   public startEditInstanceDomain(event: Event): void {
       this._editInstanceDomain = true;
@@ -91,7 +91,7 @@ export class AdminProjectDetailsComponent implements OnInit {
 
   public endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
       this._editInstanceDomain = false;
-      this._project.domain = event.value[0].name || "umi";
+      this._project.domain = event.value[0].name || 'umi';
       this._dirty = true;
   }
 
