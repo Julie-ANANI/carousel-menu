@@ -1,71 +1,53 @@
+@import "../../../../../style/variables";
+
 #pitch-card {
-  padding-top: 0;
-  padding-bottom: 0;
 
-  .choice-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .lang-wrapper {
+    padding-top: 1.57rem;
 
-    .ques {
-      padding-top: 26px;
-    }
-
-    .lang {
-      margin-top: 30px;
+    .lang-option-wrapper {
+      padding-top: .6rem;
 
       ul {
         list-style: none;
-        margin: 0 0 0 50px;
         display: flex;
-        flex-direction: row;
-        padding: 0;
+        align-items: center;
 
         li {
-          margin: 0 50px 0 0;
-          border: 2px solid #E0E0E0;
-          border-radius: 5px;
-          text-align: center;
-          cursor: pointer;
-          background: white;
-          font-size: 0.8rem;
-          color: #262831;
-          padding: 12px 30px;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          padding-left: 0;
+          padding-right: 3.15rem;
 
-          .circle-check {
-            margin-top: -27px;
-            margin-left: -44px;
+          .radio-button, span {
+            cursor: pointer;
+            margin-left: 0;
+          }
+
+          .radio-button span {
+            visibility: hidden;
           }
 
         }
 
-        li:last-child {
-          margin-left: 0;
-        }
-
-        li:hover {
-          background-color: #FFF9EB;
-          border-color: #FFB300;
-        }
-
         li.active {
-          border-color: #2ECC71;
-          background-color: white;
 
-          .circle-check {
-            background-color: #2ECC71;
+          .radio-button {
+            background-color: $validation-color;
+            border-color: rgba(46,204,113,0.45) !important;
 
-            i {
+            span {
               color: white;
+              visibility: visible;
             }
 
           }
 
         }
 
-        .add-project {
-          padding-top: 11px;
-          color: #97A4B1;
+        p {
+          color: $meta-color;
         }
 
       }
@@ -74,33 +56,25 @@
 
   }
 
-  .delete-link {
-    color: #EA5858;
-    font-size: 14px;
-  }
-
-  .action-wrapper {
-    padding-top: 30px;
-    padding-left: 170px;
-  }
 
   .project-data {
-    padding-top: 50px;
+    padding-top: 3.15rem;
   }
 
   .pd-input {
-    padding-top: 20px;
+    padding-top: 1.2rem;
   }
 
   .form-group {
     margin-bottom: 0 !important;
   }
 
+  .form-default {
+    margin-top: 0;
+  }
+
   .help-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
+    padding-top: 2.5rem;
   }
 
   .media-content {
@@ -108,16 +82,16 @@
 
     .media {
       display: inline-flex;
-      margin-right: 10px;
+      margin-right: .6rem;
       flex-direction: column;
     }
 
   }
 
   .media-action {
-    padding-top: 10px;
-    padding-bottom: 16px;
-    font-size: 14px;
+    padding-top: .6rem;
+    padding-bottom: .6rem;
+    font-size: .85rem;
   }
 
   .upload-wrapper {
@@ -136,9 +110,9 @@
       align-items: center;
 
       .para {
-        color: #97A4B1;
-        font-size: 14px;
-        margin: 25px;
+        color: $meta-color;
+        font-size: .85rem;
+        margin: 1.57rem;
       }
 
     }
@@ -149,8 +123,13 @@
 
   }
 
+  .delete-link {
+    color: $alert-color;
+    font-size: .85rem;
+  }
+
   .borderRed {
-    border-color: #EA5858;
+    border-color: $alert-color;
   }
 
   p {
@@ -158,18 +137,18 @@
   }
 
   .adv-padding {
-    padding-bottom: 15px;
+    padding-bottom: 0.95rem;
   }
 
   .answer-wrapper {
     background: #F8F4F4;
-    color: #333333;
-    padding: 8px 15px;
-    border-radius: 5px;
+    color: $dark-color;
+    padding: .5rem .95rem;
+    border-radius: 0.18rem;
     display: inline-flex;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    font-size: 14px;
+    margin-right: .6rem;
+    margin-bottom: .6rem;
+    font-size: 0.85rem;
   }
 
 }
@@ -179,43 +158,6 @@
 @media (max-width: 600px) {
 
   #pitch-card {
-    padding-top: 25px;
-
-    .choice-wrapper {
-      flex-direction: column;
-
-      .ques {
-        padding-top: 0;
-      }
-
-      .lang {
-        margin-top: 15px;
-
-        ul {
-          flex-direction: column;
-          margin-left: 0;
-
-          li {
-            margin: 15px 50px;
-          }
-
-          li:last-child {
-            margin-left: 50px;
-          }
-
-          .add-project {
-            padding-top: 15px;
-          }
-
-        }
-
-      }
-
-    }
-
-    .action-wrapper {
-      padding-left: 0;
-    }
 
     .upload-wrapper {
       flex-direction: column;

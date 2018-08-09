@@ -151,16 +151,19 @@
  */
 
 .form-radio {
+  padding-left: 1.57rem;
+  padding-right: 1.57rem;
   color: $dark-color;
 }
 
 .form-radio .form-icon {
-  height: .9rem;
-  width: .9rem;
+  height: 1rem !important;
+  top: 0.2rem !important;
+  width: 1rem !important;
 }
 
 .form-radio input:checked + .form-icon {
-  border-color: rgba(46,204,113,0.45);
+  border: none !important;
   background: $validation-color;
 }
 
@@ -223,15 +226,18 @@ textarea {
     Form slide button
   */
 
+
 .form-switch .form-icon::before {
   background: $meta-color;
   border-color: $meta-color;
+  height: .95rem;
+  top: -0.01rem;
 }
 
 .form-switch .form-icon  {
-  border: .06rem solid $border-color;
-  border-radius: .71rem;
+  border-color: $border-color;
   background-color: #FFFFFF;
+  height: 1rem;
 }
 
 .form-switch input:checked + .form-icon::before {
@@ -255,7 +261,7 @@ textarea {
   */
 
 .form-switch {
-  padding-left: 2rem;
+  padding-left: 2.5rem;
   padding-right: 0.2rem;
 }
 

@@ -5,7 +5,7 @@ export const PITCH = {
     'IMPORT_TRANSLATION': 'Importer une traduction',
 
     'LANGUAGE': {
-      'HEADING': 'Je décris mon projet en :',
+      'HEADING': 'Vous décrivez votre projet en :',
       'UPDATE_TEXT': 'Actualiser la langue du projet',
       'ADD_PROJECT_LANGUAGE': 'ou ajouter un projet dans'
     },
@@ -86,5 +86,7 @@ export const PITCH = {
   },
 
   'INNOVATION_PREVIEW': 'Aperçu',
+
+  'DELETE_LANGUAGE': 'Supprimer la langue du projet'
 
 };
