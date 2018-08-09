@@ -39,6 +39,15 @@ export class EmailsFormComponent implements OnInit, OnChanges {
   @Output() countryToFilter = new EventEmitter<any>();
   @Output() editCountry = new EventEmitter<any>();
 
+  config = {
+    limit: 10,
+    offset: 0,
+    search: {},
+    sort: {
+      created: -1
+    }
+  };
+
   private _type = '';
 
   isBlacklist = false;
@@ -125,13 +134,14 @@ export class EmailsFormComponent implements OnInit, OnChanges {
       this._tableInfos = {
         _selector: 'admin-mailgun',
         _title: 'COMMON.PROFESSIONALS',
+        _isFiltrable: true,
         _isHeadable: true,
+        _isLocal: true,
         _content: this.campaignInfosToShow.payload.recipients,
         _total: this.campaignInfosToShow.payload.recipients.length,
-        _isNotPaginable: true,
         _columns: [
-          {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT', _isSortable: false},
-          {_attrs: ['company'], _name: 'COMMON.COMPANY', _type: 'TEXT', _isSortable: false},
+          {_attrs: ['firstName', 'lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
+          {_attrs: ['company'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
         ]
       };
     }

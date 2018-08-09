@@ -1,9 +1,8 @@
 import { Question } from './question';
-import {Multiling} from './multiling';
+import { Multiling } from './multiling';
 
 export interface Section {
-  _id?: string;
-  readonly name: string;
   readonly label: Multiling;
+  readonly description: 'nothing' | '1st' | '2nd';
   readonly questions: Array<Question>;
 }

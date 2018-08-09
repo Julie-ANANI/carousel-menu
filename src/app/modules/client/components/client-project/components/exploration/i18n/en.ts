@@ -36,8 +36,7 @@ export const EXPLORATION = {
 
   'ANALYTICS': {
     'TITLE': 'Analytics of your study',
-    'PROFESSIONALS': 'Professionals',
-    'PROFESSIONALS_REACHED': 'Reached',
+    'PROFESSIONALS_REACHED': 'Professionals reached',
     'EMAILS_OPENED': 'Emails opened',
     'CLICKS': 'Visits',
     'ANSWERS': 'Validated answers'

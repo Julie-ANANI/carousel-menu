@@ -65,7 +65,7 @@
                     <div *ngIf="canEdit" class="form-group pd-input">
                       <button
                         *ngIf="isAdmin && project.innovationCards.length > 1"
-                        class="btn ghot-primary"
+                        class="btn ghost-primary"
                         [ngClass]="{'disabled': innovationCards.title}"
                         [disabled]="innovationCards.title"
                         (click)="importTranslation($event, 'title')">

@@ -15,7 +15,11 @@
   </button>
 </div>
 
-<app-answers-list [answers]="answers" (modalAnswerChange)="seeAnswer($event)"></app-answers-list>
+<app-answers-list [answers]="answers"
+                  (modalAnswerChange)="seeAnswer($event)"
+                  (validateAnswers)="changeStatus($event, 'VALIDATED_NO_MAIL')"
+                  (rejectAnswers)="changeStatus($event, 'REJECTED')">
+</app-answers-list>
 
 <!-- Insight preview -->
 <app-sidebar

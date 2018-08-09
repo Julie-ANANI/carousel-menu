@@ -117,25 +117,34 @@
     <div class="tabs-container">
       <ul class="tabs">
         <li>
-          <a [routerLink]="['setup', 'pitch']" [ngClass]="{'active': currentTab == 'pitch'}">
-            <i class="fas fa-check pitch-check" [ngStyle]="{ 'display': pitchFormValid ? 'inline-block' : 'none' }"></i>
-            {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
-          </a>
-        </li>
-        <li>
           <a [routerLink]="['setup', 'targeting']" [ngClass]="{'active': currentTab == 'targeting'}">
             <i class="fas fa-check targeting-check" [ngStyle]="{ 'display': targetingFormValid ? 'inline-block' : 'none' }"></i>
             {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
           </a>
         </li>
         <li>
+          <a [routerLink]="['setup', 'pitch']" [ngClass]="{'active': currentTab == 'pitch'}">
+            <i class="fas fa-check pitch-check" [ngStyle]="{ 'display': pitchFormValid ? 'inline-block' : 'none' }"></i>
+            {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
+          </a>
+        </li>
+        <li>
           <a [routerLink]="['setup', 'survey']" [ngClass]="{'active': currentTab == 'survey'}">
-            <i class="fas fa-check survey-check" [ngStyle]="{ 'display': surveyCreated ? 'inline-block' : 'none' }"></i>
+            <i class="fas fa-check survey-check" [ngStyle]="{ 'display': project.quizId ? 'inline-block' : 'none' }"></i>
             {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
           </a>
         </li>
       </ul>
     </div>
+  </div>
+
+  <!-- Targeting component -->
+  <div *ngIf="currentTab === 'targeting'">
+    <app-project-targeting
+      [project]="project"
+      (newSettings)="updateSettings($event)"
+      [showTargetingFieldError]="showTargetingFieldError">
+    </app-project-targeting>
   </div>
 
   <!-- Pitch component -->
@@ -149,20 +158,11 @@
     </app-project-pitch>
   </div>
 
-  <!-- Targeting component -->
-  <div *ngIf="currentTab === 'targeting'">
-    <app-project-targeting
-      [project]="project"
-      (newSettings)="updateSettings($event)"
-      [showTargetingFieldError]="showTargetingFieldError">
-    </app-project-targeting>
-  </div>
-
   <!-- Survey component -->
   <div *ngIf="currentTab === 'survey'">
     <app-project-survey
       [project]="project"
-      (surveyCreated)="surveyAvailable($event)">
+      (surveyCreated)="!!project.quizId">
     </app-project-survey>
   </div>
 

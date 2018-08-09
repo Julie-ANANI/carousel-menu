@@ -5,13 +5,13 @@
 
         <!-- Filter icon -->
         <div class="filter" (click)="filterAnswer(item, $event)">
-          <img src="https://res.cloudinary.com/umi/image/upload/v1532816663/app/default-images/filter-wicon.svg">
+          <img src="https://res.cloudinary.com/umi/image/upload/v1533115302/app/default-images/filter-icon.png" height="18px" width="26px" style="margin-top: 2px">
         </div>
 
         <!-- Value and count -->
         <div class="value">
-          <div class="label-success">{{ item.count}}x</div>
-          <p>{{ item.value }}</p>
+          <div *ngIf="item.count > 1" class="label-success">{{ item.count}}x</div>
+          <p> <img *ngIf="item.logo" [src]="item.logo" width="80px" height="80px"/> <span *ngIf="!item.logo">{{ item.value }}</span></p>
         </div>
 
         <!-- Respoand -->

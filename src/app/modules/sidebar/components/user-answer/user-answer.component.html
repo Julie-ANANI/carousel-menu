@@ -133,6 +133,19 @@
     </div>
     <!-- /User detail -->
 
+    <!-- Tags section -->
+    <div class="tag-wrapper">
+      <label class="form-label">Tag</label>
+      <app-shared-tag-item
+        [tags]="modalAnswer.tags"
+        [editMode]="editMode"
+        [projectId]="innovationId"
+        (addTag)="addTag($event)"
+        (removeTag)="removeTag($event)">
+      </app-shared-tag-item>
+    </div>
+    <!-- /Tags -->
+
     <!-- Status section -->
     <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="e-status-wrapper">
 
@@ -185,19 +198,6 @@
 
     </div>
     <!-- /Status -->
-
-    <!-- Tags section -->
-    <div *ngIf="adminMode && editMode" class="tag-wrapper">
-      <label class="form-label">Tag</label>
-      <app-shared-tag-item
-        [tags]="modalAnswer.tags"
-        [editMode]="true"
-        [projectId]="innovationId"
-        (addTag)="addTag($event)"
-        (removeTag)="removeTag($event)">
-      </app-shared-tag-item>
-    </div>
-    <!-- /Tags -->
 
     <!-- Questions section -->
     <div class="ques-wrapper">

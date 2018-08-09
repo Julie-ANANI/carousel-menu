@@ -43,13 +43,8 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
       statusbar: false,
       menubar: false,
       paste_as_text: true,
-      paste_auto_cleanup_on_paste: true,
       paste_remove_styles_if_webkit: true,
-      paste_strip_class_attributes: true,
-      paste_remove_spans: true,
-      paste_remove_styles: true,
-      paste_text_sticky: true,
-      convert_fonts_to_spans: false,
+      paste_retain_style_properties: 'none',
       toolbar : 'undo redo | bold italic | bullist numlist | link',
       skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
       setup: (editor: any) => {
