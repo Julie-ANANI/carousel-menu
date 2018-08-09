@@ -19,7 +19,7 @@ import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sid
     PipeModule,
     InputModule,
     FormsModule,
-    SidebarUserFormModule
+    SidebarUserFormModule,
   ],
   declarations: [
     AdminUsersComponent

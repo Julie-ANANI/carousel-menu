@@ -23,6 +23,7 @@ import { FooterModule } from '../base/components/footer/footer.module';
 import { HeaderModule } from '../base/components/header/header.module';
 import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
 import { LogoutPageModule } from '../base/components/logout-page/logout-page.module';
+import { InputListModule } from '../input/component/input-list/input-list.module';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { LogoutPageModule } from '../base/components/logout-page/logout-page.mod
     HeaderModule,
     NotFoundPageModule,
     LogoutPageModule,
+    InputListModule
   ],
   declarations: [
     ClientComponent,

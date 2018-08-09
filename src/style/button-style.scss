@@ -44,12 +44,8 @@
   }
 
   .icon {
-    font-size: 14px;
+    font-size: 1rem;
     vertical-align: middle;
-  }
-
-  .icon-plus {
-    font-size: 14px;
   }
 
 }
@@ -61,8 +57,8 @@
 
 .btn-round {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 3.15rem;
+  height: 3.15rem;
   display: flex;
   cursor: pointer;
   text-align: center;
@@ -76,11 +72,6 @@
               border-left-color 0.15s ease-in-out,
               border-right-color 0.15s ease-in-out,
               border-top-color 0.15s ease-in-out;
-
-  i {
-    font-size: 14px;
-  }
-
 }
 
 

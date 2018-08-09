@@ -8,6 +8,7 @@ import { InputModule } from '../../../input/input.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { AutocompleteInputModule } from '../../../input/component/autocomplete-input/autocomplete-input.module';
+import { InputListModule } from '../../../input/component/input-list/input-list.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { AutocompleteInputModule } from '../../../input/component/autocomplete-i
     InputModule,
     PipeModule,
     SharedWorldmapModule,
-    AutocompleteInputModule
+    AutocompleteInputModule,
+    InputListModule
   ],
   declarations: [
     SharedProjectSettingsComponent

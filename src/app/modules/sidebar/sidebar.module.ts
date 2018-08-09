@@ -18,6 +18,7 @@ import { RatingItemComponent } from './components/user-answer/rating-item/rating
 import { SidebarWorkflowComponent } from './components/sidebar-workflow/sidebar-workflow.component';
 import { SidebarSignatureComponent } from './components/sidebar-signature/sidebar-signature.component';
 import { AutocompleteInputModule } from '../input/component/autocomplete-input/autocomplete-input.module';
+import { InputListModule } from '../input/component/input-list/input-list.module';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { AutocompleteInputModule } from '../input/component/autocomplete-input/a
     PipeModule,
     InputModule,
     AutocompleteInputModule,
+    InputListModule
   ],
   declarations: [
     SidebarBatchComponent,
