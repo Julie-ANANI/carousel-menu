@@ -28,6 +28,7 @@ export const PROJECT = {
   'CAMPAIGN': {
     'CAMPAIGN': 'Campagne',
     'EDIT_ANSWER_TAGS': 'Editer les tags pour les réponses',
+    'FIND_PROFESSIONALS': 'Trouver des professionnels'
   },
   'CARDS': 'Innovation Cards',
   'SYNTHESIS': 'Synthèse',

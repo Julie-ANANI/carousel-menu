@@ -13,12 +13,12 @@ import { Professional } from '../../../../../models/professional';
 export class AdminCampaignProsComponent implements OnInit {
 
   public newPro: any = {
-    firstName: "",
-    lastName: "",
-    email: "",
+    firstName: '',
+    lastName: '',
+    email: '',
     emailConfidence: 100
   };
-  private _addProModal: boolean = false;
+  private _addProModal = false;
   private _campaign: Campaign;
   private _config: any;
 
@@ -39,20 +39,20 @@ export class AdminCampaignProsComponent implements OnInit {
       }
     };
   }
-  
+
   addPro(value: boolean) {
     this._addProModal = value;
     this.newPro = {
-      firstName: "",
-      lastName: "",
-      email: "",
+      firstName: '',
+      lastName: '',
+      email: '',
       emailConfidence: 100
     };
   }
 
   createPro() {
-    if (!this.newPro.email || !this.newPro.firstName || !this.newPro.lastName) {
-      this._professionalsService.create([this.newPro], this.campaign._id, this.campaign.innovation._id).first().subscribe((createdPro:Professional) => {
+    if (this.newPro.email && this.newPro.firstName && this.newPro.lastName) {
+      this._professionalsService.create([this.newPro], this.campaign._id, this.campaign.innovation._id).first().subscribe((createdPro: Professional) => {
         this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
       });
     }

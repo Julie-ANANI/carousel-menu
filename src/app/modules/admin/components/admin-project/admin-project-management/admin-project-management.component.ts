@@ -17,6 +17,7 @@ import {AuthService} from '../../../../../services/auth/auth.service';
 import {PresetService} from '../../../../../services/preset/preset.service';
 import {InnovCard} from '../../../../../models/innov-card';
 import {domainRegEx, emailRegEx} from '../../../../../utils/regex';
+import {Campaign} from '../../../../../models/campaign';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -62,6 +63,10 @@ export class AdminProjectManagementComponent implements OnInit {
 
   // Emails / Domains edition
   isEmailsDomainsSidebar = false;
+
+  // Campaign choice
+  // Is going to disappear
+  currentCampaign: Campaign = null;
 
   // Campaign tags
   isTagsSidebar = false;
@@ -131,6 +136,14 @@ export class AdminProjectManagementComponent implements OnInit {
     this.isInnovationSidebar = false;
 
     this.isEmailsDomainsSidebar = false;
+
+    this._innovationService.campaigns(this._project._id)
+      .first()
+      .subscribe(campaigns => {
+          this.currentCampaign = this.getBestCampaign(campaigns.result);
+        },
+        error => this._notificationsService.error('ERROR', error.message)
+      );
   }
 
   public setMetadata(level: string, name: string, event: any) {
@@ -173,6 +186,8 @@ export class AdminProjectManagementComponent implements OnInit {
       }
     }
   }
+
+  // Preparation section
 
   editOwner() {
     this.isEditOwner = true;
@@ -313,6 +328,15 @@ export class AdminProjectManagementComponent implements OnInit {
     };
   }
 
+  // Campaign section
+
+  getBestCampaign(campaigns: Campaign[]): Campaign {
+    return campaigns.reduce((a, b) =>
+      (a.stats ? a.stats.campaign.nbValidatedResp + a.stats.campaign.nbToValidateResp : 0)
+      > (b.stats ? b.stats.campaign.nbValidatedResp + b.stats.campaign.nbToValidateResp : 0)
+        ? a : b);
+  }
+
   editProjectTags() {
     this.changeSidebar('tags-form');
     this._more = {
@@ -335,6 +359,10 @@ export class AdminProjectManagementComponent implements OnInit {
 
   goToAnswerTagsEdition() {
     this._router.navigate(['/admin/projects/project/' + this._project._id + '/answer_tags']);
+  }
+
+  goToProfessionalsList() {
+    this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/pros']);
   }
 
   public startEditInstanceDomain(event: Event): void {

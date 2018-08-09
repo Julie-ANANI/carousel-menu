@@ -26,6 +26,7 @@ export const PROJECT = {
   'CAMPAIGN': {
     'CAMPAIGN': 'Campaign',
     'EDIT_ANSWER_TAGS': 'Edit answer tags',
+    'FIND_PROFESSIONALS': 'Find professionals'
   },
   'CARDS': 'Innovation Cards',
   'QUESTIONNAIRE': 'Questionnaire',

@@ -301,11 +301,9 @@
         <button class="showOnHover btn btn-xs ghost-edit" (click)="editProjectTags()">
           {{'COMMON.EDIT' | translate}}
         </button>
-        <div>
-        </div>
       </div>
 
-      <!-- Project operator -->
+      <!-- Answer tags -->
       <div class="project-line">
 
         <label class="form-switch" for="seeAnswerTags">
@@ -321,8 +319,25 @@
         <button class="showOnHover btn btn-xs ghost-edit" (click)="goToAnswerTagsEdition()">
           {{'COMMON.EDIT' | translate}}
         </button>
-        <div>
-        </div>
+      </div>
+
+      <!-- Campaign professionnals -->
+      <div class="project-line">
+
+        <label class="form-switch" for="seeProfessionnals">
+          <input
+            type="checkbox"
+            name="seeProfessionnals"
+            id="seeProfessionnals">
+          <!--[checked]="getMetadata('campaign', 'tags')"
+          (change)="setMetadata('campaign', 'tags', $event)"-->
+          <i class="form-icon"></i>
+          {{'PROJECT.CAMPAIGN.FIND_PROFESSIONALS' | translate}}
+        </label>
+        <label class="form-label"></label>
+        <button class="showOnHover btn btn-xs ghost-edit" (click)="goToProfessionalsList()">
+          {{'COMMON.MORE' | translate}}
+        </button>
       </div>
     </div>
 
