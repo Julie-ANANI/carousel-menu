@@ -1,4 +1,4 @@
-$secondary-color: #0B90C6;
+@import "../../../../../../style/variables";
 
 #admin-followed {
   margin-top: 20px;
@@ -23,8 +23,8 @@ $secondary-color: #0B90C6;
     flex-direction: row;
 
     .tags {
-      background-color: lighten($secondary-color, 10%);
       padding: 20px;
+      padding-top: 0;
       margin-left: 5%;
       margin-right: 5%;
       width: 40%;

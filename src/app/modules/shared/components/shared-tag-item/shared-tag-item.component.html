@@ -18,7 +18,9 @@
 
     <div *ngIf="tags?.length > 0" [ngStyle]="{ 'margin-top': '10px' }">
       <div *ngFor="let t of tags" class="tags">
-        <div class="tags-wrapper">
+        <div
+          class="tags-wrapper"
+          [ngStyle]="{ 'background-color': backgroundColor ? backgroundColor : '#F8F4F4', 'color': textColor ? textColor : '#333333' }">
           {{ t?.label | multiling:lang }}
           <i *ngIf="editMode || isAdmin" class="icon icon-cross" (click)="removeTagEmitter($event, t)"></i>
         </div>

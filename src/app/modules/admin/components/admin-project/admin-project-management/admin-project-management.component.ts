@@ -5,7 +5,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Tag} from '../../../../../models/tag';
 import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
 import {Innovation} from '../../../../../models/innovation';
-import {InnovationSettings} from '../../../../../models/innov-settings';
 import {Preset} from '../../../../../models/preset';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Template} from '../../../../sidebar/interfaces/template';
@@ -18,6 +17,9 @@ import {PresetService} from '../../../../../services/preset/preset.service';
 import {InnovCard} from '../../../../../models/innov-card';
 import {domainRegEx, emailRegEx} from '../../../../../utils/regex';
 import {Campaign} from '../../../../../models/campaign';
+import {CampaignService} from '../../../../../services/campaign/campaign.service';
+import {TemplatesService} from '../../../../../services/templates/templates.service';
+import {EmailScenario} from '../../../../../models/email-scenario';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -65,25 +67,13 @@ export class AdminProjectManagementComponent implements OnInit {
   isEmailsDomainsSidebar = false;
 
   // Campaign choice
-  // Is going to disappear
   currentCampaign: Campaign = null;
 
   // Campaign tags
   isTagsSidebar = false;
 
-  private _updateInstanceDomainConfig: {
-    placeholder: string,
-    initialData: Array<string>,
-    type: string,
-    identifier: string,
-    canOrder: boolean
-  } = {
-    placeholder: 'Partners domain list',
-    initialData: [],
-    type: 'domain',
-    identifier: 'name',
-    canOrder: false
-  };
+  // Workflows
+  workflows: Array<EmailScenario> = [];
 
   private _config = {
     search: {},
@@ -109,6 +99,8 @@ export class AdminProjectManagementComponent implements OnInit {
               private _presetService: PresetService,
               private _notificationsService: TranslateNotificationsService,
               private _dashboardService: DashboardService,
+              private _templatesService: TemplatesService,
+              private _campaignService: CampaignService,
               private _translateService: TranslateService,
               private _formBuilder: FormBuilder) {}
 
@@ -123,7 +115,9 @@ export class AdminProjectManagementComponent implements OnInit {
 
     this._dashboardService.getOperators().first().subscribe((operators) => this.operators = operators.result);
 
-    this.operatorId = this._project.operator ? this._project.operator.toString() : '';
+    this.operatorId = this._project.operator
+      ? (this._project.operator.id ? this._project.operator.id : this._project.operator.toString())
+      : undefined;
 
     this._presetService.getAll(this._config)
       .first()
@@ -144,6 +138,10 @@ export class AdminProjectManagementComponent implements OnInit {
         },
         error => this._notificationsService.error('ERROR', error.message)
       );
+
+    this._templatesService.getAll(this._config).first().subscribe((scenarios: any) => {
+      this.workflows = scenarios.result;
+    });
   }
 
   public setMetadata(level: string, name: string, event: any) {
@@ -229,8 +227,8 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   changeProjectOperator(value: any) {
-    this._project.operator = value || undefined;
-    this.operatorId = value || '';
+    this._project.operator = value || null;
+    this.operatorId = value || undefined;
     this.save(event, 'L\'opérateur à été mis à jour avec succès');
   }
 
@@ -331,10 +329,14 @@ export class AdminProjectManagementComponent implements OnInit {
   // Campaign section
 
   getBestCampaign(campaigns: Campaign[]): Campaign {
-    return campaigns.reduce((a, b) =>
-      (a.stats ? a.stats.campaign.nbValidatedResp + a.stats.campaign.nbToValidateResp : 0)
-      > (b.stats ? b.stats.campaign.nbValidatedResp + b.stats.campaign.nbToValidateResp : 0)
-        ? a : b);
+    if (campaigns.length > 0) {
+      return campaigns.reduce((a, b) =>
+        (a.stats ? a.stats.campaign.nbValidatedResp + a.stats.campaign.nbToValidateResp : 0)
+        > (b.stats ? b.stats.campaign.nbValidatedResp + b.stats.campaign.nbToValidateResp : 0)
+          ? a : b);
+    } else {
+      return null;
+    }
   }
 
   editProjectTags() {
@@ -365,45 +367,17 @@ export class AdminProjectManagementComponent implements OnInit {
     this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/pros']);
   }
 
-  public startEditInstanceDomain(event: Event): void {
-    this._editInstanceDomain = true;
+  goToTemplates() {
+    this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/templates']);
   }
 
-  public endEditInstanceDomain(event: {value: Array<{name: string}>}): void {
-    this._editInstanceDomain = false;
-    this._project.domain = event.value[0].name || 'umi';
-    this._dirty = true;
-  }
-
-  public buildInstanceDomainListConfig( initialData: Array<any>): any {
-    this._updateInstanceDomainConfig.initialData = initialData || [];
-    return this._updateInstanceDomainConfig;
-  }
-
-  public updateInstanceDomain(event: any): void {
-    this.endEditInstanceDomain(event);
-  }
-
-  public updateSettings(value: InnovationSettings): void {
-    this._project.settings = value;
-    this._dirty = true;
-  }
-
-  public generateQuiz(event: Event): void {
-    event.preventDefault();
-    this._innovationService
-      .createQuiz(this._project._id)
-      .first()
-      .subscribe((p) => {
-        this._project = p;
-        this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , 'ERROR.QUIZ.CREATED');
-      }, err => {
-        this._notificationsService.error('ERROR.ERROR', err);
-      });
+  updateDefaultWorkflow(workflowName: string) {
+    this.currentCampaign.settings.defaultWorkflow = workflowName;
+    this.saveCampaign(event, 'Le workflow par défaut a bien été mis à jour');
   }
 
   /**
-   * Sauvegarde
+   * Sauvegarde du projet
    */
   public save(event: Event, notification: string): void {
     event.preventDefault();
@@ -419,6 +393,17 @@ export class AdminProjectManagementComponent implements OnInit {
       });
   }
 
+  public saveCampaign(event: Event, notification: string): void {
+    event.preventDefault();
+    this._campaignService.put(this.currentCampaign).first().subscribe(savedCampaign => {
+      this._notificationsService.success('ERROR.ACCOUNT.UPDATE', notification);
+      this.currentCampaign = savedCampaign;
+      this.resetData();
+    }, (err: any) => {
+      this._notificationsService.error('ERROR', err);
+    });
+  }
+
 
   /**
    * Suppression et mise à jour de la vue
@@ -432,30 +417,10 @@ export class AdminProjectManagementComponent implements OnInit {
       });
   }*/
 
-  public getPrincipalMedia(project: Innovation): string {
-    if (project.principalMedia) {
-      if (project.principalMedia.type === 'PHOTO') {
-        return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + project.principalMedia.cloudinary.public_id;
-      } else {
-        return project.principalMedia.video.thumbnail;
-      }
-    } else {
-      return 'https://res.cloudinary.com/umi/image/upload/app/no-image.png';
-    }
-  }
-
   public hasPreset(): boolean {
     const p = this._project.preset;
 
     return (p && p.sections && p.constructor === Object && Object.keys(p.sections).length > 0);
-  }
-
-  public notifyClass(): string {
-    if (this._dirty) {
-      return 'btn ghost-primary btn-lg badge';
-    } else {
-      return 'btn ghost-primary btn-lg';
-    }
   }
 
   formatText(text: string) {

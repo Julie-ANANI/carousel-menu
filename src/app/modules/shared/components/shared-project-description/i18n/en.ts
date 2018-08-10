@@ -26,7 +26,11 @@ export const PROJECT = {
   'CAMPAIGN': {
     'CAMPAIGN': 'Campaign',
     'EDIT_ANSWER_TAGS': 'Edit answer tags',
-    'FIND_PROFESSIONALS': 'Find professionals'
+    'CREATE_CAMPAIGN': 'Please create a campaign to pursue the project ',
+    'FIND_PROFESSIONALS': 'Find professionals',
+    'ACTIVATE_AB_TESTING': 'Activate AB testing',
+    'EDIT_WORKFLOW': 'Edit workflow emails',
+    'CHOOSE_WORKFLOW': 'Choose a workflow',
   },
   'CARDS': 'Innovation Cards',
   'QUESTIONNAIRE': 'Questionnaire',

@@ -22,6 +22,8 @@ export class SharedTagItemComponent implements OnInit {
   };
   @Input() editMode: boolean;
   @Input() isAdmin: boolean;
+  @Input() backgroundColor: string;
+  @Input() textColor: string;
 
   @Output() addTag: EventEmitter<Tag> = new EventEmitter();
   @Output() removeTag: EventEmitter<Tag> = new EventEmitter();

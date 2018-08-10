@@ -45,7 +45,7 @@
       <select class="form-select"
               name="setOperator"
               id="setOperator"
-              [ngModel]="project.operator"
+              [ngModel]="operatorId"
               (ngModelChange)="changeProjectOperator($event)"
               [ngModelOptions]="{standalone: true}">
         <option [ngValue]="undefined" selected>{{'COMMON.NO' | translate}}</option>
@@ -271,7 +271,9 @@
         {{ formatText(project?.status) }} - {{project?.updated | date:dateFormat}}
       </label>
 
-      <button class="showOnHover btn btn-xs ghost-edit" (click)="editStatus()" *ngIf="project.status !== 'DONE'">
+      <button class="showOnHover btn btn-xs ghost-edit"
+              (click)="editStatus()"
+              [ngStyle]="{'visibility' : project.status === 'DONE' ? 'hidden' : ''}">
         {{'COMMON.EDIT' | translate}}
       </button>
 
@@ -321,28 +323,113 @@
         </button>
       </div>
 
-      <!-- Campaign professionnals -->
-      <div class="project-line">
-
-        <label class="form-switch" for="seeProfessionnals">
-          <input
-            type="checkbox"
-            name="seeProfessionnals"
-            id="seeProfessionnals">
-          <!--[checked]="getMetadata('campaign', 'tags')"
-          (change)="setMetadata('campaign', 'tags', $event)"-->
-          <i class="form-icon"></i>
-          {{'PROJECT.CAMPAIGN.FIND_PROFESSIONALS' | translate}}
-        </label>
-        <label class="form-label"></label>
-        <button class="showOnHover btn btn-xs ghost-edit" (click)="goToProfessionalsList()">
-          {{'COMMON.MORE' | translate}}
-        </button>
+      <!-- If no campaigns is created, we show an info bot to ask us to create a campaign -->
+      <div *ngIf="currentCampaign === null">
+        <div class="bot-wrapper text-center">
+          <span class="bot-rect">{{'PROJECT.CAMPAIGN.CREATE_CAMPAIGN' | translate}}</span>
+          <br>
+          <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+          <div><img src="http://res.cloudinary.com/umi/image/upload/v1533567512/app/default-images/info-bot.svg" alt="Bot" class="bot-image"></div>
+        </div>
       </div>
+
+      <!-- Else, we show the other informations -->
+      <div *ngIf="currentCampaign !== null">
+
+        <!-- Campaign professionnals -->
+        <div class="project-line">
+
+          <label class="form-switch" for="seeProfessionnals">
+            <input
+              type="checkbox"
+              name="seeProfessionnals"
+              id="seeProfessionnals">
+            <!--[checked]="getMetadata('campaign', 'professionals')"
+            (change)="setMetadata('campaign', 'professionals', $event)"-->
+            <i class="form-icon"></i>
+            {{'PROJECT.CAMPAIGN.FIND_PROFESSIONALS' | translate}}
+          </label>
+          <label class="form-label">{{currentCampaign?.stats?.campaign.nbProfessionals}} {{'COMMON.PROFESSIONALS' | translate}}</label>
+          <button class="showOnHover btn btn-xs ghost-edit"
+                  (click)="goToProfessionalsList()">
+            {{'COMMON.MORE' | translate}}
+          </button>
+        </div>
+
+        <!-- AB Testing -->
+        <div class="project-line">
+
+          <label class="form-switch" for="activateABTesting">
+            <input
+              type="checkbox"
+              name="activateABTesting"
+              id="activateABTesting">
+            <!--[checked]="getMetadata('campaign', 'professionals')"
+            (change)="setMetadata('campaign', 'professionals', $event)"-->
+            <i class="form-icon"></i>
+            {{'PROJECT.CAMPAIGN.ACTIVATE_AB_TESTING' | translate}}
+          </label>
+          <button class="showOnHover btn btn-xs ghost-edit"
+                  (click)="goToTemplates()">
+            {{'COMMON.MORE' | translate}}
+          </button>
+        </div>
+
+        <!-- Import Workflow -->
+
+        <!-- Mails edition -->
+        <div class="project-line">
+
+          <label class="form-switch" for="editWorkflowMails">
+            <input
+              type="checkbox"
+              name="editWorkflowMails"
+              id="editWorkflowMails">
+            <!--[checked]="getMetadata('campaign', 'professionals')"
+            (change)="setMetadata('campaign', 'professionals', $event)"-->
+            <i class="form-icon"></i>
+            {{'PROJECT.CAMPAIGN.EDIT_WORKFLOW' | translate}}
+          </label>
+          <button class="showOnHover btn btn-xs ghost-edit"
+                  (click)="goToTemplates()">
+            {{'COMMON.MORE' | translate}}
+          </button>
+        </div>
+
+        <!-- Choose Workflow -->
+        <div class="project-line">
+
+          <label class="form-switch" for="seeWorkflows">
+            <input
+              type="checkbox"
+              name="seeWorkflows"
+              id="seeWorkflows">
+            <!--[checked]="getMetadata('campaign', 'professionals')"
+            (change)="setMetadata('campaign', 'professionals', $event)"-->
+            <i class="form-icon"></i>
+            {{'PROJECT.CAMPAIGN.CHOOSE_WORKFLOW' | translate}}
+          </label>
+
+          <select class="form-select"
+                  name="setWorkflow"
+                  id="setWorkflow"
+                  [ngModel]="currentCampaign.settings.defaultWorkflow || ''"
+                  (ngModelChange)="updateDefaultWorkflow($event)"
+                  [ngModelOptions]="{standalone: true}">
+            <option [ngValue]="''" selected>{{'COMMON.NO' | translate}}</option>
+            <option *ngFor="let w of workflows;" [ngValue]="w.name">
+              {{w.name}}
+            </option>
+          </select>
+          <div></div>
+
+        </div>
+      </div>
+
     </div>
 
     <div class="tags">
-      <app-shared-tag-item [tags]="project.tags"></app-shared-tag-item>
+      <app-shared-tag-item [tags]="project.tags" [backgroundColor]="'#0B90C6'" [textColor]="'white'"></app-shared-tag-item>
     </div>
   </div>
 </div>
