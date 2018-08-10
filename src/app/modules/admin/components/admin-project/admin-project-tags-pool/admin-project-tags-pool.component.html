@@ -16,6 +16,16 @@
     </div>
   </form>
 
+  <app-shared-table [config]="config"
+                    [data]="tableInfos">
+  </app-shared-table>
+
+  <!--
+  (editRow)="editPro($event)"
+  (removeRows)="deleteProsModal($event)"
+  (performAction)="performActions($event)"
+  -->
+
   <table class="table tags-pool" wt-responsive-table>
     <thead>
       <tr>
@@ -75,7 +85,7 @@
             <button class="btn btn-action" (click)="editDatum[datum._id] = true">
               <i class="fas fa-edit"></i>
             </button>
-            <button *ngIf="!datum.originalTagId" class="btn btn-action" (click)="attachTagDatum[datum._id] = true">
+            <button *ngIf="!datum.originalTagId" class="btn btn-xs btn-error" (click)="attachTagDatum[datum._id] = true">
               <i class="fas fa-tag"></i>
             </button>
           </td>

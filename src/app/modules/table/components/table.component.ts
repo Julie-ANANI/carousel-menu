@@ -424,9 +424,12 @@ export class TableComponent {
     return this._filteredContent;
   }
 
-
   set content(value: Row[]) {
     this._content = value;
+  }
+
+  get lang(): string {
+    return this._translateService.currentLang;
   }
 
 }

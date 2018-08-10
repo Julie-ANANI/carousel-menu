@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AutocompleteService } from '../../../../../services/autocomplete/autocomplete.service';
 import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { Table } from '../../../../table/models/table';
 import { Tag } from '../../../../../models/tag';
 import { Observable } from 'rxjs/Observable';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
@@ -21,16 +22,31 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   private _tags: Array<Tag>;
   private _tagForm: FormGroup;
 
-  public editDatum = {};
-  public attachTagDatum = {};
+  private _tableInfos: Table = {
+    _selector: 'admin-user',
+    _content: [],
+    _total: 0,
+    _isDeletable: true,
+    _isSelectable: false,
+    _isFiltrable: true,
+    _columns: [
+      {_attrs: ['label'], _name: 'Label', _type: 'MULTILING'},
+      {_attrs: ['description'], _name: 'Description', _type: 'MULTILING'},
+      {_attrs: ['type'], _name: 'Type', _type: 'TEXT'}
+    ],
+  };
+
   private _config = {
     limit: 10,
     offset: 0,
     search: {},
     sort: {
-      label: -1
+      created: -1
     }
   };
+
+  public editDatum = {};
+  public attachTagDatum = {};
 
   constructor(private route: ActivatedRoute,
               private formBuilder: FormBuilder,
@@ -47,6 +63,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     });
     this.tagService.getTagsFromPool(this._projectId).subscribe((data) => {
       this._tags = data;
+      this._tableInfos = {...this._tableInfos, _content: this._tags, _total: this._tags.length};
     });
   }
 
@@ -123,4 +140,5 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   get config() { return this._config; }
   get tagForm() { return this._tagForm; }
   get tags() { return this._tags; }
+  get tableInfos() { return this._tableInfos; }
 }
