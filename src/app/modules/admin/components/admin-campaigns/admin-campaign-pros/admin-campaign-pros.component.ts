@@ -57,6 +57,22 @@ export class AdminCampaignProsComponent implements OnInit {
       });
     }
   }
+
+  exportPros() {
+    const config = {
+      professionals: "all",
+      campaignId: this._campaign._id,
+      query: {
+        campaignId: this._campaign._id
+      }
+    };
+    this._professionalsService.export(config).first().subscribe((answer: any) => {
+      const blob = new Blob([answer.csv], { type: 'text/csv' });
+      const url= window.URL.createObjectURL(blob);
+      window.open(url);
+    });
+  }
+
   set addProModal(value: boolean) { this._addProModal = value; }
   get addProModal(): boolean  { return this._addProModal; }
   set config(value: any) { this._config = value; }
