@@ -27,6 +27,9 @@ export class FrontendService {
 
   constructor() {}
 
+  /*
+    We are calculating the percentage for the project.
+   */
   completionCalculation(project: Innovation) {
     this.projectFieldsRequired = 0;
     this.settingsFieldsRequired = 0;
@@ -158,6 +161,16 @@ export class FrontendService {
 
   get calculatedPercentages(): Values {
     return this._calculatedValues;
+  }
+
+  /*
+    We are calculating percentage for the anlytics
+    that are being used in Market exploration and
+    Synthesis page.
+   */
+  analyticPercentage(value1: number, value2: number) {
+    const percentage = (value2 / value1) * 100;
+    return percentage === Infinity ? 0 : Math.floor(percentage);
   }
 
   }

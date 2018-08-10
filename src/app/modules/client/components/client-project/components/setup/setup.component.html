@@ -55,7 +55,7 @@
     <div *ngIf="project.reviewing && projectStatus === 'EDITING'" class="msg-wrapper">
       <div class="content text-center">
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.A' | translate }}
-        <span class="text-link">{{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.B' | translate }}</span>
+        <span>{{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.B' | translate }}</span>
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.C' | translate }}
       </div>
     </div>
@@ -65,7 +65,7 @@
       <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING' | translate }}</div>
     </div>
 
-    <!-- Project under evaluating status message -->
+    <!-- Project under done status message -->
     <div *ngIf="projectStatus === 'DONE'" class="msg-wrapper">
       <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.DONE' | translate }}</div>
     </div>

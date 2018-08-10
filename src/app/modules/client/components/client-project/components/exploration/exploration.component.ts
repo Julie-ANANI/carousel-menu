@@ -9,6 +9,7 @@ import { Question } from '../../../../../../models/question';
 import { Section } from '../../../../../../models/section';
 import { Table } from '../../../../../table/models/table';
 import { Template } from '../../../../../sidebar/interfaces/template';
+import { FrontendService } from '../../../../../../services/frontend/frontend.service';
 
 @Component({
   selector: 'app-client-exploration-project',
@@ -21,6 +22,7 @@ export class ExplorationProjectComponent implements OnInit {
   @Input() project: Innovation;
 
   private _contactUrl: string;
+
   private _campaignsStats: {
     nbPros: number,
     nbProsSent: number,
@@ -28,13 +30,17 @@ export class ExplorationProjectComponent implements OnInit {
     nbProsClicked: number,
     nbValidatedResp: number
   };
+
   private _companies: Array<Clearbit>;
   private _countries: Array<string>;
   private _questions: Array<Question>;
   private _modalAnswer: Answer;
-  sidebarTemplateValue: Template = {};
-  tableInfos: Table = null;
-  config = {
+
+  private _sidebarTemplateValue: Template = {};
+
+  private _tableInfos: Table = null;
+
+  private _config = {
     limit: 10,
     offset: 0,
     search: {},
@@ -45,8 +51,8 @@ export class ExplorationProjectComponent implements OnInit {
 
   constructor(private answerService: AnswerService,
               private innovationService: InnovationService,
-              private notificationService: TranslateNotificationsService) {
-  }
+              private notificationService: TranslateNotificationsService,
+              private frontendService: FrontendService) {}
 
   ngOnInit() {
     this._contactUrl = encodeURI('mailto:contact@umi.us?subject=' + this.project.name);
@@ -56,7 +62,7 @@ export class ExplorationProjectComponent implements OnInit {
   loadAnswers() {
     this.answerService.getInnovationValidAnswers(this.project._id).first().subscribe( (response) => {
 
-      this.tableInfos = {
+      this._tableInfos = {
         _selector: 'client-answer',
         _content: response.answers,
         _isShowable: true,
@@ -123,8 +129,8 @@ export class ExplorationProjectComponent implements OnInit {
   seeAnswer(answer: Answer) {
     this._modalAnswer = answer;
 
-    this.sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+    this._sidebarTemplateValue = {
+      animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'MARKET_REPORT.INSIGHT',
       size: '726px'
     };
@@ -132,17 +138,11 @@ export class ExplorationProjectComponent implements OnInit {
   }
 
   closeSidebar(value: string) {
-    this.sidebarTemplateValue.animate_state = value;
+    this._sidebarTemplateValue.animate_state = value;
   }
 
   public percentageCalculataion(value1: number, value2: number) {
-    let percentage = (value2 / value1) * 100;
-
-    if (percentage === Infinity) {
-      percentage = 0;
-    }
-
-    return Math.floor(percentage);
+    return this.frontendService.analyticPercentage(value1, value2);
   }
 
   public formatCompanyName(name: string) {
@@ -182,6 +182,18 @@ export class ExplorationProjectComponent implements OnInit {
 
   get projectStatus(): string {
     return this.project.status;
+  }
+
+  get sidebarTemplateValue(): Template {
+    return this._sidebarTemplateValue;
+  }
+
+  get tableInfos(): Table {
+    return this._tableInfos;
+  }
+
+  get config(): { limit: number; offset: number; search: {}; sort: { created: number } } {
+    return this._config;
   }
 
 }

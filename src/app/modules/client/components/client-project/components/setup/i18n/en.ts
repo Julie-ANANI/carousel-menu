@@ -19,7 +19,7 @@ export const SETUP = {
     'REVIEWING': {
       'A': 'Your project needs to be modified. Please',
       'B': 'reads',
-      'C': 'our comments.'
+      'C': 'our comments that we have sent you by mail.'
     },
     'PREVIEW_MODE': 'The partial synthesis of your project is available.',
     'DONE': 'Synthesis of your project is available. You can\'t make changes in your project anymore.'
