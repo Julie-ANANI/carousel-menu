@@ -1,52 +1,37 @@
-<div class="container section-container">
-  <div class="columns">
-    <div class="column col-7 col-xl-10 col-md-11 col-mx-auto">
-      <h1>{{ 'WELCOME.WELCOME' | translate }} {{name}}</h1>
+<section class="section-container" id="welcome-page">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <h1 class="main-heading">{{ 'WELCOME.WELCOME' | translate }} {{ name }}!</h1>
+    <p>{{ 'WELCOME.MAIN_SENTENCE' | translate }}</p>
 
-      <div class="columns">
-        <div class="column col-6 col-sm-12">
-          <p>
-            {{ 'WELCOME.MAIN_SENTENCE' | translate }}
-          </p>
-          <div *ngIf="isMainDomain()">
-            <p>
-              <img src="https://res.cloudinary.com/umi/image/upload/q_61/v1512724331/writing_dmzmwg.gif"
-                   align="middle"/>
-            </p>
-            <p  *ngIf="isAdmin">
-              {{ 'WELCOME.ADMIN_SENTENCE' | translate }}
-              <input type="text" [(ngModel)]="tokenEmail">
-            </p>
-            <p>
-              Happy UMIing
-            </p>
-          </div>
-        </div>
+    <div *ngIf="isMainDomain()" class="content-wrapper">
+      <img src="https://res.cloudinary.com/umi/image/upload/q_61/v1512724331/writing_dmzmwg.gif" class="img-responsive"/>
 
-        <div class="column col-12">
-          <p>
-            <b>
-              {{ 'WELCOME.I_UNDERSTAND' | translate }}
-              <span *ngIf="isMainDomain()">
-                <a target="_blank"
-                   [href]="'https://www.umi.us' + (translate.currentLang==='fr'
-                 ? '/fr/conditions-generales-utilisation/'
-                 : '/end-user-license-agreement/')">
-                {{ 'WELCOME.TERMS' | translate }}
-              </a>
-              </span>
-              <span *ngIf="!isMainDomain()">
-                {{ 'WELCOME.TERMS' | translate }}
-              </span>
-            </b>
-          </p>
-          <button class="btn btn-primary" (click)="acceptTerms($event)" [disabled]="isAdmin && !tokenEmail">
-            {{ 'COMMON.ACCEPT' | translate }}
-          </button>
-        </div>
-      </div>
+      <p *ngIf="isAdmin" class="admin-text-wrapper">
+        {{ 'WELCOME.ADMIN_SENTENCE' | translate }}
+        <br>
+        <input class="form-default" type="text" [(ngModel)]="tokenEmail">
+      </p>
+
+      <p class="happy-text-wrapper"><strong>Happy UMIing!</strong></p>
+
+      <p class="terms-wrapper">
+        {{ 'WELCOME.I_UNDERSTAND' | translate }}
+        <strong>
+          <span *ngIf="isMainDomain()" class="text-link">
+            <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/'
+               : '/end-user-license-agreement/')">
+              {{ 'WELCOME.TERMS' | translate }}
+            </a>
+          </span>
+          <span *ngIf="!isMainDomain()" class="text-link"> {{ 'WELCOME.TERMS' | translate }}</span>
+        </strong>
+      </p>
+
+      <button class="btn btn-primary" (click)="acceptTerms($event)" [disabled]="isAdmin && !tokenEmail">
+        {{ 'COMMON.ACCEPT' | translate }}
+      </button>
+
     </div>
+
   </div>
-</div>
-
-
+</section>

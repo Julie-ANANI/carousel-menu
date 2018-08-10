@@ -12,6 +12,8 @@ import { AdminTagAttachmentsSubsetComponent } from './admin-tag-attachment-list/
 import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/admin-tag-new-modal.component';
 import { InputModule } from '../../../input/input.module';
 import { RouterModule } from '@angular/router';
+import { AutocompleteInputModule } from '../../../input/component/autocomplete-input/autocomplete-input.module';
+import { PaginationModule } from '../../../input/component/pagination/pagination.module';
 
 @NgModule({
   imports: [
@@ -20,6 +22,8 @@ import { RouterModule } from '@angular/router';
     TranslateModule.forChild(),
     PipeModule,
     InputModule,
+    AutocompleteInputModule,
+    PaginationModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule

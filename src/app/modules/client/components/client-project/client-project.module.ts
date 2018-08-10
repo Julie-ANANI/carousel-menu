@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedSortModule } from '../../../shared/components/shared-sort/shared-sort.module';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
-import { SharedProjectsListModule } from '../../../admin/components/admin-projects-list/admin-projects-list.module';
+import { AdminProjectsListModule } from '../../../admin/components/admin-projects-list/admin-projects-list.module';
 import { SharedAnswerListModule } from '../../../shared/components/shared-answers-list/shared-answer-list.module';
 import { SharedLoaderModule } from '../../../shared/components/shared-loader/shared-loader.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
@@ -26,6 +26,8 @@ import { TableModule } from '../../../table/table.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputModule } from '../../../input/input.module';
+import { PaginationModule } from '../../../input/component/pagination/pagination.module';
+import { SidebarCollaboratorModule } from '../../../sidebar/components/collaborator/sidebar-collaborator.module';
 
 @NgModule({
   imports: [
@@ -33,7 +35,7 @@ import { InputModule } from '../../../input/input.module';
     SharedSortModule,
     SharedMarketReportModule,
     SharedAnswerListModule,
-    SharedProjectsListModule,
+    AdminProjectsListModule,
     SharedWorldmapModule,
     TableModule,
     TranslateModule.forChild(),
@@ -46,7 +48,9 @@ import { InputModule } from '../../../input/input.module';
     SharedProjectEditCardsModule,
     SharedProjectSettingsModule,
     SharedProjectDescriptionModule,
-    InputModule
+    InputModule,
+    PaginationModule,
+    SidebarCollaboratorModule
   ],
   declarations: [
     ClientProjectComponent,

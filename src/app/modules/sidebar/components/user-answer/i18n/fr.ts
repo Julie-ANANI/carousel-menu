@@ -11,7 +11,6 @@ export const ANSWER = {
     'REJECTED': 'Rejeté',
     'VALIDATED': 'Validé',
     'SUBMITTED': 'A regarder',
-    'VALIDATED_NO_MAIL': 'Validé sans envoi de mail',
     'EMAIL': 'Envoyer email'
   },
 

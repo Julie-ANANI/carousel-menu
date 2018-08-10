@@ -13,10 +13,7 @@ import { AdminProjectsModule } from './components/admin-projects/admin-projects.
 import { AdminCampaignsModule } from './components/admin-campaigns/admin-campaigns.module';
 import { AdminLibrariesModule } from './components/admin-libraries/admin-libraries.module';
 import { AdminCountryManagementModule } from './components/admin-settings/admin-country-management/admin-country-management.module';
-
-// Components
 import { PipeModule } from '../../pipe/pipe.module';
-import { BaseModule } from '../base/base.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { InputModule } from '../input/input.module';
 import { AdminComponent } from './admin.component';
@@ -28,6 +25,11 @@ import { AdminProjectsListComponent } from './components/admin-projects-list/adm
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
+import { FooterModule } from '../base/components/footer/footer.module';
+import { HeaderModule } from '../base/components/header/header.module';
+import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
+import { LogoutPageModule } from '../base/components/logout-page/logout-page.module';
+import { InputListModule } from '../input/component/input-list/input-list.module';
 
 @NgModule({
   imports: [
@@ -46,12 +48,16 @@ import { AdminSettingsComponent } from './components/admin-settings/admin-settin
     TranslateModule.forChild(),
     SidebarModule,
     PipeModule,
-    BaseModule,
     InputModule,
     AdminCountryManagementModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    FooterModule,
+    HeaderModule,
+    NotFoundPageModule,
+    LogoutPageModule,
+    InputListModule
   ],
   declarations: [
     AdminComponent,

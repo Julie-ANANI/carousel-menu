@@ -10,6 +10,7 @@ import { environment } from '../../../../../environments/environment';
   templateUrl: './forget-password-page.component.html',
   styleUrls: ['./forget-password-page.component.scss']
 })
+
 export class ForgetPasswordPageComponent implements OnInit {
 
   private _formData: FormGroup;
@@ -19,8 +20,7 @@ export class ForgetPasswordPageComponent implements OnInit {
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
               private translateNotificationsService: TranslateNotificationsService,
-              private userService: UserService) {
-  }
+              private userService: UserService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('FORGET_PASSWORD.TITLE');
@@ -47,27 +47,6 @@ export class ForgetPasswordPageComponent implements OnInit {
     }
 
   }
-
-  /*onResetLink(event: Event) {
-    event.preventDefault();
-
-    if (!this._formData.get('email')!.value) {
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_PLEASE');
-    } else if (this._formData.get('email').hasError('email')) {
-      this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
-    } else {
-      this.userService.changePassword(this._formData.get('email')!.value)
-        .first()
-        .subscribe(_ => {
-          this._emailSent = true;
-        }, _ => {
-           // this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.LOGIN.EMAIL_NOT_FOUND');
-          this._emailSent = true;
-        });
-    }
-
-  }*/
-
 
   get formData(): FormGroup {
     return this._formData;

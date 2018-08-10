@@ -1,14 +1,14 @@
-.user-form-wrapper {
-  padding-top: 30px;
+#user-form {
+  padding-top: 1.875rem;
 
   .operator-wrapper {
-    padding-bottom: 30px;
+    padding-bottom: 1.875rem;
 
     .input-group {
       flex-direction: column;
 
       .form-switch {
-        font-size: 14px;
+        font-size: .85rem;
       }
 
     }
@@ -29,15 +29,15 @@
   }
 
   .terms-wrapper {
-    padding-top: 22px;
-    font-size: 0.7rem;
+    padding-top: 1.375rem;
+    font-size: 0.85rem;
     color: #97A4B1;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: .9375rem;
+    padding-right: .9375rem;
   }
 
   .signUp-button-wrapper {
-    padding-top: 30px;
+    padding-top: 1.875rem;
   }
 
 }

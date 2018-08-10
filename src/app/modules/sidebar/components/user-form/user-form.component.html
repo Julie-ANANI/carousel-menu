@@ -1,4 +1,4 @@
-<div class="user-form-wrapper">
+<section id="user-form">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
@@ -194,8 +194,8 @@
 
       <!-- Link to quiz URI -->
       <div *ngIf="isProfessional && campaign" class="form-group">
-        <a (click)="openQuizUri(pro, $event)">
-        <label class="text-link">{{ 'COMMON.QUESTIONNAIRE' | translate }}</label>
+        <a (click)="addAnswer(pro, $event)">
+        <label class="text-link">{{ 'COMMON.ADD-ANSWER' | translate }}</label>
         </a>
       </div>
 
@@ -207,12 +207,10 @@
 
       <!-- Submit button -->
       <div *ngIf="isSignUp" class="signUp-button-wrapper text-center">
-        <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid && userForm.get('profileUrl').value === null && userForm.get('operator').value === false ">
-          {{ 'COMMON.BUTTON.SIGN_UP' | translate }}
-        </button>
+        <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid">{{ 'COMMON.BUTTON.SIGN_UP' | translate }}</button>
       </div>
 
     </form>
 
   </div>
-</div>
+</section>

@@ -9,7 +9,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs/Subject';
 import {Tag} from '../../../../models/tag';
-import {TagsService} from '../../../../services/tags/tags.service';
+import { TagsService } from '../../../../services/tags/tags.service';
 
 @Component({
   selector: 'app-user-form',

@@ -47,4 +47,10 @@ export class ProfessionalsService {
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
+
+  public export(config: any): Observable<any> {
+    return this._http.post(`/professional/exportCSV`, config)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
 }

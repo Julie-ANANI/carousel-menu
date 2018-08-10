@@ -20,8 +20,9 @@ import { Subject } from 'rxjs/Subject';
 export class SignupPageComponent implements OnInit {
 
   public isInvitation = false;
-  sidebarTemplateValue: Template = {};
-  sidebarState = new Subject<string>();
+  private _sidebarTemplateValue: Template = {};
+  private _sidebarState = new Subject<string>();
+  private _linkedInLink: string;
 
   constructor(private _authService: AuthService,
               private userService: UserService,
@@ -37,15 +38,16 @@ export class SignupPageComponent implements OnInit {
       this.isInvitation = params['invitation'] && params['invitation'] === 'true';
     });
 
+    this.linkedInUrl();
+
   }
 
-  linkedInSignUp(event: Event) {
-    event.preventDefault();
-
+  linkedInUrl() {
     const domain = environment.domain;
 
-    this._authService.linkedinLogin(domain).first().subscribe(url => {
-        window.location.href = url;
+    this._authService.linkedinLogin(domain).first().subscribe(
+      url => {
+        this._linkedInLink = url;
       },
       error => {
         this.translateNotificationsService.error('ERROR.ERROR', error.message);
@@ -88,8 +90,8 @@ export class SignupPageComponent implements OnInit {
   onSignUpClick(event: Event) {
     event.preventDefault();
 
-    this.sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+    this._sidebarTemplateValue = {
+      animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
       title: 'SIGN_UP.HEADING_SIDEBAR',
       type: 'isSignUp'
     };
@@ -97,8 +99,28 @@ export class SignupPageComponent implements OnInit {
   }
 
   closeSidebar(value: string) {
-    this.sidebarTemplateValue.animate_state = value;
-    this.sidebarState.next('inactive');
+    this._sidebarTemplateValue.animate_state = value;
+    this._sidebarState.next('inactive');
+  }
+
+  get linkedInLink(): string {
+    return this._linkedInLink;
+  }
+
+  get sidebarTemplateValue(): Template {
+    return this._sidebarTemplateValue;
+  }
+
+  set sidebarTemplateValue(value: Template) {
+    this._sidebarTemplateValue = value;
+  }
+
+  get sidebarState(): Subject<string> {
+    return this._sidebarState;
+  }
+
+  set sidebarState(value: Subject<string>) {
+    this._sidebarState = value;
   }
 
   get domainCompanyName(): string {

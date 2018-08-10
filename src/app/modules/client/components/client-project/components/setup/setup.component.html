@@ -7,7 +7,7 @@
       <!-- Column 1 -->
       <div class="sc-summary-wrapper">
         <h1 class="main-heading">{{ project.innovationCards[innovationPreviewIndex].title }}</h1>
-        <p>{{ project.innovationCards[innovationPreviewIndex].summary }}</p>
+        <div>{{ project.innovationCards[innovationPreviewIndex].summary }}</div>
 
         <div *ngIf="project.principalMedia?.type === 'PHOTO'" class="main-media">
           <img
@@ -27,13 +27,13 @@
       <!-- Column 2 -->
       <div class="sc-issue-wrapper">
         <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
-        <p>{{ project.innovationCards[innovationPreviewIndex].problem }}</p>
+        <div>{{ project.innovationCards[innovationPreviewIndex].problem }}</div>
       </div>
 
       <!-- Column 3 -->
       <div class="sc-solution-wrapper">
         <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
-        <p>{{ project.innovationCards[innovationPreviewIndex].solution }}</p>
+        <div>{{ project.innovationCards[innovationPreviewIndex].solution }}</div>
       </div>
     </div>
   </div>
@@ -41,7 +41,7 @@
 
 </div>
 
-<div class="section-container" id="setup-project">
+<section class="section-container" id="setup">
 
   <!-- Messages -->
   <div class="column col-xs-12 col-11 col-mx-auto">
@@ -55,7 +55,7 @@
     <div *ngIf="project.reviewing && projectStatus === 'EDITING'" class="msg-wrapper">
       <div class="content text-center">
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.A' | translate }}
-        <span class="text-link">{{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.B' | translate }}</span>
+        <span>{{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.B' | translate }}</span>
         {{ 'PROJECT_MODULE.SETUP.MESSAGE.REVIEWING.C' | translate }}
       </div>
     </div>
@@ -65,7 +65,7 @@
       <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.EVALUATING' | translate }}</div>
     </div>
 
-    <!-- Project under evaluating status message -->
+    <!-- Project under done status message -->
     <div *ngIf="projectStatus === 'DONE'" class="msg-wrapper">
       <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.DONE' | translate }}</div>
     </div>
@@ -73,9 +73,9 @@
   </div>
 
   <!-- Buttons -->
-  <div class="setup-section-1-wrapper" [ngClass]="{ 'setup-scroll-sticky': scrollOn }">
+  <div class="heading-button-wrapper" [ngClass]="{ 'setup-scroll-sticky': scrollOn }">
     <div class="column col-xs-12 col-11 col-mx-auto">
-      <div class="row-1-wrapper">
+      <div class="content-wrapper">
 
         <!-- Heading -->
         <h2 class="main-heading">{{ 'PROJECT_MODULE.SETUP.TITLE' | translate }}</h2>
@@ -166,7 +166,7 @@
     </app-project-survey>
   </div>
 
-</div>
+</section>
 
 <!-- Modal to ask user to sure about submitting the project -->
 <div class="modal" [ngClass]="{'active': projectToBeSubmitted}">
