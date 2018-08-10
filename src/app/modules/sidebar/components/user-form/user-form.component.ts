@@ -89,7 +89,7 @@ export class UserFormComponent implements OnInit {
               private autoCompleteService: AutocompleteService,
               private answerService: AnswerService,
               private notificationsService: TranslateNotificationsService,
-              private _tagsService: TagsService,
+              private tagsService: TagsService,
               private _authService: AuthService) {}
 
   ngOnInit() {

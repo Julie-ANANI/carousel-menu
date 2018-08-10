@@ -19,6 +19,7 @@ import { SharedTagItemModule } from '../../../shared/components/shared-tag-item/
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/admin-project-questionnaire.module';
+import {AutocompleteInputModule} from '../../../input/component/autocomplete-input/autocomplete-input.module';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/adm
     SharedTagItemModule,
     RouterModule,
     FormsModule,
+    AutocompleteInputModule,
     ReactiveFormsModule,
     AdminProjectQuestionnaireModule
   ],

@@ -9,6 +9,7 @@ import { SharedUploadZoneVideoModule } from '../shared-upload-zone-video/shared-
 import { SharedUploadZonePhotoModule } from '../shared-upload-zone-photo/shared-upload-zone-photo.module';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
+import { InputListModule } from '../../../input/component/input-list/input-list.module';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { PipeModule } from '../../../../pipe/pipe.module';
     SharedUploadZoneVideoModule,
     SharedUploadZonePhotoModule,
     SharedTextZoneModule,
-    PipeModule
+    PipeModule,
+    InputListModule
   ],
   declarations: [
     SharedProjectEditCardsComponent

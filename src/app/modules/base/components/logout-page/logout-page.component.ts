@@ -19,9 +19,8 @@ export class LogoutPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.translateTitleService.setTitle('LOG_OUT.TITLE');
-    this.authService.logout()
-      .first()
-      .subscribe(
+
+    this.authService.logout().first().subscribe(
         _ => {
           this.translateNotificationsService.success('ERROR.LOGIN.LOGOUT', 'ERROR.LOGIN.LOGOUT_TEXT');
           this.location1.back();

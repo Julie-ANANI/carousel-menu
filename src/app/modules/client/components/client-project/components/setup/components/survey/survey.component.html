@@ -1,4 +1,4 @@
-<div class="section-container" id="projectSurvey">
+<section class="section-container" id="survey">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <div *ngIf="!project.quizId">
@@ -6,14 +6,14 @@
         <span class="bot-rect">{{'PROJECT_MODULE.SETUP.SURVEY.NOQUIZ' | translate}}</span>
         <br>
         <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-        <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot" class="bot-image"></div>
+        <div><img src="http://res.cloudinary.com/umi/image/upload/v1533567512/app/default-images/info-bot.svg" alt="Bot" class="bot-image"></div>
       </div>
     </div>
 
     <ng-container *ngIf="project.quizId">
       <p>{{'PROJECT_MODULE.SETUP.SURVEY.DONTSHAREQUIZ' | translate}}</p>
-      <a href="{{url}}" target="_blank">{{url}}</a>
+      <a href="{{ url }}" target="_blank">{{url}}</a>
     </ng-container>
 
   </div>
-</div>
+</section>

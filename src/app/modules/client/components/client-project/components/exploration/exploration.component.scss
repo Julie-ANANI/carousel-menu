@@ -1,67 +1,66 @@
-.exploration-wrapper {
+@import "../../../../../../../style/variables";
 
-  .e-title-wrapper {
+#exploration {
+
+  .title-wrapper {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 25px;
+    padding-bottom: 1.57rem;
 
     .btn {
-      padding-top: 15px;
-      padding-bottom: 15px;
+      padding-top: .95rem;
+      padding-bottom: .95rem;
     }
 
   }
 
-  .e-comm-wrapper {
+  .sts-comment-wrapper {
     display: flex;
     padding-top: 0;
 
-    .e-status-wrapper {
-      min-height: 236px;
+    .status-wrapper {
+      min-height: 14.75rem;
       width: 330px;
-      background-color: #4F5D6B;
-      border-radius: 3px;
-      padding: 25px;
-      margin-right: 25px;
+      background-color: $background-color;
+      border-radius: .18rem;
+      padding: 1.57rem 1.57rem;
+      margin-right: 1.57rem;
 
       .section-heading {
         color: white;
       }
 
       .fa-check {
-        color: #2ECC71;
-        margin-right: 3px;
+        color: $validation-color;
+        margin-right: 0.18rem;
       }
 
       .fa-times {
-        color: #EA5858;
-        margin-right: 3px;
+        color: $alert-color;
+        margin-right: 0.18rem;
       }
 
       .text-white {
         color: white;
-        font-size: 0.7rem;
+        font-size: 0.95rem;
       }
 
-      .e-info-status {
+      .data-wrapper {
         display: flex;
         justify-content: space-between;
       }
 
     }
 
-    .e-comment-wrapper {
+    .comment-wrapper {
       flex: 1;
 
-      p {
-        padding-bottom: 0;
-      }
-
-      div {
-        padding-top: 25px;
+      .operator-wrapper {
+        padding-top: 1.57rem;
 
         span {
           font-weight: 600;
+          color: $dark-color;
         }
 
       }
@@ -70,24 +69,24 @@
 
   }
 
-  .e-analytic-wrapper {
+  .analytic-wrapper {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
 
     .pd-top {
-      padding-top: 22px;
+      padding-top: 2.375rem;
     }
 
-    .e-info-analytic {
-      margin-bottom: 25px;
+    .info-analytic-wrapper {
+      margin-bottom: 1.57rem;
 
       p {
-        color: #97A4B1;
+        color: $meta-color;
       }
 
       .svg-text {
-        font-size: 14px;
+        font-size: .85rem;
         font-weight: 600;
         fill: #FFFFFF;
       }
@@ -96,7 +95,7 @@
 
   }
 
-  .e-comp-name-wrapper {
+  .company-name-wrapper {
     list-style: none;
 
     li {
@@ -113,20 +112,20 @@
 /********************************** Media ***************************************/
 @media (max-width: 840px) {
 
-  .exploration-wrapper {
+  #exploration {
 
-    .e-comm-wrapper {
+    .sts-comment-wrapper {
       flex-direction: column;
 
-      .e-status-wrapper {
+      .status-wrapper {
         width: 310px;
         margin-right: 0;
-        margin-bottom: 25px;
+        margin-bottom: 1.57rem;
       }
 
     }
 
-    .e-comp-name-wrapper {
+    .company-name-wrapper {
 
       li {
         width: 50%;
@@ -140,13 +139,13 @@
 
 @media (max-width: 600px) {
 
-  .exploration-wrapper {
+  #exploration {
 
-    .e-title-wrapper {
+    .title-wrapper {
       flex-direction: column;
 
       .btn {
-        width: 133.72px;
+        width: 40%;
       }
 
     }
@@ -158,12 +157,12 @@
 
 @media (max-width: 320px) {
 
-  .exploration-wrapper {
+  #exploration {
 
-    .e-comm-wrapper {
+    .sts-comment-wrapper {
 
-      .e-status-wrapper {
-        width: 290px;
+      .status-wrapper {
+        width: 100%;
       }
 
     }

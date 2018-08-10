@@ -1,19 +1,22 @@
-.wait {
+@import "../style/variables";
+
+.wait-wrapper {
   height: 100vh;
   display: flex;
   align-items: center;
   text-align: center;
 
-  div {
+  section {
     flex: 1;
   }
+
   .fas {
-    color: #FFB300;
+    color: $primary-color;
   }
 
 }
 
-.body {
+.body-wrapper {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -35,6 +38,6 @@
   left: 0;
   width: 100%;
   margin: 0;
-  background-color: #FFB300;
+  background-color: $primary-color;
 }
 

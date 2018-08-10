@@ -23,6 +23,7 @@ import { CommonService } from '../../../../services/common/common.service';
 import { InputModule } from '../../../input/input.module';
 import { FilterService } from './services/filters.service';
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { SharedMarketComment2Component } from './components/professional-comment
     TranslateModule.forChild(),
     Ng2PageScrollModule,
     SidebarModule,
-    InputModule
+    InputModule,
+    RouterModule
   ],
   providers: [
     CommonService,

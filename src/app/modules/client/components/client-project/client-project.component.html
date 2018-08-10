@@ -1,6 +1,6 @@
 <app-shared-loader *ngIf="!project"></app-shared-loader>
 
-<div *ngIf="project" class="main-container" id="project-description">
+<section *ngIf="project" class="main-container" id="client-project">
 
   <!-- Header -->
   <div class="hero-light-container header-project">
@@ -13,15 +13,15 @@
       <div class="info-wrapper">
         <img [src]="imgType">
         <span class="project-info">
-      {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
-      &nbsp;•&nbsp;
-      {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
-      &nbsp;•&nbsp;
-      {{ project.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
-      <span class="text-link" (click)="editCollaborator($event)">
-        {{ 'COMMON.EDIT' | translate | lowercase}}
-      </span>
-    </span>
+          {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
+          &nbsp;•&nbsp;
+          {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
+          &nbsp;•&nbsp;
+          {{ project.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
+          <span class="text-link" (click)="editCollaborator($event)">
+            {{ 'COMMON.EDIT' | translate | lowercase}}
+          </span>
+        </span>
       </div>
 
       <!-- Tabs -->
@@ -70,18 +70,18 @@
     <app-shared-market-report [project]="project"></app-shared-market-report>
   </div>
 
-  <!-- History page -->
+  <!-- History page
   <div *ngIf="currentPage === 'history'">
-    <!--<app-client-history-project [project]="project"></app-client-history-project>-->
+    <!--<app-client-history-project [project]="project"></app-client-history-project>
     <div class="bot-wrapper text-center" [ngStyle]="{ 'padding-top': '75px', 'padding-bottom': '50px' }">
       <span class="bot-rect" [ngStyle]="{ 'width': '300px' }">Work in progress...</span>
       <br>
       <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
       <div><img src="https://res.cloudinary.com/umi/image/upload/v1528795365/app/default-images/bot-1.svg" alt="Bot"></div>
     </div>
-  </div>
+  </div>-->
 
-</div>
+</section>
 
 <!-- Scroll to top button -->
 <div class="btn-scroll scrollButton-print" [ngStyle]="{ 'display': scrollButton ? 'flex' : 'none' }" (click)="scrollToTop($event)">

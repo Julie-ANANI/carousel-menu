@@ -1,34 +1,25 @@
-<div class="small-pagination">
+<div class="pagination-wrapper">
 
-  {{'COMMON.PAGINATION' | translate}}
+  {{'COMMON.PAGINATION' | translate}}:
 
-  <select [ngModel]="perPage" (ngModelChange)="perPage = $event" class="form-select small-select">
-    <option *ngFor="let perPage of perPageValues" [value]="perPage">{{perPage}}</option>
+  <select [ngModel]="perPage" (ngModelChange)="perPage = $event" class="page-selector-wrapper">
+    <option *ngFor="let perPage of perPageValues" [value]="perPage">{{ perPage }}</option>
   </select>
 
-
-  <div class="number-of-page" *ngIf="numPages >= 2">
-
+  <div *ngIf="numPages >= 2" class="page-number-wrapper">
     <a *ngIf="currentPage > 2" (click)="(currentPage = 1) && $event.preventDefault()" href="#">
-      «
+      <i class="fas fa-angle-double-left"></i>
     </a>
-
     <a *ngIf="currentPage > 1" (click)="(currentPage > 1 ? currentPage = currentPage - 1 : currentPage = 1) && $event.preventDefault()" href="#">
-      <
+      <i class="fas fa-angle-left"></i>
     </a>
-
-    <div class="">
-      {{ (perPage * currentPage) - perPage+1 }}-{{ (perPage * currentPage <= total) ? perPage * currentPage : total }} {{ 'COMMON.OF' | translate }} {{ total }}
-    </div>
-
+    <span class="text-wrapper">{{ (perPage * currentPage) - perPage+1 }} - {{ (perPage * currentPage <= total) ? perPage * currentPage : total }} {{ 'COMMON.OF' | translate }} {{ total }}</span>
     <a *ngIf="currentPage < numPages" (click)="(currentPage = currentPage + 1) && $event.preventDefault()" href="#">
-      >
+      <i class="fas fa-angle-right"></i>
     </a>
-
     <a *ngIf="currentPage < numPages-1" (click)="(currentPage = numPages) && $event.preventDefault()" href="#">
-      »
+      <i class="fas fa-angle-double-right"></i>
     </a>
-
   </div>
 
 </div>

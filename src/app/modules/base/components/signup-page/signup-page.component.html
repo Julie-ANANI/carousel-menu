@@ -1,11 +1,11 @@
-<div class="main-container" id="sign-up">
+<section class="main-container" id="sign-up">
   <div class="columns col-gapless">
 
     <div class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image"
          [ngStyle]="{ 'background-image': 'url(' + backgroundImage() + ')'}">
     </div>
 
-    <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto sign-up-wrapper">
+    <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto sign-up-wrapper section-light-container">
 
       <!-- Logo -->
       <div class="text-center">
@@ -16,15 +16,14 @@
 
         <!-- Heading -->
         <div class="heading text-center">
-          <h1>{{ 'SIGN_UP.HEADING' | translate }}</h1>
+          <h1 class="main-heading">{{ 'SIGN_UP.HEADING' | translate }}</h1>
         </div>
 
         <!-- LinkedIn -->
         <div class="social-wrapper text-center" *ngIf="checkIsMainDomain()">
-          <button class="btn" (click)="linkedInSignUp($event)">
+          <a [href]="linkedInLink" class="btn">
             <i class="fab fa-1x fa-linkedin-in"></i>{{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
-          </button>
-
+          </a>
 
           <!-- Or -->
           <div class="or-wrapper text-center">
@@ -32,31 +31,28 @@
           </div>
 
         </div>
+
         <!-- Sign up button -->
         <div class="sign-wrapper text-center">
-          <button class="btn btn-primary" (click)="onSignUpClick($event)" [ngStyle]="{ 'padding-top': '10px' }">
+          <button class="btn btn-primary" (click)="onSignUpClick($event)">
             <i class="far fa-1x fa-envelope"></i>{{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}
           </button>
         </div>
 
         <!-- Sign up sidebar -->
         <app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
-          <app-user-form
-            [type]="sidebarTemplateValue.type"
-            (userSignUpData)="onSubmit($event)"
-            [sidebarState]="sidebarState">
-          </app-user-form>
+          <app-user-form [type]="sidebarTemplateValue.type" (userSignUpData)="onSubmit($event)" [sidebarState]="sidebarState"></app-user-form>
         </app-sidebar>
 
       </div>
 
       <!-- Sign in -->
       <div class="signin-wrapper text-center">
-        <span [ngStyle]="{ 'font-size': '14px', 'padding-right': '10px' }">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
+        <span [ngStyle]="{ 'font-size': '.85rem', 'padding-right': '.6rem' }">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
         <a class="btn btn-sm ghost-primary" routerLink="/login">{{ 'COMMON.LOG_IN' | translate }}</a>
       </div>
 
     </div>
 
   </div>
-</div>
+</section>

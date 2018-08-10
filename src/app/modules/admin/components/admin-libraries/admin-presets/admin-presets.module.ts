@@ -13,6 +13,7 @@ import { AdminPresetsEditComponent } from './admin-presets-edit/admin-presets-ed
 import { AdminPresetsListComponent } from './admin-presets-list/admin-presets-list.component';
 import { AdminPresetsNewComponent } from './admin-presets-new/admin-presets-new.component';
 import { AdminProjectQuestionnaireModule } from '../../admin-project/admin-project-questionnaire/admin-project-questionnaire.module';
+import { PaginationModule } from '../../../../input/component/pagination/pagination.module';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { AdminProjectQuestionnaireModule } from '../../admin-project/admin-proje
     FormsModule,
     ReactiveFormsModule,
     AdminProjectQuestionnaireModule,
-    SharedPresetModule
+    SharedPresetModule,
+    PaginationModule
   ],
   declarations: [
     AdminPresetsEditComponent,

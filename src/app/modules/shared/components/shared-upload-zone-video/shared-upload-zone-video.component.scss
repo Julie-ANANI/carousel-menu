@@ -1,20 +1,22 @@
+@import "../../../../../style/variables";
+
 .videos-upload {
-  border: 2px dashed #E0E0E0;
+  border: 2px dashed $border-color;
   position: relative;
-  border-radius: 5px;
-  min-height: 250px;
+  border-radius: .18rem;
+  min-height: 15.625rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 25px 10px;
+  padding: 1.57rem .6rem;
 
 
   .logos {
-    padding-bottom: 20px;
+    padding-bottom: 1.2rem;
 
     img {
-      margin-right: 30px;
+      margin-right: 1.875rem;
     }
 
   }
@@ -28,14 +30,14 @@
   }
 
   .btn {
-    margin-top: 20px;
+    margin-top: 1.2rem;
   }
 
 }
 
 .videos-upload:hover {
-  border-color: #FFB300;
-  background-color: #FFF9EB;
+  border-color: $primary-color;
+  background-color: $hover-background-color;
 }
 
 
