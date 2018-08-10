@@ -164,7 +164,7 @@ export class FrontendService {
   }
 
   /*
-    We are calculating percentage for the anlytics
+    We are calculating percentage for the analytics
     that are being used in Market exploration and
     Synthesis page.
    */
