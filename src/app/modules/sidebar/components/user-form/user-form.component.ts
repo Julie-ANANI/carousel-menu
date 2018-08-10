@@ -1,15 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { User } from '../../../../models/user.model';
-import { Professional } from '../../../../models/professional';
-import { Campaign } from '../../../../models/campaign';
+import { AnswerService } from '../../../../services/answer/answer.service';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { TagsService } from '../../../../services/tags/tags.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Answer } from '../../../../models/answer';
+import { Campaign } from '../../../../models/campaign';
+import { Professional } from '../../../../models/professional';
+import { Tag } from '../../../../models/tag';
+import { User } from '../../../../models/user.model';
 import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs/Subject';
-import {Tag} from '../../../../models/tag';
-import {TagsService} from '../../../../services/tags/tags.service';
 
 @Component({
   selector: 'app-user-form',
@@ -85,7 +87,8 @@ export class UserFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
-              private _translateService: TranslateService,
+              private answerService: AnswerService,
+              private notificationsService: TranslateNotificationsService,
               private _tagsService: TagsService,
               private _authService: AuthService) {}
 
@@ -201,11 +204,27 @@ export class UserFormComponent implements OnInit {
     this.displayCountrySuggestion = false;
   }
 
-  openQuizUri(pro: Professional, event: Event): void {
+  addAnswer(pro: Professional, event: Event): void {
     event.preventDefault();
-    const baseUri = environment.quizUrl + '/quiz/' + this.campaign.innovation.quizId + '/' + this.campaign._id;
-    const parameters = '?pro=' + pro._id + '&lang=' + this._translateService.currentLang;
-    window.open(baseUri + parameters);
+    const newAnswer: Answer = {
+      professional: pro,
+      campaign: this._campaign._id,
+      innovation: this._campaign.innovation._id,
+      answers: {},
+      status: 'SUBMITTED',
+      country: { flag: pro.country},
+      job: pro.jobTitle,
+      company: {name: pro.company},
+      tags: [],
+      answerTags: {},
+      answeredByEmail: true
+    };
+    this.answerService.create(newAnswer).first().subscribe((a) => {
+      this.notificationsService.success('Answer', 'The answer have been created!');
+      console.log(a);
+    }, error => {
+      this.notificationsService.error('ERROR', error.message);
+    });
   }
 
   public startEditInstanceDomain(event: Event): void {

@@ -167,6 +167,7 @@ export const COMMON = {
   'ADD-TAGS': 'Add tags',
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
+  'ADD-ANSWER': 'Ajouter une réponse',
   'CLIENT_SIDE': 'Client',
   'UMI_WORD': 'A word from UMI',
 
