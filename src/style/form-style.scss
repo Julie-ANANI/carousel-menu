@@ -249,6 +249,10 @@ textarea {
   background: rgba(46,204,113,0.45);
 }
 
+.form-switch input:disabled + .form-icon::before {
+  background: $disabled-color;
+}
+
 .form-switch input:focus + .form-icon {
   border-color: $border-color;
   box-shadow: none !important;

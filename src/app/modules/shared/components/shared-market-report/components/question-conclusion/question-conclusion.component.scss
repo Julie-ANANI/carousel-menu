@@ -1,3 +1,5 @@
+@import "../../../../../../../style/variables";
+
 .ques-conclusion-wrapper {
   display: flex;
   justify-content: space-between;
@@ -6,7 +8,7 @@
     flex: 2;
 
     .section-heading {
-      font-size: 18px;
+      font-size: 1.12rem;
       color: white;
       font-weight: 600;
     }
@@ -17,22 +19,22 @@
 
     p {
       padding-top: 0;
-      color: #EA5858;
+      color: $alert-color;
       font-weight: bold;
     }
 
     .op-text {
-      color: #FFB300;
+      color: $primary-color;
       font-weight: 600;
-      padding-bottom: 25px;
+      padding-bottom: 1.57rem;
     }
 
   }
 
   .divider-wrapper {
-    margin: 0 25px;
+    margin: 0 1.57rem;
     border: 1px solid white;
-    border-radius: 5px;
+    border-radius: .18rem;
     opacity: .5;
   }
 
@@ -59,7 +61,7 @@
     }
 
     .stat-wrapper {
-      padding-top: 25px;
+      padding-top: 1.57rem;
     }
 
   }
