@@ -39,7 +39,7 @@ export class AdminCampaignProsComponent implements OnInit {
       }
     };
   }
-  
+
   addPro(value: boolean) {
     this._addProModal = value;
     this.newPro = {
@@ -51,7 +51,7 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
   createPro() {
-    if (!this.newPro.email || !this.newPro.firstName || !this.newPro.lastName) {
+    if (this.newPro.email && (this.newPro.firstName || this.newPro.lastName)) {
       this._professionalsService.create([this.newPro], this.campaign._id, this.campaign.innovation._id).first().subscribe((createdPro:Professional) => {
         this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
       });
