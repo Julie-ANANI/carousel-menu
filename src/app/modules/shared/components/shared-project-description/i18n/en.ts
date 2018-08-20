@@ -30,7 +30,7 @@ export const PROJECT = {
     'FIND_PROFESSIONALS': 'Find professionals',
     'ACTIVATE_AB_TESTING': 'Activate AB testing',
     'EDIT_WORKFLOW': 'Edit workflow emails',
-    'CHOOSE_WORKFLOW': 'Choose a workflow',
+    'CHOOSE_DEFAULT_WORKFLOW': 'Choose default workflow',
   },
   'CARDS': 'Innovation Cards',
   'QUESTIONNAIRE': 'Questionnaire',

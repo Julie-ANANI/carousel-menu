@@ -375,8 +375,6 @@
           </button>
         </div>
 
-        <!-- Import Workflow -->
-
         <!-- Mails edition -->
         <div class="project-line">
 
@@ -396,8 +394,8 @@
           </button>
         </div>
 
-        <!-- Choose Workflow -->
-        <div class="project-line">
+        <!-- Choose default Workflow -->
+        <div class="project-line" [ngClass]="{disabled: modifiedScenarios.length === 0}">
 
           <label class="form-switch" for="seeWorkflows">
             <input
@@ -407,7 +405,7 @@
             <!--[checked]="getMetadata('campaign', 'professionals')"
             (change)="setMetadata('campaign', 'professionals', $event)"-->
             <i class="form-icon"></i>
-            {{'PROJECT.CAMPAIGN.CHOOSE_WORKFLOW' | translate}}
+            {{'PROJECT.CAMPAIGN.CHOOSE_DEFAULT_WORKFLOW' | translate}}
           </label>
 
           <select class="form-select"
@@ -417,7 +415,7 @@
                   (ngModelChange)="updateDefaultWorkflow($event)"
                   [ngModelOptions]="{standalone: true}">
             <option [ngValue]="''" selected>{{'COMMON.NO' | translate}}</option>
-            <option *ngFor="let w of workflows;" [ngValue]="w.name">
+            <option *ngFor="let w of modifiedScenarios" [ngValue]="w.name">
               {{w.name}}
             </option>
           </select>

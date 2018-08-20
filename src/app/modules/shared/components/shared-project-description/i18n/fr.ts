@@ -32,7 +32,7 @@ export const PROJECT = {
     'FIND_PROFESSIONALS': 'Trouver des professionnels',
     'ACTIVATE_AB_TESTING': 'Activer l\'AB testing ',
     'EDIT_WORKFLOW': 'Editer les emails des workflows',
-    'CHOOSE_WORKFLOW': 'Choisir un workflow',
+    'CHOOSE_DEFAULT_WORKFLOW': 'Choisir un workflow par défaut',
 
   },
   'CARDS': 'Innovation Cards',

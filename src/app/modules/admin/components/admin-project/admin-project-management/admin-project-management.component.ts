@@ -18,7 +18,6 @@ import {InnovCard} from '../../../../../models/innov-card';
 import {domainRegEx, emailRegEx} from '../../../../../utils/regex';
 import {Campaign} from '../../../../../models/campaign';
 import {CampaignService} from '../../../../../services/campaign/campaign.service';
-import {TemplatesService} from '../../../../../services/templates/templates.service';
 import {EmailScenario} from '../../../../../models/email-scenario';
 
 @Component({
@@ -73,7 +72,8 @@ export class AdminProjectManagementComponent implements OnInit {
   isTagsSidebar = false;
 
   // Workflows
-  workflows: Array<EmailScenario> = [];
+  private _availableScenarios: Array<EmailScenario> = [];
+  private _modifiedScenarios: Array<EmailScenario> = [];
 
   private _config = {
     search: {},
@@ -99,7 +99,6 @@ export class AdminProjectManagementComponent implements OnInit {
               private _presetService: PresetService,
               private _notificationsService: TranslateNotificationsService,
               private _dashboardService: DashboardService,
-              private _templatesService: TemplatesService,
               private _campaignService: CampaignService,
               private _translateService: TranslateService,
               private _formBuilder: FormBuilder) {}
@@ -135,13 +134,11 @@ export class AdminProjectManagementComponent implements OnInit {
       .first()
       .subscribe(campaigns => {
           this.currentCampaign = this.getBestCampaign(campaigns.result);
+          this.generateAvailableScenario();
+          this.generateModifiedScenarios();
         },
         error => this._notificationsService.error('ERROR', error.message)
       );
-
-    this._templatesService.getAll(this._config).first().subscribe((scenarios: any) => {
-      this.workflows = scenarios.result;
-    });
   }
 
   public setMetadata(level: string, name: string, event: any) {
@@ -371,6 +368,33 @@ export class AdminProjectManagementComponent implements OnInit {
     this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/templates']);
   }
 
+  private generateAvailableScenario() {
+    this._availableScenarios = [];
+    let scenariosnames: Set<string>;
+    scenariosnames = new Set<string>();
+    if (this.currentCampaign.settings && this.currentCampaign.settings.emails) {
+      this.currentCampaign.settings.emails.forEach((x) => {
+        scenariosnames.add(x.nameWorkflow);
+      });
+    }
+    scenariosnames.forEach((name) => {
+      const scenar = {} as EmailScenario;
+      scenar.name = name;
+      scenar.emails = this.currentCampaign.settings.emails.filter(email => {
+        return email.nameWorkflow === name;
+      });
+      this._availableScenarios.push(scenar);
+    });
+  }
+
+  public generateModifiedScenarios() {
+    this._modifiedScenarios = this.availableScenarios.filter((x) => {
+      return x.emails.reduce((acc, current) => {
+        return (acc && current.modified);
+      }, true);
+    });
+  }
+
   updateDefaultWorkflow(workflowName: string) {
     this.currentCampaign.settings.defaultWorkflow = workflowName;
     this.saveCampaign(event, 'Le workflow par défaut a bien été mis à jour');
@@ -459,6 +483,10 @@ export class AdminProjectManagementComponent implements OnInit {
   get project() {
     return this._project;
   }
+
+  get availableScenarios(): Array<EmailScenario> { return this._availableScenarios };
+
+  get modifiedScenarios(): Array<EmailScenario> { return this._modifiedScenarios };
 
   get more() {
     return this._more;
