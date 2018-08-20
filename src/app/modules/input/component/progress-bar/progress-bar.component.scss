@@ -1,16 +1,16 @@
 .progress-bar-outer-wrapper {
   width: 100%;
-  border-radius: 25px;
+  border-radius: 1.57rem;
   background-color: #D8D8D8;
-  height: 16px;
+  height: 1rem;
   transition: all 0.35s ease-in-out;
 
   .progress-bar-inner-wrapper {
-    min-width: 25px;
+    min-width: 1.57rem;
     height: 16px;
-    border-radius: 25px;
+    border-radius: 1.57rem;
     text-align: center;
-    font-size: 11px;
+    font-size: .6875rem;
     color: white;
     font-weight: 600;
   }
