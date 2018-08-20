@@ -372,6 +372,10 @@ export class AdminProjectManagementComponent implements OnInit {
     this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/mails']);
   }
 
+  goToInsights() {
+    this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/answers']);
+  }
+
   private generateAvailableScenario() {
     this._availableScenarios = [];
     let scenariosnames: Set<string>;

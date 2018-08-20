@@ -33,7 +33,9 @@ export const PROJECT = {
     'ACTIVATE_AB_TESTING': 'Activer l\'AB testing ',
     'EDIT_WORKFLOW': 'Editer les emails des workflows',
     'CHOOSE_DEFAULT_WORKFLOW': 'Choisir un workflow par défaut',
-    'LAUNCH_AUTO_BATCH': 'Lancer auto batch'
+    'LAUNCH_AUTO_BATCH': 'Lancer auto batch',
+    'VALIDATE_INSIGHTS': 'Validation des réponses',
+    'INSIGHTS_TO_VALIDATE': 'réponses à valider'
 
   },
   'CARDS': 'Innovation Cards',

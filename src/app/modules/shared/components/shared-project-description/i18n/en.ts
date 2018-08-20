@@ -31,7 +31,9 @@ export const PROJECT = {
     'ACTIVATE_AB_TESTING': 'Activate AB testing',
     'EDIT_WORKFLOW': 'Edit workflow emails',
     'CHOOSE_DEFAULT_WORKFLOW': 'Choose default workflow',
-    'LAUNCH_AUTO_BATCH': 'Launch auto batch'
+    'LAUNCH_AUTO_BATCH': 'Launch auto batch',
+    'VALIDATE_INSIGHTS': 'Validate insights',
+    'INSIGHTS_TO_VALIDATE': 'insights to validate'
   },
   'CARDS': 'Innovation Cards',
   'QUESTIONNAIRE': 'Questionnaire',

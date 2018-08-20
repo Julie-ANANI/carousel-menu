@@ -441,6 +441,26 @@
           </button>
         </div>
 
+        <!-- Validate insights -->
+        <div class="project-line">
+
+          <label class="form-switch" for="validateInsights">
+            <input
+              type="checkbox"
+              name="validateInsights"
+              id="validateInsights">
+            <!--[checked]="getMetadata('campaign', 'professionals')"
+            (change)="setMetadata('campaign', 'professionals', $event)"-->
+            <i class="form-icon"></i>
+            {{'PROJECT.CAMPAIGN.VALIDATE_INSIGHTS' | translate}}
+          </label>
+          <label class="label-alert">{{currentCampaign?.stats?.campaign.nbToValidateResp}} {{'PROJECT.CAMPAIGN.INSIGHTS_TO_VALIDATE' | translate}}</label>
+          <button class="showOnHover btn btn-xs ghost-edit"
+                  (click)="goToProfessionalsList()">
+            {{'COMMON.MORE' | translate}}
+          </button>
+        </div>
+
       </div>
 
     </div>
