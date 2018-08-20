@@ -25,7 +25,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   @Input() project: Innovation;
   @Input() canEdit: Boolean;
-  @Input() sidebar: Boolean;
   @Input() changesSaved: boolean;
   @Input() showPitchFieldError: Subject<boolean>;
 
@@ -78,7 +77,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
           this.showError();
         }
       });
-      this.sidebar = false;
     }
 
   }

@@ -60,7 +60,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
   exportPros() {
     const config = {
-      professionals: "all",
+      professionals: 'all',
       campaignId: this._campaign._id,
       query: {
         campaignId: this._campaign._id
@@ -68,7 +68,7 @@ export class AdminCampaignProsComponent implements OnInit {
     };
     this._professionalsService.export(config).first().subscribe((answer: any) => {
       const blob = new Blob([answer.csv], { type: 'text/csv' });
-      const url= window.URL.createObjectURL(blob);
+      const url = window.URL.createObjectURL(blob);
       window.open(url);
     });
   }

@@ -33,7 +33,6 @@
       <div class="columns">
 
         <!-- Ques -->
-        <div class="column col-md-12 col-6" [ngClass]="{'col-6': !sidebar, 'col-12' : isAdmin, 'col-mx-auto' : !isAdmin }">
         <div class="column col-md-12 col-mx-auto" [ngClass]="adminSide ? 'col-12' : 'col-6' ">
 
           <div *ngFor="let innovationCards of project.innovationCards; let i = index">

@@ -19,7 +19,7 @@ export class SharedSearchResultsComponent implements OnInit {
   private _request: any;
   private _selection: any;
   private _chosenCampaign: Array<any>;
-  public addToCampaignModal: boolean = false;
+  public addToCampaignModal = false;
   public config: any = {
     limit: 10,
     offset: 0,
@@ -63,7 +63,7 @@ export class SharedSearchResultsComponent implements OnInit {
         motherRequestId: this._request._id
       }
     };
-    if (this._selection.pros != 'all') {
+    if (this._selection.pros !== 'all') {
       const prosWithoutEmail = this._selection.pros.map((person: any) => {
         return {
           id: person._id,
@@ -98,7 +98,7 @@ export class SharedSearchResultsComponent implements OnInit {
       requestId: this._request._id,
       keywords: this._request.keywords
     };
-    if (this._selection.pros != 'all') {
+    if (this._selection.pros !== 'all') {
       const prosWithEmail = this._selection.pros.filter((p: any) => p.email);
       params.professionals = prosWithEmail;
     } else {
@@ -119,7 +119,7 @@ export class SharedSearchResultsComponent implements OnInit {
       user: this._authService.getUserInfo(),
       requestId: this._request._id
     };
-    if (this._selection.pros != 'all') {
+    if (this._selection.pros !== 'all') {
       params.persons = this._selection.pros;
     } else {
       params.all = true;

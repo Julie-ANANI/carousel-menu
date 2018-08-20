@@ -20,7 +20,6 @@
   <app-shared-project-edit-cards
     [project]="project"
     [canEdit]="true"
-    [sidebar]="true"
     (projectChange)="projectEdit($event)"
     (saveChanges)="isChange = $event"
     *ngIf="isPitch">
