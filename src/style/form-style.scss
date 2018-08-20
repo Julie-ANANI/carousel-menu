@@ -232,15 +232,16 @@ textarea {
 .form-switch .form-icon::before {
   background: $meta-color;
   border-color: $meta-color;
-  height: 1rem;
-  top: -.03125rem;
+  height: 1.3125rem;
+  width: 1.12rem;
+  top: -.21875rem;
 }
 
 .form-switch .form-icon  {
   border-color: $border-color;
   background-color: #FFFFFF;
-  height: 1rem;
-  top: unset;
+  height: .95rem;
+  width: 2rem;
 }
 
 .form-switch input:checked + .form-icon::before {
