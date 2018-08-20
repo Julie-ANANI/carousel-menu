@@ -1,5 +1,37 @@
-//import
-@import '../../../../../style/client-styles';
+@import '../../../../../style/variables';
+
+#discover-page-wrapper {
+
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    h1 {
+      flex: 2;
+    }
+
+    .search-wrapper {
+      flex: 1;
+    }
+
+  }
+
+}
+
+/********************************** Media ***************************************/
+@media (max-width: 600px) {
+
+  #discover-page-wrapper {
+
+    .header-wrapper {
+      flex-direction: column;
+    }
+
+  }
+
+}
+
+/*
 
 // Text color
 $card-title-color: #333333 !default;
@@ -115,3 +147,4 @@ $card-body-color: #878787 !default;
 
 
 
+*/

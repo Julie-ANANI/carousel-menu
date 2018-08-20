@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-// Services
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { LangChangeEvent, TranslateService} from '@ngx-translate/core';
-
-// Models
 import { Innovation } from '../../../../models/innovation';
 import { InnovCard } from '../../../../models/innov-card';
 
@@ -40,8 +36,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   constructor(private _titleService: TranslateTitleService,
               private _innovationService: InnovationService,
-              private _translateService: TranslateService) {
-  }
+              private _translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.initialize();
@@ -72,6 +67,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   loadAllInnovations(config: any): void  {
     this._config = config;
+
     this._innovationService.getAll(this._config).subscribe(innovations => {
       this.innovations = innovations.result;
       this.totalInnovations = innovations._metadata.totalCount;
