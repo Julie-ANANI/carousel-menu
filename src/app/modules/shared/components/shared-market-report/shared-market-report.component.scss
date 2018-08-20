@@ -290,8 +290,9 @@
   .menu-wrapper {
     position: fixed;
     bottom: 1.875rem;
-    left: 1.875rem;
+    right: 1.875rem;
     z-index: 11;
+    text-align: right;
 
     .btn {
       animation-name: fadeIn;
@@ -299,6 +300,7 @@
       animation-timing-function: ease-in-out;
       cursor: default;
       border-radius: .18rem;
+      box-shadow: $box-shadow;
     }
 
     .btn-secondary:hover {
@@ -311,6 +313,7 @@
       box-shadow: $box-shadow;
       border: 1px solid $border-color;
       border-radius: .18rem;
+      text-align: left;
 
       ul {
         list-style: none;
@@ -435,10 +438,6 @@
 
     }
 
-    .professional-wrapper {
-      flex-direction: column;
-    }
-
   }
 
 }
@@ -468,6 +467,10 @@
 
     }
 
+    .professional-wrapper {
+      flex-direction: column;
+    }
+
   }
 
 }
@@ -478,9 +481,18 @@
 
     .scroll-sticky-wrapper {
       position: sticky;
-      top: 0;
+      top: -0.06rem;
       box-shadow: $box-shadow;
       z-index: 11;
+
+      .detail-wrapper {
+
+        .form-switch .form-icon::before {
+          top: -0.06rem;
+        }
+
+      }
+
     }
 
   }

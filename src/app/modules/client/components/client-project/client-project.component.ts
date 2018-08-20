@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { Innovation } from '../../../../models/innovation';
@@ -64,7 +64,7 @@ export class ClientProjectComponent implements OnInit {
     this._sidebarState.next(this._sidebarTemplateValue.animate_state);
   }
 
-  @HostListener('window:scroll', [])
+  /*@HostListener('window:scroll', [])
   onWindowScroll() {
     this._scrollButton = (this.getCurrentScrollTop() > 10);
   }
@@ -79,7 +79,7 @@ export class ClientProjectComponent implements OnInit {
   scrollToTop(event: Event) {
     event.preventDefault();
     window.scrollTo(0, 0);
-  }
+  }*/
 
   get project() {
     return this._project;

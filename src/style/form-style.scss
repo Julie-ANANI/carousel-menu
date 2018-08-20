@@ -31,7 +31,7 @@
  */
 
 .form-label {
-  color: $dark-color;
+  color: $label-color;
   font-weight: 600;
   font-size: .85rem;
   line-height: 1.5;
@@ -153,7 +153,7 @@
 .form-radio {
   padding-left: 1.57rem;
   padding-right: 1.57rem;
-  color: $dark-color;
+  color: $label-color;
 }
 
 .form-radio .form-icon {
@@ -199,7 +199,7 @@
     margin-bottom: 2px;
 
     a{
-      color: $dark-color;
+      color: $label-color;
       text-decoration: none;
     }
 
@@ -230,8 +230,8 @@ textarea {
 .form-switch .form-icon::before {
   background: $meta-color;
   border-color: $meta-color;
-  height: .95rem;
-  top: -0.01rem;
+  height: 1rem;
+
 }
 
 .form-switch .form-icon  {
