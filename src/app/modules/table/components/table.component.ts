@@ -25,7 +25,7 @@ export class TableComponent {
 
   @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() removeRows: EventEmitter<any[]> = new EventEmitter<any[]>();
+  @Output() removeRows: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() performAction: EventEmitter<any> = new EventEmitter<any>();
 
@@ -50,6 +50,7 @@ export class TableComponent {
   editColumn = false;
 
   private _config: any = null;
+  private _massSelection = false;
 
   constructor(private _translateService: TranslateService) {}
 
@@ -107,7 +108,11 @@ export class TableComponent {
   }
 
   onActionClick(action: string) {
-    this.performAction.emit({_action: action, _rows: this.getSelectedRowsContent()});
+    if (this._massSelection) {
+      this.performAction.emit({_action: action, _rows: 'all'});
+    } else {
+      this.performAction.emit({_action: action, _rows: this.getSelectedRowsContent()});
+    }
   }
 
   getRowsKeys(): string[] {
@@ -199,7 +204,19 @@ export class TableComponent {
   }
 
   getSelectedRows(): Row[] {
-    return this._content.filter(value => value._isSelected === true);
+    if (this._massSelection) {
+      return [];
+    } else {
+      return this._content.filter(value => value._isSelected === true);
+    }
+  }
+
+  getSelectedRowsNumber(): number {
+    if (this._massSelection) {
+      return this._total;
+    } else {
+      return this._content.filter(value => value._isSelected === true).length;
+    }
   }
 
   getSelectedRowsContent(): any[] {
@@ -209,14 +226,18 @@ export class TableComponent {
   }
 
   removeSelectedRows() {
-    this.removeRows.emit(this.getSelectedRowsContent());
+    if (this._massSelection) {
+      this.removeRows.emit('all');
+    } else {
+      this.removeRows.emit(this.getSelectedRowsContent());
+    }
   }
 
   selectRow(key: string): void {
     if (this._isSelectable) {
       this._isLocal
         ? this._filteredContent[key]._isSelected = !(this._filteredContent[key]._isSelected)
-        : this._content[key]._isSelected = !(this._content[key]._isSelected);
+        : this._content[key]._isSelected = !(this._content[key]._isSelected); this._massSelection = false;
     }
   }
 
@@ -351,9 +372,12 @@ export class TableComponent {
   }
 
   selectAll(e: any): void  {
-    this._isLocal
-      ? this._filteredContent.forEach(value => { value._isSelected = e.srcElement.checked; })
-      : this._content.forEach(value => { value._isSelected = e.srcElement.checked; });
+    if (this._isLocal) {
+      this._filteredContent.forEach(value => { value._isSelected = e.srcElement.checked; })
+    } else {
+      this._content.forEach(value => { value._isSelected = e.srcElement.checked; });
+      this._massSelection = e.srcElement.checked;
+    }
   }
 
   get selector(): string {
@@ -417,7 +441,7 @@ export class TableComponent {
   }
 
   get selectedRows(): number {
-    return this.getSelectedRows().length;
+    return this.getSelectedRowsNumber();
   }
 
   get dateFormat(): string {
