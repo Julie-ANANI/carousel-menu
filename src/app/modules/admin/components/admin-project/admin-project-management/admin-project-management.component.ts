@@ -368,6 +368,10 @@ export class AdminProjectManagementComponent implements OnInit {
     this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/templates']);
   }
 
+  goToAutoBatch() {
+    this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/mails']);
+  }
+
   private generateAvailableScenario() {
     this._availableScenarios = [];
     let scenariosnames: Set<string>;

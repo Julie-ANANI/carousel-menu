@@ -420,8 +420,27 @@
             </option>
           </select>
           <div></div>
-
         </div>
+
+        <!-- Launch Auto Batch -->
+        <div class="project-line">
+
+          <label class="form-switch" for="lauchAutoBatch">
+            <input
+              type="checkbox"
+              name="lauchAutoBatch"
+              id="lauchAutoBatch">
+            <!--[checked]="getMetadata('campaign', 'professionals')"
+            (change)="setMetadata('campaign', 'professionals', $event)"-->
+            <i class="form-icon"></i>
+            {{'PROJECT.CAMPAIGN.LAUNCH_AUTO_BATCH' | translate}}
+          </label>
+          <button class="showOnHover btn btn-xs ghost-edit"
+                  (click)="goToAutoBatch()">
+            {{'COMMON.MORE' | translate}}
+          </button>
+        </div>
+
       </div>
 
     </div>
