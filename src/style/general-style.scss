@@ -192,8 +192,8 @@ a, a:focus, a:hover, a:active, a.active {
 
 .circle-check {
   border-radius: 50%;
-  height: 30px;
-  width: 30px;
+  height: 1.57rem;
+  width: 1.57rem;
   background: transparent;
   display: inline-block;
   position: absolute;
@@ -203,7 +203,8 @@ a, a:focus, a:hover, a:active, a.active {
     color: transparent;
     display: flex;
     justify-content: center;
-    padding-top: 7px;
+    padding-top: .4375rem;
+    font-size: .85rem;
   }
 
 }
@@ -218,8 +219,8 @@ a, a:focus, a:hover, a:active, a.active {
 
   span {
     position: absolute;
-    margin-top: -20px;
-    margin-left: -37px;
+    margin-top: -1.4rem;
+    margin-left: -2.5rem;
     font-size: .75rem;
     color: $meta-color;
   }
@@ -283,61 +284,6 @@ a, a:focus, a:hover, a:active, a.active {
 
 
 /*
-    Progress bar styles
- */
-.progressBar-progress {
-  width: 100%;
-  height: 20px;
-  color: white;
-  border-radius: 5px;
-  font-size: 12px;
-  padding: 5px;
-  background: #F79323;
-}
-
-
-.progressBar-validate {
-  width: 100%;
-  height: 20px;
-  color: white;
-  border-radius: 5px;
-  font-size: 12px;
-  padding: 5px;
-  background: $validation-color;
-}
-
-.progressBar-alert{
-  width: 100%;
-  height: 20px;
-  color: white;
-  border-radius: 5px;
-  font-size: 12px;
-  padding: 5px;
-  background: $error-color;
-}
-
-.progressBar-editing{
-  width: 100%;
-  height: 20px;
-  color: white;
-  border-radius: 5px;
-  font-size: 12px;
-  padding: 5px;
-  background: $secondary-color;
-}
-
-.progressBar-draft{
-  width: 100%;
-  height: 20px;
-  color: white;
-  border-radius: 5px;
-  font-size: 12px;
-  padding: 5px;
-  background: #4F5D6B;
-}
-
-
-/*
     Ng2 auto complete npm module style
  */
 
@@ -381,6 +327,67 @@ a, a:focus, a:hover, a:active, a.active {
   pointer-events: none;
 }
 
+
+/*
+    Tinymce panel style
+ */
+
+.mce-panel {
+  border: none;
+}
+
+.mce-tinymce {
+  border: .18rem solid $border-color !important;
+  border-radius: .35rem;
+}
+
+.mce-container {
+  font-size: .18rem !important;
+}
+
+.mce-toolbar .mce-btn-group {
+  padding: 0 !important;
+}
+
+.mce-btn.mce-disabled button, .mce-btn.mce-disabled:hover button {
+  opacity: 1 !important;
+}
+
+.mce-btn {
+  padding: .85rem 1.2rem !important;
+  background: none !important;
+}
+
+.mce-ico {
+  color: $meta-color !important;
+  cursor: pointer !important;
+}
+
+.mce-btn:hover {
+  border-color: transparent !important;
+
+  .mce-ico {
+    color: $dark-color !important;
+    background-color: transparent !important;
+  }
+
+}
+
+.mce-btn.mce-active {
+  background: none !important;
+  color: $dark-color !important;
+
+  .mce-ico {
+    color: $dark-color !important;
+    background-color: transparent !important;
+  }
+
+}
+
+.mce-btn-group:not(:first-child) {
+  margin-left: 0 !important;
+  border-left: none !important;
+}
 
 
 

@@ -40,16 +40,12 @@
   i {
     margin-right: .6rem;
     font-size: 1rem;
-    margin-top: -.2rem;
+    margin-top: -5px;
   }
 
   .icon {
-    font-size: 14px;
+    font-size: 1rem;
     vertical-align: middle;
-  }
-
-  .icon-plus {
-    font-size: 14px;
   }
 
 }
@@ -61,8 +57,8 @@
 
 .btn-round {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 3.15rem;
+  height: 3.15rem;
   display: flex;
   cursor: pointer;
   text-align: center;
@@ -76,11 +72,6 @@
               border-left-color 0.15s ease-in-out,
               border-right-color 0.15s ease-in-out,
               border-top-color 0.15s ease-in-out;
-
-  i {
-    font-size: 14px;
-  }
-
 }
 
 
@@ -247,18 +238,22 @@
     Radio button
  */
 .radio-button {
-  width: 30px;
-  height: 30px;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
-  border: 1px solid #E0E0E0;
-  margin: 20px auto 0 auto;
+  border: 1px solid $border-color;
   text-align: center;
   cursor: pointer;
-  transition: all 0.15s ease-in-out;
+  margin: .3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
 
   span {
-    color: #E0E0E0;
-    font-size: 21px;
+    color: $border-color;
+    font-size: 1.2rem;
+    padding-left: .06rem;
   }
 
 }

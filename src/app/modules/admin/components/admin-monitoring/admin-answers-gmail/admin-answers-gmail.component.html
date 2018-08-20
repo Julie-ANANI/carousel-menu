@@ -1,0 +1,25 @@
+<!--<app-shared-table [data]="tableInfos" [config]="config" (configChange)="loadQueue($event)" (editRow)="showCampaignInfos($event)"></app-shared-table>
+
+<app-sidebar
+  [template]="more" (closeSidebar)="closeSidebar($event)">
+  <app-emails-form
+    [sidebarState]="sidebarState"
+    [type]="more.type" [campaignInfos]="currentQueue">
+  </app-emails-form>
+</app-sidebar>-->
+<div>
+    <h2>Warning!</h2>
+    <p>This import process will create rejected EMPTY responses to the questionnaire for different innovations! So please, verify twice that the
+    file you will upload contains only people you want to be shadowed from the batches, i.e., that will be excluded from local batches.</p>
+
+    <p>
+        What we expect is a .csv file with the following headers:
+    </p>
+    <pre>email,date,subject,messageId</pre>
+</div>
+<div *ngIf="autorizedActions(2)" class="text-center">
+    <label class="btn ghost-primary btn-primary">
+        <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
+        {{ 'CAMPAIGNS.IMPORT-ANSWERS' | translate }}
+    </label>
+</div>

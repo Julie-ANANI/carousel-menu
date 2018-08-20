@@ -95,7 +95,7 @@
           <i class="fas fa-envelope text-error" *ngIf="request.flag==='EMAILS_QUEUED'"></i>
           <i class="fas fa-envelope text-success" *ngIf="request.flag==='EMAILS_FOUND'"></i>
           <i class="fas fa-envelope text-warning" *ngIf="request.flag==='EMAILS_SEARCHING'"></i>
-          <i class="fas fa-check-square-o text-success" *ngIf="request.flag==='PROS_ADDED'"></i>
+          <i class="fas fa-check text-success" *ngIf="request.flag==='PROS_ADDED'"></i>
         </td>
 
         <td class="text-center" *ngIf="!mails">
@@ -165,7 +165,7 @@
           <i class="fas fa-envelope text-error" *ngIf="childRequest.flag==='EMAILS_QUEUED'"></i>
           <i class="fas fa-envelope text-success" *ngIf="childRequest.flag==='EMAILS_FOUND'"></i>
           <i class="fas fa-envelope text-warning" *ngIf="childRequest.flag==='EMAILS_SEARCHING'"></i>
-          <i class="fas fa-check-square-o text-success" *ngIf="childRequest.flag==='PROS_ADDED'"></i>
+          <i class="fas fa-check text-success" *ngIf="childRequest.flag==='PROS_ADDED'"></i>
         </td>
 
         <td class="text-center" *ngIf="!mails">

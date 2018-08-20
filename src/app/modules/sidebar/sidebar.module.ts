@@ -23,6 +23,7 @@ import {SharedProjectEditCardsModule} from '../shared/components/shared-project-
 import {SharedProjectSettingsModule} from '../shared/components/shared-project-settings-component/shared-project-settings.module';
 import {SharedMailEditorModule} from '../shared/components/shared-mail-editor/shared-mail-editor.module';
 import { TagsFormComponent } from './components/tags-form/tags-form.component';
+import { InputListModule } from '../input/component/input-list/input-list.module';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { TagsFormComponent } from './components/tags-form/tags-form.component';
     PipeModule,
     InputModule,
     AutocompleteInputModule,
+    InputListModule
   ],
   declarations: [
     SidebarBatchComponent,

@@ -39,6 +39,7 @@ import { DownloadService } from './services/download/download.service';
 import { TagsService } from './services/tags/tags.service';
 import { TemplatesService } from './services/templates/templates.service';
 import { TranslationService } from './services/translation/translation.service';
+import { FrontendService } from './services/frontend/frontend.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -109,7 +110,8 @@ import { PresetResolver } from './resolvers/preset.resolver';
     RequestResolver,
     PresetResolver,
     TranslationService,
-    TagsService
+    TagsService,
+    FrontendService
   ],
   bootstrap: [AppComponent]
 })

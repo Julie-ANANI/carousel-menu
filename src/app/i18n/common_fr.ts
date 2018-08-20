@@ -163,6 +163,7 @@ export const COMMON = {
   'PRESET': 'Configuration',
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
+  'ADD-ANSWER': 'Ajouter une réponse',
   'CLIENT_SIDE': 'Client',
   'EDIT_USER': 'Modifier l\'utilisateur',
   'EDIT_PROFESSIONAL': 'Modifier Professionnel',

@@ -33,13 +33,16 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   @Output() saveChanges = new EventEmitter<boolean>();
   @Output() innovationToPreview = new EventEmitter<number>();
 
-  showTitleError: boolean;
-  showSummaryError: boolean;
-  showProblemError: boolean;
-  showSolutionError: boolean;
-  showAdvantageError: boolean;
-  showPatentError: boolean;
-  showDiffusionError: boolean;
+  private _showTitleError: boolean;
+  private _showSummaryError: boolean;
+  private _showProblemError: boolean;
+  private _showSolutionError: boolean;
+  private _showAdvantageError: boolean;
+  private _showPatentError: boolean;
+  private _showDiffusionError: boolean;
+
+  private _adminSide = false;
+  private _adminMode = false;
 
   private ngUnsubscribe: Subject<any> = new Subject();
   private _companyName: string = environment.companyShortName;
@@ -66,7 +69,10 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.changesSaved = true;
-    if (this.location.path().slice(0, 6) !== '/admin') {
+
+    this.isAdmin();
+
+    if (!this._adminSide) {
       this.showPitchFieldError.subscribe(value => {
         if (value) {
           this.showError();
@@ -74,6 +80,12 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       });
       this.sidebar = false;
     }
+
+  }
+
+  isAdmin() {
+    this._adminSide = this.location.path().slice(0, 6) === '/admin';
+    this._adminMode = (this.authService.adminLevel & 3) === 3;
   }
 
   notifyModelChanges(_event?: any) {
@@ -83,26 +95,26 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   showError() {
-    this.showTitleError = this.project.innovationCards[this.innovationCardEditingIndex].title === '';
-    this.showSummaryError = this.project.innovationCards[this.innovationCardEditingIndex].summary === '';
-    this.showProblemError = this.project.innovationCards[this.innovationCardEditingIndex].problem === '';
-    this.showSolutionError = this.project.innovationCards[this.innovationCardEditingIndex].solution === '';
-    this.showAdvantageError = this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0;
-    this.showPatentError = this.project.patented === null;
-    this.showDiffusionError = this.project.external_diffusion === null;
+    this._showTitleError = this.project.innovationCards[this.innovationCardEditingIndex].title === '';
+    this._showSummaryError = this.project.innovationCards[this.innovationCardEditingIndex].summary === '';
+    this._showProblemError = this.project.innovationCards[this.innovationCardEditingIndex].problem === '';
+    this._showSolutionError = this.project.innovationCards[this.innovationCardEditingIndex].solution === '';
+    this._showAdvantageError = this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0;
+    this._showPatentError = this.project.patented === null;
+    this._showDiffusionError = this.project.external_diffusion === null;
   }
 
   /*
       Resetting the value of all errors when we switch between the languages.
    */
   resetErrorValue() {
-    this.showTitleError = false;
-    this.showSummaryError = false;
-    this.showProblemError = false;
-    this.showSolutionError = false;
-    this.showAdvantageError = false;
-    this.showPatentError = false;
-    this.showDiffusionError = false;
+    this._showTitleError = false;
+    this._showSummaryError = false;
+    this._showProblemError = false;
+    this._showSolutionError = false;
+    this._showAdvantageError = false;
+    this._showPatentError = false;
+    this._showDiffusionError = false;
   }
 
   onLangSelect(event: Event, index: number) {
@@ -133,6 +145,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   createInnovationCard(event: Event, lang: string): void {
     event.preventDefault();
+
     if (this.canEdit) {
       if (this.changesSaved) {
         if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
@@ -171,7 +184,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   addAdvantageToInventionCard (event: {value: Array<{text: string}>}, cardIdx: number): void {
     this.project.innovationCards[cardIdx].advantages = event.value;
     this.notifyModelChanges(event.value);
-    this.showAdvantageError = (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0);
+    this._showAdvantageError = (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0);
   }
 
   setAsPrincipal (innovationCardId: string): void {
@@ -331,8 +344,48 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
-  get isAdmin(): boolean {
-    return (this.authService.adminLevel & 3) === 3;
+  get showTitleError(): boolean {
+    return this._showTitleError;
+  }
+
+  set showTitleError(value: boolean) {
+    this._showTitleError = value;
+  }
+
+  get showSummaryError(): boolean {
+    return this._showSummaryError;
+  }
+
+  get showProblemError(): boolean {
+    return this._showProblemError;
+  }
+
+  get showSolutionError(): boolean {
+    return this._showSolutionError;
+  }
+
+  get showAdvantageError(): boolean {
+    return this._showAdvantageError;
+  }
+
+  get showPatentError(): boolean {
+    return this._showPatentError;
+  }
+
+  get showDiffusionError(): boolean {
+    return this._showDiffusionError;
+  }
+
+  get adminSide(): boolean {
+    return this._adminSide;
+  }
+
+  get adminMode(): boolean {
+    return this._adminMode;
+  }
+
+  set adminMode(value: boolean) {
+    this._adminMode = value;
   }
 
 }

@@ -45,8 +45,8 @@
         }
 
         .circle-check {
-          margin-top: -15px;
-          margin-left: -13px;
+          margin-top: -.75rem;
+          margin-left: -.8125rem;
 
           i {
             color: white;
@@ -102,7 +102,7 @@
     padding-bottom: 1.57rem;
 
     .tabs li {
-      border-bottom: .06rem solid $tabs-border-color;
+      border-bottom: 1px solid $tabs-border-color;
 
       a {
         background-color: white;
@@ -138,13 +138,12 @@
   #setup {
 
     .tabs {
-      border-bottom: .06rem solid $tabs-border-color;
 
       li {
         flex: unset;
 
         a {
-          border-bottom: .25rem solid transparent;
+          border-bottom: 4px solid transparent;
           padding-left: 1.2rem;
           padding-right: 1.2rem;
         }
@@ -154,8 +153,6 @@
     }
 
   }
-
-
 
 }
 
@@ -181,6 +178,15 @@
 
         }
 
+      }
+
+    }
+
+    .tabs {
+      border-bottom: 1px solid $tabs-border-color;
+
+      li {
+        border-bottom: none !important;
       }
 
     }

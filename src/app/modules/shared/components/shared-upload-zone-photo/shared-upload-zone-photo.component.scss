@@ -1,38 +1,40 @@
+@import "../../../../../style/variables";
+
 .upload-area {
-  border: 2px dashed #E0E0E0;
-  padding-left: 5px;
-  padding-right: 5px;
+  border: 2px dashed $border-color;
+  padding-left: .35rem;
+  padding-right: .35rem;
   position: relative;
-  border-radius: 5px;
-  min-height: 250px;
+  border-radius: .18rem;
+  min-height: 15.625rem;
   display: flex;
   justify-content: center;
   align-items: center;
 
   .para {
-    font-size: 0.7rem;
+    font-size: 0.85rem;
   }
 
 }
 
 .upload-area:hover {
-  border-color: #FFB300;
-  background-color: #FFF9EB;
+  border-color: $primary-color;
+  background-color: $hover-background-color;
 }
 
 .my-drop-zone {
   transition: all 0.15s ease-in-out;
-  border-color: #FFB300;
+  border-color: $primary-color;
 }
 
 .nv-file-over {
   transition: all 0.15s ease-in-out;
-  border-color: #EA5858;
+  border-color: $alert-color;
 } /* Default class applied to drop zones on over */
 
 .another-file-over-class {
   transition: all 0.15s ease-in-out;
-  border-color: #2ECC71;
+  border-color: $validation-color;
 }
 
 
