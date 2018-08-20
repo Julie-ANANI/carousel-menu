@@ -37,6 +37,7 @@ export class BarChartComponent implements OnInit {
   @Input() showDetails: boolean;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
+  @Output() answerButtonClicked = new EventEmitter<boolean>();
 
   private _answers: Array<Answer>;
   private _barsData: Array<BarData> = [];
@@ -44,7 +45,7 @@ export class BarChartComponent implements OnInit {
   public showAnswers: {[index: string]: string} = {};
 
   constructor(private _translateService: TranslateService,
-              private filterService: FilterService) { }
+              private filterService: FilterService) {}
 
   ngOnInit() {
     this.updateAnswersData();
@@ -135,6 +136,12 @@ export class BarChartComponent implements OnInit {
 
   public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
+  }
+
+  toggleAnswer(event: Event) {
+    event.preventDefault();
+    this.showDetails = !this.showDetails;
+    this.answerButtonClicked.emit(this.showDetails);
   }
 
   get barsData(): Array<BarData> {

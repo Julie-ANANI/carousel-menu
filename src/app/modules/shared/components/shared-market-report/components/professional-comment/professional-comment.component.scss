@@ -3,12 +3,12 @@
   height: 100%;
   width: 100%;
   align-items: center;
-  font-size: 14px;
+  font-size: .875rem;
 
   .divider-wrapper {
-    margin: 0 25px;
+    margin: 0 1.57rem;
     border: 1px solid #D7D7D7;
-    border-radius: 5px;
+    border-radius: .18rem;
     height: 80%;
   }
 
@@ -26,7 +26,7 @@
     flex-direction: column;
 
     .divider-wrapper {
-      margin: 25px 0;
+      margin: 1.57rem 0;
       width: 90%;
     }
 

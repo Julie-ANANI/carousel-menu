@@ -31,7 +31,7 @@
  */
 
 .form-label {
-  color: $dark-color;
+  color: $label-color;
   font-weight: 600;
   font-size: .85rem;
   line-height: 1.5;
@@ -153,7 +153,7 @@
 .form-radio {
   padding-left: 1.57rem;
   padding-right: 1.57rem;
-  color: $dark-color;
+  color: $label-color;
 }
 
 .form-radio .form-icon {
@@ -199,7 +199,7 @@
     margin-bottom: 2px;
 
     a{
-      color: $dark-color;
+      color: $label-color;
       text-decoration: none;
     }
 
@@ -216,11 +216,13 @@
 /*
     Textarea.
  */
+
 textarea {
   resize: none;
   padding-right: 1.87rem !important;
 
 }
+
 
 /*
     Form slide button
@@ -230,14 +232,16 @@ textarea {
 .form-switch .form-icon::before {
   background: $meta-color;
   border-color: $meta-color;
-  height: .95rem;
-  top: -0.01rem;
+  height: 1.3125rem;
+  width: 1.12rem;
+  top: -.21875rem;
 }
 
 .form-switch .form-icon  {
   border-color: $border-color;
   background-color: #FFFFFF;
-  height: 1rem;
+  height: .95rem;
+  width: 2rem;
 }
 
 .form-switch input:checked + .form-icon::before {
@@ -247,6 +251,10 @@ textarea {
 .form-switch input:checked + .form-icon  {
   border-color: rgba(46,204,113,0.45) !important;
   background: rgba(46,204,113,0.45);
+}
+
+.form-switch input:disabled + .form-icon::before {
+  background: $disabled-color;
 }
 
 .form-switch input:focus + .form-icon {
@@ -274,6 +282,7 @@ textarea {
 /*
     TinyMCE
   */
+
 .mce-tinymce {
   box-shadow: none !important;
   width: inherit !important;

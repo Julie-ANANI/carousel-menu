@@ -6,7 +6,7 @@
 </p>
 
 <!-- Flag, Company and position -->
-<div class="fcp">
+<div class="fcp-wrapper">
   <span class="flag"><app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag></span>
   <p *ngIf="answer.job || answer.professional?.jobTitle || answer.company?.name || answer.professional?.company">
     <span *ngIf="answer.job || answer.professional?.jobTitle">{{ answer.job || answer.professional?.jobTitle }}</span>

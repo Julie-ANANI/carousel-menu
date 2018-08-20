@@ -1,82 +1,28 @@
-/*
-.stars-component {
-  width: 100%;
-
-  .star-ratings-css {
-
-    color: #fcfcfc;
-    font-size: 35px;
-    margin: 0 auto;
-    position: relative;
-    padding: 0;
-    text-shadow: 0px 0px 2px #999;
-    letter-spacing: -5px;
-
-    .top {
-      color: #2ECC71;
-      padding: 0;
-      position: absolute;
-      z-index: 1;
-      display: block;
-      top: 0;
-      left: 0;
-      text-shadow: 0px 0px 2px #fff;
-      overflow: hidden;
-    }
-
-    .bottom {
-      padding: 0;
-      display: block;
-      z-index: 0;
-    }
-  }
-
-  .popover-container {
-
-    background: white;
-    max-width: 180px;
-    text-align: center;
-    color: #5d5d5d;
-    font-size: 0.7rem;
-
-    .grade {
-      text-align: center;
-      font-weight: 600;
-    }
-
-    .grade-number {
-      font-weight: 800;
-      color: #2ECC71;
-    }
-
-  }
-
-}
-*/
+@import "../../../../../../../style/variables";
 
 .star-wrapper {
 
   div {
-    margin-bottom: 25px;
+    margin-bottom: 1.57rem;
 
     .note-label {
       display: flex;
       justify-content: space-between;
-      font-size: 18px;
-      color: #4F5D6B;
-      margin-bottom: 25px;
+      font-size: 1.12rem;
+      color: $background-color;
+      margin-bottom: 1.57rem;
       font-weight: 600;
 
       .vote-wrapper {
-        font-size: 14px;
-        color: #97A4B1;
+        font-size: .875rem;
+        color: $meta-color;
       }
 
     }
 
     .no-grade-wrapper {
-      font-size: 14px;
-      color: #97A4B1;
+      font-size: .875rem;
+      color: $meta-color;
     }
 
   }

@@ -9,6 +9,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
   templateUrl: 'admin-project-cards.component.html',
   styleUrls: ['admin-project-cards.component.scss']
 })
+
 export class AdminProjectCardsComponent implements OnInit {
 
   project: Innovation;
@@ -25,10 +26,12 @@ export class AdminProjectCardsComponent implements OnInit {
 
   public save(event: Event): void {
     event.preventDefault();
-    this.innovationService.save(this.project._id, this.project)
-      .first().subscribe((data: Innovation) => {
+
+    this.innovationService.save(this.project._id, this.project).first()
+      .subscribe((data: Innovation) => {
         this.lastSavedDate = new Date(data.updated);
         this.shouldSave = false;
+        this.project = data;
       }, err => {
         this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });

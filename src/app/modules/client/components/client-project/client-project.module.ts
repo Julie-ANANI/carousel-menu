@@ -28,6 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputModule } from '../../../input/input.module';
 import { PaginationModule } from '../../../input/component/pagination/pagination.module';
 import { SidebarCollaboratorModule } from '../../../sidebar/components/collaborator/sidebar-collaborator.module';
+import { SidebarInnovationPreviewModule } from '../../../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { SidebarCollaboratorModule } from '../../../sidebar/components/collabora
     SharedProjectDescriptionModule,
     InputModule,
     PaginationModule,
-    SidebarCollaboratorModule
+    SidebarCollaboratorModule,
+    SidebarInnovationPreviewModule
   ],
   declarations: [
     ClientProjectComponent,

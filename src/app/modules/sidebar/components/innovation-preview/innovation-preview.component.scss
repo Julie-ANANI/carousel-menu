@@ -1,18 +1,20 @@
-.innovation-wrapper {
+@import "../../../../../style/variables";
+
+#innovation-wrapper {
 
   .hero-light-container {
-    background-color: #4F5D6B;
+    background-color: $background-color;
 
     h1, h6 {
       color: white;
     }
 
     h6 {
-      font-size: 18px;
+      font-size: 1.12rem;
     }
 
     .summary {
-      padding-left: 4px;
+      padding-left: .3rem;
       color: white;
     }
 
@@ -21,8 +23,8 @@
       flex-wrap: wrap;
 
       .gap {
-        margin-top: 15px;
-        margin-right: 25px;
+        margin-top: .9375rem;
+        margin-right: 1.57rem;
       }
 
     }
@@ -32,9 +34,8 @@
   .advantage {
 
     li {
-      color: #5D5D5D;
-      font-size: 0.8rem;
-      padding: 6px 8px 6px 3px;
+      color: $dark-color;
+      padding:  .375rem .5rem .375rem .18rem;
     }
 
     li:last-child {
@@ -44,7 +45,7 @@
   }
 
   .section-container {
-    padding-top: 25px;
+    padding-top: 1.57rem;
     padding-bottom: 0;
 
     p {

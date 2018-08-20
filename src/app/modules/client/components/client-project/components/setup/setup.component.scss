@@ -111,8 +111,9 @@
         font-weight: 500;
       }
 
-      li a:hover {
+      a:hover {
         border-bottom-color: $primary-color;
+        color: $primary-color;
       }
 
     }

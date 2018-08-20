@@ -1,15 +1,15 @@
 .piechart {
-  font-size: 14px;
+  font-size: .85rem;
   font-weight: 600;
   max-width: 320px;
 
   .percentage {
     padding-bottom: 0;
-    margin-bottom: 25px;
+    margin-bottom: 1.57rem;
   }
 
   .chart-pie {
-    margin-bottom: 25px;
+    margin-bottom: 1.57rem;
     margin-left: auto;
     margin-right: auto;
     height: auto !important;
@@ -17,23 +17,24 @@
 
   .pie-data {
     display: inline-block;
-    margin-bottom: -10px;
+    margin-bottom: -.6rem;
 
     .data {
       display: inline-flex;
-      margin-bottom: 10px;
-      margin-right: 10px;
+      margin-bottom: .6rem;
+      margin-right: .6rem;
       flex-wrap: wrap;
-      font-size: 14px;
+      font-size: .85rem;
+      vertical-align: middle;
 
       .circle {
         width: 13px;
         height: 13px;
-        margin-top: 3px;
+        margin-top: .18rem;
       }
 
       .response, .circle, .text{
-        margin-right: 8px;
+        margin-right: .5rem;
       }
 
     }

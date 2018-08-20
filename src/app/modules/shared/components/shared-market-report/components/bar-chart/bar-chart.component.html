@@ -1,4 +1,4 @@
-<div class="bar-chart">
+<div class="bar-chart-wrapper">
 
   <div class="header-wrapper">
     <div class="section-inline-container">
@@ -19,7 +19,7 @@
       <button
         type="button"
         class="btn ghost-primary"
-        (click)="showDetails = !showDetails; $event.preventDefault()">
+        (click)="toggleAnswer($event)">
         {{ (showDetails ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translate }}
         <i class="icon" aria-hidden="true" [ngClass]="showDetails ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
       </button>

@@ -30,6 +30,7 @@ import { HeaderModule } from '../base/components/header/header.module';
 import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
 import { LogoutPageModule } from '../base/components/logout-page/logout-page.module';
 import { InputListModule } from '../input/component/input-list/input-list.module';
+import { SidebarInnovationPreviewModule } from '../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import { InputListModule } from '../input/component/input-list/input-list.module
     HeaderModule,
     NotFoundPageModule,
     LogoutPageModule,
-    InputListModule
+    InputListModule,
+    SidebarInnovationPreviewModule
   ],
   declarations: [
     AdminComponent,
