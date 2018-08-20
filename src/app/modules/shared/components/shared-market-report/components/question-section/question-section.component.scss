@@ -28,7 +28,7 @@
 
   .answer-button-wrapper {
     text-align: center;
-    margin-top: 25px;
+    margin-top: 1.57rem;
 
     .btn i {
       margin-left: .6rem;
@@ -51,7 +51,6 @@
 
   }
 
-
   .textarea-answer-wrapper, .rating-answer-wrapper, .star-answer-wrapper, .toggle-answer-wrapper {
     margin-top: 1.57rem;
   }
@@ -66,7 +65,7 @@
       background: white;
       border: 1px solid $border-color;
       min-height: 11.875rem;
-      padding: 15px 16px 10px 16px;
+      padding: .9375rem 1rem .6rem 1rem;
       border-radius: .18rem;
       margin-bottom: 1.2rem;
       flex: 0 1 calc(50% - 1rem);
@@ -75,7 +74,7 @@
   }
 
   .comment-wrapper, .clear-list-wrapper {
-    margin-top: 25px;
+    margin-top: 1.57rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -85,9 +84,9 @@
     display: flex;
     background: white;
     border: 1px solid #D7D7D7;
-    padding: 20px 30px;
-    border-radius: 3px;
-    margin-bottom: 20px;
+    padding: 1.2rem 1.875rem;
+    border-radius: .18rem;
+    margin-bottom: 1.2rem;
     flex: 1;
   }
 
@@ -97,7 +96,7 @@
   }
 
   .comment-wrapper {
-    margin-top: 15px;
+    margin-top: .9375rem;
   }
 
 }
@@ -128,7 +127,7 @@
 @media (max-width: 600px) {
 
   .comment-outer-wrapper, .textarea-answer-outer-wrapper {
-    padding: 15px 16px !important;
+    padding: .9375rem 1rem !important;
   }
 
 }

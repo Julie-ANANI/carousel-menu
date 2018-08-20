@@ -22,27 +22,33 @@ export class QuestionSectionComponent implements OnInit {
   private _readonly: boolean;
   private _tags: Array<Tag>;
   private _stats: {nbAnswers?: number, percentage?: number};
+  private _showComment: boolean;
 
   @Input() selectedTag: any;
+  @Input() public question: Question;
+  @Input() public innovation: Innovation;
 
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
     this.updateAnswersData();
   }
+
   @Input() set showComments(value: boolean) {
     this._showComments = value;
   }
+
   @Input() set showDetails(value: boolean) {
     this._showDetails = value;
+    this._showComment = value;
   }
+
   @Input() set readonly(value: boolean) {
     this._readonly = value;
   }
-  @Output() modalAnswerChange = new EventEmitter<any>();
-  @Input() public question: Question;
-  @Input() public innovation: Innovation;
 
-  constructor(private _translateService: TranslateService) { }
+  @Output() modalAnswerChange = new EventEmitter<any>();
+
+  constructor(private _translateService: TranslateService) {}
 
   ngOnInit() {
     this._domSectionId = this.question.identifier.replace(/\s/g, '');
@@ -143,6 +149,14 @@ export class QuestionSectionComponent implements OnInit {
 
   public seeAnswer(event: Answer) {
     this.modalAnswerChange.emit(event);
+  }
+
+  answerBtnClicked(event: boolean) {
+    this._showComment = event;
+  }
+
+  get showComment(): boolean {
+    return this._showComment;
   }
 
   get answers() { return this._answers; }
