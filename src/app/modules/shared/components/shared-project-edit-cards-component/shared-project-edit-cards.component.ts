@@ -144,8 +144,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   createInnovationCard(event: Event, lang: string): void {
     event.preventDefault();
 
-    if (this.canEdit) {
-      if (this.changesSaved) {
+    if (this.canEdit || this.adminSide) {
+      if (this.changesSaved || this.adminSide) {
         if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
           this.innovationService.createInnovationCard(this.project._id, {
             lang: lang
@@ -247,8 +247,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   }
 
   deleteModal(innovcardID: string, lang: string) {
-    if (this.canEdit) {
-      if (this.changesSaved) {
+    if (this.canEdit || this.adminSide) {
+      if (this.changesSaved || this.adminSide) {
         this._deleteInnovCardId = innovcardID;
         this._langDelete = lang;
         this._showDeleteModal = true;
@@ -260,6 +260,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   deleteInnovCard(event: Event) {
     event.preventDefault();
+
     this.innovationService.removeInnovationCard(this.project._id, this._deleteInnovCardId)
       .subscribe((res) => {
       this.project.innovationCards = this.project.innovationCards.filter((card) => card._id !== this._deleteInnovCardId);
@@ -271,6 +272,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       this._showDeleteModal = false;
     });
+
   }
 
   importTranslation(event: Event, model: string) {
