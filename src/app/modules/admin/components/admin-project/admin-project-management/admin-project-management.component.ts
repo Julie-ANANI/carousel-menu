@@ -19,6 +19,7 @@ import {domainRegEx, emailRegEx} from '../../../../../utils/regex';
 import {Campaign} from '../../../../../models/campaign';
 import {CampaignService} from '../../../../../services/campaign/campaign.service';
 import {EmailScenario} from '../../../../../models/email-scenario';
+import {TagsService} from '../../../../../services/tags/tags.service';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -65,6 +66,9 @@ export class AdminProjectManagementComponent implements OnInit {
   // Emails / Domains edition
   isEmailsDomainsSidebar = false;
 
+  // Answer tags number
+  answerTags = 0;
+
   // Campaign choice
   currentCampaign: Campaign = null;
 
@@ -97,6 +101,7 @@ export class AdminProjectManagementComponent implements OnInit {
               private _authService: AuthService,
               private _router: Router,
               private _presetService: PresetService,
+              private _tagService: TagsService,
               private _notificationsService: TranslateNotificationsService,
               private _dashboardService: DashboardService,
               private _campaignService: CampaignService,
@@ -130,10 +135,15 @@ export class AdminProjectManagementComponent implements OnInit {
 
     this.isEmailsDomainsSidebar = false;
 
+    this._tagService.getTagsFromPool(this.project._id).subscribe((data) => {
+      this.answerTags = data.length;
+    });
+
     this._innovationService.campaigns(this._project._id)
       .first()
       .subscribe(campaigns => {
           this.currentCampaign = this.getBestCampaign(campaigns.result);
+          this.updateStats(event, this.currentCampaign);
           this.generateAvailableScenario();
           this.generateModifiedScenarios();
         },
@@ -324,6 +334,17 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   // Campaign section
+
+  public updateStats(event: Event, campaign: Campaign) {
+    event.preventDefault();
+    this._campaignService.updateStats(campaign._id)
+      .first()
+      .subscribe(stats => {
+        campaign.stats = stats;
+      }, error => {
+        this._notificationsService.error('ERROR', error.message);
+      });
+  };
 
   getBestCampaign(campaigns: Campaign[]): Campaign {
     if (campaigns.length > 0) {

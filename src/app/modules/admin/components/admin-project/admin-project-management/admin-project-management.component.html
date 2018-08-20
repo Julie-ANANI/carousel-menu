@@ -293,9 +293,8 @@
           <input
             type="checkbox"
             name="seeProjectTags"
-            id="seeProjectTags">
-          <!--[checked]="getMetadata('campaign', 'tags')"
-          (change)="setMetadata('campaign', 'tags', $event)"-->
+            id="seeProjectTags"
+            [checked]="project.tags.length > 0">
           <i class="form-icon"></i>
           {{'PROJECT.PROJECT_TAGS' | translate}}
         </label>
@@ -312,12 +311,13 @@
           <input
             type="checkbox"
             name="seeAnswerTags"
-            id="seeAnswerTags">
-          <!--[checked]="getMetadata('campaign', 'tags')"
-          (change)="setMetadata('campaign', 'tags', $event)"-->
+            id="seeAnswerTags"
+            [checked]="getMetadata('campaign', 'tags')"
+            (change)="setMetadata('campaign', 'tags', $event)">
           <i class="form-icon"></i>
           {{'PROJECT.CAMPAIGN.EDIT_ANSWER_TAGS' | translate}}
         </label>
+        <label class="form-label">{{answerTags}} tags</label>
         <button class="showOnHover btn btn-xs ghost-edit" (click)="goToAnswerTagsEdition()">
           {{'COMMON.EDIT' | translate}}
         </button>
@@ -337,15 +337,15 @@
       <div *ngIf="currentCampaign !== null">
 
         <!-- Campaign professionnals -->
-        <div class="project-line">
+        <div class="project-line" [ngClass]="{disabled: answerTags === 0}">
 
           <label class="form-switch" for="seeProfessionnals">
             <input
               type="checkbox"
               name="seeProfessionnals"
-              id="seeProfessionnals">
-            <!--[checked]="getMetadata('campaign', 'professionals')"
-            (change)="setMetadata('campaign', 'professionals', $event)"-->
+              id="seeProfessionnals"
+              [checked]="getMetadata('campaign', 'pros')"
+              (change)="setMetadata('campaign', 'pros', $event)">
             <i class="form-icon"></i>
             {{'PROJECT.CAMPAIGN.FIND_PROFESSIONALS' | translate}}
           </label>
@@ -357,15 +357,15 @@
         </div>
 
         <!-- AB Testing -->
-        <div class="project-line">
+        <div class="project-line" [ngClass]="{disabled: currentCampaign?.stats?.campaign.nbProfessionals === 0}">
 
           <label class="form-switch" for="activateABTesting">
             <input
               type="checkbox"
               name="activateABTesting"
-              id="activateABTesting">
-            <!--[checked]="getMetadata('campaign', 'professionals')"
-            (change)="setMetadata('campaign', 'professionals', $event)"-->
+              id="activateABTesting"
+              [checked]="getMetadata('campaign', 'abtesting')"
+              (change)="setMetadata('campaign', 'abtesting', $event)">
             <i class="form-icon"></i>
             {{'PROJECT.CAMPAIGN.ACTIVATE_AB_TESTING' | translate}}
           </label>
@@ -382,9 +382,9 @@
             <input
               type="checkbox"
               name="editWorkflowMails"
-              id="editWorkflowMails">
-            <!--[checked]="getMetadata('campaign', 'professionals')"
-            (change)="setMetadata('campaign', 'professionals', $event)"-->
+              id="editWorkflowMails"
+              [checked]="getMetadata('campaign', 'workflow')"
+              (change)="setMetadata('campaign', 'workflow', $event)">
             <i class="form-icon"></i>
             {{'PROJECT.CAMPAIGN.EDIT_WORKFLOW' | translate}}
           </label>
@@ -401,9 +401,8 @@
             <input
               type="checkbox"
               name="seeWorkflows"
-              id="seeWorkflows">
-            <!--[checked]="getMetadata('campaign', 'professionals')"
-            (change)="setMetadata('campaign', 'professionals', $event)"-->
+              id="seeWorkflows"
+              [checked]="currentCampaign?.settings?.defaultWorkflow !== ''" >
             <i class="form-icon"></i>
             {{'PROJECT.CAMPAIGN.CHOOSE_DEFAULT_WORKFLOW' | translate}}
           </label>
@@ -423,15 +422,15 @@
         </div>
 
         <!-- Launch Auto Batch -->
-        <div class="project-line">
+        <div class="project-line" [ngClass]="{disabled: modifiedScenarios.length === 0}">
 
           <label class="form-switch" for="lauchAutoBatch">
             <input
               type="checkbox"
               name="lauchAutoBatch"
-              id="lauchAutoBatch">
-            <!--[checked]="getMetadata('campaign', 'professionals')"
-            (change)="setMetadata('campaign', 'professionals', $event)"-->
+              id="lauchAutoBatch"
+              [checked]="getMetadata('campaign', 'autobatch')"
+              (change)="setMetadata('campaign', 'autobatch', $event)">
             <i class="form-icon"></i>
             {{'PROJECT.CAMPAIGN.LAUNCH_AUTO_BATCH' | translate}}
           </label>
@@ -448,15 +447,15 @@
             <input
               type="checkbox"
               name="validateInsights"
-              id="validateInsights">
-            <!--[checked]="getMetadata('campaign', 'professionals')"
-            (change)="setMetadata('campaign', 'professionals', $event)"-->
+              id="validateInsights"
+              [checked]="getMetadata('campaign', 'insights')"
+              (change)="setMetadata('campaign', 'insights', $event)">
             <i class="form-icon"></i>
             {{'PROJECT.CAMPAIGN.VALIDATE_INSIGHTS' | translate}}
           </label>
           <label class="label-alert">{{currentCampaign?.stats?.campaign.nbToValidateResp}} {{'PROJECT.CAMPAIGN.INSIGHTS_TO_VALIDATE' | translate}}</label>
           <button class="showOnHover btn btn-xs ghost-edit"
-                  (click)="goToProfessionalsList()">
+                  (click)="goToInsights()">
             {{'COMMON.MORE' | translate}}
           </button>
         </div>

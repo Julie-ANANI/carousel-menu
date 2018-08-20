@@ -59,7 +59,7 @@
             <th class="all" [attr.colspan]="isSelectable ? columns.length : columns.length -1">
               <span>{{selectedRows}} {{'COMMON.TABLE.SELECTED_ROWS' | translate}} </span>
               <i class="icon icon-arrow-right"></i>
-              <div [ngStyle]="{display: 'inline-flex'}" *ngIf="selectedRows < total">
+              <div [ngStyle]="{display: 'inline-flex'}" *ngIf="(selectedRows < total) || (total <= content.length)">
                 <button *ngFor="let a of actions"
                         class="btn btn-xs ghost-edit"
                         style="margin-left: 10px;"

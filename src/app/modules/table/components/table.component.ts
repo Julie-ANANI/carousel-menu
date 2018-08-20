@@ -204,7 +204,7 @@ export class TableComponent {
   }
 
   getSelectedRows(): Row[] {
-    if (this._massSelection) {
+    if (this._massSelection && this._total > this._content.length) {
       return [];
     } else {
       return this._content.filter(value => value._isSelected === true);
@@ -226,7 +226,7 @@ export class TableComponent {
   }
 
   removeSelectedRows() {
-    if (this._massSelection) {
+    if (this._massSelection && this._total > this._content.length) {
       this.removeRows.emit('all');
     } else {
       this.removeRows.emit(this.getSelectedRowsContent());
