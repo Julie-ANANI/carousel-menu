@@ -2,16 +2,16 @@
   min-width: 280px;
   max-width: 320px;
   color: white;
-  font-size: 14px;
+  font-size: .85rem;
   font-weight: 600;
 
   .number-answers {
-    font-size: 99px;
+    font-size: 6.1875rem;
     font-weight: 300;
     color: white;
 
     .subtitle {
-      font-size: 14px;
+      font-size: .85rem;
       padding-bottom: 0;
       font-weight: 600;
     }
@@ -19,10 +19,10 @@
   }
 
   hr {
-    margin: 25px;
+    margin: 1.57rem;
     width: 80%;
     border-color: white;
-    border-radius: 5px;
+    border-radius: .18rem;
   }
 
   .number-ratio {
@@ -35,73 +35,3 @@
   }
 
 }
-
-/*.big-blue-synthesis {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  flex-direction: column;
-  background: #0B90C6;
-  font-size: 14px;
-  color: #FFFFFF;
-  min-height: 180px;
-  padding-top: 25px;
-  width: 260px;
-  padding-bottom: 25px;
-  border-radius: 3px;
-
-  hr {
-    margin: 20px;
-    width: 80%;
-    border-color: white;
-    border-radius: 5px;
-  }
-
-  p {
-    color: white;
-    font-size: 0.7rem;
-  }
-
-  .number-answers {
-    text-align: center;
-
-    span {
-      font-size: 3.2rem;
-      font-weight: 400;
-    }
-
-    p {
-      padding-top: 4px;
-    }
-
-  }
-
-
-
-  .total-score {
-    font-size: 27px;
-    color: #93E0FE;
-    font-weight: 400;
-    padding: 20px 0;
-  }
-
-  .total-score span {
-    display: inline-block;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: 64px;
-    font-weight: 400;
-    color: black;
-  }
-
-  .key-benefit {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-
-}*/
-
-/********************************** Media ***************************************/
-
-

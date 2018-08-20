@@ -16,6 +16,7 @@ import { Template } from '../../../sidebar/interfaces/template';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs/Subject';
+import { FrontendService } from '../../../../services/frontend/frontend.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -28,18 +29,23 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   @Input() project: Innovation;
   @Input() adminMode: boolean;
 
-  adminSide: boolean;
-  sidebarTemplateValue: Template = {};
+  private _adminSide: boolean;
+  private _sidebarTemplateValue: Template = {};
   scrollOn = false;
-  menuButton = false;
-  displayMenuWrapper = false;
+
+  private _menuButton = false;
+  private _displayMenuWrapper = false;
+
   editMode = new Subject<boolean>(); // this is for the admin side.
-  previewMode: boolean;
-  disableButton: any;
-  projectToBeFinished: boolean;
-  endDate: Date;
+  private _previewMode: boolean;
+
+  private _disableButton: any;
+  private _projectToBeFinished: boolean;
+
+  private _endDate: Date;
 
   private _companies: Array<Clearbit>;
+
   private _campaignsStats: {
     nbPros: number,
     nbProsSent: number,
@@ -47,13 +53,16 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     nbProsClicked: number,
     nbValidatedResp: number
   };
+
   private _questions: Array<Question> = [];
   private _cleaned_questions: Array<Question> = [];
   private _answers: Array<Answer> = [];
   private _filteredAnswers: Array<Answer> = [];
   private _countries: Array<string> = [];
   private _showListProfessional = true;
+
   private _showDetails = true;
+
   private _innoid: string;
 
   public activeSection: string;
@@ -71,16 +80,22 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private location: Location,
               private innovationService: InnovationService,
               private authService: AuthService,
-              public filterService: FilterService) {
+              public filterService: FilterService,
+              private frontendService: FrontendService) {
     this.filterService.reset();
   }
 
   ngOnInit() {
     this.isAdmin();
+
     this.today = Date.now();
+
     this._innoid = this.project._id;
+
     this.resetMap();
+
     this.loadAnswers();
+
     this.loadCampaign();
 
     if (this.project.preset && this.project.preset.sections) {
@@ -103,9 +118,9 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
     PageScrollConfig.defaultDuration = 800;
 
-    this.previewMode = this.project.previewMode;
+    this._previewMode = this.project.previewMode;
 
-    this.disableButton = this.project.status;
+    this._disableButton = this.project.status;
 
     this.projectFinishDate();
 
@@ -119,7 +134,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       this.scrollOn = false;
     }
 
-    this.menuButton = (this.getCurrentScroll() > 10);
+    this._menuButton = (this.getCurrentScroll() > 150);
 
   }
 
@@ -131,13 +146,13 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   };
 
   isAdmin() {
-    this.adminSide = this.location.path().slice(0, 6) === '/admin';
+    this._adminSide = this.location.path().slice(0, 6) === '/admin';
     this.adminMode = this.authService.adminLevel > 2;
   }
 
   projectFinishDate() {
     const index = this.project.statusLogs.findIndex(action => action.action === 'FINISH');
-    this.endDate = index === -1 ? null : this.project.statusLogs[index].date;
+    this._endDate = index === -1 ? null : this.project.statusLogs[index].date;
   }
 
   resetMap() {
@@ -242,15 +257,15 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   confirmModal(event: Event) {
     event.preventDefault();
-    this.projectToBeFinished = true;
+    this._projectToBeFinished = true;
   }
 
   changeStatus(event: Event, status: 'DONE'): void {
-    this.projectToBeFinished = false;
+    this._projectToBeFinished = false;
 
     this.innovationService.updateStatus(this._innoid, status).first().subscribe((results) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
-      this.disableButton = results.status;
+      this._disableButton = results.status;
     }, (error) => {
       this.translateNotificationsService.error('ERROR.ERROR', error.message);
     });
@@ -258,7 +273,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   closeModal(event: Event) {
     event.preventDefault();
-    this.projectToBeFinished = false;
+    this._projectToBeFinished = false;
   }
 
   toggleDetails(event: Event): void {
@@ -270,7 +285,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   toggleMode(event: Event): void {
     event.preventDefault();
-   this.previewMode =  this.project.previewMode = event.target['checked'] === true;
+   this._previewMode =  this.project.previewMode = event.target['checked'] === true;
 
     if (event.target['checked']) {
       this.innovationService.save(this._innoid, this.project).first().subscribe( (data) => {
@@ -286,27 +301,27 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   displayMenu(event: Event) {
     event.preventDefault();
-    this.displayMenuWrapper = true;
+    this._displayMenuWrapper = true;
   }
 
   hideMenu(event: Event) {
     event.preventDefault();
-    this.displayMenuWrapper = false;
+    this._displayMenuWrapper = false;
   }
 
   seeAnswer(answer: Answer): void {
     this._modalAnswer = answer;
 
-    this.sidebarTemplateValue = {
-      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: this.adminSide ? 'COMMON.EDIT_INSIGHT' : 'Insight',
+    this._sidebarTemplateValue = {
+      animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: this._adminSide ? 'COMMON.EDIT_INSIGHT' : 'Insight',
       size: '726px'
     };
 
   }
 
   closeSidebar(value: string) {
-    this.sidebarTemplateValue.animate_state = value;
+    this._sidebarTemplateValue.animate_state = value;
     this.editMode.next(false);
   }
 
@@ -333,14 +348,13 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     window.print();
   }
 
+  getSrc(): string {
+    const index = this.project.innovationCards[0].media.findIndex((media) => media.type === 'PHOTO');
+    return this.project.innovationCards[0].media[index].url;
+  }
+
   public percentageCalculataion(value1: number, value2: number) {
-    let percentage = (value2 / value1) * 100;
-
-    if (percentage === Infinity) {
-      percentage = 0;
-    }
-
-    return Math.floor(percentage);
+    return this.frontendService.analyticPercentage(value1, value2);
   }
 
   get campaignStats() {
@@ -425,5 +439,38 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   getLogo(): string {
     return environment.logoURL;
   }
+
+  get adminSide(): boolean {
+    return this._adminSide;
+  }
+
+  get sidebarTemplateValue(): Template {
+    return this._sidebarTemplateValue;
+  }
+
+  get menuButton(): boolean {
+    return this._menuButton;
+  }
+
+  get displayMenuWrapper(): boolean {
+    return this._displayMenuWrapper;
+  }
+
+  get previewMode(): boolean {
+    return this._previewMode;
+  }
+
+  get disableButton(): any {
+    return this._disableButton;
+  }
+
+  get projectToBeFinished(): boolean {
+    return this._projectToBeFinished;
+  }
+
+  get endDate(): Date {
+    return this._endDate;
+  }
+
 
 }

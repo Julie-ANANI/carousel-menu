@@ -1,19 +1,21 @@
+@import "../../../../../../../style/variables";
+
 .pro-tag-wrapper {
   height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
-  font-size: 14px;
+  font-size: 0.875rem;
   flex-direction: column;
 
   .label-validate {
     margin-right: auto;
     margin-left: auto;
-    margin-bottom: 10px;
+    margin-bottom: .6rem;
   }
 
   .flag-wrapper {
-    margin-bottom: 10px;
+    margin-bottom: .6rem;
   }
 
   .detail-wrapper {
@@ -25,17 +27,17 @@
     flex-direction: column;
 
     .name-wrapper {
-      font-size: 16px;
+      font-size: 1rem;
       font-weight: 600;
     }
 
     .job-wrapper {
-      font-size: 15px;
-      color: #4F5D6B;
+      font-size: 0.9375rem;
+      color: $background-color;
     }
 
     .company-wrapper {
-      color: #97A4B1;
+      color: $meta-color;
       font-weight: 600;
     }
 
@@ -43,19 +45,19 @@
 
   .tag-wrapper {
     display: inline-flex;
-    background-color: #4F5D6B;
-    padding: 5px 15px;
-    font-size: 11px;
+    background-color: $background-color;
+    padding: .35rem .9375rem;
+    font-size: 0.6875rem;
     font-weight: 600;
-    border-radius: 25px;
+    border-radius: 1.57rem;
     color: white;
     cursor: pointer;
-    margin: 5px;
+    margin: .35rem;
     transition: all .15s ease-in-out;
   }
 
   .tag-wrapper:hover {
-    background-color: #FFB300;
+    background-color: $primary-color;
     color: white;
   }
 

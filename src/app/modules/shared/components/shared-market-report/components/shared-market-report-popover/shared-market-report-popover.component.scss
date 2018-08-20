@@ -1,6 +1,8 @@
+@import "../../../../../../../style/variables";
+
 .item-menu-sandwich {
   cursor: pointer;
-  font-size: 22px;
+  font-size: 1.375rem;
   opacity: 0.5;
   align-self: auto;
 }
@@ -11,16 +13,16 @@
 
 .users-menu {
   background: white;
-  box-shadow: 1px 2px 4px 0 rgba(0,0,0,0.37);
+  box-shadow: $box-shadow;
   max-width: 290px;
   z-index: 3;
 
   ul li {
-    border-bottom: 1px solid #D7D7D7;
-    padding: 15px 0;
+    border-bottom: 1px solid $border-color;
+    padding: .9375rem 0;
     margin: 0;
     list-style: none;
-    color: #4A4A4A;
+    color: $text-dark;
 
     &:last-child {
       border-bottom: none;
