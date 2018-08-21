@@ -35,7 +35,8 @@ export interface Innovation {
   readonly projectStatus?: number;
   readonly reviewing?: any;
   readonly patented?: boolean;
-  readonly external_diffusion?: boolean;
+  isPublic?: boolean;
+  external_diffusion?: boolean;
   readonly launched?: Date;
   readonly created?: Date;
   readonly updated?: Date;

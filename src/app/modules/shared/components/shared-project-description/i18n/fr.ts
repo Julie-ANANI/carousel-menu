@@ -39,6 +39,12 @@ export const PROJECT = {
     'INSIGHTS_TO_VALIDATE': 'réponses à valider'
 
   },
+  'DELIVERY' : {
+    'DELIVERY': 'Livrable',
+    'PUBLIC': 'Projet public',
+    'UPDATE_ANSWER_TAGS': 'Mettre à jour les tags pour les réponses',
+    'WRITE_CONCLUSIONS': 'Rédiger les conclusions'
+  },
   'CARDS': 'Innovation Cards',
   'SYNTHESIS': 'Synthèse',
   'PROJECT_TAGS': 'Tags du projet',

@@ -36,6 +36,12 @@ export const PROJECT = {
     'VALIDATE_INSIGHTS': 'Validate insights',
     'INSIGHTS_TO_VALIDATE': 'insights to validate'
   },
+  'DELIVERY' : {
+    'DELIVERY': 'Delivery',
+    'PUBLIC': 'Public project',
+    'UPDATE_ANSWER_TAGS': 'Update answer tags',
+    'WRITE_CONCLUSIONS': 'Write conclusions'
+  },
   'CARDS': 'Innovation Cards',
   'QUESTIONNAIRE': 'Questionnaire',
   'SYNTHESIS': 'Synthesis',

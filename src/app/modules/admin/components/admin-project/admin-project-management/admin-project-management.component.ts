@@ -431,6 +431,17 @@ export class AdminProjectManagementComponent implements OnInit {
     this.saveCampaign(event, 'Le workflow par défaut a bien été mis à jour');
   }
 
+  /// Delivery section
+
+  changeExternalDiffusion() {
+    this._project.isPublic = !this._project.isPublic;
+    this.save(event, 'La visibilité du projet a été mise à jour !');
+  }
+
+  goToSynthesis() {
+    this._router.navigate(['/admin/projects/project/' + this._project._id + '/synthesis']);
+  }
+
   /**
    * Sauvegarde du projet
    */

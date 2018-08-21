@@ -495,9 +495,66 @@
     <div class="tags">
       <label class="form-label">{{'PROJECT.PROJECT_TAGS' | translate}}</label>
       <app-shared-tag-item [tags]="project.tags" [backgroundColor]="'#0B90C6'"
-                           [textColor]="'white'"></app-shared-tag-item>
+                           [textColor]="'white'">
+      </app-shared-tag-item>
     </div>
   </div>
+
+  <h6>{{'PROJECT.DELIVERY.DELIVERY' | translate}}</h6>
+
+  <!-- Delivery section -->
+  <div class="project-section">
+
+    <!-- Public project -->
+    <div class="project-line">
+
+      <label class="form-switch" for="publicProject">
+        <input
+          type="checkbox"
+          name="publicProject"
+          id="publicProject"
+          [checked]="project.isPublic === true"
+          (change)="changeExternalDiffusion()">
+        <i class="form-icon"></i>
+        {{'PROJECT.DELIVERY.PUBLIC' | translate}}
+      </label>
+    </div>
+
+    <!-- Update answer tags -->
+    <div class="project-line">
+
+      <label class="form-switch" for="updateTags">
+        <input
+          type="checkbox"
+          name="updateTags"
+          id="updateTags">
+        <i class="form-icon"></i>
+        {{'PROJECT.DELIVERY.UPDATE_ANSWER_TAGS' | translate}}
+      </label>
+      <label class="form-label">{{answerTags}} tags</label>
+      <button class="showOnHover btn btn-xs ghost-edit" (click)="goToAnswerTagsEdition()">
+        {{'COMMON.UPDATE' | translate}}
+      </button>
+    </div>
+
+    <!-- Write conclusion -->
+    <div class="project-line">
+
+      <label class="form-switch" for="writeConclusions">
+        <input
+          type="checkbox"
+          name="writeConclusions"
+          id="writeConclusions">
+        <i class="form-icon"></i>
+        {{'PROJECT.DELIVERY.WRITE_CONCLUSIONS' | translate}}
+      </label>
+      <button class="showOnHover btn btn-xs ghost-edit" (click)="goToSynthesis()">
+        {{'COMMON.SHOW' | translate}}
+      </button>
+    </div>
+
+  </div>
+
 </div>
 
 <!-- Sidebars -->
