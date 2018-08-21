@@ -143,9 +143,11 @@ export class AdminProjectManagementComponent implements OnInit {
       .first()
       .subscribe(campaigns => {
           this.currentCampaign = this.getBestCampaign(campaigns.result);
-          this.updateStats(event, this.currentCampaign);
-          this.generateAvailableScenario();
-          this.generateModifiedScenarios();
+          if (this.currentCampaign !== null) {
+            this.updateStats(event, this.currentCampaign);
+            this.generateAvailableScenario();
+            this.generateModifiedScenarios();
+          }
         },
         error => this._notificationsService.error('ERROR', error.message)
       );

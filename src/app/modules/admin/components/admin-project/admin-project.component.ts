@@ -41,7 +41,7 @@ export class AdminProjectComponent implements OnInit {
   }
 
   getColor(length: number) {
-    if (length < 34) {
+    if (length < 34 && length >= 0) {
       return '#EA5858';
     } else if (length >= 34 && length < 67) {
       return '#f0ad4e';

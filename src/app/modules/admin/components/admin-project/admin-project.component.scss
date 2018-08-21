@@ -45,9 +45,10 @@
     flex-direction: row;
     justify-content: space-between;
     margin: 0;
-    width: 15%;
+    width: 30%;
 
     .progress {
+      margin: 10px;
       width: 100px;
     }
   }

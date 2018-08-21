@@ -27,6 +27,7 @@ export const PROJECT = {
 
   'CAMPAIGN': {
     'CAMPAIGN': 'Campagne',
+    'PITCH_EDIT_DESCRIPTION': 'Veuillez finir l\'édition de la description du projet',
     'EDIT_ANSWER_TAGS': 'Editer les tags pour les réponses',
     'CREATE_CAMPAIGN': 'Veuillez créer une campagne pour poursuivre le projet',
     'FIND_PROFESSIONALS': 'Trouver des professionnels',
