@@ -43,7 +43,8 @@ export const PROJECT = {
     'DELIVERY': 'Livrable',
     'PUBLIC': 'Projet public',
     'UPDATE_ANSWER_TAGS': 'Mettre à jour les tags pour les réponses',
-    'WRITE_CONCLUSIONS': 'Rédiger les conclusions'
+    'WRITE_CONCLUSIONS': 'Rédiger les conclusions',
+    'WRITE_ENDING_MAIL': 'Rédiger le mail final'
   },
   'CARDS': 'Innovation Cards',
   'SYNTHESIS': 'Synthèse',

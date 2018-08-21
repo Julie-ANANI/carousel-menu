@@ -40,7 +40,8 @@ export const PROJECT = {
     'DELIVERY': 'Delivery',
     'PUBLIC': 'Public project',
     'UPDATE_ANSWER_TAGS': 'Update answer tags',
-    'WRITE_CONCLUSIONS': 'Write conclusions'
+    'WRITE_CONCLUSIONS': 'Write conclusions',
+    'WRITE_ENDING_MAIL': 'Write ending mail'
   },
   'CARDS': 'Innovation Cards',
   'QUESTIONNAIRE': 'Questionnaire',

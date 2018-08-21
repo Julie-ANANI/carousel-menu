@@ -272,10 +272,6 @@
         {{ formatText(project?.status) }} - {{project?.updated | date:dateFormat}}
       </label>
 
-      <!-- TODO
-      Send mail after having editing the status
-      For now it only change the status
-      -->
       <button class="showOnHover btn btn-xs ghost-edit"
               (click)="editStatus()"
               [ngStyle]="{'visibility' : project.status === 'DONE' ? 'hidden' : ''}">
@@ -549,7 +545,23 @@
         {{'PROJECT.DELIVERY.WRITE_CONCLUSIONS' | translate}}
       </label>
       <button class="showOnHover btn btn-xs ghost-edit" (click)="goToSynthesis()">
-        {{'COMMON.SHOW' | translate}}
+        {{'COMMON.MORE' | translate}}
+      </button>
+    </div>
+
+    <!-- Send Ending mail -->
+    <div class="project-line">
+
+      <label class="form-switch" for="writeEndingMail">
+        <input
+          type="checkbox"
+          name="writeEndingMail"
+          id="writeEndingMail">
+        <i class="form-icon"></i>
+        {{'PROJECT.DELIVERY.WRITE_ENDING_MAIL' | translate}}
+      </label>
+      <button class="showOnHover btn btn-xs ghost-edit" (click)="editEndingMail()">
+        {{'COMMON.EDIT' | translate}}
       </button>
     </div>
 

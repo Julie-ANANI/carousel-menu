@@ -442,6 +442,16 @@ export class AdminProjectManagementComponent implements OnInit {
     this._router.navigate(['/admin/projects/project/' + this._project._id + '/synthesis']);
   }
 
+  editEndingMail() {
+    this.changeSidebar('innovation-form');
+    this._more = {
+      animate_state: 'active',
+      title: 'PROJECT.DELIVERY.WRITE_ENDING_MAIL',
+      type: 'send-mail',
+      size: '650px',
+    };
+  }
+
   /**
    * Sauvegarde du projet
    */

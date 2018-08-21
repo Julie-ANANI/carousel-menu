@@ -31,6 +31,7 @@ export class InnovationFormComponent implements OnInit {
   isPitch = false;
   isTargeting = false;
   isStatus = false;
+  isMail = false;
 
   private _type = '';
 
@@ -84,6 +85,7 @@ export class InnovationFormComponent implements OnInit {
     this.isPitch = false;
     this.isTargeting = false;
     this.isStatus = false;
+    this.isMail = false;
   }
 
   loadTypes() {
@@ -98,7 +100,13 @@ export class InnovationFormComponent implements OnInit {
         break;
       } case('preview'): {
         break;
-      }case('status'): {
+      } case('send-mail'): {
+        this.isMail = true;
+        this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
+          this._signatures = signatures.result;
+        });
+        break;
+      } case('status'): {
         this.isStatus = true;
         this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
           this._signatures = signatures.result;
@@ -111,6 +119,7 @@ export class InnovationFormComponent implements OnInit {
 
   }
 
+  // TODO : Implement functionality to send mail
   onSubmit() {
     switch (this.type) {
       case('pitch') : {
@@ -124,7 +133,10 @@ export class InnovationFormComponent implements OnInit {
         break;
       } case('preview'): {
         break;
-      } default: {
+      } case('send-mail'): {
+        break;
+      }
+      default: {
         break;
       }
     }

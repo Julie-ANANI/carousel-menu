@@ -13,7 +13,7 @@
     <button type="submit"
             class="btn btn-primary"
             [disabled]="(!isChange) || (!statusValid)">
-      {{isStatus ? ('COMMON.SEND' | translate) : ('COMMON.SAVE' | translate) }}
+      {{(isStatus || isMail) ? ('COMMON.SEND' | translate) : ('COMMON.SAVE' | translate) }}
     </button>
   </div>
 
@@ -33,6 +33,14 @@
     [adminMode]="true">
   </app-shared-project-settings>
 
-  <app-shared-mail-editor *ngIf="isStatus" [signatures]="signatures" [emailsObject]="email" (emailChange)="email = $event"></app-shared-mail-editor>
+  <label *ngIf="isStatus || isMail" class="form-label" style="color: #EA5858; margin-left: 10px;">Pour le moment l'envoi de mail n'est pas fonctionnel</label>
+
+  <!-- This functionality doesn't work for the moment -->
+  <app-shared-mail-editor *ngIf="isStatus || isMail"
+                          class="disabled"
+                          [signatures]="signatures"
+                          [emailsObject]="email"
+                          (emailChange)="email = $event">
+  </app-shared-mail-editor>
 
 </form>
