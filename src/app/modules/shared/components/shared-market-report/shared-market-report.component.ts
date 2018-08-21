@@ -350,7 +350,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   getSrc(): string {
     const index = this.project.innovationCards[0].media.findIndex((media) => media.type === 'PHOTO');
-    return this.project.innovationCards[0].media[index].url;
+    return index === -1 ? '' : this.project.innovationCards[0].media[index].url;
   }
 
   public percentageCalculataion(value1: number, value2: number) {

@@ -9,6 +9,28 @@
       </div>
     </div>
 
+    <!-- Innovations -->
+    <div class="innovations-wrapper">
+      <div *ngFor="let innovation of innovationCards" class="innov-wrapper">
+        <div class="content-wrapper">
+
+          <!-- Image -->
+          <div class="img-wrapper">
+            <img *ngIf="innovation.media.length > 0; else noMedia" [src]="getSrc(innovation)">
+            <ng-template #noMedia>
+              <img [src]= "" alt="Media">
+            </ng-template>
+          </div>
+
+          <!-- Body part -->
+          <div class="body-wrapper">
+            <h1 class="main-heading">{{ innovation.title }}</h1>
+            <p>{{ innovation.summary }}</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
 
   </div>
 </section>
