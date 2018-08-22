@@ -27,7 +27,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   private _suggestionInnov: Array<{text: string, id: string}>; // to show suggestions to user below the search field when he types
 
   private _config = {
-    fields: '',
+    fields: 'name,type,status,principalMedia,tags,innovationCards',
     limit: 0,
     offset: 0,
     search: {
