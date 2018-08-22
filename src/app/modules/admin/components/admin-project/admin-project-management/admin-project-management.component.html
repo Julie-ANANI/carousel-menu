@@ -624,19 +624,45 @@
         </button>
       </div>
 
+      <!-- Operator review -->
+      <div class="project-line">
+
+        <label class="form-switch" for="review">
+          <input
+            type="checkbox"
+            name="review"
+            id="review">
+          <i class="form-icon"></i>
+          {{'PROJECT.DELIVERY.OPERATOR_FEEDBACK' | translate}}
+        </label>
+        <button class="showOnHover btn btn-xs ghost-edit" (click)="editFeedback()">
+          {{'COMMON.EDIT' | translate}}
+        </button>
+      </div>
+
     </div>
 
-    <div class="user-message"
-         *ngIf="project.userSatisfaction?.message"
-         [ngClass]="{
+    <div class="project-commentaries">
+      <div class="user-message"
+           *ngIf="project.userSatisfaction?.message"
+           [ngClass]="{
         happy: project.userSatisfaction.satisfaction === 'HAPPY' || project.userSatisfaction.satisfaction === 'VERY_HAPPY',
         normal: project.userSatisfaction.satisfaction === 'NORMAL',
         bad: project.userSatisfaction.satisfaction === 'BAD' || project.userSatisfaction.satisfaction === 'VERY_BAD'
         }">
-      <label class="form-label">{{'PROJECT.DELIVERY.CLIENT_SATISFACTION' | translate}}</label>
-      <span>
+        <label class="form-label">{{'PROJECT.DELIVERY.CLIENT_SATISFACTION' | translate}}</label>
+        <span>
           {{project.userSatisfaction?.message}}
       </span>
+      </div>
+
+      <div class="operator-feedback" *ngIf="project.feedback">
+        <label class="form-label">{{'PROJECT.DELIVERY.OPERATOR_FEEDBACK' | translate}}</label>
+        <span>
+          {{project.feedback}}
+        </span>
+      </div>
+
     </div>
 
   </div>

@@ -34,19 +34,28 @@
     height: 150px;
   }
 
-  .project-delivery .user-message {
+  .project-delivery .project-commentaries {
     margin-left: 5%;
     margin-right: 5%;
+    width: 40%;
+  }
+
+  .project-commentaries .user-message, .project-commentaries .operator-feedback {
     padding-left: 20px;
     padding-right: 20px;
     height: 100px;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.1);
+    margin-bottom: 30px;
     border-radius: 5px;
-    width: 40%;
     overflow: auto;
 
     span, label {
       color: white;
     }
+  }
+
+  .project-commentaries .operator-feedback {
+    background-color: $secondary-color;
   }
 
   .user-message.happy {

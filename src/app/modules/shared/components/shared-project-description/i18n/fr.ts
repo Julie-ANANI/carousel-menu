@@ -48,13 +48,15 @@ export const PROJECT = {
     'RESTITUTION': 'Restitution du projet',
     'CLIENT_SATISFACTION': 'Satisfaction du client',
     'MESSAGE_FROM_CLIENT': 'Message du client',
+    'MESSAGE_FROM_OPERATOR': 'Message de l\'operateur',
     'SATISFACTIONS': {
       'VERY_HAPPY': 'Très content',
       'HAPPY': 'Content',
       'NORMAL': 'Neutre',
       'BAD': 'Mécontent',
       'VERY_BAD': 'Très mécontent',
-    }
+    },
+    'OPERATOR_FEEDBACK': 'Compte rendu de la mission'
   },
   'CARDS': 'Innovation Cards',
   'SYNTHESIS': 'Synthèse',

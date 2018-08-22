@@ -466,6 +466,15 @@ export class AdminProjectManagementComponent implements OnInit {
     };
   }
 
+  editFeedback() {
+    this.changeSidebar('innovation-form');
+    this._more = {
+      animate_state: 'active',
+      title: 'PROJECT.DELIVERY.OPERATOR_FEEDBACK',
+      type: 'feedback',
+    };
+  }
+
   /**
    * Sauvegarde du projet
    */

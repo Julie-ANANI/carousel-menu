@@ -27,7 +27,7 @@ export class AdminUsersComponent implements OnInit {
   private _total = 0;
   private _config = {
     fields: 'id companyName jobTitle created domain location firstName lastName',
-    limit: 10,
+    limit: 20,
     offset: 0,
     search: {},
     sort: {

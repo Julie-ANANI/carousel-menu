@@ -33,6 +33,7 @@ export class InnovationFormComponent implements OnInit {
   isStatus = false;
   isMail = false;
   isUserSatisfaction = false;
+  isFeedback = false;
 
   private _type = '';
 
@@ -90,6 +91,7 @@ export class InnovationFormComponent implements OnInit {
     this.isStatus = false;
     this.isMail = false;
     this.isUserSatisfaction = false;
+    this.isFeedback = false;
   }
 
   loadTypes() {
@@ -103,6 +105,9 @@ export class InnovationFormComponent implements OnInit {
         this.isTargeting = true;
         break;
       } case('preview'): {
+        break;
+      } case('feedback'): {
+        this.isFeedback = true;
         break;
       } case('satisfaction'): {
         if (!this._project.userSatisfaction) {
@@ -143,6 +148,9 @@ export class InnovationFormComponent implements OnInit {
         this.projectChange.emit(this._project);
         break;
       } case('status'): {
+        this.projectChange.emit(this._project);
+        break;
+      } case('feedback'): {
         this.projectChange.emit(this._project);
         break;
       } case('preview'): {
@@ -195,8 +203,13 @@ export class InnovationFormComponent implements OnInit {
     this._isChange = true;
   }
 
-  onMessageChange(message: string) {
+  onUserMessageChange(message: string) {
     this._project.userSatisfaction.message = message;
+    this._isChange = true;
+  }
+
+  onReviewChange(message: string) {
+    this._project.feedback = message;
     this._isChange = true;
   }
 
