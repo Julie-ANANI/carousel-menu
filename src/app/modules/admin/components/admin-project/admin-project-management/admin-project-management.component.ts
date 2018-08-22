@@ -440,7 +440,6 @@ export class AdminProjectManagementComponent implements OnInit {
       .save(this._project._id, this._project)
       .first()
       .subscribe(data => {
-        this._project.__v = data.__v;
         this.resetData();
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , notification);
       }, err => {
