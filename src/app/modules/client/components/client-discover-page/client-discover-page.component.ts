@@ -27,7 +27,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   private _suggestionInnov: Array<{text: string, id: string}>; // to show suggestions to user below the search field when he types
 
   private _config = {
-    fields: '',
+    fields: 'name,type,status,principalMedia,tags,innovationCards',
     limit: 0,
     offset: 0,
     search: {
@@ -44,9 +44,9 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initialize();
 
-    this._config.search['status'] = 'EVALUATING' || 'DONE';
+    this._config.search["$or"] = [{'status':'EVALUATING'}, {'status':'DONE'}];
+    this.initialize();
 
     this._translateService.onLangChange.subscribe((event: LangChangeEvent) => {
       if (this.userDefaultLang !== this._translateService.currentLang) {
