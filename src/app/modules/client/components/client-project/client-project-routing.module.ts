@@ -35,7 +35,7 @@ export const clientProjectRoutes: any = [
                 path: 'targeting', component: TargetingComponent, canActivate: [AuthGuard], pathMatch: 'full'
               }
             ]
-            //canDeactivate: [PendingChangesGuard] //TODO: uncomment
+            // canDeactivate: [PendingChangesGuard] //TODO: uncomment
           },
           {
             path: 'exploration', component: ExplorationProjectComponent, canActivate: [AuthGuard], pathMatch: 'full'

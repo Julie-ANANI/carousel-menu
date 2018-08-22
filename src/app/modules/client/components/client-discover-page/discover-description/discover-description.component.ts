@@ -12,6 +12,7 @@ import { environment } from '../../../../../../environments/environment';
   templateUrl: './discover-description.component.html',
   styleUrls: ['./discover-description.component.scss']
 })
+
 export class DiscoverDescriptionComponent implements OnInit {
 
   private _innovationCard: InnovCard[] = [];
@@ -25,17 +26,25 @@ export class DiscoverDescriptionComponent implements OnInit {
   private quizButtonDisplay: string;
   private _mediaModal: boolean;
   private _mediaURL: string;
+  private _lang: string;
+  private _id: string;
 
   constructor(private innovationService: InnovationService,
               private activatedRoute: ActivatedRoute,
               private shareService: ShareService,
-              private domSanitizer1: DomSanitizer) {
-  }
+              private domSanitizer1: DomSanitizer) {}
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      this.loadInnovation(params['id'], params['lang']);
+    this.activatedRoute.queryParams.subscribe(params => {
+      this._lang = params.lang;
     });
+
+    this.activatedRoute.params.subscribe(params => {
+      this._id = params['id'];
+    });
+
+    this.loadInnovation(this._id, this._lang);
+
   }
 
   loadInnovation(id: any, lang: any) {
@@ -81,6 +90,14 @@ export class DiscoverDescriptionComponent implements OnInit {
   closeModal(event: Event) {
     event.preventDefault();
     this._mediaModal = false;
+  }
+
+  get lang(): string {
+    return this._lang;
+  }
+
+  get id(): string {
+    return this._id;
   }
 
   get innovationCard(): InnovCard[] {

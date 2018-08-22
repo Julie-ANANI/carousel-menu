@@ -13,23 +13,31 @@
     <div class="innovations-wrapper">
       <div *ngFor="let innovation of innovationCards" class="innov-wrapper">
         <div class="content-wrapper">
+          <a [routerLink]="innovation.innovation_reference" [queryParams]="{ lang: innovation.lang }">
 
-          <!-- Image -->
-          <div class="img-wrapper">
-            <img *ngIf="innovation.media.length > 0; else noMedia" [src]="getSrc(innovation)">
-            <ng-template #noMedia>
-              <img [src]= "" alt="Media">
-            </ng-template>
-          </div>
+            <!-- Image -->
+            <div class="img-wrapper">
+              <img [src]="getSrc(innovation)" alt="No media">
+            </div>
 
-          <!-- Body part -->
-          <div class="body-wrapper">
-            <h1 class="main-heading">{{ innovation.title }}</h1>
-            <p>{{ innovation.summary }}</p>
-          </div>
+            <!-- Body part -->
+            <div class="body-wrapper">
+              <h1 class="main-heading">{{ innovation.title | DiscoverSummaryPipe:95 }}</h1>
+              <p>{{ innovation.summary }}</p>
+            </div>
 
+          </a>
         </div>
       </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper">
+      <app-pagination
+        [total]="totalValue"
+        [propertyName]="'innovations'"
+        [config]="config">
+      </app-pagination>
     </div>
 
   </div>

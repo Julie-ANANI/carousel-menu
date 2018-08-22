@@ -3,9 +3,11 @@
 
     <!-- Add project button -->
     <div class="text-right">
-      <button [routerLink]="'/project/new'" (click)="$event.preventDefault()" class="btn btn-primary">
-        {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
-      </button>
+      <a [routerLink]="'/project/new'">
+        <button (click)="$event.preventDefault()" class="btn btn-primary">
+          {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
+        </button>
+      </a>
     </div>
 
     <!-- No project -->
@@ -26,9 +28,13 @@
     <div *ngIf="projects && projects.length" class="project-wrapper">
       <div *ngFor="let project of projects" class="content-outer-wrapper">
         <div class="content-wrapper">
-          <img [src]="getPrincipalMedia(project)" [routerLink]="getRelevantLink(project)" alt="Media">
+          <a [routerLink]="getRelevantLink(project)">
+            <img [src]="getPrincipalMedia(project)"  alt="Media">
+          </a>
           <div class="project-description">
-            <span [routerLink]="getRelevantLink(project)">{{ project.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
+            <a [routerLink]="getRelevantLink(project)">
+              <span >{{ project.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
+            </a>
             <p class="date-text-wrapper">
               {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
               •
@@ -37,6 +43,7 @@
               {{ project.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
             </p>
           </div>
+
         </div>
       </div>
 

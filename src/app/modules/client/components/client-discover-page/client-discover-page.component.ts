@@ -16,17 +16,17 @@ export class ClientDiscoverPageComponent implements OnInit {
   // private innovations: Array<Innovation>;
   private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
   private totalInnovations: Array<Innovation> = [];
-  // private innovationCardId: string;
 
   selectedLang = '';
+  totalValue = 0;
 
   private searchInput: string;
   private innovationDetails: Array<{text: string, id: string}>; // array to store the innovation title of all the innovations for search field
   private _suggestionInnov: Array<{text: string, id: string}>; // to show suggestions to user below the search field when he types
 
-  private _config = {
-    fields: '',
-    limit: 0,
+  config = {
+    fields: 'created innovationCards',
+    limit: 20,
     offset: 0,
     search: {
       isPublic: 1
@@ -42,37 +42,25 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.TITLE');
-
-    for (let i = 0; i < 2; i++) {
-      i === 0 ? this._config.search['status'] = 'EVALUATING' : this._config.search['status'] = 'DONE';
-      this.initialize();
-    }
-
-   /* this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
-      console.log(this.currentLang);
-      if (this.userDefaultLang !== this.translateService.currentLang) {
-        this.initialize();
-      }
-    });*/
-
+    this.config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
+    this.initialize();
   }
 
   initialize(): void {
     this._innovationCards = [];
     this.innovationDetails = [];
     this.searchInput = '';
-    // this.userDefaultLang = this.translateService.currentLang;
-    this.getAllInnovations(this._config);
+    this.getAllInnovations();
   }
 
 
-  getAllInnovations(config: any) {
-    this._config = config;
-    this.innovationService.getAll(this._config).subscribe(innovations => {
+  getAllInnovations() {
+    this.innovationService.getAll(this.config).subscribe(innovations => {
       innovations.result.forEach((items) => {
         this.totalInnovations.push(items);
       });
-      this.loadInnovationCards(this.totalInnovations);
+      this.totalValue += innovations._metadata.totalCount;
+      this.loadInnovationCards();
     });
   }
 
@@ -111,8 +99,8 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   }*/
 
-  loadInnovationCards(innovations: Array<Innovation>) {
-    innovations.forEach((items) => {
+  loadInnovationCards() {
+    this.totalInnovations.forEach((items) => {
       let index = items.innovationCards.findIndex(innovationCard => innovationCard.lang === this.innovationsLang);
 
       // if we do not have the innovation in the english language then we show the innovation i.e. on index [0].
@@ -120,28 +108,17 @@ export class ClientDiscoverPageComponent implements OnInit {
         index = 0;
       }
 
-      this.getInnovationCard(items.innovationCards[index]._id);
+      this._innovationCards.push(items.innovationCards[index]);
     });
   }
 
-  getInnovationCard(id: any) {
-    this.innovationService.getInnovationCard(id).subscribe(result => {
-      this.innovationDetails.push({text: result.title, id: result._id});
-      const index = this._innovationCards.findIndex((item) => item._id === result._id);
-      if (index === -1) {
-        this._innovationCards.push(result);
-      }
-      this.sortInnovations(this._innovationCards);
-    });
-  }
-
-  sortInnovations(innovations: any) {
+  /*sortInnovations(innovations: any) {
     this._innovationCards = innovations.sort((a: any, b: any) => {
       const a1: any = new Date(a.created);
       const b1: any = new Date(b.created);
       return b1 - a1;
     });
-  }
+  }*/
 
   onSearchValue(event: any) {
     if (event.value !== '') {
