@@ -452,6 +452,20 @@ export class AdminProjectManagementComponent implements OnInit {
     };
   }
 
+  changeProjectRestitution() {
+    this._project.restitution = !this._project.restitution;
+    this.save(event, 'La restitution du projet à bien été mise à jour !');
+  }
+
+  editClientSatisfaction() {
+    this.changeSidebar('innovation-form');
+    this._more = {
+      animate_state: 'active',
+      title: 'PROJECT.DELIVERY.CLIENT_SATISFACTION',
+      type: 'satisfaction',
+    };
+  }
+
   /**
    * Sauvegarde du projet
    */
@@ -461,7 +475,7 @@ export class AdminProjectManagementComponent implements OnInit {
       .save(this._project._id, this._project)
       .first()
       .subscribe(data => {
-        this._project.__v = data.__v;
+        this._project = data;
         this.resetData();
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , notification);
       }, err => {
@@ -521,7 +535,6 @@ export class AdminProjectManagementComponent implements OnInit {
   closeSidebar(value: string) {
     this.more.animate_state = value;
     this.sidebarState.next(this.more.animate_state);
-    this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this.projectSubject.next(this._project);
   }
 
@@ -557,11 +570,3 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
 }
-
-
-/*
-seeDomain
-seeOperator
-editOwner
-
- */

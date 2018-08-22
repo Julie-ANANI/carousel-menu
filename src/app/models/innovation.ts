@@ -31,6 +31,7 @@ export interface Innovation {
   settings?: InnovationSettings;
   stats?: any;
   restitution?: boolean;
+  userSatisfaction?: {satisfaction?: 'VERY_HAPPY' | 'HAPPY' | 'NORMAL' | 'BAD' | 'VERY_BAD', message?: string};
   thanks?: boolean;
   readonly projectStatus?: number;
   readonly reviewing?: any;

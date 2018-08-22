@@ -32,6 +32,7 @@ export class InnovationFormComponent implements OnInit {
   isTargeting = false;
   isStatus = false;
   isMail = false;
+  isUserSatisfaction = false;
 
   private _type = '';
 
@@ -59,26 +60,28 @@ export class InnovationFormComponent implements OnInit {
     this._isChange = false;
     this.statusValid = true;
 
-    if (this.sidebarState) {
-      this.sidebarState.subscribe((state) => {
-        if (state === 'inactive') {
-          setTimeout (() => {
-            this._isChange = false;
-            this._email = {
-              en: {language: 'en', subject: '', content: ''},
-              fr: {language: 'fr', subject: '', content: ''}
-            };
-            this.statusValid = true;
-          }, 500);
-        }
-      })
-    }
-
     if (this.setProject) {
       this.setProject.subscribe((project) => {
         this._project = JSON.parse(JSON.stringify(project));
       })
     }
+
+    console.log(this._project.userSatisfaction);
+
+    if (this.sidebarState) {
+      this.sidebarState.subscribe((state) => {
+        if (state === 'inactive') {
+          this._isChange = false;
+          this._email = {
+            en: {language: 'en', subject: '', content: ''},
+            fr: {language: 'fr', subject: '', content: ''}
+          };
+          this.statusValid = true;
+          console.log(this._project.userSatisfaction);
+        }
+      });
+    }
+
   }
 
   reinitialiseForm() {
@@ -86,6 +89,7 @@ export class InnovationFormComponent implements OnInit {
     this.isTargeting = false;
     this.isStatus = false;
     this.isMail = false;
+    this.isUserSatisfaction = false;
   }
 
   loadTypes() {
@@ -99,6 +103,12 @@ export class InnovationFormComponent implements OnInit {
         this.isTargeting = true;
         break;
       } case('preview'): {
+        break;
+      } case('satisfaction'): {
+        if (!this._project.userSatisfaction) {
+          this._project.userSatisfaction = {};
+        }
+        this.isUserSatisfaction = true;
         break;
       } case('send-mail'): {
         this.isMail = true;
@@ -121,11 +131,15 @@ export class InnovationFormComponent implements OnInit {
 
   // TODO : Implement functionality to send mail
   onSubmit() {
+    this._isChange = false;
     switch (this.type) {
       case('pitch') : {
         this.projectChange.emit(this._project);
         break;
       } case('targeting'): {
+        this.projectChange.emit(this._project);
+        break;
+      } case('satisfaction'): {
         this.projectChange.emit(this._project);
         break;
       } case('status'): {
@@ -173,6 +187,17 @@ export class InnovationFormComponent implements OnInit {
     if (this.statusValid === false) {
       this._notificationsService.error('PROJECT_LIST.STATUS' , 'Vous ne pouvez pas revenir à ce status');
     }
+  }
+
+  onSatisfactionChange(event: any) {
+    this._project.userSatisfaction.satisfaction = event.srcElement.value;
+    this._project.userSatisfaction.message = '';
+    this._isChange = true;
+  }
+
+  onMessageChange(message: string) {
+    this._project.userSatisfaction.message = message;
+    this._isChange = true;
   }
 
   get type(): string {

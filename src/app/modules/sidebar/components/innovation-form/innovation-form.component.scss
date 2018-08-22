@@ -1,3 +1,5 @@
+@import "../../../../../style/variables";
+
 .text-right {
   margin: 20px;
 }
@@ -14,8 +16,26 @@
   }
 }
 
+.form-group {
+  margin: 30px;
+}
+
 .disabled {
   opacity: .5;
   pointer-events: none;
   cursor: not-allowed;
+}
+
+.satisfaction {
+  input[type="radio"]:checked+label {
+    .happy {
+      color: $validation-color;
+    }
+    .normal {
+      color: $progress-color;
+    }
+    .bad {
+      color: $alert-color;
+    }
+  }
 }

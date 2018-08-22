@@ -41,7 +41,17 @@ export const PROJECT = {
     'PUBLIC': 'Public project',
     'UPDATE_ANSWER_TAGS': 'Update answer tags',
     'WRITE_CONCLUSIONS': 'Write conclusions',
-    'WRITE_ENDING_MAIL': 'Write ending mail'
+    'WRITE_ENDING_MAIL': 'Write ending mail',
+    'RESTITUTION': 'Project restitution',
+    'CLIENT_SATISFACTION': 'Client satisfaction',
+    'MESSAGE_FROM_CLIENT': 'Message from the client',
+    'SATISFACTIONS': {
+      'VERY_HAPPY': 'Very satisfying',
+      'HAPPY': 'Satisfying',
+      'NORMAL': 'Neutral',
+      'BAD': 'Unsatisfying',
+      'VERY_BAD': 'Very unsatisfying',
+    }
   },
   'CARDS': 'Innovation Cards',
   'QUESTIONNAIRE': 'Questionnaire',

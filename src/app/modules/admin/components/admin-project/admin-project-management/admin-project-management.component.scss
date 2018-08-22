@@ -13,24 +13,50 @@
   }
   .project-line {
     margin: 10px;
+    min-height: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .project-campaigns {
+  .project-campaigns, .project-delivery {
     display: flex;
     flex-direction: row;
+  }
 
-    .tags {
-      padding: 20px;
-      padding-top: 0;
-      margin-left: 5%;
-      margin-right: 5%;
-      width: 40%;
-      overflow: auto;
-      height: 150px;
+  .project-campaigns .tags{
+    padding: 20px;
+    padding-top: 0;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 40%;
+    overflow: auto;
+    height: 150px;
+  }
+
+  .project-delivery .user-message {
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 100px;
+    border-radius: 5px;
+    width: 40%;
+    overflow: auto;
+
+    span, label {
+      color: white;
     }
+  }
+
+  .user-message.happy {
+    background-color: $validation-color;
+  }
+  .user-message.normal {
+    background-color: $progress-color;
+  }
+  .user-message.bad {
+    background-color: $alert-color;
   }
 
   .project-line:hover {
@@ -55,5 +81,22 @@
     opacity: .5;
     pointer-events: none;
     cursor: not-allowed;
+  }
+
+  .satisfaction {
+
+    label {
+      padding: 0;
+      margin-left: 5px;
+    }
+    .happy {
+      color: $validation-color;
+    }
+    .normal {
+      color: $progress-color;
+    }
+    .bad {
+      color: $alert-color;
+    }
   }
 }

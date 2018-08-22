@@ -496,73 +496,147 @@
     </div>
   </div>
 
+  <!-- Delivery part -->
+
   <h6>{{'PROJECT.DELIVERY.DELIVERY' | translate}}</h6>
 
-  <!-- Delivery section -->
-  <div class="project-section">
+  <div class="project-delivery">
 
-    <!-- Public project -->
-    <div class="project-line">
+    <!-- Delivery section -->
+    <div class="project-section">
 
-      <label class="form-switch" for="publicProject">
-        <input
-          type="checkbox"
-          name="publicProject"
-          id="publicProject"
-          [checked]="project.isPublic === true"
-          (change)="changeExternalDiffusion()">
-        <i class="form-icon"></i>
-        {{'PROJECT.DELIVERY.PUBLIC' | translate}}
-      </label>
+      <!-- Public project -->
+      <div class="project-line">
+
+        <label class="form-switch" for="publicProject">
+          <input
+            type="checkbox"
+            name="publicProject"
+            id="publicProject"
+            [checked]="project.isPublic === true"
+            (change)="changeExternalDiffusion()">
+          <i class="form-icon"></i>
+          {{'PROJECT.DELIVERY.PUBLIC' | translate}}
+        </label>
+      </div>
+
+      <!-- Update answer tags -->
+      <div class="project-line">
+
+        <label class="form-switch" for="updateTags">
+          <input
+            type="checkbox"
+            name="updateTags"
+            id="updateTags">
+          <i class="form-icon"></i>
+          {{'PROJECT.DELIVERY.UPDATE_ANSWER_TAGS' | translate}}
+        </label>
+        <label class="form-label">{{answerTags}} tags</label>
+        <button class="showOnHover btn btn-xs ghost-edit" (click)="goToAnswerTagsEdition()">
+          {{'COMMON.UPDATE' | translate}}
+        </button>
+      </div>
+
+      <!-- Write conclusion -->
+      <div class="project-line">
+
+        <label class="form-switch" for="writeConclusions">
+          <input
+            type="checkbox"
+            name="writeConclusions"
+            id="writeConclusions">
+          <i class="form-icon"></i>
+          {{'PROJECT.DELIVERY.WRITE_CONCLUSIONS' | translate}}
+        </label>
+        <button class="showOnHover btn btn-xs ghost-edit" (click)="goToSynthesis()">
+          {{'COMMON.MORE' | translate}}
+        </button>
+      </div>
+
+      <!-- Send Ending mail -->
+      <div class="project-line">
+
+        <label class="form-switch" for="writeEndingMail">
+          <input
+            type="checkbox"
+            name="writeEndingMail"
+            id="writeEndingMail">
+          <i class="form-icon"></i>
+          {{'PROJECT.DELIVERY.WRITE_ENDING_MAIL' | translate}}
+        </label>
+        <button class="showOnHover btn btn-xs ghost-edit" (click)="editEndingMail()">
+          {{'COMMON.EDIT' | translate}}
+        </button>
+      </div>
+
+      <!-- Restitution -->
+      <div class="project-line">
+
+        <label class="form-switch" for="projectRestitution">
+          <input
+            type="checkbox"
+            name="projectRestitution"
+            id="projectRestitution"
+            [checked]="project.restitution === true"
+            (change)="changeProjectRestitution()">
+          <i class="form-icon"></i>
+          {{'PROJECT.DELIVERY.RESTITUTION' | translate}}
+        </label>
+      </div>
+
+      <!-- Client satisfaction -->
+      <div class="project-line">
+
+        <label class="form-switch" for="editClientSatisfaction">
+          <input
+            type="checkbox"
+            name="editClientSatisfaction"
+            id="editClientSatisfaction">
+          <i class="form-icon"></i>
+          {{'PROJECT.DELIVERY.CLIENT_SATISFACTION' | translate}}
+        </label>
+        <div [ngSwitch]="project.userSatisfaction.satisfaction"
+             class="satisfaction">
+          <div *ngSwitchDefault></div>
+          <div *ngSwitchCase="'VERY_HAPPY'" class="happy">
+            <i class="far fa-2x fa-grin-hearts"></i>
+            <label>{{'PROJECT.DELIVERY.SATISFACTIONS.VERY_HAPPY' | translate}}</label>
+          </div>
+          <div *ngSwitchCase="'HAPPY'" class="happy">
+            <i class="far fa-2x fa-smile"></i>
+            <label>{{'PROJECT.DELIVERY.SATISFACTIONS.HAPPY' | translate}}</label>
+          </div>
+          <div *ngSwitchCase="'NORMAL'" class="normal">
+            <i class="far fa-2x fa-meh"></i>
+            <label>{{'PROJECT.DELIVERY.SATISFACTIONS.NORMAL' | translate}}</label>
+          </div>
+          <div *ngSwitchCase="'BAD'" class="bad">
+            <i class="far fa-2x fa-frown"></i>
+            <label>{{'PROJECT.DELIVERY.SATISFACTIONS.BAD' | translate}}</label>
+          </div>
+          <div *ngSwitchCase="'VERY_BAD'" class="bad">
+            <i class="far fa-2x fa-angry"></i>
+            <label>{{'PROJECT.DELIVERY.SATISFACTIONS.VERY_BAD' | translate}}</label>
+          </div>
+        </div>
+        <button class="showOnHover btn btn-xs ghost-edit" (click)="editClientSatisfaction()">
+          {{'COMMON.EDIT' | translate}}
+        </button>
+      </div>
+
     </div>
 
-    <!-- Update answer tags -->
-    <div class="project-line">
-
-      <label class="form-switch" for="updateTags">
-        <input
-          type="checkbox"
-          name="updateTags"
-          id="updateTags">
-        <i class="form-icon"></i>
-        {{'PROJECT.DELIVERY.UPDATE_ANSWER_TAGS' | translate}}
-      </label>
-      <label class="form-label">{{answerTags}} tags</label>
-      <button class="showOnHover btn btn-xs ghost-edit" (click)="goToAnswerTagsEdition()">
-        {{'COMMON.UPDATE' | translate}}
-      </button>
-    </div>
-
-    <!-- Write conclusion -->
-    <div class="project-line">
-
-      <label class="form-switch" for="writeConclusions">
-        <input
-          type="checkbox"
-          name="writeConclusions"
-          id="writeConclusions">
-        <i class="form-icon"></i>
-        {{'PROJECT.DELIVERY.WRITE_CONCLUSIONS' | translate}}
-      </label>
-      <button class="showOnHover btn btn-xs ghost-edit" (click)="goToSynthesis()">
-        {{'COMMON.MORE' | translate}}
-      </button>
-    </div>
-
-    <!-- Send Ending mail -->
-    <div class="project-line">
-
-      <label class="form-switch" for="writeEndingMail">
-        <input
-          type="checkbox"
-          name="writeEndingMail"
-          id="writeEndingMail">
-        <i class="form-icon"></i>
-        {{'PROJECT.DELIVERY.WRITE_ENDING_MAIL' | translate}}
-      </label>
-      <button class="showOnHover btn btn-xs ghost-edit" (click)="editEndingMail()">
-        {{'COMMON.EDIT' | translate}}
-      </button>
+    <div class="user-message"
+         *ngIf="project.userSatisfaction?.message"
+         [ngClass]="{
+        happy: project.userSatisfaction.satisfaction === 'HAPPY' || project.userSatisfaction.satisfaction === 'VERY_HAPPY',
+        normal: project.userSatisfaction.satisfaction === 'NORMAL',
+        bad: project.userSatisfaction.satisfaction === 'BAD' || project.userSatisfaction.satisfaction === 'VERY_BAD'
+        }">
+      <label class="form-label">{{'PROJECT.DELIVERY.CLIENT_SATISFACTION' | translate}}</label>
+      <span>
+          {{project.userSatisfaction?.message}}
+      </span>
     </div>
 
   </div>
