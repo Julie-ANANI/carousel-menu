@@ -44,9 +44,9 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initialize();
 
-    this._config.search['status'] = 'EVALUATING' || 'DONE';
+    this._config.search["$or"] = [{'status':'EVALUATING'}, {'status':'DONE'}];
+    this.initialize();
 
     this._translateService.onLangChange.subscribe((event: LangChangeEvent) => {
       if (this.userDefaultLang !== this._translateService.currentLang) {
