@@ -105,11 +105,11 @@
                   </div>
 
                   <!-- If column type is PROGRESS -->
-                  <progress class="progress tooltip"
-                            *ngSwitchCase="'PROGRESS'"
-                            [attr.data-tooltip]="getContentValue(key, getAttrs(column)[0]) || 0 + '%'"
-                            [value]="getContentValue(key, getAttrs(column)[0]) || 0" max="100">
-                  </progress>
+                  <app-progress-bar class="progress"
+                                    *ngSwitchCase="'PROGRESS'"
+                                    [width]="(getContentValue(key, getAttrs(column)[0]) || 0) +'%'"
+                                    [backgroundColor]="getColor(getContentValue(key, getAttrs(column)[0]) || 0)">
+                  </app-progress-bar>
 
                   <!-- If column type is CHECK -->
                   <div *ngSwitchCase="'CHECK'">

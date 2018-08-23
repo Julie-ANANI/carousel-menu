@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Subject } from 'rxjs/Subject';
 import { Innovation } from '../../../../models/innovation';
-import { User } from '../../../../models/user.model';
 import {Table} from '../../../table/models/table';
+import {Router} from '@angular/router';
+import {FrontendService} from '../../../../services/frontend/frontend.service';
 
 @Component({
   selector: 'app-admin-projects-list',
@@ -13,11 +13,9 @@ import {Table} from '../../../table/models/table';
   styleUrls: ['./admin-projects-list.component.scss']
 })
 export class AdminProjectsListComponent implements OnInit, OnDestroy {
-
-  @Input() status: string;
-  @Input() operators: Array<User>;
   @Input() operatorId: string; // Filtrer les résultats pour un utilisateur en particulier
   @Input() refreshNeededEmitter: Subject<any>;
+
   private _projects: Array<Innovation> = [];
   public selectedProjectIdToBeDeleted: any = null;
   private _tableInfos: Table = null;
@@ -26,8 +24,9 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
 
 
   constructor(private _translateService: TranslateService,
-              private _notificationService: TranslateNotificationsService,
-              private _innovationService: InnovationService) {}
+              private _innovationService: InnovationService,
+              private _frontendService: FrontendService,
+              private _router: Router) {}
 
   ngOnInit(): void {
     this.build();
@@ -58,40 +57,8 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
         created: -1
       }
     };
-    switch (this.status) {
-      case 'PREPARING': {
-        this._config.status = {$in: ['EDITING', 'SUBMITTED']};
-        if (this.operatorId && this.operatorId !== '') {
-          this._config.operator = this.operatorId;
-        }
-        else {
-          this._config.operator = {$exists: true};
-        }
-        this._config.sort = {
-          status: -1 // SUBMITTED est prioritaire
-        };
-        break;
-      }
-      case 'WITHOUT_OPERATOR': {
-        this._config.operator = null;
-        break;
-      }
-      case 'DONE': {
-        this._config.status = {$in: ['DONE', 'EVALUATING_DONE']};
-        if (this.operatorId && this.operatorId !== '') {
-          this._config.operator = this.operatorId;
-        }
-        break;
-      }
-      default: {
-        this._config.status = this.status;
-        if (this.operatorId && this.operatorId !== '') {
-          this._config.operator = this.operatorId;
-        }
-        this._config.sort = {
-          launched: 1
-        };
-      }
+    if (this.operatorId && this.operatorId !== '') {
+      this._config.operator = this.operatorId;
     }
     this.loadProjects(this._config);
   }
@@ -112,16 +79,13 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
       .first()
       .subscribe(projects => {
         this._projects = projects.result.map((project: Innovation) => {
-          if (!project.stats) {
-            project.stats = {
-              pros: 0,
-              answers: 0,
-              submittedAnswers: 0,
-              emailsOK: 0,
-              received: 0,
-              opened: 0,
-              clicked: 0
-            }
+          if (project._metadata) {
+            this._frontendService.calculateInnovationMetadataPercentages(project, 'preparation');
+            this._frontendService.calculateInnovationMetadataPercentages(project, 'campaign');
+            this._frontendService.calculateInnovationMetadataPercentages(project, 'delivery');
+            project['percentages'] = JSON.parse(JSON.stringify(this._frontendService.innovationMetadataCalculatedValues));
+          } else {
+            project['percentages'] = {preparation: 0, campaign: 0, delivery: 0};
           }
           return project;
         });
@@ -132,6 +96,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
           _title: 'COMMON.PROJECTS',
           _content: this._projects,
           _total: this._total,
+          _isShowable: true,
           _isFiltrable: true,
           _isHeadable: true,
           _columns: [
@@ -141,7 +106,11 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
                 {_name: 'apps', _url: 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-apps.svg'},
                 {_name: 'insights', _url: 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-insights.svg'},
                 {_name: 'leads', _url: 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-leads.svg'}
-              ]}]
+              ]},
+            {_attrs: ['percentages.preparation'], _name: 'Preparation', _type: 'PROGRESS'},
+            {_attrs: ['percentages.campaign'], _name: 'PROJECT.CAMPAIGN.CAMPAIGN', _type: 'PROGRESS'},
+            {_attrs: ['percentages.delivery'], _name: 'PROJECT.DELIVERY.DELIVERY', _type: 'PROGRESS'},
+          ]
         };
       });
   }
@@ -161,16 +130,12 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   }
 
   public getRelevantLink (project: Innovation) { // routerLink : /projects/:project_id
-    const link = 'projects/project/' + project._id;
-    switch (project.status) {
-      case 'DONE':
-      case 'EVALUATING':
-        return link + '/synthesis';
-      // case 'SUBMITTED':
-      //   return link;
-      default:
-        return link;
-    }
+    const link = '/admin/projects/project/' + project._id;
+    return link;
+  }
+
+  goToProject(project: Innovation) {
+    this._router.navigate([this.getRelevantLink(project)]);
   }
 
   private _getProjectIndex(projectId: string): number {
@@ -179,67 +144,6 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
         return this._projects.indexOf(project);
       }
     }
-  }
-
-  public getPrincipalMedia(project: Innovation): string {
-    if (project.principalMedia) {
-      if (project.principalMedia.type === 'PHOTO') {
-        return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + project.principalMedia.cloudinary.public_id;
-      }
-      else {
-        return project.principalMedia.video.thumbnail;
-      }
-    } else {
-      return 'https://res.cloudinary.com/umi/image/upload/app/no-image.png';
-    }
-  }
-
-  public getDelai (date: Date) {
-    const delai = 8; // On se donne 8 jours à compter de la validation du projet
-    const today: Date = new Date();
-    date = date || new Date('1970');
-    if (!date.getTime) {
-      date = new Date(date);
-    }
-    const time = delai - Math.round((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
-    return time;
-  }
-
-  public updateThanksState(event: Event, project: Innovation): void {
-    event.preventDefault();
-    this._innovationService.save(project._id, {thanks: !project.thanks})
-      .first()
-      .subscribe(data => {
-        project.thanks = data.thanks;
-      });
-  }
-
-  public updateRestitutionState(event: Event, project: Innovation): void {
-    event.preventDefault();
-    this._innovationService.save(project._id, {restitution: !project.restitution})
-      .first()
-      .subscribe(data => {
-        project.restitution = data.restitution;
-      });
-  }
-
-  public setOperator (operatorId: string, project: Innovation) {
-    if (operatorId) {
-      this._innovationService.setOperator(project._id, operatorId)
-          .first()
-          .subscribe(_ => {
-            this._notificationService.success('Opérateur affecté', 'OK');
-          });
-    }
-  }
-
-  public disableOperatorsList(): boolean {
-    return this.operators.length === 0;
-  }
-
-  public seeMore (event: Event) {
-    event.preventDefault();
-    this.loadProjects();
   }
 
   set config(value: any) { this._config = value; }

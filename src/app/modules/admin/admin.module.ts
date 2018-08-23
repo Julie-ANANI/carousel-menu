@@ -17,11 +17,9 @@ import { PipeModule } from '../../pipe/pipe.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { InputModule } from '../input/input.module';
 import { AdminComponent } from './admin.component';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminIndexComponent } from './components/admin-index/admin-index.component';
 import { AdminPatentsComponent } from './components/admin-patents/admin-patents.component';
 import { AdminUserDetailsComponent } from './components/admin-users/admin-user-detail/admin-user-details.component';
-import { AdminProjectsListComponent } from './components/admin-projects-list/admin-projects-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AdminSettingsComponent } from './components/admin-settings/admin-settings.component';
@@ -31,6 +29,7 @@ import { NotFoundPageModule } from '../base/components/not-found-page/not-found-
 import { LogoutPageModule } from '../base/components/logout-page/logout-page.module';
 import { InputListModule } from '../input/component/input-list/input-list.module';
 import { SidebarInnovationPreviewModule } from '../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
+import {AdminDashboardModule} from './components/admin-dashboard/admin-dashboard.module';
 
 @NgModule({
   imports: [
@@ -44,6 +43,7 @@ import { SidebarInnovationPreviewModule } from '../sidebar/components/innovation
     AdminProfessionalsModule,
     AdminLibrariesModule,
     AdminTagModule,
+    AdminDashboardModule,
     AdminCampaignsModule,
     AdminProjectModule,
     TranslateModule.forChild(),
@@ -63,11 +63,9 @@ import { SidebarInnovationPreviewModule } from '../sidebar/components/innovation
   ],
   declarations: [
     AdminComponent,
-    AdminDashboardComponent,
     AdminIndexComponent,
     AdminPatentsComponent,
     AdminUserDetailsComponent,
-    AdminProjectsListComponent,
     AdminSettingsComponent
   ]
 })

@@ -380,6 +380,16 @@ export class TableComponent {
     }
   }
 
+  getColor(length: number) {
+    if (length < 34 && length >= 0) {
+      return '#EA5858';
+    } else if (length >= 34 && length < 67) {
+      return '#f0ad4e';
+    } else {
+      return '#2ECC71';
+    }
+  }
+
   get selector(): string {
     return this._selector;
   }

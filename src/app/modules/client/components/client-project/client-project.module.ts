@@ -29,6 +29,7 @@ import { InputModule } from '../../../input/input.module';
 import { PaginationModule } from '../../../input/component/pagination/pagination.module';
 import { SidebarCollaboratorModule } from '../../../sidebar/components/collaborator/sidebar-collaborator.module';
 import { SidebarInnovationPreviewModule } from '../../../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
+import {ProjectsListComponent} from './components/projects-list/projects-list.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { SidebarInnovationPreviewModule } from '../../../sidebar/components/inno
   ],
   declarations: [
     ClientProjectComponent,
+    ProjectsListComponent,
     ExplorationProjectComponent,
     HistoryProjectComponent,
     NewProjectComponent,
