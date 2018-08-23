@@ -595,7 +595,7 @@
           <i class="form-icon"></i>
           {{'PROJECT.DELIVERY.CLIENT_SATISFACTION' | translate}}
         </label>
-        <div [ngSwitch]="project.userSatisfaction.satisfaction"
+        <div [ngSwitch]="project.userSatisfaction?.satisfaction"
              class="satisfaction">
           <div *ngSwitchDefault></div>
           <div *ngSwitchCase="'VERY_HAPPY'" class="happy">
