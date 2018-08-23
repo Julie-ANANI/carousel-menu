@@ -654,7 +654,7 @@
 
     <div class="project-commentaries">
       <div class="user-message"
-           *ngIf="project.clientSatisfaction?.message"
+           *ngIf="project.clientSatisfaction.message"
            [ngClass]="{
         happy: project.clientSatisfaction.satisfaction === 'HAPPY' || project.clientSatisfaction.satisfaction === 'VERY_HAPPY',
         normal: project.clientSatisfaction.satisfaction === 'NORMAL',

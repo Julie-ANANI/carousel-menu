@@ -48,35 +48,35 @@
     <input type="radio" id="verybad"
            name="satisfaction"
            value="VERY_BAD"
-           [ngModel]="project.userSatisfaction.satisfaction"
+           [ngModel]="project.clientSatisfaction.satisfaction"
            (change)="onSatisfactionChange($event)">
     <label for="verybad"><i class="bad far fa-2x fa-angry"></i></label>
 
     <input type="radio" id="bad"
            name="satisfaction"
            value="BAD"
-           [ngModel]="project.userSatisfaction.satisfaction"
+           [ngModel]="project.clientSatisfaction.satisfaction"
            (change)="onSatisfactionChange($event)">
     <label for="bad"><i class="bad far fa-2x fa-frown"></i></label>
 
     <input type="radio" id="normal"
            name="satisfaction"
            value="NORMAL"
-           [ngModel]="project.userSatisfaction.satisfaction"
+           [ngModel]="project.clientSatisfaction.satisfaction"
            (change)="onSatisfactionChange($event)">
     <label for="normal"><i class="normal far fa-2x fa-meh"></i></label>
 
     <input type="radio" id="happy"
            name="satisfaction"
            value="HAPPY"
-           [ngModel]="project.userSatisfaction.satisfaction"
+           [ngModel]="project.clientSatisfaction.satisfaction"
            (change)="onSatisfactionChange($event)">
     <label for="happy"><i class="happy far fa-2x fa-smile"></i></label>
 
     <input type="radio" id="veryhappy"
            name="satisfaction"
            value="VERY_HAPPY"
-           [ngModel]="project.userSatisfaction.satisfaction"
+           [ngModel]="project.clientSatisfaction.satisfaction"
            (change)="onSatisfactionChange($event)">
     <label for="veryhappy"><i class="happy far fa-2x fa-grin-hearts"></i></label>
 
@@ -86,7 +86,7 @@
   <div class="form-group" *ngIf="isUserSatisfaction">
     <label class="form-label" for="message">{{ 'PROJECT.DELIVERY.MESSAGE_FROM_CLIENT' | translate }}</label>
     <input
-      [ngModel]="project.userSatisfaction.message"
+      [ngModel]="project.clientSatisfaction.message"
       (ngModelChange)="onUserMessageChange($event)"
       [ngModelOptions]="{standalone: true}"
       class="form-default"
