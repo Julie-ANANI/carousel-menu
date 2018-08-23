@@ -67,7 +67,7 @@ export class InnovationFormComponent implements OnInit {
       })
     }
 
-    console.log(this._project.userSatisfaction);
+    console.log(this._project.clientSatisfaction);
 
     if (this.sidebarState) {
       this.sidebarState.subscribe((state) => {
@@ -78,7 +78,7 @@ export class InnovationFormComponent implements OnInit {
             fr: {language: 'fr', subject: '', content: ''}
           };
           this.statusValid = true;
-          console.log(this._project.userSatisfaction);
+          console.log(this._project.clientSatisfaction);
         }
       });
     }
@@ -110,8 +110,8 @@ export class InnovationFormComponent implements OnInit {
         this.isFeedback = true;
         break;
       } case('satisfaction'): {
-        if (!this._project.userSatisfaction) {
-          this._project.userSatisfaction = {};
+        if (!this._project.clientSatisfaction) {
+          this._project.clientSatisfaction = {};
         }
         this.isUserSatisfaction = true;
         break;
@@ -198,13 +198,13 @@ export class InnovationFormComponent implements OnInit {
   }
 
   onSatisfactionChange(event: any) {
-    this._project.userSatisfaction.satisfaction = event.srcElement.value;
-    this._project.userSatisfaction.message = '';
+    this._project.clientSatisfaction.satisfaction = event.srcElement.value;
+    this._project.clientSatisfaction.message = '';
     this._isChange = true;
   }
 
   onUserMessageChange(message: string) {
-    this._project.userSatisfaction.message = message;
+    this._project.clientSatisfaction.message = message;
     this._isChange = true;
   }
 

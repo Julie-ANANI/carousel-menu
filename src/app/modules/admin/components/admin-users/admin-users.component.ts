@@ -27,7 +27,7 @@ export class AdminUsersComponent implements OnInit {
   private _total = 0;
   private _config = {
     fields: 'id companyName jobTitle created domain location firstName lastName',
-    limit: 20,
+    limit: 10,
     offset: 0,
     search: {},
     sort: {
@@ -44,7 +44,7 @@ export class AdminUsersComponent implements OnInit {
     this._titleService.setTitle('USERS.TITLE');
     this._selfId = this._authService.userId;
     this._actions = ['Action1', 'Action2', 'Action3'];
-    this.loadUsers(this._config);
+    this.loadUsers();
   }
 
   get tableInfos(): Table
@@ -52,9 +52,8 @@ export class AdminUsersComponent implements OnInit {
     return this._tableInfos;
   }
 
-  loadUsers(config: any): void
+  loadUsers(): void
   {
-    this._config = config;
     this._userService.getAll(this._config).first().subscribe(users => {
         this._users = users.result;
         this._total = users._metadata.totalCount;
@@ -77,6 +76,11 @@ export class AdminUsersComponent implements OnInit {
             {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'}]
         };
       });
+  }
+
+  configChange(config: any) {
+    this._config = config;
+    this.loadUsers();
   }
 
   inviteUser(event: Event): void {
@@ -108,7 +112,7 @@ export class AdminUsersComponent implements OnInit {
         data => {
           this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
           this._more = {animate_state: 'inactive', title: this._more.title};
-          this.loadUsers(this._config);
+          this.loadUsers();
         },
         error => {
           this._notificationsService.error('ERROR.ERROR', error.message);
@@ -161,7 +165,7 @@ export class AdminUsersComponent implements OnInit {
   removeUser(userId: string) {
     this._userService.deleteUser(userId).first()
       .subscribe(foo => {
-        this.loadUsers(this._config);
+        this.loadUsers();
       });
   }
 

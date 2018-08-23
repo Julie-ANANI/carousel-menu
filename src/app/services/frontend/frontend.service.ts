@@ -10,6 +10,12 @@ export interface Values {
   totalPercentage?: number;
 }
 
+export interface InnovationMetadataValues {
+  preparation?: number;
+  campaign?: number;
+  delivery?: number;
+}
+
 @Injectable()
 export class FrontendService {
   totalFieldsPresent: number;
@@ -24,6 +30,8 @@ export class FrontendService {
   innovCardFieldsPresent: number;
 
   private _calculatedValues: Values = {};
+
+  private _innovationMetadataCalculatedValues = {};
 
   constructor() {}
 
@@ -159,6 +167,18 @@ export class FrontendService {
 
   }
 
+  /*
+    Return the completion percentage of a project section (preparation, campaign or delivery)
+   */
+  calculateInnovationMetadataPercentages(project: Innovation, level: string) {
+    const keys = Object.keys(project._metadata[level]);
+    this._innovationMetadataCalculatedValues[level] = (((keys.filter(value => project._metadata[level][value] === true).length) * 100) / keys.length);
+  }
+
+  get innovationMetadataCalculatedValues(): InnovationMetadataValues {
+    return this._innovationMetadataCalculatedValues;
+  }
+
   get calculatedPercentages(): Values {
     return this._calculatedValues;
   }
@@ -173,4 +193,4 @@ export class FrontendService {
     return percentage === Infinity ? 0 : Math.floor(percentage);
   }
 
-  }
+}

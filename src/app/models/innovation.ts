@@ -31,11 +31,11 @@ export interface Innovation {
   settings?: InnovationSettings;
   stats?: any;
   restitution?: boolean;
-  userSatisfaction?: {satisfaction?: 'VERY_HAPPY' | 'HAPPY' | 'NORMAL' | 'BAD' | 'VERY_BAD', message?: string};
+  clientSatisfaction?: {satisfaction?: 'VERY_HAPPY' | 'HAPPY' | 'NORMAL' | 'BAD' | 'VERY_BAD', message?: string};
   feedback?: string;
   thanks?: boolean;
   readonly projectStatus?: number;
-  reviewing?: any;
+  readonly reviewing?: any;
   readonly patented?: boolean;
   isPublic?: boolean;
   external_diffusion?: boolean;

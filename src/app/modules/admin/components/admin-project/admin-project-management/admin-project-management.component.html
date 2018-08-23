@@ -521,13 +521,15 @@
       </div>
 
       <!-- Update answer tags -->
-      <div class="project-line">
+      <div class="project-line" [ngClass]="{disabled: answerTags === 0}">
 
         <label class="form-switch" for="updateTags">
           <input
             type="checkbox"
             name="updateTags"
-            id="updateTags">
+            id="updateTags"
+            [checked]="getMetadata('delivery', 'answertags')"
+            (change)="setMetadata('delivery', 'answertags', $event)">
           <i class="form-icon"></i>
           {{'PROJECT.DELIVERY.UPDATE_ANSWER_TAGS' | translate}}
         </label>
@@ -544,7 +546,9 @@
           <input
             type="checkbox"
             name="writeConclusions"
-            id="writeConclusions">
+            id="writeConclusions"
+            [checked]="getMetadata('delivery', 'conclusions')"
+            (change)="setMetadata('delivery', 'conclusions', $event)">
           <i class="form-icon"></i>
           {{'PROJECT.DELIVERY.WRITE_CONCLUSIONS' | translate}}
         </label>
@@ -560,7 +564,9 @@
           <input
             type="checkbox"
             name="writeEndingMail"
-            id="writeEndingMail">
+            id="writeEndingMail"
+            [checked]="getMetadata('delivery', 'endingmail')"
+            (change)="setMetadata('delivery', 'endingmail', $event)">
           <i class="form-icon"></i>
           {{'PROJECT.DELIVERY.WRITE_ENDING_MAIL' | translate}}
         </label>
@@ -577,8 +583,8 @@
             type="checkbox"
             name="projectRestitution"
             id="projectRestitution"
-            [checked]="project.restitution === true"
-            (change)="changeProjectRestitution()">
+            [checked]="getMetadata('delivery', 'restitution')"
+            (change)="setMetadata('delivery', 'restitution', $event)">
           <i class="form-icon"></i>
           {{'PROJECT.DELIVERY.RESTITUTION' | translate}}
         </label>
@@ -591,11 +597,13 @@
           <input
             type="checkbox"
             name="editClientSatisfaction"
-            id="editClientSatisfaction">
+            id="editClientSatisfaction"
+            [checked]="getMetadata('delivery', 'clientsatisfaction')"
+            (change)="setMetadata('delivery', 'clientsatisfaction', $event)">
           <i class="form-icon"></i>
           {{'PROJECT.DELIVERY.CLIENT_SATISFACTION' | translate}}
         </label>
-        <div [ngSwitch]="project.userSatisfaction.satisfaction"
+        <div [ngSwitch]="project.clientSatisfaction?.satisfaction"
              class="satisfaction">
           <div *ngSwitchDefault></div>
           <div *ngSwitchCase="'VERY_HAPPY'" class="happy">
@@ -624,14 +632,16 @@
         </button>
       </div>
 
-      <!-- Operator review -->
+      <!-- Operator feedback -->
       <div class="project-line">
 
         <label class="form-switch" for="review">
           <input
             type="checkbox"
             name="review"
-            id="review">
+            id="review"
+            [checked]="getMetadata('delivery', 'feedback')"
+            (change)="setMetadata('delivery', 'feedback', $event)">
           <i class="form-icon"></i>
           {{'PROJECT.DELIVERY.OPERATOR_FEEDBACK' | translate}}
         </label>
@@ -644,15 +654,15 @@
 
     <div class="project-commentaries">
       <div class="user-message"
-           *ngIf="project.userSatisfaction?.message"
+           *ngIf="project.clientSatisfaction?.message"
            [ngClass]="{
-        happy: project.userSatisfaction.satisfaction === 'HAPPY' || project.userSatisfaction.satisfaction === 'VERY_HAPPY',
-        normal: project.userSatisfaction.satisfaction === 'NORMAL',
-        bad: project.userSatisfaction.satisfaction === 'BAD' || project.userSatisfaction.satisfaction === 'VERY_BAD'
+        happy: project.clientSatisfaction.satisfaction === 'HAPPY' || project.clientSatisfaction.satisfaction === 'VERY_HAPPY',
+        normal: project.clientSatisfaction.satisfaction === 'NORMAL',
+        bad: project.clientSatisfaction.satisfaction === 'BAD' || project.clientSatisfaction.satisfaction === 'VERY_BAD'
         }">
         <label class="form-label">{{'PROJECT.DELIVERY.CLIENT_SATISFACTION' | translate}}</label>
         <span>
-          {{project.userSatisfaction?.message}}
+          {{project.clientSatisfaction?.message}}
       </span>
       </div>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {InnovationService} from '../../../../../services/innovation/innovation.service';
 import {TranslateService} from '@ngx-translate/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -20,6 +20,7 @@ import {Campaign} from '../../../../../models/campaign';
 import {CampaignService} from '../../../../../services/campaign/campaign.service';
 import {EmailScenario} from '../../../../../models/email-scenario';
 import {TagsService} from '../../../../../services/tags/tags.service';
+import {FrontendService} from '../../../../../services/frontend/frontend.service';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -86,7 +87,6 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   };
 
-
   public formData: FormGroup = this._formBuilder.group({
     domainen: ['', [Validators.required]],
     domainfr: ['', [Validators.required]],
@@ -106,7 +106,8 @@ export class AdminProjectManagementComponent implements OnInit {
               private _dashboardService: DashboardService,
               private _campaignService: CampaignService,
               private _translateService: TranslateService,
-              private _formBuilder: FormBuilder) {}
+              private _formBuilder: FormBuilder,
+              private _frontendService: FrontendService) {}
 
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
@@ -156,6 +157,7 @@ export class AdminProjectManagementComponent implements OnInit {
   public setMetadata(level: string, name: string, event: any) {
     if (this._project._metadata && this._project._metadata[level][name] !== undefined) {
       this._project._metadata[level][name] = event.currentTarget.checked;
+      this._frontendService.calculateInnovationMetadataPercentages(this._project, level);
       this.save(event, 'Successfully saved.');
     }
   }
@@ -450,11 +452,6 @@ export class AdminProjectManagementComponent implements OnInit {
       type: 'send-mail',
       size: '650px',
     };
-  }
-
-  changeProjectRestitution() {
-    this._project.restitution = !this._project.restitution;
-    this.save(event, 'La restitution du projet à bien été mise à jour !');
   }
 
   editClientSatisfaction() {

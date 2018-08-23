@@ -13,7 +13,7 @@
 
         <app-shared-table [data]="tableInfos"
                           [config]="config"
-                          (configChange)="loadUsers($event)"
+                          (configChange)="configChange($event)"
                           (editRow)="editUser($event)"
                           (removeRows)="deleteUsersModal($event)"
                           (performAction)="performActions($event)">
