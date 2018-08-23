@@ -40,7 +40,7 @@ export const COMMON = {
   'I_FINISHED': 'J\'ai terminé',
   'SYNTHESIS': 'Synthèse',
   'SEARCHINNOVATION': 'Recherche innovation',
-  'LOADING': 'Chargement',
+  'LOADING': 'Chargement...',
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',

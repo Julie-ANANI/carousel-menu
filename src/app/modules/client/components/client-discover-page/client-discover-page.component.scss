@@ -21,14 +21,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin-bottom: -3.15rem;
     margin-right: -1rem;
 
     .innov-wrapper {
       display: inline-flex;
       background: white;
       border: 1px solid $border-color;
-      min-height: 15rem;
       margin-bottom: 3.15rem;
       margin-right: 1rem;
       border-radius: .18rem;
@@ -65,7 +63,7 @@
 
           p {
             color: #878787;
-            font-size: .875rem;
+            font-size: .9375rem;
           }
 
         }
@@ -85,7 +83,6 @@
   }
 
   .pagination-wrapper {
-    padding-top: 3.15rem;
     display: flex;
     justify-content: flex-end;
   }

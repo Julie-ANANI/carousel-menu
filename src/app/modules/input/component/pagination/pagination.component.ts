@@ -8,7 +8,10 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 
 export class PaginationComponent implements OnInit, OnChanges {
 
-  @Input() config: any;
+  @Input() set config(value: any) {
+    this._config = JSON.parse(JSON.stringify(value));
+  };
+
   @Input() perPageValues: Array<number>;
   @Input() total: number;
   @Input() propertyName: string;
@@ -16,6 +19,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   @Output() configChange = new EventEmitter <any>();
 
   private _numPages: number;
+  private _config: any = {};
   private _initialized = false;
 
   constructor() {
@@ -30,7 +34,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     if (!this._initialized && this.propertyName) {
       // Dès l'initialisation, on regarde si l'utilisateur a déjà des préférences concernant la pagination,
       // Et on met à jour si c'est le cas
-      this.config.limit = localStorage.getItem(`${this.propertyName}-limit`) || this.config.limit;
+      this._config.limit = localStorage.getItem(`${this.propertyName}-limit`) || this._config.limit;
       // this.config.offset = sessionStorage.getItem(`${this.propertyName}-offset`) || this.config.offset;
     }
     this._numPages = Math.ceil(this.total / this.perPage);
@@ -42,15 +46,15 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   get currentPage(): number {
-    return (this.config.offset / this.config.limit) + 1;
+    return (this._config.offset / this._config.limit) + 1;
   }
 
   private _update() {
     if (this.propertyName) {
-      localStorage.setItem(`${this.propertyName}-limit`, this.config.limit);
+      localStorage.setItem(`${this.propertyName}-limit`, this._config.limit);
       // sessionStorage.setItem(`${this.propertyName}-offset`, this.config.offset);
     }
-    this.configChange.emit(this.config);
+    this.configChange.emit(this._config);
   }
 
   goToPage(event: any): void {
@@ -60,19 +64,26 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   set currentPage(page: number) {
-    this.config.offset = this.config.limit * (page - 1);
+    /*if ( (this._config.offset || 0) !== this._config.limit * (page - 1)) {
+      this._config.offset = this._config.limit * (page - 1);
+      this._update();
+    }*/
+    this._config.offset = this._config.limit * (page - 1);
     this._update();
   }
 
   get perPage(): number {
-    return this.config.limit;
+    return this._config.limit;
   }
 
   set perPage(number: number) {
-    this.config.limit = number;
+    this._config.limit = number;
     this._update();
     this._numPages = Math.ceil(this.total / this.perPage);
   }
 
+  get config(): any {
+    return this._config;
+  }
 
 }

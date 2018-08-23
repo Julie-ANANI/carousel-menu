@@ -32,11 +32,12 @@ export class ProjectsListComponent implements OnInit {
 
   ngOnInit(): void {
     this._titleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
-    this.loadProjects(this._config);
+    // this.loadProjects(this._config);
+    this.loadProjects();
   }
 
-  loadProjects(config: any): void {
-    this._config = config;
+  loadProjects(): void {
+    // this._config = config;
     this._userService.getMyInnovations(this._config)
       .first()
       .subscribe(projects => {

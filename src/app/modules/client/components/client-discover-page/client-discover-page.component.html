@@ -35,8 +35,9 @@
     <div class="pagination-wrapper">
       <app-pagination
         [total]="totalValue"
-        [propertyName]="'innovations'"
-        [config]="config">
+        [propertyName]="'app-discover'"
+        [config]="config"
+        (configChange)="configChange($event)">
       </app-pagination>
     </div>
 

@@ -4,6 +4,7 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { TranslateService} from '@ngx-translate/core';
 import { Innovation } from '../../../../models/innovation';
 import { InnovCard } from '../../../../models/innov-card';
+import { FrontendService } from '../../../../services/frontend/frontend.service';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -15,7 +16,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   // private innovations: Array<Innovation>;
   private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
-  private totalInnovations: Array<Innovation> = [];
+  private totalInnovations: Array<Innovation>;
 
   selectedLang = '';
   totalValue = 0;
@@ -24,7 +25,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   private innovationDetails: Array<{text: string, id: string}>; // array to store the innovation title of all the innovations for search field
   private _suggestionInnov: Array<{text: string, id: string}>; // to show suggestions to user below the search field when he types
 
-  config = {
+  private _config = {
     fields: 'created innovationCards',
     limit: 20,
     offset: 0,
@@ -38,30 +39,42 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private frontendService: FrontendService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.TITLE');
-    this.config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
+    this._config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
     this.initialize();
   }
 
-  initialize(): void {
-    this._innovationCards = [];
+  initialize() {
     this.innovationDetails = [];
+    this.totalInnovations = [];
     this.searchInput = '';
     this.getAllInnovations();
   }
 
 
   getAllInnovations() {
-    this.innovationService.getAll(this.config).subscribe(innovations => {
-      innovations.result.forEach((items) => {
-        this.totalInnovations.push(items);
-      });
-      this.totalValue += innovations._metadata.totalCount;
+    console.log(this._config);
+    this.innovationService.getAll(this._config).first().subscribe(innovations => {
+      this.totalInnovations = innovations.result;
+      this.totalValue = innovations._metadata.totalCount;
+      console.log(this._config);
       this.loadInnovationCards();
     });
+  }
+
+  configChange(config: any) {
+    const _configChange = this.frontendService.compareObject(this._config, config);
+
+    if (_configChange) {
+      this._config = config;
+      this.getAllInnovations();
+      window.scroll(0, 0);
+    }
+
   }
 
 /*  loadAllInnovations(config: any): void  {
@@ -100,6 +113,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   }*/
 
   loadInnovationCards() {
+    this._innovationCards = [];
     this.totalInnovations.forEach((items) => {
       let index = items.innovationCards.findIndex(innovationCard => innovationCard.lang === this.innovationsLang);
 
@@ -109,6 +123,7 @@ export class ClientDiscoverPageComponent implements OnInit {
       }
 
       this._innovationCards.push(items.innovationCards[index]);
+
     });
   }
 
@@ -172,6 +187,14 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   set innovationCards(value: InnovCard[]) {
     this._innovationCards = value;
+  }
+
+  get config(): { fields: string; limit: number; offset: number; search: { isPublic: number }; sort: { created: number } } {
+    return this._config;
+  }
+
+  set config(value: { fields: string; limit: number; offset: number; search: { isPublic: number }; sort: { created: number } }) {
+    this._config = value;
   }
 
 }
