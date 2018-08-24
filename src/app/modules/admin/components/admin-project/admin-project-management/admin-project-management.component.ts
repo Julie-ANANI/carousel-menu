@@ -295,7 +295,7 @@ export class AdminProjectManagementComponent implements OnInit {
   changeProject(value: Innovation) {
     this._project = value;
     this.save(event, 'Le projet a bien été mise à jour !');
-    this._more = {animate_state: 'inactive', title: this._more.title};
+    window.location.reload();
   }
 
   editBlacklist() {

@@ -5,6 +5,7 @@ import {InnovationSettings} from '../../../../models/innov-settings';
 import {TemplatesService} from '../../../../services/templates/templates.service';
 import {EmailSignature} from '../../../../models/email-signature';
 import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {FrontendService} from '../../../../services/frontend/frontend.service';
 
 @Component({
   selector: 'app-innovation-form',
@@ -49,7 +50,9 @@ export class InnovationFormComponent implements OnInit {
   statusValid = true;
   private _signatures: Array<EmailSignature> = [];
 
-  constructor(private _templatesService: TemplatesService, private _notificationsService: TranslateNotificationsService) { }
+  constructor(private _templatesService: TemplatesService,
+              private _notificationsService: TranslateNotificationsService,
+              private frontendService: FrontendService) { }
 
   ngOnInit() {
 
@@ -139,9 +142,11 @@ export class InnovationFormComponent implements OnInit {
     this._isChange = false;
     switch (this.type) {
       case('pitch') : {
+        this.calculatePercentage();
         this.projectChange.emit(this._project);
         break;
       } case('targeting'): {
+        this.calculatePercentage();
         this.projectChange.emit(this._project);
         break;
       } case('satisfaction'): {
@@ -194,6 +199,21 @@ export class InnovationFormComponent implements OnInit {
 
     if (this.statusValid === false) {
       this._notificationsService.error('PROJECT_LIST.STATUS' , 'Vous ne pouvez pas revenir à ce status');
+    }
+  }
+
+  calculatePercentage() {
+    this.frontendService.completionCalculation(this.project);
+
+    const percentages = this.frontendService.calculatedPercentages;
+
+    if (percentages) {
+      this.project.settings.completion = percentages.settingPercentage;
+      this.project.completion = percentages.totalPercentage;
+      percentages.innovationCardsPercentage.forEach((item: any) => {
+        const index = this.project.innovationCards.findIndex(card => card.lang === item.lang);
+        this.project.innovationCards[index].completion = item.percentage;
+      });
     }
   }
 
