@@ -131,27 +131,27 @@ export class FrontendService {
 
     for (let i = 0; i < value.innovationCards.length; i++) {
 
-      if (value.innovationCards[i].title.length) {
+      if (value.innovationCards[i].title) {
         this.totalFieldsPresent++;
         this.innovCardFieldsPresent++;
       }
 
-      if (value.innovationCards[i].summary.length) {
+      if (value.innovationCards[i].summary) {
         this.totalFieldsPresent++;
         this.innovCardFieldsPresent++;
       }
 
-      if (value.innovationCards[i].problem.length) {
+      if (value.innovationCards[i].problem) {
         this.totalFieldsPresent++;
         this.innovCardFieldsPresent++;
       }
 
-      if (value.innovationCards[i].solution.length) {
+      if (value.innovationCards[i].solution) {
         this.totalFieldsPresent++;
         this.innovCardFieldsPresent++;
       }
 
-      if (value.innovationCards[i].advantages.length) {
+      if (value.innovationCards[i].advantages) {
         this.totalFieldsPresent++;
         this.innovCardFieldsPresent++;
       }

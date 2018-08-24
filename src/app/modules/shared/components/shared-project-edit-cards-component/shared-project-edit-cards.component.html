@@ -107,8 +107,8 @@
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
                   -->
                   <div class="charRemaining">
-                  <span [ngStyle]="{'color': getColor(innovationCards.summary.length | characterCountdown:500)}">
-                    {{ innovationCards.summary.length | characterCountdown:500 }}</span>
+                  <span [ngStyle]="{'color': getColor(innovationCards.summary?.length | characterCountdown:500)}">
+                    {{ innovationCards.summary?.length | characterCountdown:500 }}</span>
                   </div>
                   <div class="form-error" *ngIf="showSummaryError">
                     <span>{{ 'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SUMMARY.ERROR' | translate }}</span>
@@ -148,8 +148,8 @@
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.PROBLEM.PLACEHOLDER' | translate"
                   -->
                   <div class="charRemaining">
-                  <span [ngStyle]="{'color': getColor(innovationCards.problem.length | characterCountdown:1000)}">
-                    {{ innovationCards.problem.length | characterCountdown:1000 }}
+                  <span [ngStyle]="{'color': getColor(innovationCards.problem?.length | characterCountdown:1000)}">
+                    {{ innovationCards.problem?.length | characterCountdown:1000 }}
                   </span>
                   </div>
                   <div class="form-error" *ngIf="showProblemError">
@@ -190,8 +190,8 @@
                     [placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.SOLUTION.PLACEHOLDER' | translate"
                    -->
                   <div class="charRemaining">
-                  <span [ngStyle]="{'color': getColor(innovationCards.solution.length | characterCountdown:1000)}">
-                    {{ innovationCards.solution.length | characterCountdown:1000 }}
+                  <span [ngStyle]="{'color': getColor(innovationCards.solution?.length | characterCountdown:1000)}">
+                    {{ innovationCards.solution?.length | characterCountdown:1000 }}
                   </span>
                   </div>
                   <div class="form-error" *ngIf="showSolutionError">

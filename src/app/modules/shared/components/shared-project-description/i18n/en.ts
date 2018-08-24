@@ -2,6 +2,7 @@ export const PROJECT = {
   'PATENTED': 'Patent protected',
   'CONTACT_PROJECT_MANAGER': 'Contact the project manager',
   'SOLUTION': 'Solution',
+  'PROJECT': 'Project',
   'ISSUE': 'Issue',
   'MARKET_BENEFITS': 'Market benefits',
   'GALLERY': 'Gallery',
@@ -25,6 +26,7 @@ export const PROJECT = {
   },
   'CAMPAIGN': {
     'CAMPAIGN': 'Campaign',
+    'INSIGHTS': 'Insights',
     'PITCH_EDIT_DESCRIPTION': 'Please complete the edition of project description',
     'EDIT_ANSWER_TAGS': 'Edit answer tags',
     'CREATE_CAMPAIGN': 'Please create a campaign to pursue the project ',

@@ -29,7 +29,6 @@ import {FrontendService} from '../../../../../services/frontend/frontend.service
 })
 export class AdminProjectManagementComponent implements OnInit {
 
-
   private _project: Innovation;
   private _dirty = false;
   private _domain = {fr: '', en: ''};
@@ -72,6 +71,9 @@ export class AdminProjectManagementComponent implements OnInit {
 
   // Campaign choice
   currentCampaign: Campaign = null;
+
+  // Click percentage
+  private _clickPercentage = 0.0;
 
   // Campaign tags
   isTagsSidebar = false;
@@ -145,6 +147,7 @@ export class AdminProjectManagementComponent implements OnInit {
       .subscribe(campaigns => {
           this.currentCampaign = this.getBestCampaign(campaigns.result);
           if (this.currentCampaign !== null) {
+            this.calculateClickPercentage();
             this.updateStats(event, this.currentCampaign);
             this.generateAvailableScenario();
             this.generateModifiedScenarios();
@@ -361,6 +364,11 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
+  calculateClickPercentage() {
+    this._clickPercentage = this._frontendService.analyticPercentage(this.currentCampaign.stats.campaign.nbProfessionals,
+      this.currentCampaign.stats.campaign.nbResp);
+  }
+
   editProjectTags() {
     this.changeSidebar('tags-form');
     this._more = {
@@ -573,6 +581,10 @@ export class AdminProjectManagementComponent implements OnInit {
 
   get editInstanceDomain(): boolean {
     return this._editInstanceDomain;
+  }
+
+  get clickPercentage(): number {
+    return this._clickPercentage;
   }
 
 }

@@ -16,21 +16,4 @@ export class InnovCard extends Model {
   advantages?: Array<{text: string}>;
   readonly principal?: boolean;
   completion?: number;
-
-  constructor(innov?: any) {
-    super(innov);
-  }
-
-  get completionPercentage(): number {
-    let rating = 0;
-    const totalRating = 5;
-
-    if (this.title !== '') { rating++; }
-    if (this.summary !== '') { rating++; }
-    if (this.problem !== '') { rating++; }
-    if (this.solution !== '') { rating++; }
-    if (this.advantages.length > 0) { rating++; }
-
-    return (rating * 100) / totalRating;
-  }
 }
