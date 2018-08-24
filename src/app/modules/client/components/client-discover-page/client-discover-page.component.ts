@@ -5,6 +5,7 @@ import { TranslateService} from '@ngx-translate/core';
 import { Innovation } from '../../../../models/innovation';
 import { InnovCard } from '../../../../models/innov-card';
 import { FrontendService } from '../../../../services/frontend/frontend.service';
+import {ConfigTemplate} from '../../../../models/config';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -37,6 +38,8 @@ export class ClientDiscoverPageComponent implements OnInit {
     }
   };
 
+  configValue: ConfigTemplate = {};
+
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
               private translateService: TranslateService,
@@ -45,6 +48,10 @@ export class ClientDiscoverPageComponent implements OnInit {
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.TITLE');
     this._config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
+    this.configValue = {
+      limit: 124,
+      offset: this._config.offset
+    };
     this.initialize();
   }
 
@@ -57,11 +64,9 @@ export class ClientDiscoverPageComponent implements OnInit {
 
 
   getAllInnovations() {
-    console.log(this._config);
     this.innovationService.getAll(this._config).first().subscribe(innovations => {
       this.totalInnovations = innovations.result;
       this.totalValue = innovations._metadata.totalCount;
-      console.log(this._config);
       this.loadInnovationCards();
     });
   }

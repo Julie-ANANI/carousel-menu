@@ -4,6 +4,7 @@ import { TranslateTitleService } from '../../../../../../services/title/title.se
 import { UserService } from '../../../../../../services/user/user.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
+import {FrontendService} from '../../../../../../services/frontend/frontend.service';
 
 @Component({
   selector: 'app-projects-list',
@@ -25,20 +26,19 @@ export class ProjectsListComponent implements OnInit {
     }
   };
 
-  constructor(private _translateService: TranslateService,
-              private _userService: UserService,
-              private _innovationService: InnovationService,
-              private _titleService: TranslateTitleService) {}
+  constructor(private translateService: TranslateService,
+              private userService: UserService,
+              private innovationService: InnovationService,
+              private translateTitleService: TranslateTitleService,
+              private frontendService: FrontendService) {}
 
   ngOnInit(): void {
-    this._titleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
-    // this.loadProjects(this._config);
+    this.translateTitleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
     this.loadProjects();
   }
 
   loadProjects(): void {
-    // this._config = config;
-    this._userService.getMyInnovations(this._config)
+    this.userService.getMyInnovations(this._config)
       .first()
       .subscribe(projects => {
         this._projects = projects.result;
@@ -46,12 +46,23 @@ export class ProjectsListComponent implements OnInit {
       });
   }
 
+  configChange(config: any) {
+    const _configChange = this.frontendService.compareObject(this._config, config);
+
+    if (_configChange) {
+      this._config = config;
+      this.loadProjects();
+      window.scroll(0, 0);
+    }
+
+  }
+
   /**
    * Suppression et mise à jour de la vue
    */
   public removeProject(event: Event, projectId: string): void {
     event.preventDefault();
-    this._innovationService
+    this.innovationService
       .remove(projectId)
       .first()
       .subscribe(_ => {
@@ -109,6 +120,6 @@ export class ProjectsListComponent implements OnInit {
   }
 
   get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 }
