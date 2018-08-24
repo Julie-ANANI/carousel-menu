@@ -1,4 +1,4 @@
 export interface ConfigTemplate {
-  limit?: number;
-  offset?: number;
+  limit?: any;
+  offset?: any;
 }

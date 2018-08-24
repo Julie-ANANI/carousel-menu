@@ -31,6 +31,8 @@
     <option *ngFor="let perPage of perPageValues" [value]="perPage">{{ perPage }}</option>
   </select>
 
+  {{ perPage }}
+
   <div *ngIf="numPages >= 2" class="page-number-wrapper">
     <a *ngIf="currentPage > 2" (click)="(currentPage = 1) && $event.preventDefault()" href="#">
       <i class="fas fa-angle-double-left"></i>
@@ -38,7 +40,7 @@
     <a *ngIf="currentPage > 1" (click)="(currentPage > 1 ? currentPage = currentPage - 1 : currentPage = 1) && $event.preventDefault()" href="#">
       <i class="fas fa-angle-left"></i>
     </a>
-    <span class="text-wrapper">{{ (perPage * currentPage) - perPage+1 }} - {{ (perPage * currentPage <= total) ? perPage * currentPage : total }} {{ 'COMMON.OF' | translate }} {{ total }}</span>
+    <span class="text-wrapper">{{ (perPage * currentPage) - perPage + 1 }} - {{ (perPage * currentPage <= total) ? perPage * currentPage : total }} {{ 'COMMON.OF' | translate }} {{ total }}</span>
     <a *ngIf="currentPage < numPages" (click)="(currentPage = currentPage + 1) && $event.preventDefault()" href="#">
       <i class="fas fa-angle-right"></i>
     </a>

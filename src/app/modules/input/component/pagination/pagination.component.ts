@@ -18,7 +18,7 @@ export class PaginationComponent implements OnInit {
   @Input() propertyName: string;
 
   @Input() set configValue(value: ConfigTemplate) {
-    if (this.checkConfig(value.limit, value.offset)) {
+    if (this.checkConfig(value.limit)) {
       this.initialConfigValues.limit = JSON.parse(JSON.stringify(value.limit));
       this.initialConfigValues.offset = JSON.parse(JSON.stringify(value.offset));
     }
@@ -28,35 +28,30 @@ export class PaginationComponent implements OnInit {
 
   private _numPages: number;
   private _config: any = {};
-  private _initialized = false;
-  initialConfigValues: ConfigTemplate = {};
+  // private _initialized = false;
+  initialConfigValues: ConfigTemplate = {
+    limit: 10,
+    offset: 0
+  };
 
   constructor() {
     this.perPageValues = this.perPageValues || [10, 20, 50, 100, 1000];
   }
 
   ngOnInit() {
-    this._initialized = true;
+    // this._initialized = true;
     this.initialize();
   }
 
   initialize() {
-    const localLimit = localStorage.getItem(`${this.propertyName}-limit`);
+    const localLimit = parseInt(localStorage.getItem(`${this.propertyName}-limit`) || '0', 10);
 
-    console.log(this.initialConfigValues);
-
-    if (this.propertyName && localLimit) {
-      if (this.checkConfig(localLimit, this.initialConfigValues.offset)) {
-        this.initialConfigValues.limit = parseInt(localLimit, 10);
-      }
-    } else {
-      this.initialConfigValues.limit = 10;
-      this.initialConfigValues.offset = 0;
+    if (this.propertyName && localLimit && this.checkConfig(localLimit)) {
+      this.initialConfigValues.limit = localLimit;
     }
 
-    console.log(this.initialConfigValues);
     this._numPages = Math.ceil(this.total / this.perPage);
-   // this._update();
+    this._update();
 
   }
 
@@ -72,8 +67,21 @@ export class PaginationComponent implements OnInit {
 
   }*/
 
-  checkConfig(value1: any, value2: any): boolean {
+  checkConfig(value1: any): boolean {
     const limit = parseInt(value1, 10);
+
+    if (limit >= 10 && limit <= 1000) {
+      const index = this.perPageValues.findIndex((item) => item === limit);
+      if (index === -1) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    return false;
+
+    /*const limit = parseInt(value1, 10);
 
     if (limit >= 10 && limit <= 1000) {
       this.perPageValues.forEach((items) => {
@@ -84,7 +92,6 @@ export class PaginationComponent implements OnInit {
           return true;
         } else {
           this.initialConfigValues.limit = limit;
-          this.initialConfigValues.offset = value2;
           return true;
         }
       });
@@ -92,7 +99,7 @@ export class PaginationComponent implements OnInit {
 
     this.initialConfigValues.limit = 10;
     this.initialConfigValues.offset = 0;
-    return true;
+    return true;*/
   }
 
   get numPages(): number {
@@ -100,37 +107,40 @@ export class PaginationComponent implements OnInit {
   }
 
   get currentPage(): number {
-    return (this._config.offset / this._config.limit) + 1;
+    // return (this._config.offset / this._config.limit) + 1;
+    return (this.initialConfigValues.offset / this.initialConfigValues.limit) + 1;
   }
 
   private _update() {
-    if (this.propertyName) {
+    /*if (this.propertyName) {
       localStorage.setItem(`${this.propertyName}-limit`, JSON.stringify(this.initialConfigValues.limit));
       // sessionStorage.setItem(`${this.propertyName}-offset`, this.config.offset);
-    }
+    }*/
     console.log(this.initialConfigValues);
 
     // this.configChange.emit(this._config);
   }
 
   goToPage(event: any): void {
-    const page = parseInt((<HTMLInputElement> event.srcElement).value, 10);
+    const page = parseInt((<HTMLInputElement> event.srcElement).value);
     this.config.offset = this.config.limit * (page - 1);
     this._update();
   }
 
   set currentPage(page: number) {
-    this._config.offset = this._config.limit * (page - 1);
-    console.log(this._config.offset);
+    // this._config.offset = this._config.limit * (page - 1);
+    this.initialConfigValues.offset = this.initialConfigValues.limit * (page - 1);
     this._update();
   }
 
   get perPage(): number {
-    return this._config.limit;
+    // return this._config.limit;
+    return this.initialConfigValues.limit;
   }
 
   set perPage(number: number) {
-    this._config.limit = number;
+    // this._config.limit = number;
+    this.initialConfigValues.limit = number;
     this._update();
     this._numPages = Math.ceil(this.total / this.perPage);
   }

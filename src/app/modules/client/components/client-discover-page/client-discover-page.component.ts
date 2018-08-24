@@ -49,7 +49,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     this.translateTitleService.setTitle('DISCOVER.TITLE');
     this._config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
     this.configValue = {
-      limit: 124,
+      limit: this._config.limit,
       offset: this._config.offset
     };
     this.initialize();
