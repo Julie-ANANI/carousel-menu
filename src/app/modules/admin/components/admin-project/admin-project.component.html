@@ -8,13 +8,18 @@
         <div class="project-progress">
           <label class="form-label">Preparation</label>
           <app-progress-bar class="progress"
-                            [width]="calculatePercentage('preparation')+'%'"
-                            [backgroundColor]="getColor(calculatePercentage('preparation'))">
+                            [width]="getPercentage('preparation') +'%'"
+                            [backgroundColor]="getColor(getPercentage('preparation'))">
           </app-progress-bar>
-          <label class="form-label">Campaign</label>
+          <label class="form-label">{{'PROJECT.CAMPAIGN.CAMPAIGN' | translate}}</label>
           <app-progress-bar class="progress"
-                            [width]="calculatePercentage('campaign')+'%'"
-                            [backgroundColor]="getColor(calculatePercentage('campaign'))">
+                            [width]="getPercentage('campaign') +'%'"
+                            [backgroundColor]="getColor(getPercentage('campaign'))">
+          </app-progress-bar>
+          <label class="form-label">{{'PROJECT.DELIVERY.DELIVERY' | translate}}</label>
+          <app-progress-bar class="progress"
+                            [width]="getPercentage('delivery') +'%'"
+                            [backgroundColor]="getColor(getPercentage('delivery'))">
           </app-progress-bar>
         </div>
         <a [href]="clientSideUrl" target="_blank"><button class="btn ghost-primary">View client side</button></a>
@@ -22,7 +27,7 @@
 
 
       <ul class="tabs">
-        <li *ngFor="let tab of authorizedTabs">
+        <li *ngFor="let tab of authorizedTabs" (out)="getEvent($event)">
           <a routerLinkActive="active" [routerLink]="baseUrl + tab" [routerLinkActiveOptions]="{ exact: true }">
             {{ 'PROJECT.' + tab.toUpperCase() | translate }}
           </a>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {InnovationService} from '../../../../../services/innovation/innovation.service';
 import {TranslateService} from '@ngx-translate/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -20,6 +20,7 @@ import {Campaign} from '../../../../../models/campaign';
 import {CampaignService} from '../../../../../services/campaign/campaign.service';
 import {EmailScenario} from '../../../../../models/email-scenario';
 import {TagsService} from '../../../../../services/tags/tags.service';
+import {FrontendService} from '../../../../../services/frontend/frontend.service';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -27,7 +28,6 @@ import {TagsService} from '../../../../../services/tags/tags.service';
   styleUrls: ['./admin-project-management.component.scss']
 })
 export class AdminProjectManagementComponent implements OnInit {
-
 
   private _project: Innovation;
   private _dirty = false;
@@ -72,6 +72,9 @@ export class AdminProjectManagementComponent implements OnInit {
   // Campaign choice
   currentCampaign: Campaign = null;
 
+  // Click percentage
+  private _clickPercentage = 0.0;
+
   // Campaign tags
   isTagsSidebar = false;
 
@@ -85,7 +88,6 @@ export class AdminProjectManagementComponent implements OnInit {
       created: -1
     }
   };
-
 
   public formData: FormGroup = this._formBuilder.group({
     domainen: ['', [Validators.required]],
@@ -106,7 +108,8 @@ export class AdminProjectManagementComponent implements OnInit {
               private _dashboardService: DashboardService,
               private _campaignService: CampaignService,
               private _translateService: TranslateService,
-              private _formBuilder: FormBuilder) {}
+              private _formBuilder: FormBuilder,
+              private _frontendService: FrontendService) {}
 
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
@@ -144,6 +147,7 @@ export class AdminProjectManagementComponent implements OnInit {
       .subscribe(campaigns => {
           this.currentCampaign = this.getBestCampaign(campaigns.result);
           if (this.currentCampaign !== null) {
+            this.calculateClickPercentage();
             this.updateStats(event, this.currentCampaign);
             this.generateAvailableScenario();
             this.generateModifiedScenarios();
@@ -156,6 +160,7 @@ export class AdminProjectManagementComponent implements OnInit {
   public setMetadata(level: string, name: string, event: any) {
     if (this._project._metadata && this._project._metadata[level][name] !== undefined) {
       this._project._metadata[level][name] = event.currentTarget.checked;
+      this._frontendService.calculateInnovationMetadataPercentages(this._project, level);
       this.save(event, 'Successfully saved.');
     }
   }
@@ -359,6 +364,13 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
+  calculateClickPercentage() {
+    if (this.currentCampaign && this.currentCampaign.stats && this.currentCampaign.stats.campaign) {
+      this._clickPercentage = this._frontendService.analyticPercentage(this.currentCampaign.stats.campaign.nbProfessionals,
+        this.currentCampaign.stats.campaign.nbResp);
+    }
+  }
+
   editProjectTags() {
     this.changeSidebar('tags-form');
     this._more = {
@@ -431,6 +443,45 @@ export class AdminProjectManagementComponent implements OnInit {
     this.saveCampaign(event, 'Le workflow par défaut a bien été mis à jour');
   }
 
+  /// Delivery section
+
+  changeExternalDiffusion() {
+    this._project.isPublic = !this._project.isPublic;
+    this.save(event, 'La visibilité du projet a été mise à jour !');
+  }
+
+  goToSynthesis() {
+    this._router.navigate(['/admin/projects/project/' + this._project._id + '/synthesis']);
+  }
+
+  editEndingMail() {
+    this.changeSidebar('innovation-form');
+    this._more = {
+      animate_state: 'active',
+      title: 'PROJECT.DELIVERY.WRITE_ENDING_MAIL',
+      type: 'send-mail',
+      size: '650px',
+    };
+  }
+
+  editClientSatisfaction() {
+    this.changeSidebar('innovation-form');
+    this._more = {
+      animate_state: 'active',
+      title: 'PROJECT.DELIVERY.CLIENT_SATISFACTION',
+      type: 'satisfaction',
+    };
+  }
+
+  editFeedback() {
+    this.changeSidebar('innovation-form');
+    this._more = {
+      animate_state: 'active',
+      title: 'PROJECT.DELIVERY.OPERATOR_FEEDBACK',
+      type: 'feedback',
+    };
+  }
+
   /**
    * Sauvegarde du projet
    */
@@ -440,6 +491,7 @@ export class AdminProjectManagementComponent implements OnInit {
       .save(this._project._id, this._project)
       .first()
       .subscribe(data => {
+        this._project = data;
         this.resetData();
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , notification);
       }, err => {
@@ -499,7 +551,6 @@ export class AdminProjectManagementComponent implements OnInit {
   closeSidebar(value: string) {
     this.more.animate_state = value;
     this.sidebarState.next(this.more.animate_state);
-    this._project = this._activatedRoute.snapshot.parent.data['innovation'];
     this.projectSubject.next(this._project);
   }
 
@@ -534,12 +585,8 @@ export class AdminProjectManagementComponent implements OnInit {
     return this._editInstanceDomain;
   }
 
+  get clickPercentage(): number {
+    return this._clickPercentage;
+  }
+
 }
-
-
-/*
-seeDomain
-seeOperator
-editOwner
-
- */

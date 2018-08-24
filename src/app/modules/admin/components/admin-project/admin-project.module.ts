@@ -7,7 +7,6 @@ import { SharedSortModule } from '../../../shared/components/shared-sort/shared-
 import { SharedTextZoneModule } from '../../../shared/components/shared-text-zone/shared-text-zone.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { AdminProjectComponent } from './admin-project.component';
-import { AdminProjectDetailsComponent } from './admin-project-details/admin-project-details.component';
 import { AdminProjectCardsComponent } from './admin-project-cards/admin-project-cards.component';
 import { AdminProjectCampaignsComponent } from './admin-project-campaigns/admin-project-campaigns.component';
 import { AdminProjectSynthesisComponent } from './admin-project-synthesis/admin-project-synthesis.component';
@@ -45,7 +44,6 @@ import {SidebarModule} from '../../../sidebar/sidebar.module';
   ],
   declarations: [
     AdminProjectComponent,
-    AdminProjectDetailsComponent,
     AdminProjectCardsComponent,
     AdminProjectCampaignsComponent,
     AdminProjectSynthesisComponent,

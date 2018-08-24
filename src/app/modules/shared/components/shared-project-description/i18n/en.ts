@@ -2,6 +2,7 @@ export const PROJECT = {
   'PATENTED': 'Patent protected',
   'CONTACT_PROJECT_MANAGER': 'Contact the project manager',
   'SOLUTION': 'Solution',
+  'PROJECT': 'Project',
   'ISSUE': 'Issue',
   'MARKET_BENEFITS': 'Market benefits',
   'GALLERY': 'Gallery',
@@ -25,6 +26,7 @@ export const PROJECT = {
   },
   'CAMPAIGN': {
     'CAMPAIGN': 'Campaign',
+    'INSIGHTS': 'Insights',
     'PITCH_EDIT_DESCRIPTION': 'Please complete the edition of project description',
     'EDIT_ANSWER_TAGS': 'Edit answer tags',
     'CREATE_CAMPAIGN': 'Please create a campaign to pursue the project ',
@@ -35,6 +37,25 @@ export const PROJECT = {
     'LAUNCH_AUTO_BATCH': 'Launch auto batch',
     'VALIDATE_INSIGHTS': 'Validate insights',
     'INSIGHTS_TO_VALIDATE': 'insights to validate'
+  },
+  'DELIVERY' : {
+    'DELIVERY': 'Delivery',
+    'PUBLIC': 'Public project',
+    'UPDATE_ANSWER_TAGS': 'Update answer tags',
+    'WRITE_CONCLUSIONS': 'Write conclusions',
+    'WRITE_ENDING_MAIL': 'Write ending mail',
+    'RESTITUTION': 'Project restitution',
+    'CLIENT_SATISFACTION': 'Client satisfaction',
+    'MESSAGE_FROM_CLIENT': 'Message from the client',
+    'MESSAGE_FROM_OPERATOR': 'Message from the operator',
+    'SATISFACTIONS': {
+      'VERY_HAPPY': 'Very satisfying',
+      'HAPPY': 'Satisfying',
+      'NORMAL': 'Neutral',
+      'BAD': 'Unsatisfying',
+      'VERY_BAD': 'Very unsatisfying',
+    },
+    'OPERATOR_FEEDBACK': 'Feedback of the mission'
   },
   'CARDS': 'Innovation Cards',
   'QUESTIONNAIRE': 'Questionnaire',

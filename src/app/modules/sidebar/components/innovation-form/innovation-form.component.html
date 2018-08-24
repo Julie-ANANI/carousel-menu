@@ -13,7 +13,7 @@
     <button type="submit"
             class="btn btn-primary"
             [disabled]="(!isChange) || (!statusValid)">
-      {{isStatus ? ('COMMON.SEND' | translate) : ('COMMON.SAVE' | translate) }}
+      {{(isStatus || isMail) ? ('COMMON.SEND' | translate) : ('COMMON.SAVE' | translate) }}
     </button>
   </div>
 
@@ -33,6 +33,77 @@
     [adminMode]="true">
   </app-shared-project-settings>
 
-  <app-shared-mail-editor *ngIf="isStatus" [signatures]="signatures" [emailsObject]="email" (emailChange)="email = $event"></app-shared-mail-editor>
+  <h6 *ngIf="isStatus || isMail" style="color: #EA5858; margin-left: 10px;">Pour le moment l'envoi de mail n'est pas fonctionnel</h6>
+
+  <!-- This functionality doesn't work for the moment -->
+  <app-shared-mail-editor *ngIf="isStatus || isMail"
+                          class="disabled"
+                          [signatures]="signatures"
+                          [emailsObject]="email"
+                          (emailChange)="email = $event">
+  </app-shared-mail-editor>
+
+  <div *ngIf="isUserSatisfaction" class="form-group-inline-space satisfaction">
+
+    <input type="radio" id="verybad"
+           name="satisfaction"
+           value="VERY_BAD"
+           [ngModel]="project.clientSatisfaction.satisfaction"
+           (change)="onSatisfactionChange($event)">
+    <label for="verybad"><i class="bad far fa-2x fa-angry"></i></label>
+
+    <input type="radio" id="bad"
+           name="satisfaction"
+           value="BAD"
+           [ngModel]="project.clientSatisfaction.satisfaction"
+           (change)="onSatisfactionChange($event)">
+    <label for="bad"><i class="bad far fa-2x fa-frown"></i></label>
+
+    <input type="radio" id="normal"
+           name="satisfaction"
+           value="NORMAL"
+           [ngModel]="project.clientSatisfaction.satisfaction"
+           (change)="onSatisfactionChange($event)">
+    <label for="normal"><i class="normal far fa-2x fa-meh"></i></label>
+
+    <input type="radio" id="happy"
+           name="satisfaction"
+           value="HAPPY"
+           [ngModel]="project.clientSatisfaction.satisfaction"
+           (change)="onSatisfactionChange($event)">
+    <label for="happy"><i class="happy far fa-2x fa-smile"></i></label>
+
+    <input type="radio" id="veryhappy"
+           name="satisfaction"
+           value="VERY_HAPPY"
+           [ngModel]="project.clientSatisfaction.satisfaction"
+           (change)="onSatisfactionChange($event)">
+    <label for="veryhappy"><i class="happy far fa-2x fa-grin-hearts"></i></label>
+
+  </div>
+
+  <!-- Message for the client -->
+  <div class="form-group" *ngIf="isUserSatisfaction">
+    <label class="form-label" for="message">{{ 'PROJECT.DELIVERY.MESSAGE_FROM_CLIENT' | translate }}</label>
+    <input
+      [ngModel]="project.clientSatisfaction.message"
+      (ngModelChange)="onUserMessageChange($event)"
+      [ngModelOptions]="{standalone: true}"
+      class="form-default"
+      id="userMessage"
+      type="text">
+  </div>
+
+  <!-- Feedback message -->
+  <div class="form-group" *ngIf="isFeedback">
+    <label class="form-label" for="message">{{ 'PROJECT.DELIVERY.MESSAGE_FROM_OPERATOR' | translate }}</label>
+    <input
+      [ngModel]="project.feedback"
+      (ngModelChange)="onReviewChange($event)"
+      [ngModelOptions]="{standalone: true}"
+      class="form-default"
+      id="message"
+      type="text">
+  </div>
 
 </form>

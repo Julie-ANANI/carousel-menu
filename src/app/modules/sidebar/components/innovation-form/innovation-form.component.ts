@@ -31,6 +31,9 @@ export class InnovationFormComponent implements OnInit {
   isPitch = false;
   isTargeting = false;
   isStatus = false;
+  isMail = false;
+  isUserSatisfaction = false;
+  isFeedback = false;
 
   private _type = '';
 
@@ -58,32 +61,37 @@ export class InnovationFormComponent implements OnInit {
     this._isChange = false;
     this.statusValid = true;
 
-    if (this.sidebarState) {
-      this.sidebarState.subscribe((state) => {
-        if (state === 'inactive') {
-          setTimeout (() => {
-            this._isChange = false;
-            this._email = {
-              en: {language: 'en', subject: '', content: ''},
-              fr: {language: 'fr', subject: '', content: ''}
-            };
-            this.statusValid = true;
-          }, 500);
-        }
-      })
-    }
-
     if (this.setProject) {
       this.setProject.subscribe((project) => {
         this._project = JSON.parse(JSON.stringify(project));
       })
     }
+
+    console.log(this._project.clientSatisfaction);
+
+    if (this.sidebarState) {
+      this.sidebarState.subscribe((state) => {
+        if (state === 'inactive') {
+          this._isChange = false;
+          this._email = {
+            en: {language: 'en', subject: '', content: ''},
+            fr: {language: 'fr', subject: '', content: ''}
+          };
+          this.statusValid = true;
+          console.log(this._project.clientSatisfaction);
+        }
+      });
+    }
+
   }
 
   reinitialiseForm() {
     this.isPitch = false;
     this.isTargeting = false;
     this.isStatus = false;
+    this.isMail = false;
+    this.isUserSatisfaction = false;
+    this.isFeedback = false;
   }
 
   loadTypes() {
@@ -98,7 +106,22 @@ export class InnovationFormComponent implements OnInit {
         break;
       } case('preview'): {
         break;
-      }case('status'): {
+      } case('feedback'): {
+        this.isFeedback = true;
+        break;
+      } case('satisfaction'): {
+        if (!this._project.clientSatisfaction) {
+          this._project.clientSatisfaction = {};
+        }
+        this.isUserSatisfaction = true;
+        break;
+      } case('send-mail'): {
+        this.isMail = true;
+        this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
+          this._signatures = signatures.result;
+        });
+        break;
+      } case('status'): {
         this.isStatus = true;
         this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
           this._signatures = signatures.result;
@@ -111,7 +134,9 @@ export class InnovationFormComponent implements OnInit {
 
   }
 
+  // TODO : Implement functionality to send mail
   onSubmit() {
+    this._isChange = false;
     switch (this.type) {
       case('pitch') : {
         this.projectChange.emit(this._project);
@@ -119,12 +144,21 @@ export class InnovationFormComponent implements OnInit {
       } case('targeting'): {
         this.projectChange.emit(this._project);
         break;
+      } case('satisfaction'): {
+        this.projectChange.emit(this._project);
+        break;
       } case('status'): {
+        this.projectChange.emit(this._project);
+        break;
+      } case('feedback'): {
         this.projectChange.emit(this._project);
         break;
       } case('preview'): {
         break;
-      } default: {
+      } case('send-mail'): {
+        break;
+      }
+      default: {
         break;
       }
     }
@@ -161,6 +195,22 @@ export class InnovationFormComponent implements OnInit {
     if (this.statusValid === false) {
       this._notificationsService.error('PROJECT_LIST.STATUS' , 'Vous ne pouvez pas revenir à ce status');
     }
+  }
+
+  onSatisfactionChange(event: any) {
+    this._project.clientSatisfaction.satisfaction = event.srcElement.value;
+    this._project.clientSatisfaction.message = '';
+    this._isChange = true;
+  }
+
+  onUserMessageChange(message: string) {
+    this._project.clientSatisfaction.message = message;
+    this._isChange = true;
+  }
+
+  onReviewChange(message: string) {
+    this._project.feedback = message;
+    this._isChange = true;
   }
 
   get type(): string {

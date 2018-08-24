@@ -2,6 +2,7 @@ export const PROJECT = {
   'PATENTED': 'Protégé par brevet',
   'CONTACT_PROJECT_MANAGER': 'Contacter le responsable',
   'SOLUTION': 'Solution',
+  'PROJECT': 'Projet',
   'ISSUE': 'Problématique',
   'MARKET_BENEFITS': 'Avantages marché',
   'GALLERY': 'Galerie',
@@ -27,6 +28,7 @@ export const PROJECT = {
 
   'CAMPAIGN': {
     'CAMPAIGN': 'Campagne',
+    'INSIGHTS': 'Réponses',
     'PITCH_EDIT_DESCRIPTION': 'Veuillez finir l\'édition de la description du projet',
     'EDIT_ANSWER_TAGS': 'Editer les tags pour les réponses',
     'CREATE_CAMPAIGN': 'Veuillez créer une campagne pour poursuivre le projet',
@@ -38,6 +40,25 @@ export const PROJECT = {
     'VALIDATE_INSIGHTS': 'Validation des réponses',
     'INSIGHTS_TO_VALIDATE': 'réponses à valider'
 
+  },
+  'DELIVERY' : {
+    'DELIVERY': 'Livrable',
+    'PUBLIC': 'Projet public',
+    'UPDATE_ANSWER_TAGS': 'Mettre à jour les tags pour les réponses',
+    'WRITE_CONCLUSIONS': 'Rédiger les conclusions',
+    'WRITE_ENDING_MAIL': 'Rédiger le mail final',
+    'RESTITUTION': 'Restitution du projet',
+    'CLIENT_SATISFACTION': 'Satisfaction du client',
+    'MESSAGE_FROM_CLIENT': 'Message du client',
+    'MESSAGE_FROM_OPERATOR': 'Message de l\'operateur',
+    'SATISFACTIONS': {
+      'VERY_HAPPY': 'Très content',
+      'HAPPY': 'Content',
+      'NORMAL': 'Neutre',
+      'BAD': 'Mécontent',
+      'VERY_BAD': 'Très mécontent',
+    },
+    'OPERATOR_FEEDBACK': 'Compte rendu de la mission'
   },
   'CARDS': 'Innovation Cards',
   'SYNTHESIS': 'Synthèse',
