@@ -207,7 +207,7 @@
         <div *ngFor="let lang of innovCards">
           <label class="form-label">
             {{lang?.lang == 'fr' ? ('COMMON.LANG.FR' | translate) : ('COMMON.LANG.EN' | translate) }}
-            <span>{{lang?.completion.toFixed(0)}} %</span>
+            <span>{{lang?.completion?.toFixed(0)}} %</span>
           </label>
         </div>
         <div></div>
@@ -307,7 +307,7 @@
         </span>
         <span *ngFor="let innov of project.innovationCards">
           <label class="form-label">{{innov?.lang == 'fr' ? ('COMMON.LANG.FR' | translate) : ('COMMON.LANG.EN' | translate) }}</label>
-          <label>{{innov?.completion.toFixed(0)}} %</label>
+          <label>{{innov?.completion?.toFixed(0)}} %</label>
         </span>
       </div>
       <div class="campaign">

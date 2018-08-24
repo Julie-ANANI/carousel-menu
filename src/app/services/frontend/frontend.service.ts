@@ -194,7 +194,7 @@ export class FrontendService {
    */
   analyticPercentage(value1: number, value2: number) {
     const percentage = (value2 / value1) * 100;
-    return percentage === Infinity ? 0 : Math.floor(percentage);
+    return percentage === (Infinity || NaN) ? 0 : Math.floor(percentage);
   }
 
 }

@@ -365,8 +365,10 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   calculateClickPercentage() {
-    this._clickPercentage = this._frontendService.analyticPercentage(this.currentCampaign.stats.campaign.nbProfessionals,
-      this.currentCampaign.stats.campaign.nbResp);
+    if (this.currentCampaign && this.currentCampaign.stats && this.currentCampaign.stats.campaign) {
+      this._clickPercentage = this._frontendService.analyticPercentage(this.currentCampaign.stats.campaign.nbProfessionals,
+        this.currentCampaign.stats.campaign.nbResp);
+    }
   }
 
   editProjectTags() {

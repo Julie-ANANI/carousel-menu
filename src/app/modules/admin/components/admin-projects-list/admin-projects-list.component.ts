@@ -4,7 +4,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs/Subject';
 import { Innovation } from '../../../../models/innovation';
 import {Table} from '../../../table/models/table';
-import {Router} from '@angular/router';
 import {FrontendService} from '../../../../services/frontend/frontend.service';
 
 @Component({
@@ -25,8 +24,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
 
   constructor(private _translateService: TranslateService,
               private _innovationService: InnovationService,
-              private _frontendService: FrontendService,
-              private _router: Router) {}
+              private _frontendService: FrontendService) {}
 
   ngOnInit(): void {
     this.build();
@@ -135,7 +133,8 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   }
 
   goToProject(project: Innovation) {
-    this._router.navigate([this.getRelevantLink(project)]);
+    // this._router.navigate([this.getRelevantLink(project)]);
+    window.open(this.getRelevantLink(project), '_blank')
   }
 
   private _getProjectIndex(projectId: string): number {
