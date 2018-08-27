@@ -27,12 +27,14 @@ import {FrontendService} from '../../../../../services/frontend/frontend.service
   templateUrl: './admin-project-management.component.html',
   styleUrls: ['./admin-project-management.component.scss']
 })
+
+/***
+ * To do list for one project, show a list of tasks to perform for the project
+ */
 export class AdminProjectManagementComponent implements OnInit {
 
   private _project: Innovation;
-  private _dirty = false;
   private _domain = {fr: '', en: ''};
-  private _editInstanceDomain = false;
 
   private _more: Template = {};
   sidebarState = new Subject<string>();
@@ -111,6 +113,9 @@ export class AdminProjectManagementComponent implements OnInit {
               private _formBuilder: FormBuilder,
               private _frontendService: FrontendService) {}
 
+  /***
+   * On initialising, we load all the data we need by calling services
+   */
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.parent.data['innovation'];
 
@@ -157,6 +162,13 @@ export class AdminProjectManagementComponent implements OnInit {
       );
   }
 
+  /***
+   * This function is call when the user click on a toggle
+   * Change the metadata corresponding to the task in the project and saves it
+   * @param {string} level
+   * @param {string} name
+   * @param event
+   */
   public setMetadata(level: string, name: string, event: any) {
     if (this._project._metadata && this._project._metadata[level][name] !== undefined) {
       this._project._metadata[level][name] = event.currentTarget.checked;
@@ -165,22 +177,37 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
+  /***
+   * Get the boolean value of a task
+   * @param {string} level
+   * @param {string} name
+   * @returns {any}
+   */
   public getMetadata(level: string, name: string) {
     return !!this._project._metadata && this._project._metadata[level][name];
   }
 
+  /***
+   * This function reset the data
+   */
   resetData() {
-    this._dirty = false;
     this.isEditOwner = false;
     this.formData.reset();
   }
 
+  /***
+   * Reset all the sidebars
+   */
   resetAllSidebar() {
     this.isEmailsDomainsSidebar = false;
     this.isInnovationSidebar = false;
     this.isTagsSidebar = false;
   }
 
+  /***
+   * Change the boolean value of a sidebar to true
+   * @param {string} name
+   */
   changeSidebar(name: string) {
     this.resetAllSidebar();
     switch (name) {
@@ -205,6 +232,9 @@ export class AdminProjectManagementComponent implements OnInit {
     this.isEditOwner = true;
   }
 
+  /***
+   * This function suggest users to the user when he wants to change the owner
+   */
   onSuggestUsers() {
     this.formData.get('owner').valueChanges.distinctUntilChanged().subscribe(input => {
       this.displayUserSuggestion = true;
@@ -224,33 +254,57 @@ export class AdminProjectManagementComponent implements OnInit {
     });
   }
 
+  /***
+   * This function set the owner value
+   * @param value
+   */
   onValueSelect(value: any) {
     this.formData.get('owner').setValue(value.name);
     this.owner = value;
     this.displayUserSuggestion = false;
   }
 
+  /***
+   * This function is call when the user click on save
+   * Change the owner of the project
+   */
   ownerEditionFinished() {
     this._project.owner = this.owner;
     this.save(event, 'Le propriétaire à été mis à jour avec succès !');
   }
 
+  /***
+   * This function is call when the user change the domain of the project
+   * @param {string} value
+   */
   changeProjectDomain(value: string) {
     this._project.domain = value;
     this.save(event, 'le domaine a été mis à jour avec succès !');
   }
 
+  /***
+   * This function is call when the user change the operator of the project
+   * @param value
+   */
   changeProjectOperator(value: any) {
     this._project.operator = value || null;
     this.operatorId = value || undefined;
     this.save(event, 'L\'opérateur à été mis à jour avec succès');
   }
 
+  /***
+   * This function is call when the user change the offer of the project
+   * @param value
+   */
   changeProjectOffer(value: any) {
     this._project.type = value;
     this.save(event, 'L\'offre à été mise à jour avec succès');
   }
 
+  /***
+   * This function is call when the user change the preset of the project
+   * @param {string} presetName
+   */
   public updatePreset(presetName: string): void {
     let preset: any = {sections: []};
     if (presetName) {
@@ -268,10 +322,28 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
+  /***
+   * This function check if a project has a preset
+   * @returns {boolean}
+   */
+  public hasPreset(): boolean {
+    const p = this._project.preset;
+
+    return (p && p.sections && p.constructor === Object && Object.keys(p.sections).length > 0);
+  }
+
+  /***
+   * This function is call when the user click on the button show
+   * Go to the preset edition page
+   */
   goToPresetEdition() {
     this._router.navigate(['/admin/projects/project/' + this._project._id + '/questionnaire']);
   }
 
+  /***
+   * This function is call when the user edit the description of the project
+   * Change the sidebar to the pitch sidebar
+   */
   editProjectDescription() {
     this.changeSidebar('innovation-form');
     this._more = {
@@ -282,6 +354,10 @@ export class AdminProjectManagementComponent implements OnInit {
     };
   }
 
+  /***
+   * This function is call when the user edit the targeting of the project
+   * Change the sidebar to the targeting sidebar
+   */
   editProjectTargeting() {
     this.changeSidebar('innovation-form');
     this._more = {
@@ -292,12 +368,21 @@ export class AdminProjectManagementComponent implements OnInit {
     };
   }
 
+  /***
+   * This function is call when the user save a modification on the project in a sidebar
+   * Change the project value and saves it
+   * @param {Innovation} value
+   */
   changeProject(value: Innovation) {
     this._project = value;
     this.save(event, 'Le projet a bien été mise à jour !');
     window.location.reload();
   }
 
+  /***
+   * This function is call when the user edit the mails and domais to blacklist on the project
+   * Change the sidebar to the excludeEmails sidebar
+   */
   editBlacklist() {
     this.changeSidebar('blacklist-emails-domains');
     this._more = {
@@ -307,6 +392,11 @@ export class AdminProjectManagementComponent implements OnInit {
     };
   }
 
+  /***
+   * This function is call when the user saves his modifications on the blacklist sidebar
+   * Add mails and domains to blacklist
+   * @param {Array<any>} values
+   */
   addBlacklists(values: Array<any>) {
     if (values.length > 0) {
       const domainExp = domainRegEx;
@@ -330,6 +420,10 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
+  /***
+   * This function is call when the user edit the status of the project
+   * Change the sidebar to the status sidebar
+   */
   editStatus() {
     this.changeSidebar('innovation-form');
     this._more = {
@@ -342,6 +436,11 @@ export class AdminProjectManagementComponent implements OnInit {
 
   // Campaign section
 
+  /***
+   * This function is call to update the stats of a campaign
+   * @param {Event} event
+   * @param {Campaign} campaign
+   */
   public updateStats(event: Event, campaign: Campaign) {
     event.preventDefault();
     this._campaignService.updateStats(campaign._id)
@@ -353,6 +452,11 @@ export class AdminProjectManagementComponent implements OnInit {
       });
   };
 
+  /***
+   * This function returns the best campaign related to a project
+   * @param {Campaign[]} campaigns
+   * @returns {Campaign}
+   */
   getBestCampaign(campaigns: Campaign[]): Campaign {
     if (campaigns.length > 0) {
       return campaigns.reduce((a, b) =>
@@ -364,6 +468,9 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
+  /***
+   * This function calculate the click percentage to the project
+   */
   calculateClickPercentage() {
     if (this.currentCampaign && this.currentCampaign.stats && this.currentCampaign.stats.campaign) {
       this._clickPercentage = this._frontendService.analyticPercentage(this.currentCampaign.stats.campaign.nbProfessionals,
@@ -371,6 +478,10 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
+  /***
+   * This function is call when the user edit the tags of the project
+   * Change the sidebar to the addTags sidebar
+   */
   editProjectTags() {
     this.changeSidebar('tags-form');
     this._more = {
@@ -380,6 +491,10 @@ export class AdminProjectManagementComponent implements OnInit {
     };
   }
 
+  /***
+   * This function is call when the user add tags to the project
+   * @param {Tag[]} tags
+   */
   addTags(tags: Tag[]) {
     this._project.tags = [];
     tags.forEach(tag => {
@@ -391,26 +506,49 @@ export class AdminProjectManagementComponent implements OnInit {
     this._more = {animate_state: 'inactive', title: this._more.title};
   }
 
+  /***
+   * This function is call when the user click on the button show
+   * Go to the answer tags edition page
+   */
   goToAnswerTagsEdition() {
     this._router.navigate(['/admin/projects/project/' + this._project._id + '/answer_tags']);
   }
 
+  /***
+   * This function is call when the user click on the button show
+   * Go to the professional list page
+   */
   goToProfessionalsList() {
     this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/pros']);
   }
 
+  /***
+   * This function is call when the user click on the button show
+   * Go to the templates edition page
+   */
   goToTemplates() {
     this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/templates']);
   }
 
+  /***
+   * This function is call when the user click on the button show
+   * Go to the autobatch page
+   */
   goToAutoBatch() {
     this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/mails']);
   }
 
+  /***
+   * This function is call when the user click on the button show
+   * Go to the answers edition page
+   */
   goToInsights() {
     this._router.navigate(['/admin/campaigns/campaign/' + this.currentCampaign._id + '/answers']);
   }
 
+  /***
+   * This function get the available scenarios of the campaign
+   */
   private generateAvailableScenario() {
     this._availableScenarios = [];
     let scenariosnames: Set<string>;
@@ -430,6 +568,9 @@ export class AdminProjectManagementComponent implements OnInit {
     });
   }
 
+  /***
+   * This function get the available scenarios that have been fully modified
+   */
   public generateModifiedScenarios() {
     this._modifiedScenarios = this.availableScenarios.filter((x) => {
       return x.emails.reduce((acc, current) => {
@@ -438,6 +579,11 @@ export class AdminProjectManagementComponent implements OnInit {
     });
   }
 
+  /***
+   * This function update the default scenarios
+   * @requires at least one modify scenario
+   * @param {string} workflowName
+   */
   updateDefaultWorkflow(workflowName: string) {
     this.currentCampaign.settings.defaultWorkflow = workflowName;
     this.saveCampaign(event, 'Le workflow par défaut a bien été mis à jour');
@@ -445,15 +591,26 @@ export class AdminProjectManagementComponent implements OnInit {
 
   /// Delivery section
 
+  /***
+   * change the visibility of the project
+   */
   changeExternalDiffusion() {
     this._project.isPublic = !this._project.isPublic;
     this.save(event, 'La visibilité du projet a été mise à jour !');
   }
 
+  /***
+   * This function is call when the user click on the button show
+   * Go to the synthesis page
+   */
   goToSynthesis() {
     this._router.navigate(['/admin/projects/project/' + this._project._id + '/synthesis']);
   }
 
+  /***
+   * This function is call when the user wants to write the ending mail of the project
+   * Change the sidebar to the send-mail sidebar
+   */
   editEndingMail() {
     this.changeSidebar('innovation-form');
     this._more = {
@@ -464,6 +621,10 @@ export class AdminProjectManagementComponent implements OnInit {
     };
   }
 
+  /***
+   * This function is call when the user wants to edit the client satisfaction for the project
+   * Change the sidebar to the satisfaction sidebar
+   */
   editClientSatisfaction() {
     this.changeSidebar('innovation-form');
     this._more = {
@@ -473,6 +634,10 @@ export class AdminProjectManagementComponent implements OnInit {
     };
   }
 
+  /***
+   * This function is call when the user wants to edit the project feedback
+   * Change the sidebar to the feedback sidebar
+   */
   editFeedback() {
     this.changeSidebar('innovation-form');
     this._more = {
@@ -482,8 +647,10 @@ export class AdminProjectManagementComponent implements OnInit {
     };
   }
 
-  /**
-   * Sauvegarde du projet
+  /***
+   * This function is call when the user wants to save the project
+   * @param {Event} event
+   * @param {string} notification
    */
   public save(event: Event, notification: string): void {
     event.preventDefault();
@@ -499,6 +666,11 @@ export class AdminProjectManagementComponent implements OnInit {
       });
   }
 
+  /***
+   * This function is call when the user wants to save a campaign
+   * @param {Event} event
+   * @param {string} notification
+   */
   public saveCampaign(event: Event, notification: string): void {
     event.preventDefault();
     this._campaignService.put(this.currentCampaign).first().subscribe(savedCampaign => {
@@ -510,6 +682,15 @@ export class AdminProjectManagementComponent implements OnInit {
     });
   }
 
+  /***
+   * This function is call when the user close the sidebar
+   * @param {string} value
+   */
+  closeSidebar(value: string) {
+    this.more.animate_state = value;
+    this.sidebarState.next(this.more.animate_state);
+    this.projectSubject.next(this._project);
+  }
 
   /**
    * Suppression et mise à jour de la vue
@@ -523,35 +704,12 @@ export class AdminProjectManagementComponent implements OnInit {
       });
   }*/
 
-  public hasPreset(): boolean {
-    const p = this._project.preset;
-
-    return (p && p.sections && p.constructor === Object && Object.keys(p.sections).length > 0);
-  }
-
   formatText(text: string) {
     return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
   }
 
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
-  }
-
-
-
-  public updateDomain() {
-    this._innovationService.updateSettingsDomain(this._project._id, this._domain).first().subscribe( x => {
-      this._domain = x.domain;
-      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-    }, (error) => {
-      this._notificationsService.error('ERROR', error);
-    });
-  }
-
-  closeSidebar(value: string) {
-    this.more.animate_state = value;
-    this.sidebarState.next(this.more.animate_state);
-    this.projectSubject.next(this._project);
   }
 
   set domain(domain: {en: string, fr: string}) { this._domain = domain; }
@@ -575,14 +733,6 @@ export class AdminProjectManagementComponent implements OnInit {
 
   get authService() {
     return this._authService;
-  }
-
-  get dirty() {
-    return this._dirty;
-  }
-
-  get editInstanceDomain(): boolean {
-    return this._editInstanceDomain;
   }
 
   get clickPercentage(): number {
