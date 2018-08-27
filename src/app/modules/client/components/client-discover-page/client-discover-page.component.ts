@@ -4,8 +4,9 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { TranslateService} from '@ngx-translate/core';
 import { Innovation } from '../../../../models/innovation';
 import { InnovCard } from '../../../../models/innov-card';
-import { FrontendService } from '../../../../services/frontend/frontend.service';
+// import { FrontendService } from '../../../../services/frontend/frontend.service';
 import {ConfigTemplate} from '../../../../models/config';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -44,7 +45,8 @@ export class ClientDiscoverPageComponent implements OnInit {
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
               private translateService: TranslateService,
-              private frontendService: FrontendService) {}
+              // private frontendService: FrontendService,
+              private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.TITLE');
@@ -70,21 +72,17 @@ export class ClientDiscoverPageComponent implements OnInit {
       this.totalValue = innovations._metadata.totalCount;
       this.loadInnovationCards();
     }, () => {
-
+      this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVER.ERROR');
     }, () => {
       this.displaySpinner = false;
     });
   }
 
-  configChange(config: any) {
-    const _configChange = this.frontendService.compareObject(this._config, config);
-
-    if (_configChange) {
-      this._config = config;
-      this.getAllInnovations();
-      window.scroll(0, 0);
-    }
-
+  configChange(configValues: ConfigTemplate) {
+    window.scroll(0, 0);
+    this._config.offset = configValues.offset;
+    this._config.limit = configValues.limit;
+    this.getAllInnovations();
   }
 
 /*  loadAllInnovations(config: any): void  {
@@ -135,6 +133,7 @@ export class ClientDiscoverPageComponent implements OnInit {
       this._innovationCards.push(items.innovationCards[index]);
 
     });
+
   }
 
   /*sortInnovations(innovations: any) {

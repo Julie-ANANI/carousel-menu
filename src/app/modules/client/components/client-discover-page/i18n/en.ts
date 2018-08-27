@@ -7,5 +7,8 @@ export const DISCOVER = {
   'AEROSPACE': 'Aerospace',
   'COMPUTER': 'Computer',
   'MATHEMATICS': 'Mathematics',
-  'SEARCH_CATEGORY': 'Category'
+  'SEARCH_CATEGORY': 'Category',
+  'ERROR': 'We are having trouble while fetching the data. Please try to reload the page again.',
+  'SHOWING': 'showing',
+  'FROM': 'from'
 };

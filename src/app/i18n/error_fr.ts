@@ -4,6 +4,8 @@ export const ERROR = {
   'CANNOT_REACH': 'Le serveur ne répond pas...',
   'FORM_ERROR': 'Erreur de formulaire',
 
+  'PAGINATION': 'Nous ne pouvons pas obtenir les résultats. S\'il vous plaît changer la valeur de \'lignes par page\'.',
+
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',
   'INVALID_FORM_DATA': 'L\'e-mail ou le mot de passe n\'est pas valide.',
   'PAGE_NOT_FOUND': 'Pas de page par ici...',

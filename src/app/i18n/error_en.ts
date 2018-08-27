@@ -4,6 +4,8 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
   'CANNOT_REACH': 'Cannot reach to server.',
   'FORM_ERROR': 'Form error',
 
+  'PAGINATION': 'We are unable to fetch the results. Please change the value of \'Rows per page\'.',
+
   'INVALID_FORM': 'There are errors in your form please correct them and try again.',
   'INVALID_DOMAIN': 'Cannot create a super-admin account in this instance.',
   'INVALID_FORM_DATA': 'The email/password combination is not valid.',

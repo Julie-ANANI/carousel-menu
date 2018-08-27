@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfigTemplate } from '../../../../models/config';
+import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-pagination',
@@ -8,12 +9,6 @@ import { ConfigTemplate } from '../../../../models/config';
 })
 
 export class PaginationComponent implements OnInit {
-
-  @Input() set config(value: any) {
-    this._config = JSON.parse(JSON.stringify(value));
-  };
-
-  // @Input() perPageValues: Array<number>;
 
   @Input() total: number;
   @Input() propertyName: string;
@@ -28,7 +23,6 @@ export class PaginationComponent implements OnInit {
   @Output() configChange = new EventEmitter <any>();
 
   private _numPages: number;
-  private _config: any = {};
   perPageValues: Array<number> = [10, 20, 50, 100, 1000];
 
   initialConfigValues: ConfigTemplate = {
@@ -36,17 +30,19 @@ export class PaginationComponent implements OnInit {
     offset: 0
   };
 
-  constructor() {
-    // this.perPageValues = this.perPageValues || [10, 20, 50, 100, 1000];
-  }
+  private _localOffset = 0;
+  private _limit = 0;
+
+  constructor(private translateNotificationService: TranslateNotificationsService) {}
 
   ngOnInit() {
-    // this._initialized = true;
     this.initialize();
   }
 
   initialize() {
-    const localLimit = parseInt(localStorage.getItem(`${this.propertyName}-limit`) || '0', 10);
+    this._limit = this.initialConfigValues.limit;
+
+    const localLimit = parseInt(localStorage.getItem(`${this.propertyName}-limit`) || '10', 10);
 
     if (this.propertyName && localLimit && this.checkConfig(localLimit)) {
       this.initialConfigValues.limit = localLimit;
@@ -94,13 +90,17 @@ export class PaginationComponent implements OnInit {
   }
 
   private _update() {
-    /*if (this.propertyName) {
-      localStorage.setItem(`${this.propertyName}-limit`, JSON.stringify(this.initialConfigValues.limit));
+    if (this.propertyName) {
+      localStorage.setItem(`${this.propertyName}-limit`, this.initialConfigValues.limit);
       // sessionStorage.setItem(`${this.propertyName}-offset`, this.config.offset);
-    }*/
-    // this.configChange.emit(this._config);
-    console.log(this.initialConfigValues);
+    }
 
+    // this.configChange.emit(this._config);
+
+    if (this._localOffset !== this.initialConfigValues.offset || this._limit !== this.initialConfigValues.limit) {
+      this.configChange.emit(this.initialConfigValues);
+      this._localOffset = this.initialConfigValues.offset;
+    }
 
   }
 
@@ -112,8 +112,12 @@ export class PaginationComponent implements OnInit {
 
   set currentPage(page: number) {
     // this._config.offset = this._config.limit * (page - 1);
-    this.initialConfigValues.offset = this.initialConfigValues.limit * (page - 1);
-    this._update();
+    if (page >= 1) {
+      this.initialConfigValues.offset = this.initialConfigValues.limit * (page - 1);
+      this._update();
+    } else {
+      this.translateNotificationService.error('ERROR.ERROR', 'ERROR.PAGINATION');
+    }
   }
 
   get perPage(): number {
@@ -128,8 +132,17 @@ export class PaginationComponent implements OnInit {
     this._numPages = Math.ceil(this.total / this.perPage);
   }
 
-  get config(): any {
-    return this._config;
+  get localOffset(): number {
+    return this._localOffset;
+  }
+
+
+  get limit(): number {
+    return this._limit;
+  }
+
+  set limit(value: number) {
+    this._limit = value;
   }
 
 }

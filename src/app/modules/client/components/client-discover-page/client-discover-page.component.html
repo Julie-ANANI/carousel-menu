@@ -4,7 +4,7 @@
     <!-- Heading and Search field -->
     <div class="header-wrapper">
       <h1 class="main-heading">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</h1>
-      <div class="search-wrapper">
+      <div class="search">
         <app-search-input></app-search-input>
       </div>
     </div>
@@ -14,37 +14,46 @@
       <app-shared-loader></app-shared-loader>
     </div>
 
-    <!-- Innovations -->
-    <div *ngIf="!displaySpinner" class="innovations-wrapper">
-      <div *ngFor="let innovation of innovationCards" class="innov-wrapper">
-        <div class="content-wrapper">
-          <a [routerLink]="innovation.innovation_reference" [queryParams]="{ lang: innovation.lang }">
+    <ng-container *ngIf="!displaySpinner">
 
-            <!-- Image -->
-            <div class="img-wrapper">
-              <img [src]="getSrc(innovation)" alt="No media">
-            </div>
+      <!-- Total number of innovations -->
+      <div class="total-innov-wrapper">
+        <h6>{{ 'DISCOVER.SHOWING' | translate }} {{ innovationCards.length }} {{ 'innovations' }} {{ 'DISCOVER.FROM' | translate }} {{ totalValue }} {{ 'innovations.' }}</h6>
+      </div>
 
-            <!-- Body part -->
-            <div class="body-wrapper">
-              <h1 class="main-heading">{{ innovation.title | DiscoverSummaryPipe:95 }}</h1>
-              <p>{{ innovation.summary }}</p>
-            </div>
+      <!-- Innovations -->
+      <div class="innovations-wrapper">
+        <div *ngFor="let innovation of innovationCards" class="innov-wrapper">
+          <div class="innov-content">
+            <a [routerLink]="innovation.innovation_reference" [queryParams]="{ lang: innovation.lang }">
 
-          </a>
+              <!-- Image -->
+              <div class="innov-img">
+                <img [src]="getSrc(innovation)" alt="No media">
+              </div>
+
+              <!-- Body part -->
+              <div class="innov-body">
+                <h1 class="main-heading">{{ innovation.title | DiscoverSummaryPipe:95 }}</h1>
+                <p>{{ innovation.summary }}</p>
+              </div>
+
+            </a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Pagination -->
-    <div class="pagination-wrapper">
-      <app-pagination
-        [total]="totalValue"
-        [propertyName]="'app-discover99'"
-        [configValue]="configValue"
-        (configChange)="configChange($event)">
-      </app-pagination>
-    </div>
+      <!-- Pagination -->
+      <div class="pagination-wrapper">
+        <app-pagination
+          [total]="totalValue"
+          [propertyName]="'app-discover99'"
+          [configValue]="configValue"
+          (configChange)="configChange($event)">
+        </app-pagination>
+      </div>
+
+    </ng-container>
 
   </div>
 </section>
