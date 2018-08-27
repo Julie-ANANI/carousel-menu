@@ -380,6 +380,16 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
+   *
+   * @param mail
+   */
+  sendMailToOwner(mail: any) {
+    this._innovationService.sendMailToOwner(this._project._id, mail).first().subscribe((answer: any) => {
+      console.log(answer);
+    });
+  }
+
+  /***
    * This function is call when the user edit the mails and domais to blacklist on the project
    * Change the sidebar to the excludeEmails sidebar
    */
@@ -609,14 +619,14 @@ export class AdminProjectManagementComponent implements OnInit {
 
   /***
    * This function is call when the user wants to write the ending mail of the project
-   * Change the sidebar to the send-mail sidebar
+   * Change the sidebar to the send-ending-mail sidebar
    */
   editEndingMail() {
     this.changeSidebar('innovation-form');
     this._more = {
       animate_state: 'active',
       title: 'PROJECT.DELIVERY.WRITE_ENDING_MAIL',
-      type: 'send-mail',
+      type: 'send-ending-mail',
       size: '650px',
     };
   }

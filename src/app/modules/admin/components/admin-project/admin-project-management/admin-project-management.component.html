@@ -631,7 +631,7 @@
           <i class="form-icon"></i>
           {{'PROJECT.DELIVERY.WRITE_ENDING_MAIL' | translate}}
         </label>
-        <button class="showOnHover btn btn-xs ghost-edit" (click)="editEndingMail()">
+        <button class="showOnHover btn btn-xs ghost-edit" (click)="editEndingMail()" *ngIf="getMetadata('delivery', 'endingmail') === false">
           {{'COMMON.EDIT' | translate}}
         </button>
       </div>
@@ -749,7 +749,8 @@
     [type]="more.type"
     [initialProject]="project"
     [setProject]="projectSubject"
-    (projectChange)="changeProject($event)">
+    (projectChange)="changeProject($event)"
+    (sendMail)="sendMailToOwner($event)">
   </app-innovation-form>
   <app-emails-form
     *ngIf="isEmailsDomainsSidebar"

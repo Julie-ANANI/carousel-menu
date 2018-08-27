@@ -29,6 +29,8 @@ export class InnovationFormComponent implements OnInit {
 
   @Output() projectChange = new EventEmitter<Innovation>();
 
+  @Output() sendMail = new EventEmitter<any>();
+
   isPitch = false;
   isTargeting = false;
   isStatus = false;
@@ -42,6 +44,7 @@ export class InnovationFormComponent implements OnInit {
   private _isChange = false;
 
   private _email = {};
+
   status = [
     {name: 'EDITING', alias: 'Editing'},
     {name: 'SUBMITTED', alias: 'Submitted'},
@@ -118,7 +121,7 @@ export class InnovationFormComponent implements OnInit {
         }
         this.isUserSatisfaction = true;
         break;
-      } case('send-mail'): {
+      } case('send-ending-mail'): {
         this.isMail = true;
         this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
           this._signatures = signatures.result;
@@ -154,13 +157,17 @@ export class InnovationFormComponent implements OnInit {
         break;
       } case('status'): {
         this.projectChange.emit(this._project);
+        this.sendMail.emit(this._email);
         break;
       } case('feedback'): {
         this.projectChange.emit(this._project);
         break;
       } case('preview'): {
         break;
-      } case('send-mail'): {
+      } case('send-ending-mail'): {
+        this._project._metadata.delivery.endingmail = true;
+        this.projectChange.emit(this._project);
+        this.sendMail.emit(this._email);
         break;
       }
       default: {

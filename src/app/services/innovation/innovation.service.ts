@@ -140,6 +140,12 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public sendMailToOwner(innovationId: string, mail: any): Observable<any> {
+    return this._http.put('/innovation/' + innovationId + '/sendMailToOwner', {mail: mail})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public setOperator(innovationId: string, operatorId: string): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/operator', {operatorId: operatorId})
       .map((res: Response) => res.json())
