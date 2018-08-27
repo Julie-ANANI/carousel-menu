@@ -4,7 +4,6 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { TranslateService} from '@ngx-translate/core';
 import { Innovation } from '../../../../models/innovation';
 import { InnovCard } from '../../../../models/innov-card';
-// import { FrontendService } from '../../../../services/frontend/frontend.service';
 import {ConfigTemplate} from '../../../../models/config';
 import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 
@@ -45,7 +44,6 @@ export class ClientDiscoverPageComponent implements OnInit {
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
               private translateService: TranslateService,
-              // private frontendService: FrontendService,
               private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
@@ -122,6 +120,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   loadInnovationCards() {
     this._innovationCards = [];
+
     this.totalInnovations.forEach((items) => {
       let index = items.innovationCards.findIndex(innovationCard => innovationCard.lang === this.innovationsLang);
 
@@ -179,12 +178,17 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   getSrc(innovation: InnovCard): string {
     let src = '';
+    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
 
     if (innovation.principalMedia && innovation.principalMedia.type === 'PHOTO') {
       src = innovation.principalMedia.url;
     } else {
       const index = innovation.media.findIndex((media) => media.type === 'PHOTO');
-      src = index === -1 ? '' : innovation.media[index].url;
+      src = index === -1 ? defaultSrc : innovation.media[index].url;
+    }
+
+    if (src === '') {
+      src = defaultSrc;
     }
 
     return src;

@@ -16,9 +16,10 @@
 
     <ng-container *ngIf="!displaySpinner">
 
-      <!-- Total number of innovations -->
-      <div class="total-innov-wrapper">
+      <!-- Total number of innovations and filters -->
+      <div class="total-filter-wrapper">
         <h6>{{ 'DISCOVER.SHOWING' | translate }} {{ innovationCards.length }} {{ 'innovations' }} {{ 'DISCOVER.FROM' | translate }} {{ totalValue }} {{ 'innovations.' }}</h6>
+        <button class="btn btn-sm ghost-edit"><i class="fas fa-sliders-h"></i>Add Filters</button>
       </div>
 
       <!-- Innovations -->
@@ -47,7 +48,7 @@
       <div class="pagination-wrapper">
         <app-pagination
           [total]="totalValue"
-          [propertyName]="'app-discover99'"
+          [propertyName]="'app-discover'"
           [configValue]="configValue"
           (configChange)="configChange($event)">
         </app-pagination>
