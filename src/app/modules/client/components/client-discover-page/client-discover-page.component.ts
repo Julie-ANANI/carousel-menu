@@ -21,6 +21,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   selectedLang = '';
   totalValue = 0;
+  displaySpinner = true;
 
   private searchInput: string;
   private innovationDetails: Array<{text: string, id: string}>; // array to store the innovation title of all the innovations for search field
@@ -68,6 +69,10 @@ export class ClientDiscoverPageComponent implements OnInit {
       this.totalInnovations = innovations.result;
       this.totalValue = innovations._metadata.totalCount;
       this.loadInnovationCards();
+    }, () => {
+
+    }, () => {
+      this.displaySpinner = false;
     });
   }
 

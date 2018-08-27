@@ -9,8 +9,13 @@
       </div>
     </div>
 
+    <!-- Spinner display -->
+    <div *ngIf="displaySpinner" class="spinner-wrapper">
+      <app-shared-loader></app-shared-loader>
+    </div>
+
     <!-- Innovations -->
-    <div class="innovations-wrapper">
+    <div *ngIf="!displaySpinner" class="innovations-wrapper">
       <div *ngFor="let innovation of innovationCards" class="innov-wrapper">
         <div class="content-wrapper">
           <a [routerLink]="innovation.innovation_reference" [queryParams]="{ lang: innovation.lang }">

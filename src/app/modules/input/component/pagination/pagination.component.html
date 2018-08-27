@@ -31,8 +31,6 @@
     <option *ngFor="let perPage of perPageValues" [value]="perPage">{{ perPage }}</option>
   </select>
 
-  {{ perPage }}
-
   <div *ngIf="numPages >= 2" class="page-number-wrapper">
     <a *ngIf="currentPage > 2" (click)="(currentPage = 1) && $event.preventDefault()" href="#">
       <i class="fas fa-angle-double-left"></i>

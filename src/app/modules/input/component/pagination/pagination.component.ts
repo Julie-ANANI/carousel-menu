@@ -13,7 +13,8 @@ export class PaginationComponent implements OnInit {
     this._config = JSON.parse(JSON.stringify(value));
   };
 
-  @Input() perPageValues: Array<number>;
+  // @Input() perPageValues: Array<number>;
+
   @Input() total: number;
   @Input() propertyName: string;
 
@@ -28,14 +29,15 @@ export class PaginationComponent implements OnInit {
 
   private _numPages: number;
   private _config: any = {};
-  // private _initialized = false;
+  perPageValues: Array<number> = [10, 20, 50, 100, 1000];
+
   initialConfigValues: ConfigTemplate = {
     limit: 10,
     offset: 0
   };
 
   constructor() {
-    this.perPageValues = this.perPageValues || [10, 20, 50, 100, 1000];
+    // this.perPageValues = this.perPageValues || [10, 20, 50, 100, 1000];
   }
 
   ngOnInit() {
@@ -80,26 +82,6 @@ export class PaginationComponent implements OnInit {
     }
 
     return false;
-
-    /*const limit = parseInt(value1, 10);
-
-    if (limit >= 10 && limit <= 1000) {
-      this.perPageValues.forEach((items) => {
-        const index = this.perPageValues.findIndex((item) => item === limit);
-        if (index === -1) {
-          this.initialConfigValues.limit = 10;
-          this.initialConfigValues.offset = 0;
-          return true;
-        } else {
-          this.initialConfigValues.limit = limit;
-          return true;
-        }
-      });
-    }
-
-    this.initialConfigValues.limit = 10;
-    this.initialConfigValues.offset = 0;
-    return true;*/
   }
 
   get numPages(): number {
@@ -116,16 +98,17 @@ export class PaginationComponent implements OnInit {
       localStorage.setItem(`${this.propertyName}-limit`, JSON.stringify(this.initialConfigValues.limit));
       // sessionStorage.setItem(`${this.propertyName}-offset`, this.config.offset);
     }*/
+    // this.configChange.emit(this._config);
     console.log(this.initialConfigValues);
 
-    // this.configChange.emit(this._config);
+
   }
 
-  goToPage(event: any): void {
+  /*goToPage(event: any): void {
     const page = parseInt((<HTMLInputElement> event.srcElement).value);
     this.config.offset = this.config.limit * (page - 1);
     this._update();
-  }
+  }*/
 
   set currentPage(page: number) {
     // this._config.offset = this._config.limit * (page - 1);

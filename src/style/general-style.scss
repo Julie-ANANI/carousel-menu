@@ -95,17 +95,6 @@ a, a:focus, a:hover, a:active, a.active {
 
 
 /*
-    This is the style that is related to the loading circle we see.
- */
-
-.loading::after {
-  border-color: $primary-color;
-  border-right-color: transparent;
-  border-top-color: transparent;
-}
-
-
-/*
     This is to show the horizontal line around the word to show as divider.
     Just wrap the word with this class. Class name: .or-divider
  */
