@@ -4,8 +4,9 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { TranslateService} from '@ngx-translate/core';
 import { Innovation } from '../../../../models/innovation';
 import { InnovCard } from '../../../../models/innov-card';
-import {ConfigTemplate} from '../../../../models/config';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import { ConfigTemplate } from '../../../../models/config';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Tag } from '../../../../models/tag';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -23,13 +24,15 @@ export class ClientDiscoverPageComponent implements OnInit {
   totalValue = 0;
   displaySpinner = true;
   showFilterContainer = false;
+  tags: Array<Tag>;
+  filterApplied: Array<{id: string, value: string}>;
 
   private searchInput: string;
   private innovationDetails: Array<{text: string, id: string}>; // array to store the innovation title of all the innovations for search field
   private _suggestionInnov: Array<{text: string, id: string}>; // to show suggestions to user below the search field when he types
 
   private _config = {
-    fields: 'created innovationCards',
+    fields: 'created innovationCards tags',
     limit: 20,
     offset: 0,
     search: {
@@ -40,7 +43,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     }
   };
 
-  configValue: ConfigTemplate = {};
+  paginationConfigValue: ConfigTemplate = {};
 
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
@@ -50,7 +53,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.TITLE');
     this._config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
-    this.configValue = {
+    this.paginationConfigValue = {
       limit: this._config.limit,
       offset: this._config.offset
     };
@@ -60,14 +63,15 @@ export class ClientDiscoverPageComponent implements OnInit {
   initialize() {
     this.innovationDetails = [];
     this.totalInnovations = [];
+    this.filterApplied = [];
     this.searchInput = '';
     this.getAllInnovations();
   }
 
-
   getAllInnovations() {
     this.innovationService.getAll(this._config).first().subscribe(innovations => {
       this.totalInnovations = innovations.result;
+      console.log(innovations.result);
       this.totalValue = innovations._metadata.totalCount;
       this.loadInnovationCards();
     }, () => {
@@ -119,22 +123,46 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   }*/
 
-  loadInnovationCards() {
-    this._innovationCards = [];
+  toggleFilter(event: Event) {
+    console.log(event);
 
-    this.totalInnovations.forEach((items) => {
-      let index = items.innovationCards.findIndex(innovationCard => innovationCard.lang === this.innovationsLang);
-
-      // if we do not have the innovation in the english language then we show the innovation i.e. on index [0].
-      if (index === -1) {
-        index = 0;
+    // if language is selected
+    if (event.target['name'] === 'language') {
+      if (event.target['checked']) {
+        this.filterApplied.push({id: event.target['id'], value: event.target['defaultValue']});
+      } else {
+        const index = this.filterApplied.findIndex(name => name.id === event.target['id']);
+        this.filterApplied.splice(index, 1);
       }
+    }
 
-      this._innovationCards.push(items.innovationCards[index]);
-
-    });
+    console.log(this.filterApplied);
+    this.loadInnovationCards();
 
   }
+
+  loadInnovationCards() {
+
+    // No filter is applied
+    if (this.filterApplied.length === 0) {
+      this._innovationCards = [];
+
+      this.totalInnovations.forEach((items) => {
+        let index = items.innovationCards.findIndex(innovationCard => innovationCard.lang === this.innovationsLang);
+
+        // if we do not have the innovation in the english language then we show the innovation i.e. on index [0].
+        if (index === -1) {
+          index = 0;
+        }
+
+        this._innovationCards.push(items.innovationCards[index]);
+
+      });
+    }
+
+
+  }
+
 
   /*sortInnovations(innovations: any) {
     this._innovationCards = innovations.sort((a: any, b: any) => {

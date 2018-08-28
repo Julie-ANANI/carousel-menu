@@ -17,10 +17,11 @@ import { SharedProjectSettingsModule } from '../../../shared/components/shared-p
 import { SharedTagItemModule } from '../../../shared/components/shared-tag-item/shared-tag-item.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/admin-project-questionnaire.module';
-import {AutocompleteInputModule} from '../../../input/component/autocomplete-input/autocomplete-input.module';
+import { AdminProjectQuestionnaireModule } from './admin-project-questionnaire/admin-project-questionnaire.module';
+import { AutocompleteInputModule } from '../../../input/component/autocomplete-input/autocomplete-input.module';
 import { AdminProjectManagementComponent } from './admin-project-management/admin-project-management.component';
-import {SidebarModule} from '../../../sidebar/sidebar.module';
+import { SidebarModule } from '../../../sidebar/sidebar.module';
+import { ProgressBarModule } from '../../../input/component/progress-bar/progress-bar.module';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import {SidebarModule} from '../../../sidebar/sidebar.module';
     FormsModule,
     AutocompleteInputModule,
     ReactiveFormsModule,
-    AdminProjectQuestionnaireModule
+    AdminProjectQuestionnaireModule,
+    ProgressBarModule
   ],
   declarations: [
     AdminProjectComponent,

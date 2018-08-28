@@ -30,34 +30,72 @@
           <ng-container *ngIf="showFilterContainer === true">
             <div class="filter-action">
               <button class="btn btn-sm ghost-edit btn-cancel" (click)="showFilterContainer = false">Cancel</button>
-              <button class="btn btn-sm btn-primary">Apply Filters</button>
+              <button class="btn btn-sm btn-primary" (click)="showFilterContainer = false">Apply Filters</button>
             </div>
           </ng-container>
 
         </div>
 
         <div class="filter-applied" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
-          Filter 1
+
         </div>
 
         <div class="column col-xs-12 col-11 col-mx-auto filter-outer" [ngStyle]="{ 'display': showFilterContainer ? 'block' : 'none'}">
           <div class="filter-content">
+
+            <!-- Filter sector -->
+            <div class="filter-type">
+              <p>Type</p>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input type="checkbox" id="Value Chain" value="VALUE_CHAIN" name="type">
+                  <i class="form-icon"></i><span class="checkbox-label">Value Chain</span>
+                </label>
+              </div>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input type="checkbox" id="Sector" value="SECTOR" name="type">
+                  <i class="form-icon"></i><span class="checkbox-label">Sector</span>
+                </label>
+              </div>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input type="checkbox" id="Solution" value="SOLUTION_TYPE" name="type">
+                  <i class="form-icon"></i><span class="checkbox-label">Solution</span>
+                </label>
+              </div>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input type="checkbox" id="Qualification" value="QUALIFICATION" name="type">
+                  <i class="form-icon"></i><span class="checkbox-label">Qualification</span>
+                </label>
+              </div>
+            </div>
 
             <!-- Language filter -->
             <div class="filter-language">
               <p>Language</p>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" value="en">
+                  <input type="checkbox" id="en" value="en" name="language" (change)="toggleFilter($event)">
                   <i class="form-icon"></i><span class="checkbox-label">English</span>
                 </label>
               </div>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" value="fr">
+                  <input type="checkbox" id="fr" value="fr" name="language" (change)="toggleFilter($event)">
                   <i class="form-icon"></i><span class="checkbox-label">French</span>
                 </label>
               </div>
+            </div>
+
+            <!-- Filter sector -->
+            <div class="filter-label">
+              <p>Label</p>
+            </div>
+
+            <div class="filter-spinner">
+              <app-shared-loader></app-shared-loader>
             </div>
 
           </div>
@@ -94,7 +132,7 @@
         <app-pagination
           [total]="totalValue"
           [propertyName]="'app-discover'"
-          [configValue]="configValue"
+          [configValue]="paginationConfigValue"
           (configChange)="configChange($event)">
         </app-pagination>
       </div>

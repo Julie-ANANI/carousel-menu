@@ -81,21 +81,32 @@
       border-top: 1px solid $border-color;
       padding-top: 1.57rem;
       padding-bottom: 1.57rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
 
-      .filter-language {
+      .filter-language, .filter-type, .filter-label {
         font-size: .9375rem;
+        display: inline-flex;
+        flex-direction: column;
 
         p {
           color: $filter-section-heading;
           font-weight: 600;
         }
 
+        .filter-option {
+          margin-bottom: .6rem;
+        }
+
       }
 
-      .filter-option {
-        display: inline-flex;
-        flex-wrap: wrap;
-        margin-right: 1.57rem;
+      .filter-spinner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        position: absolute;
       }
 
     }
@@ -154,7 +165,7 @@
         }
 
         .innov-body {
-          padding: .9375rem .6rem;
+          padding: .6rem .9375rem;
 
           .main-heading {
             font-size: 1.12rem;
