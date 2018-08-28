@@ -22,6 +22,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   selectedLang = '';
   totalValue = 0;
   displaySpinner = true;
+  showFilterContainer = false;
 
   private searchInput: string;
   private innovationDetails: Array<{text: string, id: string}>; // array to store the innovation title of all the innovations for search field

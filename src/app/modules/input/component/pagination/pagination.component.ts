@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfigTemplate } from '../../../../models/config';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-pagination',

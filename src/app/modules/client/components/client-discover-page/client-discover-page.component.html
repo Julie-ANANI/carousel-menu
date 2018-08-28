@@ -17,10 +17,55 @@
     <ng-container *ngIf="!displaySpinner">
 
       <!-- Total number of innovations and filters -->
-      <div class="total-filter-wrapper">
-        <h6>{{ 'DISCOVER.SHOWING' | translate }} {{ innovationCards.length }} {{ 'innovations' }} {{ 'DISCOVER.FROM' | translate }} {{ totalValue }} {{ 'innovations.' }}</h6>
-        <button class="btn btn-sm ghost-edit"><i class="fas fa-sliders-h"></i>Add Filters</button>
+      <div [ngClass]="{ 'filter-wrapper': showFilterContainer }">
+
+        <div class="total-filter-wrapper" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
+
+          <h6>{{ 'DISCOVER.SHOWING' | translate }} {{ innovationCards.length }} {{ 'innovations' }} {{ 'DISCOVER.FROM' | translate }} {{ totalValue }} {{ 'innovations.' }}</h6>
+
+          <ng-container *ngIf="showFilterContainer === false">
+            <button class="btn btn-sm ghost-edit btn-filter" (click)="showFilterContainer = true"><i class="fas fa-sliders-h"></i>Add Filters</button>
+          </ng-container>
+
+          <ng-container *ngIf="showFilterContainer === true">
+            <div class="filter-action">
+              <button class="btn btn-sm ghost-edit btn-cancel" (click)="showFilterContainer = false">Cancel</button>
+              <button class="btn btn-sm btn-primary">Apply Filters</button>
+            </div>
+          </ng-container>
+
+        </div>
+
+        <div class="filter-applied" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
+          Filter 1
+        </div>
+
+        <div class="column col-xs-12 col-11 col-mx-auto filter-outer" [ngStyle]="{ 'display': showFilterContainer ? 'block' : 'none'}">
+          <div class="filter-content">
+
+            <!-- Language filter -->
+            <div class="filter-language">
+              <p>Language</p>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input type="checkbox" value="en">
+                  <i class="form-icon"></i><span class="checkbox-label">English</span>
+                </label>
+              </div>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input type="checkbox" value="fr">
+                  <i class="form-icon"></i><span class="checkbox-label">French</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
+
+      <div [ngClass]="{ 'filter-wrapper-overlay': showFilterContainer }" (click)="showFilterContainer = false"></div>
 
       <!-- Innovations -->
       <div class="innovations-wrapper">

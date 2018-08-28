@@ -16,12 +16,23 @@
 
   }
 
+  .filter-wrapper {
+    background: white;
+    z-index: 3;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
   .total-filter-wrapper {
     padding-top: 1.57rem;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
+    animation-name: fadeIn;
+    animation-duration: .35s;
+    animation-timing-function: ease-in-out;
 
     h6 {
       color: $meta-color;
@@ -29,11 +40,7 @@
       font-size: 1.12rem;
     }
 
-    .btn {
-      border-radius: .18rem;
-      border-width: .06rem;
-      padding-left: .9375rem !important;
-      padding-right: .9375rem !important;
+    .btn-filter {
       margin-bottom: 1.57rem;
 
       i {
@@ -47,10 +54,67 @@
 
   }
 
-  .filter-btn-wrapper {
+  .filter-action {
+    margin-bottom: 1.57rem;
+  }
 
+  .ghost-edit, .btn-primary {
+    border-radius: .18rem;
+    border-width: .06rem;
+    padding-left: .9375rem !important;
+    padding-right: .9375rem !important;
+  }
 
+  .btn-cancel {
+    margin-right: .6rem;
+    border: none;
+  }
 
+  .filter-outer {
+    display: block;
+    padding-top: 1.57rem;
+    animation-name: fadeIn;
+    animation-duration: .35s;
+    animation-timing-function: ease-in-out;
+
+    .filter-content {
+      border-top: 1px solid $border-color;
+      padding-top: 1.57rem;
+      padding-bottom: 1.57rem;
+
+      .filter-language {
+        font-size: .9375rem;
+
+        p {
+          color: $filter-section-heading;
+          font-weight: 600;
+        }
+
+      }
+
+      .filter-option {
+        display: inline-flex;
+        flex-wrap: wrap;
+        margin-right: 1.57rem;
+      }
+
+    }
+
+  }
+
+  .filter-wrapper-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background: rgba(0,0,0,0.65);
+    animation-name: fadeIn;
+    animation-duration: .35s;
+    animation-timing-function: ease-in-out;
   }
 
   .innovations-wrapper {
