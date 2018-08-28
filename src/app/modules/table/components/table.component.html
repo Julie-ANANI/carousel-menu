@@ -174,9 +174,9 @@
 
   <!-- Behind the table we show the pagination -->
   <app-pagination *ngIf="!isNotPaginable"
-                [config]="config"
-                (configChange)="changeConfig($event)"
-                [total]="total"
-                [propertyName]="selector">
+                  [configValue]="paginationConfig"
+                  (configChange)="changePaginationConfig($event)"
+                  [total]="total"
+                  [propertyName]="selector">
   </app-pagination>
 </span>

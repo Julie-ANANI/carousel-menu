@@ -43,8 +43,8 @@
       <!-- Pagination -->
       <div class="pagination-wrapper">
         <app-pagination
-          [config]="config"
-          (configChange)="loadProjects($event)"
+          [configValue]="paginationConfig"
+          (configChange)="configChange($event)"
           [total]="total"
           [propertyName]="'client-projects'">
         </app-pagination>

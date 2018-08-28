@@ -4,6 +4,7 @@ import { TranslateTitleService } from '../../../../../../services/title/title.se
 import { UserService } from '../../../../../../services/user/user.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
+import {ConfigTemplate} from '../../../../../../models/config';
 
 @Component({
   selector: 'app-projects-list',
@@ -25,6 +26,8 @@ export class ProjectsListComponent implements OnInit {
     }
   };
 
+  private _paginationConfig: ConfigTemplate = {limit: this._config.limit, offset: this._config.offset};
+
   constructor(private _translateService: TranslateService,
               private _userService: UserService,
               private _innovationService: InnovationService,
@@ -32,17 +35,24 @@ export class ProjectsListComponent implements OnInit {
 
   ngOnInit(): void {
     this._titleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
-    this.loadProjects(this._config);
+    this.loadProjects();
   }
 
-  loadProjects(config: any): void {
-    this._config = config;
+  loadProjects(): void {
     this._userService.getMyInnovations(this._config)
       .first()
       .subscribe(projects => {
         this._projects = projects.result;
         this._total = projects._metadata.totalCount;
       });
+  }
+
+  configChange(value: any) {
+    this._paginationConfig = value;
+    this._config.limit = value.limit
+    this._config.offset = value.offset;
+    window.scroll(0, 0);
+    this.loadProjects();
   }
 
   /**
@@ -109,5 +119,9 @@ export class ProjectsListComponent implements OnInit {
 
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+  }
+
+  get paginationConfig(): ConfigTemplate {
+    return this._paginationConfig;
   }
 }

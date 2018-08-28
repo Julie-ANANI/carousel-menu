@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { ConfigTemplate } from '../../../../models/config';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import {ConfigTemplate} from '../../../../models/config';
 
 @Component({
   selector: 'app-pagination',
@@ -8,9 +8,12 @@ import { TranslateNotificationsService } from '../../../../services/notification
   styleUrls: ['./pagination.component.scss']
 })
 
-export class PaginationComponent implements OnInit, OnChanges {
+export class PaginationComponent implements OnInit {
 
-  @Input() total: number;
+  @Input() set total(value: number) {
+    this._total = value;
+    this._numPages = Math.ceil(this._total / this.perPage);
+  };
   @Input() propertyName: string;
 
   @Input() set configValue(value: ConfigTemplate) {
@@ -32,6 +35,7 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   private _localOffset = 0;
   private _limit = 0;
+  private _total = 0;
 
   constructor(private translateNotificationService: TranslateNotificationsService) {}
 
@@ -48,7 +52,6 @@ export class PaginationComponent implements OnInit, OnChanges {
       this.initialConfigValues.limit = localLimit;
     }
 
-    this._numPages = Math.ceil(this.total / this.perPage);
     this._update();
 
   }
@@ -129,7 +132,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     // this._config.limit = number;
     this.initialConfigValues.limit = number;
     this._update();
-    this._numPages = Math.ceil(this.total / this.perPage);
+    this._numPages = Math.ceil(this._total / this.perPage);
   }
 
   get localOffset(): number {
@@ -143,6 +146,10 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   set limit(value: number) {
     this._limit = value;
+  }
+
+  get total(): number {
+    return this._total;
   }
 
 }
