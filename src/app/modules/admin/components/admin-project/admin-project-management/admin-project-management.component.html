@@ -715,12 +715,7 @@
 
     <div class="project-commentaries">
       <div class="user-message"
-           *ngIf="project.clientSatisfaction.message"
-           [ngClass]="{
-        happy: project.clientSatisfaction.satisfaction === 'HAPPY' || project.clientSatisfaction.satisfaction === 'VERY_HAPPY',
-        normal: project.clientSatisfaction.satisfaction === 'NORMAL',
-        bad: project.clientSatisfaction.satisfaction === 'BAD' || project.clientSatisfaction.satisfaction === 'VERY_BAD'
-        }">
+           *ngIf="project.clientSatisfaction.message">
         <label class="form-label">{{'PROJECT.DELIVERY.CLIENT_SATISFACTION' | translate}}</label>
         <span>
           {{project.clientSatisfaction?.message}}
