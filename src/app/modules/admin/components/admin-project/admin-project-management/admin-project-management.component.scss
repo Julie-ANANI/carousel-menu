@@ -16,7 +16,11 @@
     min-height: 40px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: left;
+
+    label.form-switch {
+      width: 33%;
+    }
   }
 
   .project-summary {
@@ -27,7 +31,7 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      align-items: center;
+      align-items: left;
     }
 
     h6 {
