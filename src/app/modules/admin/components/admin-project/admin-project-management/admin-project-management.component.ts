@@ -40,6 +40,8 @@ export class AdminProjectManagementComponent implements OnInit {
   sidebarState = new Subject<string>();
   projectSubject = new Subject<Innovation>();
 
+  private _showDeleteModal = false;
+
   // Owner edition
   isEditOwner = false;
   usersSuggestion: Array<any> = [];
@@ -702,17 +704,25 @@ export class AdminProjectManagementComponent implements OnInit {
     this.projectSubject.next(this._project);
   }
 
+  deleteProjectModal() {
+    this._showDeleteModal = true;
+  }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._showDeleteModal = false;
+  }
+
   /**
    * Suppression et mise à jour de la vue
    */
-  /*public removeProject(projectId: string) {
+  public removeProject() {
     this._innovationService
-      .remove(projectId)
+      .remove(this._project._id)
       .subscribe(projectRemoved => {
-        this._projects.splice(this._getProjectIndex(projectId), 1);
-        this.selectedProjectIdToBeDeleted = null;
+        this._router.navigate(['/admin/projects/']);
       });
-  }*/
+  }
 
   formatText(text: string) {
     return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
@@ -747,6 +757,10 @@ export class AdminProjectManagementComponent implements OnInit {
 
   get clickPercentage(): number {
     return this._clickPercentage;
+  }
+
+  get showDeleteModal(): boolean {
+    return this._showDeleteModal;
   }
 
 }

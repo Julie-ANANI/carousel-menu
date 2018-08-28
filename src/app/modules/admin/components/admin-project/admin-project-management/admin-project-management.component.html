@@ -738,6 +738,8 @@
 
   </div>
 
+  <button class="btn btn-sm ghost-delete" (click)="deleteProjectModal()">{{ 'PROJECT_MODULE.SETUP.DELETE_BUTTON' | translate }}</button>
+
 </div>
 
 <!-- Sidebars -->
@@ -767,3 +769,27 @@
                  (newTags)="addTags($event)">
   </app-tags-form>
 </app-sidebar>
+
+<!-- Modal to ask admin to sure about deleting the project -->
+<div class="modal" [ngClass]="{ 'active': showDeleteModal }">
+  <div class="modal-overlay" (click)="closeModal($event)"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+      <div class="modal-title">{{ 'PROJECT_MODULE.SETUP.DELETE_BUTTON' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        {{ 'PROJECT_MODULE.SETUP.DELETE_PROJECT_MODAL.CONTENT' | translate }}
+        <ul>
+          <li *ngFor="let user of usersToRemove">{{user.firstName}} {{user.lastName}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-sm ghost-delete" (click)="removeProject()">
+        {{ 'COMMON.DELETE' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
