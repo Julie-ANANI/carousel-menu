@@ -94,14 +94,12 @@
               <p>Label</p>
             </div>
 
-            <div class="filter-spinner">
-              <app-shared-loader></app-shared-loader>
-            </div>
-
           </div>
         </div>
 
       </div>
+
+      <div *ngIf="addingFilter" class="filter-spinner-wrapper"><app-shared-loader></app-shared-loader></div>
 
       <div [ngClass]="{ 'filter-wrapper-overlay': showFilterContainer }" (click)="showFilterContainer = false"></div>
 

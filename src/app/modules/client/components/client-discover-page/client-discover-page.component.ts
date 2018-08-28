@@ -26,6 +26,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   showFilterContainer = false;
   tags: Array<Tag>;
   filterApplied: Array<{id: string, value: string}>;
+  addingFilter = false;
 
   private searchInput: string;
   private innovationDetails: Array<{text: string, id: string}>; // array to store the innovation title of all the innovations for search field
@@ -137,6 +138,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     }
 
     console.log(this.filterApplied);
+    this.addingFilter = true;
     this.loadInnovationCards();
 
   }
@@ -159,6 +161,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
       });
     }
+
 
 
   }
