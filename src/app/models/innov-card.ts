@@ -1,6 +1,8 @@
 import { Media } from './media';
+import {Model} from './model';
 
-export interface InnovCard {
+export class InnovCard extends Model {
+
   readonly _id?: string;
   readonly innovation_reference?: string;
   readonly title?: string;

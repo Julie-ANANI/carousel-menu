@@ -5,6 +5,8 @@ export const COMMON = {
   'LAST_SAVED_AT': 'Last saved at',
   'UPDATE': 'Update',
   'EDIT': 'Edit',
+  'SEND': 'Send',
+  'CHANGE': 'Change',
   'DELETE': 'Delete',
   'SUBMIT': 'CONFIRM',
   'LOG_IN': 'Sign in',

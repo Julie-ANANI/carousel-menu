@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AdminEmailQueueComponent } from './admin-emails-queue/admin-emails-queue.component';
-import { AdminAnswersGmailComponent } from "./admin-answers-gmail/admin-answers-gmail.component";
+import { AdminAnswersGmailComponent } from './admin-answers-gmail/admin-answers-gmail.component';
 import { AdminBatchInformationComponent } from './admin-batch-information/admin-batch-information.component';
 
 export const monitoringRoutes: Routes = [

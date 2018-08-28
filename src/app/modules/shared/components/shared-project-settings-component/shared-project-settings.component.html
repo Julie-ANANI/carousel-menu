@@ -344,32 +344,6 @@
           </div>
         </div>
 
-        <!-- Blacklist domains -->
-        <div *ngIf="adminMode" class="blacklist-domain-wrapper pd-ques">
-          <span class="num-rect">6</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.BLACKLIST.DOMAINS' | translate }}</span>
-          <div class="pd-input" [ngStyle]=" { 'padding-left': '0' }">
-            <app-input-list
-              (update)="addDomainToExclude($event)"
-              [canEdit]="true"
-              id="domain-to-exclude"
-              [config]="getConfig('domainBL')">
-            </app-input-list>
-          </div>
-        </div>
-
-        <!-- Blacklist emails -->
-        <div *ngIf="adminMode" class="blacklist-email-wrapper pd-ques">
-          <span class="num-rect">7</span><span class="ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.BLACKLIST.EMAILS' | translate }}</span>
-          <div class="pd-input" [ngStyle]=" { 'padding-left': '0' }">
-            <app-input-list
-              (update)="addEMailToExclude($event)"
-              [canEdit]="true"
-              id="emails-to-exclude"
-              [config]="getConfig('emailBL')">
-            </app-input-list>
-          </div>
-        </div>
-
       </div>
       <!-- /Question wrapper -->
 
@@ -388,7 +362,7 @@
     <!-- Ques and help section -->
 
     <!--Delete project button -->
-    <div class="delete-project-wrapper pd-ques">
+    <div *ngIf="!adminSide" class="delete-project-wrapper pd-ques">
       <button class="btn btn-sm ghost-delete" (click)="showDeleteModal($event)">{{ 'PROJECT_MODULE.SETUP.DELETE_BUTTON' | translate }}</button>
     </div>
 

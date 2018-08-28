@@ -182,7 +182,11 @@
   <tfoot>
   <tr>
     <td colspan="12">
-      <app-pagination [config]="config" (configChange)="loadHistory()" [total]="total" [propertyName]="'shared-history'"></app-pagination>
+      <app-pagination [configValue]="paginationConfig"
+                      (configChange)="configChange($event)"
+                      [total]="total"
+                      [propertyName]="'shared-history'">
+      </app-pagination>
     </td>
   </tr>
   </tfoot>

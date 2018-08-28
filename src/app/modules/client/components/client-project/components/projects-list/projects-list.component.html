@@ -50,6 +50,7 @@
       <!-- Pagination -->
       <div class="pagination-wrapper">
         <app-pagination
+          [configValue]="paginationConfig"
           (configChange)="configChange($event)"
           [total]="total"
           [propertyName]="'client-projects'">

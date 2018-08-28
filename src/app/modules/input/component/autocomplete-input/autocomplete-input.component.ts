@@ -20,6 +20,7 @@ export class AutocompleteInputComponent implements OnInit {
   @Input() onlyOne = false; // si le booléen est à true, on accepte une seule valeur et non un tableau
   @Input() adminMode = false;
   @Input() multiLangObjects = false;
+  @Input() addButton = true; // this is to add the plus button.
 
   @Input() set config(config: { placeholder: string, type: string, initialData: any, identifier: string, canOrder: boolean }) {
     if (config) {
@@ -85,6 +86,8 @@ export class AutocompleteInputComponent implements OnInit {
       return data[this._identifier];
     }
   };
+
+
 
   addProposition(val: any): void {
     val = val ? val.get('answer').value : '';

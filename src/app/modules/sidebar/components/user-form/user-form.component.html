@@ -58,11 +58,11 @@
       <!-- Show Tags -->
       <div *ngIf="isProfessional && tags.length > 0" class="form-group">
         <label class="form-label">Tags</label>
-        <app-shared-tag-item [tags]="tags" (removeTag)="removeTag($event)"></app-shared-tag-item>
+        <app-shared-tag-item [tags]="tags" (removeTag)="removeTag($event)" [isAdmin]="true"></app-shared-tag-item>
       </div>
 
       <!-- First name -->
-      <div class="form-group" *ngIf="!addTagsToProfessionals">
+      <div class="form-group">
         <label class="form-label" for="firstName">{{ 'COMMON.FIRSTNAME' | translate }}</label>
         <input
           class="form-default"
@@ -76,7 +76,7 @@
       </div>
 
       <!-- Last name -->
-      <div class="form-group" *ngIf="!addTagsToProfessionals">
+      <div class="form-group">
         <label class="form-label" for="firstName">{{ 'COMMON.LASTNAME' | translate }}</label>
         <input
           class="form-default"
@@ -90,7 +90,7 @@
       </div>
 
       <!-- Email -->
-      <div class="form-group" *ngIf="!addTagsToProfessionals">
+      <div class="form-group">
         <label class="form-label" for="email">{{ 'COMMON.EMAIL' | translate }}</label>
         <input
           class="form-default"
@@ -120,7 +120,7 @@
       </div>
 
       <!-- Job -->
-      <div class="form-group" *ngIf="!addTagsToProfessionals">
+      <div class="form-group">
         <label class="form-label" for="jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
         <input
           class="form-default"
@@ -134,7 +134,7 @@
       </div>
 
       <!-- Company -->
-      <div class="form-group" *ngIf="!addTagsToProfessionals">
+      <div class="form-group">
         <label class="form-label" for="companyName">{{ 'COMMON.COMPANY' | translate }}</label>
         <input
           class="form-default"
@@ -148,7 +148,7 @@
       </div>
 
       <!-- Country -->
-      <div class="form-group" *ngIf="!addTagsToProfessionals">
+      <div class="form-group">
         <label class="form-label" for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
         <input
           class="form-default"
@@ -183,14 +183,6 @@
           <span *ngIf="userForm.get('profileUrl').hasError('required')">{{ 'COMMON.REQUIRED.URL' | translate }}</span>
         </div>
       </div>
-
-      <!-- Add Tags -->
-      <app-shared-tag-item
-        *ngIf="addTagsToProfessionals"
-        [tags]="tags"
-        [editMode]="true"
-        (addTag)="addTag($event)"
-        (removeTag)="removeTag($event)"></app-shared-tag-item>
 
       <!-- Link to quiz URI -->
       <div *ngIf="isProfessional && campaign" class="form-group">

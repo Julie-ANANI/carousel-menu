@@ -40,6 +40,19 @@
 
   }
 
+  .project-progress {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0;
+    width: 45%;
+
+    .progress {
+      margin: 10px;
+      width: 100px;
+    }
+  }
+
   .tabs li a:hover, .tabs li a.active {
     color:  #FFB300;
     border-bottom: 5px solid #FFB300;
