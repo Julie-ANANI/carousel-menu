@@ -8,25 +8,32 @@
         <app-search-input></app-search-input>
       </div>
     </div>
+    <!-- /Heading and Search field -->
 
     <!-- Spinner display -->
     <div *ngIf="displaySpinner" class="spinner-wrapper">
       <app-shared-loader></app-shared-loader>
     </div>
+    <!-- /Spinner display -->
 
+    <!-- Spinner display is off -->
     <ng-container *ngIf="!displaySpinner">
 
       <!-- Total number of innovations and filters -->
       <div [ngClass]="{ 'filter-wrapper': showFilterContainer }">
 
+        <!-- result and add filter button -->
         <div class="total-filter-wrapper" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
 
+          <!-- show results title -->
           <h6>{{ 'DISCOVER.SHOWING' | translate }} {{ innovationCards.length }} {{ 'innovations' }} {{ 'DISCOVER.FROM' | translate }} {{ totalValue }} {{ 'innovations.' }}</h6>
 
+          <!-- add filter button -->
           <ng-container *ngIf="showFilterContainer === false">
             <button class="btn btn-sm ghost-edit btn-filter" (click)="showFilterContainer = true"><i class="fas fa-sliders-h"></i>Add Filters</button>
           </ng-container>
 
+          <!-- cancel and apply filter button -->
           <ng-container *ngIf="showFilterContainer === true">
             <div class="filter-action">
               <button class="btn btn-sm ghost-edit btn-cancel" (click)="showFilterContainer = false">Cancel</button>
@@ -35,11 +42,11 @@
           </ng-container>
 
         </div>
+        <!-- /result and add filter button -->
 
-        <div class="filter-applied" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
+        <!--<div class="filter-applied" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }"></div>-->
 
-        </div>
-
+        <!-- add filter button is clicked, showing the container -->
         <div class="column col-xs-12 col-11 col-mx-auto filter-outer" [ngStyle]="{ 'display': showFilterContainer ? 'block' : 'none'}">
           <div class="filter-content">
 
@@ -89,18 +96,38 @@
               </div>
             </div>
 
-            <!-- Filter sector -->
+            <!-- Filter status -->
+            <div class="filter-status">
+              <p>Status</p>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input type="checkbox" id="evaluating" value="EVALUATING" name="status" (change)="toggleFilter($event)">
+                  <i class="form-icon"></i><span class="checkbox-label">In progress</span>
+                </label>
+              </div>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input type="checkbox" id="done" value="DONE" name="status" (change)="toggleFilter($event)">
+                  <i class="form-icon"></i><span class="checkbox-label">Completed</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Filter label -->
             <div class="filter-label">
               <p>Label</p>
             </div>
 
           </div>
         </div>
+        <!-- /add filter button is clicked, showing the container -->
 
       </div>
+      <!-- /Total number of innovations and filters -->
 
-      <div *ngIf="addingFilter" class="filter-spinner-wrapper"><app-shared-loader></app-shared-loader></div>
+      <!--<div *ngIf="addingFilter" class="filter-spinner-wrapper"><app-shared-loader></app-shared-loader></div>-->
 
+      <!-- Overlay to show black background when the filter button is clicked -->
       <div [ngClass]="{ 'filter-wrapper-overlay': showFilterContainer }" (click)="showFilterContainer = false"></div>
 
       <!-- Innovations -->
@@ -124,18 +151,21 @@
           </div>
         </div>
       </div>
+      <!-- /Innovations -->
 
       <!-- Pagination -->
       <div class="pagination-wrapper">
         <app-pagination
           [total]="totalValue"
           [propertyName]="'app-discover'"
-          [configValue]="paginationConfigValue"
-          (configChange)="configChange($event)">
+          [configValue]="paginationValue"
+          (configChange)="changePagination($event)">
         </app-pagination>
       </div>
+      <!-- /Pagination -->
 
     </ng-container>
+    <!-- Spinner display is off -->
 
   </div>
 </section>
