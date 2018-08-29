@@ -26,7 +26,7 @@
         <div class="total-filter-wrapper" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
 
           <!-- show results title -->
-          <h6>{{ 'DISCOVER.SHOWING' | translate }} {{ innovationCards.length }} {{ 'innovations' }} {{ 'DISCOVER.FROM' | translate }} {{ totalValue }} {{ 'innovations.' }}</h6>
+          <h6>{{ 'DISCOVER.SHOWING' | translate }} {{ 'innovations' }} {{ 'DISCOVER.FROM' | translate }} {{ totalValue }} {{ 'innovations.' }}</h6>
 
           <!-- add filter button -->
           <ng-container *ngIf="showFilterContainer === false">
@@ -143,7 +143,7 @@
 
               <!-- Body part -->
               <div class="innov-body">
-                <h1 class="main-heading">{{ innovation.title | DiscoverSummaryPipe:95 }}</h1>
+                <h1 class="main-heading">{{ innovation.title | DiscoverSummaryPipe:80 }}</h1>
                 <p>{{ innovation.summary }}</p>
               </div>
 

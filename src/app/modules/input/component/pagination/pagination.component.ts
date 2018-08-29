@@ -14,6 +14,7 @@ export class PaginationComponent implements OnInit {
     this._total = value;
     this._numPages = Math.ceil(this._total / this.perPage);
   };
+
   @Input() propertyName: string;
 
   @Input() set configValue(value: ConfigTemplate) {
@@ -53,6 +54,7 @@ export class PaginationComponent implements OnInit {
       this.initialConfigValues.limit = localLimit;
     }
 
+    this._numPages = Math.ceil(this._total / this.perPage);
     this._update();
 
   }

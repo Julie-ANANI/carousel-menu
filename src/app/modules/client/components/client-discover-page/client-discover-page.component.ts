@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateService} from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { InnovCard } from '../../../../models/innov-card';
 import { ConfigTemplate } from '../../../../models/config';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../models/tag';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -17,9 +18,10 @@ import { Tag } from '../../../../models/tag';
 export class ClientDiscoverPageComponent implements OnInit {
 
   // private innovations: Array<Innovation>;
+
   private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
 
-  private totalInnovations: Array<Innovation>; // to hold the total project result we get from the server.
+  private totalInnovations: Array<Innovation> = []; // to hold the total project result we get from the server.
 
   selectedLang = '';
 
@@ -31,13 +33,15 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   tags: Array<Tag>; // to store the project tags.
 
-  filterApplied: Array<{id: string, value: string}>; // to show the client the filters he added.
+  filterApplied: Array<{id: string, value: string}> = []; // to show the client the filters he added.
 
   addingFilter = false;
 
+  results = 0;
+
   private searchInput: string;
 
-  private innovationDetails: Array<{text: string, id: string}>; // array to store the innovation title of all the innovations for search field
+  private innovationDetails: Array<{text: string, id: string}>; // to store the innovation title of all the innovations for search field
 
   private _suggestionInnov: Array<{text: string, id: string}>; // to show suggestions to user below the search field when he types
 
@@ -75,9 +79,8 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private initialize() {
     this.innovationDetails = [];
-    this.totalInnovations = [];
-    this.filterApplied = [];
     this.searchInput = '';
+    console.log(this.filterApplied);
     this.getAllInnovations();
   }
 
@@ -88,8 +91,13 @@ export class ClientDiscoverPageComponent implements OnInit {
     this.innovationService.getAll(this._config).first().subscribe(innovations => {
       this.totalInnovations = innovations.result;
       console.log(innovations.result);
-      this.totalValue = innovations._metadata.totalCount;
-      this.loadInnovationCards();
+
+      if (this.filterApplied.length > 0) {
+
+      } else {
+        this.totalValue = innovations._metadata.totalCount;
+        this.loadInnovationCards();
+      }
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVER.ERROR');
     }, () => {
@@ -108,14 +116,23 @@ export class ClientDiscoverPageComponent implements OnInit {
   toggleFilter(event: Event) {
     console.log(event);
 
+    // if type is selected
+    if (event.target['name'] === 'type') {
+      this.typeFilter(event);
+    }
+
     // if language is selected
     if (event.target['name'] === 'language') {
       this.langFilter(event);
     }
 
     console.log(this.filterApplied);
-    this.addingFilter = true;
-    this.loadInnovationCards();
+    this._config.limit = 0;
+    this.getAllInnovations();
+
+  }
+
+  private typeFilter(event: Event) {
 
   }
 
@@ -147,6 +164,11 @@ export class ClientDiscoverPageComponent implements OnInit {
 
     });
 
+  }
+
+  @HostListener('window: beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    return this.displaySpinner = true;
   }
 
   onSearchValue(event: any) {
