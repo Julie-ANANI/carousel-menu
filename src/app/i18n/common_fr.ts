@@ -14,6 +14,7 @@ export const COMMON = {
   'LOG_OUT': 'Se déconnecter',
   'CANCEL': 'Annuler',
   'ADD': 'Ajouter',
+  'GENERATE': 'Générer',
   'MORE': 'Voir Plus',
   'ALL': 'Tous',
   'OF': 'de',

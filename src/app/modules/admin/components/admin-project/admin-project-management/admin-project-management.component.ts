@@ -343,6 +343,19 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
+   * This function generates the quiz for the project.
+   */
+  generateQuiz(event: Event) {
+    event.preventDefault();
+    this._innovationService.createQuiz(this._project._id).first().subscribe((result) => {
+      this._project = result;
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.QUIZ.CREATED');
+    }, (err) => {
+      this._notificationsService.error('ERROR.ERROR', err);
+    })
+  }
+
+  /***
    * This function is call when the user edit the description of the project
    * Change the sidebar to the pitch sidebar
    */
