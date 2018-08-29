@@ -166,6 +166,11 @@
           {{ 'PROJECT.PREPARATION.EDIT_PRESET' | translate }}
         </label>
 
+        <button class="showOnHover btn btn-xs ghost-primary"
+                (click)="generateQuiz($event)">
+          {{'COMMON.GENERATE' | translate}}
+        </button>
+
         <button class="showOnHover btn btn-xs ghost-edit"
                 (click)="goToPresetEdition()">
           {{'COMMON.EDIT' | translate}}

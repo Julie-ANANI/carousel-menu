@@ -21,6 +21,7 @@ export const COMMON = {
   'ADDED': 'Added on',
   'CREATED': 'Created on',
   'UPDATED': 'Updated on',
+  'GENERATE': 'Generate',
   'LAUNCHED': 'Launched on',
   'EXPIRATION' : 'Expires on',
   'EXPIRATION-SPECIFY': 'Or specify a date',
