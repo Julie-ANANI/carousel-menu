@@ -19,19 +19,19 @@ export class ClientDiscoverPageComponent implements OnInit {
   // private innovations: Array<Innovation>;
   private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
 
-  private totalInnovations: Array<Innovation>;
+  private totalInnovations: Array<Innovation>; // to hold the total project result we get from the server.
 
   selectedLang = '';
 
-  totalValue = 0;
+  totalValue = 0; // to send the total results to the pagination component.
 
-  displaySpinner = true;
+  displaySpinner = true; // to show the spinner when we are fetching the data from the server.
 
-  showFilterContainer = false;
+  showFilterContainer = false; // to show or hide the filter container.
 
-  tags: Array<Tag>;
+  tags: Array<Tag>; // to store the project tags.
 
-  filterApplied: Array<{id: string, value: string}>;
+  filterApplied: Array<{id: string, value: string}>; // to show the client the filters he added.
 
   addingFilter = false;
 
