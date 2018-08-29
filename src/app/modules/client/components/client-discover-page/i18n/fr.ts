@@ -10,5 +10,6 @@ export const DISCOVER = {
   'CATEGORY': 'Catégorie',
   'ERROR': 'Nous rencontrons des problèmes lors de la récupération des données. Veuillez essayer de recharger la page à nouveau.',
   'SHOWING': 'montrant',
-  'FROM': 'de'
+  'FROM': 'de',
+  'RESULT': 'résultats'
 };

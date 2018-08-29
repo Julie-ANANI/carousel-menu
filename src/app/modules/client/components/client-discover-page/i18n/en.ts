@@ -10,5 +10,6 @@ export const DISCOVER = {
   'SEARCH_CATEGORY': 'Category',
   'ERROR': 'We are having trouble while fetching the data. Please try to reload the page again.',
   'SHOWING': 'showing',
-  'FROM': 'from'
+  'FROM': 'from',
+  'RESULT': 'results'
 };

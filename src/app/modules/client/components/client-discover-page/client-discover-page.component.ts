@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateService} from '@ngx-translate/core';
@@ -7,7 +7,6 @@ import { InnovCard } from '../../../../models/innov-card';
 import { ConfigTemplate } from '../../../../models/config';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../models/tag';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -25,19 +24,21 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   selectedLang = '';
 
-  totalValue = 0; // to send the total results to the pagination component.
-
   displaySpinner = true; // to show the spinner when we are fetching the data from the server.
 
   showFilterContainer = false; // to show or hide the filter container.
 
   tags: Array<Tag>; // to store the project tags.
 
-  filterApplied: Array<{id: string, value: string}> = []; // to show the client the filters he added.
+  filterApplied: Array<{id: string, value: string, type: string}> = []; // to show the client the filters he added.
 
-  addingFilter = false;
+  addingFilter = false; // showing spinner when adding the filters.
 
-  results = 0;
+  totalResults = 0; // saving the result that we get from the server.
+
+  showingResult = 0; // innovations we are showing to user from all the innovations.
+
+  applyFilterClicked = false;
 
   private searchInput: string;
 
@@ -59,6 +60,8 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   paginationValue: ConfigTemplate = {}; // to pass the value in the pagination component.
 
+  initialConfigLimit = 20;
+
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
               private translateService: TranslateService,
@@ -74,15 +77,49 @@ export class ClientDiscoverPageComponent implements OnInit {
       offset: this._config.offset
     };
 
+    this.storedFilters();
+
     this.initialize();
+
   }
+
+
+  /*
+    checking do we have any filters and limit in the session storage,
+    if yes then assign to the filterApplied attribute.
+   */
+  private storedFilters() {
+    const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters'));
+
+    if (sessionValues.length > 0) {
+      this.filterApplied = sessionValues;
+      this._config.limit = 0;
+    } else {
+      this.filterApplied = [];
+      this._config.limit = this.initialConfigLimit;
+    }
+
+    /*const sessionLimit = JSON.parse(sessionStorage.getItem('discover-limit'));
+    this._config.limit = sessionLimit === null ? this.reLimitValue : sessionLimit;*/
+  }
+
+
+  /*
+    checking the filterApplied contains the keys,
+    if yes then we make the checkbox ticked.
+   */
+  filterChecked(id: string): boolean {
+    const index = this.filterApplied.findIndex((item) => item.id === id);
+    return index !== -1;
+  }
+
 
   private initialize() {
     this.innovationDetails = [];
     this.searchInput = '';
-    console.log(this.filterApplied);
     this.getAllInnovations();
   }
+
 
   /*
     based on the config we request to the server and get the results.
@@ -90,18 +127,18 @@ export class ClientDiscoverPageComponent implements OnInit {
   private getAllInnovations() {
     this.innovationService.getAll(this._config).first().subscribe(innovations => {
       this.totalInnovations = innovations.result;
-      console.log(innovations.result);
-
-      if (this.filterApplied.length > 0) {
-
-      } else {
-        this.totalValue = innovations._metadata.totalCount;
-        this.loadInnovationCards();
-      }
+      this.addingFilter = true;
+      this.totalResults = innovations._metadata.totalCount;
+      this.loadInnovationCards();
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVER.ERROR');
     }, () => {
       this.displaySpinner = false;
+
+      setTimeout(() => {
+        this.addingFilter = false;
+      }, 500);
+
     });
   }
 
@@ -109,12 +146,50 @@ export class ClientDiscoverPageComponent implements OnInit {
   changePagination(paginationValues: ConfigTemplate) {
     window.scroll(0, 0);
     this._config.offset = paginationValues.offset;
-    this._config.limit = paginationValues.limit;
+    this.initialConfigLimit = this._config.limit = paginationValues.limit;
     this.getAllInnovations();
   }
 
+
+  /*
+    showing the filter container.
+   */
+  addFilter(event: Event) {
+    event.preventDefault();
+    this.showFilterContainer = true;
+    this.applyFilterClicked = false;
+  }
+
+
+  /*
+    check the value of applyFilterClicked, if false then assign the
+    filters that are stored in the sessionStorage.
+   */
+  cancelFilter(event: Event) {
+    event.preventDefault();
+
+    if (!this.applyFilterClicked) {
+      this.storedFilters();
+      this.getAllInnovations();
+    }
+
+    this.showFilterContainer = false;
+
+  }
+
+
+  /*
+    save the applied filters to session storage and close the container.
+   */
+  applyFilter(event: Event) {
+    event.preventDefault();
+    sessionStorage.setItem('discover-filters', JSON.stringify(this.filterApplied));
+    this.applyFilterClicked = true;
+    this.showFilterContainer = false;
+  }
+
+
   toggleFilter(event: Event) {
-    console.log(event);
 
     // if type is selected
     if (event.target['name'] === 'type') {
@@ -126,24 +201,31 @@ export class ClientDiscoverPageComponent implements OnInit {
       this.langFilter(event);
     }
 
-    console.log(this.filterApplied);
-    this._config.limit = 0;
+    if (this.filterApplied.length > 0) {
+      this._config.limit = 0;
+    } else {
+      this._config.limit = this.initialConfigLimit;
+    }
+
     this.getAllInnovations();
 
   }
+
 
   private typeFilter(event: Event) {
 
   }
 
+
   private langFilter(event: Event) {
     if (event.target['checked']) {
-      this.filterApplied.push({id: event.target['id'], value: event.target['defaultValue']});
+      this.filterApplied.push({id: event.target['id'], value: event.target['defaultValue'], type: event.target['name']});
     } else {
       const index = this.filterApplied.findIndex(name => name.id === event.target['id']);
       this.filterApplied.splice(index, 1);
     }
   }
+
 
   /*
     after fetching all the innovations from the server we are pushing them to the
@@ -153,23 +235,41 @@ export class ClientDiscoverPageComponent implements OnInit {
     this._innovationCards = [];
 
     this.totalInnovations.forEach((items) => {
-      let index = items.innovationCards.findIndex(innovationCard => innovationCard.lang === this.innovationsLang);
 
-      // if we do not have the innovation in the english language then we show the innovation i.e. on index [0].
-      if (index === -1) {
-        index = 0;
+      if (this.filterApplied.length > 0) {
+
+        for (let i = 0; i < this.filterApplied.length; i++) {
+
+
+          if (this.filterApplied[i].type === 'language') {
+            const index = items.innovationCards.findIndex(innovationCard => innovationCard.lang === this.filterApplied[i].value);
+            if (index !== -1) {
+              this._innovationCards.push(items.innovationCards[index]);
+            }
+
+          }
+
+          this.totalResults = this._innovationCards.length;
+
+        }
+
+      } else {
+        let index = items.innovationCards.findIndex(innovationCard => innovationCard.lang === this.innovationsLang);
+
+        // if we do not have the innovation in the english language then we show the innovation i.e. on index [0].
+        if (index === -1) {
+          index = 0;
+        }
+
+        this._innovationCards.push(items.innovationCards[index]);
+
+        this.showingResult = this._innovationCards.length;
       }
-
-      this._innovationCards.push(items.innovationCards[index]);
 
     });
 
   }
 
-  @HostListener('window: beforeunload')
-  canDeactivate(): Observable<boolean> | boolean {
-    return this.displaySpinner = true;
-  }
 
   onSearchValue(event: any) {
     if (event.value !== '') {
@@ -182,9 +282,11 @@ export class ClientDiscoverPageComponent implements OnInit {
     }
   }
 
+
   get suggestionInnov(): Array<{ text: string; id: string }> {
     return this._suggestionInnov;
   }
+
 
   onValueSelected(event: any) {
     if (event.value.text !== '') {
@@ -194,6 +296,7 @@ export class ClientDiscoverPageComponent implements OnInit {
       });
     }
   }
+
 
   /*
     getting the image src of the innovation.
@@ -224,12 +327,14 @@ export class ClientDiscoverPageComponent implements OnInit {
     return this.translateService.currentLang;
   }
 
+
   /*
     getting the language of the innovations that we want to display.
    */
   get innovationsLang(): string {
     return this.selectedLang === '' ? 'en' : this.selectedLang;
   }
+
 
   get innovationCards(): InnovCard[] {
     return this._innovationCards;
