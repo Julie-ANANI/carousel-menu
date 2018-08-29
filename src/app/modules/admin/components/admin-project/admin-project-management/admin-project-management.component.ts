@@ -268,6 +268,19 @@ export class AdminProjectManagementComponent implements OnInit {
     }
   }
 
+  /***
+   * This function generates the quiz for the project.
+   */
+  generateQuiz(event: Event) {
+    event.preventDefault();
+    this._innovationService.createQuiz(this._project._id).first().subscribe((result) => {
+      this._project = result;
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.QUIZ.CREATED');
+    }, (err) => {
+      this._notificationsService.error('ERROR.ERROR', err);
+    })
+  }
+
   goToPresetEdition() {
     this._router.navigate(['/admin/projects/project/' + this._project._id + '/questionnaire']);
   }
