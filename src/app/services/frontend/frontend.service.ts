@@ -29,6 +29,8 @@ export class FrontendService {
   innovCardFieldsRequired: number;
   innovCardFieldsPresent: number;
 
+  scrollValue = 0;
+
   private _calculatedValues: Values = {};
 
   private _innovationMetadataCalculatedValues = {};

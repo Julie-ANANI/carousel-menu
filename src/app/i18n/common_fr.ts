@@ -12,6 +12,7 @@ export const COMMON = {
   'LOG_IN': 'Connexion',
   'SIGN_UP': 'Inscription',
   'LOG_OUT': 'Se déconnecter',
+  'GENERATE': 'Générer',
   'CANCEL': 'Annuler',
   'ADD': 'Ajouter',
   'GENERATE': 'Générer',

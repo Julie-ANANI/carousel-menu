@@ -40,8 +40,16 @@ export class PitchComponent implements OnInit {
     });
   }
 
-  get project() { return this._project; }
-  get showFieldError() { return this._showFieldError; }
-  get canEdit() { return this._canEdit; }
+  get project() {
+    return this._project;
+  }
+
+  get showFieldError() {
+    return this._showFieldError;
+  }
+
+  get canEdit() {
+    return this._canEdit;
+  }
 
 }
