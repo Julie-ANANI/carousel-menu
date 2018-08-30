@@ -57,16 +57,16 @@ export class SetupProjectComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    console.log(this.getScroll());
-    this.scrollOn = (this.getScroll() > 0);
+    const scrollValue = window.pageYOffset || window.scrollY || 0;
+
+    if (scrollValue > 0) {
+      this.scrollOn = true;
+    } else {
+      this.scrollOn = false;
+    }
+
   }
 
-  getScroll() {
-    if (typeof window.pageYOffset !== 'undefined' && window.pageYOffset >= 0) {
-      return window.pageYOffset;
-    }
-    return 0;
-  };
 
   /*
       Here we are checking the fields that are required to submit or validate the form.
@@ -100,7 +100,7 @@ export class SetupProjectComponent implements OnInit {
   saveProject(event: Event): void {
     event.preventDefault();
 
-    this.scrollValue =
+    console.log(this.scrollValue);
 
     this.frontendService.completionCalculation(this.project);
 
