@@ -22,7 +22,6 @@ export const COMMON = {
   'CREATED': 'Created on',
   'GENERATE': 'Generate',
   'UPDATED': 'Updated on',
-  'GENERATE': 'Generate',
   'LAUNCHED': 'Launched on',
   'EXPIRATION' : 'Expires on',
   'EXPIRATION-SPECIFY': 'Or specify a date',
