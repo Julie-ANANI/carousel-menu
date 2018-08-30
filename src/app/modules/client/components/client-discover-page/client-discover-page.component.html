@@ -27,10 +27,10 @@
 
           <!-- show results title -->
           <h6 *ngIf="!showFilterContainer && filterApplied.length === 0">
-            {{ 'DISCOVER.SHOWING' | translate }} {{ showingResult }} {{ 'innovations' }} {{ 'DISCOVER.FROM' | translate }} {{ totalResults }} {{ 'innovations.' }}
+            {{ 'DISCOVER.SHOWING' | translate }} {{ showingResult }} {{ 'innovations' }} {{ 'DISCOVER.FROM' | translate }} {{ totalResults }} {{ 'innovations' }}
           </h6>
           <h6 *ngIf="!showFilterContainer && filterApplied.length > 0">
-            {{ 'DISCOVER.SHOWING' | translate }} {{ totalResults }} {{ 'innovations.' }}
+            {{ 'DISCOVER.SHOWING' | translate }} {{ totalResults }} {{ 'innovations' }}
           </h6>
           <h6 *ngIf="showFilterContainer">{{ totalResults }} {{ 'DISCOVER.RESULT' | translate }}</h6>
 
@@ -61,25 +61,25 @@
               <p>Type</p>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" id="value_chain" value="VALUE_CHAIN" name="type" [checked]="filterChecked('value_chain')">
+                  <input type="checkbox" id="value_chain" value="VALUE_CHAIN" name="type" (change)="toggleFilter($event)" [checked]="filterChecked('value_chain')">
                   <i class="form-icon"></i><span class="checkbox-label">Value Chain</span>
                 </label>
               </div>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" id="sector" value="SECTOR" name="type" [checked]="filterChecked('sector')">
+                  <input type="checkbox" id="sector" value="SECTOR" name="type" (change)="toggleFilter($event)" [checked]="filterChecked('sector')">
                   <i class="form-icon"></i><span class="checkbox-label">Sector</span>
                 </label>
               </div>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" id="solution" value="SOLUTION_TYPE" name="type" [checked]="filterChecked('solution')">
+                  <input type="checkbox" id="solution" value="SOLUTION_TYPE" name="type" (change)="toggleFilter($event)" [checked]="filterChecked('solution')">
                   <i class="form-icon"></i><span class="checkbox-label">Solution</span>
                 </label>
               </div>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" id="qualification" value="QUALIFICATION" name="type" [checked]="filterChecked('qualification')">
+                  <input type="checkbox" id="qualification" value="QUALIFICATION" name="type" (change)="toggleFilter($event)" [checked]="filterChecked('qualification')">
                   <i class="form-icon"></i><span class="checkbox-label">Qualification</span>
                 </label>
               </div>
@@ -122,6 +122,9 @@
             <!-- Filter label -->
             <div class="filter-label">
               <p>Label</p>
+              <div class="labels">
+
+              </div>
             </div>
 
           </div>

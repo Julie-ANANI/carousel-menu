@@ -47,7 +47,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   private _suggestionInnov: Array<{text: string, id: string}>; // to show suggestions to user below the search field when he types
 
   private _config = {
-    fields: 'created innovationCards tags',
+    fields: 'created innovationCards tags status',
     limit: 20,
     offset: 0,
     search: {
@@ -89,7 +89,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     if yes then assign to the filterApplied attribute.
    */
   private storedFilters() {
-    const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters'));
+    const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
 
     if (sessionValues.length > 0) {
       this.filterApplied = sessionValues;
@@ -125,6 +125,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     based on the config we request to the server and get the results.
    */
   private getAllInnovations() {
+    console.log(this._config);
     this.innovationService.getAll(this._config).first().subscribe(innovations => {
       this.totalInnovations = innovations.result;
       this.addingFilter = true;
@@ -134,15 +135,15 @@ export class ClientDiscoverPageComponent implements OnInit {
       this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVER.ERROR');
     }, () => {
       this.displaySpinner = false;
-
-      setTimeout(() => {
-        this.addingFilter = false;
-      }, 500);
-
+      this.addingFilter = false;
     });
   }
 
 
+  /*
+    when there is change in the pagination we detect the change and
+    call the service with the new limit and offset value.
+   */
   changePagination(paginationValues: ConfigTemplate) {
     window.scroll(0, 0);
     this._config.offset = paginationValues.offset;
@@ -191,39 +192,16 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   toggleFilter(event: Event) {
 
-    // if type is selected
-    if (event.target['name'] === 'type') {
-      this.typeFilter(event);
-    }
-
-    // if language is selected
-    if (event.target['name'] === 'language') {
-      this.langFilter(event);
-    }
-
-    if (this.filterApplied.length > 0) {
-      this._config.limit = 0;
-    } else {
-      this._config.limit = this.initialConfigLimit;
-    }
-
-    this.getAllInnovations();
-
-  }
-
-
-  private typeFilter(event: Event) {
-
-  }
-
-
-  private langFilter(event: Event) {
     if (event.target['checked']) {
       this.filterApplied.push({id: event.target['id'], value: event.target['defaultValue'], type: event.target['name']});
     } else {
       const index = this.filterApplied.findIndex(name => name.id === event.target['id']);
       this.filterApplied.splice(index, 1);
     }
+
+    this._config.limit = this.filterApplied.length > 0 ? 0 : this.initialConfigLimit;
+    this.getAllInnovations();
+
   }
 
 
@@ -236,35 +214,16 @@ export class ClientDiscoverPageComponent implements OnInit {
 
     this.totalInnovations.forEach((items) => {
 
-      if (this.filterApplied.length > 0) {
+      let index = items.innovationCards.findIndex(innovationCard => innovationCard.lang === this.innovationsLang);
 
-        for (let i = 0; i < this.filterApplied.length; i++) {
-
-
-          if (this.filterApplied[i].type === 'language') {
-            const index = items.innovationCards.findIndex(innovationCard => innovationCard.lang === this.filterApplied[i].value);
-            if (index !== -1) {
-              this._innovationCards.push(items.innovationCards[index]);
-            }
-
-          }
-
-          this.totalResults = this._innovationCards.length;
-
-        }
-
-      } else {
-        let index = items.innovationCards.findIndex(innovationCard => innovationCard.lang === this.innovationsLang);
-
-        // if we do not have the innovation in the english language then we show the innovation i.e. on index [0].
-        if (index === -1) {
-          index = 0;
-        }
-
-        this._innovationCards.push(items.innovationCards[index]);
-
-        this.showingResult = this._innovationCards.length;
+      // if we do not have the innovation in the english language then we show the innovation i.e. on index [0].
+      if (index === -1) {
+        index = 0;
       }
+
+      this._innovationCards.push(items.innovationCards[index]);
+
+      this.showingResult = this._innovationCards.length;
 
     });
 
