@@ -9,7 +9,7 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
   templateUrl: 'admin-tag-attachment-subset.component.html',
   styleUrls: ['admin-tag-attachment-subset.component.scss']
 })
-export class AdminTagAttachmentsSubsetComponent implements OnInit{
+export class AdminTagAttachmentsSubsetComponent implements OnInit {
 
   /**
    * This is used to configure the query to pull the correct set of codes
@@ -18,7 +18,7 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
 
   @Input() public selectFn: any;
 
-  private _dataset: {result: Array<any>, _metadata:any};
+  private _dataset: {result: Array<any>, _metadata: any};
 
   private _config = {
     limit: 10,
@@ -55,6 +55,13 @@ export class AdminTagAttachmentsSubsetComponent implements OnInit{
       this._notificationsService.error('Attachments', 'Error loading some attachments of type ' + this.type);
       console.error(error);
     });
+  }
+
+  configChange(value: any) {
+
+    this._config = value;
+    window.scroll(0, 0);
+    this.loadData();
   }
 
   public selectDatum(datum: any) {

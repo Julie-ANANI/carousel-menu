@@ -16,6 +16,8 @@
   'text-warning': googleQuota < 10000 && googleQuota > 5000,
   'text-error': googleQuota < 5000}">
     {{ googleQuota }} requêtes google restantes  <i (click)="getGoogleQuota()" class="c-hand fa fa-refresh"></i></span>
+    -
+    <span class="text-success">Coût total : {{getTotalCost()}}</span>
   </h6>
   <sqFilter [config]="config" (configChange)="loadHistory()" prop="keywords"></sqFilter><i class="icon icon-search"></i>
   <table class="table">
@@ -182,7 +184,11 @@
   <tfoot>
   <tr>
     <td colspan="12">
-      <app-pagination [config]="config" (configChange)="loadHistory()" [total]="total" [propertyName]="'shared-history'"></app-pagination>
+      <app-pagination [configValue]="paginationConfig"
+                      (configChange)="configChange($event)"
+                      [total]="total"
+                      [propertyName]="'shared-history'">
+      </app-pagination>
     </td>
   </tr>
   </tfoot>

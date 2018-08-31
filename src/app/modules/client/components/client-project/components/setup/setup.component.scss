@@ -205,7 +205,7 @@
     .setup-scroll-sticky {
       position: sticky;
       background-color: white;
-      top: 0;
+      top: -0.06rem;
       box-shadow: $box-shadow;
       z-index: 11;
     }

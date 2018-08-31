@@ -16,7 +16,11 @@
     min-height: 40px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: left;
+
+    label.form-switch {
+      width: 33%;
+    }
   }
 
   .project-summary {
@@ -39,17 +43,14 @@
     label {
       color: white;
     }
-    .timing {
-      background-color: $secondary-color;
-    }
-    .completion {
-      background-color: lighten($secondary-color, 5);
+    .timing, .completion {
+      background-color: #0B90C6;
     }
     .campaign {
-      background-color: lighten($secondary-color, 10);
+      background-color: #2FA4D4;
     }
     .cost {
-      background-color: lighten($secondary-color, 15);
+      background-color: #5FAECE;
     }
     .form-label {
       color: $border-color;
@@ -95,14 +96,8 @@
     background-color: $secondary-color;
   }
 
-  .user-message.happy {
-    background-color: $validation-color;
-  }
-  .user-message.normal {
-    background-color: $progress-color;
-  }
-  .user-message.bad {
-    background-color: $alert-color;
+  .user-message {
+    background-color: $meta-color;
   }
 
   .project-line:hover {

@@ -20,6 +20,7 @@ export const COMMON = {
   'DATE': 'Date',
   'ADDED': 'Added on',
   'CREATED': 'Created on',
+  'GENERATE': 'Generate',
   'UPDATED': 'Updated on',
   'LAUNCHED': 'Launched on',
   'EXPIRATION' : 'Expires on',

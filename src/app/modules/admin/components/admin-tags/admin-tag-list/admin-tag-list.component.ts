@@ -7,6 +7,7 @@ import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import {ConfigTemplate} from '../../../../../models/config';
 
 
 @Component({
@@ -16,7 +17,8 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 })
 export class AdminTagListComponent implements OnInit {
 
-  private _dataset: {result: Array<Tag>, _metadata: any};
+  private _data: Array<Tag> = [];
+  total = 0;
 
   private _config = {
     limit: 10,
@@ -26,6 +28,8 @@ export class AdminTagListComponent implements OnInit {
       label: -1
     }
   };
+
+  private _paginationConfig: ConfigTemplate = {};
 
   private _addAttachmentConfig: {
     placeholder: string,
@@ -49,22 +53,26 @@ export class AdminTagListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this._dataset = {
-      result: [],
-      _metadata: {
-        totalCount: 0
-      }
-    };
-    this.loadData(null);
+    this._paginationConfig = {limit: 10, offset: 0};
+    this.loadData(this._config);
   }
 
   public loadData(config: any) {
-    this._config = config || this._config;
-    this._tagsService.getAll(config).subscribe(result=>{
-      if(result) {
-        this._dataset = result;
+    this._config = config;
+    this._tagsService.getAll(this._config).first().subscribe(result => {
+      if (result) {
+        this._data = result.result;
+        this.total = result._metadata.totalCount;
       }
     });
+  }
+
+  configChange(value: any) {
+    this._paginationConfig = value;
+    this._config.limit = value.limit;
+    this._config.offset = value.offset;
+    window.scroll(0, 0);
+    this.loadData(this._config);
   }
 
   public updateEntry(datum: any, event: Event) {
@@ -93,10 +101,9 @@ export class AdminTagListComponent implements OnInit {
     datum.attachments = event.value;
   }
 
-  get data(): Array<Tag> { return this._dataset.result; };
-  get metadata(): any { return this._dataset._metadata; };
+  get data(): Array<Tag> { return this._data; };
   get config(): any { return this._config; };
   set config(value: any) { this._config = value; };
-  get total(): number { return this._dataset._metadata.totalCount; };
+  get paginationConfig(): ConfigTemplate { return this._paginationConfig; }
   get lang(): string { return this._translateService.currentLang; };
 }

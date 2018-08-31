@@ -166,6 +166,11 @@
           {{ 'PROJECT.PREPARATION.EDIT_PRESET' | translate }}
         </label>
 
+        <button class="showOnHover btn btn-xs ghost-primary"
+                (click)="generateQuiz($event)">
+          {{'COMMON.GENERATE' | translate}}
+        </button>
+
         <button class="showOnHover btn btn-xs ghost-edit"
                 (click)="goToPresetEdition()">
           {{'COMMON.EDIT' | translate}}
@@ -307,14 +312,14 @@
         </span>
         <span *ngFor="let innov of project.innovationCards">
           <label class="form-label">{{innov?.lang == 'fr' ? ('COMMON.LANG.FR' | translate) : ('COMMON.LANG.EN' | translate) }}</label>
-          <label>{{innov?.completion?.toFixed(0)}} %</label>
+          <label>{{innov?.completion?.toFixed(0) || 0}} %</label>
         </span>
       </div>
       <div class="campaign">
         <h6>Campaign</h6>
         <span>
           <label class="form-label">{{'COMMON.PROFESSIONALS' | translate}}</label>
-          <label>{{currentCampaign?.stats?.campaign?.nbProfessionals}}</label>
+          <label>{{currentCampaign?.stats?.campaign?.nbProfessionals || '?'}}</label>
         </span>
         <span>
           <label class="form-label">Click</label>
@@ -322,7 +327,7 @@
         </span>
         <span>
           <label class="form-label">{{'PROJECT.CAMPAIGN.INSIGHTS' | translate}}</label>
-          <label>{{currentCampaign?.stats?.campaign?.nbResp}}</label>
+          <label>{{currentCampaign?.stats?.campaign?.nbResp || '?'}}</label>
         </span>
       </div>
       <div class="cost">
@@ -366,10 +371,29 @@
         </button>
       </div>
 
-      <!-- If we have not finish the edition of project description -->
-      <div *ngIf="getMetadata('preparation', 'description') === false">
+      <!-- Answer tags-->
+      <div class="project-line">
+
+        <label class="form-switch" for="seeAnswerTags">
+          <input
+            type="checkbox"
+            name="seeAnswerTags"
+            id="seeAnswerTags"
+            [checked]="getMetadata('campaign', 'tags')"
+            (change)="setMetadata('campaign', 'tags', $event)">
+          <i class="form-icon"></i>
+          {{'PROJECT.CAMPAIGN.EDIT_ANSWER_TAGS' | translate}}
+        </label>
+        <label class="form-label">{{answerTags}} tags</label>
+        <button class="showOnHover btn btn-xs ghost-edit" (click)="goToAnswerTagsEdition()">
+          {{'COMMON.EDIT' | translate}}
+        </button>
+      </div>
+
+      <!-- If no campaigns is created, we show an info bot to ask us to create a campaign -->
+      <div *ngIf="currentCampaign === null">
         <div class="bot-wrapper text-center">
-          <span class="bot-rect">{{'PROJECT.CAMPAIGN.PITCH_EDIT_DESCRIPTION' | translate}}</span>
+          <span class="bot-rect">{{'PROJECT.CAMPAIGN.CREATE_CAMPAIGN' | translate}}</span>
           <br>
           <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg"
                class="bot-trian">
@@ -378,173 +402,138 @@
         </div>
       </div>
 
-      <!-- If the edition of project description is complete -->
-      <div *ngIf="getMetadata('preparation', 'description') === true">
+      <!-- Else, we show the other informations -->
+      <div *ngIf="currentCampaign !== null">
 
-        <!-- Answer tags-->
-        <div class="project-line">
+        <!-- Campaign professionnals -->
+        <div class="project-line" [ngClass]="{disabled: answerTags === 0}">
 
-          <label class="form-switch" for="seeAnswerTags">
+          <label class="form-switch" for="seeProfessionnals">
             <input
               type="checkbox"
-              name="seeAnswerTags"
-              id="seeAnswerTags"
-              [checked]="getMetadata('campaign', 'tags')"
-              (change)="setMetadata('campaign', 'tags', $event)">
+              name="seeProfessionnals"
+              id="seeProfessionnals"
+              [checked]="getMetadata('campaign', 'pros')"
+              (change)="setMetadata('campaign', 'pros', $event)">
             <i class="form-icon"></i>
-            {{'PROJECT.CAMPAIGN.EDIT_ANSWER_TAGS' | translate}}
+            {{'PROJECT.CAMPAIGN.FIND_PROFESSIONALS' | translate}}
           </label>
-          <label class="form-label">{{answerTags}} tags</label>
-          <button class="showOnHover btn btn-xs ghost-edit" (click)="goToAnswerTagsEdition()">
-            {{'COMMON.EDIT' | translate}}
+          <label class="form-label">{{currentCampaign?.stats?.campaign.nbProfessionals}} {{'COMMON.PROFESSIONALS' |
+            translate}}</label>
+          <button class="showOnHover btn btn-xs ghost-edit"
+                  (click)="goToProfessionalsList()">
+            {{'COMMON.MORE' | translate}}
           </button>
         </div>
 
-        <!-- If no campaigns is created, we show an info bot to ask us to create a campaign -->
-        <div *ngIf="currentCampaign === null">
-          <div class="bot-wrapper text-center">
-            <span class="bot-rect">{{'PROJECT.CAMPAIGN.CREATE_CAMPAIGN' | translate}}</span>
-            <br>
-            <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg"
-                 class="bot-trian">
-            <div><img src="http://res.cloudinary.com/umi/image/upload/v1533567512/app/default-images/info-bot.svg"
-                      alt="Bot" class="bot-image"></div>
-          </div>
+        <!-- AB Testing -->
+        <!-- TODO
+        Ask Adrien about this task
+        -->
+        <div class="project-line" [ngClass]="{disabled: currentCampaign?.stats?.campaign.nbProfessionals === 0}">
+
+          <label class="form-switch" for="activateABTesting">
+            <input
+              type="checkbox"
+              name="activateABTesting"
+              id="activateABTesting"
+              [checked]="getMetadata('campaign', 'abtesting')"
+              (change)="setMetadata('campaign', 'abtesting', $event)">
+            <i class="form-icon"></i>
+            {{'PROJECT.CAMPAIGN.ACTIVATE_AB_TESTING' | translate}}
+          </label>
+          <button class="showOnHover btn btn-xs ghost-edit"
+                  (click)="goToTemplates()">
+            {{'COMMON.MORE' | translate}}
+          </button>
         </div>
 
-        <!-- Else, we show the other informations -->
-        <div *ngIf="currentCampaign !== null">
+        <!-- Mails edition -->
+        <div class="project-line">
 
-          <!-- Campaign professionnals -->
-          <div class="project-line" [ngClass]="{disabled: answerTags === 0}">
-
-            <label class="form-switch" for="seeProfessionnals">
-              <input
-                type="checkbox"
-                name="seeProfessionnals"
-                id="seeProfessionnals"
-                [checked]="getMetadata('campaign', 'pros')"
-                (change)="setMetadata('campaign', 'pros', $event)">
-              <i class="form-icon"></i>
-              {{'PROJECT.CAMPAIGN.FIND_PROFESSIONALS' | translate}}
-            </label>
-            <label class="form-label">{{currentCampaign?.stats?.campaign.nbProfessionals}} {{'COMMON.PROFESSIONALS' |
-              translate}}</label>
-            <button class="showOnHover btn btn-xs ghost-edit"
-                    (click)="goToProfessionalsList()">
-              {{'COMMON.MORE' | translate}}
-            </button>
-          </div>
-
-          <!-- AB Testing -->
-          <!-- TODO
-          Ask Adrien about this task
-          -->
-          <div class="project-line" [ngClass]="{disabled: currentCampaign?.stats?.campaign.nbProfessionals === 0}">
-
-            <label class="form-switch" for="activateABTesting">
-              <input
-                type="checkbox"
-                name="activateABTesting"
-                id="activateABTesting"
-                [checked]="getMetadata('campaign', 'abtesting')"
-                (change)="setMetadata('campaign', 'abtesting', $event)">
-              <i class="form-icon"></i>
-              {{'PROJECT.CAMPAIGN.ACTIVATE_AB_TESTING' | translate}}
-            </label>
-            <button class="showOnHover btn btn-xs ghost-edit"
-                    (click)="goToTemplates()">
-              {{'COMMON.MORE' | translate}}
-            </button>
-          </div>
-
-          <!-- Mails edition -->
-          <div class="project-line">
-
-            <label class="form-switch" for="editWorkflowMails">
-              <input
-                type="checkbox"
-                name="editWorkflowMails"
-                id="editWorkflowMails"
-                [checked]="getMetadata('campaign', 'workflow')"
-                (change)="setMetadata('campaign', 'workflow', $event)">
-              <i class="form-icon"></i>
-              {{'PROJECT.CAMPAIGN.EDIT_WORKFLOW' | translate}}
-            </label>
-            <button class="showOnHover btn btn-xs ghost-edit"
-                    (click)="goToTemplates()">
-              {{'COMMON.MORE' | translate}}
-            </button>
-          </div>
-
-          <!-- Choose default Workflow -->
-          <div class="project-line" [ngClass]="{disabled: modifiedScenarios.length === 0}">
-
-            <label class="form-switch" for="seeWorkflows">
-              <input
-                type="checkbox"
-                name="seeWorkflows"
-                id="seeWorkflows"
-                [checked]="currentCampaign?.settings?.defaultWorkflow !== '' && currentCampaign?.settings?.defaultWorkflow !== undefined">
-              <i class="form-icon"></i>
-              {{'PROJECT.CAMPAIGN.CHOOSE_DEFAULT_WORKFLOW' | translate}}
-            </label>
-
-            <select class="form-select"
-                    name="setWorkflow"
-                    id="setWorkflow"
-                    [ngModel]="currentCampaign.settings.defaultWorkflow || ''"
-                    (ngModelChange)="updateDefaultWorkflow($event)"
-                    [ngModelOptions]="{standalone: true}">
-              <option [ngValue]="''" selected>{{'COMMON.NO' | translate}}</option>
-              <option *ngFor="let w of modifiedScenarios" [ngValue]="w.name">
-                {{w.name}}
-              </option>
-            </select>
-            <div></div>
-          </div>
-
-          <!-- Launch Auto Batch -->
-          <div class="project-line" [ngClass]="{disabled: modifiedScenarios.length === 0}">
-
-            <label class="form-switch" for="lauchAutoBatch">
-              <input
-                type="checkbox"
-                name="lauchAutoBatch"
-                id="lauchAutoBatch"
-                [checked]="getMetadata('campaign', 'autobatch')"
-                (change)="setMetadata('campaign', 'autobatch', $event)">
-              <i class="form-icon"></i>
-              {{'PROJECT.CAMPAIGN.LAUNCH_AUTO_BATCH' | translate}}
-            </label>
-            <button class="showOnHover btn btn-xs ghost-edit"
-                    (click)="goToAutoBatch()">
-              {{'COMMON.MORE' | translate}}
-            </button>
-          </div>
-
-          <!-- Validate insights -->
-          <div class="project-line">
-
-            <label class="form-switch" for="validateInsights">
-              <input
-                type="checkbox"
-                name="validateInsights"
-                id="validateInsights"
-                [checked]="getMetadata('campaign', 'insights')"
-                (change)="setMetadata('campaign', 'insights', $event)">
-              <i class="form-icon"></i>
-              {{'PROJECT.CAMPAIGN.VALIDATE_INSIGHTS' | translate}}
-            </label>
-            <label class="label-alert">{{currentCampaign?.stats?.campaign.nbToValidateResp}}
-              {{'PROJECT.CAMPAIGN.INSIGHTS_TO_VALIDATE' | translate}}</label>
-            <button class="showOnHover btn btn-xs ghost-edit"
-                    (click)="goToInsights()">
-              {{'COMMON.MORE' | translate}}
-            </button>
-          </div>
-
+          <label class="form-switch" for="editWorkflowMails">
+            <input
+              type="checkbox"
+              name="editWorkflowMails"
+              id="editWorkflowMails"
+              [checked]="getMetadata('campaign', 'workflow')"
+              (change)="setMetadata('campaign', 'workflow', $event)">
+            <i class="form-icon"></i>
+            {{'PROJECT.CAMPAIGN.EDIT_WORKFLOW' | translate}}
+          </label>
+          <button class="showOnHover btn btn-xs ghost-edit"
+                  (click)="goToTemplates()">
+            {{'COMMON.MORE' | translate}}
+          </button>
         </div>
+
+        <!-- Choose default Workflow -->
+        <div class="project-line" [ngClass]="{disabled: modifiedScenarios.length === 0}">
+
+          <label class="form-switch" for="seeWorkflows">
+            <input
+              type="checkbox"
+              name="seeWorkflows"
+              id="seeWorkflows"
+              [checked]="currentCampaign?.settings?.defaultWorkflow !== '' && currentCampaign?.settings?.defaultWorkflow !== undefined">
+            <i class="form-icon"></i>
+            {{'PROJECT.CAMPAIGN.CHOOSE_DEFAULT_WORKFLOW' | translate}}
+          </label>
+
+          <select class="form-select"
+                  name="setWorkflow"
+                  id="setWorkflow"
+                  [ngModel]="currentCampaign.settings.defaultWorkflow || ''"
+                  (ngModelChange)="updateDefaultWorkflow($event)"
+                  [ngModelOptions]="{standalone: true}">
+            <option [ngValue]="''" selected>{{'COMMON.NO' | translate}}</option>
+            <option *ngFor="let w of modifiedScenarios" [ngValue]="w.name">
+              {{w.name}}
+            </option>
+          </select>
+          <div></div>
+        </div>
+
+        <!-- Launch Auto Batch -->
+        <div class="project-line" [ngClass]="{disabled: modifiedScenarios.length === 0}">
+
+          <label class="form-switch" for="lauchAutoBatch">
+            <input
+              type="checkbox"
+              name="lauchAutoBatch"
+              id="lauchAutoBatch"
+              [checked]="getMetadata('campaign', 'autobatch')"
+              (change)="setMetadata('campaign', 'autobatch', $event)">
+            <i class="form-icon"></i>
+            {{'PROJECT.CAMPAIGN.LAUNCH_AUTO_BATCH' | translate}}
+          </label>
+          <button class="showOnHover btn btn-xs ghost-edit"
+                  (click)="goToAutoBatch()">
+            {{'COMMON.MORE' | translate}}
+          </button>
+        </div>
+
+        <!-- Validate insights -->
+        <div class="project-line">
+
+          <label class="form-switch" for="validateInsights">
+            <input
+              type="checkbox"
+              name="validateInsights"
+              id="validateInsights"
+              [checked]="getMetadata('campaign', 'insights')"
+              (change)="setMetadata('campaign', 'insights', $event)">
+            <i class="form-icon"></i>
+            {{'PROJECT.CAMPAIGN.VALIDATE_INSIGHTS' | translate}}
+          </label>
+          <label class="label-alert">{{currentCampaign?.stats?.campaign.nbToValidateResp}}
+            {{'PROJECT.CAMPAIGN.INSIGHTS_TO_VALIDATE' | translate}}</label>
+          <button class="showOnHover btn btn-xs ghost-edit"
+                  (click)="goToInsights()">
+            {{'COMMON.MORE' | translate}}
+          </button>
+        </div>
+
       </div>
 
     </div>
@@ -631,7 +620,8 @@
           <i class="form-icon"></i>
           {{'PROJECT.DELIVERY.WRITE_ENDING_MAIL' | translate}}
         </label>
-        <button class="showOnHover btn btn-xs ghost-edit" (click)="editEndingMail()">
+        <button class="showOnHover btn btn-xs ghost-edit" (click)="editEndingMail()"
+                *ngIf="getMetadata('delivery', 'endingmail') === false">
           {{'COMMON.EDIT' | translate}}
         </button>
       </div>
@@ -715,12 +705,7 @@
 
     <div class="project-commentaries">
       <div class="user-message"
-           *ngIf="project.clientSatisfaction.message"
-           [ngClass]="{
-        happy: project.clientSatisfaction.satisfaction === 'HAPPY' || project.clientSatisfaction.satisfaction === 'VERY_HAPPY',
-        normal: project.clientSatisfaction.satisfaction === 'NORMAL',
-        bad: project.clientSatisfaction.satisfaction === 'BAD' || project.clientSatisfaction.satisfaction === 'VERY_BAD'
-        }">
+           *ngIf="project.clientSatisfaction.message">
         <label class="form-label">{{'PROJECT.DELIVERY.CLIENT_SATISFACTION' | translate}}</label>
         <span>
           {{project.clientSatisfaction?.message}}
@@ -738,6 +723,10 @@
 
   </div>
 
+  <button class="btn btn-sm ghost-delete" (click)="deleteProjectModal()">{{ 'PROJECT_MODULE.SETUP.DELETE_BUTTON' |
+    translate }}
+  </button>
+
 </div>
 
 <!-- Sidebars -->
@@ -749,7 +738,8 @@
     [type]="more.type"
     [initialProject]="project"
     [setProject]="projectSubject"
-    (projectChange)="changeProject($event)">
+    (projectChange)="changeProject($event)"
+    (sendMail)="sendMailToOwner($event)">
   </app-innovation-form>
   <app-emails-form
     *ngIf="isEmailsDomainsSidebar"
@@ -766,3 +756,27 @@
                  (newTags)="addTags($event)">
   </app-tags-form>
 </app-sidebar>
+
+<!-- Modal to ask admin to sure about deleting the project -->
+<div class="modal" [ngClass]="{ 'active': showDeleteModal }">
+  <div class="modal-overlay" (click)="closeModal($event)"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+      <div class="modal-title">{{ 'PROJECT_MODULE.SETUP.DELETE_BUTTON' | translate }}</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        {{ 'PROJECT_MODULE.SETUP.DELETE_PROJECT_MODAL.CONTENT' | translate }}
+        <ul>
+          <li *ngFor="let user of usersToRemove">{{user.firstName}} {{user.lastName}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-sm ghost-delete" (click)="removeProject()">
+        {{ 'COMMON.DELETE' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

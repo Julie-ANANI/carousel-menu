@@ -84,7 +84,7 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
   },
 
   'QUIZ': {
-    'CREATED': 'The quiz has been created'
+    'CREATED': 'The quiz has been successfully created.'
   }
 
 };

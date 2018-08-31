@@ -63,8 +63,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
               private translateService: TranslateService,
               private translationService: TranslationService,
               private translateNotificationsService: TranslateNotificationsService,
-              private location: Location) {
-  }
+              private location: Location) {}
 
   ngOnInit() {
     this.changesSaved = true;
@@ -86,7 +85,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this._adminMode = (this.authService.adminLevel & 3) === 3;
   }
 
-  notifyModelChanges(_event?: any) {
+  notifyModelChanges() {
     this.changesSaved = false;
     this.saveChanges.emit(true);
     this.projectChange.emit(this.project);
@@ -94,9 +93,9 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
   showError() {
     this._showTitleError = this.project.innovationCards[this.innovationCardEditingIndex].title === '';
-    this._showSummaryError = this.project.innovationCards[this.innovationCardEditingIndex].summary === '';
-    this._showProblemError = this.project.innovationCards[this.innovationCardEditingIndex].problem === '';
-    this._showSolutionError = this.project.innovationCards[this.innovationCardEditingIndex].solution === '';
+    this._showSummaryError = this.project.innovationCards[this.innovationCardEditingIndex].summary.length === 0;
+    this._showProblemError = this.project.innovationCards[this.innovationCardEditingIndex].problem.length === 0;
+    this._showSolutionError = this.project.innovationCards[this.innovationCardEditingIndex].solution.length === 0;
     this._showAdvantageError = this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0;
     this._showPatentError = this.project.patented === null;
     this._showDiffusionError = this.project.external_diffusion === null;
@@ -152,7 +151,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
           })).first().subscribe((data: InnovCard) => {
             this.project.innovationCards.push(data);
             this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
-            this.notifyModelChanges(event);
+            this.notifyModelChanges();
             this.onLangSelect(event, this.innovationCardEditingIndex);
           });
         }
@@ -166,12 +165,17 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   updateData(event: {id: string, content: string}) {
     if (event.id.indexOf('summary') !== -1) {
       this.project.innovationCards[this.innovationCardEditingIndex].summary = event.content;
+      this._showSummaryError = event.content.length === 0;
     } else if (event.id.indexOf('problem') !== -1) {
       this.project.innovationCards[this.innovationCardEditingIndex].problem = event.content;
+      this._showProblemError = false;
     } else if (event.id.indexOf('solution') !== -1) {
       this.project.innovationCards[this.innovationCardEditingIndex].solution = event.content;
+      this._showSolutionError = false;
     }
+
     this.notifyModelChanges();
+
   }
 
   /**
@@ -181,7 +185,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
    */
   addAdvantageToInventionCard (event: {value: Array<{text: string}>}, cardIdx: number): void {
     this.project.innovationCards[cardIdx].advantages = event.value;
-    this.notifyModelChanges(event.value);
+    this.notifyModelChanges();
     this._showAdvantageError = (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0);
   }
 
@@ -266,7 +270,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       this.project.innovationCards = this.project.innovationCards.filter((card) => card._id !== this._deleteInnovCardId);
       // this.innovationCardEditingIndex -= 1;
       this._showDeleteModal = false;
-      this.notifyModelChanges(event);
+      this.notifyModelChanges();
       this.onLangSelect(event, 0);
     }, err => {
       this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);

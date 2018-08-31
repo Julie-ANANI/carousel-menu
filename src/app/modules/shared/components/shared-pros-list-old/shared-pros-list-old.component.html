@@ -47,7 +47,10 @@
   <tfoot>
   <tr>
     <td colspan="12">
-      <app-pagination [config]="config" (configChange)="loadPros($event)" [total]="total" [propertyName]="'shared-pros'"></app-pagination>
+      <app-pagination [configValue]="paginationConfig"
+                      (configChange)="changePaginationConfig($event)"
+                      [total]="total"
+                      [propertyName]="'shared-pros'"></app-pagination>
     </td>
   </tr>
   </tfoot>
