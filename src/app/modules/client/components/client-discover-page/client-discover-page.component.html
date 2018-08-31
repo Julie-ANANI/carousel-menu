@@ -26,12 +26,7 @@
         <div class="total-filter-wrapper" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
 
           <!-- show results title -->
-          <h6 *ngIf="!showFilterContainer && filterApplied.length === 0">
-            {{ 'DISCOVER.SHOWING' | translate }} {{ showingResult }} {{ 'innovations' }} {{ 'DISCOVER.FROM' | translate }} {{ totalResults }} {{ 'innovations' }}
-          </h6>
-          <h6 *ngIf="!showFilterContainer && filterApplied.length > 0">
-            {{ 'DISCOVER.SHOWING' | translate }} {{ totalResults }} {{ 'innovations' }}
-          </h6>
+          <h6 *ngIf="!showFilterContainer">{{ totalResults }} {{ 'innovations' }}</h6>
           <h6 *ngIf="showFilterContainer">{{ totalResults }} {{ 'DISCOVER.RESULT' | translate }}</h6>
 
           <!-- add filter button -->
@@ -61,25 +56,53 @@
               <p>Type</p>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" id="value_chain" value="VALUE_CHAIN" name="type" (change)="toggleFilter($event)" [checked]="filterChecked('value_chain')">
+                  <input
+                    type="checkbox"
+                    id="value_chain"
+                    value="VALUE_CHAIN"
+                    name="type"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('value_chain')"
+                    [disabled]="checkDisable('value_chain', 'type')">
                   <i class="form-icon"></i><span class="checkbox-label">Value Chain</span>
                 </label>
               </div>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" id="sector" value="SECTOR" name="type" (change)="toggleFilter($event)" [checked]="filterChecked('sector')">
+                  <input
+                    type="checkbox"
+                    id="sector"
+                    value="SECTOR"
+                    name="type"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('sector')"
+                    [disabled]="checkDisable('sector', 'type')">
                   <i class="form-icon"></i><span class="checkbox-label">Sector</span>
                 </label>
               </div>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" id="solution" value="SOLUTION_TYPE" name="type" (change)="toggleFilter($event)" [checked]="filterChecked('solution')">
+                  <input
+                    type="checkbox"
+                    id="solution"
+                    value="SOLUTION_TYPE"
+                    name="type"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('solution')"
+                    [disabled]="checkDisable('solution', 'type')">
                   <i class="form-icon"></i><span class="checkbox-label">Solution</span>
                 </label>
               </div>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" id="qualification" value="QUALIFICATION" name="type" (change)="toggleFilter($event)" [checked]="filterChecked('qualification')">
+                  <input
+                    type="checkbox"
+                    id="qualification"
+                    value="QUALIFICATION"
+                    name="type"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('qualification')"
+                    [disabled]="checkDisable('qualification', 'type')">
                   <i class="form-icon"></i><span class="checkbox-label">Qualification</span>
                 </label>
               </div>
@@ -90,13 +113,27 @@
               <p>Language</p>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" id="en" value="en" name="language" (change)="toggleFilter($event)" [checked]="filterChecked('en')">
+                  <input
+                    type="checkbox"
+                    id="en"
+                    value="en"
+                    name="language"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('en')"
+                    [disabled]="checkDisable('en', 'language')">
                   <i class="form-icon"></i><span class="checkbox-label">English</span>
                 </label>
               </div>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" id="fr" value="fr" name="language" (change)="toggleFilter($event)" [checked]="filterChecked('fr')">
+                  <input
+                    type="checkbox"
+                    id="fr"
+                    value="fr"
+                    name="language"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('fr')"
+                    [disabled]="checkDisable('fr', 'language')">
                   <i class="form-icon"></i><span class="checkbox-label">French</span>
                 </label>
               </div>
@@ -107,13 +144,27 @@
               <p>Status</p>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" id="evaluating" value="EVALUATING" name="status" (change)="toggleFilter($event)" [checked]="filterChecked('evaluating')">
+                  <input
+                    type="checkbox"
+                    id="evaluating"
+                    value="EVALUATING"
+                    name="status"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('evaluating')"
+                    [disabled]="checkDisable('evaluating', 'status')">
                   <i class="form-icon"></i><span class="checkbox-label">In progress</span>
                 </label>
               </div>
               <div class="filter-option">
                 <label class="form-checkbox">
-                  <input type="checkbox" id="done" value="DONE" name="status" (change)="toggleFilter($event)" [checked]="filterChecked('done')">
+                  <input
+                    type="checkbox"
+                    id="done"
+                    value="DONE"
+                    name="status"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('done')"
+                    [disabled]="checkDisable('done', 'status')">
                   <i class="form-icon"></i><span class="checkbox-label">Completed</span>
                 </label>
               </div>
