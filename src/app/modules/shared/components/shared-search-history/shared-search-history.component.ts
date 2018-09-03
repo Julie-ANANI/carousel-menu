@@ -151,6 +151,18 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   }
 
+  getTotalCost() {
+    let totalCost = 0;
+    if (this._requests) {
+      for (const cost of this._requests) {
+        if (cost.cost) {
+          totalCost += cost.cost.totalCost;
+        }
+      }
+    }
+    return totalCost.toFixed(2);
+  }
+
   get requests(): Array<any> { return this._requests; }
   get total(): number { return this._total; }
   get googleQuota(): number { return this._googleQuota; }

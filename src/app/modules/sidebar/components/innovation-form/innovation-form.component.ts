@@ -73,8 +73,6 @@ export class InnovationFormComponent implements OnInit {
       })
     }
 
-    console.log(this._project.clientSatisfaction);
-
     if (this.sidebarState) {
       this.sidebarState.subscribe((state) => {
         if (state === 'inactive') {

@@ -65,11 +65,10 @@ export class SharedSearchResultsComponent implements OnInit {
     };
     if (this._selection.pros !== 'all') {
       const prosWithoutEmail = this._selection.pros.map((person: any) => {
-        return {
-          id: person._id,
-          requestId: this._request._id,
-          email: person.email || ''
-        };
+        person.id = person._id;
+        person.requestId = this._request._id;
+        person.email = person.email || "";
+        return person;
       }).filter((p: any) => p.email === '');
       params.persons = prosWithoutEmail;
     } else {

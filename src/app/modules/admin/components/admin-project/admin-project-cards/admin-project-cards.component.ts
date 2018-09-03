@@ -21,7 +21,9 @@ export class AdminProjectCardsComponent implements OnInit {
               private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit(): void {
-    this.project = this.activatedRoute.snapshot.parent.data['innovation'];
+    this.innovationService.get(this.activatedRoute.snapshot.parent.data['innovation']._id).first().subscribe(result => {
+      this.project = result;
+    });
   }
 
   public save(event: Event): void {
