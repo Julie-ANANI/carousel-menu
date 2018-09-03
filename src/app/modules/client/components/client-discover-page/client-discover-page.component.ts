@@ -22,13 +22,13 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private totalInnovations: Array<Innovation> = []; // to hold the total project result we get from the server.
 
-  filterInnovations: Array<Innovation> = [];
+  filterInnovations: Array<Innovation> = []; // in this we store the innovation that are filtered.
 
   displaySpinner = true; // to show the spinner when we are fetching the data from the server.
 
   showFilterContainer = false; // to show or hide the filter container.
 
-  tags: Array<Tag>; // to store the project tags.
+  tags: Array<Tag> = []; // to store the project tags.
 
   filterApplied: Array<{id: string, value: string, type: string}> = []; // to show the client the filters he added.
 
@@ -36,11 +36,23 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   totalResults = 0; // saving the result that we get from the server.
 
+  tagLabel: Array<{'label': string, 'id': string}> = [];
+
+  tagType: Array<{'type': string, 'id': string}> = [];
+
+  innoStatus: Array<{'status': string}> = [];
+
+  innoLang: Array<{'lang': string, 'id': string}> = [];
+
+  endLabelIndex = 4;
+
+  endTypeIndex = 4;
+
   applyFilterClicked = false;
 
   private searchInput: string;
 
-  selectedLang = '';
+  selectedLang = ''; // set the lang when user select the lang in the filter.
 
   private innovationDetails: Array<{text: string, id: string}>; // to store the innovation title of all the innovations for search field
 
@@ -104,16 +116,6 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  /*
-    checking the filterApplied contains the keys,
-    if yes then we make the checkbox ticked.
-   */
-  filterChecked(id: string): boolean {
-    const index = this.filterApplied.findIndex((item) => item.id === id);
-    return index !== -1;
-  }
-
-
   private initialize() {
     this.innovationDetails = [];
     this.searchInput = '';
@@ -127,7 +129,6 @@ export class ClientDiscoverPageComponent implements OnInit {
   private getAllInnovations() {
     this.innovationService.getAll(this._config).first().subscribe(innovations => {
       this.totalInnovations = innovations.result;
-      // this.totalResults = innovations._metadata.totalCount;
       this.loadInnovations();
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVER.ERROR');
@@ -139,145 +140,66 @@ export class ClientDiscoverPageComponent implements OnInit {
 
 
   /*
-    when there is change in the pagination we detect the change and
-    call the service with the new limit and offset value.
-   */
-  changePagination(paginationValues: ConfigTemplate) {
-    window.scroll(0, 0);
-    this._config.offset = paginationValues.offset;
-    this.initialConfigLimit = this._config.limit = paginationValues.limit;
-    this.getAllInnovations();
-  }
-
-
-  /*
-    showing the filter container.
-   */
-  addFilter(event: Event) {
-    event.preventDefault();
-    this.showFilterContainer = true;
-    this.applyFilterClicked = false;
-  }
-
-
-  /*
-    check the value of applyFilterClicked, if false then assign the
-    filters that are stored in the sessionStorage.
-   */
-  cancelFilter(event: Event) {
-    event.preventDefault();
-
-    if (!this.applyFilterClicked) {
-      this.storedFilters();
-      this.getAllInnovations();
-    }
-
-    this.showFilterContainer = false;
-
-  }
-
-
-  /*
-    save the applied filters to session storage and close the container.
-   */
-  applyFilter(event: Event) {
-    event.preventDefault();
-    sessionStorage.setItem('discover-filters', JSON.stringify(this.filterApplied));
-    this.applyFilterClicked = true;
-    this.showFilterContainer = false;
-  }
-
-
-  toggleFilter(event: Event) {
-    this.addingFilter = true;
-    this.selectedLang = '';
-
-    if (event.target['checked']) {
-      this.filterApplied.push({id: event.target['id'], value: event.target['defaultValue'], type: event.target['name']});
-    } else {
-      const index = this.filterApplied.findIndex(name => name.id === event.target['id']);
-      this.filterApplied.splice(index, 1);
-    }
-
-    this._config.limit = this.filterApplied.length > 0 ? 0 : this.initialConfigLimit;
-
-    if (this.filterApplied.length > 1) {
-      this.loadInnovations();
-    } else {
-      this.getAllInnovations();
-    }
-
-  }
-
-
-  /*
-   we disable the type and the language that are not selected.
-  */
-  checkDisable(id: string, type: string): boolean {
-
-    if (this.filterApplied.length > 0) {
-      const typeIndex = this.filterApplied.findIndex((item) => item.type === type);
-
-      if (typeIndex !== -1) {
-        const index = this.filterApplied.findIndex((item) => item.id === id);
-        if (index === -1) {
-          return true;
-        }
-      }
-
-    }
-
-    return false;
-  }
-
-
-  /*
-    after fetching all the innovations from the server first we check the length of
-    filterApplied then according to that we call the functions.
-   */
+  after fetching all the innovations from the server first we check the length of
+  filterApplied then according to that we call the functions.
+ */
   private loadInnovations() {
 
     if (this.filterApplied.length > 0) {
       this.filterInnovations = [];
 
-        for (let i = 0; i < this.filterApplied.length; i++) {
+      for (let i = 0; i < this.filterApplied.length; i++) {
 
-          if (i === 0) {
+        if (i === 0) {
 
-            if (this.filterApplied[i].type === 'type') {
-              this.typeFilter(this.totalInnovations, this.filterApplied[i].value);
-            }
+          if (this.filterApplied[i].type === 'type') {
+             this.typeFilter(this.totalInnovations, this.filterApplied[i].id);
+          }
 
-            if (this.filterApplied[i].type === 'status') {
-              this.statusFilter(this.totalInnovations, this.filterApplied[i].value);
-            }
+          if (this.filterApplied[i].type === 'status') {
+            this.statusFilter(this.totalInnovations, this.filterApplied[i].value);
+          }
 
-            if (this.filterApplied[i].type === 'language') {
-              this.selectedLang = this.filterApplied[i].value;
-              this.langFilter(this.totalInnovations, this.filterApplied[i].value);
-            }
+          if (this.filterApplied[i].type === 'language') {
+            this.selectedLang = this.filterApplied[i].value;
+            this.langFilter(this.totalInnovations, this.filterApplied[i].id);
+          }
 
-          } else {
+          if (this.filterApplied[i].type === 'label') {
+            this.labelFilter(this.totalInnovations, this.filterApplied[i].id);
+          }
 
-            if (this.filterApplied[i].type === 'type') {
-              this.typeFilter(this.filterInnovations, this.filterApplied[i].value);
-            }
+        } else {
 
-            if (this.filterApplied[i].type === 'status') {
-              this.statusFilter(this.filterInnovations, this.filterApplied[i].value);
-            }
+          if (this.filterApplied[i].type === 'type') {
+             this.typeFilter(this.filterInnovations, this.filterApplied[i].id);
+          }
 
-            if (this.filterApplied[i].type === 'language') {
-              this.selectedLang = this.filterApplied[i].value;
-              this.langFilter(this.filterInnovations, this.filterApplied[i].value);
-            }
+          if (this.filterApplied[i].type === 'status') {
+            this.statusFilter(this.filterInnovations, this.filterApplied[i].value);
+          }
 
+          if (this.filterApplied[i].type === 'language') {
+            this.selectedLang = this.filterApplied[i].value;
+            this.langFilter(this.filterInnovations, this.filterApplied[i].id);
+          }
+
+          if (this.filterApplied[i].type === 'label') {
+            this.labelFilter(this.filterInnovations, this.filterApplied[i].id);
           }
 
         }
 
+      }
+      this.innovationLang(this.filterInnovations);
+      this.innovationStatus(this.filterInnovations);
+      this.tagFilter(this.filterInnovations);
       this.searchInInnovationCards(this.filterInnovations);
+      console.log(this.filterInnovations);
     } else {
+      this.innovationLang(this.totalInnovations);
+      this.innovationStatus(this.totalInnovations);
+      this.tagFilter(this.totalInnovations);
       this.searchInInnovationCards(this.totalInnovations);
     }
 
@@ -287,25 +209,236 @@ export class ClientDiscoverPageComponent implements OnInit {
 
 
   private typeFilter(innovations: Array<Innovation>, value: string) {
-    this.filterInnovations = innovations.filter((item) => {
-      return item.tags.findIndex((tag) => tag.type === value) !== -1;
+    this.filterInnovations = innovations.filter((items) => {
+      return items.tags.findIndex((tag) => tag._id === value) !== -1;
     });
   }
 
 
   private statusFilter(innovations: Array<Innovation>, value: string) {
-    this.filterInnovations = innovations.filter((item) => {
-      return item.status === value;
+    this.filterInnovations = innovations.filter((items) => {
+      return items.status === value;
     });
   }
 
 
   private langFilter(innovations: Array<Innovation>, value: string) {
-    this.filterInnovations = innovations.filter((item) => {
-      return item.innovationCards.findIndex((inno) => inno.lang === value) !== -1;
+    this.filterInnovations = innovations.filter((items) => {
+      return items.innovationCards.findIndex((inno) => inno.lang === value) !== -1;
     });
   }
 
+
+  private labelFilter(innovations: Array<Innovation>, value: string) {
+    this.filterInnovations = innovations.filter((items) => {
+      return items.tags.findIndex((tag) => tag._id === value) !== -1;
+    });
+  }
+
+
+  private innovationStatus(innovation: Array<Innovation>) {
+    this.innoStatus = [];
+
+    innovation.forEach((items) => {
+      const index = this.innoStatus.findIndex((item) => item.status === items.status);
+      if (index === -1) {
+        this.innoStatus.push({'status': items.status});
+      }
+    });
+
+    this.innoStatus.sort((a: any, b: any) => {
+      if (a.status < b.status) {
+        return -1;
+      }
+
+      if (a.status > b.status) {
+        return 1;
+      }
+
+      return 0
+
+    });
+
+  }
+
+
+  private innovationLang(innovation: Array<Innovation>) {
+    this.innoLang = [];
+
+    innovation.forEach((items) => {
+      items.innovationCards.forEach((inno) => {
+        const index = this.innoLang.findIndex((item) => item.lang === inno.lang);
+        if (index === -1) {
+          this.innoLang.push({'lang': inno.lang, 'id': items._id});
+        }
+      });
+    });
+
+    this.innoLang.sort((a: any, b: any) => {
+      if (a.lang < b.lang) {
+        return -1;
+      }
+
+      if (a.lang > b.lang) {
+        return 1;
+      }
+
+      return 0
+
+    });
+
+  }
+
+
+  private tagFilter(innovations: Array<Innovation>) {
+    this.tags = [];
+
+    innovations.forEach((items) => {
+      items.tags.forEach((tag) => {
+        this.tags.push(tag);
+      });
+    });
+
+    this.displayLabelFilter();
+
+    this.displayTypeFilter();
+
+  }
+
+
+  private displayLabelFilter() {
+    this.tagLabel = [];
+
+    this.tags.forEach((items) => {
+      const index = this.tagLabel.findIndex((item) => item.id === items._id);
+      if (index === -1) {
+        this.tagLabel.push({'label': items.label.en, 'id': items._id});
+      }
+    });
+
+    this.tagLabel.sort((a: any, b: any) => {
+      if (a.label < b.label) {
+        return -1;
+      }
+
+      if (a.label > b.label) {
+        return 1;
+      }
+
+      return 0
+
+    });
+
+  }
+
+
+  private displayTypeFilter() {
+    this.tagType = [];
+
+    this.tags.forEach((items) => {
+      const index = this.tagType.findIndex((item) => item.type === items.type);
+      if (index === -1) {
+        this.tagType.push({'type': items.type, 'id': items._id});
+      }
+    });
+
+    this.tagType.sort((a: any, b: any) => {
+      if (a.type < b.type) {
+        return -1;
+      }
+
+      if (a.type > b.type) {
+        return 1;
+      }
+
+      return 0
+
+    });
+
+   }
+
+
+   getTypeName(value: string): string {
+    if (value === 'SECTOR') {
+      return 'Sector';
+    }
+
+     if (value === 'VALUE_CHAIN') {
+       return 'Value chain';
+     }
+
+     if (value === 'SOLUTION_TYPE') {
+       return 'Solution';
+     }
+
+     if (value === 'QUALIFICATION') {
+       return 'Qualification';
+     }
+
+     return 'Unknown';
+
+   }
+
+
+   getLabelName(value: string): string {
+    if (value) {
+      return `${value[0].toUpperCase()}${value.slice(1).toLowerCase()}`;
+    }
+
+    return 'Unknown';
+
+   }
+
+  getLangName(value: string): string {
+    if (value === 'en') {
+      return 'English';
+    }
+
+    if (value === 'fr') {
+      return 'French';
+    }
+
+  }
+
+
+  getStatusName(value: string): string {
+    if (value === 'DONE') {
+      return 'Completed';
+    }
+
+    if (value === 'EVALUATING') {
+      return 'In progress';
+    }
+
+  }
+
+
+  changeIndex(event: Event, value: string) {
+    event.preventDefault();
+
+    if (value === 'label') {
+      if (this.endLabelIndex < this.tagLabel.length) {
+        const diff = this.tagLabel.length - this.endLabelIndex;
+        if (diff >= 4) {
+          this.endLabelIndex += 4;
+        } else {
+          this.endLabelIndex += diff;
+        }
+      }
+    }
+
+    if (value === 'type') {
+      if (this.endTypeIndex < this.tagLabel.length) {
+        const diff = this.tagLabel.length - this.endTypeIndex;
+        if (diff >= 4) {
+          this.endTypeIndex += 4;
+        } else {
+          this.endTypeIndex += diff;
+        }
+      }
+    }
+
+  }
 
   /*
     based on the innovations array we pass, we load the innovation
@@ -331,6 +464,161 @@ export class ClientDiscoverPageComponent implements OnInit {
 
     this.totalResults = this._innovationCards.length;
 
+  }
+
+
+  /*
+    checking the filterApplied contains the keys,
+    if yes then we make the checkbox ticked.
+   */
+  filterChecked(value: string, type: string): boolean {
+    const index = this.filterApplied.findIndex((item) => item.id === value && item.type === type);
+    return index !== -1;
+  }
+
+
+  /*
+    showing the filter container.
+   */
+  addFilter(event: Event) {
+    event.preventDefault();
+    this.showFilterContainer = true;
+    this.applyFilterClicked = false;
+  }
+
+
+  /*
+  check the value of applyFilterClicked, if false then assign the
+  filters that are stored in the sessionStorage.
+ */
+  cancelFilter(event: Event) {
+    event.preventDefault();
+
+    if (!this.applyFilterClicked) {
+      this.storedFilters();
+      this.getAllInnovations();
+    }
+
+    this.showFilterContainer = false;
+
+  }
+
+
+  /*
+    save the applied filters to session storage and close the container.
+   */
+  applyFilter() {
+    sessionStorage.setItem('discover-filters', JSON.stringify(this.filterApplied));
+    this.applyFilterClicked = true;
+    this.showFilterContainer = false;
+  }
+
+
+  /*
+    based on the checkbox checked or unchecked we effect the filterApplied attribute,
+    and call the related functions.
+   */
+  toggleFilter(event: Event) {
+    this.addingFilter = true;
+    this.selectedLang = '';
+
+    if (event.target['checked']) {
+      this.filterApplied.push({id: event.target['id'], value: event.target['defaultValue'], type: event.target['name']});
+    } else {
+      this.filterRemove(event.target['id']);
+    }
+
+    this.checkFilterLength();
+
+  }
+
+
+  filterRemove(id: string) {
+    const index = this.filterApplied.findIndex(name => name.id === id);
+    this.filterApplied.splice(index, 1);
+  }
+
+
+  checkFilterLength() {
+    this._config.limit = this.filterApplied.length > 0 ? 0 : this.initialConfigLimit;
+
+    if (this.filterApplied.length > 1) {
+      this.loadInnovations();
+    } else {
+      this.getAllInnovations();
+    }
+
+  }
+
+  /*
+    we disable the type and the language that are not selected.
+  */
+  checkDisable(value: string, type: string): boolean {
+
+    if (this.filterApplied.length > 0) {
+      const typeIndex = this.filterApplied.findIndex((item) => item.type === type);
+
+      if (typeIndex !== -1) {
+        const index = this.filterApplied.findIndex((item) => item.id === value);
+        if (index === -1) {
+          return true;
+        }
+      }
+
+    }
+
+    return false;
+  }
+
+
+  removeFilter(id: string) {
+    this.addingFilter = true;
+    this.filterRemove(id);
+    this.applyFilter();
+    this.checkFilterLength();
+  }
+
+
+  removeAllFilter(event: Event) {
+    this.addingFilter = true;
+    event.preventDefault();
+    this.filterApplied = [];
+    this.applyFilter();
+    this.checkFilterLength();
+  }
+
+
+  getFilterName(item: Array<{id: string, value: string, type: string}>): string {
+    if (item['type'] === 'language' ) {
+      return this.getLangName(item['value']);
+    }
+
+    if (item['type'] === 'type' ) {
+      return this.getTypeName(item['value']);
+    }
+
+    if (item['type'] === 'status' ) {
+      return this.getStatusName(item['value']);
+    }
+
+    if (item['type'] === 'label' ) {
+      return this.getLabelName(item['value']);
+    }
+
+    return '';
+
+  }
+
+
+  /*
+    when there is change in the pagination we detect the change and
+    call the service with the new limit and offset value.
+   */
+  changePagination(paginationValues: ConfigTemplate) {
+    window.scroll(0, 0);
+    this._config.offset = paginationValues.offset;
+    this.initialConfigLimit = this._config.limit = paginationValues.limit;
+    this.getAllInnovations();
   }
 
 
@@ -362,8 +650,22 @@ export class ClientDiscoverPageComponent implements OnInit {
 
 
   /*
-    getting the image src of the innovation.
+    the current lang of the user.
    */
+  get currentLang(): string {
+    return this.translateService.currentLang;
+  }
+
+  /*
+    the language in which we want to display the innovation card..
+   */
+  get innovationsLang(): string {
+    return this.selectedLang === '' ? 'en' : this.selectedLang;
+  }
+
+  /*
+  getting the image src of the innovation.
+ */
   getSrc(innovation: InnovCard): string {
     let src = '';
     const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
@@ -381,23 +683,6 @@ export class ClientDiscoverPageComponent implements OnInit {
 
     return src;
   }
-
-
-  /*
-    getting the current lang of the user.
-   */
-  get currentLang(): string {
-    return this.translateService.currentLang;
-  }
-
-
-  /*
-    getting the language of the innovations that we want to display.
-   */
-  get innovationsLang(): string {
-    return this.selectedLang === '' ? 'en' : this.selectedLang;
-  }
-
 
   get innovationCards(): InnovCard[] {
     return this._innovationCards;
@@ -459,5 +744,42 @@ export class ClientDiscoverPageComponent implements OnInit {
         this.filterInnovations.push(innovation);
       }
     });*/
+
+  /* private typeFilter(innovations: Array<Innovation>, value: string) {
+    this.filterInnovations = innovations.filter((item) => {
+      return item.tags.findIndex((tag) => tag.type === value) !== -1;
+    });
+  }*/
+
+  /*
+    private displayLabelFilter() {
+    this.tagLabel = [];
+
+    this.tags.forEach((items) => {
+      const index = this.tagLabel.findIndex((item) => item.id === items._id);
+      if (index === -1) {
+        if (this.innovationsLang === 'en') {
+          this.tagLabel.push({'label': items.label.en, 'id': items._id});
+        } else {
+          this.tagLabel.push({'label': items.label.fr, 'id': items._id});
+        }
+      }
+    });
+
+    this.tagLabel.sort((a: any, b: any) => {
+      if (a.label < b.label) {
+        return -1;
+      }
+
+      if (a.label > b.label) {
+        return 1;
+      }
+
+      return 0
+
+    });
+
+  }
+   */
 
 }

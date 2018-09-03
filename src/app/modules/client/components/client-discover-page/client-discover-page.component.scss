@@ -54,6 +54,41 @@
 
   }
 
+  .filter-applied-wrapper {
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin-right: .6rem;
+    list-style: none;
+
+    li {
+      background-color: $background-color;
+      color: white;
+      font-size: .875rem;
+      border-radius: .18rem;
+
+      i {
+        margin-left: .6rem;
+        font-size: 1rem;
+        vertical-align: -5%;
+      }
+
+    }
+
+  }
+
+  .filter-applied-wrapper:hover {
+    cursor: pointer;
+  }
+
+  .clear-filter {
+    color: $primary-color;
+  }
+
+  .clear-filter:hover {
+    cursor: pointer;
+    color: lighten($primary-color, 15%);
+  }
+
   .filter-action {
     margin-bottom: 1.57rem;
   }
@@ -79,8 +114,8 @@
 
     .filter-content {
       border-top: 1px solid $border-color;
-      padding-top: 3.15rem;
-      padding-bottom: 3.15rem;
+      padding-top: 1.57rem;
+      padding-bottom: 1.57rem;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -99,6 +134,15 @@
           margin-bottom: .6rem;
         }
 
+        .text-link {
+          font-size: .8125rem;
+        }
+
+      }
+
+      .disabled-label {
+        cursor: not-allowed;
+        opacity: .5;
       }
 
     }
@@ -121,7 +165,7 @@
     width: 100%;
     z-index: 4;
     min-height: 100vh;
-    background: rgba(0,0,0,0.31);
+    background: rgba(0,0,0,0.5);
   }
 
   .filter-wrapper-overlay {
