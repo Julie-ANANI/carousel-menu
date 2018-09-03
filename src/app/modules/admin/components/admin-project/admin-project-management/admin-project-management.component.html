@@ -769,7 +769,9 @@
       <div class="content">
         {{ 'PROJECT_MODULE.SETUP.DELETE_PROJECT_MODAL.CONTENT' | translate }}
         <ul>
-          <li *ngFor="let user of usersToRemove">{{user.firstName}} {{user.lastName}}</li>
+          <!-- Property 'usersToRemove' does not exist on type 'AdminProjectManagementComponent'.
+            <li *ngFor="let user of usersToRemove">{{user.firstName}} {{user.lastName}}</li>
+          -->
         </ul>
       </div>
     </div>
