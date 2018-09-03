@@ -4,7 +4,7 @@
 
       <!-- Logo -->
       <div class="text-left">
-        <a routerLink="/">
+        <a routerLink="/" class="gtm-menu-logo">
           <img src="{{ getLogo() }}" alt="UMI" height="30px" class="logo">
         </a>
       </div>
@@ -23,7 +23,8 @@
             <a
               [routerLink]="'/sample'"
               routerLinkActive="active"
-              (click)="onClickLink()">
+              (click)="onClickLink()"
+              class="gtm-menu-sample-synthesis">
               {{ 'HEADER.EXAMPLE' | translate }}
             </a>
           </li>
@@ -33,7 +34,8 @@
             <a
               [routerLink]="'/discover'"
               routerLinkActive="active"
-              (click)="onClickLink()">
+              (click)="onClickLink()"
+              class="gtm-menu-discover">
               {{ 'COMMON.DISCOVER' | translate }}
             </a>
           </li>
@@ -43,7 +45,8 @@
             <a
               [routerLink]="'/project'"
               routerLinkActive="active"
-              (click)="onClickLink()">
+              (click)="onClickLink()"
+              class="gtm-menu-my-projects">
               {{ 'COMMON.MY_PROJECTS' | translate }}
             </a>
           </li>
@@ -53,7 +56,8 @@
             <a
               [routerLink]="'/account'"
               routerLinkActive="active"
-              (click)="onClickLink()">
+              (click)="onClickLink()"
+              class="gtm-menu-my-account">
               {{ 'COMMON.MY_ACCOUNT' | translate }}
             </a>
           </li>
