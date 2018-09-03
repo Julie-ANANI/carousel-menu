@@ -170,7 +170,7 @@ export class TableComponent {
    */
   changePaginationConfig(value: any) {
     this._paginationConfig = value;
-    this._config.limit = value.limit
+    this._config.limit = value.limit;
     this._config.offset = value.offset;
     window.scroll(0, 0);
     this.changeConfig(this._config);
@@ -630,6 +630,10 @@ export class TableComponent {
 
   set content(value: Row[]) {
     this._content = value;
+  }
+
+  get lang(): string {
+    return this._translateService.currentLang;
   }
 
 }

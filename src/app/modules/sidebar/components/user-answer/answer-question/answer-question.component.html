@@ -64,6 +64,7 @@
           [editMode]="editMode"
           [projectId]="innoid"
           (addTag)="addTag($event, question.identifier)"
+          (createTag)="createTag($event, question.identifier)"
           (removeTag)="removeTag($event, question.identifier)">
         </app-shared-tag-item>
       </div>
@@ -99,6 +100,7 @@
          [editMode]="editMode"
          [projectId]="innoid"
          (addTag)="addTag($event, question.identifier)"
+         (createTag)="createTag($event, question.identifier)"
          (removeTag)="removeTag($event, question.identifier)">
        </app-shared-tag-item>
      </div>
@@ -162,6 +164,7 @@
           [editMode]="editMode"
           [projectId]="innoid"
           (addTag)="addTag($event, question.identifier)"
+          (createTag)="createTag($event, question.identifier)"
           (removeTag)="removeTag($event, question.identifier)">
         </app-shared-tag-item>
       </div>
@@ -240,6 +243,7 @@
         [editMode]="false"
         [projectId]="innoid"
         (addTag)="addTag($event, question.identifier + 'Comment')"
+        (createTag)="createTag($event, question.identifier + 'Comment')"
         (removeTag)="removeTag($event, question.identifier + 'Comment')">
       </app-shared-tag-item>
     </div>
@@ -277,6 +281,7 @@
           [editMode]="true"
           [projectId]="innoid"
           (addTag)="addTag($event, question.identifier + 'Comment')"
+          (createTag)="createTag($event, question.identifier + 'Comment')"
           (removeTag)="removeTag($event, question.identifier + 'Comment')">
         </app-shared-tag-item>
       </div>

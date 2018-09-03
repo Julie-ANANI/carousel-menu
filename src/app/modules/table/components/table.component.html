@@ -93,8 +93,8 @@
 
                   <!-- If column type is  TEXT -->
                   <span *ngSwitchDefault>
-                  <span *ngFor="let attr of getAttrs(column)">{{(getContentValue(key, attr)|| " - ").toString() | ellipsis:50}} </span>
-                </span>
+                    <span *ngFor="let attr of getAttrs(column)">{{(getContentValue(key, attr)|| " - ").toString() | ellipsis:50}} </span>
+                  </span>
 
                   <!-- If column type is COUNTRY -->
                   <app-country-flag *ngSwitchCase="'COUNTRY'" [country]="(getContentValue(key, getAttrs(column)[0]) || '')"></app-country-flag>
@@ -134,12 +134,12 @@
                 </span>
 
                   <span *ngSwitchCase="'DATE'">
-                  {{(getContentValue(key, getAttrs(column)[0])?.toString() | date:dateFormat)}}
-                </span>
+                    {{(getContentValue(key, getAttrs(column)[0])?.toString() | date:dateFormat)}}
+                  </span>
 
                   <span *ngSwitchCase="'ARRAY'">
-                  {{(getContentValue(key, getAttrs(column)[0]) || []).length.toString()}}
-                </span>
+                    {{(getContentValue(key, getAttrs(column)[0]) || []).length.toString()}}
+                  </span>
 
                   <!-- If column type is MULTI-LABEL -->
                   <span *ngSwitchCase="'MULTI-LABEL'">
@@ -154,8 +154,12 @@
 
                       {{(getContentValue(key, attr) || " - ").toString()}}
 
-                    </span>
-                </span>
+                      </span>
+                  </span>
+
+                  <span *ngSwitchCase="'MULTILING'">
+                    {{(getContentValue(key, getAttrs(column)[0]) | multiling:lang)}}
+                  </span>
 
                 </ng-container>
               </span>
