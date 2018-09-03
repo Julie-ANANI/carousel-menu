@@ -3,7 +3,7 @@
 
     <!-- Add project button -->
     <div class="text-right">
-      <button [routerLink]="'/project/new'" (click)="$event.preventDefault()" class="btn btn-primary">
+      <button [routerLink]="'/project/new'" (click)="$event.preventDefault()" class="btn btn-primary gtm-create-project">
         {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
       </button>
     </div>
@@ -26,9 +26,9 @@
     <div *ngIf="projects && projects.length" class="project-wrapper">
       <div *ngFor="let project of projects" class="content-outer-wrapper">
         <div class="content-wrapper">
-          <img [src]="getPrincipalMedia(project)" [routerLink]="getRelevantLink(project)" alt="Media">
+          <img [src]="getPrincipalMedia(project)" [routerLink]="getRelevantLink(project)" alt="Media" class="gtm-visit-user-project">
           <div class="project-description">
-            <span [routerLink]="getRelevantLink(project)">{{ project.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
+            <span [routerLink]="getRelevantLink(project)" class="gtm-visit-user-project">{{ project.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
             <p class="date-text-wrapper">
               {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
               •
@@ -43,8 +43,8 @@
       <!-- Pagination -->
       <div class="pagination-wrapper">
         <app-pagination
-          [config]="config"
-          (configChange)="loadProjects($event)"
+          [configValue]="paginationConfig"
+          (configChange)="configChange($event)"
           [total]="total"
           [propertyName]="'client-projects'">
         </app-pagination>

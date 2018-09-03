@@ -19,7 +19,8 @@
             <app-search-input
               (searchInputEmit)="onSearchValue($event)"
               (discoverValueEmit)="onValueSelected($event)"
-              [suggestions]="suggestionInnov">
+              [suggestions]="suggestionInnov"
+              class="gtm-search-public-project">
             </app-search-input>
           </div>
         </div>
@@ -35,7 +36,7 @@
         <div class="columns">
           <div class="column col-sm-12 col-xl-6 col-4" id="row-padding" *ngFor="let innovationCard of innovationCards">
             <div class="card">
-              <div class="card-image" [routerLink]="[ innovationCard.innovation_reference, innovationCard.lang ]">
+              <div class="card-image gtm-visit-public-project" [routerLink]="[ innovationCard.innovation_reference, innovationCard.lang ]">
                 <img
                   *ngIf="innovationCard.media[0] ; else nomedia"
                   [src]= "innovationCard.media[0].url" alt="Media">
@@ -45,7 +46,7 @@
                 </ng-template>
               </div>
               <div class="card-header">
-                <div class="card-title" [routerLink]="[ innovationCard.innovation_reference, innovationCard.lang ]">{{ innovationCard.title }}</div>
+                <div class="card-title gtm-visit-public-project" [routerLink]="[ innovationCard.innovation_reference, innovationCard.lang ]">{{ innovationCard.title }}</div>
                 <div class="card-subtitle text-gray"> </div>
               </div>
               <div class="card-body"> {{ innovationCard.summary | DiscoverSummaryPipe }}</div>

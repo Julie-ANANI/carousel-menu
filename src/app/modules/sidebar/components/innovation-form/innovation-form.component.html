@@ -4,7 +4,7 @@
     <div class="input-group">
       <select class="form-select"
               *ngIf="isStatus"
-              [(ngModel)]="project.status"
+              [ngModel]="project.status"
               (ngModelChange)="checkStatus($event)"
               [ngModelOptions]="{standalone: true}">
         <option *ngFor="let stat of status" [ngValue]="stat.name">{{stat.alias}}</option>
@@ -33,11 +33,8 @@
     [adminMode]="true">
   </app-shared-project-settings>
 
-  <h6 *ngIf="isStatus || isMail" style="color: #EA5858; margin-left: 10px;">Pour le moment l'envoi de mail n'est pas fonctionnel</h6>
-
   <!-- This functionality doesn't work for the moment -->
   <app-shared-mail-editor *ngIf="isStatus || isMail"
-                          class="disabled"
                           [signatures]="signatures"
                           [emailsObject]="email"
                           (emailChange)="email = $event">

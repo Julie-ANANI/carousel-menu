@@ -108,9 +108,9 @@
             <button type="submit" class="btn btn-xxl btn-primary centered tooltip-top" [disabled]="formData.invalid">{{ 'COMMON.SAVE' | translate }}</button>
             <p>
               <br>
-              <a (click)="changePassword($event)" class="c-hand">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</a> -
-              <a (click)="(accountDeletionAsked = true) && $event.preventDefault()" class="c-hand text-error">{{ 'MY_ACCOUNT.DELETE' | translate }}</a> -
-              <a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}&nbsp;<i class="fas fa-sign-out-alt"></i></a>
+              <a (click)="changePassword($event)" class="c-hand gtm-change-password">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</a> -
+              <a (click)="(accountDeletionAsked = true) && $event.preventDefault()" class="c-hand text-error gtm-delete-account">{{ 'MY_ACCOUNT.DELETE' | translate }}</a> -
+              <a [routerLink]="'/logout'" class="gtm-disconnect">{{ 'COMMON.LOG_OUT' | translate }}&nbsp;<i class="fas fa-sign-out-alt"></i></a>
             </p>
         </div>
       </form>

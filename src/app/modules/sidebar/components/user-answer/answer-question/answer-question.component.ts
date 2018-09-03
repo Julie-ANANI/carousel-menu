@@ -70,7 +70,25 @@ export class AnswerQuestionComponent {
       .addTag(this.fullAnswer._id, tag._id, q_identifier)
       .first()
       .subscribe((a) => {
-        this.fullAnswer.answerTags[q_identifier].push(tag);
+        if (this.fullAnswer.answerTags[q_identifier]) {
+          this.fullAnswer.answerTags[q_identifier].push(tag);
+        } else {
+          this.fullAnswer.answerTags[q_identifier] = [tag];
+        }
+        this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
+      }, err => {
+        this._notificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
+      });
+  }
+
+  createTag(tag: Tag, q_identifier: string): void {
+    this._answerService.createTag(this.fullAnswer._id, tag, q_identifier).first()
+      .subscribe((a) => {
+        if (this.fullAnswer.answerTags[q_identifier]) {
+          this.fullAnswer.answerTags[q_identifier].push(tag);
+        } else {
+          this.fullAnswer.answerTags[q_identifier] = [tag];
+        }
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
         this._notificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');

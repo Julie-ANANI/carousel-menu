@@ -51,7 +51,11 @@
     <tfoot>
       <tr>
         <td colspan="12">
-          <app-pagination [config]="config" (configChange)="loadPresets($event)" [total]="total" [propertyName]="'admin-presets'"></app-pagination>
+          <app-pagination
+            [configValue]="paginationConfig"
+            (configChange)="configChange($event)"
+            [total]="total"
+            [propertyName]="'admin-presets'"></app-pagination>
         </td>
       </tr>
     </tfoot>

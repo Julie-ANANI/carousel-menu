@@ -83,12 +83,12 @@
         <!-- Buttons -->
         <div class="func-btn-wrapper">
           <span>
-            <button class="btn ghost-primary" (click)="printInnovationCard($event)">
+            <button class="btn ghost-primary gtm-print-card" (click)="printInnovationCard($event)">
               {{ 'PROJECT_MODULE.SETUP.PRINT_BUTTON' | translate }}
             </button>
           </span>
           <span>
-            <button class="btn ghost-primary" (click)="showInnovation($event)">
+            <button class="btn ghost-primary gtm-preview-card" (click)="showInnovation($event)">
               {{ 'PROJECT_MODULE.SETUP.PREVIEW_BUTTON' | translate }}
             </button>
           </span>
@@ -101,7 +101,7 @@
           <span>
             <button
               [disabled]="projectStatus !== 'EDITING'"
-              class="btn btn-primary"
+              class="btn btn-primary gtm-submit-project"
               (click)="submitButton($event)">
               {{ 'PROJECT_MODULE.SETUP.SUBMIT_PROJECT' | translate }}
             </button>
@@ -117,19 +117,19 @@
     <div class="tabs-container">
       <ul class="tabs">
         <li>
-          <a [routerLink]="['setup', 'targeting']" [ngClass]="{'active': currentTab == 'targeting'}">
+          <a [routerLink]="['setup', 'targeting']" [ngClass]="{'active': currentTab == 'targeting'}" class="gtm-edit-market-targeting">
             <i class="fas fa-check targeting-check" [ngStyle]="{ 'display': targetingFormValid ? 'inline-block' : 'none' }"></i>
             {{ 'PROJECT_MODULE.SETUP.TARGETING_TAB' | translate }}
           </a>
         </li>
         <li>
-          <a [routerLink]="['setup', 'pitch']" [ngClass]="{'active': currentTab == 'pitch'}">
+          <a [routerLink]="['setup', 'pitch']" [ngClass]="{'active': currentTab == 'pitch'}" class="gtm-edit-description">
             <i class="fas fa-check pitch-check" [ngStyle]="{ 'display': pitchFormValid ? 'inline-block' : 'none' }"></i>
             {{ 'PROJECT_MODULE.SETUP.PITCH_TAB' | translate }}
           </a>
         </li>
         <li>
-          <a [routerLink]="['setup', 'survey']" [ngClass]="{'active': currentTab == 'survey'}">
+          <a [routerLink]="['setup', 'survey']" [ngClass]="{'active': currentTab == 'survey'}" class="gtm-edit-questionnaire">
             <i class="fas fa-check survey-check" [ngStyle]="{ 'display': project.quizId ? 'inline-block' : 'none' }"></i>
             {{ 'PROJECT_MODULE.SETUP.SURVEY_TAB' | translate }}
           </a>

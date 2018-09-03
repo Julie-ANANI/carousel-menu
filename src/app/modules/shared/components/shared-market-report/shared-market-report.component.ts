@@ -349,8 +349,22 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   getSrc(): string {
-    const index = this.project.innovationCards[0].media.findIndex((media) => media.type === 'PHOTO');
-    return this.project.innovationCards[0].media[index].url;
+    let src = '';
+    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
+
+    if (this.project.innovationCards[0].principalMedia && this.project.innovationCards[0].principalMedia.type === 'PHOTO') {
+      src = this.project.innovationCards[0].principalMedia.url;
+    } else {
+      const index = this.project.innovationCards[0].media.findIndex((media) => media.type === 'PHOTO');
+      src = index === -1 ? defaultSrc : this.project.innovationCards[0].media[index].url;
+    }
+
+    if (src === '' || undefined) {
+      src = defaultSrc;
+    }
+
+    return src;
+
   }
 
   public percentageCalculataion(value1: number, value2: number) {

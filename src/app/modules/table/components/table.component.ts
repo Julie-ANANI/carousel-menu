@@ -5,6 +5,7 @@ import {Column, types} from '../models/column';
 import {Choice} from '../models/choice';
 import {TranslateService} from '@ngx-translate/core';
 import {MultiLabel} from '../models/multi-label';
+import {ConfigTemplate} from '../../../models/config';
 
 @Component({
   selector: 'app-shared-table',
@@ -81,6 +82,7 @@ export class TableComponent {
   editColumn = false;
 
   private _config: any = null;
+  private _paginationConfig: ConfigTemplate = {};
   private _massSelection = false;
 
   constructor(private _translateService: TranslateService) {}
@@ -140,6 +142,10 @@ export class TableComponent {
    */
   loadConfig(value: any): void {
     this._config = value;
+    this._paginationConfig = {
+      limit: value.limit || 10,
+      offset: value.offset || 0
+    };
   }
 
   /***
@@ -155,6 +161,19 @@ export class TableComponent {
     } else {
       Promise.resolve(null).then(() => this.changeLocalConfig());
     }
+  }
+
+  /***
+   * This function is call when the user change the pagination config
+   * It affects the values and call changeConfig
+   * @param value
+   */
+  changePaginationConfig(value: any) {
+    this._paginationConfig = value;
+    this._config.limit = value.limit;
+    this._config.offset = value.offset;
+    window.scroll(0, 0);
+    this.changeConfig(this._config);
   }
 
   /***
@@ -605,9 +624,16 @@ export class TableComponent {
     return this._filteredContent;
   }
 
+  get paginationConfig(): ConfigTemplate {
+    return this._paginationConfig;
+  }
 
   set content(value: Row[]) {
     this._content = value;
+  }
+
+  get lang(): string {
+    return this._translateService.currentLang;
   }
 
 }

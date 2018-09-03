@@ -21,6 +21,7 @@ import {CampaignService} from '../../../../../services/campaign/campaign.service
 import {EmailScenario} from '../../../../../models/email-scenario';
 import {TagsService} from '../../../../../services/tags/tags.service';
 import {FrontendService} from '../../../../../services/frontend/frontend.service';
+import {EmailTemplate} from '../../../../../models/email-template';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -39,6 +40,8 @@ export class AdminProjectManagementComponent implements OnInit {
   private _more: Template = {};
   sidebarState = new Subject<string>();
   projectSubject = new Subject<Innovation>();
+
+  private _showDeleteModal = false;
 
   // Owner edition
   isEditOwner = false;
@@ -72,7 +75,7 @@ export class AdminProjectManagementComponent implements OnInit {
   answerTags = 0;
 
   // Campaign choice
-  currentCampaign: Campaign = null;
+  currentCampaign: any = null;
 
   // Click percentage
   private _clickPercentage = 0.0;
@@ -341,6 +344,19 @@ export class AdminProjectManagementComponent implements OnInit {
   }
 
   /***
+   * This function generates the quiz for the project.
+   */
+  generateQuiz(event: Event) {
+    event.preventDefault();
+    this._innovationService.createQuiz(this._project._id).first().subscribe((result) => {
+      this._project = result;
+      this._notificationsService.success('ERROR.SUCCESS', 'ERROR.QUIZ.CREATED');
+    }, (err) => {
+      this._notificationsService.error('ERROR.ERROR', err);
+    })
+  }
+
+  /***
    * This function is call when the user edit the description of the project
    * Change the sidebar to the pitch sidebar
    */
@@ -375,8 +391,20 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   changeProject(value: Innovation) {
     this._project = value;
+    console.log(this._project);
+    this._more = {animate_state: 'inactive', title: this._more.title, type: this._more.type};
     this.save(event, 'Le projet a bien été mise à jour !');
-    window.location.reload();
+    // window.location.reload();
+  }
+
+  /***
+   *
+   * @param mail
+   */
+  sendMailToOwner(mail: any) {
+    this._innovationService.sendMailToOwner(this._project._id, mail).first().subscribe((answer: any) => {
+      console.log(answer);
+    });
   }
 
   /***
@@ -473,8 +501,8 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   calculateClickPercentage() {
     if (this.currentCampaign && this.currentCampaign.stats && this.currentCampaign.stats.campaign) {
-      this._clickPercentage = this._frontendService.analyticPercentage(this.currentCampaign.stats.campaign.nbProfessionals,
-        this.currentCampaign.stats.campaign.nbResp);
+      this._clickPercentage = this._frontendService.analyticPercentage(this.currentCampaign.stats.nbProsClicked,
+        this.currentCampaign.stats.nbProsOpened);
     }
   }
 
@@ -554,14 +582,14 @@ export class AdminProjectManagementComponent implements OnInit {
     let scenariosnames: Set<string>;
     scenariosnames = new Set<string>();
     if (this.currentCampaign.settings && this.currentCampaign.settings.emails) {
-      this.currentCampaign.settings.emails.forEach((x) => {
+      this.currentCampaign.settings.emails.forEach((x: EmailTemplate) => {
         scenariosnames.add(x.nameWorkflow);
       });
     }
     scenariosnames.forEach((name) => {
       const scenar = {} as EmailScenario;
       scenar.name = name;
-      scenar.emails = this.currentCampaign.settings.emails.filter(email => {
+      scenar.emails = this.currentCampaign.settings.emails.filter((email: EmailTemplate) => {
         return email.nameWorkflow === name;
       });
       this._availableScenarios.push(scenar);
@@ -609,14 +637,14 @@ export class AdminProjectManagementComponent implements OnInit {
 
   /***
    * This function is call when the user wants to write the ending mail of the project
-   * Change the sidebar to the send-mail sidebar
+   * Change the sidebar to the send-ending-mail sidebar
    */
   editEndingMail() {
     this.changeSidebar('innovation-form');
     this._more = {
       animate_state: 'active',
       title: 'PROJECT.DELIVERY.WRITE_ENDING_MAIL',
-      type: 'send-mail',
+      type: 'send-ending-mail',
       size: '650px',
     };
   }
@@ -692,17 +720,25 @@ export class AdminProjectManagementComponent implements OnInit {
     this.projectSubject.next(this._project);
   }
 
+  deleteProjectModal() {
+    this._showDeleteModal = true;
+  }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._showDeleteModal = false;
+  }
+
   /**
    * Suppression et mise à jour de la vue
    */
-  /*public removeProject(projectId: string) {
+  public removeProject() {
     this._innovationService
-      .remove(projectId)
+      .remove(this._project._id)
       .subscribe(projectRemoved => {
-        this._projects.splice(this._getProjectIndex(projectId), 1);
-        this.selectedProjectIdToBeDeleted = null;
+        this._router.navigate(['/admin/projects/']);
       });
-  }*/
+  }
 
   formatText(text: string) {
     return text.charAt(0).toUpperCase() + text.toLowerCase().slice(1);
@@ -737,6 +773,10 @@ export class AdminProjectManagementComponent implements OnInit {
 
   get clickPercentage(): number {
     return this._clickPercentage;
+  }
+
+  get showDeleteModal(): boolean {
+    return this._showDeleteModal;
   }
 
 }
