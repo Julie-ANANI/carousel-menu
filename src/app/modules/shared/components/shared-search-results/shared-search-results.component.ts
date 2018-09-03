@@ -57,6 +57,7 @@ export class SharedSearchResultsComponent implements OnInit {
   }
   searchMails() {
     const params: any = {
+      requestId: this._request._id,
       user: this._authService.getUserInfo(),
       query: {
         motherRequestId: this._request._id
@@ -73,7 +74,6 @@ export class SharedSearchResultsComponent implements OnInit {
       params.persons = prosWithoutEmail;
     } else {
       params.all = true;
-      params.requestId = this._request._id;
       params.query = this._selection.query;
       params.query.motherRequestId = this._request._id;
     }

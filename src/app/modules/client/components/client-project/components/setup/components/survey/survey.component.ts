@@ -1,4 +1,4 @@
-import {Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Innovation } from '../../../../../../../../models/innovation';
 import { environment } from '../../../../../../../../../environments/environment';
@@ -15,8 +15,7 @@ export class SurveyComponent implements OnInit {
 
   private _url: string;
 
-  constructor(private translateService: TranslateService) {
-  }
+  constructor(private translateService: TranslateService) {}
 
   ngOnInit() {
     if (this.project.quizId) {

@@ -33,5 +33,6 @@ export interface InnovationSettings {
     emails: Array<string>;
     readonly people: Array<any>;
   };
-  domain?: any; // {en: string, fr: string}
+  domain?: any; // {en: string, fr: string},
+  completion?: number
 }

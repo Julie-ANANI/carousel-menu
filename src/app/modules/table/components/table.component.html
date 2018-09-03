@@ -76,9 +76,9 @@
     <tbody>
 
         <tr *ngFor="let key of getRowsKeys()"
-            [ngClass]="{'active': isSelected(content[key])}">
+            [ngClass]="{'active': isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])}">
 
-          <td *ngIf="isSelectable" (click)="selectRow(key)"><input type="checkbox" [checked]="isSelected(content[key])"/>
+          <td *ngIf="isSelectable" (click)="selectRow(key)"><input type="checkbox" [checked]="isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])"/>
             <div class="square-check primary"><i class="icon icon-check"></i></div></td>
 
           <!-- Foreach columns -->

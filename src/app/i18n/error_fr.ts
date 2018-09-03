@@ -45,6 +45,8 @@ export const ERROR = {
     'SAVED': 'Sauvegardé',
     'DELETED': 'Supprimé',
     'DELETED_TEXT': 'Votre projet a été supprimé dans la langue spécifiée.',
+    'DELETED_PROJECT_TEXT': 'Votre projet a été supprimé.',
+    'NOT_DELETED_TEXT': 'Votre projet ne peut pas être supprimé pour le moment pour des raisons techniques. Veuillez réessayer plus tard !',
     'SAVED_TEXT': 'Votre projet a été enregistré.',
     'SAVE_ERROR': 'Veuillez sauvegarder toutes vos modifications avant de continuer.',
     'SUBMITTED': 'Soumis',

@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedFilterMultiModule } from '../shared/components/shared-filter-multi/shared-filter-multi.module';
 import { SharedSortModule } from '../shared/components/shared-sort/shared-sort.module';
 import {InputModule} from '../input/input.module';
+import { PaginationModule } from '../input/component/pagination/pagination.module';
 
 // Components
 import { PipeModule } from '../../pipe/pipe.module';
@@ -21,6 +22,7 @@ import { TableComponent } from './components/table.component';
     FormsModule,
     TranslateModule.forChild(),
     InputModule,
+    PaginationModule,
     TranslateModule.forChild(),
     PipeModule
   ],

@@ -1,13 +1,13 @@
-$header-background: #4F5D6B;
+@import "../../../../../style/variables";
 
-.main-container {
-  background: $header-background;
-  padding-top: 20px;
-  padding-bottom: 20px;
+#header {
+  background: $background-color;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
 
   .navbar-toggler-icon {
     position: absolute;
-    top: 20px;
+    top: 1.2rem;
     right: 6.5%;
 
     .fa-bars {
@@ -30,27 +30,27 @@ $header-background: #4F5D6B;
 
         .navbar-item {
           margin-top: 0;
-          padding: 40px 0;
+          padding: 2.5rem 0;
 
           a {
             opacity: 0.5;
             letter-spacing: 0.66px;
             color: #FFFFFF;
             text-decoration: none;
-            font-size: 0.75rem;
             font-weight: 600;
-            transition: all 0.3s ease-in-out;
+            font-size: .85rem;
+            transition: all 0.15s ease-in-out;
           }
 
           a:hover {
             opacity: 1;
-            color: #FFB300;
+            color: $primary-color;
             cursor: pointer;
           }
 
           a.active {
             opacity: 1;
-            color: #FFB300;
+            color: $primary-color;
           }
 
         }
@@ -68,35 +68,43 @@ $header-background: #4F5D6B;
 
 @media (max-width: 767px) {
 
-  .navbar-toggler {
-    right: 6.5% !important;
+  #header {
+
+    .navbar-toggler {
+      right: 6.5% !important;
+    }
+
   }
 
 }
 
 @media (min-width: 931px) {
 
-  .navbar-toggler-icon {
-    display: none !important;
-  }
+  #header {
 
-  .navbar {
-    display: flex !important;
+    .navbar-toggler-icon {
+      display: none !important;
+    }
 
-    .nav-item-wrapper {
-      padding-top: 8px !important;
-      flex: unset !important;
-      display: block !important;
+    .navbar {
+      display: flex !important;
 
-      .navbar-nav {
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-        display: inline-flex !important;
-        justify-content: flex-end !important;
+      .nav-item-wrapper {
+        padding-top: .5rem !important;
+        flex: unset !important;
+        display: block !important;
 
-        .navbar-item {
-          margin-left: 41px !important;
-          padding: 0 !important;
+        .navbar-nav {
+          margin-top: 0 !important;
+          margin-bottom: 0 !important;
+          display: inline-flex !important;
+          justify-content: flex-end !important;
+
+          .navbar-item {
+            margin-left: 2.55rem !important;
+            padding: 0 !important;
+          }
+
         }
 
       }

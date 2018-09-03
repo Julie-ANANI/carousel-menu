@@ -20,6 +20,7 @@ import { TableModule } from '../../../table/table.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/admin-project-questionnaire.module';
+import {AutocompleteInputModule} from '../../../input/component/autocomplete-input/autocomplete-input.module';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/adm
     TableModule,
     RouterModule,
     FormsModule,
+    AutocompleteInputModule,
     ReactiveFormsModule,
     AdminProjectQuestionnaireModule
   ],

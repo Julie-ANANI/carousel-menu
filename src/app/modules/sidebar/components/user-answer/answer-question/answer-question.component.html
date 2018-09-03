@@ -140,7 +140,7 @@
     <ng-container *ngSwitchCase="'textarea'">
 
       <form *ngIf="editMode">
-        <div class="e-comment-wrapper">
+        <div class="comment-wrapper">
           <textarea
             class="form-default"
             [(ngModel)]="fullAnswer.answers[question.identifier]"
@@ -257,7 +257,7 @@
 
     <form *ngIf="commenting" [ngStyle]="{ 'width': '100%' }">
       <p class="comment-text">{{ 'COMMON.COMMENT' | translate }} <i class="icon icon-arrow-down"></i></p>
-      <div class="e-comment-wrapper">
+      <div class="comment-wrapper">
           <textarea
             class="form-default"
             name="comment"

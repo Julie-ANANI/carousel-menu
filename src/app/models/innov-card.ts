@@ -13,4 +13,5 @@ export interface InnovCard {
   solution?: string;
   advantages?: Array<{text: string}>;
   readonly principal?: boolean;
+  completion?: number;
 }

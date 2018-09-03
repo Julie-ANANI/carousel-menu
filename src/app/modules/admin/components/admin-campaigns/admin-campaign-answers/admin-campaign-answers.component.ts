@@ -87,6 +87,15 @@ export class AdminCampaignAnswersComponent implements OnInit {
       });
   }
 
+  public changeStatus(rows: Answer[], status: 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED_NO_MAIL' | 'VALIDATED') {
+    rows.forEach(value => {
+      value.status = status;
+      this.answerService.save(value._id, value).first().subscribe(res => {
+        this.loadAnswers();
+      });
+    });
+  }
+
   public closeSidebar(state: string) {
     this.sidebarTemplateValue.animate_state = state;
     this.editMode.next(false);

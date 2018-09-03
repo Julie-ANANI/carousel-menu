@@ -19,7 +19,7 @@ export const SETUP = {
     'REVIEWING': {
       'A': 'Your project needs to be modified. Please',
       'B': 'reads',
-      'C': 'our comments.'
+      'C': 'our comments that we have sent you by mail.'
     },
     'PREVIEW_MODE': 'The partial synthesis of your project is available.',
     'DONE': 'Synthesis of your project is available. You can\'t make changes in your project anymore.'
@@ -35,7 +35,14 @@ export const SETUP = {
 
   'PREVIEW': 'Preview',
   'PREVIEW_BUTTON': 'Preview innovation',
-  'PRINT_BUTTON': 'Print'
+  'PRINT_BUTTON': 'Print innovation',
+
+  'DELETE_BUTTON': 'Delete project',
+
+  'DELETE_PROJECT_MODAL': {
+    'TITLE': 'Delete Board',
+    'CONTENT': 'Do you really want to delete this project?'
+  },
 
 
 };

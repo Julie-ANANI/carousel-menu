@@ -15,26 +15,29 @@ import { AuthService } from '../../../../services/auth/auth.service';
 export class WelcomePageComponent implements OnInit {
 
   private _user: User;
-  public tokenEmail: string;
+  private _tokenEmail: string;
 
   constructor(private _authService: AuthService,
               private _userService: UserService,
               private _router: Router,
-              private _translateService: TranslateService) { }
+              private _translateService: TranslateService) {}
 
   ngOnInit() {
     this._user = this._authService.user;
+
     if (!this._user) {
       this._router.navigate(['/logout']);
-    } else if( this._user.emailVerified ) {
+    } else if ( this._user.emailVerified ) {
       this._router.navigate(['/project']);
     }
+
   }
 
   public acceptTerms(event: Event): void {
     event.preventDefault();
     this._authService.user.state = 'confirmed';
-    this._userService.activate(this._authService.user.state, this.tokenEmail)
+
+    this._userService.activate(this._authService.user.state, this._tokenEmail)
       .first()
       .subscribe(res => {
         if (res.emailVerified === true) {
@@ -46,6 +49,7 @@ export class WelcomePageComponent implements OnInit {
         console.error(error);
         this._router.navigate(['/logout']);
       })
+
   }
 
   get name(): string {
@@ -59,6 +63,14 @@ export class WelcomePageComponent implements OnInit {
     else {
       return false;
     }
+  }
+
+  get tokenEmail(): string {
+    return this._tokenEmail;
+  }
+
+  set tokenEmail(value: string) {
+    this._tokenEmail = value;
   }
 
   get translate (): TranslateService {
