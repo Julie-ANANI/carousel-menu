@@ -8,10 +8,17 @@
 
 <app-sidebar [template]="more" (closeSidebar)="closeSidebar($event)">
   <app-user-form [sidebarState]="sidebarState"
+                 *ngIf="isUserForm"
                  [type]="more.type"
                  [pro]="currentPro" [campaign]="campaign ? campaign: null"
-                 (professionalUserData)="updatePro($event)" (newTags)="addTagsToPro($event)">
+                 (professionalUserData)="updatePro($event)">
   </app-user-form>
+  <app-tags-form [sidebarState]="sidebarState"
+                 *ngIf="isTagsForm"
+                 [type]="more.type"
+                 [project]="project"
+                 (newTags)="addTagsToPro($event)">
+  </app-tags-form>
 </app-sidebar>
 
 <!-- Modal to ask admin to sure about deleting the user -->

@@ -13,12 +13,12 @@ import { Professional } from '../../../../../models/professional';
 export class AdminCampaignProsComponent implements OnInit {
 
   public newPro: any = {
-    firstName: "",
-    lastName: "",
-    email: "",
+    firstName: '',
+    lastName: '',
+    email: '',
     emailConfidence: 100
   };
-  private _addProModal: boolean = false;
+  private _addProModal = false;
   private _campaign: Campaign;
   private _config: any;
 
@@ -43,16 +43,16 @@ export class AdminCampaignProsComponent implements OnInit {
   addPro(value: boolean) {
     this._addProModal = value;
     this.newPro = {
-      firstName: "",
-      lastName: "",
-      email: "",
+      firstName: '',
+      lastName: '',
+      email: '',
       emailConfidence: 100
     };
   }
 
   createPro() {
-    if (this.newPro.email && (this.newPro.firstName || this.newPro.lastName)) {
-      this._professionalsService.create([this.newPro], this.campaign._id, this.campaign.innovation._id).first().subscribe((createdPro:Professional) => {
+    if (this.newPro.email && (this.newPro.firstName && this.newPro.lastName)) {
+      this._professionalsService.create([this.newPro], this.campaign._id, this.campaign.innovation._id).first().subscribe((createdPro: Professional) => {
         this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
       });
     }
@@ -60,7 +60,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
   exportPros() {
     const config = {
-      professionals: "all",
+      professionals: 'all',
       campaignId: this._campaign._id,
       query: {
         campaignId: this._campaign._id
@@ -68,7 +68,7 @@ export class AdminCampaignProsComponent implements OnInit {
     };
     this._professionalsService.export(config).first().subscribe((answer: any) => {
       const blob = new Blob([answer.csv], { type: 'text/csv' });
-      const url= window.URL.createObjectURL(blob);
+      const url = window.URL.createObjectURL(blob);
       window.open(url);
     });
   }

@@ -5,6 +5,8 @@ export const COMMON = {
   'LAST_SAVED_AT': 'Last saved at',
   'UPDATE': 'Update',
   'EDIT': 'Edit',
+  'SEND': 'Send',
+  'CHANGE': 'Change',
   'DELETE': 'Delete',
   'SUBMIT': 'CONFIRM',
   'LOG_IN': 'Sign in',
@@ -18,6 +20,7 @@ export const COMMON = {
   'DATE': 'Date',
   'ADDED': 'Added on',
   'CREATED': 'Created on',
+  'GENERATE': 'Generate',
   'UPDATED': 'Updated on',
   'LAUNCHED': 'Launched on',
   'EXPIRATION' : 'Expires on',
@@ -147,6 +150,7 @@ export const COMMON = {
   'PROFESSIONALS': 'Professionals',
   'PROFESSIONAL': {
     'PITCH-DELETE': 'Are you sure you want to delete the professionnal(s)?',
+    'PITCH-DELETE-ALL' : 'Are you sure you want to delete all the professionnals?',
     'DELETE': 'Delete professionnal(s)',
   },
 

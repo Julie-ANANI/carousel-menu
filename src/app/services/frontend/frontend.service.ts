@@ -10,6 +10,12 @@ export interface Values {
   totalPercentage?: number;
 }
 
+export interface InnovationMetadataValues {
+  preparation?: number;
+  campaign?: number;
+  delivery?: number;
+}
+
 @Injectable()
 export class FrontendService {
   totalFieldsPresent: number;
@@ -23,7 +29,11 @@ export class FrontendService {
   innovCardFieldsRequired: number;
   innovCardFieldsPresent: number;
 
+  scrollValue = 0;
+
   private _calculatedValues: Values = {};
+
+  private _innovationMetadataCalculatedValues = {};
 
   constructor() {}
 
@@ -123,27 +133,27 @@ export class FrontendService {
 
     for (let i = 0; i < value.innovationCards.length; i++) {
 
-      if (value.innovationCards[i].title.length) {
+      if (value.innovationCards[i].title) {
         this.totalFieldsPresent++;
         this.innovCardFieldsPresent++;
       }
 
-      if (value.innovationCards[i].summary.length) {
+      if (value.innovationCards[i].summary) {
         this.totalFieldsPresent++;
         this.innovCardFieldsPresent++;
       }
 
-      if (value.innovationCards[i].problem.length) {
+      if (value.innovationCards[i].problem) {
         this.totalFieldsPresent++;
         this.innovCardFieldsPresent++;
       }
 
-      if (value.innovationCards[i].solution.length) {
+      if (value.innovationCards[i].solution) {
         this.totalFieldsPresent++;
         this.innovCardFieldsPresent++;
       }
 
-      if (value.innovationCards[i].advantages.length) {
+      if (value.innovationCards[i].advantages) {
         this.totalFieldsPresent++;
         this.innovCardFieldsPresent++;
       }
@@ -159,6 +169,22 @@ export class FrontendService {
 
   }
 
+  /*
+    Return the completion percentage of a project section (preparation, campaign or delivery)
+   */
+  calculateInnovationMetadataPercentages(project: Innovation, level: string) {
+    if (project._metadata[level] !== undefined) {
+      const keys = Object.keys(project._metadata[level]) || [];
+      this._innovationMetadataCalculatedValues[level] = (((keys.filter(value => project._metadata[level][value] === true).length) * 100) / keys.length);
+    } else {
+      this._innovationMetadataCalculatedValues[level] = 0;
+    }
+  }
+
+  get innovationMetadataCalculatedValues(): InnovationMetadataValues {
+    return this._innovationMetadataCalculatedValues;
+  }
+
   get calculatedPercentages(): Values {
     return this._calculatedValues;
   }
@@ -169,8 +195,12 @@ export class FrontendService {
     Synthesis page.
    */
   analyticPercentage(value1: number, value2: number) {
-    const percentage = (value2 / value1) * 100;
-    return percentage === Infinity ? 0 : Math.floor(percentage);
+    if (value2 === 0 || value2 === undefined) {
+      return 0;
+    } else {
+      const percentage = (value2 / value1) * 100;
+      return percentage === Infinity ? 0 : Math.floor(percentage);
+    }
   }
 
-  }
+}

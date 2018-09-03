@@ -76,6 +76,13 @@ export class AnswerService {
     window.open(url);
   }
 
+  public importFromGmail(file: File): Observable<any> {
+    const url = environment.apiUrl + '/innovation/importAnswers';
+    return this._http.upload(url, file)
+      .map((res: Response) => <string>res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public importAsCsv(campaignId: string, file: File): Observable<any> {
     const url = environment.apiUrl + '/campaign/' + campaignId + '/importAnswers';
     return this._http.upload(url, file)

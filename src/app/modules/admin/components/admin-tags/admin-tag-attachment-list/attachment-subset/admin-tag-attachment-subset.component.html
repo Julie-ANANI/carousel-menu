@@ -37,7 +37,12 @@
     <tfoot>
     <tr>
         <td colspan="12">
-            <app-pagination [config]="config" (configChange)="loadData()" [total]="total"></app-pagination>
+            <app-pagination
+              [configValue]="config"
+              (configChange)="configChange($event)"
+              [total]="total"
+              [propertyName]="'admin-attachment-tags'">
+            </app-pagination>
         </td>
     </tr>
     </tfoot>

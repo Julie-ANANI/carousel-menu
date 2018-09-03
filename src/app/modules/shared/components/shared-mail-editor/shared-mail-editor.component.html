@@ -1,0 +1,54 @@
+<div *ngIf="email">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <div class="sidebar-header">
+      <div class="language-choice">
+        <div (click)="changeLanguage('en')" [ngClass]="{active: language === 'en'}" class="discreet-link">English</div>
+        <div (click)="changeLanguage('fr')" [ngClass]="{active: language === 'fr'}" class="discreet-link">Français</div>
+      </div>
+
+      <label class="form-switch" *ngIf="email.content != null">
+        <input type="checkbox" (change)="(editionMode = !editionMode) && $event.preventDefault()">
+        <i class="form-icon"></i> Preview
+      </label>
+    </div>
+
+
+    <div class="sidebar-edit">
+      <div *ngIf="!editionMode"><strong>Object : {{ email?.subject }}</strong></div>
+
+      <div *ngIf="editionMode">
+        <div class="form-group">
+          <label class="form-label" for="object">Objet</label>
+          <input
+            class="form-default"
+            [(ngModel)]="email.subject"
+            (ngModelChange)="onUpdate($event)"
+            name="subject"
+            type="text"
+            id="object"
+            placeholder="">
+        </div>
+      </div>
+
+      <label class="form-label" *ngIf="editionMode">Email</label>
+      <app-text-zone [elementId]="language"
+                     [readonly]="!editionMode"
+                     [data]="email.content || ''"
+                     (onTextChange)="updateContent($event)"></app-text-zone>
+
+      <p *ngIf="editionMode" class="variable-tiny-mce">Variables : *|URL_QUIZ|*, *|TITLE|*, *|CAMPAIGN_SLUG|*, *|PITCH|*, *|FULL_NAME|*, *|FIRSTNAME|*, *|LASTNAME|*, *|URL_PICTURE|*, *|DOMAIN|*</p>
+
+      <div class="form-group">
+        <label class="form-label" for="signature">Signature</label>
+        <select
+          class="form-default"
+          [ngModel]="email.signature ? email.signature.name : null "
+          id="signature">
+          <option *ngFor="let s of signatures" [value]="s.name">{{ s.name }} - <span>{{ s.language }}</span></option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+</div>

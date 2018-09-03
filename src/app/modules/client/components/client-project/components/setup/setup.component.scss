@@ -111,8 +111,9 @@
         font-weight: 500;
       }
 
-      li a:hover {
+      a:hover {
         border-bottom-color: $primary-color;
+        color: $primary-color;
       }
 
     }
@@ -204,7 +205,7 @@
     .setup-scroll-sticky {
       position: sticky;
       background-color: white;
-      top: 0;
+      top: -0.06rem;
       box-shadow: $box-shadow;
       z-index: 11;
     }

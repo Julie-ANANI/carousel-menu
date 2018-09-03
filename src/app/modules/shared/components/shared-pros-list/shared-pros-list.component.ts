@@ -44,6 +44,9 @@ export class SharedProsListComponent {
   private _showDeleteModal = false;
   private _currentPro: Professional = null;
 
+  isUserForm = false;
+  isTagsForm = false;
+
   constructor(private _professionalService: ProfessionalsService,
               private _notificationsService: TranslateNotificationsService,
               private _searchService: SearchService) { }
@@ -127,8 +130,10 @@ export class SharedProsListComponent {
     this._more = {
       animate_state: 'active',
       title: 'COMMON.ADD-TAGS',
-      type: 'tagProfessional'
+      type: 'addTags'
     };
+    this.isUserForm = false;
+    this.isTagsForm = true;
     this._prosToTag = pros;
   }
 
@@ -137,7 +142,10 @@ export class SharedProsListComponent {
       if (!this._prosToTag[index].tags) {
         this._prosToTag[index].tags = [];
       }
-      tags.forEach(value1 => this._prosToTag[index].tags.push(value1))
+      tags.forEach(value1 => {
+        if (!(value.tags.find(value2 => {return value2._id === value1._id}))) {
+          this._prosToTag[index].tags.push(value1);
+        }})
     });
 
     this._prosToTag.forEach(value => this.updatePro(value));
@@ -192,6 +200,8 @@ export class SharedProsListComponent {
         title: 'COMMON.EDIT_PROFESSIONAL',
         type: 'professional'
       };
+      this.isUserForm = true;
+      this.isTagsForm = false;
       this._currentPro = professional;
     });
   }

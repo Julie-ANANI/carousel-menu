@@ -9,7 +9,8 @@
       [readonly]="readonly"
       [stats]="stats"
       [showDetails]="showDetails"
-      (modalAnswerChange)="seeAnswer($event)">
+      (modalAnswerChange)="seeAnswer($event)"
+      (answerButtonClicked)="answerBtnClicked($event)">
     </app-bar-chart>
   </ng-container>
 
@@ -130,20 +131,8 @@
   </ng-container>
 
   <!-- Comments that are not related to answers like general comments but not for list and clearbit question type -->
-  <ng-container *ngIf="showDetails && question.controlType !== 'list' && question.controlType !== 'clearbit'
+  <ng-container *ngIf="showComment && question.controlType !== 'list' && question.controlType !== 'clearbit'
   && answersWithComment.length > 0">
-
-    <!-- Comment button
-    <div class="comment-button-wrapper">
-      <button
-        type="button"
-        class="btn ghost-primary"
-        (click)="showComments = !showComments; $event.preventDefault()">
-        {{ (showComments ? 'MARKET_REPORT.BTN_COMMENTS_CLOSE' : 'MARKET_REPORT.BTN_COMMENTS_OPEN')
-        | translate:({ length: answersWithComment.length }) }}
-        <i class="icon" aria-hidden="true" [ngClass]="showComments ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
-      </button>
-    </div>-->
 
     <div class="comment-button-wrapper">
       <h5>{{ answersWithComment.length }} {{ 'MARKET_REPORT.BTN_COMMENTS_OPEN' | translate }}</h5>

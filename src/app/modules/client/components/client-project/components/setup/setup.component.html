@@ -2,10 +2,10 @@
 
   <!-- Innovation detail -->
   <div class="section-light-container">
-    <div class="section-inline-container sc-innovation-wrapper white-background">
+    <div class="section-inline-container innovation-wrapper white-background">
 
       <!-- Column 1 -->
-      <div class="sc-summary-wrapper">
+      <div class="summary-wrapper">
         <h1 class="main-heading">{{ project.innovationCards[innovationPreviewIndex].title }}</h1>
         <div>{{ project.innovationCards[innovationPreviewIndex].summary }}</div>
 
@@ -17,7 +17,7 @@
         </div>
 
         <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
-        <ul class="sc-advantage">
+        <ul class="advantage-wrapper">
           <li *ngFor="let advantage of project.innovationCards[innovationPreviewIndex].advantages;">
             {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
           </li>
@@ -25,13 +25,13 @@
       </div>
 
       <!-- Column 2 -->
-      <div class="sc-issue-wrapper">
+      <div class="issue-wrapper">
         <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
         <div>{{ project.innovationCards[innovationPreviewIndex].problem }}</div>
       </div>
 
       <!-- Column 3 -->
-      <div class="sc-solution-wrapper">
+      <div class="solution-wrapper">
         <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
         <div>{{ project.innovationCards[innovationPreviewIndex].solution }}</div>
       </div>

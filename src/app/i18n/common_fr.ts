@@ -5,11 +5,14 @@ export const COMMON = {
   'LAST_SAVED_AT': 'Sauvegardé à',
   'UPDATE': 'Mettre à jour',
   'EDIT': 'Éditer',
+  'SEND': 'Envoyer',
+  'CHANGE': 'Changer',
   'DELETE': 'Supprimer',
   'SUBMIT': 'Confirmer',
   'LOG_IN': 'Connexion',
   'SIGN_UP': 'Inscription',
   'LOG_OUT': 'Se déconnecter',
+  'GENERATE': 'Générer',
   'CANCEL': 'Annuler',
   'ADD': 'Ajouter',
   'MORE': 'Voir Plus',
@@ -146,6 +149,7 @@ export const COMMON = {
   'PROFESSIONALS': 'Professionnels',
   'PROFESSIONAL': {
     'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
+    'PITCH-DELETE-ALL' : 'Êtes-vous sûr de vouloir supprimer tous les professionnels',
     'DELETE': 'Supprimer le(s) professionnel(s)',
   },
 

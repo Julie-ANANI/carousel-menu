@@ -1,109 +1,10 @@
-/*.bar-chart-component {
+@import "../../../../../../../style/variables";
 
-  .flex-container {
-    display: flex;
-  }
-
-  !* === Horizontals bars === *!
-
-  .horizontal-bar {
-    position: relative;
-    border: 1px solid #D6D6D6;
-    width: 100%;
-    height: 49px;
-    margin-right: 20px;
-    border-radius: 3px;
-    margin-bottom: 13px;
-    cursor: pointer;
-
-    .bar-number {
-      background: grey;
-      width: 47.5px;
-      height: 47.5px;
-      color: white;
-      text-align: center;
-      font-weight: bold;
-      font-size: 16px;
-      float: left;
-      padding-top: 12.5px;
-      border-radius: 3px 1px 1px 3px;
-    }
-
-    .bar-fill {
-      background-image: linear-gradient(-90deg, #edeeef 16%, #d7dee0 100%);
-      height: 47.5px;
-      padding-left: 38px;
-    }
-
-    .bar-name {
-      position: absolute;
-      top: 12.5px;
-      left: 62px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: #5d5d5d;
-    }
-
-    .bar-stats {
-      position: absolute;
-      top: 12.5px;
-      right: 12px;
-      font-weight: 600;
-      font-size: 0.7rem;
-      color: #0B90C6;
-    }
-
-  }
-
-  !* === Pour les Bars qui n'ont pas de chiffres au début === *!
-
-  #key-benefits .horizontal-bar .bar-name {
-    left: 20px;
-  }
-
-  #expression-of-interest .horizontal-bar .bar-name {
-    left: 20px;
-  }
-
-  .average {
-    font-size: 22px;
-    color: #9B9B9B;
-    margin-top: 0;
-    margin-bottom: 30px;
-  }
-
-  ul.comments {
-
-    li {
-      list-style: none;
-      .flex-container {
-        display: flex;
-        justify-content: space-between;
-      }
-    }
-
-    > li {
-      position: relative;
-      margin-bottom: 15px;
-      border-radius: 3px;
-      background-color: white;
-      box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
-      border: 1px solid #F2F2F2;
-    }
-
-  }
-
-  ul.comments > li .flex-container {
-    align-items: center !important;
-  }
-
-}*/
-
-.bar-chart {
+.bar-chart-wrapper {
 
   .header-wrapper {
-    background-color: #4F5D6B;
-    border-radius: 3px;
+    background-color: $background-color;
+    border-radius: .18rem;
     color: white;
 
     h1 {
@@ -115,11 +16,18 @@
   .content-wrapper {
 
     .answer-button-wrapper {
-      margin-top: 25px;
+      margin-top: 1.57rem;
+
+      .btn i {
+        margin-top: 0;
+        margin-right: 0;
+        margin-left: .6rem;
+      }
+
     }
 
     .data-wrapper {
-      padding-top: 50px;
+      padding-top: 3.15rem;
 
       .row1-wrapper {
         display: flex;
@@ -135,19 +43,19 @@
           .bar-name {
             margin-left: 10px;
             font-size: 18px;
-            color: #4F5D6B;
-            margin-right: 10px;
+            color: $background-color;
+            margin-right: .6rem;
           }
 
         }
 
         .response-arrow-wrapper {
-          font-size: 16px;
-          color: #97A4B1;
+          font-size: 1rem;
+          color: $meta-color;
           cursor: pointer;
 
           .icon {
-            font-size: 14px;
+            font-size: .875rem;
           }
 
         }
@@ -155,12 +63,12 @@
       }
 
       .row2-wrapper {
-        margin-top: 15px;
+        margin-top: .9375rem;
         cursor: pointer;
       }
 
       .answer-wrapper {
-        margin-top: 25px;
+        margin-top: 1.57rem;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
@@ -168,11 +76,11 @@
         div {
           display: inline-flex;
           background: white;
-          border: 1px solid #D7D7D7;
-          min-height: 190px;
-          padding: 15px 16px;
-          border-radius: 3px;
-          margin-bottom: 20px;
+          border: 1px solid $border-color;
+          min-height: 11.875rem;
+          padding: .9375rem 1rem;
+          border-radius: .18rem;
+          margin-bottom: 1.2rem;
           flex: 0 1 calc(50% - 1rem);
         }
 
@@ -186,9 +94,9 @@
 
 
 /********************************** Media ***************************************/
-@media (max-width: 840px) {
+@media (max-width: 600px) {
 
-  .bar-chart {
+  .bar-chart-wrapper {
 
     .answer-wrapper {
       flex-direction: column;

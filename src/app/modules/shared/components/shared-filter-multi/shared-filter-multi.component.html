@@ -13,7 +13,7 @@
              class="form-input"
              [placeholder]="'COMMON.FILTER' | translate"
       />
-      <span (click)="isLocal ? filterTextLocal(search) : filterText(search)">
+      <span (click)="filterText(search)">
         <i class="form-icon icon icon-search"
            *ngIf="search.value === ''">
         </i>

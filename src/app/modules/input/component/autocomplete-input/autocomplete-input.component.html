@@ -12,7 +12,7 @@
         [attr.placeholder]="placeholder | translate"
         class="form-default"
         [ngStyle]="{ 'margin-top': '0', 'margin-right': '.35rem' }">
-      <button class="btn-round btn-primary" [disabled]="!canAdd" translate><i class="fas fa-plus"></i></button>
+      <button *ngIf="addButton" class="btn-round btn-primary" [disabled]="!canAdd" translate><i class="fas fa-plus"></i></button>
     </div>
 
   </form>

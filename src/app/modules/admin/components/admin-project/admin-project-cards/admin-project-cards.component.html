@@ -1,4 +1,4 @@
-<div class="section-container" id="admin-card">
+<section class="section-container" id="admin-card">
   <div class="columns">
     <div class="column col-12 col-mx-auto">
 
@@ -31,8 +31,8 @@
               </p>
             </div>
 
-            <div *ngIf="project.status !== 'EDITING' && project.status !== 'DONE'">
-              <div *ngIf="project.status === 'SUBMITTED'" [ngStyle]="{ 'margin-right': '30px' , 'display': 'inline-flex' }">
+            <div *ngIf="project?.status !== 'EDITING' && project?.status !== 'DONE'">
+              <div *ngIf="project?.status === 'SUBMITTED'" [ngStyle]="{ 'margin-right': '30px' , 'display': 'inline-flex' }">
                 <button class="btn btn-primary" (click)="validateProject()">
                   Validation du projet
                 </button>
@@ -50,10 +50,9 @@
 
       <app-shared-project-edit-cards
         [project]="project"
-        [canEdit]="true"
         (projectChange)="updateProject($event)">
       </app-shared-project-edit-cards>
 
     </div>
   </div>
-</div>
+</section>

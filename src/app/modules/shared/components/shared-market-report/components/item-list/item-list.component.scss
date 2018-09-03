@@ -1,3 +1,5 @@
+@import "../../../../../../../style/variables";
+
 .item-list-wrapper {
 
   .items {
@@ -8,11 +10,11 @@
     .item {
       display: inline-flex;
       background: white;
-      border: 1px solid #D7D7D7;
-      padding: 10px;
-      border-radius: 3px;
-      min-height: 120px;
-      margin-bottom: 20px;
+      border: 1px solid $border-color;
+      padding: .6rem;
+      border-radius: .18rem;
+      min-height: 7.5rem;
+      margin-bottom: 1.2rem;
       flex: 0 1 calc(32% - 1rem);
 
       .content {
@@ -32,22 +34,22 @@
           text-align: center;
 
           .label-success {
-            background-color: #2ECC71;
+            background-color: $validation-color;
             width: 71px;
             margin-left: auto;
             margin-right: auto;
             color: white;
-            font-size: 12px;
+            font-size: .75rem;
             font-weight: 600;
-            border-radius: 5px;
-            height: 26.4px;
-            padding-top: 5px;
+            border-radius: .18rem;
+            height: 1.65rem;
+            padding-top: .25rem;
           }
 
           p {
-            padding-top: 25px;
-            font-size: 16px;
-            color: #4F5D6B;
+            padding-top: 1.57rem;
+            font-size: 1rem;
+            color: $background-color;
           }
 
         }

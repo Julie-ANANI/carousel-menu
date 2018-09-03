@@ -10,7 +10,6 @@ import { InputModule } from '../input/input.module';
 import { SidebarComponent } from './sidebar.component';
 import { SidebarBatchComponent } from './components/sidebar-batch/sidebar-batch.component';
 import { EmailsFormComponent } from './components/emails-form/emails-form.component';
-import { InnovationPreviewComponent } from './components/innovation-preview/innovation-preview.component';
 import { SidebarSearchComponent } from './components/sidebar-search/sidebar-search.component';
 import { UserAnswerComponent } from './components/user-answer/user-answer.component';
 import { AnswerQuestionComponent } from './components/user-answer/answer-question/answer-question.component';
@@ -18,6 +17,11 @@ import { RatingItemComponent } from './components/user-answer/rating-item/rating
 import { SidebarWorkflowComponent } from './components/sidebar-workflow/sidebar-workflow.component';
 import { SidebarSignatureComponent } from './components/sidebar-signature/sidebar-signature.component';
 import { AutocompleteInputModule } from '../input/component/autocomplete-input/autocomplete-input.module';
+import { InnovationFormComponent } from './components/innovation-form/innovation-form.component';
+import {SharedProjectEditCardsModule} from '../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
+import {SharedProjectSettingsModule} from '../shared/components/shared-project-settings-component/shared-project-settings.module';
+import {SharedMailEditorModule} from '../shared/components/shared-mail-editor/shared-mail-editor.module';
+import { TagsFormComponent } from './components/tags-form/tags-form.component';
 import { InputListModule } from '../input/component/input-list/input-list.module';
 
 @NgModule({
@@ -28,6 +32,9 @@ import { InputListModule } from '../input/component/input-list/input-list.module
     TranslateModule.forChild(),
     TableModule,
     SharedTagItemModule,
+    SharedProjectEditCardsModule,
+    SharedProjectSettingsModule,
+    SharedMailEditorModule,
     SharedTextZoneModule,
     PipeModule,
     InputModule,
@@ -39,21 +46,23 @@ import { InputListModule } from '../input/component/input-list/input-list.module
     SidebarWorkflowComponent,
     SidebarSignatureComponent,
     SidebarComponent,
-    InnovationPreviewComponent,
     SidebarSearchComponent,
     UserAnswerComponent,
     EmailsFormComponent,
     AnswerQuestionComponent,
-    RatingItemComponent
+    RatingItemComponent,
+    InnovationFormComponent,
+    TagsFormComponent,
   ],
   exports: [
     SidebarComponent,
     SidebarBatchComponent,
     SidebarWorkflowComponent,
     SidebarSignatureComponent,
-    InnovationPreviewComponent,
+    InnovationFormComponent,
     SidebarSearchComponent,
     UserAnswerComponent,
+    TagsFormComponent,
     EmailsFormComponent,
   ]
 })

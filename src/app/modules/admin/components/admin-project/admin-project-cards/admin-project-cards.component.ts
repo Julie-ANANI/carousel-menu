@@ -9,6 +9,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
   templateUrl: 'admin-project-cards.component.html',
   styleUrls: ['admin-project-cards.component.scss']
 })
+
 export class AdminProjectCardsComponent implements OnInit {
 
   project: Innovation;
@@ -20,15 +21,19 @@ export class AdminProjectCardsComponent implements OnInit {
               private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit(): void {
-    this.project = this.activatedRoute.snapshot.parent.data['innovation'];
+    this.innovationService.get(this.activatedRoute.snapshot.parent.data['innovation']._id).first().subscribe(result => {
+      this.project = result;
+    });
   }
 
   public save(event: Event): void {
     event.preventDefault();
-    this.innovationService.save(this.project._id, this.project)
-      .first().subscribe((data: Innovation) => {
+
+    this.innovationService.save(this.project._id, this.project).first()
+      .subscribe((data: Innovation) => {
         this.lastSavedDate = new Date(data.updated);
         this.shouldSave = false;
+        this.project = data;
       }, err => {
         this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
