@@ -48,7 +48,7 @@
         <!-- Filter applied -->
         <div *ngIf="filterApplied.length > 0" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
           <ul *ngFor="let item of filterApplied" class="filter-applied-wrapper">
-            <li (click)="removeFilter(item.id)">{{ getFilterName(item) }}<i class="fas fa-times"></i></li>
+            <li (click)="removeFilter(item.value)">{{ getFilterName(item) }}<i class="fas fa-times"></i></li>
           </ul>
           <span *ngIf="filterApplied.length > 1" class="clear-filter" (click)="removeAllFilter($event)">Clear All</span>
         </div>
@@ -61,7 +61,7 @@
             <!-- Filter sector -->
             <div *ngIf="tagType.length > 0" class="filter-type">
               <p>Type</p>
-              <div *ngFor="let item of tagType.sort() | slice:0:endTypeIndex;" class="filter-option">
+              <div *ngFor="let item of tagType | slice:0:endTypeIndex;" class="filter-option">
                 <label class="form-checkbox">
                   <input
                     type="checkbox"
@@ -69,9 +69,9 @@
                     [value]="item.type"
                     name="type"
                     (change)="toggleFilter($event)"
-                    [checked]="filterChecked(item.id, 'type')"
-                    [disabled]="checkDisable(item.id, 'type')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable(item.id, 'type') }">{{ getTypeName(item.type) }}</span>
+                    [checked]="filterChecked(item.type, 'type')"
+                    [disabled]="checkDisable(item.type, 'type')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable(item.type, 'type') }">{{ getTypeName(item.type) }}</span>
                 </label>
               </div>
               <span *ngIf="tagType.length > 4 && tagType.length !== endTypeIndex" class="text-link" (click)="changeIndex($event, 'type')">See more</span>
@@ -124,9 +124,9 @@
                     name="label"
                     [value]="item.label"
                     (change)="toggleFilter($event)"
-                    [checked]="filterChecked(item.id, 'label')"
-                    [disabled]="checkDisable(item.id, 'label')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable(item.id, 'label') }">{{ getLabelName(item.label) }}</span>
+                    [checked]="filterChecked(item.label, 'label')"
+                    [disabled]="checkDisable(item.label, 'label')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable(item.label, 'label') }">{{ getLabelName(item.label) }}</span>
                 </label>
               </div>
               <span *ngIf="tagLabel.length > 4 && tagLabel.length !== endLabelIndex" class="text-link" (click)="changeIndex($event, 'label')">See more</span>

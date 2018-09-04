@@ -16,8 +16,6 @@ import { Tag } from '../../../../models/tag';
 
 export class ClientDiscoverPageComponent implements OnInit {
 
-  // private innovations: Array<Innovation>;
-
   private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
 
   private totalInnovations: Array<Innovation> = []; // to hold the total project result we get from the server.
@@ -36,19 +34,19 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   totalResults = 0; // saving the result that we get from the server.
 
-  tagLabel: Array<{'label': string, 'id': string}> = [];
+  tagLabel: Array<{'label': string, 'id': string}> = []; // to store the label.
 
-  tagType: Array<{'type': string, 'id': string}> = [];
+  tagType: Array<{'type': string, 'id': string}> = []; // to store the type.
 
-  innoStatus: Array<{'status': string}> = [];
+  innoStatus: Array<{'status': string}> = []; // to store the innovation status.
 
-  innoLang: Array<{'lang': string, 'id': string}> = [];
+  innoLang: Array<{'lang': string, 'id': string}> = []; // to store the innovation language.
 
-  endLabelIndex = 4;
+  endLabelIndex = 4; // to display the number of label item.
 
-  endTypeIndex = 4;
+  endTypeIndex = 4; // to display the number of type item.
 
-  applyFilterClicked = false;
+  applyFilterClicked = false; // to display the spinner when the user is applying the filters.
 
   private searchInput: string;
 
@@ -119,6 +117,11 @@ export class ClientDiscoverPageComponent implements OnInit {
   private initialize() {
     this.innovationDetails = [];
     this.searchInput = '';
+    this.innoLang = [];
+    this.innoStatus = [];
+    this.tags = [];
+    this.tagLabel = [];
+    this.tagType = [];
     this.getAllInnovations();
   }
 
@@ -141,7 +144,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   /*
   after fetching all the innovations from the server first we check the length of
-  filterApplied then according to that we call the functions.
+  filterApplied then according to that we call the respective functions.
  */
   private loadInnovations() {
 
@@ -153,53 +156,53 @@ export class ClientDiscoverPageComponent implements OnInit {
         if (i === 0) {
 
           if (this.filterApplied[i].type === 'type') {
-             this.typeFilter(this.totalInnovations, this.filterApplied[i].id);
+             this.filterType(this.totalInnovations, this.filterApplied[i].value);
           }
 
           if (this.filterApplied[i].type === 'status') {
-            this.statusFilter(this.totalInnovations, this.filterApplied[i].value);
+            this.filterStatus(this.totalInnovations, this.filterApplied[i].value);
           }
 
           if (this.filterApplied[i].type === 'language') {
             this.selectedLang = this.filterApplied[i].value;
-            this.langFilter(this.totalInnovations, this.filterApplied[i].id);
+            this.filterLang(this.totalInnovations, this.filterApplied[i].value);
           }
 
           if (this.filterApplied[i].type === 'label') {
-            this.labelFilter(this.totalInnovations, this.filterApplied[i].id);
+            this.filterLabel(this.totalInnovations, this.filterApplied[i].id);
           }
 
         } else {
 
           if (this.filterApplied[i].type === 'type') {
-             this.typeFilter(this.filterInnovations, this.filterApplied[i].id);
+             this.filterType(this.filterInnovations, this.filterApplied[i].value);
           }
 
           if (this.filterApplied[i].type === 'status') {
-            this.statusFilter(this.filterInnovations, this.filterApplied[i].value);
+            this.filterStatus(this.filterInnovations, this.filterApplied[i].value);
           }
 
           if (this.filterApplied[i].type === 'language') {
             this.selectedLang = this.filterApplied[i].value;
-            this.langFilter(this.filterInnovations, this.filterApplied[i].id);
+            this.filterLang(this.filterInnovations, this.filterApplied[i].value);
           }
 
           if (this.filterApplied[i].type === 'label') {
-            this.labelFilter(this.filterInnovations, this.filterApplied[i].id);
+            this.filterLabel(this.filterInnovations, this.filterApplied[i].id);
           }
 
         }
 
       }
-      this.innovationLang(this.filterInnovations);
-      this.innovationStatus(this.filterInnovations);
-      this.tagFilter(this.filterInnovations);
+      this.populateLang(this.filterInnovations);
+      this.populateStatus(this.filterInnovations);
+      this.populateTags(this.filterInnovations);
       this.searchInInnovationCards(this.filterInnovations);
-      console.log(this.filterInnovations);
+      console.log(this.filterInnovations)
     } else {
-      this.innovationLang(this.totalInnovations);
-      this.innovationStatus(this.totalInnovations);
-      this.tagFilter(this.totalInnovations);
+      this.populateLang(this.totalInnovations);
+      this.populateStatus(this.totalInnovations);
+      this.populateTags(this.totalInnovations);
       this.searchInInnovationCards(this.totalInnovations);
     }
 
@@ -208,37 +211,36 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  private typeFilter(innovations: Array<Innovation>, value: string) {
+  private filterType(innovations: Array<Innovation>, value: string) {
     this.filterInnovations = innovations.filter((items) => {
-      return items.tags.findIndex((tag) => tag._id === value) !== -1;
+      return items.tags.findIndex((tag) => tag.type === value) !== -1;
     });
   }
 
 
-  private statusFilter(innovations: Array<Innovation>, value: string) {
+  private filterStatus(innovations: Array<Innovation>, value: string) {
     this.filterInnovations = innovations.filter((items) => {
       return items.status === value;
     });
   }
 
 
-  private langFilter(innovations: Array<Innovation>, value: string) {
+  private filterLang(innovations: Array<Innovation>, value: string) {
     this.filterInnovations = innovations.filter((items) => {
       return items.innovationCards.findIndex((inno) => inno.lang === value) !== -1;
     });
+
   }
 
 
-  private labelFilter(innovations: Array<Innovation>, value: string) {
+  private filterLabel(innovations: Array<Innovation>, value: string) {
     this.filterInnovations = innovations.filter((items) => {
       return items.tags.findIndex((tag) => tag._id === value) !== -1;
     });
   }
 
 
-  private innovationStatus(innovation: Array<Innovation>) {
-    this.innoStatus = [];
-
+  private populateStatus(innovation: Array<Innovation>) {
     innovation.forEach((items) => {
       const index = this.innoStatus.findIndex((item) => item.status === items.status);
       if (index === -1) {
@@ -262,9 +264,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  private innovationLang(innovation: Array<Innovation>) {
-    this.innoLang = [];
-
+  private populateLang(innovation: Array<Innovation>) {
     innovation.forEach((items) => {
       items.innovationCards.forEach((inno) => {
         const index = this.innoLang.findIndex((item) => item.lang === inno.lang);
@@ -283,36 +283,51 @@ export class ClientDiscoverPageComponent implements OnInit {
         return 1;
       }
 
-      return 0
+      return 0;
 
     });
 
   }
 
 
-  private tagFilter(innovations: Array<Innovation>) {
-    this.tags = [];
+  private populateTags(innovations: Array<Innovation>) {
+    innovations.forEach((innovations) => {
+      const index = this.filterApplied.findIndex((item) => item.type === 'type' || item.type === 'label' );
 
-    innovations.forEach((items) => {
-      items.tags.forEach((tag) => {
-        this.tags.push(tag);
-      });
+      if (index !== -1) {
+        innovations.tags.forEach((tag) => {
+          const index = this.filterApplied.findIndex((item) => item.id === tag._id);
+          if (index !== -1) {
+            // this.tags.push(tag);
+          }
+        });
+      } else {
+        innovations.tags.forEach((tag) => {
+          const index = this.tags.findIndex((item) => item._id === tag._id);
+          if (index === -1) {
+            this.tags.push(tag);
+          }
+        });
+      }
+
     });
 
-    this.displayLabelFilter();
+    this.populateLabels();
 
-    this.displayTypeFilter();
+    this.populateTypes();
 
   }
 
 
-  private displayLabelFilter() {
-    this.tagLabel = [];
-
+  private populateLabels() {
     this.tags.forEach((items) => {
       const index = this.tagLabel.findIndex((item) => item.id === items._id);
       if (index === -1) {
-        this.tagLabel.push({'label': items.label.en, 'id': items._id});
+        if (this.currentLang === 'en') {
+          this.tagLabel.push({'label': items.label.en, 'id': items._id});
+        } else {
+          this.tagLabel.push({'label': items.label.fr, 'id': items._id});
+        }
       }
     });
 
@@ -332,9 +347,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  private displayTypeFilter() {
-    this.tagType = [];
-
+  private populateTypes() {
     this.tags.forEach((items) => {
       const index = this.tagType.findIndex((item) => item.type === items.type);
       if (index === -1) {
@@ -351,9 +364,11 @@ export class ClientDiscoverPageComponent implements OnInit {
         return 1;
       }
 
-      return 0
+      return 0;
 
     });
+
+    console.log(this.tagType);
 
    }
 
@@ -388,6 +403,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     return 'Unknown';
 
    }
+
 
   getLangName(value: string): string {
     if (value === 'en') {
@@ -440,6 +456,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   }
 
+
   /*
     based on the innovations array we pass, we load the innovation
     card.
@@ -472,7 +489,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     if yes then we make the checkbox ticked.
    */
   filterChecked(value: string, type: string): boolean {
-    const index = this.filterApplied.findIndex((item) => item.id === value && item.type === type);
+    const index = this.filterApplied.findIndex((item) => item.value === value && item.type === type);
     return index !== -1;
   }
 
@@ -496,7 +513,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
     if (!this.applyFilterClicked) {
       this.storedFilters();
-      this.getAllInnovations();
+      this.initialize();
     }
 
     this.showFilterContainer = false;
@@ -525,7 +542,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     if (event.target['checked']) {
       this.filterApplied.push({id: event.target['id'], value: event.target['defaultValue'], type: event.target['name']});
     } else {
-      this.filterRemove(event.target['id']);
+      this.filterRemove(event.target['defaultValue']);
     }
 
     this.checkFilterLength();
@@ -533,22 +550,31 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  filterRemove(id: string) {
-    const index = this.filterApplied.findIndex(name => name.id === id);
+  /*
+    remove the filter from the filterApplied attribute based on the
+    value.
+   */
+  filterRemove(value: string) {
+    const index = this.filterApplied.findIndex(name => name.value === value);
     this.filterApplied.splice(index, 1);
   }
 
 
+  /*
+    check the filterApplied length and calls the respective
+    function.
+   */
   checkFilterLength() {
     this._config.limit = this.filterApplied.length > 0 ? 0 : this.initialConfigLimit;
 
     if (this.filterApplied.length > 1) {
       this.loadInnovations();
     } else {
-      this.getAllInnovations();
+      this.initialize();
     }
 
   }
+
 
   /*
     we disable the type and the language that are not selected.
@@ -559,7 +585,7 @@ export class ClientDiscoverPageComponent implements OnInit {
       const typeIndex = this.filterApplied.findIndex((item) => item.type === type);
 
       if (typeIndex !== -1) {
-        const index = this.filterApplied.findIndex((item) => item.id === value);
+        const index = this.filterApplied.findIndex((item) => item.value === value);
         if (index === -1) {
           return true;
         }
@@ -571,14 +597,20 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  removeFilter(id: string) {
+  /*
+    when the applied filter is clicked to remove it.
+   */
+  removeFilter(value: string) {
     this.addingFilter = true;
-    this.filterRemove(id);
+    this.filterRemove(value);
     this.applyFilter();
     this.checkFilterLength();
   }
 
 
+  /*
+    when click all link is clicked to remove all the filters.
+   */
   removeAllFilter(event: Event) {
     this.addingFilter = true;
     event.preventDefault();
