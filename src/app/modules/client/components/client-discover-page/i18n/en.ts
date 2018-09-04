@@ -11,5 +11,13 @@ export const DISCOVER = {
   'ERROR': 'We are having trouble while fetching the data. Please try to reload the page again.',
   'SHOWING': 'showing',
   'FROM': 'from',
-  'RESULT': 'results'
+  'RESULT': 'results',
+  'STATUS': 'Status',
+  'SEE_MORE': 'See more',
+  'COMPLETED': 'Completed',
+  'IN_PROGRESS': 'In progress',
+  'ADD_FILTERS': 'Add Filters',
+  'APPLY_FILTERS': 'Apply Filters',
+  'CANCEL': 'Cancel',
+  'CLEAR_ALL': 'Clear All'
 };

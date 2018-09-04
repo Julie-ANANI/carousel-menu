@@ -31,14 +31,14 @@
 
           <!-- add filter button -->
           <ng-container *ngIf="showFilterContainer === false">
-            <button class="btn btn-sm ghost-edit btn-filter" (click)="addFilter($event)"><i class="fas fa-sliders-h"></i>Add Filters</button>
+            <button class="btn btn-sm ghost-edit btn-filter" (click)="addFilter($event)"><i class="fas fa-sliders-h"></i>{{ 'DISCOVER.ADD_FILTERS' | translate }}</button>
           </ng-container>
 
           <!-- cancel and apply filter button -->
           <ng-container *ngIf="showFilterContainer === true">
             <div class="filter-action">
-              <button class="btn btn-sm ghost-edit btn-cancel" (click)="cancelFilter($event)">Cancel</button>
-              <button class="btn btn-sm btn-primary" (click)="applyFilter($event)">Apply Filters</button>
+              <button class="btn btn-sm ghost-edit btn-cancel" (click)="cancelFilter($event)">{{ 'DISCOVER.CANCEL' | translate }}</button>
+              <button class="btn btn-sm btn-primary" (click)="applyFilter($event)">{{ 'DISCOVER.APPLY_FILTERS' | translate }}</button>
             </div>
           </ng-container>
 
@@ -50,7 +50,7 @@
           <ul *ngFor="let item of filterApplied" class="filter-applied-wrapper">
             <li (click)="removeFilter(item.value)">{{ getFilterName(item) }}<i class="fas fa-times"></i></li>
           </ul>
-          <span *ngIf="filterApplied.length > 1" class="clear-filter" (click)="removeAllFilter($event)">Clear All</span>
+          <span *ngIf="filterApplied.length > 1" class="clear-filter" (click)="removeAllFilter($event)">{{ 'DISCOVER.CLEAR_ALL' | translate }}</span>
         </div>
         <!-- /Filter applied -->
 
@@ -59,77 +59,143 @@
           <div class="filter-content">
 
             <!-- Filter sector -->
-            <div *ngIf="tagType.length > 0" class="filter-type">
+            <div class="filter-type">
               <p>Type</p>
-              <div *ngFor="let item of tagType | slice:0:endTypeIndex;" class="filter-option">
+              <div class="filter-option">
                 <label class="form-checkbox">
                   <input
                     type="checkbox"
-                    [id]="item.id"
-                    [value]="item.type"
+                    id="QUALIFICATION"
+                    value="QUALIFICATION"
                     name="type"
                     (change)="toggleFilter($event)"
-                    [checked]="filterChecked(item.type, 'type')"
-                    [disabled]="checkDisable(item.type, 'type')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable(item.type, 'type') }">{{ getTypeName(item.type) }}</span>
+                    [checked]="filterChecked('QUALIFICATION', 'type')"
+                    [disabled]="checkDisable('QUALIFICATION', 'type')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('QUALIFICATION', 'type') }">Qualification</span>
                 </label>
               </div>
-              <span *ngIf="tagType.length > 4 && tagType.length !== endTypeIndex" class="text-link" (click)="changeIndex($event, 'type')">See more</span>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="SECTOR"
+                    value="SECTOR"
+                    name="type"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('SECTOR', 'type')"
+                    [disabled]="checkDisable('SECTOR', 'type')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('SECTOR', 'type') }">Sector</span>
+                </label>
+              </div>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="SOLUTION_TYPE"
+                    value="SOLUTION_TYPE"
+                    name="type"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('SOLUTION_TYPE', 'type')"
+                    [disabled]="checkDisable('SOLUTION_TYPE', 'type')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('SOLUTION_TYPE', 'type') }">Solution</span>
+                </label>
+              </div>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="VALUE_CHAIN"
+                    value="VALUE_CHAIN"
+                    name="type"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('VALUE_CHAIN', 'type')"
+                    [disabled]="checkDisable('VALUE_CHAIN', 'type')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('VALUE_CHAIN', 'type') }">Value Chain</span>
+                </label>
+              </div>
             </div>
 
             <!-- Language filter -->
-            <div *ngIf="innoLang.length > 0" class="filter-language">
-              <p>Language</p>
-              <div *ngFor="let item of innoLang" class="filter-option">
+            <div class="filter-language">
+              <p>{{ 'COMMON.LANGUAGE' | translate }}</p>
+              <div class="filter-option">
                 <label class="form-checkbox">
                   <input
                     type="checkbox"
-                    [id]="item.lang"
-                    [value]="item.lang"
+                    id="en"
+                    value="en"
                     name="language"
                     (change)="toggleFilter($event)"
-                    [checked]="filterChecked(item.lang, 'language')"
-                    [disabled]="checkDisable(item.lang, 'language')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable(item.lang, 'language') }">{{ getLangName(item.lang) }}</span>
+                    [checked]="filterChecked('en', 'language')"
+                    [disabled]="checkDisable('en', 'language')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('en', 'language') }">{{ 'COMMON.LANG.EN' | translate }}</span>
+                </label>
+              </div>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="fr"
+                    value="fr"
+                    name="language"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('fr', 'language')"
+                    [disabled]="checkDisable('fr', 'language')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('fr', 'language') }">{{ 'COMMON.LANG.FR' | translate }}</span>
                 </label>
               </div>
             </div>
 
             <!-- Filter status -->
-            <div *ngIf="innoStatus.length > 0" class="filter-status">
-              <p>Status</p>
-              <div *ngFor="let item of innoStatus" class="filter-option">
+            <div class="filter-status">
+              <p>{{ 'DISCOVER.STATUS' | translate }}</p>
+              <div class="filter-option">
                 <label class="form-checkbox">
                   <input
                     type="checkbox"
-                    [id]="item.status"
-                    [value]="item.status"
+                    id="done"
+                    value="DONE"
                     name="status"
                     (change)="toggleFilter($event)"
-                    [checked]="filterChecked(item.status, 'status')"
-                    [disabled]="checkDisable(item.status, 'status')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable(item.status, 'status') }">{{ getStatusName(item.status) }}</span>
+                    [checked]="filterChecked('DONE', 'status')"
+                    [disabled]="checkDisable('DONE', 'status')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('DONE', 'status') }">{{ getStatusName('DONE') }}</span>
+                </label>
+              </div>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="evaluating"
+                    value="EVALUATING"
+                    name="status"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('EVALUATING', 'status')"
+                    [disabled]="checkDisable('EVALUATING', 'status')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('EVALUATING', 'status') }">{{ getStatusName('EVALUATING') }}</span>
                 </label>
               </div>
             </div>
 
             <!-- Filter label -->
-            <div *ngIf="tagLabel.length > 0" class="filter-label">
-              <p>Label</p>
-              <div *ngFor="let item of tagLabel | slice:0:endLabelIndex;" class="filter-option">
-                <label class="form-checkbox">
-                  <input
-                    type="checkbox"
-                    [id]="item.id"
-                    name="label"
-                    [value]="item.label"
-                    (change)="toggleFilter($event)"
-                    [checked]="filterChecked(item.label, 'label')"
-                    [disabled]="checkDisable(item.label, 'label')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable(item.label, 'label') }">{{ getLabelName(item.label) }}</span>
-                </label>
-              </div>
-              <span *ngIf="tagLabel.length > 4 && tagLabel.length !== endLabelIndex" class="text-link" (click)="changeIndex($event, 'label')">See more</span>
+            <div class="filter-label">
+              <ng-container *ngIf="tagLabel.length > 0">
+                <p>Label</p>
+                <div *ngFor="let item of tagLabel | slice:0:endLabelIndex;" class="filter-option">
+                  <label class="form-checkbox">
+                    <input
+                      type="checkbox"
+                      [id]="item.id"
+                      name="label"
+                      [value]="item.label"
+                      (change)="toggleFilter($event)"
+                      [checked]="filterChecked(item.id, 'label')"
+                      [disabled]="checkDisable(item.id, 'label')">
+                    <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable(item.id, 'label') }">{{ getLabelName(item.label) }}</span>
+                  </label>
+                </div>
+              </ng-container>
+              <span *ngIf="tagLabel.length > 4 && tagLabel.length !== endLabelIndex" class="text-link" (click)="changeIndex($event, 'label')">{{ 'DISCOVER.SEE_MORE' | translate }}</span>
             </div>
 
           </div>

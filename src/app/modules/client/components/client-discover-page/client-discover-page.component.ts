@@ -36,15 +36,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   tagLabel: Array<{'label': string, 'id': string}> = []; // to store the label.
 
-  tagType: Array<{'type': string, 'id': string}> = []; // to store the type.
-
-  innoStatus: Array<{'status': string}> = []; // to store the innovation status.
-
-  innoLang: Array<{'lang': string, 'id': string}> = []; // to store the innovation language.
-
   endLabelIndex = 4; // to display the number of label item.
-
-  endTypeIndex = 4; // to display the number of type item.
 
   applyFilterClicked = false; // to display the spinner when the user is applying the filters.
 
@@ -117,11 +109,6 @@ export class ClientDiscoverPageComponent implements OnInit {
   private initialize() {
     this.innovationDetails = [];
     this.searchInput = '';
-    this.innoLang = [];
-    this.innoStatus = [];
-    this.tags = [];
-    this.tagLabel = [];
-    this.tagType = [];
     this.getAllInnovations();
   }
 
@@ -194,14 +181,9 @@ export class ClientDiscoverPageComponent implements OnInit {
         }
 
       }
-      this.populateLang(this.filterInnovations);
-      this.populateStatus(this.filterInnovations);
       this.populateTags(this.filterInnovations);
       this.searchInInnovationCards(this.filterInnovations);
-      console.log(this.filterInnovations)
     } else {
-      this.populateLang(this.totalInnovations);
-      this.populateStatus(this.totalInnovations);
       this.populateTags(this.totalInnovations);
       this.searchInInnovationCards(this.totalInnovations);
     }
@@ -240,65 +222,17 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  private populateStatus(innovation: Array<Innovation>) {
-    innovation.forEach((items) => {
-      const index = this.innoStatus.findIndex((item) => item.status === items.status);
-      if (index === -1) {
-        this.innoStatus.push({'status': items.status});
-      }
-    });
-
-    this.innoStatus.sort((a: any, b: any) => {
-      if (a.status < b.status) {
-        return -1;
-      }
-
-      if (a.status > b.status) {
-        return 1;
-      }
-
-      return 0
-
-    });
-
-  }
-
-
-  private populateLang(innovation: Array<Innovation>) {
-    innovation.forEach((items) => {
-      items.innovationCards.forEach((inno) => {
-        const index = this.innoLang.findIndex((item) => item.lang === inno.lang);
-        if (index === -1) {
-          this.innoLang.push({'lang': inno.lang, 'id': items._id});
-        }
-      });
-    });
-
-    this.innoLang.sort((a: any, b: any) => {
-      if (a.lang < b.lang) {
-        return -1;
-      }
-
-      if (a.lang > b.lang) {
-        return 1;
-      }
-
-      return 0;
-
-    });
-
-  }
-
-
   private populateTags(innovations: Array<Innovation>) {
+    this.tags = [];
+
     innovations.forEach((innovations) => {
       const index = this.filterApplied.findIndex((item) => item.type === 'type' || item.type === 'label' );
 
       if (index !== -1) {
         innovations.tags.forEach((tag) => {
-          const index = this.filterApplied.findIndex((item) => item.id === tag._id);
+          const index = this.filterApplied.findIndex((item) => item.type === 'type' ? item.id === tag.type : item.id === tag._id);
           if (index !== -1) {
-            // this.tags.push(tag);
+            this.tags.push(tag);
           }
         });
       } else {
@@ -314,12 +248,12 @@ export class ClientDiscoverPageComponent implements OnInit {
 
     this.populateLabels();
 
-    this.populateTypes();
-
   }
 
 
   private populateLabels() {
+    this.tagLabel = [];
+
     this.tags.forEach((items) => {
       const index = this.tagLabel.findIndex((item) => item.id === items._id);
       if (index === -1) {
@@ -340,59 +274,33 @@ export class ClientDiscoverPageComponent implements OnInit {
         return 1;
       }
 
-      return 0
+      return 0;
 
     });
 
   }
 
 
-  private populateTypes() {
-    this.tags.forEach((items) => {
-      const index = this.tagType.findIndex((item) => item.type === items.type);
-      if (index === -1) {
-        this.tagType.push({'type': items.type, 'id': items._id});
-      }
-    });
-
-    this.tagType.sort((a: any, b: any) => {
-      if (a.type < b.type) {
-        return -1;
-      }
-
-      if (a.type > b.type) {
-        return 1;
-      }
-
-      return 0;
-
-    });
-
-    console.log(this.tagType);
-
-   }
-
-
-   getTypeName(value: string): string {
+  getTypeName(value: string): string {
     if (value === 'SECTOR') {
       return 'Sector';
     }
 
-     if (value === 'VALUE_CHAIN') {
-       return 'Value chain';
-     }
+    if (value === 'VALUE_CHAIN') {
+      return 'Value chain';
+    }
 
-     if (value === 'SOLUTION_TYPE') {
-       return 'Solution';
-     }
+    if (value === 'SOLUTION_TYPE') {
+      return 'Solution';
+    }
 
-     if (value === 'QUALIFICATION') {
-       return 'Qualification';
-     }
+    if (value === 'QUALIFICATION') {
+      return 'Qualification';
+    }
 
-     return 'Unknown';
+    return 'Unknown';
 
-   }
+  }
 
 
    getLabelName(value: string): string {
@@ -400,18 +308,26 @@ export class ClientDiscoverPageComponent implements OnInit {
       return `${value[0].toUpperCase()}${value.slice(1).toLowerCase()}`;
     }
 
-    return 'Unknown';
+    return 'Unknown'
 
    }
 
 
   getLangName(value: string): string {
     if (value === 'en') {
-      return 'English';
+      if (this.currentLang === 'en') {
+        return 'English'
+      } else {
+        return 'Anglais'
+      }
     }
 
     if (value === 'fr') {
-      return 'French';
+      if (this.currentLang === 'en') {
+        return 'French'
+      } else {
+        return 'Français'
+      }
     }
 
   }
@@ -419,11 +335,19 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   getStatusName(value: string): string {
     if (value === 'DONE') {
-      return 'Completed';
+      if (this.currentLang === 'en') {
+        return 'Completed'
+      } else {
+        return 'Terminé'
+      }
     }
 
     if (value === 'EVALUATING') {
-      return 'In progress';
+      if (this.currentLang === 'en') {
+        return 'In progress'
+      } else {
+        return 'En cours'
+      }
     }
 
   }
@@ -439,17 +363,6 @@ export class ClientDiscoverPageComponent implements OnInit {
           this.endLabelIndex += 4;
         } else {
           this.endLabelIndex += diff;
-        }
-      }
-    }
-
-    if (value === 'type') {
-      if (this.endTypeIndex < this.tagLabel.length) {
-        const diff = this.tagLabel.length - this.endTypeIndex;
-        if (diff >= 4) {
-          this.endTypeIndex += 4;
-        } else {
-          this.endTypeIndex += diff;
         }
       }
     }
@@ -489,7 +402,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     if yes then we make the checkbox ticked.
    */
   filterChecked(value: string, type: string): boolean {
-    const index = this.filterApplied.findIndex((item) => item.value === value && item.type === type);
+    const index = this.filterApplied.findIndex((item) => item.id === value && item.type === type);
     return index !== -1;
   }
 
@@ -542,7 +455,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     if (event.target['checked']) {
       this.filterApplied.push({id: event.target['id'], value: event.target['defaultValue'], type: event.target['name']});
     } else {
-      this.filterRemove(event.target['defaultValue']);
+      this.filterRemove(event.target['id']);
     }
 
     this.checkFilterLength();
@@ -555,7 +468,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     value.
    */
   filterRemove(value: string) {
-    const index = this.filterApplied.findIndex(name => name.value === value);
+    const index = this.filterApplied.findIndex(name => name.id === value);
     this.filterApplied.splice(index, 1);
   }
 
@@ -585,7 +498,7 @@ export class ClientDiscoverPageComponent implements OnInit {
       const typeIndex = this.filterApplied.findIndex((item) => item.type === type);
 
       if (typeIndex !== -1) {
-        const index = this.filterApplied.findIndex((item) => item.value === value);
+        const index = this.filterApplied.findIndex((item) => item.id === value);
         if (index === -1) {
           return true;
         }
@@ -620,7 +533,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  getFilterName(item: Array<{id: string, value: string, type: string}>): string {
+  getFilterName(item: Array<{id: string, value: any, type: string}>): string {
     if (item['type'] === 'language' ) {
       return this.getLangName(item['value']);
     }
@@ -813,5 +726,32 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   }
    */
+
+  /*  private populateLang(innovation: Array<Innovation>) {
+    innovation.forEach((items) => {
+      items.innovationCards.forEach((inno) => {
+        const index = this.innoLang.findIndex((item) => item.lang === inno.lang);
+        if (index === -1) {
+          this.innoLang.push({'lang': inno.lang});
+        }
+      });
+    });
+
+    this.innoLang.sort((a: any, b: any) => {
+      if (a.lang < b.lang) {
+        return -1;
+      }
+
+      if (a.lang > b.lang) {
+        return 1;
+      }
+
+      return 0;
+
+    });
+
+    console.log(this.innoLang);
+
+  }*/
 
 }

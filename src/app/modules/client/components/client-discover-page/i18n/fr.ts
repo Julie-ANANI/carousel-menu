@@ -11,5 +11,13 @@ export const DISCOVER = {
   'ERROR': 'Nous rencontrons des problèmes lors de la récupération des données. Veuillez essayer de recharger la page à nouveau.',
   'SHOWING': 'montrant',
   'FROM': 'de',
-  'RESULT': 'résultats'
+  'RESULT': 'résultats',
+  'STATUS': 'Statut',
+  'SEE_MORE': 'Voir plus',
+  'COMPLETED': 'Terminé',
+  'IN_PROGRESS': 'En cours',
+  'ADD_FILTERS': 'Ajouter des filtres',
+  'APPLY_FILTERS': 'Appliquer des filtres',
+  'CANCEL': 'Annuler',
+  'CLEAR_ALL': 'Tout effacer'
 };
