@@ -28,6 +28,11 @@
       }
     }
 
+    button.ghost-edit {
+      border-color: #FFFFFF;
+      color: #FFFFFF;
+    }
+
     .button-actions {
       flex: 1;
       text-align: right;
@@ -46,8 +51,12 @@
     }
   }
 
-  .question-header:hover .button-actions {
-    display: block;
+  .question-header:hover {
+
+    .button-actions {
+      display: block;
+    }
+
   }
 
   .question-body {

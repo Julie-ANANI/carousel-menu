@@ -24,6 +24,10 @@
   </ng-container>
 
   <div *ngIf="editSection" class="save-button">
+    <button type="button" class="btn btn-xs btn-error"
+            (click)="removeSection($event)">
+      Delete
+    </button>
     <button type="button" class="btn btn-xs ghost-edit"
             (click)="(editSection = false) || save($event)">
       Save
@@ -34,10 +38,6 @@
     <button type="button" class="btn btn-xs ghost-edit"
             (click)="editSection = true">
       Edit
-    </button>
-    <button type="button" class="btn btn-xs btn-error"
-            (click)="removeSection($event)">
-      Delete
     </button>
   </div>
 
