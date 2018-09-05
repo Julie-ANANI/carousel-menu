@@ -59,7 +59,7 @@
           <div class="filter-content">
 
             <!-- Filter sector -->
-            <div class="filter-type">
+            <div *ngIf="tags.length > 0" class="filter-type">
               <p>Type</p>
               <div class="filter-option">
                 <label class="form-checkbox">
