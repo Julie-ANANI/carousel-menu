@@ -1,24 +1,26 @@
-<div class="main-container" id="discover-description">
+<section class="section-container" id="discover-description">
   <div *ngFor="let innovation of innovationCard">
 
     <!-- Hero section -->
     <div class="hero-container">
 
       <div class="column col-xs-12 col-11 col-mx-auto">
-        <h1>{{ innovation.title }}</h1>
+        <h1 class="main-heading">{{ innovation.title }}</h1>
         <h6>{{ 'DISCOVERDESCRIPTION.AVAILABLE' | translate }} &nbsp;•&nbsp;  {{ 'DISCOVERDESCRIPTION.PATENT' | translate }}</h6>
         <hr class="hero-hr" align="left">
 
         <!-- Summary and share button -->
         <div class="detail-wrapper">
+
           <div class="summary-wrapper">
-            <p class="para">{{ innovation.summary }}</p>
+            <div class="para">{{ innovation.summary }}</div>
             <div class="quiz-wrapper" [ngStyle]="{ 'display': quizButtonDisplay }">
               <a class="btn btn-primary" [href]="quizUrl" target="_blank">
                 <i class="icon icon-message"></i>{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}
               </a>
             </div>
           </div>
+
           <div class="share-wrapper">
             <p class="para">{{ 'DISCOVERDESCRIPTION.SHARE' | translate }}</p>
             <a [href]="linkedInUrl" target="_blank">
@@ -38,62 +40,73 @@
             </a>
           </div>
         </div>
+        <!-- /Summary and share button -->
 
       </div>
     </div>
+    <!-- /Hero section -->
 
     <!-- Media section -->
-    <div class="section-container">
+    <div *ngIf="innovation.media?.length > 0" class="section-container">
       <div class="column col-xs-12 col-11 col-mx-auto">
-        <h3>{{ 'DISCOVERDESCRIPTION.MEDIAS' | translate }}</h3>
+        <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.MEDIAS' | translate }}</h3>
         <div class="media-wrapper" *ngFor="let media of innovation.media">
+
           <div *ngIf="media?.type === 'VIDEO'">
             <iframe
               [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
-              width="318" height="230"
-              (click)="mediaToShow($event, media.video.embeddableUrl)">
+              height="230"
+              [ngStyle]="{ 'left': 'O', 'width': '318px', 'border-width': '0' }">
             </iframe>
           </div>
+
           <a *ngIf="media?.type === 'PHOTO'">
             <img
-              [src]="media.url"
+              [src]="getSrc(media.url)"
               [alt]="'DISCOVERDESCRIPTION.MEDIA' | translate"
               (click)="mediaToShow($event, media.url)">
           </a>
+
         </div>
       </div>
     </div>
+    <!-- /Media section -->
 
     <!-- Advantage section -->
-    <div class="section-container" [ngStyle]="{ 'background-color': '#f5f5f5' }">
+    <div *ngIf="innovation.advantages?.length > 0" class="section-container" [ngStyle]="{ 'background-color': '#f5f5f5' }">
       <div class="column col-xs-12 col-11 col-mx-auto">
-        <h3>{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h3>
+        <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h3>
         <ul class="advantage">
-          <li *ngFor="let advantage of innovation.advantages;">
+          <li *ngFor="let advantage of innovation.advantages">
             {{ advantage.text[0] | uppercase }}{{advantage.text|slice:1}}
           </li>
         </ul>
       </div>
     </div>
+    <!-- /Advantage section -->
 
     <!-- Solution and issue section -->
-    <div class="section-container solution-wrapper">
+    <div *ngIf="innovation.problem?.length > 0 || innovation.solution?.length > 0" class="section-container solution-wrapper">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <div class="columns">
+
           <div class="column col-md-12 col-6">
-            <h3>{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h3>
-            <p class="para">{{ innovation.problem }}</p>
+            <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h3>
+            <div>{{ innovation.problem }}</div>
           </div>
+
           <div class="column col-md-12 col-6">
-            <h3 class="heading-solution">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h3>
-            <p class="para">{{ innovation.solution }}</p>
+            <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h3>
+            <div>{{ innovation.solution }}</div>
           </div>
+
         </div>
       </div>
     </div>
+    <!-- /Solution and issue section -->
 
   </div>
-</div>
+</section>
 
 
 <!-- Modal to display media -->

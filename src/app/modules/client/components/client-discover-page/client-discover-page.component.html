@@ -214,7 +214,7 @@
       <div class="innovations-wrapper">
         <div *ngFor="let innovation of innovationCards" class="innov-wrapper">
           <div class="innov-content">
-            <a [routerLink]="innovation.innovation_reference" [queryParams]="{ lang: innovation.lang }" target="_blank">
+            <a [routerLink]="[ innovation.innovation_reference, innovation.lang ]" target="_blank">
 
               <!-- Image -->
               <div class="innov-img">

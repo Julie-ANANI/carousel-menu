@@ -35,20 +35,16 @@ export class DiscoverDescriptionComponent implements OnInit {
               private domSanitizer1: DomSanitizer) {}
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe(params => {
-      this._lang = params.lang;
-    });
-
     this.activatedRoute.params.subscribe(params => {
       this._id = params['id'];
+      this._lang = params['lang'];
     });
 
     this.loadInnovation(this._id, this._lang);
 
   }
 
-  loadInnovation(id: any, lang: any) {
-
+  loadInnovation(id: string, lang: string) {
     this.innovationService.get(id).subscribe(response => {
 
       if (response.quizId === '') {
@@ -81,10 +77,18 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   }
 
+  getSrc(src: string): string {
+    if (src === '' ) {
+      return 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
+    }
+
+    return src;
+  }
+
   mediaToShow(event: Event, src: string) {
     event.preventDefault();
     this._mediaModal = true;
-    this._mediaURL = src;
+    this._mediaURL = this.getSrc(src);
   }
 
   closeModal(event: Event) {

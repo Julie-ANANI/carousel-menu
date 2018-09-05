@@ -1,7 +1,10 @@
+@import "../../../../../../style/variables";
+
 #discover-description {
+  padding-top: 0;
 
   .hero-container {
-    background-color: #4F5D6B;
+    background-color: $background-color;
 
     h1, .para {
       color: white;
@@ -9,8 +12,8 @@
 
     h6 {
       color: #a4a4a4;
-      font-size: 0.8rem;
-      margin-bottom: 15px;
+      font-size: 0.875rem;
+      margin-bottom: .9375rem;
     }
 
     .detail-wrapper {
@@ -18,7 +21,7 @@
       justify-content: space-between;
 
       .summary-wrapper {
-        padding-right: 20px;
+        padding-right: 1.2rem;
         display: inline-flex;
         flex-direction: column;
         justify-content: space-between;
@@ -27,8 +30,8 @@
       .quiz-wrapper {
 
         .btn {
-          padding-top: 14px;
-          padding-bottom: 14px;
+          padding-top: .875rem;
+          padding-bottom: .875rem;
 
           i {
             vertical-align: middle;
@@ -40,21 +43,21 @@
 
       .share-wrapper {
         background-color: #235273;
-        padding: 13px 18px 34px 18px;
+        padding: .8125rem 1.125rem 2.215rem 1.125rem;
         color: #fff;
         max-width: 310px;
         flex: 1 0 auto;
-        min-height: 210.56px;
-        border-radius: 3px;
+        min-height: 13.16rem;
+        border-radius: .18rem;
 
         .para {
-          font-size: 0.8rem;
+          font-size: 0.9375rem;
         }
 
         .fab, .far {
-          margin: 5px 0 5px 2px;
-          padding: 11.79px 11.82px;
-          border-radius: 5px;
+          margin: .3125rem 0 .3125rem .125rem;
+          padding: .736875rem .73875rem;
+          border-radius: 0.3125rem;
           cursor: pointer;
           transition: all 0.15s ease-in-out;
         }
@@ -65,8 +68,8 @@
         }
 
         #icon-linkedIn {
-          padding-left: 13.5px;
-          padding-right: 13.5px;
+          padding-left: .84375rem;
+          padding-right: .84375rem;
           background-color: #0077B5;
         }
 
@@ -85,8 +88,8 @@
         }
 
         #icon-facebook {
-          padding-left: 19.5px;
-          padding-right: 19.5px;
+          padding-left: 1.21875rem;
+          padding-right: 1.21875rem;
           background-color: #4F65A1;
           color: white;
         }
@@ -98,8 +101,8 @@
 
         #icon-google {
           background-color: #CC5441;
-          padding-right: 8px;
-          padding-left: 8px;
+          padding-right: .5rem;
+          padding-left: .5rem;
         }
 
         #icon-google:hover {
@@ -108,12 +111,12 @@
         }
 
         #icon-mail {
-          background-color: #97A4B1;
+          background-color: $meta-color;
         }
 
         #icon-mail:hover {
           background-color: white;
-          color: #97A4B1;
+          color: $meta-color;
         }
 
       }
@@ -122,9 +125,13 @@
 
   }
 
+  .section-heading {
+    font-weight: 400;
+  }
+
   .media-wrapper {
     display: inline-block;
-    margin: 8px 8px 8px 0;
+    margin: .5rem .5rem .5rem 0;
 
     img {
       width: 318px;
@@ -134,18 +141,14 @@
 
   }
 
-  h3 {
-    color: #0B90C6;
-  }
-
   .advantage {
     margin: 0;
 
     li {
       color: #5D5D5D;
-      font-size: 0.9rem;
+      font-size: 1rem;
       margin: 0;
-      padding: 6px 8px 6px 4px;
+      padding: .375rem .5rem .375rem .25rem;
     }
 
     li:last-child {
@@ -155,9 +158,11 @@
   }
 
   .solution-wrapper {
+    padding-top: 0;
+    padding-bottom: 0;
 
-    .para {
-      padding: 0;
+    .section-heading {
+      padding-top: 3.15rem;
     }
 
   }
@@ -174,11 +179,11 @@
 
     .modal-header {
       background: transparent;
-      padding-right: 10px;
+      padding-right: .625rem;
     }
 
     .modal-body {
-      padding: 10px;
+      padding: .625rem;
       max-height: 80vh;
 
       img {
@@ -210,8 +215,8 @@
     .quiz-wrapper {
 
       .btn {
-        padding-left: 17px;
-        padding-right: 17px;
+        padding-left: 1.0625rem;
+        padding-right: 1.0625rem;
       }
 
     }
@@ -245,17 +250,9 @@
       flex-direction: column;
 
       .share-wrapper {
-        margin-top: 25px;
+        margin-top: 1.5625rem;
         width: unset !important;
         max-width: 336px;
-      }
-
-    }
-
-    .solution-wrapper {
-
-      .heading-solution {
-        margin-top: 25px;
       }
 
     }
