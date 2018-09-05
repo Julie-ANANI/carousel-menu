@@ -256,9 +256,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   public filterPro(answer: Answer, event: Event) {
     event.preventDefault();
+    const proFilter = this.filterService.filters['professionals'];
     this.filterService.addFilter({
       status: 'PROFESSIONALS',
-      value: [answer._id],
+      value: proFilter && Array.isArray(proFilter.value) ? [...proFilter.value, answer._id] : [answer._id],
       questionId: 'professionals',
       questionTitle: {en: 'Professionals', fr: 'Professionnels'}
     });
