@@ -62,7 +62,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       tag: null,
     });
     this.tagService.getTagsFromPool(this._projectId).subscribe((data) => {
-      this._tags = data.sort((a, b) => !a.originalTagId && b.originalTagId ? -1 : 0);
+      this._tags = data.sort((a, b) => !a.originalTagId && b.originalTagId ? -1 : 1);
       this._tableInfos = {...this._tableInfos, _content: this._tags, _total: this._tags.length};
     });
   }
