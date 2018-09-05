@@ -252,7 +252,16 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     } else {
       this.filterService.deleteFilter('worldmap');
     }
-    this._filteredAnswers = this.filterService.filter(this._answers);
+  }
+
+  public filterPro(answer: Answer, event: Event) {
+    event.preventDefault();
+    this.filterService.addFilter({
+      status: 'PROFESSIONALS',
+      value: [answer._id],
+      questionId: 'professionals',
+      questionTitle: {en: 'Professionals', fr: 'Professionnels'}
+    });
   }
 
   confirmModal(event: Event) {
@@ -432,14 +441,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   get innoid(): string {
     return this._innoid;
-  }
-
-  get showListProfessional(): boolean {
-    return this._showListProfessional;
-  }
-
-  set showListProfessional(val: boolean) {
-    this._showListProfessional = val;
   }
 
   get showDetails(): boolean {
