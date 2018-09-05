@@ -183,6 +183,8 @@
  */
 
 .suggestion {
+  display: flex;
+  flex-direction: column;
   box-shadow: $box-shadow;
   margin: 0;
   padding: 0;
@@ -190,13 +192,12 @@
   z-index: 2;
   background-color: white;
   outline: none;
+  overflow: auto;
 
   li {
-    padding: .5rem .6rem;
+    padding: .75rem .9375rem;
     transition: all .15s ease-in-out;
-    cursor: pointer;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    word-break: break-word;
 
     a{
       color: $label-color;

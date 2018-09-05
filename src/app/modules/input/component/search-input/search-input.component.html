@@ -1,5 +1,28 @@
-<form novalidate>
-  <div class="has-icon-right form-group">
+<div id="search-input">
+  <form novalidate class="search-wrapper" [ngClass]="{ 'active': searchActive}">
+    <input
+      type="text"
+      [attr.placeholder]= "'COMMON.SEARCH_INNOVATION' | translate "
+      [formControl]="searchField">
+    <i class="fas fa-times search-cross-icon" (click)="clearInput()" [ngStyle]="{ 'display': crossIcon ? 'block' : 'none' }"></i>
+    <button class="btn-round btn-primary" type="button" (click)="closeSearch()">
+      <i class="fas fa-search search-icon"></i>
+    </button>
+
+    <ul class="suggestion">
+      <li>convient à tout le mondeconvient à tout le mondeconvient à tout le monde</li>
+      <li>2</li>
+      <li>convient à tout le monde</li>
+      <li>2</li>
+      <li>convient à tout le monde</li>
+      <li>2</li>
+    </ul>
+
+  </form>
+</div>
+
+<!--<form novalidate>
+  <div class="form-group">
     <input
       class="form-input form-control"
       type="search"
@@ -17,5 +40,5 @@
     </li>
   </ul>
 
-</form>
+</form>-->
 
