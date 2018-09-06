@@ -14,7 +14,7 @@
     </button>
 
     <ul *ngIf="searchField.value" class="suggestion" [ngStyle]="{'display': displaySuggestion ? 'flex' : 'none' }">
-      <li *ngFor="let suggestion of suggestions; let i = index;" (click)="onValueSelect(suggestion)" [ngClass]="{ 'is-focused': i === currentFocus }">
+      <li *ngFor="let suggestion of localSuggestions; let i = index;" (click)="onValueSelect(suggestion)" [ngClass]="{ 'is-focused': i === currentFocus }">
         <a>
           <span>{{ suggestion.text }}</span>
         </a>

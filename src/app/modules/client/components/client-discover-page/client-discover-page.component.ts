@@ -46,7 +46,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   innovationDetails: Array<{text: string}> = []; // to store the innovation detail to send the search field.
 
-  private _suggestionInnov: Array<{text: string, id: string}>; // to show suggestions to user below the search field when he types
+  suggestionInnov: Array<{text: string, id: string}>; // to show suggestions to user below the search field when he types
 
   private _config = {
     fields: 'created innovationCards tags status',
@@ -571,24 +571,23 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  /*
+ /* /!*
     when the user starts typing the results we are start
     filtering the innovation according to that.
-   */
+   *!/
   onSearchValue(event: string) {
-    this.displaySpinner = true;
     console.log(event);
 
 
-    /*if (event.value !== '') {
+    /!*if (event.value !== '') {
       const searchInput = String(event.value).toLowerCase();
       this._suggestionInnov = this.innovationDetails.filter((innovTitle) => {
         return innovTitle.text.toLowerCase().includes(searchInput);
       });
     } else {
       this.initialize();
-    }*/
-  }
+    }*!/
+  }*/
 
 
   onValueSelected(event: any) {
@@ -599,10 +598,6 @@ export class ClientDiscoverPageComponent implements OnInit {
         this._innovationCards.push(result);
       });
     }*/
-  }
-
-  get suggestionInnov(): Array<{ text: string; id: string }> {
-    return this._suggestionInnov;
   }
 
 
