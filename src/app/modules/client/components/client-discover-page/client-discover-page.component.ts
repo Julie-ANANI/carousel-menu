@@ -18,9 +18,11 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
 
-  private totalInnovations: Array<Innovation> = []; // to hold the total project result we get from the server.
+  totalInnovations: Array<Innovation> = []; // to hold the total project result we get from the server.
 
   filterInnovations: Array<Innovation> = []; // in this we store the innovation that are filtered.
+
+  localInnovations: Array<Innovation> = []; // we store the result of the total innovation to do functions on it.
 
   displaySpinner = true; // to show the spinner when we are fetching the data from the server.
 
@@ -40,17 +42,13 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   applyFilterClicked = false; // to display the spinner when the user is applying the filters.
 
-  searchInput: string;
-
   selectedLang = ''; // set the lang when user select the lang in the filter.
 
   innovationDetails: Array<{text: string}> = []; // to store the innovation detail to send the search field.
 
-  suggestionInnov: Array<{text: string, id: string}>; // to show suggestions to user below the search field when he types
-
   private _config = {
     fields: 'created innovationCards tags status',
-    limit: 20,
+    limit: 0,
     offset: 0,
     search: {
       isPublic: 1
@@ -61,8 +59,6 @@ export class ClientDiscoverPageComponent implements OnInit {
   };
 
   paginationValue: ConfigTemplate = {}; // to pass the value in the pagination component.
-
-  initialConfigLimit = 20;
 
   initialSearch = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
 
@@ -81,34 +77,12 @@ export class ClientDiscoverPageComponent implements OnInit {
       offset: this._config.offset
     };
 
+    this.getAllInnovations();
+
     this.storedFilters();
 
     this.initialize();
 
-  }
-
-
-  /*
-    checking do we have any filters and limit in the session storage,
-    if yes then assign to the filterApplied attribute.
-   */
-  private storedFilters() {
-    const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
-
-    if (sessionValues.length > 0) {
-      this.filterApplied = sessionValues;
-      this._config.limit = 0;
-    } else {
-      this.filterApplied = [];
-      this._config.limit = this.initialConfigLimit;
-    }
-
-  }
-
-
-  private initialize() {
-    this.searchInput = '';
-    this.getAllInnovations();
   }
 
 
@@ -125,7 +99,31 @@ export class ClientDiscoverPageComponent implements OnInit {
       this.displaySpinner = false;
       this.addingFilter = false;
     });
+
   }
+
+
+  /*
+    checking do we have any filters and limit in the session storage,
+    if yes then assign to the filterApplied attribute.
+   */
+  private storedFilters() {
+    const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
+
+    if (sessionValues.length > 0) {
+      this.filterApplied = sessionValues;
+      this._config.limit = 0;
+    } else {
+      this.filterApplied = [];
+    }
+
+  }
+
+
+  private initialize() {
+    this.getAllInnovations();
+  }
+
 
 
   /*
@@ -142,20 +140,20 @@ export class ClientDiscoverPageComponent implements OnInit {
         if (i === 0) {
 
           if (this.filterApplied[i].type === 'type') {
-             this.filterType(this.totalInnovations, this.filterApplied[i].value);
+             this.filterType(this.localInnovations, this.filterApplied[i].value);
           }
 
           if (this.filterApplied[i].type === 'status') {
-            this.filterStatus(this.totalInnovations, this.filterApplied[i].value);
+            this.filterStatus(this.localInnovations, this.filterApplied[i].value);
           }
 
           if (this.filterApplied[i].type === 'language') {
             this.selectedLang = this.filterApplied[i].value;
-            this.filterLang(this.totalInnovations, this.filterApplied[i].value);
+            this.filterLang(this.localInnovations, this.filterApplied[i].value);
           }
 
           if (this.filterApplied[i].type === 'label') {
-            this.filterLabel(this.totalInnovations, this.filterApplied[i].id);
+            this.filterLabel(this.localInnovations, this.filterApplied[i].id);
           }
 
         } else {
@@ -180,11 +178,13 @@ export class ClientDiscoverPageComponent implements OnInit {
         }
 
       }
+      console.log(this.localInnovations);
       this.populateTags(this.filterInnovations);
       this.searchInInnovationCards(this.filterInnovations);
     } else {
-      this.populateTags(this.totalInnovations);
-      this.searchInInnovationCards(this.totalInnovations);
+      console.log(this.localInnovations);
+      this.populateTags(this.localInnovations);
+      this.searchInInnovationCards(this.localInnovations);
     }
 
     this.addingFilter = false;
@@ -396,8 +396,6 @@ export class ClientDiscoverPageComponent implements OnInit {
 
     this.totalResults = this._innovationCards.length;
 
-    console.log(this.innovationDetails);
-
   }
 
 
@@ -482,7 +480,6 @@ export class ClientDiscoverPageComponent implements OnInit {
     function.
    */
   checkFilterLength() {
-    this._config.limit = this.filterApplied.length > 0 ? 0 : this.initialConfigLimit;
 
     if (this.filterApplied.length > 1) {
       this.loadInnovations();
@@ -566,38 +563,32 @@ export class ClientDiscoverPageComponent implements OnInit {
   changePagination(paginationValues: ConfigTemplate) {
     window.scroll(0, 0);
     this._config.offset = paginationValues.offset;
-    this.initialConfigLimit = this._config.limit = paginationValues.limit;
+    this._config.limit = paginationValues.limit;
     this.getAllInnovations();
   }
 
 
- /* /!*
-    when the user starts typing the results we are start
-    filtering the innovation according to that.
-   *!/
-  onSearchValue(event: string) {
-    console.log(event);
-
-
-    /!*if (event.value !== '') {
-      const searchInput = String(event.value).toLowerCase();
-      this._suggestionInnov = this.innovationDetails.filter((innovTitle) => {
-        return innovTitle.text.toLowerCase().includes(searchInput);
-      });
-    } else {
+  onValueSelected(value: string) {
+    if (value === '') {
       this.initialize();
-    }*!/
-  }*/
-
-
-  onValueSelected(event: any) {
-    console.log(event);
-    /*if (event.value.text !== '') {
-      this._innovationCards = [];
-      this.innovationService.getInnovationCard(event.value.id).subscribe(result => {
-        this._innovationCards.push(result);
+    } else {
+      this.displaySpinner = true;
+      this.localInnovations = [];
+      this.totalInnovations.forEach((innovation) => {
+       innovation.innovationCards.forEach((innoCard) => {
+         const find = innoCard.title.toLowerCase().search(value.toLowerCase());
+         if (find !== -1) {
+           const index = this.localInnovations.findIndex((item) => item._id === innovation._id);
+           if (index === -1) {
+             this.localInnovations.push(innovation);
+           }
+         }
+       })
       });
-    }*/
+      this.loadInnovations();
+      this.displaySpinner = false;
+    }
+
   }
 
 
@@ -760,5 +751,22 @@ export class ClientDiscoverPageComponent implements OnInit {
     console.log(this.innoLang);
 
   }*/
+  /* /!*
+   when the user starts typing the results we are start
+   filtering the innovation according to that.
+  *!/
+ onSearchValue(event: string) {
+   console.log(event);
+
+
+   /!*if (event.value !== '') {
+     const searchInput = String(event.value).toLowerCase();
+     this._suggestionInnov = this.innovationDetails.filter((innovTitle) => {
+       return innovTitle.text.toLowerCase().includes(searchInput);
+     });
+   } else {
+     this.initialize();
+   }*!/
+ }*/
 
 }

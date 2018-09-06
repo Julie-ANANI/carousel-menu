@@ -77,15 +77,10 @@
     top: 100%;
     right: 30px;
     left: 22px;
-    background-color: #F2F2F2;
     max-height: 31.25rem;
 
-    li {
-      font-size: .875rem;
-      color: $input-color;
-    }
 
-    li:hover, .is-focused {
+    .is-focused {
       background-color: $border-color;
       border-color: $border-color;
     }

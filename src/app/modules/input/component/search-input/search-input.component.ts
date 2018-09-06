@@ -42,7 +42,7 @@ export class SearchInputComponent implements OnInit {
 
     if (value !== '') {
       this._localSuggestions = this.suggestions.filter((item: any) => {
-        return item.text.match(value);
+        return item.text.toLowerCase().match(value);
       });
     }
 
@@ -50,7 +50,7 @@ export class SearchInputComponent implements OnInit {
 
   onValueSelect(value: any) {
     this._searchField.setValue(value.text);
-    this.finalValueEmit.emit(value);
+    this.finalValueEmit.emit(value.text);
     this._displaySuggestion = false;
     this._crossIcon = true;
   }
@@ -81,8 +81,10 @@ export class SearchInputComponent implements OnInit {
       event.preventDefault();
 
       if (this._currentFocus > -1) {
-        this._searchField.setValue(this._localSuggestions[this._currentFocus].text);
-        this._currentFocus = -1;
+        if (this._localSuggestions[this._currentFocus].text !== '') {
+          this._searchField.setValue(this._localSuggestions[this._currentFocus].text);
+          this._currentFocus = -1;
+        }
       }
 
       this.finalValueEmit.emit(this._searchField.value);
