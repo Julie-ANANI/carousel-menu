@@ -40,11 +40,11 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   applyFilterClicked = false; // to display the spinner when the user is applying the filters.
 
-  private searchInput: string;
+  searchInput: string;
 
   selectedLang = ''; // set the lang when user select the lang in the filter.
 
-  private innovationDetails: Array<{text: string, id: string}>; // to store the innovation title of all the innovations for search field
+  innovationDetails: Array<{text: string}> = []; // to store the innovation detail to send the search field.
 
   private _suggestionInnov: Array<{text: string, id: string}>; // to show suggestions to user below the search field when he types
 
@@ -107,7 +107,6 @@ export class ClientDiscoverPageComponent implements OnInit {
 
 
   private initialize() {
-    this.innovationDetails = [];
     this.searchInput = '';
     this.getAllInnovations();
   }
@@ -376,23 +375,28 @@ export class ClientDiscoverPageComponent implements OnInit {
    */
   private searchInInnovationCards(innovations: Array<Innovation>) {
     this._innovationCards = [];
+    this.innovationDetails = [];
 
     innovations.forEach((item) => {
 
       if (this.selectedLang === '') {
         for (let i = 0; i < item.innovationCards.length; i++) {
           this._innovationCards.push(item.innovationCards[i]);
+          this.innovationDetails.push({'text': item.innovationCards[i].title});
         }
       } else {
         const index = item.innovationCards.findIndex(innovationCard => innovationCard.lang === this.innovationsLang);
         if (index !== -1) {
           this._innovationCards.push(item.innovationCards[index]);
+          this.innovationDetails.push({'text': item.innovationCards[index].title});
         }
       }
 
     });
 
     this.totalResults = this._innovationCards.length;
+
+    console.log(this.innovationDetails);
 
   }
 
@@ -567,30 +571,38 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  onSearchValue(event: any) {
-    if (event.value !== '') {
+  /*
+    when the user starts typing the results we are start
+    filtering the innovation according to that.
+   */
+  onSearchValue(event: string) {
+    this.displaySpinner = true;
+    console.log(event);
+
+
+    /*if (event.value !== '') {
       const searchInput = String(event.value).toLowerCase();
       this._suggestionInnov = this.innovationDetails.filter((innovTitle) => {
         return innovTitle.text.toLowerCase().includes(searchInput);
       });
     } else {
       this.initialize();
-    }
-  }
-
-
-  get suggestionInnov(): Array<{ text: string; id: string }> {
-    return this._suggestionInnov;
+    }*/
   }
 
 
   onValueSelected(event: any) {
-    if (event.value.text !== '') {
+    console.log(event);
+    /*if (event.value.text !== '') {
       this._innovationCards = [];
       this.innovationService.getInnovationCard(event.value.id).subscribe(result => {
         this._innovationCards.push(result);
       });
-    }
+    }*/
+  }
+
+  get suggestionInnov(): Array<{ text: string; id: string }> {
+    return this._suggestionInnov;
   }
 
 

@@ -18,7 +18,7 @@
       border: 1px solid transparent;
       box-sizing: border-box;
       outline: 0;
-      display: block;
+      display: flex;
       background-color: white;
       transition: all .35s ease-in-out;
       color: $input-color;
@@ -77,6 +77,19 @@
     top: 100%;
     right: 30px;
     left: 22px;
+    background-color: #F2F2F2;
+    max-height: 31.25rem;
+
+    li {
+      font-size: .875rem;
+      color: $input-color;
+    }
+
+    li:hover, .is-focused {
+      background-color: $border-color;
+      border-color: $border-color;
+    }
+
   }
 
 }

@@ -10,35 +10,32 @@ import 'rxjs/Rx';
 
 export class SearchInputComponent implements OnInit {
 
-  @Output() searchInputEmit = new EventEmitter<any>(); // general output event emitter
+  @Output() searchInputEmit = new EventEmitter<any>(); // we are emitting only the text value as the user start typing.
 
-  @Output() discoverValueEmit = new EventEmitter<any>(); // output event emitter of discover page
+  @Output() finalValueEmit = new EventEmitter<any>(); // this is the final value that we send to the parent.
 
-  @Input() suggestions: any; // general suggestion
+  @Input() suggestions: any; // values that we get from the parent component.
 
-  private _searchField: FormControl; /* declare the FormControl as properties of our components. */
-
-  displaySuggestion = true;
-
+  private _searchField: FormControl; // declare the FormControl as properties of our components.
+  private _displaySuggestion = true;
   private _crossIcon = false;
-
   private _searchActive = false;
+  currentFocus = -1;
 
   ngOnInit() {
-    this._searchField = new FormControl(); // create the form control
+    this._searchField = new FormControl(); // create the form control.
 
     this._searchField.valueChanges.distinctUntilChanged().subscribe(input => {
       this._crossIcon = input !== '';
-      this.displaySuggestion = true;
+      this._displaySuggestion = true;
       this.searchInputEmit.emit({value: input} );
       });
-
   }
 
   onValueSelect(value: any) {
     this._searchField.setValue(value.text);
-    this.discoverValueEmit.emit({value});
-    this.displaySuggestion = false;
+    this.finalValueEmit.emit({value});
+    this._displaySuggestion = false;
     this._crossIcon = true;
   }
 
@@ -54,8 +51,46 @@ export class SearchInputComponent implements OnInit {
     this.searchActive = !this.searchActive;
   }
 
+  onKeyboardPress(event: Event) {
+    this._displaySuggestion = true;
+
+    if (event['key'] === 40 || event['code'] === 'ArrowDown') {
+      this.currentFocus++;
+      this.setFocus(this.currentFocus);
+    } else if (event['key'] === 38 || event['code'] === 'ArrowUp') {
+      this.currentFocus--;
+      this.setFocus(this.currentFocus);
+    } else if (event['key'] === 13 || event['code'] === 'Enter') {
+      event.preventDefault();
+
+      if (this.currentFocus > -1) {
+        this._searchField.setValue(this.suggestions[this.currentFocus].text);
+        this.currentFocus = -1;
+      }
+
+      this.finalValueEmit.emit(this._searchField.value);
+      this._displaySuggestion = false;
+    }
+
+  }
+
+  setFocus(value: number) {
+    if (value >= this.suggestions.length) {
+      this.currentFocus = 0;
+    }
+
+    if (value < 0) {
+      this.currentFocus = this.suggestions.length - 1;
+    }
+
+  }
+
   get searchField(): FormControl {
     return this._searchField;
+  }
+
+  get displaySuggestion(): boolean {
+    return this._displaySuggestion;
   }
 
   get crossIcon(): boolean {
