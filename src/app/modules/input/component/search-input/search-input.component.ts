@@ -20,7 +20,7 @@ export class SearchInputComponent implements OnInit {
   private _displaySuggestion = true;
   private _crossIcon = false;
   private _searchActive = false;
-  currentFocus = -1;
+  private _currentFocus = -1;
 
   ngOnInit() {
     this._searchField = new FormControl(); // create the form control.
@@ -34,7 +34,7 @@ export class SearchInputComponent implements OnInit {
 
   onValueSelect(value: any) {
     this._searchField.setValue(value.text);
-    this.finalValueEmit.emit({value});
+    this.finalValueEmit.emit({value: value});
     this._displaySuggestion = false;
     this._crossIcon = true;
   }
@@ -55,32 +55,32 @@ export class SearchInputComponent implements OnInit {
     this._displaySuggestion = true;
 
     if (event['key'] === 40 || event['code'] === 'ArrowDown') {
-      this.currentFocus++;
-      this.setFocus(this.currentFocus);
+      this._currentFocus++;
+      this.setFocus(this._currentFocus);
     } else if (event['key'] === 38 || event['code'] === 'ArrowUp') {
-      this.currentFocus--;
-      this.setFocus(this.currentFocus);
+      this._currentFocus--;
+      this.setFocus(this._currentFocus);
     } else if (event['key'] === 13 || event['code'] === 'Enter') {
       event.preventDefault();
 
-      if (this.currentFocus > -1) {
-        this._searchField.setValue(this.suggestions[this.currentFocus].text);
-        this.currentFocus = -1;
+      if (this._currentFocus > -1) {
+        this._searchField.setValue({value: this.suggestions[this._currentFocus].text});
+        this._currentFocus = -1;
       }
 
-      this.finalValueEmit.emit(this._searchField.value);
+      this.finalValueEmit.emit({value: this._searchField.value});
       this._displaySuggestion = false;
     }
 
   }
 
-  setFocus(value: number) {
+  private setFocus(value: number) {
     if (value >= this.suggestions.length) {
-      this.currentFocus = 0;
+      this._currentFocus = 0;
     }
 
     if (value < 0) {
-      this.currentFocus = this.suggestions.length - 1;
+      this._currentFocus = this.suggestions.length - 1;
     }
 
   }
@@ -103,6 +103,10 @@ export class SearchInputComponent implements OnInit {
 
   set searchActive(value: boolean) {
     this._searchActive = value;
+  }
+
+  get currentFocus(): number {
+    return this._currentFocus;
   }
 
 }
