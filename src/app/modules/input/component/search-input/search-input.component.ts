@@ -29,7 +29,7 @@ export class SearchInputComponent implements OnInit {
   ngOnInit() {
     this._searchField = new FormControl(); // create the form control.
 
-    this._searchField.valueChanges.distinctUntilChanged().subscribe(input => {
+    this._searchField.valueChanges.subscribe(input => {
       this._crossIcon = input !== '';
       this._displaySuggestion = true;
       this.searchLocally(input);
