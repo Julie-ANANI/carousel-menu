@@ -6,15 +6,45 @@
         <button type="submit" class="btn btn-primary">{{'COMMON.SAVE' | translate}}</button>
       </div>
 
-      <!-- Add Tags -->
-      <app-shared-tag-item
-        *ngIf="addTags"
-        [tags]="tags"
-        [editMode]="true"
-        [projectId]="projectId"
-        (addTag)="addTag($event)"
-        (removeTag)="removeTag($event)">
-      </app-shared-tag-item>
+      <ng-container [ngSwitch]="type">
+
+        <!-- Add Tags -->
+        <app-shared-tag-item *ngSwitchCase="'addTags'"
+          [tags]="tags"
+          [editMode]="true"
+          [projectId]="projectId"
+          (addTag)="addTag($event)"
+          (removeTag)="removeTag($event)">
+        </app-shared-tag-item>
+
+        <!-- Edit Tag -->
+        <div *ngSwitchCase="'editTag'">
+          <h4>Label:</h4>
+          <p>
+            <label for="enlabel">English: </label>
+            <input id="enlabel" type="text" size="20" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.label.en"
+                   alt="label" placeholder="label in english"/>
+          </p>
+          <p>
+            <label for="frlabel">Français: </label>
+            <input id="frlabel" type="text" size="20" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.label.fr"
+                   alt="label" placeholder="label en français"/>
+          </p>
+
+          <h4>Description:</h4>
+          <p>
+            <label for="endesc">English: </label>
+            <input id="endesc" type="text" size="40" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.description.en"
+                   alt="description" placeholder="description in english"/>
+          </p>
+          <p>
+            <label for="frdesc">Français: </label>
+            <input id="frdesc" type="text" size="40" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.description.fr"
+                   alt="description" placeholder="description en français"/>
+          </p>
+        </div>
+
+      </ng-container>
 
     </form>
 

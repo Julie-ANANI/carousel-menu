@@ -6,8 +6,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { AutocompleteService } from '../../../../../services/autocomplete/autocomplete.service';
 import { TagsService } from '../../../../../services/tags/tags.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { Innovation } from '../../../../../models/innovation';
 import { Table } from '../../../../table/models/table';
 import { Tag } from '../../../../../models/tag';
+import { Template } from '../../../../sidebar/interfaces/template';
 import { Observable } from 'rxjs/Observable';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 
@@ -18,21 +20,26 @@ import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 })
 export class AdminProjectTagsPoolComponent implements OnInit {
 
-  private _projectId: string;
-  private _tags: Array<Tag>;
+  private _project: Innovation;
+  private _tag: Tag;
   private _tagForm: FormGroup;
+  private _sidebarTemplateValue: Template = {};
 
   private _tableInfos: Table = {
     _selector: 'admin-user',
     _content: [],
     _total: 0,
     _isDeletable: true,
-    _isSelectable: false,
-    _isFiltrable: true,
+    _isSelectable: true,
+    _isFiltrable: false,
     _columns: [
       {_attrs: ['label'], _name: 'Label', _type: 'MULTILING'},
       {_attrs: ['description'], _name: 'Description', _type: 'MULTILING'},
-      {_attrs: ['type'], _name: 'Type', _type: 'TEXT'}
+      {_attrs: ['type'], _name: 'Type', _type: 'TEXT'},
+      {
+        _attrs: ['state'], _name: 'State', _type: 'MULTI-CHOICES',
+        _choices: [{_name: 'To Tag', _class: 'label-alert'}, {_name: 'Tagged', _class: 'label-validate'}]
+      }
     ],
   };
 
@@ -45,9 +52,6 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     }
   };
 
-  public editDatum = {};
-  public attachTagDatum = {};
-
   constructor(private route: ActivatedRoute,
               private formBuilder: FormBuilder,
               private sanitizer: DomSanitizer,
@@ -57,14 +61,22 @@ export class AdminProjectTagsPoolComponent implements OnInit {
               private tagService: TagsService) {}
 
   ngOnInit(): void {
-    this._projectId = this.route.snapshot.parent.data['innovation']._id;
+    this._project = this.route.snapshot.parent.data['innovation'];
     this._tagForm = this.formBuilder.group({
       tag: null,
     });
-    this.tagService.getTagsFromPool(this._projectId).subscribe((data) => {
-      this._tags = data.sort((a, b) => !a.originalTagId && b.originalTagId ? -1 : 1);
-      this._tableInfos = {...this._tableInfos, _content: this._tags, _total: this._tags.length};
+    this.tagService.getTagsFromPool(this._project._id).subscribe((data) => {
+      this.updateTable(data);
     });
+  }
+
+  private updateTable(tags: Array<Tag>) {
+    const tagsList = tags
+      .map(x => {
+        return {...x, state: x.originalTagId ? 'Tagged' : 'To Tag'};
+      })
+      .sort((a, b) => !a.originalTagId && b.originalTagId ? -1 : 1);
+    this._tableInfos = {...this._tableInfos, _content: tagsList, _total: tagsList.length};
   }
 
   public suggestions(keyword: string): Observable<Array<any>> {
@@ -87,10 +99,9 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   public connectToTag(event: Event, tag: Tag): void {
     event.preventDefault();
     this.tagService
-      .updateTagInPool(this._projectId, tag)
+      .updateTagInPool(this._project._id, tag)
       .first()
       .subscribe((data) => {
-        this.attachTagDatum[tag._id] = false;
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
       }, err => {
         this.notificationsService.error('ERROR.ERROR', err);
@@ -100,10 +111,10 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   public addTag(event: Event): void {
     event.preventDefault();
     this.tagService
-      .addTagToPool(this._projectId, this._tagForm.get('tag').value._id)
+      .addTagToPool(this._project._id, this._tagForm.get('tag').value._id)
       .first()
       .subscribe((data) => {
-        this._tags = data;
+        this.updateTable(data);
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
       }, err => {
         this.notificationsService.error('ERROR.ERROR', err);
@@ -111,34 +122,49 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     this._tagForm.get('tag').reset();
   }
 
-  public updateTag(event: Event, tag: Tag): void {
-    event.preventDefault();
+  public updateTag(tag: Tag): void {
     this.tagService
-      .updateTagInPool(this._projectId, tag)
+      .updateTagInPool(this._project._id, tag)
       .first()
       .subscribe((data) => {
-        this.editDatum[tag._id] = false;
+        this.updateTable(data);
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
       }, err => {
         this.notificationsService.error('ERROR.ERROR', err);
       });
   }
 
-  public removeTag(event: Event, tag: Tag): void {
-    event.preventDefault();
-    this.tagService
-      .removeTagFromPool(this._projectId, tag)
-      .first()
-      .subscribe((data) => {
-        this._tags = data;
-        this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
-      }, err => {
-        this.notificationsService.error('ERROR.ERROR', err);
-      });
+  public editTag(tag: Tag) {
+    this._tag = tag;
+    this._sidebarTemplateValue = {
+      animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'COMMON.EDIT_INSIGHT',
+      size: '726px'
+    };
+  }
+
+  public closeSidebar(state: string) {
+    this._sidebarTemplateValue.animate_state = state;
+  }
+
+  public deleteTags(tags: Array<Tag>): void {
+    tags.forEach((tag) => {
+      this.tagService
+        .removeTagFromPool(this._project._id, tag)
+        .first()
+        .subscribe((data) => {
+          this.updateTable(data);
+          this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
+        }, err => {
+          this.notificationsService.error('ERROR.ERROR', err);
+        });
+    });
   }
 
   get config() { return this._config; }
+  get project() { return this._project; }
+  get sidebarTemplateValue() { return this._sidebarTemplateValue; }
+  get tag() { return this._tag; }
   get tagForm() { return this._tagForm; }
-  get tags() { return this._tags; }
   get tableInfos() { return this._tableInfos; }
 }

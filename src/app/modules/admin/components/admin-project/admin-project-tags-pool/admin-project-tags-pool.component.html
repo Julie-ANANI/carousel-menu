@@ -16,80 +16,23 @@
     </div>
   </form>
 
-  <!-- TODO: use table component
     <app-shared-table [config]="config"
-                      [data]="tableInfos">
+                      [data]="tableInfos"
+                      (editRow)="editTag($event)"
+                      (removeRows)="deleteTags($event)">
     </app-shared-table>
-  -->
 
-  <table class="table tags-pool" wt-responsive-table>
-    <thead>
-      <tr>
-        <th><sq-sort [config]="config" [prop]="'label'">Label</sq-sort></th>
-        <th><sq-sort [config]="config" [prop]="'description'">Description</sq-sort></th>
-        <th><sq-sort [config]="config" [prop]="'type'">Type</sq-sort></th>
-        <th>{{ 'CAMPAIGNS.ACTIONS' | translate }}</th>
-      </tr>
-    </thead>
-    <tbody>
-
-      <tr *ngFor="let datum of tags" [ngClass]="{'active': datum.isSelected}">
-
-        <ng-container *ngIf="editDatum[datum._id]">
-          <td>
-            <input type="text" size="20" [(ngModel)]="datum.label.en" alt="label" placeholder="label in english"/>
-            <input type="text" size="20" [(ngModel)]="datum.label.fr" alt="label" placeholder="label en français"/>
-          </td>
-          <td>
-            <input type="text" size="40" [(ngModel)]="datum.description.en" alt="description" placeholder="description in english"/>
-            <input type="text" size="40" [(ngModel)]="datum.description.fr" alt="description" placeholder="description en français"/>
-          </td>
-          <td>{{ 'TAGS.NEW.TYPE.' + datum.type | translate }}</td>
-          <td>
-            <button class="btn btn-action" (click)="editDatum[datum._id] = false"><i class="fas fa-times"></i></button>
-            <button class="btn btn-action" (click)="updateTag($event, datum)"><i class="far fa-save"></i></button>
-            <button class="btn btn-error" (click)="removeTag($event, datum)"><i class="far fa-trash-alt"></i></button>
-          </td>
-        </ng-container>
-
-        <ng-container *ngIf="attachTagDatum[datum._id]">
-          <td>{{ datum.label | multiling:lang }}</td>
-          <td colspan="2">
-            <input ng2-auto-complete
-                   [(ngModel)]="datum.originalTagId"
-                   [source]="suggestions.bind(this)"
-                   select-value-of="_id"
-                   [list-formatter]="autocompleListFormatter"
-                   [value-formatter]="autocompleValueFormatter"
-                   attr.placeholder="Add an existing tag"
-                   class="form-input form-control input-lg">
-            <button (click)="connectToTag($event, datum)" class="btn btn-primary input-group-btn" translate>
-              COMMON.ADD
-              <i class="icon icon-arrow-right"></i>
-            </button>
-          </td>
-          <td>
-            <button class="btn btn-action" (click)="attachTagDatum[datum._id] = false"><i class="fas fa-times"></i></button>
-          </td>
-        </ng-container>
-
-        <ng-container *ngIf="!(editDatum[datum._id] || attachTagDatum[datum._id])">
-          <td>{{ datum.label | multiling:lang }}</td>
-          <td>{{ datum.description | multiling:lang }}</td>
-          <td>{{ 'TAGS.NEW.TYPE.' + datum.type | translate }}</td>
-          <td>
-            <button class="btn btn-action" (click)="editDatum[datum._id] = true">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button *ngIf="!datum.originalTagId" class="btn btn-xs btn-error" (click)="attachTagDatum[datum._id] = true">
-              <i class="fas fa-tag"></i>
-            </button>
-          </td>
-        </ng-container>
-
-      </tr>
-    </tbody>
-  </table>
+  <!-- Tag preview -->
+  <app-sidebar
+    [template]="sidebarTemplateValue"
+    (closeSidebar)="closeSidebar($event)">
+    <app-tags-form
+      *ngIf="tag"
+      [tag]="tag"
+      [type]="'editTag'"
+      (updateTag)="updateTag($event)">
+    </app-tags-form>
+  </app-sidebar>
 
 </div>
 

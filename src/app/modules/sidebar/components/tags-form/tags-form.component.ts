@@ -13,11 +13,14 @@ export class TagsFormComponent implements OnInit {
 
   @Input() set type(type: string) {
     this._type = type;
-    this.loadTypes();
   }
 
   @Input() set tags(tags: Array<Tag>) {
     this._tags = [...tags];
+  }
+
+  @Input() set tag(tag: Tag) {
+    this._tag = {...tag};
   }
 
   @Input() set project(value: Innovation) {
@@ -27,10 +30,10 @@ export class TagsFormComponent implements OnInit {
   @Input() sidebarState: Subject<string>;
 
   @Output() newTags = new EventEmitter<Tag[]>();
-
-  addTags = false;
+  @Output() updateTag = new EventEmitter<Tag>();
 
   private _tags: Tag[] = [];
+  private _tag: Tag;
   private _projectId = '';
 
   private _type = '';
@@ -38,7 +41,6 @@ export class TagsFormComponent implements OnInit {
   constructor(private _tagsService: TagsService) {}
 
   ngOnInit() {
-
     if (this.sidebarState) {
       this.sidebarState.subscribe((state) => {
         if (state === 'inactive') {
@@ -48,24 +50,17 @@ export class TagsFormComponent implements OnInit {
         }
       })
     }
-
   }
 
-  reinitialiseForm() {
-    this.addTags = false;
-  }
-
-  loadTypes() {
-    this.reinitialiseForm();
-    if (this._type === 'addTags') {
-      this.addTags = true;
-    }
-
-  }
 
   onSubmit() {
-    if (this.addTags) {
-      this.newTags.emit(this._tags);
+    switch (this._type) {
+      case 'addTags':
+        this.newTags.emit(this._tags);
+        break;
+      case 'editTag':
+        this.updateTag.emit(this._tag);
+        break;
     }
   }
 
@@ -80,8 +75,16 @@ export class TagsFormComponent implements OnInit {
     this._tags.splice(this._tags.findIndex(value => value._id === tag._id), 1);
   }
 
+  get tag(): Tag {
+    return this._tag;
+  }
+
   get tags(): Tag[] {
     return this._tags;
+  }
+
+  get type(): string {
+    return this._type;
   }
 
   get projectId(): string {
