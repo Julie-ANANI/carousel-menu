@@ -42,6 +42,25 @@
             <input id="frdesc" type="text" size="40" [ngModelOptions]="{standalone: true}" [(ngModel)]="tag.description.fr"
                    alt="description" placeholder="description en français"/>
           </p>
+
+          <h4>Original Tag:</h4>
+          <p *ngIf="!needToSetOriginalTag" [innerHtml]="tag.originalTagId"></p>
+          <p *ngIf="needToSetOriginalTag">
+            <input ng2-auto-complete
+                   [(ngModel)]="tag.originalTagId"
+                   [ngModelOptions]="{standalone: true}"
+                   [source]="suggestions.bind(this)"
+                   select-value-of="_id"
+                   [list-formatter]="autocompleListFormatter"
+                   [value-formatter]="autocompleValueFormatter"
+                   attr.placeholder="Add an existing tag"
+                   class="form-input form-control input-lg">
+            <button (click)="connectToTag($event, tag)" class="btn btn-primary input-group-btn" translate>
+              COMMON.ADD
+              <i class="icon icon-arrow-right"></i>
+            </button>
+          </p>
+
         </div>
 
       </ng-container>

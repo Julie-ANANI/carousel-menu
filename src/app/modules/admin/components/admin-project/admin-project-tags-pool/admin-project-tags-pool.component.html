@@ -28,6 +28,7 @@
     (closeSidebar)="closeSidebar($event)">
     <app-tags-form
       *ngIf="tag"
+      [project]="project"
       [tag]="tag"
       [type]="'editTag'"
       (updateTag)="updateTag($event)">

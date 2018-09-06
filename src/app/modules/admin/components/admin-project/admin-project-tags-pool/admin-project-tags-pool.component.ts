@@ -96,18 +96,6 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       return MultilingPipe.prototype.transform(data.name, this.translateService.currentLang);
   };
 
-  public connectToTag(event: Event, tag: Tag): void {
-    event.preventDefault();
-    this.tagService
-      .updateTagInPool(this._project._id, tag)
-      .first()
-      .subscribe((data) => {
-        this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
-      }, err => {
-        this.notificationsService.error('ERROR.ERROR', err);
-      });
-  }
-
   public addTag(event: Event): void {
     event.preventDefault();
     this.tagService
