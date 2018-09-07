@@ -57,13 +57,15 @@ export class SharedSearchHistoryComponent implements OnInit {
     this._searchService.getRequests(this._config)
       .first()
       .subscribe(result => {
-        this._requests = result.requests.map((request: any) => {
-          request.keywords = request.keywords || request.oldKeywords[0].original;
-          return request;
-        });
-        this._paused = result._metadata.paused;
+        if(result.requests) {
+          this._requests = result.requests.map((request: any) => {
+            request.keywords = request.keywords || request.oldKeywords[0].original;
+            return request;
+          });
+        }
         if (result._metadata) {
           this._total = result._metadata.totalCount;
+          this._paused = result._metadata.paused;
         }
       });
   }

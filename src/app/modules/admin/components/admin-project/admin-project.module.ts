@@ -15,6 +15,7 @@ import { InputModule } from '../../../input/input.module';
 import { SharedProjectEditCardsModule } from '../../../shared/components/shared-project-edit-cards-component/shared-project-edit-cards.module';
 import { SharedProjectSettingsModule } from '../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 import { SharedTagItemModule } from '../../../shared/components/shared-tag-item/shared-tag-item.module';
+import { TableModule } from '../../../table/table.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AdminProjectQuestionnaireModule} from './admin-project-questionnaire/admin-project-questionnaire.module';
@@ -35,6 +36,7 @@ import {SidebarModule} from '../../../sidebar/sidebar.module';
     SharedProjectEditCardsModule,
     SharedProjectSettingsModule,
     SharedTagItemModule,
+    TableModule,
     RouterModule,
     SidebarModule,
     FormsModule,

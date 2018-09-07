@@ -73,8 +73,8 @@ export class TagsService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public removeTagFromPool(innovationId: string, tagId: string): Observable<Array<Tag>> {
-    return this._http.delete('/tags/' + innovationId + '/pool', { params: {tag: tagId }})
+  public removeTagFromPool(innovationId: string, tag: Tag): Observable<Array<Tag>> {
+    return this._http.delete('/tags/' + innovationId + '/pool', { params: {tag: tag._id }})
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }

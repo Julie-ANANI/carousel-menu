@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { TableModule } from '../table/table.module';
 import { SharedTagItemModule } from '../shared/components/shared-tag-item/shared-tag-item.module';
 import { SharedTextZoneModule } from '../shared/components/shared-text-zone/shared-text-zone.module';
@@ -30,6 +31,7 @@ import { InputListModule } from '../input/component/input-list/input-list.module
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
+    Ng2AutoCompleteModule,
     TableModule,
     SharedTagItemModule,
     SharedProjectEditCardsModule,

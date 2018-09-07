@@ -363,6 +363,19 @@
       border-radius: .18rem;
       margin-bottom: 1.2rem;
       flex: 0 1 calc(50% - 1rem);
+
+      i.hide-user {
+        position: absolute;
+        display: none;
+        cursor: pointer;
+      }
+    }
+
+    .profile:hover {
+      color: $border-color;
+      i.hide-user {
+        display: block;
+      }
     }
 
   }

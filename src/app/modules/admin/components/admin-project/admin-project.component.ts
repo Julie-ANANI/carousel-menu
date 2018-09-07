@@ -25,7 +25,7 @@ export class AdminProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this._project = this._activatedRoute.snapshot.data['innovation'];
-    this._titleService.setTitle(this._project.name);
+    this._titleService.setTitle(this._project.name || 'Project');
     this.clientSideUrl = 'project/' + this.project._id;
     this._frontendService.calculateInnovationMetadataPercentages(this._project, 'preparation');
     this._frontendService.calculateInnovationMetadataPercentages(this._project, 'campaign');

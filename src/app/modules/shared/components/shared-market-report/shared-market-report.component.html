@@ -337,12 +337,13 @@
           <li *ngIf="project.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" [ngClass]="{'active': activeSection === 'key-learning'}" pageScroll href="#key-learning">
             {{ 'MARKET_REPORT.KEY_LEARNING' | translate }}
           </li>
-          <li [ngClass]="{'active': activeSection === 'professionals'}" pageScroll href="#professionals">
+          <li [ngClass]="{'active': activeSection === 'professionals'}"
+              pageScroll pageScrollOffset="140" href="#professionals">
             {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
           </li>
           <li
             *ngFor="let question of cleaned_questions"
-            pageScroll [href]="'#' + question.identifier"
+            pageScroll pageScrollOffset="140" [href]="'#' + question.identifier"
             [ngClass]="{'active': activeSection === question.identifier}">
             {{ question.title | multiling:lang }}
           </li>
@@ -416,6 +417,7 @@
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="professional-wrapper">
             <div *ngFor="let answer of filteredAnswers" class="profile">
+              <i class="fas fa-times hide-user" (click)="filterPro(answer, $event)"></i>
               <app-pro-tag
                 [answer]="answer"
                 (modalAnswerChange)="seeAnswer($event)"
