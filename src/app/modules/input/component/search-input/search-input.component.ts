@@ -10,9 +10,9 @@ import 'rxjs/Rx';
 
 export class SearchInputComponent implements OnInit {
 
-  @Output() finalValueEmit = new EventEmitter<any>(); // this is the final value that we send to the parent.
+  @Output() finalValueEmit = new EventEmitter<any>(); // this is the final value that we send to the parent. By default we send only the string type.
 
-  @Input() suggestions: any; // values that we get from the parent component.
+  @Input() suggestions: any; // values that we get from the parent component. By default it is Array<{'text': string}> type.
 
   private _searchField: FormControl; // declare the FormControl as properties of our components.
 

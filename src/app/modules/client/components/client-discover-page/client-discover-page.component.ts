@@ -46,7 +46,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   innovationDetails: Array<{text: string}> = []; // to store the innovation detail to send the search field.
 
-  private _config = {
+  config = {
     fields: 'created innovationCards tags status',
     limit: 0,
     offset: 0,
@@ -68,11 +68,11 @@ export class ClientDiscoverPageComponent implements OnInit {
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.TITLE');
 
-    this._config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
+    this.config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
 
     this.paginationValue = {
-      limit: this._config.limit,
-      offset: this._config.offset
+      limit: this.config.limit,
+      offset: this.config.offset
     };
 
     this.getAllInnovations();
@@ -86,7 +86,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     based on the config we request to the server and get the results.
    */
   private getAllInnovations() {
-    this.innovationService.getAll(this._config).first().subscribe(innovations => {
+    this.innovationService.getAll(this.config).first().subscribe(innovations => {
       this.displaySpinner = true;
       this.totalInnovations = innovations.result;
       this.initialize();
@@ -129,7 +129,6 @@ export class ClientDiscoverPageComponent implements OnInit {
   we call the respective functions.
  */
   private loadInnovations() {
-    console.log(this.addingFilter);
 
     if (this.filterApplied.length > 0) {
       this.filterInnovations = [];
@@ -350,6 +349,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   addFilter(event: Event) {
     event.preventDefault();
     this.showFilterContainer = true;
+    this.applyFilterClicked = false;
   }
 
 
@@ -359,24 +359,27 @@ export class ClientDiscoverPageComponent implements OnInit {
 */
   cancelFilter(event: Event) {
     event.preventDefault();
+
     this.showFilterContainer = false;
-    this.addingFilter = true;
 
     if (!this.applyFilterClicked) {
       this.storedFilters();
-      this.checkFilterLength();
     }
 
+    this.checkFilterLength();
+
   }
+
 
   /*
     check the filterApplied length and calls the respective
     function.
    */
   checkFilterLength() {
-    if (this.filterApplied.length >= 1) {
+    if (this.filterApplied.length > 0) {
       this.loadInnovations();
     } else {
+      this.selectedLang = '';
       this.initialize();
     }
   }
@@ -386,6 +389,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     save the applied filters to session storage and close the container.
    */
   applyFilter() {
+    this.applyFilterClicked = true;
     this.storeFilters();
     this.showFilterContainer = false;
   }
@@ -404,9 +408,15 @@ export class ClientDiscoverPageComponent implements OnInit {
    */
   removeFilter(value: string) {
     this.addingFilter = true;
+
     this.filterRemove(value);
-    this.storeFilters();
+
+    if (!this.showFilterContainer) {
+      this.storeFilters();
+    }
+
     this.checkFilterLength();
+
   }
 
 
@@ -420,55 +430,72 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  getTypeName(value: string): string {
-    if (value === 'SECTOR') {
-      return 'Sector';
+  /*
+  when click all link is clicked to remove all the filters.
+ */
+  removeAllFilter(event: Event) {
+    event.preventDefault();
+
+    this.addingFilter = true;
+
+    this.filterApplied = [];
+
+    if (!this.showFilterContainer) {
+      this.storeFilters();
     }
 
-    if (value === 'VALUE_CHAIN') {
-      return 'Value chain';
-    }
-
-    if (value === 'SOLUTION_TYPE') {
-      return 'Solution';
-    }
-
-    if (value === 'QUALIFICATION') {
-      return 'Qualification';
-    }
-
-    return 'Unknown';
+    this.checkFilterLength();
 
   }
 
 
-   getLabelName(value: string): string {
-    if (value) {
-      return `${value[0].toUpperCase()}${value.slice(1).toLowerCase()}`;
+  /*
+  based on the checkbox checked or unchecked we effect the filterApplied attribute,
+  and call the related functions.
+ */
+  toggleFilter(event: Event) {
+    this.addingFilter = true;
+    this.selectedLang = '';
+
+    if (event.target['checked']) {
+      this.filterApplied.push({id: event.target['id'], value: event.target['defaultValue'], type: event.target['name']});
+    } else {
+      this.filterRemove(event.target['id']);
     }
 
-    return 'Unknown'
+    this.checkFilterLength();
 
-   }
+  }
 
 
-  getLangName(value: string): string {
-    if (value === 'en') {
-      if (this.currentLang === 'en') {
-        return 'English'
-      } else {
-        return 'Anglais'
+  /*
+    checking the filterApplied contains the keys, if yes then
+    we make the checkbox ticked.
+   */
+  filterChecked(value: string, type: string): boolean {
+    const index = this.filterApplied.findIndex((item) => item.id === value && item.type === type);
+    return index !== -1;
+  }
+
+
+  /*
+  we disable the type that are not selected.
+*/
+  checkDisable(value: string, type: string): boolean {
+
+    if (this.filterApplied.length > 0) {
+      const typeIndex = this.filterApplied.findIndex((item) => item.type === type);
+
+      if (typeIndex !== -1) {
+        const index = this.filterApplied.findIndex((item) => item.id === value);
+        if (index === -1) {
+          return true;
+        }
       }
+
     }
 
-    if (value === 'fr') {
-      if (this.currentLang === 'en') {
-        return 'French'
-      } else {
-        return 'Français'
-      }
-    }
-
+    return false;
   }
 
 
@@ -492,6 +519,16 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
+  getLabelName(value: string): string {
+    if (value) {
+      return `${value[0].toUpperCase()}${value.slice(1).toLowerCase()}`;
+    }
+
+    return 'Unknown'
+
+  }
+
+
   changeIndex(event: Event, value: string) {
     event.preventDefault();
 
@@ -506,78 +543,6 @@ export class ClientDiscoverPageComponent implements OnInit {
       }
     }
 
-  }
-
-
-
-
-
-  /*
-    checking the filterApplied contains the keys,
-    if yes then we make the checkbox ticked.
-   */
-  filterChecked(value: string, type: string): boolean {
-    const index = this.filterApplied.findIndex((item) => item.id === value && item.type === type);
-    return index !== -1;
-  }
-
-
-  /*
-    based on the checkbox checked or unchecked we effect the filterApplied attribute,
-    and call the related functions.
-   */
-  toggleFilter(event: Event) {
-    this.addingFilter = true;
-    this.selectedLang = '';
-
-    if (event.target['checked']) {
-      this.filterApplied.push({id: event.target['id'], value: event.target['defaultValue'], type: event.target['name']});
-    } else {
-      this.filterRemove(event.target['id']);
-    }
-
-    this.checkFilterLength();
-
-  }
-
-
-
-
-
-
-  /*
-    we disable the type and the language that are not selected.
-  */
-  checkDisable(value: string, type: string): boolean {
-
-    if (this.filterApplied.length > 0) {
-      const typeIndex = this.filterApplied.findIndex((item) => item.type === type);
-
-      if (typeIndex !== -1) {
-        const index = this.filterApplied.findIndex((item) => item.id === value);
-        if (index === -1) {
-          return true;
-        }
-      }
-
-    }
-
-    return false;
-  }
-
-
-
-
-
-  /*
-    when click all link is clicked to remove all the filters.
-   */
-  removeAllFilter(event: Event) {
-    this.addingFilter = true;
-    event.preventDefault();
-    this.filterApplied = [];
-    this.applyFilter();
-    this.checkFilterLength();
   }
 
 
@@ -603,6 +568,48 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
+  getTypeName(value: string): string {
+    if (value === 'SECTOR') {
+      return 'Sector';
+    }
+
+    if (value === 'VALUE_CHAIN') {
+      return 'Value chain';
+    }
+
+    if (value === 'SOLUTION_TYPE') {
+      return 'Solution';
+    }
+
+    if (value === 'QUALIFICATION') {
+      return 'Qualification';
+    }
+
+    return 'Unknown';
+
+  }
+
+
+  getLangName(value: string): string {
+    if (value === 'en') {
+      if (this.currentLang === 'en') {
+        return 'English'
+      } else {
+        return 'Anglais'
+      }
+    }
+
+    if (value === 'fr') {
+      if (this.currentLang === 'en') {
+        return 'French'
+      } else {
+        return 'Français'
+      }
+    }
+
+  }
+
+
   /*
     when there is change in the pagination we detect the change and
     call the service with the new limit and offset value.
@@ -611,6 +618,8 @@ export class ClientDiscoverPageComponent implements OnInit {
     window.scroll(0, 0);
     /*this._config.offset = paginationValues.offset;
     this._config.limit = paginationValues.limit;*/
+    console.log(paginationValues);
+    this.config.limit = paginationValues.limit;
   }
 
 
@@ -656,14 +665,6 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   set innovationCards(value: InnovCard[]) {
     this._innovationCards = value;
-  }
-
-  get config(): { fields: string; limit: number; offset: number; search: { isPublic: number }; sort: { created: number } } {
-    return this._config;
-  }
-
-  set config(value: { fields: string; limit: number; offset: number; search: { isPublic: number }; sort: { created: number } }) {
-    this._config = value;
   }
 
   /*sortInnovations(innovations: any) {
