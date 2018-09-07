@@ -40,9 +40,15 @@ export class SearchInputComponent implements OnInit {
   private searchLocally(value: string) {
     this._localSuggestions = [];
 
-    if (value !== '') {
-      this._localSuggestions = this.suggestions.filter((item: any) => {
-        return item.text.toLowerCase().match(value);
+    if (value !== null) {
+      this.suggestions.forEach((items: any) => {
+        const index = this._localSuggestions.findIndex((item: any) => item.text === items.text);
+        const temp = items.text.toLowerCase().includes(value.toLowerCase());
+        if (temp) {
+          if (index === -1) {
+            this._localSuggestions.push(items);
+          }
+        }
       });
     }
 
@@ -55,17 +61,23 @@ export class SearchInputComponent implements OnInit {
     this._crossIcon = true;
   }
 
-  clearInput() {
+  clearInput(event: Event) {
+    event.preventDefault();
     this._searchField.reset();
     this._crossIcon = false;
     this.finalValueEmit.emit('');
   }
 
-  closeSearch() {
+  closeSearch(event: Event) {
+    event.preventDefault();
     this._searchField.reset();
     this._crossIcon = false;
-    this.finalValueEmit.emit('');
     this.searchActive = !this.searchActive;
+
+    if (this.searchActive === false) {
+      this.finalValueEmit.emit('');
+    }
+
   }
 
   onKeyboardPress(event: Event) {

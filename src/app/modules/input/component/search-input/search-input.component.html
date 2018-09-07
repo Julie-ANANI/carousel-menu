@@ -2,14 +2,14 @@
   <form novalidate class="search-wrapper" [ngClass]="{ 'active': searchActive}" autocomplete="off">
 
     <input
-      type="text"
+      type="search"
       [attr.placeholder]= "'COMMON.SEARCH_INNOVATION' | translate "
       [formControl]="searchField"
       (keydown)="onKeyboardPress($event)">
 
-    <i class="fas fa-times search-cross-icon" (click)="clearInput()" [ngStyle]="{ 'display': crossIcon ? 'block' : 'none' }"></i>
+    <i class="fas fa-times search-cross-icon" (click)="clearInput($event)" [ngStyle]="{ 'display': crossIcon ? 'block' : 'none' }"></i>
 
-    <button class="btn-round btn-primary" type="button" (click)="closeSearch()">
+    <button class="btn-round btn-primary" type="button" (click)="closeSearch($event)">
       <i class="fas fa-search search-icon"></i>
     </button>
 

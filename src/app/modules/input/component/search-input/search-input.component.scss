@@ -11,7 +11,7 @@
     display: flex;
     justify-content: flex-end;
 
-    input[type="text"] {
+    input[type="search"] {
       height: 3.15rem;
       width: 0;
       border-radius: 40px;
@@ -57,7 +57,7 @@
     &.active {
       width: 100%;
 
-      input[type="text"] {
+      input[type="search"] {
         border-color: $meta-color;
         padding: .6rem 5.625rem .6rem 1.57rem;
         width: 100%;
