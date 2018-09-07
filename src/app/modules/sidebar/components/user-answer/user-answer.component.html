@@ -101,7 +101,7 @@
       </div>
 
       <!-- Email -->
-      <div *ngIf="adminMode && (modalAnswer.professional?.email)" class="email">
+      <div *ngIf="modalAnswer.professional?.email" class="email">
         <p>
           <i class="far fa-envelope"></i>
           <a [href]="'mailto:'+modalAnswer.professional.email">
