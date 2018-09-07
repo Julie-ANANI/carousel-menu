@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, AfterViewInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
-import { PageScrollConfig } from 'ng2-page-scroll';
+import { PageScrollConfig } from 'ngx-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
