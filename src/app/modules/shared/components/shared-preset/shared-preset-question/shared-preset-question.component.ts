@@ -53,8 +53,11 @@ export class SharedPresetQuestionComponent {
 
   public removeQuestion(event: Event) {
     event.preventDefault();
-    this.updateQuestion.emit(null);
-    this._formData.reset();
+    const res = confirm('Are you sure you want to delete this question?');
+    if (res) {
+      this.updateQuestion.emit(null);
+      this._formData.reset();
+    }
   }
 
   public cloneQuestion(event: Event) {
