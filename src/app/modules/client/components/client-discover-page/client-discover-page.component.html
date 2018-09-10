@@ -29,7 +29,7 @@
         <div class="total-filter-wrapper" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
 
           <!-- show results title -->
-          <h6 *ngIf="!showFilterContainer">{{ totalResults }} {{ 'innovations' }}</h6>
+          <h6 *ngIf="!showFilterContainer"></h6>
           <h6 *ngIf="showFilterContainer">{{ totalResults }} {{ 'DISCOVER.RESULT' | translate }}</h6>
 
           <!-- add filter button -->
@@ -61,7 +61,7 @@
         <div class="column col-xs-12 col-11 col-mx-auto filter-outer" [ngStyle]="{ 'display': showFilterContainer ? 'block' : 'none'}">
           <div class="filter-content">
 
-            <!-- Filter sector -->
+            <!-- Filter sector
             <div class="filter-type">
               <ng-container *ngIf="tags.length > 0">
                 <p>Type</p>
@@ -118,7 +118,7 @@
                   </label>
                 </div>
               </ng-container>
-            </div>
+            </div>-->
 
             <!-- Language filter -->
             <div class="filter-language">
@@ -220,7 +220,7 @@
 
       <!-- Innovations -->
       <div class="innovations-wrapper">
-        <div *ngFor="let innovation of innovationCards" class="innov-wrapper">
+        <div *ngFor="let innovation of innovationCards | slice:startInnoIndex:endInnoIndex" class="innov-wrapper">
           <div class="innov-content">
             <a [routerLink]="[ innovation.innovation_reference, innovation.lang ]" target="_blank">
 

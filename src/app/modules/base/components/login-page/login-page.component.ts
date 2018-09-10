@@ -72,7 +72,7 @@ export class LoginPageComponent implements OnInit {
 
   }
 
-  linkedInUrl() {
+  private linkedInUrl() {
     const domain = environment.domain;
 
     this._authService.linkedinLogin(domain).first().subscribe(
@@ -86,34 +86,34 @@ export class LoginPageComponent implements OnInit {
 
   }
 
+  checkIsMainDomain(): boolean {
+    return environment.domain === 'umi';
+  }
+
+  getCompanyUrl(): string {
+    return environment.companyURL || '';
+  }
+
+  // getting the logo of the company
+  getLogo(): string {
+    return environment.logoURL;
+  }
+
+  getLogoWBG(): string {
+    return environment.logoSynthURL;
+  }
+
+  // getting the background image of the company
+  getBackgroundImage(): string {
+    return environment.background;
+  }
+
   get authService(): AuthService {
     return this._authService;
   }
 
   get formData(): FormGroup {
     return this._formData;
-  }
-
-  public checkIsMainDomain(): boolean {
-    return environment.domain === 'umi';
-  }
-
-  public getCompanyUrl(): string {
-    return environment.companyURL || '';
-  }
-
-  // getting the logo of the company
-  public getLogo(): string {
-    return environment.logoURL;
-  }
-
-  public getLogoWBG(): string {
-    return environment.logoSynthURL;
-  }
-
-  // getting the background image of the company
-  public getBackgroundImage(): string {
-    return environment.background;
   }
 
   get linkedInLink(): string {

@@ -46,6 +46,10 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   innovationDetails: Array<{text: string}> = []; // to store the innovation detail to send the search field.
 
+  startInnoIndex: number; // starting index of the innovation.
+
+  endInnoIndex: number; // upto which index we have to show the innovation.
+
   config = {
     fields: 'created innovationCards tags status',
     limit: 0,
@@ -89,8 +93,8 @@ export class ClientDiscoverPageComponent implements OnInit {
     this.innovationService.getAll(this.config).first().subscribe(innovations => {
       this.displaySpinner = true;
       this.totalInnovations = innovations.result;
+      console.log(innovations.result);
       this.initialize();
-      // this.loadInnovations();
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVER.ERROR');
     });
@@ -129,6 +133,8 @@ export class ClientDiscoverPageComponent implements OnInit {
   we call the respective functions.
  */
   private loadInnovations() {
+    this.startInnoIndex = 0;
+    this.endInnoIndex = parseInt(localStorage.getItem('app-discover-limit'), 10) || 20;
 
     if (this.filterApplied.length > 0) {
       this.filterInnovations = [];
@@ -220,7 +226,8 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   /*
     according to the innovations we pass we search for the tags in it
-    and assign them to tags attributes.
+    and assign them to tags attributes. Write now we are showing label
+    fo the type SECTOR.
    */
   private populateTags(innovations: Array<Innovation>) {
     this.tags = [];
@@ -237,9 +244,11 @@ export class ClientDiscoverPageComponent implements OnInit {
         });
       } else {
         innovations.tags.forEach((tag) => {
-          const index = this.tags.findIndex((item) => item._id === tag._id);
-          if (index === -1) {
-            this.tags.push(tag);
+          if (tag.type === 'SECTOR') {
+            const index = this.tags.findIndex((item) => item._id === tag._id);
+            if (index === -1) {
+              this.tags.push(tag);
+            }
           }
         });
       }
@@ -616,12 +625,27 @@ export class ClientDiscoverPageComponent implements OnInit {
    */
   changePagination(paginationValues: ConfigTemplate) {
     window.scroll(0, 0);
-    /*this._config.offset = paginationValues.offset;
-    this._config.limit = paginationValues.limit;*/
-    console.log(paginationValues);
-    this.config.limit = paginationValues.limit;
-  }
 
+    const tempOffset = parseInt(paginationValues.offset, 10);
+    const tempLimit = parseInt(paginationValues.limit, 10);
+
+    this.startInnoIndex = tempOffset;
+    this.endInnoIndex = tempLimit;
+
+    if (paginationValues.limit >= this.totalResults) {
+      this.startInnoIndex = 0;
+      this.endInnoIndex = this.totalResults;
+    } else {
+      if (paginationValues.offset === 0) {
+        this.startInnoIndex = 0;
+        this.endInnoIndex = tempLimit;
+      } else if (paginationValues.offset > 0) {
+        this.startInnoIndex = tempOffset;
+        this.endInnoIndex += tempOffset;
+      }
+    }
+
+  }
 
 
   /*
@@ -792,5 +816,36 @@ export class ClientDiscoverPageComponent implements OnInit {
      this.initialize();
    }*!/
  }*/
+
+  /*
+  private populateTags(innovations: Array<Innovation>) {
+    this.tags = [];
+
+    innovations.forEach((innovations) => {
+      const index = this.filterApplied.findIndex((item) => item.type === 'type' || item.type === 'label' );
+
+      if (index !== -1) {
+        innovations.tags.forEach((tag) => {
+          const index = this.filterApplied.findIndex((item) => item.type === 'type' ? item.id === tag.type : item.id === tag._id);
+          if (index !== -1) {
+            this.tags.push(tag);
+          }
+        });
+      } else {
+        innovations.tags.forEach((tag) => {
+          const index = this.tags.findIndex((item) => item._id === tag._id);
+          if (index === -1) {
+            this.tags.push(tag);
+          }
+        });
+      }
+
+    });
+
+    this.populateLabels();
+
+  }
+
+   */
 
 }
