@@ -8,4 +8,10 @@ export const DISCOVERDESCRIPTION = {
   'ISSUE': 'Issue',
   'SOLUTION': 'Solution',
   'MEDIAS': 'Medias',
+  'STAGE': {
+    'A': 'Idea',
+    'B': 'Development in progress',
+    'C': 'Already available'
+  },
+  'ERROR': 'We are unable to fetch this innovation at this moment. Please try to reload this innovation!'
 };

@@ -6,6 +6,7 @@ import { Innovation } from '../../../../../models/innovation';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { ShareService } from '../../../../../services/share/share.service';
 import { environment } from '../../../../../../environments/environment';
+import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-discover-description',
@@ -17,22 +18,32 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _innovationCard: InnovCard[] = [];
   private innovation: Innovation;
+
   private quizUrl: string;
   private linkedInUrl: string;
   private twitterUrl: string;
   private facebookUrl: string;
   private googlePlusUrl: string;
   private mailUrl: string;
+
   private quizButtonDisplay: string;
+
   private _mediaModal: boolean;
   private _mediaURL: string;
+
   private _lang: string;
   private _id: string;
+
+  private _patent = false;
+  private _projectState: number;
+
+  displaySpinner = true;
 
   constructor(private innovationService: InnovationService,
               private activatedRoute: ActivatedRoute,
               private shareService: ShareService,
-              private domSanitizer1: DomSanitizer) {}
+              private domSanitizer1: DomSanitizer,
+              private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
@@ -47,7 +58,7 @@ export class DiscoverDescriptionComponent implements OnInit {
   loadInnovation(id: string, lang: string) {
     this.innovationService.get(id).subscribe(response => {
 
-      if (response.quizId === '') {
+      if (response.quizId === '' || response.status === 'DONE') {
         this.quizButtonDisplay = 'none';
       }
 
@@ -56,6 +67,10 @@ export class DiscoverDescriptionComponent implements OnInit {
       }
 
       this.innovation = response;
+
+      this._patent = response.patented;
+
+      this._projectState = response.projectStatus;
 
       this.linkedInUrl = this.shareService.linkedinProjectShareLink(this.innovation, lang);
 
@@ -73,7 +88,26 @@ export class DiscoverDescriptionComponent implements OnInit {
 
       this._innovationCard.push(response.innovationCards[innovationCardIndex]);
 
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVERDESCRIPTION.ERROR');
+    }, () => {
+      this.displaySpinner = false;
     });
+
+  }
+
+  getProjectState(value: number) {
+    if (value === 0) {
+      return 'DISCOVERDESCRIPTION.STAGE.A'
+    }
+
+    if (value === 1) {
+      return 'DISCOVERDESCRIPTION.STAGE.B'
+    }
+
+    if (value === 2) {
+      return 'DISCOVERDESCRIPTION.STAGE.C'
+    }
 
   }
 
@@ -118,6 +152,14 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   get mediaURL(): string {
     return this._mediaURL;
+  }
+
+  get patent(): boolean {
+    return this._patent;
+  }
+
+  get projectState(): number {
+    return this._projectState;
   }
 
 }

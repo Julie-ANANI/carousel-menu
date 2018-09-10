@@ -93,7 +93,6 @@ export class ClientDiscoverPageComponent implements OnInit {
     this.innovationService.getAll(this.config).first().subscribe(innovations => {
       this.displaySpinner = true;
       this.totalInnovations = innovations.result;
-      console.log(innovations.result);
       this.initialize();
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVER.ERROR');

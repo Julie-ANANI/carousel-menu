@@ -3,6 +3,13 @@
 #discover-description {
   padding-top: 0;
 
+  .spinner-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+  }
+
   .hero-container {
     background-color: $background-color;
 

@@ -8,4 +8,10 @@ export const DISCOVERDESCRIPTION = {
   'ISSUE': 'Problématique',
   'SOLUTION': 'Solution',
   'MEDIAS': 'Médias',
+  'STAGE': {
+    'A': 'Idée',
+    'B': 'Développement en cours',
+    'C': 'Déjà disponible'
+  },
+  'ERROR': 'Nous ne pouvons pas trouver cette innovation en ce moment. Essayez de recharger cette innovation !'
 };
