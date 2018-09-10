@@ -57,13 +57,15 @@ export class SharedSearchHistoryComponent implements OnInit {
     this._searchService.getRequests(this._config)
       .first()
       .subscribe(result => {
-        this._requests = result.requests.map((request: any) => {
-          request.keywords = request.keywords || request.oldKeywords[0].original;
-          return request;
-        });
-        this._paused = result._metadata.paused;
+        if(result.requests) {
+          this._requests = result.requests.map((request: any) => {
+            request.keywords = request.keywords || request.oldKeywords[0].original;
+            return request;
+          });
+        }
         if (result._metadata) {
           this._total = result._metadata.totalCount;
+          this._paused = result._metadata.paused;
         }
       });
   }
@@ -149,6 +151,18 @@ export class SharedSearchHistoryComponent implements OnInit {
         return array.indexOf(request);
       }
     }
+  }
+
+  getTotalCost() {
+    let totalCost = 0;
+    if (this._requests) {
+      for (const cost of this._requests) {
+        if (cost.cost) {
+          totalCost += cost.cost.totalCost;
+        }
+      }
+    }
+    return totalCost.toFixed(2);
   }
 
   get requests(): Array<any> { return this._requests; }

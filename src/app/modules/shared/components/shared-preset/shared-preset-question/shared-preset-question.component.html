@@ -27,6 +27,10 @@
     <p>{{formData.get('label').value | multiling:lang}}</p>
 
     <div *ngIf="editMode" class="save-button">
+      <button type="button" class="btn btn-xs ghost-delete"
+              (click)="removeQuestion($event)">
+        Delete
+      </button>
       <button type="button" class="btn btn-xs ghost-edit"
               (click)="(editMode = false) || save($event)">
         Save
@@ -35,18 +39,12 @@
 
     <div *ngIf="!editMode" class="button-actions">
       <button type="button" class="btn btn-xs ghost-edit"
-              (click)="editMode = true">
-        Edit
-      </button>
-
-      <button type="button" class="btn btn-xs ghost-edit"
               (click)="cloneQuestion($event)">
         Clone
       </button>
-
-      <button type="button" class="btn btn-xs ghost-delete"
-              (click)="removeQuestion($event)">
-        Delete
+      <button type="button" class="btn btn-xs ghost-edit"
+              (click)="editMode = true">
+        Edit
       </button>
     </div>
   </div>

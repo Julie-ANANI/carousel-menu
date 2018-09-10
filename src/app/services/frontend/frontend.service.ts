@@ -29,6 +29,8 @@ export class FrontendService {
   innovCardFieldsRequired: number;
   innovCardFieldsPresent: number;
 
+  scrollValue = 0;
+
   private _calculatedValues: Values = {};
 
   private _innovationMetadataCalculatedValues = {};
@@ -194,8 +196,12 @@ export class FrontendService {
     Synthesis page.
    */
   analyticPercentage(value1: number, value2: number) {
-    const percentage = (value2 / value1) * 100;
-    return percentage === (Infinity || NaN) ? 0 : Math.floor(percentage);
+    if (value2 === 0 || value2 === undefined) {
+      return 0;
+    } else {
+      const percentage = (value2 / value1) * 100;
+      return percentage === Infinity ? 0 : Math.floor(percentage);
+    }
   }
 
 

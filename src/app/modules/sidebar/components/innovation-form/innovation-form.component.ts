@@ -73,8 +73,6 @@ export class InnovationFormComponent implements OnInit {
       })
     }
 
-    console.log(this._project.clientSatisfaction);
-
     if (this.sidebarState) {
       this.sidebarState.subscribe((state) => {
         if (state === 'inactive') {
@@ -190,8 +188,7 @@ export class InnovationFormComponent implements OnInit {
     this.project.settings = value;
   }
 
-  checkStatus(event: string) {
-    this._isChange = true;
+  checkStatus(event: 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE') {
     this.statusValid = true;
     switch (this._project.status) {
       case 'SUBMITTED': {
@@ -211,6 +208,9 @@ export class InnovationFormComponent implements OnInit {
 
     if (this.statusValid === false) {
       this._notificationsService.error('PROJECT_LIST.STATUS' , 'Vous ne pouvez pas revenir à ce status');
+    } else {
+      this._isChange = true;
+      this._project.status = event;
     }
   }
 

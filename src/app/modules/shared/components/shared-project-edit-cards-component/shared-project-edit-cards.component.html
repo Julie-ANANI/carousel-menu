@@ -47,7 +47,7 @@
                   <p>{{ innovationCards.title }}</p>
                 </div>
 
-                <div *ngIf="adminSide && project.innovationCards.length > 1" class="pd-input">
+                <div *ngIf="adminSide && project.innovationCards?.length > 1" class="pd-input">
                   <button
                     class="btn btn-sm ghost-primary"
                     [ngClass]="{'disabled': innovationCards.title}"
@@ -66,7 +66,7 @@
                     #title="ngModel"
                     [(ngModel)]="innovationCards.title"
                     [attr.placeholder]="'PROJECT_MODULE.SETUP.PITCH.DESCRIPTION.TITLE.PLACEHOLDER' | translate"
-                    (ngModelChange)="notifyModelChanges($event)"
+                    (ngModelChange)="notifyModelChanges()"
                     required
                     [ngClass]="{'borderRed': showTitleError}"
                     (keyup)="showTitleError = false">
@@ -86,7 +86,7 @@
                   <div [innerHtml]="innovationCards.summary"></div>
                 </div>
 
-                <div *ngIf="adminSide && project.innovationCards.length > 1" class="pd-input">
+                <div *ngIf="adminSide && project.innovationCards?.length > 1" class="pd-input">
                   <button
                     class="btn btn-sm ghost-primary"
                     [ngClass]="{'disabled': innovationCards.summary}"
@@ -100,7 +100,6 @@
                   <app-text-zone
                     [data]="innovationCards.summary"
                     [elementId]="'summary' + innovationCards.lang"
-                    [ngClass]="{'borderRed': showSummaryError}"
                     (onTextChange)="updateData($event)">
                   </app-text-zone>
                   <!-- todo: add placeholders
@@ -127,7 +126,7 @@
                   <div [innerHtml]="innovationCards.problem"></div>
                 </div>
 
-                <div *ngIf="adminSide && project.innovationCards.length > 1" class="pd-input">
+                <div *ngIf="adminSide && project.innovationCards?.length > 1" class="pd-input">
                   <button
                     class="btn btn-sm ghost-primary"
                     [disabled]="innovationCards.problem"
@@ -141,7 +140,6 @@
                   <app-text-zone
                     [data]="innovationCards.problem"
                     [elementId]="'problem'+innovationCards.lang"
-                    [ngClass]="{'borderRed': showProblemError}"
                     (onTextChange)="updateData($event)">
                   </app-text-zone>
                   <!-- todo: add placeholders
@@ -169,7 +167,7 @@
                   <div [innerHtml]="innovationCards.solution"></div>
                 </div>
 
-                <div *ngIf="adminSide && project.innovationCards.length > 1" class="pd-input">
+                <div *ngIf="adminSide && project.innovationCards?.length > 1" class="pd-input">
                   <button
                     class="btn btn-sm ghost-primary"
                     [disabled]="innovationCards.solution"
@@ -183,7 +181,6 @@
                   <app-text-zone
                     [data]="innovationCards.solution"
                     [elementId]="'solution'+innovationCards.lang"
-                    [ngClass]="{'borderRed': showSolutionError}"
                     (onTextChange)="updateData($event)">
                   </app-text-zone>
                   <!-- todo: add placeholders
@@ -213,7 +210,7 @@
                   </div>
                 </div>
 
-                <div *ngIf="adminSide && project.innovationCards.length > 1" class="pd-input">
+                <div *ngIf="adminSide && project.innovationCards?.length > 1" class="pd-input">
                   <button
                     class="btn btn-sm ghost-primary"
                     [disabled]="innovationCards.advantages?.length"
@@ -345,7 +342,7 @@
                   name="external_diffusion"
                   [(ngModel)]="project.external_diffusion"
                   [value]="true"
-                  (ngModelChange)="notifyModelChanges($event)">
+                  (ngModelChange)="notifyModelChanges()">
                 <i class="form-icon"></i>{{ 'COMMON.YES' | translate }}
               </label>
               <div class="form-error" *ngIf="showDiffusionError">

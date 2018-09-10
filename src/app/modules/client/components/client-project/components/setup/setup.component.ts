@@ -28,7 +28,9 @@ export class SetupProjectComponent implements OnInit {
   private _showPitchFieldError: Subject<boolean> = new Subject();
   private _targetingFormValid: boolean;
   private _showTargetingFieldError: Subject<boolean> = new Subject();
+
   scrollOn = false;
+  scrollValue = 0;
 
   private _innovationPreviewIndex = 0;
   private _sidebarTemplateValue: Template = {};
@@ -55,12 +57,16 @@ export class SetupProjectComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    if (window.scrollY > 150) {
+    const scrollValue = window.pageYOffset || window.scrollY || 0;
+
+    if (scrollValue > 0) {
       this.scrollOn = true;
     } else {
       this.scrollOn = false;
     }
+
   }
+
 
   /*
       Here we are checking the fields that are required to submit or validate the form.
@@ -94,6 +100,8 @@ export class SetupProjectComponent implements OnInit {
   saveProject(event: Event): void {
     event.preventDefault();
 
+    console.log(this.scrollValue);
+
     this.frontendService.completionCalculation(this.project);
 
     const percentages = this.frontendService.calculatedPercentages;
@@ -110,11 +118,11 @@ export class SetupProjectComponent implements OnInit {
      if (this._saveChanges) {
         this.innovationService.save(this.project._id, this.project).first().subscribe(data => {
             this.project = data;
-            this.translateNotificationsService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
             this._changesSaved = true;
             this._saveChanges = false;
             this._saveButtonClass = 'disabled';
             this.checkProjectStatus();
+            this.translateNotificationsService.success('ERROR.PROJECT.SAVED', 'ERROR.PROJECT.SAVED_TEXT');
           }, err => {
             this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
         });

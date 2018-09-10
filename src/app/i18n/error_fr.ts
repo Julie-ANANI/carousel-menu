@@ -86,7 +86,7 @@ export const ERROR = {
   },
 
   'QUIZ': {
-    'CREATED': 'Le quiz a été créé'
+    'CREATED': 'Le quiz a été créé.'
   }
 
 };

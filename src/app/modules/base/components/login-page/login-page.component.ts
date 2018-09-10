@@ -63,6 +63,7 @@ export class LoginPageComponent implements OnInit {
           },
           err => {
             this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+            this._formData.get('password').reset();
           });
     } else {
       if (this._formData.untouched && this._formData.pristine) {

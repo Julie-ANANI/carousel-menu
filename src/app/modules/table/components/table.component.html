@@ -26,7 +26,8 @@
         <ng-container *ngIf="selectedRows==0">
           <tr>
             <th *ngIf="isSelectable" width="50"><input type="checkbox" (change)="selectAll($event)"/>
-              <div class="square-check"><i class="icon icon-check"></i></div></th>
+              <div class="square-check"><i class="icon icon-check"></i></div>
+            </th>
 
             <th *ngFor="let column of columns" [class]="'column-' + i"
                 [ngClass]="{'active': isSort(column), 'pointable': isSortable(column)}"
@@ -79,96 +80,98 @@
     </thead>
     <tbody>
 
-        <tr *ngFor="let key of getRowsKeys()"
-            [ngClass]="{'active': isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])}">
+      <tr *ngFor="let key of getRowsKeys()"
+          [ngClass]="{'active': isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])}">
 
-          <td *ngIf="isSelectable" (click)="selectRow(key)"><input type="checkbox" [checked]="isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])"/>
-            <div class="square-check primary"><i class="icon icon-check"></i></div></td>
+        <td *ngIf="isSelectable" (click)="selectRow(key)"><input type="checkbox" [checked]="isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])"/>
+          <div class="square-check primary"><i class="icon icon-check"></i></div></td>
 
-          <!-- Foreach columns -->
-          <ng-container>
-            <td *ngFor="let column of columns; let i = index" [ngClass]="{'col-wrapper': i === 0}">
-              <span (click)="selectRow(key)">
-                <ng-container [ngSwitch]="getType(column)">
+        <!-- Foreach columns -->
+        <td *ngFor="let column of columns; let i = index">
+          <span (click)="selectRow(key)">
+            <ng-container [ngSwitch]="getType(column)">
 
-                  <!-- If column type is  TEXT -->
-                  <span *ngSwitchDefault>
-                  <span *ngFor="let attr of getAttrs(column)">{{(getContentValue(key, attr)|| " - ").toString() | ellipsis:50}} </span>
-                </span>
-
-                  <!-- If column type is COUNTRY -->
-                  <app-country-flag *ngSwitchCase="'COUNTRY'" [country]="(getContentValue(key, getAttrs(column)[0]) || '')"></app-country-flag>
-
-                  <!-- If column type is PICTURE -->
-                  <div class="picture" *ngSwitchCase="'PICTURE'">
-                    <img [src]="getContentValue(key, getAttrs(column)[0]) || ''" class="img-fit-cover">
-                  </div>
-
-                  <!-- If column type is PROGRESS -->
-                  <app-progress-bar class="progress"
-                                    *ngSwitchCase="'PROGRESS'"
-                                    [width]="(getContentValue(key, getAttrs(column)[0]) || 0) +'%'"
-                                    [backgroundColor]="getColor(getContentValue(key, getAttrs(column)[0]) || 0)">
-                  </app-progress-bar>
-
-                  <!-- If column type is CHECK -->
-                  <div *ngSwitchCase="'CHECK'">
-                    <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 0" class="icon icon-cross"></i>
-                    <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 1" class="icon icon-check"></i>
-                  </div>
-
-                  <!-- If column type is LABEL -->
-                  <span *ngSwitchCase="'MULTI-CHOICES'">
-
-                  <img [src]="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || ''))"
-                       *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) !== ''"
-                       class="img-fit-cover">
-
-                  <span *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) === ''"
-                        [class]="getChoiceClass(getChoice(column, (getContentValue(key, getAttrs(column)[0]) || '')))">
-
-                    {{(getChoiceAlias(getChoice(column, getContentValue(key, getAttrs(column)[0])|| " - "))) | translate }}
-
-                  </span>
-
-                </span>
-
-                  <span *ngSwitchCase="'DATE'">
-                  {{(getContentValue(key, getAttrs(column)[0])?.toString() | date:dateFormat)}}
-                </span>
-
-                  <span *ngSwitchCase="'ARRAY'">
-                  {{(getContentValue(key, getAttrs(column)[0]) || []).length.toString()}}
-                </span>
-
-                  <!-- If column type is MULTI-LABEL -->
-                  <span *ngSwitchCase="'MULTI-LABEL'">
-                    <span *ngFor="let attr of getAttrs(column)"
-                        [class]="getMultiLabelClass(getMultiLabel(column, attr)) || ''"
-                        [ngClass]="{
-                        'left-label': getAttrIndex(column, attr) === 0 && getAttrs(column).length !== 1,
-                         'right-label' : getAttrIndex(column, attr) === getAttrs(column).length-1 && getAttrs(column).length !== 1,
-                         'middle-label' : getAttrIndex(column, attr) !== 0 &&
-                         getAttrIndex(column, attr) !== getAttrs(column).length-1
-                         }">
-
-                      {{(getContentValue(key, attr) || " - ").toString()}}
-
-                    </span>
-                </span>
-
-                </ng-container>
+              <!-- If column type is  TEXT -->
+              <span *ngSwitchDefault>
+                <span *ngFor="let attr of getAttrs(column)">{{(getContentValue(key, attr)|| " - ").toString() | ellipsis:50}} </span>
               </span>
 
-              <!-- If isEditable we show a button onHover the row -->
-              <button *ngIf="i === 0" class="btn btn-xs ghost-edit visibleOnHover"
-                      (click)="isLocal ? edit(filteredContent[key]) : edit(content[key])">
-                {{isEditable ? ('COMMON.EDIT' | translate) : ('COMMON.MORE' | translate) }}
-              </button>
+              <!-- If column type is COUNTRY -->
+              <app-country-flag *ngSwitchCase="'COUNTRY'" [country]="(getContentValue(key, getAttrs(column)[0]) || '')"></app-country-flag>
 
-            </td>
-          </ng-container>
-        </tr>
+              <!-- If column type is PICTURE -->
+              <div class="picture" *ngSwitchCase="'PICTURE'">
+                <img [src]="getContentValue(key, getAttrs(column)[0]) || ''" class="img-fit-cover">
+              </div>
+
+              <!-- If column type is PROGRESS -->
+              <app-progress-bar class="progress"
+                                *ngSwitchCase="'PROGRESS'"
+                                [width]="(getContentValue(key, getAttrs(column)[0]) || 0) +'%'"
+                                [backgroundColor]="getColor(getContentValue(key, getAttrs(column)[0]) || 0)">
+              </app-progress-bar>
+
+              <!-- If column type is CHECK -->
+              <div *ngSwitchCase="'CHECK'">
+                <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 0" class="icon icon-cross"></i>
+                <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 1" class="icon icon-check"></i>
+              </div>
+
+              <!-- If column type is LABEL -->
+              <span *ngSwitchCase="'MULTI-CHOICES'">
+
+              <img [src]="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || ''))"
+                   *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) !== ''"
+                   class="img-fit-cover">
+
+              <span *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) === ''"
+                    [class]="getChoiceClass(getChoice(column, (getContentValue(key, getAttrs(column)[0]) || '')))">
+
+                {{(getChoiceAlias(getChoice(column, getContentValue(key, getAttrs(column)[0])|| " - "))) | translate }}
+
+              </span>
+
+            </span>
+
+              <span *ngSwitchCase="'DATE'">
+                {{(getContentValue(key, getAttrs(column)[0])?.toString() | date:dateFormat)}}
+              </span>
+
+              <span *ngSwitchCase="'ARRAY'">
+                {{(getContentValue(key, getAttrs(column)[0]) || []).length.toString()}}
+              </span>
+
+              <!-- If column type is MULTI-LABEL -->
+              <span *ngSwitchCase="'MULTI-LABEL'">
+                <span *ngFor="let attr of getAttrs(column)"
+                    [class]="getMultiLabelClass(getMultiLabel(column, attr)) || ''"
+                    [ngClass]="{
+                    'left-label': getAttrIndex(column, attr) === 0 && getAttrs(column).length !== 1,
+                     'right-label' : getAttrIndex(column, attr) === getAttrs(column).length-1 && getAttrs(column).length !== 1,
+                     'middle-label' : getAttrIndex(column, attr) !== 0 &&
+                     getAttrIndex(column, attr) !== getAttrs(column).length-1
+                     }">
+
+                  {{(getContentValue(key, attr) || " - ").toString()}}
+
+                  </span>
+              </span>
+
+              <span *ngSwitchCase="'MULTILING'">
+                {{(getContentValue(key, getAttrs(column)[0]) | multiling:lang)}}
+              </span>
+
+            </ng-container>
+          </span>
+
+          <!-- If isEditable we show a button onHover the row -->
+          <button *ngIf="i === 0" class="btn btn-xs ghost-edit visibleOnHover table-edit-button"
+                  (click)="isLocal ? edit(filteredContent[key]) : edit(content[key])">
+            {{isEditable ? ('COMMON.EDIT' | translate) : ('COMMON.MORE' | translate) }}
+          </button>
+
+        </td>
+      </tr>
     </tbody>
   </table>
 

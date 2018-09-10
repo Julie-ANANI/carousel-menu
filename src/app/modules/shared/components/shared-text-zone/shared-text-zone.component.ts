@@ -84,6 +84,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   public get htmlId(): string { return this._htmlId; }
 
   public get text(): string { return this._text; }
+
   public set text(value: string) {
     this._text = value; // This is in case tinymce fails, then we will be able to use the textarea
     this.onTextChange.emit({id: this.elementId, content: value});

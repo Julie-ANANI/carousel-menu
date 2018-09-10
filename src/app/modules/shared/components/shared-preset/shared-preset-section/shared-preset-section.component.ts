@@ -79,8 +79,11 @@ export class SharedPresetSectionComponent {
 
   public removeSection(event: Event): void {
     event.preventDefault();
-    this.updateSection.emit(null);
-    this._formData.reset();
+    const res = confirm('Are you sure you want to delete this section?');
+    if (res) {
+      this.updateSection.emit(null);
+      this._formData.reset();
+    }
   }
 
   public updateQuestion(question: Question, index: number) {

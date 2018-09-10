@@ -38,7 +38,7 @@ export class ClientProjectComponent implements OnInit {
 
     this._project = this.activatedRoute.snapshot.data['innovation'];
 
-    this.titleService.setTitle(this._project.name);
+    this.titleService.setTitle(this._project.name || 'Project');
 
     // Getting the project type
     this._imgType = `https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-${this._project.type}.svg`;

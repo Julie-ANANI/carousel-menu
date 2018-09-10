@@ -18,7 +18,7 @@
           {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
           &nbsp;•&nbsp;
           {{ project.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
-          <span class="text-link" (click)="editCollaborator($event)">
+          <span class="text-link gtm-edit-collaborators" (click)="editCollaborator($event)">
             {{ 'COMMON.EDIT' | translate | lowercase}}
           </span>
         </span>
@@ -28,17 +28,17 @@
       <div class="tab-container">
         <ul class="tabs">
           <li>
-            <a [routerLink]="['setup']" [ngClass]="{'active': currentPage == 'setup'}">
+            <a [routerLink]="['setup']" [ngClass]="{'active': currentPage == 'setup'}" class="gtm-tabs-description">
               <i class="fas fa-pencil-alt"></i>{{ 'PROJECT_MODULE.SETUP_TAB' | translate }}
             </a>
           </li>
           <li>
-            <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage == 'exploration'}">
+            <a [routerLink]="['exploration']" [ngClass]="{'active': currentPage == 'exploration'}" class="gtm-tabs-exploration">
               <i class="fas fa-globe"></i>{{ 'PROJECT_MODULE.EXPLORATION_TAB' | translate }}
             </a>
           </li>
           <li>
-            <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage == 'synthesis'}">
+            <a [routerLink]="['synthesis']" [ngClass]="{'active': currentPage == 'synthesis'}" class="gtm-tabs-synthesis">
               <i class="fas fa-signal"></i>{{ 'PROJECT_MODULE.SYNTHESIS_TAB' | translate }}
             </a>
           </li>

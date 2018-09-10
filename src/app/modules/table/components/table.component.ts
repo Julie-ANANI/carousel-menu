@@ -632,4 +632,8 @@ export class TableComponent {
     this._content = value;
   }
 
+  get lang(): string {
+    return this._translateService.currentLang;
+  }
+
 }

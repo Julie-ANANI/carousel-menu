@@ -49,7 +49,7 @@
 
         <!-- Detail view -->
         <div class="detail-wrapper">
-          <label class="form-switch" for="showDetails">
+          <label class="form-switch gtm-synthesis-detail-view" for="showDetails">
             <input
               type="checkbox"
               name="showDetails"
@@ -92,7 +92,7 @@
             </ng-container>
             <ng-container *ngSwitchCase="false">
               <!--<button class="btn ghost-primary">{{ 'MARKET_REPORT.STICKY_BAR.BUTTON_CSV' | translate }}</button>-->
-              <button class="btn btn-primary" (click)="printSynthesis($event)">
+              <button class="btn btn-primary gtm-print-synthesis" (click)="printSynthesis($event)">
                 {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_PRINT' | translate }}
               </button>
             </ng-container>
@@ -327,7 +327,7 @@
     <!-- /Innovation analytics -->
 
     <!-- Menu button -->
-    <div class="menu-wrapper s-menuButton-print" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
+    <div class="menu-wrapper s-menuButton-print gtm-synthesis-menu" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
       <div
         class="menu-item-wrapper"
         [ngStyle]="{ 'display': displayMenuWrapper ? 'block' : 'none' }"
@@ -337,12 +337,13 @@
           <li *ngIf="project.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" [ngClass]="{'active': activeSection === 'key-learning'}" pageScroll href="#key-learning">
             {{ 'MARKET_REPORT.KEY_LEARNING' | translate }}
           </li>
-          <li [ngClass]="{'active': activeSection === 'professionals'}" pageScroll href="#professionals">
+          <li [ngClass]="{'active': activeSection === 'professionals'}"
+              pageScroll pageScrollOffset="140" href="#professionals">
             {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
           </li>
           <li
             *ngFor="let question of cleaned_questions"
-            pageScroll [href]="'#' + question.identifier"
+            pageScroll pageScrollOffset="140" [href]="'#' + question.identifier"
             [ngClass]="{'active': activeSection === question.identifier}">
             {{ question.title | multiling:lang }}
           </li>
@@ -416,6 +417,7 @@
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="professional-wrapper">
             <div *ngFor="let answer of filteredAnswers" class="profile">
+              <i class="fas fa-times hide-user" (click)="filterPro(answer, $event)"></i>
               <app-pro-tag
                 [answer]="answer"
                 (modalAnswerChange)="seeAnswer($event)"

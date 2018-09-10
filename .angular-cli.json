@@ -64,14 +64,12 @@
         }
       ],
       "scripts": [
-        "../node_modules/jquery/dist/jquery.js",
-        "../node_modules/hammerjs/hammer.js",
-        "../node_modules/chart.js/dist/Chart.min.js",
         "../node_modules/tinymce/tinymce.min.js",
         "../node_modules/tinymce/themes/modern/theme.min.js",
+        "../node_modules/tinymce/plugins/advlist/plugin.min.js",
         "../node_modules/tinymce/plugins/link/plugin.min.js",
-        "../node_modules/tinymce/plugins/paste/plugin.min.js",
-        "../node_modules/tinymce/plugins/table/plugin.min.js"
+        "../node_modules/tinymce/plugins/lists/plugin.min.js",
+        "../node_modules/tinymce/plugins/paste/plugin.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
@@ -102,14 +100,12 @@
         }
       ],
       "scripts": [
-        "../node_modules/jquery/dist/jquery.js",
-        "../node_modules/hammerjs/hammer.js",
-        "../node_modules/chart.js/dist/Chart.min.js",
         "../node_modules/tinymce/tinymce.min.js",
         "../node_modules/tinymce/themes/modern/theme.min.js",
+        "../node_modules/tinymce/plugins/advlist/plugin.min.js",
         "../node_modules/tinymce/plugins/link/plugin.min.js",
-        "../node_modules/tinymce/plugins/paste/plugin.min.js",
-        "../node_modules/tinymce/plugins/table/plugin.min.js"
+        "../node_modules/tinymce/plugins/lists/plugin.min.js",
+        "../node_modules/tinymce/plugins/paste/plugin.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
@@ -140,14 +136,12 @@
         }
       ],
       "scripts": [
-        "../node_modules/jquery/dist/jquery.js",
-        "../node_modules/hammerjs/hammer.js",
-        "../node_modules/chart.js/dist/Chart.min.js",
         "../node_modules/tinymce/tinymce.min.js",
         "../node_modules/tinymce/themes/modern/theme.min.js",
+        "../node_modules/tinymce/plugins/advlist/plugin.min.js",
         "../node_modules/tinymce/plugins/link/plugin.min.js",
-        "../node_modules/tinymce/plugins/paste/plugin.min.js",
-        "../node_modules/tinymce/plugins/table/plugin.min.js"
+        "../node_modules/tinymce/plugins/lists/plugin.min.js",
+        "../node_modules/tinymce/plugins/paste/plugin.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

@@ -12,12 +12,12 @@
           </button>
           <ul class="menu" (click)="(displayLangChoices = false)">
             <li *ngIf="translate.currentLang !== 'fr'">
-              <a (click)="propagateTranslation('fr') && $event.preventDefault()">
+              <a (click)="propagateTranslation('fr') && $event.preventDefault()" class="gtm-language-fr">
                 {{ 'COMMON.LANG.FR' | translate }}
               </a>
             </li>
             <li *ngIf="translate.currentLang !== 'en'">
-              <a (click)="propagateTranslation('en') && $event.preventDefault()">
+              <a (click)="propagateTranslation('en') && $event.preventDefault()" class="gtm-language-en">
                 {{ 'COMMON.LANG.EN' | translate }}
               </a>
             </li>
@@ -36,11 +36,11 @@
       {{ 'FOOTER.COPYRIGHT' | translate }} © 2015 - {{ copyrightDate }} {{ companyName }}
       <span *ngIf="checkIsMainDomain()">
         |
-        <a [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')" target="_blank">
+        <a [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/mentions-legales/' : '/legal-notice/')" target="_blank" class="gtm-legal-notice">
           {{ 'FOOTER.LEGAL_NOTICE' | translate }}
         </a>
         |
-        <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')">
+        <a target="_blank" [href]="'https://www.umi.us' + (translate.currentLang==='fr' ? '/fr/conditions-generales-utilisation/' : '/end-user-license-agreement/')" class="gtm-end-user-licence-agreement">
           {{ 'FOOTER.TERMS' | translate }}
         </a>
       </span>

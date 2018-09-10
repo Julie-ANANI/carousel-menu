@@ -186,7 +186,7 @@
 
       <!-- Link to quiz URI -->
       <div *ngIf="isProfessional && campaign" class="form-group">
-        <a (click)="addAnswer(pro, $event)">
+        <a (click)="openQuizUri(pro, $event)">
         <label class="text-link">{{ 'COMMON.ADD-ANSWER' | translate }}</label>
         </a>
       </div>
@@ -199,7 +199,7 @@
 
       <!-- Submit button -->
       <div *ngIf="isSignUp" class="signUp-button-wrapper text-center">
-        <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid">{{ 'COMMON.BUTTON.SIGN_UP' | translate }}</button>
+        <button class="btn btn-primary gtm-signup-email-validated" type="submit" [disabled]="userForm.invalid">{{ 'COMMON.BUTTON.SIGN_UP' | translate }}</button>
       </div>
 
     </form>

@@ -21,6 +21,7 @@ import {CampaignService} from '../../../../../services/campaign/campaign.service
 import {EmailScenario} from '../../../../../models/email-scenario';
 import {TagsService} from '../../../../../services/tags/tags.service';
 import {FrontendService} from '../../../../../services/frontend/frontend.service';
+import {EmailTemplate} from '../../../../../models/email-template';
 
 @Component({
   selector: 'app-admin-project-followed',
@@ -74,7 +75,7 @@ export class AdminProjectManagementComponent implements OnInit {
   answerTags = 0;
 
   // Campaign choice
-  currentCampaign: Campaign = null;
+  currentCampaign: any = null;
 
   // Click percentage
   private _clickPercentage = 0.0;
@@ -390,8 +391,10 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   changeProject(value: Innovation) {
     this._project = value;
+    console.log(this._project);
+    this._more = {animate_state: 'inactive', title: this._more.title, type: this._more.type};
     this.save(event, 'Le projet a bien été mise à jour !');
-    window.location.reload();
+    // window.location.reload();
   }
 
   /***
@@ -498,8 +501,8 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   calculateClickPercentage() {
     if (this.currentCampaign && this.currentCampaign.stats && this.currentCampaign.stats.campaign) {
-      this._clickPercentage = this._frontendService.analyticPercentage(this.currentCampaign.stats.campaign.nbProfessionals,
-        this.currentCampaign.stats.campaign.nbResp);
+      this._clickPercentage = this._frontendService.analyticPercentage(this.currentCampaign.stats.nbProsClicked,
+        this.currentCampaign.stats.nbProsOpened);
     }
   }
 
@@ -579,14 +582,14 @@ export class AdminProjectManagementComponent implements OnInit {
     let scenariosnames: Set<string>;
     scenariosnames = new Set<string>();
     if (this.currentCampaign.settings && this.currentCampaign.settings.emails) {
-      this.currentCampaign.settings.emails.forEach((x) => {
+      this.currentCampaign.settings.emails.forEach((x: EmailTemplate) => {
         scenariosnames.add(x.nameWorkflow);
       });
     }
     scenariosnames.forEach((name) => {
       const scenar = {} as EmailScenario;
       scenar.name = name;
-      scenar.emails = this.currentCampaign.settings.emails.filter(email => {
+      scenar.emails = this.currentCampaign.settings.emails.filter((email: EmailTemplate) => {
         return email.nameWorkflow === name;
       });
       this._availableScenarios.push(scenar);

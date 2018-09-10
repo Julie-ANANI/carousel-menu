@@ -23,7 +23,7 @@
 
         <!-- LinkedIn -->
         <div class="social-wrapper text-center" *ngIf="checkIsMainDomain()">
-          <a [href]="linkedInLink" class="btn">
+          <a [href]="linkedInLink" class="btn gtm-signin-linkedin">
             <i class="fab fa-1x fa-linkedin-in"></i>{{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
           </a>
 
@@ -75,14 +75,14 @@
           <div class="submit-wrapper text-center">
             <div class="login-button">
               <button
-                class="btn btn-primary"
+                class="btn btn-primary gtm-signin-email"
                 type="submit"
                 [disabled]="formData.invalid">
                 {{ 'LOG_IN.LOG_IN_BTN' | translate }}
               </button>
             </div>
             <span [ngStyle]="{ 'font-size': '0.85rem' }">{{ 'LOG_IN.FORGOT_PASSWORD.A' | translate }}</span>
-            <a class="text-link" routerLink="/forget">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</a>
+            <a class="text-link gtm-forgot-password" routerLink="/forget">{{ 'LOG_IN.FORGOT_PASSWORD.B' | translate }}</a>
           </div>
 
         </form>

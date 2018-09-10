@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, AfterViewInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
-import { PageScrollConfig } from 'ng2-page-scroll';
+import { PageScrollConfig } from 'ngx-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
@@ -252,7 +252,17 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     } else {
       this.filterService.deleteFilter('worldmap');
     }
-    this._filteredAnswers = this.filterService.filter(this._answers);
+  }
+
+  public filterPro(answer: Answer, event: Event) {
+    event.preventDefault();
+    const proFilter = this.filterService.filters['professionals'];
+    this.filterService.addFilter({
+      status: 'PROFESSIONALS',
+      value: proFilter && Array.isArray(proFilter.value) ? [...proFilter.value, answer._id] : [answer._id],
+      questionId: 'professionals',
+      questionTitle: {en: 'Professionals', fr: 'Professionnels'}
+    });
   }
 
   confirmModal(event: Event) {
@@ -349,8 +359,22 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   getSrc(): string {
-    const index = this.project.innovationCards[0].media.findIndex((media) => media.type === 'PHOTO');
-    return index === -1 ? '' : this.project.innovationCards[0].media[index].url;
+    let src = '';
+    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
+
+    if (this.project.innovationCards[0].principalMedia && this.project.innovationCards[0].principalMedia.type === 'PHOTO') {
+      src = this.project.innovationCards[0].principalMedia.url;
+    } else {
+      const index = this.project.innovationCards[0].media.findIndex((media) => media.type === 'PHOTO');
+      src = index === -1 ? defaultSrc : this.project.innovationCards[0].media[index].url;
+    }
+
+    if (src === '' || undefined) {
+      src = defaultSrc;
+    }
+
+    return src;
+
   }
 
   public percentageCalculataion(value1: number, value2: number) {
@@ -418,14 +442,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   get innoid(): string {
     return this._innoid;
-  }
-
-  get showListProfessional(): boolean {
-    return this._showListProfessional;
-  }
-
-  set showListProfessional(val: boolean) {
-    this._showListProfessional = val;
   }
 
   get showDetails(): boolean {

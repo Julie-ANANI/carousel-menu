@@ -4,7 +4,7 @@
     <div class="input-group">
       <select class="form-select"
               *ngIf="isStatus"
-              [(ngModel)]="project.status"
+              [ngModel]="project.status"
               (ngModelChange)="checkStatus($event)"
               [ngModelOptions]="{standalone: true}">
         <option *ngFor="let stat of status" [ngValue]="stat.name">{{stat.alias}}</option>

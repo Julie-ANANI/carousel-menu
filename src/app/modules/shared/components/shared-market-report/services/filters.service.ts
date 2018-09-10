@@ -68,6 +68,9 @@ export class FilterService {
               answer.answers[filter.questionId].some((item: any) => item.text === filter.value);
           });
           break;
+        case 'PROFESSIONALS':
+          filteredAnswers = filteredAnswers.filter((answer) => filter.value.indexOf(answer._id) === -1 );
+          break;
         case 'RADIO':
           filteredAnswers = filteredAnswers.filter((answer) => {
             return answer.answers[filter.questionId] === filter.value;

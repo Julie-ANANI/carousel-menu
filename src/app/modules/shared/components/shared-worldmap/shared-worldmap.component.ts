@@ -90,7 +90,7 @@ export class SharedWorldmapComponent {
         Array.prototype.forEach.call(continent_elems, (continent_el: HTMLElement) => {
           const countries_elems = continent_el.getElementsByTagName('path');
           Array.prototype.forEach.call(countries_elems, (country_el: HTMLElement) => {
-            countries_list.push(country_el.getAttribute('class'));
+            countries_list.push(...country_el.getAttribute('class').split(' '));
           });
         });
       }

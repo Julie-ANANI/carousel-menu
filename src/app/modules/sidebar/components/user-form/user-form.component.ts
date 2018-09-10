@@ -195,7 +195,7 @@ export class UserFormComponent implements OnInit {
 
   openQuizUri(pro: Professional, event: Event): void {
     event.preventDefault();
-    const baseUri = environment.quizUrl + '/quiz/' + this.campaign.innovation.quizId + '/' + this.campaign._id;
+    const baseUri = environment.quizUrl + '/quiz/' + this._campaign.innovation.quizId + '/' + this._campaign._id;
     const parameters = '?pro=' + pro._id + '&lang=' + this.translateService.currentLang;
     window.open(baseUri + parameters);
   }
