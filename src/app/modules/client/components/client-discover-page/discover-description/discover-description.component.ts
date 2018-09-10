@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { InnovCard} from '../../../../../models/innov-card';
 import { Innovation } from '../../../../../models/innovation';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { ShareService } from '../../../../../services/share/share.service';
 import { environment } from '../../../../../../environments/environment';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-discover-description',
@@ -26,7 +26,7 @@ export class DiscoverDescriptionComponent implements OnInit {
   private googlePlusUrl: string;
   private mailUrl: string;
 
-  private quizButtonDisplay: string;
+  private _quizButtonDisplay: string;
 
   private _mediaModal: boolean;
   private _mediaURL: string;
@@ -37,13 +37,16 @@ export class DiscoverDescriptionComponent implements OnInit {
   private _patent = false;
   private _projectState: number;
 
-  displaySpinner = true;
+  private _displaySpinner = true;
+
+  private _operatorEmail: string;
 
   constructor(private innovationService: InnovationService,
               private activatedRoute: ActivatedRoute,
               private shareService: ShareService,
               private domSanitizer1: DomSanitizer,
-              private translateNotificationsService: TranslateNotificationsService) {}
+              private translateNotificationsService: TranslateNotificationsService,
+              private router: Router) {}
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
@@ -59,7 +62,7 @@ export class DiscoverDescriptionComponent implements OnInit {
     this.innovationService.get(id).subscribe(response => {
 
       if (response.quizId === '' || response.status === 'DONE') {
-        this.quizButtonDisplay = 'none';
+        this._quizButtonDisplay = 'none';
       }
 
       if (response.campaigns.length !== 0) {
@@ -69,6 +72,8 @@ export class DiscoverDescriptionComponent implements OnInit {
       this.innovation = response;
 
       this._patent = response.patented;
+
+      this._operatorEmail = response.operator ? response.operator.email : 'contact@umi.us';
 
       this._projectState = response.projectStatus;
 
@@ -91,8 +96,20 @@ export class DiscoverDescriptionComponent implements OnInit {
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVERDESCRIPTION.ERROR');
     }, () => {
-      this.displaySpinner = false;
+      this._displaySpinner = false;
     });
+
+  }
+
+
+  contactUs(event: Event) {
+    event.preventDefault();
+
+    const url = encodeURI(this.router.url);
+
+    const message = encodeURI('Please add your message here.' + '\r\n' + '\r\n' + '-------------------------------------' + '\r\n' + '\r\n'
+      + 'Innovation Title - ' + this._innovationCard[0].title + '\r\n' + '\r\n' + 'Innovation URL - ' + url);
+    window.location.href = 'mailto:' + this._operatorEmail + '?subject=' + 'Contacting us - ' + this._innovationCard[0].title  + '&body=' + message;
 
   }
 
@@ -160,6 +177,18 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   get projectState(): number {
     return this._projectState;
+  }
+
+  get displaySpinner(): boolean {
+    return this._displaySpinner;
+  }
+
+  get operatorEmail(): string {
+    return this._operatorEmail;
+  }
+
+  get quizButtonDisplay(): string {
+    return this._quizButtonDisplay;
   }
 
 }

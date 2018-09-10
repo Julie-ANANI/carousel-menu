@@ -23,10 +23,17 @@
 
             <div class="summary-wrapper">
               <div class="para">{{ innovation.summary }}</div>
-              <div class="quiz-wrapper" [ngStyle]="{ 'display': quizButtonDisplay }">
-                <a class="btn btn-primary" [href]="quizUrl" target="_blank">
-                  <i class="icon icon-message"></i>{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}
-                </a>
+              <div class="opinion-wrapper">
+                <div class="contact-button">
+                  <a class="btn btn-primary btn-sm" (click)="contactUs($event)">
+                    <i class="fas fa-comments"></i>{{ 'DISCOVERDESCRIPTION.CONTACT_US' | translate }}
+                  </a>
+                </div>
+                <div class="quiz-button" [ngStyle]="{ 'display': quizButtonDisplay }">
+                  <a class="btn ghost-edit btn-sm" [href]="quizUrl" target="_blank">
+                    <i class="icon icon-message"></i>{{ 'DISCOVERDESCRIPTION.OPINION' | translate }}
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -41,9 +48,9 @@
               <a [href]="facebookUrl" target="_blank">
                 <i class="fab fa-facebook-f fa-2x" id="icon-facebook"></i>
               </a>&nbsp;
-              <a [href]="googlePlusUrl" target="_blank">
+             <!-- <a [href]="googlePlusUrl" target="_blank">
                 <i class="fab fa-google-plus-g fa-2x" id="icon-google"></i>
-              </a>
+              </a>-->
               <a [href]="mailUrl">
                 <i class="far fa-envelope fa-2x" id="icon-mail"></i>
               </a>
