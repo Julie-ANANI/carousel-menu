@@ -125,7 +125,7 @@
       flex-wrap: wrap;
       justify-content: space-between;
 
-      .filter-language, .filter-type, .filter-label, .filter-status {
+      .filter-language, .filter-type, .filter-label, .filter-status, .filter-stage {
         font-size: .9375rem;
         display: inline-flex;
         flex-direction: column;
@@ -179,6 +179,10 @@
     animation-name: fadeIn;
     animation-duration: .35s;
     animation-timing-function: ease-in-out;
+  }
+
+  .no-innovation {
+    padding-top: 3.15rem;
   }
 
   .innovations-wrapper {

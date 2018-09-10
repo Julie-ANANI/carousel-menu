@@ -120,6 +120,50 @@
               </ng-container>
             </div>-->
 
+            <!-- Filter stage -->
+            <div class="filter-stage">
+              <p>{{ 'DISCOVER.STAGE' | translate }}</p>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="0"
+                    value="0"
+                    name="stage"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('0', 'stage')"
+                    [disabled]="checkDisable('0', 'stage')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('0', 'stage') }">{{ getStageName('0') }}</span>
+                </label>
+              </div>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="1"
+                    value="1"
+                    name="stage"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('1', 'stage')"
+                    [disabled]="checkDisable('1', 'stage')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('1', 'stage') }">{{ getStageName('1') }}</span>
+                </label>
+              </div>
+              <div class="filter-option">
+                <label class="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="2"
+                    value="2"
+                    name="stage"
+                    (change)="toggleFilter($event)"
+                    [checked]="filterChecked('2', 'stage')"
+                    [disabled]="checkDisable('2', 'stage')">
+                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('2', 'stage') }">{{ getStageName('2') }}</span>
+                </label>
+              </div>
+            </div>
+
             <!-- Language filter -->
             <div class="filter-language">
               <p>{{ 'COMMON.LANGUAGE' | translate }}</p>
@@ -147,37 +191,6 @@
                     [checked]="filterChecked('fr', 'language')"
                     [disabled]="checkDisable('fr', 'language')">
                   <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('fr', 'language') }">{{ 'COMMON.LANG.FR' | translate }}</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Filter status -->
-            <div class="filter-status">
-              <p>{{ 'DISCOVER.STATUS' | translate }}</p>
-              <div class="filter-option">
-                <label class="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="DONE"
-                    value="DONE"
-                    name="status"
-                    (change)="toggleFilter($event)"
-                    [checked]="filterChecked('DONE', 'status')"
-                    [disabled]="checkDisable('DONE', 'status')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('DONE', 'status') }">{{ getStatusName('DONE') }}</span>
-                </label>
-              </div>
-              <div class="filter-option">
-                <label class="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="EVALUATING"
-                    value="EVALUATING"
-                    name="status"
-                    (change)="toggleFilter($event)"
-                    [checked]="filterChecked('EVALUATING', 'status')"
-                    [disabled]="checkDisable('EVALUATING', 'status')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('EVALUATING', 'status') }">{{ getStatusName('EVALUATING') }}</span>
                 </label>
               </div>
             </div>
@@ -218,8 +231,26 @@
       <!-- Overlay to show black background when the filter button is clicked -->
       <div [ngClass]="{ 'filter-wrapper-overlay': showFilterContainer }" (click)="cancelFilter($event)"></div>
 
+      <!-- When no innovation to show -->
+      <div *ngIf="totalResults === 0" class="no-innovation">
+        <div class="bot-wrapper text-center">
+        <span class="bot-rect">
+          {{ 'DISCOVER.NO_INNOVATION' | translate }}
+        </span>
+          <br>
+          <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
+          <div>
+            <img
+              src="https://res.cloudinary.com/umi/image/upload/v1532678059/app/default-images/error-bot.svg"
+              class="bot-image"
+              alt="Bot">
+          </div>
+        </div>
+      </div>
+      <!-- /When no innovation to show -->
+
       <!-- Innovations -->
-      <div class="innovations-wrapper">
+      <div *ngIf="totalResults > 0" class="innovations-wrapper">
         <div *ngFor="let innovation of innovationCards | slice:startInnoIndex:endInnoIndex" class="innov-wrapper">
           <div class="innov-content">
             <a [routerLink]="[ innovation.innovation_reference, innovation.lang ]" target="_blank">
@@ -242,7 +273,7 @@
       <!-- /Innovations -->
 
       <!-- Pagination -->
-      <div class="pagination-wrapper">
+      <div *ngIf="totalResults > 0" class="pagination-wrapper">
         <app-pagination
           [total]="totalResults"
           [propertyName]="'app-discover'"

@@ -19,5 +19,7 @@ export const DISCOVER = {
   'ADD_FILTERS': 'Add Filters',
   'APPLY_FILTERS': 'Apply Filters',
   'CANCEL': 'Cancel',
-  'CLEAR_ALL': 'Clear All'
+  'CLEAR_ALL': 'Clear All',
+  'NO_INNOVATION': 'We are unable to find innovations based on your query.',
+  'STAGE': 'Stage'
 };

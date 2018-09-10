@@ -19,5 +19,8 @@ export const DISCOVER = {
   'ADD_FILTERS': 'Ajouter des filtres',
   'APPLY_FILTERS': 'Appliquer des filtres',
   'CANCEL': 'Annuler',
-  'CLEAR_ALL': 'Tout effacer'
+  'CLEAR_ALL': 'Tout effacer',
+  'NO_INNOVATION': 'Nous ne pouvons pas trouver d\'innovations basées sur votre requête.',
+  'STAGE': 'Étape'
+
 };

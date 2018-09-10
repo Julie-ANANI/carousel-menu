@@ -51,7 +51,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   endInnoIndex: number; // upto which index we have to show the innovation.
 
   config = {
-    fields: 'created innovationCards tags status',
+    fields: 'created innovationCards tags status projectStatus',
     limit: 0,
     offset: 0,
     search: {
@@ -147,8 +147,12 @@ export class ClientDiscoverPageComponent implements OnInit {
              this.filterType(this.localInnovations, this.filterApplied[i].value);
           }
 
-          if (this.filterApplied[i].type === 'status') {
+          /*if (this.filterApplied[i].type === 'status') {
             this.filterStatus(this.localInnovations, this.filterApplied[i].value);
+          }*/
+
+          if (this.filterApplied[i].type === 'stage') {
+            this.filterStage(this.localInnovations, this.filterApplied[i].value);
           }
 
           if (this.filterApplied[i].type === 'language') {
@@ -166,8 +170,12 @@ export class ClientDiscoverPageComponent implements OnInit {
              this.filterType(this.filterInnovations, this.filterApplied[i].value);
           }
 
-          if (this.filterApplied[i].type === 'status') {
+          /*if (this.filterApplied[i].type === 'status') {
             this.filterStatus(this.filterInnovations, this.filterApplied[i].value);
+          }*/
+
+          if (this.filterApplied[i].type === 'stage') {
+            this.filterStage(this.filterInnovations, this.filterApplied[i].value);
           }
 
           if (this.filterApplied[i].type === 'language') {
@@ -202,11 +210,17 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  private filterStatus(innovations: Array<Innovation>, value: string) {
+  private filterStage(innovations: Array<Innovation>, value: string) {
+    this.filterInnovations = innovations.filter((items) => {
+      return items.projectStatus === Number(value);
+    });
+  }
+
+  /*private filterStatus(innovations: Array<Innovation>, value: string) {
     this.filterInnovations = innovations.filter((items) => {
       return items.status === value;
     });
-  }
+  }*/
 
 
   private filterLang(innovations: Array<Innovation>, value: string) {
@@ -508,7 +522,34 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  getStatusName(value: string): string {
+  getStageName(value: string): string {
+    if (value === '0') {
+      if (this.currentLang === 'en') {
+        return 'Idea'
+      } else {
+        return 'Idée'
+      }
+    }
+
+    if (value === '1') {
+      if (this.currentLang === 'en') {
+        return 'Development in progress'
+      } else {
+        return 'Développement en cours'
+      }
+    }
+
+    if (value === '2') {
+      if (this.currentLang === 'en') {
+        return 'Already available'
+      } else {
+        return 'Déjà disponible'
+      }
+    }
+
+  }
+
+/*  getStatusName(value: string): string {
     if (value === 'DONE') {
       if (this.currentLang === 'en') {
         return 'Completed'
@@ -525,7 +566,7 @@ export class ClientDiscoverPageComponent implements OnInit {
       }
     }
 
-  }
+  }*/
 
 
   getLabelName(value: string): string {
@@ -564,8 +605,8 @@ export class ClientDiscoverPageComponent implements OnInit {
       return this.getTypeName(item['value']);
     }
 
-    if (item['type'] === 'status' ) {
-      return this.getStatusName(item['value']);
+    if (item['type'] === 'stage' ) {
+      return this.getStageName(item['value']);
     }
 
     if (item['type'] === 'label' ) {
