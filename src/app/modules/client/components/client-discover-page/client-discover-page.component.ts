@@ -4,7 +4,7 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { TranslateService} from '@ngx-translate/core';
 import { Innovation } from '../../../../models/innovation';
 import { InnovCard } from '../../../../models/innov-card';
-import { ConfigTemplate } from '../../../../models/config';
+import { PaginationTemplate } from '../../../../models/pagination';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../models/tag';
 
@@ -62,7 +62,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     }
   };
 
-  paginationValue: ConfigTemplate = {}; // to pass the value in the pagination component.
+  paginationValue: PaginationTemplate = {}; // to pass the value in the pagination component.
 
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
@@ -95,7 +95,7 @@ export class ClientDiscoverPageComponent implements OnInit {
       this.totalInnovations = innovations.result;
       this.initialize();
     }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVER.ERROR');
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
 
@@ -663,7 +663,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     when there is change in the pagination we detect the change and
     call the service with the new limit and offset value.
    */
-  changePagination(paginationValues: ConfigTemplate) {
+  changePagination(paginationValues: PaginationTemplate) {
     window.scroll(0, 0);
 
     const tempOffset = parseInt(paginationValues.offset, 10);

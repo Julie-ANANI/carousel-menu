@@ -8,7 +8,6 @@ export const DISCOVER = {
   'COMPUTER': 'Ordinateur',
   'MATHEMATICS': 'Mathématiques',
   'CATEGORY': 'Catégorie',
-  'ERROR': 'Nous rencontrons des problèmes lors de la récupération des données. Veuillez essayer de recharger la page à nouveau.',
   'SHOWING': 'montrant',
   'FROM': 'de',
   'RESULT': 'résultats',

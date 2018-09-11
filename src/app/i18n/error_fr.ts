@@ -6,10 +6,15 @@ export const ERROR = {
 
   'PAGINATION': 'Nous ne pouvons pas obtenir les résultats. S\'il vous plaît changer la valeur de \'lignes par page\'.',
 
+  'FETCHING_ERROR': 'Nous rencontrons des problèmes lors de la récupération des données. Veuillez essayer de recharger la page à nouveau !',
+
+  'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur. Essayez de recharger la page à nouveau !',
+
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',
   'INVALID_FORM_DATA': 'L\'e-mail ou le mot de passe n\'est pas valide.',
-  'PAGE_NOT_FOUND': 'Pas de page par ici...',
   'INVALID_DOMAIN': 'On peut pas créer un compte super-admin dans cette instance.',
+
+  'PAGE_NOT_FOUND': 'Pas de page par ici...',
 
   'FORM': {
     'PITCH_FORM': 'Veuillez remplir tous les champs avant de soumettre votre projet. Merci !',

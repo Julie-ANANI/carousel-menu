@@ -6,9 +6,14 @@ export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit p
 
   'PAGINATION': 'We are unable to fetch the results. Please change the value of \'Rows per page\'.',
 
+  'FETCHING_ERROR': 'We are having trouble while fetching the data. Please try to reload the page again!',
+
+  'SERVER_ERROR': 'We are having trouble while connecting to the server. Please try to reload the page again!',
+
   'INVALID_FORM': 'There are errors in your form please correct them and try again.',
   'INVALID_DOMAIN': 'Cannot create a super-admin account in this instance.',
   'INVALID_FORM_DATA': 'The email/password combination is not valid.',
+
   'PAGE_NOT_FOUND': 'Page could not be found.',
 
   'FORM': {

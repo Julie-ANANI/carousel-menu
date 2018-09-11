@@ -9,6 +9,7 @@
         </button>
       </a>
     </div>
+    <!-- /Add project button -->
 
     <!-- No project -->
     <div *ngIf="projects && !projects.length" class="no-project-wrapper text-center">
@@ -23,41 +24,58 @@
         <img src="https://res.cloudinary.com/umi/image/upload/v1532612435/app/default-images/bot-advice.svg" alt="Bot" class="bot-image">
       </div>
     </div>
+    <!-- /No project -->
 
-    <!-- Projects list -->
-    <div *ngIf="projects && projects.length" class="project-wrapper">
-      <div *ngFor="let project of projects" class="content-outer-wrapper">
-        <div class="content-wrapper">
-          <a [routerLink]="getRelevantLink(project)">
-            <img [src]="getPrincipalMedia(project)"  alt="Media">
-          </a>
-          <div class="project-description">
-            <a [routerLink]="getRelevantLink(project)">
-              <span >{{ project.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
-            </a>
-            <p class="date-text-wrapper">
-              {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
-              •
-              {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
-              •
-              {{ project.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
-            </p>
+    <!-- Projects -->
+    <ng-container *ngIf="projects && projects.length">
+
+      <!-- While fetching -->
+      <div *ngIf="displaySpinner" class="spinner-wrapper">
+        <app-shared-loader></app-shared-loader>
+      </div>
+      <!-- /While fetching -->
+
+      <!-- Complete fetching -->
+      <ng-container *ngIf="!displaySpinner">
+
+        <!-- Projects list -->
+        <div class="project-wrapper">
+          <div *ngFor="let project of projects" class="content-outer">
+            <div class="content">
+              <a [routerLink]="getRelevantLink(project)"><img [src]="getMedia(project)"  alt="Media"></a>
+              <div class="project-description">
+                <a [routerLink]="getRelevantLink(project)">
+                  <span >{{ project.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}</span>
+                </a>
+                <p class="date-text">
+                  {{ 'COMMON.ADDED' | translate }} {{ project.created | date:dateFormat }}
+                  •
+                  {{ 'COMMON.UPDATED' | translate }} {{ project.updated | date:dateFormat }}
+                  •
+                  {{ project.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
+                </p>
+              </div>
+            </div>
           </div>
-
         </div>
-      </div>
+        <!-- /Projects list -->
 
-      <!-- Pagination -->
-      <div class="pagination-wrapper">
-        <app-pagination
-          [configValue]="paginationConfig"
-          (configChange)="configChange($event)"
-          [total]="total"
-          [propertyName]="'client-projects'">
-        </app-pagination>
-      </div>
+        <!-- Pagination -->
+        <div class="pagination-wrapper">
+          <app-pagination
+            [configValue]="paginationConfig"
+            (configChange)="configChange($event)"
+            [total]="total"
+            [propertyName]="'client-projects'">
+          </app-pagination>
+        </div>
+        <!-- /Pagination -->
 
-    </div>
+      </ng-container>
+      <!-- /Complete fetching -->
+
+    </ng-container>
+    <!-- /Projects -->
 
   </div>
 </section>

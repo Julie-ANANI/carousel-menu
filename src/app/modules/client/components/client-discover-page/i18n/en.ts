@@ -8,7 +8,6 @@ export const DISCOVER = {
   'COMPUTER': 'Computer',
   'MATHEMATICS': 'Mathematics',
   'SEARCH_CATEGORY': 'Category',
-  'ERROR': 'We are having trouble while fetching the data. Please try to reload the page again.',
   'SHOWING': 'showing',
   'FROM': 'from',
   'RESULT': 'results',

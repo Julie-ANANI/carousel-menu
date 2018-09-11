@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
-import {ConfigTemplate} from '../../../../models/config';
+import {PaginationTemplate} from '../../../../models/pagination';
 
 @Component({
   selector: 'app-shared-search-history',
@@ -28,7 +28,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   };
 
-  private _paginationConfig: ConfigTemplate = {limit: this._config.limit, offset: this._config.offset};
+  private _paginationConfig: PaginationTemplate = {limit: this._config.limit, offset: this._config.offset};
 
   constructor(private _searchService: SearchService) {}
 
@@ -170,5 +170,5 @@ export class SharedSearchHistoryComponent implements OnInit {
   get googleQuota(): number { return this._googleQuota; }
   get config(): any { return this._config; }
   get paused(): boolean { return this._paused; }
-  get paginationConfig(): ConfigTemplate { return this._paginationConfig; }
+  get paginationConfig(): PaginationTemplate { return this._paginationConfig; }
 }
