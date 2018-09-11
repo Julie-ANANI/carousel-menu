@@ -1,7 +1,7 @@
 export const ERROR = {
   'ERROR': 'Oups...',
   'SUCCESS': 'Succès',
-  'CANNOT_REACH': 'Le serveur ne répond pas...',
+  'CANNOT_REACH': 'Nous ne pouvons pas atteindre le serveur pour le moment. Veuillez réessayer !',
   'FORM_ERROR': 'Erreur de formulaire',
 
   'PAGINATION': 'Nous ne pouvons pas obtenir les résultats. S\'il vous plaît changer la valeur de \'lignes par page\'.',

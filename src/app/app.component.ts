@@ -16,7 +16,9 @@ import { NavigationEnd, Router } from '@angular/router';
 export class AppComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<any> = new Subject();
+
   displayLoader = false;
+
   private _displayLoading = true; // to show spinner.
 
   public notificationsOptions = {
@@ -49,22 +51,23 @@ export class AppComponent implements OnInit, OnDestroy {
     this.loaderService.isLoading$.takeUntil(this.ngUnsubscribe).subscribe((isLoading: boolean) => {
       // Bug corrigé avec setTimeout :
       // https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
-      setTimeout((_: void) => { this.displayLoader = isLoading; } );
+      setTimeout((_: void) => {
+        this.displayLoader = isLoading;
+      });
     });
 
     this.loaderService.stopLoading();
-
-    setTimeout (() => {
-      this._displayLoading = false;
-    }, 800);
 
     if (this.authService.isAcceptingCookies) { // CNIL
       this.authService.initializeSession().takeUntil(this.ngUnsubscribe).subscribe(
         _ => {},
         _ => this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
-          clickToClose: false,
           timeOut: 0
-        })
+        }), () => {
+          setTimeout (() => {
+            this._displayLoading = false;
+          }, 200);
+        }
       );
     }
 
