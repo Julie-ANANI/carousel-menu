@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import {ConfigTemplate} from '../../../../models/config';
+import { ConfigTemplate } from '../../../../models/config';
 
 @Component({
   selector: 'app-pagination',
@@ -14,6 +14,7 @@ export class PaginationComponent implements OnInit {
     this._total = value;
     this._numPages = Math.ceil(this._total / this.perPage);
   };
+
   @Input() propertyName: string;
 
   @Input() set configValue(value: ConfigTemplate) {
@@ -26,6 +27,7 @@ export class PaginationComponent implements OnInit {
   @Output() configChange = new EventEmitter <any>();
 
   private _numPages: number;
+
   perPageValues: Array<number> = [10, 20, 50, 100, 1000];
 
   initialConfigValues: ConfigTemplate = {
@@ -52,6 +54,7 @@ export class PaginationComponent implements OnInit {
       this.initialConfigValues.limit = localLimit;
     }
 
+    this._numPages = Math.ceil(this._total / this.perPage);
     this._update();
 
   }

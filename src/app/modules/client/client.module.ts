@@ -24,6 +24,8 @@ import { HeaderModule } from '../base/components/header/header.module';
 import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
 import { LogoutPageModule } from '../base/components/logout-page/logout-page.module';
 import { InputListModule } from '../input/component/input-list/input-list.module';
+import { SearchInputModule } from '../input/component/search-input/search-input.module';
+import { PaginationModule } from '../input/component/pagination/pagination.module';
 
 
 @NgModule({
@@ -48,7 +50,9 @@ import { InputListModule } from '../input/component/input-list/input-list.module
     HeaderModule,
     NotFoundPageModule,
     LogoutPageModule,
-    InputListModule
+    InputListModule,
+    SearchInputModule,
+    PaginationModule
   ],
   declarations: [
     ClientComponent,

@@ -183,31 +183,34 @@
  */
 
 .suggestion {
+  display: flex;
+  flex-direction: column;
   box-shadow: $box-shadow;
   margin: 0;
   padding: 0;
   list-style: none;
   z-index: 2;
-  background-color: white;
+  background-color: #F2F2F2;
   outline: none;
+  overflow: auto;
 
   li {
-    padding: .5rem .6rem;
+    padding: .75rem .9375rem;
     transition: all .15s ease-in-out;
-    cursor: pointer;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    word-break: break-word;
+    font-size: .875rem;
+    color: $input-color;
 
     a{
-      color: $label-color;
       text-decoration: none;
     }
 
   }
 
   li:hover {
-    background:  #F2F2F2;
-    border-color: #F2F2F2;
+    background-color: $border-color;
+    border-color: $border-color;
+    cursor: pointer;
   }
 
 }
@@ -276,6 +279,41 @@ textarea {
 .form-switch-padding {
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
+}
+
+
+/*
+    Form checkbox
+ */
+
+.form-checkbox {
+  padding-left: 1.5rem;
+}
+
+.form-checkbox .form-icon {
+  width: 1rem;
+  height: 1rem;
+  top: .21rem;
+  border-color: $border-color;
+}
+
+.form-checkbox .form-icon::before {
+  height: 11px;
+  width: 7px;
+  margin-left: -3px;
+  margin-top: -7px;
+}
+
+.form-checkbox input:focus + .form-icon {
+  box-shadow: none !important;
+  background: white;
+  -webkit-box-shadow: none !important;
+  border-color: $border-color;
+}
+
+.form-checkbox input:checked + .form-icon, .form-checkbox input:active + .form-icon {
+  background: $validation-color;
+  border-color: $validation-color;
 }
 
 

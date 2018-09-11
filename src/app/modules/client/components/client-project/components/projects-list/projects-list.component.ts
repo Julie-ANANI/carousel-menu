@@ -4,7 +4,7 @@ import { TranslateTitleService } from '../../../../../../services/title/title.se
 import { UserService } from '../../../../../../services/user/user.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
-import {ConfigTemplate} from '../../../../../../models/config';
+import { ConfigTemplate } from '../../../../../../models/config';
 
 @Component({
   selector: 'app-projects-list',
@@ -49,7 +49,7 @@ export class ProjectsListComponent implements OnInit {
 
   configChange(value: any) {
     this._paginationConfig = value;
-    this._config.limit = value.limit
+    this._config.limit = value.limit;
     this._config.offset = value.offset;
     window.scroll(0, 0);
     this.loadProjects();
@@ -88,7 +88,7 @@ export class ProjectsListComponent implements OnInit {
     return this._projects.findIndex((x) => x._id === projectId);
   }
 
-  public getPrincipalMedia(project: Innovation): string {
+  getPrincipalMedia(project: Innovation): string {
     if (project.principalMedia) {
       if (project.principalMedia.type === 'PHOTO') {
         return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + project.principalMedia.cloudinary.public_id;

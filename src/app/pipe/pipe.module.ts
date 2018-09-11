@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { CharacterCountdown } from './pipes/CharacterCountdown';
 import { DomSanitizerPipe } from './pipes/DomSanitizer';
 import { FilterPipe } from './pipes/TableFilterPipe';

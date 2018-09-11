@@ -1,8 +1,10 @@
 export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit par Bastien en précipitation)
   'ERROR': 'Oups...',
   'SUCCESS': 'Success',
-  'CANNOT_REACH': 'Cannot reach to server.',
+  'CANNOT_REACH': 'We are unable to reach the server at the moment. Please try again!',
   'FORM_ERROR': 'Form error',
+
+  'PAGINATION': 'We are unable to fetch the results. Please change the value of \'Rows per page\'.',
 
   'INVALID_FORM': 'There are errors in your form please correct them and try again.',
   'INVALID_DOMAIN': 'Cannot create a super-admin account in this instance.',
