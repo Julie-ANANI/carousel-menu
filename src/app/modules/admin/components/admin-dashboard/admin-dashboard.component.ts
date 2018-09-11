@@ -70,7 +70,11 @@ export class AdminDashboardComponent implements OnInit {
       this.operatorId = this._authService.user.id;
     }
 
-    this._dashboardService.getOperators().first().subscribe((operators) => this.operators = operators.result);
+    this._dashboardService.getOperators().first().subscribe((operators) => {
+      this.operators = operators.result.sort((a,b) => {
+        return a.firstName > b.firstName ? 1 : -1;
+      });
+    });
 
     this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData) => this.operatorData = operatorData);
 

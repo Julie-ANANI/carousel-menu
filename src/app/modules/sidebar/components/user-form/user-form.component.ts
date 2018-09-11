@@ -95,7 +95,7 @@ export class UserFormComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]],
       country: ['', [Validators.required]],
       roles: '',
-      operator: [false],
+      isOperator: [false],
       profileUrl: [null],
       domain: [''],
     });
