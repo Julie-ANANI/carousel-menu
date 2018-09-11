@@ -82,6 +82,9 @@ export class ClientDiscoverPageComponent implements OnInit {
         // we do not have the innovation in the default language
         if ( index === -1 ) {
           index = items.innovationCards.findIndex(card => card.lang === 'en'); // default language index
+          if ( index === -1 ) {
+            index = 0; // default index
+          }
         }
 
         this.innovationCardId = items.innovationCards[index]._id;
