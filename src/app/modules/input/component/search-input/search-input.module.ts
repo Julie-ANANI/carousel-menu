@@ -1,21 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedLoaderComponent } from './shared-loader.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {SearchInputComponent} from './search-input.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    TranslateModule,
     ReactiveFormsModule,
-    TranslateModule.forChild()
+    FormsModule
   ],
   declarations: [
-    SharedLoaderComponent
+    SearchInputComponent
   ],
   exports: [
-    SharedLoaderComponent
+    SearchInputComponent
   ]
 })
 
-export class SharedLoaderModule {}
+export class SearchInputModule {}

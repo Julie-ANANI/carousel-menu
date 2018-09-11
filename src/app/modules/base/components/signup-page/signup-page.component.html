@@ -1,8 +1,9 @@
 <section class="main-container" id="sign-up">
   <div class="columns col-gapless">
 
-    <div class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image"
-         [ngStyle]="{ 'background-image': 'url(' + backgroundImage() + ')'}">
+    <div
+      class="column col-md-6 col-xl-7 col-8 col-mx-auto cover-image"
+      [ngStyle]="{ 'background-image': 'url(' + backgroundImage() + ')'}">
     </div>
 
     <div class="column col-sm-12 col-md-6 col-xl-5 col-4 col-mx-auto sign-up-wrapper section-light-container">
@@ -41,7 +42,11 @@
 
         <!-- Sign up sidebar -->
         <app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
-          <app-user-form [type]="sidebarTemplateValue.type" (userSignUpData)="onSubmit($event)" [sidebarState]="sidebarState"></app-user-form>
+          <app-user-form
+            [type]="sidebarTemplateValue.type"
+            (userSignUpData)="onSubmit($event)"
+            [sidebarState]="sidebarState">
+          </app-user-form>
         </app-sidebar>
 
       </div>

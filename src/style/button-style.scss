@@ -122,6 +122,24 @@
 
 
 /*
+    Edit button class that you have to add with button class.
+    Class name: btn-edit
+ */
+
+.btn-edit:not(:disabled), .btn-edit:not(:disabled):focus, .btn-edit:not(:disabled):active {
+  color: white;
+  background-color: $meta-color;
+  border-color: $meta-color;
+}
+
+.btn-edit:not(:disabled):hover {
+  color: white;
+  background-color: lighten($meta-color, 15%);
+  border-color: lighten($meta-color, 15%);
+}
+
+
+/*
     Error button class that you have to add with button class.
     Class name: btn-error
  */

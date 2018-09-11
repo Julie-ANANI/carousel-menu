@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-shared-loader',
-  template: '<div class="loading loading-lg"></div>'
+  templateUrl: './shared-loader.component.html',
+  styleUrls: ['./shared-loader.component.scss']
 })
 
 export class SharedLoaderComponent {

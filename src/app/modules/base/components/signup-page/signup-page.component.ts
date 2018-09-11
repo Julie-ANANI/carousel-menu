@@ -24,9 +24,9 @@ export class SignupPageComponent implements OnInit {
   private _sidebarState = new Subject<string>();
   private _linkedInLink: string;
 
-  constructor(private _authService: AuthService,
+  constructor(private authService: AuthService,
               private userService: UserService,
-              private _location: Location,
+              private location1: Location,
               private activatedRoute: ActivatedRoute,
               private translateTitleService: TranslateTitleService,
               private translateNotificationsService: TranslateNotificationsService) {}
@@ -42,10 +42,10 @@ export class SignupPageComponent implements OnInit {
 
   }
 
-  linkedInUrl() {
+  private linkedInUrl() {
     const domain = environment.domain;
 
-    this._authService.linkedinLogin(domain).first().subscribe(
+    this.authService.linkedinLogin(domain).first().subscribe(
       url => {
         this._linkedInLink = url;
       },
@@ -66,9 +66,9 @@ export class SignupPageComponent implements OnInit {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
       }else {
         this.userService.create(user).first().subscribe(_ => {
-            this._authService.login(user).first().subscribe(
+            this.authService.login(user).first().subscribe(
               _ => {
-                this._location.back();
+                this.location1.back();
               },
               error => {
                 this.translateNotificationsService.error('ERROR.ERROR', error.message);
@@ -103,6 +103,32 @@ export class SignupPageComponent implements OnInit {
     this._sidebarState.next('inactive');
   }
 
+  get domainCompanyName(): string {
+    return environment.companyName;
+  }
+
+  checkIsMainDomain(): boolean {
+    return environment.domain === 'umi';
+  }
+
+  getCompanyUrl(): string {
+    return environment.companyURL || '';
+  }
+
+  // getting the company logo.
+  getLogo(): string {
+    return environment.logoURL;
+  }
+
+  // getting the background image.
+  backgroundImage(): string {
+    return environment.background;
+  }
+
+  getLogoWBG(): string {
+    return environment.logoSynthURL;
+  }
+
   get linkedInLink(): string {
     return this._linkedInLink;
   }
@@ -121,32 +147,6 @@ export class SignupPageComponent implements OnInit {
 
   set sidebarState(value: Subject<string>) {
     this._sidebarState = value;
-  }
-
-  get domainCompanyName(): string {
-    return environment.companyName;
-  }
-
-  public checkIsMainDomain(): boolean {
-    return environment.domain === 'umi';
-  }
-
-  public getCompanyUrl(): string {
-    return environment.companyURL || '';
-  }
-
-  // getting the company logo.
-  public getLogo(): string {
-    return environment.logoURL;
-  }
-
-  // getting the background image.
-  public backgroundImage(): string {
-    return environment.background;
-  }
-
-  public getLogoWBG(): string {
-    return environment.logoSynthURL;
   }
 
 }

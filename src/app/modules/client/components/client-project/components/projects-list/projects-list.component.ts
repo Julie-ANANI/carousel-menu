@@ -2,22 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { UserService } from '../../../../../../services/user/user.service';
-import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
-import {ConfigTemplate} from '../../../../../../models/config';
+import { PaginationTemplate } from '../../../../../../models/pagination';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-projects-list',
   templateUrl: 'projects-list.component.html',
   styleUrls: ['projects-list.component.scss']
 })
+
 export class ProjectsListComponent implements OnInit {
 
   private _projects: Array<Innovation>;
-  public selectedProjectIdToBeDeleted: any = null;
+
   private _total: number;
+
+  displaySpinner = true;
+
   private _config = {
-    fields: '',
+    fields: 'name created updated status collaborators principalMedia',
     limit: 10,
     offset: 0,
     search: {},
@@ -26,51 +30,32 @@ export class ProjectsListComponent implements OnInit {
     }
   };
 
-  private _paginationConfig: ConfigTemplate = {limit: this._config.limit, offset: this._config.offset};
+  private _paginationConfig: PaginationTemplate = {limit: this._config.limit, offset: this._config.offset};
 
-  constructor(private _translateService: TranslateService,
-              private _userService: UserService,
-              private _innovationService: InnovationService,
-              private _titleService: TranslateTitleService) {}
+  constructor(private translateService: TranslateService,
+              private userService: UserService,
+              private translateTitleService: TranslateTitleService,
+              private translateNotificationService: TranslateNotificationsService) {}
 
-  ngOnInit(): void {
-    this._titleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
+  ngOnInit() {
+    this.translateTitleService.setTitle('PROJECT_MODULE.PROJECTS_LIST.TITLE');
     this.loadProjects();
   }
 
-  loadProjects(): void {
-    this._userService.getMyInnovations(this._config)
-      .first()
-      .subscribe(projects => {
-        this._projects = projects.result;
-        this._total = projects._metadata.totalCount;
-      });
+  private loadProjects() {
+    this.userService.getMyInnovations(this._config).first().subscribe(respones => {
+        this._projects = respones.result;
+        this._total = respones._metadata.totalCount;
+    }, () => {
+      this.translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    }, () => {
+      this.displaySpinner = false;
+    });
   }
 
-  configChange(value: any) {
-    this._paginationConfig = value;
-    this._config.limit = value.limit
-    this._config.offset = value.offset;
-    window.scroll(0, 0);
-    this.loadProjects();
-  }
-
-  /**
-   * Suppression et mise à jour de la vue
-   */
-  public removeProject(event: Event, projectId: string): void {
-    event.preventDefault();
-    this._innovationService
-      .remove(projectId)
-      .first()
-      .subscribe(_ => {
-        this._projects.splice(this._getProjectIndex(projectId), 1);
-        this.selectedProjectIdToBeDeleted = null;
-      });
-  }
-
-  public getRelevantLink(project: Innovation): Array<string> { // routerLink : /project/:project_id
+  getRelevantLink(project: Innovation): Array<string> {
     const link = ['/project', project._id];
+
     switch (project.status) {
       case 'DONE':
         link.push('synthesis');
@@ -82,23 +67,31 @@ export class ProjectsListComponent implements OnInit {
         link.push('setup');
     }
     return link;
+
   }
 
-  private _getProjectIndex(projectId: string): number {
-    return this._projects.findIndex((x) => x._id === projectId);
-  }
-
-  public getPrincipalMedia(project: Innovation): string {
+  getMedia(project: Innovation): string {
     if (project.principalMedia) {
+
       if (project.principalMedia.type === 'PHOTO') {
         return 'https://res.cloudinary.com/umi/image/upload/c_scale,h_260,w_260/' + project.principalMedia.cloudinary.public_id;
       }
       else {
         return project.principalMedia.video.thumbnail;
       }
+
     } else {
       return 'https://res.cloudinary.com/umi/image/upload/app/no-image.png';
     }
+
+  }
+
+  configChange(value: any) {
+    window.scroll(0, 0);
+    this._paginationConfig = value;
+    this._config.limit = value.limit;
+    this._config.offset = value.offset;
+    this.loadProjects();
   }
 
   set config(value: any) {
@@ -118,10 +111,11 @@ export class ProjectsListComponent implements OnInit {
   }
 
   get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
-  get paginationConfig(): ConfigTemplate {
+  get paginationConfig(): PaginationTemplate {
     return this._paginationConfig;
   }
+
 }

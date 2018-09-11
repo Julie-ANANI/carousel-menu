@@ -1,11 +1,25 @@
 export const DISCOVER = {
   'TITLE': 'Découvrir',
-  'PAGE_DESCRIPTION': 'Découvrez toutes les innovations ajoutées quotidiennement à la plateforme.',
+  'PAGE_DESCRIPTION': 'Découvrez toutes les innovations ajoutées quotidiennement à la plateforme',
   'CATEGORIES': 'Catégories',
   'ELECTRONIC': 'Electronique',
   'AGRICULTURE': 'Agriculture',
   'AEROSPACE': 'Aérospatial',
   'COMPUTER': 'Ordinateur',
   'MATHEMATICS': 'Mathématiques',
-  'CATEGORY': 'Catégorie'
+  'CATEGORY': 'Catégorie',
+  'SHOWING': 'montrant',
+  'FROM': 'de',
+  'RESULT': 'résultats',
+  'STATUS': 'Statut',
+  'SEE_MORE': 'Voir plus',
+  'COMPLETED': 'Terminé',
+  'IN_PROGRESS': 'En cours',
+  'ADD_FILTERS': 'Ajouter des filtres',
+  'APPLY_FILTERS': 'Appliquer des filtres',
+  'CANCEL': 'Annuler',
+  'CLEAR_ALL': 'Tout effacer',
+  'NO_INNOVATION': 'Nous ne pouvons pas trouver d\'innovations basées sur votre requête.',
+  'STAGE': 'Étape'
+
 };

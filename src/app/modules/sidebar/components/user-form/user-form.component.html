@@ -1,7 +1,7 @@
 <section id="user-form">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
-    <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()" autocomplete="off">
 
       <!-- Operator -->
       <div *ngIf="!isSignUp" class="form-group-inline-space operator-wrapper">
@@ -11,7 +11,7 @@
               type="checkbox"
               name="operator"
               id="operator"
-              formControlName="operator">
+              formControlName="isOperator">
             <i class="form-icon"></i>
             {{ 'PROJECT_LIST.OPERATOR' | translate }}
           </label>

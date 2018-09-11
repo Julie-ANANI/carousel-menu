@@ -189,6 +189,7 @@ export class FrontendService {
     return this._calculatedValues;
   }
 
+
   /*
     We are calculating percentage for the analytics
     that are being used in Market exploration and
@@ -201,6 +202,57 @@ export class FrontendService {
       const percentage = (value2 / value1) * 100;
       return percentage === Infinity ? 0 : Math.floor(percentage);
     }
+  }
+
+
+  /*
+
+   */
+  compareObject(object1: any, object2: any): boolean {
+
+    if (typeof (object1) !== typeof (object2)) {
+      return true;
+    }
+
+    if (Object.keys(object1).length !== Object.keys(object2).length) {
+      return true;
+
+    }
+
+    for (const key of Object.keys(object1)) {
+
+      for (const key2 of Object.keys(object2)) {
+
+        if (key === key2) {
+
+          if (typeof (object2[key]) !== typeof (object1[key])) {
+            return true;
+          }
+
+          if (object1[key] instanceof Object && object2[key] instanceof Object) {
+            this.compareObject(object1[key], object2[key]);
+          } else if (object1[key] instanceof Array && object2[key] instanceof Array) {
+            const changeValue = object1[key].filter((item: any) => {
+              object2[key].indexOf(item < 0);
+            });
+
+            if (changeValue.length > 0) {
+              return true;
+            }
+
+          } else {
+            if (JSON.stringify(object1[key]) !== JSON.stringify(object2[key])) {
+              return true;
+            }
+          }
+
+        }
+
+      }
+
+    }
+
+    return false;
   }
 
 }

@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
-import {ConfigTemplate} from '../../../../models/config';
+import {PaginationTemplate} from '../../../../models/pagination';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -16,7 +16,7 @@ export interface SelectedProfessional extends Professional {
 export class SharedProsListOldComponent {
 
   private _config: any;
-  private _paginationConfig: ConfigTemplate = {};
+  private _paginationConfig: PaginationTemplate = {};
   public smartSelect: any = null;
   public editUser: {[propString: string]: boolean} = {};
 
@@ -93,5 +93,5 @@ export class SharedProsListOldComponent {
   get total() { return this._total; }
   get pros() { return this._pros; }
   get config() { return this._config; }
-  get paginationConfig(): ConfigTemplate { return this._paginationConfig; }
+  get paginationConfig(): PaginationTemplate { return this._paginationConfig; }
 }

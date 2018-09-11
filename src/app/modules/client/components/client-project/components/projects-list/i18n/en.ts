@@ -13,5 +13,6 @@ export const PROJECTS_LIST = {
   'NO_PROJECT': {
     'TITLE': 'Don\'t have any project? ',
     'CONTENT': 'Create your first project by clicking on Add project button.'
-  }
+  },
+
 };
