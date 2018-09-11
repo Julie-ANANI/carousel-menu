@@ -58,7 +58,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.loaderService.stopLoading();
 
-    if (this.authService.isAcceptingCookies) { // CNIL
+    if (this.authService.isAcceptingCookies) {
       this.authService.initializeSession().takeUntil(this.ngUnsubscribe).subscribe(
         _ => {},
         _ => this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
@@ -66,7 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
         }), () => {
           setTimeout (() => {
             this._displayLoading = false;
-          }, 200);
+          }, 400);
         }
       );
     }
