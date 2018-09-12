@@ -1,13 +1,18 @@
 export const MY_ACCOUNT = {
-  'TITLE': 'Mon compte',
+
+  'TITLE': 'Profil',
+
+  'PARA': 'Ajoutez des informations sur vous-même.',
+
   'CHANGE_PASSWORD': 'Changer de mot de passe',
-  'DELETE': 'Supprimer mon compte',
+
+  'DELETE': 'Fermer le compte',
+
   'DELETE_MODAL': {
-    'TITLE': 'Êtes-vous sûr(e) de vouloir supprimer votre compte ?',
-    'CONTENT': 'Cest triste de vous voir partir. Néanmoins, toutes vos données personnelles seront ' +
-    'définitivement supprimées.'
+    'BOARD_TITLE': 'Supprimer le forum',
+    'TITLE': 'Voulez-vous vraiment supprimer votre compte ?',
+    'CONTENT': 'C\'est triste de te voir nous quitter. Toutes vos données personnelles seront supprimées. Quoi qu\'il en soit, si vous voulez revenir, vous êtes les bienvenus !'
   },
-  'SECTORS': 'Secteurs d\'activité',
-  'TECHNOLOGIES': 'Technologies',
+
   'JOB_TITLE_EXAMPLE': 'Ingénieur en  aérodynamique'
 };

@@ -15,82 +15,117 @@ import { Router } from '@angular/router';
 })
 export class ClientMyAccountComponent implements OnInit {
 
-  public formData: FormGroup;
-  public accountDeletionAsked = false;
+  private _formData: FormGroup;
+  name: string;
+  jobTitle: string;
+  accountDeletionAsked = false;
 
   // TODO : profile picture, reset password, description, location
 
-  constructor(private _userService: UserService,
-              private _notificationsService: TranslateNotificationsService,
-              private _authService: AuthService,
-              private _formBuilder: FormBuilder,
-              private _router: Router,
-              private _titleService: TranslateTitleService) {}
+  constructor(private userService: UserService,
+              private translateNotificationsService: TranslateNotificationsService,
+              private authService: AuthService,
+              private formBuilder: FormBuilder,
+              private router: Router,
+              private translateTitleService: TranslateTitleService) {}
 
-  ngOnInit(): void {
-    this._titleService.setTitle('MY_ACCOUNT.TITLE');
+  ngOnInit() {
+    this.translateTitleService.setTitle('MY_ACCOUNT.TITLE');
+    this.buildForm();
+    this.patchForm();
+  }
 
-    this.formData = this._formBuilder.group({
+  private buildForm() {
+    this._formData = this.formBuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
-      companyName: '',
-      jobTitle: '',
-      phone: '',
+      companyName: [''],
+      jobTitle: [''],
+      phone: [''],
       sectors: [[]],
       technologies: [[]],
       language: ['', [Validators.required]]
     });
+  }
 
-    this._userService.getSelf().subscribe(user => {
-      this.formData.patchValue(user);
+  private patchForm() {
+    this.userService.getSelf().subscribe((response: User) => {
+      console.log(response);
+      this._formData.patchValue(response);
+      this.name = response.name;
+      this.jobTitle = response.jobTitle;
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
 
-  public changePassword(event: Event) {
+  changePassword(event: Event) {
     event.preventDefault();
-    this._userService.changePassword()
+    this.userService.changePassword()
       .first()
       .subscribe(res => {
-        this._router.navigate(['/reset-password/' + res.token])
+        this.router.navigate(['/reset-password/' + res.token])
       });
   }
 
-  public onSubmit() {
-    if (this.formData.valid) {
-      const user = new User(this.formData.value);
-      this._userService.update(user)
-        .first()
-        .subscribe(
-        data => {
-          this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
-          this.formData.patchValue(data);
+  onSubmit() {
+    if (this._formData.valid) {
+      const user = new User(this._formData.value);
+      this.userService.update(user).first().subscribe(
+        (response: User) => {
+          this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
+          this.name = response.name;
+          this.jobTitle = response.jobTitle;
+          this._formData.patchValue(response);
         },
         error => {
-          this._notificationsService.error('ERROR.ERROR', error.message);
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
         });
     }
     else {
-      this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
   }
 
-  public addSector(event: {value: Array<string>}) {
-    this.formData.get('sectors')!.setValue(event.value);
+  addSector(event: {value: Array<string>}) {
+    this._formData.get('sectors')!.setValue(event.value);
   }
 
-  public addTechnology(event: {value: Array<string>}) {
-    this.formData.get('technologies')!.setValue(event.value);
+  addTechnology(event: {value: Array<string>}) {
+    this._formData.get('technologies')!.setValue(event.value);
   }
 
-  public deleteAccount (event: Event) {
+  onDelete(event: Event) {
     event.preventDefault();
-    this._userService.delete().first().subscribe(_ => {
-      this._authService.logout().first().subscribe(() => {
-        this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
-        this._router.navigate(['/']);
+    this.accountDeletionAsked = true;
+  }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this.accountDeletionAsked = false;
+  }
+
+  deleteAccount (event: Event) {
+    event.preventDefault();
+
+    this.userService.delete().first().subscribe(_ => {
+      this.authService.logout().first().subscribe(() => {
+        this.translateNotificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
+        this.router.navigate(['/']);
       });
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
+
+  }
+
+  set formData(value: FormGroup) {
+    this._formData = value;
+  }
+
+  get formData(): FormGroup {
+    return this._formData;
   }
 
 }
