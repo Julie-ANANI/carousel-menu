@@ -1,143 +1,211 @@
-<div class="container section-container">
-  <div class="columns">
-    <div class="column col-10 col-mx-auto">
-      <h1>{{ 'MY_ACCOUNT.TITLE' | translate }}</h1>
-    </div>
-    <div class="column col-5 col-lg-7 col-md-8 col-sm-12 col-mx-auto">
-      <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData" class="form-horizontal">
-        <div class="form-group">
-          <div class="col-3">
-            <label class="form-label" for="firstName">{{ "COMMON.FIRSTNAME" | translate }}</label>
-          </div>
-          <div class="col-9">
-            <input class="form-input" id="firstName" name="firstName" formControlName="firstName" type="text"
-                   placeholder="John">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-3">
-            <label class="form-label" for="lastName">{{ "COMMON.LASTNAME" | translate }}</label>
-          </div>
-          <div class="col-9">
-            <input class="form-input" id="lastName" name="lastName" formControlName="lastName" type="text"
-                   placeholder="Doe">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-3">
-            <label class="form-label" for="companyName">{{ "COMMON.COMPANY" | translate }}</label>
-          </div>
-          <div class="col-9">
-            <input class="form-input" id="companyName" name="companyName" formControlName="companyName" type="text"
-                   placeholder="United Motion Ideas">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-3">
-            <label class="form-label" for="jobTitle">{{ "COMMON.JOBTITLE" | translate }}</label>
-          </div>
-          <div class="col-9">
-            <input class="form-input" id="jobTitle" name="jobTitle" formControlName="jobTitle" type="text"
-                   placeholder="{{ 'MY_ACCOUNT.JOB_TITLE_EXAMPLE' | translate }}">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-3">
-            <label class="form-label" for="email">{{ "COMMON.EMAIL" | translate }}</label>
-          </div>
-          <div class="col-9">
-            <input class="form-input" id="email" name="email" formControlName="email" type="email" placeholder="john.doe@gmail.com">
-          </div>
+<section class="section-container" id="account-page-wrapper">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <div class="profile-wrapper">
+
+      <!-- Picture left section -->
+      <div class="left-content text-center">
+
+        <!-- Profile pics -->
+        <div class="profile-pic">
+          <img src="https://res.cloudinary.com/umi/image/upload/v1536738450/app/default-images/default-profile.svg">
         </div>
 
-        <div class="form-group">
-          <div class="col-3">
-            <label class="form-label" for="phone">{{ "COMMON.PHONE" | translate }}</label>
-          </div>
-          <div class="col-9">
-            <input class="form-input" id="phone" name="phone" formControlName="phone" type="tel"
-                   placeholder="+33 4 05 06 07 08">
-          </div>
+        <!-- Name -->
+        <h5>{{ name }}</h5>
+
+        <!-- Job -->
+        <h6>{{ jobTitle }}</h6>
+
+        <!-- hr -->
+        <hr class="hero-hr">
+
+        <!-- Links -->
+        <ul class="user-actions">
+          <li (click)="changePassword($event)">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</li>
+          <li (click)="onDelete($event)">{{ 'MY_ACCOUNT.DELETE' | translate }}</li>
+          <li [routerLink]="'/logout'"><a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}</a></li>
+        </ul>
+
+      </div>
+      <!-- /Picture left section -->
+
+      <!-- Data right section -->
+      <div class="right-content">
+
+        <!-- Title -->
+        <div class="title text-center">
+          <h6>{{ 'MY_ACCOUNT.TITLE' | translate }}</h6>
+          <p>{{ 'MY_ACCOUNT.PARA' | translate }}</p>
         </div>
 
-        <div class="form-group">
-          <div class="col-3">
-            <label class="form-label" for="lang">{{ "COMMON.LANGUAGE" | translate }}</label>
+        <!-- Form -->
+        <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formData" class="details-form">
+
+          <!-- First name &  Last name -->
+          <div class="group">
+
+            <!-- First name -->
+            <div class="form-group">
+              <label class="form-label" for="firstName">{{ 'COMMON.FIRSTNAME' | translate }}</label>
+              <input
+                class="form-default"
+                formControlName="firstName"
+                id="firstName"
+                type="text"
+                placeholder="John">
+              <div class="form-error" *ngIf="formData.get('firstName').touched && formData.get('firstName').invalid">
+                <span *ngIf="formData.get('firstName').hasError('required')">{{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}</span>
+              </div>
+            </div>
+
+            <!-- Last name -->
+            <div class="form-group">
+              <label class="form-label" for="lastName">{{ 'COMMON.LASTNAME' | translate }}</label>
+              <input
+                class="form-default"
+                formControlName="lastName"
+                id="lastName"
+                type="text"
+                placeholder="Doe">
+              <div class="form-error" *ngIf="formData.get('lastName').touched && formData.get('lastName').invalid">
+                <span *ngIf="formData.get('lastName').hasError('required')">{{ 'COMMON.REQUIRED.LASTNAME' | translate }}</span>
+              </div>
+            </div>
+
           </div>
-          <div class="col-9">
+          <!-- /First name &  Last name -->
+
+          <!-- Company & Job -->
+          <div class="group">
+
+            <!-- Company -->
+            <div class="form-group">
+              <label class="form-label" for="companyName">{{ 'COMMON.COMPANY' | translate }}</label>
+              <input
+                class="form-default"
+                formControlName="companyName"
+                id="companyName"
+                type="text"
+                [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
+            </div>
+
+            <!-- Job -->
+            <div class="form-group">
+              <label class="form-label" for="jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
+              <input
+                class="form-default"
+                formControlName="jobTitle"
+                id="jobTitle"
+                type="text"
+                [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
+            </div>
+
+          </div>
+          <!-- /Company & Job -->
+
+          <!-- Email & Phone -->
+          <div class="group">
+
+            <!-- Email -->
+            <div class="form-group">
+              <label class="form-label" for="email">{{ 'COMMON.EMAIL' | translate }}</label>
+              <input
+                class="form-default"
+                formControlName="email"
+                id="email"
+                type="email"
+                placeholder="john@catco.com">
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+              <label class="form-label" for="phone">{{ 'COMMON.PHONE' | translate }}</label>
+              <input
+                class="form-default"
+                formControlName="phone"
+                id="phone"
+                type="tel"
+                placeholder="+33 55 90 56 876">
+            </div>
+
+          </div>
+          <!-- /Email & Phone -->
+
+          <!-- Language -->
+          <div class="form-group">
+            <label class="form-label" for="lang">{{ 'COMMON.LANGUAGE' | translate }}</label>
             <select class="form-select" id="lang" name="lang" formControlName="language">
               <option value="en">{{ 'COMMON.LANG.EN' | translate }}</option>
               <option value="fr">{{ 'COMMON.LANG.FR' | translate }}</option>
             </select>
           </div>
-        </div>
+          <!-- /Language -->
 
-        <div class="form-group">
-          <div class="col-3">
-            <label class="form-label">{{ 'MY_ACCOUNT.SECTORS' | translate }}</label>
-          </div>
-          <div class="col-9">
-            <div class="input-group">
-              <app-input-list (update)="addSector($event)"
-                              [config]="{
-                                placeholder: ('MY_ACCOUNT.SECTORS' | translate),
-                                initialData: formData.get('sectors').value
-                              }">
-              </app-input-list>
+          <!-- Sector & Technology -->
+          <div class="group">
+
+            <!-- Business -->
+            <div class="form-group">
+              <label class="form-label">{{ 'COMMON.ACTIVITY_FIELDS' | translate }}</label>
+              <div class="input">
+                <app-input-list
+                  (update)="addSector($event)"
+                  [config]="{ placeholder: ('COMMON.ACTIVITY_FIELDS_PLACEHOLDER' | translate), initialData: formData.get('sectors').value }">
+                </app-input-list>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="form-group">
-          <div class="col-3">
-            <label class="form-label">{{ 'MY_ACCOUNT.TECHNOLOGIES' | translate }}</label>
-          </div>
-          <div class="col-9">
-            <div class="input-group">
-              <app-input-list (update)="addTechnology($event)"
-                              [config]="{
-                                placeholder: ('MY_ACCOUNT.TECHNOLOGIES' | translate),
-                                initialData: formData.get('technologies').value
-                              }">
-              </app-input-list>
+            <!-- Technologies -->
+            <div class="form-group">
+              <label class="form-label">{{ 'COMMON.TECHNOLOGIES' | translate }}</label>
+              <div class="input">
+                <app-input-list
+                  (update)="addTechnology($event)"
+                  [config]="{ placeholder: ('COMMON.TECHNOLOGIES_PLACEHOLDER' | translate), initialData: formData.get('technologies').value }">
+                </app-input-list>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="text-center">
-            <button type="submit" class="btn btn-xxl btn-primary centered tooltip-top" [disabled]="formData.invalid">{{ 'COMMON.SAVE' | translate }}</button>
-            <p>
-              <br>
-              <a (click)="changePassword($event)" class="c-hand gtm-change-password">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</a> -
-              <a (click)="(accountDeletionAsked = true) && $event.preventDefault()" class="c-hand text-error gtm-delete-account">{{ 'MY_ACCOUNT.DELETE' | translate }}</a> -
-              <a [routerLink]="'/logout'" class="gtm-disconnect">{{ 'COMMON.LOG_OUT' | translate }}&nbsp;<i class="fas fa-sign-out-alt"></i></a>
-            </p>
-        </div>
-      </form>
+          </div>
+          <!-- /Sector & Technology -->
+
+          <!-- Save button -->
+          <div class="save text-center">
+            <button class="btn btn-primary" type="submit" [disabled]="formData.invalid">{{ 'COMMON.SAVE' | translate }}</button>
+          </div>
+          <!-- /Save button -->
+
+        </form>
+        <!-- /Form -->
+
+      </div>
+      <!-- /Data right section -->
 
     </div>
   </div>
-</div>
+</section>
 
 
 <!-- MODAL : Are you sure you want to delete your account ? -->
 <div class="modal" [ngClass]="{'active': accountDeletionAsked}">
-  <div class="modal-overlay" (click)="(accountDeletionAsked = false) && $event.preventDefault()"></div>
+  <div class="modal-overlay" (click)="closeModal($event)"></div>
   <div class="modal-container">
     <div class="modal-header">
-      <button class="btn btn-clear float-right" (click)="(accountDeletionAsked = false) && $event.preventDefault()"></button>
-      <div class="modal-title h5">{{ 'MY_ACCOUNT.DELETE_MODAL.TITLE' | translate }}</div>
+      <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
+      <div class="modal-title">{{ 'MY_ACCOUNT.DELETE_MODAL.BOARD_TITLE' | translate }}</div>
     </div>
     <div class="modal-body">
-      <div class="content">{{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}</div>
+      <div class="content">
+        <span>{{ 'MY_ACCOUNT.DELETE_MODAL.TITLE' | translate }}</span>
+        <br><br>
+        <span>{{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}</span>
+      </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-link" (click)="(accountDeletionAsked = false); deleteAccount($event)">
-        {{ 'COMMON.DELETE' | translate }}
-      </button>
-      <button class="btn btn-primary" (click)="(accountDeletionAsked = false); $event.preventDefault()">
-        {{ 'COMMON.CANCEL' | translate }}
-      </button>
+      <button class="btn ghost-edit btn-sm" (click)="closeModal($event)">{{ 'COMMON.CANCEL' | translate }}</button>
+      <button class="btn btn-primary btn-sm" (click)="deleteAccount($event)">{{ 'COMMON.SUBMIT' | translate }}</button>
     </div>
   </div>
 </div>
+
+
