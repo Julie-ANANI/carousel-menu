@@ -6,7 +6,7 @@ export const MY_ACCOUNT = {
 
   'CHANGE_PASSWORD': 'Change password',
 
-  'DELETE': 'Close account',
+  'DELETE': 'Delete my account',
 
   'DELETE_MODAL': {
     'BOARD_TITLE': 'Delete Board',

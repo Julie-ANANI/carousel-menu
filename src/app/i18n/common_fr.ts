@@ -150,7 +150,11 @@ export const COMMON = {
   },
 
   'USERS': 'Utilisateurs',
+
+  'AMBASSADOR': 'Ambassadeur',
+
   'PROFESSIONALS': 'Professionnels',
+
   'PROFESSIONAL': {
     'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
     'PITCH-DELETE-ALL' : 'Êtes-vous sûr de vouloir supprimer tous les professionnels',

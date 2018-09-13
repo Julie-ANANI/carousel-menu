@@ -7,6 +7,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import 'rxjs/add/operator/filter';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 
 @Component({
   selector: 'app-client-my-account',
@@ -19,6 +20,9 @@ export class ClientMyAccountComponent implements OnInit {
   name: string;
   jobTitle: string;
   accountDeletionAsked = false;
+  userProvider: string;
+  countriesSuggestion: Array<string> = [];
+  displayCountrySuggestion = false;
 
   // TODO : profile picture, reset password, description, location
 
@@ -27,7 +31,8 @@ export class ClientMyAccountComponent implements OnInit {
               private authService: AuthService,
               private formBuilder: FormBuilder,
               private router: Router,
-              private translateTitleService: TranslateTitleService) {}
+              private translateTitleService: TranslateTitleService,
+              private autoCompleteService: AutocompleteService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('MY_ACCOUNT.TITLE');
@@ -43,6 +48,7 @@ export class ClientMyAccountComponent implements OnInit {
       companyName: [''],
       jobTitle: [''],
       phone: [''],
+      country: [''],
       sectors: [[]],
       technologies: [[]],
       language: ['', [Validators.required]]
@@ -51,13 +57,37 @@ export class ClientMyAccountComponent implements OnInit {
 
   private patchForm() {
     this.userService.getSelf().subscribe((response: User) => {
-      console.log(response);
       this._formData.patchValue(response);
       this.name = response.name;
       this.jobTitle = response.jobTitle;
+      this.userProvider = response.provider;
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
+  }
+
+  onSuggestCountries() {
+    this._formData.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
+      this.displayCountrySuggestion = true;
+      this.countriesSuggestion = [];
+      this.autoCompleteService.get({keyword: input, type: 'countries'}).subscribe(res => {
+        if (res.length === 0) {
+          this.displayCountrySuggestion = false;
+        } else {
+          res.forEach((items) => {
+            const valueIndex = this.countriesSuggestion.indexOf(items.name);
+            if (valueIndex === -1) { // if not exist then push into the array.
+              this.countriesSuggestion.push(items.name);
+            }
+          })
+        }
+      });
+    });
+  }
+
+  onValueSelect(value: string) {
+    this._formData.get('country').setValue(value);
+    this.displayCountrySuggestion = false;
   }
 
   changePassword(event: Event) {
@@ -77,6 +107,7 @@ export class ClientMyAccountComponent implements OnInit {
           this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
           this.name = response.name;
           this.jobTitle = response.jobTitle;
+          this.userProvider = response.provider;
           this._formData.patchValue(response);
         },
         error => {

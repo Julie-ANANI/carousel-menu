@@ -4,18 +4,28 @@
 
   .profile-wrapper {
     display: flex;
-    justify-content: space-between;
 
     .left-content {
-      padding-left: 3.15rem;
       padding-right: 3.15rem;
       padding-top: 1.57rem;
+      min-width: 35%;
 
       .profile-pic {
         height: 120px;
         width: 120px;
         margin-left: auto;
         margin-right: auto;
+        background-color: #E0E0E0;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        h1 {
+          font-size: 63px;
+          margin-bottom: 0;
+        }
+
       }
 
       h5 {
@@ -28,6 +38,10 @@
         font-weight: normal;
         font-size: .875rem;
         font-style: italic;
+      }
+
+      .user-label {
+        padding-bottom: 1.57rem;
       }
 
       .hero-hr {
@@ -65,7 +79,6 @@
     .right-content {
       border-left: 1px solid $border-color;
       padding-left: 3.15rem;
-      padding-right: 3.15rem;
 
       .title {
         padding-top: .9375rem;
@@ -92,12 +105,14 @@
         .group {
           display: inline-flex;
           width: 100%;
+          position: relative;
         }
 
         .form-group {
           padding-left: .9375rem;
           padding-right: .9375rem;
           width: 100%;
+          position: relative;
         }
 
         .form-default:disabled {
@@ -112,6 +127,13 @@
           padding-top: 1.75rem;
         }
 
+      }
+
+      .suggestion {
+        position: absolute;
+        max-height: 300px;
+        left: .9375rem;
+        right: .9375rem;
       }
 
     }
@@ -165,7 +187,7 @@
   #account-page-wrapper {
 
     .left-content {
-      min-width: 25%;
+      min-width: 25% !important;
     }
 
     .details-form {

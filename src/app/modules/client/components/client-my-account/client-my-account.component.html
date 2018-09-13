@@ -7,7 +7,7 @@
 
         <!-- Profile pics -->
         <div class="profile-pic">
-          <img src="https://res.cloudinary.com/umi/image/upload/v1536738450/app/default-images/default-profile.svg">
+          <h1>{{ formData.get('firstName').value | slice:0:1 }}{{ formData.get('lastName').value | slice:0:1 }}</h1>
         </div>
 
         <!-- Name -->
@@ -16,6 +16,11 @@
         <!-- Job -->
         <h6>{{ jobTitle }}</h6>
 
+        <!-- Label Ambassador & linkedIn -->
+        <p class="user-label" *ngIf="userProvider === 'hubspot'"><span class="label-draft">{{ 'COMMON.AMBASSADOR' | translate }}</span></p>
+        <p class="user-label" *ngIf="userProvider === 'external'"><span  class="label-editing">LinkedIn</span></p>
+        <!-- /Label Ambassador & linkedIn -->
+
         <!-- hr -->
         <hr class="hero-hr">
 
@@ -23,7 +28,7 @@
         <ul class="user-actions">
           <li (click)="changePassword($event)">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</li>
           <li (click)="onDelete($event)">{{ 'MY_ACCOUNT.DELETE' | translate }}</li>
-          <li [routerLink]="'/logout'"><a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}</a></li>
+          <a [routerLink]="'/logout'"><li>{{ 'COMMON.LOG_OUT' | translate }}</li></a>
         </ul>
 
       </div>
@@ -75,35 +80,7 @@
           </div>
           <!-- /First name &  Last name -->
 
-          <!-- Company & Job -->
-          <div class="group">
-
-            <!-- Company -->
-            <div class="form-group">
-              <label class="form-label" for="companyName">{{ 'COMMON.COMPANY' | translate }}</label>
-              <input
-                class="form-default"
-                formControlName="companyName"
-                id="companyName"
-                type="text"
-                [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
-            </div>
-
-            <!-- Job -->
-            <div class="form-group">
-              <label class="form-label" for="jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
-              <input
-                class="form-default"
-                formControlName="jobTitle"
-                id="jobTitle"
-                type="text"
-                [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
-            </div>
-
-          </div>
-          <!-- /Company & Job -->
-
-          <!-- Email & Phone -->
+          <!-- Email & Company -->
           <div class="group">
 
             <!-- Email -->
@@ -117,6 +94,61 @@
                 placeholder="john@catco.com">
             </div>
 
+            <!-- Company -->
+            <div class="form-group">
+              <label class="form-label" for="companyName">{{ 'COMMON.COMPANY' | translate }}</label>
+              <input
+                class="form-default"
+                formControlName="companyName"
+                id="companyName"
+                type="text"
+                [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
+            </div>
+
+          </div>
+          <!-- /Email & Company -->
+
+          <!-- Job & Country -->
+          <div class="group">
+
+            <!-- Job -->
+            <div class="form-group">
+              <label class="form-label" for="jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
+              <input
+                class="form-default"
+                formControlName="jobTitle"
+                id="jobTitle"
+                type="text"
+                [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
+            </div>
+
+            <!-- Country -->
+            <div class="form-group">
+              <label class="form-label" for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
+              <input
+                class="form-default"
+                formControlName="country"
+                id="country"
+                type="text"
+                [attr.placeholder]="'COMMON.COUNTRY_PLACEHOLDER' | translate"
+                (click)="onSuggestCountries()"
+                autocomplete="off">
+              <ul
+                *ngIf="formData.get('country').value"
+                class="suggestion"
+                [ngStyle]="{ 'display': displayCountrySuggestion ? 'flex' : 'none' }">
+                <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onValueSelect(suggestion)">
+                  <a><span>{{ suggestion }}</span></a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+          <!-- /Job & Country -->
+
+          <!-- Phone & lang -->
+          <div class="group">
+
             <!-- Phone -->
             <div class="form-group">
               <label class="form-label" for="phone">{{ 'COMMON.PHONE' | translate }}</label>
@@ -128,18 +160,17 @@
                 placeholder="+33 55 90 56 876">
             </div>
 
-          </div>
-          <!-- /Email & Phone -->
+            <!-- Language -->
+            <div class="form-group">
+              <label class="form-label" for="lang">{{ 'COMMON.LANGUAGE' | translate }}</label>
+              <select class="form-select" id="lang" name="lang" formControlName="language">
+                <option value="en">{{ 'COMMON.LANG.EN' | translate }}</option>
+                <option value="fr">{{ 'COMMON.LANG.FR' | translate }}</option>
+              </select>
+            </div>
 
-          <!-- Language -->
-          <div class="form-group">
-            <label class="form-label" for="lang">{{ 'COMMON.LANGUAGE' | translate }}</label>
-            <select class="form-select" id="lang" name="lang" formControlName="language">
-              <option value="en">{{ 'COMMON.LANG.EN' | translate }}</option>
-              <option value="fr">{{ 'COMMON.LANG.FR' | translate }}</option>
-            </select>
           </div>
-          <!-- /Language -->
+          <!-- /Phone & lang -->
 
           <!-- Sector & Technology -->
           <div class="group">
