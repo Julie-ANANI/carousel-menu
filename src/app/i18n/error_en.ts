@@ -1,4 +1,4 @@
-export const ERROR = {  // TODO: repasser sur les trads des erreurs ! (traduit par Bastien en précipitation)
+export const ERROR = {
   'ERROR': 'Oups...',
   'SUCCESS': 'Success',
   'CANNOT_REACH': 'We are unable to reach the server at the moment. Please try again!',

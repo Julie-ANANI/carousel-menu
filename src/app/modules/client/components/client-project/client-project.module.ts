@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { PendingChangesGuard } from '../../../../pending-changes-guard.service';
 import { SharedSortModule } from '../../../shared/components/shared-sort/shared-sort.module';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
@@ -67,6 +68,9 @@ import {ProjectsListComponent} from './components/projects-list/projects-list.co
     PitchComponent,
     SurveyComponent,
     TargetingComponent
+  ],
+  providers: [
+    PendingChangesGuard
   ],
   exports: [
     ClientProjectComponent

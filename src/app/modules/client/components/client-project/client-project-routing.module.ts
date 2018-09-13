@@ -24,6 +24,7 @@ export const clientProjectRoutes: any = [
         children: [
           {
             path: 'setup', component: SetupProjectComponent,
+            // canDeactivate: [PendingChangesGuard], // TODO: uncomment
             children: [
               {
                 path: 'pitch', component: PitchComponent, canActivate: [AuthGuard], pathMatch: 'full'
@@ -35,7 +36,6 @@ export const clientProjectRoutes: any = [
                 path: 'targeting', component: TargetingComponent, canActivate: [AuthGuard], pathMatch: 'full'
               }
             ]
-            // canDeactivate: [PendingChangesGuard] //TODO: uncomment
           },
           {
             path: 'exploration', component: ExplorationProjectComponent, canActivate: [AuthGuard], pathMatch: 'full'

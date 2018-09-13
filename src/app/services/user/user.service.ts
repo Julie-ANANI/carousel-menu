@@ -7,8 +7,6 @@ import { User } from '../../models/user.model';
 @Injectable()
 export class UserService {
 
-  // private _selfUserSnapshot: any; // TODO
-
   constructor(private _http: Http) {}
 
   public getMyInnovations(config?: any): Observable<any> {

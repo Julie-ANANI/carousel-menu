@@ -2,6 +2,7 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { ComponentCanDeactivate } from '../../../../../../pending-changes-guard.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
 import { Subject } from 'rxjs/Subject';
@@ -16,7 +17,7 @@ const DEFAULT_TAB = 'targeting';
   styleUrls: ['setup.component.scss']
 })
 
-export class SetupProjectComponent implements OnInit {
+export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
 
   @Input() project: Innovation;
 
@@ -65,6 +66,10 @@ export class SetupProjectComponent implements OnInit {
       this.scrollOn = false;
     }
 
+  }
+
+  canDeactivate(): boolean {
+    return true;
   }
 
 

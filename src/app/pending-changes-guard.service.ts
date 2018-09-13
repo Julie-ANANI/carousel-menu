@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
 
 export interface ComponentCanDeactivate {
-  canDeactivate: () => boolean | Observable<boolean>;
+  canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
 }
 
 @Injectable()
@@ -13,14 +13,18 @@ export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate
   constructor (private _translateService: TranslateService) {}
 
   private _getMessage (): string {
-    return this._translateService.currentLang === 'fr'
-      ? 'ATTENTION : Certaines de vos modifications n\'ont pas été sauvegardées.' +
-      'Si vous quittez cette page, ces modifications seront perdues. Êtes-vous sûr(e) de vouloir quitter ?'
-      : 'WARNING: Some of your modifications are not saved. If you leave this page, these ' +
-      'changes will be lost. Are you sure you want to leave?';
+    switch (this._translateService.currentLang) {
+      case 'fr':
+        return 'ATTENTION : Certaines de vos modifications n\'ont pas été sauvegardées.' +
+          'Si vous quittez cette page, ces modifications seront perdues. Êtes-vous sûr(e) de vouloir quitter ?';
+      case 'en':
+      default:
+        return 'WARNING: Some of your modifications are not saved. If you leave this page, these ' +
+          'changes will be lost. Are you sure you want to leave?';
+    }
   }
 
-  canDeactivate(component: ComponentCanDeactivate): boolean | Observable<boolean> {
+  canDeactivate(component: ComponentCanDeactivate): Observable<boolean> | Promise<boolean> | boolean {
     // if there are no pending changes, just allow deactivation; else confirm first
     return component.canDeactivate() ?
       true :

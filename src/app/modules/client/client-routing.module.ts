@@ -10,6 +10,7 @@ import { clientProjectRoutes } from './components/client-project/client-project-
 /* Guards */
 import { AuthGuard } from '../../auth-guard.service';
 import { NonAuthGuard } from '../../non-auth-guard.service';
+import { PendingChangesGuard } from '../../pending-changes-guard.service';
 
 /* Components */
 import { ClientComponent } from './client.component';
@@ -108,6 +109,9 @@ const clientRoutes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(clientRoutes)
+  ],
+  providers: [
+    PendingChangesGuard
   ],
   exports: [
     RouterModule
