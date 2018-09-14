@@ -7,7 +7,12 @@
 
         <!-- Profile pics -->
         <div class="profile-pic">
-          <h1>{{ formData.get('firstName').value | slice:0:1 }}{{ formData.get('lastName').value | slice:0:1 }}</h1>
+            <div *ngIf="hasProfilePic()">
+                <img [src]="pictureUrl">
+            </div>
+            <div *ngIf="!hasProfilePic()">
+                <h1>{{ formData.get('firstName').value | slice:0:1 }}{{ formData.get('lastName').value | slice:0:1 }}</h1>
+            </div>
         </div>
 
         <!-- Name -->

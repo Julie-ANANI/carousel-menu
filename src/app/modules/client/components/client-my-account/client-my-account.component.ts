@@ -23,6 +23,7 @@ export class ClientMyAccountComponent implements OnInit {
   userProvider: string;
   countriesSuggestion: Array<string> = [];
   displayCountrySuggestion = false;
+  profilePicture = "";
 
   // TODO : profile picture, reset password, description, location
 
@@ -61,6 +62,7 @@ export class ClientMyAccountComponent implements OnInit {
       this.name = response.name;
       this.jobTitle = response.jobTitle;
       this.userProvider = response.provider;
+      this.profilePicture = response.profilePic.url;
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
@@ -149,6 +151,14 @@ export class ClientMyAccountComponent implements OnInit {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
 
+  }
+
+  public hasProfilePic(): boolean {
+    return !!this.profilePicture && this.profilePicture !== "";
+  }
+
+  get pictureUrl(): string {
+    return this.profilePicture;
   }
 
   set formData(value: FormGroup) {

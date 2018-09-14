@@ -10,7 +10,7 @@ export class User extends Model {
   private _emailVerified: boolean;
   private _phone: string;
   private _password: string;
-  private _profilePicture: string;
+  private _profilePic: any;
   private _domain: string;
   private _isOperator: boolean;
   private _roles: string;
@@ -102,14 +102,14 @@ export class User extends Model {
     return this._password;
   }
 
-  set profilePicture(profilePicture: string) {
+  set profilePic(profilePicture: any) {
     if (profilePicture) {
-      this._profilePicture = profilePicture;
+      this._profilePic = profilePicture;
     }
   }
 
-  get profilePicture(): string {
-    return this._profilePicture;
+  get profilePic(): any {
+    return this._profilePic;
   }
 
   set domain(domain: string) {
