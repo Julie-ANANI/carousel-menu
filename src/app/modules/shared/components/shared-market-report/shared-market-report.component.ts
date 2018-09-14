@@ -74,6 +74,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   // égal à la réponse à afficher si le modal est ouvert
   private _modalAnswer: Answer;
 
+  private _showSynthesisModal = false;
+
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
               private translateNotificationsService: TranslateNotificationsService,
@@ -358,6 +360,26 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     window.print();
   }
 
+  public shareSynthesis(event: Event): void {
+    event.preventDefault();
+    this._showSynthesisModal = true;
+  }
+
+  public closeSynthesisModal(): void {
+    event.preventDefault();
+    this._showSynthesisModal = false;
+  }
+
+  public shareNewSynthesisVersion(event: Event, name: string): void {
+    event.preventDefault();
+    const data = {
+      name: name,
+      answers: this._filteredAnswers.map((answer) => answer._id)
+    };
+    console.log(data);
+    this.closeSynthesisModal();
+  }
+
   getSrc(): string {
     let src = '';
     const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
@@ -486,6 +508,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   get endDate(): Date {
     return this._endDate;
+  }
+
+  get showSynthesisModal(): boolean {
+    return this._showSynthesisModal;
   }
 
 

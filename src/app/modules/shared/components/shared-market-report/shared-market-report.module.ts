@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ChartsModule } from 'ng2-charts';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
+import { ModalModule } from '../shared-modal/modal.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { BluesquareComponent } from './components/bluesquare/bluesquare.component';
@@ -29,12 +31,14 @@ import { ProgressBarModule } from '../../../input/component/progress-bar/progres
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     ChartsModule,
     PipeModule,
     SharedTextZoneModule,
     SharedWorldmapModule,
     TranslateModule.forChild(),
     NgxPageScrollModule,
+    ModalModule,
     SidebarModule,
     InputModule,
     RouterModule,
