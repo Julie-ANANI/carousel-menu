@@ -105,6 +105,12 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public shareSynthesis(innovationId: string, data: { name: string, answers: Array<string>}): Observable<any> {
+    return this._http.post('/innovation/' + innovationId + '/marketReport', data)
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   public updatePreset(innovationId: string, data: any): Observable<any> {
     return this._http.put('/innovation/' + innovationId + '/updatePreset', {preset: data})
       .map((res: Response) => res.json())

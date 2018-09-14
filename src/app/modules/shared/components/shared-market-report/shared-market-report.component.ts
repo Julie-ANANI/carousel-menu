@@ -376,7 +376,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       name: name,
       answers: this._filteredAnswers.map((answer) => answer._id)
     };
-    console.log(data);
+    this.innovationService.shareSynthesis(this._innoid, data).first().subscribe((results) => {
+      console.log(results);
+    }, (error) => {
+      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+    });
     this.closeSynthesisModal();
   }
 
