@@ -61,34 +61,55 @@ export const COMMON = {
   'EXCLUDE-EMAILS': 'Exclude emails',
   'EXCLUDE-DOMAINS': 'Exclude domains',
   'EXCLUDE-COUNTRIES': 'Exclude countries',
+
   'NEVER': 'Never',
+
   'COMMENT': 'Comment',
 
   'NAME': 'Name',
   'FIRSTNAME': 'First Name',
   'LASTNAME': 'Last Name',
+
   'EMAIL': 'E-mail',
   'PHONE': 'Phone Number',
+
   'ACTIVITY_FIELDS': 'Activity Fields',
   'ACTIVITY_FIELDS_PLACEHOLDER': 'Enter your activity field',
+
   'TECHNOLOGIES': 'Technologies',
   'TECHNOLOGIES_PLACEHOLDER': 'Enter the technology',
+
   'PASSWORD': 'Password',
+  'OLD_PASSWORD': 'Old Password',
+  'NEW_PASSWORD': 'New Password',
+  'CONFIRM_PASSWORD': 'Confirm Password',
+
   'PASSWORD_PLACEHOLDER': 'Enter your password',
+  'OLD_PASSWORD_PLACEHOLDER': 'Enter your old password',
+  'NEW_PASSWORD_PLACEHOLDER': 'Enter your new password: 8+ characters',
+  'CONFIRM_PASSWORD_PLACEHOLDER': 'Enter the confirmation password',
   'PASSWORD_SIGNUP_PLACEHOLDER': '8+ characters',
+
   'PASSWORD_CONFIRM': 'Password confirmation',
+
   'COMPANY': 'Company Name',
   'COMPANY_PLACEHOLDER': 'Enter your company name',
+
   'JOBTITLE': 'Job Title',
   'JOBTITLE_PLACEHOLDER': 'Enter your job title',
+
   'TYPE': 'Type',
+
   'DOMAIN': 'Domain',
+
   'COUNTRY': 'Country',
   'COUNTRY_PLACEHOLDER': 'Enter your country',
+
   'TERMS': {
     'A': 'By clicking "Continue" I agree to',
     'B': 'terms and conditions of use.',
   },
+
   'PROFILE_URL': 'Profile URL',
   'TOP_PROFILE': 'Top profile',
 
@@ -98,6 +119,9 @@ export const COMMON = {
     'EMAIL': 'Email address is required.',
     'PHONE': 'Phone is required.',
     'PASSWORD': 'Password is required.',
+    'OLD_PASSWORD': 'Old password is required.',
+    'NEW_PASSWORD': 'New password is required.',
+    'CONFIRM_PASSWORD': 'Confirm password is required.',
     'COMPANY': 'Company is required.',
     'JOBTITLE': 'Job title is required.',
     'MESSAGE': 'All fields are mandatory.',

@@ -41,9 +41,7 @@ export class LoginPageComponent implements OnInit {
       const user = new User(this._formData.value);
       user.domain = environment.domain;
 
-      this._authService.login(user)
-        .first()
-        .subscribe(() => {
+      this._authService.login(user).first().subscribe(() => {
             if (this._authService.isAuthenticated) {
               // Get the redirect URL from our auth service
               // If no redirect has been set, use the default

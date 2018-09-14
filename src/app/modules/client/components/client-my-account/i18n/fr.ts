@@ -14,5 +14,7 @@ export const MY_ACCOUNT = {
     'CONTENT': 'C\'est triste de te voir nous quitter. Toutes vos données personnelles seront supprimées. Quoi qu\'il en soit, si vous voulez revenir, vous êtes les bienvenus !'
   },
 
-  'JOB_TITLE_EXAMPLE': 'Ingénieur en  aérodynamique'
+  'JOB_TITLE_EXAMPLE': 'Ingénieur en  aérodynamique',
+
+  'CHANGE': 'Changer de mot de passe',
 };

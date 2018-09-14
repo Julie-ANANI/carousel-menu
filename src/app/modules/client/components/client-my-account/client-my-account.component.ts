@@ -8,6 +8,8 @@ import 'rxjs/add/operator/filter';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
+import { Template } from '../../../sidebar/interfaces/template';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-client-my-account',
@@ -17,15 +19,24 @@ import { AutocompleteService } from '../../../../services/autocomplete/autocompl
 export class ClientMyAccountComponent implements OnInit {
 
   private _formData: FormGroup;
-  name: string;
-  jobTitle: string;
-  accountDeletionAsked = false;
-  userProvider: string;
-  countriesSuggestion: Array<string> = [];
-  displayCountrySuggestion = false;
-  profilePicture = "";
 
-  // TODO : profile picture, reset password, description, location
+  private _name: string;
+  private _jobTitle: string;
+
+  private _accountDeletionAsked = false;
+
+  private _userProvider: string;
+
+  private _countriesSuggestion: Array<string> = [];
+  private _displayCountrySuggestion = false;
+
+  private _profilePicture = '';
+
+  private _sidebarTemplateValue: Template = {};
+
+  private _sidebarState = new Subject<string>();
+
+  // TODO : reset password, description, location
 
   constructor(private userService: UserService,
               private translateNotificationsService: TranslateNotificationsService,
@@ -59,10 +70,10 @@ export class ClientMyAccountComponent implements OnInit {
   private patchForm() {
     this.userService.getSelf().subscribe((response: User) => {
       this._formData.patchValue(response);
-      this.name = response.name;
-      this.jobTitle = response.jobTitle;
-      this.userProvider = response.provider;
-      this.profilePicture = response.profilePic.url;
+      this._name = response.name;
+      this._jobTitle = response.jobTitle;
+      this._userProvider = response.provider;
+      this._profilePicture = response.profilePic.url;
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
@@ -70,16 +81,16 @@ export class ClientMyAccountComponent implements OnInit {
 
   onSuggestCountries() {
     this._formData.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
-      this.displayCountrySuggestion = true;
-      this.countriesSuggestion = [];
+      this._displayCountrySuggestion = true;
+      this._countriesSuggestion = [];
       this.autoCompleteService.get({keyword: input, type: 'countries'}).subscribe(res => {
         if (res.length === 0) {
-          this.displayCountrySuggestion = false;
+          this._displayCountrySuggestion = false;
         } else {
           res.forEach((items) => {
-            const valueIndex = this.countriesSuggestion.indexOf(items.name);
+            const valueIndex = this._countriesSuggestion.indexOf(items.name);
             if (valueIndex === -1) { // if not exist then push into the array.
-              this.countriesSuggestion.push(items.name);
+              this._countriesSuggestion.push(items.name);
             }
           })
         }
@@ -89,16 +100,17 @@ export class ClientMyAccountComponent implements OnInit {
 
   onValueSelect(value: string) {
     this._formData.get('country').setValue(value);
-    this.displayCountrySuggestion = false;
+    this._displayCountrySuggestion = false;
   }
 
-  changePassword(event: Event) {
+  showPasswordSidebar(event: Event) {
     event.preventDefault();
-    this.userService.changePassword()
-      .first()
-      .subscribe(res => {
-        this.router.navigate(['/reset-password/' + res.token])
-      });
+
+    this._sidebarTemplateValue = {
+      animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'MY_ACCOUNT.CHANGE'
+    };
+
   }
 
   onSubmit() {
@@ -107,9 +119,10 @@ export class ClientMyAccountComponent implements OnInit {
       this.userService.update(user).first().subscribe(
         (response: User) => {
           this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
-          this.name = response.name;
-          this.jobTitle = response.jobTitle;
-          this.userProvider = response.provider;
+          this._name = response.name;
+          this._jobTitle = response.jobTitle;
+          this._userProvider = response.provider;
+          this._profilePicture = response.profilePic.url;
           this._formData.patchValue(response);
         },
         error => {
@@ -131,12 +144,12 @@ export class ClientMyAccountComponent implements OnInit {
 
   onDelete(event: Event) {
     event.preventDefault();
-    this.accountDeletionAsked = true;
+    this._accountDeletionAsked = true;
   }
 
   closeModal(event: Event) {
     event.preventDefault();
-    this.accountDeletionAsked = false;
+    this._accountDeletionAsked = false;
   }
 
   deleteAccount (event: Event) {
@@ -153,12 +166,26 @@ export class ClientMyAccountComponent implements OnInit {
 
   }
 
-  public hasProfilePic(): boolean {
-    return !!this.profilePicture && this.profilePicture !== "";
+  hasProfilePic(): boolean {
+    return !!this._profilePicture && this._profilePicture !== '';
   }
 
-  get pictureUrl(): string {
-    return this.profilePicture;
+  changePassword(value: FormGroup) {
+
+    /*this.userService.changePassword()
+      .first()
+      .subscribe(res => {
+        this.router.navigate(['/reset-password/' + res.token])
+      });*/
+  }
+
+  closeSidebar(value: string) {
+    this._sidebarTemplateValue.animate_state = value;
+    this._sidebarState.next('inactive');
+  }
+
+  get profilePicture(): string {
+    return this._profilePicture;
   }
 
   set formData(value: FormGroup) {
@@ -167,6 +194,42 @@ export class ClientMyAccountComponent implements OnInit {
 
   get formData(): FormGroup {
     return this._formData;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get jobTitle(): string {
+    return this._jobTitle;
+  }
+
+  get accountDeletionAsked(): boolean {
+    return this._accountDeletionAsked;
+  }
+
+  get userProvider(): string {
+    return this._userProvider;
+  }
+
+  get countriesSuggestion(): Array<string> {
+    return this._countriesSuggestion;
+  }
+
+  get displayCountrySuggestion(): boolean {
+    return this._displayCountrySuggestion;
+  }
+
+  get sidebarTemplateValue(): Template {
+    return this._sidebarTemplateValue;
+  }
+
+  get sidebarState(): Subject<string> {
+    return this._sidebarState;
+  }
+
+  set sidebarState(value: Subject<string>) {
+    this._sidebarState = value;
   }
 
 }

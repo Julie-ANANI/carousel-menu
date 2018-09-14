@@ -66,28 +66,47 @@ export const COMMON = {
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
   'LASTNAME': 'Nom',
+
   'EMAIL': 'E-mail',
   'PHONE': 'Téléphone',
+
   'ACTIVITY_FIELDS': 'Champs d\'activité',
   'ACTIVITY_FIELDS_PLACEHOLDER': 'Entrez votre secteur d\'activité',
+
   'TECHNOLOGIES': 'Technologies',
   'TECHNOLOGIES_PLACEHOLDER': 'Entrez la technologie',
+
   'PASSWORD': 'Mot de passe',
+  'OLD_PASSWORD': 'Ancien mot de passe',
+  'NEW_PASSWORD': 'Nouveau mot de passe',
+  'CONFIRM_PASSWORD': 'Confirmez le mot de passe',
+
   'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',
+  'OLD_PASSWORD_PLACEHOLDER': 'Entrez votre ancien mot de passe',
+  'NEW_PASSWORD_PLACEHOLDER': 'Entrez votre nouveau mot de passe: 8+ caractères',
+  'CONFIRM_PASSWORD_PLACEHOLDER': 'Entrez le mot de passe de confirmation',
   'PASSWORD_SIGNUP_PLACEHOLDER': '8+ caractères',
+
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
+
   'COMPANY': 'Nom de l\'entreprise',
   'COMPANY_PLACEHOLDER': 'Entrez le nom de votre entreprise',
+
   'JOBTITLE': 'Poste',
   'JOBTITLE_PLACEHOLDER': 'Entrez votre titre de poste',
+
   'TYPE': 'Type',
+
   'DOMAIN': 'Domaine',
+
   'COUNTRY': 'Pays',
   'COUNTRY_PLACEHOLDER': 'Entrez votre pays',
+
   'TERMS': {
     'A': 'En cliquant sur "Continuer", j\'accepte',
     'B': 'termes et conditions d\'utilisation.',
   },
+
   'PROFILE_URL': 'Profile URL',
   'TOP_PROFILE': 'Profil haut',
 
@@ -97,6 +116,9 @@ export const COMMON = {
     'EMAIL': 'L\'adresse email est requise.',
     'PHONE': 'Le numéro de téléphone est requis.',
     'PASSWORD': 'Le mot de passe e@st requis.',
+    'OLD_PASSWORD': 'Un ancien mot de passe est requis.',
+    'NEW_PASSWORD': 'Un nouveau mot de passe est requis.',
+    'CONFIRM_PASSWORD': 'Confirmer le mot de passe est requis.',
     'COMPANY': 'Le nom de l\'entreprise est requis.',
     'JOBTITLE': 'Le poste est requis.',
     'MESSAGE': 'Tous les champs sont obligatoires',
