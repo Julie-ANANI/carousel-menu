@@ -64,23 +64,6 @@ export class ClientProjectComponent implements OnInit {
     this._sidebarState.next(this._sidebarTemplateValue.animate_state);
   }
 
-  /*@HostListener('window:scroll', [])
-  onWindowScroll() {
-    this._scrollButton = (this.getCurrentScrollTop() > 10);
-  }
-
-  getCurrentScrollTop() {
-    if (typeof window.scrollY !== 'undefined' && window.scrollY >= 0) {
-      return window.scrollY;
-    }
-    return 0;
-  };
-
-  scrollToTop(event: Event) {
-    event.preventDefault();
-    window.scrollTo(0, 0);
-  }*/
-
   get project() {
     return this._project;
   }

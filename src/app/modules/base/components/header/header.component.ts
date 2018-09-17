@@ -15,14 +15,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private _displayMenuOptions: boolean; // on small devices if true then display menu options.
   private _displayNavbar: boolean; // if true that means user is authenticated so display navbar.
 
-  constructor(private authService1: AuthService,
-              private location1: Location) {}
+  constructor(private _authService: AuthService,
+              private _location: Location) {}
 
   ngOnInit() {
-    this._displayNavbar = this.authService1.isAuthenticated;
+    this._displayNavbar = this._authService.isAuthenticated;
     this._displayMenuOptions = false;
     this._backOfficeValue = false;
-    this._backOfficeValue = this.location1.path().slice(0, 6) === '/admin';
+    this._backOfficeValue = this._location.path().slice(0, 6) === '/admin';
   }
 
   public getLogo(): string {
@@ -31,11 +31,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public canShow(reqLevel: number): boolean {
-    return reqLevel && ( this.authService1.adminLevel & reqLevel) === reqLevel;
+    return reqLevel && ( this._authService.adminLevel & reqLevel) === reqLevel;
   }
 
   get authService(): AuthService {
-    return this.authService1;
+    return this._authService;
   }
 
   // to toggle the back office value.

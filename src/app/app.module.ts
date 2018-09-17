@@ -4,7 +4,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { HttpModule, XHRBackend, RequestOptions } from '@angular/http';
 import { Http } from './services/http';
 import { httpFactory } from './factories/http.factory';
-import { CookieService, CookieOptions } from 'angular2-cookie/core';
+import { CookieModule, CookieService } from 'ngx-cookie';
 import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Observable';
@@ -66,18 +66,14 @@ import { PresetResolver } from './resolvers/preset.resolver';
     }),
     ChartsModule,
     Ng2AutoCompleteModule,
-    Angular2FontawesomeModule
+    Angular2FontawesomeModule,
+    CookieModule.forRoot()
   ],
   declarations: [
     AppComponent,
   ],
   providers: [
     Title,
-    CookieService,
-    {
-      provide: CookieOptions,
-      useValue: {}
-    },
     UserService,
     InnovationService,
     CampaignService,

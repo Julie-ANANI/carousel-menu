@@ -62,7 +62,7 @@ export class ClientMyAccountComponent implements OnInit {
       this.name = response.name;
       this.jobTitle = response.jobTitle;
       this.userProvider = response.provider;
-      this.profilePicture = response.profilePic.url;
+      this.profilePicture = response.profilePic ? response.profilePic.url || "" : "";
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });

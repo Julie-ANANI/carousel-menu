@@ -12,22 +12,22 @@ import { AuthService } from '../../../../services/auth/auth.service';
 
 export class LogoutPageComponent implements OnInit {
 
-  constructor(private authService: AuthService,
-              private location1: Location,
-              private translateTitleService: TranslateTitleService,
-              private translateNotificationsService: TranslateNotificationsService) {}
+  constructor(private _authService: AuthService,
+              private _location: Location,
+              private _translateTitleService: TranslateTitleService,
+              private _translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit(): void {
-    this.translateTitleService.setTitle('LOG_OUT.TITLE');
+    this._translateTitleService.setTitle('LOG_OUT.TITLE');
 
-    this.authService.logout().first().subscribe(
+    this._authService.logout().first().subscribe(
         _ => {
-          this.translateNotificationsService.success('ERROR.LOGIN.LOGOUT', 'ERROR.LOGIN.LOGOUT_TEXT');
-          this.location1.back();
+          this._translateNotificationsService.success('ERROR.LOGIN.LOGOUT', 'ERROR.LOGIN.LOGOUT_TEXT');
+          this._location.back();
         },
         _ => {
-          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
-          this.location1.back();
+          this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
+          this._location.back();
         });
   }
 

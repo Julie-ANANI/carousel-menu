@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from 'angular2-cookie/core';
+import { CookieService, CookieOptions } from 'ngx-cookie';
 import { Http, Response } from '../http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { User } from '../../models/user.model';
 import { urlRegEx } from '../../utils/regex';
+import { environment } from '../../../environments/environment';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthService {
@@ -20,8 +22,16 @@ export class AuthService {
 
   private _user: User;
 
+  private _cookieOptions: CookieOptions = {
+    expires: new Date(Date.now()+environment.cookieTime ),
+    secure: environment.secureCookie
+  };
+
+  private _cookieObserver: any = null;
+
   constructor(private _http: Http,
-              private _cookieService: CookieService) {
+              private _cookieService: CookieService,
+              private _router: Router) {
   /**
      Les cookies <hasBeenAuthenticated> et <hasBeenAdmin> sont utiles quand l'application essaye d'accéder à une route
      sans que la session ait été récupérée du serveur via la fonction <initializeSession()>. Ceci évite que si l'on
@@ -33,6 +43,21 @@ export class AuthService {
     this._setConfirmedTo(this._cookieService.get('hasBeenConfirmed') === 'true');
   }
 
+  public startCookieObservator() {
+    if(this._cookieObserver === null) {
+      this._cookieObserver = setInterval(()=>{
+        if(!this._cookieService.get('hasBeenAuthenticated')) {
+          //this._cookieService.get('user')
+          this.logout().first().subscribe(() => {
+            this._router.navigate(['/logout']);
+          }, err=>{
+            console.error(err)
+          });
+        }
+      }, 30000);
+    }
+  }
+
   public login(user: User): Observable<User> {
     return this._http.post('/auth/login', user.toJSON())
       .map((res: Response) => {
@@ -41,6 +66,9 @@ export class AuthService {
         this._setAdminTo(response.adminLevel);
         this._setConfirmedTo(response.isConfirmed);
         this._user = response;
+        if(response.isAuthenticated) {
+          this.startCookieObservator();
+        }
         return response;
       })
       .catch((error: Response) => Observable.throw(error.json()));
@@ -64,7 +92,9 @@ export class AuthService {
         this._setAuthenticatedTo(response.isAuthenticated);
         this._setAdminTo(response.adminLevel);
         this._setConfirmedTo(response.isConfirmed);
+        this._cookieService.removeAll();
         this._user = null;
+        clearInterval(this._cookieObserver);
         return response;
       })
       .catch((error: Response) => Observable.throw(error.json()));
@@ -88,18 +118,18 @@ export class AuthService {
 
   private _setConfirmedTo(newValue: boolean): void {
     this._confirmed = newValue;
-    this._cookieService.put('hasBeenConfirmed', newValue.toString());
+    this._cookieService.put('hasBeenConfirmed', newValue.toString(), this._cookieOptions);
   }
 
   private _setAuthenticatedTo(newValue: boolean): void {
     this._authenticated = newValue;
     this._authenticatedSource.next(newValue);
-    this._cookieService.put('hasBeenAuthenticated', newValue.toString());
+    this._cookieService.put('hasBeenAuthenticated', newValue.toString(), this._cookieOptions);
   }
 
   private _setAdminTo(newValue: number): void {
     this._admin = newValue;
-    this._cookieService.put('hasBeenAdmin', `${newValue}`);
+    this._cookieService.put('hasBeenAdmin', `${newValue}`, this._cookieOptions);
   }
 
   public getUserInfo(): any {
