@@ -40,7 +40,8 @@ export const MARKET_REPORT = {
   'SHARE_MODAL': {
     'TITLE': 'Partagez la synthése avec vos collaborateurs.',
     'NAME': 'Donner un nom à cette version:',
-    'SUBMIT': 'Partager'
+    'SUBMIT': 'Partager',
+    'EXISTINGSYNTHESIS': 'Synthéses crées'
   },
 
   'MESSAGE_SYNTHESIS_VISIBLE': 'La synthèse est visible pour le client.',

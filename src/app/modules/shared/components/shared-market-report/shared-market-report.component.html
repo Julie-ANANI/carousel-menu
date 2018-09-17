@@ -507,15 +507,21 @@
 
 <!-- Share static synthesis -->
 <app-modal *ngIf="showSynthesisModal" (close)="closeSynthesisModal();">
-  <h1 [innerHtml]="'MARKET_REPORT.SHARE_MODAL.TITLE'" translate></h1>
+  <h1 [textContent]="'MARKET_REPORT.SHARE_MODAL.TITLE'" translate></h1>
   <form #shareSynthesisForm="ngForm" (ngSubmit)="shareNewSynthesisVersion($event, synthName); shareSynthesisForm.reset()">
     <div class="form-group">
-      <label for="name" [innerHtml]="'MARKET_REPORT.SHARE_MODAL.NAME'" translate></label>
+      <label for="name" [textContent]="'MARKET_REPORT.SHARE_MODAL.NAME'" translate></label>
       <input type="text" class="form-control" id="name" name="name"
              required [(ngModel)]="synthName" #name="ngModel">
     </div>
     <button class="btn btn-success" type="submit"
             [disabled]="!shareSynthesisForm.form.valid"
-            [innerHtml]="'MARKET_REPORT.SHARE_MODAL.SUBMIT'" translate></button>
+            [textContent]="'MARKET_REPORT.SHARE_MODAL.SUBMIT'" translate></button>
   </form>
+  <ng-container *ngIf="sharedSynthesisList.length > 0">
+    <h3 [textContent]="'MARKET_REPORT.SHARE_MODAL.EXISTINGSYNTHESIS'" translate></h3>
+    <ul>
+      <li *ngFor="let synthesis of sharedSynthesisList" [innerHtml]="synthesis.name"></li>
+    </ul>
+  </ng-container>
 </app-modal>

@@ -14,6 +14,7 @@ import { Innovation } from '../../../../models/innovation';
 import { environment} from '../../../../../environments/environment';
 import { Template } from '../../../sidebar/interfaces/template';
 import { Clearbit } from '../../../../models/clearbit';
+import { SharedSynthesis } from './models/shared-synthesis';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs/Subject';
 import { FrontendService } from '../../../../services/frontend/frontend.service';
@@ -75,6 +76,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   private _modalAnswer: Answer;
 
   private _showSynthesisModal = false;
+  private _sharedSynthesisList: Array<SharedSynthesis> = [];
 
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
@@ -99,6 +101,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.loadAnswers();
 
     this.loadCampaign();
+
+    this.loadSharedSynthesisList();
 
     if (this.project.preset && this.project.preset.sections) {
       this.project.preset.sections.forEach((section: Section) => {
@@ -223,6 +227,16 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       this.translateNotificationsService.error('ERROR.ERROR', error.message);
     });
 
+  }
+
+  loadSharedSynthesisList() {
+    this.innovationService.sharedSynthesisList(this._innoid).first().subscribe((results) => {
+      if (Array.isArray(results)) {
+        this._sharedSynthesisList = results;
+      }
+    }, (error) => {
+      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+    });
   }
 
   ngAfterViewInit() {
@@ -376,8 +390,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       name: name,
       answers: this._filteredAnswers.map((answer) => answer._id)
     };
-    this.innovationService.shareSynthesis(this._innoid, data).first().subscribe((results) => {
-      console.log(results);
+    this.innovationService.shareSynthesis(this._innoid, data).first().subscribe((res) => {
+      this._sharedSynthesisList.push(res)
     }, (error) => {
       this.translateNotificationsService.error('ERROR.ERROR', error.message);
     });
@@ -516,6 +530,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   get showSynthesisModal(): boolean {
     return this._showSynthesisModal;
+  }
+
+  get sharedSynthesisList(): Array<SharedSynthesis> {
+    return this._sharedSynthesisList;
   }
 
 
