@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../../../../services/auth/auth.service';
+/*
 import { UserService } from '../../../../services/user/user.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';*/
 
 @Component({
   selector: 'app-client-reset-password',
@@ -16,10 +17,11 @@ export class ClientResetPasswordComponent implements OnInit {
   public passwordMinLength = 8;
 
   constructor(private _authService: AuthService,
+              /*
               private _activatedRoute: ActivatedRoute,
               private _router: Router,
               private _notificationsService: TranslateNotificationsService,
-              private _userService: UserService,
+              private _userService: UserService,*/
               private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -34,7 +36,7 @@ export class ClientResetPasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.formData.valid && this.formData.get('email')!.value) {
+ /*   if (this.formData.valid && this.formData.get('email')!.value) {
       if (this.formData.get('password')!.value === this.formData.get('passwordConfirm')!.value) {
         this._activatedRoute.params.first().subscribe(params => {
           const tokenEmail = params['tokenEmail'];
@@ -57,6 +59,6 @@ export class ClientResetPasswordComponent implements OnInit {
     }
     else {
       this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
-    }
+    }*/
   }
 }

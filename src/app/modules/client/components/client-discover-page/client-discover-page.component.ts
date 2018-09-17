@@ -319,7 +319,9 @@ export class ClientDiscoverPageComponent implements OnInit {
 
       if (this.selectedLang === '') {
         for (let i = 0; i < item.innovationCards.length; i++) {
-          this._innovationCards.push(item.innovationCards[i]);
+          if (item.innovationCards[i].lang === this.currentLang) {
+            this._innovationCards.push(item.innovationCards[i]);
+          }
           this.innovationDetails.push({'text': item.innovationCards[i].title});
         }
       } else {

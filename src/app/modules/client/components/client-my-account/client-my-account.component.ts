@@ -113,7 +113,13 @@ export class ClientMyAccountComponent implements OnInit {
 
   }
 
+  closeSidebar(value: string) {
+    this._sidebarTemplateValue.animate_state = value;
+    this._sidebarState.next('inactive');
+  }
+
   onSubmit() {
+
     if (this._formData.valid) {
       const user = new User(this._formData.value);
       this.userService.update(user).first().subscribe(
@@ -132,6 +138,7 @@ export class ClientMyAccountComponent implements OnInit {
     else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
+
   }
 
   addSector(event: {value: Array<string>}) {
@@ -171,17 +178,66 @@ export class ClientMyAccountComponent implements OnInit {
   }
 
   changePassword(value: FormGroup) {
+    const email = this._formData.get('email').value;
 
-    /*this.userService.changePassword()
-      .first()
-      .subscribe(res => {
-        this.router.navigate(['/reset-password/' + res.token])
-      });*/
+    this.userService.changePassword(email).first().subscribe((res) => {
+      this.userService.updatePassword({
+        email: email, password: value.value.newPassword, passwordConfirm: value.value.confirmPassword, tokenEmail: res.token
+      }).first().subscribe(() => {
+        this.translateNotificationsService.success('ERROR.ACCOUNT.PASSWORD_UPDATED', 'ERROR.ACCOUNT.PASSWORD_UPDATED_TEXT');
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.SAME_PASSWORD');
+      })
+    });
+
   }
 
-  closeSidebar(value: string) {
-    this._sidebarTemplateValue.animate_state = value;
-    this._sidebarState.next('inactive');
+  profileCompletion(): number {
+    const totalFieldsRequired = 10;
+    let totalFieldsPresent = 0;
+
+    if (this._formData.get('email').value !== null) {
+      totalFieldsPresent++;
+    }
+
+    if (this._formData.get('firstName').value !== null) {
+      totalFieldsPresent++;
+    }
+
+    if (this._formData.get('lastName').value !== null) {
+      totalFieldsPresent++;
+    }
+
+    if (this._formData.get('companyName').value !== null) {
+      totalFieldsPresent++;
+    }
+
+    if (this._formData.get('jobTitle').value !== null) {
+      totalFieldsPresent++;
+    }
+
+    if (this._formData.get('country').value !== null) {
+      totalFieldsPresent++;
+    }
+
+    if (this._formData.get('phone').value !== null) {
+      totalFieldsPresent++;
+    }
+
+    if (this._formData.get('lang').value !== null) {
+      totalFieldsPresent++;
+    }
+
+    if (this._formData.get('sectors').value !== null) {
+      totalFieldsPresent++;
+    }
+
+    if (this._formData.get('technologies').value !== null) {
+      totalFieldsPresent++;
+    }
+
+    return ( totalFieldsPresent * 100) / totalFieldsRequired;
+
   }
 
   get profilePicture(): string {
@@ -231,5 +287,6 @@ export class ClientMyAccountComponent implements OnInit {
   set sidebarState(value: Subject<string>) {
     this._sidebarState = value;
   }
+
 
 }
