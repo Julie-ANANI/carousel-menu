@@ -73,7 +73,7 @@ export class ClientMyAccountComponent implements OnInit {
       this._name = response.name;
       this._jobTitle = response.jobTitle;
       this._userProvider = response.provider;
-      this._profilePicture = response.profilePic.url;
+      this._profilePicture = response.profilePic ? response.profilePic.url || "" : "";
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
@@ -122,7 +122,7 @@ export class ClientMyAccountComponent implements OnInit {
           this._name = response.name;
           this._jobTitle = response.jobTitle;
           this._userProvider = response.provider;
-          this._profilePicture = response.profilePic.url;
+          this._profilePicture = response.profilePic ? response.profilePic.url || "" : "";
           this._formData.patchValue(response);
         },
         error => {
