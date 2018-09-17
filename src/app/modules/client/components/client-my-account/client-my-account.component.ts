@@ -180,15 +180,15 @@ export class ClientMyAccountComponent implements OnInit {
   changePassword(value: FormGroup) {
     const email = this._formData.get('email').value;
 
-    this.userService.changePassword(email).first().subscribe((res) => {
+    //this.userService.changePassword(email).first().subscribe((res) => {
       this.userService.updatePassword({
-        email: email, password: value.value.newPassword, passwordConfirm: value.value.confirmPassword, tokenEmail: res.token
+        email: email, oldPassword: value.value.oldPassword, newPassword: value.value.newPassword, confirmPassword: value.value.confirmPassword
       }).first().subscribe(() => {
         this.translateNotificationsService.success('ERROR.ACCOUNT.PASSWORD_UPDATED', 'ERROR.ACCOUNT.PASSWORD_UPDATED_TEXT');
       }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.SAME_PASSWORD');
       })
-    });
+    //});
 
   }
 
