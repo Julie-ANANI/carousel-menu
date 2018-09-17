@@ -6,14 +6,14 @@
       <div class="left-content text-center">
 
         <!-- Profile pics -->
-        <div class="profile-pic">
-            <div *ngIf="hasProfilePic()">
-                <img [src]="pictureUrl">
-            </div>
-            <div *ngIf="!hasProfilePic()">
-                <h1>{{ formData.get('firstName').value | slice:0:1 }}{{ formData.get('lastName').value | slice:0:1 }}</h1>
-            </div>
+        <div *ngIf="hasProfilePic()" class="profile-pic">
+            <img [src]="profilePicture">
         </div>
+
+        <div *ngIf="!hasProfilePic()" class="profile-pic-def">
+            <h1>{{ formData.get('firstName').value | slice:0:1 }}{{ formData.get('lastName').value | slice:0:1 }}</h1>
+        </div>
+        <!-- /Profile pics -->
 
         <!-- Name -->
         <h5>{{ name }}</h5>
@@ -31,7 +31,7 @@
 
         <!-- Links -->
         <ul class="user-actions">
-          <li (click)="changePassword($event)">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</li>
+          <li (click)="showPasswordSidebar($event)">{{ 'MY_ACCOUNT.CHANGE_PASSWORD' | translate }}</li>
           <li (click)="onDelete($event)">{{ 'MY_ACCOUNT.DELETE' | translate }}</li>
           <li><a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}</a></li>
         </ul>
@@ -220,6 +220,15 @@
     </div>
   </div>
 </section>
+
+
+<!-- Change password sidebar -->
+<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+  <app-user-change-password
+    [sidebarState]="sidebarState"
+    (changePasswordData)="changePassword($event)">
+  </app-user-change-password>
+</app-sidebar>
 
 
 <!-- MODAL : Are you sure you want to delete your account ? -->

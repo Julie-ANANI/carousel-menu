@@ -11,6 +11,16 @@
       min-width: 35%;
 
       .profile-pic {
+        margin-left: auto;
+        margin-right: auto;
+
+        img {
+          border-radius: 50%;
+        }
+
+      }
+
+      .profile-pic-def {
         height: 120px;
         width: 120px;
         margin-left: auto;

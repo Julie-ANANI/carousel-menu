@@ -26,6 +26,7 @@ import { LogoutPageModule } from '../base/components/logout-page/logout-page.mod
 import { InputListModule } from '../input/component/input-list/input-list.module';
 import { SearchInputModule } from '../input/component/search-input/search-input.module';
 import { PaginationModule } from '../input/component/pagination/pagination.module';
+import { SidebarUserChangePasswordModule } from '../sidebar/components/user-change-password/sidebar-user-change-password.module';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { PaginationModule } from '../input/component/pagination/pagination.modul
     LogoutPageModule,
     InputListModule,
     SearchInputModule,
-    PaginationModule
+    PaginationModule,
+    SidebarUserChangePasswordModule
   ],
   declarations: [
     ClientComponent,

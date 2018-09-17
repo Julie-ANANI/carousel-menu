@@ -16,5 +16,8 @@ export const MY_ACCOUNT = {
     'very welcome!'
   },
 
-  'JOB_TITLE_EXAMPLE': 'Aerodynamics Engineer'
+  'JOB_TITLE_EXAMPLE': 'Aerodynamics Engineer',
+
+  'CHANGE': 'Change Password',
+
 };
