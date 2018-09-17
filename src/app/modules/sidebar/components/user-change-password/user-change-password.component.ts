@@ -7,13 +7,14 @@ import { Subject } from 'rxjs/Subject';
   templateUrl: './user-change-password.component.html',
   styleUrls: ['./user-change-password.component.scss']
 })
+
 export class UserChangePasswordComponent implements OnInit {
 
   @Input() sidebarState: Subject<string>;
 
   @Output() changePasswordData = new EventEmitter<FormGroup>();
 
-  formData: FormGroup;
+  private _formData: FormGroup;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -24,7 +25,7 @@ export class UserChangePasswordComponent implements OnInit {
       this.sidebarState.subscribe((state) => {
         if (state === 'inactive') {
           setTimeout (() => {
-            this.formData.reset();
+            this._formData.reset();
           }, 500);
         }
       })
@@ -33,15 +34,23 @@ export class UserChangePasswordComponent implements OnInit {
   }
 
   private buildForm() {
-    this.formData = this.formBuilder.group({
+    this._formData = this.formBuilder.group({
       oldPassword: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.minLength(8)]],
+      newPassword: ['', [Validators.required, Validators.minLength(9)]],
       confirmPassword: ['', [Validators.required]],
     });
   }
 
   onSubmit() {
-    this.changePasswordData.emit(this.formData);
+    this.changePasswordData.emit(this._formData);
+  }
+
+  get formData(): FormGroup {
+    return this._formData;
+  }
+
+  set formData(value: FormGroup) {
+    this._formData = value;
   }
 
 }

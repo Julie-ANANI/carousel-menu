@@ -83,9 +83,9 @@ export const COMMON = {
 
   'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',
   'OLD_PASSWORD_PLACEHOLDER': 'Entrez votre ancien mot de passe',
-  'NEW_PASSWORD_PLACEHOLDER': 'Entrez votre nouveau mot de passe: 8+ caractères',
+  'NEW_PASSWORD_PLACEHOLDER': 'Entrez votre nouveau mot de passe: 9+ caractères',
   'CONFIRM_PASSWORD_PLACEHOLDER': 'Entrez le mot de passe de confirmation',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '8+ caractères',
+  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ caractères',
 
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
 
