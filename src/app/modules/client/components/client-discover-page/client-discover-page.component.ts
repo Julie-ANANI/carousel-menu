@@ -247,16 +247,16 @@ export class ClientDiscoverPageComponent implements OnInit {
 
     innovations.forEach((innovations) => {
       const index = this.filterApplied.findIndex((item) => item.type === 'type' || item.type === 'label' );
-
+      const rawTags = innovations.tags || [];
       if (index !== -1) {
-        innovations.tags.forEach((tag) => {
+        rawTags.forEach((tag) => {
           const index = this.filterApplied.findIndex((item) => item.type === 'type' ? item.id === tag.type : item.id === tag._id);
           if (index !== -1) {
             this.tags.push(tag);
           }
         });
       } else {
-        innovations.tags.forEach((tag) => {
+        rawTags.forEach((tag) => {
           if (tag.type === 'SECTOR') {
             const index = this.tags.findIndex((item) => item._id === tag._id);
             if (index === -1) {
