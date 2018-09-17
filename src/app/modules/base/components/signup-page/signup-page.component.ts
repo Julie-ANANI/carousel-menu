@@ -67,7 +67,7 @@ export class SignupPageComponent implements OnInit {
       }else {
         this.userService.create(user).first().subscribe(_ => {
             this.authService.login(user).first().subscribe(
-              _ => {
+              (res) => {
                 this.location1.back();
               },
               error => {

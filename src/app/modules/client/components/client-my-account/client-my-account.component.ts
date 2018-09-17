@@ -9,13 +9,14 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { Template } from '../../../sidebar/interfaces/template';
-import {Subject} from 'rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-client-my-account',
   templateUrl: './client-my-account.component.html',
   styleUrls: ['./client-my-account.component.scss']
 })
+
 export class ClientMyAccountComponent implements OnInit {
 
   private _formData: FormGroup;
@@ -36,7 +37,7 @@ export class ClientMyAccountComponent implements OnInit {
 
   private _sidebarState = new Subject<string>();
 
-  // TODO : reset password, description, location
+  // TODO : description, location
 
   constructor(private userService: UserService,
               private translateNotificationsService: TranslateNotificationsService,
@@ -73,7 +74,7 @@ export class ClientMyAccountComponent implements OnInit {
       this._name = response.name;
       this._jobTitle = response.jobTitle;
       this._userProvider = response.provider;
-      this._profilePicture = response.profilePic ? response.profilePic.url || "" : "";
+      this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
@@ -128,7 +129,7 @@ export class ClientMyAccountComponent implements OnInit {
           this._name = response.name;
           this._jobTitle = response.jobTitle;
           this._userProvider = response.provider;
-          this._profilePicture = response.profilePic ? response.profilePic.url || "" : "";
+          this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
           this._formData.patchValue(response);
         },
         error => {
@@ -179,64 +180,21 @@ export class ClientMyAccountComponent implements OnInit {
 
   changePassword(value: FormGroup) {
     const email = this._formData.get('email').value;
+    const newPassword = value.value.newPassword;
+    const confirmPassword = value.value.confirmPassword;
 
-    //this.userService.changePassword(email).first().subscribe((res) => {
+    if (newPassword === confirmPassword) {
       this.userService.updatePassword({
-        email: email, oldPassword: value.value.oldPassword, newPassword: value.value.newPassword, confirmPassword: value.value.confirmPassword
+        email: email, oldPassword: value.value.oldPassword, newPassword: newPassword, confirmPassword: confirmPassword
       }).first().subscribe(() => {
+        this.closeSidebar('inactive');
         this.translateNotificationsService.success('ERROR.ACCOUNT.PASSWORD_UPDATED', 'ERROR.ACCOUNT.PASSWORD_UPDATED_TEXT');
       }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.SAME_PASSWORD');
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.OLD_PASSWORD');
       })
-    //});
-
-  }
-
-  profileCompletion(): number {
-    const totalFieldsRequired = 10;
-    let totalFieldsPresent = 0;
-
-    if (this._formData.get('email').value !== null) {
-      totalFieldsPresent++;
+    } else {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.SAME_PASSWORD');
     }
-
-    if (this._formData.get('firstName').value !== null) {
-      totalFieldsPresent++;
-    }
-
-    if (this._formData.get('lastName').value !== null) {
-      totalFieldsPresent++;
-    }
-
-    if (this._formData.get('companyName').value !== null) {
-      totalFieldsPresent++;
-    }
-
-    if (this._formData.get('jobTitle').value !== null) {
-      totalFieldsPresent++;
-    }
-
-    if (this._formData.get('country').value !== null) {
-      totalFieldsPresent++;
-    }
-
-    if (this._formData.get('phone').value !== null) {
-      totalFieldsPresent++;
-    }
-
-    if (this._formData.get('lang').value !== null) {
-      totalFieldsPresent++;
-    }
-
-    if (this._formData.get('sectors').value !== null) {
-      totalFieldsPresent++;
-    }
-
-    if (this._formData.get('technologies').value !== null) {
-      totalFieldsPresent++;
-    }
-
-    return ( totalFieldsPresent * 100) / totalFieldsRequired;
 
   }
 
