@@ -187,7 +187,7 @@ export class ClientMyAccountComponent implements OnInit {
       this.userService.updatePassword({
         email: email, oldPassword: value.value.oldPassword, newPassword: newPassword, confirmPassword: confirmPassword
       }).first().subscribe(() => {
-        this.closeSidebar('inactive');
+        this.showPasswordSidebar(event);
         this.translateNotificationsService.success('ERROR.ACCOUNT.PASSWORD_UPDATED', 'ERROR.ACCOUNT.PASSWORD_UPDATED_TEXT');
       }, () => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.OLD_PASSWORD');

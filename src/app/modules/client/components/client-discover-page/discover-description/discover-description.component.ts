@@ -95,6 +95,7 @@ export class DiscoverDescriptionComponent implements OnInit {
 
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVERDESCRIPTION.ERROR');
+      this._displaySpinner = false;
     }, () => {
       this._displaySpinner = false;
     });
