@@ -35,6 +35,7 @@ export class TagsFormComponent implements OnInit {
     this._projectId = value._id;
   }
 
+  @Input() tagType: string;
   @Input() sidebarState: Subject<string>;
 
   @Output() newTags = new EventEmitter<Tag[]>();
@@ -78,9 +79,9 @@ export class TagsFormComponent implements OnInit {
     }
   }
 
-  public suggestions(keyword: string): Observable<Array<any>> {
+  public suggestions(query: string): Observable<Array<any>> {
     const queryConf = {
-      keyword: keyword,
+      query: query,
       type: 'tags'
     };
     return this._autocompleteService.get(queryConf);

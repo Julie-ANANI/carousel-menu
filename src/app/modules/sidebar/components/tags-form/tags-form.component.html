@@ -11,6 +11,7 @@
         <!-- Add Tags -->
         <app-shared-tag-item *ngSwitchCase="'addTags'"
           [tags]="tags"
+          [type]="tagType"
           [editMode]="true"
           [projectId]="projectId"
           (addTag)="addTag($event)"
