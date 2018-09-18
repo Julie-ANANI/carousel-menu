@@ -10,7 +10,7 @@
         <th></th>
         <th><sq-sort [config]="config" (configChange)="loadData($event)" [prop]="'label'">Label</sq-sort></th>
         <th><sq-sort [config]="config" (configChange)="loadData($event)" [prop]="'description'">Description</sq-sort></th>
-        <th><sq-sort [config]="config" (configChange)="loadData($event)" [prop]="'status'">Status</sq-sort></th>
+        <th><sq-sort [config]="config" (configChange)="loadData($event)" [prop]="'type'">Type</sq-sort></th>
         <th><sq-sort [config]="config" (configChange)="loadData($event)" [prop]="'attachments'" >Attachments</sq-sort></th>
         <th><sq-sort [config]="config" (configChange)="loadData($event)" [prop]="'created'" >Created</sq-sort></th>
         <th>{{ 'CAMPAIGNS.ACTIONS' | translate }}</th>
@@ -32,7 +32,15 @@
                   <input type="text" size="40" [(ngModel)]="datum.description.en" alt="description" placeholder="description in english"/>
                   <input type="text" size="40" [(ngModel)]="datum.description.fr" alt="description" placeholder="description en français"/>
                 </td>
-                <td>{{ datum.status }}</td>
+                <td>
+                  <select [(ngModel)]="datum.type">
+                    <option value="UNKNOWN" [textContent]="'TAGS.TYPE.UNKNOWN'" translate></option>
+                    <option value="SECTOR" [textContent]="'TAGS.TYPE.SECTOR'" translate></option>
+                    <option value="VALUE_CHAIN" [textContent]="'TAGS.TYPE.VALUE_CHAIN'" translate></option>
+                    <option value="SOLUTION_TYPE" [textContent]="'TAGS.TYPE.SOLUTION_TYPE'" translate></option>
+                    <option value="QUALIFICATION" [textContent]="'TAGS.TYPE.QUALIFICATION'" translate></option>
+                  </select>
+                </td>
                 <td>
                     <app-autocomplete-input id="attachments"
                                             (update)="addAttachment($event, datum)"
@@ -50,7 +58,7 @@
                     <td><input type="checkbox" [(ngModel)]="datum.isSelected"/></td>
                     <td>{{ datum.label | multiling:lang }}</td>
                     <td>{{ datum.description | multiling:lang }}</td>
-                    <td>{{ datum.status }}</td>
+                    <td [textContent]="'TAGS.TYPE.'+datum.type" translate></td>
                     <td>{{ datum.attachments?.length || 0 }}</td>
                     <td>{{ datum.created | date }}</td>
                 </ng-container>
