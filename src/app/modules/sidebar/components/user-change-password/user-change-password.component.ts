@@ -36,7 +36,7 @@ export class UserChangePasswordComponent implements OnInit {
   private buildForm() {
     this._formData = this.formBuilder.group({
       oldPassword: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.minLength(9)]],
+      newPassword: ['', [Validators.required, Validators.minLength(9), Validators.pattern(/[\w]*[\&\@\$\.\#\+\=\/]+[\w]*/g)]],
       confirmPassword: ['', [Validators.required]],
     });
   }

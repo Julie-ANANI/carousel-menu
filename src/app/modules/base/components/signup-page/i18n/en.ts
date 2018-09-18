@@ -1,5 +1,5 @@
 export const SIGN_UP = {
-  'HEADING': 'Sign up',
+  'HEADING': 'Sign Up',
 
   'HAVE_ACCOUNT': 'Already have an account?',
 
@@ -7,6 +7,8 @@ export const SIGN_UP = {
 
   'SIGN_UP_LINKEDIN': 'Sign up with LinkedIn',
 
-  'SIGN_UP_EMAIL': 'Sign up with email address'
+  'SIGN_UP_EMAIL': 'Sign up with email address',
+
+  'BUTTON': 'Sign In',
 
 };

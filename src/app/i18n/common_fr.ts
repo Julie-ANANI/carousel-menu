@@ -158,7 +158,8 @@ export const COMMON = {
 
   'INVALID': {
     'EMAIL': 'Veuillez renseigner une adresse email valide',
-    'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court.'
+    'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court.',
+    'MUST_CONTAIN': 'Le mot de passe doit en contenir un.'
   },
 
   'LINKS': 'Liens',

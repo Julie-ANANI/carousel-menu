@@ -11,7 +11,7 @@ export const COMMON = {
   'SUBMIT': 'CONFIRM',
   'LOG_IN': 'Sign in',
   'SIGN_UP': 'Sign up',
-  'LOG_OUT': 'Log out',
+  'LOG_OUT': 'Sign out',
   'CANCEL': 'Cancel',
   'MORE': 'Show',
   'OF': 'of',
@@ -161,7 +161,8 @@ export const COMMON = {
 
   'INVALID': {
     'EMAIL': 'Please enter a valid email address.',
-    'PASSWORD_TOO_SHORT': 'Password is too short.'
+    'PASSWORD_TOO_SHORT': 'Password is too short.',
+    'MUST_CONTAIN': 'Password must contain one special character.'
   },
 
   'LINKS': 'Links',

@@ -116,6 +116,7 @@
         <div class="form-error" *ngIf="userForm.get('password').touched && userForm.get('password').invalid">
           <span *ngIf="userForm.get('password').hasError('required')">{{ 'COMMON.REQUIRED.PASSWORD' | translate }}</span>
           <span *ngIf="userForm.get('password').hasError('minlength')">{{ 'COMMON.INVALID.PASSWORD_TOO_SHORT' | translate }}</span>
+          <span *ngIf="userForm.get('password').hasError('pattern')">{{ 'COMMON.INVALID.MUST_CONTAIN' | translate }}</span>
         </div>
       </div>
 
