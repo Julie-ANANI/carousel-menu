@@ -1,24 +1,225 @@
+<header class="main-container" id="header-wrapper" [ngStyle]="{ 'display': displayNavbar ? 'flex' : 'none' }">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+    <nav class="nav-wrapper">
+
+      <!-- Logo -->
+      <div class="logo">
+        <a routerLink="/" class="gtm-menu-logo">
+          <img src="{{ getLogo() }}" alt="UMI" height="28px" class="logo">
+        </a>
+      </div>
+      <!-- /Logo -->
+
+      <!-- Menu items -->
+      <ul class="nav-menu">
+
+        <!-- Client example page link -->
+        <li class="nav-menu-item" *ngIf="!backOfficeValue">
+          <a
+            [routerLink]="'/sample'"
+            routerLinkActive="active"
+            (click)="onClickLink()"
+            class="gtm-menu-sample-synthesis">
+            {{ 'HEADER.EXAMPLE' | translate }}
+          </a>
+        </li>
+
+        <!-- Client discover page link -->
+        <li class="nav-menu-item" *ngIf="!backOfficeValue && authService.adminLevel > 2">
+          <a
+            [routerLink]="'/discover'"
+            routerLinkActive="active"
+            (click)="onClickLink()"
+            class="gtm-menu-discover">
+            {{ 'COMMON.DISCOVER' | translate }}
+          </a>
+        </li>
+
+        <!-- Client projects page link -->
+        <li class="nav-menu-item" *ngIf="!backOfficeValue">
+          <a
+            [routerLink]="'/project'"
+            routerLinkActive="active"
+            (click)="onClickLink()"
+            class="gtm-menu-my-projects">
+            {{ 'COMMON.MY_PROJECTS' | translate }}
+          </a>
+        </li>
+
+        <!-- Admin dashboards page link -->
+        <li class="nav-menu-item" *ngIf="backOfficeValue && canShow(1)">
+          <a
+            [routerLink]="'/admin'"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="onClickLink()">
+            Dashboard
+          </a>
+        </li>
+
+        <!-- Admin users page link -->
+        <li class="nav-menu-item" *ngIf="backOfficeValue && canShow(1)">
+          <a
+            routerLinkActive="active"
+            [routerLink]="'/admin/users'"
+            (click)="onClickLink()">
+            {{ 'COMMON.USERS' | translate }}
+          </a>
+        </li>
+
+        <!-- Admin professionals page link -->
+        <li class="nav-menu-item" *ngIf="backOfficeValue && canShow(3)">
+          <a
+            routerLinkActive="active"
+            [routerLink]="'/admin/professionals'"
+            (click)="onClickLink()">
+            {{ 'COMMON.PROFESSIONALS' | translate }}
+          </a>
+        </li>
+
+        <!-- Admin projects page link -->
+        <li class="nav-menu-item" *ngIf="backOfficeValue && canShow(1)">
+          <a
+            routerLinkActive="active"
+            [routerLink]="'/admin/projects'"
+            (click)="onClickLink()">
+            {{ 'COMMON.PROJECTS' | translate }}
+          </a>
+        </li>
+
+        <!-- Admin libraries page link -->
+        <li class="nav-menu-item" *ngIf="backOfficeValue && canShow(3)">
+          <a
+            routerLinkActive="active"
+            [routerLink]="'/admin/libraries'"
+            (click)="onClickLink()">
+            Libraries
+          </a>
+        </li>
+
+        <!-- Admin monitoring page link -->
+        <li class="nav-menu-item" *ngIf="backOfficeValue && canShow(3)">
+          <a
+            routerLinkActive="active"
+            [routerLink]="'/admin/monitoring'"
+            (click)="onClickLink()">
+            Monitoring
+          </a>
+        </li>
+
+        <!-- Admin settings page link -->
+        <li class="nav-menu-item" *ngIf="backOfficeValue && canShow(3)">
+          <a
+            routerLinkActive="active"
+            [routerLink]="'/admin/settings'"
+            (click)="onClickLink()">
+            {{ 'COMMON.PRESETS' | translate }}
+          </a>
+        </li>
+
+        <!-- Profile icon -->
+        <li class="profile">
+          <p class="name">{{ user?.name }}<i class="fas fa-sort-down"></i></p>
+
+          <ul class="profile-dropdown">
+
+            <!-- My account link -->
+            <li>
+              <a
+                [routerLink]="'/account'"
+                (click)="onClickLink()"
+                class="gtm-menu-my-account profile-row-1">
+
+                <!-- Profile pics -->
+                <span *ngIf="hasProfilePic()" class="pic">
+                  <img [src]="profilePic">
+                </span>
+
+                <span *ngIf="!hasProfilePic()" class="pic-def">
+                  <span>{{ user?.firstName | slice:0:1 }}{{ user?.lastName | slice:0:1 }}</span>
+                </span>
+
+                <!-- Info -->
+                <div class="info">
+                  <p>{{ user?.name }}</p>
+                  <p class="email">{{ user?.email }}</p>
+                </div>
+
+              </a>
+            </li>
+
+            <!-- hr -->
+            <li class="hr">
+              <hr>
+            </li>
+
+            <!-- Client side link -->
+            <li *ngIf="backOfficeValue && canShow(1)">
+              <a
+                routerLinkActive="active"
+                [routerLink]="'/project'"
+                (click)="toggleBackOfficeState(); onClickLink();">
+                {{ 'COMMON.CLIENT_SIDE' | translate }}
+              </a>
+            </li>
+
+            <!-- Admin side link -->
+            <li *ngIf="!backOfficeValue && canShow(1)">
+              <a
+                [routerLink]="'/admin'"
+                routerLinkActive="active"
+                (click)="toggleBackOfficeState(); onClickLink();">
+                {{ 'COMMON.ADMIN' | translate }}
+              </a>
+            </li>
+
+            <li>
+              <a [routerLink]="'/logout'">{{ 'COMMON.LOG_OUT' | translate }}</a>
+            </li>
+
+          </ul>
+
+        </li>
+        <!-- /Profile icon -->
+
+      </ul>
+      <!-- /Menu items -->
+
+    </nav>
+  </div>
+</header>
+
+<!--
+
+<div class="nav-profile">
+          <span>{{ user?.name }}<i class="fas fa-sort-down"></i></span>
+
+          <div class="profile-content">
+            abhishek
+          </div>
+
+        </div>
 <header class="main-container" [ngStyle]="{ 'display': displayNavbar ? 'block' : 'none' }" id="header">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <nav class="navbar">
 
-      <!-- Logo -->
+      &lt;!&ndash; Logo &ndash;&gt;
       <div class="text-left">
         <a routerLink="/" class="gtm-menu-logo">
           <img src="{{ getLogo() }}" alt="UMI" height="30px" class="logo">
         </a>
       </div>
 
-      <!-- Collapse menu icon -->
+      &lt;!&ndash; Collapse menu icon &ndash;&gt;
       <div class="navbar-toggler-icon">
         <i class="fas fa-2x fa-bars" (click)="toggleMenuState()"></i>
       </div>
 
-      <!-- Menu -->
+      &lt;!&ndash; Menu &ndash;&gt;
       <div class="nav-item-wrapper" [ngStyle]="{ 'display': displayMenuOptions ? 'block' : 'none' }">
         <ul class="navbar-nav">
 
-          <!-- Client example -->
+          &lt;!&ndash; Client example &ndash;&gt;
           <li class="navbar-item" *ngIf="!backOfficeValue">
             <a
               [routerLink]="'/sample'"
@@ -29,7 +230,7 @@
             </a>
           </li>
 
-          <!-- Client discover page -->
+          &lt;!&ndash; Client discover page &ndash;&gt;
           <li class="navbar-item" *ngIf="!backOfficeValue && authService.adminLevel > 2">
             <a
               [routerLink]="'/discover'"
@@ -40,7 +241,7 @@
             </a>
           </li>
 
-          <!-- Client project page -->
+          &lt;!&ndash; Client project page &ndash;&gt;
           <li class="navbar-item" *ngIf="!backOfficeValue">
             <a
               [routerLink]="'/project'"
@@ -51,7 +252,7 @@
             </a>
           </li>
 
-          <!-- Client account page -->
+          &lt;!&ndash; Client account page &ndash;&gt;
           <li class="navbar-item" *ngIf="!backOfficeValue">
             <a
               [routerLink]="'/account'"
@@ -62,7 +263,7 @@
             </a>
           </li>
 
-          <!-- Back office dashboard page -->
+          &lt;!&ndash; Back office dashboard page &ndash;&gt;
           <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
             <a
               [routerLink]="'/admin'"
@@ -74,7 +275,7 @@
             </a>
           </li>
 
-          <!-- Back office user page -->
+          &lt;!&ndash; Back office user page &ndash;&gt;
           <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
             <a
               routerLinkActive="active"
@@ -85,7 +286,7 @@
             </a>
           </li>
 
-          <!-- Back office professional page -->
+          &lt;!&ndash; Back office professional page &ndash;&gt;
           <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
             <a
               routerLinkActive="active"
@@ -96,7 +297,7 @@
             </a>
           </li>
 
-          <!-- Back office project page -->
+          &lt;!&ndash; Back office project page &ndash;&gt;
           <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
             <a
               routerLinkActive="active"
@@ -107,7 +308,7 @@
             </a>
           </li>
 
-          <!-- Back office library page -->
+          &lt;!&ndash; Back office library page &ndash;&gt;
           <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
             <a
               routerLinkActive="active"
@@ -118,7 +319,7 @@
             </a>
           </li>
 
-          <!-- Back office monitoring page -->
+          &lt;!&ndash; Back office monitoring page &ndash;&gt;
           <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
             <a
               routerLinkActive="active"
@@ -129,7 +330,7 @@
             </a>
           </li>
 
-          <!-- Back office setting page -->
+          &lt;!&ndash; Back office setting page &ndash;&gt;
           <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
             <a
               routerLinkActive="active"
@@ -140,7 +341,7 @@
             </a>
           </li>
 
-          <!-- Back office search page
+          &lt;!&ndash; Back office search page
           <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
             <a
               routerLinkActive="active"
@@ -149,9 +350,9 @@
               (click)="onClickLink()">
               {{ 'COMMON.SEARCH' | translate }}
             </a>
-          </li>-->
+          </li>&ndash;&gt;
 
-          <!-- Back office client side page -->
+          &lt;!&ndash; Back office client side page &ndash;&gt;
           <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
             <a
               routerLinkActive="active"
@@ -162,7 +363,7 @@
             </a>
           </li>
 
-          <!-- Adlin link -->
+          &lt;!&ndash; Adlin link &ndash;&gt;
           <li class="navbar-item" *ngIf="!backOfficeValue && canShow(1)">
             <a
               [routerLink]="'/admin'"
@@ -178,3 +379,4 @@
     </nav>
   </div>
 </header>
+-->

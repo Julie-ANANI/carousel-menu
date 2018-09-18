@@ -185,7 +185,7 @@ export const COMMON = {
   },
 
   'HOME': 'Accueil',
-  'ADMIN': 'Admin',
+  'ADMIN': 'Admin Side',
   'MY_PROJECT': 'Mon projet',
   'MY_PROJECTS': 'Mes projets',
   'MY_USERS': 'Mes utilisateurs',
@@ -197,7 +197,7 @@ export const COMMON = {
   'PRESETS': 'Settings',
   'QUESTIONNAIRE': 'Questionnaire(s)',
   'ADD-ANSWER': 'Ajouter une réponse',
-  'CLIENT_SIDE': 'Client',
+  'CLIENT_SIDE': 'Client Side',
   'EDIT_USER': 'Modifier l\'utilisateur',
   'EDIT_PROFESSIONAL': 'Modifier Professionnel',
   'EDIT_INSIGHT': 'Modifier l\'aperçu',

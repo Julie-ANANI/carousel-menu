@@ -1,5 +1,196 @@
 @import "../../../../../style/variables";
 
+#header-wrapper {
+  background: $background-color;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: .875rem;
+  font-weight: 600;
+
+  .nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .nav-menu {
+      padding-top: .35rem;
+      position: relative;
+      list-style: none;
+      display: flex;
+
+      li {
+        padding: 0;
+        margin-left: 2.55rem;
+      }
+
+      .nav-menu-item {
+
+        a {
+          opacity: 0.5;
+          color: white;
+          letter-spacing: 0.66px;
+          text-decoration: none;
+          transition: all 0.15s ease-in-out;
+        }
+
+        a:hover {
+          opacity: 1;
+          color: $primary-color;
+          cursor: pointer;
+        }
+
+        a.active {
+          opacity: 1;
+          color: $primary-color;
+        }
+
+      }
+
+      .profile {
+        transition: all .15s ease-in-out;
+
+        .name {
+          opacity: .5;
+          padding-bottom: 0;
+          color: white;
+        }
+
+        .fa-sort-down {
+          margin-left: .35rem;
+          vertical-align: 5%;
+        }
+
+        .profile-dropdown {
+          position: absolute;
+          top: 94%;
+          right: 0;
+          flex-direction: column;
+          box-shadow: $box-shadow;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          z-index: 2;
+          background-color: #F2F2F2;
+          width: 320px;
+          display: none;
+          text-align: left;
+          cursor: default;
+          opacity: 1;
+          font-weight: 400;
+
+          li {
+            margin: 0;
+            padding: 0;
+            transition: all .15s ease-in-out;
+            word-break: break-word;
+            font-size: .875rem;
+            color: $input-color;
+
+            a{
+              text-decoration: none;
+              display: flex;
+              padding: .6rem .9375rem;
+            }
+
+            .profile-row-1 {
+
+              .pic img {
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+              }
+
+              .pic-def {
+                height: 50px;
+                width: 50px;
+                margin: 0;
+                background-color: #E0E0E0;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: all .15s ease-in-out;
+
+                span {
+                  font-size: 26px;
+                  margin-bottom: 0;
+                }
+
+              }
+
+              .info {
+                margin-left: .6rem;
+                padding-top: .5rem;
+
+                p {
+                  padding-bottom: 0;
+                  line-height: 1.2rem;
+                }
+
+                .email {
+                  color: $meta-color;
+                }
+
+              }
+
+            }
+
+          }
+
+          li:hover {
+            background-color: $border-color;
+            border-color: $border-color;
+            cursor: pointer;
+
+            .profile-row-1 .pic-def {
+              background-color: #F2F2F2;
+            }
+
+          }
+
+          .hr {
+            padding-left: .9375rem;
+            padding-right: .9375rem;
+
+            hr {
+              width: 100%;
+              border: .5px solid $meta-color;
+            }
+
+          }
+
+          .hr:hover {
+            cursor: default;
+            border-color: #F2F2F2;
+            background-color: #F2F2F2;
+          }
+
+        }
+
+      }
+
+      .profile:hover {
+        cursor: pointer;
+
+        .name {
+          opacity: 1;
+        }
+
+        .profile-dropdown, .profile-dropdown:hover {
+          display: flex;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+/*
+
 #header {
   background: $background-color;
   padding-top: 1.2rem;
@@ -64,7 +255,7 @@
 }
 
 
-/********************************** Media ***************************************/
+!********************************** Media ***************************************!
 
 @media (max-width: 767px) {
 
@@ -117,3 +308,4 @@
 
 
 
+*/
