@@ -17,7 +17,9 @@
           (removeTag)="removeTag($event)">
         </app-shared-tag-item>
 
-        <p>Original name: <span [textContent]="tag.originalLabel | multiling:lang"></span></p>
+        <p><b>Original name: </b><span [textContent]="tag.originalLabel | multiling:lang"></span></p>
+
+        <p><b>Type: </b><span [textContent]="'TAGS.TYPE.' + tag.type" translate></span></p>
 
         <!-- Edit Tag -->
         <div *ngSwitchCase="'editTag'">
