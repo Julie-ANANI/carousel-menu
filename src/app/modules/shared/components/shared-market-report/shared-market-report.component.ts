@@ -17,6 +17,7 @@ import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs/Subject';
 import { FrontendService } from '../../../../services/frontend/frontend.service';
+import {PrintService} from '../../../../services/print/print.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -81,7 +82,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private innovationService: InnovationService,
               private authService: AuthService,
               public filterService: FilterService,
-              private frontendService: FrontendService) {
+              private frontendService: FrontendService,
+              private printService: PrintService) {
     this.filterService.reset();
   }
 
@@ -355,7 +357,13 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   public printSynthesis(event: Event): void {
     event.preventDefault();
-    window.print();
+    const html = document.getElementsByTagName('html')[0];
+    const body = {html: html.outerHTML};
+    this.printService.getPdf(body).subscribe((response) => {
+      console.log(response);
+    });
+
+   // window.print();
   }
 
   getSrc(): string {
