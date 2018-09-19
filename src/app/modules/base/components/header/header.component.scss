@@ -12,7 +12,99 @@
     justify-content: space-between;
     flex-wrap: wrap;
 
-    .nav-menu {
+    .nav-toggle-icon {
+      display: none;
+    }
+
+    .user-info {
+
+      .user-avatar img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+      }
+
+      .user-no-avatar {
+        height: 50px;
+        width: 50px;
+        margin: 0;
+        background-color: #E0E0E0;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all .15s ease-in-out;
+
+        span {
+          font-size: 26px;
+          margin-bottom: 0;
+        }
+
+      }
+
+      .user-detail {
+        margin-left: .6rem;
+        padding-top: .5rem;
+
+        p {
+          padding-bottom: 0;
+          line-height: 1.2rem;
+        }
+
+        .user-email {
+          color: $meta-color;
+        }
+
+      }
+
+    }
+
+    .user-info:hover .user-no-avatar {
+      background-color: #F2F2F2;
+    }
+
+    .nav-menu-item {
+
+      a {
+        opacity: 0.5;
+        color: white;
+        letter-spacing: 0.66px;
+        text-decoration: none;
+        transition: all 0.15s ease-in-out;
+      }
+
+      a:hover {
+        opacity: 1;
+        color: $primary-color !important;
+        cursor: pointer;
+      }
+
+      a.active {
+        opacity: 1;
+        color: $primary-color !important;
+        font-weight: 600;
+      }
+
+    }
+
+    .hr-wrapper {
+      padding-left: .9375rem !important;
+      padding-right: .9375rem !important;
+
+      hr {
+        width: 100%;
+        border: .5px solid $meta-color;
+      }
+
+    }
+
+    .hr-wrapper:hover {
+      cursor: default !important;
+      border-color: white !important;
+      background-color: white !important;
+    }
+
+    .nav-menu-wrapper {
       padding-top: .35rem;
       position: relative;
       list-style: none;
@@ -23,33 +115,11 @@
         margin-left: 2.55rem;
       }
 
-      .nav-menu-item {
-
-        a {
-          opacity: 0.5;
-          color: white;
-          letter-spacing: 0.66px;
-          text-decoration: none;
-          transition: all 0.15s ease-in-out;
-        }
-
-        a:hover {
-          opacity: 1;
-          color: $primary-color;
-          cursor: pointer;
-        }
-
-        a.active {
-          opacity: 1;
-          color: $primary-color;
-        }
-
-      }
-
-      .profile {
+      .user-profile-wrapper {
         transition: all .15s ease-in-out;
+        cursor: default;
 
-        .name {
+        .user-name {
           opacity: .5;
           padding-bottom: 0;
           color: white;
@@ -60,7 +130,7 @@
           vertical-align: 5%;
         }
 
-        .profile-dropdown {
+        .dropdown-menu-wrapper {
           position: absolute;
           top: 94%;
           right: 0;
@@ -70,7 +140,7 @@
           padding: 0;
           list-style: none;
           z-index: 2;
-          background-color: #F2F2F2;
+          background-color: white;
           width: 320px;
           display: none;
           text-align: left;
@@ -89,50 +159,7 @@
             a{
               text-decoration: none;
               display: flex;
-              padding: .6rem .9375rem;
-            }
-
-            .profile-row-1 {
-
-              .pic img {
-                height: 50px;
-                width: 50px;
-                border-radius: 50%;
-              }
-
-              .pic-def {
-                height: 50px;
-                width: 50px;
-                margin: 0;
-                background-color: #E0E0E0;
-                border-radius: 50%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                transition: all .15s ease-in-out;
-
-                span {
-                  font-size: 26px;
-                  margin-bottom: 0;
-                }
-
-              }
-
-              .info {
-                margin-left: .6rem;
-                padding-top: .5rem;
-
-                p {
-                  padding-bottom: 0;
-                  line-height: 1.2rem;
-                }
-
-                .email {
-                  color: $meta-color;
-                }
-
-              }
-
+              padding: 1rem .9375rem;
             }
 
           }
@@ -141,42 +168,19 @@
             background-color: $border-color;
             border-color: $border-color;
             cursor: pointer;
-
-            .profile-row-1 .pic-def {
-              background-color: #F2F2F2;
-            }
-
-          }
-
-          .hr {
-            padding-left: .9375rem;
-            padding-right: .9375rem;
-
-            hr {
-              width: 100%;
-              border: .5px solid $meta-color;
-            }
-
-          }
-
-          .hr:hover {
-            cursor: default;
-            border-color: #F2F2F2;
-            background-color: #F2F2F2;
           }
 
         }
 
       }
 
-      .profile:hover {
-        cursor: pointer;
+      .user-profile-wrapper:hover {
 
-        .name {
+        .user-name {
           opacity: 1;
         }
 
-        .profile-dropdown, .profile-dropdown:hover {
+        .dropdown-menu-wrapper, .dropdown-menu-wrapper:hover {
           display: flex;
         }
 
@@ -188,124 +192,92 @@
 
 }
 
+/********************************** Media ***************************************/
 
-/*
+@media (max-width: 600px) {
 
-#header {
-  background: $background-color;
-  padding-top: 1.2rem;
-  padding-bottom: 1.2rem;
+  #header-wrapper {
 
-  .navbar-toggler-icon {
-    position: absolute;
-    top: 1.2rem;
-    right: 6.5%;
-
-    .fa-bars {
-      color: #FFFFFF;
-    }
-
-  }
-
-  .navbar {
-    display: block;
-
-    .nav-item-wrapper {
-      flex: 1;
-      display: none;
-
-      .navbar-nav {
-        list-style: none;
-        margin-left: 0;
-        text-align: center;
-
-        .navbar-item {
-          margin-top: 0;
-          padding: 2.5rem 0;
-
-          a {
-            opacity: 0.5;
-            letter-spacing: 0.66px;
-            color: #FFFFFF;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: .85rem;
-            transition: all 0.15s ease-in-out;
-          }
-
-          a:hover {
-            opacity: 1;
-            color: $primary-color;
-            cursor: pointer;
-          }
-
-          a.active {
-            opacity: 1;
-            color: $primary-color;
-          }
-
-        }
-
-      }
-
-    }
-
-  }
-
-}
-
-
-!********************************** Media ***************************************!
-
-@media (max-width: 767px) {
-
-  #header {
-
-    .navbar-toggler {
-      right: 6.5% !important;
-    }
-
-  }
-
-}
-
-@media (min-width: 931px) {
-
-  #header {
-
-    .navbar-toggler-icon {
+    .nav-menu-wrapper {
       display: none !important;
     }
 
-    .navbar {
-      display: flex !important;
+    .nav-toggle-icon {
+      position: relative;
+      display: block !important;
 
-      .nav-item-wrapper {
-        padding-top: .5rem !important;
-        flex: unset !important;
-        display: block !important;
+      .fa-bars {
+        color: #FFFFFF;
+      }
 
-        .navbar-nav {
-          margin-top: 0 !important;
-          margin-bottom: 0 !important;
-          display: inline-flex !important;
-          justify-content: flex-end !important;
+    }
 
-          .navbar-item {
-            margin-left: 2.55rem !important;
-            padding: 0 !important;
+    .nav-toggle-icon:hover {
+      cursor: pointer;
+    }
+
+    .m-menu-wrapper {
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 2;
+      position: fixed;
+      right: 0;
+      padding-left: 0;
+      padding-right: 0;
+      opacity: 0;
+      overflow: auto;
+      overflow-x: hidden;
+      cursor: default;
+
+      .m-menu-content {
+        width: 80%;
+        min-height: 100vh;
+        background: #FFFFFF;
+        float: right;
+        right: 0;
+        z-index: 3;
+        list-style: none;
+
+        li {
+          margin: 0;
+          padding: 0;
+          transition: all .15s ease-in-out;
+          word-break: break-word;
+          font-size: .875rem;
+          font-weight: 400;
+          color: $input-color;
+
+          a{
+            text-decoration: none;
+            display: flex;
+            padding: .6rem .9375rem;
           }
 
+        }
+
+        .m-my-account {
+          padding-top: 1.57rem !important;
+          padding-bottom: 1.57rem !important;
+          background-color: #F2F2F2;
+        }
+
+        li:hover {
+          background-color: $border-color;
+          border-color: $border-color;
+          cursor: pointer
         }
 
       }
 
     }
 
+    a {
+      padding: 1rem .9375rem !important;
+      color: $input-color !important;
+      opacity: 1 !important;
+    }
+
   }
 
 }
-
-
-
-*/
