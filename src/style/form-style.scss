@@ -201,14 +201,16 @@
   overflow: auto;
 
   li {
-    padding: .75rem .9375rem;
     transition: all .15s ease-in-out;
     word-break: break-word;
     font-size: .875rem;
     color: $input-color;
+    padding: 0;
 
     a{
       text-decoration: none;
+      display: flex;
+      padding: 1rem .9375rem;
     }
 
   }
