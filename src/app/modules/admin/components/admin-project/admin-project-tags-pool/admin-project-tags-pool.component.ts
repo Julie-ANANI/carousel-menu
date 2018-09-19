@@ -156,4 +156,9 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   get tag() { return this._tag; }
   get tagForm() { return this._tagForm; }
   get tableInfos() { return this._tableInfos; }
+
+  get canAddTag(): boolean {
+    const tag = this._tagForm.get('tag').value;
+    return tag && tag._id;
+  }
 }
