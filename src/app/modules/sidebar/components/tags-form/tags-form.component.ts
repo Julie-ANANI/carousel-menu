@@ -3,7 +3,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import {TagsService} from '../../../../services/tags/tags.service';
 import {Subject} from 'rxjs/Subject';
-import {Tag} from '../../../../models/tag';
+import { Multiling } from '../../../../models/multiling';
+import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -34,6 +35,7 @@ export class TagsFormComponent implements OnInit {
     this._projectId = value._id;
   }
 
+  @Input() tagType: string;
   @Input() sidebarState: Subject<string>;
 
   @Output() newTags = new EventEmitter<Tag[]>();
@@ -77,20 +79,20 @@ export class TagsFormComponent implements OnInit {
     }
   }
 
-  public suggestions(keyword: string): Observable<Array<any>> {
+  public suggestions(query: string): Observable<Array<any>> {
     const queryConf = {
-      keyword: keyword,
+      query: query,
       type: 'tags'
     };
     return this._autocompleteService.get(queryConf);
   }
 
-  public autocompleListFormatter = (data: {name: string, _id: string}) : SafeHtml => {
+  public autocompleListFormatter = (data: {name: Multiling, _id: string}) : SafeHtml => {
     const text = this.autocompleValueFormatter(data);
     return this._sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
-  public autocompleValueFormatter = (data: {name: string, _id: string}) : string => {
+  public autocompleValueFormatter = (data: {name: Multiling, _id: string}) : string => {
     return MultilingPipe.prototype.transform(data.name, this._translateService.currentLang);
   };
 
@@ -136,5 +138,9 @@ export class TagsFormComponent implements OnInit {
 
   get needToSetOriginalTag(): boolean {
     return this._needToSetOriginalTag;
+  }
+
+  get lang(): string {
+    return this._translateService.currentLang;
   }
 }

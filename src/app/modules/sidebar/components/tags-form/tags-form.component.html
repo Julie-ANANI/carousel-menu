@@ -11,6 +11,7 @@
         <!-- Add Tags -->
         <app-shared-tag-item *ngSwitchCase="'addTags'"
           [tags]="tags"
+          [type]="tagType"
           [editMode]="true"
           [projectId]="projectId"
           (addTag)="addTag($event)"
@@ -19,6 +20,11 @@
 
         <!-- Edit Tag -->
         <div *ngSwitchCase="'editTag'">
+
+          <p><b>Original name: </b><span [textContent]="tag.originalLabel | multiling:lang"></span></p>
+
+          <p><b>Type: </b><span [textContent]="'TAGS.TYPE.' + tag.type" translate></span></p>
+
           <h4>Label:</h4>
           <p>
             <label for="enlabel">English: </label>

@@ -15,16 +15,16 @@ export const TAGS = {
       "LABEL": "Tag attachments",
       "PLACEHOLDER": ""
     },
-    "TYPE": {
-      "LABEL": "Type",
-      "UNKNOWN": "",
-      "undefined": "",
-      "SECTOR": "Secteur",
-      "VALUE_CHAIN": "Chaine de valeur",
-      "SOLUTION_TYPE": "Type de solution",
-      "QUALIFICATION": "Qualification"
-    },
     "SUBMIT": "Créer le tag",
     "CANCEL": "Annuler"
+  },
+  "TYPE": {
+    "LABEL": "Type",
+    "UNKNOWN": "",
+    "undefined": "",
+    "SECTOR": "Secteur",
+    "VALUE_CHAIN": "Chaine de valeur",
+    "SOLUTION_TYPE": "Type de solution",
+    "QUALIFICATION": "Qualification"
   }
 };

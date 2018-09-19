@@ -173,7 +173,7 @@ export class UserFormComponent implements OnInit {
     this.userForm.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
       this.displayCountrySuggestion = true;
       this.countriesSuggestion = [];
-      this.autoCompleteService.get({keyword: input, type: 'countries'}).subscribe(res => {
+      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe(res => {
         if (res.length === 0) {
           this.displayCountrySuggestion = false;
         } else {

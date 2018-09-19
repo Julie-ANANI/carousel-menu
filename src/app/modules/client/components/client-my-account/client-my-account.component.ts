@@ -84,7 +84,7 @@ export class ClientMyAccountComponent implements OnInit {
     this._formData.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
       this._displayCountrySuggestion = true;
       this._countriesSuggestion = [];
-      this.autoCompleteService.get({keyword: input, type: 'countries'}).subscribe(res => {
+      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe(res => {
         if (res.length === 0) {
           this._displayCountrySuggestion = false;
         } else {

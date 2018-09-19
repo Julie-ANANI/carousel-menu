@@ -17,6 +17,7 @@ import { Observable } from 'rxjs/Observable';
 export class SharedTagItemComponent implements OnInit {
 
   @Input() tags: Array<any>;
+  @Input() type: string;
   @Input() set projectId(project: string) {
     this._projectId = project;
   };
@@ -46,14 +47,17 @@ export class SharedTagItemComponent implements OnInit {
     });
   }
 
-  public tagSuggestions(keyword: string): Observable<Array<any>> {
+  public tagSuggestions(query: string): Observable<Array<any>> {
     if (this._projectId !== '') {
-      return this.tagsService.searchTagInPool(this.projectId, keyword);
+      return this.tagsService.searchTagInPool(this.projectId, query);
     } else {
       const queryConf = {
-        keyword: keyword,
+        query: query,
         type: 'tags'
       };
+      if (this.type) {
+        queryConf['tagType'] = this.type;
+      }
       return this.autocompleteService.get(queryConf);
     }
   }
