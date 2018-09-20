@@ -84,6 +84,10 @@
           flex: 0 1 calc(50% - 1rem);
         }
 
+        div:hover {
+          box-shadow: $box-shadow-hover;
+        }
+
       }
 
     }

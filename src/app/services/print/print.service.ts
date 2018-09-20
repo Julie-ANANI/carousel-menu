@@ -8,7 +8,7 @@ export class PrintService {
   constructor(private _http: Http) { }
 
   public getPdf(body: any): Observable<any> {
-    return this._http.post('/print/generatePdf', body );
+    return this._http.post('/reporting/job', body, {responseType: 3});
   }
 
 }
