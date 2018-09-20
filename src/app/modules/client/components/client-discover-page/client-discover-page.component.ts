@@ -38,7 +38,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private _tagLabel: Array<{'label': string, 'id': string}> = []; // to store the label.
 
-  private _endLabelIndex = 4; // to display the number of label item.
+  private _endLabelIndex = 8; // to display the number of label item.
 
   private _applyFilterClicked = false; // to display the spinner when the user is applying the filters.
 
@@ -587,8 +587,8 @@ export class ClientDiscoverPageComponent implements OnInit {
     if (value === 'label') {
       if (this._endLabelIndex < this._tagLabel.length) {
         const diff = this._tagLabel.length - this._endLabelIndex;
-        if (diff >= 4) {
-          this._endLabelIndex += 4;
+        if (diff >= 8) {
+          this._endLabelIndex += 8;
         } else {
           this._endLabelIndex += diff;
         }
