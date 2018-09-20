@@ -391,6 +391,32 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return this.frontendService.analyticPercentage(value1, value2);
   }
 
+  formatCompanyName(name: string) {
+    if (name) {
+      return `${name[0].toUpperCase()}${name.slice(1)}`;
+    }
+    return '--';
+  }
+
+  getDomainName(): string {
+    return environment.domain;
+  }
+
+  getIntroSrc(): string {
+    let src = '';
+
+    if (this.lang === 'en') {
+      src = 'https://res.cloudinary.com/umi/image/upload/v1537445724/app/default-images/Intro-UMI-en.png';
+    }
+
+    if (this.lang === 'fr') {
+      src = 'https://res.cloudinary.com/umi/image/upload/v1537445724/app/default-images/Intro-UMI-fr.png';
+    }
+
+    return src;
+
+  }
+
   get campaignStats() {
     return this._campaignsStats;
   }
@@ -425,13 +451,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   get continentTarget(): any {
     return this.project.settings ? this.project.settings.geography.continentTarget : {};
-  }
-
-  formatCompanyName(name: string) {
-    if (name) {
-      return `${name[0].toUpperCase()}${name.slice(1)}`;
-    }
-    return '--';
   }
 
   get cleaned_questions(): Array<Question> {
