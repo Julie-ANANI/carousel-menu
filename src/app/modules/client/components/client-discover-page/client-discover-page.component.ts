@@ -48,6 +48,8 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private _startInnoIndex: number; // starting index of the innovation.
 
+  private _config = {
+    fields: 'name type status principalMedia tags innovationCards',
   private _endInnoIndex: number; // upto which index we have to show the innovation.
 
   config = {
