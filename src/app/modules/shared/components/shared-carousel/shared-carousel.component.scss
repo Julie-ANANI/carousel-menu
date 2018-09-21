@@ -1,0 +1,113 @@
+@import "../../../../../style/variables";
+
+.carousel-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  left: 0;
+  right: 0;
+  background-color: $backgroud-cover-color;
+  z-index: 8996;
+
+  .carousel-body {
+    position: absolute;
+    margin: auto;
+    background-color: white;
+    max-width: 920px;
+    height: 600px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    border-radius: 3px;
+
+    .carousel-content {
+      display: flex;
+      width: 100%;
+      position: relative;
+
+      .carousel-image {
+        height: 50%;
+        width: 100%;
+        background-color: pink;
+        position: relative;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+
+        .carousel-next-arrow, .carousel-prev-arrow {
+          position: absolute;
+          display: flex;
+          visibility: hidden;
+          top: 50%;
+          border-radius: 50%;
+          width: 42px;
+          height: 42px;
+          justify-content: center;
+          align-items: center;
+          transition: all .15s ease-in-out;
+
+          .fa-angle-right, .fa-angle-left {
+            color: white;
+          }
+
+        }
+
+        .carousel-next-arrow {
+          right: 25px;
+          padding-left: 3px;
+        }
+
+        .carousel-prev-arrow {
+          left: 25px;
+          padding-right: 3px;
+        }
+
+        .carousel-next-arrow:hover, .carousel-prev-arrow:hover {
+          background-color: $background-hover-icon;
+          cursor: pointer;
+        }
+
+        .carousel-dot {
+          display: flex;
+          position: absolute;
+          width: 100%;
+          justify-content: center;
+          top: 90%;
+
+          span {
+            margin-right: .35rem;
+
+            .fa-circle {
+              color: #bbb;
+            }
+
+          }
+
+          .fa-circle:hover, .active {
+            color: $background-hover-icon !important;
+            cursor: pointer;
+          }
+
+        }
+
+      }
+
+      .carousel-image:hover {
+
+
+        .carousel-next-arrow, .carousel-prev-arrow {
+          visibility: visible;
+        }
+
+      }
+
+    }
+
+  }
+
+}
