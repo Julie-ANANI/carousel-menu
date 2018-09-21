@@ -22,7 +22,7 @@
           <div class="detail-wrapper">
 
             <div class="summary-wrapper">
-              <div class="para">{{ innovation.summary }}</div>
+              <div class="para" [innerHTML]="innovation.summary"></div>
               <div class="opinion-wrapper">
                 <div class="contact-button">
                   <a class="btn btn-primary btn-sm" (click)="contactUs($event)">
@@ -108,12 +108,12 @@
 
             <div class="column col-md-12 col-6">
               <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h3>
-              <div>{{ innovation.problem }}</div>
+              <div [innerHTML]="innovation.problem"></div>
             </div>
 
             <div class="column col-md-12 col-6">
               <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h3>
-              <div>{{ innovation.solution }}</div>
+              <div [innerHTML]="innovation.solution"></div>
             </div>
 
           </div>
