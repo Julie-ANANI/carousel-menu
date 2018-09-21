@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +23,7 @@ export class AuthService {
   private _user: User;
 
   private _cookieOptions: CookieOptions = {
-    expires: new Date(Date.now()+environment.cookieTime ),
+    expires: new Date(Date.now() + environment.cookieTime ),
     secure: environment.secureCookie
   };
 
