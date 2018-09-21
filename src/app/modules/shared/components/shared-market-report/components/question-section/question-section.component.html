@@ -1,7 +1,9 @@
 <section class="question-section-wrapper s-question-print" [id]=domSectionId>
 
-  <div *ngFor="let tag of tags" class="tags-wrapper">
-    <span (click)="addTagFilter($event, tag)">#{{ tag.label | multiling:lang }}</span>
+  <div *ngFor="let tag of tags" class="tags-wrapper"
+       (click)="addTagFilter($event, tag)">
+      #{{ tag.label | multiling:lang }}
+      <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
   </div>
 
   <!-- If the question type is checkbox or radio -->
