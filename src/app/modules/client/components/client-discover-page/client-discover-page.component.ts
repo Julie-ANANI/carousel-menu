@@ -48,8 +48,6 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private _startInnoIndex: number; // starting index of the innovation.
 
-  private _config = {
-    fields: 'name type status principalMedia tags innovationCards',
   private _endInnoIndex: number; // upto which index we have to show the innovation.
 
   config = {
@@ -146,7 +144,7 @@ export class ClientDiscoverPageComponent implements OnInit {
         if (i === 0) {
 
           if (this._filterApplied[i].type === 'type') {
-             this.filterType(this._localInnovations, this._filterApplied[i].value);
+            this.filterType(this._localInnovations, this._filterApplied[i].value);
           }
 
           /*if (this.filterApplied[i].type === 'status') {
@@ -169,7 +167,7 @@ export class ClientDiscoverPageComponent implements OnInit {
         } else {
 
           if (this._filterApplied[i].type === 'type') {
-             this.filterType(this._filterInnovations, this._filterApplied[i].value);
+            this.filterType(this._filterInnovations, this._filterApplied[i].value);
           }
 
           /*if (this.filterApplied[i].type === 'status') {
@@ -553,24 +551,24 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   }
 
-/*  getStatusName(value: string): string {
-    if (value === 'DONE') {
-      if (this.currentLang === 'en') {
-        return 'Completed'
-      } else {
-        return 'Terminé'
+  /*  getStatusName(value: string): string {
+      if (value === 'DONE') {
+        if (this.currentLang === 'en') {
+          return 'Completed'
+        } else {
+          return 'Terminé'
+        }
       }
-    }
 
-    if (value === 'EVALUATING') {
-      if (this.currentLang === 'en') {
-        return 'In progress'
-      } else {
-        return 'En cours'
+      if (value === 'EVALUATING') {
+        if (this.currentLang === 'en') {
+          return 'In progress'
+        } else {
+          return 'En cours'
+        }
       }
-    }
 
-  }*/
+    }*/
 
 
   getLabelName(value: string): string {
