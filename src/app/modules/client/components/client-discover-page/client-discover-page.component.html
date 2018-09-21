@@ -263,7 +263,7 @@
               <!-- Body part -->
               <div class="innov-body">
                 <h1 class="main-heading">{{ innovation.title | DiscoverSummaryPipe:80 }}</h1>
-                <p>{{ innovation.summary }}</p>
+                <p [innerHTML]="innovation.summary"></p>
               </div>
 
             </a>
