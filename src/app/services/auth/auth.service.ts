@@ -44,13 +44,13 @@ export class AuthService {
   }
 
   public startCookieObservator() {
-    if(this._cookieObserver === null) {
-      this._cookieObserver = setInterval(()=>{
-        if(!this._cookieService.get('hasBeenAuthenticated')) {
-          //this._cookieService.get('user')
+    if (this._cookieObserver === null) {
+      this._cookieObserver = setInterval(() => {
+        if (!this._cookieService.get('hasBeenAuthenticated')) {
+          // this._cookieService.get('user')
           this.logout().first().subscribe(() => {
             this._router.navigate(['/logout']);
-          }, err=>{
+          }, err => {
             console.error(err)
           });
         }

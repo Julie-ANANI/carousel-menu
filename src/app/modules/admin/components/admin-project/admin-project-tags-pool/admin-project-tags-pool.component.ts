@@ -12,6 +12,7 @@ import { Tag } from '../../../../../models/tag';
 import { Template } from '../../../../sidebar/interfaces/template';
 import { Observable } from 'rxjs/Observable';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
+import { Multiling } from '../../../../../models/multiling';
 
 @Component({
   selector: 'app-admin-project-tags-pool',
@@ -79,20 +80,20 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     this._tableInfos = {...this._tableInfos, _content: tagsList, _total: tagsList.length};
   }
 
-  public suggestions(keyword: string): Observable<Array<any>> {
+  public suggestions(query: string): Observable<Array<any>> {
     const queryConf = {
-      keyword: keyword,
+      query: query,
       type: 'tags'
     };
     return this.autocompleteService.get(queryConf);
   }
 
-  public autocompleListFormatter = (data: {name: string, _id: string}) : SafeHtml => {
+  public autocompleListFormatter = (data: {name: Multiling, _id: string}) : SafeHtml => {
     const text = this.autocompleValueFormatter(data);
     return this.sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
-  public autocompleValueFormatter = (data: {name: string, _id: string}) : string => {
+  public autocompleValueFormatter = (data: {name: Multiling, _id: string}) : string => {
       return MultilingPipe.prototype.transform(data.name, this.translateService.currentLang);
   };
 
@@ -155,4 +156,9 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   get tag() { return this._tag; }
   get tagForm() { return this._tagForm; }
   get tableInfos() { return this._tableInfos; }
+
+  get canAddTag(): boolean {
+    const tag = this._tagForm.get('tag').value;
+    return tag && tag._id;
+  }
 }

@@ -2,6 +2,13 @@
 
   <div class="header-wrapper">
     <div class="section-inline-container">
+
+      <div *ngFor="let tag of tags" class="tags-wrapper"
+           (click)="addTagFilter($event, tag)">
+        #{{ tag.label | multiling:lang }}
+        <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
+      </div>
+
       <app-question-conclusion
         [innovation]="innovation"
         [pieChart]="pieChart"
@@ -9,6 +16,7 @@
         [readonly]="readonly"
         [stats]="stats">
       </app-question-conclusion>
+
     </div>
   </div>
 
@@ -73,43 +81,3 @@
   </div>
 
 </div>
-
-
-
-<!--
-<div class="bar-chart-component">
-
-  <div *ngFor="let barData of barsData; let i = index" [attr.data-index]="i" class="page-break">
-
-    <div class="flex-container">
-      <div class="horizontal-bar" (click)="showAnswers[i] = !showAnswers[i]">
-        <div class="bar-number" [ngStyle]="{'background': barData.color}">{{i+1}}</div>
-        <div class="bar-fill" [style.width]="barData.relativePercentage"></div>
-        <div class="bar-name">{{barData.label | multiling:lang}}</div>
-        <div class="bar-stats tooltip" [ngSwitch]="question.controlType"
-             [attr.data-tooltip]="barData.count + ' ' + ('MARKET_REPORT.ANSWERS' | translate)">
-          <span *ngSwitchCase="'radio'">{{barData.absolutePercentage}}</span>
-          <span *ngSwitchCase="'checkbox'">{{barData.count}} {{'MARKET_REPORT.ANSWERS' | translate}}</span>
-          <i class="icon" aria-hidden="true" [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
-        </div>
-      </div>
-      <button class="btn-round btn-secondary" (click)="filterAnswer(barData, $event)">
-        <i class="fas fa-filter"></i>
-      </button>
-    </div>
-
-    &lt;!&ndash; Textarea &ndash;&gt;
-    <ul *ngIf="showAnswers[i]" class="comments">
-      <li *ngFor="let answer of barData.answers">
-        <app-market-comment
-          [answer]="answer"
-          [questionId]="question.identifier+'Comment'"
-          (addFilter)="newFilter($event)"
-          (modalAnswerChange)="seeAnswer($event)">
-        </app-market-comment>
-      </li>
-    </ul>
-
-  </div>
-
-</div>-->

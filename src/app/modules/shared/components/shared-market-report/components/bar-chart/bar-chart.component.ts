@@ -5,6 +5,7 @@ import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
 import { Multiling } from '../../../../../../models/multiling';
 import { Question } from '../../../../../../models/question';
+import { Tag } from '../../../../../../models/tag';
 
 export interface BarData {
   label: Multiling,
@@ -29,7 +30,7 @@ export class BarChartComponent implements OnInit {
     this._answers = value;
     this.updateAnswersData();
   }
-
+  @Input() public tags: Array<Tag>;
   @Input() public innovation: Innovation;
   @Input() public question: Question;
   @Input() public readonly: boolean;
@@ -142,6 +143,16 @@ export class BarChartComponent implements OnInit {
     event.preventDefault();
     this.showDetails = !this.showDetails;
     this.answerButtonClicked.emit(this.showDetails);
+  }
+
+  public addTagFilter(event: Event, tag: Tag) {
+    event.preventDefault();
+    this.filterService.addFilter({
+      status: 'TAG',
+      questionId: this.question.identifier + 'Comment',
+      questionTitle: tag.label,
+      value: tag._id
+    });
   }
 
   get barsData(): Array<BarData> {

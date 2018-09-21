@@ -11,7 +11,7 @@ export const COMMON = {
   'SUBMIT': 'CONFIRM',
   'LOG_IN': 'Sign in',
   'SIGN_UP': 'Sign up',
-  'LOG_OUT': 'Log out',
+  'LOG_OUT': 'Sign out',
   'CANCEL': 'Cancel',
   'MORE': 'Show',
   'OF': 'of',
@@ -86,9 +86,9 @@ export const COMMON = {
 
   'PASSWORD_PLACEHOLDER': 'Enter your password',
   'OLD_PASSWORD_PLACEHOLDER': 'Enter your old password',
-  'NEW_PASSWORD_PLACEHOLDER': 'Enter your new password: 9+ characters',
+  'NEW_PASSWORD_PLACEHOLDER': '9+ characters and must have 1 special character',
   'CONFIRM_PASSWORD_PLACEHOLDER': 'Enter the confirmation password',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ characters',
+  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ characters and must have 1 special character',
 
   'PASSWORD_CONFIRM': 'Password confirmation',
 
@@ -161,7 +161,8 @@ export const COMMON = {
 
   'INVALID': {
     'EMAIL': 'Please enter a valid email address.',
-    'PASSWORD_TOO_SHORT': 'Password is too short.'
+    'PASSWORD_TOO_SHORT': 'Password is too short.',
+    'MUST_CONTAIN': 'Password must contain one special character.'
   },
 
   'LINKS': 'Links',

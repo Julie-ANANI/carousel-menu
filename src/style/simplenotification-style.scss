@@ -1,0 +1,43 @@
+@import "variables";
+
+/*
+    This is the style that are related to the notification that we see in the bottom-right.
+ */
+
+
+.simple-notification {
+  border: 1px solid transparent !important;
+  border-radius: .18rem !important;
+  word-wrap: break-word !important;
+}
+
+.simple-notification-wrapper {
+  z-index: 9999 !important;
+}
+
+.simple-notification .sn-title {
+  font-size: 1.1rem !important;
+  line-height: 1.5 !important;
+  padding-right: 0 !important;
+  font-weight: bold;
+  padding-bottom: .5rem !important;
+}
+
+.simple-notification .sn-content {
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+  padding-right: 0 !important;
+  padding-bottom: .6rem !important;
+}
+
+.simple-notification.success {
+  background: $validation-color !important;
+  color: white !important;
+  border-color: $validation-color !important;
+}
+
+.simple-notification.error {
+  background: $alert-color !important;
+  color: white !important;
+  border-color: $alert-color !important;
+}

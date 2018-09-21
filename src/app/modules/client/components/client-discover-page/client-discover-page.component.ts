@@ -18,37 +18,37 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
 
-  totalInnovations: Array<Innovation> = []; // to hold the total project result we get from the server.
+  private _totalInnovations: Array<Innovation> = []; // to hold the total project result we get from the server.
 
-  filterInnovations: Array<Innovation> = []; // in this we store the innovation that are filtered.
+  private _filterInnovations: Array<Innovation> = []; // in this we store the innovation that are filtered.
 
-  localInnovations: Array<Innovation> = []; // we store the result of the total innovation to do functions on it.
+  private _localInnovations: Array<Innovation> = []; // we store the result of the total innovation to do functions on it.
 
-  displaySpinner = true; // to show the spinner when we are fetching the data from the server.
+  private _displaySpinner = true; // to show the spinner when we are fetching the data from the server.
 
-  showFilterContainer = false; // to show or hide the filter container.
+  private _showFilterContainer = false; // to show or hide the filter container.
 
-  tags: Array<Tag> = []; // to store the project tags.
+  private _tags: Array<Tag> = []; // to store the project tags.
 
-  filterApplied: Array<{id: string, value: string, type: string}> = []; // to show the client the filters he added.
+  private _filterApplied: Array<{id: string, value: string, type: string}> = []; // to show the client the filters he added.
 
-  addingFilter = false; // showing spinner when adding the filters.
+  private _addingFilter = false; // showing spinner when adding the filters.
 
-  totalResults = 0; // saving the result that we get from the server.
+  private _totalResults = 0; // saving the result that we get from the server.
 
-  tagLabel: Array<{'label': string, 'id': string}> = []; // to store the label.
+  private _tagLabel: Array<{'label': string, 'id': string}> = []; // to store the label.
 
-  endLabelIndex = 4; // to display the number of label item.
+  private _endLabelIndex = 8; // to display the number of label item.
 
-  applyFilterClicked = false; // to display the spinner when the user is applying the filters.
+  private _applyFilterClicked = false; // to display the spinner when the user is applying the filters.
 
-  selectedLang = ''; // set the lang when user select the lang in the filter.
+  private _selectedLang = ''; // set the lang when user select the lang in the filter.
 
-  innovationDetails: Array<{text: string}> = []; // to store the innovation detail to send the search field.
+  private _innovationDetails: Array<{text: string}> = []; // to store the innovation detail to send the search field.
 
-  startInnoIndex: number; // starting index of the innovation.
+  private _startInnoIndex: number; // starting index of the innovation.
 
-  endInnoIndex: number; // upto which index we have to show the innovation.
+  private _endInnoIndex: number; // upto which index we have to show the innovation.
 
   config = {
     fields: 'created innovationCards tags status projectStatus',
@@ -91,11 +91,12 @@ export class ClientDiscoverPageComponent implements OnInit {
    */
   private getAllInnovations() {
     this.innovationService.getAll(this.config).first().subscribe(innovations => {
-      this.displaySpinner = true;
-      this.totalInnovations = innovations.result;
+      this._displaySpinner = true;
+      this._totalInnovations = innovations.result;
       this.initialize();
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      this._displaySpinner = false;
     });
   }
 
@@ -108,9 +109,9 @@ export class ClientDiscoverPageComponent implements OnInit {
     const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
 
     if (sessionValues.length > 0) {
-      this.filterApplied = sessionValues;
+      this._filterApplied = sessionValues;
     } else {
-      this.filterApplied = [];
+      this._filterApplied = [];
     }
 
   }
@@ -121,7 +122,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     to perform the actions on it.
    */
   private initialize() {
-    this.localInnovations = this.totalInnovations;
+    this._localInnovations = this._totalInnovations;
     this.loadInnovations();
   }
 
@@ -132,85 +133,85 @@ export class ClientDiscoverPageComponent implements OnInit {
   we call the respective functions.
  */
   private loadInnovations() {
-    this.startInnoIndex = 0;
-    this.endInnoIndex = parseInt(localStorage.getItem('app-discover-limit'), 10) || 20;
+    this._startInnoIndex = 0;
+    this._endInnoIndex = parseInt(localStorage.getItem('app-discover-limit'), 10) || 20;
 
-    if (this.filterApplied.length > 0) {
-      this.filterInnovations = [];
+    if (this._filterApplied.length > 0) {
+      this._filterInnovations = [];
 
-      for (let i = 0; i < this.filterApplied.length; i++) {
+      for (let i = 0; i < this._filterApplied.length; i++) {
 
         if (i === 0) {
 
-          if (this.filterApplied[i].type === 'type') {
-             this.filterType(this.localInnovations, this.filterApplied[i].value);
+          if (this._filterApplied[i].type === 'type') {
+             this.filterType(this._localInnovations, this._filterApplied[i].value);
           }
 
           /*if (this.filterApplied[i].type === 'status') {
             this.filterStatus(this.localInnovations, this.filterApplied[i].value);
           }*/
 
-          if (this.filterApplied[i].type === 'stage') {
-            this.filterStage(this.localInnovations, this.filterApplied[i].value);
+          if (this._filterApplied[i].type === 'stage') {
+            this.filterStage(this._localInnovations, this._filterApplied[i].value);
           }
 
-          if (this.filterApplied[i].type === 'language') {
-            this.selectedLang = this.filterApplied[i].value;
-            this.filterLang(this.localInnovations, this.filterApplied[i].value);
+          if (this._filterApplied[i].type === 'language') {
+            this._selectedLang = this._filterApplied[i].value;
+            this.filterLang(this._localInnovations, this._filterApplied[i].value);
           }
 
-          if (this.filterApplied[i].type === 'label') {
-            this.filterLabel(this.localInnovations, this.filterApplied[i].id);
+          if (this._filterApplied[i].type === 'label') {
+            this.filterLabel(this._localInnovations, this._filterApplied[i].id);
           }
 
         } else {
 
-          if (this.filterApplied[i].type === 'type') {
-             this.filterType(this.filterInnovations, this.filterApplied[i].value);
+          if (this._filterApplied[i].type === 'type') {
+             this.filterType(this._filterInnovations, this._filterApplied[i].value);
           }
 
           /*if (this.filterApplied[i].type === 'status') {
             this.filterStatus(this.filterInnovations, this.filterApplied[i].value);
           }*/
 
-          if (this.filterApplied[i].type === 'stage') {
-            this.filterStage(this.filterInnovations, this.filterApplied[i].value);
+          if (this._filterApplied[i].type === 'stage') {
+            this.filterStage(this._filterInnovations, this._filterApplied[i].value);
           }
 
-          if (this.filterApplied[i].type === 'language') {
-            this.selectedLang = this.filterApplied[i].value;
-            this.filterLang(this.filterInnovations, this.filterApplied[i].value);
+          if (this._filterApplied[i].type === 'language') {
+            this._selectedLang = this._filterApplied[i].value;
+            this.filterLang(this._filterInnovations, this._filterApplied[i].value);
           }
 
-          if (this.filterApplied[i].type === 'label') {
-            this.filterLabel(this.filterInnovations, this.filterApplied[i].id);
+          if (this._filterApplied[i].type === 'label') {
+            this.filterLabel(this._filterInnovations, this._filterApplied[i].id);
           }
 
         }
 
       }
-      this.populateTags(this.filterInnovations);
-      this.searchInInnovationCards(this.filterInnovations);
+      this.populateTags(this._filterInnovations);
+      this.searchInInnovationCards(this._filterInnovations);
     } else {
-      this.populateTags(this.localInnovations);
-      this.searchInInnovationCards(this.localInnovations);
+      this.populateTags(this._localInnovations);
+      this.searchInInnovationCards(this._localInnovations);
     }
 
-    this.displaySpinner = false;
-    this.addingFilter = false;
+    this._displaySpinner = false;
+    this._addingFilter = false;
 
   }
 
 
   private filterType(innovations: Array<Innovation>, value: string) {
-    this.filterInnovations = innovations.filter((items) => {
+    this._filterInnovations = innovations.filter((items) => {
       return items.tags.findIndex((tag) => tag.type === value) !== -1;
     });
   }
 
 
   private filterStage(innovations: Array<Innovation>, value: string) {
-    this.filterInnovations = innovations.filter((items) => {
+    this._filterInnovations = innovations.filter((items) => {
       return items.projectStatus === Number(value);
     });
   }
@@ -223,7 +224,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
 
   private filterLang(innovations: Array<Innovation>, value: string) {
-    this.filterInnovations = innovations.filter((items) => {
+    this._filterInnovations = innovations.filter((items) => {
       return items.innovationCards.findIndex((inno) => inno.lang === value) !== -1;
     });
 
@@ -231,7 +232,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
 
   private filterLabel(innovations: Array<Innovation>, value: string) {
-    this.filterInnovations = innovations.filter((items) => {
+    this._filterInnovations = innovations.filter((items) => {
       return items.tags.findIndex((tag) => tag._id === value) !== -1;
     });
   }
@@ -243,24 +244,24 @@ export class ClientDiscoverPageComponent implements OnInit {
     fo the type SECTOR.
    */
   private populateTags(innovations: Array<Innovation>) {
-    this.tags = [];
+    this._tags = [];
 
     innovations.forEach((innovations) => {
-      const index = this.filterApplied.findIndex((item) => item.type === 'type' || item.type === 'label' );
+      const index = this._filterApplied.findIndex((item) => item.type === 'type' || item.type === 'label' );
       const rawTags = innovations.tags || [];
       if (index !== -1) {
         rawTags.forEach((tag) => {
-          const index = this.filterApplied.findIndex((item) => item.type === 'type' ? item.id === tag.type : item.id === tag._id);
+          const index = this._filterApplied.findIndex((item) => item.type === 'type' ? item.id === tag.type : item.id === tag._id);
           if (index !== -1) {
-            this.tags.push(tag);
+            this._tags.push(tag);
           }
         });
       } else {
         rawTags.forEach((tag) => {
           if (tag.type === 'SECTOR') {
-            const index = this.tags.findIndex((item) => item._id === tag._id);
+            const index = this._tags.findIndex((item) => item._id === tag._id);
             if (index === -1) {
-              this.tags.push(tag);
+              this._tags.push(tag);
             }
           }
         });
@@ -278,20 +279,20 @@ export class ClientDiscoverPageComponent implements OnInit {
     it to the tagLabel attribute and we also sort the array alphabetically.
    */
   private populateLabels() {
-    this.tagLabel = [];
+    this._tagLabel = [];
 
-    this.tags.forEach((items) => {
-      const index = this.tagLabel.findIndex((item) => item.id === items._id);
+    this._tags.forEach((items) => {
+      const index = this._tagLabel.findIndex((item) => item.id === items._id);
       if (index === -1) {
         if (this.currentLang === 'en') {
-          this.tagLabel.push({'label': items.label.en, 'id': items._id});
+          this._tagLabel.push({'label': items.label.en, 'id': items._id});
         } else {
-          this.tagLabel.push({'label': items.label.fr, 'id': items._id});
+          this._tagLabel.push({'label': items.label.fr, 'id': items._id});
         }
       }
     });
 
-    this.tagLabel.sort((a: any, b: any) => {
+    this._tagLabel.sort((a: any, b: any) => {
       if (a.label < b.label) {
         return -1;
       }
@@ -313,28 +314,28 @@ export class ClientDiscoverPageComponent implements OnInit {
    */
   private searchInInnovationCards(innovations: Array<Innovation>) {
     this._innovationCards = [];
-    this.innovationDetails = [];
+    this._innovationDetails = [];
 
     innovations.forEach((item) => {
 
-      if (this.selectedLang === '') {
+      if (this._selectedLang === '') {
         for (let i = 0; i < item.innovationCards.length; i++) {
           if (item.innovationCards[i].lang === this.currentLang) {
             this._innovationCards.push(item.innovationCards[i]);
           }
-          this.innovationDetails.push({'text': item.innovationCards[i].title});
+          this._innovationDetails.push({'text': item.innovationCards[i].title});
         }
       } else {
         const index = item.innovationCards.findIndex(innovationCard => innovationCard.lang === this.innovationsLang);
         if (index !== -1) {
           this._innovationCards.push(item.innovationCards[index]);
-          this.innovationDetails.push({'text': item.innovationCards[index].title});
+          this._innovationDetails.push({'text': item.innovationCards[index].title});
         }
       }
 
     });
 
-    this.totalResults = this._innovationCards.length;
+    this._totalResults = this._innovationCards.length;
 
   }
 
@@ -345,18 +346,18 @@ export class ClientDiscoverPageComponent implements OnInit {
    */
   onValueSelected(value: string) {
     if (value === '') {
-      this.displaySpinner = true;
+      this._displaySpinner = true;
       this.initialize();
     } else {
-      this.displaySpinner = true;
-      this.localInnovations = [];
-      this.totalInnovations.forEach((innovation) => {
+      this._displaySpinner = true;
+      this._localInnovations = [];
+      this._totalInnovations.forEach((innovation) => {
         innovation.innovationCards.forEach((innoCard) => {
           const find = innoCard.title.toLowerCase().includes(value.toLowerCase());
           if (find) {
-            const index = this.localInnovations.findIndex((item) => item._id === innovation._id);
+            const index = this._localInnovations.findIndex((item) => item._id === innovation._id);
             if (index === -1) {
-              this.localInnovations.push(innovation);
+              this._localInnovations.push(innovation);
             }
           }
         })
@@ -372,8 +373,8 @@ export class ClientDiscoverPageComponent implements OnInit {
    */
   addFilter(event: Event) {
     event.preventDefault();
-    this.showFilterContainer = true;
-    this.applyFilterClicked = false;
+    this._showFilterContainer = true;
+    this._applyFilterClicked = false;
   }
 
 
@@ -384,9 +385,9 @@ export class ClientDiscoverPageComponent implements OnInit {
   cancelFilter(event: Event) {
     event.preventDefault();
 
-    this.showFilterContainer = false;
+    this._showFilterContainer = false;
 
-    if (!this.applyFilterClicked) {
+    if (!this._applyFilterClicked) {
       this.storedFilters();
     }
 
@@ -400,10 +401,10 @@ export class ClientDiscoverPageComponent implements OnInit {
     function.
    */
   checkFilterLength() {
-    if (this.filterApplied.length > 0) {
+    if (this._filterApplied.length > 0) {
       this.loadInnovations();
     } else {
-      this.selectedLang = '';
+      this._selectedLang = '';
       this.initialize();
     }
   }
@@ -413,9 +414,9 @@ export class ClientDiscoverPageComponent implements OnInit {
     save the applied filters to session storage and close the container.
    */
   applyFilter() {
-    this.applyFilterClicked = true;
+    this._applyFilterClicked = true;
     this.storeFilters();
-    this.showFilterContainer = false;
+    this._showFilterContainer = false;
   }
 
 
@@ -423,7 +424,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     here we are storing the filter values in the session storage.
    */
   private storeFilters() {
-    sessionStorage.setItem('discover-filters', JSON.stringify(this.filterApplied));
+    sessionStorage.setItem('discover-filters', JSON.stringify(this._filterApplied));
   }
 
 
@@ -431,11 +432,11 @@ export class ClientDiscoverPageComponent implements OnInit {
     when the applied filter is clicked to remove it.
    */
   removeFilter(value: string) {
-    this.addingFilter = true;
+    this._addingFilter = true;
 
     this.filterRemove(value);
 
-    if (!this.showFilterContainer) {
+    if (!this._showFilterContainer) {
       this.storeFilters();
     }
 
@@ -449,8 +450,8 @@ export class ClientDiscoverPageComponent implements OnInit {
    value.
   */
   filterRemove(value: string) {
-    const index = this.filterApplied.findIndex(name => name.id === value);
-    this.filterApplied.splice(index, 1);
+    const index = this._filterApplied.findIndex(name => name.id === value);
+    this._filterApplied.splice(index, 1);
   }
 
 
@@ -460,11 +461,11 @@ export class ClientDiscoverPageComponent implements OnInit {
   removeAllFilter(event: Event) {
     event.preventDefault();
 
-    this.addingFilter = true;
+    this._addingFilter = true;
 
-    this.filterApplied = [];
+    this._filterApplied = [];
 
-    if (!this.showFilterContainer) {
+    if (!this._showFilterContainer) {
       this.storeFilters();
     }
 
@@ -478,11 +479,11 @@ export class ClientDiscoverPageComponent implements OnInit {
   and call the related functions.
  */
   toggleFilter(event: Event) {
-    this.addingFilter = true;
-    this.selectedLang = '';
+    this._addingFilter = true;
+    this._selectedLang = '';
 
     if (event.target['checked']) {
-      this.filterApplied.push({id: event.target['id'], value: event.target['defaultValue'], type: event.target['name']});
+      this._filterApplied.push({id: event.target['id'], value: event.target['defaultValue'], type: event.target['name']});
     } else {
       this.filterRemove(event.target['id']);
     }
@@ -497,7 +498,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     we make the checkbox ticked.
    */
   filterChecked(value: string, type: string): boolean {
-    const index = this.filterApplied.findIndex((item) => item.id === value && item.type === type);
+    const index = this._filterApplied.findIndex((item) => item.id === value && item.type === type);
     return index !== -1;
   }
 
@@ -507,11 +508,11 @@ export class ClientDiscoverPageComponent implements OnInit {
 */
   checkDisable(value: string, type: string): boolean {
 
-    if (this.filterApplied.length > 0) {
-      const typeIndex = this.filterApplied.findIndex((item) => item.type === type);
+    if (this._filterApplied.length > 0) {
+      const typeIndex = this._filterApplied.findIndex((item) => item.type === type);
 
       if (typeIndex !== -1) {
-        const index = this.filterApplied.findIndex((item) => item.id === value);
+        const index = this._filterApplied.findIndex((item) => item.id === value);
         if (index === -1) {
           return true;
         }
@@ -584,12 +585,12 @@ export class ClientDiscoverPageComponent implements OnInit {
     event.preventDefault();
 
     if (value === 'label') {
-      if (this.endLabelIndex < this.tagLabel.length) {
-        const diff = this.tagLabel.length - this.endLabelIndex;
-        if (diff >= 4) {
-          this.endLabelIndex += 4;
+      if (this._endLabelIndex < this._tagLabel.length) {
+        const diff = this._tagLabel.length - this._endLabelIndex;
+        if (diff >= 8) {
+          this._endLabelIndex += 8;
         } else {
-          this.endLabelIndex += diff;
+          this._endLabelIndex += diff;
         }
       }
     }
@@ -671,19 +672,19 @@ export class ClientDiscoverPageComponent implements OnInit {
     const tempOffset = parseInt(paginationValues.offset, 10);
     const tempLimit = parseInt(paginationValues.limit, 10);
 
-    this.startInnoIndex = tempOffset;
-    this.endInnoIndex = tempLimit;
+    this._startInnoIndex = tempOffset;
+    this._endInnoIndex = tempLimit;
 
-    if (paginationValues.limit >= this.totalResults) {
-      this.startInnoIndex = 0;
-      this.endInnoIndex = this.totalResults;
+    if (paginationValues.limit >= this._totalResults) {
+      this._startInnoIndex = 0;
+      this._endInnoIndex = this._totalResults;
     } else {
       if (paginationValues.offset === 0) {
-        this.startInnoIndex = 0;
-        this.endInnoIndex = tempLimit;
+        this._startInnoIndex = 0;
+        this._endInnoIndex = tempLimit;
       } else if (paginationValues.offset > 0) {
-        this.startInnoIndex = tempOffset;
-        this.endInnoIndex += tempOffset;
+        this._startInnoIndex = tempOffset;
+        this._endInnoIndex += tempOffset;
       }
     }
 
@@ -701,7 +702,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     the language in which we want to display the innovation card..
    */
   get innovationsLang(): string {
-    return this.selectedLang === '' ? 'en' : this.selectedLang;
+    return this._selectedLang === '' ? 'en' : this._selectedLang;
   }
 
   /*
@@ -731,6 +732,70 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   set innovationCards(value: InnovCard[]) {
     this._innovationCards = value;
+  }
+
+  get totalInnovations(): Array<Innovation> {
+    return this._totalInnovations;
+  }
+
+  get filterInnovations(): Array<Innovation> {
+    return this._filterInnovations;
+  }
+
+  get localInnovations(): Array<Innovation> {
+    return this._localInnovations;
+  }
+
+  get displaySpinner(): boolean {
+    return this._displaySpinner;
+  }
+
+  get showFilterContainer(): boolean {
+    return this._showFilterContainer;
+  }
+
+  get tags(): Array<Tag> {
+    return this._tags;
+  }
+
+  get filterApplied(): Array<{ id: string; value: string; type: string }> {
+    return this._filterApplied;
+  }
+
+  get addingFilter(): boolean {
+    return this._addingFilter;
+  }
+
+  get totalResults(): number {
+    return this._totalResults;
+  }
+
+  get tagLabel(): Array<{ label: string; id: string }> {
+    return this._tagLabel;
+  }
+
+  get endLabelIndex(): number {
+    return this._endLabelIndex;
+  }
+
+  get applyFilterClicked(): boolean {
+    return this._applyFilterClicked;
+  }
+
+  get selectedLang(): string {
+    return this._selectedLang;
+  }
+
+  get innovationDetails(): Array<{ text: string }> {
+    return this._innovationDetails;
+  }
+
+  get startInnoIndex(): number {
+    return this._startInnoIndex;
+  }
+
+  get endInnoIndex(): number {
+    return this._endInnoIndex;
   }
 
   /*sortInnovations(innovations: any) {

@@ -19,8 +19,6 @@ export class User extends Model {
   private _jobTitle: string;
   private _country: string;
   private _provider: string;
-  private _newFeature: Array<{ page: string, updateNumber: number, updated: Date }>;
-  private _completion: number;
 
   constructor(user?: any) {
     super(user);
@@ -178,20 +176,5 @@ export class User extends Model {
     this._provider = value;
   }
 
-  get newFeature(): Array<{ page: string; updateNumber: number; updated: Date }> {
-    return this._newFeature;
-  }
-
-  set newFeature(value: Array<{ page: string; updateNumber: number; updated: Date }>) {
-    this._newFeature = value;
-  }
-
-  get completion(): number {
-    return this._completion;
-  }
-
-  set completion(value: number) {
-    this._completion = value;
-  }
 
 }

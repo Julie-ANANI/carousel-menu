@@ -40,6 +40,7 @@ import { TagsService } from './services/tags/tags.service';
 import { TemplatesService } from './services/templates/templates.service';
 import { TranslationService } from './services/translation/translation.service';
 import { FrontendService } from './services/frontend/frontend.service';
+import { PrintService } from './services/print/print.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -70,7 +71,7 @@ import { PresetResolver } from './resolvers/preset.resolver';
     CookieModule.forRoot()
   ],
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   providers: [
     Title,
@@ -107,7 +108,8 @@ import { PresetResolver } from './resolvers/preset.resolver';
     PresetResolver,
     TranslationService,
     TagsService,
-    FrontendService
+    FrontendService,
+    PrintService
   ],
   bootstrap: [AppComponent]
 })

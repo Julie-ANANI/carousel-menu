@@ -1,0 +1,57 @@
+@import "variables";
+
+/*
+    This stylesheet contains all the label related class
+    on our platform.
+ */
+
+
+.label-progress {
+  border-radius: .18rem;
+  background: $progress-color;
+  color: white;
+  font-size: .75rem;
+  padding: .375rem .95rem;
+  margin-right: .5rem;
+  font-weight: 600;
+}
+
+.label-validate {
+  border-radius: .18rem;
+  background: $validation-color;
+  color: white;
+  font-size: .75rem;
+  padding: .375rem .95rem;
+  margin-right: .5rem;
+  font-weight: 600;
+}
+
+.label-alert{
+  border-radius: .18rem;
+  background: $alert-color;
+  color: white;
+  font-size: .75rem;
+  padding: .375rem .95rem;
+  margin-right: .5rem;
+  font-weight: 600;
+}
+
+.label-editing{
+  border-radius: .18rem;
+  background: $secondary-color;
+  color: white;
+  font-size: .75rem;
+  padding: .375rem .95rem;
+  margin-right: .5rem;
+  font-weight: 600;
+}
+
+.label-draft{
+  border-radius: .18rem;
+  background: $background-color;
+  color: white;
+  font-size: .75rem;
+  padding: .375rem .95rem;
+  margin-right: .5rem;
+  font-weight: 600;
+}

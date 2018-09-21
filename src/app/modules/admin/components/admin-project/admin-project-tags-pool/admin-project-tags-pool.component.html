@@ -9,7 +9,7 @@
              [value-formatter]="autocompleValueFormatter"
              [attr.placeholder]="'Add an existing tag'"
              class="form-input form-control input-lg">
-      <button class="btn btn-primary input-group-btn" translate>
+      <button class="btn btn-primary input-group-btn" [disabled]="!canAddTag" translate>
         COMMON.ADD
         <i class="icon icon-arrow-right"></i>
       </button>

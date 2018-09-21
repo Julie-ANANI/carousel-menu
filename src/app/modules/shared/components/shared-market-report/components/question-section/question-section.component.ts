@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
 import { Question } from '../../../../../../models/question';
 import { Innovation } from '../../../../../../models/innovation';
@@ -20,6 +21,7 @@ export class QuestionSectionComponent implements OnInit {
   private _answersWithComment: Array<Answer> = [];
   private _answersToShow: Array<Answer> = [];
   private _readonly: boolean;
+  private _tagId: string;
   private _tags: Array<Tag>;
   private _stats: {nbAnswers?: number, percentage?: number};
   private _showComment: boolean;
@@ -48,10 +50,12 @@ export class QuestionSectionComponent implements OnInit {
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
-  constructor(private _translateService: TranslateService) {}
+  constructor(private _translateService: TranslateService,
+              private filterService: FilterService) {}
 
   ngOnInit() {
     this._domSectionId = this.question.identifier.replace(/\s/g, '');
+    this._tagId = this.question.identifier + (this.question.controlType !== 'textarea' ? 'Comment' : '');
     this.updateAnswersData();
   }
 
@@ -88,7 +92,7 @@ export class QuestionSectionComponent implements OnInit {
 
       // calculate tags list
       this._tags = this._answersToShow.reduce((tagsList, answer) => {
-        const answerTags = answer.answerTags[id];
+        const answerTags = answer.answerTags[this._tagId];
         if (Array.isArray(answerTags)) {
           answerTags.forEach((t) => {
             const previousTag = tagsList.find((t2) => t2._id === t._id);
@@ -151,8 +155,18 @@ export class QuestionSectionComponent implements OnInit {
     this.modalAnswerChange.emit(event);
   }
 
-  answerBtnClicked(event: boolean) {
+  public answerBtnClicked(event: boolean) {
     this._showComment = event;
+  }
+
+  public addTagFilter(event: Event, tag: Tag) {
+    event.preventDefault();
+    this.filterService.addFilter({
+      status: 'TAG',
+      questionId: this._tagId,
+      questionTitle: tag.label,
+      value: tag._id
+    });
   }
 
   get showComment(): boolean {
