@@ -17,8 +17,8 @@ import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs/Subject';
 import { FrontendService } from '../../../../services/frontend/frontend.service';
-import {PrintService} from '../../../../services/print/print.service';
-import * as FileSaver from "file-saver";
+// import {PrintService} from '../../../../services/print/print.service';
+// import * as FileSaver from "file-saver";
 
 @Component({
   selector: 'app-shared-market-report',
@@ -83,8 +83,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private innovationService: InnovationService,
               private authService: AuthService,
               public filterService: FilterService,
-              private frontendService: FrontendService,
-              private printService: PrintService) {
+              private frontendService: FrontendService) {
     this.filterService.reset();
   }
 
@@ -358,14 +357,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   public printSynthesis(event: Event): void {
     event.preventDefault();
-    const html = document.getElementsByTagName('html')[0];
+   /* const html = document.getElementsByTagName('html')[0];
     const body = {html: html.outerHTML};
     this.printService.getPdf(body).subscribe((response) => {
       const file = new Blob([ response.blob() ], {type: 'application/pdf'})
       FileSaver.saveAs(file, 'test.pdf');
-    });
+    });*/
 
-   // window.print();
+   window.print();
   }
 
   getSrc(): string {
@@ -387,7 +386,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   }
 
-  public percentageCalculataion(value1: number, value2: number) {
+  public percentageCalculation(value1: number, value2: number) {
     return this.frontendService.analyticPercentage(value1, value2);
   }
 
