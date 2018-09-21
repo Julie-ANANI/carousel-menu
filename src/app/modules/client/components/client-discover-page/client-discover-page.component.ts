@@ -233,7 +233,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private filterLabel(innovations: Array<Innovation>, value: string) {
     this._filterInnovations = innovations.filter((items) => {
-      return items.tags.findIndex((tag) => tag._id === value) !== -1;
+      return items.tags && items.tags.findIndex((tag) => tag._id === value) !== -1;
     });
   }
 
