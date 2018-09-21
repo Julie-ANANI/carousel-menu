@@ -31,7 +31,7 @@ import { PaginationModule } from '../../../input/component/pagination/pagination
 import { SidebarCollaboratorModule } from '../../../sidebar/components/collaborator/sidebar-collaborator.module';
 import { SidebarInnovationPreviewModule } from '../../../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
 import { ProjectsListComponent } from './components/projects-list/projects-list.component';
-import { SharedCarouselModule } from '../../../shared/components/shared-carousel/shared-carousel.module';
+// import { SharedCarouselModule } from '../../../shared/components/shared-carousel/shared-carousel.module';
 
 @NgModule({
   imports: [
@@ -56,7 +56,7 @@ import { SharedCarouselModule } from '../../../shared/components/shared-carousel
     PaginationModule,
     SidebarCollaboratorModule,
     SidebarInnovationPreviewModule,
-    SharedCarouselModule
+    // SharedCarouselModule
   ],
   declarations: [
     ClientProjectComponent,
