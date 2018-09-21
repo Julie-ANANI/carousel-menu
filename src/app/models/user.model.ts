@@ -10,14 +10,15 @@ export class User extends Model {
   private _emailVerified: boolean;
   private _phone: string;
   private _password: string;
-  private _profilePicture: string;
+  private _profilePic: any;
   private _domain: string;
   private _isOperator: boolean;
   private _roles: string;
   private _state: 'unconfirmed' | 'confirmed';
   private _companyName: string;
   private _jobTitle: string;
-
+  private _country: string;
+  private _provider: string;
 
   constructor(user?: any) {
     super(user);
@@ -99,14 +100,14 @@ export class User extends Model {
     return this._password;
   }
 
-  set profilePicture(profilePicture: string) {
+  set profilePic(profilePicture: any) {
     if (profilePicture) {
-      this._profilePicture = profilePicture;
+      this._profilePic = profilePicture;
     }
   }
 
-  get profilePicture(): string {
-    return this._profilePicture;
+  get profilePic(): any {
+    return this._profilePic;
   }
 
   set domain(domain: string) {
@@ -143,8 +144,37 @@ export class User extends Model {
     this._state = value;
   }
 
-  get companyName(): string { return this._companyName; }
-  set companyName(value: string) { this._companyName = value; }
-  get jobTitle(): string { return this._jobTitle; }
-  set jobTitle(value: string) { this._jobTitle = value; }
+  get companyName(): string {
+    return this._companyName;
+  }
+
+  set companyName(value: string) {
+    this._companyName = value;
+  }
+
+  get jobTitle(): string {
+    return this._jobTitle;
+  }
+
+  set jobTitle(value: string) {
+    this._jobTitle = value;
+  }
+
+  get country(): string {
+    return this._country;
+  }
+
+  set country(value: string) {
+    this._country = value;
+  }
+
+  get provider(): string {
+    return this._provider;
+  }
+
+  set provider(value: string) {
+    this._provider = value;
+  }
+
+
 }

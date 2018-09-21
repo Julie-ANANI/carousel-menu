@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../../../../environments/environment';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-new-project',
@@ -14,15 +15,15 @@ import { Innovation } from '../../../../../../models/innovation';
 export class NewProjectComponent implements OnInit {
 
   private _formData: FormGroup;
-  private _scrollButton = false;
 
-  constructor(private _router: Router,
-              private _formBuilder: FormBuilder,
-              private _innovationService: InnovationService) {
+  constructor(private router: Router,
+              private formBuilder: FormBuilder,
+              private innovationService: InnovationService,
+              private translateNotificationService: TranslateNotificationsService) {
   }
 
-  ngOnInit(): void {
-    this._formData = this._formBuilder.group({
+  ngOnInit() {
+    this._formData = this.formBuilder.group({
       choosenLang: [null, Validators.required],
       name: [null, Validators.required],
       type: [null, Validators.required],
@@ -30,7 +31,7 @@ export class NewProjectComponent implements OnInit {
 
   }
 
-  public onSubmit() {
+  onSubmit() {
     const newProject = {
       domain: environment.domain,
       lang: this._formData.value.choosenLang,
@@ -38,16 +39,12 @@ export class NewProjectComponent implements OnInit {
       type: this._formData.value.type
     };
 
-    this._innovationService.create(newProject)
-      .first()
-      .subscribe((project: Innovation) => {
-        this._router.navigate(['/project/' + project._id + '/setup'])
-      });
+    this.innovationService.create(newProject).first().subscribe((project: Innovation) => {
+        this.router.navigate(['/project/' + project._id + '/setup'])
+      }, () => {
+      this.translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR')
+    });
 
-  }
-
-  get scrollButton(): boolean {
-    return this._scrollButton;
   }
 
   get formData(): FormGroup {

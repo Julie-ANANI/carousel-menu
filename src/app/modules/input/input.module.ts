@@ -5,9 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { PipeModule } from '../../pipe/pipe.module';
-import { SearchInputComponent } from './component/search-input/search-input.component';
 import { CountryFlagComponent } from './component/country-flag/country-flag.component';
-import { ProgressBarComponent } from './component/progress-bar/progress-bar.component';
 
 
 @NgModule({
@@ -21,14 +19,10 @@ import { ProgressBarComponent } from './component/progress-bar/progress-bar.comp
     PipeModule
   ],
   declarations: [
-    SearchInputComponent,
-    CountryFlagComponent,
-    ProgressBarComponent
+    CountryFlagComponent
   ],
   exports: [
-    SearchInputComponent,
-    CountryFlagComponent,
-    ProgressBarComponent
+    CountryFlagComponent
   ]
 })
 

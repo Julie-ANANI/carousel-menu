@@ -44,7 +44,7 @@
     name: .form-default
  */
 
-.form-default {
+.form-default, .form-select {
   border: 1px solid $border-color;
   font-size: .85rem;
   color: $input-color;
@@ -61,6 +61,12 @@
 }
 
 
+.form-select:not([multiple]):not([size]) {
+  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") no-repeat right .9rem center/0.4rem 0.5rem;
+  background-size: .6rem;
+}
+
+
 /*
     Placeholder style
  */
@@ -74,7 +80,7 @@
     Focus on input style
  */
 
-.form-default:not(:disabled):focus {
+.form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
   border-color: $primary-color;
 }
 
@@ -83,7 +89,7 @@
     Error on input style
  */
 
-.form-default.ng-touched.ng-invalid{
+.form-default.ng-touched.ng-invalid {
   border-color: $alert-color;
 }
 
@@ -92,7 +98,7 @@
     Form input is disabled.
  */
 
-.form-default:disabled, .form-default.disabled {
+.form-default:disabled, .form-default.disabled, .form-select:disabled, .form-select.disabled {
   background: $disabled-color;
   color: $disabled-text-color;
   border-color: $disabled-color;
@@ -183,31 +189,36 @@
  */
 
 .suggestion {
+  display: flex;
+  flex-direction: column;
   box-shadow: $box-shadow;
   margin: 0;
   padding: 0;
   list-style: none;
   z-index: 2;
-  background-color: white;
+  background-color: #F2F2F2;
   outline: none;
+  overflow: auto;
 
   li {
-    padding: .5rem .6rem;
     transition: all .15s ease-in-out;
-    cursor: pointer;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    word-break: break-word;
+    font-size: .875rem;
+    color: $input-color;
+    padding: 0;
 
     a{
-      color: $label-color;
       text-decoration: none;
+      display: flex;
+      padding: 1rem .9375rem;
     }
 
   }
 
   li:hover {
-    background:  #F2F2F2;
-    border-color: #F2F2F2;
+    background-color: $border-color;
+    border-color: $border-color;
+    cursor: pointer;
   }
 
 }
@@ -276,6 +287,41 @@ textarea {
 .form-switch-padding {
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
+}
+
+
+/*
+    Form checkbox
+ */
+
+.form-checkbox {
+  padding-left: 1.5rem;
+}
+
+.form-checkbox .form-icon {
+  width: 1rem;
+  height: 1rem;
+  top: .21rem;
+  border-color: $border-color;
+}
+
+.form-checkbox .form-icon::before {
+  height: 11px;
+  width: 7px;
+  margin-left: -3px;
+  margin-top: -7px;
+}
+
+.form-checkbox input:focus + .form-icon {
+  box-shadow: none !important;
+  background: white;
+  -webkit-box-shadow: none !important;
+  border-color: $border-color;
+}
+
+.form-checkbox input:checked + .form-icon, .form-checkbox input:active + .form-icon {
+  background: $validation-color;
+  border-color: $validation-color;
 }
 
 

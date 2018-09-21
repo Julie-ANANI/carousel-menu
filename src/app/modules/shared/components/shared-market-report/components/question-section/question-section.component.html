@@ -4,6 +4,7 @@
   <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
     <app-bar-chart
       [answers]="answersToShow"
+      [tags]="tags"
       [innovation]="innovation"
       [question]="question"
       [readonly]="readonly"
@@ -18,6 +19,13 @@
   <ng-container *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'">
     <div class="header">
       <div class="section-inline-container">
+
+        <div *ngFor="let tag of tags" class="tags-wrapper"
+             (click)="addTagFilter($event, tag)">
+          #{{ tag.label | multiling:lang }}
+          <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
+        </div>
+
         <app-question-conclusion
           [innovation]="innovation"
           [question]="question"

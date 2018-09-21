@@ -4,7 +4,6 @@ import { AuthService } from './services/auth/auth.service';
 
 /* Guards */
 import { AdminAuthGuard } from './admin-auth-guard.service';
-import { PendingChangesGuard } from './pending-changes-guard.service';
 import { NonAuthGuard } from './non-auth-guard.service';
 import { AuthGuard } from './auth-guard.service';
 
@@ -22,7 +21,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes) // TODO {useHash: true} annule le fonctionnement des ancres
+    RouterModule.forRoot(appRoutes)
   ],
   exports: [
     RouterModule
@@ -33,7 +32,6 @@ const appRoutes: Routes = [
     // Guards :
     AuthGuard,
     NonAuthGuard,
-    PendingChangesGuard,
     AdminAuthGuard
   ]
 })

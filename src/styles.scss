@@ -13,7 +13,7 @@
 @import "../node_modules/spectre.css/src/spectre-exp.scss";
 
 /*
-    Fontawesome icons
+    FontAwesome icons
  */
 
 @import "../node_modules/@fortawesome/fontawesome-free/css/regular.css";
@@ -68,6 +68,7 @@ body {
 
 @import "style/animation";
 @import "style/app-modal-style";
+@import "style/label-style";
 @import "style/container-style";
 @import "style/general-style";
 @import "style/text-style";
@@ -77,6 +78,9 @@ body {
 @import "style/modal-style";
 @import "style/tooltip-style";
 @import "style/table-style";
+@import "style/tinymce-style";
+@import "style/simplenotification-style";
+@import "style/ng2autocomplete-style";
 
 
 

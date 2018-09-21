@@ -24,6 +24,7 @@ import { InputModule } from '../../../input/input.module';
 import { FilterService } from './services/filters.service';
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
 import { RouterModule } from '@angular/router';
+import { ProgressBarModule } from '../../../input/component/progress-bar/progress-bar.module';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { RouterModule } from '@angular/router';
     NgxPageScrollModule,
     SidebarModule,
     InputModule,
-    RouterModule
+    RouterModule,
+    ProgressBarModule
   ],
   providers: [
     CommonService,

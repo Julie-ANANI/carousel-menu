@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { initTranslation, TranslateService } from '../../../../i18n/i18n';
-import { CookieService } from 'angular2-cookie/core';
+import { CookieService } from 'ngx-cookie';
 import { environment } from '../../../../../environments/environment';
 
 @Component({

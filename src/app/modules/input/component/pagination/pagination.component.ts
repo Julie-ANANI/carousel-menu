@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import {ConfigTemplate} from '../../../../models/config';
+import { PaginationTemplate } from '../../../../models/pagination';
 
 @Component({
   selector: 'app-pagination',
@@ -14,9 +14,10 @@ export class PaginationComponent implements OnInit {
     this._total = value;
     this._numPages = Math.ceil(this._total / this.perPage);
   };
+
   @Input() propertyName: string;
 
-  @Input() set configValue(value: ConfigTemplate) {
+  @Input() set configValue(value: PaginationTemplate) {
     if (this.checkConfig(value.limit)) {
       this.initialConfigValues.limit = JSON.parse(JSON.stringify(value.limit));
       this.initialConfigValues.offset = JSON.parse(JSON.stringify(value.offset));
@@ -26,9 +27,10 @@ export class PaginationComponent implements OnInit {
   @Output() configChange = new EventEmitter <any>();
 
   private _numPages: number;
+
   perPageValues: Array<number> = [10, 20, 50, 100, 1000];
 
-  initialConfigValues: ConfigTemplate = {
+  initialConfigValues: PaginationTemplate = {
     limit: 10,
     offset: 0
   };
@@ -52,6 +54,7 @@ export class PaginationComponent implements OnInit {
       this.initialConfigValues.limit = localLimit;
     }
 
+    this._numPages = Math.ceil(this._total / this.perPage);
     this._update();
 
   }

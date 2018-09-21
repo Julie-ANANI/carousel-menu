@@ -7,90 +7,244 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import 'rxjs/add/operator/filter';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
+import { Template } from '../../../sidebar/interfaces/template';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-client-my-account',
   templateUrl: './client-my-account.component.html',
   styleUrls: ['./client-my-account.component.scss']
 })
+
 export class ClientMyAccountComponent implements OnInit {
 
-  public formData: FormGroup;
-  public accountDeletionAsked = false;
+  private _formData: FormGroup;
 
-  // TODO : profile picture, reset password, description, location
+  private _name: string;
+  private _jobTitle: string;
 
-  constructor(private _userService: UserService,
-              private _notificationsService: TranslateNotificationsService,
-              private _authService: AuthService,
-              private _formBuilder: FormBuilder,
-              private _router: Router,
-              private _titleService: TranslateTitleService) {}
+  private _accountDeletionAsked = false;
 
-  ngOnInit(): void {
-    this._titleService.setTitle('MY_ACCOUNT.TITLE');
+  private _userProvider: string;
 
-    this.formData = this._formBuilder.group({
+  private _countriesSuggestion: Array<string> = [];
+  private _displayCountrySuggestion = false;
+
+  private _profilePicture = '';
+
+  private _sidebarTemplateValue: Template = {};
+
+  private _sidebarState = new Subject<string>();
+
+  // TODO : description, location
+
+  constructor(private userService: UserService,
+              private translateNotificationsService: TranslateNotificationsService,
+              private authService: AuthService,
+              private formBuilder: FormBuilder,
+              private router: Router,
+              private translateTitleService: TranslateTitleService,
+              private autoCompleteService: AutocompleteService) {}
+
+  ngOnInit() {
+    this.translateTitleService.setTitle('MY_ACCOUNT.TITLE');
+    this.buildForm();
+    this.patchForm();
+  }
+
+  private buildForm() {
+    this._formData = this.formBuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
-      companyName: '',
-      jobTitle: '',
-      phone: '',
+      companyName: [''],
+      jobTitle: [''],
+      phone: [''],
+      country: [''],
       sectors: [[]],
       technologies: [[]],
       language: ['', [Validators.required]]
     });
+  }
 
-    this._userService.getSelf().subscribe(user => {
-      this.formData.patchValue(user);
+  private patchForm() {
+    this.userService.getSelf().subscribe((response: User) => {
+      this._formData.patchValue(response);
+      this._name = response.name;
+      this._jobTitle = response.jobTitle;
+      this._userProvider = response.provider;
+      this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
 
-  public changePassword(event: Event) {
-    event.preventDefault();
-    this._userService.changePassword()
-      .first()
-      .subscribe(res => {
-        this._router.navigate(['/reset-password/' + res.token])
+  onSuggestCountries() {
+    this._formData.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
+      this._displayCountrySuggestion = true;
+      this._countriesSuggestion = [];
+      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe(res => {
+        if (res.length === 0) {
+          this._displayCountrySuggestion = false;
+        } else {
+          res.forEach((items) => {
+            const valueIndex = this._countriesSuggestion.indexOf(items.name);
+            if (valueIndex === -1) { // if not exist then push into the array.
+              this._countriesSuggestion.push(items.name);
+            }
+          })
+        }
       });
+    });
   }
 
-  public onSubmit() {
-    if (this.formData.valid) {
-      const user = new User(this.formData.value);
-      this._userService.update(user)
-        .first()
-        .subscribe(
-        data => {
-          this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
-          this.formData.patchValue(data);
+  onValueSelect(value: string) {
+    this._formData.get('country').setValue(value);
+    this._displayCountrySuggestion = false;
+  }
+
+  showPasswordSidebar(event: Event) {
+    event.preventDefault();
+
+    this._sidebarTemplateValue = {
+      animate_state: this._sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'MY_ACCOUNT.CHANGE'
+    };
+
+  }
+
+  closeSidebar(value: string) {
+    this._sidebarTemplateValue.animate_state = value;
+    this._sidebarState.next('inactive');
+  }
+
+  onSubmit() {
+
+    if (this._formData.valid) {
+      const user = new User(this._formData.value);
+      this.userService.update(user).first().subscribe(
+        (response: User) => {
+          this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
+          this._name = response.name;
+          this._jobTitle = response.jobTitle;
+          this._userProvider = response.provider;
+          this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
+          this._formData.patchValue(response);
         },
         error => {
-          this._notificationsService.error('ERROR.ERROR', error.message);
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
         });
     }
     else {
-      this._notificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
+
   }
 
-  public addSector(event: {value: Array<string>}) {
-    this.formData.get('sectors')!.setValue(event.value);
+  addSector(event: {value: Array<string>}) {
+    this._formData.get('sectors')!.setValue(event.value);
   }
 
-  public addTechnology(event: {value: Array<string>}) {
-    this.formData.get('technologies')!.setValue(event.value);
+  addTechnology(event: {value: Array<string>}) {
+    this._formData.get('technologies')!.setValue(event.value);
   }
 
-  public deleteAccount (event: Event) {
+  onDelete(event: Event) {
     event.preventDefault();
-    this._userService.delete().first().subscribe(_ => {
-      this._authService.logout().first().subscribe(() => {
-        this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
-        this._router.navigate(['/']);
-      });
-    });
+    this._accountDeletionAsked = true;
   }
+
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._accountDeletionAsked = false;
+  }
+
+  deleteAccount (event: Event) {
+    event.preventDefault();
+
+    this.userService.delete().first().subscribe(_ => {
+      this.authService.logout().first().subscribe(() => {
+        this.translateNotificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
+        this.router.navigate(['/']);
+      });
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+
+  }
+
+  hasProfilePic(): boolean {
+    return !!this._profilePicture && this._profilePicture !== '';
+  }
+
+  changePassword(value: FormGroup) {
+    const email = this._formData.get('email').value;
+    const newPassword = value.value.newPassword;
+    const confirmPassword = value.value.confirmPassword;
+
+    if (newPassword === confirmPassword) {
+      this.userService.updatePassword({
+        email: email, oldPassword: value.value.oldPassword, newPassword: newPassword, confirmPassword: confirmPassword
+      }).first().subscribe(() => {
+        this.showPasswordSidebar(event);
+        this.translateNotificationsService.success('ERROR.ACCOUNT.PASSWORD_UPDATED', 'ERROR.ACCOUNT.PASSWORD_UPDATED_TEXT');
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.OLD_PASSWORD');
+      })
+    } else {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.SAME_PASSWORD');
+    }
+
+  }
+
+  get profilePicture(): string {
+    return this._profilePicture;
+  }
+
+  set formData(value: FormGroup) {
+    this._formData = value;
+  }
+
+  get formData(): FormGroup {
+    return this._formData;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get jobTitle(): string {
+    return this._jobTitle;
+  }
+
+  get accountDeletionAsked(): boolean {
+    return this._accountDeletionAsked;
+  }
+
+  get userProvider(): string {
+    return this._userProvider;
+  }
+
+  get countriesSuggestion(): Array<string> {
+    return this._countriesSuggestion;
+  }
+
+  get displayCountrySuggestion(): boolean {
+    return this._displayCountrySuggestion;
+  }
+
+  get sidebarTemplateValue(): Template {
+    return this._sidebarTemplateValue;
+  }
+
+  get sidebarState(): Subject<string> {
+    return this._sidebarState;
+  }
+
+  set sidebarState(value: Subject<string>) {
+    this._sidebarState = value;
+  }
+
 
 }

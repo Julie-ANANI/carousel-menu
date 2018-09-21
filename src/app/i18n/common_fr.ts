@@ -42,8 +42,8 @@ export const COMMON = {
   'REINVITE': 'Inviter à nouveau',
   'I_FINISHED': 'J\'ai terminé',
   'SYNTHESIS': 'Synthèse',
-  'SEARCHINNOVATION': 'Recherche innovation',
-  'LOADING': 'Chargement',
+  'SEARCH_INNOVATION': 'Recherche innovation',
+  'LOADING': 'Chargement...',
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
@@ -66,24 +66,47 @@ export const COMMON = {
   'NAME': 'Nom',
   'FIRSTNAME': 'Prénom',
   'LASTNAME': 'Nom',
-  'EMAIL': 'Email',
+
+  'EMAIL': 'E-mail',
   'PHONE': 'Téléphone',
+
+  'ACTIVITY_FIELDS': 'Champs d\'activité',
+  'ACTIVITY_FIELDS_PLACEHOLDER': 'Entrez votre secteur d\'activité',
+
+  'TECHNOLOGIES': 'Technologies',
+  'TECHNOLOGIES_PLACEHOLDER': 'Entrez la technologie',
+
   'PASSWORD': 'Mot de passe',
+  'OLD_PASSWORD': 'Ancien mot de passe',
+  'NEW_PASSWORD': 'Nouveau mot de passe',
+  'CONFIRM_PASSWORD': 'Confirmez le mot de passe',
+
   'PASSWORD_PLACEHOLDER': 'Entrez votre mot de passe',
-  'PASSWORD_SIGNUP_PLACEHOLDER': '8+ caractères',
+  'OLD_PASSWORD_PLACEHOLDER': 'Entrez votre ancien mot de passe',
+  'NEW_PASSWORD_PLACEHOLDER': '9+ caractères et doit avoir 1 caractère spécial',
+  'CONFIRM_PASSWORD_PLACEHOLDER': 'Entrez le mot de passe de confirmation',
+  'PASSWORD_SIGNUP_PLACEHOLDER': '9+ caractères et doit avoir 1 caractère spécial',
+
   'PASSWORD_CONFIRM': 'Confirmation du mot de passe',
-  'COMPANY': 'Entreprise',
+
+  'COMPANY': 'Nom de l\'entreprise',
   'COMPANY_PLACEHOLDER': 'Entrez le nom de votre entreprise',
+
   'JOBTITLE': 'Poste',
   'JOBTITLE_PLACEHOLDER': 'Entrez votre titre de poste',
+
   'TYPE': 'Type',
+
   'DOMAIN': 'Domaine',
+
   'COUNTRY': 'Pays',
   'COUNTRY_PLACEHOLDER': 'Entrez votre pays',
+
   'TERMS': {
     'A': 'En cliquant sur "Continuer", j\'accepte',
     'B': 'termes et conditions d\'utilisation.',
   },
+
   'PROFILE_URL': 'Profile URL',
   'TOP_PROFILE': 'Profil haut',
 
@@ -93,6 +116,9 @@ export const COMMON = {
     'EMAIL': 'L\'adresse email est requise.',
     'PHONE': 'Le numéro de téléphone est requis.',
     'PASSWORD': 'Le mot de passe e@st requis.',
+    'OLD_PASSWORD': 'Un ancien mot de passe est requis.',
+    'NEW_PASSWORD': 'Un nouveau mot de passe est requis.',
+    'CONFIRM_PASSWORD': 'Confirmer le mot de passe est requis.',
     'COMPANY': 'Le nom de l\'entreprise est requis.',
     'JOBTITLE': 'Le poste est requis.',
     'MESSAGE': 'Tous les champs sont obligatoires',
@@ -132,7 +158,8 @@ export const COMMON = {
 
   'INVALID': {
     'EMAIL': 'Veuillez renseigner une adresse email valide',
-    'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court.'
+    'PASSWORD_TOO_SHORT': 'Le mot de passe est trop court.',
+    'MUST_CONTAIN': 'Le mot de passe doit en contenir un.'
   },
 
   'LINKS': 'Liens',
@@ -146,7 +173,11 @@ export const COMMON = {
   },
 
   'USERS': 'Utilisateurs',
+
+  'AMBASSADOR': 'Ambassadeur',
+
   'PROFESSIONALS': 'Professionnels',
+
   'PROFESSIONAL': {
     'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
     'PITCH-DELETE-ALL' : 'Êtes-vous sûr de vouloir supprimer tous les professionnels',

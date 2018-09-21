@@ -5,7 +5,7 @@ import {Column, types} from '../models/column';
 import {Choice} from '../models/choice';
 import {TranslateService} from '@ngx-translate/core';
 import {MultiLabel} from '../models/multi-label';
-import {ConfigTemplate} from '../../../models/config';
+import {PaginationTemplate} from '../../../models/pagination';
 
 @Component({
   selector: 'app-shared-table',
@@ -82,7 +82,7 @@ export class TableComponent {
   editColumn = false;
 
   private _config: any = null;
-  private _paginationConfig: ConfigTemplate = {};
+  private _paginationConfig: PaginationTemplate = {};
   private _massSelection = false;
 
   constructor(private _translateService: TranslateService) {}
@@ -624,7 +624,7 @@ export class TableComponent {
     return this._filteredContent;
   }
 
-  get paginationConfig(): ConfigTemplate {
+  get paginationConfig(): PaginationTemplate {
     return this._paginationConfig;
   }
 

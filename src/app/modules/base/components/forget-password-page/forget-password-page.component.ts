@@ -57,7 +57,7 @@ export class ForgetPasswordPageComponent implements OnInit {
   }
 
   // getting the logo of the company
-  public getLogo(): string {
+  getLogo(): string {
     return environment.logoURL;
   }
 

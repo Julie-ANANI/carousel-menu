@@ -242,7 +242,7 @@ export class AdminProjectManagementComponent implements OnInit {
     this.formData.get('owner').valueChanges.distinctUntilChanged().subscribe(input => {
       this.displayUserSuggestion = true;
       this.usersSuggestion = [];
-      this._autoCompleteService.get({keyword: input, type: 'users'}).subscribe(res => {
+      this._autoCompleteService.get({query: input, type: 'users'}).subscribe(res => {
         if (res.length === 0) {
           this.displayUserSuggestion = false;
         } else {

@@ -66,9 +66,9 @@ export class AutocompleteInputComponent implements OnInit {
     });
   }
 
-  suggestions(keyword: any): Observable<Array<{name: string, domain: string, flag: string}>> {
+  suggestions(query: any): Observable<Array<{name: string, domain: string, flag: string}>> {
     const queryConf = {
-      keyword: keyword,
+      query: query,
       type: this._autocompleteType
     };
     return this._autocompleteService.get(queryConf);

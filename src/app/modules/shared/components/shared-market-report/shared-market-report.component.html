@@ -30,7 +30,7 @@
       </span>
         <br>
         <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
-        <div><img src="http://res.cloudinary.com/umi/image/upload/v1533567512/app/default-images/info-bot.svg" alt="Bot" class="bot-image"></div>
+        <div><img src="https://res.cloudinary.com/umi/image/upload/v1533567512/app/default-images/info-bot.svg" alt="Bot" class="bot-image"></div>
       </div>
     </div>
   </ng-container>
@@ -129,6 +129,16 @@
       </div>
     </div>
     <!-- /Main page -->
+
+    <!-- UMI Intro -->
+    <div *ngIf="!adminSide && showDetails && getDomainName() === 'umi'" class="section-light-container">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="image-wrapper">
+          <img [src]="getIntroSrc()" class="img-responsive">
+        </div>
+      </div>
+    </div>
+    <!-- /UMI Intro -->
 
     <!-- Innovation detail -->
     <div *ngIf="!adminSide && showDetails" class="section-light-container s-innovationPage-print">
@@ -255,7 +265,7 @@
                     <g transform="translate(701.000000, 810.000000)">
                       <polygon fill="#2ECC71" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
                       <text class="svg-text">
-                        <tspan x="27.4760742" y="24">{{ percentageCalculataion(campaignStats?.nbProsSent, campaignStats?.nbProsOpened) || 0 }}%</tspan>
+                        <tspan x="27.4760742" y="24">{{ percentageCalculation(campaignStats?.nbProsSent, campaignStats?.nbProsOpened) || 0 }}%</tspan>
                       </text>
                     </g>
                   </g>
@@ -275,7 +285,7 @@
                     <g transform="translate(701.000000, 810.000000)">
                       <polygon fill="#EA5858" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
                       <text class="svg-text">
-                        <tspan x="27.4760742" y="24">{{ percentageCalculataion(campaignStats?.nbProsOpened, campaignStats?.nbProsClicked) || 0 }}%</tspan>
+                        <tspan x="27.4760742" y="24">{{ percentageCalculation(campaignStats?.nbProsOpened, campaignStats?.nbProsClicked) || 0 }}%</tspan>
                       </text>
                     </g>
                   </g>
@@ -295,7 +305,7 @@
                     <g transform="translate(701.000000, 810.000000)">
                       <polygon fill="#F79323" points="0 0 64.1497147 0 80 19.8465833 64.1497147 38 0 38 14.6486762 19"></polygon>
                       <text class="svg-text">
-                        <tspan x="27.4760742" y="24">{{ percentageCalculataion(campaignStats?.nbProsClicked, campaignStats?.nbValidatedResp) || 0 }}%</tspan>
+                        <tspan x="27.4760742" y="24">{{ percentageCalculation(campaignStats?.nbProsClicked, campaignStats?.nbValidatedResp) || 0 }}%</tspan>
                       </text>
                     </g>
                   </g>
@@ -417,7 +427,7 @@
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="professional-wrapper">
             <div *ngFor="let answer of filteredAnswers" class="profile">
-              <i class="fas fa-times hide-user" (click)="filterPro(answer, $event)"></i>
+              <img src="https://res.cloudinary.com/umi/image/upload/v1533115302/app/default-images/filter-icon.png" height="13px" width="20px" style="margin-top: .125rem" (click)="filterPro(answer, $event)">
               <app-pro-tag
                 [answer]="answer"
                 (modalAnswerChange)="seeAnswer($event)"

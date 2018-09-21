@@ -1,13 +1,20 @@
 export const ERROR = {
   'ERROR': 'Oups...',
   'SUCCESS': 'Succès',
-  'CANNOT_REACH': 'Le serveur ne répond pas...',
+  'CANNOT_REACH': 'Nous ne pouvons pas atteindre le serveur pour le moment. Veuillez réessayer !',
   'FORM_ERROR': 'Erreur de formulaire',
+
+  'PAGINATION': 'Nous ne pouvons pas obtenir les résultats. S\'il vous plaît changer la valeur de \'lignes par page\'.',
+
+  'FETCHING_ERROR': 'Nous rencontrons des problèmes lors de la récupération des données. Veuillez essayer de recharger la page à nouveau !',
+
+  'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur. Essayez de recharger la page à nouveau !',
 
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',
   'INVALID_FORM_DATA': 'L\'e-mail ou le mot de passe n\'est pas valide.',
-  'PAGE_NOT_FOUND': 'Pas de page par ici...',
   'INVALID_DOMAIN': 'On peut pas créer un compte super-admin dans cette instance.',
+
+  'PAGE_NOT_FOUND': 'Pas de page par ici...',
 
   'FORM': {
     'PITCH_FORM': 'Veuillez remplir tous les champs avant de soumettre votre projet. Merci !',
@@ -35,7 +42,8 @@ export const ERROR = {
     'DELETED_TEXT': 'Le compte a été supprimé.',
     'PASSWORD_UPDATED': 'Mot de passe mis à jour.',
     'PASSWORD_UPDATED_TEXT': 'Votre mot de passe a été mis à jour.',
-    'SAME_PASSWORD': 'Les deux mots de passe doivent être identiques.'
+    'SAME_PASSWORD': 'Le nouveau mot de passe et le mot de passe de confirmation doivent être identiques.',
+    'OLD_PASSWORD': 'Ancien mot de passe est incorrect.',
   },
 
   'PROJECT': {

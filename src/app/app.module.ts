@@ -4,7 +4,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { HttpModule, XHRBackend, RequestOptions } from '@angular/http';
 import { Http } from './services/http';
 import { httpFactory } from './factories/http.factory';
-import { CookieService, CookieOptions } from 'angular2-cookie/core';
+import { CookieModule, CookieService } from 'ngx-cookie';
 import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Observable';
@@ -40,6 +40,7 @@ import { TagsService } from './services/tags/tags.service';
 import { TemplatesService } from './services/templates/templates.service';
 import { TranslationService } from './services/translation/translation.service';
 import { FrontendService } from './services/frontend/frontend.service';
+import { PrintService } from './services/print/print.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -66,18 +67,14 @@ import { PresetResolver } from './resolvers/preset.resolver';
     }),
     ChartsModule,
     Ng2AutoCompleteModule,
-    Angular2FontawesomeModule
+    Angular2FontawesomeModule,
+    CookieModule.forRoot()
   ],
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   providers: [
     Title,
-    CookieService,
-    {
-      provide: CookieOptions,
-      useValue: {}
-    },
     UserService,
     InnovationService,
     CampaignService,
@@ -111,7 +108,8 @@ import { PresetResolver } from './resolvers/preset.resolver';
     PresetResolver,
     TranslationService,
     TagsService,
-    FrontendService
+    FrontendService,
+    PrintService
   ],
   bootstrap: [AppComponent]
 })

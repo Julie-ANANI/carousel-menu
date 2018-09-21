@@ -1,4 +1,5 @@
 @import "variables";
+
 /*
     This stylesheet contains all the styles that are common
     for everywhere on the platform.
@@ -46,62 +47,9 @@ p {
  */
 
 a, a:focus, a:hover, a:active, a.active {
-  color: $primary-color;
+  color: inherit;
   text-decoration: none;
   cursor: pointer;
-}
-
-
-/*
-    This is the style that are related to the notification that we see.
- */
-
-.simple-notification {
-  border: 1px solid transparent !important;
-  border-radius: .18rem !important;
-  word-wrap: break-word !important;
-}
-
-.simple-notification-wrapper {
-  z-index: 9999 !important;
-}
-
-.simple-notification .sn-title {
-  font-size: 1.1rem !important;
-  line-height: 1.5 !important;
-  padding-right: 0 !important;
-  font-weight: bold;
-  padding-bottom: .5rem !important;
-}
-
-.simple-notification .sn-content {
-  font-size: 1rem !important;
-  line-height: 1.5 !important;
-  padding-right: 0 !important;
-  padding-bottom: .6rem !important;
-}
-
-.simple-notification.success {
-  background: $validation-color !important;
-  color: white !important;
-  border-color: $validation-color !important;
-}
-
-.simple-notification.error {
-  background: $alert-color !important;
-  color: white !important;
-  border-color: $alert-color !important;
-}
-
-
-/*
-    This is the style that is related to the loading circle we see.
- */
-
-.loading::after {
-  border-color: $primary-color;
-  border-right-color: transparent;
-  border-top-color: transparent;
 }
 
 
@@ -229,167 +177,11 @@ a, a:focus, a:hover, a:active, a.active {
 
 
 /*
-    Label styles
- */
-
-.label-progress {
-  border-radius: .18rem;
-  background: $progress-color;
-  color: white;
-  font-size: .75rem;
-  padding: .375rem .95rem;
-  margin-right: .5rem;
-  font-weight: 600;
-}
-
-.label-validate {
-  border-radius: .18rem;
-  background: $validation-color;
-  color: white;
-  font-size: .75rem;
-  padding: .375rem .95rem;
-  margin-right: .5rem;
-  font-weight: 600;
-}
-
-.label-alert{
-  border-radius: .18rem;
-  background: $alert-color;
-  color: white;
-  font-size: .75rem;
-  padding: .375rem .95rem;
-  margin-right: .5rem;
-  font-weight: 600;
-}
-
-.label-editing{
-  border-radius: .18rem;
-  background: $secondary-color;
-  color: white;
-  font-size: .75rem;
-  padding: .375rem .95rem;
-  margin-right: .5rem;
-  font-weight: 600;
-}
-
-.label-draft{
-  border-radius: .18rem;
-  background: $background-color;
-  color: white;
-  font-size: .75rem;
-  padding: .375rem .95rem;
-  margin-right: .5rem;
-  font-weight: 600;
-}
-
-
-/*
-    Ng2 auto complete npm module style
- */
-
-.ng2-auto-complete-wrapper {
-  display: inline-flex;
-  flex: 1;
-  max-width: 100%;
-}
-
-.ng2-auto-complete > ul {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  list-style: none;
-  z-index: 2;
-  background-color: white;
-  border: none !important;
-}
-
-.ng2-auto-complete > ul li {
-  padding: .5rem .6rem !important;
-  transition: all .35s ease-in-out;
-  cursor: pointer;
-  margin-top: .125rem !important;
-  margin-bottom: .125rem !important;
-  border-radius: .125rem !important;
-  border-bottom: none !important;
-  color: $dark-color !important;
-}
-
-.ng2-auto-complete > ul li:hover, .ng2-auto-complete > ul li.selected {
-  background:  #F2F2F2 !important;
-  border-color: #F2F2F2 !important;
-}
-
-
-/*
     Disabled cursor
  */
 .c-disabled {
   pointer-events: none;
 }
-
-
-/*
-    Tinymce panel style
- */
-
-.mce-panel {
-  border: none;
-}
-
-.mce-tinymce {
-  border: .18rem solid $border-color !important;
-  border-radius: .35rem;
-}
-
-.mce-container {
-  font-size: .18rem !important;
-}
-
-.mce-toolbar .mce-btn-group {
-  padding: 0 !important;
-}
-
-.mce-btn.mce-disabled button, .mce-btn.mce-disabled:hover button {
-  opacity: 1 !important;
-}
-
-.mce-btn {
-  padding: .85rem 1.2rem !important;
-  background: none !important;
-}
-
-.mce-ico {
-  color: $meta-color !important;
-  cursor: pointer !important;
-}
-
-.mce-btn:hover {
-  border-color: transparent !important;
-
-  .mce-ico {
-    color: $dark-color !important;
-    background-color: transparent !important;
-  }
-
-}
-
-.mce-btn.mce-active {
-  background: none !important;
-  color: $dark-color !important;
-
-  .mce-ico {
-    color: $dark-color !important;
-    background-color: transparent !important;
-  }
-
-}
-
-.mce-btn-group:not(:first-child) {
-  margin-left: 0 !important;
-  border-left: none !important;
-}
-
-
 
 .discreet-link {
   color: #97A4B1;

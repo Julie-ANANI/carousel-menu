@@ -2,6 +2,7 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { ComponentCanDeactivate } from '../../../../../../pending-changes-guard.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
 import { Subject } from 'rxjs/Subject';
@@ -16,7 +17,7 @@ const DEFAULT_TAB = 'targeting';
   styleUrls: ['setup.component.scss']
 })
 
-export class SetupProjectComponent implements OnInit {
+export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
 
   @Input() project: Innovation;
 
@@ -26,11 +27,11 @@ export class SetupProjectComponent implements OnInit {
 
   private _pitchFormValid: boolean;
   private _showPitchFieldError: Subject<boolean> = new Subject();
+
   private _targetingFormValid: boolean;
   private _showTargetingFieldError: Subject<boolean> = new Subject();
 
   scrollOn = false;
-  scrollValue = 0;
 
   private _innovationPreviewIndex = 0;
   private _sidebarTemplateValue: Template = {};
@@ -67,11 +68,14 @@ export class SetupProjectComponent implements OnInit {
 
   }
 
+  canDeactivate(): boolean {
+    return true;
+  }
 
   /*
       Here we are checking the fields that are required to submit or validate the form.
    */
-  checkProjectStatus() {
+  private checkProjectStatus() {
 
     for (let i = 0; i < this.project.innovationCards.length; i++ ) {
       if (this.project.innovationCards[i].title === '' || this.project.innovationCards[i].summary === ''
@@ -99,8 +103,6 @@ export class SetupProjectComponent implements OnInit {
 
   saveProject(event: Event): void {
     event.preventDefault();
-
-    console.log(this.scrollValue);
 
     this.frontendService.completionCalculation(this.project);
 
@@ -217,7 +219,7 @@ export class SetupProjectComponent implements OnInit {
     };
   }
 
-  public printInnovationCard(event: Event) {
+  printInnovationCard(event: Event) {
     event.preventDefault();
     window.print();
   }
