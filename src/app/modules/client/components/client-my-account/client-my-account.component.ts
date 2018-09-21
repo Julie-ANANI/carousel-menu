@@ -184,7 +184,7 @@ export class ClientMyAccountComponent implements OnInit {
     const confirmPassword = value.value.confirmPassword;
 
     if (newPassword === confirmPassword) {
-      this.userService.updatePassword({
+      this.userService.changePassword({
         email: email, oldPassword: value.value.oldPassword, newPassword: newPassword, confirmPassword: confirmPassword
       }).first().subscribe(() => {
         this.showPasswordSidebar(event);
