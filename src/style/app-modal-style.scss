@@ -10,7 +10,7 @@ app-modal {
     left: 0;
 
     /* z-index must be higher than .app-modal-background */
-    z-index: 1000;
+    z-index: 8998;
 
     /* enables scrolling for tall modals */
     overflow: auto;
@@ -37,7 +37,7 @@ app-modal {
     opacity: 0.75;
 
     /* z-index must be below .app-modal and above everything else  */
-    z-index: 900;
+    z-index: 8997;
   }
 }
 
