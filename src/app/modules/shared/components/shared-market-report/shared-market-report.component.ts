@@ -364,8 +364,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       const file = new Blob([ response.blob() ], {type: 'application/pdf'})
       FileSaver.saveAs(file, 'test.pdf');
     });
-
-   // window.print();
   }
 
   getSrc(): string {
