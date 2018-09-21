@@ -7,7 +7,7 @@
       <!-- Column 1 -->
       <div class="summary-wrapper">
         <h1 class="main-heading">{{ project.innovationCards[innovationPreviewIndex].title }}</h1>
-        <div>{{ project.innovationCards[innovationPreviewIndex].summary }}</div>
+        <div [innerHtml]="project.innovationCards[innovationPreviewIndex].summary"></div>
 
         <div *ngIf="project.principalMedia?.type === 'PHOTO'" class="main-media">
           <img
@@ -27,13 +27,13 @@
       <!-- Column 2 -->
       <div class="issue-wrapper">
         <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
-        <div>{{ project.innovationCards[innovationPreviewIndex].problem }}</div>
+        <div [innerHtml]="project.innovationCards[innovationPreviewIndex].problem"></div>
       </div>
 
       <!-- Column 3 -->
       <div class="solution-wrapper">
         <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
-        <div>{{ project.innovationCards[innovationPreviewIndex].solution }}</div>
+        <div [innerHtml]="project.innovationCards[innovationPreviewIndex].solution"></div>
       </div>
     </div>
   </div>

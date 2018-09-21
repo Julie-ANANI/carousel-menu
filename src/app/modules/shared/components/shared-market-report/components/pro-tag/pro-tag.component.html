@@ -31,8 +31,8 @@
   </div>
 
   <!-- Tag -->
-  <div *ngIf="answer.tags?.length > 0">
-    <div *ngFor="let tag of answer.tags" class="tag-wrapper">
+  <div *ngIf="tags?.length > 0">
+    <div *ngFor="let tag of tags" class="tag-wrapper">
       <span (click)="newFilter($event, tag)">#{{ tag.label | multiling:lang }}</span>
     </div>
   </div>

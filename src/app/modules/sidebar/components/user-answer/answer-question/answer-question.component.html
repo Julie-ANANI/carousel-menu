@@ -58,17 +58,6 @@
         </app-autocomplete-input>
       </div>
 
-      <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
-        <app-shared-tag-item
-          [tags]="answerTags(question.identifier)"
-          [editMode]="editMode"
-          [projectId]="innoid"
-          (addTag)="addTag($event, question.identifier)"
-          (createTag)="createTag($event, question.identifier)"
-          (removeTag)="removeTag($event, question.identifier)">
-        </app-shared-tag-item>
-      </div>
-
     </ng-container>
 
     <!-- List case -->
@@ -92,17 +81,6 @@
          [config]="{ placeholder: 'Enter your response', initialData: fullAnswer.answers[question.identifier] || [] }"
          [adminMode]="editMode">
        </app-input-list>
-     </div>
-
-     <div [ngStyle]="{ 'margin-top': '15px', 'margin-bottom': answerTags(question.identifier).length > 0 ? '-10px' : '0' }">
-       <app-shared-tag-item
-         [tags]="answerTags(question.identifier)"
-         [editMode]="editMode"
-         [projectId]="innoid"
-         (addTag)="addTag($event, question.identifier)"
-         (createTag)="createTag($event, question.identifier)"
-         (removeTag)="removeTag($event, question.identifier)">
-       </app-shared-tag-item>
      </div>
 
    </ng-container>

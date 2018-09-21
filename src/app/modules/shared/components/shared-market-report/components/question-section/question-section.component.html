@@ -1,5 +1,9 @@
 <section class="question-section-wrapper s-question-print" [id]=domSectionId>
 
+  <div *ngFor="let tag of tags" class="tags-wrapper">
+    <span (click)="addTagFilter($event, tag)">#{{ tag.label | multiling:lang }}</span>
+  </div>
+
   <!-- If the question type is checkbox or radio -->
   <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
     <app-bar-chart

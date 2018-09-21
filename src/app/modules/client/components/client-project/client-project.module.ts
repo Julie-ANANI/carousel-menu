@@ -30,7 +30,8 @@ import { InputModule } from '../../../input/input.module';
 import { PaginationModule } from '../../../input/component/pagination/pagination.module';
 import { SidebarCollaboratorModule } from '../../../sidebar/components/collaborator/sidebar-collaborator.module';
 import { SidebarInnovationPreviewModule } from '../../../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
-import {ProjectsListComponent} from './components/projects-list/projects-list.component';
+import { ProjectsListComponent } from './components/projects-list/projects-list.component';
+// import { SharedCarouselModule } from '../../../shared/components/shared-carousel/shared-carousel.module';
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import {ProjectsListComponent} from './components/projects-list/projects-list.co
     InputModule,
     PaginationModule,
     SidebarCollaboratorModule,
-    SidebarInnovationPreviewModule
+    SidebarInnovationPreviewModule,
+    // SharedCarouselModule
   ],
   declarations: [
     ClientProjectComponent,

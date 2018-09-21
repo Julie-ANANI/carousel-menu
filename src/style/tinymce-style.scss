@@ -1,0 +1,63 @@
+@import "variables";
+
+/*
+    This stylesheet contains the style related to the tinymce panel.
+ */
+
+
+.mce-panel {
+  border: none;
+}
+
+.mce-tinymce {
+  border: .18rem solid $border-color !important;
+  border-radius: .35rem;
+}
+
+.mce-container {
+  font-size: .18rem !important;
+}
+
+.mce-toolbar .mce-btn-group {
+  padding: 0 !important;
+}
+
+.mce-btn.mce-disabled button, .mce-btn.mce-disabled:hover button {
+  opacity: 1 !important;
+}
+
+.mce-btn {
+  padding: .85rem 1.2rem !important;
+  background: none !important;
+}
+
+.mce-ico {
+  color: $meta-color !important;
+  cursor: pointer !important;
+}
+
+.mce-btn:hover {
+  border-color: transparent !important;
+
+  .mce-ico {
+    color: $dark-color !important;
+    background-color: transparent !important;
+  }
+
+}
+
+.mce-btn.mce-active {
+  background: none !important;
+  color: $dark-color !important;
+
+  .mce-ico {
+    color: $dark-color !important;
+    background-color: transparent !important;
+  }
+
+}
+
+.mce-btn-group:not(:first-child) {
+  margin-left: 0 !important;
+  border-left: none !important;
+}

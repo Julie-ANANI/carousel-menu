@@ -71,7 +71,7 @@ import { PresetResolver } from './resolvers/preset.resolver';
     CookieModule.forRoot()
   ],
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   providers: [
     Title,
