@@ -19,12 +19,12 @@ export class DiscoverDescriptionComponent implements OnInit {
   private _innovationCard: InnovCard[] = [];
   private innovation: Innovation;
 
-  private quizUrl: string;
-  private linkedInUrl: string;
-  private twitterUrl: string;
-  private facebookUrl: string;
-  private googlePlusUrl: string;
-  private mailUrl: string;
+  private _quizUrl: string;
+  private _linkedInUrl: string;
+  private _twitterUrl: string;
+  private _facebookUrl: string;
+  private _googlePlusUrl: string;
+  private _mailUrl: string;
 
   private _quizButtonDisplay: string;
 
@@ -66,7 +66,7 @@ export class DiscoverDescriptionComponent implements OnInit {
       }
 
       if (response.campaigns.length !== 0) {
-        this.quizUrl = environment.quizUrl + '/quiz/' + response.quizId + '/' + response.campaigns[0].id + '?lang=' + lang;
+        this._quizUrl = environment.quizUrl + '/quiz/' + response.quizId + '/' + response.campaigns[0].id + '?lang=' + lang;
       }
 
       this.innovation = response;
@@ -77,17 +77,17 @@ export class DiscoverDescriptionComponent implements OnInit {
 
       this._projectState = response.projectStatus;
 
-      this.linkedInUrl = this.shareService.linkedinProjectShareLink(this.innovation, lang);
+      this._linkedInUrl = this.shareService.linkedinProjectShareLink(this.innovation, lang);
 
-      this.linkedInUrl = this.shareService.linkedinProjectShareLink(this.innovation, lang);
+      this._linkedInUrl = this.shareService.linkedinProjectShareLink(this.innovation, lang);
 
-      this.twitterUrl = this.shareService.twitterProjectShareLink(this.innovation, lang);
+      this._twitterUrl = this.shareService.twitterProjectShareLink(this.innovation, lang);
 
-      this.facebookUrl = this.shareService.facebookProjectShareLink(this.innovation);
+      this._facebookUrl = this.shareService.facebookProjectShareLink(this.innovation);
 
-      this.googlePlusUrl = this.shareService.googleProjectShareLink(this.innovation, lang);
+      this._googlePlusUrl = this.shareService.googleProjectShareLink(this.innovation, lang);
 
-      this.mailUrl = this.shareService.mailProjectShareLink(this.innovation, lang);
+      this._mailUrl = this.shareService.mailProjectShareLink(this.innovation, lang);
 
       const innovationCardIndex = response.innovationCards.findIndex( card => card.lang === lang);
 
@@ -192,6 +192,30 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   get quizButtonDisplay(): string {
     return this._quizButtonDisplay;
+  }
+
+  get quizUrl() {
+    return this._quizUrl;
+  }
+
+  get linkedInUrl() {
+    return this._linkedInUrl;
+  }
+
+  get twitterUrl() {
+    return this._twitterUrl;
+  }
+
+  get facebookUrl() {
+    return this._facebookUrl;
+  }
+
+  get googlePlusUrl() {
+    return this._googlePlusUrl;
+  }
+
+  get mailUrl() {
+    return this._mailUrl;
   }
 
 }

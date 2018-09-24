@@ -61,7 +61,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   private _answers: Array<Answer> = [];
   private _filteredAnswers: Array<Answer> = [];
   private _countries: Array<string> = [];
-  private _showListProfessional = true;
 
   private _showDetails = true;
 
@@ -292,7 +291,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     event.preventDefault();
     const value = !this._showDetails;
     this._showDetails = value;
-    this._showListProfessional = value;
   }
 
   toggleMode(event: Event): void {

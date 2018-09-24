@@ -50,8 +50,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }>;
   private _sizeA: number;
   private _sizeB: number;
-  private _statusA: number;
-  private _statusB: number;
   private _batchesLength = 0;
 
 
@@ -118,8 +116,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       this._sizeB = result.batches[1].size;
       this._statsA = result.batches[0].stats;
       this._statsB = result.batches[1].stats;
-      this._statusA = result.batches[0].status;
-      this._statusB = result.batches[1].status;
       this._generateStatsTable();
     });
   }
@@ -252,8 +248,6 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       this._statsB = obj[1].stats;
       this._sizeA = obj[0].size;
       this._sizeB = obj[1].size;
-      this._statusA = obj[0].status;
-      this._statusB = obj[1].status;
       this._generateStatsTable();
     });
   }

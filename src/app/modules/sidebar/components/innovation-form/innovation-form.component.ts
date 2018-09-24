@@ -155,7 +155,7 @@ export class InnovationFormComponent implements OnInit {
         break;
       } case('status'): {
         this.projectChange.emit(this._project);
-        if (this.sendMail !== {}) {
+        if (this.sendMail.constructor === Object && Object.keys(this.sendMail).length !== 0) {
           this.sendMail.emit(this._email);
         }
         this.sendMail.emit(this._email);
@@ -168,7 +168,7 @@ export class InnovationFormComponent implements OnInit {
       } case('send-ending-mail'): {
         this._project._metadata.delivery.endingmail = true;
         this.projectChange.emit(this._project);
-        if (this.sendMail !== {}) {
+        if (this.sendMail.constructor === Object && Object.keys(this.sendMail).length !== 0) {
           this.sendMail.emit(this._email);
         }
         break;

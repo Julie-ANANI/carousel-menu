@@ -7,7 +7,7 @@
     {
       "name": "umi",
       "root": "src",
-      "outDir": "./dist",
+      "outDir": "dist/browser",
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
@@ -45,7 +45,7 @@
     {
       "name": "dynergie",
       "root": "src",
-      "outDir": "./dist",
+      "outDir": "dist/browser",
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
@@ -81,7 +81,7 @@
     {
       "name": "inomer",
       "root": "src",
-      "outDir": "./dist",
+      "outDir": "dist/browser",
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
@@ -117,7 +117,7 @@
     {
       "name": "multivalente",
       "root": "src",
-      "outDir": "./dist",
+      "outDir": "dist/browser",
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
