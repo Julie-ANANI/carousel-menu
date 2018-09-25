@@ -6,7 +6,7 @@ import { AutocompleteService } from '../../../../services/autocomplete/autocompl
 import { TagsService } from '../../../../services/tags/tags.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Tag } from '../../../../models/tag';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-shared-tag-item',

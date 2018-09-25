@@ -43,9 +43,9 @@ export class ProjectsListComponent implements OnInit {
   }
 
   private loadProjects() {
-    this.userService.getMyInnovations(this._config).first().subscribe(respones => {
-        this._projects = respones.result;
-        this._total = respones._metadata.totalCount;
+    this.userService.getMyInnovations(this._config).first().subscribe((responses: any) => {
+        this._projects = responses.result;
+        this._total = responses._metadata.totalCount;
     }, () => {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }, () => {

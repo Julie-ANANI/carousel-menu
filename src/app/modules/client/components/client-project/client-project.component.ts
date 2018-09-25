@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { Innovation } from '../../../../models/innovation';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { Template } from '../../../sidebar/interfaces/template';
 
 const DEFAULT_PAGE = 'setup';

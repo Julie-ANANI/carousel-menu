@@ -39,13 +39,13 @@ export class WelcomePageComponent implements OnInit {
 
     this._userService.activate(this._authService.user.state, this._tokenEmail)
       .first()
-      .subscribe(res => {
+      .subscribe((res: any) => {
         if (res.emailVerified === true) {
           this._authService.emailVerified = true;
         }
         this._authService.isConfirmed = true;
         this._router.navigate(['/project']);
-      }, error => {
+      }, (error: any) => {
         console.error(error);
         this._router.navigate(['/logout']);
       })

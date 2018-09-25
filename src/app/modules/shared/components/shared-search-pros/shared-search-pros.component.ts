@@ -28,7 +28,7 @@ export class SharedSearchProsComponent implements OnInit {
 
   ngOnInit(): void {
     this._initParams();
-    this._searchService.getCountriesSettings().first().subscribe(countriesSettings => {
+    this._searchService.getCountriesSettings().first().subscribe((countriesSettings: any) => {
       this._countriesSettings = countriesSettings.countries;
     });
   }
@@ -75,7 +75,7 @@ export class SharedSearchProsComponent implements OnInit {
   }
 
   public getGoogleQuota() {
-    this._searchService.dailyStats().first().subscribe(result => {
+    this._searchService.dailyStats().first().subscribe((result: any) => {
       this._googleQuota = 30000;
       if (result.hours) {
         this._googleQuota -= result.hours.slice(7).reduce((sum: number, hour: any) => sum + hour.googleQueries, 0)
@@ -114,7 +114,7 @@ export class SharedSearchProsComponent implements OnInit {
     const searchParams = this._params;
     searchParams.metadata = {user: this._authService.getUserInfo()};
     searchParams.websites = Object.keys(searchParams.websites).filter(key => searchParams.websites[key]).join(' ');
-    this._searchService.search(searchParams).first().subscribe(_ => {
+    this._searchService.search(searchParams).first().subscribe((_: any) => {
       this._initParams();
       this._notificationsService.success('Requête ajoutée', 'La requête a bien été ajoutée à la file d\'attente');
     });

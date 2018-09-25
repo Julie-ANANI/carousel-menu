@@ -38,7 +38,7 @@ export class AdminPresetsListComponent implements OnInit {
     this._config = config;
     this._presetService.getAll(this._config)
       .first()
-      .subscribe(presets => {
+      .subscribe((presets: any) => {
         this._presets = presets.result;
         this._total = presets._metadata.totalCount;
       });
@@ -68,7 +68,7 @@ export class AdminPresetsListComponent implements OnInit {
     this._presetService
       .remove(presetId)
       .first()
-      .subscribe(_ => {
+      .subscribe((_: any) => {
         this._presets.splice(this._getPresetIndex(presetId), 1);
         this.selectedPresetIdToBeDeleted = null;
       });
@@ -77,7 +77,7 @@ export class AdminPresetsListComponent implements OnInit {
   public clonePreset(event: Event, clonedPreset: Preset) {
     event.preventDefault();
     delete clonedPreset._id;
-    this._presetService.create(clonedPreset).first().subscribe(preset => {
+    this._presetService.create(clonedPreset).first().subscribe((preset: any) => {
       this._router.navigate(['/admin/libraries/questionnaire/' + preset._id])
     });
   }

@@ -59,7 +59,7 @@ export class LoginPageComponent implements OnInit {
               this.router.navigate([redirect], navigationExtras);
             }
           },
-          err => {
+        (err: any) => {
             this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
             this._formData.get('password').reset();
           });
@@ -75,13 +75,12 @@ export class LoginPageComponent implements OnInit {
     const domain = environment.domain;
 
     this._authService.linkedinLogin(domain).first().subscribe(
-        url => {
+      (url: string) => {
           this._linkedInLink = url;
-        },
-        error => {
+      }, (error: any) => {
           this.translateNotificationsService.error('ERROR.ERROR', error.message);
-        }
-      );
+      }
+    );
 
   }
 

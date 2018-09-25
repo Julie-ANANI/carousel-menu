@@ -9,7 +9,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 import { Template } from '../../../sidebar/interfaces/template';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-signup-page',
@@ -46,10 +46,9 @@ export class SignupPageComponent implements OnInit {
     const domain = environment.domain;
 
     this.authService.linkedinLogin(domain).first().subscribe(
-      url => {
+      (url: string) => {
         this._linkedInLink = url;
-      },
-      error => {
+      }, (error: any) => {
         this.translateNotificationsService.error('ERROR.ERROR', error.message);
       }
     );
@@ -65,17 +64,17 @@ export class SignupPageComponent implements OnInit {
       if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
       }else {
-        this.userService.create(user).first().subscribe(_ => {
+        this.userService.create(user).first().subscribe((_: any) => {
             this.authService.login(user).first().subscribe(
-              (res) => {
+              (_res: any) => {
                 this.location1.back();
               },
-              error => {
+              (error: any) => {
                 this.translateNotificationsService.error('ERROR.ERROR', error.message);
               }
             );
           },
-          error => {
+          (error: any) => {
             this.translateNotificationsService.error('ERROR.ERROR', error.message);
           }
         );

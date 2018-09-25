@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Innovation } from '../../../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../../../models/innov-settings';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-project-targeting',
@@ -26,7 +26,7 @@ export class TargetingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.showTargetingFieldError.subscribe( value => {
+    this.showTargetingFieldError.subscribe((value: any) => {
       this.showFieldError.next(value);
     });
   }

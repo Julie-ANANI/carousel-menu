@@ -20,7 +20,7 @@ export class AdminPresetsEditComponent implements OnInit {
   }
 
   public savePreset(preset: Preset): void {
-    this._presetService.save(this._preset._id, preset).first().subscribe( result => {
+    this._presetService.save(this._preset._id, preset).first().subscribe((result: any) => {
       this._preset = result;
     });
   }

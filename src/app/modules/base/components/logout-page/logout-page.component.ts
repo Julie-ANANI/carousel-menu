@@ -21,11 +21,11 @@ export class LogoutPageComponent implements OnInit {
     this._translateTitleService.setTitle('LOG_OUT.TITLE');
 
     this._authService.logout().first().subscribe(
-        _ => {
+      (_: any) => {
           this._translateNotificationsService.success('ERROR.LOGIN.LOGOUT', 'ERROR.LOGIN.LOGOUT_TEXT');
           this._location.back();
         },
-        _ => {
+      (_: any) => {
           this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
           this._location.back();
         });

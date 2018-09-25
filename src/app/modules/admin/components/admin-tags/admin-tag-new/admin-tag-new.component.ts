@@ -69,7 +69,7 @@ export class AdminTagNewComponent {
   public onSubmit(_event: any) {
     this._tagsService.create(this.formData.value)
       .first()
-      .subscribe((result) => {
+      .subscribe((result: any) => {
         if (result) {
           this.result = result;
           const t_label = MultilingPipe.prototype.transform(result.label, this._translateService.currentLang);
@@ -77,7 +77,7 @@ export class AdminTagNewComponent {
         } else {
           this._notificationsService.error('ERROR.ERROR', 'Empty response from server');
         }
-        }, (error) => {
+        }, (error: any) => {
           error = JSON.parse(error);
           this._notificationsService.error('ERROR.ERROR', error.message);
       });

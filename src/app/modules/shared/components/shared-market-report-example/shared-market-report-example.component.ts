@@ -14,7 +14,7 @@ export class SharedMarketReportExampleComponent implements OnInit {
   constructor(private _http: Http) {  }
 
   ngOnInit() {
-    this._http.get('/sample' ).subscribe(page => {
+    this._http.get('/sample' ).subscribe((page: any) => {
       this._myTemplate = page.text();
     });
   }

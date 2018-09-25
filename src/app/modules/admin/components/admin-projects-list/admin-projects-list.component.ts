@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { Innovation } from '../../../../models/innovation';
 import {Table} from '../../../table/models/table';
 import {FrontendService} from '../../../../services/frontend/frontend.service';
@@ -29,7 +29,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.build();
     if (this.refreshNeededEmitter) {
-      this.refreshNeededEmitter.subscribe((data) => {
+      this.refreshNeededEmitter.subscribe((data: any) => {
         if (typeof data.operatorId !== 'undefined') {
           this.operatorId = data.operatorId;
         }
@@ -75,7 +75,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     }
     this._innovationService.getAll(this._config)
       .first()
-      .subscribe(projects => {
+      .subscribe((projects: any) => {
         this._projects = projects.result.map((project: Innovation) => {
           if (project._metadata) {
             this._frontendService.calculateInnovationMetadataPercentages(project, 'preparation');
@@ -121,7 +121,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     this._innovationService
       .remove(projectId)
       .first()
-      .subscribe(_ => {
+      .subscribe((_: any) => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
       });

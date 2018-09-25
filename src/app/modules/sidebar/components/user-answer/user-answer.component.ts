@@ -1,5 +1,5 @@
 import {Component, Input, OnInit } from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {Question} from '../../../../models/question';
 import {Answer} from '../../../../models/answer';
 import {TranslateService} from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import {AnswerService} from '../../../../services/answer/answer.service';
 import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
 import {Tag} from '../../../../models/tag';
+import {InnovCard} from "../../../../models/innov-card";
 
 @Component({
   selector: 'app-user-answer',
@@ -45,7 +46,7 @@ export class UserAnswerComponent implements OnInit {
     // this.adminMode = this.adminMode && this.authService.adminLevel > 2;
 
     if (this.mode) {
-      this.mode.subscribe((res) => {
+      this.mode.subscribe((res: boolean) => {
         this.editMode = res;
       });
     }
@@ -58,8 +59,8 @@ export class UserAnswerComponent implements OnInit {
     if (starQuestions.length) {
       // Si question 'étoiles', on récupère les advantages
       // TODO: merge the 2 following subscribers in only one
-      this.innovationService.getInnovationCardByLanguage(this.innovationId, 'en').first().subscribe(cardEn => {
-        this.innovationService.getInnovationCardByLanguage(this.innovationId, 'fr').first().subscribe(cardFr => {
+      this.innovationService.getInnovationCardByLanguage(this.innovationId, 'en').first().subscribe((cardEn: InnovCard) => {
+        this.innovationService.getInnovationCardByLanguage(this.innovationId, 'fr').first().subscribe((cardFr: InnovCard) => {
           // puis on les assigne aux questions stars
           starQuestions.forEach(question => {
             question.options = [];
@@ -113,9 +114,9 @@ export class UserAnswerComponent implements OnInit {
       this.modalAnswer.originalAnswerReference = this.modalAnswer.originalAnswerReference || 'oldQuiz';
       this.modalAnswer.quizReference = this.modalAnswer.quizReference || 'oldQuiz';
       this.answerService.save(this.modalAnswer._id, this.modalAnswer).first()
-        .subscribe(_ => {
+        .subscribe((_: any) => {
           this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
-        }, err => {
+        }, (err: any) => {
           this.translateNotificationsService.error('ERROR.ERROR', err);
         });
     }
@@ -155,30 +156,30 @@ export class UserAnswerComponent implements OnInit {
 
   addTag(tag: Tag): void {
     this.answerService.addTag(this.modalAnswer._id, tag._id).first()
-      .subscribe((a) => {
+      .subscribe((a: any) => {
         this.modalAnswer.tags.push(tag);
         this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
-      }, err => {
+      }, (err: any) => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
       });
   }
 
   createTag(tag: Tag): void {
     this.answerService.createTag(this.modalAnswer._id, tag).first()
-      .subscribe((a) => {
+      .subscribe((a: any) => {
         this.modalAnswer.tags.push(tag);
         this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
-      }, err => {
+      }, (err: any) => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
       });
   }
 
   removeTag(tag: Tag): void {
     this.answerService.removeTag(this.modalAnswer._id, tag._id).first()
-      .subscribe((a) => {
+      .subscribe((a: any) => {
         this.modalAnswer.tags = this.modalAnswer.tags.filter(t => t._id !== tag._id);
         this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.REMOVED');
-      }, err => {
+      }, (err: any) => {
         this.translateNotificationsService.error('ERROR.ERROR', err);
       });
   }
@@ -187,7 +188,7 @@ export class UserAnswerComponent implements OnInit {
     event.preventDefault();
     this.answerService.importFromQuiz(this.modalAnswer).first().subscribe((_res: any) => {
       this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.ANSWER.IMPORTED');
-    }, err => {
+    }, (err: any) => {
       this.translateNotificationsService.error('ERROR.ERROR', err);
     });
   }

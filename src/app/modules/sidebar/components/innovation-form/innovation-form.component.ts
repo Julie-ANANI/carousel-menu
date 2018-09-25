@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {Innovation} from '../../../../models/innovation';
 import {InnovationSettings} from '../../../../models/innov-settings';
 import {TemplatesService} from '../../../../services/templates/templates.service';
@@ -68,13 +68,13 @@ export class InnovationFormComponent implements OnInit {
     this.statusValid = true;
 
     if (this.setProject) {
-      this.setProject.subscribe((project) => {
+      this.setProject.subscribe((project: Innovation) => {
         this._project = JSON.parse(JSON.stringify(project));
       })
     }
 
     if (this.sidebarState) {
-      this.sidebarState.subscribe((state) => {
+      this.sidebarState.subscribe((state: any) => {
         if (state === 'inactive') {
           this._isChange = false;
           this._email = {

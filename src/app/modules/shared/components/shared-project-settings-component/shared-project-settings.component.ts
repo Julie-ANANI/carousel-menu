@@ -4,7 +4,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { ShareService } from '../../../../services/share/share.service';
 import { InnovationSettings } from '../../../../models/innov-settings';
 import * as _ from 'lodash';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { Location } from '@angular/common';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Router } from '@angular/router';
@@ -59,7 +59,7 @@ export class SharedProjectSettingsComponent implements OnInit {
     }
 
     if (!this._adminSide) {
-      this.showTargetingFieldError.subscribe(value => {
+      this.showTargetingFieldError.subscribe((value: any) => {
         if (value) {
           this._showMarketError = this.settings.market.comments.length === 0;
           this.checkGeographyError();
@@ -312,10 +312,10 @@ export class SharedProjectSettingsComponent implements OnInit {
   deleteProject(event: Event) {
     event.preventDefault();
 
-    this.innovationService.remove(this.innovId).first().subscribe((res) => {
+    this.innovationService.remove(this.innovId).first().subscribe((res: any) => {
       this.router.navigate(['/project']);
       this.translateNotificationsService.success('ERROR.PROJECT.DELETED', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
-    }, err => {
+    }, (err: any) => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
     })
   }

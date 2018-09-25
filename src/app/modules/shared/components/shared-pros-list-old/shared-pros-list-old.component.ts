@@ -42,7 +42,7 @@ export class SharedProsListOldComponent {
 
   loadPros(config: any): void {
     this._config = config;
-    this._searchService.getPros(this._config, this.requestId).first().subscribe(pros => {
+    this._searchService.getPros(this._config, this.requestId).first().subscribe((pros: any) => {
       this._pros = pros.persons;
       this._total = pros._metadata.totalCount;
     });

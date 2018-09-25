@@ -59,7 +59,7 @@ export class DiscoverDescriptionComponent implements OnInit {
   }
 
   loadInnovation(id: string, lang: string) {
-    this.innovationService.get(id).subscribe(response => {
+    this.innovationService.get(id).subscribe((response: any) => {
 
       if (response.quizId === '' || response.status === 'DONE') {
         this._quizButtonDisplay = 'none';
@@ -89,7 +89,7 @@ export class DiscoverDescriptionComponent implements OnInit {
 
       this._mailUrl = this.shareService.mailProjectShareLink(this.innovation, lang);
 
-      const innovationCardIndex = response.innovationCards.findIndex( card => card.lang === lang);
+      const innovationCardIndex = response.innovationCards.findIndex( (card: any) => card.lang === lang);
 
       this._innovationCard.push(response.innovationCards[innovationCardIndex]);
 

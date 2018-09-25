@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-user-change-password',
@@ -22,7 +22,7 @@ export class UserChangePasswordComponent implements OnInit {
     this.buildForm();
 
     if (this.sidebarState) {
-      this.sidebarState.subscribe((state) => {
+      this.sidebarState.subscribe((state: any) => {
         if (state === 'inactive') {
           setTimeout (() => {
             this._formData.reset();

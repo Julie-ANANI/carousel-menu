@@ -79,7 +79,7 @@ export class SharedSearchResultsComponent implements OnInit {
     if (this._request.country) {
       params.country = this._request.country;
     }
-    this._searchService.searchMails(params).first().subscribe(result => {
+    this._searchService.searchMails(params).first().subscribe((result: any) => {
       this._notificationsService.success('Recherche lancée', `La recherche de mails a été lancée`);
     });
   }
@@ -105,7 +105,7 @@ export class SharedSearchResultsComponent implements OnInit {
       params.query = this._selection.query;
       params.query.motherRequestId = this._request._id;
     }
-    this._professionalsService.addFromRequest(params).first().subscribe(result => {
+    this._professionalsService.addFromRequest(params).first().subscribe((result: any) => {
       this._notificationsService.success('Déplacement des pros', `${result.nbProfessionalsMoved} pros ont été déplacés`);
       if (goToCampaign) {
         this._router.navigate([`/admin/campaigns/campaign/${campaign._id}/pros`]);

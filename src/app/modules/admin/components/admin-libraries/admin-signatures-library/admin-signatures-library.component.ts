@@ -75,7 +75,7 @@ export class AdminSignaturesLibraryComponent implements OnInit {
   }
 
   public updateSignature(signature: EmailSignature) {
-    this._templatesService.saveSignature(signature).first().subscribe(updatedSignature => {
+    this._templatesService.saveSignature(signature).first().subscribe((updatedSignature: any) => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
@@ -89,14 +89,14 @@ export class AdminSignaturesLibraryComponent implements OnInit {
   }
 
   public deleteSignature(signatureId: string) {
-    this._templatesService.removeSignature(signatureId).first().subscribe(_ => {
+    this._templatesService.removeSignature(signatureId).first().subscribe((_: any) => {
       this.getSignatures();
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     });
   }
 
   public createSignature() {
-    this._templatesService.createSignature({name: this._newSignatureName}).first().subscribe(newSignature => {
+    this._templatesService.createSignature({name: this._newSignatureName}).first().subscribe((newSignature: any) => {
       this._newSignatureName = null;
       this.editSignature(newSignature);
       this.getSignatures();

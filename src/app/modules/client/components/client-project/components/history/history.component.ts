@@ -28,7 +28,7 @@ export class HistoryProjectComponent implements OnInit {
     this.answers
       .getInnovationValidAnswers(this.project._id)
       .first()
-      .subscribe((answers) => {
+      .subscribe((answers: any) => {
         const events = this.getBaseEvents();
         answers.answers.forEach((a: Answer) => {
           events.push({type: 'NEWANSWER', date: a.created, data: a});

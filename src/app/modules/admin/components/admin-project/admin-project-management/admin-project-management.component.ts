@@ -8,7 +8,7 @@ import {Innovation} from '../../../../../models/innovation';
 import {Preset} from '../../../../../models/preset';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Template} from '../../../../sidebar/interfaces/template';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {AutocompleteService} from '../../../../../services/autocomplete/autocomplete.service';
 import {DashboardService} from '../../../../../services/dashboard/dashboard.service';
 import {User} from '../../../../../models/user.model';
@@ -128,7 +128,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
     this.offers = [{name: 'insights', alias: 'GetInsights'}, {name: 'apps', alias: 'GetApps'}, {name: 'leads', alias: 'GetLeads'}];
 
-    this._dashboardService.getOperators().first().subscribe((operators) => this.operators = operators.result);
+    this._dashboardService.getOperators().first().subscribe((operators: any) => this.operators = operators.result);
 
     this.operatorId = this._project.operator
       ? (this._project.operator.id ? this._project.operator.id : this._project.operator.toString())
@@ -136,7 +136,7 @@ export class AdminProjectManagementComponent implements OnInit {
 
     this._presetService.getAll(this._config)
       .first()
-      .subscribe(p => {
+      .subscribe((p: any) => {
         this.presets = p.result;
       });
 
@@ -146,13 +146,13 @@ export class AdminProjectManagementComponent implements OnInit {
 
     this.isEmailsDomainsSidebar = false;
 
-    this._tagService.getTagsFromPool(this.project._id).subscribe((data) => {
+    this._tagService.getTagsFromPool(this.project._id).subscribe((data: any) => {
       this.answerTags = data.length;
     });
 
     this._innovationService.campaigns(this._project._id)
       .first()
-      .subscribe(campaigns => {
+      .subscribe((campaigns: any) => {
           this.currentCampaign = this.getBestCampaign(campaigns.result);
           if (this.currentCampaign !== null) {
             this.calculateClickPercentage();
@@ -161,7 +161,7 @@ export class AdminProjectManagementComponent implements OnInit {
             this.generateModifiedScenarios();
           }
         },
-        error => this._notificationsService.error('ERROR', error.message)
+        (error: any) => this._notificationsService.error('ERROR', error.message)
       );
   }
 
@@ -239,14 +239,14 @@ export class AdminProjectManagementComponent implements OnInit {
    * This function suggest users to the user when he wants to change the owner
    */
   onSuggestUsers() {
-    this.formData.get('owner').valueChanges.distinctUntilChanged().subscribe(input => {
+    this.formData.get('owner').valueChanges.distinctUntilChanged().subscribe((input: any) => {
       this.displayUserSuggestion = true;
       this.usersSuggestion = [];
-      this._autoCompleteService.get({query: input, type: 'users'}).subscribe(res => {
+      this._autoCompleteService.get({query: input, type: 'users'}).subscribe((res: any) => {
         if (res.length === 0) {
           this.displayUserSuggestion = false;
         } else {
-          res.forEach((items) => {
+          res.forEach((items: any) => {
             const valueIndex = this.usersSuggestion.indexOf(items._id);
             if (valueIndex === -1) { // if not exist then push into the array.
               this.usersSuggestion.push({name: items.name, _id: items._id});
@@ -312,11 +312,11 @@ export class AdminProjectManagementComponent implements OnInit {
     let preset: any = {sections: []};
     if (presetName) {
       preset = this.presets.find(value => value.name === presetName);
-      this._innovationService.updatePreset(this._project._id, preset).first().subscribe(data => {
+      this._innovationService.updatePreset(this._project._id, preset).first().subscribe((data: any) => {
         this._activatedRoute.snapshot.parent.data['innovation'] = data;
         this._project = data;
         this.save(event, 'Le questionnaire a bien été affecté au projet');
-      }, (err) => {
+      }, (err: any) => {
         this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
     } else {
@@ -348,10 +348,10 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   generateQuiz(event: Event) {
     event.preventDefault();
-    this._innovationService.createQuiz(this._project._id).first().subscribe((result) => {
+    this._innovationService.createQuiz(this._project._id).first().subscribe((result: any) => {
       this._project = result;
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.QUIZ.CREATED');
-    }, (err) => {
+    }, (err: any) => {
       this._notificationsService.error('ERROR.ERROR', err);
     })
   }
@@ -473,9 +473,9 @@ export class AdminProjectManagementComponent implements OnInit {
     event.preventDefault();
     this._campaignService.updateStats(campaign._id)
       .first()
-      .subscribe(stats => {
+      .subscribe((stats: any) => {
         campaign.stats = stats;
-      }, error => {
+      }, (error: any) => {
         this._notificationsService.error('ERROR', error.message);
       });
   };
@@ -685,11 +685,11 @@ export class AdminProjectManagementComponent implements OnInit {
     this._innovationService
       .save(this._project._id, this._project)
       .first()
-      .subscribe(data => {
+      .subscribe((data: any) => {
         this._project = data;
         this.resetData();
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , notification);
-      }, err => {
+      }, (err: any) => {
         this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
   }
@@ -701,7 +701,7 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   public saveCampaign(event: Event, notification: string): void {
     event.preventDefault();
-    this._campaignService.put(this.currentCampaign).first().subscribe(savedCampaign => {
+    this._campaignService.put(this.currentCampaign).first().subscribe((savedCampaign: any) => {
       this._notificationsService.success('ERROR.ACCOUNT.UPDATE', notification);
       this.currentCampaign = savedCampaign;
       this.resetData();
@@ -735,7 +735,7 @@ export class AdminProjectManagementComponent implements OnInit {
   public removeProject() {
     this._innovationService
       .remove(this._project._id)
-      .subscribe(projectRemoved => {
+      .subscribe((projectRemoved: any) => {
         this._router.navigate(['/admin/projects/']);
       });
   }

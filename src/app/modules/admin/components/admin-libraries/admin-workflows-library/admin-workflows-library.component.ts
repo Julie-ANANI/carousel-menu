@@ -53,14 +53,14 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
         emails.push(this._createEmail(step, language));
       });
     });
-    this._templatesService.create({name: this._newScenarioName, emails: emails}).first().subscribe(newScenario => {
+    this._templatesService.create({name: this._newScenarioName, emails: emails}).first().subscribe((newScenario: any) => {
       this._newScenarioName = null;
       this._scenarios.unshift(newScenario);
     });
   }
 
   public updateScenario(changedScenario: EmailScenario) {
-    this._templatesService.save(changedScenario).first().subscribe(updatedScenario => {
+    this._templatesService.save(changedScenario).first().subscribe((updatedScenario: any) => {
       const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id === changedScenario._id);
       this._scenarios[scenarioIndex] = updatedScenario;
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
@@ -73,7 +73,7 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
    * Suppression et mise à jour de la vue
    */
   public deleteScenario(scenarioToDelete: EmailScenario) {
-    this._templatesService.remove(scenarioToDelete._id).first().subscribe(_ => {
+    this._templatesService.remove(scenarioToDelete._id).first().subscribe((_: any) => {
       const scenarioIndex: number = this._scenarios.findIndex((scenario: EmailScenario) => scenario._id === scenarioToDelete._id);
       this._scenarios.splice(scenarioIndex, 1);
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');

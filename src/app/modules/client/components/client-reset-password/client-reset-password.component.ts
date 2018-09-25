@@ -36,18 +36,17 @@ export class ClientResetPasswordComponent implements OnInit {
   onSubmit() {
     if (this.formData.valid && this.formData.get('email')!.value) {
       if (this.formData.get('password')!.value === this.formData.get('passwordConfirm')!.value) {
-        this._activatedRoute.params.first().subscribe(params => {
+        this._activatedRoute.params.first().subscribe((params: any) => {
           const tokenEmail = params['tokenEmail'];
           this._userService.updatePassword({
             email: this.formData.get('email')!.value,
             password: this.formData.get('password')!.value,
             passwordConfirm: this.formData.get('passwordConfirm')!.value,
             tokenEmail: tokenEmail
-          }).first().subscribe(_ => {
+          }).first().subscribe((_: any) => {
               this._notificationsService.success('ERROR.ACCOUNT.PASSWORD_UPDATED', 'ERROR.ACCOUNT.PASSWORD_UPDATED_TEXT');
               this._router.navigate(['/account']);
-            },
-            err => {
+            }, (err: any) => {
               this._notificationsService.error('ERROR.ERROR', err.message);
             });
         });

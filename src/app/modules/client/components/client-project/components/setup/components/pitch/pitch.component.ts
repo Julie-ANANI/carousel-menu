@@ -1,6 +1,6 @@
 import {Component, Output, Input, EventEmitter, OnInit} from '@angular/core';
 import { Innovation } from '../../../../../../../../models/innovation';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-project-pitch',
@@ -35,7 +35,7 @@ export class PitchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.showPitchFieldError.subscribe( value => {
+    this.showPitchFieldError.subscribe( (value: any) => {
       this._showFieldError.next(value);
     });
   }

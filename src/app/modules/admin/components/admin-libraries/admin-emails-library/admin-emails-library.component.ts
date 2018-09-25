@@ -101,7 +101,7 @@ export class AdminEmailsLibraryComponent implements OnInit {
   }
 
   public updateEmail(email: TransactionalEmail) {
-    this._templatesService.saveEmail(email).first().subscribe(updatedEmail => {
+    this._templatesService.saveEmail(email).first().subscribe((updatedEmail: any) => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
@@ -115,14 +115,14 @@ export class AdminEmailsLibraryComponent implements OnInit {
   }
 
   public deleteEmail(emailId: string) {
-    this._templatesService.removeEmail(emailId).first().subscribe(_ => {
+    this._templatesService.removeEmail(emailId).first().subscribe((_: any) => {
       this.getEmails();
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     });
   }
 
   public createEmail() {
-    this._templatesService.createEmail({name: this._newEmailName}).first().subscribe(newEmail => {
+    this._templatesService.createEmail({name: this._newEmailName}).first().subscribe((newEmail: any) => {
       this._newEmailName = null;
       this.editEmail(newEmail);
       this.getEmails();

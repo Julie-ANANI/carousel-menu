@@ -3,7 +3,7 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -53,7 +53,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
     };
     this.innovationService.updateMarketReport(this.innovation._id, objToSave)
       .first()
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         this.innovation.marketReport = data;
       });
   }

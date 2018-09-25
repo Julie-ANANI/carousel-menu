@@ -90,7 +90,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     based on the config we request to the server and get the results.
    */
   private getAllInnovations() {
-    this.innovationService.getAll(this.config).first().subscribe(innovations => {
+    this.innovationService.getAll(this.config).first().subscribe((innovations: any) => {
       this._displaySpinner = true;
       this._totalInnovations = innovations.result;
       this.initialize();

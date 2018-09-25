@@ -69,28 +69,28 @@ export class AnswerQuestionComponent {
     this._answerService
       .addTag(this.fullAnswer._id, tag._id, q_identifier)
       .first()
-      .subscribe((a) => {
+      .subscribe((a: any) => {
         if (this.fullAnswer.answerTags[q_identifier]) {
           this.fullAnswer.answerTags[q_identifier].push(tag);
         } else {
           this.fullAnswer.answerTags[q_identifier] = [tag];
         }
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
-      }, err => {
+      }, (err: any) => {
         this._notificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
       });
   }
 
   createTag(tag: Tag, q_identifier: string): void {
     this._answerService.createTag(this.fullAnswer._id, tag, q_identifier).first()
-      .subscribe((a) => {
+      .subscribe((a: any) => {
         if (this.fullAnswer.answerTags[q_identifier]) {
           this.fullAnswer.answerTags[q_identifier].push(tag);
         } else {
           this.fullAnswer.answerTags[q_identifier] = [tag];
         }
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
-      }, err => {
+      }, (err: any) => {
         this._notificationsService.error('ERROR.ERROR', 'ERROR.TAGS.ALREADY_ADDED');
       });
   }
@@ -99,10 +99,10 @@ export class AnswerQuestionComponent {
     this._answerService
       .removeTag(this.fullAnswer._id, tag._id, q_identifier)
       .first()
-      .subscribe((a) => {
+      .subscribe((a: any) => {
         this.fullAnswer.answerTags[q_identifier] = this.fullAnswer.answerTags[q_identifier].filter(t => t._id !== tag._id);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');
-      }, err => {
+      }, (err: any) => {
         this._notificationsService.error('ERROR.ERROR', err);
       });
   }

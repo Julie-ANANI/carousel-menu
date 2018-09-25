@@ -7,7 +7,7 @@ import { Campaign } from '../../../../models/campaign';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { Tag } from '../../../../models/tag';
 
 @Component({
@@ -105,7 +105,7 @@ export class UserFormComponent implements OnInit {
     this.loadTypes();
 
     if (this.sidebarState) {
-      this.sidebarState.subscribe((state) => {
+      this.sidebarState.subscribe((state: any) => {
         if (state === 'inactive') {
           setTimeout (() => {
             this.userForm.reset();
@@ -170,14 +170,14 @@ export class UserFormComponent implements OnInit {
   }
 
   onSuggestCountries() {
-    this.userForm.get('country').valueChanges.distinctUntilChanged().subscribe(input => {
+    this.userForm.get('country').valueChanges.distinctUntilChanged().subscribe((input: any) => {
       this.displayCountrySuggestion = true;
       this.countriesSuggestion = [];
-      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe(res => {
+      this.autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {
         if (res.length === 0) {
           this.displayCountrySuggestion = false;
         } else {
-          res.forEach((items) => {
+          res.forEach((items: any) => {
             const valueIndex = this.countriesSuggestion.indexOf(items.name);
             if (valueIndex === -1) { // if not exist then push into the array.
               this.countriesSuggestion.push(items.name);

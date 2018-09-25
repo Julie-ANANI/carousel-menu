@@ -35,12 +35,12 @@ export class AdminPresetsNewComponent {
 
 
   public createPreset() {
-    this._presetService.create(this._newPreset).first().subscribe( (preset) => {
+    this._presetService.create(this._newPreset).first().subscribe((preset: any) => {
       this._newPreset = preset;
       this.errorquestionnaire = false;
       this.created = true;
       this._router.navigate(['/admin/libraries/questionnaire/' + preset._id])
-    }, (error) => {
+    }, (error: any) => {
       error = JSON.parse(error);
       this.errorquestionnaire = true;
     });
@@ -49,11 +49,6 @@ export class AdminPresetsNewComponent {
   public goBack() {
     this._router.navigate(['/admin/libraries/questionnaire/']);
   }
-/*
-  ngOnInit() {
-
-  }
-*/
 
   get newPreset(): any { return this._newPreset;}
   get name(): AbstractControl { return this.formData.get('name'); }

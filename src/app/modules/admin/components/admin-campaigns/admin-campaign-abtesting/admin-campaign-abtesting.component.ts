@@ -69,7 +69,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   ngOnInit() {
 
-    this._campaignService.messagesStats(this._campaign._id).first().subscribe(stats => {
+    this._campaignService.messagesStats(this._campaign._id).first().subscribe((stats: any) => {
       this._batchesLength = stats.batches.length;
     });
 
@@ -111,7 +111,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   // MessageStats => Recupere tout les batch de la campagne sans les update (moins lourd, on update sur demande en statut 2)
   public getStatsBatch() {
-    this._campaignService.messagesStats(this.campaign._id).first().subscribe(result => {
+    this._campaignService.messagesStats(this.campaign._id).first().subscribe((result: any) => {
       this._sizeA = result.batches[0].size;
       this._sizeB = result.batches[1].size;
       this._statsA = result.batches[0].stats;
@@ -122,7 +122,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   public validateABtesting() {
     this._campaign.settings.ABsettings.status = '2';
-    this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
+    this._campaignService.put(this._campaign).first().subscribe((savedCampaign: any) => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);

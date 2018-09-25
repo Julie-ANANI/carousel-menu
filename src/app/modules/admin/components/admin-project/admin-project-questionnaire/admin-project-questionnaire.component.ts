@@ -22,7 +22,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit {
 
   public savePreset(preset: Preset): void {
     const project = { preset: this._project.preset };
-    this._innovationService.save(this._project._id, project).first().subscribe( result => {
+    this._innovationService.save(this._project._id, project).first().subscribe((result: any) => {
       this._project = result;
     });
   }
