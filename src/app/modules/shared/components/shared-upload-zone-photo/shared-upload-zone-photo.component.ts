@@ -1,5 +1,7 @@
 import { Component, Input, Output, OnInit, EventEmitter, ViewChild } from '@angular/core';
-import { FileUploader, FilterFunction, FileItem, ParsedResponseHeaders, FileUploaderOptions } from 'ng2-file-upload';
+import { HttpHeaders } from '@angular/common/http';
+import { FileSystemDirectoryEntry, FileSystemFileEntry, UploadEvent, UploadFile } from 'ngx-file-drop';
+import { Http } from '../../../../services/http';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { environment } from '../../../../../environments/environment'
 
@@ -11,8 +13,7 @@ import { environment } from '../../../../../environments/environment'
 
 export class SharedUploadZonePhotoComponent implements OnInit {
 
-  private _filters: Array<FilterFunction>;
-  private _uploader: FileUploader;
+  private _files: Array<UploadFile> = [];
   public hasBaseDropZoneOver = false;
   public loading = false;
 
@@ -22,15 +23,59 @@ export class SharedUploadZonePhotoComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: any;
 
-  constructor(private notificationsService: TranslateNotificationsService) {}
+  constructor(private notificationsService: TranslateNotificationsService,
+              private http: Http) {}
+
+  public dropped(event: UploadEvent) {
+    this._files = event.files;
+    for (const droppedFile of event.files) {
+
+      // Is it a file?
+      if (droppedFile.fileEntry.isFile) {
+        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+        fileEntry.file((file: File) => {
+
+          // Here you can access the real file
+          console.log(droppedFile.relativePath, file);
+
+           // You could upload it like this:
+           const formData = new FormData();
+           formData.append('logo', file, relativePath);
+
+           // Headers
+           const headers = new HttpHeaders({
+            'api-token': 'umi-front-application,TXnKAVHh0xpiFlC8D01S3e8ZkD45VIDJ'
+          });
+
+           this.http.post(environment.apiUrl + this.uri, formData, { headers: headers, responseType: 'application/json' })
+           .subscribe((data: any) => {
+            // Sanitized logo returned from backend
+             console.log(data);
+          });
+
+        });
+      } else {
+        // It was a directory (empty directories are added, otherwise only files)
+        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+        console.log(droppedFile.relativePath, fileEntry);
+      }
+    }
+  }
+
+  public fileOver(event: any) {
+    console.log('fileOver ' + event);
+  }
+
+  public fileLeave(event: any) {
+    console.log('fileLeave ' + event);
+  }
+
 
   ngOnInit() {
-    this._filters = Array<FilterFunction>();
 
     this._uploader = new FileUploader({
       url: environment.apiUrl + this.uri,
       autoUpload: true,
-      filters: this._filters,
       // maxFileSize: 1024 * 1024,
       additionalParameter: {} // à transmettre au serveur au moment de la sauvegarde
     });
@@ -65,10 +110,6 @@ export class SharedUploadZonePhotoComponent implements OnInit {
       }
     }
 
-  }
-
-  get uploader() {
-    return this._uploader;
   }
 
   public fileOverBase(e: any): void {

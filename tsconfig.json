@@ -14,25 +14,28 @@
     "noEmitHelpers": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": false, // TODO: set to true
+    "noUnusedParameters": false,
     "outDir": "./dist/out-tsc",
     "rootDir": "src/",
     "sourceMap": true,
-    "strict": false, // Set to true only if you feel brave enough :D
+    "strict": false,
     "strictNullChecks": false,
     "suppressImplicitAnyIndexErrors": true,
     "target": "es5",
     "lib": [
       "dom",
       "es6"
-    ]
+    ],
+    "baseUrl": "./"
   },
   "exclude": [
     "node_modules",
     "dist"
   ],
   "paths": {
-    "@angular/*": ["node_modules/@angular/*"]
+    "@angular/*": [
+      "node_modules/@angular/*"
+    ]
   },
   "typeRoots": [
     "node_modules/@types"

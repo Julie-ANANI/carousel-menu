@@ -9,7 +9,9 @@
 
     <div style="height:0;overflow:hidden">
       <!-- let $event propagate here -->
-      <input type="file" ng2FileSelect [uploader]="uploader" id="fileInput" name="fileInput"  #fileInput />
+      <file-drop headertext="Drop files here" (onFileDrop)="dropped($event)"
+                 (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+      </file-drop>
     </div>
 
     <div class="text-center" *ngIf="!loading">
