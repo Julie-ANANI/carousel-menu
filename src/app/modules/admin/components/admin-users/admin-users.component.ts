@@ -7,6 +7,7 @@ import { Table } from '../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import {Template} from '../../../sidebar/interfaces/template';
 import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-users',
@@ -54,7 +55,7 @@ export class AdminUsersComponent implements OnInit {
 
   loadUsers(): void
   {
-    this._userService.getAll(this._config).first().subscribe((users: any) => {
+    this._userService.getAll(this._config).pipe(first()).subscribe((users: any) => {
         this._users = users.result;
         this._total = users._metadata.totalCount;
 
@@ -107,7 +108,7 @@ export class AdminUsersComponent implements OnInit {
 
   userEditionFinish(user: User) {
     this._userService.updateOther(user)
-      .first()
+      .pipe(first())
       .subscribe(
         (data: any) => {
           this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
@@ -130,7 +131,7 @@ export class AdminUsersComponent implements OnInit {
   loadInnovations(event: Event, userId: string): void {
     event.preventDefault();
     this._userService.getInnovations(userId)
-      .first()
+      .pipe(first())
       .subscribe((innovations: any) => {
         console.log(innovations.innovations);
       });
@@ -163,7 +164,8 @@ export class AdminUsersComponent implements OnInit {
   }
 
   removeUser(userId: string) {
-    this._userService.deleteUser(userId).first()
+    this._userService.deleteUser(userId)
+      .pipe(first())
       .subscribe((foo: any) => {
         this.loadUsers();
       });

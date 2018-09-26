@@ -4,7 +4,8 @@ import { EmailService } from '../../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import {Table} from '../../../../table/models/table';
 import {Template} from '../../../../sidebar/interfaces/template';
-import {Subject} from 'rxjs';
+import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-email-queue',
@@ -51,7 +52,7 @@ export class AdminEmailQueueComponent implements OnInit {
   public loadQueue(config: any): void {
     this._config = config;
     this._emailService.getQueue(this._config)
-      .first()
+      .pipe(first())
       .subscribe((queue: any) => {
           this._queueList = queue;
 
@@ -80,7 +81,7 @@ export class AdminEmailQueueComponent implements OnInit {
 
   private _stopBatch(batch: any): void {
     this._emailService.stopBatch(batch._id)
-      .first()
+      .pipe(first())
       .subscribe((result: any) => {
         if (result && result.status === 200) {
           batch.status = 'CANCELED';

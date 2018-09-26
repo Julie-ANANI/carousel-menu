@@ -49,6 +49,7 @@
     "ngx-page-scroll": "^4.0.0",
     "ngx-uploader": "^3.3.11",
     "print-js": "^1.0.47",
+    "rxjs-compat": "^6.3.3",
     "spectre.css": "^0.4.7",
     "sqreen": "^1.23.0",
     "tinymce": "^4.7.6",

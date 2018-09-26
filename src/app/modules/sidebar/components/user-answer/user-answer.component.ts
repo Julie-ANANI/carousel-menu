@@ -1,5 +1,6 @@
 import {Component, Input, OnInit } from '@angular/core';
 import {Subject} from 'rxjs';
+import { first } from 'rxjs/operators';
 import {Question} from '../../../../models/question';
 import {Answer} from '../../../../models/answer';
 import {TranslateService} from '@ngx-translate/core';
@@ -7,7 +8,7 @@ import {AnswerService} from '../../../../services/answer/answer.service';
 import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
 import {Tag} from '../../../../models/tag';
-import {InnovCard} from "../../../../models/innov-card";
+import {InnovCard} from '../../../../models/innov-card';
 
 @Component({
   selector: 'app-user-answer',
@@ -59,8 +60,8 @@ export class UserAnswerComponent implements OnInit {
     if (starQuestions.length) {
       // Si question 'étoiles', on récupère les advantages
       // TODO: merge the 2 following subscribers in only one
-      this.innovationService.getInnovationCardByLanguage(this.innovationId, 'en').first().subscribe((cardEn: InnovCard) => {
-        this.innovationService.getInnovationCardByLanguage(this.innovationId, 'fr').first().subscribe((cardFr: InnovCard) => {
+      this.innovationService.getInnovationCardByLanguage(this.innovationId, 'en').pipe(first()).subscribe((cardEn: InnovCard) => {
+        this.innovationService.getInnovationCardByLanguage(this.innovationId, 'fr').pipe(first()).subscribe((cardFr: InnovCard) => {
           // puis on les assigne aux questions stars
           starQuestions.forEach(question => {
             question.options = [];
@@ -113,7 +114,8 @@ export class UserAnswerComponent implements OnInit {
       // TODO: remove this hack
       this.modalAnswer.originalAnswerReference = this.modalAnswer.originalAnswerReference || 'oldQuiz';
       this.modalAnswer.quizReference = this.modalAnswer.quizReference || 'oldQuiz';
-      this.answerService.save(this.modalAnswer._id, this.modalAnswer).first()
+      this.answerService.save(this.modalAnswer._id, this.modalAnswer)
+        .pipe(first())
         .subscribe((_: any) => {
           this.translateNotificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ANSWER.UPDATED');
         }, (err: any) => {
@@ -155,7 +157,8 @@ export class UserAnswerComponent implements OnInit {
   }
 
   addTag(tag: Tag): void {
-    this.answerService.addTag(this.modalAnswer._id, tag._id).first()
+    this.answerService.addTag(this.modalAnswer._id, tag._id)
+      .pipe(first())
       .subscribe((a: any) => {
         this.modalAnswer.tags.push(tag);
         this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
@@ -165,7 +168,8 @@ export class UserAnswerComponent implements OnInit {
   }
 
   createTag(tag: Tag): void {
-    this.answerService.createTag(this.modalAnswer._id, tag).first()
+    this.answerService.createTag(this.modalAnswer._id, tag)
+      .pipe(first())
       .subscribe((a: any) => {
         this.modalAnswer.tags.push(tag);
         this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.ADDED');
@@ -175,7 +179,8 @@ export class UserAnswerComponent implements OnInit {
   }
 
   removeTag(tag: Tag): void {
-    this.answerService.removeTag(this.modalAnswer._id, tag._id).first()
+    this.answerService.removeTag(this.modalAnswer._id, tag._id)
+      .pipe(first())
       .subscribe((a: any) => {
         this.modalAnswer.tags = this.modalAnswer.tags.filter(t => t._id !== tag._id);
         this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.TAGS.REMOVED');
@@ -186,7 +191,7 @@ export class UserAnswerComponent implements OnInit {
 
   importAnswer(event: Event): void {
     event.preventDefault();
-    this.answerService.importFromQuiz(this.modalAnswer).first().subscribe((_res: any) => {
+    this.answerService.importFromQuiz(this.modalAnswer).pipe(first()).subscribe((_res: any) => {
       this.translateNotificationsService.success('ERROR.SUCCESS' , 'ERROR.ANSWER.IMPORTED');
     }, (err: any) => {
       this.translateNotificationsService.error('ERROR.ERROR', err);

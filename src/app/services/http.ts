@@ -11,6 +11,7 @@ import { environment } from '../../environments/environment';
 import { LoaderService } from './loader/loader.service';
 import { RequestOptions } from './requestOptions';
 import { Observable } from 'rxjs';
+import { retry, catchError, tap, finalize } from 'rxjs/operators';
 import { TranslateNotificationsService } from './notifications/notifications.service';
 
 import * as SessionVerificationController from '@umius/umi-session-verifications';
@@ -37,16 +38,18 @@ export class Http extends AngularHttp {
     }
 
     return super.get(UriOrUrl, this._requestOptions(options))
-        .retry(2)
-      .catch(this._onCatch)
-      .do((res: Response) => {
-        this._onSuccess(res);
-      }, (error: any) => {
-        this._onError(error);
-      })
-      .finally(() => {
-        this._onEnd();
-      });
+      .pipe(
+        retry(2),
+        catchError(this._onCatch),
+        tap((res: Response) => {
+          this._onSuccess(res);
+        }, (error: any) => {
+          this._onError(error);
+        }),
+        finalize(() => {
+          this._onEnd();
+        })
+      );
   }
 
   public post(UriOrUrl: string, data?: any, options?: RequestOptionsArgs) {
@@ -57,15 +60,17 @@ export class Http extends AngularHttp {
     }
 
     return super.post(UriOrUrl, data, this._requestOptions(options))
-      .catch(this._onCatch)
-      .do((res: Response) => {
-        this._onSuccess(res);
-      }, (error: any) => {
-        this._onError(error);
-      })
-      .finally(() => {
-        this._onEnd();
-      });
+      .pipe(
+        catchError(this._onCatch),
+        tap((res: Response) => {
+          this._onSuccess(res);
+        }, (error: any) => {
+          this._onError(error);
+        }),
+        finalize(() => {
+          this._onEnd();
+        })
+      );
   }
 
   public put(UriOrUrl: string, data?: object, options?: RequestOptionsArgs) {
@@ -76,15 +81,17 @@ export class Http extends AngularHttp {
     }
 
     return super.put(UriOrUrl, data, this._requestOptions(options))
-      .catch(this._onCatch)
-      .do((res: Response) => {
-        this._onSuccess(res);
-      }, (error: any) => {
-        this._onError(error);
-      })
-      .finally(() => {
-        this._onEnd();
-      });
+      .pipe(
+        catchError(this._onCatch),
+        tap((res: Response) => {
+          this._onSuccess(res);
+        }, (error: any) => {
+          this._onError(error);
+        }),
+        finalize(() => {
+          this._onEnd();
+        })
+      );
   }
 
   public delete(UriOrUrl: string, options?: RequestOptionsArgs) {
@@ -95,15 +102,17 @@ export class Http extends AngularHttp {
     }
 
     return super.delete(UriOrUrl, this._requestOptions(options))
-      .catch(this._onCatch)
-      .do((res: Response) => {
-        this._onSuccess(res);
-      }, (error: any) => {
-        this._onError(error);
-      })
-      .finally(() => {
-        this._onEnd();
-      });
+      .pipe(
+        catchError(this._onCatch),
+        tap((res: Response) => {
+          this._onSuccess(res);
+        }, (error: any) => {
+          this._onError(error);
+        }),
+        finalize(() => {
+          this._onEnd();
+        })
+      );
   }
 
   public download(UriOrUrl: string, options?: RequestOptionsArgs) {
@@ -119,15 +128,17 @@ export class Http extends AngularHttp {
     }
 
     return super.get(UriOrUrl, this._requestOptions(options))
-      .catch(this._onCatch)
-      .do((res: Response) => {
-        this._onSuccess(res);
-      }, (error: any) => {
-        this._onError(error);
-      })
-      .finally(() => {
-        this._onEnd();
-      });
+      .pipe(
+        catchError(this._onCatch),
+        tap((res: Response) => {
+          this._onSuccess(res);
+        }, (error: any) => {
+          this._onError(error);
+        }),
+        finalize(() => {
+          this._onEnd();
+        })
+      );
   }
 
   public upload(UriOrUrl: string, file: File, options?: RequestOptionsArgs) {
@@ -144,15 +155,17 @@ export class Http extends AngularHttp {
     formData.append('file', file, file.name);
 
     return super.post(UriOrUrl, formData, requestOptions)
-      .catch(this._onCatch)
-      .do((res: Response) => {
-        this._onSuccess(res);
-      }, (error: any) => {
-        this._onError(error);
-      })
-      .finally(() => {
-        this._onEnd();
-      });
+      .pipe(
+        catchError(this._onCatch),
+        tap((res: Response) => {
+          this._onSuccess(res);
+        }, (error: any) => {
+          this._onError(error);
+        }),
+        finalize(() => {
+          this._onEnd();
+        })
+      );
   }
 
   private _requestOptions(options?: RequestOptionsArgs): RequestOptionsArgs {

@@ -5,6 +5,7 @@ import { Table } from '../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Template } from '../../../../sidebar/interfaces/template';
 import { EmailSignature } from '../../../../../models/email-signature';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-emails-library',
@@ -34,15 +35,17 @@ export class AdminEmailsLibraryComponent implements OnInit {
               private _notificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
-    this._templatesService.getAllSignatures({limit: 0}).first().subscribe((signatures: any) => {
+    this._templatesService.getAllSignatures({limit: 0}).pipe(first()).subscribe((signatures: any) => {
       this._signatures = signatures.result;
     });
     this.getEmails();
   }
 
   public getEmails(config?: any) {
-    if (config) this._config = config;
-    this._templatesService.getAllEmails(this._config).first().subscribe((emails:any) => {
+    if (config) {
+      this._config = config;
+    }
+    this._templatesService.getAllEmails(this._config).pipe(first()).subscribe((emails:any) => {
       this._emails = emails.result;
       this._total = emails._metadata.totalCount;
       this._initTable();
@@ -101,7 +104,7 @@ export class AdminEmailsLibraryComponent implements OnInit {
   }
 
   public updateEmail(email: TransactionalEmail) {
-    this._templatesService.saveEmail(email).first().subscribe((updatedEmail: any) => {
+    this._templatesService.saveEmail(email).pipe(first()).subscribe((updatedEmail: any) => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
@@ -115,14 +118,14 @@ export class AdminEmailsLibraryComponent implements OnInit {
   }
 
   public deleteEmail(emailId: string) {
-    this._templatesService.removeEmail(emailId).first().subscribe((_: any) => {
+    this._templatesService.removeEmail(emailId).pipe(first()).subscribe((_: any) => {
       this.getEmails();
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     });
   }
 
   public createEmail() {
-    this._templatesService.createEmail({name: this._newEmailName}).first().subscribe((newEmail: any) => {
+    this._templatesService.createEmail({name: this._newEmailName}).pipe(first()).subscribe((newEmail: any) => {
       this._newEmailName = null;
       this.editEmail(newEmail);
       this.getEmails();

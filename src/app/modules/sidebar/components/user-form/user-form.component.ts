@@ -8,6 +8,7 @@ import { AutocompleteService } from '../../../../services/autocomplete/autocompl
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
 
 @Component({
@@ -170,7 +171,7 @@ export class UserFormComponent implements OnInit {
   }
 
   onSuggestCountries() {
-    this.userForm.get('country').valueChanges.distinctUntilChanged().subscribe((input: any) => {
+    this.userForm.get('country').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
       this.displayCountrySuggestion = true;
       this.countriesSuggestion = [];
       this.autoCompleteService.get({query: input, type: 'countries'}).subscribe((res: any) => {

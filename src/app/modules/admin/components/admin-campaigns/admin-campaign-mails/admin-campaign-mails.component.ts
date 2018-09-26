@@ -7,6 +7,7 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 import {Batch} from '../../../../../models/batch';
 import {Table} from '../../../../table/models/table';
 import {Template} from '../../../../sidebar/interfaces/template';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-campaign-mails',
@@ -54,7 +55,7 @@ export class AdminCampaignMailsComponent implements OnInit {
         return environment.quizUrl + '/quiz/' + this._campaign.innovation.quizId + '/' + this._campaign._id + '?lang=' + l;
       });
     }
-    this._campaignService.messagesStats(this._campaign._id).first().subscribe((stats: any) => {
+    this._campaignService.messagesStats(this._campaign._id).pipe(first()).subscribe((stats: any) => {
       this._stats = stats;
       this.lastMail = this._stats['CAMPAIGN_LAST'] || 0;
       this.secondMail = this._stats['CAMPAIGN_SECOND'] || 0;
@@ -88,20 +89,20 @@ export class AdminCampaignMailsComponent implements OnInit {
   public createNewBatch(sendNow: boolean) {
     this.newBatch.firstMail = sendNow ? Date.now() : this._computeDate(this.dateMail, this.timeMail);
     this.newBatch.sendNow = sendNow;
-    this._campaignService.createNewBatch(this._campaign._id, this.newBatch).first().subscribe((batch: Batch) => {
+    this._campaignService.createNewBatch(this._campaign._id, this.newBatch).pipe(first()).subscribe((batch: Batch) => {
       this.stats.batches.push(batch);
     });
   }
 
   public freezeStatus(batch: Batch) {
-    this._campaignService.freezeStatus(batch).first().subscribe((modifiedBatch: any) => {
+    this._campaignService.freezeStatus(batch).pipe(first()).subscribe((modifiedBatch: any) => {
       this.stats.batches[this._getBatchIndex(modifiedBatch._id)] = modifiedBatch;
     });
   }
 
   // result won't be typed as batch everytime
   public AutoBatch() {
-    this._campaignService.AutoBatch(this._campaign._id).first().subscribe((result: Array<any>) => {
+    this._campaignService.AutoBatch(this._campaign._id).pipe(first()).subscribe((result: Array<any>) => {
       if (result.length === 0) {
         this._notificationsService.success('Autobatch OFF', 'No batch will be created');
       } else {
@@ -116,13 +117,8 @@ export class AdminCampaignMailsComponent implements OnInit {
     });
   }
 
-// DEBUG AUTOBATCH => Creation de pro a la volée
-  public creerpro() {
-    this._campaignService.creerpro(this._campaign._id).first().subscribe();
-  }
-
   public deleteBatch(batchId: string) {
-     this._campaignService.deleteBatch(batchId).first().subscribe((_: any) => {
+     this._campaignService.deleteBatch(batchId).pipe(first()).subscribe((_: any) => {
        this.stats.batches.splice(this._getBatchIndex(batchId), 1);
        this._tableBatch = this.stats.batches.map((batch: any) => {
          return this.generateTableBatch(batch);
@@ -150,7 +146,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public sendTestEmails(batchStatus: number) {
-    this._campaignService.sendTestEmails(this._campaign._id, batchStatus).first().subscribe((_: any) => {
+    this._campaignService.sendTestEmails(this._campaign._id, batchStatus).pipe(first()).subscribe((_: any) => {
       console.log('OK');
     });
   }
@@ -394,7 +390,7 @@ export class AdminCampaignMailsComponent implements OnInit {
         this.currentBatch.thirdMail = this._computeDate(result.date, result.time);
         break;
     }
-    this._campaignService.updateBatch(this.currentBatch).first().subscribe((batch: any) => {
+    this._campaignService.updateBatch(this.currentBatch).pipe(first()).subscribe((batch: any) => {
       this.stats.batches[this._getBatchIndex(batch)] = batch;
       this.templateSidebar = { animate_state: 'inactive', title: 'COMMON.EDIT', type: 'editBatch'};
       this._tableBatch.every((table, index) => {

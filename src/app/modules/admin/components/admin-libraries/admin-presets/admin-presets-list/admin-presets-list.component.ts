@@ -3,6 +3,7 @@ import { PresetService } from '../../../../../../services/preset/preset.service'
 import { Router } from '@angular/router';
 import { Preset } from '../../../../../../models/preset';
 import {PaginationTemplate} from '../../../../../../models/pagination';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-presets-list',
@@ -37,7 +38,7 @@ export class AdminPresetsListComponent implements OnInit {
   loadPresets(config: any): void {
     this._config = config;
     this._presetService.getAll(this._config)
-      .first()
+      .pipe(first())
       .subscribe((presets: any) => {
         this._presets = presets.result;
         this._total = presets._metadata.totalCount;
@@ -67,7 +68,7 @@ export class AdminPresetsListComponent implements OnInit {
     event.preventDefault();
     this._presetService
       .remove(presetId)
-      .first()
+      .pipe(first())
       .subscribe((_: any) => {
         this._presets.splice(this._getPresetIndex(presetId), 1);
         this.selectedPresetIdToBeDeleted = null;
@@ -77,7 +78,7 @@ export class AdminPresetsListComponent implements OnInit {
   public clonePreset(event: Event, clonedPreset: Preset) {
     event.preventDefault();
     delete clonedPreset._id;
-    this._presetService.create(clonedPreset).first().subscribe((preset: any) => {
+    this._presetService.create(clonedPreset).pipe(first()).subscribe((preset: any) => {
       this._router.navigate(['/admin/libraries/questionnaire/' + preset._id])
     });
   }

@@ -5,6 +5,7 @@ import { ShareService } from '../../../../services/share/share.service';
 import { InnovationSettings } from '../../../../models/innov-settings';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Router } from '@angular/router';
@@ -312,7 +313,7 @@ export class SharedProjectSettingsComponent implements OnInit {
   deleteProject(event: Event) {
     event.preventDefault();
 
-    this.innovationService.remove(this.innovId).first().subscribe((res: any) => {
+    this.innovationService.remove(this.innovId).pipe(first()).subscribe((res: any) => {
       this.router.navigate(['/project']);
       this.translateNotificationsService.success('ERROR.PROJECT.DELETED', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
     }, (err: any) => {

@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { noSpacesValidator } from '../directives/no-spaces.validator';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-presets-new',
@@ -35,7 +36,7 @@ export class AdminPresetsNewComponent {
 
 
   public createPreset() {
-    this._presetService.create(this._newPreset).first().subscribe((preset: any) => {
+    this._presetService.create(this._newPreset).pipe(first()).subscribe((preset: any) => {
       this._newPreset = preset;
       this.errorquestionnaire = false;
       this.created = true;

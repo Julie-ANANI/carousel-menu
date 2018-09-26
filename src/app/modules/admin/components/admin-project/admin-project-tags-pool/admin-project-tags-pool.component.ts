@@ -11,6 +11,7 @@ import { Table } from '../../../../table/models/table';
 import { Tag } from '../../../../../models/tag';
 import { Template } from '../../../../sidebar/interfaces/template';
 import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
 import { Multiling } from '../../../../../models/multiling';
 
@@ -101,7 +102,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     event.preventDefault();
     this.tagService
       .addTagToPool(this._project._id, this._tagForm.get('tag').value._id)
-      .first()
+      .pipe(first())
       .subscribe((data: any) => {
         this.updateTable(data);
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.ADDED');
@@ -114,7 +115,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
   public updateTag(tag: Tag): void {
     this.tagService
       .updateTagInPool(this._project._id, tag)
-      .first()
+      .pipe(first())
       .subscribe((data: any) => {
         this.updateTable(data);
         this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');
@@ -140,7 +141,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     tags.forEach((tag) => {
       this.tagService
         .removeTagFromPool(this._project._id, tag)
-        .first()
+        .pipe(first())
         .subscribe((data: any) => {
           this.updateTable(data);
           this.notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');

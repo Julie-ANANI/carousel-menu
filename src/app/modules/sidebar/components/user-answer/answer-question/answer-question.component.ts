@@ -6,6 +6,7 @@ import { Answer } from '../../../../../models/answer';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { AnswerService } from '../../../../../services/answer/answer.service';
 import { Tag } from '../../../../../models/tag';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-answer-question',
@@ -68,7 +69,7 @@ export class AnswerQuestionComponent {
   public addTag(tag: Tag, q_identifier: string): void {
     this._answerService
       .addTag(this.fullAnswer._id, tag._id, q_identifier)
-      .first()
+      .pipe(first())
       .subscribe((a: any) => {
         if (this.fullAnswer.answerTags[q_identifier]) {
           this.fullAnswer.answerTags[q_identifier].push(tag);
@@ -82,7 +83,8 @@ export class AnswerQuestionComponent {
   }
 
   createTag(tag: Tag, q_identifier: string): void {
-    this._answerService.createTag(this.fullAnswer._id, tag, q_identifier).first()
+    this._answerService.createTag(this.fullAnswer._id, tag, q_identifier)
+      .pipe(first())
       .subscribe((a: any) => {
         if (this.fullAnswer.answerTags[q_identifier]) {
           this.fullAnswer.answerTags[q_identifier].push(tag);
@@ -98,7 +100,7 @@ export class AnswerQuestionComponent {
   public removeTag(tag: Tag, q_identifier: string): void {
     this._answerService
       .removeTag(this.fullAnswer._id, tag._id, q_identifier)
-      .first()
+      .pipe(first())
       .subscribe((a: any) => {
         this.fullAnswer.answerTags[q_identifier] = this.fullAnswer.answerTags[q_identifier].filter(t => t._id !== tag._id);
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.REMOVED');

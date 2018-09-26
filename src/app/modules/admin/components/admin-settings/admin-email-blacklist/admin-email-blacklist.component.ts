@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Subject} from 'rxjs';
+import { first } from 'rxjs/operators';
 import {Table} from '../../../../table/models/table';
 import {Template} from '../../../../sidebar/interfaces/template';
 import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
@@ -148,7 +149,7 @@ export class AdminEmailBlacklistComponent implements OnInit {
   blacklistEditionFinish(email: any) {
     console.log(email);
     this._emailService.updateBlacklistEntry(email._id, email)
-      .first()
+      .pipe(first())
       .subscribe(
         (data: any) => {
           this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');

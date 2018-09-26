@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Subject} from 'rxjs';
+import { first } from 'rxjs/operators';
 import {Template} from '../../../../sidebar/interfaces/template';
 import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
 import {EmailService} from '../../../../../services/email/email.service';
@@ -113,7 +114,7 @@ export class AdminCountryManagementComponent implements OnInit {
 
   countryEditionFinish(country: any) {
     this._emailService.updateCountry(country._id, country)
-      .first()
+      .pipe(first())
       .subscribe(
         (data: any) => {
           this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
@@ -150,7 +151,8 @@ export class AdminCountryManagementComponent implements OnInit {
   }
 
   removeCountry(countryId: string) {
-    this._emailService.deleteCountry(countryId).first()
+    this._emailService.deleteCountry(countryId)
+      .pipe(first())
       .subscribe((foo: any) => {
         this.loadCountries(this._config);
       });

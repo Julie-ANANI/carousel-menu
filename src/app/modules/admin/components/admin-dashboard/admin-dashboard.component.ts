@@ -5,6 +5,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { User } from '../../../../models/user.model';
 import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { InnovCard } from '../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
@@ -70,13 +71,13 @@ export class AdminDashboardComponent implements OnInit {
       this.operatorId = this._authService.user.id;
     }
 
-    this._dashboardService.getOperators().first().subscribe((operators: any) => {
+    this._dashboardService.getOperators().pipe(first()).subscribe((operators: any) => {
       this.operators = operators.result.sort((a: User, b: User) => {
         return a.firstName > b.firstName ? 1 : -1;
       });
     });
 
-    this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData: any) => this.operatorData = operatorData);
+    this._dashboardService.getOperatorData(this.operatorId).pipe(first()).subscribe((operatorData: any) => this.operatorData = operatorData);
 
     this.getPeriodStats();
 
@@ -88,11 +89,11 @@ export class AdminDashboardComponent implements OnInit {
     this.refreshNeededEmitter.next({
       operatorId: operatorId
     });
-    this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData: any) => this.operatorData = operatorData);
+    this._dashboardService.getOperatorData(this.operatorId).pipe(first()).subscribe((operatorData: any) => this.operatorData = operatorData);
   }
 
   public getPeriodStats() {
-    this._searchService.getEmailStats(this.nbDaysOfStats).first().subscribe((stats: any) => {
+    this._searchService.getEmailStats(this.nbDaysOfStats).pipe(first()).subscribe((stats: any) => {
       const totalMails = stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut;
       this.statistics.percentFoundEmails = totalMails ? Math.round(stats.total.found / totalMails * 100) : 'NA';
       this.statistics.percentFoundPros = 'NA';
@@ -104,21 +105,21 @@ export class AdminDashboardComponent implements OnInit {
   public getWeek() {
     const now = Date.now();
     this._dateNow = new Date(now);
-    this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe( (batches: Array<any>) => {
+    this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe( (batches: Array<any>) => {
         this._weekBatches = batches;
     });
   }
 
   public getNextWeek() {
     this._dateNow.setDate(this._dateNow.getDate() + 7);
-    this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe((batches: Array<any>) => {
+    this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
     });
   }
 
   public getLastWeek() {
     this._dateNow.setDate(this._dateNow.getDate() - 7);
-    this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe((batches: Array<any>) => {
+    this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
     });
   }
@@ -164,7 +165,7 @@ export class AdminDashboardComponent implements OnInit {
   showPreview(event: Event, batch: any) {
     event.preventDefault();
     this._selectedBatch = batch;
-    this._innovationService.getInnovationCard(batch.innovation.innovationCards[0]).first().subscribe((card: any) => {
+    this._innovationService.getInnovationCard(batch.innovation.innovationCards[0]).pipe(first()).subscribe((card: any) => {
       this._selectedInnovation = card;
       this.sidebarTemplateValue = {
         animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',

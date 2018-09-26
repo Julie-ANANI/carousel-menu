@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Innovation } from '../../../../models/innovation';
 import {Table} from '../../../table/models/table';
 import {Router} from '@angular/router';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-projects',
@@ -40,7 +41,7 @@ export class AdminProjectsComponent implements OnInit {
   loadProjects(config: any): void {
     this._config = config;
     this._innovationService.getAll(this._config)
-      .first()
+      .pipe(first())
       .subscribe((projects: any) => {
         this._projects = projects.result;
         this._total = projects._metadata.totalCount;
@@ -77,7 +78,7 @@ export class AdminProjectsComponent implements OnInit {
     event.preventDefault();
     this._innovationService
       .remove(projectId)
-      .first()
+      .pipe(first())
       .subscribe((_: any) => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;

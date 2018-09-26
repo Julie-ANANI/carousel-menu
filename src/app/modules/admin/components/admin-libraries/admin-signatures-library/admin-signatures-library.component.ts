@@ -4,6 +4,7 @@ import { EmailSignature } from '../../../../../models/email-signature';
 import { Table } from '../../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import {Template} from '../../../../sidebar/interfaces/template';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-signatures-library',
@@ -36,7 +37,7 @@ export class AdminSignaturesLibraryComponent implements OnInit {
 
   public getSignatures(config?: any) {
     if (config) this._config = config;
-    this._templatesService.getAllSignatures(this._config).first().subscribe((signatures: any) => {
+    this._templatesService.getAllSignatures(this._config).pipe(first()).subscribe((signatures: any) => {
       this._signatures = signatures.result;
       this._total = signatures._metadata.totalCount;
 
@@ -75,7 +76,7 @@ export class AdminSignaturesLibraryComponent implements OnInit {
   }
 
   public updateSignature(signature: EmailSignature) {
-    this._templatesService.saveSignature(signature).first().subscribe((updatedSignature: any) => {
+    this._templatesService.saveSignature(signature).pipe(first()).subscribe((updatedSignature: any) => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     }, (err: any) => {
       this._notificationsService.error('ERROR', err);
@@ -89,14 +90,14 @@ export class AdminSignaturesLibraryComponent implements OnInit {
   }
 
   public deleteSignature(signatureId: string) {
-    this._templatesService.removeSignature(signatureId).first().subscribe((_: any) => {
+    this._templatesService.removeSignature(signatureId).pipe(first()).subscribe((_: any) => {
       this.getSignatures();
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
     });
   }
 
   public createSignature() {
-    this._templatesService.createSignature({name: this._newSignatureName}).first().subscribe((newSignature: any) => {
+    this._templatesService.createSignature({name: this._newSignatureName}).pipe(first()).subscribe((newSignature: any) => {
       this._newSignatureName = null;
       this.editSignature(newSignature);
       this.getSignatures();

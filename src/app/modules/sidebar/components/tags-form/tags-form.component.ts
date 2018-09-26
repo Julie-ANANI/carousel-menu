@@ -9,6 +9,7 @@ import { AutocompleteService } from '../../../../services/autocomplete/autocompl
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Observable, Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tags-form',
@@ -97,7 +98,7 @@ export class TagsFormComponent implements OnInit {
 
   addTag(tag: any) {
     const id = tag.tag ? tag.tag : tag._id;
-    this._tagsService.get(id).first().subscribe((res: any) => {
+    this._tagsService.get(id).pipe(first()).subscribe((res: any) => {
       this._tags.push(res.tags[0]);
     });
   }
@@ -106,7 +107,7 @@ export class TagsFormComponent implements OnInit {
     event.preventDefault();
     this._tagsService
       .updateTagInPool(this._projectId, tag)
-      .first()
+      .pipe(first())
       .subscribe((data: any) => {
         this._needToSetOriginalTag = false;
         this._notificationsService.success('ERROR.TAGS.UPDATE' , 'ERROR.TAGS.UPDATED');

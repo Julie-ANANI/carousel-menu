@@ -7,8 +7,8 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { Media, Video } from '../../../../models/media';
 import { Innovation } from '../../../../models/innovation';
 import { InnovCard } from '../../../../models/innov-card';
-import { Subject } from 'rxjs';
-import { forkJoin } from 'rxjs/operations';
+import { Subject, forkJoin } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslationService } from '../../../../services/translation/translation.service';
@@ -148,7 +148,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
         if (this.project.innovationCards.length < 2 && this.project.innovationCards.length !== 0) {
           this.innovationService.createInnovationCard(this.project._id, new InnovCard({
             lang: lang
-          })).first().subscribe((data: InnovCard) => {
+          })).pipe(first()).subscribe((data: InnovCard) => {
             this.project.innovationCards.push(data);
             this.innovationCardEditingIndex = this.project.innovationCards.length - 1;
             this.notifyModelChanges();
@@ -189,12 +189,6 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     this._showAdvantageError = (this.project.innovationCards[this.innovationCardEditingIndex].advantages.length === 0);
   }
 
-  setAsPrincipal (innovationCardId: string): void {
-    this.project.innovationCards.forEach((innovCard: any) => {
-      innovCard.principal = (innovCard._id === innovationCardId);
-    });
-  }
-
   imageUploaded(media: Media, cardIdx: number): void {
     this.project.innovationCards[cardIdx].media.push(media);
     this.checkPrincipalMedia(media, cardIdx);
@@ -203,7 +197,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
   newOnlineVideoToAdd (videoInfos: Video): void {
     this.innovationService.addNewMediaVideoToInnovationCard(this.project._id,
       this.project.innovationCards[this.innovationCardEditingIndex]._id, videoInfos)
-      .first().subscribe((res: any) => {
+      .pipe(first())
+      .subscribe((res: any) => {
         this.project.innovationCards[this.innovationCardEditingIndex].media.push(res);
         this.checkPrincipalMedia(res, this.innovationCardEditingIndex);
       });
@@ -214,7 +209,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
     if (this.project.innovationCards[this.innovationCardEditingIndex].media.length > 0) {
       if (!this.project.innovationCards[this.innovationCardEditingIndex].principalMedia) {
         this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
-          this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id).first()
+          this.project.innovationCards[this.innovationCardEditingIndex]._id, media._id)
+          .pipe(first())
           .subscribe((res: any) => {
             this.project.innovationCards[cardIdx].principalMedia = media;
           });
@@ -227,7 +223,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     this.innovationService.setPrincipalMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[index]._id, media._id)
-      .first().subscribe((res: Innovation) => {
+      .pipe(first())
+      .subscribe((res: Innovation) => {
         this.project.innovationCards[index].principalMedia = media;
       });
 
@@ -238,7 +235,8 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
 
     this.innovationService.deleteMediaOfInnovationCard(this.project._id,
       this.project.innovationCards[index]._id, media._id)
-      .first().subscribe((_res: Innovation) => {
+      .pipe(first())
+      .subscribe((_res: Innovation) => {
         this.project.innovationCards[index].media = this.project.innovationCards[index].media.filter((m) => m._id !== media._id);
         if (this.project.innovationCards[index].principalMedia._id === media._id) {
           this.project.innovationCards[index].principalMedia = null;
@@ -294,7 +292,7 @@ export class SharedProjectEditCardsComponent implements OnInit, OnDestroy {
       default:
         // remove html tags from text
         const text = from_card[model].replace(/<[^>]*>/g, '');
-        this.translationService.translate(text, target_card.lang).first().subscribe((o: any) => {
+        this.translationService.translate(text, target_card.lang).pipe(first()).subscribe((o: any) => {
           target_card[model] = o.translation;
           this.notifyModelChanges();
         });

@@ -6,6 +6,7 @@ import { EmailSignature } from '../../../../../models/email-signature';
 import { CampaignService } from '../../../../../services/campaign/campaign.service';
 import { TemplatesService } from '../../../../../services/templates/templates.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { first } from 'rxjs/operators';
 // import { EmailTemplate } from '../../../../../models/email-template';
 
 @Component({
@@ -47,10 +48,10 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
     this.generateAvailableScenario();
     this.generateModifiedScenarios();
-    this._templatesService.getAll(this._config).first().subscribe((templates: any) => {
+    this._templatesService.getAll(this._config).pipe(first()).subscribe((templates: any) => {
       this._templates = templates.result;
     });
-    this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
+    this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).pipe(first()).subscribe((signatures: any) => {
       this._signatures = signatures.result;
     });
   }
@@ -95,7 +96,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
 
   private _saveTemplates() {
-    this._campaignService.put(this._campaign).first().subscribe((savedCampaign: any) => {
+    this._campaignService.put(this._campaign).pipe(first()).subscribe((savedCampaign: any) => {
       this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
       this.generateModifiedScenarios();
     }, (err: any) => {

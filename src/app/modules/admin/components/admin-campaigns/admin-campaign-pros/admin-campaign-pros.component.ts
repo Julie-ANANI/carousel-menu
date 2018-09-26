@@ -4,6 +4,7 @@ import { Campaign } from '../../../../../models/campaign';
 import { ProfessionalsService } from '../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { Professional } from '../../../../../models/professional';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-campaign-pros',
@@ -52,9 +53,12 @@ export class AdminCampaignProsComponent implements OnInit {
 
   createPro() {
     if (this.newPro.email && (this.newPro.firstName && this.newPro.lastName)) {
-      this._professionalsService.create([this.newPro], this.campaign._id, this.campaign.innovation._id).first().subscribe((createdPro: Professional) => {
-        this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-      });
+      this._professionalsService
+        .create([this.newPro], this.campaign._id, this.campaign.innovation._id)
+        .pipe(first())
+        .subscribe((createdPro: Professional) => {
+          this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
+        });
     }
   }
 
@@ -66,7 +70,7 @@ export class AdminCampaignProsComponent implements OnInit {
         campaignId: this._campaign._id
       }
     };
-    this._professionalsService.export(config).first().subscribe((answer: any) => {
+    this._professionalsService.export(config).pipe(first()).subscribe((answer: any) => {
       const blob = new Blob([answer.csv], { type: 'text/csv' });
       const url = window.URL.createObjectURL(blob);
       window.open(url);
