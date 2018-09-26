@@ -6,6 +6,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { User } from '../../../../models/user.model';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login-page',
@@ -41,7 +42,7 @@ export class LoginPageComponent implements OnInit {
       const user = new User(this._formData.value);
       user.domain = environment.domain;
 
-      this._authService.login(user).first().subscribe(() => {
+      this._authService.login(user).pipe(first()).subscribe(() => {
             if (this._authService.isAuthenticated) {
               // Get the redirect URL from our auth service
               // If no redirect has been set, use the default
@@ -74,7 +75,7 @@ export class LoginPageComponent implements OnInit {
   private linkedInUrl() {
     const domain = environment.domain;
 
-    this._authService.linkedinLogin(domain).first().subscribe(
+    this._authService.linkedinLogin(domain).pipe(first()).subscribe(
       (url: string) => {
           this._linkedInLink = url;
       }, (error: any) => {

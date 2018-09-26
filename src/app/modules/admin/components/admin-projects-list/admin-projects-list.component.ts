@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { Innovation } from '../../../../models/innovation';
 import {Table} from '../../../table/models/table';
 import {FrontendService} from '../../../../services/frontend/frontend.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-projects-list',
@@ -74,7 +75,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
       this._config = config;
     }
     this._innovationService.getAll(this._config)
-      .first()
+      .pipe(first())
       .subscribe((projects: any) => {
         this._projects = projects.result.map((project: Innovation) => {
           if (project._metadata) {
@@ -120,7 +121,7 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this._innovationService
       .remove(projectId)
-      .first()
+      .pipe(first())
       .subscribe((_: any) => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;

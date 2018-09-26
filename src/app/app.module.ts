@@ -8,7 +8,7 @@ import { httpFactory } from './factories/http.factory';
 import { CookieModule, CookieService } from 'ngx-cookie';
 import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
@@ -27,10 +27,8 @@ import { TranslateTitleService } from './services/title/title.service';
 import { UserService } from './services/user/user.service';
 import { LoaderService } from './services/loader/loader.service';
 import { ChartsModule } from 'ng2-charts';
-import { IndexService } from './services/index/index.service';
 import { ShareService } from './services/share/share.service';
 import { AutocompleteService } from './services/autocomplete/autocomplete.service';
-import { LatexService } from './services/latex/latex.service';
 import { EmailService } from './services/email/email.service';
 import { SearchService } from './services/search/search.service';
 import { PresetService } from './services/preset/preset.service';
@@ -81,9 +79,7 @@ import { PresetResolver } from './resolvers/preset.resolver';
     CampaignService,
     LoaderService,
     WindowRefService,
-    IndexService,
     DashboardService,
-    LatexService,
     EmailService,
     ShareService,
     SearchService,

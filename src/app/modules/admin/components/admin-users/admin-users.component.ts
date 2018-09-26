@@ -6,7 +6,7 @@ import { User } from '../../../../models/user.model';
 import { Table } from '../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import {Template} from '../../../sidebar/interfaces/template';
-import {Subject} from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-admin-users',
@@ -54,7 +54,7 @@ export class AdminUsersComponent implements OnInit {
 
   loadUsers(): void
   {
-    this._userService.getAll(this._config).first().subscribe(users => {
+    this._userService.getAll(this._config).first().subscribe((users: any) => {
         this._users = users.result;
         this._total = users._metadata.totalCount;
 
@@ -90,7 +90,7 @@ export class AdminUsersComponent implements OnInit {
 
   editUser(user: User) {
     const us = new User(user);
-    this._userService.get(us.id).subscribe(value => {
+    this._userService.get(us.id).subscribe((value: any) => {
       this._more = {
         animate_state: 'active',
         title: 'COMMON.EDIT_USER',
@@ -109,12 +109,12 @@ export class AdminUsersComponent implements OnInit {
     this._userService.updateOther(user)
       .first()
       .subscribe(
-        data => {
+        (data: any) => {
           this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
           this._more = {animate_state: 'inactive', title: this._more.title};
           this.loadUsers();
         },
-        error => {
+        (error: any) => {
           this._notificationsService.error('ERROR.ERROR', error.message);
         });
   }
@@ -131,7 +131,7 @@ export class AdminUsersComponent implements OnInit {
     event.preventDefault();
     this._userService.getInnovations(userId)
       .first()
-      .subscribe(innovations => {
+      .subscribe((innovations: any) => {
         console.log(innovations.innovations);
       });
   }
@@ -164,7 +164,7 @@ export class AdminUsersComponent implements OnInit {
 
   removeUser(userId: string) {
     this._userService.deleteUser(userId).first()
-      .subscribe(foo => {
+      .subscribe((foo: any) => {
         this.loadUsers();
       });
   }

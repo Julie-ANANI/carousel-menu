@@ -3,8 +3,8 @@ import { AuthService } from './services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { LoaderService } from './services/loader/loader.service';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/pairwise';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
       window.scrollTo(0, 0);
     });
 
-    this.loaderService.isLoading$.takeUntil(this.ngUnsubscribe).subscribe((isLoading: boolean) => {
+    this.loaderService.isLoading$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((isLoading: boolean) => {
       // Bug corrigé avec setTimeout :
       // https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
       setTimeout((_: void) => {
@@ -59,14 +59,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.loaderService.stopLoading();
 
     if (this.authService.isAcceptingCookies) {
-      this.authService.initializeSession().takeUntil(this.ngUnsubscribe).subscribe(
-        _ => {},
-        _ => this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
+      this.authService.initializeSession().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+        (_: any) => {},
+        (_: any) => this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
           timeOut: 0
         }), () => {
           setTimeout (() => {
             this._displayLoading = false;
-          }, 400);
+          }, 400); // TODO: why is there 400 ms timeout before displaying the app ?
         }
       );
     }

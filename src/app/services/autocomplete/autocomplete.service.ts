@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '../http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class AutocompleteService {
@@ -10,10 +11,9 @@ export class AutocompleteService {
 
   public get(params: {query: string, type: string, tagType?: string}): Observable<{_id: string, name: string, domain: string, flag: string}[]> {
     return this._http.get('/misc/suggestions', {params: params})
-      .map((res: Response) => {
-        const response = res.json();
-        return response.result;
-      })
-      .catch((error: Response) => Observable.throw(error.json()));
+    .pipe(
+        map((res: Response) => res.json().result),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 }

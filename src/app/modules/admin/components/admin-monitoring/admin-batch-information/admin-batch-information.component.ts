@@ -24,14 +24,13 @@ export class AdminBatchInformationComponent implements OnInit {
       const batchId = params['batchId'];
       this._emailService.getBatch(batchId)
         .first()
-        .subscribe(batch => {
-          console.log(batch);
+        .subscribe((batch: any) => {
           this._batch = batch.mailqueues[0];
           this._recipients = this._batch.payload.recipients;
           this._campaignService.get(this._batch.payload.metadata.campaign_id)
             .first()
-            .subscribe(campaign => this._campaign = campaign, error => { console.log(error)});
-        }, error => {
+            .subscribe((campaign: Campaign) => this._campaign = campaign, (error: any) => { console.log(error); });
+        }, (error: any) => {
           console.error(error); // notify error
         });
     });

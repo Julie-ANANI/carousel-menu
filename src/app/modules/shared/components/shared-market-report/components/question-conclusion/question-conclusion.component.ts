@@ -4,6 +4,7 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -35,7 +36,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
     this._lang = this.translateService.currentLang || 'en';
     this.translateService.onLangChange
-      .takeUntil(this.ngUnsubscribe)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((e: LangChangeEvent) => {
         this._lang = e.lang || 'en';
       });
@@ -52,7 +53,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
       conclusion: event['content']
     };
     this.innovationService.updateMarketReport(this.innovation._id, objToSave)
-      .first()
+      .pipe(first())
       .subscribe((data: any) => {
         this.innovation.marketReport = data;
       });

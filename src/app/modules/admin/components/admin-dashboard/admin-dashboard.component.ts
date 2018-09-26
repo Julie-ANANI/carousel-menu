@@ -4,7 +4,7 @@ import { DashboardService } from '../../../../services/dashboard/dashboard.servi
 import { AuthService } from '../../../../services/auth/auth.service';
 import { SearchService } from '../../../../services/search/search.service';
 import { User } from '../../../../models/user.model';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { InnovCard } from '../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
@@ -70,13 +70,13 @@ export class AdminDashboardComponent implements OnInit {
       this.operatorId = this._authService.user.id;
     }
 
-    this._dashboardService.getOperators().first().subscribe((operators) => {
-      this.operators = operators.result.sort((a,b) => {
+    this._dashboardService.getOperators().first().subscribe((operators: any) => {
+      this.operators = operators.result.sort((a: User, b: User) => {
         return a.firstName > b.firstName ? 1 : -1;
       });
     });
 
-    this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData) => this.operatorData = operatorData);
+    this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData: any) => this.operatorData = operatorData);
 
     this.getPeriodStats();
 
@@ -88,11 +88,11 @@ export class AdminDashboardComponent implements OnInit {
     this.refreshNeededEmitter.next({
       operatorId: operatorId
     });
-    this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData) => this.operatorData = operatorData);
+    this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData: any) => this.operatorData = operatorData);
   }
 
   public getPeriodStats() {
-    this._searchService.getEmailStats(this.nbDaysOfStats).first().subscribe(stats => {
+    this._searchService.getEmailStats(this.nbDaysOfStats).first().subscribe((stats: any) => {
       const totalMails = stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut;
       this.statistics.percentFoundEmails = totalMails ? Math.round(stats.total.found / totalMails * 100) : 'NA';
       this.statistics.percentFoundPros = 'NA';
@@ -164,7 +164,7 @@ export class AdminDashboardComponent implements OnInit {
   showPreview(event: Event, batch: any) {
     event.preventDefault();
     this._selectedBatch = batch;
-    this._innovationService.getInnovationCard(batch.innovation.innovationCards[0]).first().subscribe( card => {
+    this._innovationService.getInnovationCard(batch.innovation.innovationCards[0]).first().subscribe((card: any) => {
       this._selectedInnovation = card;
       this.sidebarTemplateValue = {
         animate_state: this.sidebarTemplateValue.animate_state === 'active' ? 'inactive' : 'active',

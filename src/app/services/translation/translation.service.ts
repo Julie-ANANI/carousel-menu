@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '../http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class TranslationService {
@@ -9,8 +10,10 @@ export class TranslationService {
 
   public translate(text: string, lang: string): Observable<{translation: string}> {
     return this._http.get('/misc/translate', {params: {text: text, lang: lang}})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
 }

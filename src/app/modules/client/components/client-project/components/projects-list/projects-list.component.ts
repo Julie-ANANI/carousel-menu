@@ -5,6 +5,7 @@ import { UserService } from '../../../../../../services/user/user.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { PaginationTemplate } from '../../../../../../models/pagination';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-projects-list',
@@ -43,7 +44,7 @@ export class ProjectsListComponent implements OnInit {
   }
 
   private loadProjects() {
-    this.userService.getMyInnovations(this._config).first().subscribe((responses: any) => {
+    this.userService.getMyInnovations(this._config).pipe(first()).subscribe((responses: any) => {
         this._projects = responses.result;
         this._total = responses._metadata.totalCount;
     }, () => {

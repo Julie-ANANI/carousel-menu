@@ -7,6 +7,7 @@ import { InnovCard } from '../../../../models/innov-card';
 import { PaginationTemplate } from '../../../../models/pagination';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../models/tag';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -90,14 +91,16 @@ export class ClientDiscoverPageComponent implements OnInit {
     based on the config we request to the server and get the results.
    */
   private getAllInnovations() {
-    this.innovationService.getAll(this.config).first().subscribe((innovations: any) => {
-      this._displaySpinner = true;
-      this._totalInnovations = innovations.result;
-      this.initialize();
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-      this._displaySpinner = false;
-    });
+    this.innovationService.getAll(this.config)
+      .pipe(first())
+      .subscribe((innovations: any) => {
+        this._displaySpinner = true;
+        this._totalInnovations = innovations.result;
+        this.initialize();
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+        this._displaySpinner = false;
+      });
   }
 
 

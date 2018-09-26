@@ -21,9 +21,12 @@ export class AdminProjectCardsComponent implements OnInit {
               private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit(): void {
-    this.innovationService.get(this.activatedRoute.snapshot.parent.data['innovation']._id).first().subscribe(result => {
-      this.project = result;
-    });
+    this.innovationService
+      .get(this.activatedRoute.snapshot.parent.data['innovation']._id)
+      .first()
+      .subscribe((result: Innovation) => {
+        this.project = result;
+      });
   }
 
   public save(event: Event): void {
@@ -34,7 +37,7 @@ export class AdminProjectCardsComponent implements OnInit {
         this.lastSavedDate = new Date(data.updated);
         this.shouldSave = false;
         this.project = data;
-      }, err => {
+      }, (err: any) => {
         this.translateNotificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
   }
@@ -50,13 +53,13 @@ export class AdminProjectCardsComponent implements OnInit {
   }
 
   public validateProject (): void {
-    this.innovationService.validate(this.project._id).first().subscribe(_ => {
+    this.innovationService.validate(this.project._id).first().subscribe((_: any) => {
       this.translateNotificationsService.success('Projet validé', 'Le projet a bien été validé');
     });
   }
 
   public askRevision (): void {
-    this.innovationService.askRevision(this.project._id).first().subscribe(_ => {
+    this.innovationService.askRevision(this.project._id).first().subscribe((_: any) => {
       this.translateNotificationsService.success('Projet en révision', 'Le projet a été passé en status de révision, veuillez avertir le propriétaire des chagements à effectuer');
     });
   }

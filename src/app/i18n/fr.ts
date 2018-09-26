@@ -3,7 +3,6 @@ import { ERROR } from './error_fr';
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/fr';
 import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/fr';
 import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/fr';
-import { EXPORT } from '../modules/shared/components/shared-latex-manager/i18n/fr';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
 import { PROJECT } from '../modules/shared/components/shared-project-description/i18n/fr';
 import { DASHBOARD } from '../modules/admin/components/admin-dashboard/i18n/fr';
@@ -42,7 +41,6 @@ export const fr = {
   'FORGET_PASSWORD': FORGET_PASSWORD,
   'WELCOME': WELCOME,
   'HEADER': HEADER,
-  'EXPORT': EXPORT,
   'PAGINATION': PAGINATION,
   'PROJECT': PROJECT,
   'DASHBOARD': DASHBOARD,

@@ -17,6 +17,7 @@ import { Template } from '../../../sidebar/interfaces/template';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { FrontendService } from '../../../../services/frontend/frontend.service';
 // import {PrintService} from '../../../../services/print/print.service';
 // import * as FileSaver from "file-saver";
@@ -170,7 +171,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   loadAnswers() {
-    this.answerService.getInnovationValidAnswers(this._innoid).first().subscribe((results: any) => {
+    this.answerService.getInnovationValidAnswers(this._innoid).pipe(first()).subscribe((results: any) => {
       this._answers = results.answers.sort((a: Answer, b: Answer) => {
         return b.profileQuality - a.profileQuality;
       });
@@ -200,7 +201,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   loadCampaign() {
-    this.innovationService.campaigns(this._innoid).first().subscribe((results: any) => {
+    this.innovationService.campaigns(this._innoid).pipe(first()).subscribe((results: any) => {
       if (results && Array.isArray(results.result)) {
         this._campaignsStats = results.result.reduce(function(acc: any, campaign: Campaign) {
           if (campaign.stats) {
@@ -275,7 +276,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   changeStatus(event: Event, status: 'DONE'): void {
     this._projectToBeFinished = false;
 
-    this.innovationService.updateStatus(this._innoid, status).first().subscribe((results: any) => {
+    this.innovationService.updateStatus(this._innoid, status).pipe(first()).subscribe((results: any) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
       this._disableButton = results.status;
     }, (error: any) => {
@@ -299,11 +300,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
    this._previewMode =  this.project.previewMode = event.target['checked'] === true;
 
     if (event.target['checked']) {
-      this.innovationService.save(this._innoid, this.project).first().subscribe( (data: any) => {
+      this.innovationService.save(this._innoid, this.project).pipe(first()).subscribe( (data: any) => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
       });
     } else {
-      this.innovationService.save(this._innoid, this.project).first().subscribe( (data: any) => {
+      this.innovationService.save(this._innoid, this.project).pipe(first()).subscribe( (data: any) => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
       });
     }
@@ -341,7 +342,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     objToSave[ob] = {
       conclusion: event['content']
     };
-    this.innovationService.updateMarketReport(this.project._id, objToSave).first().subscribe((data: any) => {
+    this.innovationService.updateMarketReport(this.project._id, objToSave).pipe(first()).subscribe((data: any) => {
         this.project.marketReport = data;
       });
   }

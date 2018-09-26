@@ -47,7 +47,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
     this.generateAvailableScenario();
     this.generateModifiedScenarios();
-    this._templatesService.getAll(this._config).first().subscribe(templates => {
+    this._templatesService.getAll(this._config).first().subscribe((templates: any) => {
       this._templates = templates.result;
     });
     this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).first().subscribe((signatures: any) => {
@@ -95,7 +95,7 @@ export class AdminCampaignTemplatesComponent implements OnInit {
 
 
   private _saveTemplates() {
-    this._campaignService.put(this._campaign).first().subscribe(savedCampaign => {
+    this._campaignService.put(this._campaign).first().subscribe((savedCampaign: any) => {
       this._notificationsService.success("ERROR.SUCCESS", "ERROR.ACCOUNT.UPDATE");
       this.generateModifiedScenarios();
     }, (err: any) => {

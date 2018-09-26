@@ -3,7 +3,8 @@
  */
 import { Injectable } from '@angular/core';
 import { Http, Response } from '../http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class SearchService {
@@ -13,8 +14,10 @@ export class SearchService {
 
   public search(params: any): Observable<any> {
     return this._http.post('/search/searchPros', params)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public getRequest(requestId: string): Observable<any> {
@@ -26,26 +29,34 @@ export class SearchService {
     };
 
     return this._http.get('/search/get', {params: query})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public stopRequest(requestId: string): Observable<any> {
     return this._http.get('/search/stop', {params: {id: requestId}})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public cancelRequest(requestId: string, cancel: boolean): Observable<any> {
     return this._http.get('/search/cancel', {params: {id: requestId, cancel: cancel}})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public getPros(config: any, requestId: string): Observable<any> {
     return this._http.get('/search/queryRessourceAPI/request/' + requestId + '/person', {params:config})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public getEmailStats(daysCount: number): Observable<any> {
@@ -54,26 +65,34 @@ export class SearchService {
       path: '/stats/email'
     };
     return this._http.get('/search/get', {params: query})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public dailyStats(): Observable<any> {
     return this._http.get('/search/get', {params: {path: '/stats/day'}})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public getRequests(config: any): Observable<any> {
     return this._http.get('/search/queryRessourceAPI/request', {params: config})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public searchMails(config: any): Observable<any> {
     return this._http.post('/search/searchMails', config)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public export(requestId: string, config: any): Observable<any> {
@@ -82,8 +101,10 @@ export class SearchService {
       data: config
     };
     return this._http.get('/search/export', {params: query})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public getCountriesSettings(): Observable<any> {
@@ -91,8 +112,10 @@ export class SearchService {
       path: '/countries',
     };
     return this._http.get('/search/get', {params: query})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public relaunchRequests(): Observable<any> {
@@ -100,8 +123,10 @@ export class SearchService {
       path: '/search/people/relaunch',
     };
     return this._http.get('/search/get', {params: query})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public relaunchMailRequests(): Observable<any> {
@@ -109,7 +134,9 @@ export class SearchService {
       path: '/search/mail/relaunch',
     };
     return this._http.get('/search/get', {params: query})
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 }

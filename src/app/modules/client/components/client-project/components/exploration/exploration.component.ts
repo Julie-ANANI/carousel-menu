@@ -11,6 +11,7 @@ import { Section } from '../../../../../../models/section';
 import { Table } from '../../../../../table/models/table';
 import { Template } from '../../../../../sidebar/interfaces/template';
 import { FrontendService } from '../../../../../../services/frontend/frontend.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-client-exploration-project',
@@ -61,7 +62,7 @@ export class ExplorationProjectComponent implements OnInit {
   }
 
   loadAnswers() {
-    this.answerService.getInnovationValidAnswers(this.project._id).first().subscribe((response: any) => {
+    this.answerService.getInnovationValidAnswers(this.project._id).pipe(first()).subscribe((response: any) => {
 
       this._tableInfos = {
         _selector: 'client-answer',
@@ -88,7 +89,7 @@ export class ExplorationProjectComponent implements OnInit {
       this.notificationService.error('ERROR.ERROR', error.message);
     });
 
-    this.innovationService.campaigns(this.project._id).first().subscribe((results: any) => {
+    this.innovationService.campaigns(this.project._id).pipe(first()).subscribe((results: any) => {
         if (results && Array.isArray(results.result)) {
           this._campaignsStats = results.result.reduce(function(acc: any, campaign: Campaign) {
               if (campaign.stats) {

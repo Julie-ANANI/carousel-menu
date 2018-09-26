@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '../http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class EmailService {
@@ -9,99 +10,90 @@ export class EmailService {
 
   public stopBatch(batchId: string): Observable<any> {
     return this._http.post( '/mail/queue/' + batchId, {newStatus: 'CANCELED'} )
-      .map((res: Response) => {
-        const response = res.json();
-        return response;
-      })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public getBatch(batchId: string): Observable<any> {
     return this._http.get( '/mail/queue/' + batchId )
-      .map((res: Response) => {
-        const response = res.json();
-        return response;
-      })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public getQueue(params: any): Observable<any> {
     return this._http.get('/mail/queue', {params: params})
-      .map((res: Response) => {
-        const response = res.json();
-        return response;
-      })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public getBlacklist(config: any): Observable<any> {
       return this._http.get('/mail/blacklist', {params: config})
-          .map((res: Response) => {
-              const response = res.json();
-              return response;
-          })
-          .catch((error: Response) => Observable.throw(error.json()));
+        .pipe(
+          map((res: Response) => res.json()),
+          catchError((error: Response) => throwError(error.text()))
+        );
   }
 
   public addToBlacklist(config: any): Observable<any> {
       return this._http.post('/mail/blacklist', config)
-          .map((res: Response) => {
-              const response = res.json();
-              return response;
-          })
-          .catch((error: Response) => Observable.throw(error.json()));
+        .pipe(
+          map((res: Response) => res.json()),
+          catchError((error: Response) => throwError(error.text()))
+        );
   }
 
   public updateBlacklistEntry(entryId: string, data: any): Observable<any> {
       return this._http.put('/mail/blacklist/' + entryId, data)
-          .map((res: Response) => {
-              const response = res.json();
-              return response;
-          })
-          .catch((error: Response) => Observable.throw(error.json()));
+        .pipe(
+          map((res: Response) => res.json()),
+          catchError((error: Response) => throwError(error.text()))
+        );
   }
 
   public getCountries(config: any): Observable<any> {
     return this._http.get('/mail/filteredCountries', {params: config})
-      .map((res: Response) => {
-        const response = res.json();
-        return response;
-      })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public addCountry(config: any): Observable<any> {
     return this._http.post('/mail/filteredCountries', config)
-      .map((res: Response) => {
-        const response = res.json();
-        return response;
-      })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public updateCountry(entryId: string, data: any): Observable<any> {
     return this._http.put('/mail/filteredCountries/' + entryId, data)
-      .map((res: Response) => {
-        const response = res.json();
-        return response;
-      })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public deleteCountry(countryId: any): Observable<any> {
     return this._http.delete('/mail/filteredCountries/' + countryId)
-      .map((res: Response) => res.json())
-      .catch((error: Response) => Observable.throw(error.text()));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((error: Response) => throwError(error.text()))
+      );
   }
 
   public getRawMessages(config: any): Observable<any> {
       return this._http.get('/mail/blacklist', {params: config})
-          .map((res: Response) => {
-              const response = res.json();
-              return response;
-          })
-          .catch((error: Response) => Observable.throw(error.json()));
+        .pipe(
+          map((res: Response) => res.json()),
+          catchError((error: Response) => throwError(error.text()))
+        );
   }
-
 
 }

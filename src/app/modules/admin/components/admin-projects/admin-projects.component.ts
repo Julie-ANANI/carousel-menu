@@ -41,7 +41,7 @@ export class AdminProjectsComponent implements OnInit {
     this._config = config;
     this._innovationService.getAll(this._config)
       .first()
-      .subscribe(projects => {
+      .subscribe((projects: any) => {
         this._projects = projects.result;
         this._total = projects._metadata.totalCount;
 
@@ -78,7 +78,7 @@ export class AdminProjectsComponent implements OnInit {
     this._innovationService
       .remove(projectId)
       .first()
-      .subscribe(_ => {
+      .subscribe((_: any) => {
         this._projects.splice(this._getProjectIndex(projectId), 1);
         this.selectedProjectIdToBeDeleted = null;
       });

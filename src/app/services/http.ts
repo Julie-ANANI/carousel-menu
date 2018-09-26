@@ -10,8 +10,7 @@ import {
 import { environment } from '../../environments/environment';
 import { LoaderService } from './loader/loader.service';
 import { RequestOptions } from './requestOptions';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { TranslateNotificationsService } from './notifications/notifications.service';
 
 import * as SessionVerificationController from '@umius/umi-session-verifications';

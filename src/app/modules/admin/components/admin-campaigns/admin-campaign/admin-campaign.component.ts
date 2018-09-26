@@ -60,10 +60,10 @@ export class AdminCampaignComponent implements OnInit {
   public updateStats() {
     this._campaignService.updateStats(this._campaign._id)
       .first()
-      .subscribe(stats => {
+      .subscribe((stats: any) => {
         this._campaign.stats = stats;
         this.computeStats();
-      }, error => {
+      }, (error: any) => {
         this._notificationsService.error('ERROR', error.message);
       });
   };

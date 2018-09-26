@@ -5,6 +5,7 @@ import { environment } from '../../../../../../../environments/environment';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-project',
@@ -39,7 +40,7 @@ export class NewProjectComponent implements OnInit {
       type: this._formData.value.type
     };
 
-    this.innovationService.create(newProject).first().subscribe((project: Innovation) => {
+    this.innovationService.create(newProject).pipe(first()).subscribe((project: Innovation) => {
         this.router.navigate(['/project/' + project._id + '/setup'])
       }, () => {
       this.translateNotificationService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR')

@@ -1,13 +1,12 @@
 import { Component, Output, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { TagsService } from '../../../../../services/tags/tags.service';
-
 import { TagAttachment } from '../../../../../models/tag-attachment';
 import { Tag } from '../../../../../models/tag';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
+import { first } from 'rxjs/operators';
 
 
 @Component({
@@ -68,7 +67,7 @@ export class AdminTagNewComponent {
 
   public onSubmit(_event: any) {
     this._tagsService.create(this.formData.value)
-      .first()
+      .pipe(first())
       .subscribe((result: any) => {
         if (result) {
           this.result = result;

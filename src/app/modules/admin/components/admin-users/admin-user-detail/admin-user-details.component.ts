@@ -40,10 +40,10 @@ export class AdminUserDetailsComponent implements OnInit {
       const userId = params['userId'];
       this._userService.get(userId)
         .first()
-        .subscribe((user) => {
+        .subscribe((user: any) => {
           this._userBasicData = user;
           this.formData.patchValue(user);
-        }, error => {
+        }, (error: any) => {
           console.error(error);
         });
     });
@@ -71,11 +71,11 @@ export class AdminUserDetailsComponent implements OnInit {
       this._userService.updateOther(user)
         .first()
         .subscribe(
-          data => {
+          (data: any) => {
             this._notificationsService.success('ERROR.ACCOUNT.UPDATE', 'ERROR.ACCOUNT.UPDATE_TEXT');
             this.formData.patchValue(data);
           },
-          error => {
+          (error: any) => {
             this._notificationsService.error('ERROR.ERROR', error.message);
           });
     }
@@ -118,7 +118,7 @@ export class AdminUserDetailsComponent implements OnInit {
     event.preventDefault();
     this._userService.deleteUser(this._userBasicData['id'])
       .first()
-      .subscribe(_ => {
+      .subscribe((_: any) => {
         this._notificationsService.success('ERROR.ACCOUNT.DELETED', 'ERROR.ACCOUNT.DELETED_TEXT');
         this._router.navigate(['/admin/users']);
     });

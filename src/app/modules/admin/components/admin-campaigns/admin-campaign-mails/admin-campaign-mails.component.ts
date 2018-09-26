@@ -94,7 +94,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public freezeStatus(batch: Batch) {
-    this._campaignService.freezeStatus(batch).first().subscribe(modifiedBatch => {
+    this._campaignService.freezeStatus(batch).first().subscribe((modifiedBatch: any) => {
       this.stats.batches[this._getBatchIndex(modifiedBatch._id)] = modifiedBatch;
     });
   }
@@ -122,7 +122,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public deleteBatch(batchId: string) {
-     this._campaignService.deleteBatch(batchId).first().subscribe(_ => {
+     this._campaignService.deleteBatch(batchId).first().subscribe((_: any) => {
        this.stats.batches.splice(this._getBatchIndex(batchId), 1);
        this._tableBatch = this.stats.batches.map((batch: any) => {
          return this.generateTableBatch(batch);
@@ -150,7 +150,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public sendTestEmails(batchStatus: number) {
-    this._campaignService.sendTestEmails(this._campaign._id, batchStatus).first().subscribe(_ => {
+    this._campaignService.sendTestEmails(this._campaign._id, batchStatus).first().subscribe((_: any) => {
       console.log('OK');
     });
   }
@@ -394,7 +394,7 @@ export class AdminCampaignMailsComponent implements OnInit {
         this.currentBatch.thirdMail = this._computeDate(result.date, result.time);
         break;
     }
-    this._campaignService.updateBatch(this.currentBatch).first().subscribe( (batch => {
+    this._campaignService.updateBatch(this.currentBatch).first().subscribe((batch: any) => {
       this.stats.batches[this._getBatchIndex(batch)] = batch;
       this.templateSidebar = { animate_state: 'inactive', title: 'COMMON.EDIT', type: 'editBatch'};
       this._tableBatch.every((table, index) => {
@@ -405,7 +405,7 @@ export class AdminCampaignMailsComponent implements OnInit {
         }
         return true;
       });
-    }), error => {
+    }, (error: any) => {
       this._notificationsService.success('ERROR.ERROR', '');
     });
   }

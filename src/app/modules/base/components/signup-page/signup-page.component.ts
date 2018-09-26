@@ -10,6 +10,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { environment } from '../../../../../environments/environment';
 import { Template } from '../../../sidebar/interfaces/template';
 import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup-page',
@@ -45,7 +46,7 @@ export class SignupPageComponent implements OnInit {
   private linkedInUrl() {
     const domain = environment.domain;
 
-    this.authService.linkedinLogin(domain).first().subscribe(
+    this.authService.linkedinLogin(domain).pipe(first()).subscribe(
       (url: string) => {
         this._linkedInLink = url;
       }, (error: any) => {
@@ -64,8 +65,8 @@ export class SignupPageComponent implements OnInit {
       if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
       }else {
-        this.userService.create(user).first().subscribe((_: any) => {
-            this.authService.login(user).first().subscribe(
+        this.userService.create(user).pipe(first()).subscribe((_: any) => {
+            this.authService.login(user).pipe(first()).subscribe(
               (_res: any) => {
                 this.location1.back();
               },

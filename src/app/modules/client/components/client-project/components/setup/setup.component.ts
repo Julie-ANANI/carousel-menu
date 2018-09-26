@@ -8,6 +8,7 @@ import { InnovationSettings } from '../../../../../../models/innov-settings';
 import { Template } from '../../../../../sidebar/interfaces/template';
 import { FrontendService } from '../../../../../../services/frontend/frontend.service';
 import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 const DEFAULT_TAB = 'targeting';
 
@@ -118,7 +119,7 @@ export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
     }
 
      if (this._saveChanges) {
-        this.innovationService.save(this.project._id, this.project).first().subscribe((data: any) => {
+        this.innovationService.save(this.project._id, this.project).pipe(first()).subscribe((data: any) => {
             this.project = data;
             this._changesSaved = true;
             this._saveChanges = false;
@@ -162,7 +163,7 @@ export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
     this._projectToBeSubmitted = false;
 
     this.innovationService.submitProjectToValidation(this.project._id)
-      .first().subscribe((data: any) => {
+      .pipe(first()).subscribe((data: any) => {
        this.project.status = 'SUBMITTED';
        this.translateNotificationsService.success('ERROR.PROJECT.SUBMITTED', 'ERROR.PROJECT.SUBMITTED_TEXT');
        this.router.navigate(['project']);
