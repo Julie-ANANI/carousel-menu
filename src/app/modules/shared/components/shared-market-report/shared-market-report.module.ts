@@ -22,6 +22,7 @@ import { StarsComponent } from './components/stars/stars.component';
 import { CommonService } from '../../../../services/common/common.service';
 import { InputModule } from '../../../input/input.module';
 import { FilterService } from './services/filters.service';
+import { DataExtractor } from "./services/dataextractor.service";
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
 import { RouterModule } from '@angular/router';
 import { ProgressBarModule } from '../../../input/component/progress-bar/progress-bar.module';
@@ -42,7 +43,8 @@ import { ProgressBarModule } from '../../../input/component/progress-bar/progres
   ],
   providers: [
     CommonService,
-    FilterService
+    FilterService,
+    DataExtractor
   ],
   declarations: [
     SharedMarketReportComponent,
