@@ -35,7 +35,8 @@ export class DataExtractor {
         return groups;
       }, {});
     // We need to create all the sections and the answers
-    console.log(this._createRadioSections(groupTypes['stars']));
+    console.log(this._createRadioSections(groupTypes['radio']));
+    console.log(this._createStarSections(groupTypes['stars']));
     //The map and the conclusions are handled differently
   }
 
@@ -101,6 +102,36 @@ export class DataExtractor {
   }
 
   /**
+   * Analyzes the star questions
+   * @param elements
+   * @private
+   */
+  private _createStarSections(elements: any) {
+    const sections = Array<any>();
+    elements.forEach((question: any)=>{
+      sections.push(this._createOneStarSection(question));
+    });
+    return sections;
+  }
+
+  /**
+   * Creates radio and radio only ONE section :)
+   * @param question
+   * @private
+   */
+  private _createOneStarSection(question: any) {
+    const answers = this._getAllAnswersForQuestion(question.identifier);
+    this._selectLanguage(question);
+    const data = {
+      type: templateMapping['stars'],
+      sectionConfig: question
+    };
+    data['sectionConfig'].barData = this._reduceStartAnswers(answers);
+    data['sectionConfig'].conclusions = this._data.marketReport[question.identifier] || "";
+    return data;
+  }
+
+  /**
    *
    * @param data
    * @private
@@ -121,6 +152,37 @@ export class DataExtractor {
       }
       return groups;
     }, {});
+  }
+
+  /**
+   * This will reduce
+   * @param data
+   * @private
+   */
+  private _reduceStartAnswers(data: Array<any>) {
+    let notes = data.reduce((groups, item)=>{
+      //item is an object containing { "id": "value" }
+      const val = item || '';
+      if(val) {
+        Object.keys(item).forEach((key)=>{
+          if(!groups[key]) {
+            groups[key] = {
+              count: 0,
+              sum: 0,
+              percentage: 0.0
+            };
+          }
+          groups[key]["count"]++;
+          groups[key]["sum"] += parseInt(item[key], 10) || 0;
+        });
+      }
+      return groups;
+    }, {});
+    //Calculate the percentage
+    Object.keys(notes).forEach(item=>{
+      notes[item]["percentage"] = notes[item]["count"] > 0 ? Math.round(( notes[item]["sum"] / notes[item]["count"] ) * 20 ) : 0;
+    });
+    return notes;
   }
 
 }
