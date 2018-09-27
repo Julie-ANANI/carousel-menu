@@ -35,7 +35,7 @@ export class ForgetPasswordPageComponent implements OnInit {
 
   onSubmit() {
     if (this._formData.valid) {
-      this.userService.changePassword(this._formData.get('email').value).first().subscribe(() => {
+      this.userService.resetPassword(this._formData.get('email').value).first().subscribe(() => {
         this._emailSent = true;
       }, () => {
         this._emailSent = true;
