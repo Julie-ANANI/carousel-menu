@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CookieService, CookieOptions } from 'ngx-cookie';
-import { Http, Response } from '../http';
+import { Http } from '../http.service';
 import { Observable, Subject, throwError } from 'rxjs';
 import { first, map, catchError } from 'rxjs/operators';
 import { User } from '../../models/user.model';
@@ -58,16 +58,15 @@ export class AuthService {
   public login(user: User): Observable<User> {
     return this._http.post('/auth/login', user.toJSON())
       .pipe(
-        map((res: Response) => {
-          const response = res.json();
-          this._setAuthenticatedTo(response.isAuthenticated);
-          this._setAdminTo(response.adminLevel);
-          this._setConfirmedTo(response.isConfirmed);
-          this._user = response;
-          if (response.isAuthenticated) {
+        map((res: any) => {
+          this._setAuthenticatedTo(res.isAuthenticated);
+          this._setAdminTo(res.adminLevel);
+          this._setConfirmedTo(res.isConfirmed);
+          this._user = res;
+          if (res.isAuthenticated) {
             this.startCookieObservator();
           }
-          return response;
+          return res;
         }),
         catchError((error: Response) => throwError(error.json()))
       )
@@ -76,9 +75,8 @@ export class AuthService {
   public linkedinLogin(domain: string): Observable<any> {
     return this._http.get(`/auth/linkedin?domain=${domain}`)
       .pipe(
-        map((res: Response) => {
-          const response = res.json();
-          return response.url;
+        map((res: any) => {
+          return res.url;
         }),
         catchError((error: Response) => {
           return throwError(error.json())
@@ -89,15 +87,14 @@ export class AuthService {
   public logout(): Observable<any> {
     return this._http.get('/auth/logout')
       .pipe(
-        map((res: Response) => {
-          const response = res.json();
-          this._setAuthenticatedTo(response.isAuthenticated);
-          this._setAdminTo(response.adminLevel);
-          this._setConfirmedTo(response.isConfirmed);
+        map((res: any) => {
+          this._setAuthenticatedTo(res.isAuthenticated);
+          this._setAdminTo(res.adminLevel);
+          this._setConfirmedTo(res.isConfirmed);
           this._cookieService.removeAll();
           this._user = null;
           clearInterval(this._cookieObserver);
-          return response;
+          return res;
         }),
         catchError((error: Response) => throwError(error.json()))
       );
@@ -110,12 +107,11 @@ export class AuthService {
     return this._http.get('/auth/session')
       .pipe(
         map((res: any) => {
-          const response = res.json();
-          this._setAuthenticatedTo(response.isAuthenticated);
-          this._setAdminTo(response.adminLevel);
-          this._setConfirmedTo(response.isConfirmed);
-          this._user = response.user || null;
-          return response;
+          this._setAuthenticatedTo(res.isAuthenticated);
+          this._setAdminTo(res.adminLevel);
+          this._setConfirmedTo(res.isConfirmed);
+          this._user = res.user || null;
+          return res;
         }),
         catchError((error: Response) => throwError(error.json()))
       );
@@ -144,7 +140,6 @@ export class AuthService {
     }
   }
 
-  get isAuthenticated$(): Observable<boolean> { return this._authenticatedSource.asObservable(); }
   get isAuthenticated(): boolean { return this._authenticated; }
   get isConfirmed(): boolean { return this._confirmed; }
   get adminLevel(): number { return this._admin; }

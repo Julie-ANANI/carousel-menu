@@ -2,11 +2,9 @@
 import { NgModule, PLATFORM_ID, APP_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { HttpModule, XHRBackend, RequestOptions } from '@angular/http';
-import { Http } from './services/http';
-import { httpFactory } from './factories/http.factory';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieModule, CookieService } from 'ngx-cookie';
-import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Services
+import { Http } from './services/http.service';
 import { InnovationService } from './services/innovation/innovation.service';
 import { CampaignService } from './services/campaign/campaign.service';
 import { DashboardService } from './services/dashboard/dashboard.service';
@@ -49,12 +48,15 @@ import { ScenarioResolver } from './resolvers/scenario.resolver';
 import { SignatureResolver } from './resolvers/signature.resolver';
 import { PresetResolver } from './resolvers/preset.resolver';
 
+// Interceptors
+import { SessionInterceptor } from './interceptors/session.interceptor';
+
 @NgModule({
   imports: [
     BrowserModule.withServerTransition({
       appId: 'umi-application-front'
     }),
-    HttpModule,
+    HttpClientModule,
     AppRoutingModule,
     SimpleNotificationsModule.forRoot(),
     BrowserAnimationsModule,
@@ -73,6 +75,12 @@ import { PresetResolver } from './resolvers/preset.resolver';
     AppComponent
   ],
   providers: [
+    Http,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SessionInterceptor,
+      multi: true,
+    },
     Title,
     UserService,
     InnovationService,
@@ -88,11 +96,6 @@ import { PresetResolver } from './resolvers/preset.resolver';
     ProfessionalsService,
     DownloadService,
     TemplatesService,
-    {
-      provide: Http,
-      useFactory: httpFactory,
-      deps: [XHRBackend, RequestOptions, LoaderService, NotificationsService]
-    },
     AutocompleteService,
     TranslateNotificationsService,
     TranslateTitleService,

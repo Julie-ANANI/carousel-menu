@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Http } from '../../../../services/http';
+import { Http } from '../../../../services/http.service';
 
 @Component({
   templateUrl: 'shared-market-report-example.component.html',

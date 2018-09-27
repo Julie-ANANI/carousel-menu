@@ -2,7 +2,7 @@
  * Created by bastien on 19/12/2017.
  */
 import { Injectable } from '@angular/core';
-import { Http, Response } from '../http';
+import { Http, Response } from '../http.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Professional } from '../../models/professional';
