@@ -2,9 +2,8 @@
  * Created by bastien on 19/12/2017.
  */
 import { Injectable } from '@angular/core';
-import { Http, Response } from '../http.service';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Http } from '../http.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SearchService {
@@ -13,11 +12,7 @@ export class SearchService {
   }
 
   public search(params: any): Observable<any> {
-    return this._http.post('/search/searchPros', params)
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.post('/search/searchPros', params);
   }
 
   public getRequest(requestId: string): Observable<any> {
@@ -28,35 +23,19 @@ export class SearchService {
       }
     };
 
-    return this._http.get('/search/get', {params: query})
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.get('/search/get', {params: query});
   }
 
   public stopRequest(requestId: string): Observable<any> {
-    return this._http.get('/search/stop', {params: {id: requestId}})
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.get('/search/stop', {params: {id: requestId}});
   }
 
   public cancelRequest(requestId: string, cancel: boolean): Observable<any> {
-    return this._http.get('/search/cancel', {params: {id: requestId, cancel: cancel}})
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.get('/search/cancel', {params: {id: requestId, cancel: cancel}});
   }
 
   public getPros(config: any, requestId: string): Observable<any> {
-    return this._http.get('/search/queryRessourceAPI/request/' + requestId + '/person', {params:config})
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.get('/search/queryRessourceAPI/request/' + requestId + '/person', {params:config});
   }
 
   public getEmailStats(daysCount: number): Observable<any> {
@@ -64,35 +43,19 @@ export class SearchService {
       params: {daysCount: daysCount},
       path: '/stats/email'
     };
-    return this._http.get('/search/get', {params: query})
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.get('/search/get', {params: query});
   }
 
   public dailyStats(): Observable<any> {
-    return this._http.get('/search/get', {params: {path: '/stats/day'}})
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.get('/search/get', {params: {path: '/stats/day'}});
   }
 
   public getRequests(config: any): Observable<any> {
-    return this._http.get('/search/queryRessourceAPI/request', {params: config})
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.get('/search/queryRessourceAPI/request', {params: config});
   }
 
   public searchMails(config: any): Observable<any> {
-    return this._http.post('/search/searchMails', config)
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.post('/search/searchMails', config);
   }
 
   public export(requestId: string, config: any): Observable<any> {
@@ -100,43 +63,27 @@ export class SearchService {
       path: '/request/' + requestId + '/export/people',
       data: config
     };
-    return this._http.get('/search/export', {params: query})
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.get('/search/export', {params: query});
   }
 
   public getCountriesSettings(): Observable<any> {
     const query = {
       path: '/countries',
     };
-    return this._http.get('/search/get', {params: query})
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.get('/search/get', {params: query});
   }
 
   public relaunchRequests(): Observable<any> {
     const query = {
       path: '/search/people/relaunch',
     };
-    return this._http.get('/search/get', {params: query})
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.get('/search/get', {params: query});
   }
 
   public relaunchMailRequests(): Observable<any> {
     const query = {
       path: '/search/mail/relaunch',
     };
-    return this._http.get('/search/get', {params: query})
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((error: Response) => throwError(error.text()))
-      );
+    return this._http.get('/search/get', {params: query});
   }
 }

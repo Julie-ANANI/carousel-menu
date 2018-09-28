@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { UserService } from './user.service';
-import { Http } from '../http';
+import { Http } from '../http.service';
 
 describe('UserService', () => {
   beforeEach(() => {

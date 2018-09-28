@@ -1,14 +1,10 @@
-# umi-application client
-
-Ce projet a été généré avec [Angular CLI](https://github.com/angular/angular-cli) version 1.0.1.
-
-Il utilise Angular Universal pour calculer un pré-rendu qui sera restitué au client, favorisant le SEO.
+# umi-application-front
 
 ## Développement
 
-Lancer `ng serve --env=local --port 3080` pour lancer le serveur web de développement. 
+Lancer `ng serve --prod --project=umi --configuration=local` pour lancer le serveur web de développement. 
 
-Se rendre sur `http://localhost:3080/`.
+Se rendre sur `http://localhost:4200/`.
 
 L'application va automatiquement se recharger si une modification est faite sur son code source.
 

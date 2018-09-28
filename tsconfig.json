@@ -3,8 +3,12 @@
   "buildOnSave": false,
   "compileOnSave": false,
   "compilerOptions": {
+
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
     "allowSyntheticDefaultImports": false,
-    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -15,18 +19,15 @@
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
-    "outDir": "./dist/out-tsc",
     "rootDir": "src/",
-    "sourceMap": true,
     "strict": false,
     "strictNullChecks": false,
     "suppressImplicitAnyIndexErrors": true,
     "target": "es5",
     "lib": [
-      "dom",
-      "es6"
-    ],
-    "baseUrl": "./"
+      "es2017",
+      "dom"
+    ]
   },
   "exclude": [
     "node_modules",
