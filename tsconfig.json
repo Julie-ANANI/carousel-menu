@@ -19,7 +19,6 @@
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
-    "rootDir": "src/",
     "strict": false,
     "strictNullChecks": false,
     "suppressImplicitAnyIndexErrors": true,
