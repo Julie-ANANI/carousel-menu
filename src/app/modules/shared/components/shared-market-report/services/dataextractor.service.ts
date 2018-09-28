@@ -1,4 +1,4 @@
-import {ReportData} from "../models/report-data.model";
+import { ReportData } from "../models/report-data.model";
 
 const templateMapping = {
   "radio": "typeB1",
@@ -9,6 +9,7 @@ const templateMapping = {
   "map": "typeA",
   "overall": "typeE"
 };
+
 
 export class DataExtractor {
   private _data: ReportData;
@@ -72,6 +73,33 @@ export class DataExtractor {
   }
 
   /**
+   * Search the professionals comments array for compiling all the comments to a specific question
+   * @param questionIdentifier
+   * @private
+   */
+  private _getAllCommentsForQuestion(questionIdentifier: string): Array<any> {
+    let result = Array<any>();
+    let comments = this._data.answers.map(answer=>{
+      return answer.answers[questionIdentifier];
+    });
+    comments.forEach((comment, index)=>{
+      if(comment) {
+        result.push({
+          comment: comment,
+          professional: {
+            country: this._data.answers[index].country,
+            displayName: `${this._data.answers[index].professional.firstName} ${this._data.answers[index].professional.lastName}`,
+            jobTitle: this._data.answers[index].job,
+            email: this._data.answers[index].professional.email,
+            company: this._data.answers[index].company ? this._data.answers[index].company.name || "" : ""
+          }
+        })
+      }
+    });
+    return result;
+  }
+
+  /**
    * Creates radio and radio only sections :)
    * @param elements
    * @private
@@ -98,6 +126,9 @@ export class DataExtractor {
     };
     data['sectionConfig'].barData = this._reduceRadioAnswers(answers);
     data['sectionConfig'].conclusions = this._data.marketReport[question.identifier] || "";
+    data['meta'] = {
+      'strings': this._data.strings
+    };
     return data;
   }
 
@@ -121,6 +152,9 @@ export class DataExtractor {
    */
   private _createOneStarSection(question: any) {
     const answers = this._getAllAnswersForQuestion(question.identifier);
+    const comments = this._getAllCommentsForQuestion(question.identifier+"Comment");
+    console.log(comments);
+    const nbValidAnswers = answers && answers.length ? answers.filter(ans=>{ return !!ans }).length : 0;
     this._selectLanguage(question);
     const data = {
       type: templateMapping['stars'],
@@ -128,6 +162,12 @@ export class DataExtractor {
     };
     data['sectionConfig'].barData = this._reduceStartAnswers(answers);
     data['sectionConfig'].conclusions = this._data.marketReport[question.identifier] || "";
+    data['sectionConfig'].meta = {
+      answers: nbValidAnswers,
+      percentage: answers && answers.length ? Math.round((nbValidAnswers / answers.length)*100) : 0,
+      subtitle: question.subtitle,
+      strings: this._data.strings
+    };
     return data;
   }
 

@@ -177,7 +177,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       this._filteredAnswers = this._answers;
       this.filterService.filtersUpdate.subscribe((_) => {
         this._filteredAnswers = this.filterService.filter(this._answers);
-        this.dataExtractor.printFiltered(this._filteredAnswers);
+        this.dataExtractor.printFiltered(this._filteredAnswers); //FIXME
       });
 
       this._companies = results.answers.map((answer: any) => answer.company || {
@@ -371,8 +371,30 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       questions: JSON.parse(JSON.stringify(this._questions)),
       filter: null,
       lang: this.lang,
-      marketReport: { ...this.project.marketReport} || {}
+      marketReport: { ...this.project.marketReport} || {},
+      strings: this._translationStrings()
     });
+  }
+
+  private _translationStrings(): any {
+    /*
+  {{ 'COMMON.UMI_WORD' | translate }}
+  {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
+  {{ 'MARKET_REPORT.PIE_CHART' | translate }}
+  {{ 'MARKET_REPORT.ANSWERS' | translate }}
+  {{ 'MARKET_REPORT.PEOPLE_VOTED' | translate }}
+  {{ 'MARKET_REPORT.NO_GRADE' | translate }}
+  {{ 'MARKET_REPORT.GRADE' | translate }}
+   */
+    return  {
+      "UMI_WORD": this.translateService.instant('COMMON.UMI_WORD' ),
+      "SYNTHESIS_FRAME": this.translateService.instant('MARKET_REPORT.SYNTHESIS_FRAME' ),
+      "PIE_CHART": this.translateService.instant('MARKET_REPORT.PIE_CHART' ),
+      "ANSWERS": this.translateService.instant('MARKET_REPORT.ANSWERS' ),
+      "PEOPLE_VOTED": this.translateService.instant('MARKET_REPORT.PEOPLE_VOTED' ),
+      "NO_GRADE": this.translateService.instant('MARKET_REPORT.NO_GRADE' ),
+      "GRADE": this.translateService.instant('MARKET_REPORT.GRADE' )
+    };
   }
 
   getSrc(): string {

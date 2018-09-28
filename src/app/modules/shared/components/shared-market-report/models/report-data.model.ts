@@ -8,5 +8,6 @@ export interface ReportData {
   readonly questions: Array<Question>,
   readonly filter: Filter,
   readonly lang: string,
-  readonly marketReport: any
+  readonly marketReport: any,
+  readonly strings: any
 }
