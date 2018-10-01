@@ -7,6 +7,7 @@ import { ShareRoutingModule } from './share-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
 import { SynthesisListModule } from './component/synthesis-list/synthesis-list.module';
+import { HeaderModule } from '../base/components/header/header.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { SynthesisListModule } from './component/synthesis-list/synthesis-list.m
     ShareRoutingModule,
     RouterModule,
     NotFoundPageModule,
-    SynthesisListModule
+    SynthesisListModule,
+    HeaderModule
   ],
   declarations: [
     ShareComponent,
