@@ -1,0 +1,60 @@
+@import "../../../../../style/variables";
+
+#synthesis-complete {
+  .header-wrapper {
+    background-color: $background-color;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    .navbar-wrapper {
+      display: inline-flex;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: space-between;
+
+      .logo {
+        padding-top: .4375rem;
+      }
+
+      .btn {
+        min-width: 100px;
+      }
+
+    }
+
+  }
+
+  .message-wrapper {
+    background-color: $validation-color;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: .95rem;
+    border-radius: .18rem;
+    text-align: center;
+
+    p {
+      padding-bottom: 0;
+    }
+
+  }
+
+  .spinner-wrapper {
+    padding-top: 3.15rem;
+  }
+
+}
+
+
+/********************************** Media ***************************************/
+@media (max-width: 320px) {
+
+  #synthesis-complete {
+
+    .logo {
+      padding-bottom: .4375rem;
+    }
+
+  }
+
+}
