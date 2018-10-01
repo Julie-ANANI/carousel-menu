@@ -25,6 +25,7 @@ import { FORGET_PASSWORD } from '../modules/base/components/forget-password-page
 import { WELCOME } from '../modules/base/components/welcome-page/i18n/fr';
 import { HEADER } from '../modules/base/components/header/i18n/fr';
 import { PAGINATION } from '../modules/input/component/pagination/i18n/fr';
+import { SHARE } from '../modules/share/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
@@ -54,4 +55,5 @@ export const fr = {
   'PROJECT_LIST': PROJECT_LIST,
   'PROJECT_MODULE': PROJECT_MODULE,
   'PROFESSIONALS' : PROFESSIONALS,
+  'SHARE': SHARE
 };

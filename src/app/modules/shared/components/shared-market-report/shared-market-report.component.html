@@ -95,6 +95,11 @@
               <button class="btn btn-primary gtm-print-synthesis" (click)="printSynthesis($event)">
                 {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_PRINT' | translate }}
               </button>
+              <ng-container *ngIf="project.status === 'DONE'">
+                <button class="btn btn-primary gtm-share-synthesis" (click)="shareSynthesis($event)">
+                  {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_SHARE' | translate }}
+                </button>
+              </ng-container>
             </ng-container>
           </ng-container>
         </div>

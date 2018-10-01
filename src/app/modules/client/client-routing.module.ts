@@ -8,9 +8,9 @@ import { SharedMarketReportExampleComponent } from '../shared/components/shared-
 import { clientProjectRoutes } from './components/client-project/client-project-routing.module';
 
 /* Guards */
-import { AuthGuard } from '../../auth-guard.service';
-import { NonAuthGuard } from '../../non-auth-guard.service';
-import { PendingChangesGuard } from '../../pending-changes-guard.service';
+import { AuthGuard } from '../../guards/auth-guard.service';
+import { NonAuthGuard } from '../../guards/non-auth-guard.service';
+import { PendingChangesGuard } from '../../guards/pending-changes-guard.service';
 
 /* Components */
 import { ClientComponent } from './client.component';
@@ -85,9 +85,8 @@ const clientRoutes: Routes = [
       },
       {
         path: 'discover',
-        canActivate: [AuthGuard],
         children: [
-          { path: '', component: ClientDiscoverPageComponent, pathMatch: 'full' },
+          { path: '', component: ClientDiscoverPageComponent, pathMatch: 'full', canActivate: [AuthGuard] },
           { path: ':id/:lang', component: DiscoverDescriptionComponent, pathMatch: 'full'}
         ]
       },

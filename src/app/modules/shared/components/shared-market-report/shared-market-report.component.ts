@@ -355,7 +355,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.filterService.deleteFilter(key);
   }
 
-  public printSynthesis(event: Event): void {
+  printSynthesis(event: Event): void {
     event.preventDefault();
    /* const html = document.getElementsByTagName('html')[0];
     const body = {html: html.outerHTML};
@@ -365,6 +365,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     });*/
 
    window.print();
+  }
+
+  shareSynthesis(event: Event) {
+    event.preventDefault();
   }
 
   getSrc(): string {

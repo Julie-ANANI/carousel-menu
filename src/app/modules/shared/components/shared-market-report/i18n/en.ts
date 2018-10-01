@@ -41,6 +41,7 @@ export const MARKET_REPORT = {
     'BUTTON_CSV': 'Export CSV',
     'BUTTON_PRINT': 'Print synthesis',
     'BUTTON_ADMIN': 'Finalize synthesis',
+    'BUTTON_SHARE': 'Share synthesis'
   },
 
   'MESSAGE_SYNTHESIS_VISIBLE': 'The synthesis is visible to client.',

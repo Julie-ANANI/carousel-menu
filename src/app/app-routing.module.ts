@@ -3,14 +3,18 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
 
 /* Guards */
-import { AdminAuthGuard } from './admin-auth-guard.service';
-import { NonAuthGuard } from './non-auth-guard.service';
-import { AuthGuard } from './auth-guard.service';
+import { AdminAuthGuard } from './guards/admin-auth-guard.service';
+import { NonAuthGuard } from './guards/non-auth-guard.service';
+import { AuthGuard } from './guards/auth-guard.service';
 
 const appRoutes: Routes = [
   {
     path: 'admin',
    loadChildren: './modules/admin/admin.module#AdminModule'
+  },
+  {
+    path: 'share',
+    loadChildren: './modules/share/share.module#ShareModule'
   },
   {
     path: '',

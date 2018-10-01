@@ -11,7 +11,7 @@ import { SurveyComponent } from './components/setup/components/survey/survey.com
 import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
 import { SharedMarketReportComponent } from '../../../shared/components/shared-market-report/shared-market-report.component';
 import { InnovationResolver } from '../../../../resolvers/innovation.resolver';
-import { AuthGuard } from '../../../../auth-guard.service';
+import { AuthGuard } from '../../../../guards/auth-guard.service';
 
 export const clientProjectRoutes: any = [
   {
