@@ -51,7 +51,7 @@ export class LoginPageComponent implements OnInit {
               // Set our navigation extras object
               // that passes on our global query params and fragment
               const navigationExtras: NavigationExtras = {
-                preserveQueryParams: true,
+                queryParamsHandling: 'merge',
                 preserveFragment: true
               };
 

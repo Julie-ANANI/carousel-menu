@@ -1,6 +1,5 @@
 // Modules externes
-import { NgModule, PLATFORM_ID, APP_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieModule, CookieService } from 'ngx-cookie';
@@ -116,13 +115,8 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
 
 export class AppModule {
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,
-              @Inject(APP_ID) private appId: string,
-              private _translateService: TranslateService,
+  constructor(private _translateService: TranslateService,
               private _cookieService: CookieService) {
-
-    const platform = isPlatformBrowser(this.platformId) ? 'in the browser' : 'on the server';
-    console.log(`Running ${platform} with appId=${this.appId}`);
 
     this._translateService.addLangs(['en', 'fr']);
     this._translateService.setDefaultLang('en');
