@@ -9,6 +9,9 @@ import { NotFoundPageModule } from '../base/components/not-found-page/not-found-
 import { SynthesisListModule } from './component/synthesis-list/synthesis-list.module';
 import { HeaderModule } from '../base/components/header/header.module';
 import { FooterModule } from '../base/components/footer/footer.module';
+import { SidebarModule } from '../sidebar/sidebar.module';
+import { SidebarUserFormModule } from '../sidebar/components/user-form/sidebar-user-form.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -20,7 +23,11 @@ import { FooterModule } from '../base/components/footer/footer.module';
     NotFoundPageModule,
     SynthesisListModule,
     HeaderModule,
-    FooterModule
+    FooterModule,
+    SidebarModule,
+    SidebarUserFormModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     ShareComponent,
