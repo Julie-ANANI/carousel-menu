@@ -62,7 +62,7 @@
         </div>
 
         <!-- Filter view -->
-        <div class="filter-wrapper">
+        <div class="filter-wrapper" [ngStyle]="{ 'border-right': sharable ? 'none' : 'block' }">
           <p>{{ 'MARKET_REPORT.STICKY_BAR.FILTER' | translate }}</p>
           <ul>
             <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
@@ -72,7 +72,7 @@
         </div>
 
         <!-- Buttons -->
-        <div class="button-wrapper">
+        <div class="button-wrapper" [ngStyle]="{ 'display': sharable ? 'none' : 'inline-flex' }">
           <ng-container [ngSwitch]="adminSide">
             <ng-container *ngSwitchCase="true">
               <div class="preview-button-wrapper">

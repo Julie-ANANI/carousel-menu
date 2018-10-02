@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-share',
@@ -7,8 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShareComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _authService: AuthService) { }
 
   ngOnInit() {}
+
+  /***
+   * We are checking user is authenticated or not.
+   * @returns {AuthService}
+   */
+  get authService(): AuthService {
+    return this._authService;
+  }
+
+  /***
+   * We are getting the logo of the company.
+   * @returns {string}
+   */
+  getLogo(): string {
+    return environment.logoURL;
+  }
 
 }

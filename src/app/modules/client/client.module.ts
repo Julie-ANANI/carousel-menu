@@ -28,6 +28,7 @@ import { SearchInputModule } from '../input/component/search-input/search-input.
 import { PaginationModule } from '../input/component/pagination/pagination.module';
 import { SidebarUserChangePasswordModule } from '../sidebar/components/user-change-password/sidebar-user-change-password.module';
 import { SynthesisCompleteModule } from '../share/component/synthesis-complete/synthesis-complete.module';
+import { SynthesisListModule } from '../share/component/synthesis-list/synthesis-list.module';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { SynthesisCompleteModule } from '../share/component/synthesis-complete/s
     SearchInputModule,
     PaginationModule,
     SidebarUserChangePasswordModule,
-    SynthesisCompleteModule
+    SynthesisCompleteModule,
+    SynthesisListModule
   ],
   declarations: [
     ClientComponent,

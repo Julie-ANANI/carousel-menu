@@ -1,55 +1,23 @@
-<main id="synthesis-complete" class="main-container">
-
-  <!-- Header -->
-
-  <!-- if not authenticated -->
-  <ng-container *ngIf="!authService.isAuthenticated">
-    <header class="header-wrapper">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <nav class="navbar-wrapper">
-
-          <!-- Logo -->
-          <div class="logo">
-            <a routerLink="/" class="gtm-menu-logo">
-              <img src="{{ getLogo() }}" alt="UMI" height="22px">
-            </a>
-          </div>
-
-          <!-- Buttons -->
-          <div class="action-buttons">
-            <button type="button" class="btn ghost-primary btn-xs" [ngStyle]="{ 'margin-right': '.6rem' }">{{ 'SHARE.BUTTON.SIGN_UP' | translate }}</button>
-            <button type="button" class="btn btn-primary btn-xs">{{ 'SHARE.BUTTON.SIGN_IN' | translate }}</button>
-          </div>
-
-        </nav>
-      </div>
-    </header>
-  </ng-container>
-
-  <!-- if authenticated -->
-  <ng-container *ngIf="authService.isAuthenticated">
-    <app-header></app-header>
-  </ng-container>
-
-  <!-- /Header -->
+<section id="synthesis-complete">
 
   <!-- Message -->
   <div class="message-wrapper">
     <p>{{ 'SHARE.MESSAGE' | translate }}</p>
   </div>
 
-  <ng-container *ngIf="!displaySpinner">
+  <ng-container *ngIf="displaySpinner">
     <div class="spinner-wrapper">
       <app-shared-loader></app-shared-loader>
     </div>
   </ng-container>
 
   <!-- Market report -->
-  <ng-container *ngIf="displaySpinner">
+  <ng-container *ngIf="!displaySpinner">
     <app-shared-market-report
       [project]="project"
-      [adminMode]="false">
+      [adminMode]="false"
+      [sharable]="true">
     </app-shared-market-report>
   </ng-container>
 
-</main>
+</section>

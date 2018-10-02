@@ -70,6 +70,22 @@
 
   }
 
+  .info {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    transition: all 0.35s ease-in-out;
+
+    a {
+      color: white;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+  }
+
 }
 
 

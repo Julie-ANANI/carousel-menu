@@ -1,3 +1,42 @@
+<main class="main-container" id="share">
 
+  <!-- Header -->
 
-<router-outlet></router-outlet>
+  <!-- if authenticated -->
+  <ng-container *ngIf="authService.isAuthenticated">
+    <app-header></app-header>
+  </ng-container>
+
+  <!-- if not authenticated -->
+  <ng-container *ngIf="!authService.isAuthenticated">
+    <header class="header-wrapper">
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <nav class="navbar-wrapper">
+
+          <div class="logo">
+            <a routerLink="/" class="gtm-menu-logo">
+              <img src="{{ getLogo() }}" alt="UMI" height="22px">
+            </a>
+          </div>
+
+          <div class="action-buttons">
+            <button type="button" class="btn ghost-primary btn-xs" [ngStyle]="{ 'margin-right': '.6rem' }">{{ 'SHARE.BUTTON.SIGN_UP' | translate }}</button>
+            <button type="button" class="btn btn-primary btn-xs">{{ 'SHARE.BUTTON.SIGN_IN' | translate }}</button>
+          </div>
+
+        </nav>
+      </div>
+    </header>
+  </ng-container>
+
+  <!-- Header -->
+
+  <div class="main">
+    <router-outlet></router-outlet>
+  </div>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+
+</main>
+

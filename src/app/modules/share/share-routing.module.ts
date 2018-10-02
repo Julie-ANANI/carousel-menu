@@ -12,22 +12,31 @@ import { AuthGuard } from '../../guards/auth-guard.service';
  * Components
  */
 import { NotFoundPageComponent } from '../base/components/not-found-page/not-found-page.component';
-import { SynthesisListComponent } from './component/synthesis-list/synthesis-list.component';
 import { SynthesisCompleteComponent } from './component/synthesis-complete/synthesis-complete.component';
+import { ShareComponent } from './share.component';
 
 
 const shareRoutes: Routes = [
   {
-    path: 'synthesis',
+    path: '',
+    component: ShareComponent,
     children: [
-      { path: '', component: SynthesisListComponent, pathMatch: 'full',  canActivate: [AuthGuard] },
-      { path: ':projectId/:userKey', component: SynthesisCompleteComponent, pathMatch: 'full' }
+      {
+        path: '',
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+        redirectTo: '/login'
+      },
+      { path: 'synthesis/:projectId/:userKey',
+        component: SynthesisCompleteComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: '**',
+        component: NotFoundPageComponent
+      }
     ]
   },
-  {
-    path: '**',
-    component: NotFoundPageComponent
-  }
 ];
 
 

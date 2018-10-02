@@ -40,6 +40,17 @@
             </a>
           </li>
 
+          <!-- Client shared report page -->
+          <li class="navbar-item" *ngIf="!backOfficeValue">
+            <a
+              [routerLink]="'/synthesis'"
+              routerLinkActive="active"
+              (click)="onClickLink()"
+              class="gtm-menu-my-projects">
+              {{ 'COMMON.HEADER.SHARED_REPORTS' | translate }}
+            </a>
+          </li>
+
           <!-- Client project page -->
           <li class="navbar-item" *ngIf="!backOfficeValue">
             <a

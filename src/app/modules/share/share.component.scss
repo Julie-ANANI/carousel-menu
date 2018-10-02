@@ -1,0 +1,48 @@
+@import "../../../style/variables";
+
+#share {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+  .header-wrapper {
+    background-color: $background-color;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    .navbar-wrapper {
+      display: inline-flex;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: space-between;
+
+      .logo {
+        padding-top: .4375rem;
+      }
+
+      .btn {
+        min-width: 100px;
+      }
+
+    }
+
+  }
+
+  .main {
+    flex: 1 0 auto;
+  }
+
+}
+
+/********************************** Media ***************************************/
+@media (max-width: 320px) {
+
+  #share {
+
+    .logo {
+      padding-bottom: .4375rem;
+    }
+
+  }
+
+}

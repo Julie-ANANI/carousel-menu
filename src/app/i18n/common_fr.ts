@@ -212,5 +212,10 @@ export const COMMON = {
     'BY_DOMAIN': 'Domain',
     'BY_CREATION_DATE': 'Création',
     'BY_UPDATE_DATE': 'Mise à jour'
+  },
+
+  'HEADER': {
+    'SHARED_REPORTS': 'Rapports partagés'
   }
+
 };

@@ -215,5 +215,11 @@ export const COMMON = {
     'BY_DOMAIN': 'Domain',
     'BY_CREATION_DATE': 'Date',
     'BY_UPDATE_DATE': 'Default'
+  },
+
+  'HEADER': {
+    'SHARED_REPORTS': 'Shared reports'
   }
+
+
 };
