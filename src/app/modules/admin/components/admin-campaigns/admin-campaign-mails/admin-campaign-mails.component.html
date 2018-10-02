@@ -40,7 +40,11 @@
     </button>
     <label class="form-switch">
       <input type="checkbox" (change)="AutoBatch()" [ngModel]="campaign.autoBatch" [disabled] = "!readyAutoBatch" >
-      <i class="form-icon"></i>
+      <i class="form-icon"></i> Autobatch
+    </label>
+    <label class="form-switch">
+      <input type="checkbox" (change)="setNuggets()" [ngModel]="campaign.nuggets" [disabled] = "!readyAutoBatch" >
+      <i class="form-icon"></i>Méthode nuggets
     </label>
     <ul>
       <li *ngIf="!quizGenerated"> Quizz manquant </li>

@@ -116,6 +116,17 @@ export class AdminCampaignMailsComponent implements OnInit {
     });
   }
 
+  public setNuggets() {
+    this._campaignService.setNuggets(this._campaign._id).first().subscribe((result: Campaign) => {
+        this._campaign = result;
+        if (result.nuggets) {
+          this._notificationsService.success('Nuggets activés', 'Des pros à 80% seront incorporés.');
+        } else {
+          this._notificationsService.success('Nuggets désactivés', 'On utilisera uniquement des pros à 90%.');
+        }
+    });
+  }
+
 // DEBUG AUTOBATCH => Creation de pro a la volée
   public creerpro() {
     this._campaignService.creerpro(this._campaign._id).first().subscribe();
@@ -369,7 +380,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   public getContentWorkflowStep(batchID: any, step: any): any {
     const index = this._getBatchIndex(batchID);
     const workflowname = this.getWorkflowName(index);
-    const content = {en: '', fr: ''}
+    const content = {en: '', fr: ''};
     this.campaign.settings.emails.forEach( mail => {
       if (mail.step === step && workflowname === mail.nameWorkflow) {
        if (mail.language === 'en') {
@@ -414,7 +425,6 @@ export class AdminCampaignMailsComponent implements OnInit {
   get defaultWorkflow() { return  this._campaign.settings.defaultWorkflow }
   get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ''); }
   get campaign() { return this._campaign }
-  get quizLinks() {return this._quizLinks }
   get stats() {return this._stats }
 
   public tableBatch(index: number) { return this._tableBatch[index] }
