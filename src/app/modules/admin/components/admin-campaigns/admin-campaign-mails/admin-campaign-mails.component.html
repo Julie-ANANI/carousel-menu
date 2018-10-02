@@ -68,6 +68,14 @@
               <i class="fas fa-trash"></i>
             </a>
           </span>
+          <span *ngIf="batch.nuggets">
+            <i class="fas fa-crow"></i>
+          </span>
+          <span *ngIf="!batch.nuggets && batch.status === 0">
+            <a class="c-hand" role="button" (click)="(addNuggetsToBatch(batch._id)) && $event.preventDefault()">
+              <i class="fas fa-plus-circle"></i>
+            </a>
+          </span>
         <label class="form-switch" style="float:right">
           <input type="checkbox" (change)="freezeStatus(batch)" [ngModel]="batch.active" >
           <i class="form-icon"></i>

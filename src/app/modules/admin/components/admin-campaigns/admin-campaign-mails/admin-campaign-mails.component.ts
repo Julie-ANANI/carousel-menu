@@ -127,6 +127,12 @@ export class AdminCampaignMailsComponent implements OnInit {
     });
   }
 
+  public addNuggetsToBatch(batchId: string) {
+    this._campaignService.addNuggets(this._campaign._id, batchId).first().subscribe((result: any) => {
+      this._notificationsService.success('Nuggets ajoutés', `${result.number} pros à 80% ont été ajoutés.`);
+    });
+  }
+
 // DEBUG AUTOBATCH => Creation de pro a la volée
   public creerpro() {
     this._campaignService.creerpro(this._campaign._id).first().subscribe();
