@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Innovation } from '../../models/innovation';
 import { InnovCard } from '../../models/innov-card';
+import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
+import {Http, Response} from "../http";
 
 @Injectable()
 export class ShareService {
 
-  constructor() {}
+  constructor(private _http: Http) {}
 
   private _getShareUrl (project: Innovation): string {
     return encodeURIComponent(`${environment.innovationUrl}/projects/${project._id}`);
@@ -27,6 +29,12 @@ export class ShareService {
       return encodeURIComponent(innovationCard['summary'] || '');
     }
     return '';
+  }
+
+  public shareSynthesis(projectId: string): Observable<any> {
+    return this._http.post('/sharing', {id: projectId, type: 'synthesis'})
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
   }
 
   public linkedinProjectShareLink (project: Innovation, lang: string): string {
