@@ -70,7 +70,7 @@ export const COMMON = {
   'FIRSTNAME': 'First Name',
   'LASTNAME': 'Last Name',
 
-  'EMAIL': 'E-mail',
+  'EMAIL': 'E-mail Address',
   'PHONE': 'Phone Number',
 
   'ACTIVITY_FIELDS': 'Activity Fields',

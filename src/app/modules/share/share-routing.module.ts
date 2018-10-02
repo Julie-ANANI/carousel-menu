@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
  *  Guards
  */
 import { AuthGuard } from '../../guards/auth-guard.service';
+import { NonAuthGuard } from '../../guards/non-auth-guard.service';
 
 
 /***
@@ -14,6 +15,7 @@ import { AuthGuard } from '../../guards/auth-guard.service';
 import { NotFoundPageComponent } from '../base/components/not-found-page/not-found-page.component';
 import { SynthesisCompleteComponent } from './component/synthesis-complete/synthesis-complete.component';
 import { ShareComponent } from './share.component';
+
 
 
 const shareRoutes: Routes = [
@@ -29,7 +31,8 @@ const shareRoutes: Routes = [
       },
       { path: 'synthesis/:projectId/:userKey',
         component: SynthesisCompleteComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        canActivate: [NonAuthGuard],
       },
       {
         path: '**',
