@@ -37,6 +37,8 @@ export const MARKET_REPORT = {
     'BUTTON_SHARE': 'Partager la synthèse'
   },
 
+  'ANONYMOUS': 'Anonyme',
+
   'MESSAGE_SYNTHESIS_VISIBLE': 'La synthèse est visible pour le client.',
 
   'MESSAGE_SYNTHESIS_NOT_VISIBLE': 'La synthèse n\'est pas visible pour le client.',

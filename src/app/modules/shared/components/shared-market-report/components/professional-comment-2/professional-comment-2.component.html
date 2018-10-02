@@ -1,8 +1,8 @@
 <!-- Name -->
 <p class="name">
   <span class="text-link" (click)="seeAnswer(answer)">
-    <span *ngIf="answer.professional && answer.professional.firstName">{{ answer.professional?.firstName[0] | uppercase }}{{ answer.professional?.firstName | slice:1 }} {{ answer.professional?.lastName }}</span>
-    <span *ngIf="!answer.professional?.firstName">Anonymous</span>
+    <span *ngIf="answer.professional && answer.professional?.firstName">{{ answer.professional?.firstName[0] | uppercase }}{{ answer.professional?.firstName | slice:1 }} {{ answer.professional?.lastName }}</span>
+    <span *ngIf="!answer.professional?.firstName">{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
   </span>
 </p>
 

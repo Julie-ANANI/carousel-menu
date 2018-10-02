@@ -17,7 +17,7 @@ import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs/Subject';
 import { FrontendService } from '../../../../services/frontend/frontend.service';
-import { ShareService } from "../../../../services/share/share.service";
+import { ShareService } from '../../../../services/share/share.service';
 // import {PrintService} from '../../../../services/print/print.service';
 // import * as FileSaver from "file-saver";
 
@@ -401,9 +401,9 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   shareSynthesis(event: Event) {
     event.preventDefault();
     this._sharingService.shareSynthesis(this.project._id)
-      .first().subscribe(result=>{
-        console.log(`http://localhost:4200/${result.sharedObjectType}/${result.objectId}/${result.shareKey||""}`);
-    }, err=>{
+      .first().subscribe(result => {
+        console.log(`http://localhost:4200/${result.sharedObjectType}/${result.objectId}/${result.shareKey || ''}`);
+    }, err => {
         console.error(err);
     });
   }

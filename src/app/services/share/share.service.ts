@@ -4,7 +4,7 @@ import { Innovation } from '../../models/innovation';
 import { InnovCard } from '../../models/innov-card';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
-import {Http, Response} from "../http";
+import {Http, Response} from '../http';
 
 @Injectable()
 export class ShareService {

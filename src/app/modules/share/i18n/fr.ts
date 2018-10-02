@@ -3,7 +3,7 @@ export const SHARE = {
   'TITLE': 'Synthesis',
 
   'BUTTON': {
-    'SIGN_IN': 'Sign connecter',
+    'SIGN_IN': 'Se connecter',
     'SIGN_UP': 'S\'inscrire'
   },
 

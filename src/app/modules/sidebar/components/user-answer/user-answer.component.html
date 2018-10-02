@@ -16,7 +16,10 @@
 
       <!-- Name, flag and rating -->
       <div class="title">
-       <h6>{{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}</h6>
+        <h6>
+          <span *ngIf="modalAnswer.professional?.firstName">{{ modalAnswer.professional?.firstName }} {{ modalAnswer.professional?.lastName }}</span>
+          <span *ngIf="!modalAnswer.professional?.firstName">{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
+        </h6>
         <div *ngIf="editMode" class="app-rating">
           <app-rating-item
             [editMode]="adminMode"
