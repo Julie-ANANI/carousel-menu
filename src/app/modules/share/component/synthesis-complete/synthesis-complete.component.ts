@@ -14,6 +14,8 @@ import { TranslateNotificationsService } from '../../../../services/notification
 export class SynthesisCompleteComponent implements OnInit {
   projectId: string;
 
+  shareKey: string;
+
   project: Innovation;
 
   displaySpinner = true;
@@ -28,13 +30,14 @@ export class SynthesisCompleteComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params['projectId'];
+      this.shareKey = params['userKey'];
     });
 
     this.getProject();
   }
 
   private getProject() {
-    this.innovationService.get(this.projectId).subscribe((response: Innovation) => {
+    this.innovationService.getSharedSyntheis(this.projectId, this.shareKey).subscribe((response: any) => {
       this.project = response;
     }, () => {
       this.translateNotififcationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR')
