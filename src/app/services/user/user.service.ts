@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { User } from '../../models/user.model';
 
+import { environment } from '../../../environments/environment';
+
 @Injectable()
 export class UserService {
 
@@ -28,7 +30,7 @@ export class UserService {
   }
 
   public resetPassword(email?: string): Observable<any> {
-    return this._http.post('/user/resetPassword', {email: email})
+    return this._http.post('/user/resetPassword', {email: email, callback: environment.clientUrl })
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }

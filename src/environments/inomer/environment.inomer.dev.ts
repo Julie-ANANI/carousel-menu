@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://dev.umi.us/api',
+  clientUrl: 'https://dev-inomer.umi.us',
   companyName: 'INOMER',
   companyShortName: 'INOMER',
   domain: 'vendor1',

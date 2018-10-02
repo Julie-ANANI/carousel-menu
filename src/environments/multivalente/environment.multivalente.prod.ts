@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   apiUrl: 'https://appv3.umi.us/api',
+  clientUrl: 'https://multivalente.umi.us',
   companyName: 'Multivalente',
   companyShortName: 'Multivalente',
   domain: 'multivalente',

@@ -17,6 +17,7 @@ import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs/Subject';
 import { FrontendService } from '../../../../services/frontend/frontend.service';
+import { DataExtractor } from "./services/dataextractor.service";
 // import {PrintService} from '../../../../services/print/print.service';
 // import * as FileSaver from "file-saver";
 
@@ -83,7 +84,9 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private innovationService: InnovationService,
               private authService: AuthService,
               public filterService: FilterService,
-              private frontendService: FrontendService) {
+              private frontendService: FrontendService,
+              private dataExtractor: DataExtractor) {
+    this.dataExtractor.hello();
     this.filterService.reset();
   }
 
@@ -130,11 +133,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    if (window.scrollY !== 0) {
-      this.scrollOn = true;
-    } else {
-      this.scrollOn = false;
-    }
+    this.scrollOn = window.scrollY !== 0;
 
     this._menuButton = (this.getCurrentScroll() > 150);
 
@@ -178,6 +177,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       this._filteredAnswers = this._answers;
       this.filterService.filtersUpdate.subscribe((_) => {
         this._filteredAnswers = this.filterService.filter(this._answers);
+        this.dataExtractor.printFiltered(this._filteredAnswers); //FIXME
       });
 
       this._companies = results.answers.map((answer: any) => answer.company || {
@@ -364,7 +364,37 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       FileSaver.saveAs(file, 'test.pdf');
     });*/
 
-   window.print();
+   //window.print();
+    this.dataExtractor.updateData({
+      answers: this.filteredAnswers,
+      countries: this._countries,
+      questions: JSON.parse(JSON.stringify(this._questions)),
+      filter: null,
+      lang: this.lang,
+      marketReport: { ...this.project.marketReport} || {},
+      strings: this._translationStrings()
+    });
+  }
+
+  private _translationStrings(): any {
+    /*
+  {{ 'COMMON.UMI_WORD' | translate }}
+  {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
+  {{ 'MARKET_REPORT.PIE_CHART' | translate }}
+  {{ 'MARKET_REPORT.ANSWERS' | translate }}
+  {{ 'MARKET_REPORT.PEOPLE_VOTED' | translate }}
+  {{ 'MARKET_REPORT.NO_GRADE' | translate }}
+  {{ 'MARKET_REPORT.GRADE' | translate }}
+   */
+    return  {
+      "UMI_WORD": this.translateService.instant('COMMON.UMI_WORD' ),
+      "SYNTHESIS_FRAME": this.translateService.instant('MARKET_REPORT.SYNTHESIS_FRAME' ),
+      "PIE_CHART": this.translateService.instant('MARKET_REPORT.PIE_CHART' ),
+      "ANSWERS": this.translateService.instant('MARKET_REPORT.ANSWERS' ),
+      "PEOPLE_VOTED": this.translateService.instant('MARKET_REPORT.PEOPLE_VOTED' ),
+      "NO_GRADE": this.translateService.instant('MARKET_REPORT.NO_GRADE' ),
+      "GRADE": this.translateService.instant('MARKET_REPORT.GRADE' )
+    };
   }
 
   shareSynthesis(event: Event) {

@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://dev.umi.us/api',
+  clientUrl: 'https://dynergiecli-dev.umi.us',
   companyName: 'Dynergie',
   companyShortName: 'Dynergie',
   domain: 'dynergie',

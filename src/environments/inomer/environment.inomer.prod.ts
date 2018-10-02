@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   apiUrl: 'https://appv3.umi.us/api',
+  clientUrl: 'https://imr.inomer.fr',
   companyName: 'INOMER',
   companyShortName: 'INOMER',
   domain: 'inomer',

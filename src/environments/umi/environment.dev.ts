@@ -3,6 +3,7 @@
 export const environment = {
   production: true,
   apiUrl: 'https://dev.umi.us/api',
+  clientUrl: 'https://umicli-dev.umi.us',
   companyName: 'United Motion Ideas (dev)',
   companyShortName: 'UMI',
   domain: 'umi',

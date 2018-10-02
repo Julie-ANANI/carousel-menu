@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/api',
+  clientUrl: 'http://localhost:4200',
   companyName: 'Multivalente',
   companyShortName: 'Multivalente',
   domain: 'multivalente',
