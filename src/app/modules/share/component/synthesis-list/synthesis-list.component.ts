@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from "../../../../services/user/user.service";
 
 @Component({
   selector: 'app-synthesis-list',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SynthesisListComponent implements OnInit {
 
-  constructor() { }
+  private _sharedGraph: any = [];
+
+  public displaySpinner = false;
+  constructor( private _userService: UserService ) { }
 
   ngOnInit() {
+    this._userService.getSharedWithMe()
+      .first().subscribe(result=>{
+        this._sharedGraph = result.sharedgraph || [];
+        console.log(this._sharedGraph);
+    }, err=>{
+      console.log(err);
+    });
   }
 
+  get sharedGraph(): any {
+    return this._sharedGraph;
+  }
 }
