@@ -15,8 +15,8 @@
         <!-- if not authenticated -->
         <ng-container *ngIf="!authService.isAuthenticated">
           <div class="pad">
-            <button type="button" class="btn ghost-primary btn-xs" (click)="onSignUpClick($event)" [ngStyle]="{ 'margin-right': '.6rem' }">{{ 'SHARE.BUTTON.SIGN_UP' | translate }}</button>
-            <button type="button" class="btn btn-primary btn-xs" (click)="onSignInClick($event)" id="signInButton">{{ 'SHARE.BUTTON.SIGN_IN' | translate }}</button>
+            <button type="button" class="btn ghost-primary btn-xs" (click)="onSignInClick($event)" id="signInButton" [ngStyle]="{ 'margin-right': '.6rem' }">{{ 'SHARE.BUTTON.SIGN_IN' | translate }}</button>
+            <button type="button" class="btn btn-primary btn-xs" (click)="onSignUpClick($event)">{{ 'SHARE.BUTTON.SIGN_UP' | translate }}</button>
           </div>
 
           <!-- Sign in form -->
