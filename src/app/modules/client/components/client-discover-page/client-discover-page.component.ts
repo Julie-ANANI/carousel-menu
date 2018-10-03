@@ -137,59 +137,28 @@ export class ClientDiscoverPageComponent implements OnInit {
     this._endInnoIndex = parseInt(localStorage.getItem('app-discover-limit'), 10) || 20;
 
     if (this._filterApplied.length > 0) {
-      this._filterInnovations = [];
+      this._filterInnovations =  [];
 
-      for (let i = 0; i < this._filterApplied.length; i++) {
-
-        if (i === 0) {
-
-          if (this._filterApplied[i].type === 'type') {
-            this.filterType(this._localInnovations, this._filterApplied[i].value);
-          }
-
-          /*if (this.filterApplied[i].type === 'status') {
-            this.filterStatus(this.localInnovations, this.filterApplied[i].value);
-          }*/
-
-          if (this._filterApplied[i].type === 'stage') {
-            this.filterStage(this._localInnovations, this._filterApplied[i].value);
-          }
-
-          if (this._filterApplied[i].type === 'language') {
-            this._selectedLang = this._filterApplied[i].value;
-            this.filterLang(this._localInnovations, this._filterApplied[i].value);
-          }
-
-          if (this._filterApplied[i].type === 'label') {
-            this.filterLabel(this._localInnovations, this._filterApplied[i].id);
-          }
-
-        } else {
-
-          if (this._filterApplied[i].type === 'type') {
-            this.filterType(this._filterInnovations, this._filterApplied[i].value);
-          }
-
-          /*if (this.filterApplied[i].type === 'status') {
-            this.filterStatus(this.filterInnovations, this.filterApplied[i].value);
-          }*/
-
-          if (this._filterApplied[i].type === 'stage') {
-            this.filterStage(this._filterInnovations, this._filterApplied[i].value);
-          }
-
-          if (this._filterApplied[i].type === 'language') {
-            this._selectedLang = this._filterApplied[i].value;
-            this.filterLang(this._filterInnovations, this._filterApplied[i].value);
-          }
-
-          if (this._filterApplied[i].type === 'label') {
-            this.filterLabel(this._filterInnovations, this._filterApplied[i].id);
-          }
-
+      this._filterApplied.forEach(filter=>{
+        switch(filter.type) {
+          case('type'):
+            this.filterType(this._localInnovations, filter.value);
+            break;
+          case('stage'):
+            this.filterStage(this._localInnovations, filter.value);
+            break;
+          case('language'):
+            this._selectedLang = filter.value;
+            this.filterLang(this._localInnovations, filter.value);
+            break;
+          case('label'):
+            this.filterLabel(this._localInnovations, filter.id);
+            break;
+          default:
+            //Do nothing
         }
+      });
 
-      }
       this.populateTags(this._filterInnovations);
       this.searchInInnovationCards(this._filterInnovations);
     } else {
@@ -246,9 +215,9 @@ export class ClientDiscoverPageComponent implements OnInit {
   private populateTags(innovations: Array<Innovation>) {
     this._tags = [];
 
-    innovations.forEach((innovations) => {
+    innovations.forEach(innovation => {
       const index = this._filterApplied.findIndex((item) => item.type === 'type' || item.type === 'label' );
-      const rawTags = innovations.tags || [];
+      const rawTags = innovation.tags || [];
       if (index !== -1) {
         rawTags.forEach((tag) => {
           const index = this._filterApplied.findIndex((item) => item.type === 'type' ? item.id === tag.type : item.id === tag._id);
