@@ -1,5 +1,6 @@
 // Modules externes
-import { NgModule } from '@angular/core';
+import { NgModule, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieModule, CookieService } from 'ngx-cookie';
@@ -115,20 +116,22 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
 
 export class AppModule {
 
-  constructor(private _translateService: TranslateService,
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private _translateService: TranslateService,
               private _cookieService: CookieService) {
 
     this._translateService.addLangs(['en', 'fr']);
     this._translateService.setDefaultLang('en');
 
-    const user_lang = this._cookieService.get('user_lang');
-    let browserLang = user_lang || this._translateService.getBrowserLang();
-    if (!browserLang.match(/en|fr/)) {
-      browserLang = 'en';
+    if (isPlatformBrowser(platformId)) {
+      const user_lang = this._cookieService.get('user_lang');
+      let browserLang = user_lang || this._translateService.getBrowserLang();
+      if (!browserLang.match(/en|fr/)) {
+        browserLang = 'en';
+      }
+      this._cookieService.put('user_lang', browserLang);
+      this._translateService.use(browserLang);
     }
-
-    this._cookieService.put('user_lang', browserLang);
-    this._translateService.use(browserLang);
   }
 
 }

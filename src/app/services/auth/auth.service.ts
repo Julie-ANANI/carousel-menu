@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CookieService, CookieOptions } from 'ngx-cookie';
 import { Http } from '../http.service';
 import { Observable, Subject, throwError } from 'rxjs';
@@ -26,7 +27,8 @@ export class AuthService {
 
   private _cookieObserver: any = null;
 
-  constructor(private _http: Http,
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private _http: Http,
               private _cookieService: CookieService,
               private _router: Router) {
   /**
@@ -35,9 +37,11 @@ export class AuthService {
      colle un lien de l'admin par exemple, on soit redirigé sur la page d'accueil car les variables <authenticated>
      et <admin> sont encore à <false> (la réponse du serveur (<initializeSession()>) n'a pas encore été reçue).
      */
-    this._setAuthenticatedTo(this._cookieService.get('hasBeenAuthenticated') === 'true');
-    this._setAdminTo(parseInt(this._cookieService.get('hasBeenAdmin'), 10));
-    this._setConfirmedTo(this._cookieService.get('hasBeenConfirmed') === 'true');
+    if (isPlatformBrowser(platformId)) {
+      this._setAuthenticatedTo(this._cookieService.get('hasBeenAuthenticated') === 'true');
+      this._setAdminTo(parseInt(this._cookieService.get('hasBeenAdmin'), 10));
+      this._setConfirmedTo(this._cookieService.get('hasBeenConfirmed') === 'true');
+    }
   }
 
   public startCookieObservator() {

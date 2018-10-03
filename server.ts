@@ -44,7 +44,18 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
-  res.render('index', { req });
+  res.render('index', {
+    req: req,
+    res: res,
+    providers: [
+      {
+        provide: 'REQUEST', useValue: (req)
+      },
+      {
+        provide: 'RESPONSE', useValue: (res)
+      }
+    ]
+  });
 });
 
 // Start up the Node server
