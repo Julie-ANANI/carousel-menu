@@ -1,100 +1,15 @@
 <main class="main-container" id="share">
 
   <!-- Header -->
+  <app-header></app-header>
 
-  <!-- if not authenticated -->
-  <ng-container *ngIf="!authService.isAuthenticated">
-    <header class="header-wrapper">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <nav class="navbar-wrapper">
-
-          <div class="logo">
-            <a routerLink="/" class="gtm-menu-logo">
-              <img src="{{ getLogo() }}" alt="UMI" height="22px">
-            </a>
-          </div>
-
-          <div class="action-buttons">
-            <button type="button" class="btn ghost-primary btn-xs" (click)="onSignUpClick($event)" [ngStyle]="{ 'margin-right': '.6rem' }">{{ 'SHARE.BUTTON.SIGN_UP' | translate }}</button>
-            <button type="button" class="btn btn-primary btn-xs" (click)="onSignInClick($event)" id="signInButton">{{ 'SHARE.BUTTON.SIGN_IN' | translate }}</button>
-          </div>
-
-          <!-- Sign in form -->
-          <div class="signIn-wrapper" [ngStyle]="{ 'display': displaySignInForm ? 'block' : 'none' }" id="signInForm">
-            <div class="column col-xs-12 col-11 col-mx-auto">
-
-              <!-- Heading -->
-              <div class="text-center">
-                <h1 class="main-heading">{{ 'LOG_IN.HEADING' | translate }}</h1>
-              </div>
-
-              <form novalidate [formGroup]="formData" (submit)="onSignInSubmit()">
-
-                <!-- Email address -->
-                <div class="form-group">
-                  <label class="form-label">{{ 'COMMON.EMAIL' | translate }}</label>
-                  <input
-                    type="email"
-                    class="form-default"
-                    formControlName="email"
-                    placeholder="john@catco.com">
-                  <span
-                    class="form-error"
-                    *ngIf="formData.get('email').touched">
-                    <span *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-                    <span *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">
-                      {{ 'COMMON.INVALID.EMAIL' | translate }}
-                    </span>
-                  </span>
-                </div>
-
-                <!-- Password -->
-                <div class="form-group">
-                  <label class="form-label">{{ 'COMMON.PASSWORD' | translate }}</label>
-                  <input
-                    class="form-default"
-                    type="password"
-                    formControlName="password"
-                    [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate ">
-                  <span class="form-error" *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
-                    {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
-                  </span>
-                </div>
-
-                <!-- login button -->
-                <div class="login-button text-center">
-                  <button class="btn btn-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">
-                    {{ 'LOG_IN.LOG_IN_BTN' | translate }}
-                  </button>
-                </div>
-
-              </form>
-
-            </div>
-          </div>
-          <!-- /Sign in form -->
-
-        </nav>
-      </div>
-    </header>
-  </ng-container>
-
-  <!-- Header -->
-
-  <div class="main">
+  <!-- Body -->
+  <section class="main">
     <router-outlet></router-outlet>
-  </div>
+  </section>
 
   <!-- Footer -->
   <app-footer></app-footer>
 
 </main>
 
-<!-- Sign up sidebar -->
-<app-sidebar [template]="signUpSidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
-  <app-user-form
-    [type]="signUpSidebarTemplateValue.type"
-    [sidebarState]="sidebarState"
-    (userSignUpData)="onSignUpSubmit($event)">
-  </app-user-form>
-</app-sidebar>

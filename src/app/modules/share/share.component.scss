@@ -5,81 +5,9 @@
   min-height: 100vh;
   flex-direction: column;
 
-  .header-wrapper {
-    background-color: $background-color;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-
-    .navbar-wrapper {
-      display: inline-flex;
-      flex-wrap: wrap;
-      width: 100%;
-      justify-content: space-between;
-      position: relative;
-
-      .logo {
-        padding-top: .4375rem;
-      }
-
-      .btn {
-        min-width: 100px;
-      }
-
-      .signIn-wrapper {
-        position: absolute;
-        top: 120%;
-        right: 0;
-        width: 380px;
-        min-height: 300px;
-        text-align: left;
-        background-color: white;
-        z-index: 2;
-        box-shadow: $box-shadow-hover;
-        transition: all .35s ease-in-out;
-        border-radius: .18rem;
-        padding-top: 1.57rem;
-        padding-bottom: 1.57rem;
-        display: none;
-
-        .login-button {
-          padding-top: .9375rem;
-          padding-bottom: .6rem;
-        }
-
-      }
-
-    }
-
-  }
-
   .main {
     flex: 1 0 auto;
   }
 
 }
 
-/********************************** Media ***************************************/
-@media (max-width: 320px) {
-
-  #share {
-
-    .logo {
-      padding-bottom: .4375rem;
-    }
-
-  }
-
-}
-
-
-@media (max-width: 600px) {
-
-  #share {
-
-    .signIn-wrapper {
-      width: 80vw !important;
-    }
-
-  }
-
-}

@@ -3,12 +3,19 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { HeaderComponent } from './header.component';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SidebarModule } from '../../../sidebar/sidebar.module';
+import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sidebar-user-form.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SidebarModule,
+    SidebarUserFormModule
   ],
   declarations: [
     HeaderComponent

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { initTranslation, TranslateService } from '../../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
 import { environment } from '../../../../../environments/environment';
+import { CurrentRouteService } from '../../../../services/frontend/current-route/current-route.service';
 
 @Component({
   selector: 'app-footer',
@@ -17,12 +18,21 @@ export class FooterComponent implements OnInit {
 
   private _currentLang: string;
 
+  private _displayFooter: boolean;
+
   constructor (private translateService: TranslateService,
-               private cookieService: CookieService) { }
+               private cookieService: CookieService,
+               private currentRouteService: CurrentRouteService) { }
 
   ngOnInit(): void {
+    this.currentRouteService.getCurrentRoute().subscribe((value) => {
+      this._displayFooter = !(value === '/forget' || value === '/signup' || value === '/login');
+    });
+
     initTranslation(this.translateService);
+
     this.lang();
+
   }
 
   private lang () {
@@ -83,6 +93,10 @@ export class FooterComponent implements OnInit {
 
   set currentLang(value: string) {
     this._currentLang = value;
+  }
+
+  get displayFooter(): boolean {
+    return this._displayFooter;
   }
 
 }

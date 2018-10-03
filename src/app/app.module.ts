@@ -41,6 +41,7 @@ import { TemplatesService } from './services/templates/templates.service';
 import { TranslationService } from './services/translation/translation.service';
 import { FrontendService } from './services/frontend/frontend.service';
 import { PrintService } from './services/print/print.service';
+import { CurrentRouteService } from './services/frontend/current-route/current-route.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -109,7 +110,8 @@ import { PresetResolver } from './resolvers/preset.resolver';
     TranslationService,
     TagsService,
     FrontendService,
-    PrintService
+    PrintService,
+    CurrentRouteService
   ],
   bootstrap: [AppComponent]
 })

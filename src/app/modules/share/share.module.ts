@@ -11,6 +11,7 @@ import { FooterModule } from '../base/components/footer/footer.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../sidebar/components/user-form/sidebar-user-form.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HeaderModule } from '../base/components/header/header.module';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SidebarModule,
     SidebarUserFormModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HeaderModule
   ],
   declarations: [
     ShareComponent,

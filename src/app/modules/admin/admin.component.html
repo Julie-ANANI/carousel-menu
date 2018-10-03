@@ -1,12 +1,15 @@
 <div class="body admin">
 
-  <app-header *ngIf="authService.isAuthenticated"></app-header>
+  <!-- Header -->
+  <app-header></app-header>
 
+  <!-- Body -->
   <div class="main">
     <router-outlet></router-outlet>
   </div>
 
-  <app-footer *ngIf="authService.isAuthenticated"></app-footer>
+  <!-- Footer -->
+  <app-footer></app-footer>
 
 </div>
 

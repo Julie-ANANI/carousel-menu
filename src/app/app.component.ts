@@ -6,6 +6,7 @@ import { LoaderService } from './services/loader/loader.service';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/pairwise';
 import { NavigationEnd, Router } from '@angular/router';
+import { CurrentRouteService } from './services/frontend/current-route/current-route.service';
 
 @Component({
   selector: 'app-root',
@@ -36,17 +37,13 @@ export class AppComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private loaderService: LoaderService,
               private translateNotificationsService: TranslateNotificationsService,
-              private router: Router) {}
+              private router: Router,
+              private currentRouteService: CurrentRouteService) {}
 
   ngOnInit(): void {
     initTranslation(this.translateService);
 
-    this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-        return;
-      }
-      window.scrollTo(0, 0);
-    });
+    this.routeCheck();
 
     this.loaderService.isLoading$.takeUntil(this.ngUnsubscribe).subscribe((isLoading: boolean) => {
       // Bug corrigé avec setTimeout :
@@ -54,6 +51,9 @@ export class AppComponent implements OnInit, OnDestroy {
       setTimeout((_: void) => {
         this.displayLoader = isLoading;
       });
+
+      this.currentRouteService.setCurrentRoute(this.router.url);
+
     });
 
     this.loaderService.stopLoading();
@@ -75,6 +75,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   get displayLoading(): boolean {
     return this._displayLoading;
+  }
+
+  private routeCheck() {
+    this.router.events.subscribe((event) => {
+      this.currentRouteService.setCurrentRoute(this.router.url);
+
+      if (!(event instanceof NavigationEnd)) {
+        return;
+      }
+
+      window.scrollTo(0, 0);
+
+    });
   }
 
   ngOnDestroy() {

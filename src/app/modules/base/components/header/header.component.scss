@@ -2,59 +2,103 @@
 
 #header {
   background: $background-color;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  font-weight: 600;
+  font-size: .85rem;
+  color: white;
 
-  .navbar-toggler-icon {
-    position: absolute;
-    top: 1.2rem;
-    right: 6.5%;
-
-    .fa-bars {
-      color: #FFFFFF;
-    }
-
+  .pad {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .navbar {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
 
-    .nav-item-wrapper {
-      flex: 1;
+    .menu-view {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .signIn-wrapper {
+      position: absolute;
+      top: 85%;
+      right: 0;
+      width: 380px;
+      min-height: 300px;
+      text-align: left;
+      background-color: white;
+      z-index: 2;
+      box-shadow: $box-shadow-hover;
+      transition: all .35s ease-in-out;
+      border-radius: .18rem;
+      padding-top: 1.57rem;
+      padding-bottom: 1.57rem;
       display: none;
 
-      .navbar-nav {
-        list-style: none;
-        margin-left: 0;
-        text-align: center;
+      .login-button {
+        padding-top: .9375rem;
+        padding-bottom: .6rem;
+      }
 
-        .navbar-item {
-          margin-top: 0;
-          padding: 2.5rem 0;
+    }
 
-          a {
-            opacity: 0.5;
-            letter-spacing: 0.66px;
-            color: #FFFFFF;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: .85rem;
-            transition: all 0.15s ease-in-out;
-          }
+    .navbar-toggle-icon {
+      display: none;
+      position: absolute;
+      right: 0;
 
-          a:hover {
-            opacity: 1;
-            color: $primary-color;
-            cursor: pointer;
-          }
+      .fa-bars {
+        color: #FFFFFF;
+      }
 
-          a.active {
-            opacity: 1;
-            color: $primary-color;
-          }
+    }
 
+    .menu-item-wrapper {
+      display: none;
+    }
+
+    .navbar-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: inline-flex;
+      flex-wrap: wrap;
+
+      .navbar-item {
+        margin-left: .6rem;
+        margin-right: .6rem;
+
+        a {
+          opacity: .5;
+          font-weight: 600;
+          transition: all 0.15s ease-in-out;
         }
 
+        a:hover {
+          opacity: 1;
+          color: $primary-color;
+          cursor: pointer;
+        }
+
+        a.active {
+          opacity: 1;
+          color: $primary-color;
+        }
+
+      }
+
+      .navbar-item:first-child {
+        margin-left: 0;
+      }
+
+      .navbar-item:last-child {
+        margin-right: 0;
       }
 
     }
@@ -66,47 +110,42 @@
 
 /********************************** Media ***************************************/
 
-@media (max-width: 767px) {
+@media (max-width: 600px) {
 
   #header {
 
-    .navbar-toggler {
-      right: 6.5% !important;
+    .signIn-wrapper {
+      width: 80vw !important;
     }
 
   }
 
 }
 
-@media (min-width: 931px) {
+@media (max-width: 840px) {
 
   #header {
 
-    .navbar-toggler-icon {
-      display: none !important;
+    .navbar-toggle-icon {
+      display: block !important;
     }
 
     .navbar {
-      display: flex !important;
+      flex-direction: column;
+      align-items: flex-start !important;
+    }
 
-      .nav-item-wrapper {
-        padding-top: .2rem !important;
-        flex: unset !important;
-        display: block !important;
+    .menu-item-wrapper {
+      width: 100%;
+    }
 
-        .navbar-nav {
-          margin-top: 0 !important;
-          margin-bottom: 0 !important;
-          display: inline-flex !important;
-          justify-content: flex-end !important;
+    .navbar-nav {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
 
-          .navbar-item {
-            margin-left: 2.55rem !important;
-            padding: 0 !important;
-          }
-
-        }
-
+      .navbar-item {
+        margin: 1.2rem 0 !important;
       }
 
     }
@@ -116,4 +155,14 @@
 }
 
 
+@media (min-width: 841px) {
 
+  #header {
+
+    .menu-item-wrapper {
+      display: flex !important;
+    }
+
+  }
+
+}

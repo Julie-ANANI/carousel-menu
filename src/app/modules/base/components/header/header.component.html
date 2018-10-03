@@ -1,191 +1,257 @@
-<header class="main-container" [ngStyle]="{ 'display': displayNavbar ? 'block' : 'none' }" id="header">
+<header *ngIf="displayHeader" class="main-container" id="header">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <nav class="navbar">
 
-      <!-- Logo -->
-      <div class="text-left">
-        <a routerLink="/" class="gtm-menu-logo">
-          <img src="{{ getLogo() }}" alt="UMI" height="28px" class="logo">
-        </a>
+      <!-- Logo, and not authenticated menu -->
+      <div class="menu-view" [ngStyle]="{ 'width': authService.isAuthenticated ? 'auto' : '100%'}">
+
+        <!-- Logo -->
+        <div class="pad">
+          <a routerLink="/" class="gtm-menu-logo">
+            <img src="{{ getLogo() }}" [alt]="companyName" height="28px">
+          </a>
+        </div>
+
+        <!-- if not authenticated -->
+        <ng-container *ngIf="!authService.isAuthenticated">
+          <div class="pad">
+            <button type="button" class="btn ghost-primary btn-xs" (click)="onSignUpClick($event)" [ngStyle]="{ 'margin-right': '.6rem' }">{{ 'SHARE.BUTTON.SIGN_UP' | translate }}</button>
+            <button type="button" class="btn btn-primary btn-xs" (click)="onSignInClick($event)" id="signInButton">{{ 'SHARE.BUTTON.SIGN_IN' | translate }}</button>
+          </div>
+
+          <!-- Sign in form -->
+          <div class="signIn-wrapper" [ngStyle]="{ 'display': displaySignInForm ? 'block' : 'none' }" id="signInForm">
+            <div class="column col-xs-12 col-11 col-mx-auto">
+
+              <!-- Heading -->
+              <div class="text-center">
+                <h1 class="main-heading">{{ 'LOG_IN.HEADING' | translate }}</h1>
+              </div>
+
+              <form novalidate [formGroup]="formData" (submit)="onSignInSubmit()">
+
+                <!-- Email address -->
+                <div class="form-group">
+                  <label class="form-label">{{ 'COMMON.EMAIL' | translate }}</label>
+                  <input
+                    type="email"
+                    class="form-default"
+                    formControlName="email"
+                    placeholder="john@catco.com">
+                  <span
+                    class="form-error"
+                    *ngIf="formData.get('email').touched">
+                    <span *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+                    <span *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">
+                      {{ 'COMMON.INVALID.EMAIL' | translate }}
+                    </span>
+                  </span>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                  <label class="form-label">{{ 'COMMON.PASSWORD' | translate }}</label>
+                  <input
+                    class="form-default"
+                    type="password"
+                    formControlName="password"
+                    [attr.placeholder]="'COMMON.PASSWORD_PLACEHOLDER' | translate ">
+                  <span class="form-error" *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
+                    {{ 'COMMON.REQUIRED.PASSWORD' | translate }}
+                  </span>
+                </div>
+
+                <!-- login button -->
+                <div class="login-button text-center">
+                  <button class="btn btn-primary gtm-signin-email" type="submit" [disabled]="formData.invalid">
+                    {{ 'LOG_IN.LOG_IN_BTN' | translate }}
+                  </button>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+          <!-- /Sign in form -->
+
+        </ng-container>
+        <!-- /if not authenticated -->
+
       </div>
+      <!-- /Logo, and not authenticated menu -->
 
-      <!-- Collapse menu icon -->
-      <div class="navbar-toggler-icon">
-        <i class="fas fa-2x fa-bars" (click)="toggleMenuState()"></i>
-      </div>
+      <!-- if authenticated -->
+      <ng-container *ngIf="authService.isAuthenticated">
 
-      <!-- Menu -->
-      <div class="nav-item-wrapper" [ngStyle]="{ 'display': displayMenuOptions ? 'block' : 'none' }">
-        <ul class="navbar-nav">
+        <!-- Mobile toggle icon -->
+        <div class="navbar-toggle-icon pad">
+          <i class="fas fa-2x fa-bars" (click)="toggleMenuState()"></i>
+        </div>
 
-          <!-- Client example -->
-          <li class="navbar-item" *ngIf="!backOfficeValue">
-            <a
-              [routerLink]="'/sample'"
-              routerLinkActive="active"
-              (click)="onClickLink()"
-              class="gtm-menu-sample-synthesis">
-              {{ 'HEADER.EXAMPLE' | translate }}
-            </a>
-          </li>
+        <!-- Menu -->
+        <div class="menu-item-wrapper" [ngStyle]="{ 'display': displayMenuOptions ? 'flex' : 'none' }">
+          <ul class="navbar-nav">
 
-          <!-- Client discover page -->
-          <li class="navbar-item" *ngIf="!backOfficeValue && authService.adminLevel > 2">
-            <a
-              [routerLink]="'/discover'"
-              routerLinkActive="active"
-              (click)="onClickLink()"
-              class="gtm-menu-discover">
-              {{ 'COMMON.DISCOVER' | translate }}
-            </a>
-          </li>
+            <!-- Client example -->
+            <li class="navbar-item" *ngIf="!backOfficeValue">
+              <a
+                [routerLink]="'/sample'"
+                routerLinkActive="active"
+                (click)="onClickLink()"
+                class="gtm-menu-sample-synthesis">
+                {{ 'HEADER.EXAMPLE' | translate }}
+              </a>
+            </li>
 
-          <!-- Client shared report page -->
-          <li class="navbar-item" *ngIf="!backOfficeValue">
-            <a
-              [routerLink]="'/synthesis'"
-              routerLinkActive="active"
-              (click)="onClickLink()"
-              class="gtm-menu-my-projects">
-              {{ 'COMMON.HEADER.SHARED_REPORTS' | translate }}
-            </a>
-          </li>
+            <!-- Client discover -->
+            <li class="navbar-item" *ngIf="!backOfficeValue && authService.adminLevel > 2">
+              <a
+                [routerLink]="'/discover'"
+                routerLinkActive="active"
+                (click)="onClickLink()"
+                class="gtm-menu-discover">
+                {{ 'COMMON.DISCOVER' | translate }}
+              </a>
+            </li>
 
-          <!-- Client project page -->
-          <li class="navbar-item" *ngIf="!backOfficeValue">
-            <a
-              [routerLink]="'/project'"
-              routerLinkActive="active"
-              (click)="onClickLink()"
-              class="gtm-menu-my-projects">
-              {{ 'COMMON.MY_PROJECTS' | translate }}
-            </a>
-          </li>
+            <!-- Client shared reports -->
+            <li class="navbar-item" *ngIf="!backOfficeValue">
+              <a
+                [routerLink]="'/synthesis'"
+                routerLinkActive="active"
+                (click)="onClickLink()"
+                class="gtm-menu-my-projects">
+                {{ 'COMMON.HEADER.SHARED_REPORTS' | translate }}
+              </a>
+            </li>
 
-          <!-- Client account page -->
-          <li class="navbar-item" *ngIf="!backOfficeValue">
-            <a
-              [routerLink]="'/account'"
-              routerLinkActive="active"
-              (click)="onClickLink()"
-              class="gtm-menu-my-account">
-              {{ 'COMMON.MY_ACCOUNT' | translate }}
-            </a>
-          </li>
+            <!-- Client projects --->
+            <li class="navbar-item" *ngIf="!backOfficeValue">
+              <a
+                [routerLink]="'/project'"
+                routerLinkActive="active"
+                (click)="onClickLink()"
+                class="gtm-menu-my-projects">
+                {{ 'COMMON.MY_PROJECTS' | translate }}
+              </a>
+            </li>
 
-          <!-- Back office dashboard page -->
-          <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
-            <a
-              [routerLink]="'/admin'"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              title=""
-              (click)="onClickLink()">
-              Dashboard
-            </a>
-          </li>
+            <!-- Client account -->
+            <li class="navbar-item" *ngIf="!backOfficeValue">
+              <a
+                [routerLink]="'/account'"
+                routerLinkActive="active"
+                (click)="onClickLink()"
+                class="gtm-menu-my-account">
+                {{ 'COMMON.MY_ACCOUNT' | translate }}
+              </a>
+            </li>
 
-          <!-- Back office user page -->
-          <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
-            <a
-              routerLinkActive="active"
-              [routerLink]="'/admin/users'"
-              title=""
-              (click)="onClickLink()">
-              {{ 'COMMON.USERS' | translate }}
-            </a>
-          </li>
+            <!-- Back office dashboard -->
+            <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
+              <a
+                [routerLink]="'/admin'"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="onClickLink()">
+                Dashboard
+              </a>
+            </li>
 
-          <!-- Back office professional page -->
-          <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
-            <a
-              routerLinkActive="active"
-              [routerLink]="'/admin/professionals'"
-              title=""
-              (click)="onClickLink()">
-              {{ 'COMMON.PROFESSIONALS' | translate }}
-            </a>
-          </li>
+            <!-- Back office users -->
+            <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
+              <a
+                routerLinkActive="active"
+                [routerLink]="'/admin/users'"
+                (click)="onClickLink()">
+                {{ 'COMMON.USERS' | translate }}
+              </a>
+            </li>
 
-          <!-- Back office project page -->
-          <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
-            <a
-              routerLinkActive="active"
-              [routerLink]="'/admin/projects'"
-              title=""
-              (click)="onClickLink()">
-              {{ 'COMMON.PROJECTS' | translate }}
-            </a>
-          </li>
+            <!-- Back office professional -->
+            <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
+              <a
+                routerLinkActive="active"
+                [routerLink]="'/admin/professionals'"
+                (click)="onClickLink()">
+                {{ 'COMMON.PROFESSIONALS' | translate }}
+              </a>
+            </li>
 
-          <!-- Back office library page -->
-          <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
-            <a
-              routerLinkActive="active"
-              [routerLink]="'/admin/libraries'"
-              title=""
-              (click)="onClickLink()">
-              Libraries
-            </a>
-          </li>
+            <!-- Back office projects -->
+            <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
+              <a
+                routerLinkActive="active"
+                [routerLink]="'/admin/projects'"
+                (click)="onClickLink()">
+                {{ 'COMMON.PROJECTS' | translate }}
+              </a>
+            </li>
 
-          <!-- Back office monitoring page -->
-          <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
-            <a
-              routerLinkActive="active"
-              [routerLink]="'/admin/monitoring'"
-              title=""
-              (click)="onClickLink()">
-              Monitoring
-            </a>
-          </li>
+            <!-- Back office library -->
+            <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
+              <a
+                routerLinkActive="active"
+                [routerLink]="'/admin/libraries'"
+                (click)="onClickLink()">
+                Libraries
+              </a>
+            </li>
 
-          <!-- Back office setting page -->
-          <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
-            <a
-              routerLinkActive="active"
-              [routerLink]="'/admin/settings'"
-              title=""
-              (click)="onClickLink()">
-              {{ 'COMMON.PRESETS' | translate }}
-            </a>
-          </li>
+            <!-- BAck office monitoring -->
+            <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
+              <a
+                routerLinkActive="active"
+                [routerLink]="'/admin/monitoring'"
+                (click)="onClickLink()">
+                Monitoring
+              </a>
+            </li>
 
-          <!-- Back office search page
-          <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
-            <a
-              routerLinkActive="active"
-              [routerLink]="'/admin/search'"
-              title=""
-              (click)="onClickLink()">
-              {{ 'COMMON.SEARCH' | translate }}
-            </a>
-          </li>-->
+            <!-- Back office setting -->
+            <li class="navbar-item" *ngIf="backOfficeValue && canShow(3)">
+              <a
+                routerLinkActive="active"
+                [routerLink]="'/admin/settings'"
+                (click)="onClickLink()">
+                {{ 'COMMON.PRESETS' | translate }}
+              </a>
+            </li>
 
-          <!-- Back office client side page -->
-          <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
-            <a
-              routerLinkActive="active"
-              [routerLink]="'/project'"
-              title=""
-              (click)="toggleBackOfficeState(); onClickLink();">
-              {{ 'COMMON.CLIENT_SIDE' | translate }}
-            </a>
-          </li>
+            <!-- To go client side -->
+            <li class="navbar-item" *ngIf="backOfficeValue && canShow(1)">
+              <a
+                routerLinkActive="active"
+                [routerLink]="'/project'"
+                (click)="toggleBackOfficeState(); onClickLink();">
+                {{ 'COMMON.CLIENT_SIDE' | translate }}
+              </a>
+            </li>
 
-          <!-- Adlin link -->
-          <li class="navbar-item" *ngIf="!backOfficeValue && canShow(1)">
-            <a
-              [routerLink]="'/admin'"
-              routerLinkActive="active"
-              (click)="toggleBackOfficeState(); onClickLink();">
-              {{ 'COMMON.ADMIN' | translate }}
-            </a>
-          </li>
+            <!-- To go admin side -->
+            <li class="navbar-item" *ngIf="!backOfficeValue && canShow(1)">
+              <a
+                [routerLink]="'/admin'"
+                routerLinkActive="active"
+                (click)="toggleBackOfficeState(); onClickLink();">
+                {{ 'COMMON.ADMIN' | translate }}
+              </a>
+            </li>
 
-        </ul>
-      </div>
+          </ul>
+        </div>
+      </ng-container>
+      <!-- /if authenticated -->
 
     </nav>
   </div>
 </header>
+
+<!-- Sign up sidebar -->
+<app-sidebar [template]="signUpSidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+  <app-user-form
+    [type]="signUpSidebarTemplateValue.type"
+    [sidebarState]="sidebarState"
+    (userSignUpData)="onSignUpSubmit($event)">
+  </app-user-form>
+</app-sidebar>
