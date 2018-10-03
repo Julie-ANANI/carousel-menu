@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { LoaderService } from './loader/loader.service';
 import { Observable, throwError } from 'rxjs';
@@ -17,14 +17,16 @@ export class Http {
               private loaderService: LoaderService,
               private notificationsService: TranslateNotificationsService) {}
 
-  public get(UriOrUrl: string, options?: any): Observable<any> {
+  public get(UriOrUrl: string, options?: {params: {[param: string]: string | string[]}}): Observable<any> {
     this.showLoader();
 
     if (UriOrUrl.indexOf('http') === -1) { // Si ce n'est pas une URL
       UriOrUrl = this._getFullUrl(UriOrUrl);
     }
 
-    return this.httpClient.get(UriOrUrl, options)
+    const params = new HttpParams(options ? { fromObject: options.params } : {});
+
+    return this.httpClient.get(UriOrUrl, {params})
       .pipe(
         retry(2),
         catchError(this._onCatch),

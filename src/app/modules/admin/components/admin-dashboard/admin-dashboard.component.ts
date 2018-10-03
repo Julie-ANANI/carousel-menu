@@ -77,7 +77,10 @@ export class AdminDashboardComponent implements OnInit {
       });
     });
 
-    this._dashboardService.getOperatorData(this.operatorId).pipe(first()).subscribe((operatorData: any) => this.operatorData = operatorData);
+    this._dashboardService
+      .getOperatorData(this.operatorId)
+      .pipe(first())
+      .subscribe((operatorData: any) => this.operatorData = operatorData);
 
     this.getPeriodStats();
 
@@ -89,17 +92,23 @@ export class AdminDashboardComponent implements OnInit {
     this.refreshNeededEmitter.next({
       operatorId: operatorId
     });
-    this._dashboardService.getOperatorData(this.operatorId).pipe(first()).subscribe((operatorData: any) => this.operatorData = operatorData);
+    this._dashboardService
+      .getOperatorData(this.operatorId)
+      .pipe(first())
+      .subscribe((operatorData: any) => this.operatorData = operatorData);
   }
 
   public getPeriodStats() {
-    this._searchService.getEmailStats(this.nbDaysOfStats).pipe(first()).subscribe((stats: any) => {
-      const totalMails = stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut;
-      this.statistics.percentFoundEmails = totalMails ? Math.round(stats.total.found / totalMails * 100) : 'NA';
-      this.statistics.percentFoundPros = 'NA';
-      this.statistics.percentOkEmails =  stats.total.found ? Math.round((stats.total.confidence['100'] || 0) / stats.total.found * 100) : 'NA';
-      this.statistics.percentReceivedEmails = 'NA';
-    });
+    this._searchService
+      .getEmailStats(this.nbDaysOfStats)
+      .pipe(first())
+      .subscribe((stats: any) => {
+        const totalMails = stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut;
+        this.statistics.percentFoundEmails = totalMails ? Math.round(stats.total.found / totalMails * 100) : 'NA';
+        this.statistics.percentFoundPros = 'NA';
+        this.statistics.percentOkEmails =  stats.total.found ? Math.round((stats.total.confidence['100'] || 0) / stats.total.found * 100) : 'NA';
+        this.statistics.percentReceivedEmails = 'NA';
+      });
   }
 
   public getWeek() {

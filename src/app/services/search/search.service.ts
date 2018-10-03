@@ -18,9 +18,9 @@ export class SearchService {
   public getRequest(requestId: string): Observable<any> {
     const query = {
       path: '/request/' + requestId,
-      params: {
+      params: JSON.stringify({
         fields: 'status, flag, mailRequest, request, entity, _id, keywords, oldKeywords, country, language, campaign, profiles, automated'
-      }
+      })
     };
 
     return this._http.get('/search/get', {params: query});
@@ -31,7 +31,7 @@ export class SearchService {
   }
 
   public cancelRequest(requestId: string, cancel: boolean): Observable<any> {
-    return this._http.get('/search/cancel', {params: {id: requestId, cancel: cancel}});
+    return this._http.get('/search/cancel', {params: {id: requestId, cancel: JSON.stringify(cancel)}});
   }
 
   public getPros(config: any, requestId: string): Observable<any> {
@@ -40,7 +40,7 @@ export class SearchService {
 
   public getEmailStats(daysCount: number): Observable<any> {
     const query = {
-      params: {daysCount: daysCount},
+      params: JSON.stringify({daysCount: daysCount}),
       path: '/stats/email'
     };
     return this._http.get('/search/get', {params: query});

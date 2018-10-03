@@ -14,7 +14,6 @@ export class SessionInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(this.setAuthorizationHeader(req))
       .pipe(catchError((event) => {
-        console.log('event', event);
         if (event instanceof HttpErrorResponse) {
           return this.catch401(event);
         }
@@ -27,6 +26,7 @@ export class SessionInterceptor implements HttpInterceptor {
     SessionVerification.setHeader(req, 'umi-front-application');
     return req.clone({ withCredentials: true });
   }
+
   // Response Interceptor
   private catch401(error: HttpErrorResponse): Observable<any> {
     // Check if we had 401 response

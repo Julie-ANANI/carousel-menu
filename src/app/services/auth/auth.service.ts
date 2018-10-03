@@ -48,7 +48,7 @@ export class AuthService {
           this.logout().pipe(first()).subscribe(() => {
             this._router.navigate(['/logout']);
           }, (err: any) => {
-            console.error(err)
+            console.error(err);
           });
         }
       }, 30000);
@@ -69,7 +69,7 @@ export class AuthService {
           return res;
         }),
         catchError((error: Response) => throwError(error.json()))
-      )
+      );
   }
 
   public linkedinLogin(domain: string): Observable<any> {
@@ -78,9 +78,7 @@ export class AuthService {
         map((res: any) => {
           return res.url;
         }),
-        catchError((error: Response) => {
-          return throwError(error.json())
-        })
+        catchError((error: Response) => throwError(error.json()))
       );
   }
 
@@ -137,7 +135,7 @@ export class AuthService {
     return {
       name: this.user ? this.user.firstName + ' ' + this.user.lastName : '',
       id: this.userId
-    }
+    };
   }
 
   get isAuthenticated(): boolean { return this._authenticated; }

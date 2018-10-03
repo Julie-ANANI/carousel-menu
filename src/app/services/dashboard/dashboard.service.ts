@@ -9,7 +9,7 @@ export class DashboardService {
   constructor(private _http: Http) {}
 
   public getOperators(): Observable<{result: Array<User>}> {
-    return this._http.get('/user', {params: {search: {isOperator: true}}});
+    return this._http.get('/user', {params: {search: JSON.stringify({isOperator: true})}});
   }
 
   public getOperatorData(operatorId?: String): Observable<{nbProjectsToValidate: number; nbProjectsToTreat: number; }> {

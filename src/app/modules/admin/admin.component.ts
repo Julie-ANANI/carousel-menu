@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -9,34 +9,7 @@ import { AuthService } from '../../services/auth/auth.service';
 
 export class AdminComponent {
 
-  private _scrollButton = false;
-
   constructor(private _authService: AuthService) {}
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    if (this.getCurrentScrollTop() > 10) {
-      this._scrollButton = true;
-    } else {
-      this._scrollButton = false;
-    }
-  }
-
-  getCurrentScrollTop() {
-    if (typeof window.scrollY !== 'undefined' && window.scrollY >= 0) {
-      return window.scrollY;
-    }
-    return 0;
-  };
-
-  scrollToTop(event: Event) {
-    event.preventDefault();
-    window.scrollTo(0, 0);
-  }
-
-  get scrollButton(): boolean {
-    return this._scrollButton;
-  }
 
   get authService(): AuthService {
     return this._authService;
