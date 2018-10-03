@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from './services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
@@ -32,43 +33,47 @@ export class AppComponent implements OnInit, OnDestroy {
     clickToClose: true
   };
 
-  constructor(private translateService: TranslateService,
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private translateService: TranslateService,
               private authService: AuthService,
               private loaderService: LoaderService,
               private translateNotificationsService: TranslateNotificationsService,
               private router: Router) {}
 
   ngOnInit(): void {
+
     initTranslation(this.translateService);
 
-    this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-        return;
-      }
-      window.scrollTo(0, 0);
-    });
-
-    this.loaderService.isLoading$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((isLoading: boolean) => {
-      // Bug corrigé avec setTimeout :
-      // https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
-      setTimeout((_: void) => {
-        this.displayLoader = isLoading;
-      });
-    });
-
-    this.loaderService.stopLoading();
-
-    if (this.authService.isAcceptingCookies) {
-      this.authService.initializeSession().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-        (_: any) => {},
-        (_: any) => this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
-          timeOut: 0
-        }), () => {
-          setTimeout (() => {
-            this._displayLoading = false;
-          }, 400); // TODO: why is there 400 ms timeout before displaying the app ?
+    if (isPlatformBrowser(this.platformId)) {
+      this.router.events.subscribe((event) => {
+        if (!(event instanceof NavigationEnd)) {
+          return;
         }
-      );
+        window.scrollTo(0, 0);
+      });
+
+      this.loaderService.isLoading$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((isLoading: boolean) => {
+        // Bug corrigé avec setTimeout :
+        // https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
+        setTimeout((_: void) => {
+          this.displayLoader = isLoading;
+        });
+      });
+
+      this.loaderService.stopLoading();
+
+      if (this.authService.isAcceptingCookies) {
+        this.authService.initializeSession().subscribe(
+          (_: any) => {},
+          (_: any) => this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
+            timeOut: 0
+          }), () => {
+            setTimeout (() => {
+              this._displayLoading = false;
+            }, 400); // TODO: why is there 400 ms timeout before displaying the app ?
+          }
+        );
+      }
     }
 
   }

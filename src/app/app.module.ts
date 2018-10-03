@@ -20,7 +20,6 @@ import { Http } from './services/http.service';
 import { InnovationService } from './services/innovation/innovation.service';
 import { CampaignService } from './services/campaign/campaign.service';
 import { DashboardService } from './services/dashboard/dashboard.service';
-import { WindowRefService } from './services/window-ref/window-ref.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { TranslateTitleService } from './services/title/title.service';
 import { UserService } from './services/user/user.service';
@@ -86,7 +85,6 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     InnovationService,
     CampaignService,
     LoaderService,
-    WindowRefService,
     DashboardService,
     EmailService,
     ShareService,

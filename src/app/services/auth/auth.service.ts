@@ -121,18 +121,24 @@ export class AuthService {
 
   private _setConfirmedTo(newValue: boolean): void {
     this._confirmed = newValue;
-    this._cookieService.put('hasBeenConfirmed', newValue.toString(), this._cookieOptions);
+    if (isPlatformBrowser(this.platformId)) {
+      this._cookieService.put('hasBeenConfirmed', newValue.toString(), this._cookieOptions);
+    }
   }
 
   private _setAuthenticatedTo(newValue: boolean): void {
     this._authenticated = newValue;
     this._authenticatedSource.next(newValue);
-    this._cookieService.put('hasBeenAuthenticated', newValue.toString(), this._cookieOptions);
+    if (isPlatformBrowser(this.platformId)) {
+      this._cookieService.put('hasBeenAuthenticated', newValue.toString(), this._cookieOptions);
+    }
   }
 
   private _setAdminTo(newValue: number): void {
     this._admin = newValue;
-    this._cookieService.put('hasBeenAdmin', `${newValue}`, this._cookieOptions);
+    if (isPlatformBrowser(this.platformId)) {
+      this._cookieService.put('hasBeenAdmin', `${newValue}`, this._cookieOptions);
+    }
   }
 
   public getUserInfo(): any {
@@ -147,7 +153,7 @@ export class AuthService {
   get adminLevel(): number { return this._admin; }
   get user () { return this._user; }
   get userId (): string { return this._user ? this._user.id : ''; }
-  get isAcceptingCookies(): boolean { // CNIL
+  get isAcceptingCookies(): boolean { // CNIL -> TODO: this should be initialized with a false value
     return true;
   }
   get emailVerified(): boolean { return this._user && this._user.emailVerified || false; }
