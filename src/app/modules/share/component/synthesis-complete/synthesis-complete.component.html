@@ -1,10 +1,11 @@
 <section id="synthesis-complete">
 
   <!-- Message -->
-  <div class="message-wrapper">
+  <div class="message-wrapper" *ngIf="!notFound && !displaySpinner">
     <p>{{ 'SHARE.MESSAGE' | translate }}</p>
   </div>
 
+  <!-- Spinner -->
   <ng-container *ngIf="displaySpinner">
     <div class="spinner-wrapper">
       <app-shared-loader></app-shared-loader>
@@ -12,12 +13,17 @@
   </ng-container>
 
   <!-- Market report -->
-  <ng-container *ngIf="!displaySpinner">
+  <ng-container *ngIf="!displaySpinner && !notFound">
     <app-shared-market-report
       [project]="project"
       [adminMode]="false"
       [sharable]="true">
     </app-shared-market-report>
+  </ng-container>
+
+  <!-- Not found view -->
+  <ng-container *ngIf="notFound">
+    <app-not-found-page></app-not-found-page>
   </ng-container>
 
 </section>

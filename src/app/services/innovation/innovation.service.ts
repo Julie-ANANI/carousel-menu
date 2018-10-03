@@ -193,7 +193,7 @@ export class InnovationService {
     return encodeURIComponent(`${environment.innovationUrl}/#/signup?invitation=true`);
   }
 
-  public getSharedSyntheis(id: string, sharedKey: string): Observable<any> {
+  public getSharedSynthesis(id: string, sharedKey: string): Observable<any> {
     return this._http.get(`/sharing/synthesis/${id}/${sharedKey}`)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));

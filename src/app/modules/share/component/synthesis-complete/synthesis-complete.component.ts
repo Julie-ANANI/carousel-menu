@@ -3,7 +3,6 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../models/innovation';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-synthesis-online',
@@ -20,10 +19,11 @@ export class SynthesisCompleteComponent implements OnInit {
 
   displaySpinner = true;
 
+  notFound = false;
+
   constructor(private translateTitleService: TranslateTitleService,
               private activatedRoute: ActivatedRoute,
-              private innovationService: InnovationService,
-              private translateNotififcationsService: TranslateNotificationsService) { }
+              private innovationService: InnovationService) { }
 
   ngOnInit() {
     this.translateTitleService.setTitle('SHARE.TITLE');
@@ -37,10 +37,11 @@ export class SynthesisCompleteComponent implements OnInit {
   }
 
   private getProject() {
-    this.innovationService.getSharedSyntheis(this.projectId, this.shareKey).subscribe((response: any) => {
+    this.innovationService.getSharedSynthesis(this.projectId, this.shareKey).subscribe((response: any) => {
       this.project = response;
     }, () => {
-      this.translateNotififcationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR')
+      this.displaySpinner = false;
+      this.notFound = true;
     }, () => {
       this.displaySpinner = false;
     });

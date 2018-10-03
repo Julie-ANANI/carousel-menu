@@ -25,8 +25,22 @@ export class ShareComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
+    this.checkUserLogin();
   }
 
+
+  private checkUserLogin() {
+    if (this.authService.isAuthenticated) {
+      console.log('authenticated');
+    } else {
+      console.log('not-authenticated');
+    }
+  }
+
+
+  /***
+   * This is to listen the click event on the page.
+   */
   @HostListener('mouseup', ['$event'])
   onMouseUp() {
 
@@ -35,6 +49,7 @@ export class ShareComponent implements OnInit {
     }
 
   }
+
 
   private buildForm() {
     this.formData = this.formBuilder.group({

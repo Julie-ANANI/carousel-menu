@@ -2,11 +2,6 @@
 
   <!-- Header -->
 
-  <!-- if authenticated -->
-  <ng-container *ngIf="authService.isAuthenticated">
-    <app-header></app-header>
-  </ng-container>
-
   <!-- if not authenticated -->
   <ng-container *ngIf="!authService.isAuthenticated">
     <header class="header-wrapper">
