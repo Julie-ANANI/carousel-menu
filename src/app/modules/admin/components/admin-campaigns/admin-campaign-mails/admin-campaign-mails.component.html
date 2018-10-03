@@ -32,7 +32,7 @@
     La quiz n'a pas été généré pour cette innovation, il doit y avoir un quiz avant de faire un envoi d'emails !
   </p>
   <div class="centered-buttons">
-    <button (click)="testModal=true" class="btn btn-primary">
+    <button (click)="testModal=true" class="btn btn-primary" [disabled] = "!defaultWorkflow">
       Envoyer les mails de test
     </button>
     <button (click)="batchModal=true" class="btn btn-primary" [disabled] = "!readyAutoBatch" >
