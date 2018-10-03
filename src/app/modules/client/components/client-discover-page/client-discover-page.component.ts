@@ -226,12 +226,11 @@ export class ClientDiscoverPageComponent implements OnInit {
           }
         });
       } else {
-        rawTags.forEach((tag) => {
-          if (tag.type === 'SECTOR') {
-            const index = this._tags.findIndex((item) => item._id === tag._id);
-            if (index === -1) {
-              this._tags.push(tag);
-            }
+        rawTags.filter(tag=>{
+          return tag.type === 'SECTOR';
+        }).forEach(tag=>{
+          if(this._tags.findIndex((item) => item._id === tag._id) === -1) {
+            this._tags.push(tag);
           }
         });
       }
