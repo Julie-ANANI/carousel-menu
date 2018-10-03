@@ -18,12 +18,14 @@ export class AdminCampaignMailsComponent implements OnInit {
   private _campaign: Campaign;
   private _quizLinks: Array<string> = [];
   private _stats: any = {};
+  public Math: any = Math;
   public mailsToSend = 0;
   public firstMail = 0;
   public secondMail = 0;
   public lastMail = 0;
   public testModal= false;
   public batchModal = false;
+  public nuggetsBatch: Batch = null;
   public newBatch: Batch;
   public dateformat = 'le dd/MM/yyyy à HH:mm';
   public selectedBatchToBeDeleted: any = null;
@@ -128,6 +130,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   }
 
   public addNuggetsToBatch(batchId: string) {
+    this.nuggetsBatch = null;
     this._campaignService.addNuggets(this._campaign._id, batchId).first().subscribe((result: any) => {
       this._notificationsService.success('Nuggets ajoutés', `${result.number} pros à 80% ont été ajoutés.`);
     });
