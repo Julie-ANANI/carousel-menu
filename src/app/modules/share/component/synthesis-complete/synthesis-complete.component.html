@@ -1,7 +1,7 @@
 <section id="synthesis-complete">
 
   <!-- Message -->
-  <div class="message-wrapper" *ngIf="!notFound && !displaySpinner">
+  <div class="message-wrapper" *ngIf="!notFound && !displaySpinner && authService.adminLevel < 2">
     <p>{{ 'SHARE.MESSAGE' | translate }}</p>
   </div>
 

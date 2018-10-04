@@ -11,13 +11,14 @@ import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
 import { Innovation } from '../../../../models/innovation';
-import { environment} from '../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { Template } from '../../../sidebar/interfaces/template';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs/Subject';
 import { FrontendService } from '../../../../services/frontend/frontend.service';
 import { ShareService } from '../../../../services/share/share.service';
+import { Share } from '../../../../models/share';
 // import {PrintService} from '../../../../services/print/print.service';
 // import * as FileSaver from "file-saver";
 
@@ -86,7 +87,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private location: Location,
               private innovationService: InnovationService,
               private authService: AuthService,
-              private _sharingService: ShareService,
+              private shareService: ShareService,
               public filterService: FilterService,
               private frontendService: FrontendService) {
     this.filterService.reset();
@@ -365,7 +366,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       FileSaver.saveAs(file, 'test.pdf');
     });*/
 
-   // window.print();
+   window.print();
     /*this.dataExtractor.updateData({
       answers: this.filteredAnswers,
       countries: this._countries,
@@ -398,14 +399,45 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     };*!/
   }*/
 
+
   shareSynthesis(event: Event) {
     event.preventDefault();
-    this._sharingService.shareSynthesis(this.project._id)
-      .first().subscribe(result => {
-        console.log(`http://localhost:4200/${result.sharedObjectType}/${result.objectId}/${result.shareKey || ''}`);
-    }, err => {
-        console.error(err);
+
+    this.shareService.shareSynthesis(this.project._id).first().subscribe((response: Share) => {
+      this.openMailTo(response.objectId, response.shareKey);
+    }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
+
+  }
+
+  private openMailTo(projectID: string, shareKey: string) {
+    let message = '';
+    let subject = '';
+    const url = this.getInnovationUrl() + '/share/synthesis/' + projectID + '/' + shareKey;
+    const innovationIndex = this.project.innovationCards.findIndex((items) => items.lang === this.translateService.getBrowserLang());
+
+    if (this.translateService.getBrowserLang() === 'en') {
+
+      subject = 'Sharing the synthesis - ' + this.project.innovationCards[innovationIndex].title;
+
+      message = encodeURI('Hello,' + '\r\n' + '\r\n' + 'I invite you to discover the results of the market test carried out by ' + this.getCompanyName() + ' for the innovation ' +
+        this.project.innovationCards[innovationIndex].title + '\r\n' + '\r\n' + 'Go on this link: ' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
+        'geographical location, person etc. ' + '\r\n' + '\r\n' + 'Cordially, ' + '\r\n' + '\r\n' + this.getOwnerName());
+
+    }
+
+    if (this.translateService.getBrowserLang() === 'fr') {
+
+      subject = 'Partager la synthèse - ' + this.project.innovationCards[innovationIndex].title;
+
+      message = encodeURI('Bonjour,' + '\r\n' + '\r\n' + 'Je vous invite à découvrir les résultats du test marché réalisé par ' + this.getCompanyName() + ' pour l\'innovation ' +
+      this.project.innovationCards[innovationIndex].title + '\r\n' + '\r\n' + 'Allez sur ce lien: ' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
+        'emplacement géographique, personne etc. ' + '\r\n' + '\r\n' + 'Cordialement, ' + '\r\n' + '\r\n' + this.getOwnerName());
+    }
+
+    window.location.href = 'mailto:' + '?subject=' + subject  + '&body=' + message;
+
   }
 
   getSrc(): string {
@@ -555,6 +587,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   get endDate(): Date {
     return this._endDate;
+  }
+
+  getCompanyName(): string {
+    return environment.companyName;
+  }
+
+  getInnovationUrl(): string {
+    return environment.innovationUrl;
+  }
+
+  getOwnerName(): string {
+    return this.project.owner.name || '';
   }
 
 

@@ -3,6 +3,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../models/innovation';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-synthesis-online',
@@ -23,7 +24,8 @@ export class SynthesisCompleteComponent implements OnInit {
 
   constructor(private translateTitleService: TranslateTitleService,
               private activatedRoute: ActivatedRoute,
-              private innovationService: InnovationService) { }
+              private innovationService: InnovationService,
+              private _authService: AuthService) { }
 
   ngOnInit() {
     this.translateTitleService.setTitle('SHARE.TITLE');
@@ -48,6 +50,10 @@ export class SynthesisCompleteComponent implements OnInit {
       }, () => {
         this.displaySpinner = false;
       });
+  }
+
+  get authService() {
+    return this._authService;
   }
 
 }
