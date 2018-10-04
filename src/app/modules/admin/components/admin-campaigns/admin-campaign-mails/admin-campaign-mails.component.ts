@@ -131,8 +131,9 @@ export class AdminCampaignMailsComponent implements OnInit {
 
   public addNuggetsToBatch(batchId: string) {
     this.nuggetsBatch = null;
-    this._campaignService.addNuggets(this._campaign._id, batchId).first().subscribe((result: any) => {
-      this._notificationsService.success('Nuggets ajoutés', `${result.number} pros à 80% ont été ajoutés.`);
+    this._campaignService.addNuggets(this._campaign._id, batchId).first().subscribe((batch: any) => {
+      this.stats.batches[this._getBatchIndex(batch._id)] = batch;
+      this._notificationsService.success('Nuggets ajoutés', `${batch.nuggetsPros} pros à 80% ont été ajoutés.`);
     });
   }
 
