@@ -120,7 +120,7 @@
 
           <!-- Project name -->
           <div class="body-wrapper">
-            <h1>{{ project.name }}</h1>
+            <h1>{{ project.innovationCards[currentInnovationIndex]?.title }}</h1>
             <h6 *ngIf="projectStatus === 'DONE'">{{ endDate | date }}</h6>
           </div>
 
@@ -152,8 +152,8 @@
 
           <!-- Column 1 -->
           <div class="summary-wrapper">
-            <h1 class="main-heading">{{ project.innovationCards[0].title }}</h1>
-            <div [innerHtml]="project.innovationCards[0].summary"></div>
+            <h1 class="main-heading">{{ project.innovationCards[currentInnovationIndex]?.title }}</h1>
+            <div [innerHtml]="project.innovationCards[currentInnovationIndex]?.summary"></div>
             <div class="img-wrapper">
               <img
                 [src]="getSrc()"
@@ -162,7 +162,7 @@
             </div>
             <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
             <ul class="advantage-wrapper">
-              <li *ngFor="let advantage of project.innovationCards[0].advantages;">
+              <li *ngFor="let advantage of project.innovationCards[currentInnovationIndex]?.advantages;">
                 {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
               </li>
             </ul>
@@ -171,13 +171,13 @@
           <!-- Column 2 -->
           <div class="issue-wrapper">
             <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
-            <div [innerHtml]="project.innovationCards[0].problem"></div>
+            <div [innerHtml]="project.innovationCards[currentInnovationIndex]?.problem"></div>
           </div>
 
           <!-- Column 3 -->
           <div class="solution-wrapper">
             <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
-            <div [innerHtml]="project.innovationCards[0].solution"></div>
+            <div [innerHtml]="project.innovationCards[currentInnovationIndex]?.solution"></div>
           </div>
 
         </div>
