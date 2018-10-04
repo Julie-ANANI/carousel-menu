@@ -96,7 +96,7 @@ const clientRoutes: Routes = [
         path: 'synthesis',
         children: [
           { path: '', component: SynthesisListComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-          { path: ':projectId/:userKey', component: SynthesisCompleteComponent, pathMatch: 'full', canActivate: [AuthGuard] }
+          { path: ':projectId/:shareKey', component: SynthesisCompleteComponent, pathMatch: 'full', canActivate: [AuthGuard] }
         ]
       },
       {

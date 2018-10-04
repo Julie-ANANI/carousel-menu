@@ -31,20 +31,23 @@ export class SynthesisCompleteComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params['projectId'];
       this.shareKey = params['shareKey'];
+      this.getProject();
     });
 
-    this.getProject();
   }
 
   private getProject() {
-    this.innovationService.getSharedSynthesis(this.projectId, this.shareKey).subscribe((response: any) => {
-      this.project = response;
-    }, () => {
-      this.displaySpinner = false;
-      this.notFound = true;
-    }, () => {
-      this.displaySpinner = false;
-    });
+    this.innovationService
+      .getSharedSynthesis(this.projectId, this.shareKey)
+      .first()
+      .subscribe((response: any) => {
+        this.project = response;
+      }, () => {
+        this.displaySpinner = false;
+        this.notFound = true;
+      }, () => {
+        this.displaySpinner = false;
+      });
   }
 
 }
