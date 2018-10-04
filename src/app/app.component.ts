@@ -19,11 +19,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<any> = new Subject();
 
-  displayLoader = false;
+  private _displayLoader = false;
 
   private _displayLoading = true; // to show spinner.
 
-  public notificationsOptions = {
+  notificationsOptions = {
     position: ['bottom', 'right'],
     timeOut: 2000,
     lastOnBottom: true,
@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
       // Bug corrigé avec setTimeout :
       // https://stackoverflow.com/questions/38930183/angular2-expression-has-changed-after-it-was-checked-binding-to-div-width-wi
       setTimeout((_: void) => {
-        this.displayLoader = isLoading;
+        this._displayLoader = isLoading;
       });
 
       this.initializeService();
@@ -92,12 +92,16 @@ export class AppComponent implements OnInit, OnDestroy {
     this.listenerService.setClickEvent(event);
   }
 
+  private initializeService() {
+    this.currentRouteService.setCurrentRoute(this.router.url);
+  }
+
   get displayLoading(): boolean {
     return this._displayLoading;
   }
 
-  private initializeService() {
-    this.currentRouteService.setCurrentRoute(this.router.url);
+  get displayLoader(): boolean {
+    return this._displayLoader;
   }
 
   ngOnDestroy() {

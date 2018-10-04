@@ -93,7 +93,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    */
   onSignInClick(event: Event) {
     event.preventDefault();
-    this.displaySignInForm = true;
+    this.displaySignInForm = !this.displaySignInForm;
   }
 
 

@@ -15,6 +15,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SharedLoaderModule } from './modules/shared/components/shared-loader/shared-loader.module';
 
 // Services
 import { InnovationService } from './services/innovation/innovation.service';
@@ -61,6 +62,7 @@ import { PresetResolver } from './resolvers/preset.resolver';
     AppRoutingModule,
     SimpleNotificationsModule.forRoot(),
     BrowserAnimationsModule,
+    SharedLoaderModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
