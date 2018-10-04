@@ -30,7 +30,7 @@ export class SynthesisCompleteComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params['projectId'];
-      this.shareKey = params['userKey'];
+      this.shareKey = params['shareKey'];
     });
 
     this.getProject();

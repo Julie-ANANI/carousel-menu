@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { Location } from '@angular/common';
 import { AuthService } from '../../../../services/auth/auth.service';
@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Template } from '../../../sidebar/interfaces/template';
 import { Subject } from 'rxjs/Subject';
 import { CurrentRouteService } from '../../../../services/frontend/current-route/current-route.service';
+import { ListenerService } from '../../../../services/frontend/listener/listener.service';
 
 @Component({
   selector: 'app-header',
@@ -15,15 +16,15 @@ import { CurrentRouteService } from '../../../../services/frontend/current-route
 
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  private _backOfficeValue: boolean; // if true then display back office menu options.
+  private _backOfficeValue: boolean; // if true, then display back office menu options.
 
   private _displayMenuOptions: boolean; // on small devices if true then display menu options.
 
-  displayHeader: boolean;
+  displayHeader: boolean; // if false, we are not showing header on login, signup and forget page.
 
-  formData: FormGroup;
+  formData: FormGroup; // for the user sign in form.
 
-  displaySignInForm = false;
+  displaySignInForm = false; // to toggle the display of sign if box.
 
   signUpSidebarTemplateValue: Template = {};
 
@@ -32,12 +33,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private _authService: AuthService,
               private _location: Location,
               private formBuilder: FormBuilder,
-              private currentRouteService: CurrentRouteService) { }
+              private currentRouteService: CurrentRouteService,
+              private listenerService: ListenerService) { }
 
   ngOnInit() {
+    /***
+     * this is to show and hide the header.
+     */
     this.currentRouteService.getCurrentRoute().subscribe((value) => {
      this.displayHeader = !(value === '/forget' || value === '/signup' || value === '/login');
-   });
+    });
+
+    /***
+     * this is to listen the click event.
+     */
+    this.listenerService.getClickEvent().subscribe((event: Event) => {
+      if (event.target['id'] !== 'header-signInForm' && event.target['parentNode']['id'] !== 'header-signInForm' && event.target['parentNode']['offsetParent']['id'] !== 'header-signInForm') {
+        this.displaySignInForm = false;
+      }
+    });
 
     this.buildForm();
 
@@ -46,18 +60,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this._backOfficeValue = false;
 
     this._backOfficeValue = this._location.path().slice(0, 6) === '/admin';
-  }
-
-  /***
-   * This is to listen the click event on the page.
-   */
-  @HostListener('mouseup', ['$event'])
-  onMouseUp() {
-
-    if (event.target['id'] !== 'signInForm' && event.target['parentNode']['id'] !== 'signInForm' && event.target['parentNode']['offsetParent']['id'] !== 'signInForm') {
-      this.displaySignInForm = false;
-    }
-
   }
 
   private buildForm() {

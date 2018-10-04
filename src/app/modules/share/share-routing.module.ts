@@ -3,12 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 /***
- *  Guards
- */
-import { NonAuthGuard } from '../../guards/non-auth-guard.service';
-
-
-/***
  * Components
  */
 import { SynthesisCompleteComponent } from './component/synthesis-complete/synthesis-complete.component';
@@ -19,9 +13,8 @@ const shareRoutes: Routes = [
   {
     path: '',
     component: ShareComponent,
-    canActivate: [NonAuthGuard],
     children: [
-      { path: 'synthesis/:projectId/:userKey',
+      { path: 'synthesis/:projectId/:shareKey',
         component: SynthesisCompleteComponent,
         pathMatch: 'full',
       },

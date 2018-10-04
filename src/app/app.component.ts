@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { AuthService } from './services/auth/auth.service';
 import { TranslateService, initTranslation } from './i18n/i18n';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/pairwise';
 import { NavigationEnd, Router } from '@angular/router';
 import { CurrentRouteService } from './services/frontend/current-route/current-route.service';
+import { ListenerService } from './services/frontend/listener/listener.service';
 
 @Component({
   selector: 'app-root',
@@ -38,12 +39,22 @@ export class AppComponent implements OnInit, OnDestroy {
               private loaderService: LoaderService,
               private translateNotificationsService: TranslateNotificationsService,
               private router: Router,
-              private currentRouteService: CurrentRouteService) {}
+              private currentRouteService: CurrentRouteService,
+              private listenerService: ListenerService) {}
 
   ngOnInit(): void {
     initTranslation(this.translateService);
 
-    this.routeCheck();
+    this.router.events.subscribe((event) => {
+      this.initializeService();
+
+      if (!(event instanceof NavigationEnd)) {
+        return;
+      }
+
+      window.scrollTo(0, 0);
+
+    });
 
     this.loaderService.isLoading$.takeUntil(this.ngUnsubscribe).subscribe((isLoading: boolean) => {
       // Bug corrigé avec setTimeout :
@@ -52,7 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.displayLoader = isLoading;
       });
 
-      this.currentRouteService.setCurrentRoute(this.router.url);
+      this.initializeService();
 
     });
 
@@ -73,21 +84,20 @@ export class AppComponent implements OnInit, OnDestroy {
 
   }
 
+  /***
+   * This is to listen the click event on the page.
+   */
+  @HostListener('mouseup', ['$event'])
+  onMouseUp() {
+    this.listenerService.setClickEvent(event);
+  }
+
   get displayLoading(): boolean {
     return this._displayLoading;
   }
 
-  private routeCheck() {
-    this.router.events.subscribe((event) => {
-      this.currentRouteService.setCurrentRoute(this.router.url);
-
-      if (!(event instanceof NavigationEnd)) {
-        return;
-      }
-
-      window.scrollTo(0, 0);
-
-    });
+  private initializeService() {
+    this.currentRouteService.setCurrentRoute(this.router.url);
   }
 
   ngOnDestroy() {
