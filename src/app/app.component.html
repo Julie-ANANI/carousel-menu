@@ -1,15 +1,7 @@
-<div *ngIf="displayLoading" class="spinner-wrapper">
-  <i class="fas fa-spinner fa-pulse fa-4x"></i>
-</div>
-
-
-<main *ngIf="!displayLoading" class="body-wrapper">
+<main class="body-wrapper">
 
   <simple-notifications [options]="notificationsOptions" class="hide-on-small-and-down"></simple-notifications>
   <!--<progress class="progress" max="100" *ngIf="displayLoader"></progress>-->
   <router-outlet></router-outlet>
 
 </main>
-
-
-

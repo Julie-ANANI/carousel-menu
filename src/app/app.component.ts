@@ -20,8 +20,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   displayLoader = false;
 
-  private _displayLoading = true; // to show spinner.
-
   public notificationsOptions = {
     position: ['bottom', 'right'],
     timeOut: 2000,
@@ -67,19 +65,11 @@ export class AppComponent implements OnInit, OnDestroy {
           (_: any) => {},
           (_: any) => this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
             timeOut: 0
-          }), () => {
-            setTimeout (() => {
-              this._displayLoading = false;
-            }, 400); // TODO: why is there 400 ms timeout before displaying the app ?
-          }
+          })
         );
       }
     }
 
-  }
-
-  get displayLoading(): boolean {
-    return this._displayLoading;
   }
 
   ngOnDestroy() {

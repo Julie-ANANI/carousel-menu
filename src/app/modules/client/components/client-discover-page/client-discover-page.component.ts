@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateService} from '@ngx-translate/core';
@@ -49,7 +50,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private _startInnoIndex: number; // starting index of the innovation.
 
-  private _endInnoIndex: number; // upto which index we have to show the innovation.
+  private _endInnoIndex = 20; // upto which index we have to show the innovation.
 
   config = {
     fields: 'created innovationCards tags status projectStatus',
@@ -65,10 +66,12 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   paginationValue: PaginationTemplate = {}; // to pass the value in the pagination component.
 
-  constructor(private translateTitleService: TranslateTitleService,
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
               private translateService: TranslateService,
-              private translateNotificationsService: TranslateNotificationsService) {}
+              private translateNotificationsService: TranslateNotificationsService
+              ) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.TITLE');
@@ -109,15 +112,15 @@ export class ClientDiscoverPageComponent implements OnInit {
     if yes then assign to the filterApplied attribute.
    */
   private storedFilters() {
-    const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
-
-    if (sessionValues.length > 0) {
-      this._filterApplied = sessionValues;
-    } else {
-      this._filterApplied = [];
+    if (isPlatformBrowser(this.platformId)) {
+      const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
+      if (sessionValues.length > 0) {
+        this._filterApplied = sessionValues;
+      } else {
+        this._filterApplied = [];
+      }
     }
-
-  }
+}
 
 
   /*
@@ -137,7 +140,10 @@ export class ClientDiscoverPageComponent implements OnInit {
  */
   private loadInnovations() {
     this._startInnoIndex = 0;
-    this._endInnoIndex = parseInt(localStorage.getItem('app-discover-limit'), 10) || 20;
+    if (isPlatformBrowser(this.platformId)) {
+      // TODO: this value have never been set anywhere
+      this._endInnoIndex = parseInt(localStorage.getItem('app-discover-limit'), 10) || 20;
+    }
 
     if (this._filterApplied.length > 0) {
       this._filterInnovations = [];
@@ -219,12 +225,6 @@ export class ClientDiscoverPageComponent implements OnInit {
     });
   }
 
-  /*private filterStatus(innovations: Array<Innovation>, value: string) {
-    this.filterInnovations = innovations.filter((items) => {
-      return items.status === value;
-    });
-  }*/
-
 
   private filterLang(innovations: Array<Innovation>, value: string) {
     this._filterInnovations = innovations.filter((items) => {
@@ -262,8 +262,7 @@ export class ClientDiscoverPageComponent implements OnInit {
       } else {
         rawTags.forEach((tag) => {
           if (tag.type === 'SECTOR') {
-            const index = this._tags.findIndex((item) => item._id === tag._id);
-            if (index === -1) {
+            if (this._tags.findIndex((item) => item._id === tag._id) === -1) {
               this._tags.push(tag);
             }
           }
@@ -427,7 +426,9 @@ export class ClientDiscoverPageComponent implements OnInit {
     here we are storing the filter values in the session storage.
    */
   private storeFilters() {
-    sessionStorage.setItem('discover-filters', JSON.stringify(this._filterApplied));
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.setItem('discover-filters', JSON.stringify(this._filterApplied));
+    }
   }
 
 
@@ -554,25 +555,6 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   }
 
-  /*  getStatusName(value: string): string {
-      if (value === 'DONE') {
-        if (this.currentLang === 'en') {
-          return 'Completed'
-        } else {
-          return 'Terminé'
-        }
-      }
-
-      if (value === 'EVALUATING') {
-        if (this.currentLang === 'en') {
-          return 'In progress'
-        } else {
-          return 'En cours'
-        }
-      }
-
-    }*/
-
 
   getLabelName(value: string): string {
     if (value) {
@@ -648,17 +630,17 @@ export class ClientDiscoverPageComponent implements OnInit {
   getLangName(value: string): string {
     if (value === 'en') {
       if (this.currentLang === 'en') {
-        return 'English'
+        return 'English';
       } else {
-        return 'Anglais'
+        return 'Anglais';
       }
     }
 
     if (value === 'fr') {
       if (this.currentLang === 'en') {
-        return 'French'
+        return 'French';
       } else {
-        return 'Français'
+        return 'Français';
       }
     }
 
@@ -737,18 +719,6 @@ export class ClientDiscoverPageComponent implements OnInit {
     this._innovationCards = value;
   }
 
-  get totalInnovations(): Array<Innovation> {
-    return this._totalInnovations;
-  }
-
-  get filterInnovations(): Array<Innovation> {
-    return this._filterInnovations;
-  }
-
-  get localInnovations(): Array<Innovation> {
-    return this._localInnovations;
-  }
-
   get displaySpinner(): boolean {
     return this._displaySpinner;
   }
@@ -781,14 +751,6 @@ export class ClientDiscoverPageComponent implements OnInit {
     return this._endLabelIndex;
   }
 
-  get applyFilterClicked(): boolean {
-    return this._applyFilterClicked;
-  }
-
-  get selectedLang(): string {
-    return this._selectedLang;
-  }
-
   get innovationDetails(): Array<{ text: string }> {
     return this._innovationDetails;
   }
@@ -800,162 +762,5 @@ export class ClientDiscoverPageComponent implements OnInit {
   get endInnoIndex(): number {
     return this._endInnoIndex;
   }
-
-  /*sortInnovations(innovations: any) {
-   this._innovationCards = innovations.sort((a: any, b: any) => {
-     const a1: any = new Date(a.created);
-     const b1: any = new Date(b.created);
-     return b1 - a1;
-   });
- }*/
-
-  /*  private checkFilter() {
-    const tempFilter: Array<{status: string}> = [];
-
-    // first we always check do we have status filter or not.
-    const tempStatusFilter = this.filterApplied.filter((item) => item.type === 'status');
-    if (tempStatusFilter.length > 0) {
-      for (let i = 0; i < tempStatusFilter.length; i++) {
-        tempFilter.push({status: tempStatusFilter[i].value});
-      }
-      this._config.search['$or'] = tempFilter;
-    } else {
-      this._config.search['$or'] = this.initialSearch;
-    }
-
-  }*/
-
-  /* this.totalInnovations.forEach((innovation) => {
-      const tempTypeFilter = this.filterApplied.filter((item) => item.type === 'type');
-        if (tempTypeFilter.length > 0) {
-          for (let i = 0; i < tempTypeFilter.length; i++) {
-            innovation.tags.forEach((tag) => {
-              const find = tempTypeFilter.findIndex((item) => item.value === tag.type);
-              if (find !== -1) {
-                this.filterInnovations.push(innovation);
-              }
-            });
-          }
-        }
-      });*/
-
-  /*innovation.tags.forEach((tag) => {
-      const index = findType.findIndex((item: any) => item.value === tag.type);
-      if (index !== -1) {
-        this.filterInnovations.push(innovation);
-      }
-    });*/
-
-  /* private typeFilter(innovations: Array<Innovation>, value: string) {
-    this.filterInnovations = innovations.filter((item) => {
-      return item.tags.findIndex((tag) => tag.type === value) !== -1;
-    });
-  }*/
-
-  /*
-    private displayLabelFilter() {
-    this.tagLabel = [];
-
-    this.tags.forEach((items) => {
-      const index = this.tagLabel.findIndex((item) => item.id === items._id);
-      if (index === -1) {
-        if (this.innovationsLang === 'en') {
-          this.tagLabel.push({'label': items.label.en, 'id': items._id});
-        } else {
-          this.tagLabel.push({'label': items.label.fr, 'id': items._id});
-        }
-      }
-    });
-
-    this.tagLabel.sort((a: any, b: any) => {
-      if (a.label < b.label) {
-        return -1;
-      }
-
-      if (a.label > b.label) {
-        return 1;
-      }
-
-      return 0
-
-    });
-
-  }
-   */
-
-  /*  private populateLang(innovation: Array<Innovation>) {
-    innovation.forEach((items) => {
-      items.innovationCards.forEach((inno) => {
-        const index = this.innoLang.findIndex((item) => item.lang === inno.lang);
-        if (index === -1) {
-          this.innoLang.push({'lang': inno.lang});
-        }
-      });
-    });
-
-    this.innoLang.sort((a: any, b: any) => {
-      if (a.lang < b.lang) {
-        return -1;
-      }
-
-      if (a.lang > b.lang) {
-        return 1;
-      }
-
-      return 0;
-
-    });
-
-    console.log(this.innoLang);
-
-  }*/
-  /* /!*
-   when the user starts typing the results we are start
-   filtering the innovation according to that.
-  *!/
- onSearchValue(event: string) {
-   console.log(event);
-
-
-   /!*if (event.value !== '') {
-     const searchInput = String(event.value).toLowerCase();
-     this._suggestionInnov = this.innovationDetails.filter((innovTitle) => {
-       return innovTitle.text.toLowerCase().includes(searchInput);
-     });
-   } else {
-     this.initialize();
-   }*!/
- }*/
-
-  /*
-  private populateTags(innovations: Array<Innovation>) {
-    this.tags = [];
-
-    innovations.forEach((innovations) => {
-      const index = this.filterApplied.findIndex((item) => item.type === 'type' || item.type === 'label' );
-
-      if (index !== -1) {
-        innovations.tags.forEach((tag) => {
-          const index = this.filterApplied.findIndex((item) => item.type === 'type' ? item.id === tag.type : item.id === tag._id);
-          if (index !== -1) {
-            this.tags.push(tag);
-          }
-        });
-      } else {
-        innovations.tags.forEach((tag) => {
-          const index = this.tags.findIndex((item) => item._id === tag._id);
-          if (index === -1) {
-            this.tags.push(tag);
-          }
-        });
-      }
-
-    });
-
-    this.populateLabels();
-
-  }
-
-   */
 
 }
