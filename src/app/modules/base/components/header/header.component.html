@@ -104,7 +104,7 @@
             </li>
 
             <!-- Client discover -->
-            <li class="navbar-item" *ngIf="!backOfficeValue && authService.adminLevel > 2">
+            <li class="navbar-item" *ngIf="!backOfficeValue">
               <a
                 [routerLink]="'/discover'"
                 routerLinkActive="active"
