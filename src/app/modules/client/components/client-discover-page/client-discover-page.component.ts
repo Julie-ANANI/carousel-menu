@@ -141,7 +141,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   private loadInnovations() {
     this._startInnoIndex = 0;
     if (isPlatformBrowser(this.platformId)) {
-      // TODO: this value have never been set anywhere
+      // set in pagination.component.ts
       this._endInnoIndex = parseInt(localStorage.getItem('app-discover-limit'), 10) || 20;
     }
 
