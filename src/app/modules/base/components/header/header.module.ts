@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sidebar-user-form.module';
+import { SharedLoaderModule } from '../../../shared/components/shared-loader/shared-loader.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { SidebarUserFormModule } from '../../../sidebar/components/user-form/sid
     FormsModule,
     ReactiveFormsModule,
     SidebarModule,
-    SidebarUserFormModule
+    SidebarUserFormModule,
+    SharedLoaderModule
   ],
   declarations: [
     HeaderComponent

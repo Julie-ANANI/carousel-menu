@@ -39,10 +39,7 @@ export class SynthesisCompleteComponent implements OnInit {
   }
 
   private getProject() {
-    this.innovationService
-      .getSharedSynthesis(this.projectId, this.shareKey)
-      .first()
-      .subscribe((response: any) => {
+    this.innovationService.getSharedSynthesis(this.projectId, this.shareKey).first().subscribe((response: any) => {
         this.project = response;
       }, () => {
         this.displaySpinner = false;

@@ -7,6 +7,9 @@ import { Template } from '../../../sidebar/interfaces/template';
 import { Subject } from 'rxjs/Subject';
 import { CurrentRouteService } from '../../../../services/frontend/current-route/current-route.service';
 import { ListenerService } from '../../../../services/frontend/listener/listener.service';
+import { User } from '../../../../models/user.model';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -30,11 +33,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   sidebarState = new Subject<string>();
 
+  signInProgress = false;
+
   constructor(private _authService: AuthService,
               private _location: Location,
               private formBuilder: FormBuilder,
               private currentRouteService: CurrentRouteService,
-              private listenerService: ListenerService) { }
+              private listenerService: ListenerService,
+              private translateNotificationsService: TranslateNotificationsService,
+              private router: Router) { }
 
   ngOnInit() {
     /***
@@ -52,6 +59,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.displaySignInForm = false;
       }
     });
+
+
+    /***
+     * If the user is authenticated we check the url to see if the user is trying to access
+     * the share component, if yes, then we redirect him.
+     */
+    if (this.authService.isAuthenticated) {
+      this.checkUrlToRedirect();
+    }
 
     this.buildForm();
 
@@ -123,6 +139,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
    * We get the data from the sign in form and login the user.
    */
   onSignInSubmit() {
+    if (this.formData.valid) {
+      const user = new User(this.formData.value);
+      user.domain = environment.domain;
+      this.authService.login(user).first().subscribe((response) => {
+        if (this.authService.isAuthenticated) {
+          this.checkUrlToRedirect();
+        }
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+        this.formData.get('password').reset();
+      });
+    } else {
+      if (this.formData.untouched && this.formData.pristine) {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+      }
+    }
+  }
+
+  private checkUrlToRedirect() {
+
+    if (this.router.url.includes('/share/synthesis/')) {
+      this.router.navigate([this.router.url.replace('/share/synthesis/', '/synthesis/')]);
+    }
 
   }
 

@@ -15,7 +15,7 @@
         <!-- if not authenticated -->
         <ng-container *ngIf="!authService.isAuthenticated">
           <div class="pad">
-            <button type="button" class="btn ghost-primary btn-xs" (click)="onSignInClick($event)" id="header-signInButton" [ngStyle]="{ 'margin-right': '.6rem' }">{{ 'SHARE.BUTTON.SIGN_IN' | translate }}</button>
+            <button type="button" class="btn ghost-primary btn-xs" (click)="onSignInClick($event)" [ngStyle]="{ 'margin-right': '.6rem' }">{{ 'SHARE.BUTTON.SIGN_IN' | translate }}</button>
             <button type="button" class="btn btn-primary btn-xs" (click)="onSignUpClick($event)">{{ 'SHARE.BUTTON.SIGN_UP' | translate }}</button>
           </div>
 
@@ -255,3 +255,11 @@
     (userSignUpData)="onSignUpSubmit($event)">
   </app-user-form>
 </app-sidebar>
+
+
+<!-- displaying spinner when the user sign in -->
+<ng-container *ngIf="signInProgress">
+  <div class="spinner-wrapper">
+    <app-shared-loader></app-shared-loader>
+  </div>
+</ng-container>
