@@ -10,6 +10,7 @@ import { ListenerService } from '../../../../services/frontend/listener/listener
 import { User } from '../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   selector: 'app-header',
@@ -33,15 +34,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   sidebarState = new Subject<string>();
 
-  signInProgress = false;
-
   constructor(private _authService: AuthService,
               private _location: Location,
               private formBuilder: FormBuilder,
               private currentRouteService: CurrentRouteService,
               private listenerService: ListenerService,
               private translateNotificationsService: TranslateNotificationsService,
-              private router: Router) { }
+              private router: Router,
+              private userService: UserService) { }
 
   ngOnInit() {
     /***
@@ -131,9 +131,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
    * @param {FormGroup} res
    */
   onSignUpSubmit(res: FormGroup) {
-
+    if (res.valid) {
+      const user = new User(res.value);
+      user.domain = environment.domain;
+      if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
+      } else {
+        this.userService.create(user).first().subscribe(() => {
+          this.authService.login(user).first().subscribe(() => {
+            this._location.back();
+          }, () => {
+            this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+          });
+        }, () => {
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');
+        });
+      }
+    } else {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
+    }
   }
-
 
   /***
    * We get the data from the sign in form and login the user.

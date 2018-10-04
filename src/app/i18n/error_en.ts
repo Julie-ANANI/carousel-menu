@@ -1,7 +1,10 @@
 export const ERROR = {
   'ERROR': 'Oups...',
+
   'SUCCESS': 'Success',
+
   'CANNOT_REACH': 'We are unable to reach the server at the moment. Please try again!',
+
   'FORM_ERROR': 'Form error',
 
   'PAGINATION': 'We are unable to fetch the results. Please change the value of \'Rows per page\'.',
@@ -12,11 +15,13 @@ export const ERROR = {
 
   'INVALID_FORM': 'There are errors in your form please correct them and try again.',
 
-  'INVALID_DOMAIN': 'Cannot create a super-admin account in this instance.',
+  'INVALID_DOMAIN': 'You are not allowed to create a super-admin account in this instance.',
 
   'INVALID_FORM_DATA': 'The email/password combination is not valid.',
 
   'PAGE_NOT_FOUND': 'Page could not be found.',
+
+  'ALREADY_EXIST': 'A user with this e-mail address is already registered in the system.',
 
   'FORM': {
     'PITCH_FORM': 'Please answer the fields of the pitch form.',

@@ -41,11 +41,6 @@ z-index: 8996;
 z-index: 7999;
 z-index: 7998;
 
-/*
-  share page login progress
- */
- z-index: 6999;
-
 
 // Rest z-index value depends on which we component we are using and what its priority.
 

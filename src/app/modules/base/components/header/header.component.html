@@ -255,11 +255,3 @@
     (userSignUpData)="onSignUpSubmit($event)">
   </app-user-form>
 </app-sidebar>
-
-
-<!-- displaying spinner when the user sign in -->
-<ng-container *ngIf="signInProgress">
-  <div class="spinner-wrapper">
-    <app-shared-loader></app-shared-loader>
-  </div>
-</ng-container>
