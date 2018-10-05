@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
-import { PaginationTemplate } from '../../../../models/pagination';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { environment } from '../../../../../environments/environment';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Share } from '../../../../models/share';
 
 @Component({
   selector: 'app-synthesis-list',
@@ -8,20 +11,16 @@ import { PaginationTemplate } from '../../../../models/pagination';
   styleUrls: ['./synthesis-list.component.scss']
 })
 
-export class SynthesisListComponent implements OnInit {
+export class SynthesisListComponent implements OnInit, OnDestroy {
 
-  private _sharedGraph: any = [];
+  private _subscriptions = Array<any>();
 
-  totalReports: Array<object> = [];
+  private _totalReports: any = [];
 
-  total: number;
+  private _displaySpinner = true;
 
-  reportsDetails: any = [];
-
-  displaySpinner = true;
-
-  config = {
-    fields: '',
+  private _config = {
+    fields: 'name,owner,principalMedia',
     limit: 10,
     offset: 0,
     search: {},
@@ -30,59 +29,101 @@ export class SynthesisListComponent implements OnInit {
     }
   };
 
-  paginationConfig: PaginationTemplate = {limit: this.config.limit, offset: this.config.offset};
-
-  constructor(private userService: UserService) { }
+  constructor( private userService: UserService,
+               private innovationService: InnovationService,
+               private translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-
     this.getUserReports();
-
-    this.displaySpinner = false;
-
-    /*this.userService.getSharedWithMe()
-      .first().subscribe(result => {
-        this._sharedGraph = result.sharedgraph || [];
-    }, err => {
-      console.log(err);
-    });*/
+    this._displaySpinner = false;
   }
 
   private getUserReports() {
-    this.userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
-      console.log(this.totalReports);
-      this.getDetails();
-      console.log(this.totalReports);
-    });
-  }
-
-  private getDetails() {
-
-  }
-
-  getRelevantLink() {
-
-  }
-
-  getMedia() {
-
+    this._subscriptions.push(this.userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
+      this._totalReports = reports.sharedgraph || [];
+      this.getSharedReports();
+    }));
   }
 
   /***
-   * This function is called when there is cha change in the pagination. We update the config and
-   * call the getUserReports().
-   * @param value
+   * This function is getting the shared reports of the user and we are
+   * pushing those to totalReports variable.
    */
-  configChange(value: any) {
-    window.scroll(0, 0);
-    this.paginationConfig = value;
-    this.config.limit = value.limit;
-    this.config.offset = value.offset;
-    this.getUserReports();
+  private getSharedReports() {
+    this._totalReports.forEach((info: Share) => {
+      this._subscriptions.push(this.innovationService.get(info.sharedObjectId, this.config).subscribe(result => {
+          const report: Share = {
+            name: result.name,
+            owner: result.owner,
+            media: result.principalMedia || null,
+            objectId: info.sharedObjectId,
+            sharedKey: info.sharedKey,
+            date: info.created // TODO use the share date instead...
+          };
+          report['link'] = `/synthesis/${report.objectId}/${report.sharedKey}`;
+          this._totalReports.push(report);
+        }, () => {
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+        })
+      );
+    });
   }
 
-  get sharedGraph(): any {
-    return this._sharedGraph;
+  /***
+   * Here we are getting the link.
+   * @param report
+   * @returns {string}
+   */
+  getRelevantLink(report: any): string {
+    if (report) {
+      return `${environment.clientUrl}${report.link}`;
+    } else {
+      return '#';
+    }
+  }
+
+  /***
+   * This function is to get the principal media of the innovation.
+   * @param report
+   * @returns {string}
+   */
+  getMedia(report: any) {
+    let src = 'https://res.cloudinary.com/umi/image/upload/app/no-image.png';
+
+    if (report.media && report.media.type === 'PHOTO') {
+      src = report.media.url;
+    }
+    return src;
+  }
+
+  get totalReports(): any {
+    return this._totalReports;
+  }
+
+  get displaySpinner(): boolean {
+    return this._displaySpinner;
+  }
+
+  get config(): { fields: string; limit: number; offset: number; search: {}; sort: { created: number } } {
+    return this._config;
+  }
+
+  get subscriptions(): any[] {
+    return this._subscriptions;
+  }
+
+  ngOnDestroy(): void {
+    this._cleanSubs();
+  }
+
+  /**
+   * Remove all subscriptions
+   * @private
+   */
+  private _cleanSubs() {
+    this._subscriptions.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 
 }

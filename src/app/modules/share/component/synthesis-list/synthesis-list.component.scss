@@ -15,4 +15,57 @@
     padding-top: 3.15rem;
   }
 
+  .report-wrapper {
+
+    .content-outer {
+      margin-bottom: 1.57rem;
+
+      .content {
+        display: inline-flex;
+        width: 100%;
+
+        img {
+          border-radius: .18rem;
+          width: 120px;
+          height: 100px;
+          margin-right: 1.2rem;
+          cursor: pointer;
+        }
+
+        img:hover {
+          box-shadow: $box-shadow-hover;
+        }
+
+        .report-description {
+          border-bottom: .06rem solid $border-color;
+          width: 100%;
+
+          span {
+            font-size: 1.4rem;
+          }
+
+          span:hover {
+            color: $primary-color;
+            cursor: pointer;
+          }
+
+          .date-text {
+            margin-top: 0.95rem;
+            font-size: 0.85rem;
+            color: $meta-color;
+            font-weight: 600;
+          }
+
+        }
+
+      }
+
+    }
+
+    .content-outer:last-child {
+      margin-bottom: 0;
+    }
+
+  }
+
 }
