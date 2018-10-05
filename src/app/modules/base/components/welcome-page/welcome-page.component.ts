@@ -46,7 +46,6 @@ export class WelcomePageComponent implements OnInit {
         this._authService.isConfirmed = true;
         this._router.navigate(['/project']);
       }, error => {
-        console.error(error);
         this._router.navigate(['/logout']);
       })
 

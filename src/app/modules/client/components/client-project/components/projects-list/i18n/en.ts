@@ -1,7 +1,7 @@
 export const PROJECTS_LIST = {
   'TITLE': 'My projects',
 
-  'ADD_PROJECT': 'Add project',
+  'ADD_PROJECT': 'Add Project',
 
   'DELETE_PROJECT_MODAL': {
     'TITLE': 'Are you sure?',

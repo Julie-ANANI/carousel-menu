@@ -11,8 +11,12 @@ export const ERROR = {
   'SERVER_ERROR': 'Nous rencontrons des problèmes lors de la connexion au serveur. Essayez de recharger la page à nouveau !',
 
   'INVALID_FORM': 'Des erreurs se sont glissées dans votre formulaire, corrigez-les et réessayez.',
+
   'INVALID_FORM_DATA': 'L\'e-mail ou le mot de passe n\'est pas valide.',
-  'INVALID_DOMAIN': 'On peut pas créer un compte super-admin dans cette instance.',
+
+  'INVALID_DOMAIN': 'Vous n\'êtes pas autorisé à créer un compte super-administrateur dans cette instance.',
+
+  'ALREADY_EXIST': 'Un utilisateur avec cette adresse e-mail est déjà enregistré dans le système.',
 
   'PAGE_NOT_FOUND': 'Pas de page par ici...',
 

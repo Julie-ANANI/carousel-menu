@@ -62,7 +62,7 @@
         </div>
 
         <!-- Filter view -->
-        <div class="filter-wrapper">
+        <div class="filter-wrapper" [ngStyle]="{ 'border-right': sharable ? 'none' : 'block' }">
           <p>{{ 'MARKET_REPORT.STICKY_BAR.FILTER' | translate }}</p>
           <ul>
             <li *ngFor="let fKey of objectKeys(filters)" (click)="deleteFilter(fKey, $event)">
@@ -72,7 +72,7 @@
         </div>
 
         <!-- Buttons -->
-        <div class="button-wrapper">
+        <div class="button-wrapper" [ngStyle]="{ 'display': sharable ? 'none' : 'inline-flex' }">
           <ng-container [ngSwitch]="adminSide">
             <ng-container *ngSwitchCase="true">
               <div class="preview-button-wrapper">
@@ -91,6 +91,11 @@
               <button class="btn btn-primary" [disabled]="disableButton === 'DONE'" (click)="confirmModal($event)">End project</button>
             </ng-container>
             <ng-container *ngSwitchCase="false">
+              <ng-container *ngIf="project.status === 'DONE'">
+                <button class="btn ghost-primary gtm-share-synthesis" (click)="shareSynthesis($event)">
+                  {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_SHARE' | translate }}
+                </button>
+              </ng-container>
               <!--<button class="btn ghost-primary">{{ 'MARKET_REPORT.STICKY_BAR.BUTTON_CSV' | translate }}</button>-->
               <button class="btn btn-primary gtm-print-synthesis" (click)="printSynthesis($event)">
                 {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_PRINT' | translate }}
@@ -115,7 +120,7 @@
 
           <!-- Project name -->
           <div class="body-wrapper">
-            <h1>{{ project.name }}</h1>
+            <h1>{{ project.innovationCards[currentInnovationIndex]?.title }}</h1>
             <h6 *ngIf="projectStatus === 'DONE'">{{ endDate | date }}</h6>
           </div>
 
@@ -147,8 +152,8 @@
 
           <!-- Column 1 -->
           <div class="summary-wrapper">
-            <h1 class="main-heading">{{ project.innovationCards[0].title }}</h1>
-            <div [innerHtml]="project.innovationCards[0].summary"></div>
+            <h1 class="main-heading">{{ project.innovationCards[currentInnovationIndex]?.title }}</h1>
+            <div [innerHtml]="project.innovationCards[currentInnovationIndex]?.summary"></div>
             <div class="img-wrapper">
               <img
                 [src]="getSrc()"
@@ -157,7 +162,7 @@
             </div>
             <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
             <ul class="advantage-wrapper">
-              <li *ngFor="let advantage of project.innovationCards[0].advantages;">
+              <li *ngFor="let advantage of project.innovationCards[currentInnovationIndex]?.advantages;">
                 {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
               </li>
             </ul>
@@ -166,13 +171,13 @@
           <!-- Column 2 -->
           <div class="issue-wrapper">
             <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
-            <div [innerHtml]="project.innovationCards[0].problem"></div>
+            <div [innerHtml]="project.innovationCards[currentInnovationIndex]?.problem"></div>
           </div>
 
           <!-- Column 3 -->
           <div class="solution-wrapper">
             <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
-            <div [innerHtml]="project.innovationCards[0].solution"></div>
+            <div [innerHtml]="project.innovationCards[currentInnovationIndex]?.solution"></div>
           </div>
 
         </div>

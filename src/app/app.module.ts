@@ -10,11 +10,12 @@ import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-transla
 import { Observable } from 'rxjs/Observable';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
-//import { Angular2FontawesomeModule } from 'angular2-fontawesome';
+// import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SharedLoaderModule } from './modules/shared/components/shared-loader/shared-loader.module';
 
 // Services
 import { InnovationService } from './services/innovation/innovation.service';
@@ -41,6 +42,8 @@ import { TemplatesService } from './services/templates/templates.service';
 import { TranslationService } from './services/translation/translation.service';
 import { FrontendService } from './services/frontend/frontend.service';
 import { PrintService } from './services/print/print.service';
+import { CurrentRouteService } from './services/frontend/current-route/current-route.service';
+import { ListenerService } from './services/frontend/listener/listener.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -59,6 +62,7 @@ import { PresetResolver } from './resolvers/preset.resolver';
     AppRoutingModule,
     SimpleNotificationsModule.forRoot(),
     BrowserAnimationsModule,
+    SharedLoaderModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -67,11 +71,11 @@ import { PresetResolver } from './resolvers/preset.resolver';
     }),
     ChartsModule,
     Ng2AutoCompleteModule,
-    //Angular2FontawesomeModule,
+    // Angular2FontawesomeModule,
     CookieModule.forRoot()
   ],
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   providers: [
     Title,
@@ -109,7 +113,9 @@ import { PresetResolver } from './resolvers/preset.resolver';
     TranslationService,
     TagsService,
     FrontendService,
-    PrintService
+    PrintService,
+    CurrentRouteService,
+    ListenerService
   ],
   bootstrap: [AppComponent]
 })
