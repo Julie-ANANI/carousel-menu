@@ -39,9 +39,9 @@ export const MARKET_REPORT = {
     'DETAIL_VIEW': 'Detail view',
     'FILTER': 'Filters',
     'BUTTON_CSV': 'Export CSV',
-    'BUTTON_PRINT': 'Print synthesis',
-    'BUTTON_ADMIN': 'Finalize synthesis',
-    'BUTTON_SHARE': 'Share synthesis'
+    'BUTTON_PRINT': 'Print Synthesis',
+    'BUTTON_ADMIN': 'Finalize Synthesis',
+    'BUTTON_SHARE': 'Share Synthesis'
   },
 
   'ANONYMOUS': 'Non Disclosed',
