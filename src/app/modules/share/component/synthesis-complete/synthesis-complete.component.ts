@@ -12,15 +12,16 @@ import { AuthService } from '../../../../services/auth/auth.service';
 })
 
 export class SynthesisCompleteComponent implements OnInit {
-  projectId: string;
 
-  shareKey: string;
+  private _projectId: string;
 
-  project: Innovation;
+  private _shareKey: string;
 
-  displaySpinner = true;
+  private _project: Innovation;
 
-  notFound = false;
+  private _displaySpinner = true;
+
+  private _notFound = false;
 
   constructor(private translateTitleService: TranslateTitleService,
               private activatedRoute: ActivatedRoute,
@@ -31,26 +32,49 @@ export class SynthesisCompleteComponent implements OnInit {
     this.translateTitleService.setTitle('SHARE.TITLE');
 
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = params['projectId'];
-      this.shareKey = params['shareKey'];
+      this._projectId = params['projectId'];
+      this._shareKey = params['shareKey'];
       this.getProject();
     });
 
   }
 
+  /***
+   * This function is to get the shared synthesis detail from the server.
+   */
   private getProject() {
-    this.innovationService.getSharedSynthesis(this.projectId, this.shareKey).first().subscribe((response: any) => {
-        this.project = response;
+    this.innovationService.getSharedSynthesis(this._projectId, this._shareKey).first().subscribe((response: any) => {
+        this._project = response;
       }, () => {
-        this.displaySpinner = false;
-        this.notFound = true;
+        this._displaySpinner = false;
+        this._notFound = true;
       }, () => {
-        this.displaySpinner = false;
+        this._displaySpinner = false;
       });
   }
 
   get authService() {
     return this._authService;
+  }
+
+  get projectId(): string {
+    return this._projectId;
+  }
+
+  get shareKey(): string {
+    return this._shareKey;
+  }
+
+  get project(): Innovation {
+    return this._project;
+  }
+
+  get displaySpinner(): boolean {
+    return this._displaySpinner;
+  }
+
+  get notFound(): boolean {
+    return this._notFound;
   }
 
 }

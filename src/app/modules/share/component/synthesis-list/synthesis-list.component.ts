@@ -1,27 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from "../../../../services/user/user.service";
-import { InnovationService } from "../../../../services/innovation/innovation.service";
-import { PaginationTemplate } from '../../../../models/pagination';
-import { environment } from "../../../../../environments/environment";
+import { UserService } from '../../../../services/user/user.service';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { environment } from '../../../../../environments/environment';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { Share } from '../../../../models/share';
 
 @Component({
   selector: 'app-synthesis-list',
   templateUrl: './synthesis-list.component.html',
   styleUrls: ['./synthesis-list.component.scss']
 })
+
 export class SynthesisListComponent implements OnInit {
 
-  private _sharedGraph: any = [];
+  private _totalReports: any = [];
 
-  totalReports: Array<object> = [];
+  private _displaySpinner = true;
 
-  total: number;
-
-  reportsDetails: any = [];
-
-  displaySpinner = true;
-
-  config = {
+  private _config = {
     fields: 'name,owner,principalMedia',
     limit: 10,
     offset: 0,
@@ -31,36 +27,65 @@ export class SynthesisListComponent implements OnInit {
     }
   };
 
-  paginationConfig: PaginationTemplate = {limit: this.config.limit, offset: this.config.offset};
-
-  constructor( private _userService: UserService,
-               private _innovationService: InnovationService ) { }
+  constructor( private userService: UserService,
+               private innovationService: InnovationService,
+               private translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-
     this.getUserReports();
-
-    this.displaySpinner = false;
+    this._displaySpinner = false;
   }
 
   private getUserReports() {
-    this._userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
-      this._sharedGraph = reports.sharedgraph || [];
-      this._getSharedObjectsInformation();
-
+    this.userService.getSharedWithMe().first().subscribe((reports: any) => {
+      this._totalReports = reports.sharedgraph;
+      this.getSharedReports();
     });
   }
 
-  public getRelevantLink(report: any): string {
-    if(report) {
+  /***
+   * This function is getting the shared reports of the user and we are
+   * pushing those to totalReports variable.
+   */
+  private getSharedReports() {
+    this._totalReports.forEach((info: any) => {
+      this.innovationService.get(info.sharedObjectId, this._config).subscribe(result => {
+        const report: Share = {
+          name: result.name,
+          owner: result.owner,
+          media: result.principalMedia || null,
+          objectId: info.sharedObjectId,
+          sharedKey: info.sharedKey,
+          date: info.created // TODO use the share date instead...
+        };
+        report['link'] = `/synthesis/${report.objectId}/${report.sharedKey}`;
+        this._totalReports.push(report);
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      });
+    });
+  }
+
+  /***
+   * Here we are getting the link.
+   * @param report
+   * @returns {string}
+   */
+  getRelevantLink(report: any): string {
+    if (report) {
       return `${environment.clientUrl}${report.link}`;
     } else {
-      return "#";
+      return '#';
     }
   }
 
+  /***
+   * This function is to get the principal media of the innovation.
+   * @param report
+   * @returns {string}
+   */
   getMedia(report: any) {
-    let src = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
+    let src = 'https://res.cloudinary.com/umi/image/upload/app/no-image.png';
 
     if (report.media && report.media.type === 'PHOTO') {
       src = report.media.url;
@@ -68,42 +93,16 @@ export class SynthesisListComponent implements OnInit {
     return src;
   }
 
-  /***
-   * This function is called when there is cha change in the pagination. We update the config and
-   * call the getUserReports().
-   * @param value
-   */
-  configChange(value: any) {
-    window.scroll(0, 0);
-    this.paginationConfig = value;
-    this.config.limit = value.limit;
-    this.config.offset = value.offset;
-    this.getUserReports();
+  get totalReports(): any {
+    return this._totalReports;
   }
 
-  private _getSharedObjectsInformation() {
-    this._sharedGraph.forEach((info:any)=>{
-      this._innovationService.get(info.sharedObjectId, this.config)
-        .subscribe(result=>{
-          let report = {
-            name: result.name,
-            owner: result.owner,
-            media: result.principalMedia || null,
-            objectId: info.sharedObjectId,
-            sharedKey: info.sharedKey,
-            date: info.created //TODO use the share date instead...
-          };
-          report['link'] = `/synthesis/${report.objectId}/${report.sharedKey}`;
-          this.totalReports.push(report);
-        }, err=>{
-          console.error(err); //TODO
-        });
-    });
-    console.log(this.totalReports);
+  get displaySpinner(): boolean {
+    return this._displaySpinner;
   }
 
-  get sharedGraph(): any {
-    return this._sharedGraph;
+  get config(): { fields: string; limit: number; offset: number; search: {}; sort: { created: number } } {
+    return this._config;
   }
 
 }
