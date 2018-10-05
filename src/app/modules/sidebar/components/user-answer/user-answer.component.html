@@ -137,7 +137,7 @@
     <!-- /User detail -->
 
     <!-- Tags section -->
-    <div *ngIf="modalAnswer.tags.length > 0" class="tag-wrapper">
+    <div *ngIf="modalAnswer?.tags.length > 0" class="tag-wrapper">
       <label class="form-label">Tag</label>
       <app-shared-tag-item
         [tags]="modalAnswer.tags"

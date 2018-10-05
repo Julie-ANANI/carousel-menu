@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from "../../../../services/user/user.service";
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   selector: 'app-synthesis-list',
@@ -10,17 +10,48 @@ export class SynthesisListComponent implements OnInit {
 
   private _sharedGraph: any = [];
 
-  public displaySpinner = false;
-  constructor( private _userService: UserService ) { }
+  totalReports: Array<object> = [];
+
+  reportsDetails: any = [];
+
+  displaySpinner = true;
+
+  config = {
+    fields: 'owner',
+    limit: 10,
+    offset: 0,
+    search: {},
+    sort: {
+      created: -1
+    }
+  };
+
+  constructor( private userService: UserService ) { }
 
   ngOnInit() {
-    this._userService.getSharedWithMe()
-      .first().subscribe(result=>{
+
+    this.getUserReports();
+
+    this.displaySpinner = false;
+
+    /*this.userService.getSharedWithMe()
+      .first().subscribe(result => {
         this._sharedGraph = result.sharedgraph || [];
-        console.log(this._sharedGraph);
-    }, err=>{
+    }, err => {
       console.log(err);
+    });*/
+  }
+
+  private getUserReports() {
+    this.userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
+      console.log(this.totalReports);
+      this.getDetails();
+      console.log(this.totalReports);
     });
+  }
+
+  private getDetails() {
+
   }
 
   get sharedGraph(): any {

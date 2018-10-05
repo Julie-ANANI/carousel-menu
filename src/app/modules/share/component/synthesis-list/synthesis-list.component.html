@@ -1,7 +1,43 @@
+<section class="section-container" id="synthesis-list">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+    <!-- No shared reports -->
+    <div *ngIf="totalReports && !totalReports.length" class="no-report-wrapper text-center">
+      <div class="bot-rect">
+        {{ 'SHARE.SYNTHESIS_LIST.BOT_TEXT' | translate }}
+      </div>
+      <br>
+      <img src="https://res.cloudinary.com/umi/image/upload/v1528795403/app/default-images/bot-triangle.svg" class="bot-trian">
+      <div>
+        <img src="https://res.cloudinary.com/umi/image/upload/v1532612435/app/default-images/bot-advice.svg" alt="Bot" class="bot-image">
+      </div>
+    </div>
+    <!-- /No shared reports -->
+
+
+    <!-- When reports -->
+    <ng-container *ngIf="totalReports && totalReports.length">
+
+      <!-- While fetching -->
+      <ng-container *ngIf="displaySpinner">
+        <div class="spinner-wrapper">
+          <app-shared-loader></app-shared-loader>
+        </div>
+      </ng-container>
+      <!-- /While fetching -->
+
+    </ng-container>
+    <!-- /When reports -->
+
+
+  </div>
+</section>
+
+<!--
 <section class="section-container" id="projects-list">
     <div class="column col-xs-12 col-11 col-mx-auto">
 
-        <!-- No project -->
+        &lt;!&ndash; No project &ndash;&gt;
         <div *ngIf="sharedGraph && !sharedGraph.length" class="no-project-wrapper text-center">
             <div class="bot-rect">
                 {{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.TITLE' | translate }}
@@ -14,24 +50,24 @@
                 <img src="https://res.cloudinary.com/umi/image/upload/v1532612435/app/default-images/bot-advice.svg" alt="Bot" class="bot-image">
             </div>
         </div>
-        <!-- /No project -->
+        &lt;!&ndash; /No project &ndash;&gt;
 
-        <!-- Projects -->
+        &lt;!&ndash; Projects &ndash;&gt;
         <ng-container *ngIf="sharedGraph && sharedGraph.length">
 
-            <!-- While fetching -->
-            <!--<div *ngIf="displaySpinner" class="spinner-wrapper">
+            &lt;!&ndash; While fetching &ndash;&gt;
+            &lt;!&ndash;<div *ngIf="displaySpinner" class="spinner-wrapper">
                 <app-shared-loader></app-shared-loader>
-            </div>-->
-            <!-- /While fetching -->
+            </div>&ndash;&gt;
+            &lt;!&ndash; /While fetching &ndash;&gt;
 
-            <!-- Complete fetching -->
+            &lt;!&ndash; Complete fetching &ndash;&gt;
             <ng-container *ngIf="!displaySpinner">
 
-                <!-- Projects list -->
+                &lt;!&ndash; Projects list &ndash;&gt;
                 <div class="project-wrapper">
                     <div *ngFor="let graph of sharedGraph" class="content-outer">
-                        <!--<div class="content">
+                        &lt;!&ndash;<div class="content">
                             <a [routerLink]="#"><img [src]=""  alt="Media"></a>
                             <div class="project-description">
                                 <a [routerLink]="getRelevantLink(project)">
@@ -45,12 +81,12 @@
                                     {{ project.collaborators.length }} {{ 'PROJECT_MODULE.COLLABORATORS' | translate }}
                                 </p>
                             </div>
-                        </div>-->
+                        </div>&ndash;&gt;
                     </div>
                 </div>
-                <!-- /Projects list -->
+                &lt;!&ndash; /Projects list &ndash;&gt;
 
-                <!-- Pagination
+                &lt;!&ndash; Pagination
                 <div class="pagination-wrapper">
                     <app-pagination
                             [configValue]="paginationConfig"
@@ -59,13 +95,13 @@
                             [propertyName]="'client-projects'">
                     </app-pagination>
                 </div>
-                <!-- /Pagination -->
+                &lt;!&ndash; /Pagination &ndash;&gt;
 
             </ng-container>
-            <!-- /Complete fetching -->
+            &lt;!&ndash; /Complete fetching &ndash;&gt;
 
         </ng-container>
-        <!-- /Projects -->
+        &lt;!&ndash; /Projects &ndash;&gt;
 
     </div>
-</section>
+</section>-->
