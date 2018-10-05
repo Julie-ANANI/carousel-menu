@@ -613,7 +613,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   getCompanyName(): string {
-    return environment.companyName;
+    return environment.companyShortName;
   }
 
   getInnovationUrl(): string {

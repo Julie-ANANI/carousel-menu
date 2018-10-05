@@ -44,6 +44,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private userService: UserService) { }
 
   ngOnInit() {
+
+    // for the temporary
+    const currentRoute = this.router.url;
+    this.displayHeader = !(currentRoute === '/forget' || currentRoute === '/signup' || currentRoute === '/login');
+
     /***
      * this is to show and hide the header.
      */

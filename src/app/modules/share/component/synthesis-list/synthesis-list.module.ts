@@ -4,13 +4,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SynthesisListComponent } from './synthesis-list.component';
 import { RouterModule } from '@angular/router';
 import { SharedLoaderModule } from '../../../shared/components/shared-loader/shared-loader.module';
+import { PaginationModule } from '../../../input/component/pagination/pagination.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
     RouterModule,
-    SharedLoaderModule
+    SharedLoaderModule,
+    PaginationModule
   ],
   declarations: [
     SynthesisListComponent

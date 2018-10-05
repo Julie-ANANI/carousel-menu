@@ -3,15 +3,15 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class CurrentRouteService {
-  currentRoute = new Subject<any>();
+  currentRoute = new Subject<string>();
 
   constructor() { }
 
-  setCurrentRoute(value: any) {
+  setCurrentRoute(value: string) {
     this.currentRoute.next(value);
   }
 
-  getCurrentRoute(): Subject<any> {
+  getCurrentRoute(): Subject<string> {
     return this.currentRoute;
   }
 
