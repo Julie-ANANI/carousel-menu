@@ -40,8 +40,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
   private getUserReports() {
     this._subscriptions.push(this.userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
-      this._totalReports = reports.sharedgraph || [];
-      this.getSharedReports();
+      this.getSharedReports(reports.sharedgraph || []);
     }));
   }
 
@@ -49,8 +48,8 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
    * This function is getting the shared reports of the user and we are
    * pushing those to totalReports variable.
    */
-  private getSharedReports() {
-    this._totalReports.forEach((info: Share) => {
+  private getSharedReports(recievedReports:any) {
+    recievedReports.forEach((info: Share) => {
       this._subscriptions.push(this.innovationService.get(info.sharedObjectId, this.config).subscribe(result => {
           const report: Share = {
             name: result.name,
