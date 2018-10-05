@@ -21,9 +21,12 @@ export class InnovationService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public get(id: string): Observable<Innovation> {
-    return this._http.get('/innovation/' + id)
-      .map((res: Response) => res.json())
+  public get(id: string, config?: any): Observable<Innovation> {
+    let request = this._http.get('/innovation/' + id);
+    if(config) {
+      request = this._http.get('/innovation/' + id, {params: config});
+    }
+    return request.map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
