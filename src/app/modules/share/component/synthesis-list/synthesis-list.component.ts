@@ -1,3 +1,8 @@
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import { UserService } from "../../../../services/user/user.service";
+import { InnovationService } from "../../../../services/innovation/innovation.service";
+import { PaginationTemplate } from '../../../../models/pagination';
+import { environment } from "../../../../../environments/environment";
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
@@ -12,6 +17,9 @@ import { Share } from '../../../../models/share';
 })
 
 export class SynthesisListComponent implements OnInit {
+export class SynthesisListComponent implements OnInit, OnDestroy {
+
+  private _subscriptions = Array<any>();
 
   private _totalReports: any = [];
 
@@ -37,10 +45,11 @@ export class SynthesisListComponent implements OnInit {
   }
 
   private getUserReports() {
-    this.userService.getSharedWithMe().first().subscribe((reports: any) => {
-      this._totalReports = reports.sharedgraph;
-      this.getSharedReports();
-    });
+    this._subscriptions.push(this._userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
+      this._sharedGraph = reports.sharedgraph || [];
+      this._getSharedObjectsInformation();
+
+    }));
   }
 
   /***
@@ -79,6 +88,28 @@ export class SynthesisListComponent implements OnInit {
     }
   }
 
+  private _getSharedObjectsInformation() {
+    this._sharedGraph.forEach((info:any)=>{
+      this._subscriptions.push(this._innovationService.get(info.sharedObjectId, this.config)
+        .subscribe(result=>{
+          let report = {
+            name: result.name,
+            owner: result.owner,
+            media: result.principalMedia || null,
+            objectId: info.sharedObjectId,
+            sharedKey: info.sharedKey,
+            date: info.created //TODO use the share date instead...
+          };
+          report['link'] = `/synthesis/${report.objectId}/${report.sharedKey}`;
+          this.totalReports.push(report);
+        }, err=>{
+          console.error(err); //TODO
+        })
+      );
+    });
+
+  }
+
   /***
    * This function is to get the principal media of the innovation.
    * @param report
@@ -103,6 +134,10 @@ export class SynthesisListComponent implements OnInit {
 
   get config(): { fields: string; limit: number; offset: number; search: {}; sort: { created: number } } {
     return this._config;
+  }
+
+  ngOnDestroy(): void {
+    this._cleanSubs();
   }
 
 }
