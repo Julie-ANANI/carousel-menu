@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from "../../../../services/user/user.service";
 import { InnovationService } from "../../../../services/innovation/innovation.service";
 import { PaginationTemplate } from '../../../../models/pagination';
+import { environment } from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-synthesis-list',
@@ -21,7 +22,7 @@ export class SynthesisListComponent implements OnInit {
   displaySpinner = true;
 
   config = {
-    fields: '',
+    fields: 'name,owner,principalMedia',
     limit: 10,
     offset: 0,
     search: {},
@@ -32,8 +33,6 @@ export class SynthesisListComponent implements OnInit {
 
   paginationConfig: PaginationTemplate = {limit: this.config.limit, offset: this.config.offset};
 
-  constructor(private userService: UserService) { }
-  public displaySpinner = false;
   constructor( private _userService: UserService,
                private _innovationService: InnovationService ) { }
 
@@ -42,35 +41,31 @@ export class SynthesisListComponent implements OnInit {
     this.getUserReports();
 
     this.displaySpinner = false;
-
-    /*this.userService.getSharedWithMe()
-      .first().subscribe(result => {
-        this._sharedGraph = result.sharedgraph || [];
-    }, err => {
-        this._getSharedObjectsInformation();
-    }, err=>{
-      console.log(err);
-    });*/
   }
 
   private getUserReports() {
-    this.userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
-      console.log(this.totalReports);
-      this.getDetails();
-      console.log(this.totalReports);
+    this._userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
+      this._sharedGraph = reports.sharedgraph || [];
+      this._getSharedObjectsInformation();
+
     });
   }
 
-  private getDetails() {
-
+  public getRelevantLink(report: any): string {
+    if(report) {
+      return `${environment.clientUrl}${report.link}`;
+    } else {
+      return "#";
+    }
   }
 
-  getRelevantLink() {
+  getMedia(report: any) {
+    let src = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
 
-  }
-
-  getMedia() {
-
+    if (report.media && report.media.type === 'PHOTO') {
+      src = report.media.url;
+    }
+    return src;
   }
 
   /***
@@ -88,13 +83,23 @@ export class SynthesisListComponent implements OnInit {
 
   private _getSharedObjectsInformation() {
     this._sharedGraph.forEach((info:any)=>{
-      this._innovationService.get(info.sharedObjectId, {fields:"name,owner,principalMedia"})
+      this._innovationService.get(info.sharedObjectId, this.config)
         .subscribe(result=>{
-          console.log(result);
+          let report = {
+            name: result.name,
+            owner: result.owner,
+            media: result.principalMedia || null,
+            objectId: info.sharedObjectId,
+            sharedKey: info.sharedKey,
+            date: info.created //TODO use the share date instead...
+          };
+          report['link'] = `/synthesis/${report.objectId}/${report.sharedKey}`;
+          this.totalReports.push(report);
         }, err=>{
-          console.error(err);
+          console.error(err); //TODO
         });
-    })
+    });
+    console.log(this.totalReports);
   }
 
   get sharedGraph(): any {

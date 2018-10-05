@@ -28,21 +28,20 @@
 
       <!-- Complete fetching  -->
       <ng-container *ngIf="!displaySpinner">
-
-        <!-- Report list -->
-        <div class="report-wrapper">
-          <div class="content-outer">
-            <div class="content">
-              <a><img [src]=""  alt="Media"></a>
-              <div class="report-description">
-                <a>
-                  <span></span>
-                </a>
-                <p class="date-text">{{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.A' | translate }} {{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.B' | translate }}</p>
+          <!-- Report list -->
+          <div class="report-wrapper">
+              <div *ngFor="let report of totalReports" class="content-outer">
+                  <div class="content">
+                      <a><img [src]="getMedia(report)"  alt="Media"></a>
+                      <div class="report-description">
+                          <a [href]="getRelevantLink(report)">
+                              <span>{{report.name}}</span>
+                          </a>
+                          <p class="date-text">{{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.A' | translate }} {{ report.owner.firstName + " " + report.owner.lastName }} {{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.B' | translate }} {{report.date }}</p>
+                      </div>
+                  </div>
               </div>
-            </div>
           </div>
-        </div>
         <!-- /Report list -->
 
         <!-- Pagination -->
