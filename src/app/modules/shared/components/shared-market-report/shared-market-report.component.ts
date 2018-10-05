@@ -19,8 +19,6 @@ import { Subject } from 'rxjs/Subject';
 import { FrontendService } from '../../../../services/frontend/frontend.service';
 import { ShareService } from '../../../../services/share/share.service';
 import { Share } from '../../../../models/share';
-// import {PrintService} from '../../../../services/print/print.service';
-// import * as FileSaver from "file-saver";
 
 @Component({
   selector: 'app-shared-market-report',
@@ -35,6 +33,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   @Input() adminMode: boolean;
 
   @Input() sharable = false;
+
+  spinnerDisplay = true;
 
   private _adminSide: boolean;
 
@@ -77,10 +77,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   private _showDetails = true;
 
-  private _innoid: string;
-
   public activeSection: string;
-  public today: Number;
+  // public today: Number;
   public objectKeys = Object.keys;
   public mapInitialConfiguration: {[continent: string]: boolean};
 
@@ -101,13 +99,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.isAdmin();
 
-    this.today = Date.now();
+    this.initializeReport();
 
-    this._innoid = this.project._id;
+    // this.today = Date.now();
 
-    this.currentInnovationIndex = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
+
 
     this.resetMap();
 
@@ -143,6 +140,37 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   }
 
+  private initializeReport() {
+    this.isAdminSide();
+    this.initializeInnovation();
+  }
+
+
+  /**
+   * This function is checking the are we on the admin side, and if yes than also
+   * checking the admin level.
+   */
+  private isAdminSide() {
+    this._adminSide = this.location.path().slice(0, 6) === '/admin';
+    this.adminMode = this.authService.adminLevel > 2;
+  }
+
+  /***
+   *This function is to initialize the variables regarding the innovation.
+   */
+  private initializeInnovation() {
+
+    /***
+     * here we are checking the lang of the user and according to that we display the innovation.
+     * @type {number}
+     */
+    this.currentInnovationIndex = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
+
+
+
+  }
+
+
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.scrollOn = window.scrollY !== 0;
@@ -157,11 +185,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     }
     return 0;
   };
-
-  isAdmin() {
-    this._adminSide = this.location.path().slice(0, 6) === '/admin';
-    this.adminMode = this.authService.adminLevel > 2;
-  }
 
   projectFinishDate() {
     const index = this.project.statusLogs.findIndex(action => action.action === 'FINISH');
@@ -181,7 +204,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   loadAnswers() {
-    this.answerService.getInnovationValidAnswers(this._innoid).first().subscribe((results) => {
+    this.answerService.getInnovationValidAnswers(this.project._id).first().subscribe((results) => {
       this._answers = results.answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
       });
@@ -211,7 +234,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   loadCampaign() {
-    this.innovationService.campaigns(this._innoid).first().subscribe((results) => {
+    this.innovationService.campaigns(this.project._id).first().subscribe((results) => {
       if (results && Array.isArray(results.result)) {
         this._campaignsStats = results.result.reduce(function(acc, campaign) {
           if (campaign.stats) {
@@ -286,7 +309,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   changeStatus(event: Event, status: 'DONE'): void {
     this._projectToBeFinished = false;
 
-    this.innovationService.updateStatus(this._innoid, status).first().subscribe((results) => {
+    this.innovationService.updateStatus(this.project._id, status).first().subscribe((results) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
       this._disableButton = results.status;
     }, (error) => {
@@ -311,11 +334,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
    this._previewMode =  this.project.previewMode = event.target['checked'] === true;
 
     if (event.target['checked']) {
-      this.innovationService.save(this._innoid, this.project).first().subscribe( (data) => {
+      this.innovationService.save(this.project._id, this.project).first().subscribe( (data) => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
       });
     } else {
-      this.innovationService.save(this._innoid, this.project).first().subscribe( (data) => {
+      this.innovationService.save(this.project._id, this.project).first().subscribe( (data) => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
       });
     }
@@ -512,6 +535,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   }
 
+  /***
+   * getting the current lang of the user.
+   * @returns {string}
+   */
+  get lang(): string {
+    return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
+  }
+
   get campaignStats() {
     return this._campaignsStats;
   }
@@ -564,17 +595,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this._modalAnswer = modalAnswer;
   }
 
-  get innoid(): string {
-    return this._innoid;
-  }
 
   get showDetails(): boolean {
     return this._showDetails;
   }
 
-  get lang(): string {
-    return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
-  }
+
 
   getLogo(): string {
     return environment.logoURL;
