@@ -6,8 +6,6 @@ import { Observable, throwError } from 'rxjs';
 import { tap, catchError, finalize, retry } from 'rxjs/operators';
 import { TranslateNotificationsService } from './notifications/notifications.service';
 
-export { Response } from '@angular/http';
-
 @Injectable()
 export class Http {
 

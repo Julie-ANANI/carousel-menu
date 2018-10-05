@@ -14,7 +14,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start": "ts-node ./src/server.ts"
+    "start": "ts-node ./server.ts"
   },
   "private": true,
   "dependencies": {

@@ -57,14 +57,21 @@ export class ClientDiscoverPageComponent implements OnInit {
     limit: 0,
     offset: 0,
     search: {
-      isPublic: 1
+      isPublic: 1,
+      '$or': [
+        {'status': 'EVALUATING'},
+        {'status': 'DONE'}
+      ]
     },
     sort: {
       created: -1
     }
   };
 
-  paginationValue: PaginationTemplate = {}; // to pass the value in the pagination component.
+  paginationValue: PaginationTemplate = {
+    limit: this.config.limit,
+    offset: this.config.offset
+  }; // to pass the value in the pagination component.
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private translateTitleService: TranslateTitleService,
@@ -75,13 +82,6 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.TITLE');
-
-    this.config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
-
-    this.paginationValue = {
-      limit: this.config.limit,
-      offset: this.config.offset
-    };
 
     this.getAllInnovations();
 
