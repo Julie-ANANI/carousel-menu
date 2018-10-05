@@ -38,27 +38,19 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   private _adminSide: boolean;
 
-  private _sidebarTemplateValue: Template = {};
-
-  scrollOn = false;
-
-  currentInnovationIndex = 0;
-
-  private _menuButton = false;
-
-  private _displayMenuWrapper = false;
-
-  editMode = new Subject<boolean>(); // this is for the admin side.
-
   private _previewMode: boolean;
 
-  private _disableButton: any;
+  private _currentInnovationIndex = 0;
 
-  private _projectToBeFinished: boolean;
+  private _answers: Array<Answer> = [];
 
-  private _endDate: Date;
+  private _filteredAnswers: Array<Answer> = [];
 
-  private _companies: Array<Clearbit>;
+  private _countries: Array<string> = [];
+
+  private _questions: Array<Question> = [];
+
+  private _cleaned_questions: Array<Question> = [];
 
   private _campaignsStats: {
     nbPros: number,
@@ -68,11 +60,24 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     nbValidatedResp: number
   };
 
-  private _questions: Array<Question> = [];
-  private _cleaned_questions: Array<Question> = [];
-  private _answers: Array<Answer> = [];
-  private _filteredAnswers: Array<Answer> = [];
-  private _countries: Array<string> = [];
+  private _modalAnswer: Answer = null;
+
+  private _sidebarTemplateValue: Template = {};
+
+  scrollOn = false;
+
+  private _menuButton = false;
+
+  private _displayMenuWrapper = false;
+
+  editMode = new Subject<boolean>(); // this is for the admin side.
+
+  private _projectToBeFinished: boolean;
+
+  private _endDate: Date;
+
+  private _companies: Array<Clearbit>;
+
   private _showListProfessional = true;
 
   private _showDetails = true;
@@ -84,7 +89,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   // modalAnswer : null si le modal est fermé,
   // égal à la réponse à afficher si le modal est ouvert
-  private _modalAnswer: Answer;
+
 
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
@@ -94,55 +99,43 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private authService: AuthService,
               private shareService: ShareService,
               public filterService: FilterService,
-              private frontendService: FrontendService) {
-    this.filterService.reset();
-  }
+              private frontendService: FrontendService) { }
 
   ngOnInit() {
-
+    this.filterService.reset();
     this.initializeReport();
-
-    // this.today = Date.now();
-
-
-
-    this.resetMap();
-
-    this.loadAnswers();
-
-    this.loadCampaign();
-
-    if (this.project.preset && this.project.preset.sections) {
-      this.project.preset.sections.forEach((section: Section) => {
-        this._questions = this._questions.concat(section.questions);
-      });
-
-      // remove spaces in questions identifiers.
-      this._cleaned_questions = this._questions.map((q) => {
-        const ret = JSON.parse(JSON.stringify(q));
-        // Please don't touch the parse(stringify()), this dereference q to avoid changing _questions list
-        // If changed, the answer modal won't have the good questions identifiers because _questions will be modified
-        ret.identifier = ret.identifier.replace(/\s/g, '');
-        return ret;
-      });
-
-    }
-
-    this._modalAnswer = null;
-
     PageScrollConfig.defaultDuration = 800;
+    // this.today = Date.now();
+  }
 
-    this._previewMode = this.project.previewMode;
+  ngAfterViewInit() {
+    const wrapper = document.getElementById('answer-wrapper');
 
-    this._disableButton = this.project.status;
-
-    this.projectFinishDate();
+    if (wrapper) {
+      const sections = Array.from(
+        wrapper.querySelectorAll('section')
+      );
+      window.onscroll = () => {
+        const scrollPosY = document.body.scrollTop;
+        const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
+        this.activeSection = section ? section.id : '';
+      };
+    }
 
   }
 
+  /***
+   * This function is calling all the initial functions.
+   */
   private initializeReport() {
+    this.spinnerDisplay = true;
     this.isAdminSide();
-    this.initializeInnovation();
+    this.initializeVariable();
+    this.getAnswers();
+    this.getCampaign();
+    this.resetMap();
+    this.presets();
+    this.spinnerDisplay = false;
   }
 
 
@@ -156,60 +149,41 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   /***
-   *This function is to initialize the variables regarding the innovation.
+   *This function is to initialize the variables regarding the innovation and the project.
    */
-  private initializeInnovation() {
+  private initializeVariable() {
 
     /***
-     * here we are checking the lang of the user and according to that we display the innovation.
+     * here we are registering the index of the lang of the user and according to that we display the innovation.
      * @type {number}
      */
-    this.currentInnovationIndex = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
+    this._currentInnovationIndex = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
 
+    /***
+     * this is to check, if the admin make the synthesis available before the status is Done.
+     * @type {boolean | undefined}
+     * @private
+     */
+    this._previewMode = this.project.previewMode || false;
 
+    /***
+     * to get the project end date.
+     */
+    this.projectEndDate();
 
   }
 
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    this.scrollOn = window.scrollY !== 0;
-
-    this._menuButton = (this.getCurrentScroll() > 150);
-
-  }
-
-  getCurrentScroll() {
-    if (typeof window.scrollY !== 'undefined' && window.scrollY >= 0) {
-      return window.scrollY;
-    }
-    return 0;
-  };
-
-  projectFinishDate() {
-    const index = this.project.statusLogs.findIndex(action => action.action === 'FINISH');
-    this._endDate = index === -1 ? null : this.project.statusLogs[index].date;
-  }
-
-  resetMap() {
-    this.mapInitialConfiguration = {
-      africa: true,
-      americaNord: true,
-      americaSud: true,
-      asia: true,
-      europe: true,
-      oceania: true,
-      russia: true
-    };
-  }
-
-  loadAnswers() {
+  /***
+   * This function is to fetch the answers from the server.
+   */
+  private getAnswers() {
     this.answerService.getInnovationValidAnswers(this.project._id).first().subscribe((results) => {
       this._answers = results.answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
       });
 
       this._filteredAnswers = this._answers;
+
       this.filterService.filtersUpdate.subscribe((_) => {
         this._filteredAnswers = this.filterService.filter(this._answers);
       });
@@ -227,13 +201,15 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
         return acc;
       }, []);
 
-    }, (error) => {
-      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
-
   }
 
-  loadCampaign() {
+  /***
+   * This function is to fetch the campaign from the server.
+   */
+  private getCampaign() {
     this.innovationService.campaigns(this.project._id).first().subscribe((results) => {
       if (results && Array.isArray(results.result)) {
         this._campaignsStats = results.result.reduce(function(acc, campaign) {
@@ -254,26 +230,78 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
         }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0});
       }
     }, (error) => {
-      this.translateNotificationsService.error('ERROR.ERROR', error.message);
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
-
   }
 
-  ngAfterViewInit() {
-    const wrapper = document.getElementById('answer-wrapper');
+  /***
+   * This function is to reset the map configuration.
+   */
+  private resetMap() {
+    this.mapInitialConfiguration = {
+      africa: true,
+      americaNord: true,
+      americaSud: true,
+      asia: true,
+      europe: true,
+      oceania: true,
+      russia: true
+    };
+  }
 
-    if (wrapper) {
-      const sections = Array.from(
-        wrapper.querySelectorAll('section')
-      );
-      window.onscroll = () => {
-        const scrollPosY = document.body.scrollTop;
-        const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
-        this.activeSection = section ? section.id : '';
-      };
+  /***
+   * This function will check the status log and find the status Finish, then we register that date
+   * and display to on the front page.
+   */
+  private projectEndDate() {
+    const index = this.project.statusLogs.findIndex(action => action.action === 'FINISH');
+    this._endDate = index === -1 ? null : this.project.statusLogs[index].date;
+  }
+
+  /***
+   * This function is to remove the spaces in the question identifiers.
+   */
+  private presets() {
+    if (this.project.preset && this.project.preset.sections) {
+      this.project.preset.sections.forEach((section: Section) => {
+        this._questions = this._questions.concat(section.questions);
+      });
+      // remove spaces in questions identifiers.
+      this._cleaned_questions = this._questions.map((q) => {
+        const ret = JSON.parse(JSON.stringify(q));
+        // Please don't touch the parse(stringify()), this dereference q to avoid changing _questions list
+        // If changed, the answer modal won't have the good questions identifiers because _questions will be modified
+        ret.identifier = ret.identifier.replace(/\s/g, '');
+        return ret;
+      });
     }
+  }
+
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.scrollOn = window.scrollY !== 0;
+
+    this._menuButton = (this.getCurrentScroll() > 150);
 
   }
+
+  getCurrentScroll() {
+    if (typeof window.scrollY !== 'undefined' && window.scrollY >= 0) {
+      return window.scrollY;
+    }
+    return 0;
+  };
+
+
+
+
+
+
+
+
+
+
 
   public filterByCountries(event: {countries: Array<string>, allChecked: boolean}): void {
     if (!event.allChecked) {
@@ -311,7 +339,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
     this.innovationService.updateStatus(this.project._id, status).first().subscribe((results) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
-      this._disableButton = results.status;
+      this.project = results;
     }, (error) => {
       this.translateNotificationsService.error('ERROR.ERROR', error.message);
     });
@@ -461,20 +489,20 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
     if (this.lang === 'en') {
 
-      subject = 'Results - ' + this.project.innovationCards[this.currentInnovationIndex].title;
+      subject = 'Results - ' + this.project.innovationCards[this._currentInnovationIndex].title;
 
       message = encodeURI('Hello,' + '\r\n' + '\r\n' + 'I invite you to discover the results of the market test carried out by ' + this.getCompanyName() + ' for the innovation ' +
-        this.project.innovationCards[this.currentInnovationIndex].title + '\r\n' + '\r\n' + 'Go on this link: ' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
+        this.project.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Go on this link: ' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
         'geographical location, person etc. ' + '\r\n' + '\r\n' + 'Cordially, ' + '\r\n' + '\r\n' + this.getOwnerName());
 
     }
 
     if (this.lang === 'fr') {
 
-      subject = 'Résultats - ' + this.project.innovationCards[this.currentInnovationIndex].title;
+      subject = 'Résultats - ' + this.project.innovationCards[this._currentInnovationIndex].title;
 
       message = encodeURI('Bonjour,' + '\r\n' + '\r\n' + 'Je vous invite à découvrir les résultats du test marché réalisé par ' + this.getCompanyName() + ' pour l\'innovation ' +
-      this.project.innovationCards[this.currentInnovationIndex].title + '\r\n' + '\r\n' + 'Allez sur ce lien: ' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
+      this.project.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Allez sur ce lien: ' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
         'emplacement géographique, personne etc. ' + '\r\n' + '\r\n' + 'Cordialement, ' + '\r\n' + '\r\n' + this.getOwnerName());
     }
 
@@ -490,11 +518,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     let src = '';
     const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
 
-    if (this.project.innovationCards[this.currentInnovationIndex].principalMedia && this.project.innovationCards[this.currentInnovationIndex].principalMedia.type === 'PHOTO') {
-      src = this.project.innovationCards[this.currentInnovationIndex].principalMedia.url;
+    if (this.project.innovationCards[this._currentInnovationIndex].principalMedia && this.project.innovationCards[this._currentInnovationIndex].principalMedia.type === 'PHOTO') {
+      src = this.project.innovationCards[this._currentInnovationIndex].principalMedia.url;
     } else {
-      const index = this.project.innovationCards[this.currentInnovationIndex].media.findIndex((media) => media.type === 'PHOTO');
-      src = index === -1 ? defaultSrc : this.project.innovationCards[this.currentInnovationIndex].media[index].url;
+      const index = this.project.innovationCards[this._currentInnovationIndex].media.findIndex((media) => media.type === 'PHOTO');
+      src = index === -1 ? defaultSrc : this.project.innovationCards[this._currentInnovationIndex].media[index].url;
     }
 
     if (src === '' || undefined) {
@@ -543,6 +571,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
   }
 
+  get currentInnovationIndex(): number {
+    return this._currentInnovationIndex;
+  }
+
+  get previewMode(): boolean {
+    return this._previewMode;
+  }
+
+  get filters(): {[questionId: string]: Filter} {
+    return this.filterService.filters;
+  }
+
   get campaignStats() {
     return this._campaignsStats;
   }
@@ -563,9 +603,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return this._answers;
   }
 
-  get filters(): {[questionId: string]: Filter} {
-    return this.filterService.filters;
-  }
+
 
   get filteredAnswers(): Array<Answer> {
     return this._filteredAnswers;
@@ -622,13 +660,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return this._displayMenuWrapper;
   }
 
-  get previewMode(): boolean {
-    return this._previewMode;
-  }
 
-  get disableButton(): any {
-    return this._disableButton;
-  }
 
   get projectToBeFinished(): boolean {
     return this._projectToBeFinished;

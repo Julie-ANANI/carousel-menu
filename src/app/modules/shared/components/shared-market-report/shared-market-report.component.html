@@ -1,5 +1,4 @@
-<section
-  class="section-container s-print"
+<section class="section-container s-print"
   id="market-report"
   [ngStyle]="{ 'background-color': (projectStatus !== 'DONE' && !adminSide && !previewMode) ? 'white' : '#F5F5F5' }">
 
@@ -83,12 +82,12 @@
                     id="previewMode"
                     (change)="toggleMode($event)"
                     [checked]="previewMode"
-                    [disabled]="disableButton === 'DONE'">
+                    [disabled]="project?.status === 'DONE'">
                   <i class="form-icon"></i>
                   Make it visible to client
                 </label>
               </div>
-              <button class="btn btn-primary" [disabled]="disableButton === 'DONE'" (click)="confirmModal($event)">End project</button>
+              <button class="btn btn-primary" [disabled]="project?.status === 'DONE'" (click)="confirmModal($event)">End project</button>
             </ng-container>
             <ng-container *ngSwitchCase="false">
               <ng-container *ngIf="project.status === 'DONE'">
