@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { UserService } from "../../../../services/user/user.service";
 import { InnovationService } from "../../../../services/innovation/innovation.service";
 import { PaginationTemplate } from '../../../../models/pagination';
@@ -9,7 +9,9 @@ import { environment } from "../../../../../environments/environment";
   templateUrl: './synthesis-list.component.html',
   styleUrls: ['./synthesis-list.component.scss']
 })
-export class SynthesisListComponent implements OnInit {
+export class SynthesisListComponent implements OnInit, OnDestroy {
+
+  private _subscriptions = Array<any>();
 
   private _sharedGraph: any = [];
 
@@ -44,11 +46,11 @@ export class SynthesisListComponent implements OnInit {
   }
 
   private getUserReports() {
-    this._userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
+    this._subscriptions.push(this._userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
       this._sharedGraph = reports.sharedgraph || [];
       this._getSharedObjectsInformation();
 
-    });
+    }));
   }
 
   public getRelevantLink(report: any): string {
@@ -83,7 +85,7 @@ export class SynthesisListComponent implements OnInit {
 
   private _getSharedObjectsInformation() {
     this._sharedGraph.forEach((info:any)=>{
-      this._innovationService.get(info.sharedObjectId, this.config)
+      this._subscriptions.push(this._innovationService.get(info.sharedObjectId, this.config)
         .subscribe(result=>{
           let report = {
             name: result.name,
@@ -97,13 +99,28 @@ export class SynthesisListComponent implements OnInit {
           this.totalReports.push(report);
         }, err=>{
           console.error(err); //TODO
-        });
+        })
+      );
     });
-    console.log(this.totalReports);
+
+  }
+
+  /**
+   * Remove all subscriptions
+   * @private
+   */
+  private _cleanSubs() {
+    this._subscriptions.forEach(sub=>{
+      sub.unsubscribe();
+    })
   }
 
   get sharedGraph(): any {
     return this._sharedGraph;
+  }
+
+  ngOnDestroy(): void {
+    this._cleanSubs();
   }
 
 }
