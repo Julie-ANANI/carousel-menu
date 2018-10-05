@@ -1,9 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import { UserService } from "../../../../services/user/user.service";
-import { InnovationService } from "../../../../services/innovation/innovation.service";
-import { PaginationTemplate } from '../../../../models/pagination';
-import { environment } from "../../../../../environments/environment";
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { environment } from '../../../../../environments/environment';
@@ -16,7 +11,6 @@ import { Share } from '../../../../models/share';
   styleUrls: ['./synthesis-list.component.scss']
 })
 
-export class SynthesisListComponent implements OnInit {
 export class SynthesisListComponent implements OnInit, OnDestroy {
 
   private _subscriptions = Array<any>();
@@ -45,10 +39,9 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
   }
 
   private getUserReports() {
-    this._subscriptions.push(this._userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
-      this._sharedGraph = reports.sharedgraph || [];
-      this._getSharedObjectsInformation();
-
+    this._subscriptions.push(this.userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
+      this._totalReports = reports.sharedgraph || [];
+      this.getSharedReports();
     }));
   }
 
@@ -57,21 +50,22 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
    * pushing those to totalReports variable.
    */
   private getSharedReports() {
-    this._totalReports.forEach((info: any) => {
-      this.innovationService.get(info.sharedObjectId, this._config).subscribe(result => {
-        const report: Share = {
-          name: result.name,
-          owner: result.owner,
-          media: result.principalMedia || null,
-          objectId: info.sharedObjectId,
-          sharedKey: info.sharedKey,
-          date: info.created // TODO use the share date instead...
-        };
-        report['link'] = `/synthesis/${report.objectId}/${report.sharedKey}`;
-        this._totalReports.push(report);
-      }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-      });
+    this._totalReports.forEach((info: Share) => {
+      this._subscriptions.push(this.innovationService.get(info.sharedObjectId, this.config).subscribe(result => {
+          const report: Share = {
+            name: result.name,
+            owner: result.owner,
+            media: result.principalMedia || null,
+            objectId: info.sharedObjectId,
+            sharedKey: info.sharedKey,
+            date: info.created // TODO use the share date instead...
+          };
+          report['link'] = `/synthesis/${report.objectId}/${report.sharedKey}`;
+          this._totalReports.push(report);
+        }, () => {
+          this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+        })
+      );
     });
   }
 
@@ -86,28 +80,6 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
     } else {
       return '#';
     }
-  }
-
-  private _getSharedObjectsInformation() {
-    this._sharedGraph.forEach((info:any)=>{
-      this._subscriptions.push(this._innovationService.get(info.sharedObjectId, this.config)
-        .subscribe(result=>{
-          let report = {
-            name: result.name,
-            owner: result.owner,
-            media: result.principalMedia || null,
-            objectId: info.sharedObjectId,
-            sharedKey: info.sharedKey,
-            date: info.created //TODO use the share date instead...
-          };
-          report['link'] = `/synthesis/${report.objectId}/${report.sharedKey}`;
-          this.totalReports.push(report);
-        }, err=>{
-          console.error(err); //TODO
-        })
-      );
-    });
-
   }
 
   /***
@@ -136,8 +108,22 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
     return this._config;
   }
 
+  get subscriptions(): any[] {
+    return this._subscriptions;
+  }
+
   ngOnDestroy(): void {
     this._cleanSubs();
+  }
+
+  /**
+   * Remove all subscriptions
+   * @private
+   */
+  private _cleanSubs() {
+    this._subscriptions.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 
 }
