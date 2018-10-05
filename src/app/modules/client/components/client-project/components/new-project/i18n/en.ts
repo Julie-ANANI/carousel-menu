@@ -4,7 +4,7 @@ export const NEW_PROJECT = {
     'LINE2': 'You will be able to translate it in another language later.'
   },
 
-  'BUTTON_TEXT': 'Create my project',
+  'BUTTON_TEXT': 'Create My Project',
 
   'COMPANY_NAME_LABEL': 'Give a name to your project',
   'PROJECT_NAME_PLACEHOLDER': 'Enter name of your project',

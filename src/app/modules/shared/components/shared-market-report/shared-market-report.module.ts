@@ -59,7 +59,7 @@ import { ProgressBarModule } from '../../../input/component/progress-bar/progres
     PiechartComponent,
     SharedMarketReportPopoverComponent,
     QuestionSectionComponent,
-    StarsComponent
+    StarsComponent,
   ],
   exports: [
     SharedMarketReportComponent

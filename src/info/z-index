@@ -44,6 +44,11 @@ z-index: 7998;
 
 // Rest z-index value depends on which we component we are using and what its priority.
 
+/*
+  share - sign in button
+*/
+z-index: 2;
+
 
 /*
   button

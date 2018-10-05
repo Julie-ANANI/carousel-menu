@@ -70,7 +70,7 @@ export const COMMON = {
   'FIRSTNAME': 'First Name',
   'LASTNAME': 'Last Name',
 
-  'EMAIL': 'E-mail',
+  'EMAIL': 'E-mail Address',
   'PHONE': 'Phone Number',
 
   'ACTIVITY_FIELDS': 'Activity Fields',
@@ -215,5 +215,11 @@ export const COMMON = {
     'BY_DOMAIN': 'Domain',
     'BY_CREATION_DATE': 'Date',
     'BY_UPDATE_DATE': 'Default'
+  },
+
+  'HEADER': {
+    'SHARED_REPORTS': 'Shared reports'
   }
+
+
 };

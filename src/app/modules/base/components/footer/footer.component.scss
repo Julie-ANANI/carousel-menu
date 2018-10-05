@@ -5,67 +5,49 @@
   font-size: 0.85rem;
   color: white;
 
-  .lang-wrapper {
+  .content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
 
-    .btn-lang {
-      background-color: white;
-      color: $dark-color;
-      padding: 0.4rem 0.7rem;
-      height: 3rem;
-      border-color: $meta-color;
-
-      i {
-        font-size: .8rem;
-        vertical-align: -10%;
-      }
-
+    .pad {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
     }
 
-    .icon-footer {
-      padding-left: 0.7rem;
-    }
-
-    .btn-group .btn:first-child:not(:last-child) {
-      border-radius: 0.25rem;
-    }
-
-    .menu {
-      min-width: 6.5rem;
-      border-radius: 0.25rem;
-      transition: all 0.15s ease;
-      text-align: left;
-    }
-
-    ul li {
-      margin-top: 0;
-      padding: 0.3rem;
+    .info {
+      transition: all 0.35s ease-in-out;
 
       a {
-        color: #333333;
+        color: white;
       }
 
       a:hover {
-        text-decoration: none;
+        text-decoration: underline;
         cursor: pointer;
-        color: $primary-color;
       }
 
     }
 
-  }
+    .lang {
 
-  .footer-hr {
-    margin-top: 3.15rem;
-    border: .5px solid white;
-    border-radius: .25rem;
-  }
+      .form-switch {
+        padding: 0;
+      }
 
-  .information-wrapper {
-    padding-top: 3.15rem;
-    transition: all 0.35s ease-in-out;
+      .form-select {
+        margin-top: 0;
+        min-width: 100px;
+        min-height: 2.8rem;
+        padding-top: .4375rem;
+        padding-bottom: .5rem;
+      }
 
-    a{
-      color: white;
+      .form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
+        border-color: $border-color;
+      }
+
     }
 
   }

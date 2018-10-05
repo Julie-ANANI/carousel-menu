@@ -49,12 +49,12 @@
               <span
                 class="form-error"
                 *ngIf="formData.get('email').touched">
-              <span *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
-              <span
-                *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">
-                {{ 'COMMON.INVALID.EMAIL' | translate }}
+                <span *ngIf="formData.get('email').hasError('required')">{{ 'COMMON.REQUIRED.EMAIL' | translate }}</span>
+                <span
+                  *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''">
+                  {{ 'COMMON.INVALID.EMAIL' | translate }}
+                </span>
               </span>
-            </span>
             </div>
             <div class="form-group">
               <label class="form-label">{{ 'COMMON.PASSWORD' | translate }}</label>

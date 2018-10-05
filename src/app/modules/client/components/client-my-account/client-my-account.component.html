@@ -56,11 +56,11 @@
 
             <!-- First name -->
             <div class="form-group">
-              <label class="form-label" for="firstName">{{ 'COMMON.FIRSTNAME' | translate }}</label>
+              <label class="form-label" for="accountFirstName">{{ 'COMMON.FIRSTNAME' | translate }}</label>
               <input
                 class="form-default"
                 formControlName="firstName"
-                id="firstName"
+                id="accountFirstName"
                 type="text"
                 placeholder="John">
               <div class="form-error" *ngIf="formData.get('firstName').touched && formData.get('firstName').invalid">
@@ -70,11 +70,11 @@
 
             <!-- Last name -->
             <div class="form-group">
-              <label class="form-label" for="lastName">{{ 'COMMON.LASTNAME' | translate }}</label>
+              <label class="form-label" for="accountLastName">{{ 'COMMON.LASTNAME' | translate }}</label>
               <input
                 class="form-default"
                 formControlName="lastName"
-                id="lastName"
+                id="accountLastName"
                 type="text"
                 placeholder="Doe">
               <div class="form-error" *ngIf="formData.get('lastName').touched && formData.get('lastName').invalid">
@@ -90,22 +90,22 @@
 
             <!-- Email -->
             <div class="form-group">
-              <label class="form-label" for="email">{{ 'COMMON.EMAIL' | translate }}</label>
+              <label class="form-label" for="accountEmail">{{ 'COMMON.EMAIL' | translate }}</label>
               <input
                 class="form-default"
                 formControlName="email"
-                id="email"
+                id="accountEmail"
                 type="email"
                 placeholder="john@catco.com">
             </div>
 
             <!-- Company -->
             <div class="form-group">
-              <label class="form-label" for="companyName">{{ 'COMMON.COMPANY' | translate }}</label>
+              <label class="form-label" for="accountCompanyName">{{ 'COMMON.COMPANY' | translate }}</label>
               <input
                 class="form-default"
                 formControlName="companyName"
-                id="companyName"
+                id="accountCompanyName"
                 type="text"
                 [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
             </div>
@@ -118,22 +118,22 @@
 
             <!-- Job -->
             <div class="form-group">
-              <label class="form-label" for="jobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
+              <label class="form-label" for="accountJobTitle">{{ 'COMMON.JOBTITLE' | translate }}</label>
               <input
                 class="form-default"
                 formControlName="jobTitle"
-                id="jobTitle"
+                id="accountJobTitle"
                 type="text"
                 [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
             </div>
 
             <!-- Country -->
             <div class="form-group">
-              <label class="form-label" for="country">{{ 'COMMON.COUNTRY' | translate }}</label>
+              <label class="form-label" for="accountCountry">{{ 'COMMON.COUNTRY' | translate }}</label>
               <input
                 class="form-default"
                 formControlName="country"
-                id="country"
+                id="accountCountry"
                 type="text"
                 [attr.placeholder]="'COMMON.COUNTRY_PLACEHOLDER' | translate"
                 (click)="onSuggestCountries()"
@@ -156,11 +156,11 @@
 
             <!-- Phone -->
             <div class="form-group">
-              <label class="form-label" for="phone">{{ 'COMMON.PHONE' | translate }}</label>
+              <label class="form-label" for="accountPhone">{{ 'COMMON.PHONE' | translate }}</label>
               <input
                 class="form-default"
                 formControlName="phone"
-                id="phone"
+                id="accountPhone"
                 type="tel"
                 placeholder="+33 55 90 56 876">
             </div>

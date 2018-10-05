@@ -29,7 +29,7 @@ import { NotFoundPageModule } from '../base/components/not-found-page/not-found-
 import { LogoutPageModule } from '../base/components/logout-page/logout-page.module';
 import { InputListModule } from '../input/component/input-list/input-list.module';
 import { SidebarInnovationPreviewModule } from '../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
-import {AdminDashboardModule} from './components/admin-dashboard/admin-dashboard.module';
+import { AdminDashboardModule } from './components/admin-dashboard/admin-dashboard.module';
 
 @NgModule({
   imports: [

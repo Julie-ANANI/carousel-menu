@@ -1,12 +1,15 @@
 <main class="body-wrapper">
 
-  <app-header *ngIf="authService.isAuthenticated"></app-header>
+  <!-- Header -->
+  <app-header></app-header>
 
+  <!-- Body -->
   <section class="main-wrapper">
     <router-outlet></router-outlet>
   </section>
 
-  <app-footer *ngIf="authService.isAuthenticated"></app-footer>
+  <!-- Footer -->
+  <app-footer></app-footer>
 
 </main>
 

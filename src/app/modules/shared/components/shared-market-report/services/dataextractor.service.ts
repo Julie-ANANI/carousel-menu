@@ -1,13 +1,13 @@
-import { ReportData } from "../models/report-data.model";
+import { ReportData } from '../models/report-data.model';
 
 const templateMapping = {
-  "radio": "typeB1",
-  "stars": "typeB2",
-  "list": "typeD",
-  "textArea": "typeD",
-  "checkbox": "typeB2",
-  "map": "typeA",
-  "overall": "typeE"
+  'radio': 'typeB1',
+  'stars': 'typeB2',
+  'list': 'typeD',
+  'textArea': 'typeD',
+  'checkbox': 'typeB2',
+  'map': 'typeA',
+  'overall': 'typeE'
 };
 
 
@@ -19,7 +19,7 @@ export class DataExtractor {
   }
 
   public hello() {
-    console.log("hello");
+    console.log('hello');
   }
 
   public printFiltered(data: any) {
@@ -28,7 +28,7 @@ export class DataExtractor {
 
   public updateData(data: ReportData) {
     this._data = data;
-    //Group the questions by type: this is for the sections
+    // Group the questions by type: this is for the sections
     const groupTypes = this._data.questions.reduce(function(groups, item){
         const val = item['controlType'];
         groups[val] = groups[val] || [];
@@ -36,9 +36,9 @@ export class DataExtractor {
         return groups;
       }, {});
     // We need to create all the sections and the answers
-    console.log(this._createRadioSections(groupTypes['radio']));
+    // console.log(this._createRadioSections(groupTypes['radio']));
     console.log(this._createStarSections(groupTypes['stars']));
-    //The map and the conclusions are handled differently
+    // The map and the conclusions are handled differently
   }
 
   /**
@@ -47,12 +47,12 @@ export class DataExtractor {
    * @private
    */
   private _selectLanguage(someObject: any) {
-    const toVerify = ['title','subtitle', 'label', 'options'];
-    toVerify.forEach(item=>{
-      if(someObject && someObject[item]) {
-        if(someObject[item] instanceof Array) {
-          someObject[item].forEach((subItem:any)=>{
-            subItem["label"] = subItem["label"][this._data.lang];
+    const toVerify = ['title', 'subtitle', 'label', 'options'];
+    toVerify.forEach(item => {
+      if (someObject && someObject[item]) {
+        if (someObject[item] instanceof Array) {
+          someObject[item].forEach((subItem: any) => {
+            subItem['label'] = subItem['label'][this._data.lang];
           });
         } else {
           someObject[item] = someObject[item][this._data.lang];
@@ -67,7 +67,7 @@ export class DataExtractor {
    * @private
    */
   private _getAllAnswersForQuestion(questionIdentifier: string): Array<any> {
-    return this._data.answers.map(answer=>{
+    return this._data.answers.map(answer => {
       return answer.answers[questionIdentifier];
     });
   }
@@ -78,12 +78,12 @@ export class DataExtractor {
    * @private
    */
   private _getAllCommentsForQuestion(questionIdentifier: string): Array<any> {
-    let result = Array<any>();
-    let comments = this._data.answers.map(answer=>{
+    const result = Array<any>();
+    const comments = this._data.answers.map(answer => {
       return answer.answers[questionIdentifier];
     });
-    comments.forEach((comment, index)=>{
-      if(comment) {
+    comments.forEach((comment, index) => {
+      if (comment) {
         result.push({
           comment: comment,
           professional: {
@@ -91,7 +91,7 @@ export class DataExtractor {
             displayName: `${this._data.answers[index].professional.firstName} ${this._data.answers[index].professional.lastName}`,
             jobTitle: this._data.answers[index].job,
             email: this._data.answers[index].professional.email,
-            company: this._data.answers[index].company ? this._data.answers[index].company.name || "" : ""
+            company: this._data.answers[index].company ? this._data.answers[index].company.name || '' : ''
           }
         })
       }
@@ -104,20 +104,20 @@ export class DataExtractor {
    * @param elements
    * @private
    */
-  private _createRadioSections(elements: any) {
+/*  private _createRadioSections(elements: any) {
     const sections = Array<any>();
-    elements.forEach((question: any)=>{
+    elements.forEach((question: any) => {
       sections.push(this._createOneRadioSection(question));
     });
     return sections;
-  }
+  }*/
 
   /**
    * Creates radio and radio only ONE section :)
    * @param question
    * @private
    */
-  private _createOneRadioSection(question: any) {
+/*  private _createOneRadioSection(question: any) {
     const answers = this._getAllAnswersForQuestion(question.identifier);
     this._selectLanguage(question);
     const data = {
@@ -125,12 +125,12 @@ export class DataExtractor {
       sectionConfig: question
     };
     data['sectionConfig'].barData = this._reduceRadioAnswers(answers);
-    data['sectionConfig'].conclusions = this._data.marketReport[question.identifier] || "";
+    data['sectionConfig'].conclusions = this._data.marketReport[question.identifier] || '';
     data['meta'] = {
       'strings': this._data.strings
     };
     return data;
-  }
+  }*/
 
   /**
    * Analyzes the star questions
@@ -139,7 +139,7 @@ export class DataExtractor {
    */
   private _createStarSections(elements: any) {
     const sections = Array<any>();
-    elements.forEach((question: any)=>{
+    elements.forEach((question: any) => {
       sections.push(this._createOneStarSection(question));
     });
     return sections;
@@ -152,19 +152,19 @@ export class DataExtractor {
    */
   private _createOneStarSection(question: any) {
     const answers = this._getAllAnswersForQuestion(question.identifier);
-    const comments = this._getAllCommentsForQuestion(question.identifier+"Comment");
+    const comments = this._getAllCommentsForQuestion(question.identifier + 'Comment');
     console.log(comments);
-    const nbValidAnswers = answers && answers.length ? answers.filter(ans=>{ return !!ans }).length : 0;
+    const nbValidAnswers = answers && answers.length ? answers.filter(ans => { return !!ans }).length : 0;
     this._selectLanguage(question);
     const data = {
       type: templateMapping['stars'],
       sectionConfig: question
     };
     data['sectionConfig'].barData = this._reduceStartAnswers(answers);
-    data['sectionConfig'].conclusions = this._data.marketReport[question.identifier] || "";
+    data['sectionConfig'].conclusions = this._data.marketReport[question.identifier] || '';
     data['sectionConfig'].meta = {
       answers: nbValidAnswers,
-      percentage: answers && answers.length ? Math.round((nbValidAnswers / answers.length)*100) : 0,
+      percentage: answers && answers.length ? Math.round((nbValidAnswers / answers.length) * 100) : 0,
       subtitle: question.subtitle,
       strings: this._data.strings
     };
@@ -176,23 +176,23 @@ export class DataExtractor {
    * @param data
    * @private
    */
-  private _reduceRadioAnswers(data: Array<string>): any {
-    const length = data.length - data.filter(val=>{return !val}).length;
-    return data.reduce((groups, item)=>{
+ /* private _reduceRadioAnswers(data: Array<string>): any {
+    const length = data.length - data.filter(val => {return !val}).length;
+    return data.reduce((groups, item) => {
       const val = item || '';
-      if(val) {
-        if(!groups[val]) {
+      if (val) {
+        if (!groups[val]) {
           groups[val] = {
             count: 0,
             absolutePercentage: 0.0
           };
         }
-        groups[val]["count"]++;
-        groups[val].absolutePercentage += 1.0/length;
+        groups[val]['count']++;
+        groups[val].absolutePercentage += 1.0 / length;
       }
       return groups;
     }, {});
-  }
+  }*/
 
   /**
    * This will reduce
@@ -200,27 +200,27 @@ export class DataExtractor {
    * @private
    */
   private _reduceStartAnswers(data: Array<any>) {
-    let notes = data.reduce((groups, item)=>{
-      //item is an object containing { "id": "value" }
+    const notes = data.reduce((groups, item) => {
+      // item is an object containing { "id": "value" }
       const val = item || '';
-      if(val) {
-        Object.keys(item).forEach((key)=>{
-          if(!groups[key]) {
+      if (val) {
+        Object.keys(item).forEach((key) => {
+          if (!groups[key]) {
             groups[key] = {
               count: 0,
               sum: 0,
               percentage: 0.0
             };
           }
-          groups[key]["count"]++;
-          groups[key]["sum"] += parseInt(item[key], 10) || 0;
+          groups[key]['count']++;
+          groups[key]['sum'] += parseInt(item[key], 10) || 0;
         });
       }
       return groups;
     }, {});
-    //Calculate the percentage
-    Object.keys(notes).forEach(item=>{
-      notes[item]["percentage"] = notes[item]["count"] > 0 ? Math.round(( notes[item]["sum"] / notes[item]["count"] ) * 20 ) : 0;
+    // Calculate the percentage
+    Object.keys(notes).forEach(item => {
+      notes[item]['percentage'] = notes[item]['count'] > 0 ? Math.round(( notes[item]['sum'] / notes[item]['count'] ) * 20 ) : 0;
     });
     return notes;
   }
