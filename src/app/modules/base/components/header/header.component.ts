@@ -44,6 +44,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private userService: UserService) { }
 
   ngOnInit() {
+
+    // for the temporary
+    const currentRoute = this.router.url;
+    this.displayHeader = !(currentRoute === '/forget' || currentRoute === '/signup' || currentRoute === '/login');
+
     /***
      * this is to show and hide the header.
      */
@@ -55,8 +60,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
      * this is to listen the click event.
      */
     this.listenerService.getClickEvent().subscribe((event: Event) => {
-      if (event.target['id'] !== 'header-signInForm' && event.target['parentNode']['id'] !== 'header-signInForm' && event.target['parentNode']['offsetParent']['id'] !== 'header-signInForm') {
-        this.displaySignInForm = false;
+      if (event) {
+        if (event.target['id'] !== 'header-signInForm' && event.target['parentNode']['id'] !== 'header-signInForm' && event.target['parentNode']['offsetParent']['id'] !== 'header-signInForm') {
+          this.displaySignInForm = false;
+        }
       }
     });
 

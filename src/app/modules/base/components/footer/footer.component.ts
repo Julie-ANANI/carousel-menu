@@ -3,6 +3,7 @@ import { initTranslation, TranslateService } from '../../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
 import { environment } from '../../../../../environments/environment';
 import { CurrentRouteService } from '../../../../services/frontend/current-route/current-route.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -22,9 +23,15 @@ export class FooterComponent implements OnInit {
 
   constructor (private translateService: TranslateService,
                private cookieService: CookieService,
-               private currentRouteService: CurrentRouteService) { }
+               private currentRouteService: CurrentRouteService,
+               private router: Router) { }
 
   ngOnInit(): void {
+
+    // for the temporary
+    const currentRoute = this.router.url;
+    this._displayFooter = !(currentRoute === '/forget' || currentRoute === '/signup' || currentRoute === '/login');
+
     this.currentRouteService.getCurrentRoute().subscribe((value) => {
       this._displayFooter = !(value === '/forget' || value === '/signup' || value === '/login');
     });

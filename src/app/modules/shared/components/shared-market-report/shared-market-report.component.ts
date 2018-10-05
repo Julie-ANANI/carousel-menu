@@ -438,7 +438,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
     if (this.lang === 'en') {
 
-      subject = 'Sharing the synthesis - ' + this.project.innovationCards[this.currentInnovationIndex].title;
+      subject = 'Results - ' + this.project.innovationCards[this.currentInnovationIndex].title;
 
       message = encodeURI('Hello,' + '\r\n' + '\r\n' + 'I invite you to discover the results of the market test carried out by ' + this.getCompanyName() + ' for the innovation ' +
         this.project.innovationCards[this.currentInnovationIndex].title + '\r\n' + '\r\n' + 'Go on this link: ' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
@@ -448,7 +448,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
     if (this.lang === 'fr') {
 
-      subject = 'Partager la synthèse - ' + this.project.innovationCards[this.currentInnovationIndex].title;
+      subject = 'Résultats - ' + this.project.innovationCards[this.currentInnovationIndex].title;
 
       message = encodeURI('Bonjour,' + '\r\n' + '\r\n' + 'Je vous invite à découvrir les résultats du test marché réalisé par ' + this.getCompanyName() + ' pour l\'innovation ' +
       this.project.innovationCards[this.currentInnovationIndex].title + '\r\n' + '\r\n' + 'Allez sur ce lien: ' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
@@ -613,7 +613,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   getCompanyName(): string {
-    return environment.companyName;
+    return environment.companyShortName;
   }
 
   getInnovationUrl(): string {
