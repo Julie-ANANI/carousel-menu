@@ -441,7 +441,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       subject = 'Results - ' + this.project.innovationCards[this.currentInnovationIndex].title;
 
       message = encodeURI('Hello,' + '\r\n' + '\r\n' + 'I invite you to discover the results of the market test carried out by ' + this.getCompanyName() + ' for the innovation ' +
-        this.project.innovationCards[this.currentInnovationIndex].title + '\r\n' + '\r\n' + 'Go on this link: ' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
+        this.project.innovationCards[this.currentInnovationIndex].title + ':' + '\r\n' + '\r\n' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
         'geographical location, person etc. ' + '\r\n' + '\r\n' + 'Cordially, ' + '\r\n' + '\r\n' + this.getOwnerName());
 
     }
@@ -451,7 +451,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       subject = 'Résultats - ' + this.project.innovationCards[this.currentInnovationIndex].title;
 
       message = encodeURI('Bonjour,' + '\r\n' + '\r\n' + 'Je vous invite à découvrir les résultats du test marché réalisé par ' + this.getCompanyName() + ' pour l\'innovation ' +
-      this.project.innovationCards[this.currentInnovationIndex].title + '\r\n' + '\r\n' + 'Allez sur ce lien: ' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
+      this.project.innovationCards[this.currentInnovationIndex].title + ':' + '\r\n' + '\r\n' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
         'emplacement géographique, personne etc. ' + '\r\n' + '\r\n' + 'Cordialement, ' + '\r\n' + '\r\n' + this.getOwnerName());
     }
 

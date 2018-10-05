@@ -48,7 +48,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
    * This function is getting the shared reports of the user and we are
    * pushing those to totalReports variable.
    */
-  private getSharedReports(recievedReports:any) {
+  private getSharedReports(recievedReports: any) {
     recievedReports.forEach((info: Share) => {
       this._subscriptions.push(this.innovationService.get(info.sharedObjectId, this.config).subscribe(result => {
           const report: Share = {
