@@ -1,6 +1,4 @@
-<section class="section-container s-print"
-  id="market-report"
-  [ngStyle]="{ 'background-color': (projectStatus !== 'DONE' && !adminSide && !previewMode) ? 'white' : '#F5F5F5' }">
+<section class="section-container s-print" id="market-report">
 
   <!-- Project status not done -->
   <ng-container *ngIf="projectStatus !== 'DONE' && !adminSide && !project.previewMode">

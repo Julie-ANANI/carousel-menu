@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
  */
 import { CommonService } from '../../../../services/common/common.service';
 import { FilterService } from './services/filters.service';
-import { DataExtractor } from './services/dataextractor.service';
 
 
 /***
@@ -60,8 +59,7 @@ import { SharedMarketComment2Component } from './components/professional-comment
   ],
   providers: [
     CommonService,
-    FilterService,
-    DataExtractor
+    FilterService
   ],
   declarations: [
     SharedMarketReportComponent,
