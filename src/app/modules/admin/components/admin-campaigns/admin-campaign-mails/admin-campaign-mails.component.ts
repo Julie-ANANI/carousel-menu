@@ -18,12 +18,14 @@ export class AdminCampaignMailsComponent implements OnInit {
   private _campaign: Campaign;
   private _quizLinks: Array<string> = [];
   private _stats: any = {};
+  public Math: any = Math;
   public mailsToSend = 0;
   public firstMail = 0;
   public secondMail = 0;
   public lastMail = 0;
   public testModal= false;
   public batchModal = false;
+  public nuggetsBatch: Batch = null;
   public newBatch: Batch;
   public dateformat = 'le dd/MM/yyyy à HH:mm';
   public selectedBatchToBeDeleted: any = null;
@@ -113,6 +115,25 @@ export class AdminCampaignMailsComponent implements OnInit {
         }
         this._notificationsService.success('Autobatch ON', 'Every pro in campaign just get batched');
       }
+    });
+  }
+
+  public setNuggets() {
+    this._campaignService.setNuggets(this._campaign._id).first().subscribe((result: Campaign) => {
+        this._campaign = result;
+        if (result.nuggets) {
+          this._notificationsService.success('Nuggets activés', 'Des pros à 80% seront incorporés.');
+        } else {
+          this._notificationsService.success('Nuggets désactivés', 'On utilisera uniquement des pros à 90%.');
+        }
+    });
+  }
+
+  public addNuggetsToBatch(batchId: string) {
+    this.nuggetsBatch = null;
+    this._campaignService.addNuggets(this._campaign._id, batchId).first().subscribe((batch: any) => {
+      this.stats.batches[this._getBatchIndex(batch._id)] = batch;
+      this._notificationsService.success('Nuggets ajoutés', `${batch.nuggetsPros} pros à 80% ont été ajoutés.`);
     });
   }
 
@@ -369,7 +390,7 @@ export class AdminCampaignMailsComponent implements OnInit {
   public getContentWorkflowStep(batchID: any, step: any): any {
     const index = this._getBatchIndex(batchID);
     const workflowname = this.getWorkflowName(index);
-    const content = {en: '', fr: ''}
+    const content = {en: '', fr: ''};
     this.campaign.settings.emails.forEach( mail => {
       if (mail.step === step && workflowname === mail.nameWorkflow) {
        if (mail.language === 'en') {
@@ -414,7 +435,6 @@ export class AdminCampaignMailsComponent implements OnInit {
   get defaultWorkflow() { return  this._campaign.settings.defaultWorkflow }
   get quizGenerated() { return (this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ''); }
   get campaign() { return this._campaign }
-  get quizLinks() {return this._quizLinks }
   get stats() {return this._stats }
 
   public tableBatch(index: number) { return this._tableBatch[index] }

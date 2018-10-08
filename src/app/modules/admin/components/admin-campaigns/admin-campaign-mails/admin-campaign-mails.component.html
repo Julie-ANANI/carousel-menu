@@ -40,7 +40,11 @@
     </button>
     <label class="form-switch">
       <input type="checkbox" (change)="AutoBatch()" [ngModel]="campaign.autoBatch" [disabled] = "!readyAutoBatch" >
-      <i class="form-icon"></i>
+      <i class="form-icon"></i> Autobatch
+    </label>
+    <label class="form-switch">
+      <input type="checkbox" (change)="setNuggets()" [ngModel]="campaign.nuggets" [disabled] = "!readyAutoBatch" >
+      <i class="form-icon"></i>Méthode nuggets
     </label>
     <ul>
       <li *ngIf="!quizGenerated"> Quizz manquant </li>
@@ -62,6 +66,14 @@
           <span *ngIf="this.poubelle(batch)">
             <a class="c-hand" role="button" (click)="(removeOK(batch)) && $event.preventDefault()">
               <i class="fas fa-trash"></i>
+            </a>
+          </span>
+          <span *ngIf="batch.nuggets">
+            <i class="fas fa-crow"></i>
+          </span>
+          <span *ngIf="!batch.nuggets && batch.status === 0">
+            <a class="c-hand" role="button" (click)="nuggetsBatch = batch">
+              <i class="fas fa-plus-circle"></i>
             </a>
           </span>
         <label class="form-switch" style="float:right">
@@ -159,6 +171,26 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-primary" (click)="(testModal = null) && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL : ajout de nuggets -->
+<div class="modal" [ngClass]="{'active': nuggetsBatch}">
+  <div class="modal-overlay" (click)="(nuggetsBatch = null) && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="(nuggetsBatch = null) && $event.preventDefault()"></button>
+      <div class="modal-title h5">Ajout de pros 'nuggets'</div>
+    </div>
+    <div class="modal-body">
+      <p *ngIf="nuggetsBatch">Êtes-vous sûr de vouloir ajouter {{this.Math.round(nuggetsBatch.size / 10)}} pros à 80% dans ce batch ?</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="addNuggetsToBatch(nuggetsBatch._id)">Ajouter</button>
+      <button class="btn btn-link" (click)="(nuggetsBatch = null) && $event.preventDefault()">
         {{ 'COMMON.CANCEL' | translate }}
       </button>
     </div>
