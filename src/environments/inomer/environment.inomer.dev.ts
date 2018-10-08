@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://dev.umi.us/api',
+  clientUrl: 'https://dev-inomer.umi.us',
   companyName: 'INOMER',
   companyShortName: 'INOMER',
   domain: 'vendor1',
@@ -8,5 +9,7 @@ export const environment = {
   companyURL: 'imr.inomer.fr',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/logo-inomer.png',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1529571635/whitelabel/inomer/logo-inomer-wbg.png',
-  background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg'
+  background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg',
+  secureCookie: true,
+  cookieTime: 48 * 3600 * 1000
 };

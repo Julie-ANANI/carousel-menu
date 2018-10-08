@@ -59,32 +59,28 @@ export class SignupPageComponent implements OnInit {
   onSubmit(res: FormGroup) {
     if (res.valid) {
       const user = new User(res.value);
-
       user.domain = environment.domain;
-
       if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
-      }else {
+      } else {
         this.userService.create(user).pipe(first()).subscribe((_: any) => {
             this.authService.login(user).pipe(first()).subscribe(
               (_res: any) => {
                 this.location1.back();
               },
               (error: any) => {
-                this.translateNotificationsService.error('ERROR.ERROR', error.message);
+                this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
               }
             );
           },
           (error: any) => {
-            this.translateNotificationsService.error('ERROR.ERROR', error.message);
+            this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');
           }
         );
       }
-    }
-    else {
+    } else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
-
   }
 
   onSignUpClick(event: Event) {

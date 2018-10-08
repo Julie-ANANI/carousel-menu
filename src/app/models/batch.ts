@@ -13,6 +13,7 @@ export interface Batch {
   size: number,
   status?: number,
   active: boolean,
+  nuggets?: Boolean,
   stats?: [{
     delivered: number,
     opened: number,

@@ -39,11 +39,12 @@ export class SidebarComponent implements OnInit {
     this.setTemplate(value);
   };
 
-  @Output() closeSidebar = new EventEmitter<string>();
+  @Output() closeSidebar = new EventEmitter<Template>();
 
   title: string; // Sidebar heading
   state: string; // Animation state
   size: string; // Sidebar size
+  type: string; // Sidebar type
 
   constructor() {}
 
@@ -55,15 +56,16 @@ export class SidebarComponent implements OnInit {
     this.state = value.animate_state;
     this.title = value.title;
     this.size = value.size;
+    this.type = value.type;
   }
 
   toggleState(event: Event, target: any) {
     if (event.target['id'] === 'sidebar-wrapper' || event.target['id'] === 'close') {
       this.state = 'inactive';
-      this.closeSidebar.emit(this.state);
+      this.closeSidebar.emit({animate_state: this.state, title: this.title, type: this.type});
       setTimeout(() => {
         target.scrollIntoView();
-      }, 500);
+      }, 300);
     }
   }
 

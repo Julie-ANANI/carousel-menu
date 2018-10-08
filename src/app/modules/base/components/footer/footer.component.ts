@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { initTranslation, TranslateService } from '../../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
 import { environment } from '../../../../../environments/environment';
+import { CurrentRouteService } from '../../../../services/frontend/current-route/current-route.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -12,44 +14,96 @@ import { environment } from '../../../../../environments/environment';
 export class FooterComponent implements OnInit {
 
   private _companyName: string = environment.companyName;
-  private _displayLangChoices: boolean; // to toggle the lang button
 
-  constructor (private _translateService: TranslateService,
-               private _cookieService: CookieService) {
-  }
+  private _langs: Array<string>;
+
+  private _currentLang: string;
+
+  private _displayFooter: boolean;
+
+  constructor (private translateService: TranslateService,
+               private cookieService: CookieService,
+               private currentRouteService: CurrentRouteService,
+               private router: Router) { }
 
   ngOnInit(): void {
-    initTranslation(this._translateService);
-    this._displayLangChoices = false;
+
+    // for the temporary
+    const currentRoute = this.router.url;
+    this._displayFooter = !(currentRoute === '/forget' || currentRoute === '/signup' || currentRoute === '/login');
+
+    this.currentRouteService.getCurrentRoute().subscribe((value) => {
+      this._displayFooter = !(value === '/forget' || value === '/signup' || value === '/login');
+    });
+
+    initTranslation(this.translateService);
+
+    this.lang();
+
   }
 
-  public checkIsMainDomain(): boolean {
-    return environment.domain === 'umi';
+  private lang () {
+    this._langs = this.translate.getLangs();
+    this._currentLang = this.translateService.currentLang;
   }
 
-  public propagateTranslation(lang: string) {
-    this._cookieService.put('user_lang', lang || 'en');
+  /***
+   * This is to change the lang, it is called when the user select an option.
+   * @param event
+   */
+  changeLanguage(event: any) {
+    if (event.target.value === 'French') {
+      this.propagateTranslation('fr');
+      this._currentLang = 'fr';
+    } else {
+      this.propagateTranslation('en');
+      this._currentLang = 'en';
+    }
+  }
+
+  /***
+   * Setting the lang and the cookie.
+   * @param {string} lang
+   */
+  private propagateTranslation(lang: string) {
+    this.cookieService.put('user_lang', lang || 'en');
     this.translate.use(lang || 'en');
+  }
+
+  checkIsMainDomain(): boolean {
+    return environment.domain === 'umi';
   }
 
   get companyName(): string {
     return `${ this._companyName } ${ this.checkIsMainDomain() ? '' : ' by United Motion Ideas' }`;
   }
 
+  getLogo(): string {
+    return environment.logoURL;
+  }
+
   get translate(): TranslateService {
-    return this._translateService;
+    return this.translateService;
   }
 
   get copyrightDate(): string {
     return (new Date()).getFullYear().toString();
   }
 
-  set displayLangChoices(value: boolean) {
-    this._displayLangChoices = value;
+  get langs(): Array<string> {
+    return this._langs;
   }
 
-  get displayLangChoices(): boolean {
-    return this._displayLangChoices;
+  get currentLang(): string {
+    return this._currentLang;
+  }
+
+  set currentLang(value: string) {
+    this._currentLang = value;
+  }
+
+  get displayFooter(): boolean {
+    return this._displayFooter;
   }
 
 }

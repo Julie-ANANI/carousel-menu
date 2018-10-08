@@ -8,9 +8,9 @@ import { SharedMarketReportExampleComponent } from '../shared/components/shared-
 import { clientProjectRoutes } from './components/client-project/client-project-routing.module';
 
 /* Guards */
-import { AuthGuard } from '../../auth-guard.service';
-import { NonAuthGuard } from '../../non-auth-guard.service';
-import { PendingChangesGuard } from '../../pending-changes-guard.service';
+import { AuthGuard } from '../../guards/auth-guard.service';
+import { NonAuthGuard } from '../../guards/non-auth-guard.service';
+import { PendingChangesGuard } from '../../guards/pending-changes-guard.service';
 
 /* Components */
 import { ClientComponent } from './client.component';
@@ -24,6 +24,8 @@ import { LogoutPageComponent } from '../base/components/logout-page/logout-page.
 import { SignupPageComponent } from '../base/components/signup-page/signup-page.component';
 import { ForgetPasswordPageComponent } from '../base/components/forget-password-page/forget-password-page.component';
 import { NotFoundPageComponent } from '../base/components/not-found-page/not-found-page.component';
+import { SynthesisListComponent } from './components/synthesis-list/synthesis-list.component';
+import { SynthesisCompleteComponent } from '../share/component/synthesis-complete/synthesis-complete.component';
 
 const clientRoutes: Routes = [
   {
@@ -85,10 +87,16 @@ const clientRoutes: Routes = [
       },
       {
         path: 'discover',
-        canActivate: [AuthGuard],
         children: [
-          { path: '', component: ClientDiscoverPageComponent, pathMatch: 'full' },
+          { path: '', component: ClientDiscoverPageComponent, pathMatch: 'full', canActivate: [AuthGuard] },
           { path: ':id/:lang', component: DiscoverDescriptionComponent, pathMatch: 'full'}
+        ]
+      },
+      {
+        path: 'synthesis',
+        children: [
+          { path: '', component: SynthesisListComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+          { path: ':projectId/:shareKey', component: SynthesisCompleteComponent, pathMatch: 'full', canActivate: [AuthGuard] }
         ]
       },
       {

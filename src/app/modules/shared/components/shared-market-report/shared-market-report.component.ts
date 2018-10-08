@@ -12,13 +12,15 @@ import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Section } from '../../../../models/section';
 import { Innovation } from '../../../../models/innovation';
-import { environment} from '../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { Template } from '../../../sidebar/interfaces/template';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { FrontendService } from '../../../../services/frontend/frontend.service';
+import { ShareService } from '../../../../services/share/share.service';
+import { Share } from '../../../../models/share';
 // import {PrintService} from '../../../../services/print/print.service';
 // import * as FileSaver from "file-saver";
 
@@ -31,19 +33,29 @@ import { FrontendService } from '../../../../services/frontend/frontend.service'
 export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   @Input() project: Innovation;
+
   @Input() adminMode: boolean;
 
+  @Input() sharable = false;
+
   private _adminSide: boolean;
+
   private _sidebarTemplateValue: Template = {};
+
   scrollOn = false;
 
+  currentInnovationIndex = 0;
+
   private _menuButton = false;
+
   private _displayMenuWrapper = false;
 
   editMode = new Subject<boolean>(); // this is for the admin side.
+
   private _previewMode: boolean;
 
   private _disableButton: any;
+
   private _projectToBeFinished: boolean;
 
   private _endDate: Date;
@@ -83,6 +95,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private location: Location,
               private innovationService: InnovationService,
               private authService: AuthService,
+              private shareService: ShareService,
               public filterService: FilterService,
               private frontendService: FrontendService) {
     this.filterService.reset();
@@ -94,6 +107,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.today = Date.now();
 
     this._innoid = this.project._id;
+
+    this.currentInnovationIndex = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
 
     this.resetMap();
 
@@ -131,11 +146,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    if (window.scrollY !== 0) {
-      this.scrollOn = true;
-    } else {
-      this.scrollOn = false;
-    }
+    this.scrollOn = window.scrollY !== 0;
 
     this._menuButton = (this.getCurrentScroll() > 150);
 
@@ -355,7 +366,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.filterService.deleteFilter(key);
   }
 
-  public printSynthesis(event: Event): void {
+  printSynthesis(event: Event): void {
     event.preventDefault();
    /* const html = document.getElementsByTagName('html')[0];
     const body = {html: html.outerHTML};
@@ -365,17 +376,102 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     });*/
 
    window.print();
+    /*this.dataExtractor.updateData({
+      answers: this.filteredAnswers,
+      countries: this._countries,
+      questions: JSON.parse(JSON.stringify(this._questions)),
+      filter: null,
+      lang: this.lang,
+      marketReport: { ...this.project.marketReport} || {},
+      strings: this._translationStrings()
+    });*/
   }
 
+/*  private _translationStrings(): any {
+    /!*
+  {{ 'COMMON.UMI_WORD' | translate }}
+  {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
+  {{ 'MARKET_REPORT.PIE_CHART' | translate }}
+  {{ 'MARKET_REPORT.ANSWERS' | translate }}
+  {{ 'MARKET_REPORT.PEOPLE_VOTED' | translate }}
+  {{ 'MARKET_REPORT.NO_GRADE' | translate }}
+  {{ 'MARKET_REPORT.GRADE' | translate }}
+   *!/
+    /!*return  {
+      "UMI_WORD": this.translateService.instant('COMMON.UMI_WORD' ),
+      "SYNTHESIS_FRAME": this.translateService.instant('MARKET_REPORT.SYNTHESIS_FRAME' ),
+      "PIE_CHART": this.translateService.instant('MARKET_REPORT.PIE_CHART' ),
+      "ANSWERS": this.translateService.instant('MARKET_REPORT.ANSWERS' ),
+      "PEOPLE_VOTED": this.translateService.instant('MARKET_REPORT.PEOPLE_VOTED' ),
+      "NO_GRADE": this.translateService.instant('MARKET_REPORT.NO_GRADE' ),
+      "GRADE": this.translateService.instant('MARKET_REPORT.GRADE' )
+    };*!/
+  }*/
+
+  /***
+   * This function is called when the user clicks on the share synthesis button. We call the
+   * share service to get the objectId and share key for this innovation, so that he can share
+   * this innovation with other. Then we call the "openMailTo()".
+   * @param {Event} event
+   */
+  shareSynthesis(event: Event) {
+    event.preventDefault();
+
+    this.shareService.shareSynthesis(this.project._id).first().subscribe((response: Share) => {
+      this.openMailTo(response.objectId, response.shareKey);
+    }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+
+  }
+
+  /***
+   * This function generates the message and open the mailto for the client to share the
+   * innovation.
+   * @param {string} projectID
+   * @param {string} shareKey
+   */
+  private openMailTo(projectID: string, shareKey: string) {
+    let message = '';
+    let subject = '';
+    const url = this.getInnovationUrl() + '/share/synthesis/' + projectID + '/' + shareKey;
+
+    if (this.lang === 'en') {
+
+      subject = 'Results - ' + this.project.innovationCards[this.currentInnovationIndex].title;
+
+      message = encodeURI('Hello,' + '\r\n' + '\r\n' + 'I invite you to discover the results of the market test carried out by ' + this.getCompanyName() + ' for the innovation ' +
+        this.project.innovationCards[this.currentInnovationIndex].title + ':' + '\r\n' + '\r\n' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
+        'geographical location, person etc. ' + '\r\n' + '\r\n' + 'Cordially, ' + '\r\n' + '\r\n' + this.getOwnerName());
+
+    }
+
+    if (this.lang === 'fr') {
+
+      subject = 'Résultats - ' + this.project.innovationCards[this.currentInnovationIndex].title;
+
+      message = encodeURI('Bonjour,' + '\r\n' + '\r\n' + 'Je vous invite à découvrir les résultats du test marché réalisé par ' + this.getCompanyName() + ' pour l\'innovation ' +
+      this.project.innovationCards[this.currentInnovationIndex].title + ':' + '\r\n' + '\r\n' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
+        'emplacement géographique, personne etc. ' + '\r\n' + '\r\n' + 'Cordialement, ' + '\r\n' + '\r\n' + this.getOwnerName());
+    }
+
+    window.location.href = 'mailto:' + '?subject=' + subject  + '&body=' + message;
+
+  }
+
+  /***
+   * This function is getting the image source according to the current lang of the user.
+   * @returns {string}
+   */
   getSrc(): string {
     let src = '';
     const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
 
-    if (this.project.innovationCards[0].principalMedia && this.project.innovationCards[0].principalMedia.type === 'PHOTO') {
-      src = this.project.innovationCards[0].principalMedia.url;
+    if (this.project.innovationCards[this.currentInnovationIndex].principalMedia && this.project.innovationCards[this.currentInnovationIndex].principalMedia.type === 'PHOTO') {
+      src = this.project.innovationCards[this.currentInnovationIndex].principalMedia.url;
     } else {
-      const index = this.project.innovationCards[0].media.findIndex((media) => media.type === 'PHOTO');
-      src = index === -1 ? defaultSrc : this.project.innovationCards[0].media[index].url;
+      const index = this.project.innovationCards[this.currentInnovationIndex].media.findIndex((media) => media.type === 'PHOTO');
+      src = index === -1 ? defaultSrc : this.project.innovationCards[this.currentInnovationIndex].media[index].url;
     }
 
     if (src === '' || undefined) {
@@ -386,7 +482,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   }
 
-  public percentageCalculation(value1: number, value2: number) {
+  percentageCalculation(value1: number, value2: number) {
     return this.frontendService.analyticPercentage(value1, value2);
   }
 
@@ -481,7 +577,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   getLogo(): string {
-    return environment.logoURL;
+    return environment.logoSynthURL;
   }
 
   get adminSide(): boolean {
@@ -514,6 +610,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   get endDate(): Date {
     return this._endDate;
+  }
+
+  getCompanyName(): string {
+    return environment.companyShortName;
+  }
+
+  getInnovationUrl(): string {
+    return environment.innovationUrl;
+  }
+
+  getOwnerName(): string {
+    return this.project.owner.name || '';
   }
 
 

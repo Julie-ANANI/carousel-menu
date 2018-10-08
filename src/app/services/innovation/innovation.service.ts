@@ -19,8 +19,8 @@ export class InnovationService {
     return this._http.post('/innovation', innovationObj);
   }
 
-  public get(id: string): Observable<Innovation> {
-    return this._http.get('/innovation/' + id);
+  public get(id: string, config?: any): Observable<Innovation> {
+    return this._http.get('/innovation/' + id, {params: config});
   }
 
   public getAll(config: any): Observable<{result: Array<Innovation>, _metadata: any}> {
@@ -117,6 +117,10 @@ export class InnovationService {
    */
   public getInvitationUrl (): string {
     return encodeURIComponent(`${environment.innovationUrl}/#/signup?invitation=true`);
+  }
+
+  public getSharedSynthesis(id: string, sharedKey: string): Observable<any> {
+    return this._http.get(`/sharing/synthesis/${id}/${sharedKey}`);
   }
 
 }

@@ -3,6 +3,8 @@ import { Http } from '../http.service';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 
+import { environment } from '../../../environments/environment';
+
 @Injectable()
 export class UserService {
 
@@ -16,12 +18,16 @@ export class UserService {
     return this._http.get(`/user/${userId}/innovations`);
   }
 
+  public getSharedWithMe(config?: any): Observable<any> {
+    return this._http.get('/user/me/sharedwithme', {params: config});
+  }
+
   public create(user: User): Observable<any> {
     return this._http.post('/user', user.toJSON());
   }
 
   public resetPassword(email?: string): Observable<any> {
-    return this._http.post('/user/resetPassword', {email: email});
+    return this._http.post('/user/resetPassword', {email: email, callback: environment.clientUrl});
   }
 
   public changePassword(data: {email: string, oldPassword: string, newPassword: string, confirmPassword: string}): Observable<any> {

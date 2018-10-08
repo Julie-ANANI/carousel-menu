@@ -2,7 +2,7 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { ComponentCanDeactivate } from '../../../../../../pending-changes-guard.service';
+import { ComponentCanDeactivate } from '../../../../../../guards/pending-changes-guard.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationSettings } from '../../../../../../models/innov-settings';
 import { Template } from '../../../../../sidebar/interfaces/template';

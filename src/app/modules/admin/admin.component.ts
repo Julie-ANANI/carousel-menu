@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -9,10 +8,6 @@ import { AuthService } from '../../services/auth/auth.service';
 
 export class AdminComponent {
 
-  constructor(private _authService: AuthService) {}
-
-  get authService(): AuthService {
-    return this._authService;
-  }
+  constructor() {}
 
 }

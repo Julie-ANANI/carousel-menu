@@ -89,4 +89,17 @@ export class CampaignService {
     return this._http.post(`/campaign/${campaignId}/sendTestEmailsNew`, {batchStatus: batchStatus});
   }
 
+  public setNuggets(campaignId: string): Observable<any> {
+    return this._http.get(`/campaign/${campaignId}/setNuggets`);
+  }
+
+  public addNuggets(campaignId: string, batchId: string): Observable<any> {
+    return this._http.get(`/campaign/${campaignId}/addNuggets/${batchId}`);
+  }
+
+  /*
+  public getPredictionsBatch(batchId: string):  Observable<any> {
+    return this._http.post(`/batch/${batchId}/getPredictions`, {ID: batchId});
+  }
+  */
 }

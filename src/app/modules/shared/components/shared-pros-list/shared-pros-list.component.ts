@@ -83,6 +83,9 @@ export class SharedProsListComponent {
     } else {
       this._professionalService.getAll(this._config).pipe(first()).subscribe((pros: any) => {
         this._pros = pros.result;
+        this._pros.forEach(pro => {
+          pro.sent = pro.messages && pro.messages.length > 0;
+        });
         this._total = pros._metadata.totalCount;
 
         this._tableInfos = {
@@ -101,7 +104,8 @@ export class SharedProsListComponent {
             {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},
             {_attrs: ['jobTitle'], _name: 'COMMON.JOBTITLE', _type: 'TEXT'},
             {_attrs: ['company'], _name: 'COMMON.COMPANY', _type: 'TEXT'},
-            {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'}]
+            {_attrs: ['campaigns'], _name: 'COMMON.CAMPAIGNS', _type: 'ARRAY'},
+            {_attrs: ['sent'], _name: 'Contact', _type: 'CHECK'}]
         };
 
       });
