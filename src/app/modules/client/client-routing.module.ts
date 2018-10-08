@@ -24,7 +24,7 @@ import { LogoutPageComponent } from '../base/components/logout-page/logout-page.
 import { SignupPageComponent } from '../base/components/signup-page/signup-page.component';
 import { ForgetPasswordPageComponent } from '../base/components/forget-password-page/forget-password-page.component';
 import { NotFoundPageComponent } from '../base/components/not-found-page/not-found-page.component';
-import { SynthesisListComponent } from '../share/component/synthesis-list/synthesis-list.component';
+import { SynthesisListComponent } from './components/synthesis-list/synthesis-list.component';
 import { SynthesisCompleteComponent } from '../share/component/synthesis-complete/synthesis-complete.component';
 
 const clientRoutes: Routes = [
