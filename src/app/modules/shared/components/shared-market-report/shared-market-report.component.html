@@ -88,7 +88,7 @@
               <button class="btn btn-primary" [disabled]="project?.status === 'DONE'" (click)="confirmModal($event)">End project</button>
             </ng-container>
             <ng-container *ngSwitchCase="false">
-              <ng-container *ngIf="project.status === 'DONE'">
+              <ng-container>
                 <button class="btn ghost-primary gtm-share-synthesis" (click)="shareSynthesis($event)">
                   {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_SHARE' | translate }}
                 </button>
