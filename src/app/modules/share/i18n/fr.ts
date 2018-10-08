@@ -10,7 +10,7 @@ export const SHARE = {
   'MESSAGE': 'Dans ce rapport partagé, les données personnelles des professionnels ont été cachées.',
 
   'SYNTHESIS_LIST': {
-    'BOT_TEXT': 'Here you will find all the results of the market test that have been shared to you.',
+    'BOT_TEXT': 'Vous trouverez ici les rapports marché que l\'on aura partagés avec vous.',
     'SHARED_TEXT': {
       'A': 'Partagé par',
       'B': 'le'
