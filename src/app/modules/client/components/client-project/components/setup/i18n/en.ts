@@ -21,7 +21,8 @@ export const SETUP = {
       'B': 'reads',
       'C': 'our comments that we have sent you by mail.'
     },
-    'PREVIEW_MODE': 'The partial synthesis of your project is available.',
+    'PREVIEW_MODE': 'The partial synthesis of your innovation is available.',
+    'PREVIEW_MODE_ADMIN': 'The partial synthesis of this innovation is available at the client side.',
     'DONE': 'Synthesis of your project is available. You can\'t make changes in your project anymore.'
   },
 

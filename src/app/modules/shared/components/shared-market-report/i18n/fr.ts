@@ -1,19 +1,23 @@
 export const MARKET_REPORT = {
   'TITLE': {
     'EDITING': 'Lancement de votre étude imminent...',
-    'SUBMITTED': 'En attente de validation de votre projet...',
-    'EVALUATING': 'En attente de validation de votre projet...'
+    'SUBMITTED': 'En attente de validation de votre innovation...',
+    'EVALUATING': 'En attente de validation de votre innovation...'
   },
 
   'MESSAGE': {
-    'SUBMITTED': 'Votre projet est en cours de validation. Nous revenons vers vous rapidement !',
+    'SUBMITTED': 'Votre innovation est en cours de validation. Nous revenons vers vous rapidement !',
     'EDITING': {
-      'A': 'Veuillez décrire votre projet puis nous le soumettre. Votre étude sera lancée à la suite.',
-      'B': 'la configuration de votre projet',
+      'A': 'Veuillez décrire votre innovation puis nous le soumettre. Votre étude sera lancée à la suite.',
+      'B': 'la configuration de votre innovation',
       'C': 'et le soumettre.'
     },
-    'REVIEWING': 'Veuillez modifier les modifications de votre projet et renvoyez-le.',
-    'EVALUATING': 'Nous collectons le potentiel de marché de votre projet. Nous reviendrons bientôt!'
+    'REVIEWING': 'Veuillez modifier les modifications de votre innovation et renvoyez-le.',
+    'EVALUATING': 'Nous collectons le potentiel de marché de votre innovation. Nous reviendrons bientôt!'
+  },
+
+  'MESSAGE_ADMIN': {
+    'NOT_SUBMITTED': 'Le client n\'a pas encore présenté l\'innovation. Vous pourrez éditer le rapport de marché après la présentation de son innovation.'
   },
 
   'BUTTON': {
@@ -39,15 +43,19 @@ export const MARKET_REPORT = {
 
   'ANONYMOUS': 'Identité confidentielles',
 
-  'MESSAGE_SYNTHESIS_VISIBLE': 'La synthèse est visible pour le client.',
+  'NOT_ALLOWED': 'Vous n\'êtes plus autorisé à effectuer cette action.',
+
+  'MESSAGE_SYNTHESIS_VISIBLE': 'La synthèse partielle est visible pour le client.',
 
   'MESSAGE_SYNTHESIS_NOT_VISIBLE': 'La synthèse n\'est pas visible pour le client.',
 
-  'MESSAGE_SYNTHESIS': 'Le projet a été terminé avec succès.',
+  'MESSAGE_SYNTHESIS': 'L\'innovation a été terminée avec succès et la synthèse complète est disponible côté client.',
+
+  'PRINT_DATE': 'Test marché du',
 
   'MODAL_TITLE': 'Comité de confirmation',
 
-  'MODAL_CONTENT': 'Voulez-vous terminer ce projet ?',
+  'MODAL_CONTENT': 'Voulez-vous terminer cette innovation ?',
 
   'TARGET_COUNTRIES': 'Pays ciblés',
 

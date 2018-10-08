@@ -1,19 +1,23 @@
 export const MARKET_REPORT = {
   'TITLE': {
-    'EDITING': 'Market potential of your project will be available soon',
-    'SUBMITTED': 'Exploring market potential of your project',
-    'EVALUATING': 'Exploring market potential of your project'
+    'EDITING': 'Market potential of your innovation will be available soon',
+    'SUBMITTED': 'Exploring market potential of your innovation',
+    'EVALUATING': 'Exploring market potential of your innovation'
   },
 
   'MESSAGE': {
-    'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
+    'SUBMITTED': 'Your innovation is under review by our team. We\'ll come back soon!',
     'EDITING': {
       'A': 'Please finish',
-      'B': 'setup of your project',
+      'B': 'setup of your innovation',
       'C': 'and submit it.'
     },
-    'REVIEWING': 'Please modify the changes in your project and re-submit it.',
+    'REVIEWING': 'Please modify the changes in your innovation and re-submit it.',
     'EVALUATING': 'We are collecting market potential of your project. We\'ll come back soon!'
+  },
+
+  'MESSAGE_ADMIN': {
+    'NOT_SUBMITTED': 'The client hasn\'t submitted the innovation yet. You will be able to edit the market report after he submits his innovation.'
   },
 
   'BUTTON': {
@@ -46,17 +50,21 @@ export const MARKET_REPORT = {
 
   'ANONYMOUS': 'Non Disclosed',
 
-  'MESSAGE_SYNTHESIS_VISIBLE': 'The synthesis is visible to client.',
+  'NOT_ALLOWED': 'You are not allowed to perform this action anymore.',
+
+  'MESSAGE_SYNTHESIS_VISIBLE': 'The partial synthesis is visible to client.',
 
   'MESSAGE_SYNTHESIS_NOT_VISIBLE': 'The synthesis is not visible to client.',
 
-  'MESSAGE_SYNTHESIS': 'The project has been successfully ended.',
+  'MESSAGE_SYNTHESIS': 'The innovation has been successfully ended, and the complete synthesis is available at the client side.',
 
-  'CLIENT_SYNTHESIS_MESSAGE': 'The partial synthesis of your project is available.',
+  'CLIENT_SYNTHESIS_MESSAGE': 'The partial synthesis of your innovation is available.',
+
+  'PRINT_DATE': 'Market test at',
 
   'MODAL_TITLE': 'Confirmation Board',
 
-  'MODAL_CONTENT': 'Do you want to end this project?',
+  'MODAL_CONTENT': 'Do you want to end this innovation?',
 
   'TARGET_COUNTRIES': 'Targeted countries',
 

@@ -16,7 +16,6 @@
       font-weight: 600;
       font-size: 1rem;
       padding: .95rem;
-      border-radius: .18rem;
     }
 
   }
@@ -30,13 +29,19 @@
     .content-wrapper {
       display: flex;
       font-weight: 600;
+      flex-wrap: wrap;
       font-size: .85rem;
       padding-top: .6rem;
       padding-bottom: .6rem;
 
-      .detail-wrapper {
+      .toggle-option {
         padding: 1.2rem 1.57rem 1.2rem 0;
         color: $meta-color;
+
+        .form-switch input:disabled + .form-icon::before {
+          background: $validation-color;
+        }
+
       }
 
       .filter-wrapper {
@@ -83,22 +88,15 @@
       }
 
       .button-wrapper {
-        justify-content: flex-end;
+        justify-content: flex-start;
         flex-wrap: wrap;
 
         .btn {
-          margin-bottom: 1.2rem;
-          margin-left: 1.2rem;
-          margin-top: 1.2rem;
+         margin: 1.2rem .6rem;
         }
 
-        .preview-button-wrapper {
-          color: #97A4B1;
-
-          .form-switch {
-            margin-top: 20px;
-          }
-
+        .btn:last-child {
+          margin-right: 0;
         }
 
       }
@@ -116,34 +114,86 @@
     .body-wrapper {
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      min-height: 80vh;
       justify-content: center;
 
-      h1 {
-        color: $dark-color;
-        font-size: 2.625rem;
+      .text-executive, h1 {
         margin-bottom: .6rem;
       }
 
-      h6 {
+      h1 {
+        color: $text-dark;
+        font-size: 2.625rem;
+        font-weight: 300;
+      }
+
+      .text-executive {
         color: $meta-color;
-        font-size: 1.3125rem;
+        font-size: 1.06rem;
+        display: none;
+      }
+
+      .summary, .image-wrapper {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1.2rem;
+      }
+
+      .summary {
+        font-weight: normal;
+        font-size: 1rem;
+        color: $text-dark;
+        width: 50%;
+      }
+
+      .image-wrapper {
+        height: 109.65px;
+        width: 173px;
+      }
+
+      .text-owner, .text-jobTitle, .text-email {
+        color: $dark-color;
+        margin-bottom: .18rem;
+      }
+
+      .text-owner {
+        font-size: 1rem;
+      }
+
+      .text-jobTitle, .text-email {
+        font-size: .9375rem;
+        font-weight: normal;
+      }
+
+      .goal-text {
+        display: inline-flex;
+        justify-content: center;
+        max-width: 438px;
+        background: $background-color;
+        color: white;
+        border-radius: 25px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1.57rem;
+        font-weight: 600;
+        font-size: 1rem;
+        padding: .6875rem .9375rem;
       }
 
     }
 
     .footer-wrapper {
+      border-top: 1px solid $primary-color;
       display: flex;
-      flex-direction: column;
-
-      .text-link {
-        font-size: 1.2rem;
-        margin-bottom: .6rem;
-      }
+      justify-content: space-between;
+      padding-top: .6rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $background-color;
 
       p {
-        font-size: .75rem;
         padding-bottom: 0;
+        font-size: .75rem;
       }
 
     }
@@ -383,7 +433,7 @@
 
   }
 
-  .conclusion-wrapper, .keyLearning-wrapper {
+  .conclusion-wrapper, .keyLearning-wrapper, .goal-wrapper {
     background-color: $background-color;
     border-radius: .18rem;
     color: white;
@@ -403,6 +453,70 @@
 }
 
 /********************************** Media ***************************************/
+@media (max-width: 600px) {
+
+  #market-report {
+
+    .content-wrapper {
+      flex-direction: column;
+
+      .filter-wrapper {
+        border-top: 1px solid $border-color;
+        border-bottom: 1px solid $border-color;
+        border-left: none !important;
+        border-right: none !important;
+        padding-left: 0 !important;
+      }
+
+      .button-wrapper {
+
+        .btn {
+          margin: .6rem .6rem .6rem 0 !important;
+        }
+
+      }
+
+    }
+
+    .front-wrapper {
+
+      .body-wrapper {
+        padding-top: 1.57rem;
+        padding-bottom: 1.57rem;
+
+        .summary {
+          width: 100% !important;
+        }
+
+      }
+
+      .footer-wrapper {
+        flex-wrap: wrap;
+
+        .text-right {
+          text-align: left !important;
+          padding-top: .6rem;
+        }
+
+      }
+
+    }
+
+    .exploration-wrapper {
+
+      .company-wrapper .name-wrapper li {
+        width: 100% !important;
+      }
+
+    }
+
+    .professional-wrapper {
+      flex-direction: column;
+    }
+
+  }
+
+}
 
 @media (max-width: 840px) {
 
@@ -458,38 +572,7 @@
 
 }
 
-@media (max-width: 600px) {
 
-  #market-report {
-
-    .content-wrapper {
-      flex-direction: column;
-
-      .filter-wrapper {
-        border-top: 1px solid $border-color;
-        border-bottom: 1px solid $border-color;
-        border-left: none !important;
-        border-right: none !important;
-        padding-left: 0 !important;
-      }
-
-    }
-
-    .exploration-wrapper {
-
-      .company-wrapper .name-wrapper li {
-        width: 100% !important;
-      }
-
-    }
-
-    .professional-wrapper {
-      flex-direction: column;
-    }
-
-  }
-
-}
 
 @media (min-width: 840px) {
 

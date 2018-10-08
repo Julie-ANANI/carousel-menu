@@ -60,11 +60,19 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     nbValidatedResp: number
   };
 
+  scrollOn = false;
+
+  private _showDetails: boolean;
+
+  private _projectToBeFinished: boolean;
+
+  today: Number;
+
   private _modalAnswer: Answer = null;
 
   private _sidebarTemplateValue: Template = {};
 
-  scrollOn = false;
+
 
   private _menuButton = false;
 
@@ -72,18 +80,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   editMode = new Subject<boolean>(); // this is for the admin side.
 
-  private _projectToBeFinished: boolean;
 
-  private _endDate: Date;
+
+
 
   private _companies: Array<Clearbit>;
 
   private _showListProfessional = true;
 
-  private _showDetails = true;
+
 
   public activeSection: string;
-  // public today: Number;
+  // public
   public objectKeys = Object.keys;
   public mapInitialConfiguration: {[continent: string]: boolean};
 
@@ -105,7 +113,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.filterService.reset();
     this.initializeReport();
     PageScrollConfig.defaultDuration = 800;
-    // this.today = Date.now();
+    //
   }
 
   ngAfterViewInit() {
@@ -129,6 +137,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
    */
   private initializeReport() {
     this.spinnerDisplay = true;
+    this._showDetails = true;
     this.isAdminSide();
     this.initializeVariable();
     this.getAnswers();
@@ -166,10 +175,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
      */
     this._previewMode = this.project.previewMode || false;
 
-    /***
-     * to get the project end date.
-     */
-    this.projectEndDate();
+    this.today = Date.now();
 
   }
 
@@ -250,15 +256,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   /***
-   * This function will check the status log and find the status Finish, then we register that date
-   * and display to on the front page.
-   */
-  private projectEndDate() {
-    const index = this.project.statusLogs.findIndex(action => action.action === 'FINISH');
-    this._endDate = index === -1 ? null : this.project.statusLogs[index].date;
-  }
-
-  /***
    * This function is to remove the spaces in the question identifiers.
    */
   private presets() {
@@ -277,7 +274,9 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     }
   }
 
-
+  /***
+   * We are getting the scroll value for the sticky bar.
+   */
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.scrollOn = window.scrollY !== 0;
@@ -293,6 +292,176 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return 0;
   };
 
+  toggleDetails(event: Event) {
+    event.preventDefault();
+    const value = !this._showDetails;
+    this._showDetails = value;
+    this._showListProfessional = value;
+  }
+
+  /***
+   * This function make the market report available to the client but it will be partial report.
+   * @param {Event} event
+   */
+  enablePreviewMode(event: Event) {
+    event.preventDefault();
+
+    this._previewMode =  this.project.previewMode = event.target['checked'] === true;
+
+    if (event.target['checked']) {
+      this.innovationService.save(this.project._id, this.project).first().subscribe( () => {
+        this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
+      });
+    } else {
+      this.innovationService.save(this.project._id, this.project).first().subscribe( () => {
+        this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
+      });
+    }
+
+  }
+
+  /***
+   * This function call the confirmation modal to ask for the confirmation to end the project.
+   * @param {Event} event
+   */
+  endProjectModal(event: Event) {
+    event.preventDefault();
+    this._projectToBeFinished = true;
+  }
+
+  /***
+   * This function is to close the end project confirmation modal.
+   * @param {Event} event
+   */
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._projectToBeFinished = false;
+  }
+
+  /***
+   * This function will make the project end and synthesis will be available to the client.
+   * @param {Event} event
+   * @param {"DONE"} status
+   */
+  endProject(event: Event, status: 'DONE'): void {
+    this._projectToBeFinished = false;
+
+    this.innovationService.updateStatus(this.project._id, status).first().subscribe((response) => {
+      this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
+      this.project = response;
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+    });
+  }
+
+  /***
+   * This function the deletes the applied filtered.
+   * @param {string} key
+   * @param {Event} event
+   */
+  deleteFilter(key: string, event: Event) {
+    event.preventDefault();
+
+    if (key === 'worldmap') {
+      this.resetMap();
+    }
+
+    this.filterService.deleteFilter(key);
+
+  }
+
+  /***
+   * This function is called when the user clicks on the share synthesis button. We call the
+   * share service to get the objectId and share key for this innovation, so that he can share
+   * this innovation with other. Then we call the "openMailTo()".
+   * @param {Event} event
+   */
+  shareSynthesis(event: Event) {
+    event.preventDefault();
+
+    this.shareService.shareSynthesis(this.project._id).first().subscribe((response: Share) => {
+      this.openMailTo(response.objectId, response.shareKey);
+    }, () => {
+      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+    });
+
+  }
+
+  /***
+   * This function generates the message and open the mailto for the client to share the
+   * innovation.
+   * @param {string} projectID
+   * @param {string} shareKey
+   */
+  private openMailTo(projectID: string, shareKey: string) {
+    let message = '';
+    let subject = '';
+    const url = this.getInnovationUrl() + '/share/synthesis/' + projectID + '/' + shareKey;
+
+    if (this.lang === 'en') {
+
+      subject = 'Results - ' + this.project.innovationCards[this._currentInnovationIndex].title;
+
+      message = encodeURI('Hello,' + '\r\n' + '\r\n' + 'I invite you to discover the results of the market test carried out by ' + this.getCompanyName() + ' for the innovation ' +
+        this.project.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Go on this link: ' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
+        'geographical location, person etc. ' + '\r\n' + '\r\n' + 'Cordially, ' + '\r\n' + '\r\n' + this.getOwnerName());
+
+    }
+
+    if (this.lang === 'fr') {
+
+      subject = 'Résultats - ' + this.project.innovationCards[this._currentInnovationIndex].title;
+
+      message = encodeURI('Bonjour,' + '\r\n' + '\r\n' + 'Je vous invite à découvrir les résultats du test marché réalisé par ' + this.getCompanyName() + ' pour l\'innovation ' +
+        this.project.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Allez sur ce lien: ' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
+        'emplacement géographique, personne etc. ' + '\r\n' + '\r\n' + 'Cordialement, ' + '\r\n' + '\r\n' + this.getOwnerName());
+    }
+
+    window.location.href = 'mailto:' + '?subject=' + subject  + '&body=' + message;
+
+  }
+
+  /***
+   * This functions is called when the user clicks on the print button, and it print the synthesis.
+   * @param {Event} event
+   */
+  printSynthesis(event: Event) {
+    event.preventDefault();
+    window.print();
+  }
+
+  /***
+   * This function is getting the image source according to the current lang of the user.
+   * @returns {string}
+   */
+  getSrc(): string {
+    let src = '';
+    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
+
+    if (this.project.innovationCards[this._currentInnovationIndex].principalMedia && this.project.innovationCards[this._currentInnovationIndex].principalMedia.type === 'PHOTO') {
+      src = this.project.innovationCards[this._currentInnovationIndex].principalMedia.url;
+    } else {
+      const index = this.project.innovationCards[this._currentInnovationIndex].media.findIndex((media) => media.type === 'PHOTO');
+      src = index === -1 ? defaultSrc : this.project.innovationCards[this._currentInnovationIndex].media[index].url;
+    }
+
+    if (src === '' || undefined) {
+      src = defaultSrc;
+    }
+
+    return src;
+
+  }
+
+  keyUpHandlerFunction(event: any, ob: string) {
+    const objToSave = {};
+    objToSave[ob] = {
+      conclusion: event['content']
+    };
+    this.innovationService.updateMarketReport(this.project._id, objToSave).first().subscribe((response) => {
+      this.project.marketReport = response;
+    });
+  }
 
 
 
@@ -329,49 +498,15 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     });
   }
 
-  confirmModal(event: Event) {
-    event.preventDefault();
-    this._projectToBeFinished = true;
-  }
 
-  changeStatus(event: Event, status: 'DONE'): void {
-    this._projectToBeFinished = false;
 
-    this.innovationService.updateStatus(this.project._id, status).first().subscribe((results) => {
-      this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
-      this.project = results;
-    }, (error) => {
-      this.translateNotificationsService.error('ERROR.ERROR', error.message);
-    });
-  }
 
-  closeModal(event: Event) {
-    event.preventDefault();
-    this._projectToBeFinished = false;
-  }
 
-  toggleDetails(event: Event): void {
-    event.preventDefault();
-    const value = !this._showDetails;
-    this._showDetails = value;
-    this._showListProfessional = value;
-  }
 
-  toggleMode(event: Event): void {
-    event.preventDefault();
-   this._previewMode =  this.project.previewMode = event.target['checked'] === true;
 
-    if (event.target['checked']) {
-      this.innovationService.save(this.project._id, this.project).first().subscribe( (data) => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
-      });
-    } else {
-      this.innovationService.save(this.project._id, this.project).first().subscribe( (data) => {
-        this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
-      });
-    }
 
-  }
+
+
 
   displayMenu(event: Event) {
     event.preventDefault();
@@ -399,44 +534,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.editMode.next(false);
   }
 
-  public keyupHandlerFunction(event: any, ob: string) {
-    const objToSave = {};
-    objToSave[ob] = {
-      conclusion: event['content']
-    };
-    this.innovationService.updateMarketReport(this.project._id, objToSave).first().subscribe((data) => {
-        this.project.marketReport = data;
-      });
-  }
 
-  public deleteFilter(key: string, event: Event) {
-    event.preventDefault();
-    if (key === 'worldmap') {
-      this.resetMap();
-    }
-    this.filterService.deleteFilter(key);
-  }
 
-  printSynthesis(event: Event): void {
-    event.preventDefault();
-   /* const html = document.getElementsByTagName('html')[0];
-    const body = {html: html.outerHTML};
-    this.printService.getPdf(body).subscribe((response) => {
-      const file = new Blob([ response.blob() ], {type: 'application/pdf'})
-      FileSaver.saveAs(file, 'test.pdf');
-    });*/
 
-   window.print();
-    /*this.dataExtractor.updateData({
-      answers: this.filteredAnswers,
-      countries: this._countries,
-      questions: JSON.parse(JSON.stringify(this._questions)),
-      filter: null,
-      lang: this.lang,
-      marketReport: { ...this.project.marketReport} || {},
-      strings: this._translationStrings()
-    });*/
-  }
+
+
 
 /*  private _translationStrings(): any {
     /!*
@@ -459,79 +561,9 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     };*!/
   }*/
 
-  /***
-   * This function is called when the user clicks on the share synthesis button. We call the
-   * share service to get the objectId and share key for this innovation, so that he can share
-   * this innovation with other. Then we call the "openMailTo()".
-   * @param {Event} event
-   */
-  shareSynthesis(event: Event) {
-    event.preventDefault();
 
-    this.shareService.shareSynthesis(this.project._id).first().subscribe((response: Share) => {
-      this.openMailTo(response.objectId, response.shareKey);
-    }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-    });
 
-  }
 
-  /***
-   * This function generates the message and open the mailto for the client to share the
-   * innovation.
-   * @param {string} projectID
-   * @param {string} shareKey
-   */
-  private openMailTo(projectID: string, shareKey: string) {
-    let message = '';
-    let subject = '';
-    const url = this.getInnovationUrl() + '/share/synthesis/' + projectID + '/' + shareKey;
-
-    if (this.lang === 'en') {
-
-      subject = 'Results - ' + this.project.innovationCards[this._currentInnovationIndex].title;
-
-      message = encodeURI('Hello,' + '\r\n' + '\r\n' + 'I invite you to discover the results of the market test carried out by ' + this.getCompanyName() + ' for the innovation ' +
-        this.project.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Go on this link: ' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
-        'geographical location, person etc. ' + '\r\n' + '\r\n' + 'Cordially, ' + '\r\n' + '\r\n' + this.getOwnerName());
-
-    }
-
-    if (this.lang === 'fr') {
-
-      subject = 'Résultats - ' + this.project.innovationCards[this._currentInnovationIndex].title;
-
-      message = encodeURI('Bonjour,' + '\r\n' + '\r\n' + 'Je vous invite à découvrir les résultats du test marché réalisé par ' + this.getCompanyName() + ' pour l\'innovation ' +
-      this.project.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Allez sur ce lien: ' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
-        'emplacement géographique, personne etc. ' + '\r\n' + '\r\n' + 'Cordialement, ' + '\r\n' + '\r\n' + this.getOwnerName());
-    }
-
-    window.location.href = 'mailto:' + '?subject=' + subject  + '&body=' + message;
-
-  }
-
-  /***
-   * This function is getting the image source according to the current lang of the user.
-   * @returns {string}
-   */
-  getSrc(): string {
-    let src = '';
-    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
-
-    if (this.project.innovationCards[this._currentInnovationIndex].principalMedia && this.project.innovationCards[this._currentInnovationIndex].principalMedia.type === 'PHOTO') {
-      src = this.project.innovationCards[this._currentInnovationIndex].principalMedia.url;
-    } else {
-      const index = this.project.innovationCards[this._currentInnovationIndex].media.findIndex((media) => media.type === 'PHOTO');
-      src = index === -1 ? defaultSrc : this.project.innovationCards[this._currentInnovationIndex].media[index].url;
-    }
-
-    if (src === '' || undefined) {
-      src = defaultSrc;
-    }
-
-    return src;
-
-  }
 
   percentageCalculation(value1: number, value2: number) {
     return this.frontendService.analyticPercentage(value1, value2);
@@ -579,6 +611,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return this._previewMode;
   }
 
+  get showDetails(): boolean {
+    return this._showDetails;
+  }
+
   get filters(): {[questionId: string]: Filter} {
     return this.filterService.filters;
   }
@@ -595,15 +631,9 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return environment.logoSynthURL;
   }
 
-  get projectStatus(): string {
-    return this.project.status;
-  }
-
   get answers(): Array<Answer> {
     return this._answers;
   }
-
-
 
   get filteredAnswers(): Array<Answer> {
     return this._filteredAnswers;
@@ -633,13 +663,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this._modalAnswer = modalAnswer;
   }
 
-
-  get showDetails(): boolean {
-    return this._showDetails;
-  }
-
-
-
   getLogo(): string {
     return environment.logoURL;
   }
@@ -660,14 +683,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return this._displayMenuWrapper;
   }
 
-
-
   get projectToBeFinished(): boolean {
     return this._projectToBeFinished;
-  }
-
-  get endDate(): Date {
-    return this._endDate;
   }
 
   getCompanyName(): string {
@@ -678,9 +695,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return environment.innovationUrl;
   }
 
+  getCompanyURL(): string {
+    return environment.companyURL;
+  }
+
   getOwnerName(): string {
     return this.project.owner.name || '';
   }
-
 
 }
