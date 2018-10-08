@@ -125,6 +125,18 @@ export class CampaignService {
         .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public setNuggets(campaignId: string): Observable<any> {
+    return this._http.get(`/campaign/${campaignId}/setNuggets`)
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.text()));
+  }
+
+  public addNuggets(campaignId: string, batchId: string): Observable<any> {
+    return this._http.get(`/campaign/${campaignId}/addNuggets/${batchId}`)
+        .map((res: Response) => res.json())
+        .catch((error: Response) => Observable.throw(error.text()));
+  }
+
   /*
   public getPredictionsBatch(batchId: string):  Observable<any> {
     return this._http.post(`/batch/${batchId}/getPredictions`, {ID: batchId})

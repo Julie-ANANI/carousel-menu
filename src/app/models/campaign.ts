@@ -23,4 +23,5 @@ export interface Campaign {
   stats?: CampaignStats;
   settings?: CampaignSettings;
   autoBatch: Boolean;
+  nuggets?: Boolean;
 }
