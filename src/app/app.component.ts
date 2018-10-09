@@ -62,15 +62,15 @@ export class AppComponent implements OnInit, OnDestroy {
       });*/
 
       // this.loaderService.stopLoading();
+    }
 
-      if (this.authService.isAcceptingCookies) {
-        this.authService.initializeSession().subscribe(
-          (_: any) => {},
-          (_: any) => this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
-            timeOut: 0
-          })
-        );
-      }
+    if (this.authService.isAcceptingCookies) {
+      this.authService.initializeSession().subscribe(
+        (_: any) => {},
+        (_: any) => this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH', {
+          timeOut: 0
+        })
+      );
     }
 
   }

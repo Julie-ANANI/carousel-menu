@@ -37,11 +37,9 @@ export class AuthService {
      colle un lien de l'admin par exemple, on soit redirigé sur la page d'accueil car les variables <authenticated>
      et <admin> sont encore à <false> (la réponse du serveur (<initializeSession()>) n'a pas encore été reçue).
      */
-    if (isPlatformBrowser(platformId)) {
-      this._setAuthenticatedTo(this._cookieService.get('hasBeenAuthenticated') === 'true');
-      this._setAdminTo(parseInt(this._cookieService.get('hasBeenAdmin'), 10));
-      this._setConfirmedTo(this._cookieService.get('hasBeenConfirmed') === 'true');
-    }
+    this._setAuthenticatedTo(this._cookieService.get('hasBeenAuthenticated') === 'true');
+    this._setAdminTo(parseInt(this._cookieService.get('hasBeenAdmin'), 10));
+    this._setConfirmedTo(this._cookieService.get('hasBeenConfirmed') === 'true');
   }
 
   public startCookieObservator() {
@@ -114,9 +112,7 @@ export class AuthService {
           this._setConfirmedTo(res.isConfirmed);
           this._user = res.user || null;
           return res;
-        }),
-        catchError((error: Response) => throwError(error.json()))
-      );
+        }));
   }
 
   private _setConfirmedTo(newValue: boolean): void {
