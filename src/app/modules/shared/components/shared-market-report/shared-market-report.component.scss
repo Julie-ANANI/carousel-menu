@@ -210,7 +210,7 @@
     justify-content: space-between;
 
     .summary-wrapper {
-      padding-right: 15px;
+      padding-right: .9375rem;
       flex: 1;
 
       .section-heading {
@@ -269,8 +269,9 @@
     }
 
     .sc-ques {
-      font-weight: 600;
+      color: $secondary-color;
       padding-bottom: 1.57rem;
+      font-weight: 300;
     }
 
     .answer-wrapper {
@@ -462,6 +463,26 @@
 
   #market-report {
 
+    .exploration-wrapper {
+
+      .company-wrapper .name-wrapper li {
+        width: 100% !important;
+      }
+
+    }
+
+    .professional-wrapper {
+      flex-direction: column;
+    }
+
+  }
+
+}
+
+@media (max-width: 840px) {
+
+  #market-report {
+
     .content-wrapper {
       flex-direction: column;
 
@@ -474,6 +495,7 @@
       }
 
       .button-wrapper {
+        padding-top: .6rem;
 
         .btn {
           margin: .6rem .6rem .6rem 0 !important;
@@ -507,50 +529,16 @@
 
     }
 
-    .exploration-wrapper {
-
-      .company-wrapper .name-wrapper li {
-        width: 100% !important;
-      }
-
-    }
-
-    .professional-wrapper {
-      flex-direction: column;
-    }
-
-  }
-
-}
-
-@media (max-width: 840px) {
-
-  #market-report {
-
-    .sticky-wrapper {
-
-      .filter-wrapper {
-        height: unset !important;
-      }
-
-    }
-
     .innovation-wrapper {
       flex-direction: column;
 
-      .summary-wrapper {
+      .summary-wrapper, .issue-wrapper, .solution-wrapper {
         padding-right: 0 !important;
+        padding-left: 0 !important;
       }
 
-      .issue-wrapper {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        padding-top: 1.75rem;
-      }
-
-      .solution-wrapper {
-        padding-left: 0 !important;
-        padding-top: .95rem;
+      .issue-wrapper, .solution-wrapper {
+        padding-top: 1.57rem !important;
       }
 
     }
@@ -579,7 +567,7 @@
 
 
 
-@media (min-width: 840px) {
+@media (min-width: 841px) {
 
   #market-report {
 
