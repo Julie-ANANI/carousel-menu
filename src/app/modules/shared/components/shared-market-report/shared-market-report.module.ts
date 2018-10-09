@@ -41,6 +41,7 @@ import { ItemListComponent } from './components/item-list/item-list.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { StarsComponent } from './components/stars/stars.component';
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
+import { ExecutiveReportComponent } from './components/executive-report/executive-report.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { SharedMarketComment2Component } from './components/professional-comment
     SharedMarketReportPopoverComponent,
     QuestionSectionComponent,
     StarsComponent,
+    ExecutiveReportComponent,
   ],
   exports: [
     SharedMarketReportComponent

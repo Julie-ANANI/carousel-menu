@@ -151,7 +151,7 @@
               <h6 *ngIf="project.owner?.name" class="text-owner">{{ getOwnerName() }}</h6>
               <h6 *ngIf="project.owner?.jobTitle" class="text-jobTitle">{{ project.owner?.jobTitle }}</h6>
               <h6 *ngIf="project.owner?.email" class="text-email">{{ project.owner?.email }}</h6>
-              <span *ngIf="project.marketReport?.goal.conclusion" class="goal-text">Goal: {{ project.marketReport?.goal.conclusion }}</span>
+              <span *ngIf="project.executiveReport?.goal" class="goal-text">Goal: {{ project.executiveReport?.goal }}</span>
             </div>
 
             <!-- Link -->
@@ -181,14 +181,14 @@
                     id="goal"
                     [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.GOAL' | translate"
                     rows="5"
-                    [(ngModel)]="project.marketReport?.goal.conclusion"
+                    [(ngModel)]="project.executiveReport.goal"
                     (blur)="update($event)"
                     maxlength="120">
                   </textarea>
                 </label>
                 <div class="charRemaining">
-                  <span [ngStyle]="{'color': getColor((project.marketReport?.goal?.conclusion?.length | characterCountdown:120), 120)}">
-                    {{ project.marketReport?.goal?.conclusion?.length | characterCountdown:120 }}
+                  <span [ngStyle]="{'color': getColor((project.executiveReport?.goal.length | characterCountdown:120), 120)}">
+                    {{ project.executiveReport?.goal.length | characterCountdown:120 }}
                   </span>
                 </div>
               </div>
@@ -402,7 +402,7 @@
       </div>
       <!-- /Innovation analytics -->
 
-      <!-- Executive report -->
+      <!-- Executive template generation -->
       <div *ngIf="adminSide" class="section-light-container">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="section-inline-container executive-generate-wrapper white-background">
@@ -421,6 +421,19 @@
           </div>
         </div>
       </div>
+      <!-- /Executive template generation -->
+
+      <!-- Executive report -->
+      <div class="section-light-container" id="executive-report">
+        <div class="column col-xs-12 col-11 col-mx-auto white-background">
+          <app-executive-report
+            [sections]="project.executiveReport.totalSections"
+            [questions]="questions"
+            [answers]="answers">
+          </app-executive-report>
+        </div>
+      </div>
+      <!-- /Executive report -->
 
 
       <!-- Menu button -->

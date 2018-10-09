@@ -42,6 +42,11 @@ export interface Innovation {
   readonly launched?: Date;
   readonly created?: Date;
   readonly updated?: Date;
+  executiveReport?: {
+    totalSections?: number,
+    goal?: string,
+    sections?: [{ [prop: string]: any }]
+  };
   operator?: User;
   previewMode?: boolean;
   completion?: number;

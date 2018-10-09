@@ -72,7 +72,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   private _displayMenuWrapper = false;
 
-
+  numberOfSections: number;
 
   private _modalAnswer: Answer = null;
 
@@ -141,7 +141,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
    */
   private initializeReport() {
     this.spinnerDisplay = true;
-    this._showDetails = true;
     this.isAdminSide();
     this.initializeVariable();
     this.getAnswers();
@@ -180,6 +179,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this._previewMode = this.project.previewMode || false;
 
     this.today = Date.now();
+
+    this._showDetails = true;
+
+    this.numberOfSections = this.project.executiveReport.totalSections;
 
   }
 
@@ -458,20 +461,15 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   /***
-   * This function is to update the market report.
+   * This function is to update the project.
    * @param {Event} event
    */
   update(event: Event) {
     // TODO: add project status DONE
     if (this.project.status) {
-      const objToSave = {};
-      const obName = event.target['id'];
-      objToSave[obName] = { conclusion: event.target['value'] };
-
-      this.innovationService.updateMarketReport(this.project._id, objToSave).first().subscribe((response) => {
-        this.project.marketReport = response;
+      this.innovationService.save(this.project._id, this.project).first().subscribe((response) => {
+        this.project = response;
       });
-
     }
   }
 
@@ -529,6 +527,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   generateExecutiveTemplate(event: Event) {
     event.preventDefault();
+    this.update(event);
   }
 
   keyUpHandlerFunction(event: any, ob: string) {
