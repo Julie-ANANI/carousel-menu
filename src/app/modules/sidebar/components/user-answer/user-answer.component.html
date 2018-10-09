@@ -188,17 +188,19 @@
 
       <!-- Email -->
       <div *ngIf="modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL'" class="status-email">
-        <label class="form-switch" for="email">
+        <label class="form-switch" for="answer-email">
           <input
             type="checkbox"
-            name="email"
-            id="email"
+            name="answer-email"
+            id="answer-email"
             (change)="sendEmail($event, 'VALIDATED')"
             [checked]="modalAnswer.status === 'VALIDATED'">
           <i class="form-icon"></i>
           {{ 'ANSWER.STATUS.EMAIL' | translate }}
         </label>
       </div>
+
+
 
     </div>
     <!-- /Status -->
