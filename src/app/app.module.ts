@@ -44,6 +44,7 @@ import { FrontendService } from './services/frontend/frontend.service';
 import { PrintService } from './services/print/print.service';
 import { CurrentRouteService } from './services/frontend/current-route/current-route.service';
 import { ListenerService } from './services/frontend/listener/listener.service';
+import { CalculationService } from './services/frontend/calculation/calculation.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -115,7 +116,8 @@ import { PresetResolver } from './resolvers/preset.resolver';
     FrontendService,
     PrintService,
     CurrentRouteService,
-    ListenerService
+    ListenerService,
+    CalculationService
   ],
   bootstrap: [AppComponent]
 })

@@ -66,6 +66,13 @@ export const MARKET_REPORT = {
 
   'MODAL_CONTENT': 'Do you want to end this innovation?',
 
+  'EXECUTIVE': {
+    'HEADING': 'Executive Report',
+    'CHOOSE_TEMPLATE': 'Choose template',
+    'VALID_BUTTON': 'Generate template',
+    'DELETE_BUTTON': 'Delete template'
+  },
+
   'EXECUTIVE_PLACEHOLDER': {
     'GOAL': 'What is the objective of this innovation?'
   },

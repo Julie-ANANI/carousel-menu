@@ -16,9 +16,9 @@ import { Template } from '../../../sidebar/interfaces/template';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs/Subject';
-import { FrontendService } from '../../../../services/frontend/frontend.service';
 import { ShareService } from '../../../../services/share/share.service';
 import { Share } from '../../../../models/share';
+import { CalculationService } from '../../../../services/frontend/calculation/calculation.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -68,15 +68,19 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   today: Number;
 
+  private _menuButton = false;
+
+  private _displayMenuWrapper = false;
+
+
+
   private _modalAnswer: Answer = null;
 
   private _sidebarTemplateValue: Template = {};
 
 
 
-  private _menuButton = false;
 
-  private _displayMenuWrapper = false;
 
   editMode = new Subject<boolean>(); // this is for the admin side.
 
@@ -107,7 +111,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private authService: AuthService,
               private shareService: ShareService,
               public filterService: FilterService,
-              private frontendService: FrontendService) { }
+              private calculationService: CalculationService) { }
 
   ngOnInit() {
     this.filterService.reset();
@@ -495,6 +499,38 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return 'https://res.cloudinary.com/umi/image/upload/v1537445724/app/default-images/Intro-UMI-' + this.lang + '.png';
   }
 
+  /***
+   * This function is returning the analytic percentage.
+   * @param {number} value1
+   * @param {number} value2
+   * @returns {number}
+   */
+  percentageCalculation(value1: number, value2: number) {
+    return this.calculationService.analyticPercentage(value1, value2);
+  }
+
+  /***
+   * This function display the menu options.
+   * @param {Event} event
+   */
+  displayMenu(event: Event) {
+    event.preventDefault();
+    this._displayMenuWrapper = true;
+  }
+
+  /***
+   * This function hides the menu options.
+   * @param {Event} event
+   */
+  hideMenu(event: Event) {
+    event.preventDefault();
+    this._displayMenuWrapper = false;
+  }
+
+  generateExecutiveTemplate(event: Event) {
+    event.preventDefault();
+  }
+
   keyUpHandlerFunction(event: any, ob: string) {
     const objToSave = {};
     objToSave[ob] = {
@@ -550,15 +586,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
 
 
-  displayMenu(event: Event) {
-    event.preventDefault();
-    this._displayMenuWrapper = true;
-  }
 
-  hideMenu(event: Event) {
-    event.preventDefault();
-    this._displayMenuWrapper = false;
-  }
 
   seeAnswer(answer: Answer): void {
     this._modalAnswer = answer;
@@ -607,9 +635,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
 
 
-  percentageCalculation(value1: number, value2: number) {
-    return this.frontendService.analyticPercentage(value1, value2);
-  }
+
 
   formatCompanyName(name: string) {
     if (name) {
