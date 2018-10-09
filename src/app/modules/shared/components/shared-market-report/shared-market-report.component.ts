@@ -691,7 +691,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   getLogo(): string {
-    return environment.logoURL;
+    return environment.logoSynthURL;
   }
 
   get adminSide(): boolean {
