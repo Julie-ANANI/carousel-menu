@@ -8,6 +8,11 @@
     border-radius: 0.18rem;
   }
 
+  .charRemaining span {
+    margin-top: -2.1875rem;
+    margin-left: -2.1875rem;
+  }
+
   .msg-wrapper {
 
     .content {
@@ -168,7 +173,7 @@
       .goal-text {
         display: inline-flex;
         justify-content: center;
-        max-width: 438px;
+        max-width: 500px;
         background: $background-color;
         color: white;
         border-radius: 25px;

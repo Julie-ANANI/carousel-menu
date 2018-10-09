@@ -151,7 +151,7 @@
               <h6 *ngIf="project.owner?.name" class="text-owner">{{ getOwnerName() }}</h6>
               <h6 *ngIf="project.owner?.jobTitle" class="text-jobTitle">{{ project.owner?.jobTitle }}</h6>
               <h6 *ngIf="project.owner?.email" class="text-email">{{ project.owner?.email }}</h6>
-              <span *ngIf="project.marketReport?.goal?.conclusion" class="goal-text">{{ project.marketReport?.goal?.conclusion }}</span>
+              <span *ngIf="project.marketReport?.goal.conclusion" class="goal-text">Goal: {{ project.marketReport?.goal.conclusion }}</span>
             </div>
 
             <!-- Link -->
@@ -174,11 +174,39 @@
           <div class="goal-wrapper">
             <div class="section-inline-container">
               <h1 class="main-heading">Goal</h1>
+              <div class="form-group">
+                <label class="form-label" for="goal">
+                  <textarea
+                    class="form-default"
+                    id="goal"
+                    [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.GOAL' | translate"
+                    rows="5"
+                    [(ngModel)]="project.marketReport?.goal.conclusion"
+                    (blur)="update($event)"
+                    maxlength="120">
+                  </textarea>
+                </label>
+                <div class="charRemaining">
+                  <span [ngStyle]="{'color': getColor((project.marketReport?.goal?.conclusion?.length | characterCountdown:120), 120)}">
+                    {{ project.marketReport?.goal?.conclusion?.length | characterCountdown:120 }}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
       <!-- /Main page goal -->
+
+      <!-- UMI Intro -->
+      <div *ngIf="showDetails && getDomainName() === 'umi'" class="section-light-container">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <img [src]="getIntroSrc()" class="img-responsive">
+        </div>
+      </div>
+      <!-- /UMI Intro -->
+
+
 
     </ng-container>
     <!-- /Display spinner off -->
@@ -201,15 +229,7 @@
 
 
 
-    <!-- UMI Intro -->
-    <div *ngIf="!adminSide && showDetails && getDomainName() === 'umi'" class="section-light-container">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <div class="image-wrapper">
-          <img [src]="getIntroSrc()" class="img-responsive">
-        </div>
-      </div>
-    </div>
-    <!-- /UMI Intro -->
+
 
     <!-- Innovation detail -->
     <div *ngIf="!adminSide && showDetails" class="section-light-container s-innovationPage-print">

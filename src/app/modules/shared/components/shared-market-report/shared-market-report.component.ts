@@ -453,6 +453,48 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   }
 
+  /***
+   * This function is to update the market report.
+   * @param {Event} event
+   */
+  update(event: Event) {
+    // TODO: add project status DONE
+    if (this.project.status) {
+      const objToSave = {};
+      const obName = event.target['id'];
+      objToSave[obName] = { conclusion: event.target['value'] };
+
+      this.innovationService.updateMarketReport(this.project._id, objToSave).first().subscribe((response) => {
+        this.project.marketReport = response;
+      });
+
+    }
+  }
+
+  /***
+   * This function returns the color according to the length of the input data.
+   * @param {number} length
+   * @param {number} limit
+   * @returns {string}
+   */
+  getColor(length: number, limit: number) {
+    if (length <= 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < (limit / 2)) {
+      return '#f0ad4e';
+    } else {
+      return '#2ECC71';
+    }
+  }
+
+  /***
+   * This function is to return the src of the UMI intro image.
+   * @returns {string}
+   */
+  getIntroSrc(): string {
+    return 'https://res.cloudinary.com/umi/image/upload/v1537445724/app/default-images/Intro-UMI-' + this.lang + '.png';
+  }
+
   keyUpHandlerFunction(event: any, ob: string) {
     const objToSave = {};
     objToSave[ob] = {
@@ -578,21 +620,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   getDomainName(): string {
     return environment.domain;
-  }
-
-  getIntroSrc(): string {
-    let src = '';
-
-    if (this.lang === 'en') {
-      src = 'https://res.cloudinary.com/umi/image/upload/v1537445724/app/default-images/Intro-UMI-en.png';
-    }
-
-    if (this.lang === 'fr') {
-      src = 'https://res.cloudinary.com/umi/image/upload/v1537445724/app/default-images/Intro-UMI-fr.png';
-    }
-
-    return src;
-
   }
 
   /***

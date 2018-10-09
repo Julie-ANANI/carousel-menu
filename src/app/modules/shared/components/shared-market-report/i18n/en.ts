@@ -66,6 +66,10 @@ export const MARKET_REPORT = {
 
   'MODAL_CONTENT': 'Do you want to end this innovation?',
 
+  'EXECUTIVE_PLACEHOLDER': {
+    'GOAL': 'What is the objective of this innovation?'
+  },
+
   'TARGET_COUNTRIES': 'Targeted countries',
 
  // 'TITLE': 'Exploring market potential',

@@ -22,6 +22,7 @@ import { RouterModule } from '@angular/router';
 import { ProgressBarModule } from '../../../input/component/progress-bar/progress-bar.module';
 import { InputModule } from '../../../input/input.module';
 import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
+import { FormsModule } from '@angular/forms';
 
 
 /***
@@ -55,7 +56,8 @@ import { SharedMarketComment2Component } from './components/professional-comment
     InputModule,
     RouterModule,
     ProgressBarModule,
-    SharedLoaderModule
+    SharedLoaderModule,
+    FormsModule
   ],
   providers: [
     CommonService,

@@ -41,7 +41,7 @@ export const MARKET_REPORT = {
     'BUTTON_SHARE': 'Partager la synthèse'
   },
 
-  'ANONYMOUS': 'Identité confidentielles',
+  'ANONYMOUS': 'Identité confidentielle',
 
   'NOT_ALLOWED': 'Vous n\'êtes plus autorisé à effectuer cette action.',
 
@@ -56,6 +56,10 @@ export const MARKET_REPORT = {
   'MODAL_TITLE': 'Comité de confirmation',
 
   'MODAL_CONTENT': 'Voulez-vous terminer cette innovation ?',
+
+  'EXECUTIVE_PLACEHOLDER': {
+    'GOAL': 'Quel est l\'objectif de cette innovation ?'
+  },
 
   'TARGET_COUNTRIES': 'Pays ciblés',
 
