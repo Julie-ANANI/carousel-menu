@@ -10,7 +10,7 @@ import { AuthGuard } from './guards/auth-guard.service';
 const appRoutes: Routes = [
   {
     path: 'admin',
-   loadChildren: './modules/admin/admin.module#AdminModule'
+    loadChildren: './modules/admin/admin.module#AdminModule'
   },
   {
     path: 'share',
