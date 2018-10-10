@@ -68,9 +68,10 @@ export const MARKET_REPORT = {
 
   'EXECUTIVE': {
     'HEADING': 'Executive Report',
+    'TITLE': 'Objective',
     'CHOOSE_TEMPLATE': 'Choose template',
-    'VALID_BUTTON': 'Generate template',
-    'DELETE_BUTTON': 'Delete template'
+    'VALID_BUTTON': 'Valid Template',
+    'DELETE_BUTTON': 'Delete Template'
   },
 
   'EXECUTIVE_PLACEHOLDER': {

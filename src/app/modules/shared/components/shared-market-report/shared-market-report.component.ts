@@ -19,6 +19,7 @@ import { Subject } from 'rxjs/Subject';
 import { ShareService } from '../../../../services/share/share.service';
 import { Share } from '../../../../models/share';
 import { CalculationService } from '../../../../services/frontend/calculation/calculation.service';
+import { Executive, executiveTemplate } from '../../../../models/data-static/template';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -73,6 +74,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   private _displayMenuWrapper = false;
 
   numberOfSections: number;
+
+  executiveTemplates: Executive;
 
   private _modalAnswer: Answer = null;
 
@@ -182,7 +185,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
     this._showDetails = true;
 
+
     this.numberOfSections = this.project.executiveReport.totalSections;
+
+    this.executiveTemplates = executiveTemplate;
 
   }
 
@@ -490,11 +496,34 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   /***
+   * This function is called when we click on the radio button, and assign the
+   * clicked value to the numberOfSection
+   * @param {Event} event
+   * @param {number} value
+   */
+  assignSectionValue(event: Event, value: number) {
+    event.preventDefault();
+    this.numberOfSections = value;
+  }
+
+  /***
+   * This is function is called when you click on the valid template button.
+   * We assign the number of section calue to the this.project.executiveReport.totalSections
+   * and call the update function to save it in database.
+   * @param {Event} event
+   */
+  generateExecutiveTemplate(event: Event) {
+    event.preventDefault();
+    this.project.executiveReport.totalSections = this.numberOfSections;
+    this.update(event);
+  }
+
+  /***
    * This function is to return the src of the UMI intro image.
    * @returns {string}
    */
   getIntroSrc(): string {
-    return 'https://res.cloudinary.com/umi/image/upload/v1537445724/app/default-images/Intro-UMI-' + this.lang + '.png';
+    return 'https://res.cloudinary.com/umi/image/upload/v1539157710/app/default-images/intro/UMI-' + this.lang + '.png';
   }
 
   /***
@@ -523,11 +552,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   hideMenu(event: Event) {
     event.preventDefault();
     this._displayMenuWrapper = false;
-  }
-
-  generateExecutiveTemplate(event: Event) {
-    event.preventDefault();
-    this.update(event);
   }
 
   keyUpHandlerFunction(event: any, ob: string) {

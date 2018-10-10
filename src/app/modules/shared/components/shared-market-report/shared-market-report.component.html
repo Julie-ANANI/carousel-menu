@@ -151,7 +151,7 @@
               <h6 *ngIf="project.owner?.name" class="text-owner">{{ getOwnerName() }}</h6>
               <h6 *ngIf="project.owner?.jobTitle" class="text-jobTitle">{{ project.owner?.jobTitle }}</h6>
               <h6 *ngIf="project.owner?.email" class="text-email">{{ project.owner?.email }}</h6>
-              <span *ngIf="project.executiveReport?.goal" class="goal-text">Goal: {{ project.executiveReport?.goal }}</span>
+              <span *ngIf="project.executiveReport?.goal" class="goal-text">{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ project.executiveReport?.goal }}</span>
             </div>
 
             <!-- Link -->
@@ -173,7 +173,7 @@
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div class="goal-wrapper">
             <div class="section-inline-container">
-              <h1 class="main-heading">Goal</h1>
+              <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}</h1>
               <div class="form-group">
                 <label class="form-label" for="goal">
                   <textarea
@@ -197,6 +197,47 @@
         </div>
       </section>
       <!-- /Main page goal -->
+
+      <!-- Executive template generation -->
+      <div *ngIf="adminSide" class="section-light-container">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="section-inline-container executive-generate-wrapper white-background">
+
+            <!-- Heading -->
+            <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.HEADING' | translate }}</h1>
+
+            <!-- Sub heading -->
+            <h2 class="section-heading">{{ 'MARKET_REPORT.EXECUTIVE.CHOOSE_TEMPLATE' | translate }}</h2>
+
+            <!-- Template options -->
+            <div class="template-outer-wrapper">
+              <div *ngFor="let template of executiveTemplates" class="template">
+                <img [src]="template.imageSrc" alt="">
+                <div class="radio-button" [ngClass]="{ 'active': numberOfSections === template.value }" (click)="assignSectionValue($event, template.value)"><span>•</span></div>
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="text-center">
+              <button class="btn ghost-primary btn-xs" (click)="generateExecutiveTemplate($event)">{{ 'MARKET_REPORT.EXECUTIVE.VALID_BUTTON' | translate }}</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- /Executive template generation -->
+
+      <!-- Executive report -->
+      <div class="section-light-container" id="executive-report">
+        <div class="column col-xs-12 col-11 col-mx-auto white-background">
+          <app-executive-report
+            [sections]="project.executiveReport.totalSections"
+            [questions]="questions"
+            [answers]="answers">
+          </app-executive-report>
+        </div>
+      </div>
+      <!-- /Executive report -->
 
       <!-- UMI Intro -->
       <div *ngIf="showDetails && getDomainName() === 'umi'" class="section-light-container">
@@ -401,40 +442,6 @@
         </div>
       </div>
       <!-- /Innovation analytics -->
-
-      <!-- Executive template generation -->
-      <div *ngIf="adminSide" class="section-light-container">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="section-inline-container executive-generate-wrapper white-background">
-
-            <!-- Heading -->
-            <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.HEADING' | translate }}</h1>
-
-            <!-- Sub heading -->
-            <h2 class="section-heading">{{ 'MARKET_REPORT.EXECUTIVE.CHOOSE_TEMPLATE' | translate }}</h2>
-
-            <!-- Buttons -->
-            <div class="text-left">
-              <button class="btn ghost-primary btn-xs" (click)="generateExecutiveTemplate($event)">{{ 'MARKET_REPORT.EXECUTIVE.VALID_BUTTON' | translate }}</button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-      <!-- /Executive template generation -->
-
-      <!-- Executive report -->
-      <div class="section-light-container" id="executive-report">
-        <div class="column col-xs-12 col-11 col-mx-auto white-background">
-          <app-executive-report
-            [sections]="project.executiveReport.totalSections"
-            [questions]="questions"
-            [answers]="answers">
-          </app-executive-report>
-        </div>
-      </div>
-      <!-- /Executive report -->
-
 
       <!-- Menu button -->
       <div class="menu-wrapper s-menuButton-print gtm-synthesis-menu" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">

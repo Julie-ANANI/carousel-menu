@@ -205,6 +205,58 @@
 
   }
 
+  .executive-generate-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .section-heading {
+      font-weight: normal;
+      font-size: 1.5rem;
+    }
+
+    .template-outer-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .template {
+        display: inline-flex;
+        margin-bottom: 1.57rem;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+          width: auto;
+          height: 216px;
+          margin-bottom: .6rem;
+        }
+
+        .radio-button:hover {
+          background-color: $primary-color;
+          border-color: $primary-color;
+
+          span {
+            color: white;
+          }
+
+        }
+
+        .radio-button.active {
+          background-color: $validation-color;
+          border-color: $validation-color;
+
+          span {
+            color: white;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
   .innovation-wrapper {
     display: flex;
     justify-content: space-between;
@@ -354,17 +406,6 @@
 
       }
 
-    }
-
-  }
-
-  .executive-generate-wrapper {
-    display: flex;
-    flex-direction: column;
-
-    .section-heading {
-      font-weight: normal;
-      font-size: 1.5rem;
     }
 
   }

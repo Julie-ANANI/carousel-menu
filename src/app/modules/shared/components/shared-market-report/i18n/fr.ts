@@ -59,8 +59,9 @@ export const MARKET_REPORT = {
 
   'EXECUTIVE': {
     'HEADING': 'Executive Report',
+    'TITLE': 'Objectif',
     'CHOOSE_TEMPLATE': 'Choisir le modèle',
-    'VALID_BUTTON': 'Générer un modèle',
+    'VALID_BUTTON': 'Modèle valide',
     'DELETE_BUTTON': 'Supprimer le modèle'
   },
 
