@@ -41,6 +41,7 @@ import { FrontendService } from './services/frontend/frontend.service';
 import { PrintService } from './services/print/print.service';
 import { CurrentRouteService } from './services/frontend/current-route/current-route.service';
 import { ListenerService } from './services/frontend/listener/listener.service';
+import { LocalStorageService } from './services/localStorage/localStorage.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -113,7 +114,8 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     FrontendService,
     PrintService,
     CurrentRouteService,
-    ListenerService
+    ListenerService,
+    LocalStorageService
   ],
   bootstrap: [AppComponent]
 })

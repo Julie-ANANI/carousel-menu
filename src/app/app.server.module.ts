@@ -5,6 +5,8 @@ import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader'
 
 import { CookieService, CookieBackendService } from 'ngx-cookie';
 import { CookieServerInterceptor } from './interceptors/cookie-server.interceptor';
+import { LocalStorageBackendService } from './services/localStorage/localStorageBackend.service';
+import { LocalStorageService } from './services/localStorage/localStorage.service';
 
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
@@ -23,6 +25,7 @@ import { AppComponent } from './app.component';
       useClass: CookieServerInterceptor,
       multi: true,
     },
+    { provide: LocalStorageService, useClass: LocalStorageBackendService },
   ],
   bootstrap: [ AppComponent ],
 })

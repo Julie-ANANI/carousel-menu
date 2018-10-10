@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { PaginationTemplate } from '../../../../models/pagination';
+import { LocalStorageService } from '../../../../services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-pagination',
@@ -40,16 +40,13 @@ export class PaginationComponent implements OnInit {
   private _limit = 0;
   private _total = 0;
 
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+  constructor(private lsService: LocalStorageService,
               private translateNotificationService: TranslateNotificationsService) {}
 
   ngOnInit() {
     this._limit = this.initialConfigValues.limit;
 
-    let localLimit = 10;
-    if (isPlatformBrowser(this.platformId)) {
-      localLimit = parseInt(localStorage.getItem(`${this.propertyName}-limit`) || '10', 10);
-    }
+    const localLimit = parseInt(this.lsService.getItem(`${this.propertyName}-limit`) || '10', 10);
 
     if (this.propertyName && localLimit && this.checkConfig(localLimit)) {
       this.initialConfigValues.limit = localLimit;
@@ -82,9 +79,9 @@ export class PaginationComponent implements OnInit {
   }
 
   private _update() {
-    if (this.propertyName && isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(`${this.propertyName}-limit`, this.initialConfigValues.limit);
-      // sessionStorage.setItem(`${this.propertyName}-offset`, this.config.offset);
+    if (this.propertyName) {
+      this.lsService.setItem(`${this.propertyName}-limit`, this.initialConfigValues.limit);
+      // this.lsService.setItem(`${this.propertyName}-offset`, this.config.offset);
     }
 
     // this.configChange.emit(this._config);
@@ -95,12 +92,6 @@ export class PaginationComponent implements OnInit {
     }
 
   }
-
-  /*goToPage(event: any): void {
-    const page = parseInt((<HTMLInputElement> event.srcElement).value);
-    this.config.offset = this.config.limit * (page - 1);
-    this._update();
-  }*/
 
   set currentPage(page: number) {
     // this._config.offset = this._config.limit * (page - 1);
