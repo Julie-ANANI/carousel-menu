@@ -42,6 +42,7 @@ import { SharedMarketReportPopoverComponent } from './components/shared-market-r
 import { StarsComponent } from './components/stars/stars.component';
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
 import { ExecutiveReportComponent } from './components/executive-report/executive-report.component';
+import { ExecutiveConclusionComponent } from './components/executive-report/executive-conclusion/executive-conclusion.component';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import { ExecutiveReportComponent } from './components/executive-report/executiv
     QuestionSectionComponent,
     StarsComponent,
     ExecutiveReportComponent,
+    ExecutiveConclusionComponent,
   ],
   exports: [
     SharedMarketReportComponent

@@ -65,6 +65,16 @@ export const MARKET_REPORT = {
     'DELETE_BUTTON': 'Supprimer le modèle'
   },
 
+  'EXECUTIVE_TEMPLATE': {
+    'PROFESSIONAL_HEADING': 'Professionnels interrogés',
+    'ANSWERS': 'réponses',
+    'REMAINING': {
+      'AND': 'et',
+      'OTHERS': 'autres',
+      'FOLLOW': 'Suite...'
+    },
+  },
+
   'EXECUTIVE_PLACEHOLDER': {
     'GOAL': 'Quel est l\'objectif de cette innovation ?'
   },

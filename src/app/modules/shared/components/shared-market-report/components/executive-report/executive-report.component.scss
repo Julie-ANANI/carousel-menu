@@ -1,0 +1,115 @@
+@import "../../../../../../../style/variables";
+
+#executive-report-wrapper {
+
+  .first-page {
+    background-color: white;
+    display: flex;
+    border-radius: .18rem;
+    justify-content: space-between;
+  }
+
+  .professional-wrapper {
+    padding: 3.15rem;
+    border-right: 1px solid $border-color;
+
+    .main-heading {
+      margin-bottom: .2rem;
+    }
+
+    .sub-title {
+      color: $meta-color;
+      font-weight: 600;
+      font-size: .8125rem;
+      padding-bottom: 0;
+
+      .fa-user {
+        color: $meta-color;
+      }
+
+    }
+
+    .map-wrapper {
+      padding-top: 2.8rem;
+    }
+
+    .abstract-professional {
+      padding-top: .93125rem;
+      margin-bottom: 1.875rem;
+      height: 90px;
+      color: $text-dark;
+      font-size: 13px;
+      font-weight: normal;
+      max-width: 380px;
+    }
+
+    .profile {
+      max-width: 380px;
+      height: 90px;
+      background-color: #F5F5F5;
+      border-right: .18rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+
+      .icons {
+        height: 100%;
+        width: 57px;
+        background-color: #DBDBDB;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .fa-user {
+          color: white;
+        }
+
+      }
+
+      .details {
+        padding: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 100%;
+
+        .name {
+          color: #4F5D6B;
+        }
+
+        .company {
+          color: $meta-color;
+          padding-bottom: 0;
+        }
+
+        .tag {
+          display: inline-flex;
+          background-color: $background-color;
+          color: white;
+          padding: 3px 10px;
+          font-size: 11px;
+          font-weight: 600;
+          border-radius: 25px;
+          margin: 5px 5px 5px 0;
+        }
+
+      }
+
+    }
+
+    .remaining-text {
+      font-size: 16px;
+      color: #4F5D6B;
+      font-weight: 600;
+      padding-bottom: 0;
+
+      .text-link {
+        font-size: 14px;
+      }
+
+    }
+
+  }
+
+
+
+}

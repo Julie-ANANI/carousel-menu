@@ -228,15 +228,14 @@
       <!-- /Executive template generation -->
 
       <!-- Executive report -->
-      <div class="section-light-container" id="executive-report">
-        <div class="column col-xs-12 col-11 col-mx-auto white-background">
-          <app-executive-report
-            [sections]="project.executiveReport.totalSections"
-            [questions]="questions"
-            [answers]="answers">
-          </app-executive-report>
-        </div>
-      </div>
+      <ng-container *ngIf="project.executiveReport.totalSections > 0" id="executive-report">
+        <app-executive-report
+          [report]="project.executiveReport"
+          [questions]="questions"
+          [answers]="answers"
+          [mapInitialConfiguration]="continentTarget">
+        </app-executive-report>
+      </ng-container>
       <!-- /Executive report -->
 
       <!-- UMI Intro -->
@@ -473,7 +472,28 @@
       </div>
       <!-- /Menu button -->
 
+      <div>
 
+        <!-- Conclusion -->
+        <section *ngIf="project.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" class="section-light-container s-conclusion-print" id="conclusion">
+          <div class="column col-xs-12 col-11 col-mx-auto">
+            <div class="conclusion-wrapper">
+              <div class="section-inline-container">
+                <h1 class="main-heading">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h1>
+                <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
+                <app-text-zone
+                  [elementId]="'finalConclusion'"
+                  [readonly]="!adminSide"
+                  [data]="project.marketReport?.finalConclusion?.conclusion"
+                  (onTextChange)="keyUpHandlerFunction($event, 'finalConclusion')">
+                </app-text-zone>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- /Conclusion -->
+
+      </div>
 
     </ng-container>
     <!-- /Display spinner off -->
@@ -597,24 +617,6 @@
       </div>
       <!-- /Other question and answers -->
 
-      <!-- Conclusion -->
-      <section *ngIf="project.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" class="section-light-container s-conclusion-print" id="conclusion">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="conclusion-wrapper">
-            <div class="section-inline-container">
-              <h1 class="main-heading">{{ 'MARKET_REPORT.CONCLUSION' | translate }}</h1>
-              <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
-              <app-text-zone
-                [elementId]="'finalConclusion'"
-                [readonly]="!adminSide"
-                [data]="project.marketReport?.finalConclusion?.conclusion"
-                (onTextChange)="keyUpHandlerFunction($event, 'finalConclusion')">
-              </app-text-zone>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- /Conclusion -->
 
     </div>
     <!-- /Answer wrapper -->
