@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
  */
 import { CommonService } from '../../../../services/common/common.service';
 import { FilterService } from './services/filters.service';
+import { ResponseService } from './services/response.service';
 
 
 /***
@@ -44,6 +45,8 @@ import { SharedMarketComment2Component } from './components/professional-comment
 import { ExecutiveReportComponent } from './components/executive-report/executive-report.component';
 import { ExecutiveConclusionComponent } from './components/executive-report/executive-conclusion/executive-conclusion.component';
 import { ExecutiveProfessionalComponent } from './components/executive-report/executive-professional/executive-professional.component';
+import { ExecutiveSectionComponent } from './components/executive-report/executive-section/executive-section.component';
+
 
 
 @NgModule({
@@ -64,7 +67,8 @@ import { ExecutiveProfessionalComponent } from './components/executive-report/ex
   ],
   providers: [
     CommonService,
-    FilterService
+    FilterService,
+    ResponseService
   ],
   declarations: [
     SharedMarketReportComponent,
@@ -83,6 +87,7 @@ import { ExecutiveProfessionalComponent } from './components/executive-report/ex
     ExecutiveReportComponent,
     ExecutiveConclusionComponent,
     ExecutiveProfessionalComponent,
+    ExecutiveSectionComponent,
   ],
   exports: [
     SharedMarketReportComponent

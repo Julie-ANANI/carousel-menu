@@ -18,8 +18,9 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs/Subject';
 import { ShareService } from '../../../../services/share/share.service';
 import { Share } from '../../../../models/share';
-import { CalculationService } from '../../../../services/frontend/calculation/calculation.service';
-import { Executive, executiveTemplate } from '../../../../models/data-static/template';
+import { CalculationService } from '../../../../services/calculation/calculation.service';
+import { Executive, executiveTemplate } from './models/template';
+import { ResponseService } from './services/response.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -114,7 +115,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private authService: AuthService,
               private shareService: ShareService,
               public filterService: FilterService,
-              private calculationService: CalculationService) { }
+              private calculationService: CalculationService,
+              private responseService: ResponseService) { }
 
   ngOnInit() {
     this.filterService.reset();
@@ -182,15 +184,40 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
      */
     this._previewMode = this.project.previewMode || false;
 
+    /***
+     * this is to display on the front page.
+     * @type {number}
+     */
     this.today = Date.now();
 
+    /***
+     * Client side to toggle the full view.
+     * @type {boolean}
+     * @private
+     */
     this._showDetails = true;
 
+    /***
+     * we are checking do we have any template.
+     * @type {number | undefined}
+     */
+    this.numberOfSections = this.project.executiveReport.totalSections || 0;
 
-    this.numberOfSections = this.project.executiveReport.totalSections;
-
+    /***
+     * assinging the value of the executive template.
+     * @type {Executive}
+     */
     this.executiveTemplates = executiveTemplate;
 
+    /***
+     * passing the project to the response service.
+     */
+    this.setProject();
+
+  }
+
+  private setProject() {
+    this.responseService.setProject(this.project);
   }
 
   /***
@@ -201,6 +228,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       this._answers = results.answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
       });
+
+      /***
+       * passing the non filtered answers to the service to use in the executive report.
+       */
+      this.responseService.setExecutiveAnswers(this._answers);
 
       this._filteredAnswers = this._answers;
 
@@ -276,6 +308,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     if (this.project.preset && this.project.preset.sections) {
       this.project.preset.sections.forEach((section: Section) => {
         this._questions = this._questions.concat(section.questions);
+
+        /***
+         * passing the questions to the response service.
+         */
+        this.responseService.setQuestions(this._questions);
+
       });
       // remove spaces in questions identifiers.
       this._cleaned_questions = this._questions.map((q) => {
@@ -294,12 +332,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.scrollOn = window.scrollY !== 0;
-
     this._menuButton = (this.getCurrentScroll() > 150);
-
   }
 
-  getCurrentScroll() {
+  private getCurrentScroll() {
     if (typeof window.scrollY !== 'undefined' && window.scrollY >= 0) {
       return window.scrollY;
     }
@@ -431,8 +467,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
         'emplacement géographique, personne etc. ' + '\r\n' + '\r\n' + 'Cordialement, ' + '\r\n' + '\r\n' + this.getOwnerName());
     }
 
-    window.location.href = `mailto:?subject${subject}&body${message}`;
-    // window.location.href = 'mailto:' + '?subject=' + subject  + '&body=' + message;
+    window.location.href = 'mailto:' + '?subject=' + subject  + '&body=' + message;
 
   }
 
@@ -477,6 +512,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     if (this.project.status) {
       this.innovationService.save(this.project._id, this.project).first().subscribe((response) => {
         this.project = response;
+        /***
+         * passing the project to the response service.
+         */
+        this.setProject();
       });
     }
   }

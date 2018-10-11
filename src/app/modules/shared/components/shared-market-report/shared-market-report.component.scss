@@ -204,7 +204,7 @@
         font-weight: normal;
         font-size: 1rem;
         color: $text-dark;
-        width: 50%;
+        width: 80%;
       }
 
       .image-wrapper {
@@ -229,7 +229,7 @@
       .goal-text {
         display: inline-flex;
         justify-content: center;
-        max-width: 500px;
+        max-width: 80%;
         background: $background-color;
         color: white;
         border-radius: 25px;
@@ -255,6 +255,10 @@
       p {
         padding-bottom: 0;
         font-size: .75rem;
+      }
+
+      a:hover {
+        text-decoration: underline;
       }
 
     }

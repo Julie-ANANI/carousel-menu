@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Answer } from '../../../../../../../models/answer';
+import { ResponseService } from '../../../services/response.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-executive-professional',
@@ -7,12 +9,7 @@ import { Answer } from '../../../../../../../models/answer';
   styleUrls: ['./executive-professional.component.scss']
 })
 
-export class ExecutiveProfessionalComponent implements OnInit {
-
-  @Input() set answers(value: Array<Answer>) {
-    this.answerReceived = value;
-    this.topProfessionals();
-  }
+export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   @Input() set mapInitialConfiguration(value: any) {
     this.initialConfigurationReceived = value;
@@ -22,7 +19,9 @@ export class ExecutiveProfessionalComponent implements OnInit {
     this.profAbstractReceived = value;
   }
 
-  answerReceived: Array<Answer>;
+  ngUnsubscribe: Subject<any> = new Subject();
+
+  answerReceived: Array<Answer> = [];
 
   professionals: Array<any> = [];
 
@@ -30,9 +29,19 @@ export class ExecutiveProfessionalComponent implements OnInit {
 
   profAbstractReceived: string;
 
-  constructor() { }
+  constructor(private responseService: ResponseService) { }
 
   ngOnInit() {
+    this.getAnswers();
+  }
+
+  private getAnswers() {
+    this.responseService.getExecutiveAnswers().takeUntil(this.ngUnsubscribe).subscribe((response) => {
+      if (response !== null) {
+        this.answerReceived = response;
+        this.topProfessionals();
+      }
+    })
   }
 
   private topProfessionals() {
@@ -48,6 +57,11 @@ export class ExecutiveProfessionalComponent implements OnInit {
       });
     }
 
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
 }

@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Answer} from '../../../../../../models/answer';
-import {Question} from '../../../../../../models/question';
-import {User} from '../../../../../../models/user.model';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ResponseService} from '../../services/response.service';
+import {Subject} from 'rxjs/Subject';
+import {Innovation} from '../../../../../../models/innovation';
 
 @Component({
   selector: 'app-executive-report',
@@ -9,49 +9,35 @@ import {User} from '../../../../../../models/user.model';
   styleUrls: ['./executive-report.component.scss']
 })
 
-export class ExecutiveReportComponent implements OnInit {
-
-  @Input() set answers(value: Array<Answer>) {
-    this.answerReceived = value;
-  }
-
-  @Input() set questions(value: Question) {
-    this.questionReceived = value;
-  }
-
-  @Input() set report(value: number) {
-    this.reportReceived = value;
-  }
+export class ExecutiveReportComponent implements OnInit, OnDestroy {
 
   @Input() set mapInitialConfiguration(value: any) {
     this.initialConfigurationReceived = value;
   }
 
-  @Input() set operatorContact(value: User) {
-    this.opContactReceived = value;
-  }
-
-  @Input() set conclusion(value: string) {
-    this.conclusionReceived = value;
-  }
-
-  answerReceived: Array<Answer>;
-
-  professionals: Array<any> = [];
-
-  questionReceived: Question;
-
-  reportReceived: any;
+  ngUnsubscribe: Subject<any> = new Subject();
 
   initialConfigurationReceived: any;
 
-  opContactReceived: User;
+  reportReceived: any;
 
-  conclusionReceived: string;
-
-  constructor() { }
+  constructor(private responseService: ResponseService) { }
 
   ngOnInit() {
+    this.getReport();
+  }
+
+  private getReport() {
+    this.responseService.getProject().subscribe((response: Innovation) => {
+      if (response !== null) {
+        this.reportReceived = response.executiveReport;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
 }

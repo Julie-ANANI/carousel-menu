@@ -4,20 +4,24 @@
 
       <!-- Professional column -->
       <app-executive-professional
-      [answers]="answerReceived"
       [mapInitialConfiguration]="initialConfigurationReceived"
       [ngStyle]="{ 'width': '33.33%' }">
       </app-executive-professional>
       <!-- /Professional column -->
 
+      <!-- Sections -->
+      <app-executive-section
+        [ngStyle]="{ 'width': '33.33%' }">
+      </app-executive-section>
+      <!-- /Sections -->
 
-      <ng-container *ngIf="reportReceived.totalSections === 2">
+      <!-- Conclusion part -->
+      <ng-container *ngIf="reportReceived?.totalSections === 2">
         <app-executive-conclusion
-          [conclusion]="conclusionReceived"
-          [ngStyle]="{ 'width': '33.33%' }"
-          [operatorContact]="opContactReceived">
+          [ngStyle]="{ 'width': '33.33%' }">
         </app-executive-conclusion>
       </ng-container>
+      <!-- /Conclusion part -->
 
     </div>
   </div>

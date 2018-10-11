@@ -237,7 +237,7 @@
                 <span>{{ 'MARKET_REPORT.PRINT_DATE' | translate }} {{ today | date:dateFormat }}</span>
                 <div class="text-right">
                   <a [href]="getCompanyURL()" class="text-link">{{ getCompanyName() }}</a>
-                  <p>contact@umi.us | 04 89 85 10 56 | www.umi.us</p>
+                  <p><a href="mailto:contact@umi.us">contact@umi.us</a> | 04 89 85 10 56 | www.umi.us</p>
                 </div>
               </div>
 
@@ -317,12 +317,7 @@
         <!-- Executive report -->
         <section *ngIf="project.executiveReport.totalSections > 0" id="executive-report">
           <app-executive-report
-            [report]="project.executiveReport"
-            [questions]="questions"
-            [answers]="answers"
-            [mapInitialConfiguration]="continentTarget"
-            [conclusion]="project.marketReport?.finalConclusion?.conclusion"
-            [operatorContact]="project?.operator">
+            [mapInitialConfiguration]="continentTarget">
           </app-executive-report>
         </section>
         <!-- /Executive report -->
