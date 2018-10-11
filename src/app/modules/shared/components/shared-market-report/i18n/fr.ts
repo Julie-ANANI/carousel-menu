@@ -30,6 +30,8 @@ export const MARKET_REPORT = {
 
   'CONCLUSION': 'Conclusion finale',
 
+  'COMMENT_HEADING': 'Espace pour vos commentaires',
+
   'KEY_LEARNING': 'Connaissances clés',
 
   'STICKY_BAR': {
@@ -62,7 +64,8 @@ export const MARKET_REPORT = {
     'TITLE': 'Objectif',
     'CHOOSE_TEMPLATE': 'Choisir le modèle',
     'VALID_BUTTON': 'Modèle valide',
-    'DELETE_BUTTON': 'Supprimer le modèle'
+    'DELETE_BUTTON': 'Supprimer le modèle',
+    'CONCLUSION': 'Conclusion résumé'
   },
 
   'EXECUTIVE_TEMPLATE': {
@@ -73,10 +76,16 @@ export const MARKET_REPORT = {
       'OTHERS': 'autres',
       'FOLLOW': 'Suite...'
     },
+    'CONCLUSION_HEADING': 'Ce que dit le marché…',
+    'UMI_CONTACT': {
+      'A': 'Vous souhaitez lancer un test marché ?',
+      'B': 'Contactez-nous au'
+    }
   },
 
   'EXECUTIVE_PLACEHOLDER': {
-    'GOAL': 'Quel est l\'objectif de cette innovation ?'
+    'GOAL': 'Décrivez l\'objectif de cette innovation en 120 mots.',
+    'CONCLUSION': 'Décrivez la conclusion de cette campagne d’innovation en 1200 mots.'
   },
 
   'TARGET_COUNTRIES': 'Pays ciblés',

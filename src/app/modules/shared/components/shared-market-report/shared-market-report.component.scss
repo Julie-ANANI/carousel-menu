@@ -110,6 +110,62 @@
 
   }
 
+  .menu-wrapper {
+    position: fixed;
+    bottom: 1.875rem;
+    right: 1.875rem;
+    z-index: 11;
+    text-align: right;
+
+    .btn {
+      animation-name: fadeIn;
+      animation-duration: 1s;
+      animation-timing-function: ease-in-out;
+      cursor: default;
+      border-radius: .18rem;
+      box-shadow: $box-shadow;
+    }
+
+    .btn-secondary:hover {
+      background-color: $secondary-color;
+    }
+
+    .menu-item-wrapper {
+      background-color: white;
+      width: 250px;
+      box-shadow: $box-shadow;
+      border: 1px solid $border-color;
+      border-radius: .18rem;
+      text-align: left;
+      max-height: 500px;
+      overflow: auto;
+
+      ul {
+        list-style: none;
+
+        li {
+          cursor: pointer;
+          font-size: .85rem;
+          color: $dark-color;
+          padding: 1rem .9375rem;
+        }
+
+        li:hover {
+          background-color: $primary-color;
+          color: white;
+        }
+
+        li.active {
+          background-color: $primary-color;
+          color: white;
+        }
+
+      }
+
+    }
+
+  }
+
   .front-wrapper {
     display: flex;
     flex-direction: column;
@@ -410,61 +466,7 @@
 
   }
 
-  .menu-wrapper {
-    position: fixed;
-    bottom: 1.875rem;
-    right: 1.875rem;
-    z-index: 11;
-    text-align: right;
 
-    .btn {
-      animation-name: fadeIn;
-      animation-duration: 1s;
-      animation-timing-function: ease-in-out;
-      cursor: default;
-      border-radius: .18rem;
-      box-shadow: $box-shadow;
-    }
-
-    .btn-secondary:hover {
-      background-color: $secondary-color;
-    }
-
-    .menu-item-wrapper {
-      background-color: white;
-      width: 250px;
-      box-shadow: $box-shadow;
-      border: 1px solid $border-color;
-      border-radius: .18rem;
-      text-align: left;
-      max-height: 500px;
-      overflow: auto;
-
-      ul {
-        list-style: none;
-
-        li {
-          cursor: pointer;
-          font-size: .85rem;
-          color: $dark-color;
-          padding: 1rem .9375rem;
-        }
-
-        li:hover {
-          background-color: $primary-color;
-          color: white;
-        }
-
-        li.active {
-          background-color: $primary-color;
-          color: white;
-        }
-
-      }
-
-    }
-
-  }
 
   .origin-wrapper {
     background-color: $background-color;
@@ -520,6 +522,10 @@
       color: $primary-color;
       font-weight: 600;
       padding-bottom: 1.57rem;
+    }
+
+    .abstract-wrapper {
+      margin-top: 1.57rem;
     }
 
   }

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Answer} from '../../../../../../models/answer';
 import {Question} from '../../../../../../models/question';
+import {User} from '../../../../../../models/user.model';
 
 @Component({
   selector: 'app-executive-report',
@@ -30,6 +31,14 @@ export class ExecutiveReportComponent implements OnInit {
     this.initialConfigurationReceived = value;
   }
 
+  @Input() set operatorContact(value: User) {
+    this.opContactReceived = value;
+  }
+
+  @Input() set conclusion(value: string) {
+    this.conclusionReceived = value;
+  }
+
   answerReceived: Array<Answer>;
 
   professionals: Array<any> = [];
@@ -39,6 +48,10 @@ export class ExecutiveReportComponent implements OnInit {
   reportReceived: any;
 
   initialConfigurationReceived: any;
+
+  opContactReceived: User;
+
+  conclusionReceived: string;
 
   constructor() { }
 

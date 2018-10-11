@@ -37,6 +37,8 @@ export const MARKET_REPORT = {
 
   'CONCLUSION': 'Final conclusion',
 
+  'COMMENT_HEADING': 'Space for your comments',
+
   'KEY_LEARNING': 'Key learnings',
 
   'STICKY_BAR': {
@@ -71,7 +73,8 @@ export const MARKET_REPORT = {
     'TITLE': 'Objective',
     'CHOOSE_TEMPLATE': 'Choose template',
     'VALID_BUTTON': 'Valid Template',
-    'DELETE_BUTTON': 'Delete Template'
+    'DELETE_BUTTON': 'Delete Template',
+    'CONCLUSION': 'Conclusion abstract'
   },
 
   'EXECUTIVE_TEMPLATE': {
@@ -80,12 +83,18 @@ export const MARKET_REPORT = {
     'REMAINING': {
       'AND': 'and',
       'OTHERS': 'others',
-      'FOLLOW': 'Follow...'
+      'FOLLOW': 'Follow ...'
     },
+    'CONCLUSION_HEADING': 'What the market says ...',
+    'UMI_CONTACT': {
+      'A': 'Do you want to launch a market test?',
+      'B': 'Contact us at'
+    }
   },
 
   'EXECUTIVE_PLACEHOLDER': {
-    'GOAL': 'What is the objective of this innovation?'
+    'GOAL': 'Describe the objective of this innovation within 120 words.',
+    'CONCLUSION': 'Describe the conclusion of this innovation campaign within 1200 words.'
   },
 
   'TARGET_COUNTRIES': 'Targeted countries',

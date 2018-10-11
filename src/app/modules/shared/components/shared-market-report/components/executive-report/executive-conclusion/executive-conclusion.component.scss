@@ -1,0 +1,59 @@
+@import "../../../../../../../../style/variables";
+
+#executive-conclusion {
+  background-color: $background-color;
+  color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+  .section-first {
+    padding: 3.15rem;
+
+    .main-heading {
+      color: white;
+    }
+
+    .conclusion-text {
+      font-weight: 300;
+      font-size: 13px;
+      padding-bottom: -.6rem;
+    }
+
+    .operator-contact {
+      margin-top: .9375rem;
+
+      .name, .job, .phone {
+        font-size: 16px;
+        color: white;
+        margin-bottom: .18rem;
+      }
+
+      .job, .phone, .text-link {
+        font-size: 13px;
+      }
+
+      .text-link {
+        margin-bottom: 0;
+      }
+
+    }
+
+  }
+
+  .section-second {
+    background-color: #313C48;
+    min-height: 146.71px;
+    padding: 3.15rem;
+
+    h6 {
+      color: white;
+      margin-bottom: .18rem;
+      font-size: 16px;
+    }
+
+  }
+
+}

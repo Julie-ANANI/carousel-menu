@@ -5,13 +5,14 @@
   .first-page {
     background-color: white;
     display: flex;
-    border-radius: .18rem;
+    border-radius: 3px;
     justify-content: space-between;
   }
 
   .professional-wrapper {
     padding: 3.15rem;
     border-right: 1px solid $border-color;
+    width: 33.33%;
 
     .main-heading {
       margin-bottom: .2rem;
@@ -20,7 +21,7 @@
     .sub-title {
       color: $meta-color;
       font-weight: 600;
-      font-size: .8125rem;
+      font-size: 13px;
       padding-bottom: 0;
 
       .fa-user {
@@ -47,7 +48,7 @@
       max-width: 380px;
       height: 90px;
       background-color: #F5F5F5;
-      border-right: .18rem;
+      border-right: 3px;
       margin-bottom: 1.2rem;
       display: flex;
 

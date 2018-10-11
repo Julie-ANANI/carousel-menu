@@ -45,7 +45,6 @@ export interface Innovation {
   executiveReport?: {
     totalSections?: number,
     goal?: string,
-    conclusion?: string,
     sections?: [{ [prop: string]: any }]
   };
   operator?: User;

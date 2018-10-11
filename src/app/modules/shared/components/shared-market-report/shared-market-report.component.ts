@@ -430,7 +430,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
         'emplacement géographique, personne etc. ' + '\r\n' + '\r\n' + 'Cordialement, ' + '\r\n' + '\r\n' + this.getOwnerName());
     }
 
-    window.location.href = 'mailto:' + '?subject=' + subject  + '&body=' + message;
+    window.location.href = `mailto:?subject${subject}&body${message}`;
+    // window.location.href = 'mailto:' + '?subject=' + subject  + '&body=' + message;
 
   }
 
@@ -497,7 +498,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   /***
    * This function is called when we click on the radio button, and assign the
-   * clicked value to the numberOfSection
+   * clicked value to the numberOfSection.
    * @param {Event} event
    * @param {number} value
    */
@@ -523,7 +524,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
    * @returns {string}
    */
   getIntroSrc(): string {
-    return 'https://res.cloudinary.com/umi/image/upload/v1539157710/app/default-images/intro/UMI-' + this.lang + '.png';
+    return `https://res.cloudinary.com/umi/image/upload/v1539157710/app/default-images/intro/UMI-${this.lang}.png`;
   }
 
   /***
