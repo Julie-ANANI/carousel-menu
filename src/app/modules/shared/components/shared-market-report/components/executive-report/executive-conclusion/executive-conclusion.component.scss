@@ -1,6 +1,6 @@
 @import "../../../../../../../../style/variables";
 
-#executive-conclusion {
+#executive-conclusion-wrapper {
   background-color: $background-color;
   color: white;
   width: 100%;
@@ -52,6 +52,29 @@
       color: white;
       margin-bottom: .18rem;
       font-size: 16px;
+    }
+
+    .logo-address {
+      margin-top: .6rem;
+      display: flex;
+      align-items: center;
+
+      .logo img {
+        width: 100px;
+        height: auto;
+      }
+
+      .address {
+        font-size: 12px;
+        margin-left: .6rem;
+        font-weight: 600;
+
+        p {
+          padding-bottom: 0;
+        }
+
+      }
+
     }
 
   }
