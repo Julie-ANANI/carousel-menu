@@ -107,7 +107,17 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
     this._innoid = this.project._id;
 
-    this.currentInnovationIndex = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
+    const index = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
+
+    console.log(index);
+
+    if (index !== -1) {
+      this.currentInnovationIndex = index;
+    } else {
+      this.currentInnovationIndex = 0;
+    }
+
+    console.log(this.currentInnovationIndex);
 
     this.resetMap();
 
