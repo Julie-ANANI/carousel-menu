@@ -13,18 +13,14 @@ export class ExecutiveReportComponent implements OnInit {
 
   @Input() set answers(value: Array<Answer>) {
     this.answerReceived = value;
-    this.topProfessionals();
-    console.log(this.answerReceived);
   }
 
   @Input() set questions(value: Question) {
     this.questionReceived = value;
-    console.log(value);
   }
 
   @Input() set report(value: number) {
     this.reportReceived = value;
-    console.log(value);
   }
 
   @Input() set mapInitialConfiguration(value: any) {
@@ -56,22 +52,6 @@ export class ExecutiveReportComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  }
-
-  topProfessionals() {
-    this.answerReceived.forEach((items) => {
-      if (items.profileQuality === 2) {
-        this.professionals.push(items);
-      }
-    });
-
-    if (this.professionals.length === 0) {
-      this.answerReceived.forEach((items) => {
-        this.professionals.push(items);
-      });
-    }
-
-    console.log(this.professionals);
   }
 
 }

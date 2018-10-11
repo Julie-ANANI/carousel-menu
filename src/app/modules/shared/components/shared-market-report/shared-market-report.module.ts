@@ -43,6 +43,7 @@ import { StarsComponent } from './components/stars/stars.component';
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
 import { ExecutiveReportComponent } from './components/executive-report/executive-report.component';
 import { ExecutiveConclusionComponent } from './components/executive-report/executive-conclusion/executive-conclusion.component';
+import { ExecutiveProfessionalComponent } from './components/executive-report/executive-professional/executive-professional.component';
 
 
 @NgModule({
@@ -81,6 +82,7 @@ import { ExecutiveConclusionComponent } from './components/executive-report/exec
     StarsComponent,
     ExecutiveReportComponent,
     ExecutiveConclusionComponent,
+    ExecutiveProfessionalComponent,
   ],
   exports: [
     SharedMarketReportComponent
