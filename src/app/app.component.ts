@@ -61,7 +61,6 @@ export class AppComponent implements OnInit, OnDestroy {
         });
       });*/
 
-      // this.loaderService.stopLoading();
     }
 
     if (this.authService.isAcceptingCookies) {

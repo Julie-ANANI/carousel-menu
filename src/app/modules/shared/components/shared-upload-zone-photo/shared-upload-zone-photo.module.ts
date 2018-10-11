@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedUploadZonePhotoComponent } from './shared-upload-zone-photo.component';
 import { FormsModule } from '@angular/forms';
-import { FileUploadModule } from 'ng2-file-upload';
 import { FileDropModule } from 'ngx-file-drop';
 
 @NgModule({
@@ -11,7 +10,6 @@ import { FileDropModule } from 'ngx-file-drop';
     CommonModule,
     TranslateModule.forChild(),
     FormsModule,
-    FileUploadModule,
     FileDropModule
   ],
   declarations: [

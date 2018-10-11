@@ -25,7 +25,6 @@ import { TranslateNotificationsService } from './services/notifications/notifica
 import { TranslateTitleService } from './services/title/title.service';
 import { UserService } from './services/user/user.service';
 import { LoaderService } from './services/loader/loader.service';
-import { ChartsModule } from 'ng2-charts';
 import { ShareService } from './services/share/share.service';
 import { AutocompleteService } from './services/autocomplete/autocomplete.service';
 import { EmailService } from './services/email/email.service';
@@ -70,7 +69,6 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
         useFactory: (CreateTranslateLoader)
       }
     }),
-    ChartsModule,
     Ng2AutoCompleteModule,
     // Angular2FontawesomeModule,
     CookieModule.forRoot()
