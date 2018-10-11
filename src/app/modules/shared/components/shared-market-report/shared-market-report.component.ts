@@ -172,7 +172,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
      * here we are registering the index of the lang of the user and according to that we display the innovation.
      * @type {number}
      */
-    this._currentInnovationIndex = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
+    const index = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
+    this._currentInnovationIndex = index !== -1 ? index : 0;
 
     /***
      * this is to check, if the admin make the synthesis available before the status is Done.
