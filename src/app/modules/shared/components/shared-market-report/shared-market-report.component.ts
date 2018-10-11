@@ -109,15 +109,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
     const index = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
 
-    console.log(index);
-
     if (index !== -1) {
       this.currentInnovationIndex = index;
     } else {
       this.currentInnovationIndex = 0;
     }
-
-    console.log(this.currentInnovationIndex);
 
     this.resetMap();
 
