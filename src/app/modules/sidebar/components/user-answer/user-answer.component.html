@@ -35,11 +35,11 @@
           </div>
         </div>
         <div *ngIf="adminMode && modalAnswer.localStatus !== 'draft'" class="editMode">
-          <label class="form-switch" for="editMode">
+          <label class="form-switch" for="answer-editMode">
             <input
               type="checkbox"
-              name="editMode"
-              id="editMode"
+              name="answer-editMode"
+              id="answer-editMode"
               (change)="changeMode($event)"
               [checked]="editMode">
             <i class="form-icon"></i>
@@ -78,7 +78,7 @@
           <input
             type="text"
             [(ngModel)]="modalAnswer.job"
-            id="jobTitle"
+            id="answer-jobTitle"
             alt="Job title"
             class="form-default"
             [attr.placeholder]="'COMMON.JOBTITLE_PLACEHOLDER' | translate">
@@ -96,7 +96,7 @@
           <input
             type="text"
             [(ngModel)]="modalAnswer.company.name"
-            id="company"
+            id="answer-company"
             alt="Company"
             class="form-default"
             [attr.placeholder]="'COMMON.COMPANY_PLACEHOLDER' | translate">
@@ -137,8 +137,8 @@
     <!-- /User detail -->
 
     <!-- Tags section -->
-    <div *ngIf="modalAnswer?.tags.length > 0" class="tag-wrapper">
-      <label class="form-label">Tag</label>
+    <div class="tag-wrapper">
+      <label class="form-label" *ngIf="modalAnswer?.tags.length > 0">Tags</label>
       <app-shared-tag-item
         [tags]="modalAnswer.tags"
         [editMode]="editMode"
@@ -188,11 +188,11 @@
 
       <!-- Email -->
       <div *ngIf="modalAnswer.status === 'VALIDATED' || modalAnswer.status === 'VALIDATED_NO_MAIL'" class="status-email">
-        <label class="form-switch" for="email">
+        <label class="form-switch" for="answer-email">
           <input
             type="checkbox"
-            name="email"
-            id="email"
+            name="answer-email"
+            id="answer-email"
             (change)="sendEmail($event, 'VALIDATED')"
             [checked]="modalAnswer.status === 'VALIDATED'">
           <i class="form-icon"></i>

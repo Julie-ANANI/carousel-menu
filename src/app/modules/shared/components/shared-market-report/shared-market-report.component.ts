@@ -107,7 +107,13 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
     this._innoid = this.project._id;
 
-    this.currentInnovationIndex = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
+    const index = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
+
+    if (index !== -1) {
+      this.currentInnovationIndex = index;
+    } else {
+      this.currentInnovationIndex = 0;
+    }
 
     this.resetMap();
 
@@ -577,7 +583,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   getLogo(): string {
-    return environment.logoURL;
+    return environment.logoSynthURL;
   }
 
   get adminSide(): boolean {

@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { ShareRoutingModule } from './share-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotFoundPageModule } from '../base/components/not-found-page/not-found-page.module';
-import { SynthesisListModule } from './component/synthesis-list/synthesis-list.module';
+import { SynthesisListModule } from '../client/components/synthesis-list/synthesis-list.module';
 import { FooterModule } from '../base/components/footer/footer.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../sidebar/components/user-form/sidebar-user-form.module';
