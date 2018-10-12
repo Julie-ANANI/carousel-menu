@@ -4,7 +4,7 @@
   <div *ngIf="answer.profileQuality === 2" class="label-validate">Top profile</div>
 
   <!-- Flag -->
-  <div *ngIf="answer.country.flag" class="flag-wrapper">
+  <div *ngIf="answer.country && answer.country.flag" class="flag-wrapper">
     <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
   </div>
 
