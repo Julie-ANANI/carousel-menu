@@ -204,7 +204,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
       });
 
       this._countries = results.answers.reduce((acc, answer) => {
-        if (acc.indexOf(answer.country.flag) === -1) {
+        if (answer.country && acc.indexOf(answer.country.flag) === -1) {
           acc.push(answer.country.flag);
         }
         return acc;
