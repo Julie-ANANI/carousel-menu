@@ -52,8 +52,8 @@
           <a *ngIf="request.entity==='MAIL'" href="">{{request.keywords}}</a>
           <br/>
           <small *ngIf="request.entity==='PERSON'">{{request.results ? request.results.person.length : 0}} résultats | {{request.metadata.user.name}}</small>
-          <small *ngIf="request.entity==='PERSON_BY_COUNTRIES'">{{request.totalResults}} résultats | {{request.metadata.user.name}}</small>
-          <small *ngIf="request.entity==='PERSON_BY_REGIONS'">{{request.totalResults}} résultats | {{request.metadata.user.name}}</small>
+          <small *ngIf="request.entity==='PERSON_BY_COUNTRIES'">{{request.totalResults || request.results.person.length}} résultats | {{request.metadata.user.name}}</small>
+          <small *ngIf="request.entity==='PERSON_BY_REGIONS'">{{request.totalResults || request.results.person.length}} résultats | {{request.metadata.user.name}}</small>
         </td>
 
         <td class="text-center" *ngIf="!mails">
