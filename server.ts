@@ -9,6 +9,7 @@ XHR2.prototype._restrictedHeaders.cookie = false;
 import { enableProdMode } from '@angular/core';
 
 import * as express from 'express';
+import * as compression from 'compression';
 import { join } from 'path';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
@@ -16,6 +17,7 @@ enableProdMode();
 
 // Express server
 const app = express();
+app.use(compression());
 
 const PORT = process.env.PORT || 3080;
 const DIST_FOLDER = join(process.cwd(), 'dist');
