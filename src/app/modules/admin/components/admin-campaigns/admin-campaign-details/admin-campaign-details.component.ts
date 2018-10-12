@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../models/campaign';
-//import { environment } from '../../../../../../environments/environment';
 import { QuizService } from '../../../../../services/quiz/quiz.service';
 
 @Component({
