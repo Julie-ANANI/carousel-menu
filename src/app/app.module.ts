@@ -71,7 +71,6 @@ import { PresetResolver } from './resolvers/preset.resolver';
     }),
     ChartsModule,
     Ng2AutoCompleteModule,
-    // Angular2FontawesomeModule,
     CookieModule.forRoot()
   ],
   declarations: [
