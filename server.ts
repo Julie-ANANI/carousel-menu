@@ -10,14 +10,14 @@ import { enableProdMode } from '@angular/core';
 
 import * as express from 'express';
 import * as compression from 'compression';
-import { join } from 'path';
+import { lookup } from 'mime-types';
+import { join, extname } from 'path';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
 
 // Express server
 const app = express();
-app.use(compression());
 
 const PORT = process.env.PORT || 3080;
 const DIST_FOLDER = join(process.cwd(), 'dist');
@@ -45,8 +45,18 @@ app.use('*', (req, res, next) => {
   next();
 });
 
+app.use('*.*', function (req, res, next) {
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', lookup(extname(req.originalUrl)));
+  req.url = req.url + '.gz';
+  next();
+});
+
 // Server static files from /browser
 app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
+
+// Use compression only for Universal routes, not static files
+app.use(compression());
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
