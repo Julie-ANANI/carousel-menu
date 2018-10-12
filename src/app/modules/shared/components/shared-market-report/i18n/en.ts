@@ -88,7 +88,7 @@ export const MARKET_REPORT = {
     'CONCLUSION_HEADING': 'What the market says ...',
     'UMI_CONTACT': {
       'A': 'Do you want to launch a market test?',
-      'B': 'Contact us at'
+      'B': 'Contact us'
     }
   },
 

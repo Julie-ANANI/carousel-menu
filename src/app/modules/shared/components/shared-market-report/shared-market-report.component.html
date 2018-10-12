@@ -1,5 +1,6 @@
 <section class="section-container s-print" id="market-report" [ngStyle]="{ 'background-color': (project.status !== 'DONE' && !adminSide && !previewMode) ? 'white' : '#F5F5F5' }">
 
+
   <!-- Project status not done client side -->
   <ng-container *ngIf="project.status !== 'DONE' && !adminSide">
     <div class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '3.15rem' }">
@@ -32,6 +33,7 @@
     </div>
   </ng-container>
 
+
   <!-- Project status not submitted admin side -->
   <ng-container *ngIf="project.status === 'EDITING' && adminSide">
     <div class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '3.15rem' }">
@@ -45,6 +47,7 @@
       </div>
     </div>
   </ng-container>
+
 
   <!-- Project status submitted and client side -->
   <ng-container *ngIf="project.status === 'DONE' || (project.status !== 'EDITING' && adminSide)">
@@ -145,6 +148,7 @@
       </div>
       <!-- /Sticky bar -->
 
+
       <!-- Menu button -->
       <div class="menu-wrapper s-menuButton-print gtm-synthesis-menu" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
         <div
@@ -177,10 +181,10 @@
               {{ 'MARKET_REPORT.PROFESSIONAL.TITLE' | translate }}
             </li>
             <li
-              *ngFor="let question of cleaned_questions"
+              *ngFor="let question of questions"
               pageScroll
               pageScrollOffset="135"
-              [href]="'#' + question.identifier"
+              [href]="'#' + question.identifier | removespaces"
               [ngClass]="{'active': activeSection === question.identifier}">
               {{ question.title | multiling:lang }}
             </li>
@@ -203,8 +207,10 @@
       </div>
       <!-- /Menu button -->
 
+
       <!-- Answer sections -->
       <section id="answer-wrapper">
+
 
         <!-- Main page -->
         <section *ngIf="showDetails" class="section-container front-wrapper s-frontPage-print">
@@ -246,6 +252,7 @@
         </section>
         <!-- /Main page -->
 
+
         <!-- Main page goal -->
         <section *ngIf="adminSide" class="section-light-container" id="innovation-goal">
           <div class="column col-xs-12 col-11 col-mx-auto">
@@ -275,6 +282,7 @@
           </div>
         </section>
         <!-- /Main page goal -->
+
 
         <!-- Executive template generation -->
         <section *ngIf="adminSide" class="section-light-container">
@@ -314,13 +322,13 @@
         </section>
         <!-- /Executive template generation -->
 
+
         <!-- Executive report -->
         <section *ngIf="project.executiveReport.totalSections > 0" id="executive-report">
-          <app-executive-report
-            [mapInitialConfiguration]="continentTarget">
-          </app-executive-report>
+          <app-executive-report [innovation]="project"></app-executive-report>
         </section>
         <!-- /Executive report -->
+
 
         <!-- UMI Intro -->
         <section *ngIf="showDetails && getDomainName() === 'umi'" class="section-light-container">
@@ -329,6 +337,7 @@
           </div>
         </section>
         <!-- /UMI Intro -->
+
 
         <!-- Innovation detail -->
         <section *ngIf="showDetails" class="section-light-container s-innovationPage-print">
@@ -369,6 +378,7 @@
           </div>
         </section>
         <!-- /Innovation detail -->
+
 
         <!-- Innovation targeting -->
         <section *ngIf="showDetails" class="section-light-container s-targeting-print">
@@ -431,6 +441,7 @@
           </div>
         </section>
         <!-- /Innovation targeting -->
+
 
         <!-- Innovation analytics -->
         <section *ngIf="showDetails" class="section-light-container s-analytics-print">
@@ -526,6 +537,7 @@
         </section>
         <!-- /Innovation analytics -->
 
+
         <!-- Conclusion -->
         <section *ngIf="project.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" class="section-light-container s-conclusion-print" id="conclusion">
           <div class="column col-xs-12 col-11 col-mx-auto">
@@ -545,11 +557,33 @@
         </section>
         <!-- /Conclusion -->
 
+
       </section>
       <!-- /Answer sections -->
 
+
+      <!-- Other question and answers -->
+      <div class="column col-xs-12 col-11 col-mx-auto">
+        <div *ngFor="let question of questions">
+          <div class="section-light-container s-questions-print">
+            <app-question-section
+              [innovation]="project"
+              [question]="question"
+              [answers]="filteredAnswers"
+              [showComments]="showDetails"
+              [showDetails]="showDetails"
+              [readonly]="!adminSide"
+              (modalAnswerChange)="seeAnswer($event)">
+            </app-question-section>
+          </div>
+        </div>
+      </div>
+      <!-- /Other question and answers -->
+
+
     </ng-container>
     <!-- /Display spinner off -->
+
 
   </ng-container>
   <!-- /Project status submitted and client side -->

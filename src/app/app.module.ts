@@ -117,7 +117,7 @@ import { PresetResolver } from './resolvers/preset.resolver';
     PrintService,
     CurrentRouteService,
     ListenerService,
-    CalculationService
+    CalculationService,
   ],
   bootstrap: [AppComponent]
 })

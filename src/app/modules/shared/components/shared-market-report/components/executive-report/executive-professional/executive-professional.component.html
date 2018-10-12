@@ -11,7 +11,7 @@
   <!-- Map -->
   <div class="map-wrapper">
     <app-worldmap
-      [initialConfiguration]="initialConfigurationReceived"
+      [initialConfiguration]="mapConfiguration"
       [countriesColor]="'#2ECC71'"
       [isEditable]="false"
       [width]="'auto'">
@@ -19,7 +19,7 @@
   </div>
 
   <!-- Abstract prof -->
-  <div class="abstract-professional" [innerHtml]="profAbstractReceived"></div>
+  <div class="abstract-professional" [innerHtml]="professionalAbstract"></div>
 
   <!-- Top profile -->
   <div *ngFor="let answer of professionals | slice:0:4" class="profile">

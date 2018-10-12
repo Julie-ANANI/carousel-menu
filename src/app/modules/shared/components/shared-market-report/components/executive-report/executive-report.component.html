@@ -1,29 +1,43 @@
 <div class="section-light-container" id="executive-report-wrapper">
-  <div class="column col-xs-12 col-11 col-mx-auto">
-    <div class="first-page">
 
-      <!-- Professional column -->
-      <app-executive-professional
-      [mapInitialConfiguration]="initialConfigurationReceived"
-      [ngStyle]="{ 'width': '33.33%' }">
-      </app-executive-professional>
-      <!-- /Professional column -->
 
-      <!-- Sections -->
-      <app-executive-section
-        [ngStyle]="{ 'width': '33.33%' }">
-      </app-executive-section>
-      <!-- /Sections -->
+  <!-- when two sections -->
+  <ng-container *ngIf="executiveReport.totalSections === 2">
+    <div class="column col-xs-12 col-11 col-mx-auto">
+      <div class="one-page">
 
-      <!-- Conclusion part -->
-      <ng-container *ngIf="reportReceived?.totalSections === 2">
-        <app-executive-conclusion
-          [ngStyle]="{ 'width': '33.33%' }">
-        </app-executive-conclusion>
-      </ng-container>
-      <!-- /Conclusion part -->
+        <!-- Professional column -->
+        <div class="section">
+          <app-executive-professional [innovation]="innovationReceived"></app-executive-professional>
+        </div>
+        <!-- /Professional column -->
 
+        <!-- Sections -->
+        <div class="section">
+          <div
+            *ngFor="let section of dummyArray | slice:0:executiveReport.totalSections; let i = index;"
+            class="section-wrapper"
+            [ngClass]="{ 'section-2': executiveReport.totalSections === 2 }">
+            <app-executive-section
+              [innovation]="innovationReceived"
+              [ngStyle]="{ 'width': '100%' }"
+              [section]="section">
+            </app-executive-section>
+          </div>
+        </div>
+        <!-- /Sections -->
+
+        <!-- Conclusion part -->
+        <div class="section">
+          <app-executive-conclusion [innovation]="innovationReceived"></app-executive-conclusion>
+        </div>
+        <!-- /Conclusion part -->
+
+      </div>
     </div>
-  </div>
+  </ng-container>
+  <!-- /when two sections -->
+
+
 </div>
 

@@ -1,4 +1,4 @@
-<section class="question-section-wrapper s-question-print" [id]=domSectionId>
+<section class="question-section-wrapper s-question-print" [id]="question.identifier | removespaces">
 
   <!-- If the question type is checkbox or radio -->
   <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">

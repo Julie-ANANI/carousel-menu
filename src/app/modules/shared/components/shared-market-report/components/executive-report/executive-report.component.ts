@@ -1,7 +1,6 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {ResponseService} from '../../services/response.service';
-import {Subject} from 'rxjs/Subject';
-import {Innovation} from '../../../../../../models/innovation';
+import { Component, Input, OnInit } from '@angular/core';
+import { Innovation } from '../../../../../../models/innovation';
+import {Question} from '../../../../../../models/question';
 
 @Component({
   selector: 'app-executive-report',
@@ -9,35 +8,24 @@ import {Innovation} from '../../../../../../models/innovation';
   styleUrls: ['./executive-report.component.scss']
 })
 
-export class ExecutiveReportComponent implements OnInit, OnDestroy {
+export class ExecutiveReportComponent implements OnInit{
 
-  @Input() set mapInitialConfiguration(value: any) {
-    this.initialConfigurationReceived = value;
+  @Input() set innovation(value: Innovation) {
+    this.innovationReceived = value;
+    this.executiveReport = value.executiveReport;
   }
 
-  ngUnsubscribe: Subject<any> = new Subject();
+  executiveReport: any = {};
 
-  initialConfigurationReceived: any;
+  innovationReceived: Innovation = {};
 
-  reportReceived: any;
+  question: Question = null;
 
-  constructor(private responseService: ResponseService) { }
+  dummyArray = [0, 1, 2, 3, 4, 5, 6, 7];
+
+  constructor() { }
 
   ngOnInit() {
-    this.getReport();
-  }
-
-  private getReport() {
-    this.responseService.getProject().subscribe((response: Innovation) => {
-      if (response !== null) {
-        this.reportReceived = response.executiveReport;
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
   }
 
 }

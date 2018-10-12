@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Answer } from '../../../../../../../models/answer';
 import { ResponseService } from '../../../services/response.service';
 import { Subject } from 'rxjs/Subject';
+import {Innovation} from '../../../../../../../models/innovation';
 
 @Component({
   selector: 'app-executive-professional',
@@ -11,12 +12,8 @@ import { Subject } from 'rxjs/Subject';
 
 export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
-  @Input() set mapInitialConfiguration(value: any) {
-    this.initialConfigurationReceived = value;
-  }
-
-  @Input() set professionalAbstract(value: string) {
-    this.profAbstractReceived = value;
+  @Input() set innovation(value: Innovation) {
+    this.mapConfiguration = value.settings.geography.continentTarget || {};
   }
 
   ngUnsubscribe: Subject<any> = new Subject();
@@ -25,9 +22,9 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   professionals: Array<any> = [];
 
-  initialConfigurationReceived: any;
+  mapConfiguration: any = {};
 
-  profAbstractReceived: string;
+  professionalAbstract = '';
 
   constructor(private responseService: ResponseService) { }
 

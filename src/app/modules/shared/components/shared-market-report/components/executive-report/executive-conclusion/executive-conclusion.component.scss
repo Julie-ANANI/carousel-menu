@@ -10,14 +10,15 @@
   flex-direction: column;
 
   .section-first {
-    padding: 3.15rem;
+    padding: 1.57rem;
 
     .main-heading {
       color: white;
+      font-size: 24px;
     }
 
     .conclusion-text {
-      font-weight: 300;
+      font-weight: 600;
       font-size: 13px;
       padding-bottom: -.6rem;
     }
@@ -46,7 +47,7 @@
   .section-second {
     background-color: #313C48;
     min-height: 146.71px;
-    padding: 3.15rem;
+    padding: 1.57rem;
 
     h6 {
       color: white;

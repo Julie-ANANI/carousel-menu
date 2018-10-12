@@ -7,22 +7,22 @@
     <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.CONCLUSION_HEADING' | translate }}</h1>
 
     <!-- Operator comment -->
-    <div class="conclusion-text" [innerHtml]="conclusionReceived"></div>
+    <div class="conclusion-text" [innerHtml]="conclusion"></div>
 
     <!-- Operator contact -->
-    <div *ngIf="opContactReceived" class="operator-contact">
+    <div *ngIf="operator" class="operator-contact">
 
       <!-- Name -->
-      <h6 class="name">{{ opContactReceived.name }}</h6>
+      <h6 class="name">{{ operator.name }}</h6>
 
       <!-- Job title -->
-      <h6 class="job">{{ opContactReceived.jobTitle }}</h6>
+      <h6 class="job">{{ operator.jobTitle }}</h6>
 
       <!-- Phone number -->
-      <h6 class="phone">{{ opContactReceived.phone }}</h6>
+      <h6 class="phone">{{ operator.phone }}</h6>
 
       <!-- Email -->
-      <h6 class="text-link"><a [href]="'mailto:' + opContactReceived.email">{{ opContactReceived.email }}</a></h6>
+      <h6 class="text-link"><a [href]="'mailto:' + operator.email">{{ operator.email }}</a></h6>
 
     </div>
     <!-- /Operator contact -->

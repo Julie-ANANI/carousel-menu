@@ -9,7 +9,6 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { Answer } from '../../../../models/answer';
 import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
-import { Section } from '../../../../models/section';
 import { Innovation } from '../../../../models/innovation';
 import { environment } from '../../../../../environments/environment';
 import { Template } from '../../../sidebar/interfaces/template';
@@ -51,8 +50,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   private _countries: Array<string> = [];
 
   private _questions: Array<Question> = [];
-
-  private _cleaned_questions: Array<Question> = [];
 
   private _campaignsStats: {
     nbPros: number,
@@ -209,15 +206,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
      */
     this.executiveTemplates = executiveTemplate;
 
-    /***
-     * passing the project to the response service.
-     */
-    this.setProject();
-
-  }
-
-  private setProject() {
-    this.responseService.setProject(this.project);
   }
 
   /***
@@ -281,7 +269,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
           return acc;
         }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0});
       }
-    }, (error) => {
+    }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
   }
@@ -302,28 +290,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   /***
-   * This function is to remove the spaces in the question identifiers.
+   * This function is to get the questions.
    */
   private presets() {
-    if (this.project.preset && this.project.preset.sections) {
-      this.project.preset.sections.forEach((section: Section) => {
-        this._questions = this._questions.concat(section.questions);
-
-        /***
-         * passing the questions to the response service.
-         */
-        this.responseService.setQuestions(this._questions);
-
-      });
-      // remove spaces in questions identifiers.
-      this._cleaned_questions = this._questions.map((q) => {
-        const ret = JSON.parse(JSON.stringify(q));
-        // Please don't touch the parse(stringify()), this dereference q to avoid changing _questions list
-        // If changed, the answer modal won't have the good questions identifiers because _questions will be modified
-        ret.identifier = ret.identifier.replace(/\s/g, '');
-        return ret;
-      });
-    }
+   if (this.project.preset && this.project.preset.sections) {
+     this._questions = this.responseService.getPresets(this.project);
+   }
   }
 
   /***
@@ -512,10 +484,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     if (this.project.status) {
       this.innovationService.save(this.project._id, this.project).first().subscribe((response) => {
         this.project = response;
-        /***
-         * passing the project to the response service.
-         */
-        this.setProject();
       });
     }
   }
@@ -762,10 +730,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   get continentTarget(): any {
     return this.project.settings ? this.project.settings.geography.continentTarget : {};
-  }
-
-  get cleaned_questions(): Array<Question> {
-    return this._cleaned_questions;
   }
 
   get questions(): Array<Question> {

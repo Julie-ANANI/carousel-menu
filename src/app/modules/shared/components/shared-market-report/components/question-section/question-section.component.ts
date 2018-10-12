@@ -14,7 +14,6 @@ import { Tag } from '../../../../../../models/tag';
 
 export class QuestionSectionComponent implements OnInit {
 
-  private _domSectionId: string;
   private _answers: Array<Answer>;
   private _showComments: boolean;
   private _showDetails: boolean;
@@ -54,7 +53,6 @@ export class QuestionSectionComponent implements OnInit {
               private filterService: FilterService) {}
 
   ngOnInit() {
-    this._domSectionId = this.question.identifier.replace(/\s/g, '');
     this._tagId = this.question.identifier + (this.question.controlType !== 'textarea' ? 'Comment' : '');
     this.updateAnswersData();
   }
@@ -175,7 +173,6 @@ export class QuestionSectionComponent implements OnInit {
 
   get answers() { return this._answers; }
   get readonly(): boolean { return this._readonly; }
-  get domSectionId(): string { return this._domSectionId; }
   get showComments(): boolean { return this._showComments; }
   get showDetails(): boolean { return this._showDetails; }
   get answersToShow(): Array<Answer> { return this._answersToShow; }

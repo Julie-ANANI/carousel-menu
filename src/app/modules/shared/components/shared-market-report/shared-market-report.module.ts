@@ -10,6 +10,13 @@ import { ResponseService } from './services/response.service';
 
 
 /***
+ * Pipes
+ */
+import { RemoveSpacesPipe } from './pipes/RemoveSpaces.pipe';
+
+
+
+/***
  * Modules
  */
 import { TranslateModule } from '@ngx-translate/core';
@@ -88,6 +95,7 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
     ExecutiveConclusionComponent,
     ExecutiveProfessionalComponent,
     ExecutiveSectionComponent,
+    RemoveSpacesPipe
   ],
   exports: [
     SharedMarketReportComponent
