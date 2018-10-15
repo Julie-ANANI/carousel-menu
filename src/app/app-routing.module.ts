@@ -13,6 +13,10 @@ const appRoutes: Routes = [
     loadChildren: './modules/admin/admin.module#AdminModule'
   },
   {
+    path: 'discover',
+    loadChildren: './modules/discover/discover.module#DiscoverModule'
+  },
+  {
     path: 'share',
     loadChildren: './modules/share/share.module#ShareModule'
   },

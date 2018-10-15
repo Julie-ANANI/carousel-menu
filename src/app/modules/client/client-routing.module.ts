@@ -16,8 +16,6 @@ import { PendingChangesGuard } from '../../guards/pending-changes-guard.service'
 import { ClientComponent } from './client.component';
 import { ClientMyAccountComponent } from './components/client-my-account/client-my-account.component';
 import { ClientResetPasswordComponent } from './components/client-reset-password/client-reset-password.component';
-import { ClientDiscoverPageComponent } from './components/client-discover-page/client-discover-page.component';
-import { DiscoverDescriptionComponent } from './components/client-discover-page/discover-description/discover-description.component';
 import { WelcomePageComponent } from '../base/components/welcome-page/welcome-page.component';
 import { LoginPageComponent } from '../base/components/login-page/login-page.component';
 import { LogoutPageComponent } from '../base/components/logout-page/logout-page.component';
@@ -83,13 +81,6 @@ const clientRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
           { path: '', component: ClientMyAccountComponent, pathMatch: 'full' }
-        ]
-      },
-      {
-        path: 'discover',
-        children: [
-          { path: '', component: ClientDiscoverPageComponent, pathMatch: 'full'/*, canActivate: [AuthGuard]*/ },
-          { path: ':id/:lang', component: DiscoverDescriptionComponent, pathMatch: 'full'}
         ]
       },
       {

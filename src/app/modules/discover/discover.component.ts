@@ -1,22 +1,22 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { TranslateTitleService } from '../../../../services/title/title.service';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { TranslateTitleService } from '../../services/title/title.service';
+import { InnovationService } from '../../services/innovation/innovation.service';
 import { TranslateService} from '@ngx-translate/core';
-import { Innovation } from '../../../../models/innovation';
-import { InnovCard } from '../../../../models/innov-card';
-import { PaginationTemplate } from '../../../../models/pagination';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import { Tag } from '../../../../models/tag';
+import { Innovation } from '../../models/innovation';
+import { InnovCard } from '../../models/innov-card';
+import { PaginationTemplate } from '../../models/pagination';
+import { TranslateNotificationsService } from '../../services/notifications/notifications.service';
+import { Tag } from '../../models/tag';
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-client-discover-page',
-  templateUrl: './client-discover-page.component.html',
-  styleUrls: ['./client-discover-page.component.scss']
+  selector: 'app-discover',
+  templateUrl: './discover.component.html',
+  styleUrls: ['./discover.component.scss']
 })
 
-export class ClientDiscoverPageComponent implements OnInit {
+export class DiscoverComponent implements OnInit {
 
   private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
 

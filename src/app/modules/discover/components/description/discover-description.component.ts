@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { InnovCard} from '../../../../../models/innov-card';
-import { Innovation } from '../../../../../models/innovation';
-import { InnovationService } from '../../../../../services/innovation/innovation.service';
-import { ShareService } from '../../../../../services/share/share.service';
-import { environment } from '../../../../../../environments/environment';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { InnovCard } from '../../../../models/innov-card';
+import { Innovation } from '../../../../models/innovation';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import { ShareService } from '../../../../services/share/share.service';
+import { environment } from '../../../../../environments/environment';
+import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 
 @Component({
   selector: 'app-discover-description',
