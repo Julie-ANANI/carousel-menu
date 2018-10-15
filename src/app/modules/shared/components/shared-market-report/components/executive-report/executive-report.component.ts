@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../../models/innovation';
-import {Question} from '../../../../../../models/question';
+import { Question } from '../../../../../../models/question';
 
 @Component({
   selector: 'app-executive-report',
@@ -8,20 +8,20 @@ import {Question} from '../../../../../../models/question';
   styleUrls: ['./executive-report.component.scss']
 })
 
-export class ExecutiveReportComponent implements OnInit{
+export class ExecutiveReportComponent implements OnInit {
 
-  @Input() set innovation(value: Innovation) {
-    this.innovationReceived = value;
+  @Input() set project(value: Innovation) {
+    this.innovation = value;
     this.executiveReport = value.executiveReport;
   }
 
   executiveReport: any = {};
 
-  innovationReceived: Innovation = {};
+  innovation: Innovation = {};
 
   question: Question = null;
 
-  dummyArray = [0, 1, 2, 3, 4, 5, 6, 7];
+  sectionNumbers = [0, 1, 2, 3, 4, 5, 6, 7];
 
   constructor() { }
 

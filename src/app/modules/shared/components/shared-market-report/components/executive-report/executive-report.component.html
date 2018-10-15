@@ -8,18 +8,18 @@
 
         <!-- Professional column -->
         <div class="section">
-          <app-executive-professional [innovation]="innovationReceived"></app-executive-professional>
+          <app-executive-professional [project]="innovation"></app-executive-professional>
         </div>
         <!-- /Professional column -->
 
         <!-- Sections -->
         <div class="section">
           <div
-            *ngFor="let section of dummyArray | slice:0:executiveReport.totalSections; let i = index;"
+            *ngFor="let section of sectionNumbers | slice:0:executiveReport.totalSections"
             class="section-wrapper"
             [ngClass]="{ 'section-2': executiveReport.totalSections === 2 }">
             <app-executive-section
-              [innovation]="innovationReceived"
+              [project]="innovation"
               [ngStyle]="{ 'width': '100%' }"
               [section]="section">
             </app-executive-section>
@@ -29,7 +29,7 @@
 
         <!-- Conclusion part -->
         <div class="section">
-          <app-executive-conclusion [innovation]="innovationReceived"></app-executive-conclusion>
+          <app-executive-conclusion [project]="innovation"></app-executive-conclusion>
         </div>
         <!-- /Conclusion part -->
 

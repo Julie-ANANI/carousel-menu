@@ -12,8 +12,9 @@ import {Innovation} from '../../../../../../../models/innovation';
 
 export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
-  @Input() set innovation(value: Innovation) {
+  @Input() set project(value: Innovation) {
     this.mapConfiguration = value.settings.geography.continentTarget || {};
+    this.professionalAbstract = value.executiveReport.professionalAbstract;
   }
 
   ngUnsubscribe: Subject<any> = new Subject();
@@ -57,8 +58,7 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe.unsubscribe();
   }
 
 }

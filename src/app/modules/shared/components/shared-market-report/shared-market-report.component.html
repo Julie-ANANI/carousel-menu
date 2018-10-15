@@ -1,17 +1,17 @@
-<section class="section-container s-print" id="market-report" [ngStyle]="{ 'background-color': (project.status !== 'DONE' && !adminSide && !previewMode) ? 'white' : '#F5F5F5' }">
+<section class="section-container s-print" id="market-report" [ngStyle]="{ 'background-color': (innovation.status !== 'DONE' && !adminSide && !previewMode) ? 'white' : '#F5F5F5' }">
 
 
   <!-- Project status not done client side -->
-  <ng-container *ngIf="project.status !== 'DONE' && !adminSide">
+  <ng-container *ngIf="innovation.status !== 'DONE' && !adminSide">
     <div class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '3.15rem' }">
-      <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + project.status)  | translate }}</h1>
+      <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + innovation.status)  | translate }}</h1>
       <div class="text-center" [ngStyle]="{ 'padding-top': '1.57rem' }">
-      <span class="bot-rect" [ngSwitch]="project.status" [ngStyle]="{ 'max-width': '320px' }">
+      <span class="bot-rect" [ngSwitch]="innovation.status" [ngStyle]="{ 'max-width': '320px' }">
         <ng-container *ngSwitchCase="'EDITING'">
-           <ng-container *ngIf="project.reviewing">
+           <ng-container *ngIf="innovation.reviewing">
               {{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}
             </ng-container>
-            <ng-container *ngIf="!project.reviewing">
+            <ng-container *ngIf="!innovation.reviewing">
               {{ 'MARKET_REPORT.MESSAGE.EDITING.A' | translate }}
               <span [routerLink]="'setup'" class="text-link">
                 {{ 'MARKET_REPORT.MESSAGE.EDITING.B' | translate }}
@@ -35,7 +35,7 @@
 
 
   <!-- Project status not submitted admin side -->
-  <ng-container *ngIf="project.status === 'EDITING' && adminSide">
+  <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
     <div class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '3.15rem' }">
       <div class="text-center">
         <span class="bot-rect" [ngStyle]="{ 'max-width': '430px' }">
@@ -50,7 +50,7 @@
 
 
   <!-- Project status submitted and client side -->
-  <ng-container *ngIf="project.status === 'DONE' || (project.status !== 'EDITING' && adminSide)">
+  <ng-container *ngIf="innovation.status === 'DONE' || (innovation.status !== 'EDITING' && adminSide)">
 
     <!-- Display spinner -->
     <ng-container *ngIf="spinnerDisplay">
@@ -63,7 +63,7 @@
     <ng-container *ngIf="!spinnerDisplay">
 
       <!-- Message -->
-      <div *ngIf="project?.previewMode && projectStatus !== 'DONE'" class="msg-wrapper">
+      <div *ngIf="innovation?.previewMode && projectStatus !== 'DONE'" class="msg-wrapper">
         <div *ngIf="!adminSide" class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE' | translate }}</div>
         <div *ngIf="adminSide" class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE_ADMIN' | translate }}</div>
       </div>
@@ -99,8 +99,8 @@
                   name="previewMode"
                   id="previewMode"
                   (change)="enablePreviewMode($event)"
-                  [checked]="previewMode || project?.status === 'DONE'"
-                  [disabled]="project?.status === 'DONE'">
+                  [checked]="previewMode || innovation?.status === 'DONE'"
+                  [disabled]="innovation?.status === 'DONE'">
                 <i class="form-icon"></i>
                 Make it visible to client
               </label>
@@ -136,7 +136,7 @@
             <ng-container *ngIf="adminSide">
               <button
                 class="btn btn-primary"
-                [disabled]="project?.status === 'DONE'"
+                [disabled]="innovation?.status === 'DONE'"
                 (click)="endProjectModal($event)">
                 End project
               </button>
@@ -158,7 +158,7 @@
           (mouseleave)="hideMenu($event)">
           <ul>
             <li
-              *ngIf="project.executiveReport?.totalSections > 0 || adminSide"
+              *ngIf="innovation.executiveReport?.totalSections > 0 || adminSide"
               [ngClass]="{ 'active': activeSection === 'executive-report' }"
               pageScroll
               pageScrollOffset="135"
@@ -166,7 +166,7 @@
               Executive report
             </li>
             <li
-              *ngIf="project.marketReport?.keyLearning?.conclusion.length > 0 || adminSide"
+              *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide"
               [ngClass]="{ 'active': activeSection === 'key-learning' }"
               pageScroll
               pageScrollOffset="135"
@@ -189,7 +189,7 @@
               {{ question.title | multiling:lang }}
             </li>
             <li
-              *ngIf="project.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide"
+              *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide"
               [ngClass]="{ 'active': activeSection === 'conclusion' }"
               pageScroll
               pageScrollOffset="135"
@@ -213,7 +213,7 @@
 
 
         <!-- Main page -->
-        <section *ngIf="showDetails" class="section-container front-wrapper s-frontPage-print">
+        <section *ngIf="showDetails" class="section-container front-wrapper s-frontPage-print" id="main-page">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="section-inline-container white-background">
 
@@ -225,16 +225,16 @@
               <!-- Project name -->
               <div class="body-wrapper">
                 <h6 class="text-executive">Executive report</h6>
-                <h1>{{ project.innovationCards[currentInnovationIndex]?.title }}</h1>
-                <div class="summary" [innerHtml]="project.innovationCards[currentInnovationIndex]?.summary"></div>
+                <h1>{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>
+                <div class="summary" [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
                 <img class="image-wrapper" [src]="getSrc()" [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate">
-                <h6 *ngIf="project.owner?.name" class="text-owner">{{ getOwnerName() }}</h6>
-                <h6 *ngIf="project.owner?.jobTitle" class="text-jobTitle">{{ project.owner?.jobTitle }}</h6>
-                <h6 *ngIf="project.owner?.email" class="text-email">{{ project.owner?.email }}</h6>
+                <h6 *ngIf="innovation.owner?.name" class="text-owner">{{ getOwnerName() }}</h6>
+                <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle">{{ innovation.owner?.jobTitle }}</h6>
+                <h6 *ngIf="innovation.owner?.email" class="text-email">{{ innovation.owner?.email }}</h6>
                 <span
-                  *ngIf="project.executiveReport?.goal"
+                  *ngIf="innovation.executiveReport?.goal"
                   class="goal-text">
-                  {{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ project.executiveReport?.goal }}
+                  {{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.goal }}
                 </span>
               </div>
 
@@ -266,14 +266,14 @@
                       id="goal"
                       [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.GOAL' | translate"
                       rows="5"
-                      [(ngModel)]="project.executiveReport.goal"
+                      [(ngModel)]="innovation.executiveReport.goal"
                       (blur)="update($event)"
                       maxlength="120">
                     </textarea>
                   </label>
                   <div class="charRemaining">
-                    <span [ngStyle]="{ 'color': getColor((project.executiveReport?.goal.length | characterCountdown:120), 120) }">
-                      {{ project.executiveReport?.goal.length | characterCountdown:120 }}
+                    <span [ngStyle]="{ 'color': getColor((innovation.executiveReport?.goal.length | characterCountdown:120), 120) }">
+                      {{ innovation.executiveReport?.goal.length | characterCountdown:120 }}
                     </span>
                   </div>
                 </div>
@@ -324,8 +324,8 @@
 
 
         <!-- Executive report -->
-        <section *ngIf="project.executiveReport.totalSections > 0" id="executive-report">
-          <app-executive-report [innovation]="project"></app-executive-report>
+        <section *ngIf="innovation.executiveReport.totalSections > 0" id="executive-report">
+          <app-executive-report [project]="innovation"></app-executive-report>
         </section>
         <!-- /Executive report -->
 
@@ -346,8 +346,8 @@
 
               <!-- Column 1 -->
               <div class="summary-wrapper">
-                <h1 class="main-heading">{{ project.innovationCards[currentInnovationIndex]?.title }}</h1>
-                <div [innerHtml]="project.innovationCards[currentInnovationIndex]?.summary"></div>
+                <h1 class="main-heading">{{ innovation.innovationCards[currentInnovationIndex]?.title }}</h1>
+                <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.summary"></div>
                 <div class="img-wrapper">
                   <img
                     [src]="getSrc()"
@@ -356,7 +356,7 @@
                 </div>
                 <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h1>
                 <ul class="advantage-wrapper">
-                  <li *ngFor="let advantage of project.innovationCards[currentInnovationIndex]?.advantages;">
+                  <li *ngFor="let advantage of innovation.innovationCards[currentInnovationIndex]?.advantages;">
                     {{ advantage.text[0] | uppercase }}{{ advantage.text | slice:1 }}
                   </li>
                 </ul>
@@ -365,13 +365,13 @@
               <!-- Column 2 -->
               <div class="issue-wrapper">
                 <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.ISSUE' | translate }}</h1>
-                <div [innerHtml]="project.innovationCards[currentInnovationIndex]?.problem"></div>
+                <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.problem"></div>
               </div>
 
               <!-- Column 3 -->
               <div class="solution-wrapper">
                 <h1 class="section-heading">{{ 'DISCOVERDESCRIPTION.SOLUTION' | translate }}</h1>
-                <div [innerHtml]="project.innovationCards[currentInnovationIndex]?.solution"></div>
+                <div [innerHtml]="innovation.innovationCards[currentInnovationIndex]?.solution"></div>
               </div>
 
             </div>
@@ -395,45 +395,45 @@
                   [isEditable]="false"
                   [width]="'auto'">
                 </app-worldmap>
-                <div *ngIf="project.settings.geography.exclude.length > 0" class="question-wrapper">
+                <div *ngIf="innovation.settings.geography.exclude.length > 0" class="question-wrapper">
                   <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.GEOGRAPHY.SPECIFY_COUNTRIES_TO_EXCLUDE' | translate }}</p>
-                  <div *ngFor="let country of project.settings.geography.exclude" class="answer-wrapper">
+                  <div *ngFor="let country of innovation.settings.geography.exclude" class="answer-wrapper">
                     {{ country.name }}
                   </div>
                 </div>
-                <div *ngIf="project.settings.market.comments.length > 0" class="question-wrapper">
+                <div *ngIf="innovation.settings.market.comments.length > 0" class="question-wrapper">
                   <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.MARKET.LABEL' | translate }}</p>
-                  <p>{{ project.settings.market.comments }}</p>
+                  <p>{{ innovation.settings.market.comments }}</p>
                 </div>
               </div>
 
               <!-- Column 2 -->
               <div class="c2-answer-wrapper">
-                <div *ngIf="project.settings.companies.include.length > 0" class="question-wrapper">
+                <div *ngIf="innovation.settings.companies.include.length > 0" class="question-wrapper">
                   <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_INCLUDE' | translate }}</p>
-                  <div *ngFor="let companyInclude of project.settings.companies.include" class="answer-wrapper">
+                  <div *ngFor="let companyInclude of innovation.settings.companies.include" class="answer-wrapper">
                     {{ companyInclude.name }}
                   </div>
                 </div>
-                <div *ngIf="project.settings.companies.exclude.length > 0" class="question-wrapper">
+                <div *ngIf="innovation.settings.companies.exclude.length > 0" class="question-wrapper">
                   <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.COMPANIES.TO_EXCLUDE' | translate }}</p>
-                  <div *ngFor="let companyExclude of project.settings.companies.exclude" class="answer-wrapper">
+                  <div *ngFor="let companyExclude of innovation.settings.companies.exclude" class="answer-wrapper">
                     {{ companyExclude.name }}
                   </div>
                 </div>
-                <div *ngIf="project.settings.professionals.description.length > 0" class="question-wrapper">
+                <div *ngIf="innovation.settings.professionals.description.length > 0" class="question-wrapper">
                   <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.LABEL' | translate }}</p>
-                  <p>{{ project.settings.professionals.description }}</p>
+                  <p>{{ innovation.settings.professionals.description }}</p>
                 </div>
-                <div *ngIf="project.settings.professionals.exclude.length > 0" class="question-wrapper">
+                <div *ngIf="innovation.settings.professionals.exclude.length > 0" class="question-wrapper">
                   <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.PROFESSIONALS.TO_EXCLUDE' | translate }}</p>
-                  <div *ngFor="let professionalExclude of project.settings.professionals.exclude" class="answer-wrapper">
+                  <div *ngFor="let professionalExclude of innovation.settings.professionals.exclude" class="answer-wrapper">
                     {{ professionalExclude.text }}
                   </div>
                 </div>
-                <div *ngIf="project.settings.comments.length > 0" class="question-wrapper">
+                <div *ngIf="innovation.settings.comments.length > 0" class="question-wrapper">
                   <p class="sc-ques">{{ 'PROJECT_MODULE.SETUP.TARGETING.OTHER.LABEL' | translate }}</p>
-                  <p>{{ project.settings.comments }}</p>
+                  <p>{{ innovation.settings.comments }}</p>
                 </div>
               </div>
 
@@ -523,10 +523,10 @@
               </div>
 
               <!-- Companies contact -->
-              <div *ngIf="project.settings.companies.include.length > 0" class="company-wrapper">
+              <div *ngIf="innovation.settings.companies.include.length > 0" class="company-wrapper">
                 <h1 class="section-heading">{{ 'PROJECT_MODULE.EXPLORATION.COMPANIES_LIST_TITLE' | translate }}</h1>
                 <ul class="name-wrapper">
-                  <li *ngFor="let company of project.settings.companies.include; let i = index;">
+                  <li *ngFor="let company of innovation.settings.companies.include; let i = index;">
                     {{ i + 1 + '.'}} {{ formatCompanyName(company.name) }}
                   </li>
                 </ul>
@@ -538,8 +538,106 @@
         <!-- /Innovation analytics -->
 
 
+        <!-- Key learning section -->
+        <section *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" class="section-light-container s-keyLearning-print" id="key-learning">
+          <div class="column col-xs-12 col-11 col-mx-auto">
+            <div class="keyLearning-wrapper">
+              <div class="section-inline-container">
+                <h1 class="main-heading">{{ 'MARKET_REPORT.KEY_LEARNING' | translate }}</h1>
+                <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
+                <app-text-zone
+                  [elementId]="'keyLearning'"
+                  [readonly]="!adminSide"
+                  [data]="innovation.marketReport?.keyLearning?.conclusion"
+                  (onTextChange)="saveOperatorComment($event, 'keyLearning')">
+                </app-text-zone>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- /Key learning section -->
+
+
+        <!-- Origin Comment and Professional Responses -->
+        <section class="section-light-container s-origin-print" id="professionals">
+          <div class="column col-xs-12 col-11 col-mx-auto">
+            <div class="origin-wrapper">
+              <div class="section-inline-container">
+
+                <app-question-conclusion
+                  [innovation]="innovation"
+                  [question]="{ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' }, title: { en: 'Origin of responses', fr: 'Origine des réponses' } }"
+                  [readonly]="!adminSide"
+                  [stats]="{ nbAnswers: answers.length, percentage: 0 }">
+                </app-question-conclusion>
+
+                <div *ngIf="adminSide" class="abstract-wrapper">
+                  <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.ABSTRACT' | translate }}</h1>
+                  <div class="form-group">
+                    <label class="form-label" for="market-report-professionals">
+                      <textarea
+                        class="form-default"
+                        id="market-report-professionals"
+                        [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.PROFESSIONAL' | translate"
+                        rows="5"
+                        [(ngModel)]="innovation.executiveReport.professionalAbstract"
+                        (blur)="update($event)"
+                        maxlength="180">
+                      </textarea>
+                    </label>
+                    <div class="charRemaining">
+                    <span [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:180), 180) }">
+                      {{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:180 }}
+                    </span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- /Origin Comment and Professional Responses -->
+
+
+        <!-- Map -->
+        <section class="section-light-container s-map-print">
+          <div class="column col-xs-12 col-11 col-mx-auto">
+            <div class="map-wrapper">
+              <app-worldmap
+                (updateCountries)="filterByCountries($event)"
+                [countries]="countries"
+                [countriesColor]="'#2ECC71'"
+                [initialConfiguration]="mapInitialConfiguration"
+                [synthesis]="true"
+                [width]="'auto'">
+              </app-worldmap>
+            </div>
+          </div>
+        </section>
+        <!-- /Map -->
+
+
+        <!-- Professionals -->
+        <section class="section-light-container s-professional-print">
+          <div class="column col-xs-12 col-11 col-mx-auto">
+            <div class="professional-wrapper">
+              <div *ngFor="let answer of filteredAnswers" class="profile">
+                <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" style="margin-top: .125rem" (click)="filterPro(answer, $event)">
+                <app-pro-tag
+                  [answer]="answer"
+                  (modalAnswerChange)="seeAnswer($event)"
+                  [ngStyle]="{ 'width': '100%', 'height': '100%' }">
+                </app-pro-tag>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- /Professionals -->
+
+
         <!-- Conclusion -->
-        <section *ngIf="project.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" class="section-light-container s-conclusion-print" id="conclusion">
+        <section *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" class="section-light-container s-conclusion-print" id="conclusion">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="conclusion-wrapper">
               <div class="section-inline-container">
@@ -548,8 +646,8 @@
                 <app-text-zone
                   [elementId]="'finalConclusion'"
                   [readonly]="!adminSide"
-                  [data]="project.marketReport?.finalConclusion?.conclusion"
-                  (onTextChange)="keyUpHandlerFunction($event, 'finalConclusion')">
+                  [data]="innovation.marketReport?.finalConclusion?.conclusion"
+                  (onTextChange)="saveOperatorComment($event, 'finalConclusion')">
                 </app-text-zone>
               </div>
             </div>
@@ -560,25 +658,6 @@
 
       </section>
       <!-- /Answer sections -->
-
-
-      <!-- Other question and answers -->
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <div *ngFor="let question of questions">
-          <div class="section-light-container s-questions-print">
-            <app-question-section
-              [innovation]="project"
-              [question]="question"
-              [answers]="filteredAnswers"
-              [showComments]="showDetails"
-              [showDetails]="showDetails"
-              [readonly]="!adminSide"
-              (modalAnswerChange)="seeAnswer($event)">
-            </app-question-section>
-          </div>
-        </div>
-      </div>
-      <!-- /Other question and answers -->
 
 
     </ng-container>
@@ -595,7 +674,7 @@
 
 
   <!-- Project status done -->
-  <ng-container *ngIf="projectStatus === 'DONE'">
+  <ng-container *ngIf="innovation === 'DONE'">
 
 
 
@@ -603,7 +682,23 @@
 
 
 
-
+    <!-- Other question and answers -->
+    <div class="column col-xs-12 col-11 col-mx-auto">
+      <div *ngFor="let question of questions">
+        <div class="section-light-container s-questions-print">
+          <app-question-section
+            [innovation]="innovation"
+            [question]="question"
+            [answers]="filteredAnswers"
+            [showComments]="showDetails"
+            [showDetails]="showDetails"
+            [readonly]="!adminSide"
+            (modalAnswerChange)="seeAnswer($event)">
+          </app-question-section>
+        </div>
+      </div>
+    </div>
+    <!-- /Other question and answers -->
 
 
 
@@ -616,82 +711,20 @@
     <!-- Answer wrapper -->
     <div >
 
-      <!-- Key learning section -->
-      <section *ngIf="project.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" class="section-light-container s-keyLearning-print" id="key-learning">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="keyLearning-wrapper">
-            <div class="section-inline-container">
-              <h1 class="main-heading">{{ 'MARKET_REPORT.KEY_LEARNING' | translate }}</h1>
-              <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
-              <app-text-zone
-                [elementId]="'keyLearning'"
-                [readonly]="!adminSide"
-                [data]="project.marketReport?.keyLearning?.conclusion"
-                (onTextChange)="keyUpHandlerFunction($event, 'keyLearning')">
-              </app-text-zone>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- /Key learning section -->
 
-      <!-- Origin Comment and Professional Responses -->
-      <div class="section-light-container s-origin-print">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="origin-wrapper">
-            <div class="section-inline-container">
-              <app-question-conclusion
-                [innovation]="project"
-                [question]="{identifier: 'professionals', subtitle: {en: 'professionals', fr: 'professionnels'}, title: {en: 'Origin of responses', fr: 'Origine des réponses'}}"
-                [readonly]="!adminSide"
-                [stats]="{nbAnswers: answers.length, percentage: 0}">
-              </app-question-conclusion>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- /Origin Comment and Professional Responses -->
 
-      <!-- Map -->
-      <div class="section-light-container s-map-print">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="map-wrapper">
-            <app-worldmap
-              (updateCountries)="filterByCountries($event)"
-              [countries]="countries"
-              [countriesColor]="'#2ECC71'"
-              [initialConfiguration]="mapInitialConfiguration"
-              [synthesis]="true"
-              [width]="'auto'">
-            </app-worldmap>
-          </div>
-        </div>
-      </div>
-      <!-- /Map -->
 
-      <!-- Professionals -->
-      <section class="section-light-container s-professional-print " id="professionals">
-        <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="professional-wrapper">
-            <div *ngFor="let answer of filteredAnswers" class="profile">
-              <img src="https://res.cloudinary.com/umi/image/upload/v1533115302/app/default-images/filter-icon.png" height="13px" width="20px" style="margin-top: .125rem" (click)="filterPro(answer, $event)">
-              <app-pro-tag
-                [answer]="answer"
-                (modalAnswerChange)="seeAnswer($event)"
-                [ngStyle]="{ 'width': '100%', 'height': '100%' }">
-              </app-pro-tag>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- /Professionals -->
+
+
+
+
 
       <!-- Other question and answers -->
       <div class="column col-xs-12 col-11 col-mx-auto">
         <div *ngFor="let question of questions">
           <div class="section-light-container s-questions-print">
             <app-question-section
-              [innovation]="project"
+              [innovation]="innovation"
               [question]="question"
               [answers]="filteredAnswers"
               [showComments]="showDetails"
@@ -703,6 +736,8 @@
         </div>
       </div>
       <!-- /Other question and answers -->
+
+
 
 
     </div>
@@ -732,13 +767,14 @@
   </div>
 </div>
 
+
 <!-- Insight preview -->
 <app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
   <app-user-answer
     [adminMode]="adminSide"
     [mode]="editMode"
     [(userAnswer)]="modalAnswer"
-    [innovationId]="project._id"
+    [innovationId]="innovation._id"
     [questions]="questions">
   </app-user-answer>
 </app-sidebar>

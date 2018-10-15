@@ -4,7 +4,7 @@
   <div class="heading-menu">
 
     <!-- Heading -->
-    <h1 class="main-heading"></h1>
+    <h1 class="main-heading">{{ selectedQuestion?.title | multiling:lang }}</h1>
 
     <!-- Menu -->
     <div *ngIf="adminSide" class="menu-icon">

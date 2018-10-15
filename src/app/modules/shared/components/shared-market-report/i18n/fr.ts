@@ -65,7 +65,8 @@ export const MARKET_REPORT = {
     'CHOOSE_TEMPLATE': 'Choisir le modèle',
     'VALID_BUTTON': 'Modèle valide',
     'DELETE_BUTTON': 'Supprimer le modèle',
-    'CONCLUSION': 'Conclusion résumé'
+    'CONCLUSION': 'Conclusion résumé',
+    'ABSTRACT': 'Abstract'
   },
 
   'EXECUTIVE_TEMPLATE': {
@@ -85,7 +86,8 @@ export const MARKET_REPORT = {
 
   'EXECUTIVE_PLACEHOLDER': {
     'GOAL': 'Décrivez l\'objectif de cette innovation en 120 mots.',
-    'CONCLUSION': 'Décrivez la conclusion de cette campagne d’innovation en 1200 mots.'
+    'CONCLUSION': 'Décrivez la conclusion de cette campagne d’innovation en 1200 mots.',
+    'PROFESSIONAL': 'Décrivez le résumé professionnel de cette innovation en 180 mots.'
   },
 
   'TARGET_COUNTRIES': 'Pays ciblés',

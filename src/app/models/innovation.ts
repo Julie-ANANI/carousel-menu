@@ -45,7 +45,14 @@ export interface Innovation {
   executiveReport?: {
     totalSections?: number,
     goal?: string,
-    sections?: [{ [prop: string]: any }]
+    professionalAbstract?: string,
+    sections?: [{
+      quesId?: string
+    }],
+    abstracts?: [{
+      quesId?: string,
+      value?: string
+    }]
   };
   operator?: User;
   previewMode?: boolean;

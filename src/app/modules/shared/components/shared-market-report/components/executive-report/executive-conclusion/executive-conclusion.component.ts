@@ -11,7 +11,7 @@ import {Innovation} from '../../../../../../../models/innovation';
 
 export class ExecutiveConclusionComponent implements OnInit {
 
-  @Input() set innovation(value: Innovation) {
+  @Input() set project(value: Innovation) {
     this.conclusion = value.marketReport.finalConclusion.conclusion || '';
     this.operator = value.operator || null;
   }

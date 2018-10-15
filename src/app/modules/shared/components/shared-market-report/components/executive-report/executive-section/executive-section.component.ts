@@ -7,6 +7,7 @@ import { Innovation } from '../../../../../../../models/innovation';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
+import { InnovationCommonService } from '../../../../../../../services/innovation/innovation-common.service';
 
 @Component({
   selector: 'app-executive-section',
@@ -16,44 +17,54 @@ import { InnovationService } from '../../../../../../../services/innovation/inno
 
 export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
-  @Input() set innovation(value: Innovation) {
-    this.innovationReceived = value;
-    this.executiveReport = value.executiveReport;
+  @Input() set project(value: Innovation) {
+    this.innovation = value;
     this.getQuestions(value);
   }
 
   @Input() set section(value: number) {
     this.sectionNumberReceived = value;
-    this.getSectionInformation();
-    console.log(this.executiveReport);
+    this.getSectionInformation(value);
   }
 
   ngUnsubscribe: Subject<any> = new Subject();
 
   answerReceived: Array<Answer> = [];
 
-  innovationReceived: Innovation;
+  innovation: Innovation;
 
   sectionMenuOptions: Array<Question> = [];
-
-  executiveReport: any = {};
-
-  sectionValue: [{ question: Question, sectionPlace: number }] = null;
 
   questionReceived: Array<Question> = [];
 
   sectionNumberReceived: number;
+
+  selectedQuestion: Question;
+
+  abstract = '';
 
   adminSide: boolean;
 
   constructor(private responseService: ResponseService,
               private location: Location,
               private translateService: TranslateService,
-              private innovationService: InnovationService) { }
+              private innovationService: InnovationService,
+              private innovationCommonService: InnovationCommonService) { }
 
   ngOnInit() {
     this.getAnswers();
     this.isAdminSide();
+
+    /***
+     * this is when we update the innovation in any component,
+     * we are listening that update and will update the innovation attribute.
+     */
+    this.innovationCommonService.getInnovation().takeUntil(this.ngUnsubscribe).subscribe((response: Innovation) => {
+      if (response) {
+        this.innovation = response;
+      }
+    });
+
   }
 
   private getAnswers() {
@@ -92,23 +103,32 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   /***
    * This function is called when the operator clicked on anyone title
-   * then we select that question and pass that question to the parent component
-   * to update the question menu options array.
+   * then we select that question and save that question id.
    * @param {Event} event
    * @param {Question} option
    */
   onTitleClicked(event: Event, option: Question) {
     event.preventDefault();
-    this.executiveReport.sections = [{
-      question: {
-        identifier: option.identifier,
-        title: option.title,
-        id: option._id,
-        controlType: option.controlType
-      },
-      sectionPlace: this.sectionNumberReceived
-    }];
+
+    this.innovation.executiveReport.sections[this.sectionNumberReceived].quesId = option._id;
+
+    this.selectedQuestion = option;
+
+    /*const index = this.innovation.executiveReport.sections.findIndex((item: { sectionPlace: number, quesId: string }) => item.sectionPlace === this.sectionNumberReceived);
+
+    let value: { sectionPlace: number, quesId: string };
+    value = { sectionPlace: this.sectionNumberReceived, quesId: option._id };
+
+    if (index === -1) {
+      this.innovation.executiveReport.sections.push(value);
+    } else {
+      this.innovation.executiveReport.sections[index] = value;
+    }*/
+
+    // this.getSectionInformation(this.sectionNumberReceived);
+
     this.update(event);
+
   }
 
   /***
@@ -117,17 +137,18 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    */
   update(event: Event) {
     // TODO: add project status DONE
-    if (this.innovationReceived.status) {
-      this.innovationService.save(this.innovationReceived._id, this.innovationReceived).first().subscribe((response) => {
-        this.innovationReceived = response;
-        console.log(response);
+    if (this.innovation.status) {
+      this.innovationService.save(this.innovation._id, this.innovation).first().subscribe((response: Innovation) => {
+        this.innovation = response;
+        this.innovationCommonService.setInnovation(response);
       });
     }
   }
 
-  private getSectionInformation() {
-    if (this.sectionNumberReceived && this.executiveReport && this.executiveReport.sections) {
-
+  private getSectionInformation(sectionNumber: number) {
+    const ques = this.questionReceived.findIndex((ques) => ques._id === this.innovation.executiveReport.sections[sectionNumber].quesId);
+    if (ques !== -1) {
+      this.selectedQuestion = this.questionReceived[ques];
     }
   }
 
@@ -136,8 +157,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe.unsubscribe();
   }
 
 }

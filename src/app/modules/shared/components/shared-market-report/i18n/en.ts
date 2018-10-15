@@ -74,7 +74,8 @@ export const MARKET_REPORT = {
     'CHOOSE_TEMPLATE': 'Choose template',
     'VALID_BUTTON': 'Valid Template',
     'DELETE_BUTTON': 'Delete Template',
-    'CONCLUSION': 'Conclusion abstract'
+    'CONCLUSION': 'Conclusion abstract',
+    'ABSTRACT': 'Abstract'
   },
 
   'EXECUTIVE_TEMPLATE': {
@@ -94,7 +95,8 @@ export const MARKET_REPORT = {
 
   'EXECUTIVE_PLACEHOLDER': {
     'GOAL': 'Describe the objective of this innovation within 120 words.',
-    'CONCLUSION': 'Describe the conclusion of this innovation campaign within 1200 words.'
+    'CONCLUSION': 'Describe the conclusion of this innovation campaign within 1200 words.',
+    'PROFESSIONAL': 'Describe the professional abstract of this innovation within 180 words.'
   },
 
   'TARGET_COUNTRIES': 'Targeted countries',

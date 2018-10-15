@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, HostListener } from '@angular/core';
+import {Component, OnInit, Input, AfterViewInit, HostListener, OnDestroy} from '@angular/core';
 import { Location } from '@angular/common';
 import { PageScrollConfig } from 'ngx-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
@@ -17,9 +17,10 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs/Subject';
 import { ShareService } from '../../../../services/share/share.service';
 import { Share } from '../../../../models/share';
-import { CalculationService } from '../../../../services/calculation/calculation.service';
+import { CampaignCalculationService } from '../../../../services/campaign/campaign-calculation.service';
 import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
+import { InnovationCommonService } from '../../../../services/innovation/innovation-common.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -27,13 +28,21 @@ import { ResponseService } from './services/response.service';
   styleUrls: ['./shared-market-report.component.scss']
 })
 
-export class SharedMarketReportComponent implements OnInit, AfterViewInit {
+export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() project: Innovation;
+  @Input() set project(value: Innovation) {
+    this.innovation = value;
+  }
+
+  // @Input() project: Innovation;
 
   @Input() adminMode: boolean;
 
   @Input() sharable = false;
+
+  ngUnsubscribe: Subject<any> = new Subject();
+
+  innovation: Innovation = {};
 
   spinnerDisplay = true;
 
@@ -112,8 +121,9 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
               private authService: AuthService,
               private shareService: ShareService,
               public filterService: FilterService,
-              private calculationService: CalculationService,
-              private responseService: ResponseService) { }
+              private campaignCalculationService: CampaignCalculationService,
+              private responseService: ResponseService,
+              private innovationCommonService: InnovationCommonService) { }
 
   ngOnInit() {
     this.filterService.reset();
@@ -122,21 +132,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     //
   }
 
-  ngAfterViewInit() {
-    const wrapper = document.getElementById('answer-wrapper');
-
-    if (wrapper) {
-      const sections = Array.from(
-        wrapper.querySelectorAll('section')
-      );
-      window.onscroll = () => {
-        const scrollPosY = document.body.scrollTop;
-        const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().bottom);
-        this.activeSection = section ? section.id : '';
-      };
-    }
-
-  }
 
   /***
    * This function is calling all the initial functions.
@@ -162,6 +157,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.adminMode = this.authService.adminLevel > 2;
   }
 
+
   /***
    *This function is to initialize the variables regarding the innovation and the project.
    */
@@ -171,7 +167,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
      * here we are registering the index of the lang of the user and according to that we display the innovation.
      * @type {number}
      */
-    const index = this.project.innovationCards.findIndex((items) => items.lang === this.lang);
+    const index = this.innovation.innovationCards.findIndex((items) => items.lang === this.lang);
     this._currentInnovationIndex = index !== -1 ? index : 0;
 
     /***
@@ -179,7 +175,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
      * @type {boolean | undefined}
      * @private
      */
-    this._previewMode = this.project.previewMode || false;
+    this._previewMode = this.innovation.previewMode || false;
 
     /***
      * this is to display on the front page.
@@ -198,7 +194,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
      * we are checking do we have any template.
      * @type {number | undefined}
      */
-    this.numberOfSections = this.project.executiveReport.totalSections || 0;
+    this.numberOfSections = this.innovation.executiveReport.totalSections || 0;
 
     /***
      * assinging the value of the executive template.
@@ -206,13 +202,24 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
      */
     this.executiveTemplates = executiveTemplate;
 
+    /***
+     * this is when we update the innovation in any sub component,
+     * we are listening that update and will update the innovation attribute.
+     */
+    this.innovationCommonService.getInnovation().takeUntil(this.ngUnsubscribe).subscribe((response: Innovation) => {
+      if (response) {
+        this.innovation = response;
+      }
+    });
+
   }
+
 
   /***
    * This function is to fetch the answers from the server.
    */
   private getAnswers() {
-    this.answerService.getInnovationValidAnswers(this.project._id).first().subscribe((results) => {
+    this.answerService.getInnovationValidAnswers(this.innovation._id).first().subscribe((results) => {
       this._answers = results.answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
       });
@@ -246,11 +253,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     });
   }
 
+
   /***
    * This function is to fetch the campaign from the server.
    */
   private getCampaign() {
-    this.innovationService.campaigns(this.project._id).first().subscribe((results) => {
+    this.innovationService.campaigns(this.innovation._id).first().subscribe((results) => {
       if (results && Array.isArray(results.result)) {
         this._campaignsStats = results.result.reduce(function(acc, campaign) {
           if (campaign.stats) {
@@ -274,6 +282,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     });
   }
 
+
   /***
    * This function is to reset the map configuration.
    */
@@ -289,14 +298,16 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     };
   }
 
+
   /***
    * This function is to get the questions.
    */
   private presets() {
-   if (this.project.preset && this.project.preset.sections) {
-     this._questions = this.responseService.getPresets(this.project);
+   if (this.innovation.preset && this.innovation.preset.sections) {
+     this._questions = this.responseService.getPresets(this.innovation);
    }
   }
+
 
   /***
    * We are getting the scroll value for the sticky bar.
@@ -314,12 +325,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return 0;
   };
 
+
+  /***
+   * This function toggles the view.
+   * @param {Event} event
+   */
   toggleDetails(event: Event) {
     event.preventDefault();
     const value = !this._showDetails;
     this._showDetails = value;
     this._showListProfessional = value;
   }
+
 
   /***
    * This function make the market report available to the client but it will be partial report.
@@ -328,19 +345,20 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   enablePreviewMode(event: Event) {
     event.preventDefault();
 
-    this._previewMode =  this.project.previewMode = event.target['checked'] === true;
+    this._previewMode =  this.innovation.previewMode = event.target['checked'] === true;
 
     if (event.target['checked']) {
-      this.innovationService.save(this.project._id, this.project).first().subscribe( () => {
+      this.innovationService.save(this.innovation._id, this.innovation).first().subscribe( () => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
       });
     } else {
-      this.innovationService.save(this.project._id, this.project).first().subscribe( () => {
+      this.innovationService.save(this.innovation._id, this.innovation).first().subscribe( () => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
       });
     }
 
   }
+
 
   /***
    * This function call the confirmation modal to ask for the confirmation to end the project.
@@ -351,6 +369,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this._projectToBeFinished = true;
   }
 
+
   /***
    * This function is to close the end project confirmation modal.
    * @param {Event} event
@@ -360,6 +379,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this._projectToBeFinished = false;
   }
 
+
   /***
    * This function will make the project end and synthesis will be available to the client.
    * @param {Event} event
@@ -368,13 +388,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   endProject(event: Event, status: 'DONE'): void {
     this._projectToBeFinished = false;
 
-    this.innovationService.updateStatus(this.project._id, status).first().subscribe((response) => {
+    this.innovationService.updateStatus(this.innovation._id, status).first().subscribe((response) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
-      this.project = response;
+      this.innovation = response;
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
   }
+
 
   /***
    * This function the deletes the applied filtered.
@@ -392,6 +413,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   }
 
+
   /***
    * This function is called when the user clicks on the share synthesis button. We call the
    * share service to get the objectId and share key for this innovation, so that he can share
@@ -401,13 +423,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   shareSynthesis(event: Event) {
     event.preventDefault();
 
-    this.shareService.shareSynthesis(this.project._id).first().subscribe((response: Share) => {
+    this.shareService.shareSynthesis(this.innovation._id).first().subscribe((response: Share) => {
       this.openMailTo(response.objectId, response.shareKey);
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
     });
 
   }
+
 
   /***
    * This function generates the message and open the mailto for the client to share the
@@ -422,26 +445,27 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
     if (this.lang === 'en') {
 
-      subject = 'Results - ' + this.project.innovationCards[this._currentInnovationIndex].title;
+      subject = 'Results - ' + this.innovation.innovationCards[this._currentInnovationIndex].title;
 
       message = encodeURI('Hello,' + '\r\n' + '\r\n' + 'I invite you to discover the results of the market test carried out by ' + this.getCompanyName() + ' for the innovation ' +
-        this.project.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Go on this link: ' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
+        this.innovation.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Go on this link: ' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
         'geographical location, person etc. ' + '\r\n' + '\r\n' + 'Cordially, ' + '\r\n' + '\r\n' + this.getOwnerName());
 
     }
 
     if (this.lang === 'fr') {
 
-      subject = 'Résultats - ' + this.project.innovationCards[this._currentInnovationIndex].title;
+      subject = 'Résultats - ' + this.innovation.innovationCards[this._currentInnovationIndex].title;
 
       message = encodeURI('Bonjour,' + '\r\n' + '\r\n' + 'Je vous invite à découvrir les résultats du test marché réalisé par ' + this.getCompanyName() + ' pour l\'innovation ' +
-        this.project.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Allez sur ce lien: ' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
+        this.innovation.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Allez sur ce lien: ' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
         'emplacement géographique, personne etc. ' + '\r\n' + '\r\n' + 'Cordialement, ' + '\r\n' + '\r\n' + this.getOwnerName());
     }
 
     window.location.href = 'mailto:' + '?subject=' + subject  + '&body=' + message;
 
   }
+
 
   /***
    * This functions is called when the user clicks on the print button, and it print the synthesis.
@@ -452,6 +476,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     window.print();
   }
 
+
   /***
    * This function is getting the image source according to the current lang of the user.
    * @returns {string}
@@ -460,11 +485,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     let src = '';
     const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
 
-    if (this.project.innovationCards[this._currentInnovationIndex].principalMedia && this.project.innovationCards[this._currentInnovationIndex].principalMedia.type === 'PHOTO') {
-      src = this.project.innovationCards[this._currentInnovationIndex].principalMedia.url;
+    if (this.innovation.innovationCards[this._currentInnovationIndex].principalMedia && this.innovation.innovationCards[this._currentInnovationIndex].principalMedia.type === 'PHOTO') {
+      src = this.innovation.innovationCards[this._currentInnovationIndex].principalMedia.url;
     } else {
-      const index = this.project.innovationCards[this._currentInnovationIndex].media.findIndex((media) => media.type === 'PHOTO');
-      src = index === -1 ? defaultSrc : this.project.innovationCards[this._currentInnovationIndex].media[index].url;
+      const index = this.innovation.innovationCards[this._currentInnovationIndex].media.findIndex((media) => media.type === 'PHOTO');
+      src = index === -1 ? defaultSrc : this.innovation.innovationCards[this._currentInnovationIndex].media[index].url;
     }
 
     if (src === '' || undefined) {
@@ -475,18 +500,22 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
 
   }
 
+
   /***
    * This function is to update the project.
    * @param {Event} event
    */
   update(event: Event) {
     // TODO: add project status DONE
-    if (this.project.status) {
-      this.innovationService.save(this.project._id, this.project).first().subscribe((response) => {
-        this.project = response;
+    if (this.innovation.status) {
+      this.innovationService.save(this.innovation._id, this.innovation).first().subscribe((response) => {
+        this.innovation = response;
+        this.innovationCommonService.setInnovation(this.innovation);
+        console.log(this.innovation);
       });
     }
   }
+
 
   /***
    * This function returns the color according to the length of the input data.
@@ -504,6 +533,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     }
   }
 
+
   /***
    * This function is called when we click on the radio button, and assign the
    * clicked value to the numberOfSection.
@@ -515,17 +545,19 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this.numberOfSections = value;
   }
 
+
   /***
    * This is function is called when you click on the valid template button.
-   * We assign the number of section calue to the this.project.executiveReport.totalSections
+   * We assign the number of section value to the this.project.executiveReport.totalSections
    * and call the update function to save it in database.
    * @param {Event} event
    */
   generateExecutiveTemplate(event: Event) {
     event.preventDefault();
-    this.project.executiveReport.totalSections = this.numberOfSections;
+    this.innovation.executiveReport.totalSections = this.numberOfSections;
     this.update(event);
   }
+
 
   /***
    * This function is to return the src of the UMI intro image.
@@ -535,6 +567,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     return `https://res.cloudinary.com/umi/image/upload/v1539157710/app/default-images/intro/UMI-${this.lang}.png`;
   }
 
+
   /***
    * This function is returning the analytic percentage.
    * @param {number} value1
@@ -542,8 +575,9 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
    * @returns {number}
    */
   percentageCalculation(value1: number, value2: number) {
-    return this.calculationService.analyticPercentage(value1, value2);
+    return this.campaignCalculationService.analyticPercentage(value1, value2);
   }
+
 
   /***
    * This function display the menu options.
@@ -554,6 +588,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this._displayMenuWrapper = true;
   }
 
+
   /***
    * This function hides the menu options.
    * @param {Event} event
@@ -563,26 +598,30 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
     this._displayMenuWrapper = false;
   }
 
-  keyUpHandlerFunction(event: any, ob: string) {
+
+  /***
+   * This function saves the comment of the operator.
+   * @param event
+   * @param {string} ob
+   */
+  saveOperatorComment(event: any, ob: string) {
     const objToSave = {};
     objToSave[ob] = {
       conclusion: event['content']
     };
-    this.innovationService.updateMarketReport(this.project._id, objToSave).first().subscribe((response) => {
-      this.project.marketReport = response;
+
+    this.innovationService.updateMarketReport(this.innovation._id, objToSave).first().subscribe((response) => {
+      this.innovation.marketReport = response;
     });
+
   }
 
 
-
-
-
-
-
-
-
-
-  public filterByCountries(event: {countries: Array<string>, allChecked: boolean}): void {
+  /***
+   * This function is to filter by the countries.
+   * @param {{countries: Array<string>; allChecked: boolean}} event
+   */
+  filterByCountries(event: {countries: Array<string>, allChecked: boolean}): void {
     if (!event.allChecked) {
       this.filterService.addFilter(
         {
@@ -729,7 +768,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   get continentTarget(): any {
-    return this.project.settings ? this.project.settings.geography.continentTarget : {};
+    return this.innovation.settings ? this.innovation.settings.geography.continentTarget : {};
   }
 
   get questions(): Array<Question> {
@@ -781,7 +820,27 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit {
   }
 
   getOwnerName(): string {
-    return this.project.owner.name || '';
+    return this.innovation.owner.name || '';
+  }
+
+  ngAfterViewInit() {
+    const wrapper = document.getElementById('answer-wrapper');
+
+    if (wrapper) {
+      const sections = Array.from(
+        wrapper.querySelectorAll('section')
+      );
+      window.onscroll = () => {
+        const scrollPosY = document.body.scrollTop;
+        const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().top);
+        this.activeSection = section ? section.id : '';
+      };
+    }
+
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.unsubscribe();
   }
 
 }

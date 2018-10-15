@@ -10,7 +10,7 @@
   flex-direction: column;
 
   .section-first {
-    padding: 1.57rem;
+    padding: 25px;
 
     .main-heading {
       color: white;
@@ -29,7 +29,7 @@
       .name, .job, .phone {
         font-size: 16px;
         color: white;
-        margin-bottom: .18rem;
+        margin-bottom: 3px;
       }
 
       .job, .phone, .text-link {
@@ -47,16 +47,16 @@
   .section-second {
     background-color: #313C48;
     min-height: 146.71px;
-    padding: 1.57rem;
+    padding: 25px;
 
     h6 {
       color: white;
-      margin-bottom: .18rem;
+      margin-bottom: 3px;
       font-size: 16px;
     }
 
     .logo-address {
-      margin-top: .6rem;
+      margin-top: 10px;
       display: flex;
       align-items: center;
 
@@ -67,7 +67,7 @@
 
       .address {
         font-size: 12px;
-        margin-left: .6rem;
+        margin-left: 10px;
         font-weight: 600;
 
         p {

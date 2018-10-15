@@ -155,9 +155,9 @@
           color: white;
         }
 
-        li.active {
-          background-color: $primary-color;
-          color: white;
+        .active {
+          background-color: $primary-color !important;
+          color: white !important;
         }
 
       }
@@ -470,7 +470,27 @@
 
   }
 
+  .abstract-wrapper {
+    margin-top: 1.57rem;
 
+    .main-heading {
+      color: white;
+    }
+
+    .form-group {
+      margin-bottom: 0 !important;
+    }
+
+    .form-label {
+      padding: 0;
+    }
+
+    .charRemaining span {
+      margin-top: -1.4rem;
+      margin-left: -2.625rem;
+    }
+
+  }
 
   .origin-wrapper {
     background-color: $background-color;
@@ -526,10 +546,6 @@
       color: $primary-color;
       font-weight: 600;
       padding-bottom: 1.57rem;
-    }
-
-    .abstract-wrapper {
-      margin-top: 1.57rem;
     }
 
   }
