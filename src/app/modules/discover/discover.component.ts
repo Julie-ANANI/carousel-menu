@@ -1,17 +1,14 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateTitleService } from '../../services/title/title.service';
-import { InnovationService } from '../../services/innovation/innovation.service';
 import { TranslateService} from '@ngx-translate/core';
 import { Innovation } from '../../models/innovation';
 import { InnovCard } from '../../models/innov-card';
 import { PaginationTemplate } from '../../models/pagination';
-import { TranslateNotificationsService } from '../../services/notifications/notifications.service';
 import { Tag } from '../../models/tag';
-import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-discover',
   templateUrl: './discover.component.html',
   styleUrls: ['./discover.component.scss']
 })
@@ -74,36 +71,18 @@ export class DiscoverComponent implements OnInit {
   }; // to pass the value in the pagination component.
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private route: ActivatedRoute,
               private translateTitleService: TranslateTitleService,
-              private innovationService: InnovationService,
-              private translateService: TranslateService,
-              private translateNotificationsService: TranslateNotificationsService
-              ) {}
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.TITLE');
 
-    this.getAllInnovations();
+    this._totalInnovations = this.route.snapshot.data.innovations;
+    this.initialize();
 
     this.storedFilters();
 
-  }
-
-
-  /*
-    based on the config we request to the server and get the results.
-   */
-  private getAllInnovations() {
-    this.innovationService.getAll(this.config)
-      .pipe(first())
-      .subscribe((innovations: any) => {
-        this._displaySpinner = true;
-        this._totalInnovations = innovations.result;
-        this.initialize();
-      }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-        this._displaySpinner = false;
-      });
   }
 
 

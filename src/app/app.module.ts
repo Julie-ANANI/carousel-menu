@@ -127,14 +127,16 @@ export class AppModule {
     this._translateService.addLangs(['en', 'fr']);
     this._translateService.setDefaultLang('en');
 
+    const user_lang = this._cookieService.get('user_lang');
     if (isPlatformBrowser(platformId)) {
-      const user_lang = this._cookieService.get('user_lang');
       let browserLang = user_lang || this._translateService.getBrowserLang();
       if (!browserLang.match(/en|fr/)) {
         browserLang = 'en';
       }
       this._cookieService.put('user_lang', browserLang);
       this._translateService.use(browserLang);
+    } else {
+      this._translateService.use(user_lang || 'en');
     }
   }
 
