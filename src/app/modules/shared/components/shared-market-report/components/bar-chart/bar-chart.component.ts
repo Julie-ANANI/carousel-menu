@@ -6,6 +6,11 @@ import { Innovation } from '../../../../../../models/innovation';
 import { Multiling } from '../../../../../../models/multiling';
 import { Question } from '../../../../../../models/question';
 import { Tag } from '../../../../../../models/tag';
+import { Location } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { InnovationCommonService } from '../../../../../../services/innovation/innovation-common.service';
+import { ResponseService } from '../../services/response.service';
 
 export interface BarData {
   label: Multiling,
@@ -26,19 +31,30 @@ export interface BarData {
 
 export class BarChartComponent implements OnInit {
 
+  @Input() set executiveReport(value: boolean) {
+    this.executiveReportView = value;
+  }
+
   @Input() set answers(value: Array<Answer>) {
     this._answers = value;
     this.updateAnswersData();
   }
-  @Input() public tags: Array<Tag>;
-  @Input() public innovation: Innovation;
-  @Input() public question: Question;
-  @Input() public readonly: boolean;
-  @Input() public stats: any;
+
+  @Input() tags: Array<Tag>;
+  @Input() innovation: Innovation;
+  @Input() question: Question;
+  @Input() readonly: boolean;
+  @Input() stats: any;
   @Input() showDetails: boolean;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Output() answerButtonClicked = new EventEmitter<boolean>();
+
+  adminSide: boolean;
+
+  formBarChart: FormGroup;
+
+  executiveReportView = false;
 
   private _answers: Array<Answer>;
   private _barsData: Array<BarData> = [];
@@ -46,11 +62,47 @@ export class BarChartComponent implements OnInit {
   public showAnswers: {[index: string]: string} = {};
 
   constructor(private _translateService: TranslateService,
-              private filterService: FilterService) {}
+              private filterService: FilterService,
+              private location: Location,
+              private formBuilder: FormBuilder,
+              private innovationService: InnovationService,
+              private innovationCommonService: InnovationCommonService,
+              private responseService: ResponseService) {}
 
   ngOnInit() {
+
+    /***
+     * this is to make visible abstract textarea.
+     * @type {boolean}
+     */
+    this.adminSide = this.location.path().slice(0, 6) === '/admin';
+
     this.updateAnswersData();
+
+    this.buildForm();
+    this.patchForm();
   }
+
+
+  /***
+   * Build the form using quesId.
+   */
+  private buildForm() {
+    this.formBarChart = this.formBuilder.group({
+      [this.question._id]: ['']
+    });
+  }
+
+
+  /***
+   * Patch the abstract value for each question.
+   */
+  private patchForm() {
+    const value = this.responseService.getInnovationAbstract(this.innovation, this.question._id);
+    this.formBarChart.get(this.question._id).setValue(value);
+  }
+
+
 
   private updateAnswersData(): void {
     if (this.question && this.question.identifier && Array.isArray(this.question.options)) {
@@ -154,6 +206,24 @@ export class BarChartComponent implements OnInit {
       value: tag._id
     });
   }
+
+
+  /***
+   * This function is to save the abstract in the innovation object.
+   * @param {Event} event
+   * @param {string} formControlName
+   */
+  saveAbstract(event: Event, formControlName: string) {
+    const abstract = this.formBarChart.get(formControlName).value;
+    this.innovation = this.responseService.saveInnovationAbstract(this.innovation, abstract, formControlName);
+
+    this.innovationService.save(this.innovation._id, this.innovation).subscribe((response: Innovation) => {
+      this.innovation = response;
+      this.innovationCommonService.setInnovation(this.innovation);
+    });
+
+  }
+
 
   get barsData(): Array<BarData> {
     return this._barsData;

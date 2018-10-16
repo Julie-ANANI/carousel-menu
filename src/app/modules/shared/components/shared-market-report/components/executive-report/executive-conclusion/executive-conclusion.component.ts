@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../../../../../../../models/user.model';
 import { environment } from '../../../../../../../../environments/environment';
-import {Innovation} from '../../../../../../../models/innovation';
+import { Innovation } from '../../../../../../../models/innovation';
 
 @Component({
   selector: 'app-executive-conclusion',

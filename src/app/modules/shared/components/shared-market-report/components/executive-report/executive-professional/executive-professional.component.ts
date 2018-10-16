@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Answer } from '../../../../../../../models/answer';
 import { ResponseService } from '../../../services/response.service';
 import { Subject } from 'rxjs/Subject';
-import {Innovation} from '../../../../../../../models/innovation';
+import { Innovation } from '../../../../../../../models/innovation';
 
 @Component({
   selector: 'app-executive-professional',

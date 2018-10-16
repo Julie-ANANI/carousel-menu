@@ -1,42 +1,73 @@
-<div class="ques-conclusion-wrapper">
+<!-- Market report -->
+<ng-container *ngIf="!executiveReportView">
+  <div class="ques-conclusion-wrapper">
 
-  <!-- Conclusion -->
-  <div class="umi-synthesis">
+    <!-- Conclusion -->
+    <div class="umi-synthesis">
 
-    <h1 *ngIf="question.title" class="main-heading">{{ question.title | multiling:lang }}</h1>
+      <h1 *ngIf="question.title" class="main-heading">{{ question.title | multiling:lang }}</h1>
 
-    <h2 *ngIf="question.label" class="section-heading">{{ question.label | multiling:lang }}</h2>
+      <h2 *ngIf="question.label" class="section-heading">{{ question.label | multiling:lang }}</h2>
 
-    <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
+      <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
 
-    <app-text-zone
-      [elementId]="domSectionId"
-      [readonly]="readonly"
-      [data]="innovation?.marketReport[question.identifier]?.conclusion"
-      (onTextChange)="keyupHandlerFunction($event)">
-    </app-text-zone>
+      <app-text-zone
+        [elementId]="domSectionId"
+        [readonly]="readonly"
+        [data]="innovation?.marketReport[question.identifier]?.conclusion"
+        (onTextChange)="keyupHandlerFunction($event)">
+      </app-text-zone>
+
+    </div>
+    <!-- /Conclusion -->
+
+    <div class="divider-wrapper"></div>
+
+    <ng-container [ngSwitch]="question.controlType">
+
+      <!-- Pie chart -->
+      <div *ngSwitchCase="'radio'" class="stat-wrapper pie-chart-print">
+        <app-piechart [pieChart]="pieChart"></app-piechart>
+      </div>
+
+      <!-- ou encadré bleu -->
+      <div *ngSwitchDefault class="stat-wrapper">
+        <app-market-report-bluesquare
+          [numberFocus]="stats.nbAnswers"
+          [percentage]="stats.percentage"
+          [subtitle]="question.subtitle | multiling:lang">
+        </app-market-report-bluesquare>
+      </div>
+
+    </ng-container>
 
   </div>
-  <!-- /Conclusion -->
+</ng-container>
+<!-- /Market report -->
 
-  <div class="divider-wrapper"></div>
 
-  <ng-container [ngSwitch]="question.controlType">
+<!-- Executive report -->
+<ng-container *ngIf="executiveReportView">
+  <ng-container [ngSwitch]="question?.controlType">
 
     <!-- Pie chart -->
     <div *ngSwitchCase="'radio'" class="stat-wrapper pie-chart-print">
-      <app-piechart [pieChart]="pieChart"></app-piechart>
+      <app-piechart
+        [pieChart]="pieChart"
+        [executiveReport]="true">
+      </app-piechart>
     </div>
 
     <!-- ou encadré bleu -->
     <div *ngSwitchDefault class="stat-wrapper">
       <app-market-report-bluesquare
-        [numberFocus]="stats.nbAnswers"
-        [percentage]="stats.percentage"
-        [subtitle]="question.subtitle | multiling:lang">
+        [numberFocus]="stats?.nbAnswers"
+        [percentage]="stats?.percentage"
+        [executiveReport]="true"
+        [subtitle]="question?.subtitle | multiling:lang">
       </app-market-report-bluesquare>
     </div>
 
   </ng-container>
-
-</div>
+</ng-container>
+<!-- Executive report -->

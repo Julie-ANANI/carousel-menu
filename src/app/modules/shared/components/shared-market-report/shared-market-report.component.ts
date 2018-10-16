@@ -88,15 +88,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _sidebarTemplateValue: Template = {};
 
-
-
-
-
   editMode = new Subject<boolean>(); // this is for the admin side.
-
-
-
-
 
   private _companies: Array<Clearbit>;
 
@@ -120,7 +112,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
               private innovationService: InnovationService,
               private authService: AuthService,
               private shareService: ShareService,
-              public filterService: FilterService,
+              private filterService: FilterService,
               private campaignCalculationService: CampaignCalculationService,
               private responseService: ResponseService,
               private innovationCommonService: InnovationCommonService) { }
@@ -219,8 +211,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This function is to fetch the answers from the server.
    */
   private getAnswers() {
-    this.answerService.getInnovationValidAnswers(this.innovation._id).first().subscribe((results) => {
-      this._answers = results.answers.sort((a, b) => {
+    this.answerService.getInnovationValidAnswers(this.innovation._id).first().subscribe((response) => {
+      this._answers = response.answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
       });
 
@@ -235,13 +227,13 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
         this._filteredAnswers = this.filterService.filter(this._answers);
       });
 
-      this._companies = results.answers.map((answer: any) => answer.company || {
+      this._companies = response.answers.map((answer: any) => answer.company || {
         name: answer.professional.company
       }).filter(function(item: any, pos: any, self: any) {
         return self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos;
       });
 
-      this._countries = results.answers.reduce((acc, answer) => {
+      this._countries = response.answers.reduce((acc, answer) => {
         if (acc.indexOf(answer.country.flag) === -1) {
           acc.push(answer.country.flag);
         }
@@ -511,7 +503,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       this.innovationService.save(this.innovation._id, this.innovation).first().subscribe((response) => {
         this.innovation = response;
         this.innovationCommonService.setInnovation(this.innovation);
-        console.log(this.innovation);
       });
     }
   }
@@ -680,27 +671,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
 
 
-
-/*  private _translationStrings(): any {
-    /!*
-  {{ 'COMMON.UMI_WORD' | translate }}
-  {{ 'MARKET_REPORT.SYNTHESIS_FRAME' | translate }}
-  {{ 'MARKET_REPORT.PIE_CHART' | translate }}
-  {{ 'MARKET_REPORT.ANSWERS' | translate }}
-  {{ 'MARKET_REPORT.PEOPLE_VOTED' | translate }}
-  {{ 'MARKET_REPORT.NO_GRADE' | translate }}
-  {{ 'MARKET_REPORT.GRADE' | translate }}
-   *!/
-    /!*return  {
-      "UMI_WORD": this.translateService.instant('COMMON.UMI_WORD' ),
-      "SYNTHESIS_FRAME": this.translateService.instant('MARKET_REPORT.SYNTHESIS_FRAME' ),
-      "PIE_CHART": this.translateService.instant('MARKET_REPORT.PIE_CHART' ),
-      "ANSWERS": this.translateService.instant('MARKET_REPORT.ANSWERS' ),
-      "PEOPLE_VOTED": this.translateService.instant('MARKET_REPORT.PEOPLE_VOTED' ),
-      "NO_GRADE": this.translateService.instant('MARKET_REPORT.NO_GRADE' ),
-      "GRADE": this.translateService.instant('MARKET_REPORT.GRADE' )
-    };*!/
-  }*/
 
 
 

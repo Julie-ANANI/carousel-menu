@@ -24,12 +24,13 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   @Input() set section(value: number) {
     this.sectionNumberReceived = value;
-    this.getSectionInformation(value);
   }
 
   ngUnsubscribe: Subject<any> = new Subject();
 
-  answerReceived: Array<Answer> = [];
+  answersReceived: Array<Answer> = [];
+
+  answersToShow: Array<Answer> = [];
 
   innovation: Innovation;
 
@@ -45,6 +46,8 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   adminSide: boolean;
 
+  stats: { nbAnswers?: number, percentage?: number };
+
   constructor(private responseService: ResponseService,
               private location: Location,
               private translateService: TranslateService,
@@ -52,8 +55,8 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
               private innovationCommonService: InnovationCommonService) { }
 
   ngOnInit() {
-    this.getAnswers();
     this.isAdminSide();
+    this.getAnswers();
 
     /***
      * this is when we update the innovation in any component,
@@ -67,13 +70,19 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   }
 
+
+  /***
+   * here we are getting the answers that was set on Market report ts file.
+   */
   private getAnswers() {
     this.responseService.getExecutiveAnswers().takeUntil(this.ngUnsubscribe).subscribe((response) => {
       if (response !== null) {
-        this.answerReceived = response;
+        this.answersReceived = response;
+        this.getSectionInformation(this.sectionNumberReceived);
       }
     });
   }
+
 
   /***
    * This function is to get the questions from the service, and then push it into the
@@ -92,14 +101,14 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
     }
   }
 
+
   /**
-   * This function is checking the are we on the admin side, and if yes than also
-   * checking the admin level.
+   * This function is checking the are we on the admin side.
    */
   private isAdminSide() {
     this.adminSide = this.location.path().slice(0, 6) === '/admin';
-    // this.adminMode = this.authService.adminLevel > 2;
   }
+
 
   /***
    * This function is called when the operator clicked on anyone title
@@ -108,32 +117,14 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * @param {Question} option
    */
   onTitleClicked(event: Event, option: Question) {
-    event.preventDefault();
-
     this.innovation.executiveReport.sections[this.sectionNumberReceived].quesId = option._id;
-
-    this.selectedQuestion = option;
-
-    /*const index = this.innovation.executiveReport.sections.findIndex((item: { sectionPlace: number, quesId: string }) => item.sectionPlace === this.sectionNumberReceived);
-
-    let value: { sectionPlace: number, quesId: string };
-    value = { sectionPlace: this.sectionNumberReceived, quesId: option._id };
-
-    if (index === -1) {
-      this.innovation.executiveReport.sections.push(value);
-    } else {
-      this.innovation.executiveReport.sections[index] = value;
-    }*/
-
-    // this.getSectionInformation(this.sectionNumberReceived);
-
     this.update(event);
-
+    this.getSectionInformation(this.sectionNumberReceived);
   }
+
 
   /***
    * This function is to update the project.
-   * @param {Event} event
    */
   update(event: Event) {
     // TODO: add project status DONE
@@ -145,11 +136,23 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  /***
+   * Based on the sectionNumber we get the question id from the executiveReport.sections array and fill that section
+   * with all the details.
+   * @param {number} sectionNumber
+   */
   private getSectionInformation(sectionNumber: number) {
-    const ques = this.questionReceived.findIndex((ques) => ques._id === this.innovation.executiveReport.sections[sectionNumber].quesId);
-    if (ques !== -1) {
-      this.selectedQuestion = this.questionReceived[ques];
+    this.selectedQuestion = this.questionReceived.find((ques) => ques._id === this.innovation.executiveReport.sections[sectionNumber].quesId);
+
+    if (this.selectedQuestion) {
+      this.answersToShow = this.responseService.getAnswersToShow(this.answersReceived, this.selectedQuestion);
+      this.stats = {
+        nbAnswers: this.answersToShow.length,
+        percentage: Math.round((this.answersToShow.length * 100) / this.answersReceived.length)
+      };
     }
+
   }
 
   get lang(): string {

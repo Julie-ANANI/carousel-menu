@@ -28,6 +28,28 @@
       color: white;
     }
 
+    .abstract-wrapper {
+      margin-top: 1.57rem;
+
+      .main-heading {
+        color: white;
+      }
+
+      .form-group {
+        margin-bottom: 0 !important;
+      }
+
+      .form-label {
+        padding: 0;
+      }
+
+      .charRemaining span {
+        margin-top: -1.4rem;
+        margin-left: -2.625rem;
+      }
+
+    }
+
   }
 
   .content-wrapper {

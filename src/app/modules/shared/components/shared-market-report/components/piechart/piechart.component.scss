@@ -44,6 +44,46 @@
 
 }
 
+.executiveActive {
+  font-size: 14px;
+  max-width: unset;
+  width: 100%;
+
+  .percentage {
+    display: none;
+  }
+
+  .chart-pie {
+    margin-bottom: 15px;
+  }
+
+  .pie-data {
+    margin-bottom: -10px;
+
+    .data {
+      display: inline-flex;
+      margin-bottom: 10px;
+      margin-right: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      vertical-align: middle;
+
+      .circle {
+        width: 10px;
+        height: 10px;
+        margin-top: 4px;
+      }
+
+      .response, .circle, .text{
+        margin-right: 8px;
+      }
+
+    }
+
+  }
+
+}
+
 /********************************** Media ***************************************/
 
 @media (max-width: 840px) {
@@ -56,25 +96,39 @@
 
 @media (max-width: 600px) {
 
-  .chart-pie {
-    width: 100% !important;
+  .piechart {
+
+    .chart-pie {
+      width: 100% !important;
+    }
+
   }
 
 }
 
 @media (min-width: 601px) {
 
-  .chart-pie {
-    width: 320px !important;
+  .piechart {
+
+    .chart-pie {
+      width: 320px !important;
+    }
+
   }
+
+
 
 }
 
 @media (max-width: 320px) {
 
-  .pie-data {
-    display: flex !important;
-    flex-direction: column;
+  .piechart {
+
+    .pie-data {
+      display: flex !important;
+      flex-direction: column;
+    }
+
   }
 
 }

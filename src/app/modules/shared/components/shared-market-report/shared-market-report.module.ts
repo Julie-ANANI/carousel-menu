@@ -30,7 +30,7 @@ import { RouterModule } from '@angular/router';
 import { ProgressBarModule } from '../../../input/component/progress-bar/progress-bar.module';
 import { InputModule } from '../../../input/input.module';
 import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 /***
@@ -70,7 +70,8 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
     RouterModule,
     ProgressBarModule,
     SharedLoaderModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     CommonService,

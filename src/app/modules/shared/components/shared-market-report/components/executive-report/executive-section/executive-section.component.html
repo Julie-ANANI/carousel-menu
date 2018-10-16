@@ -21,5 +21,34 @@
   </div>
   <!-- /Heading and Menu -->
 
+  <!-- Answer display -->
+  <div class="text-center">
+
+    <!-- If the question type is checkbox or radio -->
+    <ng-container *ngIf="selectedQuestion?.controlType === 'checkbox' || selectedQuestion?.controlType === 'radio'">
+      <app-bar-chart
+        [answers]="answersToShow"
+        [innovation]="innovation"
+        [question]="selectedQuestion"
+        [executiveReport]="true"
+        [stats]="stats">
+      </app-bar-chart>
+    </ng-container>
+    <!-- /If the question type is checkbox or radio -->
+
+
+    <!-- If the question type is not checkbox and radio -->
+    <ng-container *ngIf="selectedQuestion?.controlType !== 'checkbox' && selectedQuestion?.controlType !== 'radio'">
+      <app-question-conclusion
+        [innovation]="innovation"
+        [question]="selectedQuestion"
+        [executiveReport]="true"
+        [stats]="stats">
+      </app-question-conclusion>
+    </ng-container>
+
+  </div>
+  <!-- /Answer display -->
+
 
 </div>

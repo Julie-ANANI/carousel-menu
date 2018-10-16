@@ -232,9 +232,9 @@
                 <h6 *ngIf="innovation.owner?.jobTitle" class="text-jobTitle">{{ innovation.owner?.jobTitle }}</h6>
                 <h6 *ngIf="innovation.owner?.email" class="text-email">{{ innovation.owner?.email }}</h6>
                 <span
-                  *ngIf="innovation.executiveReport?.goal"
+                  *ngIf="innovation.executiveReport?.objective"
                   class="goal-text">
-                  {{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.goal }}
+                  {{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}: {{ innovation.executiveReport?.objective }}
                 </span>
               </div>
 
@@ -260,20 +260,20 @@
               <div class="section-inline-container">
                 <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.TITLE' | translate }}</h1>
                 <div class="form-group">
-                  <label class="form-label" for="goal">
+                  <label class="form-label" for="market-report-objective">
                     <textarea
                       class="form-default"
-                      id="goal"
+                      id="market-report-objective"
                       [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.GOAL' | translate"
                       rows="5"
-                      [(ngModel)]="innovation.executiveReport.goal"
+                      [(ngModel)]="innovation.executiveReport.objective"
                       (blur)="update($event)"
                       maxlength="120">
                     </textarea>
                   </label>
                   <div class="charRemaining">
-                    <span [ngStyle]="{ 'color': getColor((innovation.executiveReport?.goal.length | characterCountdown:120), 120) }">
-                      {{ innovation.executiveReport?.goal.length | characterCountdown:120 }}
+                    <span [ngStyle]="{ 'color': getColor((innovation.executiveReport?.objective.length | characterCountdown:120), 120) }">
+                      {{ innovation.executiveReport?.objective.length | characterCountdown:120 }}
                     </span>
                   </div>
                 </div>
@@ -586,7 +586,8 @@
                       </textarea>
                     </label>
                     <div class="charRemaining">
-                    <span [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:180), 180) }">
+                    <span
+                      [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:180), 180) }">
                       {{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:180 }}
                     </span>
                     </div>
@@ -623,7 +624,12 @@
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="professional-wrapper">
               <div *ngFor="let answer of filteredAnswers" class="profile">
-                <img src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png" height="13px" width="20px" style="margin-top: .125rem" (click)="filterPro(answer, $event)">
+                <img
+                  src="https://res.cloudinary.com/umi/image/upload/v1539175831/app/default-images/icons/filter.png"
+                  height="13px"
+                  width="20px"
+                  style="margin-top: .125rem"
+                  (click)="filterPro(answer, $event)">
                 <app-pro-tag
                   [answer]="answer"
                   (modalAnswerChange)="seeAnswer($event)"
@@ -636,8 +642,29 @@
         <!-- /Professionals -->
 
 
+        <!-- Other question and answers -->
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div *ngFor="let question of questions">
+            <div class="section-light-container s-questions-print">
+              <app-question-section
+                [project]="innovation"
+                [question]="question"
+                [answers]="filteredAnswers"
+                [showDetails]="showDetails"
+                [readonly]="!adminSide"
+                (modalAnswerChange)="seeAnswer($event)">
+              </app-question-section>
+            </div>
+          </div>
+        </div>
+        <!-- /Other question and answers -->
+
+
         <!-- Conclusion -->
-        <section *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide" class="section-light-container s-conclusion-print" id="conclusion">
+        <section
+          *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide"
+          class="section-light-container s-conclusion-print"
+          id="conclusion">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="conclusion-wrapper">
               <div class="section-inline-container">
@@ -668,84 +695,6 @@
   <!-- /Project status submitted and client side -->
 
 
-
-
-
-
-
-  <!-- Project status done -->
-  <ng-container *ngIf="innovation === 'DONE'">
-
-
-
-
-
-
-
-    <!-- Other question and answers -->
-    <div class="column col-xs-12 col-11 col-mx-auto">
-      <div *ngFor="let question of questions">
-        <div class="section-light-container s-questions-print">
-          <app-question-section
-            [innovation]="innovation"
-            [question]="question"
-            [answers]="filteredAnswers"
-            [showComments]="showDetails"
-            [showDetails]="showDetails"
-            [readonly]="!adminSide"
-            (modalAnswerChange)="seeAnswer($event)">
-          </app-question-section>
-        </div>
-      </div>
-    </div>
-    <!-- /Other question and answers -->
-
-
-
-
-
-
-
-
-
-    <!-- Answer wrapper -->
-    <div >
-
-
-
-
-
-
-
-
-
-      <!-- Other question and answers -->
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <div *ngFor="let question of questions">
-          <div class="section-light-container s-questions-print">
-            <app-question-section
-              [innovation]="innovation"
-              [question]="question"
-              [answers]="filteredAnswers"
-              [showComments]="showDetails"
-              [showDetails]="showDetails"
-              [readonly]="!adminSide"
-              (modalAnswerChange)="seeAnswer($event)">
-            </app-question-section>
-          </div>
-        </div>
-      </div>
-      <!-- /Other question and answers -->
-
-
-
-
-    </div>
-    <!-- /Answer wrapper -->
-
-  </ng-container>
-  <!-- /Project status done -->
-
 </section>
 
 
@@ -766,6 +715,7 @@
     </div>
   </div>
 </div>
+
 
 
 <!-- Insight preview -->
