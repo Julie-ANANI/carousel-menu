@@ -586,10 +586,10 @@
                       </textarea>
                     </label>
                     <div class="charRemaining">
-                    <span
-                      [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:180), 180) }">
-                      {{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:180 }}
-                    </span>
+                      <span
+                        [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:180), 180) }">
+                        {{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:180 }}
+                      </span>
                     </div>
                   </div>
                 </div>

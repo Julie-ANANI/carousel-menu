@@ -8,7 +8,6 @@ import { Question } from '../../../../../../models/question';
 import { Tag } from '../../../../../../models/tag';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { InnovationCommonService } from '../../../../../../services/innovation/innovation-common.service';
 import { ResponseService } from '../../services/response.service';
 
@@ -65,7 +64,6 @@ export class BarChartComponent implements OnInit {
               private filterService: FilterService,
               private location: Location,
               private formBuilder: FormBuilder,
-              private innovationService: InnovationService,
               private innovationCommonService: InnovationCommonService,
               private responseService: ResponseService) {}
 
@@ -216,12 +214,18 @@ export class BarChartComponent implements OnInit {
   saveAbstract(event: Event, formControlName: string) {
     const abstract = this.formBarChart.get(formControlName).value;
     this.innovation = this.responseService.saveInnovationAbstract(this.innovation, abstract, formControlName);
+    this.innovationCommonService.saveInnovation(this.innovation);
+  }
 
-    this.innovationService.save(this.innovation._id, this.innovation).subscribe((response: Innovation) => {
-      this.innovation = response;
-      this.innovationCommonService.setInnovation(this.innovation);
-    });
 
+  /***
+   * This function returns the color according to the length of the input data.
+   * @param {number} length
+   * @param {number} limit
+   * @returns {string}
+   */
+  getColor(length: number, limit: number) {
+    return this.responseService.getColor(length, limit);
   }
 
 

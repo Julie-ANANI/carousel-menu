@@ -5,7 +5,7 @@
 
   <!-- Icon and response -->
   <p class="sub-title">
-    <i class="fas fa-user"></i> {{ answerReceived.length || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}
+    <i class="fas fa-user"></i> {{ answers.length || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}
   </p>
 
   <!-- Map -->
@@ -22,7 +22,7 @@
   <div class="abstract-professional" [innerHtml]="professionalAbstract"></div>
 
   <!-- Top profile -->
-  <div *ngFor="let answer of professionals | slice:0:4" class="profile">
+  <div *ngFor="let answer of professionalsAnswer | slice:0:4" class="profile">
 
     <!-- Icons -->
     <div class="icons">
@@ -69,7 +69,7 @@
 
   <!-- Remaining text -->
   <p class="remaining-text text-center">
-    {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.AND' | translate }} {{ answerReceived.length - 4 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.OTHERS' | translate }}
+    {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.AND' | translate }} {{ answers.length - 4 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.OTHERS' | translate }}
     <span
       pageScroll
       pageScrollOffset="135"

@@ -6,13 +6,14 @@
 import { Injectable } from '@angular/core';
 import { Innovation } from '../../models/innovation';
 import { Subject } from 'rxjs/Subject';
+import { InnovationService } from './innovation.service';
 
 @Injectable()
 export class InnovationCommonService {
 
   innovationSubject = new Subject<Innovation>();
 
-  constructor() { }
+  constructor(private innovationService: InnovationService) { }
 
   setInnovation(innovation: Innovation) {
     this.innovationSubject.next(innovation);
@@ -20,6 +21,12 @@ export class InnovationCommonService {
 
   getInnovation(): Subject<Innovation> {
     return this.innovationSubject;
+  }
+
+   saveInnovation(project: Innovation) {
+    this.innovationService.save(project._id, project).first().subscribe((response: Innovation) => {
+      this.innovationSubject.next(response);
+    });
   }
 
 }

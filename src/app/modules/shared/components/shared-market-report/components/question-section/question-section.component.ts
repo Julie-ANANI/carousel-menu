@@ -6,6 +6,9 @@ import { Question } from '../../../../../../models/question';
 import { Innovation } from '../../../../../../models/innovation';
 import { Tag } from '../../../../../../models/tag';
 import { ResponseService } from '../../services/response.service';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import { Location } from '@angular/common';
+import {InnovationCommonService} from '../../../../../../services/innovation/innovation-common.service';
 
 @Component({
   selector: 'app-question-section',
@@ -39,6 +42,10 @@ export class QuestionSectionComponent implements OnInit {
 
   questionReceived: Question;
 
+  adminSide: boolean;
+
+  formQuestionSection: FormGroup;
+
   private _showDetails: boolean;
   private _answersWithComment: Array<Answer> = [];
   private _answersToShow: Array<Answer> = [];
@@ -58,12 +65,47 @@ export class QuestionSectionComponent implements OnInit {
 
   constructor(private _translateService: TranslateService,
               private filterService: FilterService,
-              private responseService: ResponseService) {}
+              private responseService: ResponseService,
+              private location: Location,
+              private formBuilder: FormBuilder,
+              private innovationCommonService: InnovationCommonService) {}
 
   ngOnInit() {
+
+    /***
+     * this is to make visible abstract textarea.
+     * @type {boolean}
+     */
+    this.adminSide = this.location.path().slice(0, 6) === '/admin';
+
+    this.buildForm();
+
+    this.patchForm();
+
+
     this._tagId = this.questionReceived.identifier + (this.questionReceived.controlType !== 'textarea' ? 'Comment' : '');
     this.updateAnswersData();
   }
+
+
+  /***
+   * Build the form using quesId.
+   */
+  private buildForm() {
+    this.formQuestionSection = this.formBuilder.group({
+      [this.questionReceived._id]: ['']
+    });
+  }
+
+
+  /***
+   * Patch the abstract value for each question.
+   */
+  private patchForm() {
+    const value = this.responseService.getInnovationAbstract(this.innovation, this.questionReceived._id);
+    this.formQuestionSection.get(this.questionReceived._id).setValue(value);
+  }
+
 
   private updateAnswersData() {
     if (this.questionReceived && this.questionReceived.identifier) {
@@ -152,6 +194,30 @@ export class QuestionSectionComponent implements OnInit {
       value: tag._id
     });
   }
+
+
+  /***
+   * This function is to save the abstract in the innovation object.
+   * @param {Event} event
+   * @param {string} formControlName
+   */
+  saveAbstract(event: Event, formControlName: string) {
+    const abstract = this.formQuestionSection.get(formControlName).value;
+    this.innovation = this.responseService.saveInnovationAbstract(this.innovation, abstract, formControlName);
+    this.innovationCommonService.saveInnovation(this.innovation);
+  }
+
+
+  /***
+   * This function returns the color according to the length of the input data.
+   * @param {number} length
+   * @param {number} limit
+   * @returns {string}
+   */
+  getColor(length: number, limit: number) {
+    return this.responseService.getColor(length, limit);
+  }
+
 
   get showComment(): boolean {
     return this._showComment;

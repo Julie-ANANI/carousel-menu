@@ -143,4 +143,22 @@ export class ResponseService {
 
   }
 
+
+  /***
+   * This function returns the color according to the length of the input data.
+   * @param {number} length
+   * @param {number} limit
+   * @returns {string}
+   */
+  getColor(length: number, limit: number): string {
+    if (length <= 0) {
+      return '#EA5858';
+    } else if (length > 0 && length < (limit / 2)) {
+      return '#f0ad4e';
+    } else {
+      return '#2ECC71';
+    }
+  }
+
+
 }

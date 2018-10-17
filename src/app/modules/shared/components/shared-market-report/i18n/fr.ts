@@ -87,7 +87,8 @@ export const MARKET_REPORT = {
   'EXECUTIVE_PLACEHOLDER': {
     'GOAL': 'Décrivez l\'objectif de cette innovation en 120 mots.',
     'CONCLUSION': 'Décrivez la conclusion de cette campagne d’innovation en 1200 mots.',
-    'PROFESSIONAL': 'Décrivez le résumé professionnel de cette innovation en 180 mots.'
+    'PROFESSIONAL': 'Décrivez le résumé professionnel de cette innovation en 180 mots.',
+    'SECTION': 'Décrivez le résumé de cette question en 180 mots.'
   },
 
   'TARGET_COUNTRIES': 'Pays ciblés',

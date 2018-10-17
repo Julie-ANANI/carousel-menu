@@ -202,6 +202,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       if (response) {
         this.innovation = response;
       }
+      console.log(response);
     });
 
   }
@@ -383,6 +384,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     this.innovationService.updateStatus(this.innovation._id, status).first().subscribe((response) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
       this.innovation = response;
+      this.innovationCommonService.setInnovation(this.innovation);
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
@@ -500,10 +502,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   update(event: Event) {
     // TODO: add project status DONE
     if (this.innovation.status) {
-      this.innovationService.save(this.innovation._id, this.innovation).first().subscribe((response) => {
-        this.innovation = response;
-        this.innovationCommonService.setInnovation(this.innovation);
-      });
+     this.innovationCommonService.saveInnovation(this.innovation);
     }
   }
 
@@ -515,13 +514,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * @returns {string}
    */
   getColor(length: number, limit: number) {
-    if (length <= 0) {
-      return '#EA5858';
-    } else if (length > 0 && length < (limit / 2)) {
-      return '#f0ad4e';
-    } else {
-      return '#2ECC71';
-    }
+    return this.responseService.getColor(length, limit);
   }
 
 
@@ -603,6 +596,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
     this.innovationService.updateMarketReport(this.innovation._id, objToSave).first().subscribe((response) => {
       this.innovation.marketReport = response;
+      this.innovationCommonService.setInnovation(this.innovation);
     });
 
   }

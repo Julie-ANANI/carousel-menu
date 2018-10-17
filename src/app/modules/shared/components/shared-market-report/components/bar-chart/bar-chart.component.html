@@ -28,13 +28,19 @@
                 <textarea
                   class="form-default"
                   [id]="'market-report-' + question._id"
-                  [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.PROFESSIONAL' | translate"
+                  [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.SECTION' | translate"
                   [formControlName]="question._id"
                   rows="5"
                   (blur)="saveAbstract($event, question._id)"
                   maxlength="180">
                 </textarea>
               </label>
+              <div class="charRemaining">
+                <span
+                  [ngStyle]="{ 'color': getColor((formBarChart.get(question._id).value.length | characterCountdown:180), 180) }">
+                  {{ formBarChart.get(question._id).value.length | characterCountdown:180 }}
+                </span>
+              </div>
             </div>
           </div>
         </form>

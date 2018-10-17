@@ -19,9 +19,9 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   ngUnsubscribe: Subject<any> = new Subject();
 
-  answerReceived: Array<Answer> = [];
+  answers: Array<Answer> = [];
 
-  professionals: Array<any> = [];
+  professionalsAnswer: Array<Answer> = [];
 
   mapConfiguration: any = {};
 
@@ -36,22 +36,26 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
   private getAnswers() {
     this.responseService.getExecutiveAnswers().takeUntil(this.ngUnsubscribe).subscribe((response) => {
       if (response !== null) {
-        this.answerReceived = response;
-        this.topProfessionals();
+        this.answers = response;
+        this.topProfessionalsAnswer();
       }
     })
   }
 
-  private topProfessionals() {
-    this.answerReceived.forEach((items) => {
+  private topProfessionalsAnswer() {
+
+    this.answers.forEach((items) => {
       if (items.profileQuality === 2) {
-        this.professionals.push(items);
+        this.professionalsAnswer.push(items);
       }
     });
 
-    if (this.professionals.length === 0) {
-      this.answerReceived.forEach((items) => {
-        this.professionals.push(items);
+    if (this.professionalsAnswer.length === 0 || this.professionalsAnswer.length < 4) {
+      this.answers.forEach((items) => {
+        const find = this.professionalsAnswer.find((professional) => professional._id === items._id);
+        if (!find) {
+          this.professionalsAnswer.push(items);
+        }
       });
     }
 
