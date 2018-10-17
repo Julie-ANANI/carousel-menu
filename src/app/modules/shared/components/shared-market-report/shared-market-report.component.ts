@@ -202,7 +202,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       if (response) {
         this.innovation = response;
       }
-      console.log(response);
     });
 
   }

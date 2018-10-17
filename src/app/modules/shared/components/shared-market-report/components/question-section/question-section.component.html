@@ -20,6 +20,7 @@
     <div class="header">
       <div class="section-inline-container">
 
+        <!-- Tags -->
         <div *ngIf="tags" class="tags">
           <div *ngFor="let tag of tags" class="tags-wrapper"
                (click)="addTagFilter($event, tag)">
@@ -27,6 +28,7 @@
             <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
           </div>
         </div>
+        <!-- /Tags -->
 
         <app-question-conclusion
           [innovation]="innovation"
@@ -61,7 +63,6 @@
           </div>
         </form>
         <!-- /Abstract -->
-
 
       </div>
     </div>

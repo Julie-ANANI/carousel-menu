@@ -7,11 +7,13 @@
   font-weight: normal;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .heading-menu {
     position: relative;
     display: flex;
-    margin-bottom: 25px;
 
     .main-heading {
       font-size: 24px;
@@ -78,6 +80,10 @@
 
     }
 
+  }
+
+  .abstract-value {
+    padding-bottom: 0;
   }
 
 }

@@ -8,11 +8,6 @@
     border-radius: 0.18rem;
   }
 
-  .charRemaining span {
-    margin-top: -2.1875rem;
-    margin-left: -2.1875rem;
-  }
-
   .msg-wrapper {
 
     .content {
@@ -265,6 +260,15 @@
 
   }
 
+  .goal-wrapper {
+
+    .charRemaining span {
+      margin-top: -2rem;
+      margin-left: -2.5rem;
+    }
+
+  }
+
   .executive-generate-wrapper {
     display: flex;
     flex-direction: column;
@@ -486,8 +490,8 @@
     }
 
     .charRemaining span {
-      margin-top: -1.4rem;
-      margin-left: -2.625rem;
+      margin-top: -1.57rem;
+      margin-left: -2.5rem;
     }
 
   }

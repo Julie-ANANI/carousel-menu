@@ -41,7 +41,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   selectedQuestion: Question;
 
-  abstract = '';
+  abstractValue = '';
 
   adminSide: boolean;
 
@@ -53,6 +53,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
               private innovationCommonService: InnovationCommonService) { }
 
   ngOnInit() {
+
     this.isAdminSide();
     this.getAnswers();
 
@@ -63,6 +64,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
     this.innovationCommonService.getInnovation().takeUntil(this.ngUnsubscribe).subscribe((response: Innovation) => {
       if (response) {
         this.innovation = response;
+        this.getSectionInformation(this.sectionNumber);
       }
     });
 
@@ -127,14 +129,34 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * @param {number} sectionNumber
    */
   private getSectionInformation(sectionNumber: number) {
+
     this.selectedQuestion = this.questions.find((ques) => ques._id === this.innovation.executiveReport.sections[sectionNumber].quesId);
 
     if (this.selectedQuestion) {
+
       this.answersToShow = this.responseService.getAnswersToShow(this.answers, this.selectedQuestion);
+
       this.stats = {
         nbAnswers: this.answersToShow.length,
         percentage: Math.round((this.answersToShow.length * 100) / this.answers.length)
       };
+
+      this.getAbstractValue();
+
+    }
+
+  }
+
+
+  private getAbstractValue() {
+
+    this.abstractValue = '';
+
+    if (this.innovation.executiveReport.abstracts) {
+      const findAbstract = this.innovation.executiveReport.abstracts.find((ques) => ques.quesId === this.selectedQuestion._id);
+      if (findAbstract) {
+        this.abstractValue = findAbstract.value;
+      }
     }
 
   }
