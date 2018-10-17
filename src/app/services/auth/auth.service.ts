@@ -48,6 +48,7 @@ export class AuthService {
       this._cookieObserver = setInterval(() => {
         if (!this._cookieService.get('hasBeenAuthenticated')) {
           // this._cookieService.get('user')
+          console.timeEnd('cookieObs');
           this.logout().first().subscribe(() => {
             this._router.navigate(['/logout']);
           }, err => {
@@ -67,6 +68,7 @@ export class AuthService {
         this._setConfirmedTo(response.isConfirmed);
         this._user = response;
         if (response.isAuthenticated) {
+          console.time('cookieObs');
           this.startCookieObservator();
         }
         return response;
