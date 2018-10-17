@@ -3,24 +3,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { FilterService } from '../../services/filters.service';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
-import { Multiling } from '../../../../../../models/multiling';
 import { Question } from '../../../../../../models/question';
 import { Tag } from '../../../../../../models/tag';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { InnovationCommonService } from '../../../../../../services/innovation/innovation-common.service';
 import { ResponseService } from '../../services/response.service';
-
-export interface BarData {
-  label: Multiling,
-  answers: Array<Answer>,
-  absolutePercentage: string,
-  relativePercentage: string,
-  color: string,
-  count: number,
-  positive: boolean,
-  identifier: string
-}
+import { BarData } from '../../models/bar-data';
 
 @Component({
   selector: 'app-bar-chart',
@@ -49,6 +38,8 @@ export class BarChartComponent implements OnInit {
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Output() answerButtonClicked = new EventEmitter<boolean>();
 
+  @Output() totalCount = new EventEmitter<any>();
+
   adminSide: boolean;
 
   formBarChart: FormGroup;
@@ -57,7 +48,7 @@ export class BarChartComponent implements OnInit {
 
   private _answers: Array<Answer>;
   private _barsData: Array<BarData> = [];
-  private _pieChart: {data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number, labelPercentage?: Array<string>};
+  private _pieChart: { data: Array<number>, colors: Array<string>, labels: {[prop: string]: Array<string>}, percentage?: number, labelPercentage?: Array<string> };
   public showAnswers: {[index: string]: string} = {};
 
   constructor(private _translateService: TranslateService,
@@ -172,7 +163,11 @@ export class BarChartComponent implements OnInit {
         pieChartData.percentage = Math.round((positiveAnswersCount * 100) / this._answers.length);
         this._pieChart = pieChartData;
       }
+
+      this.totalCount.emit(this._answers.length);
+
     }
+
   }
 
   public filterAnswer(data: BarData, event: Event) {

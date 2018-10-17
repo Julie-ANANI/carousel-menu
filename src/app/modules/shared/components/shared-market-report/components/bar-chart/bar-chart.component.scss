@@ -130,6 +130,50 @@
 
 }
 
+.executive-bar-chart-wrapper {
+
+  .row-1-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .bar-name {
+      font-size: 14px;
+    }
+
+    .bar-count {
+      color: $meta-color;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+  }
+
+  .row-3-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    overflow: hidden;
+    margin-bottom: 10px;
+
+    .answer-outer {
+      display: inline-flex;
+      border-radius: 3px;
+      padding: 5px 8px;
+      color: $background-color;
+      background-color: $page-color;
+      font-size: 13px;
+      font-weight: 600;
+      margin-right: 5px;
+    }
+
+  }
+
+  .row-1-wrapper, .row-2-wrapper {
+    margin-bottom: 8px;
+  }
+
+}
+
 
 /********************************** Media ***************************************/
 @media (max-width: 600px) {

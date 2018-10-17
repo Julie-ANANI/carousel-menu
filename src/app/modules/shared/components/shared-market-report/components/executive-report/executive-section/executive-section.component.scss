@@ -82,6 +82,18 @@
 
   }
 
+  .sub-title {
+    color: $meta-color;
+    font-weight: 600;
+    font-size: 13px;
+    padding-bottom: 0;
+
+    .fa-user, .fa-briefcase {
+      color: $meta-color;
+    }
+
+  }
+
   .abstract-value {
     padding-bottom: 0;
   }

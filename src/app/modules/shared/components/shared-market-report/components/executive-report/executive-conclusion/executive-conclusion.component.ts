@@ -12,11 +12,16 @@ import { Innovation } from '../../../../../../../models/innovation';
 export class ExecutiveConclusionComponent implements OnInit {
 
   @Input() set project(value: Innovation) {
-    this.conclusion = value.marketReport.finalConclusion.conclusion || '';
+
+    if (value.marketReport && value.marketReport.finalConclusion) {
+      this.conclusion = value.marketReport.finalConclusion.conclusion;
+    }
+
     this.operator = value.operator || null;
+
   }
 
-  conclusion: string;
+  conclusion = '';
 
   operator: User;
 

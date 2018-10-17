@@ -13,6 +13,7 @@ import { ResponseService } from './services/response.service';
  * Pipes
  */
 import { RemoveSpacesPipe } from './pipes/RemoveSpaces.pipe';
+import { AnswersLimiterPipe } from './pipes/AnswersLimiter.pipe';
 
 
 
@@ -56,6 +57,7 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
 
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -96,7 +98,8 @@ import { ExecutiveSectionComponent } from './components/executive-report/executi
     ExecutiveConclusionComponent,
     ExecutiveProfessionalComponent,
     ExecutiveSectionComponent,
-    RemoveSpacesPipe
+    RemoveSpacesPipe,
+    AnswersLimiterPipe
   ],
   exports: [
     SharedMarketReportComponent

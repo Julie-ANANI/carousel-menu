@@ -10,6 +10,7 @@ export class ProgressBarComponent implements OnInit {
 
   @Input() value: string;
   @Input() width: string;
+  @Input() height: string;
   @Input() backgroundColor: string;
 
   constructor() { }

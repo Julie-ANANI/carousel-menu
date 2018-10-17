@@ -84,7 +84,11 @@ export class QuestionSectionComponent implements OnInit {
 
 
     this._tagId = this.questionReceived.identifier + (this.questionReceived.controlType !== 'textarea' ? 'Comment' : '');
+
     this.updateAnswersData();
+
+    console.log(this.questionReceived);
+
   }
 
 

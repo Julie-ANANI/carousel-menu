@@ -31,7 +31,7 @@
       <i class="fas fa-user"></i>
 
       <!-- Flag -->
-      <div *ngIf="answer.country.flag" [ngStyle]="{ 'margin-top': '15px' }">
+      <div *ngIf="answer.country?.flag" [ngStyle]="{ 'margin-top': '15px' }">
         <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
       </div>
 
@@ -75,7 +75,7 @@
       pageScrollOffset="135"
       href="#professionals"
       class="text-link">
-      {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.FOLLOW' | translate }}
+      {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
     </span>
   </p>
 

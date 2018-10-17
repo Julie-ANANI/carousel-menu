@@ -1,25 +1,50 @@
 <div id="executive-section-wrapper">
 
-  <!-- Heading and Menu -->
-  <div class="heading-menu">
+  <!-- Title -->
+  <div>
 
-    <!-- Heading -->
-    <h1 class="main-heading">{{ selectedQuestion?.title | multiling:lang }}</h1>
+    <!-- Heading and Menu -->
+    <div class="heading-menu">
 
-    <!-- Menu -->
-    <div *ngIf="adminSide" class="menu-icon">
-      <i class="fas fa-bars"></i>
-      <div class="menu-item-wrapper">
-        <ul>
-          <li *ngFor="let option of sectionMenuOptions" (click)="onTitleClicked($event, option)">
-            {{ option.title | multiling }}
-          </li>
-        </ul>
+      <!-- Heading -->
+      <h1 class="main-heading">{{ selectedQuestion?.title | multiling:lang }}</h1>
+
+      <!-- Menu -->
+      <div *ngIf="adminSide" class="menu-icon">
+        <i class="fas fa-bars"></i>
+        <div class="menu-item-wrapper">
+          <ul>
+            <li *ngFor="let option of sectionMenuOptions" (click)="onTitleClicked($event, option)">
+              {{ option.title | multiling }}
+            </li>
+          </ul>
+        </div>
       </div>
+
     </div>
+    <!-- /Heading and Menu -->
+
+    <!-- Follow -->
+    <p class="sub-title">
+      <span *ngIf="selectedQuestion?.controlType !== 'checkbox'">
+        <i class="fas fa-user"></i> {{ totalCount || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}
+      </span>
+        <span *ngIf="selectedQuestion?.controlType === 'checkbox'">
+        <i class="fas fa-briefcase"></i> {{ totalCount || 0 }} {{ selectedQuestion?.title | multiling:lang | lowercase }}
+      </span>
+        <span
+          pageScroll
+          pageScrollOffset="135"
+          [href]="'#' + selectedQuestion?.identifier"
+          class="text-link">
+        {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
+      </span>
+    </p>
+    <!-- /Follow -->
 
   </div>
-  <!-- /Heading and Menu -->
+  <!-- /Title -->
+
 
   <!-- Answer display -->
   <div class="text-center">
@@ -31,7 +56,8 @@
         [innovation]="innovation"
         [question]="selectedQuestion"
         [executiveReport]="true"
-        [stats]="stats">
+        [stats]="stats"
+        (totalCount)="getTotalCount($event)">
       </app-bar-chart>
     </ng-container>
     <!-- /If the question type is checkbox or radio -->

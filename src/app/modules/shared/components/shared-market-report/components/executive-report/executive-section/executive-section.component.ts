@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Answer } from '../../../../../../../models/answer';
 import { Question } from '../../../../../../../models/question';
 import { Subject } from 'rxjs/Subject';
@@ -47,6 +47,8 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   stats: { nbAnswers?: number, percentage?: number };
 
+  totalCount: number;
+
   constructor(private responseService: ResponseService,
               private location: Location,
               private translateService: TranslateService,
@@ -67,6 +69,8 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
         this.getSectionInformation(this.sectionNumber);
       }
     });
+
+    console.log(this.innovation.executiveReport.sections);
 
   }
 
@@ -117,9 +121,18 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * @param {Question} option
    */
   onTitleClicked(event: Event, option: Question) {
-    this.innovation.executiveReport.sections[this.sectionNumber].quesId = option._id;
+
+    const questionIdIndex = this.innovation.executiveReport.sections.findIndex((ques) => ques.quesId === option._id);
+
+    if (questionIdIndex !== -1) {
+      this.innovation.executiveReport.sections[questionIdIndex].quesId = option._id;
+    } else {
+      this.innovation.executiveReport.sections[this.sectionNumber] = { quesId: option._id };
+    }
+
     this.innovationCommonService.saveInnovation(this.innovation);
     this.getSectionInformation(this.sectionNumber);
+
   }
 
 
@@ -130,18 +143,22 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    */
   private getSectionInformation(sectionNumber: number) {
 
-    this.selectedQuestion = this.questions.find((ques) => ques._id === this.innovation.executiveReport.sections[sectionNumber].quesId);
+    if (this.innovation.executiveReport.sections[sectionNumber]) {
 
-    if (this.selectedQuestion) {
+      this.selectedQuestion = this.questions.find((ques) => ques._id === this.innovation.executiveReport.sections[sectionNumber].quesId);
 
-      this.answersToShow = this.responseService.getAnswersToShow(this.answers, this.selectedQuestion);
+      if (this.selectedQuestion) {
 
-      this.stats = {
-        nbAnswers: this.answersToShow.length,
-        percentage: Math.round((this.answersToShow.length * 100) / this.answers.length)
-      };
+        this.answersToShow = this.responseService.getAnswersToShow(this.answers, this.selectedQuestion);
 
-      this.getAbstractValue();
+        this.stats = {
+          nbAnswers: this.answersToShow.length,
+          percentage: Math.round((this.answersToShow.length * 100) / this.answers.length)
+        };
+
+        this.getAbstractValue();
+
+      }
 
     }
 
@@ -159,6 +176,12 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
       }
     }
 
+  }
+
+  getTotalCount(value: number) {
+    setTimeout(() => {
+      this.totalCount = value;
+    }, 100)
   }
 
   get lang(): string {
