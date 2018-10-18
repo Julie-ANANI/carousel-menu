@@ -148,6 +148,41 @@
         "local": "environments/multivalente/environment.multivalente.local.ts",
         "prod":  "environments/multivalente/environment.multivalente.prod.ts"
       }
+    },
+    {
+      "name": "salveo",
+      "root": "src",
+      "outDir": "./dist",
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "styles.vendor1.scss"
+      ],
+      "assets": [
+        {
+          "glob": "**/*",
+          "input": "../node_modules/tinymce/skins",
+          "output": "./assets/skins"
+        }
+      ],
+      "scripts": [
+        "../node_modules/tinymce/tinymce.min.js",
+        "../node_modules/tinymce/themes/modern/theme.min.js",
+        "../node_modules/tinymce/plugins/advlist/plugin.min.js",
+        "../node_modules/tinymce/plugins/link/plugin.min.js",
+        "../node_modules/tinymce/plugins/lists/plugin.min.js",
+        "../node_modules/tinymce/plugins/paste/plugin.min.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "local": "environments/salveo/environment.salveo.local.ts",
+        "prod":  "environments/salveo/environment.salveo.prod.ts"
+      }
     }
   ],
   "e2e": {

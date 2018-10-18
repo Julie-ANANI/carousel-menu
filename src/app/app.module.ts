@@ -10,7 +10,6 @@ import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-transla
 import { Observable } from 'rxjs/Observable';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
-// import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
@@ -46,6 +45,7 @@ import { CurrentRouteService } from './services/frontend/current-route/current-r
 import { ListenerService } from './services/frontend/listener/listener.service';
 import { CampaignCalculationService } from './services/campaign/campaign-calculation.service';
 import { InnovationCommonService } from './services/innovation/innovation-common.service';
+import { QuizService } from './services/quiz/quiz.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -73,7 +73,6 @@ import { PresetResolver } from './resolvers/preset.resolver';
     }),
     ChartsModule,
     Ng2AutoCompleteModule,
-    // Angular2FontawesomeModule,
     CookieModule.forRoot()
   ],
   declarations: [
@@ -119,7 +118,8 @@ import { PresetResolver } from './resolvers/preset.resolver';
     CurrentRouteService,
     ListenerService,
     CampaignCalculationService,
-    InnovationCommonService
+    InnovationCommonService,
+    QuizService
   ],
   bootstrap: [AppComponent]
 })

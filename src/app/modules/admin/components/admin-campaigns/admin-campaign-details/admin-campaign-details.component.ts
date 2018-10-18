@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../models/campaign';
-import { environment } from '../../../../../../environments/environment';
+import { QuizService } from '../../../../../services/quiz/quiz.service';
 
 @Component({
   selector: 'app-admin-campaign-details',
@@ -19,7 +19,7 @@ export class AdminCampaignDetailsComponent implements OnInit {
     this._campaign = this._activatedRoute.snapshot.parent.data['campaign'];
     if (this._campaign.innovation && this._campaign.innovation.quizId) {
       this._quizLinks = ['fr', 'en'].map((l) => {
-        return environment.quizUrl + '/quiz/' + this._campaign.innovation.quizId + '/' + this._campaign._id + '?lang=' + l;
+        return QuizService.getQuizUrl(this._campaign, l);
       });
     }
   }
