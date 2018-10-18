@@ -73,9 +73,10 @@ export const MARKET_REPORT = {
     'TITLE': 'Objective',
     'CHOOSE_TEMPLATE': 'Choose template',
     'VALID_BUTTON': 'Valid Template',
-    'DELETE_BUTTON': 'Delete Template',
     'CONCLUSION': 'Conclusion abstract',
-    'ABSTRACT': 'Abstract'
+    'ABSTRACT': 'Abstract',
+    'NO_TAGS': 'Add the tags for this question',
+    'DELETE_BUTTON': 'Delete Executive Template'
   },
 
   'EXECUTIVE_TEMPLATE': {
@@ -120,6 +121,7 @@ export const MARKET_REPORT = {
   'BTN_COMMENTS_CLOSE': 'Hide comments ({{length}})',
   'BTN_RECOMPUTE': 'Recompute infographics',
   'PEOPLE_VOTED': 'people voted',
+  'VOTES': 'votes',
   'GRADE': 'Rating',
   'NO_GRADE': 'No rating',
   'POPUP': {

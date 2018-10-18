@@ -21,7 +21,9 @@ export class ExecutiveReportComponent implements OnInit {
 
   question: Question = null;
 
-  sectionNumbers = [0, 1, 2, 3, 4, 5, 6, 7];
+  firstPageSections = [0, 1, 2, 3];
+
+  secondPageSections = [4, 5, 6, 7];
 
   constructor() { }
 

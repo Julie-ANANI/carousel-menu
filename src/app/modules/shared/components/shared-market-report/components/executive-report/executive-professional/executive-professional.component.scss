@@ -8,35 +8,25 @@
   background-color: white;
 
   .main-heading {
-    margin-bottom: 0;
+    margin-bottom: 15px;
     font-size: 24px;
   }
 
   .sub-title {
     color: $meta-color;
     font-weight: 600;
-    font-size: 13px;
-    padding-bottom: 0;
-
-    .fa-user {
-      color: $meta-color;
-    }
-
-  }
-
-  .map-wrapper {
-    padding-top: 45px;
+    font-size: 17px;
+    margin-bottom: 10px;
   }
 
   .abstract-professional {
     padding-top: 14.9px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     height: 90px;
     color: $text-dark;
     font-size: 13px;
     font-weight: normal;
     max-width: 380px;
-    padding-bottom: -10px;
   }
 
   .profile {

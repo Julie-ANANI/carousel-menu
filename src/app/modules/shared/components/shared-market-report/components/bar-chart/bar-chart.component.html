@@ -32,13 +32,13 @@
                   [formControlName]="question._id"
                   rows="5"
                   (blur)="saveAbstract($event, question._id)"
-                  maxlength="180">
+                  maxlength="160">
                 </textarea>
               </label>
               <div class="charRemaining">
                 <span
-                  [ngStyle]="{ 'color': getColor((formBarChart.get(question._id).value.length | characterCountdown:180), 180) }">
-                  {{ formBarChart.get(question._id).value.length | characterCountdown:180 }}
+                  [ngStyle]="{ 'color': getColor((formBarChart.get(question._id).value.length | characterCountdown:160), 160) }">
+                  {{ formBarChart.get(question._id).value.length | characterCountdown:160 }}
                 </span>
               </div>
             </div>

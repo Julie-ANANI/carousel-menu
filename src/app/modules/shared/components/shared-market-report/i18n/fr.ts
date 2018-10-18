@@ -64,9 +64,10 @@ export const MARKET_REPORT = {
     'TITLE': 'Objectif',
     'CHOOSE_TEMPLATE': 'Choisir le modèle',
     'VALID_BUTTON': 'Modèle valide',
-    'DELETE_BUTTON': 'Supprimer le modèle',
+    'DELETE_BUTTON': 'Supprimer le modèle exécutif',
     'CONCLUSION': 'Conclusion résumé',
-    'ABSTRACT': 'Abstract'
+    'ABSTRACT': 'Abstract',
+    'NO_TAGS': 'Ajouter les tags pour cette question'
   },
 
   'EXECUTIVE_TEMPLATE': {
@@ -81,7 +82,7 @@ export const MARKET_REPORT = {
     'UMI_CONTACT': {
       'A': 'Vous souhaitez lancer un test marché ?',
       'B': 'Contactez-nous au'
-    }
+    },
   },
 
   'EXECUTIVE_PLACEHOLDER': {
@@ -111,6 +112,7 @@ export const MARKET_REPORT = {
   'BTN_COMMENTS_CLOSE': 'Masquer les commentaires ({{length}})',
   'BTN_RECOMPUTE': 'Recalculer l\'infographie',
   'PEOPLE_VOTED': 'personnes ont voté',
+  'VOTES': 'votes',
   'GRADE': 'Note',
   'NO_GRADE': 'Pas de note',
   'POPUP': {

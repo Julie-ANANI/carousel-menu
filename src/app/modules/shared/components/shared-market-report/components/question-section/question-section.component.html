@@ -22,8 +22,7 @@
 
         <!-- Tags -->
         <div *ngIf="tags" class="tags">
-          <div *ngFor="let tag of tags" class="tags-wrapper"
-               (click)="addTagFilter($event, tag)">
+          <div *ngFor="let tag of tags" class="tags-wrapper" (click)="addTagFilter($event, tag)">
             #{{ tag.label | multiling:lang }}
             <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
           </div>
@@ -50,13 +49,13 @@
                   [formControlName]="questionReceived._id"
                   rows="5"
                   (blur)="saveAbstract($event, questionReceived._id)"
-                  maxlength="180">
+                  maxlength="160">
                 </textarea>
               </label>
               <div class="charRemaining">
                 <span
-                  [ngStyle]="{ 'color': getColor((formQuestionSection.get(questionReceived._id).value.length | characterCountdown:180), 180) }">
-                  {{ formQuestionSection.get(questionReceived._id).value.length | characterCountdown:180 }}
+                  [ngStyle]="{ 'color': getColor((formQuestionSection.get(questionReceived._id).value.length | characterCountdown:160), 160) }">
+                  {{ formQuestionSection.get(questionReceived._id).value.length | characterCountdown:160 }}
                 </span>
               </div>
             </div>

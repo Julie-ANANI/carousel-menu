@@ -6,9 +6,26 @@
     background-color: white;
     display: flex;
     border-radius: 3px;
+  }
 
-    .section {
-      width: 33.33%;
+  .section {
+    width: 33.33%;
+  }
+
+  .sections {
+    width: 66.67%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .second-page {
+    padding-top: 3.15rem;
+
+    .second-page-wrapper {
+      display: flex;
+      border-right: 3px;
+      background-color: white;
+      min-height: 864.67px;
     }
 
   }
@@ -19,14 +36,29 @@
     padding: 25px;
   }
 
-  .section-2 {
+  .section-2, .section-4 {
     height: 50%;
     display: flex;
     border-bottom: 1px solid $border-color;
+  }
+
+  .section-4 {
+    width: 50%;
+    border-left: 1px solid $border-color;
   }
 
   .section-2:last-child {
     border-bottom: none;
   }
 
+  .section-4:last-child, .section-4:nth-child(3) {
+    border-bottom: none;
+  }
+
+  .section-4:nth-child(1), .section-4:nth-child(3) {
+    border-left: none;
+  }
+
 }
+
+

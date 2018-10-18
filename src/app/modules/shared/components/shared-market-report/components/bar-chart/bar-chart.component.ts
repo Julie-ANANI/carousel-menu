@@ -38,8 +38,6 @@ export class BarChartComponent implements OnInit {
   @Output() modalAnswerChange = new EventEmitter<any>();
   @Output() answerButtonClicked = new EventEmitter<boolean>();
 
-  @Output() totalCount = new EventEmitter<any>();
-
   adminSide: boolean;
 
   formBarChart: FormGroup;
@@ -163,8 +161,6 @@ export class BarChartComponent implements OnInit {
         pieChartData.percentage = Math.round((positiveAnswersCount * 100) / this._answers.length);
         this._pieChart = pieChartData;
       }
-
-      this.totalCount.emit(this._answers.length);
 
     }
 

@@ -25,18 +25,18 @@
     <!-- /Heading and Menu -->
 
     <!-- Follow -->
-    <p class="sub-title">
+    <p *ngIf="selectedQuestion && stats" class="sub-title">
       <span *ngIf="selectedQuestion?.controlType !== 'checkbox'">
-        <i class="fas fa-user"></i> {{ totalCount || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}
+        <i class="fas fa-user"></i> {{ stats.nbAnswers || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}
       </span>
-        <span *ngIf="selectedQuestion?.controlType === 'checkbox'">
-        <i class="fas fa-briefcase"></i> {{ totalCount || 0 }} {{ selectedQuestion?.title | multiling:lang | lowercase }}
+      <span *ngIf="selectedQuestion?.controlType === 'checkbox'">
+        <i class="fas fa-briefcase"></i> {{ stats.nbAnswers || 0 }} {{ selectedQuestion?.title | multiling:lang | lowercase }}
       </span>
-        <span
-          pageScroll
-          pageScrollOffset="135"
-          [href]="'#' + selectedQuestion?.identifier"
-          class="text-link">
+      <span
+        pageScroll
+        pageScrollOffset="135"
+        [href]="'#' + selectedQuestion?.identifier"
+        class="text-link">
         {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
       </span>
     </p>
@@ -47,7 +47,7 @@
 
 
   <!-- Answer display -->
-  <div class="text-center">
+  <div *ngIf="selectedQuestion" class="text-center">
 
     <!-- If the question type is checkbox or radio -->
     <ng-container *ngIf="selectedQuestion?.controlType === 'checkbox' || selectedQuestion?.controlType === 'radio'">
@@ -56,28 +56,49 @@
         [innovation]="innovation"
         [question]="selectedQuestion"
         [executiveReport]="true"
-        [stats]="stats"
-        (totalCount)="getTotalCount($event)">
+        [stats]="stats">
       </app-bar-chart>
     </ng-container>
     <!-- /If the question type is checkbox or radio -->
 
 
-    <!-- If the question type is not checkbox and radio -->
-    <ng-container *ngIf="selectedQuestion?.controlType !== 'checkbox' && selectedQuestion?.controlType !== 'radio'">
-      <app-question-conclusion
+    <!-- If the question type is star -->
+    <ng-container *ngIf="selectedQuestion?.controlType === 'stars'">
+      <app-stars
+        [answers]="answersToShow"
         [innovation]="innovation"
         [question]="selectedQuestion"
-        [executiveReport]="true"
-        [stats]="stats">
-      </app-question-conclusion>
+        [executiveReport]="true">
+      </app-stars>
     </ng-container>
+    <!-- /If the question type is star -->
+
+    <!-- If the question is not checkbox, radio, stars -->
+    <ng-container *ngIf="selectedQuestion?.controlType !== 'checkbox' && selectedQuestion?.controlType !== 'radio' && selectedQuestion?.controlType !== 'stars'">
+
+      <ng-container *ngIf="tags.length > 0">
+        <div *ngFor="let tag of tags | slice:0:3" class="tag">
+          <div *ngIf="tag.count > 1" class="tag-count">&nbsp;{{ tag.count }}X</div>
+          <div><span class="tag-outer-wrapper" [ngStyle]="{ 'background-color': getColor(selectedQuestion?.title | multiling:lang ) }">#{{ tag.label | multiling:lang }}</span></div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="tags.length === 0">
+        <div class="no-tags">
+          <div class="tag-count">0X</div>
+          <div><span class="tag-outer-wrapper">{{ 'MARKET_REPORT.EXECUTIVE.NO_TAGS' | translate }}</span></div>
+        </div>
+      </ng-container>
+
+    </ng-container>
+    <!-- If the question is not checkbox, radio, stars -->
+
 
   </div>
   <!-- /Answer display -->
 
   <!-- Abstract -->
-  <p *ngIf="abstractValue" class="abstract-value">{{ abstractValue }}</p>
+  <p *ngIf="selectedQuestion" class="abstract-value">{{ abstractValue }}</p>
   <!-- /Abstract -->
 
 

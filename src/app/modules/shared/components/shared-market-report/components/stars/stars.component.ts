@@ -1,7 +1,4 @@
-/**
- * Created by bastien on 24/11/2017.
- */
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Answer } from '../../../../../../models/answer';
 import { Innovation } from '../../../../../../models/innovation';
@@ -20,8 +17,17 @@ export class StarsComponent implements OnInit {
     this._answers = value;
     this.updateAnswersData();
   }
+
+  @Input() set executiveReport(value: boolean) {
+    this.executiveReportView = value;
+  }
+
   @Input() public innovation: Innovation;
   @Input() public question: Question;
+
+  executiveReportView = false;
+
+
 
   private _answers: Array<Answer> = [];
   private _notesData: Array<{label: Multiling, sum: number, count: number, percentage: string}> = [];
@@ -76,6 +82,7 @@ export class StarsComponent implements OnInit {
           noteData.percentage = `${Math.round(((noteData.sum / noteData.count) || 0) * 20)}%`;
         }
       });
+
     }
   }
 

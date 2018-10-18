@@ -34,8 +34,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     this.innovation = value;
   }
 
-  // @Input() project: Innovation;
-
   @Input() adminMode: boolean;
 
   @Input() sharable = false;
@@ -530,7 +528,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
 
   /***
-   * This is function is called when you click on the valid template button.
+   * This function is called when you click on the valid template button.
    * We assign the number of section value to the this.project.executiveReport.totalSections
    * and call the update function to save it in database.
    * @param {Event} event
@@ -539,6 +537,20 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     event.preventDefault();
     this.innovation.executiveReport.totalSections = this.numberOfSections;
     this.update(event);
+    window.location.reload();
+  }
+
+
+  /***
+   * this function is to delete the executive template.
+   * @param event
+   */
+  deleteExecutiveTemplate(event: Event) {
+    event.preventDefault();
+    this.innovation.executiveReport.totalSections = 0;
+    this.innovation.executiveReport.sections = [{}];
+    this.update(event);
+    window.location.reload();
   }
 
 
@@ -595,7 +607,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
     this.innovationService.updateMarketReport(this.innovation._id, objToSave).first().subscribe((response) => {
       this.innovation.marketReport = response;
-      this.innovationCommonService.setInnovation(this.innovation);
+      this.update(event);
     });
 
   }

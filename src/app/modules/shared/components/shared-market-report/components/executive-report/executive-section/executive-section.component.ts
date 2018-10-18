@@ -7,6 +7,7 @@ import { Innovation } from '../../../../../../../models/innovation';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationCommonService } from '../../../../../../../services/innovation/innovation-common.service';
+import {Tag} from '../../../../../../../models/tag';
 
 @Component({
   selector: 'app-executive-section',
@@ -47,7 +48,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   stats: { nbAnswers?: number, percentage?: number };
 
-  totalCount: number;
+  tags: Array<Tag> = [];
 
   constructor(private responseService: ResponseService,
               private location: Location,
@@ -69,8 +70,6 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
         this.getSectionInformation(this.sectionNumber);
       }
     });
-
-    console.log(this.innovation.executiveReport.sections);
 
   }
 
@@ -121,18 +120,9 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * @param {Question} option
    */
   onTitleClicked(event: Event, option: Question) {
-
-    const questionIdIndex = this.innovation.executiveReport.sections.findIndex((ques) => ques.quesId === option._id);
-
-    if (questionIdIndex !== -1) {
-      this.innovation.executiveReport.sections[questionIdIndex].quesId = option._id;
-    } else {
-      this.innovation.executiveReport.sections[this.sectionNumber] = { quesId: option._id };
-    }
-
+    this.innovation.executiveReport.sections[this.sectionNumber] = { quesId: option._id };
     this.innovationCommonService.saveInnovation(this.innovation);
     this.getSectionInformation(this.sectionNumber);
-
   }
 
 
@@ -158,6 +148,8 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
         this.getAbstractValue();
 
+        this.getTags();
+
       }
 
     }
@@ -165,6 +157,10 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
   }
 
 
+  /***
+   * this function is to get the abstract value from the abstracts array by using
+   * quesId.
+   */
   private getAbstractValue() {
 
     this.abstractValue = '';
@@ -178,10 +174,28 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   }
 
-  getTotalCount(value: number) {
-    setTimeout(() => {
-      this.totalCount = value;
-    }, 100)
+
+  /***
+   * this functions is to get the tags list for the particular question.
+   */
+  getTags() {
+    this.tags = this.responseService.getTagsList(this.answers, this.selectedQuestion);
+  }
+
+
+  /***
+   * this function is to get the background color for the tags based on
+   * the title of the question.
+   * @param identifier
+   */
+  getColor(identifier: string): string {
+    if (identifier.toLowerCase() === 'objections') {
+      return '#EA5858';
+    } else if (identifier.toLowerCase() === 'points forts' || identifier.toLowerCase() === 'strengths') {
+      return '#2ECC71';
+    } else {
+      return '#4F5D6B';
+    }
   }
 
   get lang(): string {

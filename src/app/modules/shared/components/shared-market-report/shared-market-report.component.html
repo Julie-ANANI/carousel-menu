@@ -311,7 +311,8 @@
               <!-- Buttons -->
               <div class="text-center">
                 <button
-                  class="btn ghost-primary btn-xs"
+                  class="btn ghost-primary"
+                  [disabled]="innovation.executiveReport.totalSections > 0"
                   (click)="generateExecutiveTemplate($event)">
                   {{ 'MARKET_REPORT.EXECUTIVE.VALID_BUTTON' | translate }}
                 </button>
@@ -328,6 +329,16 @@
           <app-executive-report [project]="innovation"></app-executive-report>
         </section>
         <!-- /Executive report -->
+
+
+        <!-- Executive Report Delete Button -->
+        <section *ngIf="innovation.executiveReport.totalSections > 0 && adminSide" class="text-center" [ngStyle]="{ 'padding-top': '1.57rem', 'padding-bottom': '1.57rem' }">
+          <button
+            class="btn ghost-delete"
+            (click)="deleteExecutiveTemplate($event)">
+            {{ 'MARKET_REPORT.EXECUTIVE.DELETE_BUTTON' | translate }}
+          </button>
+        </section>
 
 
         <!-- UMI Intro -->
@@ -582,13 +593,13 @@
                         rows="5"
                         [(ngModel)]="innovation.executiveReport.professionalAbstract"
                         (blur)="update($event)"
-                        maxlength="180">
+                        maxlength="160">
                       </textarea>
                     </label>
                     <div class="charRemaining">
                       <span
-                        [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:180), 180) }">
-                        {{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:180 }}
+                        [ngStyle]="{ 'color': getColor((innovation.executiveReport?.professionalAbstract.length | characterCountdown:160), 160) }">
+                        {{ innovation.executiveReport?.professionalAbstract.length | characterCountdown:160 }}
                       </span>
                     </div>
                   </div>

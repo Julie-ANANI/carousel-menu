@@ -1,3 +1,5 @@
+@import "../../../../../../../style/variables";
+
 .piechart {
   font-size: .85rem;
   font-weight: 600;
@@ -50,7 +52,10 @@
   width: 100%;
 
   .percentage {
-    display: none;
+    font-size: 17px;
+    color: $meta-color;
+    margin-bottom: 10px;
+    font-weight: 600;
   }
 
   .chart-pie {

@@ -27,6 +27,31 @@
 
   }
 
+}
 
+
+.executive-star-wrapper {
+  margin-bottom: 10px;
+
+  .note-label {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 14px;
+    color: $text-dark;
+    margin-bottom: 8px;
+
+    .vote-wrapper {
+      font-size: 12px;
+      color: $meta-color;
+      font-weight: 600;
+    }
+
+  }
+
+  .no-grade-wrapper {
+    font-size: 13px;
+    color: $meta-color;
+  }
 
 }

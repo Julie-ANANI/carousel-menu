@@ -32,6 +32,10 @@ export class QuestionSectionComponent implements OnInit {
     this._showComment = value;
   }
 
+  @Input() set readonly(value: boolean) {
+    this._readonly = value;
+  }
+
   @Input() set question(value: Question) {
     this.questionReceived = value;
   }
@@ -57,13 +61,11 @@ export class QuestionSectionComponent implements OnInit {
 
   @Input() selectedTag: any;
 
-  @Input() set readonly(value: boolean) {
-    this._readonly = value;
-  }
-
   @Output() modalAnswerChange = new EventEmitter<any>();
 
-  constructor(private _translateService: TranslateService,
+  @Output() executiveTags = new EventEmitter<Array<Tag>>();
+
+  constructor(private translateService: TranslateService,
               private filterService: FilterService,
               private responseService: ResponseService,
               private location: Location,
@@ -82,12 +84,9 @@ export class QuestionSectionComponent implements OnInit {
 
     this.patchForm();
 
-
     this._tagId = this.questionReceived.identifier + (this.questionReceived.controlType !== 'textarea' ? 'Comment' : '');
 
     this.updateAnswersData();
-
-    console.log(this.questionReceived);
 
   }
 
@@ -117,22 +116,7 @@ export class QuestionSectionComponent implements OnInit {
 
       this._answersToShow = this.responseService.getAnswersToShow(this.answersReceived, this.questionReceived);
 
-      // calculate tags list
-      this._tags = this._answersToShow.reduce((tagsList, answer) => {
-        const answerTags = answer.answerTags[this._tagId];
-        if (Array.isArray(answerTags)) {
-          answerTags.forEach((t) => {
-            const previousTag = tagsList.find((t2) => t2._id === t._id);
-            if (previousTag) {
-              previousTag['count'] += 1;
-            } else {
-              t['count'] = 1;
-              tagsList.push(t);
-            }
-          });
-        }
-        return tagsList;
-      }, []).sort((a, b) => b.count - a.count);
+      this._tags = this.responseService.getTagsList(this._answersToShow, this.questionReceived);
 
       // filter comments
       switch (this.questionReceived.controlType) {
@@ -252,7 +236,7 @@ export class QuestionSectionComponent implements OnInit {
   }
 
   get lang(): string {
-    return this._translateService.currentLang;
+    return this.translateService.currentLang;
   }
 
 }

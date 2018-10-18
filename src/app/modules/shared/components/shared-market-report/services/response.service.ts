@@ -4,6 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 import { Innovation } from '../../../../../models/innovation';
+import {Tag} from '../../../../../models/tag';
 
 @Injectable()
 export class ResponseService {
@@ -30,7 +31,6 @@ export class ResponseService {
   getFilteredAnswers(): Subject <Array<Answer>> {
     return this.filteredAnswers;
   }
-
 
   /***
    * This function is to get and returns the questions from the innovation.
@@ -160,5 +160,40 @@ export class ResponseService {
     }
   }
 
+
+  /***
+   * this function is to get the tags list with the tag count for the
+   * question that is passed in the passed answers.
+   * @param answers
+   * @param question
+   */
+  getTagsList(answers: Array<Answer>, question: Question): Array<Tag> {
+
+    let tags: Array<Tag>;
+    const tagId = question.identifier + (question.controlType !== 'textarea' ? 'Comment' : '');
+
+    tags = answers.reduce((tagsList, answer) => {
+
+      const answerTags = answer.answerTags[tagId];
+
+      if (Array.isArray(answerTags)) {
+        answerTags.forEach((t) => {
+          const previousTag = tagsList.find((t2) => t2._id === t._id);
+
+          if (previousTag) {
+            previousTag['count'] += 1;
+          } else {
+            t['count'] = 1;
+            tagsList.push(t);
+          }
+
+        });
+      }
+      return tagsList;
+    }, []).sort((a, b) => b.count - a.count);
+
+    return tags;
+
+  }
 
 }

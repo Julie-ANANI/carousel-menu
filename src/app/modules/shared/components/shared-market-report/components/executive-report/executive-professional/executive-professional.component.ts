@@ -35,7 +35,7 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   private getAnswers() {
     this.responseService.getExecutiveAnswers().takeUntil(this.ngUnsubscribe).subscribe((response) => {
-      if (response !== null) {
+      if (response) {
         this.answers = response;
         this.topProfessionalsAnswer();
       }

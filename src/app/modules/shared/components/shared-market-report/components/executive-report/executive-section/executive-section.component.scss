@@ -94,6 +94,35 @@
 
   }
 
+  .tag {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .tag-outer-wrapper {
+    background-color: $background-color;
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+    border-radius: 25px;
+    padding: 5px 22px;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+  }
+
+  .tag-count {
+    font-size: 30px;
+    color: $background-color;
+    font-weight: 300;
+  }
+
+  .no-tags {
+    display: flex;
+    flex-direction: column;
+  }
+
   .abstract-value {
     padding-bottom: 0;
   }
