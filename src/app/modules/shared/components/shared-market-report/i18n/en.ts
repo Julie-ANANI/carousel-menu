@@ -1,19 +1,23 @@
 export const MARKET_REPORT = {
   'TITLE': {
-    'EDITING': 'Market potential of your project will be available soon',
-    'SUBMITTED': 'Exploring market potential of your project',
-    'EVALUATING': 'Exploring market potential of your project'
+    'EDITING': 'Market potential of your innovation will be available soon',
+    'SUBMITTED': 'Exploring market potential of your innovation',
+    'EVALUATING': 'Exploring market potential of your innovation'
   },
 
   'MESSAGE': {
-    'SUBMITTED': 'Your project is under review by our team. We\'ll come back soon!',
+    'SUBMITTED': 'Your innovation is under review by our team. We\'ll come back soon!',
     'EDITING': {
       'A': 'Please finish',
-      'B': 'setup of your project',
+      'B': 'setup of your innovation',
       'C': 'and submit it.'
     },
-    'REVIEWING': 'Please modify the changes in your project and re-submit it.',
+    'REVIEWING': 'Please modify the changes in your innovation and re-submit it.',
     'EVALUATING': 'We are collecting market potential of your project. We\'ll come back soon!'
+  },
+
+  'MESSAGE_ADMIN': {
+    'NOT_SUBMITTED': 'The client hasn\'t submitted the innovation yet. You will be able to edit the market report after he submits his innovation.'
   },
 
   'BUTTON': {
@@ -33,6 +37,8 @@ export const MARKET_REPORT = {
 
   'CONCLUSION': 'Final conclusion',
 
+  'COMMENT_HEADING': 'Space for your comments',
+
   'KEY_LEARNING': 'Key learnings',
 
   'STICKY_BAR': {
@@ -46,17 +52,54 @@ export const MARKET_REPORT = {
 
   'ANONYMOUS': 'Non Disclosed',
 
-  'MESSAGE_SYNTHESIS_VISIBLE': 'The synthesis is visible to client.',
+  'NOT_ALLOWED': 'You are not allowed to perform this action anymore.',
+
+  'MESSAGE_SYNTHESIS_VISIBLE': 'The partial synthesis is visible to client.',
 
   'MESSAGE_SYNTHESIS_NOT_VISIBLE': 'The synthesis is not visible to client.',
 
-  'MESSAGE_SYNTHESIS': 'The project has been successfully ended.',
+  'MESSAGE_SYNTHESIS': 'The innovation has been successfully ended, and the complete synthesis is available at the client side.',
 
-  'CLIENT_SYNTHESIS_MESSAGE': 'The partial synthesis of your project is available.',
+  'CLIENT_SYNTHESIS_MESSAGE': 'The partial synthesis of your innovation is available.',
+
+  'PRINT_DATE': 'Market test at',
 
   'MODAL_TITLE': 'Confirmation Board',
 
-  'MODAL_CONTENT': 'Do you want to end this project?',
+  'MODAL_CONTENT': 'Do you want to end this innovation?',
+
+  'EXECUTIVE': {
+    'HEADING': 'Executive Report',
+    'TITLE': 'Objective',
+    'CHOOSE_TEMPLATE': 'Choose template',
+    'VALID_BUTTON': 'Valid Template',
+    'CONCLUSION': 'Conclusion abstract',
+    'ABSTRACT': 'Abstract',
+    'NO_TAGS': 'Add the tags for this question',
+    'DELETE_BUTTON': 'Delete Executive Template'
+  },
+
+  'EXECUTIVE_TEMPLATE': {
+    'PROFESSIONAL_HEADING': 'Qualified professionals',
+    'ANSWERS': 'answers',
+    'REMAINING': {
+      'AND': 'and',
+      'OTHERS': 'others',
+      'MORE': 'More ...'
+    },
+    'CONCLUSION_HEADING': 'What the market says ...',
+    'UMI_CONTACT': {
+      'A': 'Do you want to launch a market test?',
+      'B': 'Contact us'
+    }
+  },
+
+  'EXECUTIVE_PLACEHOLDER': {
+    'GOAL': 'Describe the objective of this innovation within 120 words.',
+    'CONCLUSION': 'Describe the conclusion of this innovation campaign within 1200 words.',
+    'PROFESSIONAL': 'Describe the professional abstract of this innovation within 180 words.',
+    'SECTION': 'Describe the abstract of this question within 180 words.'
+  },
 
   'TARGET_COUNTRIES': 'Targeted countries',
 
@@ -78,6 +121,7 @@ export const MARKET_REPORT = {
   'BTN_COMMENTS_CLOSE': 'Hide comments ({{length}})',
   'BTN_RECOMPUTE': 'Recompute infographics',
   'PEOPLE_VOTED': 'people voted',
+  'VOTES': 'votes',
   'GRADE': 'Rating',
   'NO_GRADE': 'No rating',
   'POPUP': {

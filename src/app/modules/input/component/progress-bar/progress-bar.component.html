@@ -1,7 +1,7 @@
-<div class="progress-bar-outer-wrapper">
+<div class="progress-bar-outer-wrapper" [ngStyle]="{ 'height': height ? height : '1rem' }">
   <div
     class="progress-bar-inner-wrapper"
-    [ngStyle]="{ 'width': width, 'background-color': backgroundColor ? backgroundColor : '#4F5D6B' }">
+    [ngStyle]="{ 'width': width, 'background-color': backgroundColor ? backgroundColor : '#4F5D6B', 'height': height ? height : '1rem' }">
     <span>{{ value }}</span>
   </div>
 </div>

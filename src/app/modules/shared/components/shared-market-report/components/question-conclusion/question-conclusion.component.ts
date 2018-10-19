@@ -13,6 +13,10 @@ import { Subject } from 'rxjs/Subject';
 
 export class QuestionConclusionComponent implements OnInit, OnDestroy {
 
+  @Input() set executiveReport(value: boolean) {
+    this.executiveReportView = value;
+  }
+
   @Input() readonly = true;
   @Input() pieChart: any;
   @Input() innovation: Innovation;
@@ -23,11 +27,15 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
   private _domSectionId: string;
   private _lang: string;
 
+  executiveReportView = false;
+
   constructor(private innovationService: InnovationService,
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    this._domSectionId = `${this.question.identifier.replace(/\\s/g, '')}-conclusion`;
+    if (this.question && this.question.identifier) {
+      this._domSectionId = `${this.question.identifier.replace(/\\s/g, '')}-conclusion`;
+    }
 
     if (this.innovation && !this.innovation.marketReport) {
       this.innovation.marketReport = {};

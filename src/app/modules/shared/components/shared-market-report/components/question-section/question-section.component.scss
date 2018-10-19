@@ -8,6 +8,10 @@
     color: white;
   }
 
+  .tags {
+    padding-bottom: 1.57rem;
+  }
+
   .tags-wrapper {
     font-size: 0.6875rem;
     display: inline-flex;
@@ -23,6 +27,23 @@
   .tags-wrapper:hover {
     background-color: $primary-color;
     color: white;
+  }
+
+  .abstract-wrapper {
+    margin-top: 1.57rem;
+
+    .main-heading {
+      color: white;
+    }
+
+    .form-group {
+      margin-bottom: 0 !important;
+    }
+
+    .form-label {
+      padding: 0;
+    }
+
   }
 
   .clc-wrapper {

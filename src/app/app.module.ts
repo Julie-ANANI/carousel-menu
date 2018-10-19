@@ -43,6 +43,8 @@ import { FrontendService } from './services/frontend/frontend.service';
 import { PrintService } from './services/print/print.service';
 import { CurrentRouteService } from './services/frontend/current-route/current-route.service';
 import { ListenerService } from './services/frontend/listener/listener.service';
+import { CampaignCalculationService } from './services/campaign/campaign-calculation.service';
+import { InnovationCommonService } from './services/innovation/innovation-common.service';
 import { QuizService } from './services/quiz/quiz.service';
 
 // Resolvers
@@ -115,6 +117,8 @@ import { PresetResolver } from './resolvers/preset.resolver';
     PrintService,
     CurrentRouteService,
     ListenerService,
+    CampaignCalculationService,
+    InnovationCommonService,
     QuizService
   ],
   bootstrap: [AppComponent]
