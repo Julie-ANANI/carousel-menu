@@ -1,6 +1,6 @@
 @import "../../../../../../../style/variables";
 
-#piechart {
+.piechart {
   font-size: .85rem;
   font-weight: 600;
   max-width: 320px;
@@ -52,9 +52,9 @@
   width: 100%;
 
   .percentage {
-    font-size: 17px;
+    font-size: 15px;
     color: $meta-color;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     font-weight: 600;
   }
 
@@ -63,7 +63,7 @@
   }
 
   .pie-data {
-    margin-bottom: -10px;
+    margin-bottom: -8px;
 
     .data {
       display: inline-flex;
@@ -85,6 +85,10 @@
 
     }
 
+    .data:last-child {
+      margin-right: 0;
+    }
+
   }
 
 }
@@ -93,7 +97,7 @@
 
 @media (max-width: 840px) {
 
-  #piechart {
+  .piechart {
     max-width: 100% !important;
   }
 
@@ -101,20 +105,20 @@
 
 @media (max-width: 600px) {
 
-  #piechart {
-
-    .chart-pie {
-      width: 100% !important;
-    }
-
+  .chart-pie {
+    width: 100% !important;
   }
 
 }
 
 @media (min-width: 601px) {
 
-  .chart-pie {
-    width: 320px !important;
+  .piechart {
+
+    .chart-pie {
+      width: 320px !important;
+    }
+
   }
 
   .executive-piechart {
@@ -127,21 +131,7 @@
 
 }
 
-@media (max-width: 320px) {
-
-  #piechart {
-
-    .pie-data {
-      display: flex !important;
-      flex-direction: column;
-    }
-
-  }
-
-}
-
-
-@media (min-width: 1281px) {
+@media (min-width: 840px) {
 
   .executive-piechart {
 
@@ -152,3 +142,4 @@
   }
 
 }
+

@@ -1,7 +1,7 @@
 <div id="executive-section-wrapper">
 
   <!-- Title -->
-  <div>
+  <div class="title-wrapper">
 
     <!-- Heading and Menu -->
     <div class="heading-menu">
@@ -47,7 +47,7 @@
 
 
   <!-- Answer display -->
-  <div *ngIf="questionSelected" class="text-center">
+  <div *ngIf="questionSelected" class="content-wrapper">
 
     <!-- If the question type is checkbox or radio -->
     <ng-container *ngIf="questionSelected?.controlType === 'checkbox' || questionSelected?.controlType === 'radio'">
@@ -63,7 +63,7 @@
 
 
     <!-- If the question type is star -->
-    <ng-container *ngIf="selectedQuestion?.controlType === 'stars'">
+    <ng-container *ngIf="questionSelected?.controlType === 'stars'">
       <app-stars
         [answers]="answersToShow"
         [innovation]="innovation"
@@ -98,7 +98,7 @@
   <!-- /Answer display -->
 
   <!-- Abstract -->
-  <p *ngIf="questionSelected" class="abstract-value">{{ abstractValue }}</p>
+  <div *ngIf="questionSelected" class="abstract-wrapper">{{ abstractValue }}</div>
   <!-- /Abstract -->
 
 </div>

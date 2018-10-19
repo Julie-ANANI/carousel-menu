@@ -21,7 +21,7 @@
     </div>
 
     <!-- Abstract prof -->
-    <div class="abstract-professional" [innerHtml]="professionalAbstract"></div>
+    <div class="abstract-professional">{{ professionalAbstract }}</div>
 
   </div>
   <!-- /Response, map and abstract -->
@@ -73,19 +73,19 @@
 
     </div>
 
-    <!-- Remaining text -->
-    <p class="remaining-text text-center">
-      {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.AND' | translate }} {{ answers.length - 4 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.OTHERS' | translate }}
-      <span
-        pageScroll
-        pageScrollOffset="135"
-        href="#professionals"
-        class="text-link">
-        {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
-      </span>
-    </p>
-
   </div>
   <!-- /Top profile -->
+
+  <!-- Remaining text -->
+  <p class="remaining-text text-center">
+    {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.AND' | translate }} {{ answers.length - 4 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.OTHERS' | translate }}
+    <span
+      pageScroll
+      pageScrollOffset="135"
+      href="#professionals"
+      class="text-link">
+        {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
+    </span>
+  </p>
 
 </div>

@@ -1,12 +1,12 @@
-<section class="section-container s-print" id="market-report" [ngStyle]="{ 'background-color': (innovation.status !== 'DONE' && !adminSide && !previewMode) ? 'white' : '#F5F5F5' }">
+<section class="section-container s-print" id="market-report" [ngStyle]="{ 'background-color': (innovation?.status !== 'DONE' && !adminSide && !previewMode) ? 'white' : '#F5F5F5' }">
 
 
   <!-- Project status not done client side -->
-  <ng-container *ngIf="innovation.status !== 'DONE' && !adminSide && !innovation?.previewMode">
+  <ng-container *ngIf="innovation?.status !== 'DONE' && !adminSide && !innovation?.previewMode">
     <div class="column col-xs-12 col-11 col-mx-auto" [ngStyle]="{ 'padding-top': '3.15rem' }">
-      <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + innovation.status)  | translate }}</h1>
+      <h1 class="main-heading">{{ ('MARKET_REPORT.TITLE.' + innovation?.status)  | translate }}</h1>
       <div class="text-center" [ngStyle]="{ 'padding-top': '1.57rem' }">
-      <span class="bot-rect" [ngSwitch]="innovation.status" [ngStyle]="{ 'max-width': '320px' }">
+      <span class="bot-rect" [ngSwitch]="innovation?.status" [ngStyle]="{ 'max-width': '320px' }">
         <ng-container *ngSwitchCase="'EDITING'">
            <ng-container *ngIf="innovation.reviewing">
               {{ 'MARKET_REPORT.MESSAGE.REVIEWING' | translate }}
@@ -50,7 +50,7 @@
 
 
   <!-- Project status submitted and client side -->
-  <ng-container *ngIf="innovation.status === 'DONE' || (innovation.status !== 'EDITING' && adminSide) || innovation?.previewMode">
+  <ng-container *ngIf="innovation?.status === 'DONE' || (innovation?.status !== 'EDITING' && adminSide) || innovation?.previewMode">
 
     <!-- Display spinner -->
     <ng-container *ngIf="spinnerDisplay">
@@ -63,9 +63,17 @@
     <ng-container *ngIf="!spinnerDisplay">
 
       <!-- Message -->
-      <div *ngIf="innovation?.previewMode && projectStatus !== 'DONE'" class="msg-wrapper">
-        <div *ngIf="!adminSide" class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE' | translate }}</div>
-        <div *ngIf="adminSide" class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE_ADMIN' | translate }}</div>
+      <div *ngIf="innovation?.previewMode && innovation?.status !== 'DONE'" class="msg-wrapper">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div *ngIf="!adminSide" class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE' | translate }}</div>
+          <div *ngIf="adminSide" class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE_ADMIN' | translate }}</div>
+        </div>
+      </div>
+
+      <div *ngIf="innovation?.status === 'DONE' && adminSide" class="msg-wrapper">
+        <div class="column col-xs-12 col-11 col-mx-auto">
+          <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.ADMIN_DONE' | translate }}</div>
+        </div>
       </div>
       <!-- /Message -->
 

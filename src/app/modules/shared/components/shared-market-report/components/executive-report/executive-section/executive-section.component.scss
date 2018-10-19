@@ -11,93 +11,108 @@
   flex-direction: column;
   justify-content: space-between;
 
-  .heading-menu {
-    position: relative;
-    display: flex;
+  .title-wrapper {
+    margin-bottom: 25px;
 
-    .main-heading {
-      font-size: 24px;
-      margin-bottom: 0;
-    }
+    .heading-menu {
+      position: relative;
+      display: flex;
 
-    .menu-icon {
-      text-align: right;
-      position: absolute;
-      right: 0;
-      padding-top: 9px;
-
-      .fa-bars {
-        color: $meta-color;
-        font-size: 20px;
+      .main-heading {
+        font-size: 24px;
+        margin-bottom: 0;
       }
 
-      .menu-item-wrapper {
-        background-color: white;
-        width: 250px;
-        text-align: left;
-        box-shadow: $box-shadow;
-        border: 1px solid $border-color;
-        border-radius: 3px;
-        max-height: 380px;
-        overflow: auto;
+      .menu-icon {
+        text-align: right;
         position: absolute;
         right: 0;
-        display: none;
-        top: 100%;
-        z-index: 2;
+        padding-top: 9px;
 
-        ul {
-          list-style: none;
+        .fa-bars {
+          color: $meta-color;
+          font-size: 20px;
+        }
 
-          li {
-            cursor: pointer;
-            font-size: 12px;
-            color: $dark-color;
-            padding: 12px 15px;
-          }
+        .menu-item-wrapper {
+          background-color: white;
+          width: 250px;
+          text-align: left;
+          box-shadow: $box-shadow;
+          border: 1px solid $border-color;
+          border-radius: 3px;
+          max-height: 380px;
+          overflow: auto;
+          position: absolute;
+          right: 0;
+          display: none;
+          top: 100%;
+          z-index: 2;
 
-          li:hover {
-            background-color: $primary-color;
-            color: white;
-          }
+          ul {
+            list-style: none;
 
-          li.active {
-            background-color: $primary-color;
-            color: white;
+            li {
+              cursor: pointer;
+              font-size: 12px;
+              color: $dark-color;
+              padding: 12px 15px;
+            }
+
+            li:hover {
+              background-color: $primary-color;
+              color: white;
+            }
+
+            li.active {
+              background-color: $primary-color;
+              color: white;
+            }
+
           }
 
         }
 
       }
 
+      .menu-icon:hover {
+
+        .menu-item-wrapper, .menu-item-wrapper:hover {
+          display: block;
+        }
+
+      }
+
     }
 
-    .menu-icon:hover {
+    .sub-title {
+      color: $meta-color;
+      font-weight: 600;
+      font-size: 13px;
+      padding-bottom: 0;
 
-      .menu-item-wrapper, .menu-item-wrapper:hover {
-        display: block;
+      .fa-user, .fa-briefcase {
+        color: $meta-color;
       }
 
     }
 
   }
 
-  .sub-title {
-    color: $meta-color;
-    font-weight: 600;
-    font-size: 13px;
-    padding-bottom: 0;
-
-    .fa-user, .fa-briefcase {
-      color: $meta-color;
-    }
-
+  .content-wrapper {
+    text-align: center;
+    margin-bottom: 20px;
   }
+
 
   .tag {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
+  }
+
+  .tag:last-child {
+    margin-bottom: 0;
   }
 
   .tag-outer-wrapper {
@@ -123,8 +138,5 @@
     flex-direction: column;
   }
 
-  .abstract-value {
-    padding-bottom: 0;
-  }
-
 }
+
