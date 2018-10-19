@@ -7,7 +7,7 @@
     <div class="heading-menu">
 
       <!-- Heading -->
-      <h1 class="main-heading">{{ selectedQuestion?.title | multiling:lang }}</h1>
+      <h1 class="main-heading">{{ questionSelected?.title | multiling:lang }}</h1>
 
       <!-- Menu -->
       <div *ngIf="adminSide" class="menu-icon">
@@ -15,7 +15,7 @@
         <div class="menu-item-wrapper">
           <ul>
             <li *ngFor="let option of sectionMenuOptions" (click)="onTitleClicked($event, option)">
-              {{ option.title | multiling }}
+              {{ option?.title | multiling }}
             </li>
           </ul>
         </div>
@@ -25,17 +25,17 @@
     <!-- /Heading and Menu -->
 
     <!-- Follow -->
-    <p *ngIf="selectedQuestion && stats" class="sub-title">
-      <span *ngIf="selectedQuestion?.controlType !== 'checkbox'">
+    <p *ngIf="questionSelected && stats" class="sub-title">
+      <span *ngIf="questionSelected?.controlType !== 'checkbox'">
         <i class="fas fa-user"></i> {{ stats.nbAnswers || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}
       </span>
-      <span *ngIf="selectedQuestion?.controlType === 'checkbox'">
-        <i class="fas fa-briefcase"></i> {{ stats.nbAnswers || 0 }} {{ selectedQuestion?.title | multiling:lang | lowercase }}
+      <span *ngIf="questionSelected?.controlType === 'checkbox'">
+        <i class="fas fa-briefcase"></i> {{ stats.nbAnswers || 0 }} {{ questionSelected?.title | multiling:lang | lowercase }}
       </span>
       <span
         pageScroll
         pageScrollOffset="135"
-        [href]="'#' + selectedQuestion?.identifier"
+        [href]="'#' + questionSelected?.identifier"
         class="text-link">
         {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
       </span>
@@ -47,14 +47,14 @@
 
 
   <!-- Answer display -->
-  <div *ngIf="selectedQuestion" class="text-center">
+  <div *ngIf="questionSelected" class="text-center">
 
     <!-- If the question type is checkbox or radio -->
-    <ng-container *ngIf="selectedQuestion?.controlType === 'checkbox' || selectedQuestion?.controlType === 'radio'">
+    <ng-container *ngIf="questionSelected?.controlType === 'checkbox' || questionSelected?.controlType === 'radio'">
       <app-bar-chart
         [answers]="answersToShow"
         [innovation]="innovation"
-        [question]="selectedQuestion"
+        [question]="questionSelected"
         [executiveReport]="true"
         [stats]="stats">
       </app-bar-chart>
@@ -67,19 +67,19 @@
       <app-stars
         [answers]="answersToShow"
         [innovation]="innovation"
-        [question]="selectedQuestion"
+        [question]="questionSelected"
         [executiveReport]="true">
       </app-stars>
     </ng-container>
     <!-- /If the question type is star -->
 
     <!-- If the question is not checkbox, radio, stars -->
-    <ng-container *ngIf="selectedQuestion?.controlType !== 'checkbox' && selectedQuestion?.controlType !== 'radio' && selectedQuestion?.controlType !== 'stars'">
+    <ng-container *ngIf="questionSelected?.controlType !== 'checkbox' && questionSelected?.controlType !== 'radio' && questionSelected?.controlType !== 'stars'">
 
       <ng-container *ngIf="tags.length > 0">
         <div *ngFor="let tag of tags | slice:0:3" class="tag">
           <div *ngIf="tag.count > 1" class="tag-count">&nbsp;{{ tag.count }}X</div>
-          <div><span class="tag-outer-wrapper" [ngStyle]="{ 'background-color': getColor(selectedQuestion?.title | multiling:lang ) }">#{{ tag.label | multiling:lang }}</span></div>
+          <div><span class="tag-outer-wrapper" [ngStyle]="{ 'background-color': getColor(questionSelected?.title | multiling:lang ) }">#{{ tag.label | multiling:lang }}</span></div>
         </div>
       </ng-container>
 
@@ -98,8 +98,7 @@
   <!-- /Answer display -->
 
   <!-- Abstract -->
-  <p *ngIf="selectedQuestion" class="abstract-value">{{ abstractValue }}</p>
+  <p *ngIf="questionSelected" class="abstract-value">{{ abstractValue }}</p>
   <!-- /Abstract -->
-
 
 </div>

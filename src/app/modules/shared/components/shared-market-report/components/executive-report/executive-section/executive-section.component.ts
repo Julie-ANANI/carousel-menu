@@ -18,37 +18,37 @@ import {Tag} from '../../../../../../../models/tag';
 export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
-    this.innovation = value;
+    this._innovation = value;
     this.getQuestions(value);
   }
 
   @Input() set section(value: number) {
-    this.sectionNumber = value;
+    this._sectionNumber = value;
   }
 
-  ngUnsubscribe: Subject<any> = new Subject();
+  private _ngUnsubscribe: Subject<any> = new Subject();
 
-  answers: Array<Answer> = [];
+  private _answers: Array<Answer> = [];
 
-  answersToShow: Array<Answer> = [];
+  private _answersToShow: Array<Answer> = [];
 
-  innovation: Innovation;
+  private _innovation: Innovation;
 
-  sectionMenuOptions: Array<Question> = [];
+  private _sectionMenuOptions: Array<Question> = [];
 
-  questions: Array<Question> = [];
+  private _questions: Array<Question> = [];
 
-  sectionNumber: number;
+  private _sectionNumber: number;
 
-  selectedQuestion: Question;
+  private _questionSelected: Question;
 
-  abstractValue = '';
+  private _abstractValue = '';
 
-  adminSide: boolean;
+  private _adminSide: boolean;
 
-  stats: { nbAnswers?: number, percentage?: number };
+  private _stats: { nbAnswers?: number, percentage?: number };
 
-  tags: Array<Tag> = [];
+  private _tags: Array<Tag> = [];
 
   constructor(private responseService: ResponseService,
               private location: Location,
@@ -64,10 +64,10 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
      * this is when we update the innovation in any component,
      * we are listening that update and will update the innovation attribute.
      */
-    this.innovationCommonService.getInnovation().takeUntil(this.ngUnsubscribe).subscribe((response: Innovation) => {
+    this.innovationCommonService.getInnovation().takeUntil(this._ngUnsubscribe).subscribe((response: Innovation) => {
       if (response) {
-        this.innovation = response;
-        this.getSectionInformation(this.sectionNumber);
+        this._innovation = response;
+        this.getSectionInformation(this._sectionNumber);
       }
     });
 
@@ -78,10 +78,10 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * here we are getting the answers that was set on Market report ts file.
    */
   private getAnswers() {
-    this.responseService.getExecutiveAnswers().takeUntil(this.ngUnsubscribe).subscribe((response) => {
+    this.responseService.getExecutiveAnswers().takeUntil(this._ngUnsubscribe).subscribe((response) => {
       if (response !== null) {
-        this.answers = response;
-        this.getSectionInformation(this.sectionNumber);
+        this._answers = response;
+        this.getSectionInformation(this._sectionNumber);
       }
     });
   }
@@ -95,10 +95,10 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
   private getQuestions(value: Innovation) {
     if (value.preset && value.preset.sections) {
       this.responseService.getPresets(value).forEach((questions) => {
-        const index = this.questions.findIndex((question) => question._id === questions._id);
+        const index = this._questions.findIndex((question) => question._id === questions._id);
         if (index === -1) {
-          this.questions.push(questions);
-          this.sectionMenuOptions.push(questions);
+          this._questions.push(questions);
+          this._sectionMenuOptions.push(questions);
         }
       });
     }
@@ -106,10 +106,10 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
 
 
   /**
-   * This function is checking the are we on the admin side.
+   * This function is checking the we are on the admin side.
    */
   private isAdminSide() {
-    this.adminSide = this.location.path().slice(0, 6) === '/admin';
+    this._adminSide = this.location.path().slice(0, 6) === '/admin';
   }
 
 
@@ -120,9 +120,9 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * @param {Question} option
    */
   onTitleClicked(event: Event, option: Question) {
-    this.innovation.executiveReport.sections[this.sectionNumber] = { quesId: option._id };
-    this.innovationCommonService.saveInnovation(this.innovation);
-    this.getSectionInformation(this.sectionNumber);
+    this._innovation.executiveReport.sections[this._sectionNumber] = { quesId: option._id };
+    this.innovationCommonService.saveInnovation(this._innovation);
+    this.getSectionInformation(this._sectionNumber);
   }
 
 
@@ -133,17 +133,17 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    */
   private getSectionInformation(sectionNumber: number) {
 
-    if (this.innovation.executiveReport.sections[sectionNumber]) {
+    if (this._innovation.executiveReport.sections[sectionNumber]) {
 
-      this.selectedQuestion = this.questions.find((ques) => ques._id === this.innovation.executiveReport.sections[sectionNumber].quesId);
+      this._questionSelected = this._questions.find((ques) => ques._id === this._innovation.executiveReport.sections[sectionNumber].quesId);
 
-      if (this.selectedQuestion) {
+      if (this._questionSelected) {
 
-        this.answersToShow = this.responseService.getAnswersToShow(this.answers, this.selectedQuestion);
+        this._answersToShow = this.responseService.getAnswersToShow(this._answers, this._questionSelected);
 
-        this.stats = {
-          nbAnswers: this.answersToShow.length,
-          percentage: Math.round((this.answersToShow.length * 100) / this.answers.length)
+        this._stats = {
+          nbAnswers: this._answersToShow.length,
+          percentage: Math.round((this._answersToShow.length * 100) / this._answers.length)
         };
 
         this.getAbstractValue();
@@ -163,12 +163,12 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    */
   private getAbstractValue() {
 
-    this.abstractValue = '';
+    this._abstractValue = '';
 
-    if (this.innovation.executiveReport.abstracts) {
-      const findAbstract = this.innovation.executiveReport.abstracts.find((ques) => ques.quesId === this.selectedQuestion._id);
+    if (this._innovation.executiveReport.abstracts) {
+      const findAbstract = this._innovation.executiveReport.abstracts.find((ques) => ques.quesId === this._questionSelected._id);
       if (findAbstract) {
-        this.abstractValue = findAbstract.value;
+        this._abstractValue = findAbstract.value;
       }
     }
 
@@ -179,7 +179,7 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * this functions is to get the tags list for the particular question.
    */
   getTags() {
-    this.tags = this.responseService.getTagsList(this.answers, this.selectedQuestion);
+    this._tags = this.responseService.getTagsList(this._answers, this._questionSelected);
   }
 
 
@@ -202,8 +202,56 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
     return this.translateService.currentLang;
   }
 
+  get ngUnsubscribe(): Subject<any> {
+    return this._ngUnsubscribe;
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
+  }
+
+  get answersToShow(): Array<Answer> {
+    return this._answersToShow;
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get sectionMenuOptions(): Array<Question> {
+    return this._sectionMenuOptions;
+  }
+
+  get questions(): Array<Question> {
+    return this._questions;
+  }
+
+  get sectionNumber(): number {
+    return this._sectionNumber;
+  }
+
+  get questionSelected(): Question {
+    return this._questionSelected;
+  }
+
+  get abstractValue(): string {
+    return this._abstractValue;
+  }
+
+  get adminSide(): boolean {
+    return this._adminSide;
+  }
+
+  get stats(): { nbAnswers?: number; percentage?: number } {
+    return this._stats;
+  }
+
+  get tags(): Array<Tag> {
+    return this._tags;
+  }
+
   ngOnDestroy(): void {
-    this.ngUnsubscribe.unsubscribe();
+    this._ngUnsubscribe.unsubscribe();
   }
 
 }

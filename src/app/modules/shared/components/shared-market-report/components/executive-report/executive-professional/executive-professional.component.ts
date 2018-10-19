@@ -13,19 +13,19 @@ import { Innovation } from '../../../../../../../models/innovation';
 export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
-    this.mapConfiguration = value.settings.geography.continentTarget || {};
-    this.professionalAbstract = value.executiveReport.professionalAbstract;
+    this._mapConfiguration = value.settings.geography.continentTarget || {};
+    this._professionalAbstract = value.executiveReport.professionalAbstract;
   }
 
-  ngUnsubscribe: Subject<any> = new Subject();
+  private _ngUnsubscribe: Subject<any> = new Subject();
 
-  answers: Array<Answer> = [];
+  private _answers: Array<Answer> = [];
 
-  professionalsAnswer: Array<Answer> = [];
+  private _professionalsAnswer: Array<Answer> = [];
 
-  mapConfiguration: any = {};
+  private _mapConfiguration: any = {};
 
-  professionalAbstract = '';
+  private _professionalAbstract = '';
 
   constructor(private responseService: ResponseService) { }
 
@@ -34,9 +34,9 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
   }
 
   private getAnswers() {
-    this.responseService.getExecutiveAnswers().takeUntil(this.ngUnsubscribe).subscribe((response) => {
+    this.responseService.getExecutiveAnswers().takeUntil(this._ngUnsubscribe).subscribe((response) => {
       if (response) {
-        this.answers = response;
+        this._answers = response;
         this.topProfessionalsAnswer();
       }
     })
@@ -44,25 +44,45 @@ export class ExecutiveProfessionalComponent implements OnInit, OnDestroy {
 
   private topProfessionalsAnswer() {
 
-    this.answers.forEach((items) => {
+    this._answers.forEach((items) => {
       if (items.profileQuality === 2) {
-        this.professionalsAnswer.push(items);
+        this._professionalsAnswer.push(items);
       }
     });
 
-    if (this.professionalsAnswer.length === 0 || this.professionalsAnswer.length < 4) {
-      this.answers.forEach((items) => {
-        const find = this.professionalsAnswer.find((professional) => professional._id === items._id);
+    if (this._professionalsAnswer.length === 0 || this._professionalsAnswer.length < 4) {
+      this._answers.forEach((items) => {
+        const find = this._professionalsAnswer.find((professional) => professional._id === items._id);
         if (!find) {
-          this.professionalsAnswer.push(items);
+          this._professionalsAnswer.push(items);
         }
       });
     }
 
   }
 
+  get ngUnsubscribe(): Subject<any> {
+    return this._ngUnsubscribe;
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
+  }
+
+  get professionalsAnswer(): Array<Answer> {
+    return this._professionalsAnswer;
+  }
+
+  get mapConfiguration(): any {
+    return this._mapConfiguration;
+  }
+
+  get professionalAbstract(): string {
+    return this._professionalAbstract;
+  }
+
   ngOnDestroy(): void {
-    this.ngUnsubscribe.unsubscribe();
+    this._ngUnsubscribe.unsubscribe();
   }
 
 }

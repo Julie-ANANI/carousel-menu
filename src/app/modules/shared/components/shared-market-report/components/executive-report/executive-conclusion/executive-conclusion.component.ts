@@ -14,16 +14,16 @@ export class ExecutiveConclusionComponent implements OnInit {
   @Input() set project(value: Innovation) {
 
     if (value.marketReport && value.marketReport.finalConclusion) {
-      this.conclusion = value.marketReport.finalConclusion.conclusion;
+      this._conclusion = value.marketReport.finalConclusion.conclusion;
     }
 
-    this.operator = value.operator || null;
+    this._operator = value.operator || null;
 
   }
 
-  conclusion = '';
+  private _conclusion = '';
 
-  operator: User;
+  private _operator: User;
 
   constructor() { }
 
@@ -32,6 +32,14 @@ export class ExecutiveConclusionComponent implements OnInit {
 
   getLogo(): string {
     return environment.logoSynthURL;
+  }
+
+  get conclusion(): string {
+    return this._conclusion;
+  }
+
+  get operator(): User {
+    return this._operator;
   }
 
 }

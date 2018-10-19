@@ -11,23 +11,43 @@ import { Question } from '../../../../../../models/question';
 export class ExecutiveReportComponent implements OnInit {
 
   @Input() set project(value: Innovation) {
-    this.innovation = value;
-    this.executiveReport = value.executiveReport;
+    this._innovation = value;
+    this._executiveReport = value.executiveReport;
   }
 
-  executiveReport: any = {};
+  private _executiveReport: any = {};
 
-  innovation: Innovation = {};
+  private _innovation: Innovation = {};
 
-  question: Question = null;
+  private _question: Question = null;
 
-  firstPageSections = [0, 1, 2, 3];
+  private _firstPageSections = [0, 1, 2, 3];
 
-  secondPageSections = [4, 5, 6, 7];
+  private _secondPageSections = [4, 5, 6, 7];
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  get executiveReport(): any {
+    return this._executiveReport;
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get question(): Question {
+    return this._question;
+  }
+
+  get firstPageSections(): number[] {
+    return this._firstPageSections;
+  }
+
+  get secondPageSections(): number[] {
+    return this._secondPageSections;
   }
 
 }

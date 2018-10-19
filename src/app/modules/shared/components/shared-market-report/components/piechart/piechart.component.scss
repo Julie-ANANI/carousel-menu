@@ -1,6 +1,6 @@
 @import "../../../../../../../style/variables";
 
-.piechart {
+#piechart {
   font-size: .85rem;
   font-weight: 600;
   max-width: 320px;
@@ -23,8 +23,8 @@
 
     .data {
       display: inline-flex;
-      margin-bottom: .6rem;
-      margin-right: .6rem;
+      margin-bottom: .5rem;
+      margin-right: .5rem;
       flex-wrap: wrap;
       font-size: .85rem;
       vertical-align: middle;
@@ -36,7 +36,7 @@
       }
 
       .response, .circle, .text{
-        margin-right: .5rem;
+        margin-right: .18rem;
       }
 
     }
@@ -46,7 +46,7 @@
 
 }
 
-.executiveActive {
+.executive-piechart {
   font-size: 14px;
   max-width: unset;
   width: 100%;
@@ -67,8 +67,8 @@
 
     .data {
       display: inline-flex;
-      margin-bottom: 10px;
-      margin-right: 10px;
+      margin-bottom: 8px;
+      margin-right: 8px;
       flex-wrap: wrap;
       font-size: 12px;
       vertical-align: middle;
@@ -80,7 +80,7 @@
       }
 
       .response, .circle, .text{
-        margin-right: 8px;
+        margin-right: 3px;
       }
 
     }
@@ -93,7 +93,7 @@
 
 @media (max-width: 840px) {
 
-  .piechart {
+  #piechart {
     max-width: 100% !important;
   }
 
@@ -101,7 +101,7 @@
 
 @media (max-width: 600px) {
 
-  .piechart {
+  #piechart {
 
     .chart-pie {
       width: 100% !important;
@@ -113,25 +113,40 @@
 
 @media (min-width: 601px) {
 
-  .piechart {
+  .chart-pie {
+    width: 320px !important;
+  }
+
+  .executive-piechart {
 
     .chart-pie {
-      width: 320px !important;
+      width: 100% !important;
     }
 
   }
-
-
 
 }
 
 @media (max-width: 320px) {
 
-  .piechart {
+  #piechart {
 
     .pie-data {
       display: flex !important;
       flex-direction: column;
+    }
+
+  }
+
+}
+
+
+@media (min-width: 1281px) {
+
+  .executive-piechart {
+
+    .chart-pie {
+      width: 320px !important;
     }
 
   }

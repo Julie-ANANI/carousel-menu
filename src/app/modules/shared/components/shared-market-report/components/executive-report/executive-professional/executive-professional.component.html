@@ -2,79 +2,90 @@
 
   <!-- Heading -->
   <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.PROFESSIONAL_HEADING' | translate }}</h1>
+  <!-- /Heading -->
 
-  <!-- Icon and response -->
-  <h1 class="sub-title text-center">{{ answers.length || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}</h1>
+  <!-- Response, map and abstract -->
+  <div class="section-2-wrapper">
 
-  <!-- Map -->
-  <div class="map-wrapper">
-    <app-worldmap
-      [initialConfiguration]="mapConfiguration"
-      [countriesColor]="'#2ECC71'"
-      [isEditable]="false"
-      [width]="'auto'">
-    </app-worldmap>
+    <!-- Icon and response -->
+    <h1 class="sub-title text-center">{{ answers.length || 0 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.ANSWERS' | translate }}</h1>
+
+    <!-- Map -->
+    <div class="map-wrapper">
+      <app-worldmap
+        [initialConfiguration]="mapConfiguration"
+        [countriesColor]="'#2ECC71'"
+        [isEditable]="false"
+        [width]="'auto'">
+      </app-worldmap>
+    </div>
+
+    <!-- Abstract prof -->
+    <div class="abstract-professional" [innerHtml]="professionalAbstract"></div>
+
   </div>
-
-  <!-- Abstract prof -->
-  <div class="abstract-professional" [innerHtml]="professionalAbstract"></div>
+  <!-- /Response, map and abstract -->
 
   <!-- Top profile -->
-  <div *ngFor="let answer of professionalsAnswer | slice:0:4" class="profile">
+  <div class="professional-profile-wrapper">
 
-    <!-- Icons -->
-    <div class="icons">
+    <div *ngFor="let answer of professionalsAnswer | slice:0:4" class="profile">
 
-      <!-- User -->
-      <i class="fas fa-user"></i>
+      <!-- Icons -->
+      <div class="icons">
 
-      <!-- Flag -->
-      <div *ngIf="answer.country?.flag" [ngStyle]="{ 'margin-top': '15px' }">
-        <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
-      </div>
+        <!-- User -->
+        <i class="fas fa-user"></i>
 
-    </div>
-    <!-- /Icons -->
-
-    <!-- Prof Details -->
-    <div class="details">
-
-      <!-- Name -->
-      <p class="name">
-        <span *ngIf="answer && answer.professional?.firstName">
-        {{ answer.professional?.firstName[0] | uppercase }}{{ answer.professional?.firstName | slice:1 }} {{ answer.professional?.lastName }}
-        </span>
-        <span *ngIf="!answer.professional?.firstName">{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
-      </p>
-
-      <!-- Company -->
-      <p *ngIf="answer.professional.company?.name || answer.professional?.company" class="company">
-        {{ answer.professional.company?.name || answer.professional?.company || 'company' }}
-      </p>
-
-      <!-- Tag -->
-      <ng-container *ngIf="answer.answer?.tags">
-        <div *ngFor="let tag of answer.answer.tags" class="tag">
-          <span>#{{ tag.label | multiling:lang  }}</span>
+        <!-- Flag -->
+        <div *ngIf="answer.country?.flag" [ngStyle]="{ 'margin-top': '15px' }">
+          <app-country-flag [country]="answer.country" [width]="23" [height]="16"></app-country-flag>
         </div>
-      </ng-container>
+
+      </div>
+      <!-- /Icons -->
+
+      <!-- Prof Details -->
+      <div class="details">
+
+        <!-- Name -->
+        <p class="name">
+        <span *ngIf="answer && answer.professional?.firstName">
+          {{ answer.professional?.firstName[0] | uppercase }}{{ answer.professional?.firstName | slice:1 }} {{ answer.professional?.lastName }}
+        </span>
+          <span *ngIf="!answer.professional?.firstName">{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</span>
+        </p>
+
+        <!-- Company -->
+        <p *ngIf="answer.professional.company?.name || answer.professional?.company" class="company">
+          {{ answer.professional.company?.name || answer.professional?.company || 'company' }}
+        </p>
+
+        <!-- Tag -->
+        <ng-container *ngIf="answer.answer?.tags.length > 0">
+          <div *ngFor="let tag of answer.answer?.tags" class="tag">
+            <span>#{{ tag.label | multiling:lang  }}</span>
+          </div>
+        </ng-container>
+
+      </div>
+      <!-- /Details -->
 
     </div>
-    <!-- /Details -->
+
+    <!-- Remaining text -->
+    <p class="remaining-text text-center">
+      {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.AND' | translate }} {{ answers.length - 4 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.OTHERS' | translate }}
+      <span
+        pageScroll
+        pageScrollOffset="135"
+        href="#professionals"
+        class="text-link">
+        {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
+      </span>
+    </p>
 
   </div>
   <!-- /Top profile -->
-
-  <!-- Remaining text -->
-  <p class="remaining-text text-center">
-    {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.AND' | translate }} {{ answers.length - 4 }} {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.OTHERS' | translate }}
-    <span
-      pageScroll
-      pageScrollOffset="135"
-      href="#professionals"
-      class="text-link">
-      {{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.REMAINING.MORE' | translate }}
-    </span>
-  </p>
 
 </div>
