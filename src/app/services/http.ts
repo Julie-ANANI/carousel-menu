@@ -165,6 +165,8 @@ export class Http extends AngularHttp {
       options.headers = new Headers();
     }
     SessionVerification.setHeaderAngular2(options, 'umi-front-application');
+    //Put also the domain in the headers!
+    options.headers.append("instance-domain", environment.domain );
 
     options.withCredentials = true;
 
