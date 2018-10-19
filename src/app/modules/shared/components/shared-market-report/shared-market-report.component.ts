@@ -497,8 +497,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * @param {Event} event
    */
   update(event: Event) {
-    // TODO: add project status DONE
-    if (this.innovation.status) {
+    if (this.innovation.status !== 'DONE') {
      this.innovationCommonService.saveInnovation(this.innovation);
     }
   }
@@ -605,10 +604,12 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       conclusion: event['content']
     };
 
-    this.innovationService.updateMarketReport(this.innovation._id, objToSave).first().subscribe((response) => {
-      this.innovation.marketReport = response;
-      this.update(event);
-    });
+    if (this.innovation.status !== 'DONE') {
+      this.innovationService.updateMarketReport(this.innovation._id, objToSave).first().subscribe((response) => {
+        this.innovation.marketReport = response;
+        this.update(event);
+      });
+    }
 
   }
 

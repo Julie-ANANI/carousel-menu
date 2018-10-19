@@ -15,16 +15,17 @@
     .main-heading {
       color: white;
       font-size: 24px;
+      margin-bottom: 25px;
     }
 
     .conclusion-text {
       font-weight: 600;
       font-size: 13px;
       padding-bottom: -10px;
+      margin-bottom: 15px;
     }
 
     .operator-contact {
-      margin-top: .9375rem;
 
       .name, .job, .phone {
         font-size: 16px;
@@ -69,6 +70,7 @@
         font-size: 12px;
         margin-left: 10px;
         font-weight: 600;
+        margin-top: -5px;
 
         p {
           padding-bottom: 0;

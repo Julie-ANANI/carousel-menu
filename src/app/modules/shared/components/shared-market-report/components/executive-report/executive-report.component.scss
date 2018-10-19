@@ -8,14 +8,14 @@
     border-radius: 3px;
   }
 
-  .section {
+  .section-wrapper {
     width: 33.33%;
   }
 
-  .sections {
-    width: 66.67%;
-    display: flex;
-    flex-wrap: wrap;
+  .section {
+    display: inline-flex;
+    background-color: white;
+    padding: 25px;
   }
 
   .second-page {
@@ -30,10 +30,10 @@
 
   }
 
-  .section-wrapper {
-    display: inline-flex;
-    background-color: white;
-    padding: 25px;
+  .sections {
+    width: 66.67%;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .section-2, .section-4 {
@@ -61,4 +61,27 @@
 
 }
 
+/********************************** Media ***************************************/
+@media (max-width: 960px) {
 
+  #executive-report-wrapper {
+
+    .page-first, .second-page-wrapper {
+      flex-direction: column;
+    }
+
+    .section-wrapper, .sections, .section-4 {
+      width: 100%;
+    }
+
+    .section-2, .section-4 {
+      height: 100%;
+    }
+
+    .section-4:nth-child(3) {
+      border-bottom: 1px solid $border-color;
+    }
+
+  }
+  
+}

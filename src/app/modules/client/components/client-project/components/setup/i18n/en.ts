@@ -23,7 +23,8 @@ export const SETUP = {
     },
     'PREVIEW_MODE': 'The partial synthesis of your innovation is available.',
     'PREVIEW_MODE_ADMIN': 'The partial synthesis of this innovation is available at the client side.',
-    'DONE': 'Synthesis of your project is available. You can\'t make changes in your project anymore.'
+    'DONE': 'Synthesis of your project is available. You can\'t make changes in your project anymore.',
+    'ADMIN_DONE': 'This innovation is marked as finished, and full synthesis is available at the client side. You are not allowed to make any further changes.'
   },
 
   'PITCH_TAB': 'Pitch',

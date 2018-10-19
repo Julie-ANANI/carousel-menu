@@ -9,13 +9,14 @@
   }
 
   .msg-wrapper {
+    background-color: $validation-color;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
 
     .content {
-      background-color: $validation-color;
-      color: white;
-      font-weight: 600;
-      font-size: 1rem;
-      padding: .95rem;
+      padding-top: .95rem;
+      padding-bottom: .95rem;
     }
 
   }
@@ -264,7 +265,6 @@
 
     .charRemaining span {
       margin-top: -2rem;
-      margin-left: -2.5rem;
     }
 
   }
@@ -491,7 +491,6 @@
 
     .charRemaining span {
       margin-top: -1.57rem;
-      margin-left: -2.5rem;
     }
 
   }
@@ -654,6 +653,14 @@
 @media (max-width: 600px) {
 
   #market-report {
+
+    .executive-generate-wrapper {
+
+      .template-outer-wrapper {
+        justify-content: center;
+      }
+
+    }
 
     .exploration-wrapper {
 
