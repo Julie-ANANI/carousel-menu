@@ -42,6 +42,10 @@ export interface Innovation {
   readonly launched?: Date;
   readonly created?: Date;
   readonly updated?: Date;
+  ownerConsent?: {
+    value?: boolean,
+    date?: Date
+  },
   executiveReport?: {
     totalSections?: number,
     goal?: string,

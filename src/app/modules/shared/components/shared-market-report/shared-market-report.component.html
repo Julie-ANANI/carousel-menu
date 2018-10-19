@@ -158,7 +158,7 @@
 
 
       <!-- Menu button -->
-      <div class="menu-wrapper s-menuButton-print gtm-synthesis-menu" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
+      <div class="menu-wrapper menu-button-print gtm-synthesis-menu" [ngStyle]="{ 'display': menuButton ? 'block' : 'none' }">
         <div
           class="menu-item-wrapper"
           [ngStyle]="{ 'display': displayMenuWrapper ? 'block' : 'none' }"
@@ -221,9 +221,9 @@
 
 
         <!-- Main page -->
-        <section *ngIf="showDetails" class="section-container front-wrapper s-frontPage-print" id="main-page">
+        <section *ngIf="showDetails" class="section-container front-wrapper" id="main-page">
           <div class="column col-xs-12 col-11 col-mx-auto">
-            <div class="section-inline-container white-background">
+            <div class="section-inline-container white-background front-page-print">
 
               <!-- Logo -->
               <div class="header-wrapper">
@@ -320,7 +320,7 @@
               <div class="text-center">
                 <button
                   class="btn ghost-primary"
-                  [disabled]="innovation?.executiveReport.totalSections > 0 || innovation?.status === 'DONE'"
+                  [disabled]="innovation?.executiveReport.totalSections > 0"
                   (click)="generateExecutiveTemplate($event)">
                   {{ 'MARKET_REPORT.EXECUTIVE.VALID_BUTTON' | translate }}
                 </button>
@@ -343,8 +343,7 @@
         <section *ngIf="innovation.executiveReport.totalSections > 0 && adminSide" class="text-center" [ngStyle]="{ 'padding-top': '1.57rem', 'padding-bottom': '1.57rem' }">
           <button
             class="btn ghost-delete"
-            (click)="deleteExecutiveTemplate($event)"
-            [disabled]="innovation?.status === 'DONE'">
+            (click)="deleteExecutiveTemplate($event)">
             {{ 'MARKET_REPORT.EXECUTIVE.DELETE_BUTTON' | translate }}
           </button>
         </section>

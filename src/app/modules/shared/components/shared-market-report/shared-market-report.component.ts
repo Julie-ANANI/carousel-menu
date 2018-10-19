@@ -497,7 +497,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * @param {Event} event
    */
   update(event: Event) {
-    if (this.innovation.status !== 'DONE') {
+    if (this.innovation.status) {
      this.innovationCommonService.saveInnovation(this.innovation);
     }
   }
