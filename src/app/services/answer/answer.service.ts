@@ -71,8 +71,8 @@ export class AnswerService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public exportAsCsv(campaignId: string): void {
-    const url = environment.apiUrl + '/campaign/' + campaignId + '/exportAnswers';
+  public exportAsCsv(campaignId: string, client: Boolean): void {
+    const url = environment.apiUrl + '/campaign/' + campaignId + '/exportAnswers' + (client ? '?client=true' : '');
     window.open(url);
   }
 
