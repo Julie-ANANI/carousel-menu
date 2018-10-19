@@ -1,12 +1,12 @@
-<section class="question-section-wrapper s-question-print" [id]=domSectionId>
+<section class="question-section-wrapper s-question-print" [id]="questionReceived.identifier | removespaces">
 
   <!-- If the question type is checkbox or radio -->
-  <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
+  <ng-container *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'">
     <app-bar-chart
       [answers]="answersToShow"
       [tags]="tags"
       [innovation]="innovation"
-      [question]="question"
+      [question]="questionReceived"
       [readonly]="readonly"
       [stats]="stats"
       [showDetails]="showDetails"
@@ -16,28 +16,59 @@
   </ng-container>
 
   <!-- If the question type is not checkbox and radio -->
-  <ng-container *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'">
+  <ng-container *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'">
     <div class="header">
       <div class="section-inline-container">
 
-        <div *ngFor="let tag of tags" class="tags-wrapper"
-             (click)="addTagFilter($event, tag)">
-          #{{ tag.label | multiling:lang }}
-          <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
+        <!-- Tags -->
+        <div *ngIf="tags" class="tags">
+          <div *ngFor="let tag of tags" class="tags-wrapper" (click)="addTagFilter($event, tag)">
+            #{{ tag.label | multiling:lang }}
+            <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
+          </div>
         </div>
+        <!-- /Tags -->
 
         <app-question-conclusion
           [innovation]="innovation"
-          [question]="question"
+          [question]="questionReceived"
           [readonly]="readonly"
           [stats]="stats">
         </app-question-conclusion>
+
+        <!-- Abstract -->
+        <form novalidate [formGroup]="formQuestionSection">
+          <div *ngIf="adminSide" class="abstract-wrapper">
+            <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE.ABSTRACT' | translate }}</h1>
+            <div class="form-group">
+              <label class="form-label" [for]="'market-report-' + questionReceived._id">
+                <textarea
+                  class="form-default"
+                  [id]="'market-report-' + questionReceived._id"
+                  [attr.placeholder]="'MARKET_REPORT.EXECUTIVE_PLACEHOLDER.SECTION' | translate"
+                  [formControlName]="questionReceived._id"
+                  rows="5"
+                  (blur)="saveAbstract($event, questionReceived._id)"
+                  maxlength="160">
+                </textarea>
+              </label>
+              <div class="charRemaining">
+                <span
+                  [ngStyle]="{ 'color': getColor((formQuestionSection.get(questionReceived._id).value.length | characterCountdown:160), 160) }">
+                  {{ formQuestionSection.get(questionReceived._id).value.length | characterCountdown:160 }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- /Abstract -->
+
       </div>
     </div>
   </ng-container>
 
   <!-- If the question type is list or clearbit -->
-  <ng-container *ngIf="question.controlType === 'list' || question.controlType === 'clearbit'">
+  <ng-container *ngIf="questionReceived.controlType === 'list' || questionReceived.controlType === 'clearbit'">
 
     <!-- Answer button -->
     <div class="answer-button-wrapper">
@@ -58,7 +89,7 @@
           <div *ngFor="let answer of answersWithComment" class="clco-wrapper">
             <app-market-comment-2
               [answer]="answer"
-              [questionId]="question.identifier+'Comment'"
+              [questionId]="questionReceived.identifier+'Comment'"
               (modalAnswerChange)="seeAnswer($event)">
             </app-market-comment-2>
           </div>
@@ -68,7 +99,7 @@
           <app-item-list
             [answers]="answersToShow"
             [innovation]="innovation"
-            [question]="question"
+            [question]="questionReceived"
             [readonly]="readonly"
             [stats]="stats"
             (updateNumberOfItems)="updateNumberOfItems($event)"
@@ -82,8 +113,8 @@
   </ng-container>
 
   <!-- Showing answers if the question type is not clearbit, radio, checkbox and list -->
-  <ng-container *ngIf="question.controlType !== 'checkbox' && question.controlType !== 'radio'
-  && question.controlType !== 'list' && question.controlType !== 'clearbit'">
+  <ng-container *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'
+  && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'">
 
     <!-- Answer button -->
     <div class="answer-button-wrapper">
@@ -100,21 +131,28 @@
     <ng-container *ngIf="showDetails">
 
       <!-- Star -->
-      <div *ngIf="question.controlType === 'stars'" class="star-answer-wrapper">
-        <app-stars [answers]="answersToShow" [innovation]="innovation" [question]="question"></app-stars>
+      <div *ngIf="questionReceived.controlType === 'stars'" class="star-answer-wrapper">
+        <app-stars
+          [answers]="answersToShow"
+          [innovation]="innovation"
+          [question]="questionReceived">
+        </app-stars>
       </div>
 
       <!-- Rating -->
-      <div *ngIf="question.controlType === 'scale'" class="rating-answer-wrapper">
-        <app-scale [answers]="answersToShow" [question]="question"></app-scale>
+      <div *ngIf="questionReceived.controlType === 'scale'" class="rating-answer-wrapper">
+        <app-scale
+          [answers]="answersToShow"
+          [question]="questionReceived">
+        </app-scale>
       </div>
 
       <!-- Textarea or textbox-->
-      <div *ngIf="question.controlType === 'textarea' || question.controlType === 'textbox'" class="textarea-answer-wrapper">
+      <div *ngIf="questionReceived.controlType === 'textarea' || questionReceived.controlType === 'textbox'" class="textarea-answer-wrapper">
         <div *ngFor="let answer of answersToShow" class="textarea-answer-outer-wrapper">
           <app-market-comment-2
             [answer]="answer"
-            [questionId]="question.identifier"
+            [questionId]="questionReceived.identifier"
             (modalAnswerChange)="seeAnswer($event)"
             [ngStyle]="{ 'width': '100%' }">
           </app-market-comment-2>
@@ -122,7 +160,7 @@
       </div>
 
       <!-- Toggle -->
-      <div *ngIf="question.controlType === 'toggle'" class="toggle-answer-wrapper">
+      <div *ngIf="questionReceived.controlType === 'toggle'" class="toggle-answer-wrapper">
         <div class="prof-list-wrapper">
           <div *ngFor="let answer of answersToShow" class="profile-wrapper">
             <app-pro-tag
@@ -139,7 +177,7 @@
   </ng-container>
 
   <!-- Comments that are not related to answers like general comments but not for list and clearbit question type -->
-  <ng-container *ngIf="showComment && question.controlType !== 'list' && question.controlType !== 'clearbit'
+  <ng-container *ngIf="showComment && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'
   && answersWithComment.length > 0">
 
     <div class="comment-button-wrapper">
@@ -151,7 +189,7 @@
       <div *ngFor="let answer of answersWithComment" class="comment-outer-wrapper">
         <app-market-comment-2
           [answer]="answer"
-          [questionId]="question.identifier+'Comment'"
+          [questionId]="questionReceived.identifier+'Comment'"
           (modalAnswerChange)="seeAnswer($event)">
         </app-market-comment-2>
       </div>

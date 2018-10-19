@@ -93,7 +93,8 @@ a, a:focus, a:hover, a:active, a.active {
   color: $dark-color;
   border: 1px solid $border-color;
   display: inline-block;
-  width: 273px;
+  max-width: 273px;
+  width: 100%;
   font-size: 1rem;
   text-align: center;
   animation-name: fadeIn;
