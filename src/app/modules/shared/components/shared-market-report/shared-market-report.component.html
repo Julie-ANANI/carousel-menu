@@ -138,14 +138,14 @@
             </button>
             <button
               class="btn btn-primary gtm-print-synthesis"
-              (click)="printSynthesis($event)">
+              (click)="displayModal($event, 'exportInnovation')">
               {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_PRINT' | translate }}
             </button>
             <ng-container *ngIf="adminSide">
               <button
                 class="btn btn-primary"
                 [disabled]="innovation?.status === 'DONE'"
-                (click)="endProjectModal($event)">
+                (click)="displayModal($event, 'endInnovation')">
                 End project
               </button>
             </ng-container>
@@ -333,7 +333,7 @@
 
 
         <!-- Executive report -->
-        <section *ngIf="innovation.executiveReport.totalSections > 0" id="executive-report">
+        <section *ngIf="adminSide || (innovation.executiveReport.totalSections > 0 && innovation?.status === 'DONE')" id="executive-report">
           <app-executive-report [project]="innovation"></app-executive-report>
         </section>
         <!-- /Executive report -->
@@ -718,19 +718,29 @@
 
 
 
-<!-- Modal to ask operator to sure about ending the project -->
-<div class="modal" [ngClass]="{'active': projectToBeFinished}">
+<!-- Modal to ask operator to sure about ending the project, and to client to print executive report -->
+<div class="modal" [ngClass]="{ 'active': openModal }">
   <div class="modal-overlay" (click)="closeModal($event)"></div>
   <div class="modal-container">
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
-      <div class="modal-title">{{ 'MARKET_REPORT.MODAL_TITLE' | translate }}</div>
+      <div class="modal-title">
+        <ng-container *ngIf="innovationEndModal">
+          {{ 'MARKET_REPORT.MODAL_TITLE' | translate }}
+        </ng-container>
+      </div>
     </div>
     <div class="modal-body">
-      <div class="content">{{ 'MARKET_REPORT.MODAL_CONTENT' | translate }}</div>
+      <div class="content">
+        <ng-container *ngIf="innovationEndModal">
+          {{ 'MARKET_REPORT.MODAL_CONTENT' | translate }}
+        </ng-container>
+      </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary btn-sm" (click)="endProject($event, 'DONE')">Confirm</button>
+      <ng-container *ngIf="innovationEndModal">
+        <button class="btn btn-primary btn-sm" (click)="endInnovation($event, 'DONE')">Confirm</button>
+      </ng-container>
     </div>
   </div>
 </div>

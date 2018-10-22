@@ -76,7 +76,8 @@ export const MARKET_REPORT = {
     'CONCLUSION': 'Conclusion abstract',
     'ABSTRACT': 'Abstract',
     'NO_TAGS': 'Add the tags for this question',
-    'DELETE_BUTTON': 'Delete Executive Template'
+    'DELETE_BUTTON': 'Delete Executive Template',
+    'MODAL_TITLE': 'Export Board'
   },
 
   'EXECUTIVE_TEMPLATE': {

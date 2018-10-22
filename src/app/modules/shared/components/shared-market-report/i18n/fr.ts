@@ -67,7 +67,8 @@ export const MARKET_REPORT = {
     'DELETE_BUTTON': 'Supprimer le modèle exécutif',
     'CONCLUSION': 'Conclusion résumé',
     'ABSTRACT': 'Abstract',
-    'NO_TAGS': 'Ajouter les tags pour cette question'
+    'NO_TAGS': 'Ajouter les tags pour cette question',
+    'MODAL_TITLE': 'Commission d\'exportation'
   },
 
   'EXECUTIVE_TEMPLATE': {

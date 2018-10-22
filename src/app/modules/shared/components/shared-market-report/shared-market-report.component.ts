@@ -70,7 +70,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _showDetails: boolean;
 
-  private _projectToBeFinished: boolean;
+  openModal = false;
+
+  private _innovationEndModal: boolean;
+
+  innovationExport = false;
 
   today: Number;
 
@@ -92,16 +96,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _showListProfessional = true;
 
+  activeSection: string;
 
+  objectKeys = Object.keys;
 
-  public activeSection: string;
-  // public
-  public objectKeys = Object.keys;
-  public mapInitialConfiguration: {[continent: string]: boolean};
-
-  // modalAnswer : null si le modal est fermé,
-  // égal à la réponse à afficher si le modal est ouvert
-
+  mapInitialConfiguration: {[continent: string]: boolean};
 
   constructor(private translateService: TranslateService,
               private answerService: AnswerService,
@@ -119,7 +118,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     this.filterService.reset();
     this.initializeReport();
     PageScrollConfig.defaultDuration = 800;
-    //
   }
 
 
@@ -351,22 +349,33 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
 
   /***
-   * This function call the confirmation modal to ask for the confirmation to end the project.
-   * @param {Event} event
+   * This function calls the modal.
+   * @param event
+   * @param value
    */
-  endProjectModal(event: Event) {
+  displayModal(event: Event, value: string) {
     event.preventDefault();
-    this._projectToBeFinished = true;
+    this.openModal = true;
+
+    if (value === 'endInnovation') {
+      this._innovationEndModal = true;
+    }
+
+    if (value === 'exportInnovation') {
+      this.innovationExport = true;
+    }
+
   }
 
 
   /***
-   * This function is to close the end project confirmation modal.
+   * This function is to close the modal.
    * @param {Event} event
    */
   closeModal(event: Event) {
     event.preventDefault();
-    this._projectToBeFinished = false;
+    this.openModal = false;
+    this._innovationEndModal = false;
   }
 
 
@@ -375,8 +384,9 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * @param {Event} event
    * @param {"DONE"} status
    */
-  endProject(event: Event, status: 'DONE'): void {
-    this._projectToBeFinished = false;
+  endInnovation(event: Event, status: 'DONE'): void {
+    this._innovationEndModal = false;
+    this.openModal = false;
 
     this.innovationService.updateStatus(this.innovation._id, status).first().subscribe((response) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
@@ -787,8 +797,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this._displayMenuWrapper;
   }
 
-  get projectToBeFinished(): boolean {
-    return this._projectToBeFinished;
+  get innovationEndModal(): boolean {
+    return this._innovationEndModal;
   }
 
   getCompanyName(): string {
