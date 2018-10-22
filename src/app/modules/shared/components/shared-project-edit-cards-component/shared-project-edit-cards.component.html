@@ -422,7 +422,7 @@
                       <div *ngIf="innovationItem.principalMedia?._id !== media._id" class="media">
                         <img
                           *ngIf="media.type === 'PHOTO'"
-                          [src]="'https://res.cloudinary.com/umi/image/upload/' + media.cloudinary.public_id"
+                          [src]="'https://res.cloudinary.com/umi/image/upload/' + (media.cloudinary ? media.cloudinary.public_id : 'app/no-image.png')"
                           [alt]="'COMMON.MEDIA_NOT_AVAILABLE' | translate"
                           height="146" width="220px">
                         <iframe
