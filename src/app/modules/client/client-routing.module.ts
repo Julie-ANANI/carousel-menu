@@ -88,7 +88,7 @@ const clientRoutes: Routes = [
       {
         path: 'discover',
         children: [
-          { path: '', component: ClientDiscoverPageComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+          { path: '', component: ClientDiscoverPageComponent, pathMatch: 'full' },
           { path: ':id/:lang', component: DiscoverDescriptionComponent, pathMatch: 'full'}
         ]
       },
