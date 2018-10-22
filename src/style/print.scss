@@ -141,7 +141,8 @@
     background-color: white !important;
 
     .sticky-wrapper, .menu-button-print, .report-innovation-print, .report-targeting-print, .report-analytics-print, .report-key-learnings-print
-    , .report-professionals-print, .report-map-print, .report-origin-print, .report-other-sections-print, .report-conclusion-print {
+    , .report-professionals-print, .report-map-print, .report-origin-print, .report-other-sections-print, .report-conclusion-print
+    , .msg-wrapper {
       display: none !important;
     }
 
@@ -223,6 +224,7 @@
 
      .page-first, .second-page-wrapper {
        flex-direction: row !important;
+       height: 792px !important;
      }
 
      .page-first {
@@ -303,7 +305,6 @@
 
        .second-page-wrapper {
          min-height: 100% !important;
-         height: 791px !important;
        }
 
      }
