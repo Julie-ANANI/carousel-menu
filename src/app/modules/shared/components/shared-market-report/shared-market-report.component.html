@@ -350,7 +350,7 @@
 
 
         <!-- UMI Intro -->
-        <section *ngIf="showDetails && getDomainName() === 'umi'" class="section-light-container">
+        <section *ngIf="showDetails && getDomainName() === 'umi'" class="section-light-container umi-intro-print">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <img [src]="getIntroSrc()" class="img-responsive">
           </div>
@@ -359,7 +359,7 @@
 
 
         <!-- Innovation detail -->
-        <section *ngIf="showDetails" class="section-light-container s-innovationPage-print">
+        <section *ngIf="showDetails" class="section-light-container report-innovation-print">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="section-inline-container innovation-wrapper white-background">
 
@@ -400,7 +400,7 @@
 
 
         <!-- Innovation targeting -->
-        <section *ngIf="showDetails" class="section-light-container s-targeting-print">
+        <section *ngIf="showDetails" class="section-light-container report-targeting-print">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="section-inline-container targeting-wrapper white-background">
 
@@ -463,7 +463,7 @@
 
 
         <!-- Innovation analytics -->
-        <section *ngIf="showDetails" class="section-light-container s-analytics-print">
+        <section *ngIf="showDetails" class="section-light-container report-analytics-print">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="section-inline-container exploration-wrapper white-background">
 
@@ -558,7 +558,7 @@
 
 
         <!-- Key learning section -->
-        <section *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" class="section-light-container s-keyLearning-print" id="key-learning">
+        <section *ngIf="innovation.marketReport?.keyLearning?.conclusion.length > 0 || adminSide" class="section-light-container report-key-learnings-print" id="key-learning">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="keyLearning-wrapper">
               <div class="section-inline-container">
@@ -578,7 +578,7 @@
 
 
         <!-- Origin Comment and Professional Responses -->
-        <section class="section-light-container s-origin-print" id="professionals">
+        <section class="section-light-container report-origin-print" id="professionals">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="origin-wrapper">
               <div class="section-inline-container">
@@ -621,7 +621,7 @@
 
 
         <!-- Map -->
-        <section class="section-light-container s-map-print">
+        <section class="section-light-container report-map-print">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="map-wrapper">
               <app-worldmap
@@ -639,7 +639,7 @@
 
 
         <!-- Professionals -->
-        <section class="section-light-container s-professional-print">
+        <section class="section-light-container report-professionals-print">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="professional-wrapper">
               <div *ngFor="let answer of filteredAnswers" class="profile">
@@ -662,9 +662,9 @@
 
 
         <!-- Other question and answers -->
-        <div class="column col-xs-12 col-11 col-mx-auto">
+        <div class="column col-xs-12 col-11 col-mx-auto report-other-sections-print">
           <div *ngFor="let question of questions">
-            <div class="section-light-container s-questions-print">
+            <div class="section-light-container">
               <app-question-section
                 [project]="innovation"
                 [question]="question"
@@ -682,7 +682,7 @@
         <!-- Conclusion -->
         <section
           *ngIf="innovation.marketReport?.finalConclusion?.conclusion.length > 0 || adminSide"
-          class="section-light-container s-conclusion-print"
+          class="section-light-container report-conclusion-print"
           id="conclusion">
           <div class="column col-xs-12 col-11 col-mx-auto">
             <div class="conclusion-wrapper">

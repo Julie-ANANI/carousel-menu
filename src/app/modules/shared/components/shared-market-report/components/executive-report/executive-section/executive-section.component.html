@@ -15,7 +15,7 @@
         <div class="menu-item-wrapper">
           <ul>
             <li *ngFor="let option of sectionMenuOptions" (click)="onTitleClicked($event, option)">
-              {{ option?.title | multiling }}
+              {{ option?.title | multiling:lang }}
             </li>
           </ul>
         </div>
@@ -56,6 +56,7 @@
         [innovation]="innovation"
         [question]="questionSelected"
         [executiveReport]="true"
+        class="section-bar-chart-wrapper"
         [stats]="stats">
       </app-bar-chart>
     </ng-container>
@@ -68,7 +69,8 @@
         [answers]="answersToShow"
         [innovation]="innovation"
         [question]="questionSelected"
-        [executiveReport]="true">
+        [executiveReport]="true"
+        class="section-star-wrapper">
       </app-stars>
     </ng-container>
     <!-- /If the question type is star -->

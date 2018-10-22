@@ -101,14 +101,25 @@
 
   .content-wrapper {
     text-align: center;
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+
+  .section-star-wrapper, .section-bar-chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
   }
 
 
   .tag {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
   }
 
   .tag:last-child {

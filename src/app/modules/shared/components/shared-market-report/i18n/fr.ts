@@ -38,7 +38,7 @@ export const MARKET_REPORT = {
     'DETAIL_VIEW': 'Vue détaillée',
     'FILTER': 'Filtres',
     'BUTTON_CSV': 'Exporter CSV',
-    'BUTTON_PRINT': 'Imprimer la synthèse',
+    'BUTTON_PRINT': 'Imprimer l\'executive report',
     'BUTTON_ADMIN': 'Finaliser la synthèse',
     'BUTTON_SHARE': 'Partager la synthèse'
   },
@@ -53,7 +53,7 @@ export const MARKET_REPORT = {
 
   'MESSAGE_SYNTHESIS': 'L\'innovation a été terminée avec succès et la synthèse complète est disponible côté client.',
 
-  'PRINT_DATE': 'Test marché du',
+  'PRINT_DATE': 'Test marché -',
 
   'MODAL_TITLE': 'Comité de confirmation',
 
@@ -78,7 +78,7 @@ export const MARKET_REPORT = {
       'OTHERS': 'autres',
       'MORE': 'Suite...'
     },
-    'CONCLUSION_HEADING': 'Ce que dit le marché…',
+    'CONCLUSION_HEADING': 'Conclusion',
     'UMI_CONTACT': {
       'A': 'Vous souhaitez lancer un test marché ?',
       'B': 'Contactez-nous au'

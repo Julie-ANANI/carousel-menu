@@ -63,7 +63,7 @@
 
         <!-- Tag -->
         <ng-container *ngIf="answer.answer?.tags.length > 0">
-          <div *ngFor="let tag of answer.answer?.tags" class="tag">
+          <div *ngFor="let tag of answer.answer?.tags | slice:0:2" class="tag">
             <span>#{{ tag.label | multiling:lang  }}</span>
           </div>
         </ng-container>

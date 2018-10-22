@@ -24,7 +24,7 @@
     .second-page-wrapper {
       display: flex;
       border-right: 3px;
-      background-color: white;
+      background-image: url("https://res.cloudinary.com/umi/image/upload/v1540200786/app/default-images/sections/bg-1.jpg");
       min-height: 864.67px;
     }
 
@@ -34,6 +34,7 @@
     width: 66.67%;
     display: flex;
     flex-wrap: wrap;
+    background-color: white;
   }
 
   .section-2, .section-4 {

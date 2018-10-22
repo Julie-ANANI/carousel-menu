@@ -45,7 +45,7 @@ export const MARKET_REPORT = {
     'DETAIL_VIEW': 'Detail view',
     'FILTER': 'Filters',
     'BUTTON_CSV': 'Export CSV',
-    'BUTTON_PRINT': 'Print Synthesis',
+    'BUTTON_PRINT': 'Print Executive Report',
     'BUTTON_ADMIN': 'Finalize Synthesis',
     'BUTTON_SHARE': 'Share Synthesis'
   },
@@ -62,7 +62,7 @@ export const MARKET_REPORT = {
 
   'CLIENT_SYNTHESIS_MESSAGE': 'The partial synthesis of your innovation is available.',
 
-  'PRINT_DATE': 'Market test at',
+  'PRINT_DATE': 'Market test -',
 
   'MODAL_TITLE': 'Confirmation Board',
 
@@ -87,7 +87,7 @@ export const MARKET_REPORT = {
       'OTHERS': 'others',
       'MORE': 'More ...'
     },
-    'CONCLUSION_HEADING': 'What the market says ...',
+    'CONCLUSION_HEADING': 'Conclusion',
     'UMI_CONTACT': {
       'A': 'Do you want to launch a market test?',
       'B': 'Contact us'
