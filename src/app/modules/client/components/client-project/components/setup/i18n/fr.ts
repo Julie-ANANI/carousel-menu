@@ -21,8 +21,10 @@ export const SETUP = {
       'B': 'lire',
       'C': 'nos commentaires que nous vous avons envoyés par courrier.'
     },
-    'PREVIEW_MODE': 'La synthèse partielle de votre projet est disponible.',
-    'DONE': 'La synthèse est disponible. Vous ne pouvez plus apporter de modifications à votre projet.'
+    'PREVIEW_MODE': 'La synthèse partielle de votre innovation est disponible.',
+    'PREVIEW_MODE_ADMIN': 'La synthèse partielle de cette innovation est disponible côté client.',
+    'DONE': 'La synthèse est disponible. Vous ne pouvez plus apporter de modifications à votre projet.',
+    'ADMIN_DONE': 'Cette innovation est marquée comme terminée et la synthèse complète est disponible côté client. Vous n\'êtes pas autorisé à apporter d\'autres modifications.'
   },
 
   'PITCH_TAB': 'Description',

@@ -1,5 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+/***
+ * Services
+ */
+import { CommonService } from '../../../../services/common/common.service';
+import { FilterService } from './services/filters.service';
+import { ResponseService } from './services/response.service';
+
+
+/***
+ * Pipes
+ */
+import { RemoveSpacesPipe } from './pipes/RemoveSpaces.pipe';
+import { AnswersLimiterPipe } from './pipes/AnswersLimiter.pipe';
+
+
+
+/***
+ * Modules
+ */
 import { TranslateModule } from '@ngx-translate/core';
 import { ChartsModule } from 'ng2-charts';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
@@ -7,6 +27,16 @@ import { SharedTextZoneModule } from '../shared-text-zone/shared-text-zone.modul
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
+import { RouterModule } from '@angular/router';
+import { ProgressBarModule } from '../../../input/component/progress-bar/progress-bar.module';
+import { InputModule } from '../../../input/input.module';
+import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
+/***
+ * Components
+ */
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { BluesquareComponent } from './components/bluesquare/bluesquare.component';
 import { PiechartComponent } from './components/piechart/piechart.component';
@@ -19,13 +49,14 @@ import { ScaleComponent } from './components/scale/scale.component';
 import { ItemListComponent } from './components/item-list/item-list.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { StarsComponent } from './components/stars/stars.component';
-import { CommonService } from '../../../../services/common/common.service';
-import { InputModule } from '../../../input/input.module';
-import { FilterService } from './services/filters.service';
-import { DataExtractor } from "./services/dataextractor.service";
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
-import { RouterModule } from '@angular/router';
-import { ProgressBarModule } from '../../../input/component/progress-bar/progress-bar.module';
+import { ExecutiveReportComponent } from './components/executive-report/executive-report.component';
+import { ExecutiveConclusionComponent } from './components/executive-report/executive-conclusion/executive-conclusion.component';
+import { ExecutiveProfessionalComponent } from './components/executive-report/executive-professional/executive-professional.component';
+import { ExecutiveSectionComponent } from './components/executive-report/executive-section/executive-section.component';
+
+
+
 
 @NgModule({
   imports: [
@@ -39,12 +70,15 @@ import { ProgressBarModule } from '../../../input/component/progress-bar/progres
     SidebarModule,
     InputModule,
     RouterModule,
-    ProgressBarModule
+    ProgressBarModule,
+    SharedLoaderModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     CommonService,
     FilterService,
-    DataExtractor
+    ResponseService
   ],
   declarations: [
     SharedMarketReportComponent,
@@ -60,6 +94,12 @@ import { ProgressBarModule } from '../../../input/component/progress-bar/progres
     SharedMarketReportPopoverComponent,
     QuestionSectionComponent,
     StarsComponent,
+    ExecutiveReportComponent,
+    ExecutiveConclusionComponent,
+    ExecutiveProfessionalComponent,
+    ExecutiveSectionComponent,
+    RemoveSpacesPipe,
+    AnswersLimiterPipe
   ],
   exports: [
     SharedMarketReportComponent

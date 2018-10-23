@@ -13,13 +13,6 @@
 @import "../node_modules/spectre.css/src/spectre-exp.scss";
 
 /*
-    Print style
- */
-
-@import "style/print";
-
-
-/*
     Color variable file
  */
 
@@ -73,7 +66,11 @@ body {
 @import "style/ng2autocomplete-style";
 
 
+/*
+    Print style
+ */
 
+@import "style/print";
 
 
 

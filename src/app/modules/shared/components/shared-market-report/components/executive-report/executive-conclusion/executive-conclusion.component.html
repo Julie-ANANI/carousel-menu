@@ -1,0 +1,56 @@
+<div id="executive-conclusion-wrapper">
+
+  <!-- First section -->
+  <div class="section-first">
+
+    <!-- Heading -->
+    <h1 class="main-heading">{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.CONCLUSION_HEADING' | translate }}</h1>
+
+    <!-- Operator comment -->
+    <div class="conclusion-text" [innerHtml]="conclusion"></div>
+
+    <!-- Operator contact -->
+    <div *ngIf="operator" class="operator-contact">
+
+      <!-- Name -->
+      <h6 class="name">{{ operator.name }}</h6>
+
+      <!-- Job title -->
+      <h6 class="job">{{ operator.jobTitle }}</h6>
+
+      <!-- Phone number -->
+      <h6 class="phone">{{ operator.phone }}</h6>
+
+      <!-- Email -->
+      <h6 class="text-link"><a [href]="'mailto:' + operator.email">{{ operator.email }}</a></h6>
+
+    </div>
+    <!-- /Operator contact -->
+
+  </div>
+  <!-- /First section -->
+
+  <!-- Second section -->
+  <div class="section-second">
+
+    <!-- Heading -->
+    <h6>{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.UMI_CONTACT.A' | translate }}</h6>
+
+    <!-- Sub heading -->
+    <h6>{{ 'MARKET_REPORT.EXECUTIVE_TEMPLATE.UMI_CONTACT.B' | translate }} <span [ngStyle]="{ 'color': '#FFB300' }">{{ '04 89 85 10 56' }}</span></h6>
+
+    <!-- Logo and Address -->
+    <div class="logo-address">
+      <div class="logo">
+        <img [src]="getLogo()">
+      </div>
+      <div class="address">
+        <p class="text-link"><a href="https://www.umi.us">www.umi.us</a></p>
+        <p>1 place Giovanni da Verrazzano, 69009 Lyon, France</p>
+      </div>
+    </div>
+
+  </div>
+  <!-- /Second section -->
+
+</div>

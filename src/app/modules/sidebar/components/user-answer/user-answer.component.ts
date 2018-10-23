@@ -137,11 +137,7 @@ export class UserAnswerComponent implements OnInit {
     event.preventDefault();
     if (this.editMode) {
       this.modalAnswer.status = status;
-      if (status === 'VALIDATED' || status === 'VALIDATED_NO_MAIL') {
-        this.displayEmail = true;
-      } else {
-        this.displayEmail = false;
-      }
+        this.displayEmail = (status === 'VALIDATED' || status === 'VALIDATED_NO_MAIL');
     } else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.NOT_MODIFIED.USER_ANSWER');
     }
@@ -149,10 +145,11 @@ export class UserAnswerComponent implements OnInit {
   }
 
   sendEmail(event: Event, status: any) {
+    console.log('click');
     if (event.target['checked']) {
       this.updateStatus(event, status);
     } else {
-      this.updateStatus(event, status = 'VALIDATED_NO_MAIL');
+      this.updateStatus(event, 'VALIDATED_NO_MAIL');
     }
   }
 

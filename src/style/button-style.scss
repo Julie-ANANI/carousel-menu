@@ -251,8 +251,8 @@
     Radio button
  */
 .radio-button {
-  width: 1rem;
-  height: 1rem;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   border: 1px solid $border-color;
   text-align: center;
@@ -261,11 +261,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.15s ease-in-out;
 
   span {
     color: $border-color;
-    font-size: 1.2rem;
+    font-size: 20px;
   }
 
 }

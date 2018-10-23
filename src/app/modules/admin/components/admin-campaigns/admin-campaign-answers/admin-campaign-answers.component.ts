@@ -74,7 +74,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   public exportAnswers(event: Event) {
     event.preventDefault();
-    this.answerService.exportAsCsv(this._campaign._id);
+    this.answerService.exportAsCsv(this._campaign._id, false);
   }
 
   public importAnswers(file: File, event: Event) {

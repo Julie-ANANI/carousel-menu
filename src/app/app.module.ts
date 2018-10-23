@@ -38,6 +38,9 @@ import { FrontendService } from './services/frontend/frontend.service';
 import { CurrentRouteService } from './services/frontend/current-route/current-route.service';
 import { ListenerService } from './services/frontend/listener/listener.service';
 import { LocalStorageService } from './services/localStorage/localStorage.service';
+import { CampaignCalculationService } from './services/campaign/campaign-calculation.service';
+import { InnovationCommonService } from './services/innovation/innovation-common.service';
+import { QuizService } from './services/quiz/quiz.service';
 
 // Resolvers
 import { CampaignResolver } from './resolvers/campaign.resolver';
@@ -69,7 +72,6 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
       }
     }),
     Ng2AutoCompleteModule,
-    // Angular2FontawesomeModule,
     CookieModule.forRoot()
   ],
   declarations: [
@@ -108,7 +110,10 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     FrontendService,
     CurrentRouteService,
     ListenerService,
-    LocalStorageService
+    LocalStorageService,
+    CampaignCalculationService,
+    InnovationCommonService,
+    QuizService
   ],
   bootstrap: [AppComponent]
 })

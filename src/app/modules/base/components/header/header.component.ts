@@ -60,10 +60,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
      * this is to listen the click event.
      */
     this.listenerService.getClickEvent().subscribe((event: Event) => {
-      if (event) {
-        if (event.target['id'] !== 'header-signInForm' && event.target['parentNode']['id'] !== 'header-signInForm' && event.target['parentNode']['offsetParent']['id'] !== 'header-signInForm') {
+      if (event && event.target && event.target['id'] !== 'header-signInForm'
+        && event.target['parentNode']['id'] !== 'header-signInForm'
+        && event.target['parentNode']['offsetParent']
+        && event.target['parentNode']['offsetParent']['id'] !== 'header-signInForm') {
           this.displaySignInForm = false;
-        }
       }
     });
 

@@ -3,6 +3,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import * as SessionVerificationController from '@umius/umi-session-verifications';
+import { environment } from '../../environments/environment';
 
 const SessionVerification = new SessionVerificationController();
 
@@ -24,7 +25,10 @@ export class SessionInterceptor implements HttpInterceptor {
   private setAuthorizationHeader(req: HttpRequest<any>): HttpRequest<any> {
     // Make a clone of the request then append the Authorization Header
     SessionVerification.setHeader(req, 'umi-front-application');
-    return req.clone({ withCredentials: true });
+    return req.clone({
+      headers: req.headers.set('instance-domain', environment.domain),
+      withCredentials: true
+    });
   }
 
   // Response Interceptor

@@ -10,6 +10,7 @@ import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
+import { QuizService } from '../../../../services/quiz/quiz.service';
 
 @Component({
   selector: 'app-user-form',
@@ -196,9 +197,12 @@ export class UserFormComponent implements OnInit {
 
   openQuizUri(pro: Professional, event: Event): void {
     event.preventDefault();
-    const baseUri = environment.quizUrl + '/quiz/' + this._campaign.innovation.quizId + '/' + this._campaign._id;
-    const parameters = '?pro=' + pro._id + '&lang=' + this.translateService.currentLang;
-    window.open(baseUri + parameters);
+    const quizUrl = QuizService.getQuizUrl(this._campaign, this.translateService.currentLang, pro._id);
+    window.open(quizUrl);
+  }
+
+  public getQuizUrl(pro: Professional): string {
+    return QuizService.getQuizUrl(this._campaign, this.translateService.currentLang, pro._id);
   }
 
   public startEditInstanceDomain(event: Event): void {
