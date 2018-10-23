@@ -88,7 +88,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * This is to listen the click event on the page.
    */
   @HostListener('mouseup', ['$event'])
-  onMouseUp() {
+  onMouseUp(event: any) {
     this.listenerService.setClickEvent(event);
   }
 
