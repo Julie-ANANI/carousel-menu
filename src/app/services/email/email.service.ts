@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http } from '../http.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class EmailService {
 
-  constructor(private _http: Http) { }
+  constructor(private _http: HttpClient) { }
 
   public stopBatch(batchId: string): Observable<any> {
     return this._http.post( '/mail/queue/' + batchId, {newStatus: 'CANCELED'} );

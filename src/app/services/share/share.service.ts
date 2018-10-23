@@ -4,12 +4,12 @@ import { Innovation } from '../../models/innovation';
 import { InnovCard } from '../../models/innov-card';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
-import { Http } from '../http.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ShareService {
 
-  constructor(private _http: Http) {}
+  constructor(private _http: HttpClient) {}
 
   private _getShareUrl (project: Innovation): string {
     return encodeURIComponent(`${environment.innovationUrl}/projects/${project._id}`);

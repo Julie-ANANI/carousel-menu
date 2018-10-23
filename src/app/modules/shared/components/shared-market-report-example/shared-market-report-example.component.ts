@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Http } from '../../../../services/http.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   templateUrl: 'shared-market-report-example.component.html',
@@ -11,7 +10,7 @@ export class SharedMarketReportExampleComponent implements OnInit {
 
   private _myTemplate = '';
 
-  constructor(private _http: Http) {  }
+  constructor(private _http: HttpClient) {  }
 
   ngOnInit() {
     this._http.get('/sample' ).subscribe((page: any) => {

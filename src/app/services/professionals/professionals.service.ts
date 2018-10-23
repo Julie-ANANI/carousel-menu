@@ -2,14 +2,14 @@
  * Created by bastien on 19/12/2017.
  */
 import { Injectable } from '@angular/core';
-import { Http } from '../http.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Professional } from '../../models/professional';
 
 @Injectable()
 export class ProfessionalsService {
 
-  constructor(private _http: Http) {
+  constructor(private _http: HttpClient) {
   }
 
   public create(professionalArray: Array<Professional>, campaignId: string, innovationId: string): Observable<any> {

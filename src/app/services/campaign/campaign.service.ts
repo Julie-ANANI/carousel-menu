@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Http } from '../http.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Answer } from '../../models/answer';
+import { Batch } from '../../models/batch';
 import { Campaign } from '../../models/campaign';
 import { Professional } from '../../models/professional';
-import {Batch} from '../../models/batch';
 
 @Injectable()
 export class CampaignService {
 
-  constructor(private _http: Http) {}
+  constructor(private _http: HttpClient) {}
 
   public create(campaignObj: Campaign) {
     return this._http.post('/campaign/', campaignObj);
   }
 
   public get(id: string): Observable<Campaign> {
-    return this._http.get('/campaign/' + id);
+    return this._http.get<Campaign>('/campaign/' + id);
   }
 
   public put(campaignObj: Campaign) {
@@ -24,23 +24,27 @@ export class CampaignService {
   }
 
   public getAll(config: any): Observable<Array<Campaign>> {
-    return this._http.get('/campaign/', {params: config});
+    return this._http.get<Array<Campaign>>('/campaign/', {params: config});
   }
 
   public getPros(campaignId: string, config: any): Observable<{result: Array<Professional>, _metadata: any}> {
-    return this._http.get('/campaign/' + campaignId + '/pros', {params: config});
+    return this._http
+      .get<{result: Array<Professional>, _metadata: any}>
+      ('/campaign/' + campaignId + '/pros', {params: config});
   }
 
   public getAnswers(campaignId: string): Observable<{answers: {draftAnswers: Array<Answer>, localAnswers: Array<Answer>}}> {
-    return this._http.get('/campaign/' + campaignId + '/answer');
+    return this._http
+      .get<{answers: {draftAnswers: Array<Answer>, localAnswers: Array<Answer>}}>
+      ('/campaign/' + campaignId + '/answer');
   }
 
-  public remove(campaignId: string): Observable<any> {
+  public remove(campaignId: string) {
     return this._http.delete('/campaign/' + campaignId);
   }
 
   public updateStats(campaignId: string): Observable<any> {
-    return this._http.put(`/campaign/${campaignId}/stats`);
+    return this._http.put(`/campaign/${campaignId}/stats`, {});
   }
 
   public messagesStats(campaignId: string): Observable<any> {
@@ -52,12 +56,12 @@ export class CampaignService {
   }
 
   public AutoBatch(campaignId: string): Observable<any> {
-    return this._http.post(`/campaign/${campaignId}/AutoBatch`);
+    return this._http.post(`/campaign/${campaignId}/AutoBatch`, {});
   }
 
   // DEBUG AUTOBATCH => Creation de pro a la volée
   public creerpro(campaignId: string): Observable<any> {
-    return this._http.post(`/campaign/${campaignId}/creerPro`);
+    return this._http.post(`/campaign/${campaignId}/creerPro`, {});
   }
 
   public startABtesting(campaignId: string,
@@ -74,7 +78,7 @@ export class CampaignService {
 
   // Update A/B test stats. (MailService / No NLP)
   public updateBatchesStats(campaign: string): Observable<any> {
-    return this._http.post(`/campaign/${campaign}/updateBatchesStats`);
+    return this._http.post(`/campaign/${campaign}/updateBatchesStats`, {});
   }
 
   public updateBatch(batch: Batch): Observable<any> {

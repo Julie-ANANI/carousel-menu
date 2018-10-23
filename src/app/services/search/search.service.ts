@@ -2,13 +2,13 @@
  * Created by bastien on 19/12/2017.
  */
 import { Injectable } from '@angular/core';
-import { Http } from '../http.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class SearchService {
 
-  constructor(private _http: Http) {
+  constructor(private _http: HttpClient) {
   }
 
   public search(params: any): Observable<any> {

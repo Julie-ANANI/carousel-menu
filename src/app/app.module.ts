@@ -9,7 +9,6 @@ import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-transla
 import { Observable } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
-// import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
@@ -17,7 +16,6 @@ import { AppComponent } from './app.component';
 import { SharedLoaderModule } from './modules/shared/components/shared-loader/shared-loader.module';
 
 // Services
-import { Http } from './services/http.service';
 import { InnovationService } from './services/innovation/innovation.service';
 import { CampaignService } from './services/campaign/campaign.service';
 import { DashboardService } from './services/dashboard/dashboard.service';
@@ -37,7 +35,6 @@ import { TagsService } from './services/tags/tags.service';
 import { TemplatesService } from './services/templates/templates.service';
 import { TranslationService } from './services/translation/translation.service';
 import { FrontendService } from './services/frontend/frontend.service';
-import { PrintService } from './services/print/print.service';
 import { CurrentRouteService } from './services/frontend/current-route/current-route.service';
 import { ListenerService } from './services/frontend/listener/listener.service';
 import { LocalStorageService } from './services/localStorage/localStorage.service';
@@ -51,6 +48,8 @@ import { SignatureResolver } from './resolvers/signature.resolver';
 import { PresetResolver } from './resolvers/preset.resolver';
 
 // Interceptors
+import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
+import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
 import { SessionInterceptor } from './interceptors/session.interceptor';
 
 @NgModule({
@@ -77,12 +76,9 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     AppComponent,
   ],
   providers: [
-    Http,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: SessionInterceptor,
-      multi: true,
-    },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true, },
+    { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true, },
     Title,
     UserService,
     InnovationService,
@@ -110,7 +106,6 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     TranslationService,
     TagsService,
     FrontendService,
-    PrintService,
     CurrentRouteService,
     ListenerService,
     LocalStorageService

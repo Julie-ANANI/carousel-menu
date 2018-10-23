@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Http } from '../http.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+
+interface AutocompleteObject {_id: string; name: string; domain: string; flag: string}
 
 @Injectable()
 export class AutocompleteService {
 
-  constructor(private _http: Http) { }
+  constructor(private _http: HttpClient) { }
 
-
-  public get(params: {query: string, type: string, tagType?: string}): Observable<{_id: string, name: string, domain: string, flag: string}[]> {
-    return this._http.get('/misc/suggestions', {params: params})
+  public get(params: {query: string, type: string, tagType?: string}): Observable<AutocompleteObject[]> {
+    return this._http.get<AutocompleteObject[]>('/misc/suggestions', {params: params})
     .pipe(
         map((res: any) => res.result),
         catchError((error: Response) => throwError(error.text()))

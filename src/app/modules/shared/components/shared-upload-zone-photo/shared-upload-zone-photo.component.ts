@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FileSystemFileEntry } from 'ngx-file-drop';
-import { Http } from '../../../../services/http.service';
+import { HttpClient } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { environment } from '../../../../../environments/environment';
 
@@ -21,7 +21,7 @@ export class SharedUploadZonePhotoComponent {
   @ViewChild('fileInput') fileInput: any;
 
   constructor(private notificationsService: TranslateNotificationsService,
-              private http: Http) {}
+              private http: HttpClient) {}
 
   public dropped(event: any) {
     if (this.loading === false) {
@@ -47,7 +47,9 @@ export class SharedUploadZonePhotoComponent {
   }
 
   private uploadFile(file: File) {
-    this.http.upload(environment.apiUrl + this.uri, file)
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    this.http.post(environment.apiUrl + this.uri, formData)
       .subscribe((data: any) => {
         // Sanitized logo returned from backend
         this.loading = false;

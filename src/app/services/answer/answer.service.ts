@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http } from '../http.service';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Answer } from '../../models/answer';
 import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AnswerService {
 
-  constructor(private _http: Http) {
+  constructor(private _http: HttpClient) {
   }
 
   public create(answerObj: Answer): Observable<any> {
@@ -16,11 +16,11 @@ export class AnswerService {
   }
 
   public get(id: string): Observable<Answer> {
-    return this._http.get('/answer/' + id);
+    return this._http.get<Answer>('/answer/' + id);
   }
 
   public getAll(config: any): Observable<{result: Array<Answer>, _metadata: any}> {
-    return this._http.get('/answer/', {params: config});
+    return this._http.get<{result: Array<Answer>, _metadata: any}>('/answer/', {params: config});
   }
 
   public remove(answerId: string): Observable<any> {
@@ -50,7 +50,7 @@ export class AnswerService {
   }
 
   public getInnovationValidAnswers(innovationId: string): Observable<{answers: Array<Answer>}> {
-    return this._http.get('/innovation/' + innovationId + '/validAnswers');
+    return this._http.get<{answers: Array<Answer>}>('/innovation/' + innovationId + '/validAnswers');
   }
 
   public exportAsCsv(campaignId: string): void {
@@ -60,12 +60,16 @@ export class AnswerService {
 
   public importFromGmail(file: File): Observable<any> {
     const url = environment.apiUrl + '/innovation/importAnswers';
-    return this._http.upload(url, file);
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this._http.post(url, formData);
   }
 
   public importAsCsv(campaignId: string, file: File): Observable<any> {
     const url = environment.apiUrl + '/campaign/' + campaignId + '/importAnswers';
-    return this._http.upload(url, file);
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this._http.post(url, formData);
   }
 
   public importFromQuiz(answer: any): Observable<any> {

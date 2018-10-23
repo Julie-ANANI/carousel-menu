@@ -1,7 +1,7 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CookieService, CookieOptions } from 'ngx-cookie';
-import { Http } from '../http.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
 import { first, map, catchError } from 'rxjs/operators';
 import { User } from '../../models/user.model';
@@ -28,7 +28,7 @@ export class AuthService {
   private _cookieObserver: any = null;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
-              private _http: Http,
+              private _http: HttpClient,
               private _cookieService: CookieService,
               private _router: Router) {
   /**

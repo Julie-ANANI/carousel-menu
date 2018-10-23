@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http } from '../http.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class PresetService {
 
-  constructor(private _http: Http) {
+  constructor(private _http: HttpClient) {
   }
 
   public create(presetObj: any): Observable<any> {

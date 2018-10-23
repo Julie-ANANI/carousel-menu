@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '../http.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Campaign } from '../../models/campaign';
@@ -12,7 +12,7 @@ import { QuestionReport } from '../../models/market-report';
 @Injectable()
 export class InnovationService {
 
-  constructor(private _http: Http) {
+  constructor(private _http: HttpClient) {
   }
 
   public create(innovationObj: Innovation): Observable<any> {
@@ -24,7 +24,7 @@ export class InnovationService {
   }
 
   public getAll(config: any): Observable<{result: Array<Innovation>, _metadata: any}> {
-    return this._http.get('/innovation/', {params: config});
+    return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/', {params: config});
   }
 
   public createInnovationCard(innovationId: string, innovationCardObj: InnovCard): Observable<any> {
@@ -32,7 +32,7 @@ export class InnovationService {
   }
 
   public campaigns(innovationId: string): Observable<{result: Array<Campaign>}> {
-    return this._http.get('/innovation/' + innovationId + '/campaigns');
+    return this._http.get<{result: Array<Campaign>}>('/innovation/' + innovationId + '/campaigns');
   }
 
   public addNewMediaVideoToInnovationCard(innovationId: string, innovationCardId: string, videoInfos: Video): Observable<any> {
@@ -44,7 +44,7 @@ export class InnovationService {
   }
 
   public setPrincipalMediaOfInnovationCard(innovationId: string, innovationCardId: string, mediaId: string): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/' + mediaId + '/principal');
+    return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/' + mediaId + '/principal', {});
   }
 
   public removeInnovationCard(innovationId: string, innovationCardId: string): Observable<any> {
@@ -52,11 +52,11 @@ export class InnovationService {
   }
 
   public getInnovationCard(innovationCardId: string): Observable<InnovCard> {
-    return this._http.get('/innovation/card/' + innovationCardId);
+    return this._http.get<InnovCard>('/innovation/card/' + innovationCardId);
   }
 
   public getInnovationCardByLanguage(innovationId: string, lang: string): Observable<InnovCard> {
-    return this._http.get('/innovation/' + innovationId + '/card', { params: {lang: lang }});
+    return this._http.get<InnovCard>('/innovation/' + innovationId + '/card', { params: {lang: lang }});
   }
 
   public remove(innovationId: string): Observable<any> {
@@ -80,7 +80,7 @@ export class InnovationService {
   }
 
   public submitProjectToValidation (innovationId: string): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/submit');
+    return this._http.put('/innovation/' + innovationId + '/submit', {});
   }
 
   public sendMailToOwner(innovationId: string, mail: any): Observable<any> {
@@ -88,11 +88,11 @@ export class InnovationService {
   }
 
   public validate(innovationId: string): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/changeStatus?status=EVALUATING');
+    return this._http.put('/innovation/' + innovationId + '/changeStatus?status=EVALUATING', {});
   }
 
   public askRevision(innovationId: string): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/changeStatus?status=EDITING');
+    return this._http.put('/innovation/' + innovationId + '/changeStatus?status=EDITING', {});
   }
 
   public inviteCollaborators(innovationId: string, collaboratorsEmails: string): Observable<any> {
@@ -108,7 +108,7 @@ export class InnovationService {
 
 
   public createQuiz(innovationId: string): Observable<any> {
-    return this._http.post('/innovation/' + innovationId + '/quiz');
+    return this._http.post('/innovation/' + innovationId + '/quiz', {});
   }
 
   /**

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http } from '../http.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Tag } from '../../models/tag';
 
 @Injectable()
 export class TagsService {
 
-  constructor(private _http: Http) {
+  constructor(private _http: HttpClient) {
   }
 
   public create(tagObj: Tag): Observable<any> {
@@ -18,11 +18,11 @@ export class TagsService {
   }
 
   public getAll(config: any): Observable<{result: Array<Tag>, _metadata: any}> {
-    return this._http.get('/tags/entity', {params: config});
+    return this._http.get<{result: Array<Tag>, _metadata: any}>('/tags/entity', {params: config});
   }
 
   public getAttachments(type: string): Observable<{result: Array<any>, _metadata: any}> {
-    return this._http.get('/tags/attachments' + (type ? '?type=' + type : ''));
+    return this._http.get<{result: Array<Tag>, _metadata: any}>('/tags/attachments' + (type ? '?type=' + type : ''));
   }
 
   public remove(tagId: string): Observable<any> {
@@ -38,11 +38,11 @@ export class TagsService {
    */
 
   public getTagsFromPool(innovationId: string): Observable<Array<Tag>> {
-    return this._http.get('/tags/' + innovationId + '/pool');
+    return this._http.get<Array<Tag>>('/tags/' + innovationId + '/pool');
   }
 
   public searchTagInPool(innovationId: string, keyword: string): Observable<Array<Tag>> {
-    return this._http.get('/tags/' + innovationId + '/pool/search', { params: {keyword: keyword }});
+    return this._http.get<Array<Tag>>('/tags/' + innovationId + '/pool/search', { params: {keyword: keyword }});
   }
 
   public addTagToPool(innovationId: string, tagId: string): Observable<any> {
