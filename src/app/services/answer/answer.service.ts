@@ -71,8 +71,13 @@ export class AnswerService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
-  public exportAsCsv(campaignId: string, client: Boolean): void {
+  public exportAsCsvByCampaign(campaignId: string, client: Boolean): void {
     const url = environment.apiUrl + '/campaign/' + campaignId + '/exportAnswers' + (client ? '?client=true' : '');
+    window.open(url);
+  }
+
+  public exportAsCsvByInnovation(innovationId: string, client: Boolean): void {
+    const url = environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (client ? '?client=true' : '');
     window.open(url);
   }
 
