@@ -66,13 +66,13 @@
       <div *ngIf="innovation?.previewMode && innovation?.status !== 'DONE'" class="msg-wrapper">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <div *ngIf="!adminSide" class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE' | translate }}</div>
-          <div *ngIf="adminSide" class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.PREVIEW_MODE_ADMIN' | translate }}</div>
+          <div *ngIf="adminSide" class="content text-center">{{ 'MARKET_REPORT.MESSAGE_ADMIN.PREVIEW_MODE' | translate }}</div>
         </div>
       </div>
 
       <div *ngIf="innovation?.status === 'DONE' && adminSide" class="msg-wrapper">
         <div class="column col-xs-12 col-11 col-mx-auto">
-          <div class="content text-center">{{ 'PROJECT_MODULE.SETUP.MESSAGE.ADMIN_DONE' | translate }}</div>
+          <div class="content text-center">{{ 'MARKET_REPORT.MESSAGE_ADMIN.DONE' | translate }}</div>
         </div>
       </div>
       <!-- /Message -->
@@ -110,7 +110,7 @@
                   [checked]="previewMode || innovation?.status === 'DONE'"
                   [disabled]="innovation?.status === 'DONE'">
                 <i class="form-icon"></i>
-                Make it visible to client
+                {{ 'MARKET_REPORT.STICKY_BAR.CLIENT_VISIBLE' | translate }}
               </label>
             </ng-container>
             <!-- /Admin side -->
@@ -131,16 +131,16 @@
 
           <!-- Buttons -->
           <div class="button-wrapper" [ngStyle]="{ 'display': sharable ? 'none' : 'inline-flex' }">
-            <button
-              class="btn ghost-primary gtm-share-synthesis"
-              (click)="shareSynthesis($event)">
-              {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_SHARE' | translate }}
-            </button>
-            <ng-container *ngIf="!adminSide">
+            <ng-container *ngIf="!adminSide && innovation?.status === 'DONE'">
               <button
-                class="btn btn-primary gtm-print-synthesis"
+                class="btn ghost-primary gtm-share-synthesis"
+                (click)="shareSynthesis($event)">
+                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_SHARE' | translate }}
+              </button>
+              <button
+                class="btn btn-primary gtm-export-synthesis"
                 (click)="displayModal($event, 'exportInnovation')">
-                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_PRINT' | translate }}
+                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_EXPORT' | translate }}
               </button>
             </ng-container>
             <ng-container *ngIf="adminSide">
@@ -148,7 +148,7 @@
                 class="btn btn-primary"
                 [disabled]="innovation?.status === 'DONE'"
                 (click)="displayModal($event, 'endInnovation')">
-                End project
+                {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_END' | translate }}
               </button>
             </ng-container>
           </div>
@@ -322,7 +322,7 @@
               <div class="text-center">
                 <button
                   class="btn ghost-primary"
-                  [disabled]="innovation?.executiveReport.totalSections > 0"
+                  [disabled]="innovation?.executiveReport.totalSections > 0 || innovation?.status === 'DONE'"
                   (click)="generateExecutiveTemplate($event)">
                   {{ 'MARKET_REPORT.EXECUTIVE.VALID_BUTTON' | translate }}
                 </button>
@@ -345,7 +345,8 @@
         <section *ngIf="innovation.executiveReport.totalSections > 0 && adminSide" class="text-center" [ngStyle]="{ 'padding-top': '1.57rem', 'padding-bottom': '1.57rem' }">
           <button
             class="btn ghost-delete"
-            (click)="deleteExecutiveTemplate($event)">
+            (click)="deleteExecutiveTemplate($event)"
+            [disabled]="innovation?.status === 'DONE'">
             {{ 'MARKET_REPORT.EXECUTIVE.DELETE_BUTTON' | translate }}
           </button>
         </section>
@@ -720,33 +721,114 @@
 
 
 
-<!-- Modal to ask operator to sure about ending the project, and to client to print executive report -->
+<!-- Modal to ask operator to sure about ending the project, and to client to print -->
 <div class="modal" [ngClass]="{ 'active': openModal }">
   <div class="modal-overlay" (click)="closeModal($event)"></div>
   <div class="modal-container">
+
+    <!-- Header -->
     <div class="modal-header">
       <button class="btn btn-clear float-right" (click)="closeModal($event)"></button>
       <div class="modal-title">
+
         <ng-container *ngIf="innovationEndModal">
-          {{ 'MARKET_REPORT.MODAL_TITLE' | translate }}
+          {{ 'MARKET_REPORT.MODAL.END_INNOVATION_TITLE' | translate }}
         </ng-container>
+
+        <ng-container *ngIf="innovationExport">
+          {{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_TITLE' | translate }}
+        </ng-container>
+
       </div>
     </div>
+    <!-- /Header -->
+
+    <!-- Body -->
     <div class="modal-body">
       <div class="content">
+
         <ng-container *ngIf="innovationEndModal">
-          {{ 'MARKET_REPORT.MODAL_CONTENT' | translate }}
+          {{ 'MARKET_REPORT.MODAL.END_INNOVATION_CONTENT' | translate }}
         </ng-container>
+
+        <ng-container *ngIf="innovationExport">
+
+          <!-- Export options -->
+          <div class="export-options">
+
+            <!-- Executive report -->
+            <div class="options">
+              <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.B' | translate }}</h5>
+              <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.C' | translate }}</h6>
+              <img src="https://res.cloudinary.com/umi/image/upload/v1540284995/app/default-images/icons/pdf.png">
+              <div
+                class="radio-button"
+                [ngClass]="{ 'active': 'executiveReport' === exportType }"
+                (click)="assignExportType($event, 'executiveReport')">
+                <span>•</span>
+              </div>
+            </div>
+
+          </div>
+          <!-- Export options -->
+
+          <!-- Export consent -->
+          <label class="form-checkbox export" for="market-report-consent">
+            <input
+              type="checkbox"
+              id="market-report-consent"
+              value="true"
+              name="market-report-consent"
+              (change)="toggleConsent($event)"
+              [checked]="innovation.ownerConsent.value">
+            <i class="form-icon"></i><span class="export-consent">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_NOTE' | translate }}</span>
+          </label>
+          <!-- /Export consent -->
+
+        </ng-container>
+
       </div>
     </div>
+    <!-- /Body -->
+
+    <!-- Footer -->
     <div class="modal-footer">
+
       <ng-container *ngIf="innovationEndModal">
-        <button class="btn btn-primary btn-sm" (click)="endInnovation($event, 'DONE')">Confirm</button>
+        <!-- End innovation -->
+        <button
+          class="btn btn-primary btn-sm"
+          (click)="endInnovation($event, 'DONE')">
+          {{ 'MARKET_REPORT.MODAL.BUTTON_CONFIRM' | translate }}
+        </button>
       </ng-container>
+
+      <ng-container *ngIf="innovationExport">
+
+        <!-- Cancel button -->
+        <button
+          class="btn ghost-edit btn-sm export-cancel-button"
+          [ngStyle]="{ 'margin-right': '.6rem' }"
+          (click)="closeModal($event)">
+          {{ 'MARKET_REPORT.MODAL.BUTTON_CANCEL' | translate }}
+        </button>
+
+        <!-- Download button -->
+        <button
+          class="btn ghost-primary btn-sm"
+          [disabled]="exportType === '' || !innovation.ownerConsent.value"
+          (click)="exportInnovation($event)">
+          {{ 'MARKET_REPORT.MODAL.BUTTON_DOWNLOAD' | translate }}
+        </button>
+
+      </ng-container>
+
     </div>
+    <!-- /Footer -->
+
   </div>
 </div>
-
+<!-- /Modal to ask operator to sure about ending the project, and to client to print -->
 
 
 <!-- Insight preview -->

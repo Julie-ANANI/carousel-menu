@@ -61,12 +61,16 @@
     padding: 0;
   }
 
+  .modal, app-header, app-footer {
+    display: none !important;
+  }
+
 
   /* =========================================================================
     Innovation card
     ========================================================================== */
 
-  #setup, .header-project, footer, app-header {
+  #setup, .header-project {
     display: none !important;
   }
 

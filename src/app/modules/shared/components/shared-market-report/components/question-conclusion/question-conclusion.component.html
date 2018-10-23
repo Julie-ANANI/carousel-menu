@@ -5,16 +5,16 @@
     <!-- Conclusion -->
     <div class="umi-synthesis">
 
-      <h1 *ngIf="question.title" class="main-heading">{{ question?.title | multiling:lang }}</h1>
+      <h1 *ngIf="question?.title" class="main-heading">{{ question?.title | multiling:lang }}</h1>
 
-      <h2 *ngIf="question.label" class="section-heading">{{ question?.label | multiling:lang }}</h2>
+      <h2 *ngIf="question?.label" class="section-heading">{{ question?.label | multiling:lang }}</h2>
 
       <p class="op-text">{{ 'COMMON.UMI_WORD' | translate }}</p>
 
       <app-text-zone
         [elementId]="domSectionId"
         [readonly]="readonly"
-        [data]="innovation?.marketReport[question.identifier]?.conclusion"
+        [data]="innovation?.marketReport[question?.identifier]?.conclusion"
         (onTextChange)="keyupHandlerFunction($event)">
       </app-text-zone>
 
