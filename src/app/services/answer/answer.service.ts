@@ -76,9 +76,8 @@ export class AnswerService {
     window.open(url);
   }
 
-  public exportAsCsvByInnovation(innovationId: string, client: Boolean): void {
-    const url = environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (client ? '?client=true' : '');
-    window.open(url);
+  public getExportUrl(innovationId: string, client: Boolean): string {
+    return environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (client ? '?client=true' : '');
   }
 
   public importFromGmail(file: File): Observable<any> {
