@@ -500,9 +500,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * @param {Event} event
    */
   update(event: Event) {
-    if (this._innovation.status !== 'DONE') {
-     this.innovationCommonService.saveInnovation(this._innovation);
-    }
+    this.innovationCommonService.saveInnovation(this._innovation);
   }
 
 
@@ -615,12 +613,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       conclusion: event['content']
     };
 
-    if (this._innovation.status !== 'DONE') {
-      this.innovationService.updateMarketReport(this._innovation._id, objToSave).first().subscribe((response) => {
-        this._innovation.marketReport = response;
-        this.update(event);
-      });
-    }
+    this.innovationService.updateMarketReport(this._innovation._id, objToSave).first().subscribe((response) => {
+      this._innovation.marketReport = response;
+      this.update(event);
+    });
 
   }
 
@@ -704,18 +700,32 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   exportInnovation(event: Event) {
     event.preventDefault();
 
+    this.closeModal(event);
+
     this._innovation.ownerConsent.date = new Date();
 
     this.innovationCommonService.saveInnovation(this._innovation);
 
+    if (this._exportType === 'excel') {
+      this.downloadExcel(event);
+    }
+
     if (this._exportType === 'executiveReport') {
-      this.printSynthesis(event);
+      this.printExecutiveReport(event);
     }
 
     this._exportType = '';
 
-    this.closeModal(event);
+  }
 
+
+  /***
+   * this function will download the excel file.
+   * @param event
+   */
+  private downloadExcel(event: Event) {
+    event.preventDefault();
+    window.open( this.answerService.getExportUrl(this._innovation._id, true));
   }
 
 
@@ -723,7 +733,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This functions is called when the user selects the executive report option.
    * @param {Event} event
    */
-  printSynthesis(event: Event) {
+  private printExecutiveReport(event: Event) {
     event.preventDefault();
     window.print();
   }

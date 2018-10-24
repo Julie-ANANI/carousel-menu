@@ -120,11 +120,9 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
    * @param {Question} option
    */
   onTitleClicked(event: Event, option: Question) {
-    if (this.innovation.status !== 'DONE') {
-      this._innovation.executiveReport.sections[this._sectionNumber] = { quesId: option._id };
-      this.innovationCommonService.saveInnovation(this._innovation);
-      this.getSectionInformation(this._sectionNumber);
-    }
+    this._innovation.executiveReport.sections[this._sectionNumber] = { quesId: option._id };
+    this.innovationCommonService.saveInnovation(this._innovation);
+    this.getSectionInformation(this._sectionNumber);
   }
 
 

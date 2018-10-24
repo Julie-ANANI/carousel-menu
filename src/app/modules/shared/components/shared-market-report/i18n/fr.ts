@@ -18,7 +18,7 @@ export const MARKET_REPORT = {
 
   'MESSAGE_ADMIN': {
     'NOT_SUBMITTED': 'Le client n\'a pas encore soumis le projet. Vous pourrez éditer le rapport de marché après qu\'il aura soumis son projet.',
-    'DONE': 'Ce projet est marqué comme terminé et une synthèse complète est disponible chez le client. Vous n\'êtes pas autorisé à effectuer d\'autres modifications.',
+    'DONE': 'Ce projet est marqué comme terminé et une synthèse complète est disponible chez le client.',
     'PREVIEW_MODE': 'La synthèse partielle de ce projet est disponible chez le client.',
   },
 
@@ -69,9 +69,9 @@ export const MARKET_REPORT = {
     'EXPORT_INNOVATION_CONTENT' : {
       'A': 'Toutes les réponses',
       'EXCEL': 'pour Excel',
-      'B': 'Executive report',
+      'B': 'Executive Report',
       'C': '4 pages',
-      'AROUND': 'environ',
+      'AROUND': 'Environ',
       'PAGES': 'pages'
     },
     'BUTTON_CONFIRM': 'Confirmer',

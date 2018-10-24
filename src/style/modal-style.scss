@@ -46,7 +46,7 @@
     .export-options {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
+      justify-content: space-evenly;
 
       .options {
         display: inline-flex;
@@ -72,16 +72,6 @@
           width: auto;
           height: 66px;
           margin-bottom: .6rem;
-        }
-
-        .radio-button {
-          height: 16px;
-          width: 16px;
-
-          span {
-            font-size: 16px;
-          }
-
         }
 
         .radio-button:hover {
