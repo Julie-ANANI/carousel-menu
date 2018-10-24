@@ -3,7 +3,7 @@
     <form *ngIf="editMode" [formGroup]="tagForm" (ngSubmit)="addTagEmitter($event)">
       <div [ngStyle]="{ 'display': 'flex' }">
         <input
-          ng2-auto-complete
+          auto-complete
           formControlName="tag"
           [source]="tagSuggestions.bind(this)"
           [list-formatter]="autocompleListFormatter"

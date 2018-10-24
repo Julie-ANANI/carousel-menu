@@ -8,7 +8,6 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
@@ -71,7 +70,6 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
         useFactory: (CreateTranslateLoader)
       }
     }),
-    Ng2AutoCompleteModule,
     CookieModule.forRoot()
   ],
   declarations: [

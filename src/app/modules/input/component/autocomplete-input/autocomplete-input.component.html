@@ -3,7 +3,7 @@
 
     <div *ngIf="canEdit" [ngStyle]="{ 'display': 'flex' }">
       <input
-        ng2-auto-complete
+        auto-complete
         formControlName="answer"
         [list-formatter]="autocompleListFormatter"
         [source]="suggestions.bind(this)"
