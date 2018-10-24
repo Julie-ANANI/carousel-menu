@@ -5,7 +5,7 @@
 
 import { Injectable } from '@angular/core';
 import { Innovation } from '../../models/innovation';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { InnovationService } from './innovation.service';
 
 @Injectable()

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, AfterViewInit, HostListener, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, OnInit, Inject, Input, AfterViewInit, HostListener, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, Location } from '@angular/common';
 import { PageScrollConfig } from 'ngx-page-scroll';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,6 +16,7 @@ import { Template } from '../../../sidebar/interfaces/template';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ShareService } from '../../../../services/share/share.service';
 import { Share } from '../../../../models/share';
 import { CampaignCalculationService } from '../../../../services/campaign/campaign-calculation.service';
@@ -100,7 +101,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   // égal à la réponse à afficher si le modal est ouvert
 
 
-  constructor(private translateService: TranslateService,
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object,
+              private translateService: TranslateService,
               private answerService: AnswerService,
               private translateNotificationsService: TranslateNotificationsService,
               private location: Location,
@@ -193,11 +195,13 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * this is when we update the innovation in any sub component,
      * we are listening that update and will update the innovation attribute.
      */
-    this.innovationCommonService.getInnovation().takeUntil(this.ngUnsubscribe).subscribe((response: Innovation) => {
-      if (response) {
-        this.innovation = response;
-      }
-    });
+    this.innovationCommonService.getInnovation()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response: Innovation) => {
+        if (response) {
+          this.innovation = response;
+        }
+      });
 
   }
 
@@ -205,7 +209,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This function is to fetch the answers from the server.
    */
   private getAnswers() {
-    this.answerService.getInnovationValidAnswers(this.innovation._id).first().subscribe((response) => {
+    this.answerService.getInnovationValidAnswers(this.innovation._id).subscribe((response) => {
       this._answers = response.answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
       });
@@ -243,7 +247,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This function is to fetch the campaign from the server.
    */
   private getCampaign() {
-    this.innovationService.campaigns(this.innovation._id).first().subscribe((results) => {
+    this.innovationService.campaigns(this.innovation._id).subscribe((results) => {
       if (results && Array.isArray(results.result)) {
         this._campaignsStats = results.result.reduce(function(acc: any, campaign: Campaign) {
           if (campaign.stats) {
@@ -332,11 +336,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     this._previewMode =  this.innovation.previewMode = event.target['checked'] === true;
 
     if (event.target['checked']) {
-      this.innovationService.save(this.innovation._id, this.innovation).first().subscribe( () => {
+      this.innovationService.save(this.innovation._id, this.innovation).subscribe( () => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
       });
     } else {
-      this.innovationService.save(this.innovation._id, this.innovation).first().subscribe( () => {
+      this.innovationService.save(this.innovation._id, this.innovation).subscribe( () => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
       });
     }
@@ -372,7 +376,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   endProject(event: Event, status: 'DONE'): void {
     this._projectToBeFinished = false;
 
-    this.innovationService.updateStatus(this.innovation._id, status).first().subscribe((response) => {
+    this.innovationService.updateStatus(this.innovation._id, status).subscribe((response) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
       this.innovation = response;
       this.innovationCommonService.setInnovation(this.innovation);
@@ -408,7 +412,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   shareSynthesis(event: Event) {
     event.preventDefault();
 
-    this.shareService.shareSynthesis(this.innovation._id).first().subscribe((response: Share) => {
+    this.shareService.shareSynthesis(this.innovation._id).subscribe((response: Share) => {
       this.openMailTo(response.objectId, response.shareKey);
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -607,7 +611,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     };
 
     if (this.innovation.status !== 'DONE') {
-      this.innovationService.updateMarketReport(this.innovation._id, objToSave).first().subscribe((response) => {
+      this.innovationService.updateMarketReport(this.innovation._id, objToSave).subscribe((response) => {
         this.innovation.marketReport = response;
         this.update(event);
       });
@@ -778,17 +782,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngAfterViewInit() {
-    const wrapper = document.getElementById('answer-wrapper');
-
-    if (wrapper) {
-      const sections = Array.from(
-        wrapper.querySelectorAll('section')
-      );
-      window.onscroll = () => {
-        const scrollPosY = document.body.scrollTop;
-        const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().top);
-        this.activeSection = section ? section.id : '';
-      };
+    if (isPlatformBrowser(this.platformId)) {
+      const wrapper = document.getElementById('answer-wrapper');
+      if (wrapper) {
+        const sections = Array.from(
+          wrapper.querySelectorAll('section')
+        );
+        window.onscroll = () => {
+          const scrollPosY = document.body.scrollTop;
+          const section = sections.find((n) => scrollPosY <= n.getBoundingClientRect().top);
+          this.activeSection = section ? section.id : '';
+        };
+      }
     }
 
   }
