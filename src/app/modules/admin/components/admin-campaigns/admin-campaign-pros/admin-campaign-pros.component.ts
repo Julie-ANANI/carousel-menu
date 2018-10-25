@@ -18,8 +18,10 @@ export class AdminCampaignProsComponent implements OnInit {
     email: '',
     emailConfidence: 100
   };
+  public importProsModal: Boolean = false;
   private _addProModal = false;
   private _campaign: Campaign;
+  private _originCampaign: Array<Campaign> = [];
   private _config: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -58,6 +60,23 @@ export class AdminCampaignProsComponent implements OnInit {
     }
   }
 
+  importPros() {
+    this._professionalsService.importProsFromCampaign(
+      this._originCampaign[0]._id,
+      this._campaign._id,
+      this._originCampaign[0].innovation.toString(),
+      this._campaign.innovation._id
+    ).first().subscribe((answer: any) => {
+      this._originCampaign = [];
+      const message = `${answer.nbProfessionalsMoved} pros ont été importés`;
+      this._notificationsService.success('ERROR.SUCCESS', message);
+    });
+  }
+
+  updateCampaign(event: any) {
+    this._originCampaign = event.value;
+  }
+
   exportPros() {
     const config = {
       professionals: 'all',
@@ -73,9 +92,9 @@ export class AdminCampaignProsComponent implements OnInit {
     });
   }
 
-  set addProModal(value: boolean) { this._addProModal = value; }
   get addProModal(): boolean  { return this._addProModal; }
   set config(value: any) { this._config = value; }
-  get config() { return this._config; }
-  get campaign() { return this._campaign; }
+  get config(): any { return this._config; }
+  get campaign(): Campaign { return this._campaign; }
+  get originCampaign(): Array<Campaign> { return this._originCampaign; }
 }
