@@ -56,7 +56,8 @@ export class ProfessionalsService {
 
   public importProsFromCampaign(oldCampaignId: string, newCampaignId: string, oldInnovationId: string, newInnovationId: string): Observable<any> {
     const config = {
-      professionals: "all"
+      professionals: "all",
+      query: {}
     };
     return this._http.post(`/professional/clone/${oldCampaignId}/${newCampaignId}/${oldInnovationId}/${newInnovationId}`, config)
       .map((res: Response) => res.json())

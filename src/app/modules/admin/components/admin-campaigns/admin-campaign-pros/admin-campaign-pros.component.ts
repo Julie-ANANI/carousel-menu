@@ -67,7 +67,7 @@ export class AdminCampaignProsComponent implements OnInit {
       this._originCampaign[0].innovation.toString(),
       this._campaign.innovation._id
     ).first().subscribe((answer: any) => {
-      this._originCampaign = [];
+      this.importProsModal = false;
       const message = `${answer.nbProfessionalsMoved} pros ont été importés`;
       this._notificationsService.success('ERROR.SUCCESS', message);
     });
