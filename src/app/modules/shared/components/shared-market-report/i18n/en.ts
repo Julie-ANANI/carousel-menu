@@ -20,7 +20,7 @@ export const MARKET_REPORT = {
   'MESSAGE_ADMIN': {
     'NOT_SUBMITTED': 'The client hasn\'t submitted the project yet. You will be able to edit the market report after he submits his project.',
     'PREVIEW_MODE': 'The partial synthesis of this project is available at the client side.',
-    'DONE': 'This project is marked as finished, and full synthesis is available at the client side. You are not allowed to make any further changes.'
+    'DONE': 'This project is marked as finished, and full synthesis is available at the client side.'
   },
 
   'BUTTON': {
@@ -62,11 +62,11 @@ export const MARKET_REPORT = {
     'EXPORT_INNOVATION_TITLE': 'Export Board',
     'EXPORT_INNOVATION_NOTE': 'We remind you that according to the regulation n ° 2016/679, said general regulation on the protection of the data, the personal data contained in the complete summary must not be used outside of your company.',
     'EXPORT_INNOVATION_CONTENT' : {
-      'A': 'All answers',
+      'A': 'All Answers',
       'EXCEL': 'Excel',
-      'B': 'Executive report',
+      'B': 'Executive Report',
       'C': '4 pages',
-      'AROUND': 'around',
+      'AROUND': 'Around',
       'PAGES': 'pages'
     },
     'BUTTON_CONFIRM': 'Confirm',
