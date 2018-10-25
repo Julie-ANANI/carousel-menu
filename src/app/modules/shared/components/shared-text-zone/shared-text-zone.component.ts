@@ -35,7 +35,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   }
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(PLATFORM_ID)) {
+    if (isPlatformBrowser(this.platformId)) {
       tinymce.init({
         selector: '#' + this._htmlId,
         plugins: ['link', 'paste', 'lists', 'advlist'], // Voir .angular-cli.json
@@ -69,7 +69,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
   }
 
   ngOnDestroy() {
-    if (isPlatformBrowser(PLATFORM_ID)) {
+    if (isPlatformBrowser(this.platformId)) {
       tinymce.remove(this.editor);
     }
   }
