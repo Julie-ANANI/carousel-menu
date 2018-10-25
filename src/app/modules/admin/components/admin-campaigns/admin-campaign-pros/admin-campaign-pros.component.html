@@ -1,4 +1,7 @@
 <div class="text-right">
+  <button class="btn btn-primary" (click)="importProsModal = true">
+    Import professionals
+  </button>
   <button class="btn btn-primary" (click)="addPro(true)">
     Add a professional
   </button>
@@ -7,6 +10,32 @@
   </button>
 </div>
 <app-shared-pros-list [config]="config" [campaign]="campaign"></app-shared-pros-list>
+
+<!-- Modal d'import de pros -->
+<div class="modal" [ngClass]="{'active': importProsModal}">
+  <div class="modal-overlay" (click)="importProsModal = false && $event.preventDefault()"></div>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" (click)="importProsModal = false && $event.preventDefault()"></button>
+      <div class="modal-title h5"> Import professionals </div>
+    </div>
+    <div class="modal-body foo">
+      <app-autocomplete-input
+        (update)="updateCampaign($event)"
+        [onlyOne]="true"
+        [config]="{placeholder: 'campagne', initialData: originCampaign, type: 'campaign'}"></app-autocomplete-input>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="importPros()" [disabled]="!originCampaign.length">
+        {{ 'COMMON.ADD' | translate }}
+      </button>
+      <button class="btn btn-link" (click)="importProsModal = false && $event.preventDefault()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
 
 <!-- Modal d'ajout de pro -->
 <div class="modal" [ngClass]="{'active': addProModal}">
