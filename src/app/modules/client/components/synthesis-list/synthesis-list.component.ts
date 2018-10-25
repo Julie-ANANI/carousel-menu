@@ -39,7 +39,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
   }
 
   private getUserReports() {
-    this._subscriptions.push(this.userService.getSharedWithMe(this.config).first().subscribe((reports: any) => {
+    this._subscriptions.push(this.userService.getSharedWithMe(this.config).subscribe((reports: any) => {
       this.getSharedReports(reports.sharedgraph || []);
     }));
   }
