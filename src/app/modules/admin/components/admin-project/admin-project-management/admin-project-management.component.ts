@@ -89,10 +89,8 @@ export class AdminProjectManagementComponent implements OnInit {
   private _modifiedScenarios: Array<EmailScenario> = [];
 
   private _config = {
-    search: {},
-    sort: {
-      created: -1
-    }
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   public formData: FormGroup = this._formBuilder.group({

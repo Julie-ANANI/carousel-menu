@@ -22,12 +22,10 @@ export class AdminTagListComponent implements OnInit {
   total = 0;
 
   private _config = {
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      label: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"label":-1}'
   };
 
   private _paginationConfig: PaginationTemplate = {};

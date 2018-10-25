@@ -13,18 +13,10 @@ export class InnovationsResolver implements Resolve<Array<Innovation>> {
 
   config = {
     fields: 'created innovationCards tags status projectStatus',
-    limit: 0,
-    offset: 0,
-    search: {
-      isPublic: 1,
-      '$or': [
-        {'status': 'EVALUATING'},
-        {'status': 'DONE'}
-      ]
-    },
-    sort: {
-      created: -1
-    }
+    limit: '0',
+    offset: '0',
+    search: '{"isPublic":"1","$or":[{"status":"EVALUATING"},{"status":"DONE"}]}',
+    sort: '{"created":-1}'
   };
 
   innovations: Array<Innovation>;

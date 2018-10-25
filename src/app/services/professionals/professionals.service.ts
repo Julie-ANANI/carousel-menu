@@ -20,7 +20,7 @@ export class ProfessionalsService {
     return this._http.get('/professional/' + id);
   }
 
-  public getAll(config: any): Observable<any> {
+  public getAll(config: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get('/professional/', {params: config});
   }
 

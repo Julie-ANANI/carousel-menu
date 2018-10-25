@@ -15,7 +15,7 @@ export class TemplatesService {
     return this._http.get('/template/' + id);
   }
 
-  public getAll(config: any): Observable<any> {
+  public getAll(config: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get('/template/', {params: config});
   }
 
@@ -35,7 +35,7 @@ export class TemplatesService {
     return this._http.get('/signature/' + id);
   }
 
-  public getAllSignatures(config: any): Observable<any> {
+  public getAllSignatures(config: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get('/signature/', {params: config});
   }
 
@@ -55,7 +55,7 @@ export class TemplatesService {
     return this._http.get('/emailtemplate/' + id);
   }
 
-  public getAllEmails(config: any): Observable<any> {
+  public getAllEmails(config: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get('/emailtemplate/', {params: config});
   }
 

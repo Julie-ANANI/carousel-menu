@@ -23,19 +23,17 @@ export class AdminEmailsLibraryComponent implements OnInit {
   private _total = 0;
   private _tableInfos: Table = null;
   private _config = {
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      id: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"id":-1}'
   };
 
   constructor(private _templatesService: TemplatesService,
               private _notificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
-    this._templatesService.getAllSignatures({limit: 0}).pipe(first()).subscribe((signatures: any) => {
+    this._templatesService.getAllSignatures({limit: '0'}).pipe(first()).subscribe((signatures: any) => {
       this._signatures = signatures.result;
     });
     this.getEmails();

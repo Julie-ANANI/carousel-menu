@@ -10,7 +10,7 @@ export class UserService {
 
   constructor(private _http: HttpClient) {}
 
-  public getMyInnovations(config?: any): Observable<any> {
+  public getMyInnovations(config?: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get('/user/me/innovations', {params: config});
   }
 
@@ -18,7 +18,7 @@ export class UserService {
     return this._http.get(`/user/${userId}/innovations`);
   }
 
-  public getSharedWithMe(config?: any): Observable<any> {
+  public getSharedWithMe(config?: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get('/user/me/sharedwithme', {params: config});
   }
 
@@ -59,7 +59,7 @@ export class UserService {
     return this._http.get('/user/' + userId);
   }
 
-  public getAll(config?: any): Observable<any> {
+  public getAll(config?: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get('/user', {params: config});
   }
 

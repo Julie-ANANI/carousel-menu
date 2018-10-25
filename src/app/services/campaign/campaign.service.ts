@@ -23,11 +23,11 @@ export class CampaignService {
     return this._http.put('/campaign/' + campaignObj._id, campaignObj);
   }
 
-  public getAll(config: any): Observable<Array<Campaign>> {
+  public getAll(config: {[header: string]: string | string[]}): Observable<Array<Campaign>> {
     return this._http.get<Array<Campaign>>('/campaign/', {params: config});
   }
 
-  public getPros(campaignId: string, config: any): Observable<{result: Array<Professional>, _metadata: any}> {
+  public getPros(campaignId: string, config: {[header: string]: string | string[]}): Observable<{result: Array<Professional>, _metadata: any}> {
     return this._http
       .get<{result: Array<Professional>, _metadata: any}>
       ('/campaign/' + campaignId + '/pros', {params: config});

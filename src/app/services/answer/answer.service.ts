@@ -19,7 +19,7 @@ export class AnswerService {
     return this._http.get<Answer>('/answer/' + id);
   }
 
-  public getAll(config: any): Observable<{result: Array<Answer>, _metadata: any}> {
+  public getAll(config: {[header: string]: string | string[]}): Observable<{result: Array<Answer>, _metadata: any}> {
     return this._http.get<{result: Array<Answer>, _metadata: any}>('/answer/', {params: config});
   }
 

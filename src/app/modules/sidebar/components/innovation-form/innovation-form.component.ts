@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Subject} from 'rxjs';
-import { first } from 'rxjs/operators';
 import {Innovation} from '../../../../models/innovation';
 import {InnovationSettings} from '../../../../models/innov-settings';
 import {TemplatesService} from '../../../../services/templates/templates.service';
@@ -122,13 +121,13 @@ export class InnovationFormComponent implements OnInit {
         break;
       } case('send-ending-mail'): {
         this.isMail = true;
-        this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).pipe(first()).subscribe((signatures: any) => {
+        this._templatesService.getAllSignatures({limit: '0', sort: '{"id":-1}'}).subscribe((signatures: any) => {
           this._signatures = signatures.result;
         });
         break;
       } case('status'): {
         this.isStatus = true;
-        this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).pipe(first()).subscribe((signatures: any) => {
+        this._templatesService.getAllSignatures({limit: '0', sort: '{"id":-1}'}).subscribe((signatures: any) => {
           this._signatures = signatures.result;
         });
         break;

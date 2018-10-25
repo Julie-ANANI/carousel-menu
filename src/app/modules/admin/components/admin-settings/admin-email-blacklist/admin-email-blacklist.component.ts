@@ -15,12 +15,10 @@ import {EmailService} from '../../../../../services/email/email.service';
 export class AdminEmailBlacklistComponent implements OnInit {
 
   private _config = {
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   private _emailDataset: {blacklists: Array<any>, _metadata: any};
@@ -113,7 +111,6 @@ export class AdminEmailBlacklistComponent implements OnInit {
   }
 
   public resetSearch() {
-    this._config.search = {};
     this.searchConfiguration = '';
     this.loadEmails(null);
   }

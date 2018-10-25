@@ -18,9 +18,7 @@ export class SearchService {
   public getRequest(requestId: string): Observable<any> {
     const query = {
       path: '/request/' + requestId,
-      params: JSON.stringify({
-        fields: 'status, flag, mailRequest, request, entity, _id, keywords, oldKeywords, country, language, campaign, profiles, automated'
-      })
+      params: '{"fields":"status, flag, mailRequest, request, entity, _id, keywords, oldKeywords, country, language, campaign, profiles, automated"}'
     };
 
     return this._http.get('/search/get', {params: query});
@@ -34,8 +32,8 @@ export class SearchService {
     return this._http.get('/search/cancel', {params: {id: requestId, cancel: JSON.stringify(cancel)}});
   }
 
-  public getPros(config: any, requestId: string): Observable<any> {
-    return this._http.get('/search/queryRessourceAPI/request/' + requestId + '/person', {params:config});
+  public getPros(config: {[header: string]: string | string[]}, requestId: string): Observable<any> {
+    return this._http.get('/search/queryRessourceAPI/request/' + requestId + '/person', {params: config});
   }
 
   public getEmailStats(daysCount: number): Observable<any> {
@@ -50,7 +48,7 @@ export class SearchService {
     return this._http.get('/search/get', {params: {path: '/stats/day'}});
   }
 
-  public getRequests(config: any): Observable<any> {
+  public getRequests(config: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get('/search/queryRessourceAPI/request', {params: config});
   }
 
@@ -58,7 +56,7 @@ export class SearchService {
     return this._http.post('/search/searchMails', config);
   }
 
-  public export(requestId: string, config: any): Observable<any> {
+  public export(requestId: string, config: string): Observable<any> {
     const query = {
       path: '/request/' + requestId + '/export/people',
       data: config

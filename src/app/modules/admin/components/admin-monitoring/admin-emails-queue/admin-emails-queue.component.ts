@@ -21,12 +21,10 @@ export class AdminEmailQueueComponent implements OnInit {
 
   private _config = {
     fields: '',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   private _tableInfos: Table = null;

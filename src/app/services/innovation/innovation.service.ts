@@ -23,8 +23,8 @@ export class InnovationService {
     return this._http.get('/innovation/' + id, {params: config});
   }
 
-  public getAll(config: any): Observable<{result: Array<Innovation>, _metadata: any}> {
-    return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/', {params: config});
+  public getAll(params: {[header: string]: string | string[]}): Observable<{result: Array<Innovation>, _metadata: any}> {
+    return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/', {params: params});
   }
 
   public createInnovationCard(innovationId: string, innovationCardObj: InnovCard): Observable<any> {

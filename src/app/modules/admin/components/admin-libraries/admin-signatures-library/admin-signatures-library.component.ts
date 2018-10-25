@@ -20,12 +20,10 @@ export class AdminSignaturesLibraryComponent implements OnInit {
   private _total = 0;
   private _tableInfos: Table = null;
   private _config = {
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      id: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"id":-1}'
   };
 
   constructor(private _templatesService: TemplatesService,

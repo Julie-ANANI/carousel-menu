@@ -28,12 +28,10 @@ export class AdminUsersComponent implements OnInit {
   private _total = 0;
   private _config = {
     fields: 'id companyName jobTitle created domain location firstName lastName',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   constructor(private _titleService: TranslateTitleService,

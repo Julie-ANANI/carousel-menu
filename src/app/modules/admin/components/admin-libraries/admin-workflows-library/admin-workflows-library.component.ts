@@ -22,13 +22,13 @@ export class AdminWorkflowsLibraryComponent implements OnInit {
 
   ngOnInit() {
     this.getScenarios();
-    this._templatesService.getAllSignatures({limit: 0, sort: {_id: -1}}).pipe(first()).subscribe((signatures: any) => {
+    this._templatesService.getAllSignatures({limit: '0', sort: '{"id":-1}'}).pipe(first()).subscribe((signatures: any) => {
       this._signatures = signatures.result;
     });
   }
 
   public getScenarios() {
-    this._templatesService.getAll({limit: 0, sort: {_id: -1}}).pipe(first()).subscribe((scenarios: any) => {
+    this._templatesService.getAll({limit: '0', sort: '{"id":-1}'}).pipe(first()).subscribe((scenarios: any) => {
       this._scenarios = scenarios.result;
     });
   }

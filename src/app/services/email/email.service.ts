@@ -15,11 +15,11 @@ export class EmailService {
     return this._http.get( '/mail/queue/' + batchId );
   }
 
-  public getQueue(params: any): Observable<any> {
+  public getQueue(params: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get('/mail/queue', {params: params});
   }
 
-  public getBlacklist(config: any): Observable<any> {
+  public getBlacklist(config: {[header: string]: string | string[]}): Observable<any> {
       return this._http.get('/mail/blacklist', {params: config});
   }
 
@@ -31,7 +31,7 @@ export class EmailService {
       return this._http.put('/mail/blacklist/' + entryId, data);
   }
 
-  public getCountries(config: any): Observable<any> {
+  public getCountries(config: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get('/mail/filteredCountries', {params: config});
   }
 

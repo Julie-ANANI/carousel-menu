@@ -23,12 +23,10 @@ export class ProjectsListComponent implements OnInit {
 
   private _config = {
     fields: 'name created updated status collaborators principalMedia',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   private _paginationConfig: PaginationTemplate = {limit: this._config.limit, offset: this._config.offset};

@@ -18,12 +18,10 @@ export class AdminPresetsListComponent implements OnInit {
   private _total: number;
   private _config = {
     fields: '',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   private _paginationConfig: PaginationTemplate = {limit: this._config.limit, offset: this._config.offset};
@@ -47,7 +45,7 @@ export class AdminPresetsListComponent implements OnInit {
 
   configChange(value: any) {
     this._paginationConfig = value;
-    this._config.limit = value.limit
+    this._config.limit = value.limit;
     this._config.offset = value.offset;
     window.scroll(0, 0);
     this.loadPresets(this._config);

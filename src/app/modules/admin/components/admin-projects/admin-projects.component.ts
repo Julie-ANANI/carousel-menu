@@ -20,12 +20,10 @@ export class AdminProjectsComponent implements OnInit {
   private _tableInfos: Table = null;
   private _config = {
     fields: '',
-    limit: 10,
-    offset: 0,
-    search: {},
-    sort: {
-      created: -1
-    }
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created":-1}'
   };
 
   constructor(private _translateService: TranslateService,

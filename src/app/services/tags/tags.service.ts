@@ -17,7 +17,7 @@ export class TagsService {
     return this._http.get('/tags/entity/' + id);
   }
 
-  public getAll(config: any): Observable<{result: Array<Tag>, _metadata: any}> {
+  public getAll(config: {[header: string]: string | string[]}): Observable<{result: Array<Tag>, _metadata: any}> {
     return this._http.get<{result: Array<Tag>, _metadata: any}>('/tags/entity', {params: config});
   }
 

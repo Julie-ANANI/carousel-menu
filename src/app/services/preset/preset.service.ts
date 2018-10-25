@@ -16,7 +16,7 @@ export class PresetService {
     return this._http.get('/preset/' + id);
   }
 
-  public getAll(config: any): Observable<any> {
+  public getAll(config: {[header: string]: string | string[]}): Observable<any> {
     return this._http.get('/preset/', {params: config});
   }
 
