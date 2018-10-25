@@ -1,7 +1,7 @@
 // Modules externes
 import { NgModule, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { BrowserModule, Title } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule, Title } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieModule, CookieService } from 'ngx-cookie';
 import { SimpleNotificationsModule } from 'angular2-notifications';
@@ -59,6 +59,7 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     BrowserModule.withServerTransition({
       appId: 'umi-application-front'
     }),
+    BrowserTransferStateModule,
     HttpClientModule,
     AppRoutingModule,
     SimpleNotificationsModule.forRoot(),

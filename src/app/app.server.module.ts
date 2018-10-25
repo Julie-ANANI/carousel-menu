@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ServerModule } from '@angular/platform-server';
+import { ServerModule, ServerTransferStateModule } from '@angular/platform-server';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
 
@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
   imports: [
     AppModule,
     ServerModule,
+    ServerTransferStateModule,
     ModuleMapLoaderModule
   ],
   providers: [
