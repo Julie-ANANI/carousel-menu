@@ -1,6 +1,6 @@
 export const DISCOVER = {
   'TITLE': 'Discover',
-  'PAGE_DESCRIPTION': 'Discover all the innovations added daily to the platform',
+  'PAGE_DESCRIPTION': 'All projects we help to grow up',
   'CATEGORIES': 'Categories',
   'ELECTRONIC': 'Electronic',
   'AGRICULTURE': 'Agriculture',
@@ -12,7 +12,7 @@ export const DISCOVER = {
   'FROM': 'from',
   'RESULT': 'results',
   'STATUS': 'Status',
-  'SEE_MORE': 'See more',
+  'SEE_MORE': 'See more sectors',
   'COMPLETED': 'Completed',
   'IN_PROGRESS': 'In progress',
   'ADD_FILTERS': 'Add Filters',
@@ -20,5 +20,10 @@ export const DISCOVER = {
   'CANCEL': 'Cancel',
   'CLEAR_ALL': 'Clear All',
   'NO_INNOVATION': 'We are unable to find innovations based on your query.',
-  'STAGE': 'Stage'
+  'STAGE': 'Stage',
+
+  'TAGS': {
+    'HEADING': 'Pick up sector(s) to see projects related'
+  }
+
 };
