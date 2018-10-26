@@ -24,13 +24,13 @@ export class SharedFilterMultiComponent {
 
   // For values linked with config
   filterText(event: any) {
-    this.config.offset = 0;
-    this.config.search = {};
+    this.config.offset = '0';
     const value = event.value;
       if (value === '') {
+        this.config.search = '{}';
         this.configChange.emit(this.config);
       } else {
-        this.config.search[this._currentTextProp._attrs[0]] = value;
+        this.config.search = JSON.stringify({[this._currentTextProp._attrs[0]]: value});
         this.configChange.emit(this.config);
       }
   }

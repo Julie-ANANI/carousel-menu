@@ -39,7 +39,6 @@ export class AdminProjectsComponent implements OnInit {
   loadProjects(config: any): void {
     this._config = config;
     this._innovationService.getAll(this._config)
-      .pipe(first())
       .subscribe((projects: any) => {
         this._projects = projects.result;
         this._total = projects._metadata.totalCount;
@@ -54,7 +53,10 @@ export class AdminProjectsComponent implements OnInit {
           _isShowable: true,
           _columns: [
             {_attrs: ['name'], _name: 'COMMON.PROJECT.TITLE', _type: 'TEXT'},
-            {_attrs: ['owner.firstName', 'owner.lastName'], _name: 'COMMON.PROJECT.OWNER', _type: 'TEXT', _isSortable: false, _isFiltrable: false},
+            {
+              _attrs: ['owner.firstName', 'owner.lastName'], _name: 'COMMON.PROJECT.OWNER',
+              _type: 'TEXT', _isSortable: false, _isFiltrable: false
+            },
             {_attrs: ['domain'], _name: 'COMMON.PROJECT.DOMAIN', _type: 'TEXT'},
             {_attrs: ['created'], _name: 'COMMON.CREATED', _type: 'DATE'},
             {_attrs: ['updated'], _name: 'COMMON.UPDATED', _type: 'DATE'},

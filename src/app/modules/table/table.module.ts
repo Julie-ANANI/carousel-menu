@@ -24,7 +24,6 @@ import { TableComponent } from './components/table.component';
     TranslateModule.forChild(),
     InputModule,
     PaginationModule,
-    TranslateModule.forChild(),
     PipeModule,
     ProgressBarModule
   ],

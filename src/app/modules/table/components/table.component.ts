@@ -132,8 +132,9 @@ export class TableComponent {
    */
   initialiseColumns() {
     this._columns.forEach((value1, index) => {
-      this._columns[index]._isSelected = false,
-        this._columns[index]._isHover = false});
+      this._columns[index]._isSelected = false;
+      this._columns[index]._isHover = false;
+    });
   }
 
   /***
