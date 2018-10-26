@@ -702,7 +702,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
     this.closeModal(event);
 
-    this._innovation.ownerConsent.date = new Date();
+    this._innovation.ownerConsent.date = Date.now();
 
     this.innovationCommonService.saveInnovation(this._innovation);
 
