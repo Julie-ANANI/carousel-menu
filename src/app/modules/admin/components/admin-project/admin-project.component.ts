@@ -3,7 +3,7 @@ import { TranslateTitleService } from '../../../../services/title/title.service'
 import { Innovation } from '../../../../models/innovation';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../services/auth/auth.service';
-import {FrontendService, InnovationMetadataValues} from '../../../../services/frontend/frontend.service';
+import { FrontendService } from '../../../../services/frontend/frontend.service';
 
 @Component({
   selector: 'app-admin-project',
@@ -16,7 +16,6 @@ export class AdminProjectComponent implements OnInit {
   private _project: Innovation;
   private _tabs: Array<string> = ['settings', 'cards', 'answer_tags', 'questionnaire', 'campaigns', 'synthesis' ];
   clientSideUrl: string;
-  innovationPercentages: InnovationMetadataValues = {};
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _titleService: TranslateTitleService,

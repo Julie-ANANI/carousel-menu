@@ -150,12 +150,11 @@ export class AdminProjectManagementComponent implements OnInit {
     });
 
     this._innovationService.campaigns(this._project._id)
-      .pipe(first())
       .subscribe((campaigns: any) => {
           this.currentCampaign = this.getBestCampaign(campaigns.result);
           if (this.currentCampaign !== null) {
             this.calculateClickPercentage();
-            this.updateStats(event, this.currentCampaign);
+            this.updateStats(this.currentCampaign);
             this.generateAvailableScenario();
             this.generateModifiedScenarios();
           }
@@ -175,7 +174,7 @@ export class AdminProjectManagementComponent implements OnInit {
     if (this._project._metadata && this._project._metadata[level][name] !== undefined) {
       this._project._metadata[level][name] = event.currentTarget.checked;
       this._frontendService.calculateInnovationMetadataPercentages(this._project, level);
-      this.save(event, 'Successfully saved.');
+      this.save('Successfully saved.');
     }
   }
 
@@ -272,7 +271,7 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   ownerEditionFinished() {
     this._project.owner = this.owner;
-    this.save(event, 'Le propriétaire à été mis à jour avec succès !');
+    this.save('Le propriétaire à été mis à jour avec succès !');
   }
 
   /***
@@ -281,7 +280,7 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   changeProjectDomain(value: string) {
     this._project.domain = value;
-    this.save(event, 'le domaine a été mis à jour avec succès !');
+    this.save('le domaine a été mis à jour avec succès !');
   }
 
   /***
@@ -291,7 +290,7 @@ export class AdminProjectManagementComponent implements OnInit {
   changeProjectOperator(value: any) {
     this._project.operator = value || null;
     this.operatorId = value || undefined;
-    this.save(event, 'L\'opérateur à été mis à jour avec succès');
+    this.save('L\'opérateur à été mis à jour avec succès');
   }
 
   /***
@@ -300,7 +299,7 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   changeProjectOffer(value: any) {
     this._project.type = value;
-    this.save(event, 'L\'offre à été mise à jour avec succès');
+    this.save('L\'offre à été mise à jour avec succès');
   }
 
   /***
@@ -314,13 +313,13 @@ export class AdminProjectManagementComponent implements OnInit {
       this._innovationService.updatePreset(this._project._id, preset).pipe(first()).subscribe((data: any) => {
         this._activatedRoute.snapshot.parent.data['innovation'] = data;
         this._project = data;
-        this.save(event, 'Le questionnaire a bien été affecté au projet');
+        this.save('Le questionnaire a bien été affecté au projet');
       }, (err: any) => {
         this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err);
       });
     } else {
       this.project.preset = preset;
-      this.save(event, 'Il n\'existe plus de questionnaire correspondant à ce projet');
+      this.save('Il n\'existe plus de questionnaire correspondant à ce projet');
     }
   }
 
@@ -392,7 +391,7 @@ export class AdminProjectManagementComponent implements OnInit {
     this._project = value;
     console.log(this._project);
     this._more = {animate_state: 'inactive', title: this._more.title, type: this._more.type};
-    this.save(event, 'Le projet a bien été mise à jour !');
+    this.save('Le projet a bien été mise à jour !');
     // window.location.reload();
   }
 
@@ -442,7 +441,7 @@ export class AdminProjectManagementComponent implements OnInit {
           this._project.settings.blacklist.emails.push(value.text);
         }
       });
-      this.save(event, 'Les emails / domaines ont bien été blaklistés');
+      this.save('Les emails / domaines ont bien été blaklistés');
       this._more = {animate_state: 'inactive', title: this._more.title};
     }
   }
@@ -468,8 +467,7 @@ export class AdminProjectManagementComponent implements OnInit {
    * @param {Event} event
    * @param {Campaign} campaign
    */
-  public updateStats(event: Event, campaign: Campaign) {
-    event.preventDefault();
+  public updateStats(campaign: Campaign) {
     this._campaignService.updateStats(campaign._id)
       .pipe(first())
       .subscribe((stats: any) => {
@@ -525,11 +523,11 @@ export class AdminProjectManagementComponent implements OnInit {
   addTags(tags: Tag[]) {
     this._project.tags = [];
     tags.forEach(tag => {
-      if (!this._project.tags.find(value => {return value._id === tag._id})) {
+      if (!this._project.tags.find(value => { return value._id === tag._id })) {
         this._project.tags.push(tag);
-      };
+      }
     });
-    this.save(event, 'Les tags ont bien été mis à jour ');
+    this.save('Les tags ont bien été mis à jour ');
     this._more = {animate_state: 'inactive', title: this._more.title};
   }
 
@@ -613,7 +611,7 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   updateDefaultWorkflow(workflowName: string) {
     this.currentCampaign.settings.defaultWorkflow = workflowName;
-    this.saveCampaign(event, 'Le workflow par défaut a bien été mis à jour');
+    this.saveCampaign('Le workflow par défaut a bien été mis à jour');
   }
 
   /// Delivery section
@@ -623,7 +621,7 @@ export class AdminProjectManagementComponent implements OnInit {
    */
   changeExternalDiffusion() {
     this._project.isPublic = !this._project.isPublic;
-    this.save(event, 'La visibilité du projet a été mise à jour !');
+    this.save('La visibilité du projet a été mise à jour !');
   }
 
   /***
@@ -676,14 +674,11 @@ export class AdminProjectManagementComponent implements OnInit {
 
   /***
    * This function is call when the user wants to save the project
-   * @param {Event} event
    * @param {string} notification
    */
-  public save(event: Event, notification: string): void {
-    event.preventDefault();
+  public save(notification: string): void {
     this._innovationService
       .save(this._project._id, this._project)
-      .pipe(first())
       .subscribe((data: any) => {
         this._project = data;
         this.resetData();
@@ -695,12 +690,10 @@ export class AdminProjectManagementComponent implements OnInit {
 
   /***
    * This function is call when the user wants to save a campaign
-   * @param {Event} event
    * @param {string} notification
    */
-  public saveCampaign(event: Event, notification: string): void {
-    event.preventDefault();
-    this._campaignService.put(this.currentCampaign).pipe(first()).subscribe((savedCampaign: any) => {
+  public saveCampaign(notification: string): void {
+    this._campaignService.put(this.currentCampaign).subscribe((savedCampaign: any) => {
       this._notificationsService.success('ERROR.ACCOUNT.UPDATE', notification);
       this.currentCampaign = savedCampaign;
       this.resetData();

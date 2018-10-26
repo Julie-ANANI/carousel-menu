@@ -71,6 +71,12 @@ app.get('*', (req, res) => {
         provide: 'RESPONSE', useValue: (res)
       }
     ]
+  }, (err, html) => {
+    if (err) {
+      // Here we catch the errors and we send back a generic error message.
+      res.send('An error occured.');
+    }
+    res.send(html);
   });
 });
 
