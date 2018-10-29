@@ -8,11 +8,15 @@ export class DiscoverSummaryPipe implements PipeTransform {
 
   transform (value: string, limit: number): string {
 
+    let text = '';
+
     if (value && value.length > limit) {
-      return value.slice(0, limit) + '...';
+      text = value.slice(0, limit) + ' ...';
     } else {
-      return value;
+      text = value;
     }
+
+    return text;
 
   }
 

@@ -5,7 +5,7 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../models/tag';
 import { TranslateService } from '@ngx-translate/core';
-import {MultilingPipe} from '../../../../pipe/pipes/multiling.pipe';
+import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -16,7 +16,7 @@ import {MultilingPipe} from '../../../../pipe/pipes/multiling.pipe';
 export class ClientDiscoverPageComponent implements OnInit {
 
   config = {
-    fields: 'created innovationCards tags status projectStatus',
+    fields: 'created innovationCards tags status projectStatus principalMedia',
     limit: 0,
     offset: 0,
     search: {
@@ -27,13 +27,17 @@ export class ClientDiscoverPageComponent implements OnInit {
     }
   }; // config to get the innovations from the server.
 
-  allInnovations: Array<Innovation> = []; // hold all the innovations that we get from the server.
+  totalInnovations: Array<Innovation> = []; // hold all the innovations that we get from the server.
 
-  totalInnovations: number; // hold the total number of innovations we get from the server.
+  totalResults: number; // hold the total number of innovations we get from the server.
 
   displaySpinner = true; // show the spinner until we are fetching the innovation from the server.
 
   allTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
+
+  filtersApplied: Array<Tag> = []; // hold all the filters that are selected by the user.
+
+  localInnovations: Array<Innovation> = []; // we store the result of the total innovation to do functions on it.
 
   /*private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
 
@@ -105,9 +109,10 @@ export class ClientDiscoverPageComponent implements OnInit {
    */
   private getAllInnovations() {
     this.innovationService.getAll(this.config).first().subscribe((response) => {
-      this.allInnovations = response.result;
-      this.totalInnovations = response._metadata.totalCount;
+      this.totalInnovations = response.result;
+      this.totalResults = response._metadata.totalCount;
       this.getAllTags();
+      this.initialize();
       console.log(response.result);
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
@@ -123,7 +128,7 @@ export class ClientDiscoverPageComponent implements OnInit {
    */
   private getAllTags() {
 
-    this.allInnovations.forEach((innovation) => {
+    this.totalInnovations.forEach((innovation) => {
       const tagIndex = innovation.tags.findIndex((tag) => tag.type === 'SECTOR');
       if (tagIndex !== -1) {
         const tagExistIndex = this.allTags.findIndex((tag) => tag._id === innovation.tags[tagIndex]._id);
@@ -162,6 +167,92 @@ export class ClientDiscoverPageComponent implements OnInit {
     return this.translateService.getBrowserLang() || 'en';
   }
 
+
+  /***
+   * here we are assigning the server results to the local attribute
+   to perform the actions on it.
+   */
+  private initialize() {
+    this.localInnovations = this.totalInnovations;
+  }
+
+
+  /***
+   * this function is to get image src.
+   * @param innovation
+   */
+  getImageSrc(innovation: Innovation): string {
+
+    let src = '';
+    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
+
+    if (innovation.principalMedia && innovation.principalMedia.url) {
+      src = innovation.principalMedia.url;
+    } else if (innovation.innovationCards) {
+      const index = innovation.innovationCards.findIndex((card) => card.lang === this.browserLang());
+      if (index !== -1) {
+        if (innovation.innovationCards[index].principalMedia && innovation.innovationCards[index].principalMedia.url) {
+          src = innovation.innovationCards[index].principalMedia.url;
+        } else {
+          if (innovation.innovationCards[index].media.length > 0) {
+            src = innovation.innovationCards[index].media[0].url;
+          }
+        }
+      }
+    } else {
+      src = defaultSrc;
+    }
+
+    return src;
+
+  }
+
+
+  /***
+   * this function is to return the detail of the innovation card based on the parameter toReturn.
+   * @param toReturn
+   * @param innovation
+   */
+  getInnovationDetail(toReturn: string, innovation: Innovation): string {
+    let value = '';
+    let index = 0;
+
+    if (innovation.innovationCards.length > 2) {
+      const browserLangIndex = innovation.innovationCards.findIndex((card) => card.lang === this.browserLang());
+      if (browserLangIndex !== -1) {
+        index = browserLangIndex;
+      }
+    } else {
+      const indexEn = innovation.innovationCards.findIndex((card) => card.lang === 'en');
+      if (indexEn !== -1) {
+        index = indexEn;
+      } else {
+        index = 0;
+      }
+    }
+
+
+    if (toReturn === 'title') {
+    value = innovation.innovationCards[index].title;
+    }
+
+    if (toReturn === 'summary') {
+      value = innovation.innovationCards[index].summary;
+    }
+
+    return value;
+
+  }
+
+
+  getInnovationTags(innovation: Innovation): Array<Tag> {
+    let tags: Array<Tag>;
+    tags = innovation.tags.filter((items) => {
+      return items.type === 'SECTOR';
+    });
+    return tags;
+  }
+
   /*
     checking do we have any filters and limit in the session storage,
     if yes then assign to the filterApplied attribute.
@@ -178,15 +269,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 */
 
-  /*
-    here we are assigning the server results to the local attribute
-    to perform the actions on it.
 
-  private initialize() {
-    this._localInnovations = this._totalInnovations;
-    this.loadInnovations();
-  }
-*/
 
   /*
   after fetching all the innovations and assigning to local attribute

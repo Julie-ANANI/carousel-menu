@@ -28,7 +28,7 @@
                 [id]="tag._id"
                 [name]="tag.label | multiling:browserLang()"
                 [value]="tag.label | multiling:browserLang()">
-              {{ tag.label | multiling:browserLang() | formattext }}
+              {{ tag?.label | multiling:browserLang() | FormatText }}
             </label>
           </div>
         </div>
@@ -40,11 +40,63 @@
       <!-- /Tags section -->
 
 
-      <!-- Innovation Cards -->
-      <div *ngIf="allInnovations.length > 0" class="section-cards">
+      <!-- Heading section -->
+      <div class="section-heading">
+
+        <!-- heading -->
+        <h1 class="main-heading">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</h1>
+
+        <!-- search -->
+        <div class="search">
+          <app-search-input></app-search-input>
+        </div>
 
       </div>
-      <!-- /Innovation Cards -->
+      <!-- /Heading section -->
+
+
+      <!-- Innovation cards -->
+      <div class="section-cards">
+        <div *ngFor="let innovation of localInnovations" class="card-wrapper">
+          <div class="card-content">
+
+            <!-- img -->
+            <div class="card-img">
+              <img [src]="getImageSrc(innovation)" alt="No media">
+            </div>
+
+            <!-- body -->
+            <div class="card-body">
+
+              <!-- title and tags -->
+              <div class="card-title">
+
+                <!-- title -->
+                <h1 class="main-heading">{{ getInnovationDetail('title', innovation) | DiscoverSummaryPipe:50 }}</h1>
+
+                <!-- tags -->
+                <div class="tags-wrapper">
+                  <div *ngFor="let tag of getInnovationTags(innovation) | slice:0:3" class="tag-content">
+                    #{{ tag?.label | multiling:browserLang() | FormatText }}
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- summary -->
+              <p class="summary-text">{{ getInnovationDetail('summary', innovation) }}</p>
+
+            </div>
+
+            <!-- footer -->
+            <div class="card-footer">
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- /Innovation cards -->
 
 
     </ng-container>
