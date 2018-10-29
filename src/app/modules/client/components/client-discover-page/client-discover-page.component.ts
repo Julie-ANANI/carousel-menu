@@ -38,7 +38,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private _tagLabel: Array<{'label': string, 'id': string}> = []; // to store the label.
 
-  private _endLabelIndex = 8; // to display the number of label item.
+  private _endLabelIndex = 20; // to display the number of label item.
 
   private _applyFilterClicked = false; // to display the spinner when the user is applying the filters.
 
@@ -139,8 +139,8 @@ export class ClientDiscoverPageComponent implements OnInit {
     if (this._filterApplied.length > 0) {
       this._filterInnovations =  [];
 
-      this._filterApplied.forEach(filter=>{
-        switch(filter.type) {
+      this._filterApplied.forEach(filter => {
+        switch (filter.type) {
           case('type'):
             this.filterType(this._localInnovations, filter.value);
             break;
@@ -155,7 +155,7 @@ export class ClientDiscoverPageComponent implements OnInit {
             this.filterLabel(this._localInnovations, filter.id);
             break;
           default:
-            //Do nothing
+            // Do nothing
         }
       });
 
@@ -226,9 +226,9 @@ export class ClientDiscoverPageComponent implements OnInit {
           }
         });
       } else {
-        rawTags.filter(tag=>{
+        rawTags.filter( tag => {
           return tag.type === 'SECTOR';
-        }).forEach(tag=>{
+        }).forEach( tag => {
           if(this._tags.findIndex((item) => item._id === tag._id) === -1) {
             this._tags.push(tag);
           }
@@ -555,8 +555,8 @@ export class ClientDiscoverPageComponent implements OnInit {
     if (value === 'label') {
       if (this._endLabelIndex < this._tagLabel.length) {
         const diff = this._tagLabel.length - this._endLabelIndex;
-        if (diff >= 8) {
-          this._endLabelIndex += 8;
+        if (diff >= 20) {
+          this._endLabelIndex += 20;
         } else {
           this._endLabelIndex += diff;
         }

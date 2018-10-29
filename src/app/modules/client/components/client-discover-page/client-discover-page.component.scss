@@ -2,6 +2,64 @@
 
 #discover-page-wrapper {
 
+  .tags-wrapper {
+    margin-bottom: 5rem;
+
+    .heading {
+      color: $meta-color;
+      font-weight: 600;
+      margin-bottom: .9375rem;
+      font-size: .75rem;
+    }
+
+    .tags-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin: -.6rem -.6rem -.3rem -.6rem;
+
+      .tag-content {
+        display: inline-flex;
+        align-items: center;
+        margin: .6rem .6rem .3rem .6rem;
+
+        label {
+          background-color: $background-color;
+          padding: .3rem 1.375rem;
+          border-radius: 25px;
+          color: white;
+          font-size: .6875rem;
+          font-weight: 600;
+
+          input[type="checkbox" i] {
+            display: none;
+          }
+
+        }
+
+        label:hover {
+          transition: background-color 0.15s ease-in-out;
+          background-color: $primary-color;
+          cursor: pointer;
+        }
+
+        .active {
+          background-color: $primary-color;
+        }
+
+      }
+
+    }
+
+    .text-link {
+      margin-top: 1rem;
+      padding-bottom: 0;
+      font-weight: 600;
+      font-size: .875rem;
+    }
+
+  }
+
   .header-wrapper {
     display: flex;
     justify-content: space-between;

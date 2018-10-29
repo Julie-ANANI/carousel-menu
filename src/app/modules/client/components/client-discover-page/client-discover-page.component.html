@@ -1,6 +1,35 @@
 <section class="section-container"  id="discover-page-wrapper">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
+
+    <!-- Tags section -->
+    <div *ngIf="tagLabel.length > 0" class="tags-wrapper">
+
+      <!-- Heading -->
+      <h1 class="heading">{{ 'DISCOVER.TAGS.HEADING' | translate }}</h1>
+
+      <!-- Tags -->
+      <div class="tags-container">
+        <div *ngFor="let tag of tagLabel | slice:0:endLabelIndex;" class="tag-content">
+          <label [ngClass]=" { 'active': tag.id === filterApplied[0]?.id } ">
+            <input
+              type="checkbox"
+              [id]="tag.id"
+              name="label"
+              [value]="tag.label"
+              (change)="toggleFilter($event)"
+              [checked]="filterChecked(tag.id, 'label')">
+            {{ getLabelName(tag.label) }}
+          </label>
+        </div>
+      </div>
+
+      <!-- More label -->
+      <p *ngIf="tagLabel.length > 20 && tagLabel.length !== endLabelIndex" class="text-link" (click)="changeIndex($event, 'label')">{{ 'DISCOVER.SEE_MORE' | translate }}</p>
+
+    </div>
+    <!-- /Tags section -->
+
     <!-- Heading and Search field -->
     <div class="header-wrapper">
       <h1 class="main-heading">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</h1>
@@ -22,22 +51,22 @@
     <!-- Spinner display is off -->
     <ng-container *ngIf="!displaySpinner">
 
-      <!-- Total number of innovations and filters -->
+<!--       Total number of innovations and filters
       <div [ngClass]="{ 'filter-wrapper': showFilterContainer }">
 
-        <!-- result and add filter button -->
+         result and add filter button
         <div class="total-filter-wrapper" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
 
-          <!-- show results title -->
+           show results title
           <h6 *ngIf="!showFilterContainer"></h6>
           <h6 *ngIf="showFilterContainer">{{ totalResults }} {{ 'DISCOVER.RESULT' | translate }}</h6>
 
-          <!-- add filter button -->
+           add filter button
           <ng-container *ngIf="showFilterContainer === false">
             <button class="btn btn-sm ghost-edit btn-filter" (click)="addFilter($event)"><i class="fas fa-sliders-h"></i>{{ 'DISCOVER.ADD_FILTERS' | translate }}</button>
           </ng-container>
 
-          <!-- cancel and apply filter button -->
+           cancel and apply filter button
           <ng-container *ngIf="showFilterContainer === true">
             <div class="filter-action">
               <button class="btn btn-sm ghost-edit btn-cancel" (click)="cancelFilter($event)">{{ 'DISCOVER.CANCEL' | translate }}</button>
@@ -46,22 +75,22 @@
           </ng-container>
 
         </div>
-        <!-- /result and add filter button -->
+         /result and add filter button
 
-        <!-- Filter applied -->
+         Filter applied
         <div *ngIf="filterApplied.length > 0" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
           <ul *ngFor="let item of filterApplied" class="filter-applied-wrapper">
             <li (click)="removeFilter(item.value)">{{ getFilterName(item) }}<i class="fas fa-times"></i></li>
           </ul>
           <span *ngIf="filterApplied.length > 1" class="clear-filter" (click)="removeAllFilter($event)">{{ 'DISCOVER.CLEAR_ALL' | translate }}</span>
         </div>
-        <!-- /Filter applied -->
+         /Filter applied
 
-        <!-- add filter button is clicked, showing the container -->
+         add filter button is clicked, showing the container
         <div class="column col-xs-12 col-11 col-mx-auto filter-outer" [ngStyle]="{ 'display': showFilterContainer ? 'block' : 'none'}">
           <div class="filter-content">
 
-            <!-- Filter sector
+             Filter sector
             <div class="filter-type">
               <ng-container *ngIf="tags.length > 0">
                 <p>Type</p>
@@ -118,9 +147,9 @@
                   </label>
                 </div>
               </ng-container>
-            </div>-->
+            </div>
 
-            <!-- Filter stage -->
+             Filter stage
             <div class="filter-stage">
               <p>{{ 'DISCOVER.STAGE' | translate }}</p>
               <div class="filter-option">
@@ -164,7 +193,7 @@
               </div>
             </div>
 
-            <!-- Language filter -->
+             Language filter
             <div class="filter-language">
               <p>{{ 'COMMON.LANGUAGE' | translate }}</p>
               <div class="filter-option">
@@ -195,7 +224,7 @@
               </div>
             </div>
 
-            <!-- Filter label -->
+             Filter label
             <div class="filter-label">
               <ng-container *ngIf="tagLabel.length > 0">
                 <p>Label</p>
@@ -218,10 +247,11 @@
 
           </div>
         </div>
-        <!-- /add filter button is clicked, showing the container -->
+         /add filter button is clicked, showing the container
 
       </div>
-      <!-- /Total number of innovations and filters -->
+       /Total number of innovations and filters
+      -->
 
       <!-- Display the spineer when filter is being added or removed -->
       <div *ngIf="addingFilter" class="filter-spinner-wrapper">
