@@ -6,7 +6,7 @@
       <div class="section-inline-container">
 
         <div *ngFor="let tag of tags" class="tags-wrapper"
-             (click)="addTagFilter($event, tag)">
+             [title]="tag.description | multiling:lang" (click)="addTagFilter($event, tag)">
           #{{ tag.label | multiling:lang }}
           <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
         </div>

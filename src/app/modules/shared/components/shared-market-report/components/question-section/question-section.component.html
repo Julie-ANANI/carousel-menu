@@ -22,7 +22,8 @@
 
         <!-- Tags -->
         <div *ngIf="tags" class="tags">
-          <div *ngFor="let tag of tags" class="tags-wrapper" (click)="addTagFilter($event, tag)">
+          <div *ngFor="let tag of tags" class="tags-wrapper"
+               [title]="tag.description | multiling:lang" (click)="addTagFilter($event, tag)">
             #{{ tag.label | multiling:lang }}
             <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
           </div>
