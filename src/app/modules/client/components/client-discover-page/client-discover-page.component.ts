@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
-import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { TranslateService} from '@ngx-translate/core';
 import { Innovation } from '../../../../models/innovation';
-import { InnovCard } from '../../../../models/innov-card';
-import { PaginationTemplate } from '../../../../models/pagination';
+import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Tag } from '../../../../models/tag';
+import { TranslateService } from '@ngx-translate/core';
+import {MultilingPipe} from '../../../../pipe/pipes/multiling.pipe';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -16,7 +15,27 @@ import { Tag } from '../../../../models/tag';
 
 export class ClientDiscoverPageComponent implements OnInit {
 
-  private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
+  config = {
+    fields: 'created innovationCards tags status projectStatus',
+    limit: 0,
+    offset: 0,
+    search: {
+      isPublic: 1
+    },
+    sort: {
+      created: -1
+    }
+  }; // config to get the innovations from the server.
+
+  allInnovations: Array<Innovation> = []; // hold all the innovations that we get from the server.
+
+  totalInnovations: number; // hold the total number of innovations we get from the server.
+
+  displaySpinner = true; // show the spinner until we are fetching the innovation from the server.
+
+  allTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
+
+  /*private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
 
   private _totalInnovations: Array<Innovation> = []; // to hold the total project result we get from the server.
 
@@ -50,27 +69,22 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private _endInnoIndex: number; // upto which index we have to show the innovation.
 
-  config = {
-    fields: 'created innovationCards tags status projectStatus',
-    limit: 0,
-    offset: 0,
-    search: {
-      isPublic: 1
-    },
-    sort: {
-      created: -1
-    }
-  };
 
-  paginationValue: PaginationTemplate = {}; // to pass the value in the pagination component.
+
+  paginationValue: PaginationTemplate = {}; // to pass the value in the pagination component.*/
 
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
-              private translateService: TranslateService,
-              private translateNotificationsService: TranslateNotificationsService) {}
+              private translateNotificationsService: TranslateNotificationsService,
+              private translateService: TranslateService) {}
 
   ngOnInit() {
-    this.translateTitleService.setTitle('DISCOVER.TITLE');
+    this.translateTitleService.setTitle('DISCOVER.MENU_BAR_TITLE');
+    this.getAllInnovations();
+
+    console.log(this.browserLang());
+
+    /*
 
     this.config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
 
@@ -81,30 +95,77 @@ export class ClientDiscoverPageComponent implements OnInit {
 
     this.getAllInnovations();
 
-    this.storedFilters();
+    this.storedFilters();*/
 
   }
 
 
-  /*
-    based on the config we request to the server and get the results.
+  /***
+   * this function is to get all the innovations from the server.
    */
   private getAllInnovations() {
-    this.innovationService.getAll(this.config).first().subscribe(innovations => {
-      this._displaySpinner = true;
-      this._totalInnovations = innovations.result;
-      this.initialize();
+    this.innovationService.getAll(this.config).first().subscribe((response) => {
+      this.allInnovations = response.result;
+      this.totalInnovations = response._metadata.totalCount;
+      this.getAllTags();
+      console.log(response.result);
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-      this._displaySpinner = false;
+    }, () => {
+      this.displaySpinner = false;
     });
   }
 
 
+  /***
+   * this function searches for the tags of type sector and push them to the attribute
+   * allTags.
+   */
+  private getAllTags() {
+
+    this.allInnovations.forEach((innovation) => {
+      const tagIndex = innovation.tags.findIndex((tag) => tag.type === 'SECTOR');
+      if (tagIndex !== -1) {
+        const tagExistIndex = this.allTags.findIndex((tag) => tag._id === innovation.tags[tagIndex]._id);
+        if (tagExistIndex === -1) {
+          this.allTags.push(innovation.tags[tagIndex]);
+        }
+      }
+    });
+
+    this.sortTags();
+
+  }
+
+
+  private sortTags() {
+    this.allTags = this.allTags.sort((a: Tag, b: Tag) => {
+
+      const labelA = MultilingPipe.prototype.transform(a.label, this.browserLang()).toLowerCase();
+      const labelB =  MultilingPipe.prototype.transform(b.label, this.browserLang()).toLowerCase();
+
+      if ( labelA > labelB) {
+        return 1;
+      }
+
+      if (labelA < labelB) {
+        return -1;
+      }
+
+      return 0
+
+    });
+  }
+
+
+  browserLang(): string {
+    return this.translateService.getBrowserLang() || 'en';
+  }
+
   /*
     checking do we have any filters and limit in the session storage,
     if yes then assign to the filterApplied attribute.
-   */
+
   private storedFilters() {
     const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
 
@@ -115,23 +176,23 @@ export class ClientDiscoverPageComponent implements OnInit {
     }
 
   }
-
+*/
 
   /*
     here we are assigning the server results to the local attribute
     to perform the actions on it.
-   */
+
   private initialize() {
     this._localInnovations = this._totalInnovations;
     this.loadInnovations();
   }
-
+*/
 
   /*
   after fetching all the innovations and assigning to local attribute
   first we check the length of filterApplied then according to that
   we call the respective functions.
- */
+
   private loadInnovations() {
     this._startInnoIndex = 0;
     this._endInnoIndex = parseInt(localStorage.getItem('app-discover-limit'), 10) || 20;
@@ -170,9 +231,9 @@ export class ClientDiscoverPageComponent implements OnInit {
     this._addingFilter = false;
 
   }
+*/
 
-
-  private filterType(innovations: Array<Innovation>, value: string) {
+ /* private filterType(innovations: Array<Innovation>, value: string) {
     this._filterInnovations = innovations.filter((items) => {
       return items.tags.findIndex((tag) => tag.type === value) !== -1;
     });
@@ -183,7 +244,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     this._filterInnovations = innovations.filter((items) => {
       return items.projectStatus === Number(value);
     });
-  }
+  }*/
 
   /*private filterStatus(innovations: Array<Innovation>, value: string) {
     this.filterInnovations = innovations.filter((items) => {
@@ -192,7 +253,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   }*/
 
 
-  private filterLang(innovations: Array<Innovation>, value: string) {
+  /*private filterLang(innovations: Array<Innovation>, value: string) {
     this._filterInnovations = innovations.filter((items) => {
       return items.innovationCards.findIndex((inno) => inno.lang === value) !== -1;
     });
@@ -204,14 +265,14 @@ export class ClientDiscoverPageComponent implements OnInit {
     this._filterInnovations = innovations.filter((items) => {
       return items.tags && items.tags.findIndex((tag) => tag._id === value) !== -1;
     });
-  }
+  }*/
 
 
   /*
     according to the innovations we pass we search for the tags in it
     and assign them to tags attributes. Write now we are showing label
     fo the type SECTOR.
-   */
+
   private populateTags(innovations: Array<Innovation>) {
     this._tags = [];
 
@@ -240,12 +301,12 @@ export class ClientDiscoverPageComponent implements OnInit {
     this.populateLabels();
 
   }
-
+*/
 
   /*
     after getting the value in the tags attributes we search for the labels in it and assign
     it to the tagLabel attribute and we also sort the array alphabetically.
-   */
+
   private populateLabels() {
     this._tagLabel = [];
 
@@ -274,12 +335,12 @@ export class ClientDiscoverPageComponent implements OnInit {
     });
 
   }
-
+ */
 
   /*
     based on the innovations array we pass, we load the innovation
     card.
-   */
+
   private searchInInnovationCards(innovations: Array<Innovation>) {
     this._innovationCards = [];
     this._innovationDetails = [];
@@ -306,12 +367,12 @@ export class ClientDiscoverPageComponent implements OnInit {
     this._totalResults = this._innovationCards.length;
 
   }
-
+ */
 
   /*
   here when the user types in the search field according to that we search for the innovations
   from the total innovation attributes and display it.
-   */
+
   onValueSelected(value: string) {
     if (value === '') {
       this._displaySpinner = true;
@@ -334,22 +395,22 @@ export class ClientDiscoverPageComponent implements OnInit {
     }
 
   }
-
+ */
 
   /*
     showing the filter container.
-   */
+
   addFilter(event: Event) {
     event.preventDefault();
     this._showFilterContainer = true;
     this._applyFilterClicked = false;
   }
-
+*/
 
   /*
  check the value of applyFilterClicked, if false then assign the
  filters that are stored in the sessionStorage.
-*/
+
   cancelFilter(event: Event) {
     event.preventDefault();
 
@@ -362,12 +423,12 @@ export class ClientDiscoverPageComponent implements OnInit {
     this.checkFilterLength();
 
   }
-
+*/
 
   /*
     check the filterApplied length and calls the respective
     function.
-   */
+
   checkFilterLength() {
     if (this._filterApplied.length > 0) {
       this.loadInnovations();
@@ -376,29 +437,29 @@ export class ClientDiscoverPageComponent implements OnInit {
       this.initialize();
     }
   }
-
+*/
 
   /*
     save the applied filters to session storage and close the container.
-   */
+
   applyFilter() {
     this._applyFilterClicked = true;
     this.storeFilters();
     this._showFilterContainer = false;
   }
-
-
-  /*
+*/
+/*
+  /!*
     here we are storing the filter values in the session storage.
-   */
+   *!/
   private storeFilters() {
     sessionStorage.setItem('discover-filters', JSON.stringify(this._filterApplied));
   }
 
 
-  /*
+  /!*
     when the applied filter is clicked to remove it.
-   */
+   *!/
   removeFilter(value: string) {
     this._addingFilter = true;
 
@@ -413,19 +474,19 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  /*
+  /!*
    remove the filter from the filterApplied attribute based on the
    value.
-  */
+  *!/
   filterRemove(value: string) {
     const index = this._filterApplied.findIndex(name => name.id === value);
     this._filterApplied.splice(index, 1);
   }
 
 
-  /*
+  /!*
   when click all link is clicked to remove all the filters.
- */
+ *!/
   removeAllFilter(event: Event) {
     event.preventDefault();
 
@@ -442,10 +503,10 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  /*
+  /!*
   based on the checkbox checked or unchecked we effect the filterApplied attribute,
   and call the related functions.
- */
+ *!/
   toggleFilter(event: Event) {
     this._addingFilter = true;
     this._selectedLang = '';
@@ -461,19 +522,19 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  /*
+  /!*
     checking the filterApplied contains the keys, if yes then
     we make the checkbox ticked.
-   */
+   *!/
   filterChecked(value: string, type: string): boolean {
     const index = this._filterApplied.findIndex((item) => item.id === value && item.type === type);
     return index !== -1;
   }
 
 
-  /*
+  /!*
   we disable the type that are not selected.
-*/
+*!/
   checkDisable(value: string, type: string): boolean {
 
     if (this._filterApplied.length > 0) {
@@ -519,7 +580,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   }
 
-  /*  getStatusName(value: string): string {
+  /!*  getStatusName(value: string): string {
       if (value === 'DONE') {
         if (this.currentLang === 'en') {
           return 'Completed'
@@ -536,7 +597,7 @@ export class ClientDiscoverPageComponent implements OnInit {
         }
       }
 
-    }*/
+    }*!/
 
 
   getLabelName(value: string): string {
@@ -630,10 +691,10 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  /*
+  /!*
     when there is change in the pagination we detect the change and
     call the service with the new limit and offset value.
-   */
+   *!/
   changePagination(paginationValues: PaginationTemplate) {
     window.scroll(0, 0);
 
@@ -659,23 +720,23 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
-  /*
+  /!*
     the current lang of the user.
-   */
+   *!/
   get currentLang(): string {
     return this.translateService.currentLang;
   }
 
-  /*
+  /!*
     the language in which we want to display the innovation card..
-   */
+   *!/
   get innovationsLang(): string {
     return this._selectedLang === '' ? 'en' : this._selectedLang;
   }
 
-  /*
+  /!*
   getting the image src of the innovation.
- */
+ *!/
   getSrc(innovation: InnovCard): string {
     let src = '';
     const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
@@ -764,7 +825,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   get endInnoIndex(): number {
     return this._endInnoIndex;
-  }
+  }*/
 
   /*sortInnovations(innovations: any) {
    this._innovationCards = innovations.sort((a: any, b: any) => {

@@ -1,6 +1,72 @@
 @import '../../../../../style/variables';
 
-#discover-page-wrapper {
+#discover-page {
+  padding-bottom: 0;
+
+
+  .section-tags {
+    display: flex;
+    flex-direction: column;
+
+    .main-heading {
+      color: $meta-color;
+      font-weight: 600;
+      margin-bottom: .9375rem;
+      font-size: .75rem;
+    }
+
+    .tags-wrapper {
+      display: flex;
+      float: left;
+      flex-wrap: wrap;
+      margin: -.6rem -.6rem -.3rem -.6rem;
+
+      .tag-content {
+        display: inline-flex;
+        align-items: center;
+        margin: .6rem .6rem .3rem .6rem;
+
+        label {
+          background-color: $background-color;
+          padding: .3rem 1.375rem;
+          border-radius: 25px;
+          color: white;
+          font-size: .6875rem;
+          font-weight: 600;
+
+          input[type="checkbox" i] {
+            display: none;
+          }
+
+        }
+
+        label:hover {
+          transition: background-color 0.15s ease-in-out;
+          background-color: $primary-color;
+          cursor: pointer;
+        }
+
+        .active {
+          background-color: $primary-color;
+        }
+
+      }
+
+    }
+
+    .text-link {
+      margin-top: .9375rem;
+      padding-bottom: 0;
+      font-weight: 600;
+      font-size: .875rem;
+    }
+
+  }
+
+
+}
+
+/*#discover-page-wrapper {
 
   .tags-wrapper {
     margin-bottom: 5rem;
@@ -315,11 +381,11 @@
   }
 
 
-}
+}*/
 
 /********************************** Media ***************************************/
 
-@media (max-width: 600px) {
+/*@media (max-width: 600px) {
 
   #discover-page-wrapper {
 
@@ -357,4 +423,4 @@
 
   }
 
-}
+}*/
