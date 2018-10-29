@@ -37,7 +37,10 @@
   <app-shared-mail-editor *ngIf="isStatus || isMail"
                           [signatures]="signatures"
                           [emailsObject]="email"
-                          (emailChange)="email = $event">
+                          [inputLanguage]="project.owner.language"
+                          [noLanguage]="true"
+                          (emailChange)="email = $event"
+                          (languageChange)="updateOwnerLanguage($event)">
   </app-shared-mail-editor>
 
   <div *ngIf="isUserSatisfaction" class="form-group-inline-space satisfaction">

@@ -60,7 +60,7 @@ export class UserService {
   }
 
   public updateOther(user: User): Observable<any> {
-    return this._http.put(`/user/${user.id}`, user.toJSON())
+    return this._http.put(`/user/${user.id}`, user)
       .map((res: Response) => res.json())
       .catch((error: Response) => Observable.throw(error.json()));
   }

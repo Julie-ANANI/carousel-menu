@@ -29,6 +29,8 @@ export class InnovationFormComponent implements OnInit {
 
   @Output() projectChange = new EventEmitter<Innovation>();
 
+  @Output() ownerLanguageChange = new EventEmitter<string>();
+
   @Output() sendMail = new EventEmitter<any>();
 
   isPitch = false;
@@ -87,6 +89,10 @@ export class InnovationFormComponent implements OnInit {
       });
     }
 
+  }
+
+  updateOwnerLanguage(value: string) {
+    this.ownerLanguageChange.emit(value);
   }
 
   reinitialiseForm() {
