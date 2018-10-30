@@ -22,12 +22,14 @@
         <!-- tags -->
         <div class="tags-wrapper">
           <div *ngFor="let tag of allTags" class="tag-content">
-            <label>
+            <label [ngClass]=" { 'active': getCheckedFilter(tag._id) } ">
               <input
                 type="checkbox"
                 [id]="tag._id"
                 [name]="tag.label | multiling:browserLang()"
-                [value]="tag.label | multiling:browserLang()">
+                [value]="tag.label | multiling:browserLang()"
+                (change)="toggleFilter($event, tag)"
+                [checked]="getCheckedFilter(tag._id)">
               {{ tag?.label | multiling:browserLang() | FormatText }}
             </label>
           </div>
@@ -75,7 +77,7 @@
 
                 <!-- title -->
                 <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
-                  <h1 class="main-heading">{{ getInnovationDetail('title', innovation) | DiscoverSummaryPipe:50 }}</h1>
+                  <h1 class="main-heading">{{ getInnovationDetail('title', innovation) | DiscoverSummaryPipe:53 }}</h1>
                 </a>
 
                 <!-- tags -->
@@ -94,13 +96,15 @@
 
             <!-- footer -->
             <div class="card-footer">
-              {{ 'DISCOVER.FOOTER_TEXT' | translate }}
-              <div *ngFor="let lang of getLangs(innovation)">
-                <a [routerLink]="[ getInnovationDetail('reference', innovation), lang ]" target="_blank">
-                  <span class="text-link">{{ lang }}</span>
-                </a>
-                <span *ngIf="getLangs(innovation).length > 1">|</span>
-              </div>
+              <ng-container *ngIf="getLangs(innovation).length > 0">
+                {{ 'DISCOVER.FOOTER_TEXT' | translate }}
+                <div *ngFor="let lang of getLangs(innovation)">
+                  <a [routerLink]="[ getInnovationDetail('reference', innovation), lang ]" target="_blank">
+                    <span class="text-link">{{ lang }}</span>
+                  </a>
+                  <span *ngIf="getLangs(innovation).length > 1" class="pipe">|</span>
+                </div>
+              </ng-container>
             </div>
 
           </div>

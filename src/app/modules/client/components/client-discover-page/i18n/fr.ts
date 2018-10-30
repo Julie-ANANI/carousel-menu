@@ -12,7 +12,7 @@ export const DISCOVER = {
 
   'PAGE_DESCRIPTION': 'Tous les projets que nous aidons à grandir',
 
-  'FOOTER_TEXT': 'Disponible en : ',
+  'FOOTER_TEXT': 'Aussi disponible en : ',
 
 
   'CATEGORIES': 'Catégories',

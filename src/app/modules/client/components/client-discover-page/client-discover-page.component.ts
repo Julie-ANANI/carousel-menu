@@ -35,7 +35,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   allTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
 
-  filtersApplied: Array<Tag> = []; // hold all the filters that are selected by the user.
+  appliedFilters: Array<Tag> = []; // hold all the filters that are selected by the user.
 
   localInnovations: Array<Innovation> = []; // we store the result of the total innovation to do functions on it.
 
@@ -87,8 +87,6 @@ export class ClientDiscoverPageComponent implements OnInit {
     this.config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
     this.getAllInnovations();
 
-    console.log(this.browserLang());
-
     /*
 
 
@@ -114,7 +112,6 @@ export class ClientDiscoverPageComponent implements OnInit {
       this.totalResults = response._metadata.totalCount;
       this.getAllTags();
       this.initialize();
-      console.log(response.result);
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }, () => {
@@ -130,14 +127,17 @@ export class ClientDiscoverPageComponent implements OnInit {
   private getAllTags() {
 
     this.totalInnovations.forEach((innovation) => {
-      const tagIndex = innovation.tags.findIndex((tag) => tag.type === 'SECTOR');
-      if (tagIndex !== -1) {
-        const tagExistIndex = this.allTags.findIndex((tag) => tag._id === innovation.tags[tagIndex]._id);
-        if (tagExistIndex === -1) {
-          this.allTags.push(innovation.tags[tagIndex]);
+      innovation.tags.forEach((tag: Tag) => {
+        if (tag.type === 'SECTOR') {
+          const index = this.allTags.findIndex((item: Tag) => item._id === tag._id);
+          if (index === -1) {
+            this.allTags.push(tag);
+          }
         }
-      }
+      });
     });
+
+    console.log(this.allTags);
 
     this.sortTags();
 
@@ -175,6 +175,71 @@ export class ClientDiscoverPageComponent implements OnInit {
    */
   private initialize() {
     this.localInnovations = this.totalInnovations;
+  }
+
+
+  /***
+   * this function is to determine which filter is active or not.
+   * @param id
+   */
+  getCheckedFilter(id: string): boolean {
+    const index = this.appliedFilters.findIndex((item) => item._id === id);
+    return index !== -1;
+  }
+
+
+  /***
+   * based on the filter is checked or unchecked we do the respective functions.
+   * @param event
+   * @param tag
+   */
+  toggleFilter(event: Event, tag: Tag) {
+
+    if (event.target['checked']) {
+      this.appliedFilters.push(tag);
+    } else {
+      this.removeFilter(tag._id);
+    }
+
+    this.applyFilters();
+
+  }
+
+
+  /***
+   * this function is to remove the applied filter from the variable appliedFilter.
+   * @param id
+   */
+  private removeFilter(id: string) {
+    const index = this.appliedFilters.findIndex((tag) => tag._id === id);
+    this.appliedFilters.splice(index, 1);
+  }
+
+
+  private applyFilters() {
+
+    if (this.appliedFilters.length > 0) {
+
+      this.localInnovations = [];
+
+      this.totalInnovations.forEach((innovation: Innovation) => {
+        if (innovation.tags.length > 0) {
+          innovation.tags.forEach((tag: Tag) => {
+            const index = this.appliedFilters.findIndex((filter: Tag) => filter._id === tag._id);
+            if (index !== -1) {
+              const innovationIndex = this.localInnovations.findIndex((inno: Innovation) => inno._id === innovation._id);
+              if (innovationIndex === -1) {
+                this.localInnovations.push(innovation);
+              }
+            }
+          });
+        }
+      });
+
+    } else {
+      this.initialize();
+    }
+
   }
 
 
@@ -280,7 +345,9 @@ export class ClientDiscoverPageComponent implements OnInit {
     const langs: Array<string> = [];
 
     innovation.innovationCards.forEach((card) => {
-      langs.push(card.lang);
+      if (card.lang !== this.browserLang()) {
+        langs.push(card.lang);
+      }
     });
 
     return langs.sort();

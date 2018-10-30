@@ -32,6 +32,7 @@
           border-radius: 25px;
           color: white;
           font-size: .6875rem;
+          transition: background-color 0.15s ease-in-out;
           font-weight: 600;
 
           input[type="checkbox" i] {
@@ -41,8 +42,6 @@
         }
 
         label:hover {
-          transition: background-color 0.15s ease-in-out;
-          background-color: $primary-color;
           cursor: pointer;
         }
 
@@ -115,7 +114,7 @@
           img {
             height: 200px;
             width: 100%;
-            border-radius: 2px;
+            border-radius: 3px;
           }
 
         }
@@ -173,6 +172,14 @@
 
           .text-link {
             margin-left: .35rem;
+          }
+
+        }
+
+        .card-footer div:last-child {
+
+          .pipe {
+            visibility: hidden;
           }
 
         }
