@@ -85,6 +85,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.MENU_BAR_TITLE');
     this.config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
+    this.checkStoredFilters();
     this.getAllInnovations();
 
     /*
@@ -99,6 +100,21 @@ export class ClientDiscoverPageComponent implements OnInit {
     this.getAllInnovations();
 
     this.storedFilters();*/
+
+  }
+
+
+  /***
+   * this function checks do we have any filters stored in session storage.
+   */
+  private checkStoredFilters() {
+    const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
+
+    if (sessionValues.length > 0) {
+      this.appliedFilters = sessionValues;
+    } else {
+      this.appliedFilters = [];
+    }
 
   }
 
@@ -137,8 +153,6 @@ export class ClientDiscoverPageComponent implements OnInit {
       });
     });
 
-    console.log(this.allTags);
-
     this.sortTags();
 
   }
@@ -161,6 +175,7 @@ export class ClientDiscoverPageComponent implements OnInit {
       return 0
 
     });
+
   }
 
 
@@ -170,11 +185,15 @@ export class ClientDiscoverPageComponent implements OnInit {
 
 
   /***
-   * here we are assigning the server results to the local attribute
-   to perform the actions on it.
+   * this function first check the length of the appliedFilters and do the
+   * respective functionality.
    */
   private initialize() {
-    this.localInnovations = this.totalInnovations;
+    if (this.appliedFilters.length > 0) {
+      this.applyFilters();
+    } else {
+      this.localInnovations = this.totalInnovations;
+    }
   }
 
 
@@ -203,6 +222,8 @@ export class ClientDiscoverPageComponent implements OnInit {
 
     this.applyFilters();
 
+    this.storeFilters();
+
   }
 
 
@@ -216,6 +237,9 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
+  /***
+   * this function searches for the innovations that contains the applied filters.
+   */
   private applyFilters() {
 
     if (this.appliedFilters.length > 0) {
@@ -240,6 +264,14 @@ export class ClientDiscoverPageComponent implements OnInit {
       this.initialize();
     }
 
+  }
+
+
+  /***
+   * this function stores the appliedFilters in the session storage.
+   */
+  private storeFilters() {
+    sessionStorage.setItem('discover-filters', JSON.stringify(this.appliedFilters));
   }
 
 
@@ -353,172 +385,8 @@ export class ClientDiscoverPageComponent implements OnInit {
     return langs.sort();
   }
 
-  /*
-    checking do we have any filters and limit in the session storage,
-    if yes then assign to the filterApplied attribute.
-
-  private storedFilters() {
-    const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
-
-    if (sessionValues.length > 0) {
-      this._filterApplied = sessionValues;
-    } else {
-      this._filterApplied = [];
-    }
-
-  }
-*/
 
 
-
-  /*
-  after fetching all the innovations and assigning to local attribute
-  first we check the length of filterApplied then according to that
-  we call the respective functions.
-
-  private loadInnovations() {
-    this._startInnoIndex = 0;
-    this._endInnoIndex = parseInt(localStorage.getItem('app-discover-limit'), 10) || 20;
-
-    if (this._filterApplied.length > 0) {
-      this._filterInnovations =  [];
-
-      this._filterApplied.forEach(filter => {
-        switch (filter.type) {
-          case('type'):
-            this.filterType(this._localInnovations, filter.value);
-            break;
-          case('stage'):
-            this.filterStage(this._localInnovations, filter.value);
-            break;
-          case('language'):
-            this._selectedLang = filter.value;
-            this.filterLang(this._localInnovations, filter.value);
-            break;
-          case('label'):
-            this.filterLabel(this._localInnovations, filter.id);
-            break;
-          default:
-            // Do nothing
-        }
-      });
-
-      this.populateTags(this._filterInnovations);
-      this.searchInInnovationCards(this._filterInnovations);
-    } else {
-      this.populateTags(this._localInnovations);
-      this.searchInInnovationCards(this._localInnovations);
-    }
-
-    this._displaySpinner = false;
-    this._addingFilter = false;
-
-  }
-*/
-
- /* private filterType(innovations: Array<Innovation>, value: string) {
-    this._filterInnovations = innovations.filter((items) => {
-      return items.tags.findIndex((tag) => tag.type === value) !== -1;
-    });
-  }
-
-
-  private filterStage(innovations: Array<Innovation>, value: string) {
-    this._filterInnovations = innovations.filter((items) => {
-      return items.projectStatus === Number(value);
-    });
-  }*/
-
-  /*private filterStatus(innovations: Array<Innovation>, value: string) {
-    this.filterInnovations = innovations.filter((items) => {
-      return items.status === value;
-    });
-  }*/
-
-
-  /*private filterLang(innovations: Array<Innovation>, value: string) {
-    this._filterInnovations = innovations.filter((items) => {
-      return items.innovationCards.findIndex((inno) => inno.lang === value) !== -1;
-    });
-
-  }
-
-
-  private filterLabel(innovations: Array<Innovation>, value: string) {
-    this._filterInnovations = innovations.filter((items) => {
-      return items.tags && items.tags.findIndex((tag) => tag._id === value) !== -1;
-    });
-  }*/
-
-
-  /*
-    according to the innovations we pass we search for the tags in it
-    and assign them to tags attributes. Write now we are showing label
-    fo the type SECTOR.
-
-  private populateTags(innovations: Array<Innovation>) {
-    this._tags = [];
-
-    innovations.forEach(innovation => {
-      const index = this._filterApplied.findIndex((item) => item.type === 'type' || item.type === 'label' );
-      const rawTags = innovation.tags || [];
-      if (index !== -1) {
-        rawTags.forEach((tag) => {
-          const index = this._filterApplied.findIndex((item) => item.type === 'type' ? item.id === tag.type : item.id === tag._id);
-          if (index !== -1) {
-            this._tags.push(tag);
-          }
-        });
-      } else {
-        rawTags.filter( tag => {
-          return tag.type === 'SECTOR';
-        }).forEach( tag => {
-          if(this._tags.findIndex((item) => item._id === tag._id) === -1) {
-            this._tags.push(tag);
-          }
-        });
-      }
-
-    });
-
-    this.populateLabels();
-
-  }
-*/
-
-  /*
-    after getting the value in the tags attributes we search for the labels in it and assign
-    it to the tagLabel attribute and we also sort the array alphabetically.
-
-  private populateLabels() {
-    this._tagLabel = [];
-
-    this._tags.forEach((items) => {
-      const index = this._tagLabel.findIndex((item) => item.id === items._id);
-      if (index === -1) {
-        if (this.currentLang === 'en') {
-          this._tagLabel.push({'label': items.label.en, 'id': items._id});
-        } else {
-          this._tagLabel.push({'label': items.label.fr, 'id': items._id});
-        }
-      }
-    });
-
-    this._tagLabel.sort((a: any, b: any) => {
-      if (a.label < b.label) {
-        return -1;
-      }
-
-      if (a.label > b.label) {
-        return 1;
-      }
-
-      return 0;
-
-    });
-
-  }
- */
 
   /*
     based on the innovations array we pass, we load the innovation
