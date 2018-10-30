@@ -77,7 +77,7 @@ export class StarsComponent implements OnInit {
         });
       });
 
-      this._notesData.forEach(function(noteData) {
+      this._notesData.forEach((noteData) => {
         if (this._answers.length > 0) {
           noteData.percentage = `${Math.round(((noteData.sum / this._answers.length) || 0) * 20)}%`;
         }
