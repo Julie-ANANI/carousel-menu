@@ -5,7 +5,6 @@ export const environment = {
   companyName: 'Dynergie',
   companyShortName: 'Dynergie',
   domain: 'dynergie',
-  innovationUrl: 'https://dynergie.umi.us',
   quizUrl: 'https://quiz.umi.us',
   companyURL: 'https://www.dynergie.eu',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/v1513701711/app/logo-dynergie.png',

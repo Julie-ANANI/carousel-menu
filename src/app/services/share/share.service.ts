@@ -12,7 +12,7 @@ export class ShareService {
   constructor(private _http: HttpClient) {}
 
   private _getShareUrl (project: Innovation): string {
-    return encodeURIComponent(`${environment.innovationUrl}/projects/${project._id}`);
+    return encodeURIComponent(`${environment.clientUrl}/projects/${project._id}`);
   }
 
   private _getTitle (project: Innovation, lang: string): string {

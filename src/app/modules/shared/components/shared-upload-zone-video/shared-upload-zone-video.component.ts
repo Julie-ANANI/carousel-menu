@@ -28,7 +28,7 @@ export class SharedUploadZoneVideoComponent implements OnInit {
       'playsinline=1',
       'modestbranding=1',
       'iv_load_policy=3',
-      'origin=' + environment.innovationUrl
+      'origin=' + environment.clientUrl
     ];
   }
 

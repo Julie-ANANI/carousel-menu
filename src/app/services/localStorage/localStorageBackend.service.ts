@@ -9,7 +9,7 @@ export class LocalStorageBackendService extends LocalStorageService {
     // do nothing here
   }
 
-  public getItem (k: string): string {
+  public getItem (_k: string): string {
     return null;
   }
 

@@ -109,7 +109,7 @@ export class DiscoverDescriptionComponent implements OnInit {
     const url = encodeURI(this.router.url);
 
     const message = encodeURI('Please add your message here.' + '\r\n' + '\r\n' + '-------------------------------------' + '\r\n' + '\r\n'
-      + 'Innovation Details: ' + '\r\n' + '\r\n' + 'URL - ' + environment.innovationUrl + url + '\r\n' + '\r\n' + 'Title - ' + this._innovationCard[0].title + '\r\n' + '\r\n'
+      + 'Innovation Details: ' + '\r\n' + '\r\n' + 'URL - ' + environment.clientUrl + url + '\r\n' + '\r\n' + 'Title - ' + this._innovationCard[0].title + '\r\n' + '\r\n'
       + 'Summary - ' + this._innovationCard[0].summary);
 
     window.location.href = 'mailto:' + this._operatorEmail + '?subject=' + 'Contacting us - ' + this._innovationCard[0].title  + '&body=' + message;

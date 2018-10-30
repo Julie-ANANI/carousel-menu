@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Campaign } from "../../models/campaign";
-import { environment } from "../../../environments/environment";
+import { Campaign } from '../../models/campaign';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class QuizService {
@@ -14,13 +14,14 @@ export class QuizService {
    * @param professionalId
    */
   public static getQuizUrl(campaign: Campaign, lang: string, professionalId?: string): string {
-    let url = "";
     if (campaign && campaign.innovation && campaign.innovation.quizId) {
-      url += `${environment.quizUrl}/quiz/${campaign.innovation.quizId}/${campaign._id}?lang=${lang}`;
+      let url = `${environment.quizUrl}/quiz/${campaign.innovation.quizId}/${campaign._id}?lang=${lang}`;
+      if (professionalId && professionalId.match(/^[a-f\d]{24}$/i)) {
+        url += `&pro=${professionalId}`;
+      }
+      return url;
+    } else {
+      return '';
     }
-    if(professionalId && professionalId.match(/^[a-f\d]{24}$/i)) {
-      url += `&pro=${professionalId}`;
-    }
-    return url;
   }
 }

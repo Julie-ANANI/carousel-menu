@@ -5,7 +5,6 @@ export const environment = {
   companyName: 'Groupe SALVEO',
   companyShortName: 'SALVEO',
   domain: 'salveo',
-  innovationUrl: 'http://dvoc.salveo.fr',
   quizUrl: 'https://quiz.umi.us',
   companyURL: 'salveo.fr',
   logoURL: 'https://salveo.fr/wp-content/uploads/2017/06/SALVEO-Logo-2016-FR.jpg',

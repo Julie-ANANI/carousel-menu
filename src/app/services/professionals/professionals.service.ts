@@ -37,6 +37,6 @@ export class ProfessionalsService {
   }
 
   public export(config: any): Observable<any> {
-    return this._http.post(`/professional/exportCSV`, config);
+    return this._http.post('/professional/exportCSV', config);
   }
 }

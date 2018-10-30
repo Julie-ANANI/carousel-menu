@@ -770,7 +770,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   }
 
   getInnovationUrl(): string {
-    return environment.innovationUrl;
+    return environment.clientUrl;
   }
 
   getCompanyURL(): string {

@@ -24,7 +24,7 @@ export class InnovationCommonService {
   }
 
    saveInnovation(project: Innovation) {
-    this.innovationService.save(project._id, project).first().subscribe((response: Innovation) => {
+    this.innovationService.save(project._id, project).subscribe((response: Innovation) => {
       this.innovationSubject.next(response);
     });
   }

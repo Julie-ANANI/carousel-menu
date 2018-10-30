@@ -14,7 +14,7 @@ export class LoaderBrowserInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error) => {
         console.error(error.message);
-        return throwError(error);
+        return throwError(error.text());
       }),
       finalize(() => {
         this.loaderService.stopLoading();

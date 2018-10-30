@@ -59,17 +59,15 @@ export class AnswerService {
   }
 
   public importFromGmail(file: File): Observable<any> {
-    const url = environment.apiUrl + '/innovation/importAnswers';
     const formData = new FormData();
     formData.append('file', file, file.name);
-    return this._http.post(url, formData);
+    return this._http.post('/innovation/importAnswers', formData);
   }
 
   public importAsCsv(campaignId: string, file: File): Observable<any> {
-    const url = environment.apiUrl + '/campaign/' + campaignId + '/importAnswers';
     const formData = new FormData();
     formData.append('file', file, file.name);
-    return this._http.post(url, formData);
+    return this._http.post('/campaign/' + campaignId + '/importAnswers', formData);
   }
 
   public importFromQuiz(answer: any): Observable<any> {

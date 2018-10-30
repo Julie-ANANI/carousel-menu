@@ -5,7 +5,6 @@ export const environment = {
   companyName: 'Multivalente',
   companyShortName: 'Multivalente',
   domain: 'multivalente',
-  innovationUrl: 'https://multivalente.umi.us',
   quizUrl: 'https://quiz.umi.us',
   companyURL: 'www.multivalente.com',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/v1528460832/whitelabel/multivalente/logo-multivalente-3.png',

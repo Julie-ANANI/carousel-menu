@@ -5,7 +5,6 @@ export const environment = {
   companyName: 'United Motion Ideas (demo)',
   companyShortName: 'UMI (demo)',
   domain: 'umi',
-  innovationUrl: 'https://umicli-demo.umi.us',
   quizUrl: 'https://quiz.umi.us',
   companyURL: 'https://www.umi.us',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1524744845/app/companies-logo/logo-umi.svg',
