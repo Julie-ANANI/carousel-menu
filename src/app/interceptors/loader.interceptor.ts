@@ -13,7 +13,7 @@ export class LoaderBrowserInterceptor implements HttpInterceptor {
     this.loaderService.startLoading();
     return next.handle(req).pipe(
       catchError((error) => {
-        console.error(error);
+        console.error(error.message);
         return throwError(error);
       }),
       finalize(() => {
