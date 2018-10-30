@@ -139,7 +139,7 @@
               overflow: hidden;
               flex-wrap: wrap;
               margin-top: .06rem;
-              min-height: 1.2rem;
+              max-height: 2.375rem;
 
               .tag-content {
                 display: inline-flex;
@@ -157,6 +157,7 @@
           .summary-text {
             padding-bottom: 0;
             font-size: .8125rem;
+            margin-top: .9375rem;
             color: $text-dark;
           }
 

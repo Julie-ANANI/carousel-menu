@@ -50,7 +50,10 @@
 
         <!-- search -->
         <div class="search">
-          <app-search-input></app-search-input>
+          <app-search-input
+            [suggestions]="innovationTitles"
+            (finalValueEmit)="onValueTyped($event)">
+          </app-search-input>
         </div>
 
       </div>
@@ -82,7 +85,7 @@
 
                 <!-- tags -->
                 <div class="tags-wrapper">
-                  <div *ngFor="let tag of getInnovationTags(innovation) | slice:0:3" class="tag-content">
+                  <div *ngFor="let tag of getInnovationTags(innovation)" class="tag-content">
                     #{{ tag?.label | multiling:browserLang() | FormatText }}
                   </div>
                 </div>

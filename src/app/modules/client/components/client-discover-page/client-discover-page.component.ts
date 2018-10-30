@@ -6,6 +6,7 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { Tag } from '../../../../models/tag';
 import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
+import {InnovCard} from '../../../../models/innov-card';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -38,6 +39,8 @@ export class ClientDiscoverPageComponent implements OnInit {
   appliedFilters: Array<Tag> = []; // hold all the filters that are selected by the user.
 
   localInnovations: Array<Innovation> = []; // we store the result of the total innovation to do functions on it.
+
+  innovationTitles: Array<{text: string}> = []; // to store the innovation title to send to the search field.
 
   /*private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
 
@@ -126,6 +129,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     this.innovationService.getAll(this.config).first().subscribe((response) => {
       this.totalInnovations = response.result;
       this.totalResults = response._metadata.totalCount;
+      this.getTitles();
       this.getAllTags();
       this.initialize();
     }, () => {
@@ -181,6 +185,36 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   browserLang(): string {
     return this.translateService.getBrowserLang() || 'en';
+  }
+
+
+  /***
+   * this functions is to get the titles of the innovation for the search
+   * field.
+   */
+  private getTitles() {
+    this.innovationTitles = [];
+    let index = 0;
+
+    this.totalInnovations.forEach((innovation: Innovation) => {
+      if (innovation.innovationCards.length > 1) {
+        const browserLangIndex = innovation.innovationCards.findIndex((card) => card.lang === this.browserLang());
+        if (browserLangIndex !== -1) {
+          index = browserLangIndex;
+        }
+      } else {
+        const indexEn = innovation.innovationCards.findIndex((card) => card.lang === 'en');
+        if (indexEn !== -1) {
+          index = indexEn;
+        } else {
+          index = 0;
+        }
+      }
+
+      this.innovationTitles.push({text: innovation.innovationCards[index].title});
+
+    });
+
   }
 
 
@@ -276,6 +310,31 @@ export class ClientDiscoverPageComponent implements OnInit {
 
 
   /***
+   * this functions is called when the user types in the search field.
+   * @param value
+   */
+  onValueTyped(value: string) {
+    if (value !== '') {
+      this.localInnovations = [];
+      this.appliedFilters = [];
+      this.totalInnovations.forEach((innovation: Innovation) => {
+        innovation.innovationCards.forEach((card: InnovCard) => {
+          if (card.title.toLowerCase().includes(value.toLowerCase())) {
+            const innovationIndex = this.localInnovations.findIndex((inno: Innovation) => inno._id === innovation._id);
+            if (innovationIndex === -1) {
+              this.localInnovations.push(innovation);
+            }
+          }
+        });
+      });
+    } else {
+      this.checkStoredFilters();
+      this.initialize();
+    }
+  }
+
+
+  /***
    * this function is to get image src.
    * @param innovation
    */
@@ -287,7 +346,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     if (innovation.principalMedia && innovation.principalMedia.url) {
       src = innovation.principalMedia.url;
     } else if (innovation.innovationCards) {
-      const index = innovation.innovationCards.findIndex((card) => card.lang === this.browserLang());
+      const index = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this.browserLang());
       if (index !== -1) {
         if (innovation.innovationCards[index].principalMedia && innovation.innovationCards[index].principalMedia.url
           && innovation.innovationCards[index].principalMedia.type === 'PHOTO') {
@@ -320,12 +379,12 @@ export class ClientDiscoverPageComponent implements OnInit {
     let index = 0;
 
     if (innovation.innovationCards.length > 1) {
-      const browserLangIndex = innovation.innovationCards.findIndex((card) => card.lang === this.browserLang());
+      const browserLangIndex = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this.browserLang());
       if (browserLangIndex !== -1) {
         index = browserLangIndex;
       }
     } else {
-      const indexEn = innovation.innovationCards.findIndex((card) => card.lang === 'en');
+      const indexEn = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === 'en');
       if (indexEn !== -1) {
         index = indexEn;
       } else {
@@ -376,7 +435,7 @@ export class ClientDiscoverPageComponent implements OnInit {
   getLangs(innovation: Innovation): Array<string> {
     const langs: Array<string> = [];
 
-    innovation.innovationCards.forEach((card) => {
+    innovation.innovationCards.forEach((card: InnovCard) => {
       if (card.lang !== this.browserLang()) {
         langs.push(card.lang);
       }
