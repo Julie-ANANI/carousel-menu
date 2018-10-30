@@ -84,13 +84,14 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.MENU_BAR_TITLE');
+    this.config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
     this.getAllInnovations();
 
     console.log(this.browserLang());
 
     /*
 
-    this.config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
+
 
     this.paginationValue = {
       limit: this.config.limit,
@@ -191,11 +192,15 @@ export class ClientDiscoverPageComponent implements OnInit {
     } else if (innovation.innovationCards) {
       const index = innovation.innovationCards.findIndex((card) => card.lang === this.browserLang());
       if (index !== -1) {
-        if (innovation.innovationCards[index].principalMedia && innovation.innovationCards[index].principalMedia.url) {
+        if (innovation.innovationCards[index].principalMedia && innovation.innovationCards[index].principalMedia.url
+          && innovation.innovationCards[index].principalMedia.type === 'PHOTO') {
           src = innovation.innovationCards[index].principalMedia.url;
         } else {
           if (innovation.innovationCards[index].media.length > 0) {
-            src = innovation.innovationCards[index].media[0].url;
+            const photoIndex = innovation.innovationCards[index].media.findIndex((image) => image.type === 'PHOTO');
+            if (photoIndex !== -1) {
+              src = innovation.innovationCards[index].media[photoIndex].url;
+            }
           }
         }
       }
@@ -217,7 +222,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     let value = '';
     let index = 0;
 
-    if (innovation.innovationCards.length > 2) {
+    if (innovation.innovationCards.length > 1) {
       const browserLangIndex = innovation.innovationCards.findIndex((card) => card.lang === this.browserLang());
       if (browserLangIndex !== -1) {
         index = browserLangIndex;
@@ -240,17 +245,45 @@ export class ClientDiscoverPageComponent implements OnInit {
       value = innovation.innovationCards[index].summary;
     }
 
+    if (toReturn === 'reference') {
+      value = innovation.innovationCards[index].innovation_reference;
+    }
+
+    if (toReturn === 'lang') {
+      value = innovation.innovationCards[index].lang;
+    }
+
     return value;
 
   }
 
 
+  /***
+   * this function is to return the sector tags associated with the particular
+   * innovation.
+   * @param innovation
+   */
   getInnovationTags(innovation: Innovation): Array<Tag> {
     let tags: Array<Tag>;
     tags = innovation.tags.filter((items) => {
       return items.type === 'SECTOR';
     });
     return tags;
+  }
+
+
+  /***
+   * this function is to get the all the langs of the particular innovation.
+   * @param innovation
+   */
+  getLangs(innovation: Innovation): Array<string> {
+    const langs: Array<string> = [];
+
+    innovation.innovationCards.forEach((card) => {
+      langs.push(card.lang);
+    });
+
+    return langs.sort();
   }
 
   /*

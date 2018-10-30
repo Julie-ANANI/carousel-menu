@@ -12,6 +12,8 @@ export const DISCOVER = {
 
   'PAGE_DESCRIPTION': 'All projects we help to grow up',
 
+  'FOOTER_TEXT': 'Available in: ',
+
   'CATEGORIES': 'Categories',
 
   'ELECTRONIC': 'Electronic',

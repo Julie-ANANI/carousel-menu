@@ -9,7 +9,12 @@ export const DISCOVER = {
   'SEE_MORE': 'Voir plus de secteurs',
 
   'TITLE': 'Découvrir',
+
   'PAGE_DESCRIPTION': 'Tous les projets que nous aidons à grandir',
+
+  'FOOTER_TEXT': 'Disponible en : ',
+
+
   'CATEGORIES': 'Catégories',
   'ELECTRONIC': 'Electronique',
   'AGRICULTURE': 'Agriculture',
