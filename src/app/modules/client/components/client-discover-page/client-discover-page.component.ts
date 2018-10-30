@@ -6,7 +6,8 @@ import { TranslateNotificationsService } from '../../../../services/notification
 import { Tag } from '../../../../models/tag';
 import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
-import {InnovCard} from '../../../../models/innov-card';
+import { InnovCard } from '../../../../models/innov-card';
+import { PaginationTemplate } from '../../../../models/pagination';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -32,6 +33,8 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   totalResults: number; // hold the total number of innovations we get from the server.
 
+  localResults: number; // hold the total number of innovations.
+
   displaySpinner = true; // show the spinner until we are fetching the innovation from the server.
 
   allTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
@@ -41,6 +44,12 @@ export class ClientDiscoverPageComponent implements OnInit {
   localInnovations: Array<Innovation> = []; // we store the result of the total innovation to do functions on it.
 
   innovationTitles: Array<{text: string}> = []; // to store the innovation title to send to the search field.
+
+  paginationValue: PaginationTemplate = {}; // to pass the value in the pagination component.
+
+  startingIndex: number; // starting index of the innovation.
+
+  endingIndex: number; // upto which index we have to show the innovation.
 
   /*private _innovationCards: InnovCard[]; // to hold the innovations based on the search.
 
@@ -78,7 +87,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
 
 
-  paginationValue: PaginationTemplate = {}; // to pass the value in the pagination component.*/
+  */
 
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
@@ -88,22 +97,9 @@ export class ClientDiscoverPageComponent implements OnInit {
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.MENU_BAR_TITLE');
     this.config.search['$or'] = [{'status': 'EVALUATING'}, {'status': 'DONE'}];
+    this.paginationValue = { limit: 50, offset: this.config.offset };
     this.checkStoredFilters();
     this.getAllInnovations();
-
-    /*
-
-
-
-    this.paginationValue = {
-      limit: this.config.limit,
-      offset: this.config.offset
-    };
-
-    this.getAllInnovations();
-
-    this.storedFilters();*/
-
   }
 
 
@@ -223,11 +219,18 @@ export class ClientDiscoverPageComponent implements OnInit {
    * respective functionality.
    */
   private initialize() {
+
+    this.startingIndex = 0;
+    this.endingIndex = parseInt(localStorage.getItem('discover-page-limit'), 10) || 50;
+
     if (this.appliedFilters.length > 0) {
       this.applyFilters();
     } else {
       this.localInnovations = this.totalInnovations;
+      this.localResults = this.localInnovations.length;
     }
+
+
   }
 
 
@@ -293,6 +296,8 @@ export class ClientDiscoverPageComponent implements OnInit {
           });
         }
       });
+
+      this.localResults = this.localInnovations.length;
 
     } else {
       this.initialize();
@@ -444,6 +449,35 @@ export class ClientDiscoverPageComponent implements OnInit {
     return langs.sort();
   }
 
+
+  /***
+   * when there is change in the pagination we detect the change and
+   * update the innovation cards with the new limit and offset value.
+   * @param paginationValues
+   */
+  onChangePagination(paginationValues: PaginationTemplate) {
+    window.scroll(0, 0);
+
+    const tempOffset = parseInt(paginationValues.offset, 10);
+    const tempLimit = parseInt(paginationValues.limit, 10);
+
+    this.startingIndex = tempOffset;
+    this.endingIndex = tempLimit;
+
+    if (paginationValues.limit >= this.localResults) {
+      this.startingIndex = 0;
+      this.endingIndex = this.localResults;
+    } else {
+      if (paginationValues.offset === 0) {
+        this.startingIndex = 0;
+        this.endingIndex = tempLimit;
+      } else if (paginationValues.offset > 0) {
+        this.startingIndex = tempOffset;
+        this.endingIndex += tempOffset;
+      }
+    }
+
+  }
 
 
 

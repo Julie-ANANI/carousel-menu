@@ -1,7 +1,6 @@
 @import '../../../../../style/variables';
 
 #discover-page {
-  padding-bottom: 0;
 
 
   .section-tags {
@@ -85,17 +84,17 @@
   .section-cards {
     margin-top: 1.57rem;
     display: flex;
-    float: left;
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin-right: -.6rem;
+    margin-right: -.75rem;
+    margin-left: -.3rem;
 
     .card-wrapper {
       background-color: white;
       flex: 1 0 calc(24% - 1rem);
       max-width: 320px;
       transition: all .35s ease-in-out;
-      margin-right: .6rem;
+      margin-right: .75rem;
       margin-bottom: 4.375rem;
       border-radius: 3px;
       padding: 10px;
@@ -193,6 +192,12 @@
       box-shadow: $box-shadow-hover;
     }
 
+  }
+
+
+  .section-pagination {
+    display: flex;
+    justify-content: flex-end;
   }
 
 

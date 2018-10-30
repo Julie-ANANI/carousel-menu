@@ -62,7 +62,7 @@
 
       <!-- Innovation cards -->
       <div class="section-cards">
-        <div *ngFor="let innovation of localInnovations" class="card-wrapper">
+        <div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card-wrapper">
           <div class="card-content">
 
             <!-- img -->
@@ -115,6 +115,17 @@
       </div>
       <!-- /Innovation cards -->
 
+
+      <!-- Pagination section -->
+      <div *ngIf="totalResults > 0" class="section-pagination">
+        <app-pagination
+          [total]="localResults"
+          [propertyName]="'discover-page'"
+          [configValue]="paginationValue"
+          (configChange)="onChangePagination($event)">
+        </app-pagination>
+      </div>
+      <!-- Pagination section -->
 
     </ng-container>
     <!-- /Display spinner false -->
