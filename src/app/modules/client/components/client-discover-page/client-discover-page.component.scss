@@ -12,6 +12,9 @@
       font-weight: 600;
       margin-bottom: .9375rem;
       font-size: .75rem;
+      animation-name: fadeInDown;
+      animation-duration: 1s;
+      animation-timing-function: ease-in-out;
     }
 
     .tags-wrapper {
@@ -67,6 +70,9 @@
     justify-content: space-between;
     margin-top: 5rem;
     align-items: center;
+    animation-name: fadeInDown;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
 
     .main-heading {
       font-size: 1.375rem;
@@ -196,11 +202,16 @@
 
 
   .section-no-result {
-    margin-top: 1.57rem;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    animation-name: fadeIn;
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+    animation-duration: .35s;
+    animation-timing-function: ease-in-out;
 
     .main-heading {
       color: $secondary-color;

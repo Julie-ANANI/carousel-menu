@@ -8,11 +8,39 @@ import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { InnovCard } from '../../../../models/innov-card';
 import { PaginationTemplate } from '../../../../models/pagination';
+import { animate, query, style, transition, trigger, stagger } from '@angular/animations';
 
 @Component({
   selector: 'app-client-discover-page',
   templateUrl: './client-discover-page.component.html',
-  styleUrls: ['./client-discover-page.component.scss']
+  styleUrls: ['./client-discover-page.component.scss'],
+  animations: [
+
+    trigger('tagAnimation', [
+      transition('* => *', [
+
+        query('.tag-content', style({ opacity: 0, transform: 'translateX(-15%)' })),
+
+        query('.tag-content', stagger('100ms', [
+          animate('200ms 1s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
+        ])),
+
+      ])
+    ]),
+
+    trigger('cardAnimation', [
+      transition('* => *', [
+
+        query('.card-wrapper', style({ opacity: 0, transform: 'translateX(-10%)' })),
+
+        query('.card-wrapper', stagger('100ms', [
+          animate('300ms 1s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
+        ])),
+
+      ])
+    ]),
+
+  ]
 })
 
 export class ClientDiscoverPageComponent implements OnInit {

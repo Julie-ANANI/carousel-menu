@@ -20,7 +20,7 @@
         <h6 class="main-heading">{{ 'DISCOVER.TAGS.HEADING' | translate }}</h6>
 
         <!-- tags -->
-        <div class="tags-wrapper">
+        <div class="tags-wrapper" @tagAnimation>
           <div *ngFor="let tag of allTags | slice:0:moreTagsIndex;" class="tag-content">
             <label [ngClass]=" { 'active': getCheckedFilter(tag._id) } ">
               <input
@@ -65,68 +65,78 @@
 
 
       <!-- Innovation cards -->
-      <div *ngIf="!noResultFound" class="section-cards">
-        <div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card-wrapper">
-          <div class="card-content">
+      <div class="section-cards" @cardAnimation>
 
-            <!-- img -->
-            <div class="card-img">
-              <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
-                <img [src]="getImageSrc(innovation)" alt="No media">
-              </a>
-            </div>
 
-            <!-- body -->
-            <div class="card-body">
+        <!-- Results -->
+        <ng-container *ngIf="!noResultFound">
+          <div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card-wrapper">
+            <div class="card-content">
 
-              <!-- title and tags -->
-              <div class="card-title">
-
-                <!-- title -->
+              <!-- img -->
+              <div class="card-img">
                 <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
-                  <h1 class="main-heading">{{ getInnovationDetail('title', innovation) | DiscoverSummaryPipe:53 }}</h1>
+                  <img [src]="getImageSrc(innovation)" alt="No media">
                 </a>
+              </div>
 
-                <!-- tags -->
-                <div class="tags-wrapper">
-                  <div *ngFor="let tag of getInnovationTags(innovation)" class="tag-content">
-                    #{{ tag?.label | multiling:browserLang() | FormatText }}
+              <!-- body -->
+              <div class="card-body">
+
+                <!-- title and tags -->
+                <div class="card-title">
+
+                  <!-- title -->
+                  <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
+                    <h1 class="main-heading">{{ getInnovationDetail('title', innovation) | DiscoverSummaryPipe:53 }}</h1>
+                  </a>
+
+                  <!-- tags -->
+                  <div class="tags-wrapper">
+                    <div *ngFor="let tag of getInnovationTags(innovation)" class="tag-content">
+                      #{{ tag?.label | multiling:browserLang() | FormatText }}
+                    </div>
                   </div>
+
                 </div>
+
+                <!-- summary -->
+                <p class="summary-text">{{ getInnovationDetail('summary', innovation) }}</p>
 
               </div>
 
-              <!-- summary -->
-              <p class="summary-text">{{ getInnovationDetail('summary', innovation) }}</p>
+              <!-- footer -->
+              <div class="card-footer">
+                <ng-container *ngIf="getLangs(innovation).length > 0">
+                  {{ 'DISCOVER.FOOTER_TEXT' | translate }}
+                  <div *ngFor="let lang of getLangs(innovation)">
+                    <a [routerLink]="[ getInnovationDetail('reference', innovation), lang ]" target="_blank">
+                      <span class="text-link">{{ lang }}</span>
+                    </a>
+                    <span *ngIf="getLangs(innovation).length > 1" class="pipe">|</span>
+                  </div>
+                </ng-container>
+              </div>
 
             </div>
-
-            <!-- footer -->
-            <div class="card-footer">
-              <ng-container *ngIf="getLangs(innovation).length > 0">
-                {{ 'DISCOVER.FOOTER_TEXT' | translate }}
-                <div *ngFor="let lang of getLangs(innovation)">
-                  <a [routerLink]="[ getInnovationDetail('reference', innovation), lang ]" target="_blank">
-                    <span class="text-link">{{ lang }}</span>
-                  </a>
-                  <span *ngIf="getLangs(innovation).length > 1" class="pipe">|</span>
-                </div>
-              </ng-container>
-            </div>
-
           </div>
-        </div>
+        </ng-container>
+        <!-- /Results -->
+
+
+        <!-- No result found -->
+        <ng-container *ngIf="noResultFound">
+          <div class="section-no-result text-center">
+            <h1 class="main-heading">{{ 'DISCOVER.NO_RESULT.HEADING' | translate }}</h1>
+            <p>{{ 'DISCOVER.NO_RESULT.MESSAGE.A' | translate }}</p>
+            <p>{{ 'DISCOVER.NO_RESULT.MESSAGE.B' | translate }}</p>
+          </div>
+        </ng-container>
+        <!-- /No result found -->
+
+
       </div>
       <!-- /Innovation cards -->
-
-
-      <!-- No result found -->
-      <div *ngIf="noResultFound" class="section-no-result">
-        <h1 class="main-heading">{{ 'DISCOVER.NO_RESULT.HEADING' | translate }}</h1>
-        <p>{{ 'DISCOVER.NO_RESULT.MESSAGE.A' | translate }}</p>
-        <p>{{ 'DISCOVER.NO_RESULT.MESSAGE.B' | translate }}</p>
-      </div>
-      <!-- /No result found -->
 
 
       <!-- Pagination section -->
