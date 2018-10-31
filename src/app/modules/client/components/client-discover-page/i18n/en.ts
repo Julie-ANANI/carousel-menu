@@ -14,6 +14,14 @@ export const DISCOVER = {
 
   'FOOTER_TEXT': 'Also available in: ',
 
+  'NO_RESULT': {
+    'HEADING': 'Something wrong here...',
+    'MESSAGE': {
+      'A': 'Sorry, we couldn\'t find any results (as you can see)',
+      'B': 'try again with some different keywords.'
+    }
+  },
+
   'CATEGORIES': 'Categories',
 
   'ELECTRONIC': 'Electronic',

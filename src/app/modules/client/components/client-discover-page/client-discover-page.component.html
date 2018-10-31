@@ -65,7 +65,7 @@
 
 
       <!-- Innovation cards -->
-      <div class="section-cards">
+      <div *ngIf="!noResultFound" class="section-cards">
         <div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card-wrapper">
           <div class="card-content">
 
@@ -120,8 +120,17 @@
       <!-- /Innovation cards -->
 
 
+      <!-- No result found -->
+      <div *ngIf="noResultFound" class="section-no-result">
+        <h1 class="main-heading">{{ 'DISCOVER.NO_RESULT.HEADING' | translate }}</h1>
+        <p>{{ 'DISCOVER.NO_RESULT.MESSAGE.A' | translate }}</p>
+        <p>{{ 'DISCOVER.NO_RESULT.MESSAGE.B' | translate }}</p>
+      </div>
+      <!-- /No result found -->
+
+
       <!-- Pagination section -->
-      <div *ngIf="totalResults > 0" class="section-pagination">
+      <div *ngIf="localResults > 0 && !noResultFound" class="section-pagination">
         <app-pagination
           [total]="localResults"
           [propertyName]="'discover-page'"

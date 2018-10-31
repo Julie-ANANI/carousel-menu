@@ -11,7 +11,7 @@ export class DiscoverSummaryPipe implements PipeTransform {
     let text = '';
 
     if (value && value.length > limit) {
-      text = value.slice(0, limit) + ' ...';
+      text = value.slice(0, limit) + '...';
     } else {
       text = value;
     }

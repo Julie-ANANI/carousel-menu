@@ -53,6 +53,8 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private _moreTagsIndex = 20; // to display the number of label item.
 
+  private _noResultFound = false; // when no result is while respect to search filed.
+
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService,
@@ -303,6 +305,7 @@ export class ClientDiscoverPageComponent implements OnInit {
    * @param value
    */
   onValueTyped(value: string) {
+
     if (value !== '') {
       this._localInnovations = [];
       this._appliedFilters = [];
@@ -320,6 +323,9 @@ export class ClientDiscoverPageComponent implements OnInit {
       this.checkStoredFilters();
       this.initialize();
     }
+
+    this._noResultFound = this._localInnovations.length === 0;
+
   }
 
 
@@ -513,6 +519,10 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   get moreTagsIndex(): number {
     return this._moreTagsIndex;
+  }
+
+  get noResultFound(): boolean {
+    return this._noResultFound;
   }
 
 
