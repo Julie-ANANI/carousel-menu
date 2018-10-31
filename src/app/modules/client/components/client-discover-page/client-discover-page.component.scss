@@ -70,18 +70,21 @@
     justify-content: space-between;
     margin-top: 5rem;
     align-items: center;
-    animation-name: fadeInDown;
-    animation-duration: 1s;
-    animation-timing-function: ease-in-out;
 
     .main-heading {
       font-size: 1.375rem;
       flex: 2;
+      animation-name: fadeInLeft;
+      animation-duration: .5s;
+      animation-timing-function: ease-in-out;
     }
 
     .search {
       flex: 1;
       margin-bottom: 1.57rem;
+      animation-name: fadeInRight;
+      animation-duration: .5s;
+      animation-timing-function: ease-in-out;
     }
 
   }
@@ -206,11 +209,9 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-top: 1.57rem;
     animation-name: fadeIn;
-    width: 98%;
-    margin-left: auto;
-    margin-right: auto;
-    animation-duration: .35s;
+    animation-duration: .7s;
     animation-timing-function: ease-in-out;
 
     .main-heading {
@@ -224,7 +225,6 @@
     }
 
   }
-
 
 
   .section-pagination {

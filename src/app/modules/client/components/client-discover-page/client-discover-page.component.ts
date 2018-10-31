@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { InnovCard } from '../../../../models/innov-card';
 import { PaginationTemplate } from '../../../../models/pagination';
-import { animate, query, style, transition, trigger, stagger } from '@angular/animations';
+import { animate, query, style, transition, trigger, stagger, keyframes } from '@angular/animations';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -21,8 +21,8 @@ import { animate, query, style, transition, trigger, stagger } from '@angular/an
 
         query('.tag-content', style({ opacity: 0, transform: 'translateX(-15%)' })),
 
-        query('.tag-content', stagger('100ms', [
-          animate('200ms 1s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
+        query('.tag-content', stagger('50ms', [
+          animate('.15s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
         ])),
 
       ])
@@ -31,14 +31,26 @@ import { animate, query, style, transition, trigger, stagger } from '@angular/an
     trigger('cardAnimation', [
       transition('* => *', [
 
-        query('.card-wrapper', style({ opacity: 0, transform: 'translateX(-10%)' })),
+        query(':enter', style({ opacity: 0 }), { optional: true }),
 
-        query('.card-wrapper', stagger('100ms', [
-          animate('300ms 1s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' })),
-        ])),
+        query(':enter', stagger('100ms', [
+          animate('.5s ease-in-out', keyframes([
+            style({ opacity: 0, transform: 'translateX(15%)', offset: 0 }),
+            style({ opacity: 1, transform: 'translateX(0)',     offset: 1.0 }),
+            ])
+          )]
+        ), { optional: true }),
+
+        query(':leave', stagger('20ms', [
+          animate('.35s ease-in-out', keyframes([
+            style({ opacity: 1, transform: 'translateX(0)', offset: 0 }),
+            style({ opacity: 0, transform: 'translateX(-15%)', offset: 1.0 }),
+            ])
+          )]
+        ), { optional: true })
 
       ])
-    ]),
+    ])
 
   ]
 })
@@ -123,6 +135,7 @@ export class ClientDiscoverPageComponent implements OnInit {
       this.getAllTags();
       this.initialize();
     }, () => {
+      this._displaySpinner = false;
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     }, () => {
       this._displaySpinner = false;
@@ -552,6 +565,5 @@ export class ClientDiscoverPageComponent implements OnInit {
   get noResultFound(): boolean {
     return this._noResultFound;
   }
-
 
 }

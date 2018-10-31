@@ -9,151 +9,134 @@
     <!-- /Displaying spinner -->
 
 
-    <!-- Display spinner false -->
-    <ng-container *ngIf="!displaySpinner">
+    <!-- Tags section -->
+    <div *ngIf="allTags.length > 0" class="section-tags">
+
+      <!-- heading -->
+      <h6 class="main-heading">{{ 'DISCOVER.TAGS.HEADING' | translate }}</h6>
+
+      <!-- tags -->
+      <div class="tags-wrapper" @tagAnimation>
+        <div *ngFor="let tag of allTags | slice:0:moreTagsIndex;" class="tag-content">
+          <label [ngClass]=" { 'active': getCheckedFilter(tag._id) } ">
+            <input
+              type="checkbox"
+              [id]="tag._id"
+              [name]="tag.label | multiling:browserLang()"
+              [value]="tag.label | multiling:browserLang()"
+              (change)="toggleFilter($event, tag)"
+              [checked]="getCheckedFilter(tag._id)">
+            {{ tag?.label | multiling:browserLang() | FormatText }}
+          </label>
+        </div>
+      </div>
+
+      <!-- More tag label -->
+      <p
+        [ngStyle]="{ 'visibility': allTags.length > 20 && allTags.length !== moreTagsIndex ? 'visible' : 'hidden' }"
+        (click)="onClickMore($event)" class="text-link">
+        {{ 'DISCOVER.SEE_MORE' | translate }}
+      </p>
+
+    </div>
+    <!-- /Tags section -->
 
 
-      <!-- Tags section -->
-      <div *ngIf="allTags.length > 0" class="section-tags">
+    <!-- Heading section -->
+    <div *ngIf="!displaySpinner" class="section-heading">
 
-        <!-- heading -->
-        <h6 class="main-heading">{{ 'DISCOVER.TAGS.HEADING' | translate }}</h6>
+      <!-- heading -->
+      <h1 class="main-heading">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</h1>
 
-        <!-- tags -->
-        <div class="tags-wrapper" @tagAnimation>
-          <div *ngFor="let tag of allTags | slice:0:moreTagsIndex;" class="tag-content">
-            <label [ngClass]=" { 'active': getCheckedFilter(tag._id) } ">
-              <input
-                type="checkbox"
-                [id]="tag._id"
-                [name]="tag.label | multiling:browserLang()"
-                [value]="tag.label | multiling:browserLang()"
-                (change)="toggleFilter($event, tag)"
-                [checked]="getCheckedFilter(tag._id)">
-              {{ tag?.label | multiling:browserLang() | FormatText }}
-            </label>
+      <!-- search -->
+      <div class="search">
+        <app-search-input
+          [suggestions]="innovationTitles"
+          (finalValueEmit)="onValueTyped($event)">
+        </app-search-input>
+      </div>
+
+    </div>
+    <!-- /Heading section -->
+
+
+    <!-- Innovation cards -->
+    <div class="section-cards" [@cardAnimation]="localInnovations.length">
+      <div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card-wrapper">
+        <div class="card-content">
+
+          <!-- img -->
+          <div class="card-img">
+            <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
+              <img [src]="getImageSrc(innovation)" alt="No media">
+            </a>
           </div>
-        </div>
 
-        <!-- More tag label -->
-        <p
-          [ngStyle]="{ 'visibility': allTags.length > 20 && allTags.length !== moreTagsIndex ? 'visible' : 'hidden' }"
-          (click)="onClickMore($event)" class="text-link">
-          {{ 'DISCOVER.SEE_MORE' | translate }}
-        </p>
+          <!-- body -->
+          <div class="card-body">
 
-      </div>
-      <!-- /Tags section -->
+            <!-- title and tags -->
+            <div class="card-title">
 
+              <!-- title -->
+              <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
+                <h1 class="main-heading">{{ getInnovationDetail('title', innovation) | DiscoverSummaryPipe:53 }}</h1>
+              </a>
 
-      <!-- Heading section -->
-      <div class="section-heading">
-
-        <!-- heading -->
-        <h1 class="main-heading">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</h1>
-
-        <!-- search -->
-        <div class="search">
-          <app-search-input
-            [suggestions]="innovationTitles"
-            (finalValueEmit)="onValueTyped($event)">
-          </app-search-input>
-        </div>
-
-      </div>
-      <!-- /Heading section -->
-
-
-      <!-- Innovation cards -->
-      <div class="section-cards" @cardAnimation>
-
-
-        <!-- Results -->
-        <ng-container *ngIf="!noResultFound">
-          <div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card-wrapper">
-            <div class="card-content">
-
-              <!-- img -->
-              <div class="card-img">
-                <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
-                  <img [src]="getImageSrc(innovation)" alt="No media">
-                </a>
-              </div>
-
-              <!-- body -->
-              <div class="card-body">
-
-                <!-- title and tags -->
-                <div class="card-title">
-
-                  <!-- title -->
-                  <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
-                    <h1 class="main-heading">{{ getInnovationDetail('title', innovation) | DiscoverSummaryPipe:53 }}</h1>
-                  </a>
-
-                  <!-- tags -->
-                  <div class="tags-wrapper">
-                    <div *ngFor="let tag of getInnovationTags(innovation)" class="tag-content">
-                      #{{ tag?.label | multiling:browserLang() | FormatText }}
-                    </div>
-                  </div>
-
+              <!-- tags -->
+              <div class="tags-wrapper">
+                <div *ngFor="let tag of getInnovationTags(innovation)" class="tag-content">
+                  #{{ tag?.label | multiling:browserLang() | FormatText }}
                 </div>
-
-                <!-- summary -->
-                <p class="summary-text">{{ getInnovationDetail('summary', innovation) }}</p>
-
-              </div>
-
-              <!-- footer -->
-              <div class="card-footer">
-                <ng-container *ngIf="getLangs(innovation).length > 0">
-                  {{ 'DISCOVER.FOOTER_TEXT' | translate }}
-                  <div *ngFor="let lang of getLangs(innovation)">
-                    <a [routerLink]="[ getInnovationDetail('reference', innovation), lang ]" target="_blank">
-                      <span class="text-link">{{ lang }}</span>
-                    </a>
-                    <span *ngIf="getLangs(innovation).length > 1" class="pipe">|</span>
-                  </div>
-                </ng-container>
               </div>
 
             </div>
+
+            <!-- summary -->
+            <p class="summary-text">{{ getInnovationDetail('summary', innovation) }}</p>
+
           </div>
-        </ng-container>
-        <!-- /Results -->
 
-
-        <!-- No result found -->
-        <ng-container *ngIf="noResultFound">
-          <div class="section-no-result text-center">
-            <h1 class="main-heading">{{ 'DISCOVER.NO_RESULT.HEADING' | translate }}</h1>
-            <p>{{ 'DISCOVER.NO_RESULT.MESSAGE.A' | translate }}</p>
-            <p>{{ 'DISCOVER.NO_RESULT.MESSAGE.B' | translate }}</p>
+          <!-- footer -->
+          <div class="card-footer">
+            <ng-container *ngIf="getLangs(innovation).length > 0">
+              {{ 'DISCOVER.FOOTER_TEXT' | translate }}
+              <div *ngFor="let lang of getLangs(innovation)">
+                <a [routerLink]="[ getInnovationDetail('reference', innovation), lang ]" target="_blank">
+                  <span class="text-link">{{ lang }}</span>
+                </a>
+                <span *ngIf="getLangs(innovation).length > 1" class="pipe">|</span>
+              </div>
+            </ng-container>
           </div>
-        </ng-container>
-        <!-- /No result found -->
 
-
+        </div>
       </div>
-      <!-- /Innovation cards -->
+    </div>
+    <!-- /Innovation cards -->
 
-
-      <!-- Pagination section -->
-      <div *ngIf="localResults > 0 && !noResultFound" class="section-pagination">
-        <app-pagination
-          [total]="localResults"
-          [propertyName]="'discover-page'"
-          [configValue]="paginationValue"
-          (configChange)="onChangePagination($event)">
-        </app-pagination>
+    <!-- No result found -->
+    <ng-container *ngIf="noResultFound">
+      <div class="section-no-result">
+        <h1 class="main-heading">{{ 'DISCOVER.NO_RESULT.HEADING' | translate }}</h1>
+        <p>{{ 'DISCOVER.NO_RESULT.MESSAGE.A' | translate }}</p>
+        <p>{{ 'DISCOVER.NO_RESULT.MESSAGE.B' | translate }}</p>
       </div>
-      <!-- Pagination section -->
-
     </ng-container>
-    <!-- /Display spinner false -->
+    <!-- /No result found -->
+
+
+    <!-- Pagination section -->
+    <div *ngIf="localResults > 0 && !noResultFound" class="section-pagination">
+      <app-pagination
+        [total]="localResults"
+        [propertyName]="'discover-page'"
+        [configValue]="paginationValue"
+        (configChange)="onChangePagination($event)">
+      </app-pagination>
+    </div>
+    <!-- Pagination section -->
 
 
   </div>
 </section>
-
