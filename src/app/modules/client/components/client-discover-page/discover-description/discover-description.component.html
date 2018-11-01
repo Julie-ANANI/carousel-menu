@@ -1,10 +1,12 @@
 <section class="section-container" id="discover-description">
 
+
   <!-- Display spinner -->
   <div *ngIf="displaySpinner" class="spinner-wrapper">
     <app-shared-loader></app-shared-loader>
   </div>
   <!-- /Display spinner -->
+
 
   <!-- Display innovation card -->
   <ng-container *ngIf="!displaySpinner">
@@ -12,10 +14,16 @@
 
       <!-- Hero section -->
       <div class="hero-container">
-
         <div class="column col-xs-12 col-11 col-mx-auto">
+
           <h1 class="main-heading">{{ innovation.title }}</h1>
-          <h6>{{ getProjectState(projectState) | translate }} <span *ngIf="patent">&nbsp;•&nbsp;  {{ 'DISCOVERDESCRIPTION.PATENT' | translate }} </span> </h6>
+
+          <div class="details-wrapper">
+            <div *ngFor="let tag of tags" class="tag-wrapper">
+              #{{ tag }}
+            </div>
+            <span *ngIf="patent">&nbsp;•&nbsp;  {{ 'DISCOVERDESCRIPTION.PATENT' | translate }} </span>
+          </div>
           <hr class="hero-hr" align="left">
 
           <!-- Summary and share button -->
@@ -48,9 +56,6 @@
               <a [href]="facebookUrl" target="_blank">
                 <i class="fab fa-facebook-f fa-2x" id="icon-facebook"></i>
               </a>&nbsp;
-             <!-- <a [href]="googlePlusUrl" target="_blank">
-                <i class="fab fa-google-plus-g fa-2x" id="icon-google"></i>
-              </a>-->
               <a [href]="mailUrl">
                 <i class="far fa-envelope fa-2x" id="icon-mail"></i>
               </a>
@@ -61,6 +66,7 @@
         </div>
       </div>
       <!-- /Hero section -->
+
 
       <!-- Media section -->
       <div *ngIf="innovation.media?.length > 0" class="section-container">
@@ -88,18 +94,20 @@
       </div>
       <!-- /Media section -->
 
+
       <!-- Advantage section -->
       <div *ngIf="innovation.advantages?.length > 0" class="section-container" [ngStyle]="{ 'background-color': '#f5f5f5' }">
         <div class="column col-xs-12 col-11 col-mx-auto">
           <h3 class="section-heading">{{ 'DISCOVERDESCRIPTION.BENEFITS' | translate }}</h3>
           <ul class="advantage">
             <li *ngFor="let advantage of innovation.advantages">
-              {{ advantage.text[0] | uppercase }}{{advantage.text|slice:1}}
+              {{ advantage.text | FormatText }}
             </li>
           </ul>
         </div>
       </div>
       <!-- /Advantage section -->
+
 
       <!-- Solution and issue section -->
       <div *ngIf="innovation.problem?.length > 0 || innovation.solution?.length > 0" class="section-container solution-wrapper">
@@ -124,6 +132,7 @@
     </div>
   </ng-container>
   <!-- /Display innovation card -->
+
 
 </section>
 

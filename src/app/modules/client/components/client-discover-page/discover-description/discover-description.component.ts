@@ -7,6 +7,9 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import { ShareService } from '../../../../../services/share/share.service';
 import { environment } from '../../../../../../environments/environment';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { Tag } from '../../../../../models/tag';
+import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-discover-description',
@@ -17,89 +20,126 @@ import { TranslateNotificationsService } from '../../../../../services/notificat
 export class DiscoverDescriptionComponent implements OnInit {
 
   private _innovationCard: InnovCard[] = [];
+
   private innovation: Innovation;
 
   private quizUrl: string;
+
   private linkedInUrl: string;
+
   private twitterUrl: string;
+
   private facebookUrl: string;
+
   private googlePlusUrl: string;
+
   private mailUrl: string;
 
   private _quizButtonDisplay: string;
 
   private _mediaModal: boolean;
+
   private _mediaURL: string;
 
   private _lang: string;
+
   private _id: string;
 
   private _patent = false;
-  private _projectState: number;
 
   private _displaySpinner = true;
 
   private _operatorEmail: string;
+
+  tags: Array<string> = [];
 
   constructor(private innovationService: InnovationService,
               private activatedRoute: ActivatedRoute,
               private shareService: ShareService,
               private domSanitizer1: DomSanitizer,
               private translateNotificationsService: TranslateNotificationsService,
-              private router: Router) {}
+              private router: Router,
+              private translateService: TranslateService) {}
 
   ngOnInit() {
+
     this.activatedRoute.params.subscribe(params => {
       this._id = params['id'];
       this._lang = params['lang'];
     });
 
-    this.loadInnovation(this._id, this._lang);
+    this.loadInnovation();
 
   }
 
-  loadInnovation(id: string, lang: string) {
-    this.innovationService.get(id).subscribe(response => {
+
+  private loadInnovation() {
+    this.innovationService.get(this._id).first().subscribe((response: Innovation) => {
 
       if (response.quizId === '' || response.status === 'DONE') {
         this._quizButtonDisplay = 'none';
       }
 
-      if (response.campaigns.length !== 0) {
-        this.quizUrl = environment.quizUrl + '/quiz/' + response.quizId + '/' + response.campaigns[0].id + '?lang=' + lang;
-      }
-
       this.innovation = response;
+      this.getAllTags();
+      this.getPatent();
+      this.getAllShareLinks();
+      this.getOperatorDetails();
+      this.getInnovationCard();
 
-      this._patent = response.patented;
-
-      this._operatorEmail = response.operator ? response.operator.email : 'contact@umi.us';
-
-      this._projectState = response.projectStatus;
-
-      this.linkedInUrl = this.shareService.linkedinProjectShareLink(this.innovation, lang);
-
-      this.linkedInUrl = this.shareService.linkedinProjectShareLink(this.innovation, lang);
-
-      this.twitterUrl = this.shareService.twitterProjectShareLink(this.innovation, lang);
-
-      this.facebookUrl = this.shareService.facebookProjectShareLink(this.innovation);
-
-      this.googlePlusUrl = this.shareService.googleProjectShareLink(this.innovation, lang);
-
-      this.mailUrl = this.shareService.mailProjectShareLink(this.innovation, lang);
-
-      const innovationCardIndex = response.innovationCards.findIndex( card => card.lang === lang);
-
-      this._innovationCard.push(response.innovationCards[innovationCardIndex]);
-
-    }, () => {
+      }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'DISCOVERDESCRIPTION.ERROR');
       this._displaySpinner = false;
     }, () => {
       this._displaySpinner = false;
     });
 
+  }
+
+
+  private getAllTags() {
+    this.innovation.tags.forEach((tag: Tag) => {
+      if (tag.type === 'SECTOR') {
+        this.tags.push(MultilingPipe.prototype.transform(tag.label, this.browserLang()));
+      }
+    });
+  }
+
+
+  browserLang(): string {
+    return this.translateService.getBrowserLang() || 'en';
+  }
+
+
+  private getPatent() {
+    this._patent = this.innovation.patented;
+  }
+
+
+  private getAllShareLinks() {
+
+    if (this.innovation.campaigns.length !== 0) {
+      this.quizUrl = environment.quizUrl + '/quiz/' + this.innovation.quizId + '/' + this.innovation.campaigns[0].id + '?lang=' + this._lang;
+    }
+
+    this.linkedInUrl = this.shareService.linkedinProjectShareLink(this.innovation, this._lang);
+    this.linkedInUrl = this.shareService.linkedinProjectShareLink(this.innovation, this._lang);
+    this.twitterUrl = this.shareService.twitterProjectShareLink(this.innovation, this._lang);
+    this.facebookUrl = this.shareService.facebookProjectShareLink(this.innovation);
+    this.googlePlusUrl = this.shareService.googleProjectShareLink(this.innovation, this._lang);
+    this.mailUrl = this.shareService.mailProjectShareLink(this.innovation, this._lang);
+
+  }
+
+
+  private getOperatorDetails() {
+    this._operatorEmail = this.innovation.operator ? this.innovation.operator.email : 'contact@umi.us';
+  }
+
+
+  private getInnovationCard() {
+    const innovationCardIndex = this.innovation.innovationCards.findIndex( (card: InnovCard) => card.lang === this._lang);
+    this._innovationCard.push(this.innovation.innovationCards[innovationCardIndex]);
   }
 
 
@@ -116,20 +156,6 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   }
 
-  getProjectState(value: number) {
-    if (value === 0) {
-      return 'DISCOVERDESCRIPTION.STAGE.A'
-    }
-
-    if (value === 1) {
-      return 'DISCOVERDESCRIPTION.STAGE.B'
-    }
-
-    if (value === 2) {
-      return 'DISCOVERDESCRIPTION.STAGE.C'
-    }
-
-  }
 
   getSrc(src: string): string {
     if (src === '' ) {
@@ -139,11 +165,13 @@ export class DiscoverDescriptionComponent implements OnInit {
     return src;
   }
 
+
   mediaToShow(event: Event, src: string) {
     event.preventDefault();
     this._mediaModal = true;
     this._mediaURL = this.getSrc(src);
   }
+
 
   closeModal(event: Event) {
     event.preventDefault();
@@ -176,10 +204,6 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   get patent(): boolean {
     return this._patent;
-  }
-
-  get projectState(): number {
-    return this._projectState;
   }
 
   get displaySpinner(): boolean {

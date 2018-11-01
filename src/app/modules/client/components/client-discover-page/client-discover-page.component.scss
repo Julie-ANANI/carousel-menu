@@ -220,13 +220,15 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-align: center;
     margin-top: 1.57rem;
     animation-name: fadeIn;
-    animation-duration: .7s;
+    animation-duration: .5s;
     animation-timing-function: ease-in-out;
 
     .main-heading {
-      color: $secondary-color;
+      margin-top: .6rem;
+      color: #A0A4AF;
       margin-bottom: .6rem;
     }
 
