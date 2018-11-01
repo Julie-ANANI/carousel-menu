@@ -55,11 +55,23 @@
 
     }
 
-    .text-link {
+    p {
       margin-top: .9375rem;
       padding-bottom: 0;
       font-weight: 600;
       font-size: .875rem;
+
+      .close-text {
+        color: $meta-color;
+        margin-left: .35rem;
+        font-size: .6875rem;
+      }
+
+      .close-text:hover {
+        cursor: pointer;
+        color: $dark-color;
+      }
+
     }
 
   }
@@ -68,11 +80,11 @@
   .section-heading {
     display: flex;
     justify-content: space-between;
-    margin-top: 5rem;
+    margin-top: 4rem;
     align-items: center;
 
     .main-heading {
-      font-size: 1.375rem;
+      font-size: 1.3125rem;
       flex: 2;
       animation-name: fadeInLeft;
       animation-duration: .5s;
@@ -91,7 +103,6 @@
 
 
   .section-cards {
-    margin-top: 1.57rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -128,7 +139,7 @@
         }
 
         .card-body {
-          margin: 1.57rem 0 0 0;
+          margin: .9375rem 0 0 0;
           flex: 1;
 
           .card-title {
@@ -137,8 +148,8 @@
 
             .main-heading {
               margin-bottom: 0;
-              font-size: 1.12rem;
-              font-weight: normal;
+              font-size: 1.0625rem;
+              font-weight: 500;
               overflow: hidden;
             }
 

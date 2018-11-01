@@ -341,6 +341,12 @@ export class ClientDiscoverPageComponent implements OnInit {
   }
 
 
+  onClickClose(event: Event) {
+    event.preventDefault();
+    this._moreTagsIndex = 20;
+  }
+
+
   /***
    * this functions is called when the user types in the search field.
    * @param value

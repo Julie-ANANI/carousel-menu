@@ -8,6 +8,8 @@ export const DISCOVER = {
 
   'SEE_MORE': 'See more sectors',
 
+  'CLOSE': 'close',
+
   'TITLE': 'Discover',
 
   'PAGE_DESCRIPTION': 'All projects we help to grow up',

@@ -32,10 +32,16 @@
       </div>
 
       <!-- More tag label -->
-      <p
-        [ngStyle]="{ 'visibility': allTags.length > 20 && allTags.length !== moreTagsIndex ? 'visible' : 'hidden' }"
-        (click)="onClickMore($event)" class="text-link">
-        {{ 'DISCOVER.SEE_MORE' | translate }}
+      <p [ngStyle]="{ 'visibility': allTags.length > 20 && allTags.length !== moreTagsIndex ? 'visible' : 'hidden' }">
+        <span class="text-link" (click)="onClickMore($event)">
+          {{ 'DISCOVER.SEE_MORE' | translate }}
+        </span>
+        <span
+          [ngStyle]="{ 'visibility': allTags.length > 40 ? 'visible' : 'hidden' }"
+          class="close-text"
+          (click)="onClickClose($event)">
+           {{ 'DISCOVER.CLOSE' | translate }}
+        </span>
       </p>
 
     </div>

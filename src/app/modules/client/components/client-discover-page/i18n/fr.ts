@@ -8,6 +8,8 @@ export const DISCOVER = {
 
   'SEE_MORE': 'Voir plus de secteurs',
 
+  'CLOSE': 'rapproché',
+
   'TITLE': 'Découvrir',
 
   'PAGE_DESCRIPTION': 'Tous les projets que nous aidons à grandir',
