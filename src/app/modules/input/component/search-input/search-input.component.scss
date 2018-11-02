@@ -23,6 +23,7 @@
       transition: all .35s ease-in-out;
       color: $input-color;
       font-size: .875rem;
+      font-weight: 300;
 
       &::placeholder {
         color: $placeholder-color;

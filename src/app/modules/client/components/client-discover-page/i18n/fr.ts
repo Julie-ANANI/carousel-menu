@@ -1,6 +1,30 @@
 export const DISCOVER = {
+
+  'MENU_BAR_TITLE': 'Découvrez les innovations',
+
+  'TAGS': {
+    'HEADING': 'Sélectionnez le(s) secteur(s) pour voir les projets liés'
+  },
+
+  'SEE_MORE': 'Voir plus de secteurs',
+
+  'CLOSE': 'rapproché',
+
   'TITLE': 'Découvrir',
+
   'PAGE_DESCRIPTION': 'Tous les projets que nous aidons à grandir',
+
+  'FOOTER_TEXT': 'Aussi disponible en : ',
+
+  'NO_RESULT': {
+    'HEADING': 'Quelque chose ne va pas ici..',
+    'MESSAGE': {
+      'A': 'Désolé, nous n\'avons pas trouvé de résultats (comme vous pouvez le voir),',
+      'B': 'essayez à nouveau avec des mots-clés différents.'
+    }
+  },
+
+
   'CATEGORIES': 'Catégories',
   'ELECTRONIC': 'Electronique',
   'AGRICULTURE': 'Agriculture',
@@ -12,7 +36,7 @@ export const DISCOVER = {
   'FROM': 'de',
   'RESULT': 'résultats',
   'STATUS': 'Statut',
-  'SEE_MORE': 'Voir plus de secteurs',
+
   'COMPLETED': 'Terminé',
   'IN_PROGRESS': 'En cours',
   'ADD_FILTERS': 'Ajouter des filtres',
@@ -22,8 +46,6 @@ export const DISCOVER = {
   'NO_INNOVATION': 'Nous ne pouvons pas trouver d\'innovations basées sur votre requête.',
   'STAGE': 'Étape',
 
-  'TAGS': {
-    'HEADING': 'Sélectionnez le(s) secteur(s) pour voir les projets liés'
-  }
+
 
 };

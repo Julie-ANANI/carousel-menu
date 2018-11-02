@@ -1,320 +1,149 @@
-<section class="section-container"  id="discover-page-wrapper">
+<section id="discover-page" class="section-container">
   <div class="column col-xs-12 col-11 col-mx-auto">
 
 
+    <!-- Displaying spinner -->
+    <ng-container *ngIf="displaySpinner">
+      <app-shared-loader></app-shared-loader>
+    </ng-container>
+    <!-- /Displaying spinner -->
+
+
     <!-- Tags section -->
-    <div *ngIf="tagLabel.length > 0" class="tags-wrapper">
+    <div *ngIf="allTags.length > 0" class="section-tags">
 
-      <!-- Heading -->
-      <h1 class="heading">{{ 'DISCOVER.TAGS.HEADING' | translate }}</h1>
+      <!-- heading -->
+      <h6 class="main-heading">{{ 'DISCOVER.TAGS.HEADING' | translate }}</h6>
 
-      <!-- Tags -->
-      <div class="tags-container">
-        <div *ngFor="let tag of tagLabel | slice:0:endLabelIndex;" class="tag-content">
-          <label [ngClass]=" { 'active': tag.id === filterApplied[0]?.id } ">
+      <!-- tags -->
+      <div class="tags-wrapper" @tagAnimation>
+        <div *ngFor="let tag of allTags | slice:0:moreTagsIndex;" class="tag-content">
+          <label [ngClass]=" { 'active': getCheckedFilter(tag._id) } ">
             <input
               type="checkbox"
-              [id]="tag.id"
-              name="label"
-              [value]="tag.label"
-              (change)="toggleFilter($event)"
-              [checked]="filterChecked(tag.id, 'label')">
-            {{ getLabelName(tag.label) }}
+              [id]="tag._id"
+              [name]="tag.label | multiling:browserLang()"
+              [value]="tag.label | multiling:browserLang()"
+              (change)="toggleFilter($event, tag)"
+              [checked]="getCheckedFilter(tag._id)">
+            {{ tag?.label | multiling:browserLang() | FormatText }}
           </label>
         </div>
       </div>
 
-      <!-- More label -->
-      <p *ngIf="tagLabel.length > 20 && tagLabel.length !== endLabelIndex" class="text-link" (click)="changeIndex($event, 'label')">{{ 'DISCOVER.SEE_MORE' | translate }}</p>
+      <!-- More tag label -->
+      <p [ngStyle]="{ 'visibility': allTags.length > 20 && allTags.length !== moreTagsIndex ? 'visible' : 'hidden' }">
+        <span class="text-link" (click)="onClickMore($event)">
+          {{ 'DISCOVER.SEE_MORE' | translate }}
+        </span>
+        <span
+          [ngStyle]="{ 'visibility': allTags.length > 40 ? 'visible' : 'hidden' }"
+          class="close-text"
+          (click)="onClickClose($event)">
+           {{ 'DISCOVER.CLOSE' | translate }}
+        </span>
+      </p>
 
     </div>
     <!-- /Tags section -->
 
-    <!-- Heading and Search field -->
-    <div class="header-wrapper">
+
+    <!-- Heading section -->
+    <div *ngIf="!displaySpinner" class="section-heading">
+
+      <!-- heading -->
       <h1 class="main-heading">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</h1>
+
+      <!-- search -->
       <div class="search">
         <app-search-input
-          [suggestions]="innovationDetails"
-          (finalValueEmit)="onValueSelected($event)">
+          [suggestions]="innovationTitles"
+          (finalValueEmit)="onValueTyped($event)">
         </app-search-input>
       </div>
+
     </div>
-    <!-- /Heading and Search field -->
+    <!-- /Heading section -->
 
-    <!-- Spinner display -->
-    <div *ngIf="displaySpinner" class="spinner-wrapper">
-      <app-shared-loader></app-shared-loader>
-    </div>
-    <!-- /Spinner display -->
 
-    <!-- Spinner display is off -->
-    <ng-container *ngIf="!displaySpinner">
+    <!-- Innovation cards -->
+    <div class="section-cards" [@cardAnimation]="localInnovations.length">
+      <div *ngFor="let innovation of localInnovations | slice:startingIndex:endingIndex" class="card-wrapper">
+        <div class="card-content">
 
-<!--       Total number of innovations and filters
-      <div [ngClass]="{ 'filter-wrapper': showFilterContainer }">
-
-         result and add filter button
-        <div class="total-filter-wrapper" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
-
-           show results title
-          <h6 *ngIf="!showFilterContainer"></h6>
-          <h6 *ngIf="showFilterContainer">{{ totalResults }} {{ 'DISCOVER.RESULT' | translate }}</h6>
-
-           add filter button
-          <ng-container *ngIf="showFilterContainer === false">
-            <button class="btn btn-sm ghost-edit btn-filter" (click)="addFilter($event)"><i class="fas fa-sliders-h"></i>{{ 'DISCOVER.ADD_FILTERS' | translate }}</button>
-          </ng-container>
-
-           cancel and apply filter button
-          <ng-container *ngIf="showFilterContainer === true">
-            <div class="filter-action">
-              <button class="btn btn-sm ghost-edit btn-cancel" (click)="cancelFilter($event)">{{ 'DISCOVER.CANCEL' | translate }}</button>
-              <button class="btn btn-sm btn-primary" (click)="applyFilter($event)">{{ 'DISCOVER.APPLY_FILTERS' | translate }}</button>
-            </div>
-          </ng-container>
-
-        </div>
-         /result and add filter button
-
-         Filter applied
-        <div *ngIf="filterApplied.length > 0" [ngClass]="{ 'column col-xs-12 col-11 col-mx-auto': showFilterContainer }">
-          <ul *ngFor="let item of filterApplied" class="filter-applied-wrapper">
-            <li (click)="removeFilter(item.value)">{{ getFilterName(item) }}<i class="fas fa-times"></i></li>
-          </ul>
-          <span *ngIf="filterApplied.length > 1" class="clear-filter" (click)="removeAllFilter($event)">{{ 'DISCOVER.CLEAR_ALL' | translate }}</span>
-        </div>
-         /Filter applied
-
-         add filter button is clicked, showing the container
-        <div class="column col-xs-12 col-11 col-mx-auto filter-outer" [ngStyle]="{ 'display': showFilterContainer ? 'block' : 'none'}">
-          <div class="filter-content">
-
-             Filter sector
-            <div class="filter-type">
-              <ng-container *ngIf="tags.length > 0">
-                <p>Type</p>
-                <div class="filter-option">
-                  <label class="form-checkbox">
-                    <input
-                      type="checkbox"
-                      id="QUALIFICATION"
-                      value="QUALIFICATION"
-                      name="type"
-                      (change)="toggleFilter($event)"
-                      [checked]="filterChecked('QUALIFICATION', 'type')"
-                      [disabled]="checkDisable('QUALIFICATION', 'type')">
-                    <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('QUALIFICATION', 'type') }">Qualification</span>
-                  </label>
-                </div>
-                <div class="filter-option">
-                  <label class="form-checkbox">
-                    <input
-                      type="checkbox"
-                      id="SECTOR"
-                      value="SECTOR"
-                      name="type"
-                      (change)="toggleFilter($event)"
-                      [checked]="filterChecked('SECTOR', 'type')"
-                      [disabled]="checkDisable('SECTOR', 'type')">
-                    <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('SECTOR', 'type') }">Sector</span>
-                  </label>
-                </div>
-                <div class="filter-option">
-                  <label class="form-checkbox">
-                    <input
-                      type="checkbox"
-                      id="SOLUTION_TYPE"
-                      value="SOLUTION_TYPE"
-                      name="type"
-                      (change)="toggleFilter($event)"
-                      [checked]="filterChecked('SOLUTION_TYPE', 'type')"
-                      [disabled]="checkDisable('SOLUTION_TYPE', 'type')">
-                    <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('SOLUTION_TYPE', 'type') }">Solution</span>
-                  </label>
-                </div>
-                <div class="filter-option">
-                  <label class="form-checkbox">
-                    <input
-                      type="checkbox"
-                      id="VALUE_CHAIN"
-                      value="VALUE_CHAIN"
-                      name="type"
-                      (change)="toggleFilter($event)"
-                      [checked]="filterChecked('VALUE_CHAIN', 'type')"
-                      [disabled]="checkDisable('VALUE_CHAIN', 'type')">
-                    <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('VALUE_CHAIN', 'type') }">Value Chain</span>
-                  </label>
-                </div>
-              </ng-container>
-            </div>
-
-             Filter stage
-            <div class="filter-stage">
-              <p>{{ 'DISCOVER.STAGE' | translate }}</p>
-              <div class="filter-option">
-                <label class="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="0"
-                    value="0"
-                    name="stage"
-                    (change)="toggleFilter($event)"
-                    [checked]="filterChecked('0', 'stage')"
-                    [disabled]="checkDisable('0', 'stage')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('0', 'stage') }">{{ getStageName('0') }}</span>
-                </label>
-              </div>
-              <div class="filter-option">
-                <label class="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="1"
-                    value="1"
-                    name="stage"
-                    (change)="toggleFilter($event)"
-                    [checked]="filterChecked('1', 'stage')"
-                    [disabled]="checkDisable('1', 'stage')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('1', 'stage') }">{{ getStageName('1') }}</span>
-                </label>
-              </div>
-              <div class="filter-option">
-                <label class="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="2"
-                    value="2"
-                    name="stage"
-                    (change)="toggleFilter($event)"
-                    [checked]="filterChecked('2', 'stage')"
-                    [disabled]="checkDisable('2', 'stage')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('2', 'stage') }">{{ getStageName('2') }}</span>
-                </label>
-              </div>
-            </div>
-
-             Language filter
-            <div class="filter-language">
-              <p>{{ 'COMMON.LANGUAGE' | translate }}</p>
-              <div class="filter-option">
-                <label class="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="en"
-                    value="en"
-                    name="language"
-                    (change)="toggleFilter($event)"
-                    [checked]="filterChecked('en', 'language')"
-                    [disabled]="checkDisable('en', 'language')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('en', 'language') }">{{ 'COMMON.LANG.EN' | translate }}</span>
-                </label>
-              </div>
-              <div class="filter-option">
-                <label class="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="fr"
-                    value="fr"
-                    name="language"
-                    (change)="toggleFilter($event)"
-                    [checked]="filterChecked('fr', 'language')"
-                    [disabled]="checkDisable('fr', 'language')">
-                  <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable('fr', 'language') }">{{ 'COMMON.LANG.FR' | translate }}</span>
-                </label>
-              </div>
-            </div>
-
-             Filter label
-            <div class="filter-label">
-              <ng-container *ngIf="tagLabel.length > 0">
-                <p>Label</p>
-                <div *ngFor="let item of tagLabel | slice:0:endLabelIndex;" class="filter-option">
-                  <label class="form-checkbox">
-                    <input
-                      type="checkbox"
-                      [id]="item.id"
-                      name="label"
-                      [value]="item.label"
-                      (change)="toggleFilter($event)"
-                      [checked]="filterChecked(item.id, 'label')"
-                      [disabled]="checkDisable(item.id, 'label')">
-                    <i class="form-icon"></i><span class="checkbox-label" [ngClass]="{ 'disabled-label': checkDisable(item.id, 'label') }">{{ getLabelName(item.label) }}</span>
-                  </label>
-                </div>
-              </ng-container>
-              <span *ngIf="tagLabel.length > 8 && tagLabel.length !== endLabelIndex" class="text-link" (click)="changeIndex($event, 'label')">{{ 'DISCOVER.SEE_MORE' | translate }}</span>
-            </div>
-
-          </div>
-        </div>
-         /add filter button is clicked, showing the container
-
-      </div>
-       /Total number of innovations and filters
-      -->
-
-      <!-- Display the spineer when filter is being added or removed -->
-      <div *ngIf="addingFilter" class="filter-spinner-wrapper">
-        <app-shared-loader></app-shared-loader>
-      </div>
-
-      <!-- Overlay to show black background when the filter button is clicked -->
-      <div [ngClass]="{ 'filter-wrapper-overlay': showFilterContainer }" (click)="cancelFilter($event)"></div>
-
-      <!-- When no innovation to show -->
-      <div *ngIf="totalResults === 0" class="no-innovation">
-        <div class="bot-wrapper text-center">
-        <span class="bot-rect">
-          {{ 'DISCOVER.NO_INNOVATION' | translate }}
-        </span>
-          <br>
-          <img src="https://res.cloudinary.com/umi/image/upload/app/default-images/bot-triangle.svg" class="bot-trian">
-          <div>
-            <img
-              src="https://res.cloudinary.com/umi/image/upload/v1532678059/app/default-images/error-bot.svg"
-              class="bot-image"
-              alt="Bot">
-          </div>
-        </div>
-      </div>
-      <!-- /When no innovation to show -->
-
-      <!-- Innovations -->
-      <div *ngIf="totalResults > 0" class="innovations-wrapper">
-        <div *ngFor="let innovation of innovationCards | slice:startInnoIndex:endInnoIndex" class="innov-wrapper">
-          <div class="innov-content">
-            <a [routerLink]="[ innovation.innovation_reference, innovation.lang ]" target="_blank">
-
-              <!-- Image -->
-              <div class="innov-img">
-                <img [src]="getSrc(innovation)" alt="No media">
-              </div>
-
-              <!-- Body part -->
-              <div class="innov-body">
-                <h1 class="main-heading">{{ innovation.title | DiscoverSummaryPipe:80 }}</h1>
-                <p [innerHTML]="innovation.summary| DiscoverSummaryPipe:240"></p>
-              </div>
-
+          <!-- img -->
+          <div class="card-img">
+            <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
+              <img [src]="getImageSrc(innovation)" alt="No media">
             </a>
           </div>
+
+          <!-- body -->
+          <div class="card-body">
+
+            <!-- title and tags -->
+            <div class="card-title">
+
+              <!-- title -->
+              <a [routerLink]="[ getInnovationDetail('reference', innovation), getInnovationDetail('lang', innovation) ]" target="_blank">
+                <h1 class="main-heading">{{ getInnovationDetail('title', innovation) | DiscoverSummaryPipe:53 }}</h1>
+              </a>
+
+              <!-- tags -->
+              <div class="tags-wrapper">
+                <div *ngFor="let tag of getInnovationTags(innovation)" class="tag-content">
+                  #{{ tag?.label | multiling:browserLang() | FormatText }}
+                </div>
+              </div>
+
+            </div>
+
+            <!-- summary -->
+            <p class="summary-text">{{ getInnovationDetail('summary', innovation) }}</p>
+
+          </div>
+
+          <!-- footer -->
+          <div class="card-footer">
+            <ng-container *ngIf="getLangs(innovation).length > 0">
+              {{ 'DISCOVER.FOOTER_TEXT' | translate }}
+              <div *ngFor="let lang of getLangs(innovation)">
+                <a [routerLink]="[ getInnovationDetail('reference', innovation), lang ]" target="_blank">
+                  <span class="text-link">{{ lang }}</span>
+                </a>
+                <span *ngIf="getLangs(innovation).length > 1" class="pipe">|</span>
+              </div>
+            </ng-container>
+          </div>
+
         </div>
       </div>
-      <!-- /Innovations -->
+    </div>
+    <!-- /Innovation cards -->
 
-      <!-- Pagination -->
-      <div *ngIf="totalResults > 0" class="pagination-wrapper">
-        <app-pagination
-          [total]="totalResults"
-          [propertyName]="'app-discover'"
-          [configValue]="paginationValue"
-          (configChange)="changePagination($event)">
-        </app-pagination>
+    <!-- No result found -->
+    <ng-container *ngIf="noResultFound">
+      <div class="section-no-result">
+        <img src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png" class="img-responsive">
+        <h1 class="main-heading">{{ 'DISCOVER.NO_RESULT.HEADING' | translate }}</h1>
+        <p>{{ 'DISCOVER.NO_RESULT.MESSAGE.A' | translate }}</p>
+        <p>{{ 'DISCOVER.NO_RESULT.MESSAGE.B' | translate }}</p>
       </div>
-      <!-- Pagination -->
-
     </ng-container>
-    <!-- Spinner display is off -->
+    <!-- /No result found -->
+
+
+    <!-- Pagination section -->
+    <div *ngIf="localResults > 0 && !noResultFound" class="section-pagination">
+      <app-pagination
+        [total]="localResults"
+        [propertyName]="'discover-page'"
+        [configValue]="paginationValue"
+        (configChange)="onChangePagination($event)">
+      </app-pagination>
+    </div>
+    <!-- Pagination section -->
+
 
   </div>
 </section>
