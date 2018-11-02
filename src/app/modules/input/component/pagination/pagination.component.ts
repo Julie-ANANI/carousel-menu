@@ -15,14 +15,14 @@ export class PaginationComponent implements OnInit {
     this._numPages = Math.ceil(this._total / this.perPage);
   };
 
-  @Input() propertyName: string;
-
   @Input() set configValue(value: PaginationTemplate) {
     if (this.checkConfig(value.limit)) {
       this.initialConfigValues.limit = JSON.parse(JSON.stringify(value.limit));
       this.initialConfigValues.offset = JSON.parse(JSON.stringify(value.offset));
     }
   }
+
+  @Input() propertyName: string;
 
   @Output() configChange = new EventEmitter <any>();
 
@@ -36,7 +36,9 @@ export class PaginationComponent implements OnInit {
   };
 
   private _localOffset = 0;
+
   private _limit = 0;
+
   private _total = 0;
 
   constructor(private translateNotificationService: TranslateNotificationsService) {}
@@ -48,13 +50,14 @@ export class PaginationComponent implements OnInit {
   initialize() {
     this._limit = this.initialConfigValues.limit;
 
-    const localLimit = parseInt(localStorage.getItem(`${this.propertyName}-limit`) || '10', 10);
+    const localLimit = parseInt(localStorage.getItem(`${this.propertyName}-limit`), 10);
 
-    if (this.propertyName && localLimit && this.checkConfig(localLimit)) {
+    if (localLimit !== null && this.propertyName && this.checkConfig(localLimit)) {
       this.initialConfigValues.limit = localLimit;
     }
 
     this._numPages = Math.ceil(this._total / this.perPage);
+
     this._update();
 
   }
