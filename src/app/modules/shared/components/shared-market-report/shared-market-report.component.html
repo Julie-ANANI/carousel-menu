@@ -754,18 +754,31 @@
           <!-- Export options -->
           <div class="export-options">
 
-            <!-- CSV -->
+            <!-- RESP Pdf -->
             <div class="options">
               <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
-              <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.EXCEL' | translate }}</h6>
-              <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/csv.png">
+              <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.PDF' | translate }}</h6>
+              <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/pdf.png">
               <div
                 class="radio-button"
-                [ngClass]="{ 'active': 'excel' === exportType }"
-                (click)="assignExportType($event, 'excel')">
+                [ngClass]="{ 'active': 'respReport' === exportType }"
+                (click)="assignExportType($event, 'respReport')">
                 <span>•</span>
               </div>
             </div>
+
+              <!-- CSV -->
+              <div class="options">
+                  <h5 class="type-heading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.A' | translate }}</h5>
+                  <h6 class="type-subHeading">{{ 'MARKET_REPORT.MODAL.EXPORT_INNOVATION_CONTENT.EXCEL' | translate }}</h6>
+                  <img src="https://res.cloudinary.com/umi/image/upload/v1540285006/app/default-images/icons/csv.png">
+                  <div
+                          class="radio-button"
+                          [ngClass]="{ 'active': 'excel' === exportType }"
+                          (click)="assignExportType($event, 'excel')">
+                      <span>•</span>
+                  </div>
+              </div>
 
             <!-- Executive report -->
             <div class="options">

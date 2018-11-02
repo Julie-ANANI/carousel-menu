@@ -80,6 +80,11 @@ export class AnswerService {
     return environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (client ? '?client=true' : '');
   }
 
+  public getReportUrl(innovationId: string, lang: string): string {
+    //reporting/job/answers/5b61b37ed45f9857394a9a1f?lang=fr
+    return environment.apiUrl + '/reporting/job/answers/' + innovationId + (lang ? `?lang=${lang}` : '?lang=en');
+  }
+
   public importFromGmail(file: File): Observable<any> {
     const url = environment.apiUrl + '/innovation/importAnswers';
     return this._http.upload(url, file)

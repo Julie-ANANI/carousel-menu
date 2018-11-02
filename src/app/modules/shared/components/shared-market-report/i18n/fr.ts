@@ -69,6 +69,7 @@ export const MARKET_REPORT = {
     'EXPORT_INNOVATION_CONTENT' : {
       'A': 'Toutes les réponses',
       'EXCEL': 'pour Excel',
+      'PDF': 'en PDF',
       'B': 'Executive Report',
       'C': '4 pages',
       'AROUND': 'Environ',

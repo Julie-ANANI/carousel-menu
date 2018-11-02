@@ -706,12 +706,18 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
     this.innovationCommonService.saveInnovation(this._innovation);
 
-    if (this._exportType === 'excel') {
-      this.downloadExcel(event);
-    }
-
-    if (this._exportType === 'executiveReport') {
-      this.printExecutiveReport(event);
+    switch(this._exportType) {
+      case('excel'):
+        this.downloadExcel(event);
+        break;
+      case('executiveReport'):
+        this.printExecutiveReport(event);
+        break;
+      case('respReport'):
+        this.getReportUrl(event);
+        break;
+      default:
+        //Do nothing
     }
 
     this._exportType = '';
@@ -726,6 +732,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   private downloadExcel(event: Event) {
     event.preventDefault();
     window.open( this.answerService.getExportUrl(this._innovation._id, true));
+  }
+
+  private getReportUrl(event: Event) {
+    event.preventDefault();
+    window.open( this.answerService.getReportUrl(this._innovation._id, 'en'));
   }
 
 
