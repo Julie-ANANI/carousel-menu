@@ -10,6 +10,14 @@ export const DISCOVER = {
 
   'CLOSE': 'close',
 
+  'BUTTON_SHARE': 'Share This Result',
+
+  'MODAL': {
+    'TITLE': 'Share Board',
+    'HEADING': 'Share this Url with your colleges, friends...',
+    'CONTENT': 'Copy this Url:'
+  },
+
   'TITLE': 'Discover',
 
   'PAGE_DESCRIPTION': 'All projects we help to grow up',
