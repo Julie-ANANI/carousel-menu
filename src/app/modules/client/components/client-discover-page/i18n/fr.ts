@@ -10,6 +10,8 @@ export const DISCOVER = {
 
   'CLOSE': 'rapproché',
 
+  'BUTTON_SHARE': 'Partager ce résultat',
+
   'TITLE': 'Découvrir',
 
   'PAGE_DESCRIPTION': 'Tous les projets que nous aidons à grandir',

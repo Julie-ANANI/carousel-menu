@@ -9,6 +9,7 @@ import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { InnovCard } from '../../../../models/innov-card';
 import { PaginationTemplate } from '../../../../models/pagination';
 import { animate, query, style, transition, trigger, stagger, keyframes } from '@angular/animations';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -94,6 +95,12 @@ export class ClientDiscoverPageComponent implements OnInit {
   private _moreTagsIndex = 20; // to display the number of label item.
 
   private _noResultFound = false; // when no result is while respect to search filed.
+
+  private _shareModal = false; // open the modal to share the filtered result.
+
+  private _shareUrl = ''; // share url.
+
+  private _tagUrl = ''; // contains all the applied tag in a string.
 
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
@@ -348,6 +355,41 @@ export class ClientDiscoverPageComponent implements OnInit {
 
 
   /***
+   * this function is to generate the url to share and open the modal.
+   * @param event
+   */
+  onClickShare(event: Event) {
+    event.preventDefault();
+
+    this._tagUrl = '';
+
+    this._appliedFilters.forEach((tag: Tag) => {
+      this._tagUrl += MultilingPipe.prototype.transform(tag.label, this.browserLang()).toLowerCase() + '+';
+    });
+
+    this._shareUrl = `${this.getUrl()}/discover/result?tags=${this._tagUrl.slice(0, this._tagUrl.length - 1)}`;
+
+    this._shareModal = true;
+
+  }
+
+
+  getUrl(): string {
+    return environment.innovationUrl;
+  }
+
+
+  /***
+   * this function closes the share modal.
+   * @param event
+   */
+  closeModal(event: Event) {
+    event.preventDefault();
+    this._shareModal = false;
+  }
+
+
+  /***
    * this functions is called when the user types in the search field.
    * @param value
    */
@@ -571,5 +613,18 @@ export class ClientDiscoverPageComponent implements OnInit {
   get noResultFound(): boolean {
     return this._noResultFound;
   }
+
+  get shareModal(): boolean {
+    return this._shareModal;
+  }
+
+  get shareUrl(): string {
+    return this._shareUrl;
+  }
+
+  get tagUrl(): string {
+    return this._tagUrl;
+  }
+
 
 }
