@@ -10,6 +10,7 @@ import { InnovCard } from '../../../../models/innov-card';
 import { PaginationTemplate } from '../../../../models/pagination';
 import { animate, query, style, transition, trigger, stagger, keyframes } from '@angular/animations';
 import { environment } from '../../../../../environments/environment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-client-discover-page',
@@ -105,7 +106,8 @@ export class ClientDiscoverPageComponent implements OnInit {
   constructor(private translateTitleService: TranslateTitleService,
               private innovationService: InnovationService,
               private translateNotificationsService: TranslateNotificationsService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.MENU_BAR_TITLE');
@@ -140,6 +142,7 @@ export class ClientDiscoverPageComponent implements OnInit {
       this._totalResults = response._metadata.totalCount;
       this.getTitles();
       this.getAllTags();
+      this.checkSharedResult();
       this.initialize();
     }, () => {
       this._displaySpinner = false;
@@ -196,6 +199,28 @@ export class ClientDiscoverPageComponent implements OnInit {
   browserLang(): string {
     return this.translateService.getBrowserLang() || 'en';
   }
+
+
+  /***
+   * this function is to check if we contain any params or not.
+   */
+  private checkSharedResult() {
+    this.activatedRoute.queryParams.subscribe((params: Array<any>) => {
+      if (params['tag']) {
+        this._appliedFilters = [];
+        params['tag'].forEach((tagId: string) => {
+          const index = this._allTags.findIndex((tag: Tag) => tag._id === tagId);
+          if (index !== -1) {
+            const existTagIndex = this._appliedFilters.findIndex((filter: Tag) => filter._id === tagId);
+            if (existTagIndex === -1) {
+              this._appliedFilters.push(this._allTags[index]);
+            }
+          }
+        });
+      }
+    });
+  }
+
 
 
   /***
@@ -364,10 +389,10 @@ export class ClientDiscoverPageComponent implements OnInit {
     this._tagUrl = '';
 
     this._appliedFilters.forEach((tag: Tag) => {
-      this._tagUrl += MultilingPipe.prototype.transform(tag.label, this.browserLang()).toLowerCase() + '+';
+      this._tagUrl += 'tag=' + tag._id + '&';
     });
 
-    this._shareUrl = `${this.getUrl()}/discover/result?tags=${this._tagUrl.slice(0, this._tagUrl.length - 1)}`;
+    this._shareUrl = `${this.getUrl()}/discover/result?${this._tagUrl.slice(0, this._tagUrl.length - 1)}`;
 
     this._shareModal = true;
 

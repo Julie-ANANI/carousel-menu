@@ -714,7 +714,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
         this.printExecutiveReport(event);
         break;
       case('respReport'):
-        this.getReportUrl(event);
+        this.printAnswers(event);
         break;
       default:
         // Do nothing
@@ -738,22 +738,22 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * this function will download the response.
    * @param event
    */
-  private getReportUrl(event: Event) {
+  private printAnswers(event: Event) {
+
     event.preventDefault();
-    this.answerService.getReportHTML(this._innovation._id, 'en')
-      .subscribe(html=>{
-        let myWindow = window.open('', '');
-        myWindow.document.write(html);
-        setTimeout(()=>{
-          //myWindow.document.close();
-          myWindow.focus();
-          myWindow.print();
-          myWindow.close();
+
+    this.answerService.getReportHTML(this._innovation._id, 'en').subscribe(html => {
+        const reportWindow = window.open('', '');
+        reportWindow.document.write(html);
+        setTimeout(() => {
+          reportWindow.focus();
+          reportWindow.print();
+          reportWindow.close();
         }, 500)
-      }, err=>{
-        console.error(err);
-      })
-    //window.open( this.answerService.getReportUrl(this._innovation._id, 'en'));
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      });
+
   }
 
 

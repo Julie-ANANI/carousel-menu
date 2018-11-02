@@ -12,6 +12,12 @@ export const DISCOVER = {
 
   'BUTTON_SHARE': 'Partager ce résultat',
 
+  'MODAL': {
+    'TITLE': 'Conseil d\'administration',
+    'HEADING': 'Partagez cette Url avec vos collèges, amis..',
+    'CONTENT': 'Copy this Url:'
+  },
+
   'TITLE': 'Découvrir',
 
   'PAGE_DESCRIPTION': 'Tous les projets que nous aidons à grandir',

@@ -93,6 +93,13 @@ const clientRoutes: Routes = [
         ]
       },
       {
+        path: 'discover/result',
+        children: [
+          { path: '', component: ClientDiscoverPageComponent, pathMatch: 'full' },
+          { path: ':id/:lang', component: DiscoverDescriptionComponent, pathMatch: 'full'}
+        ]
+      },
+      {
         path: 'synthesis',
         children: [
           { path: '', component: SynthesisListComponent, pathMatch: 'full', canActivate: [AuthGuard] },
