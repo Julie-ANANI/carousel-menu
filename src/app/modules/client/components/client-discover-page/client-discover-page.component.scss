@@ -77,6 +77,11 @@
   }
 
 
+  .section-share {
+    margin-top: 2.5rem;
+  }
+
+
   .section-heading {
     display: flex;
     justify-content: space-between;
@@ -246,6 +251,20 @@
   }
 
 
+}
+
+
+.discover-container {
+  max-width: 650px !important;
+}
+
+.discover-modal-heading {
+  font-size: 1.3125rem;
+}
+
+.discover-modal-text {
+  font-weight: 400;
+  font-size: .9375rem;
 }
 
 
