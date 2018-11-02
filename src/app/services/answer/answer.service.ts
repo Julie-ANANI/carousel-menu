@@ -80,9 +80,11 @@ export class AnswerService {
     return environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (client ? '?client=true' : '');
   }
 
-  public getReportUrl(innovationId: string, lang: string): string {
-    //reporting/job/answers/5b61b37ed45f9857394a9a1f?lang=fr
-    return environment.apiUrl + '/reporting/job/answers/' + innovationId + (lang ? `?lang=${lang}` : '?lang=en');
+  public getReportHTML(innovationId: string, lang: string): Observable<any>  {
+    const url = environment.apiUrl + '/reporting/job/answers/' + innovationId + (lang ? `?lang=${lang}` : '?lang=en');
+    return this._http.get(url)
+      .map((res: Response) => res['_body'])
+      .catch((error: Response) => Observable.throw(error.text()));
   }
 
   public importFromGmail(file: File): Observable<any> {
