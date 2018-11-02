@@ -740,7 +740,20 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    */
   private getReportUrl(event: Event) {
     event.preventDefault();
-    window.open( this.answerService.getReportUrl(this._innovation._id, 'en'));
+    this.answerService.getReportHTML(this._innovation._id, 'en')
+      .subscribe(html=>{
+        let myWindow = window.open('', '');
+        myWindow.document.write(html);
+        setTimeout(()=>{
+          //myWindow.document.close();
+          myWindow.focus();
+          myWindow.print();
+          myWindow.close();
+        }, 500)
+      }, err=>{
+        console.error(err);
+      })
+    //window.open( this.answerService.getReportUrl(this._innovation._id, 'en'));
   }
 
 
