@@ -1,9 +1,21 @@
 <!-- Showing spinner for 400ms -->
 <ng-container *ngIf="displayLoading">
   <div class="spinner-wrapper">
+
+
+    <!-- Company logo -->
+    <div *ngIf="getDomain() === 'umi'" class="logo-wrapper">
+      <img src="{{ getLogo() }}" alt="UMI" height="40px">
+    </div>
+
+    <!-- Loader -->
     <app-shared-loader></app-shared-loader>
+
+
   </div>
 </ng-container>
+
+
 
 <!-- Showing main body -->
 <ng-container *ngIf="!displayLoading">

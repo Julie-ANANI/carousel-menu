@@ -8,6 +8,7 @@ import 'rxjs/add/operator/pairwise';
 import { NavigationEnd, Router } from '@angular/router';
 import { CurrentRouteService } from './services/frontend/current-route/current-route.service';
 import { ListenerService } from './services/frontend/listener/listener.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -102,6 +103,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
   get displayLoader(): boolean {
     return this._displayLoader;
+  }
+
+  getLogo(): string {
+    return environment.logoURL;
+  }
+
+  getDomain(): string {
+   return environment.domain;
   }
 
   ngOnDestroy() {
