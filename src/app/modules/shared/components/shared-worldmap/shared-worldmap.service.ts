@@ -1,5 +1,4 @@
-import { /*ComponentFactoryResolver, Inject,*/ Injectable, ViewContainerRef } from '@angular/core';
-// import { SharedWorldmapComponent } from './shared-worldmap.component';
+import { Injectable, ViewContainerRef } from '@angular/core';
 
 const continents = [
   'africa',
@@ -15,8 +14,7 @@ const continents = [
 export class SharedWorldmapService {
 
   private _viewContainer: ViewContainerRef;
-
-  constructor(/*@Inject(ComponentFactoryResolver) private _factoryResolver*/) {}
+  private _memoizeCountries: {[continent: string]: Array<string>} = {};
 
   public setRootViewContainerRef(viewContainerRef: ViewContainerRef) {
     this._viewContainer = viewContainerRef;
@@ -24,19 +22,25 @@ export class SharedWorldmapService {
 
   /*
    * Return a concatened list of all the countries inside the selected continents.
-   * TODO: add memoization to avoid running always the same costly calls to the DOM (ngrx/store ?)
    */
   public getCountriesList(continentsToExplore: {[continent: string]: boolean}): Array<string> {
     const countries_list: Array<string> = [];
     continents.forEach((continent) => {
       if (continentsToExplore[continent]) {
-        const continent_elems = this._viewContainer.element.nativeElement.getElementsByClassName(continent);
-        Array.prototype.forEach.call(continent_elems, (continent_el: HTMLElement) => {
-          const countries_elems = continent_el.getElementsByTagName('path');
-          Array.prototype.forEach.call(countries_elems, (country_el: HTMLElement) => {
-            countries_list.push(...country_el.getAttribute('class').split(' '));
+        if (Array.isArray(this._memoizeCountries[continent])) {
+          countries_list.push(...this._memoizeCountries[continent]);
+        } else {
+          const countries = [];
+          const continent_elems = this._viewContainer.element.nativeElement.getElementsByClassName(continent);
+          Array.prototype.forEach.call(continent_elems, (continent_el: HTMLElement) => {
+            const countries_elems = continent_el.getElementsByTagName('path');
+            Array.prototype.forEach.call(countries_elems, (country_el: HTMLElement) => {
+              countries.push(...country_el.getAttribute('class').split(' '));
+            });
           });
-        });
+          this._memoizeCountries[continent] = countries;
+          countries_list.push(...countries);
+        }
       }
     });
     return countries_list;
