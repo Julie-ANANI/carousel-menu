@@ -622,14 +622,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   /***
    * This function is to filter by the countries.
-   * @param {{countries: Array<string>; allChecked: boolean}} event
+   * @param {{continents: {[continent: string]: string}, allChecked: boolean}} event
    */
-  filterByCountries(event: {countries: Array<string>, allChecked: boolean}): void {
+  filterByContinents(event: {continents: {[continent: string]: string}, allChecked: boolean}): void {
     if (!event.allChecked) {
       this.filterService.addFilter(
         {
           status: 'COUNTRIES',
-          value: event.countries,
+          value: event.continents,
           questionId: 'worldmap',
           questionTitle: {en: 'worldmap', fr: 'mappemonde'}
         }

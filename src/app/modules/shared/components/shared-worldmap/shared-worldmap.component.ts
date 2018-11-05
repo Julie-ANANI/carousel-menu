@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Inject, Input, Output, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
 import { SharedWorldmapService } from './shared-worldmap.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { SharedWorldmapService } from './shared-worldmap.service';
   styleUrls: ['shared-worldmap.component.scss']
 })
 
-export class SharedWorldmapComponent {
+export class SharedWorldmapComponent implements OnInit{
 
   @Input() width = '800px';
   @Input() countriesColor: string;
@@ -42,7 +42,6 @@ export class SharedWorldmapComponent {
   }
 
   @Output() updateContinent = new EventEmitter<any>();
-  @Output() updateCountries = new EventEmitter<{countries: Array<string>, allChecked: boolean}>();
 
   private _continents = {
     africa: false,
@@ -55,9 +54,11 @@ export class SharedWorldmapComponent {
   };
 
   constructor(private _elem: ElementRef,
-              @Inject(SharedWorldmapService) private _worldmap,
-              @Inject(ViewContainerRef) viewContainerRef) {
-    this._worldmap.setRootViewContainerRef(viewContainerRef);
+              private _worldmap: SharedWorldmapService,
+              private _viewContainerRef: ViewContainerRef) {}
+
+  ngOnInit() {
+    this._worldmap.loadCountriesFromViewContainerRef(this._viewContainerRef);
   }
 
   /**
@@ -95,9 +96,8 @@ export class SharedWorldmapComponent {
 
     if (this.isEditable) {
       this._continents[continent] = !this._continents[continent];
-      this.updateContinent.emit({continents: this._continents});
-      this.updateCountries.emit({
-        countries: this._worldmap.getCountriesList(this._continents),
+      this.updateContinent.emit({
+        continents: this._continents,
         allChecked: this.areAllContinentChecked()
       });
     }
