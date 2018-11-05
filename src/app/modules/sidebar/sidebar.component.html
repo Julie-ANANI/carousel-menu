@@ -23,7 +23,7 @@
       </header>
 
       <!-- Content -->
-      <ng-content></ng-content>
+      <ng-content (close)="toggleState($event, content)"></ng-content>
 
     </div>
 
