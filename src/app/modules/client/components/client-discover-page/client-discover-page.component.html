@@ -32,15 +32,18 @@
       </div>
 
       <!-- More tag label -->
-      <p [ngStyle]="{ 'display': allTags.length > 22 && allTags.length !== moreTagsIndex ? 'flex' : 'none' }">
-        <span class="text-link" (click)="onClickMore($event)">
+      <p>
+        <span
+
+          class="text-link"
+          (click)="onClickMore($event)">
           {{ 'DISCOVER.SEE_MORE' | translate }}
         </span>
         <span
-          [ngStyle]="{ 'visibility': moreTagsIndex > 44 ? 'visible' : 'hidden' }"
           class="text-link"
           (click)="onClickClose($event)">
            {{ 'DISCOVER.CLOSE' | translate }}
+          <i class="fas fa-angle-up"></i>
         </span>
       </p>
 

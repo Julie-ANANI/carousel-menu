@@ -455,7 +455,7 @@ export class ClientDiscoverPageComponent implements OnInit {
     let src = '';
     const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
 
-    if (innovation.principalMedia && innovation.principalMedia.url) {
+    if (innovation.principalMedia && innovation.principalMedia.url && innovation.principalMedia.type === 'PHOTO') {
       src = innovation.principalMedia.url;
     } else if (innovation.innovationCards) {
       const index = innovation.innovationCards.findIndex((card: InnovCard) => card.lang === this.browserLang());
