@@ -475,7 +475,17 @@ export class ClientDiscoverPageComponent implements OnInit {
     }
 
     if (src === '') {
-      src = defaultSrc;
+      const index = innovation.innovationCards.findIndex((card: InnovCard) => card.lang !== this.browserLang());
+      if (index !== -1) {
+        if (innovation.innovationCards[index].media.length > 0) {
+          const photoIndex = innovation.innovationCards[index].media.findIndex((image) => image.type === 'PHOTO');
+          if (photoIndex !== -1) {
+            src = innovation.innovationCards[index].media[photoIndex].url;
+          }
+        }
+      } else {
+        src = defaultSrc;
+      }
     }
 
     return src;
@@ -549,11 +559,13 @@ export class ClientDiscoverPageComponent implements OnInit {
   getLangs(innovation: Innovation): Array<string> {
     const langs: Array<string> = [];
 
-    innovation.innovationCards.forEach((card: InnovCard) => {
-      if (card.lang !== this.browserLang()) {
-        langs.push(card.lang);
-      }
-    });
+    if (innovation.innovationCards.length > 1) {
+      innovation.innovationCards.forEach((card: InnovCard) => {
+        if (card.lang !== this.browserLang()) {
+          langs.push(card.lang);
+        }
+      });
+    }
 
     return langs.sort();
   }
