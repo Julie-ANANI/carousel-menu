@@ -35,21 +35,13 @@ import { ActivatedRoute } from '@angular/router';
 
         query(':enter', style({ opacity: 0 }), { optional: true }),
 
-        query(':enter', stagger('100ms', [
+        query(':enter', stagger('50ms', [
           animate('.5s ease-in-out', keyframes([
             style({ opacity: 0, transform: 'translateX(15%)', offset: 0 }),
             style({ opacity: 1, transform: 'translateX(0)',     offset: 1.0 }),
             ])
           )]
         ), { optional: true }),
-
-        query(':leave', stagger('20ms', [
-          animate('.35s ease-in-out', keyframes([
-            style({ opacity: 1, transform: 'translateX(0)', offset: 0 }),
-            style({ opacity: 0, transform: 'translateX(-15%)', offset: 1.0 }),
-            ])
-          )]
-        ), { optional: true })
 
       ])
     ])
@@ -93,7 +85,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   private _endingIndex: number; // upto which index we have to show the innovation.
 
-  private _moreTagsIndex = 20; // to display the number of label item.
+  private _moreTagsIndex = 22; // to display the number of label item.
 
   private _noResultFound = false; // when no result is while respect to search filed.
 
@@ -374,8 +366,8 @@ export class ClientDiscoverPageComponent implements OnInit {
 
     if (this._moreTagsIndex < this._allTags.length) {
       const diff = this._allTags.length - this._moreTagsIndex;
-      if (diff >= 20) {
-        this._moreTagsIndex += 20;
+      if (diff >= 22) {
+        this._moreTagsIndex += 22;
       } else {
         this._moreTagsIndex += diff;
       }
@@ -386,7 +378,7 @@ export class ClientDiscoverPageComponent implements OnInit {
 
   onClickClose(event: Event) {
     event.preventDefault();
-    this._moreTagsIndex = 20;
+    this._moreTagsIndex = 22;
   }
 
 
@@ -480,7 +472,9 @@ export class ClientDiscoverPageComponent implements OnInit {
           }
         }
       }
-    } else {
+    }
+
+    if (src === '') {
       src = defaultSrc;
     }
 

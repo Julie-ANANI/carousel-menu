@@ -56,10 +56,13 @@
     }
 
     p {
+      display: flex;
       margin-top: .9375rem;
       padding-bottom: 0;
       font-weight: 600;
       font-size: .875rem;
+      align-items: center;
+      justify-content: space-between;
 
       .close-text {
         color: $meta-color;

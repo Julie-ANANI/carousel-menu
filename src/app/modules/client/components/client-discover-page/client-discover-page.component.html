@@ -32,13 +32,13 @@
       </div>
 
       <!-- More tag label -->
-      <p [ngStyle]="{ 'display': allTags.length > 20 && allTags.length !== moreTagsIndex ? 'flex' : 'none' }">
+      <p [ngStyle]="{ 'display': allTags.length > 22 && allTags.length !== moreTagsIndex ? 'flex' : 'none' }">
         <span class="text-link" (click)="onClickMore($event)">
           {{ 'DISCOVER.SEE_MORE' | translate }}
         </span>
         <span
-          [ngStyle]="{ 'visibility': allTags.length > 40 ? 'visible' : 'hidden' }"
-          class="close-text"
+          [ngStyle]="{ 'visibility': moreTagsIndex > 44 ? 'visible' : 'hidden' }"
+          class="text-link"
           (click)="onClickClose($event)">
            {{ 'DISCOVER.CLOSE' | translate }}
         </span>
@@ -49,7 +49,7 @@
 
 
     <!-- Share result section-->
-    <div *ngIf="appliedFilters.length > 0" class="section-share">
+    <div *ngIf="appliedFilters.length > 0 && !displaySpinner" class="section-share">
       <button
         type="button"
         class="btn ghost-secondary btn-xs"
@@ -111,7 +111,7 @@
             </div>
 
             <!-- summary -->
-            <p class="summary-text">{{ getInnovationDetail('summary', innovation) }}</p>
+            <div class="summary-text" [innerHTML]="getInnovationDetail('summary', innovation)"></div>
 
           </div>
 

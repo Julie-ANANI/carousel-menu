@@ -8,7 +8,7 @@ export const DISCOVER = {
 
   'SEE_MORE': 'See more sectors',
 
-  'CLOSE': 'close',
+  'CLOSE': 'less',
 
   'BUTTON_SHARE': 'Share this page',
 
