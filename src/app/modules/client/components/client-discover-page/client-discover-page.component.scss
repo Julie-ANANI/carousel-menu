@@ -12,7 +12,7 @@
       font-weight: 600;
       margin-bottom: .9375rem;
       font-size: .75rem;
-      animation-name: fadeInDown;
+      animation-name: fadeIn;
       animation-duration: 1s;
       animation-timing-function: ease-in-out;
     }
@@ -99,7 +99,7 @@
     .main-heading {
       font-size: 1.3125rem;
       flex: 2;
-      animation-name: fadeInLeft;
+      animation-name: fadeIn;
       animation-duration: .5s;
       animation-timing-function: ease-in-out;
     }
@@ -107,7 +107,7 @@
     .search {
       flex: 1;
       margin-bottom: 1.57rem;
-      animation-name: fadeInRight;
+      animation-name: fadeIn;
       animation-duration: .5s;
       animation-timing-function: ease-in-out;
     }

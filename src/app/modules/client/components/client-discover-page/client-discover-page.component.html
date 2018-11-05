@@ -13,7 +13,8 @@
     <div *ngIf="allTags.length > 0" class="section-tags">
 
       <!-- heading -->
-      <h6 class="main-heading">{{ 'DISCOVER.TAGS.HEADING' | translate }}</h6>
+      <h6 *ngIf="appliedFilters.length === 0" class="main-heading">{{ 'DISCOVER.TAGS.HEADING' | translate }}</h6>
+      <h6 *ngIf="appliedFilters.length > 0" class="main-heading">{{ appliedFilters.length }} {{ 'DISCOVER.TAGS.HEADING_2' | translate }}</h6>
 
       <!-- tags -->
       <div class="tags-wrapper" @tagAnimation>
@@ -32,14 +33,15 @@
       </div>
 
       <!-- More tag label -->
-      <p>
+      <p [ngStyle]="{ 'display': allTags.length > 22 ? 'flex' : 'none' }">
         <span
-
+          [ngStyle]="{ 'visibility': allTags.length !== moreTagsIndex ? 'visible' : 'hidden' }"
           class="text-link"
           (click)="onClickMore($event)">
           {{ 'DISCOVER.SEE_MORE' | translate }}
         </span>
         <span
+          [ngStyle]="{ 'visibility': moreTagsIndex > 22 ? 'visible' : 'hidden' }"
           class="text-link"
           (click)="onClickClose($event)">
            {{ 'DISCOVER.CLOSE' | translate }}

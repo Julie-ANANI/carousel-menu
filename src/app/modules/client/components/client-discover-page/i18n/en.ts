@@ -3,7 +3,8 @@ export const DISCOVER = {
   'MENU_BAR_TITLE': 'Discover Innovations',
 
   'TAGS': {
-    'HEADING': 'Pick up sector(s) to see projects related'
+    'HEADING': 'Pick up sector(s) to see projects related',
+    'HEADING_2': 'sector(s) selected.'
   },
 
   'SEE_MORE': 'See more sectors',
