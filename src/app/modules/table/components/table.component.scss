@@ -1,3 +1,22 @@
+@import "../../../../style/variables";
+
+#table-component {
+
+
+  .spinner-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+
+  .table-wrapper {
+
+  }
+
+
+}
+
+
 .table-edit-button {
   float: right;
 }
@@ -35,7 +54,4 @@ th.pointable:hover {
   margin-bottom: 17px;
 }
 
-.bot-wrapper {
-  margin: 30px 0;
-}
 

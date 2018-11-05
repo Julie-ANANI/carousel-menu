@@ -1,15 +1,36 @@
-<!-- We show the number of results -->
+<div id="table-component">
+
+
+  <!-- Fetching result -->
+  <div *ngIf="total === 0" class="spinner-wrapper">
+    <app-shared-loader></app-shared-loader>
+  </div>
+
+
+  <!-- Fetching done -->
+  <div *ngIf="total > 0" class="table-wrapper">
+
+  </div>
+
+
+</div>
+
+<!--
+
+
+
+&lt;!&ndash; We show the number of results &ndash;&gt;
 <div *ngIf="isHeadable" class="table-title">{{total}} {{ title | translate }}</div>
 
 
-<!-- If we want to filter by columns (not local) -->
-<sqFilterMulti *ngIf="isFiltrable"
+&lt;!&ndash; If we want to filter by columns (not local) &ndash;&gt;
+<app-shared-multi-filter *ngIf="isFiltrable"
                [config]="config"
                (configChange)="changeConfig($event)"
                [props]="columns">
-</sqFilterMulti>
+</app-shared-multi-filter>
 
-<!-- If there are no results -->
+&lt;!&ndash; If there are no results &ndash;&gt;
 <div class="bot-wrapper text-center" *ngIf="total === 0">
   <span class="bot-rect">{{'COMMON.TABLE.NO-RESULTS' | translate}}</span>
   <br>
@@ -17,12 +38,12 @@
   <div><img src="https://res.cloudinary.com/umi/image/upload/app/default-images/juan-bot.svg" width="" height="120"></div>
 </div>
 
-<!-- Else we begin to create the table -->
+&lt;!&ndash; Else we begin to create the table &ndash;&gt;
 <span *ngIf="total !== 0">
 
   <table class="table" wt-responsive-table>
     <thead>
-        <!-- If there are no selected rows we show columns name in the header-->
+        &lt;!&ndash; If there are no selected rows we show columns name in the header&ndash;&gt;
         <ng-container *ngIf="selectedRows==0">
           <tr>
             <th *ngIf="isSelectable" width="50"><input type="checkbox" (change)="selectAll($event)"/>
@@ -46,7 +67,7 @@
           </tr>
         </ng-container>
 
-        <!-- Else we show the number of selected rows, the several actions to perform and the button delete (if isDeletable) -->
+        &lt;!&ndash; Else we show the number of selected rows, the several actions to perform and the button delete (if isDeletable) &ndash;&gt;
         <ng-container *ngIf="selectedRows > 0">
           <tr>
             <th *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)" [checked]="true"/>
@@ -86,38 +107,38 @@
         <td *ngIf="isSelectable" (click)="selectRow(key)"><input type="checkbox" [checked]="isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])"/>
           <div class="square-check primary"><i class="icon icon-check"></i></div></td>
 
-        <!-- Foreach columns -->
+        &lt;!&ndash; Foreach columns &ndash;&gt;
         <td *ngFor="let column of columns; let i = index">
           <span (click)="selectRow(key)">
             <ng-container [ngSwitch]="getType(column)">
 
-              <!-- If column type is  TEXT -->
+              &lt;!&ndash; If column type is  TEXT &ndash;&gt;
               <span *ngSwitchDefault>
                 <span *ngFor="let attr of getAttrs(column)">{{(getContentValue(key, attr)|| " - ").toString() | ellipsis:50}} </span>
               </span>
 
-              <!-- If column type is COUNTRY -->
+              &lt;!&ndash; If column type is COUNTRY &ndash;&gt;
               <app-country-flag *ngSwitchCase="'COUNTRY'" [country]="(getContentValue(key, getAttrs(column)[0]) || '')"></app-country-flag>
 
-              <!-- If column type is PICTURE -->
+              &lt;!&ndash; If column type is PICTURE &ndash;&gt;
               <div class="picture" *ngSwitchCase="'PICTURE'">
                 <img [src]="getContentValue(key, getAttrs(column)[0]) || ''" class="img-fit-cover">
               </div>
 
-              <!-- If column type is PROGRESS -->
+              &lt;!&ndash; If column type is PROGRESS &ndash;&gt;
               <app-progress-bar class="progress"
                                 *ngSwitchCase="'PROGRESS'"
                                 [width]="(getContentValue(key, getAttrs(column)[0]) || 0) +'%'"
                                 [backgroundColor]="getColor(getContentValue(key, getAttrs(column)[0]) || 0)">
               </app-progress-bar>
 
-              <!-- If column type is CHECK -->
+              &lt;!&ndash; If column type is CHECK &ndash;&gt;
               <div *ngSwitchCase="'CHECK'">
                 <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 0" class="icon icon-cross"></i>
                 <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 1" class="icon icon-check"></i>
               </div>
 
-              <!-- If column type is LABEL -->
+              &lt;!&ndash; If column type is LABEL &ndash;&gt;
               <span *ngSwitchCase="'MULTI-CHOICES'">
 
               <img [src]="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || ''))"
@@ -141,7 +162,7 @@
                 {{(getContentValue(key, getAttrs(column)[0]) || []).length.toString()}}
               </span>
 
-              <!-- If column type is MULTI-LABEL -->
+              &lt;!&ndash; If column type is MULTI-LABEL &ndash;&gt;
               <span *ngSwitchCase="'MULTI-LABEL'">
                 <span *ngFor="let attr of getAttrs(column)"
                     [class]="getMultiLabelClass(getMultiLabel(column, attr)) || ''"
@@ -164,7 +185,7 @@
             </ng-container>
           </span>
 
-          <!-- If isEditable we show a button onHover the row -->
+          &lt;!&ndash; If isEditable we show a button onHover the row &ndash;&gt;
           <button *ngIf="i === 0" class="btn btn-xs ghost-edit visibleOnHover table-edit-button"
                   (click)="isLocal ? edit(filteredContent[key]) : edit(content[key])">
             {{isEditable ? ('COMMON.EDIT' | translate) : ('COMMON.MORE' | translate) }}
@@ -175,7 +196,7 @@
     </tbody>
   </table>
 
-  <!-- Behind the table we show the pagination -->
+  &lt;!&ndash; Behind the table we show the pagination &ndash;&gt;
   <app-pagination *ngIf="!isNotPaginable"
                   [configValue]="paginationConfig"
                   (configChange)="changePaginationConfig($event)"
@@ -183,3 +204,4 @@
                   [propertyName]="selector">
   </app-pagination>
 </span>
+-->

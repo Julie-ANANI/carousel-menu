@@ -3,7 +3,7 @@ import {Column, types} from '../../../table/models/column';
 import {Choice} from '../../../table/models/choice';
 
 @Component({
-  selector: 'sqFilterMulti',
+  selector: 'app-shared-multi-filter',
   templateUrl: './shared-filter-multi.component.html',
   styleUrls: ['./shared-filter-multi.component.scss']
 })

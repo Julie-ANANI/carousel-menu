@@ -1,3 +1,5 @@
+@import "variables";
+
 $primary-color: #FFB300;
 $secondary-color: #0B90C6;
 $success-color: #2ECC71;
@@ -20,7 +22,7 @@ $border-color: #E0E0E0;
   margin-top: 30px;
 }
 
-sqFilterMulti {
+app-shared-multi-filter {
   display: inline-block;
 }
 
