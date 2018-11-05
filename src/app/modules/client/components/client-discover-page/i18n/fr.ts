@@ -10,11 +10,11 @@ export const DISCOVER = {
 
   'CLOSE': 'rapproché',
 
-  'BUTTON_SHARE': 'Partager ce résultat',
+  'BUTTON_SHARE': 'Partager la page',
 
   'MODAL': {
-    'TITLE': 'Conseil d\'administration',
-    'HEADING': 'Partagez cette Url avec vos collèges, amis..',
+    'TITLE': 'Partage',
+    'HEADING': 'Ce lien vous permet de partager cette page à vos collègues avec les filtres que vous avez activés.',
     'CONTENT': 'Copy this Url:'
   },
 

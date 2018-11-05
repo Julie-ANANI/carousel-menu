@@ -205,18 +205,29 @@ export class ClientDiscoverPageComponent implements OnInit {
    * this function is to check if we contain any params or not.
    */
   private checkSharedResult() {
-    this.activatedRoute.queryParams.subscribe((params: Array<any>) => {
+    this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params['tag']) {
         this._appliedFilters = [];
-        params['tag'].forEach((tagId: string) => {
-          const index = this._allTags.findIndex((tag: Tag) => tag._id === tagId);
+        if (typeof params['tag'] === 'string') {
+          const index = this._allTags.findIndex((tag: Tag) => tag._id === params['tag']);
           if (index !== -1) {
-            const existTagIndex = this._appliedFilters.findIndex((filter: Tag) => filter._id === tagId);
+            const existTagIndex = this._appliedFilters.findIndex((filter: Tag) => filter._id === params['tag']);
             if (existTagIndex === -1) {
               this._appliedFilters.push(this._allTags[index]);
             }
           }
-        });
+        } else {
+          params['tag'].forEach((tagId: string) => {
+            const index = this._allTags.findIndex((tag: Tag) => tag._id === tagId);
+            if (index !== -1) {
+              const existTagIndex = this._appliedFilters.findIndex((filter: Tag) => filter._id === tagId);
+              if (existTagIndex === -1) {
+                this._appliedFilters.push(this._allTags[index]);
+              }
+            }
+          });
+        }
+
       }
     });
   }

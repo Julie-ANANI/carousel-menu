@@ -10,11 +10,11 @@ export const DISCOVER = {
 
   'CLOSE': 'close',
 
-  'BUTTON_SHARE': 'Share This Result',
+  'BUTTON_SHARE': 'Share this page',
 
   'MODAL': {
     'TITLE': 'Share Board',
-    'HEADING': 'Share this Url with your colleges, friends...',
+    'HEADING': 'This link allows you to share this page with your colleagues with the filters you have enabled.',
     'CONTENT': 'Copy this Url:'
   },
 
