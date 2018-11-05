@@ -1,13 +1,13 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 
 const continents = [
-  'africa',
-  'americaNord',
-  'americaSud',
-  'asia',
-  'europe',
-  'oceania',
-  'russia'
+  'AFRICA',
+  'NORTHAMERICA',
+  'SOUTHAMERICA',
+  'ASIA',
+  'EUROPE',
+  'OCEANIA',
+  'RUSSIA'
 ];
 
 @Injectable()
@@ -42,7 +42,7 @@ export class SharedWorldmapService {
   public getCountriesRepartition(countries: Array<string>): {[continent: string]: number} {
     return countries.reduce((acc, country) => {
       const continent = this._countries[country];
-      acc[continent] = acc[continent] + 1;
+      acc[continent] = (acc[continent] || 0) + 1;
       return acc;
     }, {});
   }

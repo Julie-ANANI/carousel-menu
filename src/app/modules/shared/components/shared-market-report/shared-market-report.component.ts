@@ -23,6 +23,7 @@ import { CampaignCalculationService } from '../../../../services/campaign/campai
 import { Executive, executiveTemplate } from './models/template';
 import { ResponseService } from './services/response.service';
 import { InnovationCommonService } from '../../../../services/innovation/innovation-common.service';
+import { SharedWorldmapService } from '../shared-worldmap/shared-worldmap.service';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -55,6 +56,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   private _answers: Array<Answer> = [];
 
   private _filteredAnswers: Array<Answer> = [];
+
+  private _answersOrigins: {[c: string]: number} = {};
 
   private _countries: Array<string> = [];
 
@@ -112,7 +115,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
               private filterService: FilterService,
               private campaignCalculationService: CampaignCalculationService,
               private responseService: ResponseService,
-              private innovationCommonService: InnovationCommonService) { }
+              private innovationCommonService: InnovationCommonService,
+              private worldmapService: SharedWorldmapService) { }
 
   ngOnInit() {
     this.filterService.reset();
@@ -220,9 +224,15 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       this.responseService.setExecutiveAnswers(this._answers);
 
       this._filteredAnswers = this._answers;
+      this._answersOrigins = this.worldmapService.getCountriesRepartition(
+        this._filteredAnswers.map(x => x.country.flag || x.professional.country)
+      );
 
       this.filterService.filtersUpdate.subscribe((_) => {
         this._filteredAnswers = this.filterService.filter(this._answers);
+        this._answersOrigins = this.worldmapService.getCountriesRepartition(
+          this._filteredAnswers.map(x => x.country.flag || x.professional.country)
+        );
       });
 
       this._companies = response.answers.map((answer: any) => answer.company || {
@@ -779,6 +789,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   getOwnerName(): string {
     return this.innovation.owner.name || '';
+  }
+
+  get answersOrigins(): {[c: string]: number} {
+    return this._answersOrigins;
   }
 
   ngAfterViewInit() {

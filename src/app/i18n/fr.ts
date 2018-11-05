@@ -1,6 +1,7 @@
 import { COMMON } from './common_fr';
 import { ERROR } from './error_fr';
 import { ADMIN_USERS } from '../modules/admin/components/admin-users/i18n/fr';
+import { CONTINENTS } from '../modules/shared/components/shared-worldmap/i18n/fr';
 import { MY_ACCOUNT } from '../modules/client/components/client-my-account/i18n/fr';
 import { RESET_PASSWORD } from '../modules/client/components/client-reset-password/i18n/fr';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
@@ -28,6 +29,7 @@ import { SHARE } from '../modules/share/i18n/fr';
 
 export const fr = {
   'COMMON': COMMON,
+  'CONTINENTS': CONTINENTS,
   'ERROR': ERROR,
   'MARKET_REPORT': MARKET_REPORT,
   'USERS': ADMIN_USERS,
