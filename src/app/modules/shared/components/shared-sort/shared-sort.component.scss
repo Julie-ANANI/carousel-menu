@@ -1,22 +1,55 @@
-.visibleOnHover {
-  visibility: hidden;
-}
+@import "../../../../../style/variables";
 
-.form-group-inline-left:hover {
-  .visibleOnHover {
+#sort-component {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  .icons-wrapper {
+    margin-left: 13px;
+    margin-top: 2px;
+    visibility: hidden;
+    transition: all .15s ease-in-out;
+
+    .icons {
+      display: flex;
+      flex-direction: column;
+
+      .icon {
+        height: 12px;
+      }
+
+    }
+
+    .clicked {
+
+      .active {
+        color: $primary-color;
+        visibility: visible;
+      }
+
+      .inactive {
+        visibility: visible;
+      }
+
+    }
+
+  }
+
+  .icons-wrapper:hover {
     visibility: visible;
   }
+
+
 }
 
+#sort-component:hover {
 
-.clicked {
-
-  .primary {
+  .icons-wrapper {
     visibility: visible;
   }
 
-  .not-active {
-    visibility: visible;
-  }
-
 }
+
+
+

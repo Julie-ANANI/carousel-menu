@@ -11,6 +11,85 @@
 
   .table-wrapper {
 
+    .info-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+
+      .main-heading {
+        font-size: 1rem;
+        margin-bottom: .9375rem;
+        color: $meta-color;
+        font-weight: normal;
+        margin-right: .6rem;
+      }
+
+    }
+
+
+    table {
+      width: 100%;
+      border-spacing: 0;
+      border-collapse: collapse;
+      border: 3px solid $table-border;
+
+      th {
+        position: relative;
+        font-size: .875rem;
+        color: $dark-color;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        font-weight: 600;
+        transition: all .15s ease-in-out;
+        padding-left: 11px;
+        background-color: $table-th-background-color;
+
+        .form-checkbox {
+          position: absolute;
+          margin-top: -15px;
+          margin-left: 11px;
+        }
+
+        label {
+          padding: 0;
+
+          input[type="checkbox"] {
+            position: unset;
+          }
+
+          .form-icon {
+            width: 27px;
+            height: 27px;
+            border: 2px solid $meta-color;
+          }
+
+        }
+
+
+      }
+
+      th.active {
+        background-color: $table-th-hover-background-color;
+      }
+
+      th.selectable:hover {
+        cursor: pointer;
+      }
+
+      .th-checkbox {
+        width: 52px;
+        padding: 0;
+      }
+
+      tr {
+        text-align: left;
+        font-size: .875rem;
+        vertical-align: middle;
+      }
+
+
+    }
+
+
   }
 
 

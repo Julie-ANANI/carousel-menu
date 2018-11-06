@@ -10,6 +10,68 @@
   <!-- Fetching done -->
   <div *ngIf="total > 0" class="table-wrapper">
 
+
+    <!-- Info row -->
+    <div class="info-wrapper">
+
+      <!-- Number of result and title -->
+      <h1 class="main-heading">{{ total }} {{ title | translate }}</h1>
+
+      <!-- If we want to filter by columns (not local)
+      <app-shared-multi-filter
+        *ngIf="isFiltrable"
+        [config]="config"
+        (configChange)="changeConfig($event)"
+        [props]="columns">
+      </app-shared-multi-filter>-->
+
+    </div>
+    <!-- /Info row -->
+
+
+    <!-- Table -->
+    <table>
+      <thead>
+
+      <!-- If there are no selected rows we show columns name in the header -->
+      <ng-container *ngIf="selectedRows === 0">
+        <tr>
+
+          <th class="th-checkbox">
+            <label class="form-checkbox" for="table-checkbox">
+              <input id="table-checkbox" type="checkbox" (change)="selectAll($event)"/>
+              <i class="form-icon"></i>
+            </label>
+          </th>
+
+          <th
+            *ngFor="let column of columns"
+            [ngClass]="{ 'active': isSort(column) }"
+            (click)="selectColumn(getAttrs(column)[0])">
+
+            <!-- If columns are sortable -->
+            <app-shared-sort
+              [config]="config"
+              *ngIf="isSortable(column)"
+              [ngClass]="{ 'selectable': isSortable(column) }"
+              (configChange)="changeConfig($event)"
+              [prop]="getAttrs(column)[0]">
+              {{ getName(column) | translate | FormatText }}
+            </app-shared-sort>
+
+            <!-- Not sortable -->
+            <span *ngIf="!isSortable(column)">{{ getName(column) | translate | FormatText }}</span>
+
+          </th>
+
+        </tr>
+      </ng-container>
+
+
+      </thead>
+    </table>
+
+
   </div>
 
 
@@ -18,17 +80,6 @@
 <!--
 
 
-
-&lt;!&ndash; We show the number of results &ndash;&gt;
-<div *ngIf="isHeadable" class="table-title">{{total}} {{ title | translate }}</div>
-
-
-&lt;!&ndash; If we want to filter by columns (not local) &ndash;&gt;
-<app-shared-multi-filter *ngIf="isFiltrable"
-               [config]="config"
-               (configChange)="changeConfig($event)"
-               [props]="columns">
-</app-shared-multi-filter>
 
 &lt;!&ndash; If there are no results &ndash;&gt;
 <div class="bot-wrapper text-center" *ngIf="total === 0">
@@ -54,13 +105,13 @@
                 [ngClass]="{'active': isSort(column), 'pointable': isSortable(column)}"
                 (click)="selectColumn(getAttrs(column)[0])">
 
-              <sq-sort [config]="config"
+              <app-shared-sort [config]="config"
                        class="activeHeader"
                        *ngIf="isSortable(column)"
                        (configChange)="changeConfig($event)"
                        [prop]="getAttrs(column)[0]">
                 {{getName(column) | translate }}
-              </sq-sort>
+              </app-shared-sort>
 
               <span *ngIf="!isSortable(column)">{{getName(column) | translate }}</span>
             </th>
