@@ -31,44 +31,212 @@
 
     <!-- Table -->
     <table>
-      <thead>
 
-      <!-- If there are no selected rows we show columns name in the header -->
-      <ng-container *ngIf="selectedRows === 0">
+      <thead>
         <tr>
 
-          <th class="th-checkbox">
-            <label class="form-checkbox" for="table-checkbox">
-              <input id="table-checkbox" type="checkbox" (change)="selectAll($event)"/>
-              <i class="form-icon"></i>
-            </label>
-          </th>
 
-          <th
-            *ngFor="let column of columns"
-            [ngClass]="{ 'active': isSort(column) }"
-            (click)="selectColumn(getAttrs(column)[0])">
+          <!-- If there are no selected rows we show columns name in the header -->
+          <ng-container *ngIf="selectedRows === 0">
 
-            <!-- If columns are sortable -->
-            <app-shared-sort
-              [config]="config"
-              *ngIf="isSortable(column)"
-              [ngClass]="{ 'selectable': isSortable(column) }"
-              (configChange)="changeConfig($event)"
-              [prop]="getAttrs(column)[0]">
-              {{ getName(column) | translate | FormatText }}
-            </app-shared-sort>
+            <th *ngIf="isSelectable" class="th-checkbox">
+              <label>
+                <input type="checkbox" (change)="selectAll($event)"/>
+                <div class="square-checkbox">
+                  <i class="icon icon-check"></i>
+                </div>
+              </label>
+            </th>
 
-            <!-- Not sortable -->
-            <span *ngIf="!isSortable(column)">{{ getName(column) | translate | FormatText }}</span>
+            <th
+              *ngFor="let column of columns"
+              [ngClass]="{ 'active': isSort(column) }"
+              (click)="selectColumn(getAttrs(column)[0])">
 
-          </th>
+              <!-- If columns are sortable -->
+              <app-shared-sort
+                [config]="config"
+                *ngIf="isSortable(column)"
+                [ngClass]="{ 'selectable': isSortable(column) }"
+                (configChange)="changeConfig($event)"
+                [prop]="getAttrs(column)[0]">
+                {{ getName(column) | translate | FormatText }}
+              </app-shared-sort>
+
+              <!-- Not sortable -->
+              <span *ngIf="!isSortable(column)">{{ getName(column) | translate | FormatText }}</span>
+
+            </th>
+
+          </ng-container>
+          <!-- /If there are no selected rows we show columns name in the header -->
+
+
+          <!-- If there are selected rows, the several actions to perform and the button delete (if isDeletable) -->
+          <ng-container *ngIf="selectedRows > 0">
+
+            <th *ngIf="isSelectable" class="th-checkbox">
+              <label>
+                <input type="checkbox" (change)="selectAll($event)" [checked]="true"/>
+                <div *ngIf="selectedRows === total" class="square-checkbox active">
+                  <i class="icon icon-check"></i>
+                </div>
+                <div *ngIf="selectedRows < total" class="square-checkbox">
+                  <i class="icon icon-minus"></i>
+                </div>
+              </label>
+            </th>
+
+            <th class="all" [attr.colspan]="isSelectable ? columns.length : columns.length -1">
+            <span class="selected-text">
+              {{ selectedRows }} {{ 'COMMON.TABLE.SELECTED_ROWS' | translate }}
+              <i class="icon icon-arrow-right"></i>
+            </span>
+              <div [ngStyle]="{ display: 'inline-flex' }" *ngIf="(selectedRows < total) || (total <= content.length)">
+                <button
+                  *ngFor="let action of actions"
+                  class="btn btn-xs ghost-edit"
+                  style="margin-left: 10px;"
+                  (click)="onActionClick(a)">
+                  {{ action | translate }}
+                </button>
+                <button
+                  class="btn btn-xs ghost-delete"
+                  style="margin-left: 10px;"
+                  (click)="removeSelectedRows()"
+                  *ngIf="isDeletable">
+                  {{ 'COMMON.DELETE' | translate }}
+                </button>
+              </div>
+            </th>
+
+          </ng-container>
+          <!-- /If there are selected rows, the several actions to perform and the button delete (if isDeletable) -->
 
         </tr>
-      </ng-container>
-
-
       </thead>
+
+
+      <tbody>
+        <tr *ngFor="let key of getRowsKeys()" [ngClass]="{ 'active': isLocal ? isSelected(filteredContent[key]) : isSelected(content[key]) }">
+
+          <td *ngIf="isSelectable" class="th-checkbox">
+            <label>
+              <input type="checkbox" (click)="selectRow(key)" [checked]="isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])"/>
+              <div class="square-checkbox active">
+                <i class="icon icon-check"></i>
+              </div>
+            </label>
+          </td>
+
+          <!-- For each columns -->
+          <td *ngFor="let column of columns; let i = index">
+
+            <span (click)="selectRow(key)" [ngClass]="{ 'text-margin': i === 0 }">
+              <ng-container [ngSwitch]="getType(column)">
+
+
+                <!-- If column type is Date -->
+                <ng-container *ngSwitchCase="'DATE'">
+                  <span>{{ (getContentValue(key, getAttrs(column)[0])?.toString() | date:dateFormat) }}</span>
+                </ng-container>
+
+
+                <!-- If column type is Country -->
+                <ng-container *ngSwitchCase="'COUNTRY'">
+                  <app-country-flag [country]="(getContentValue(key, getAttrs(column)[0]) || '')"></app-country-flag>
+                </ng-container>
+
+
+                <!-- If column type is Array -->
+                <ng-container *ngSwitchCase="'ARRAY'">
+                  <span>{{ (getContentValue(key, getAttrs(column)[0]) || []).length.toString() }}</span>
+                </ng-container>
+
+
+                <!-- If column type is Picture -->
+                <div *ngSwitchCase="'PICTURE'">
+                  <img [src]="getContentValue(key, getAttrs(column)[0]) || ''" class="img-responsive" style="width: 100px">>
+                </div>
+
+
+                <!-- If column type is Progress -->
+                <ng-container *ngSwitchCase="'PROGRESS'">
+                  <app-progress-bar
+                    class="progress"
+                    [width]="(getContentValue(key, getAttrs(column)[0]) || 0) +'%'"
+                    [height]="10 + 'px'"
+                    [backgroundColor]="getColor(getContentValue(key, getAttrs(column)[0]) || 0)">
+                </app-progress-bar>
+                </ng-container>
+
+
+                <!-- If column type is Check -->
+                <ng-container *ngSwitchCase="'CHECK'">
+                  <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 0" class="icon icon-cross"></i>
+                  <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 1" class="icon icon-check"></i>
+                </ng-container>
+
+
+                <!-- If column type is Multi-Choices -->
+                <ng-container *ngSwitchCase="'MULTI-CHOICES'">
+                  <img
+                    [src]="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || ''))"
+                    *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) !== ''"
+                    class="img-responsive"
+                    style="width: 100px">
+                  <span
+                    *ngIf="getUrl(getChoice(column, getContentValue(key, getAttrs(column)[0]) || '')) === ''"
+                    [class]="getChoiceClass(getChoice(column, (getContentValue(key, getAttrs(column)[0]) || '')))">
+                    {{ (getChoiceAlias(getChoice(column, getContentValue(key, getAttrs(column)[0])|| " - "))) | translate }}
+                  </span>
+                </ng-container>
+
+
+                <!-- If column type is Multi-Label -->
+                <ng-container *ngSwitchCase="'MULTI-LABEL'">
+                  <span
+                    *ngFor="let attr of getAttrs(column)"
+                    [class]="getMultiLabelClass(getMultiLabel(column, attr)) || ''"
+                    [ngClass]="{ 'left-label': getAttrIndex(column, attr) === 0 && getAttrs(column).length !== 1,
+                      'right-label' : getAttrIndex(column, attr) === getAttrs(column).length-1 && getAttrs(column).length !== 1,
+                      'middle-label' : getAttrIndex(column, attr) !== 0 && getAttrIndex(column, attr) !== getAttrs(column).length-1}">
+                    {{ (getContentValue(key, attr) || " - ").toString() }}
+                  </span>
+                </ng-container>
+
+
+                <!-- If column type is Multiling -->
+                <ng-container *ngSwitchCase="'MULTILING'">
+                  <span>{{ (getContentValue(key, getAttrs(column)[0]) | multiling:lang) | FormatText }}</span>
+                </ng-container>
+
+
+                <!-- If column type is Text -->
+                <ng-container *ngSwitchDefault>
+                  <span *ngFor="let attr of getAttrs(column)">
+                    {{ (getContentValue(key, attr)|| " - ").toString() | FormatText | ellipsis:40 }}
+                  </span>
+                </ng-container>
+
+
+              </ng-container>
+            </span>
+
+            <button
+              *ngIf="i === 0"
+              class="btn btn-xs ghost-edit visibleOnHover"
+              (click)="isLocal ? edit(filteredContent[key]) : edit(content[key])">
+              {{ isEditable ? ('COMMON.EDIT' | translate) : ('COMMON.MORE' | translate) }}
+            </button>
+
+          </td>
+
+
+        </tr>
+      </tbody>
+
+
     </table>
 
 
@@ -93,63 +261,7 @@
 <span *ngIf="total !== 0">
 
   <table class="table" wt-responsive-table>
-    <thead>
-        &lt;!&ndash; If there are no selected rows we show columns name in the header&ndash;&gt;
-        <ng-container *ngIf="selectedRows==0">
-          <tr>
-            <th *ngIf="isSelectable" width="50"><input type="checkbox" (change)="selectAll($event)"/>
-              <div class="square-check"><i class="icon icon-check"></i></div>
-            </th>
 
-            <th *ngFor="let column of columns" [class]="'column-' + i"
-                [ngClass]="{'active': isSort(column), 'pointable': isSortable(column)}"
-                (click)="selectColumn(getAttrs(column)[0])">
-
-              <app-shared-sort [config]="config"
-                       class="activeHeader"
-                       *ngIf="isSortable(column)"
-                       (configChange)="changeConfig($event)"
-                       [prop]="getAttrs(column)[0]">
-                {{getName(column) | translate }}
-              </app-shared-sort>
-
-              <span *ngIf="!isSortable(column)">{{getName(column) | translate }}</span>
-            </th>
-          </tr>
-        </ng-container>
-
-        &lt;!&ndash; Else we show the number of selected rows, the several actions to perform and the button delete (if isDeletable) &ndash;&gt;
-        <ng-container *ngIf="selectedRows > 0">
-          <tr>
-            <th *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)" [checked]="true"/>
-              <div class="square-check" *ngIf="selectedRows < total">
-                <i class="icon icon-minus"></i>
-              </div>
-              <div class="square-check primary" *ngIf="selectedRows === total">
-                <i class="icon icon-check"></i>
-              </div>
-            </th>
-            <th class="all" [attr.colspan]="isSelectable ? columns.length : columns.length -1">
-              <span>{{selectedRows}} {{'COMMON.TABLE.SELECTED_ROWS' | translate}} </span>
-              <i class="icon icon-arrow-right"></i>
-              <div [ngStyle]="{display: 'inline-flex'}" *ngIf="(selectedRows < total) || (total <= content.length)">
-                <button *ngFor="let a of actions"
-                        class="btn btn-xs ghost-edit"
-                        style="margin-left: 10px;"
-                        (click)="onActionClick(a)">
-                  {{a | translate}}
-                </button>
-                <button class="btn btn-xs ghost-delete"
-                        style="margin-left: 10px;"
-                        (click)="removeSelectedRows()"
-                        *ngIf="isDeletable">
-                  {{'COMMON.DELETE' | translate }}
-                </button>
-              </div>
-            </th>
-          </tr>
-        </ng-container>
-    </thead>
     <tbody>
 
       <tr *ngFor="let key of getRowsKeys()"
@@ -255,4 +367,65 @@
                   [propertyName]="selector">
   </app-pagination>
 </span>
+
+
+
+<thead>
+        &lt;!&ndash; If there are no selected rows we show columns name in the header&ndash;&gt;
+        <ng-container *ngIf="selectedRows==0">
+          <tr>
+            <th *ngIf="isSelectable" width="50"><input type="checkbox" (change)="selectAll($event)"/>
+              <div class="square-check"><i class="icon icon-check"></i></div>
+            </th>
+
+            <th *ngFor="let column of columns" [class]="'column-' + i"
+                [ngClass]="{'active': isSort(column), 'pointable': isSortable(column)}"
+                (click)="selectColumn(getAttrs(column)[0])">
+
+              <app-shared-sort [config]="config"
+                       class="activeHeader"
+                       *ngIf="isSortable(column)"
+                       (configChange)="changeConfig($event)"
+                       [prop]="getAttrs(column)[0]">
+                {{getName(column) | translate }}
+              </app-shared-sort>
+
+              <span *ngIf="!isSortable(column)">{{getName(column) | translate }}</span>
+            </th>
+          </tr>
+        </ng-container>
+
+        &lt;!&ndash; Else we show the number of selected rows, the several actions to perform and the button delete (if isDeletable) &ndash;&gt;
+        <ng-container *ngIf="selectedRows > 0">
+          <tr>
+            <th *ngIf="isSelectable"><input type="checkbox" (change)="selectAll($event)" [checked]="true"/>
+              <div class="square-check" *ngIf="selectedRows < total">
+                <i class="icon icon-minus"></i>
+              </div>
+              <div class="square-check primary" *ngIf="selectedRows === total">
+                <i class="icon icon-check"></i>
+              </div>
+            </th>
+            <th class="all" [attr.colspan]="isSelectable ? columns.length : columns.length -1">
+              <span>{{selectedRows}} {{'COMMON.TABLE.SELECTED_ROWS' | translate}} </span>
+              <i class="icon icon-arrow-right"></i>
+              <div [ngStyle]="{display: 'inline-flex'}" *ngIf="(selectedRows < total) || (total <= content.length)">
+                <button *ngFor="let a of actions"
+                        class="btn btn-xs ghost-edit"
+                        style="margin-left: 10px;"
+                        (click)="onActionClick(a)">
+                  {{a | translate}}
+                </button>
+                <button class="btn btn-xs ghost-delete"
+                        style="margin-left: 10px;"
+                        (click)="removeSelectedRows()"
+                        *ngIf="isDeletable">
+                  {{'COMMON.DELETE' | translate }}
+                </button>
+              </div>
+            </th>
+          </tr>
+        </ng-container>
+    </thead>
+
 -->

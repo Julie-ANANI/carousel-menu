@@ -17,7 +17,6 @@
 
       .main-heading {
         font-size: 1rem;
-        margin-bottom: .9375rem;
         color: $meta-color;
         font-weight: normal;
         margin-right: .6rem;
@@ -31,37 +30,23 @@
       border-spacing: 0;
       border-collapse: collapse;
       border: 3px solid $table-border;
+      background-color: white;
 
       th {
         position: relative;
         font-size: .875rem;
         color: $dark-color;
-        padding-top: 12px;
-        padding-bottom: 12px;
+        min-width: 100px;
         font-weight: 600;
         transition: all .15s ease-in-out;
+        border-bottom: 1px solid $table-tr-border;
         padding-left: 11px;
+        padding-right: 11px;
         background-color: $table-th-background-color;
 
-        .form-checkbox {
-          position: absolute;
-          margin-top: -15px;
-          margin-left: 11px;
-        }
-
-        label {
-          padding: 0;
-
-          input[type="checkbox"] {
-            position: unset;
-          }
-
-          .form-icon {
-            width: 27px;
-            height: 27px;
-            border: 2px solid $meta-color;
-          }
-
+        .selected-text .icon-arrow-right {
+          color: $meta-color;
+          vertical-align: -2px;
         }
 
 
@@ -75,8 +60,44 @@
         cursor: pointer;
       }
 
+      label {
+
+        input[type="checkbox"] {
+          display: none;
+        }
+
+      }
+
+      .square-checkbox {
+        width: 27px;
+        display: flex;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        align-items: center;
+        height: 27px;
+        cursor: pointer;
+        transition: all .15s ease-in-out;
+        border: 2px solid $meta-color;
+
+        .icon-check {
+          color: transparent;
+        }
+
+        .icon-minus {
+          color: $meta-color;
+          width: 12px;
+        }
+
+        .icon-minus::before {
+          height: 2px;
+        }
+
+      }
+
       .th-checkbox {
-        width: 52px;
+        width: 50px;
+        min-width: 50px;
         padding: 0;
       }
 
@@ -84,11 +105,83 @@
         text-align: left;
         font-size: .875rem;
         vertical-align: middle;
+        height: 51px;
+        border-bottom: 1px solid $table-tr-border;
       }
 
+      tr.active {
+
+        td {
+          background-color: $table-tr-background-color;
+        }
+
+      }
+
+      td {
+        padding-left: 11px;
+        padding-right: 11px;
+        font-size: 13px;
+
+        .text-margin {
+          margin-top: 9px;
+          float: left;
+        }
+
+        .icon-cross {
+          color: $alert-color;
+        }
+
+        .icon-check {
+          color: $validation-color;
+        }
+
+        .icon-check, .icon-cross {
+          font-size: 18px;
+          vertical-align: unset;
+        }
+
+        .left-label {
+          border-bottom-right-radius: 0;
+          border-top-right-radius: 0;
+          margin-right: 0;
+        }
+
+        .middle-label {
+          border-radius: 0;
+          margin-right: 0;
+        }
+
+        .right-label {
+          border-bottom-left-radius: 0;
+          border-top-left-radius: 0;
+          margin-right: 0;
+        }
+
+        .ghost-edit {
+          visibility: hidden;
+          float: right;
+        }
+
+      }
+
+      tr:hover {
+
+        .ghost-edit {
+          visibility: visible;
+        }
+
+      }
+
+      label input:checked + .active {
+        border-color: $primary-color;
+
+        .icon-check {
+          color: $primary-color;
+        }
+
+      }
 
     }
-
 
   }
 
@@ -100,10 +193,6 @@
   float: right;
 }
 
-i {
-  font-size: 20px;
-  color: #adadad;
-}
 
 .fa-tag:hover, .fa-tag.active {
   color: #00b0ff;

@@ -152,7 +152,7 @@ export const COMMON = {
   },
 
   'TABLE' : {
-    'SELECTED_ROWS': 'lignes selectionnées',
+    'SELECTED_ROWS': 'ligne(s) sélectionnée(s)',
     'NO-RESULTS': 'Désolé, il n\'y a rien à afficher'
   },
 

@@ -4,7 +4,6 @@ import { Row } from '../models/row';
 import { Column, types } from '../models/column';
 import { Choice } from '../models/choice';
 import { TranslateService } from '@ngx-translate/core';
-import { MultiLabel } from '../models/multi-label';
 import { PaginationTemplate } from '../../../models/pagination';
 
 @Component({
@@ -407,10 +406,9 @@ export class TableComponent {
 
   /***
    * This function returns the class of one label of a multilabel
-   * @param {MultiLabel} multiLabel
-   * @returns {string}
+   * @param multiLabel
    */
-  getMultiLabelClass(multiLabel: MultiLabel): string {
+  getMultiLabelClass(multiLabel: any): string {
     return multiLabel._class;
   }
 
@@ -454,8 +452,7 @@ export class TableComponent {
    */
   selectRow(key: string): void {
     if (this._isSelectable) {
-      this._isLocal
-        ? this._filteredContent[key]._isSelected = !(this._filteredContent[key]._isSelected)
+      this._isLocal ? this._filteredContent[key]._isSelected = !(this._filteredContent[key]._isSelected)
         : this._content[key]._isSelected = !(this._content[key]._isSelected); this._massSelection = false;
     }
   }
