@@ -46,6 +46,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _adminSide: boolean;
 
+  private _isOwner: boolean;
+
   private _previewMode: boolean;
 
   private _currentInnovationIndex = 0;
@@ -145,6 +147,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   private isAdminSide() {
     this._adminSide = this.location.path().slice(0, 6) === '/admin';
     this.adminMode = this.authService.adminLevel > 2;
+    this._isOwner = (this.authService.userId === this._innovation.owner.id) || this.authService.adminLevel > 2;
   }
 
 
@@ -892,6 +895,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   get spinnerDisplay(): boolean {
     return this._spinnerDisplay;
+  }
+
+  get isOwner(): boolean {
+    return this._isOwner;
   }
 
   get openModal(): boolean {
