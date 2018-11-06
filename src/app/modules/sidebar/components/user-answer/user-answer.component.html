@@ -45,6 +45,10 @@
             <i class="form-icon"></i>
             {{ 'Edit user' }}
           </label>
+          <p *ngIf="modalAnswer.blacklistedCompany" class="text-error">
+            <i class="fas fa-exclamation-triangle"></i>
+            La réponse vient peut-être d'une entreprise blacklistée !
+          </p>
         </div>
       </div>
 

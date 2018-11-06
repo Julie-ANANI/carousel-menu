@@ -9,6 +9,7 @@ export class User extends Model {
   private _email: string;
   private _emailVerified: boolean;
   private _phone: string;
+  private _language?: string;
   private _password: string;
   private _profilePic: any;
   private _domain: string;
@@ -118,6 +119,16 @@ export class User extends Model {
 
   get domain(): string {
     return this._domain;
+  }
+
+  set language(language: string) {
+    if (language) {
+      this._language = language;
+    }
+  }
+
+  get language(): string {
+    return this._language;
   }
 
   get isOperator(): boolean {

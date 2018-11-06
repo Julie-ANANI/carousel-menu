@@ -34,18 +34,18 @@ import { SharedWorldmapService } from '../shared-worldmap/shared-worldmap.servic
 export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() set project(value: Innovation) {
-    this.innovation = value;
+    this._innovation = value;
   }
 
   @Input() adminMode: boolean;
 
   @Input() sharable = false;
 
-  ngUnsubscribe: Subject<any> = new Subject();
+  private _ngUnsubscribe: Subject<any> = new Subject();
 
-  innovation: Innovation = {};
+  private _innovation: Innovation = {};
 
-  spinnerDisplay = true;
+  private _spinnerDisplay = true;
 
   private _adminSide: boolean;
 
@@ -75,17 +75,23 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   private _showDetails: boolean;
 
-  private _projectToBeFinished: boolean;
+  private _openModal = false;
 
-  today: Number;
+  private _innovationEndModal: boolean;
+
+  private _innovationExport = false;
+
+  private _today: Number;
 
   private _menuButton = false;
 
   private _displayMenuWrapper = false;
 
-  numberOfSections: number;
+  private _numberOfSections: number;
 
-  executiveTemplates: Array<Executive>;
+  private _exportType = '';
+
+  private _executiveTemplates: Array<Executive>;
 
   private _modalAnswer: Answer = null;
 
@@ -96,13 +102,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   private _companies: Array<Clearbit>;
 
   public activeSection: string;
-  // public
+
   public objectKeys = Object.keys;
-  public mapInitialConfiguration: {[continent: string]: boolean};
 
-  // modalAnswer : null si le modal est fermé,
-  // égal à la réponse à afficher si le modal est ouvert
-
+  private _mapInitialConfiguration: {[continent: string]: boolean};
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private translateService: TranslateService,
@@ -122,7 +125,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     this.filterService.reset();
     this.initializeReport();
     PageScrollConfig.defaultDuration = 800;
-    //
   }
 
 
@@ -130,14 +132,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This function is calling all the initial functions.
    */
   private initializeReport() {
-    this.spinnerDisplay = true;
+    this._spinnerDisplay = true;
     this.isAdminSide();
     this.initializeVariable();
     this.getAnswers();
     this.getCampaign();
     this.resetMap();
     this.presets();
-    this.spinnerDisplay = false;
+    this._spinnerDisplay = false;
   }
 
 
@@ -160,7 +162,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * here we are registering the index of the lang of the user and according to that we display the innovation.
      * @type {number}
      */
-    const index = this.innovation.innovationCards.findIndex((items) => items.lang === this.lang);
+    const index = this._innovation.innovationCards.findIndex((items) => items.lang === this.lang);
     this._currentInnovationIndex = index !== -1 ? index : 0;
 
     /***
@@ -168,13 +170,13 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * @type {boolean | undefined}
      * @private
      */
-    this._previewMode = this.innovation.previewMode || false;
+    this._previewMode = this._innovation.previewMode || false;
 
     /***
      * this is to display on the front page.
      * @type {number}
      */
-    this.today = Date.now();
+    this._today = Date.now();
 
     /***
      * Client side to toggle the full view.
@@ -187,23 +189,23 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * we are checking do we have any template.
      * @type {number | undefined}
      */
-    this.numberOfSections = this.innovation.executiveReport.totalSections || 0;
+    this._numberOfSections = this._innovation.executiveReport.totalSections || 0;
 
     /***
      * assinging the value of the executive template.
      * @type {Executive}
      */
-    this.executiveTemplates = executiveTemplate;
+    this._executiveTemplates = executiveTemplate;
 
     /***
      * this is when we update the innovation in any sub component,
      * we are listening that update and will update the innovation attribute.
      */
     this.innovationCommonService.getInnovation()
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((response: Innovation) => {
         if (response) {
-          this.innovation = response;
+          this._innovation = response;
         }
       });
 
@@ -213,7 +215,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This function is to fetch the answers from the server.
    */
   private getAnswers() {
-    this.answerService.getInnovationValidAnswers(this.innovation._id).subscribe((response) => {
+    this.answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
       this._answers = response.answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
       });
@@ -257,7 +259,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This function is to fetch the campaign from the server.
    */
   private getCampaign() {
-    this.innovationService.campaigns(this.innovation._id).subscribe((results) => {
+    this.innovationService.campaigns(this._innovation._id).subscribe((results) => {
       if (results && Array.isArray(results.result)) {
         this._campaignsStats = results.result.reduce(function(acc: any, campaign: Campaign) {
           if (campaign.stats) {
@@ -286,7 +288,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This function is to reset the map configuration.
    */
   private resetMap() {
-    this.mapInitialConfiguration = {
+    this._mapInitialConfiguration = {
       africa: true,
       americaNord: true,
       americaSud: true,
@@ -302,8 +304,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * This function is to get the questions.
    */
   private presets() {
-   if (this.innovation.preset && this.innovation.preset.sections) {
-     this._questions = this.responseService.getPresets(this.innovation);
+   if (this._innovation.preset && this._innovation.preset.sections) {
+     this._questions = this.responseService.getPresets(this._innovation);
    }
   }
 
@@ -322,7 +324,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       return window.scrollY;
     }
     return 0;
-  };
+  }
 
 
   /***
@@ -331,8 +333,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    */
   toggleDetails(event: Event) {
     event.preventDefault();
-    const value = !this._showDetails;
-    this._showDetails = value;
+    this._showDetails = !this._showDetails;
   }
 
 
@@ -343,14 +344,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   enablePreviewMode(event: Event) {
     event.preventDefault();
 
-    this._previewMode =  this.innovation.previewMode = event.target['checked'] === true;
+    this._previewMode =  this._innovation.previewMode = event.target['checked'] === true;
 
     if (event.target['checked']) {
-      this.innovationService.save(this.innovation._id, this.innovation).subscribe( () => {
+      this.innovationService.save(this._innovation._id, this._innovation).subscribe( () => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_VISIBLE');
       });
     } else {
-      this.innovationService.save(this.innovation._id, this.innovation).subscribe( () => {
+      this.innovationService.save(this._innovation._id, this._innovation).subscribe( () => {
         this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS_NOT_VISIBLE');
       });
     }
@@ -359,22 +360,34 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
 
   /***
-   * This function call the confirmation modal to ask for the confirmation to end the project.
-   * @param {Event} event
+   * This function calls the modal.
+   * @param event
+   * @param value
    */
-  endProjectModal(event: Event) {
+  displayModal(event: Event, value: string) {
     event.preventDefault();
-    this._projectToBeFinished = true;
+    this._openModal = true;
+
+    if (value === 'endInnovation') {
+      this._innovationEndModal = true;
+    }
+
+    if (value === 'exportInnovation') {
+      this._innovationExport = true;
+    }
+
   }
 
 
   /***
-   * This function is to close the end project confirmation modal.
+   * This function is to close the modal.
    * @param {Event} event
    */
   closeModal(event: Event) {
     event.preventDefault();
-    this._projectToBeFinished = false;
+    this._openModal = false;
+    this._innovationEndModal = false;
+    this._innovationExport = false;
   }
 
 
@@ -383,13 +396,14 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * @param {Event} event
    * @param {"DONE"} status
    */
-  endProject(event: Event, status: 'DONE'): void {
-    this._projectToBeFinished = false;
+  endInnovation(event: Event, status: 'DONE'): void {
+    this._innovationEndModal = false;
+    this._openModal = false;
 
-    this.innovationService.updateStatus(this.innovation._id, status).subscribe((response) => {
+    this.innovationService.updateStatus(this._innovation._id, status).subscribe((response) => {
       this.translateNotificationsService.success('ERROR.SUCCESS', 'MARKET_REPORT.MESSAGE_SYNTHESIS');
-      this.innovation = response;
-      this.innovationCommonService.setInnovation(this.innovation);
+      this._innovation = response;
+      this.innovationCommonService.setInnovation(this._innovation);
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
@@ -422,7 +436,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   shareSynthesis(event: Event) {
     event.preventDefault();
 
-    this.shareService.shareSynthesis(this.innovation._id).subscribe((response: Share) => {
+    this.shareService.shareSynthesis(this._innovation._id).subscribe((response: Share) => {
       this.openMailTo(response.objectId, response.shareKey);
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
@@ -444,35 +458,25 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
     if (this.lang === 'en') {
 
-      subject = 'Results - ' + this.innovation.innovationCards[this._currentInnovationIndex].title;
+      subject = 'Results - ' + this._innovation.innovationCards[this._currentInnovationIndex].title;
 
       message = encodeURI('Hello,' + '\r\n' + '\r\n' + 'I invite you to discover the results of the market test carried out by ' + this.getCompanyName() + ' for the innovation ' +
-        this.innovation.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Go on this link: ' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
+        this._innovation.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Go on this link: ' + url +  '\r\n' + '\r\n' + 'You can view the results by filtering by domain, ' +
         'geographical location, person etc. ' + '\r\n' + '\r\n' + 'Cordially, ' + '\r\n' + '\r\n' + this.getOwnerName());
 
     }
 
     if (this.lang === 'fr') {
 
-      subject = 'Résultats - ' + this.innovation.innovationCards[this._currentInnovationIndex].title;
+      subject = 'Résultats - ' + this._innovation.innovationCards[this._currentInnovationIndex].title;
 
       message = encodeURI('Bonjour,' + '\r\n' + '\r\n' + 'Je vous invite à découvrir les résultats du test marché réalisé par ' + this.getCompanyName() + ' pour l\'innovation ' +
-        this.innovation.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Allez sur ce lien: ' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
+        this._innovation.innovationCards[this._currentInnovationIndex].title + '\r\n' + '\r\n' + 'Allez sur ce lien: ' + url +  '\r\n' + '\r\n' + 'Vous pouvez afficher les résultats en filtrant par domaine, ' +
         'emplacement géographique, personne etc. ' + '\r\n' + '\r\n' + 'Cordialement, ' + '\r\n' + '\r\n' + this.getOwnerName());
     }
 
     window.location.href = 'mailto:' + '?subject=' + subject  + '&body=' + message;
 
-  }
-
-
-  /***
-   * This functions is called when the user clicks on the print button, and it print the synthesis.
-   * @param {Event} event
-   */
-  printSynthesis(event: Event) {
-    event.preventDefault();
-    window.print();
   }
 
 
@@ -484,11 +488,11 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     let src = '';
     const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
 
-    if (this.innovation.innovationCards[this._currentInnovationIndex].principalMedia && this.innovation.innovationCards[this._currentInnovationIndex].principalMedia.type === 'PHOTO') {
-      src = this.innovation.innovationCards[this._currentInnovationIndex].principalMedia.url;
+    if (this._innovation.innovationCards[this._currentInnovationIndex].principalMedia && this._innovation.innovationCards[this._currentInnovationIndex].principalMedia.type === 'PHOTO') {
+      src = this._innovation.innovationCards[this._currentInnovationIndex].principalMedia.url;
     } else {
-      const index = this.innovation.innovationCards[this._currentInnovationIndex].media.findIndex((media) => media.type === 'PHOTO');
-      src = index === -1 ? defaultSrc : this.innovation.innovationCards[this._currentInnovationIndex].media[index].url;
+      const index = this._innovation.innovationCards[this._currentInnovationIndex].media.findIndex((media) => media.type === 'PHOTO');
+      src = index === -1 ? defaultSrc : this._innovation.innovationCards[this._currentInnovationIndex].media[index].url;
     }
 
     if (src === '' || undefined) {
@@ -505,9 +509,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    * @param {Event} event
    */
   update(event: Event) {
-    if (this.innovation.status) {
-     this.innovationCommonService.saveInnovation(this.innovation);
-    }
+    this.innovationCommonService.saveInnovation(this._innovation);
   }
 
 
@@ -530,7 +532,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    */
   assignSectionValue(event: Event, value: number) {
     event.preventDefault();
-    this.numberOfSections = value;
+    this._numberOfSections = value;
   }
 
 
@@ -542,7 +544,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    */
   generateExecutiveTemplate(event: Event) {
     event.preventDefault();
-    this.innovation.executiveReport.totalSections = this.numberOfSections;
+    this._innovation.executiveReport.totalSections = this._numberOfSections;
     this.update(event);
     window.location.reload();
   }
@@ -554,8 +556,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
    */
   deleteExecutiveTemplate(event: Event) {
     event.preventDefault();
-    this.innovation.executiveReport.totalSections = 0;
-    this.innovation.executiveReport.sections = [{}];
+    this._innovation.executiveReport.totalSections = 0;
+    this._innovation.executiveReport.sections = [{}];
     this.update(event);
     window.location.reload();
   }
@@ -620,13 +622,10 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
       conclusion: event['content']
     };
 
-    if (this.innovation.status !== 'DONE') {
-      this.innovationService.updateMarketReport(this.innovation._id, objToSave).subscribe((response) => {
-        this.innovation.marketReport = response;
-        this.update(event);
-      });
-    }
-
+    this.innovationService.updateMarketReport(this._innovation._id, objToSave).subscribe((response) => {
+      this._innovation.marketReport = response;
+      this.update(event);
+    });
   }
 
 
@@ -649,7 +648,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
-  public filterPro(answer: Answer, event: Event) {
+  filterPro(answer: Answer, event: Event) {
     event.preventDefault();
     const proFilter = this.filterService.filters['professionals'];
     this.filterService.addFilter({
@@ -676,6 +675,113 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     this.editMode.next(false);
   }
 
+
+  /***
+   * this function assign the value to exportType when we select one of the options
+   * from the modal.
+   * @param event
+   * @param type
+   */
+  assignExportType(event: Event, type: string) {
+    event.preventDefault();
+    this._exportType = type;
+  }
+
+
+  /***
+   * this function is to toggle the consent value based on the checbox is
+   * checked or not.
+   * @param event
+   */
+  toggleConsent(event: Event) {
+    event.preventDefault();
+    this._innovation.ownerConsent.value = !!event.target['checked'];
+  }
+
+
+  /***
+   * this function calls the respective function based on the value of the
+   * exportType. It is called by the Download button.
+   * @param event
+   */
+  exportInnovation(event: Event) {
+    event.preventDefault();
+
+    this.closeModal(event);
+
+    this._innovation.ownerConsent.date = Date.now();
+
+    this.innovationCommonService.saveInnovation(this._innovation);
+
+    switch (this._exportType) {
+      case('excel'):
+        this.downloadExcel(event);
+        break;
+      case('executiveReport'):
+        this.printExecutiveReport(event);
+        break;
+      case('respReport'):
+        this.printAnswers(event);
+        break;
+      default:
+        // Do nothing
+    }
+
+    this._exportType = '';
+
+  }
+
+
+  /***
+   * this function will download the excel file.
+   * @param event
+   */
+  private downloadExcel(event: Event) {
+    event.preventDefault();
+    window.open( this.answerService.getExportUrl(this._innovation._id, true));
+  }
+
+  /***
+   * this function will download the response.
+   * @param event
+   */
+  private printAnswers(event: Event) {
+
+    event.preventDefault();
+
+    this.answerService.getReportHTML(this._innovation._id, 'en').subscribe(html => {
+        const reportWindow = window.open('', '');
+        reportWindow.document.write(html);
+        setTimeout(() => {
+          reportWindow.focus();
+          reportWindow.print();
+          reportWindow.close();
+        }, 500);
+      }, () => {
+        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+      });
+
+  }
+
+
+  /***
+   * This functions is called when the user selects the executive report option.
+   * @param {Event} event
+   */
+  private printExecutiveReport(event: Event) {
+    event.preventDefault();
+    window.print();
+  }
+
+
+  /***
+   * getting the current lang of the user.
+   * @returns {string}
+   */
+  get lang(): string {
+    return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
+  }
+
   formatCompanyName(name: string) {
     if (name) {
       return `${name[0].toUpperCase()}${name.slice(1)}`;
@@ -685,14 +791,6 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
 
   getDomainName(): string {
     return environment.domain;
-  }
-
-  /***
-   * getting the current lang of the user.
-   * @returns {string}
-   */
-  get lang(): string {
-    return this.translateService.currentLang || this.translateService.getBrowserLang() || 'en';
   }
 
   get currentInnovationIndex(): number {
@@ -736,7 +834,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   }
 
   get continentTarget(): any {
-    return this.innovation.settings ? this.innovation.settings.geography.continentTarget : {};
+    return this._innovation.settings ? this._innovation.settings.geography.continentTarget : {};
   }
 
   get questions(): Array<Question> {
@@ -771,8 +869,8 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
     return this._displayMenuWrapper;
   }
 
-  get projectToBeFinished(): boolean {
-    return this._projectToBeFinished;
+  get innovationEndModal(): boolean {
+    return this._innovationEndModal;
   }
 
   getCompanyName(): string {
@@ -788,7 +886,47 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   }
 
   getOwnerName(): string {
-    return this.innovation.owner.name || '';
+    return this._innovation.owner.name || '';
+  }
+
+  get ngUnsubscribe(): Subject<any> {
+    return this._ngUnsubscribe;
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get spinnerDisplay(): boolean {
+    return this._spinnerDisplay;
+  }
+
+  get openModal(): boolean {
+    return this._openModal;
+  }
+
+  get innovationExport(): boolean {
+    return this._innovationExport;
+  }
+
+  get numberOfSections(): number {
+    return this._numberOfSections;
+  }
+
+  get exportType(): string {
+    return this._exportType;
+  }
+
+  get executiveTemplates(): Array<Executive> {
+    return this._executiveTemplates;
+  }
+
+  get today(): Number {
+    return this._today;
+  }
+
+  get mapInitialConfiguration(): { [p: string]: boolean } {
+    return this._mapInitialConfiguration;
   }
 
   get answersOrigins(): {[c: string]: number} {
@@ -813,7 +951,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.unsubscribe();
+    this._ngUnsubscribe.unsubscribe();
   }
 
 }

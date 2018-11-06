@@ -12,6 +12,7 @@ import {Subject} from 'rxjs';
 import { first, distinctUntilChanged } from 'rxjs/operators';
 import {AutocompleteService} from '../../../../../services/autocomplete/autocomplete.service';
 import {DashboardService} from '../../../../../services/dashboard/dashboard.service';
+import {UserService} from '../../../../../services/user/user.service';
 import {User} from '../../../../../models/user.model';
 import {AuthService} from '../../../../../services/auth/auth.service';
 import {PresetService} from '../../../../../services/preset/preset.service';
@@ -107,6 +108,7 @@ export class AdminProjectManagementComponent implements OnInit {
               private _authService: AuthService,
               private _router: Router,
               private _presetService: PresetService,
+              private _userService: UserService,
               private _tagService: TagsService,
               private _notificationsService: TranslateNotificationsService,
               private _dashboardService: DashboardService,
@@ -464,7 +466,6 @@ export class AdminProjectManagementComponent implements OnInit {
 
   /***
    * This function is call to update the stats of a campaign
-   * @param {Event} event
    * @param {Campaign} campaign
    */
   public updateStats(campaign: Campaign) {
@@ -719,6 +720,11 @@ export class AdminProjectManagementComponent implements OnInit {
   closeModal(event: Event) {
     event.preventDefault();
     this._showDeleteModal = false;
+  }
+
+  public updateOwnerLanguage(language: string) {
+    this._project.owner.language = language;
+    this._userService.updateOther(this._project.owner).first().subscribe();
   }
 
   /**

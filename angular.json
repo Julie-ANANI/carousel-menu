@@ -23,8 +23,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "src/style/client-styles.scss"
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/tinymce/tinymce.min.js",
@@ -173,8 +172,7 @@
               "node_modules/tinymce/plugins/paste/plugin.min.js"
             ],
             "styles": [
-              "src/styles.scss",
-              "src/style/client-styles.scss"
+              "src/styles.scss"
             ],
             "assets": [
               {

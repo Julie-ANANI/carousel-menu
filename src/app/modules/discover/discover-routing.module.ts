@@ -13,6 +13,22 @@ const discoverRoutes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'result',
+      children: [
+      {
+        path: '',
+        component: DiscoverComponent,
+        resolve: { innovations: InnovationsResolver },
+        pathMatch: 'full'
+      },
+      {
+        path: ':id/:lang',
+        component: DiscoverDescriptionComponent,
+        pathMatch: 'full'
+      }
+    ]
+  },
+  {
     path: ':id/:lang',
     component: DiscoverDescriptionComponent,
     pathMatch: 'full'

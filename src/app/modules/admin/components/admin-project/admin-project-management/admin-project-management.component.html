@@ -739,6 +739,7 @@
     [initialProject]="project"
     [setProject]="projectSubject"
     (projectChange)="changeProject($event)"
+    (ownerLanguageChange)="updateOwnerLanguage($event)"
     (sendMail)="sendMailToOwner($event)">
   </app-innovation-form>
   <app-emails-form

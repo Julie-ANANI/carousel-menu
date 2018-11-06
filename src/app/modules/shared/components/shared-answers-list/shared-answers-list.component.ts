@@ -63,7 +63,6 @@ export class SharedAnswersListComponent {
   }
 
   public seeAnswer(answer: Answer) {
-    event.preventDefault();
     this.modalAnswerChange.emit(answer);
   }
 

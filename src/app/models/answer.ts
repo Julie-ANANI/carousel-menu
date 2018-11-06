@@ -17,6 +17,7 @@ export interface Answer {
   company: Clearbit;
   readonly ip?: any;
   readonly answeredByEmail: boolean;
+  readonly blacklistedCompany?: boolean;
   readonly professional?: Professional;
   readonly answers: any;
   readonly created?: Date;

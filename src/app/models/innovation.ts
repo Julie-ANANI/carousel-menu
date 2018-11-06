@@ -44,7 +44,7 @@ export interface Innovation {
   readonly updated?: Date;
   ownerConsent?: {
     value?: boolean,
-    date?: Date
+    date?: any
   },
   executiveReport?: {
     totalSections?: number,

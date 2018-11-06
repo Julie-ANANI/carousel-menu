@@ -53,9 +53,20 @@ export class AnswerService {
     return this._http.get<{answers: Array<Answer>}>('/innovation/' + innovationId + '/validAnswers');
   }
 
-  public exportAsCsv(campaignId: string, client: Boolean): void {
+  public exportAsCsvByCampaign(campaignId: string, client: Boolean): void {
     const url = environment.apiUrl + '/campaign/' + campaignId + '/exportAnswers' + (client ? '?client=true' : '');
     window.open(url);
+  }
+
+  public getExportUrl(innovationId: string, client: Boolean): string {
+    return environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (client ? '?client=true' : '');
+  }
+
+  public getReportHTML(innovationId: string, lang: string): Observable<any>  {
+    const url = environment.apiUrl + '/reporting/job/answers/' + innovationId + (lang ? `?lang=${lang}` : '?lang=en');
+    return this._http.get(url)
+      .map((res: Response) => res['_body'])
+      .catch((error: Response) => Observable.throw(error.text()));
   }
 
   public importFromGmail(file: File): Observable<any> {

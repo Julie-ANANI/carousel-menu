@@ -42,7 +42,7 @@ export const COMMON = {
   'REINVITE': 'Inviter à nouveau',
   'I_FINISHED': 'J\'ai terminé',
   'SYNTHESIS': 'Synthèse',
-  'SEARCH_INNOVATION': 'Recherche innovation',
+  'SEARCH_INNOVATION': 'Rechercher une innovation ici',
   'LOADING': 'Chargement...',
   'MEDIA_NOT_AVAILABLE': 'Médias non disponible',
   'PROGRESS': 'Évolution',

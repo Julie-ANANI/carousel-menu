@@ -1,4 +1,5 @@
 export const MARKET_REPORT = {
+
   'TITLE': {
     'EDITING': 'Market potential of your innovation will be available soon',
     'SUBMITTED': 'Exploring market potential of your innovation',
@@ -13,11 +14,13 @@ export const MARKET_REPORT = {
       'C': 'and submit it.'
     },
     'REVIEWING': 'Please modify the changes in your innovation and re-submit it.',
-    'EVALUATING': 'We are collecting market potential of your project. We\'ll come back soon!'
+    'EVALUATING': 'We are collecting market potential of your innovation. We\'ll come back soon!'
   },
 
   'MESSAGE_ADMIN': {
-    'NOT_SUBMITTED': 'The client hasn\'t submitted the innovation yet. You will be able to edit the market report after he submits his innovation.'
+    'NOT_SUBMITTED': 'The client hasn\'t submitted the project yet. You will be able to edit the market report after he submits his project.',
+    'PREVIEW_MODE': 'The partial synthesis of this project is available at the client side.',
+    'DONE': 'This project is marked as finished, and full synthesis is available at the client side.'
   },
 
   'BUTTON': {
@@ -42,12 +45,34 @@ export const MARKET_REPORT = {
   'KEY_LEARNING': 'Key learnings',
 
   'STICKY_BAR': {
-    'DETAIL_VIEW': 'Detail view',
+    'DETAIL_VIEW': 'Detail View',
     'FILTER': 'Filters',
+    'CLIENT_VISIBLE': 'Make Visible To Client',
     'BUTTON_CSV': 'Export CSV',
     'BUTTON_PRINT': 'Print Executive Report',
     'BUTTON_ADMIN': 'Finalize Synthesis',
-    'BUTTON_SHARE': 'Share Synthesis'
+    'BUTTON_SHARE': 'Share Synthesis',
+    'BUTTON_EXPORT': 'Export',
+    'BUTTON_END': 'End Project'
+  },
+
+  'MODAL': {
+    'END_INNOVATION_TITLE': 'Confirmation Board',
+    'END_INNOVATION_CONTENT': 'Do you really want to end this project? Please keep in mind that after this you won\'t be able to make any further changes.',
+    'EXPORT_INNOVATION_TITLE': 'Export Board',
+    'EXPORT_INNOVATION_NOTE': 'We remind you that according to the regulation n ° 2016/679, said general regulation on the protection of the data, the personal data contained in the complete summary must not be used outside of your company.',
+    'EXPORT_INNOVATION_CONTENT' : {
+      'A': 'All Answers',
+      'EXCEL': 'Excel',
+      'PDF': 'in PDF',
+      'B': 'Executive Report',
+      'C': '4 pages',
+      'AROUND': 'Around',
+      'PAGES': 'pages'
+    },
+    'BUTTON_CONFIRM': 'Confirm',
+    'BUTTON_DOWNLOAD': 'Download',
+    'BUTTON_CANCEL': 'Cancel'
   },
 
   'ANONYMOUS': 'Non Disclosed',
@@ -58,15 +83,9 @@ export const MARKET_REPORT = {
 
   'MESSAGE_SYNTHESIS_NOT_VISIBLE': 'The synthesis is not visible to client.',
 
-  'MESSAGE_SYNTHESIS': 'The innovation has been successfully ended, and the complete synthesis is available at the client side.',
-
-  'CLIENT_SYNTHESIS_MESSAGE': 'The partial synthesis of your innovation is available.',
+  'MESSAGE_SYNTHESIS': 'The project has been successfully ended, and the complete synthesis is available at the client side.',
 
   'PRINT_DATE': 'Market test -',
-
-  'MODAL_TITLE': 'Confirmation Board',
-
-  'MODAL_CONTENT': 'Do you want to end this innovation?',
 
   'EXECUTIVE': {
     'HEADING': 'Executive Report',
@@ -76,7 +95,7 @@ export const MARKET_REPORT = {
     'CONCLUSION': 'Conclusion abstract',
     'ABSTRACT': 'Abstract',
     'NO_TAGS': 'Add the tags for this question',
-    'DELETE_BUTTON': 'Delete Executive Template'
+    'DELETE_BUTTON': 'Delete Executive Template',
   },
 
   'EXECUTIVE_TEMPLATE': {
@@ -97,8 +116,8 @@ export const MARKET_REPORT = {
   'EXECUTIVE_PLACEHOLDER': {
     'GOAL': 'Describe the objective of this innovation within 120 words.',
     'CONCLUSION': 'Describe the conclusion of this innovation campaign within 1200 words.',
-    'PROFESSIONAL': 'Describe the professional abstract of this innovation within 180 words.',
-    'SECTION': 'Describe the abstract of this question within 180 words.'
+    'PROFESSIONAL': 'Describe the professional abstract of this innovation within 160 words.',
+    'SECTION': 'Describe the abstract of this question within 160 words.'
   },
 
   'TARGET_COUNTRIES': 'Targeted countries',

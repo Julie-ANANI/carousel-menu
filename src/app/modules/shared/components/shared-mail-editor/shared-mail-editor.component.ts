@@ -21,19 +21,21 @@ export class SharedMailEditorComponent implements OnInit {
   @Input() set inputLanguage(value: any) {
     this.changeLanguage(value);
   }
+  @Input() noLanguage: Boolean;
+  @Output() languageChange = new EventEmitter<string>();
   @Output() emailChange = new EventEmitter<any>();
 
   private _signatures: Array<EmailSignature> = [];
   private _emailsObject: any = {};
   private _language = 'en';
   private _email: EmailTemplate;
+  private _languageHasBeenSet: Boolean = false;
   public editionMode = true;
 
   constructor() {
   }
 
   ngOnInit() {
-    this._language = 'en';
     this._signatures = [];
     this.editionMode = true;
     this._email = {language: this._language, subject: '', content: ''};
@@ -43,7 +45,13 @@ export class SharedMailEditorComponent implements OnInit {
     };
   }
 
+  public setLanguage(value: string) {
+    this.changeLanguage(value);
+    this.languageChange.emit(value);
+  }
+
   public changeLanguage(value: string) {
+    if (value) this._languageHasBeenSet = true;
     this._language = value;
     if (this._emailsObject) {
       this._email = this._emailsObject[this._language];
@@ -62,7 +70,7 @@ export class SharedMailEditorComponent implements OnInit {
 
   get signatures(): Array<EmailSignature> { return this._signatures; }
   get language(): string { return this._language; }
-  set language(value: string) { this._language = value; }
+  get languageHasBeenSet(): Boolean { return this._languageHasBeenSet; }
   get email(): EmailTemplate { return this._email; }
   set email(value: EmailTemplate) { this._email = value; }
 

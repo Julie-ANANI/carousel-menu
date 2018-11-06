@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { CurrentRouteService } from './services/frontend/current-route/current-route.service';
 import { ListenerService } from './services/frontend/listener/listener.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -80,7 +81,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * This is to listen the click event on the page.
    */
   @HostListener('mouseup', ['$event'])
-  onMouseUp() {
+  onMouseUp(event: any) {
     this.listenerService.setClickEvent(event);
   }
 
@@ -90,6 +91,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
   get notificationsOptions() {
     return this._notificationsOptions;
+  }
+
+  getLogo(): string {
+    return environment.logoURL;
+  }
+
+  getDomain(): string {
+   return environment.domain;
   }
 
   ngOnDestroy() {

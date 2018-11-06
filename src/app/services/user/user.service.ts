@@ -43,7 +43,7 @@ export class UserService {
   }
 
   public updateOther(user: User): Observable<any> {
-    return this._http.put(`/user/${user.id}`, user.toJSON());
+    return this._http.put(`/user/${user.id}`, user);
   }
 
   public activate(state: string, tokenEmail?: string): Observable<any> {

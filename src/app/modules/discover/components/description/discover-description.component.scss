@@ -3,12 +3,14 @@
 #discover-description {
   padding-top: 0;
 
+
   .spinner-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-top: 3.15rem;
   }
+
 
   .hero-container {
     background-color: $background-color;
@@ -17,10 +19,31 @@
       color: white;
     }
 
-    h6 {
+    .main-heading {
+      font-weight: 400;
+    }
+
+    .details-wrapper {
+      display: flex;
+      flex-wrap: wrap;
       color: #a4a4a4;
       font-size: 0.875rem;
-      margin-bottom: .9375rem;
+      font-weight: 600;
+      margin-bottom: .35rem;
+
+      .tag-wrapper {
+        margin-right: .35rem;
+        margin-bottom: .35rem;
+      }
+
+      .tag-wrapper:last-child {
+        margin-right: 0;
+      }
+
+      span {
+        margin-bottom: .35rem;
+      }
+
     }
 
     .detail-wrapper {
@@ -33,6 +56,11 @@
         flex-direction: column;
         justify-content: space-between;
         margin-bottom: -.6rem;
+
+        .para {
+          font-size: .9375rem;
+        }
+
       }
 
       .opinion-wrapper {
@@ -161,6 +189,7 @@
       width: 318px;
       height: 230px;
       display: inline-block;
+      border-radius: 3px;
     }
 
   }
