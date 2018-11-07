@@ -8,6 +8,8 @@ import { InnovationSettings } from '../../../../../../models/innov-settings';
 import { Subject } from 'rxjs/Subject';
 import { Template } from '../../../../../sidebar/interfaces/template';
 import { FrontendService } from '../../../../../../services/frontend/frontend.service';
+import {InnovCard} from '../../../../../../models/innov-card';
+import {Media} from '../../../../../../models/media';
 
 const DEFAULT_TAB = 'targeting';
 
@@ -22,21 +24,27 @@ export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
   @Input() project: Innovation;
 
   private _changesSaved: boolean;
+
   private _saveChanges: boolean;
+
   private _saveButtonClass: string; // class to attach on the save button respect to the form status.
 
   private _pitchFormValid: boolean;
+
   private _showPitchFieldError: Subject<boolean> = new Subject();
 
   private _targetingFormValid: boolean;
+
   private _showTargetingFieldError: Subject<boolean> = new Subject();
 
   scrollOn = false;
 
   private _innovationPreviewIndex = 0;
+
   private _sidebarTemplateValue: Template = {};
 
   private _currentTab: string;
+
   private _projectToBeSubmitted: boolean;
 
   constructor(private innovationService: InnovationService,
@@ -226,6 +234,31 @@ export class SetupProjectComponent implements OnInit, ComponentCanDeactivate {
 
   closeSidebar(value: string) {
     this._sidebarTemplateValue.animate_state = value;
+  }
+
+
+  getImageSrc(innovCard: InnovCard): string {
+
+    let src = '';
+    const defaultSrc = 'https://res.cloudinary.com/umi/image/upload/v1535383716/app/default-images/image-not-available.png';
+
+    if (innovCard.principalMedia && innovCard.principalMedia.type === 'PHOTO') {
+      src = innovCard.principalMedia.url;
+    } else {
+      if (innovCard.media) {
+        const index = innovCard.media.findIndex((media: Media) => media.type === 'PHOTO');
+        if (index !== -1) {
+          src = innovCard.media[index].url;
+        }
+      }
+    }
+
+    if (src === '') {
+      src = defaultSrc;
+    }
+
+    return src;
+
   }
 
   get currentTab() {
