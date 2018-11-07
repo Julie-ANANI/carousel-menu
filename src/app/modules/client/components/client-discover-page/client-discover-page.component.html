@@ -53,6 +53,29 @@
     <!-- /Tags section -->
 
 
+    <!-- Suggested tags section -->
+    <div *ngIf="suggestedTags.length > 0" class="section-suggested-tags">
+
+      <!-- Suggested Tags -->
+      <div class="tags-wrapper" @tagAnimation>
+        <div *ngFor="let suggested_tag of suggestedTags;" class="tag-content">
+          <label [ngClass]=" { 'active': getCheckedSimilarFilter(suggested_tag._id) } ">
+            <input
+              type="checkbox"
+              [id]="suggested_tag._id"
+              [name]="suggested_tag.label | multiling:browserLang()"
+              [value]="suggested_tag.label | multiling:browserLang()"
+              (change)="toggleSimilarFilter($event, suggested_tag)"
+              [checked]="getCheckedSimilarFilter(suggested_tag._id)">
+            {{ suggested_tag?.label | multiling:browserLang() | FormatText }}
+          </label>
+        </div>
+      </div>
+
+    </div>
+     <!-- /Suggested tags section -->
+
+
     <!-- Share result section-->
     <div *ngIf="appliedFilters.length > 0 && !displaySpinner" class="section-share">
       <button

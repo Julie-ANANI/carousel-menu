@@ -79,4 +79,10 @@ export class TagsService {
       .catch((error: Response) => Observable.throw(error.text()));
   }
 
+  public getSimilarTags(tagId: string): Observable<Array<Tag>> {
+    return this._http.get('/tags/' + tagId + '/match')
+      .map((res: Response) => res.json())
+      .catch((error: Response) => Observable.throw(error.text()));
+  }
+
 }
