@@ -189,4 +189,53 @@
 }
 
 
+/********************************** Media ***************************************/
 
+
+@media (max-width: 600px) {
+
+  #table-component {
+
+    .info-wrapper {
+      flex-direction: column;
+      margin-bottom: 1.57rem;
+
+      .main-heading {
+        margin-right: 0 !important;
+        margin-bottom: .9375rem !important;
+      }
+
+    }
+
+    table, tr {
+      display: flex;
+      flex-direction: column;
+    }
+
+    th, .th-checkbox, td {
+      padding-top: 11px !important;
+      padding-bottom: 11px !important;
+
+      .ghost-edit {
+        visibility: visible !important;
+      }
+
+    }
+
+    .th-checkbox {
+      width: 100% !important;
+    }
+
+    .square-checkbox {
+      margin-left: 11px !important;
+      margin-right: unset !important;
+    }
+
+    tr {
+      height: unset !important;
+    }
+
+  }
+
+  
+}
