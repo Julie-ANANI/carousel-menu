@@ -127,15 +127,6 @@ export class AdminUsersComponent implements OnInit {
     return id && id === this.selfId;
   }
 
-  loadInnovations(event: Event, userId: string): void {
-    event.preventDefault();
-    this._userService.getInnovations(userId)
-      .first()
-      .subscribe(innovations => {
-        console.log(innovations.innovations);
-      });
-  }
-
   deleteUserModal(user: User) {
     this._usersToRemove = [];
     this._more = {animate_state: 'inactive', title: this._more.title};

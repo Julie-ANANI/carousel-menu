@@ -55,6 +55,18 @@
         </div>
       </div>
 
+      <!-- Projects -->
+      <div *ngIf="isEditUser" class="form-group">
+        <label class="form-label">Collaborates to {{ projects.length }} projects</label>
+        <select (change)="selectProject($event)">
+          <option selected>View the projects</option>
+          <option *ngFor="let project of projects" [value]="project._id">{{ project.name }} </option>
+        </select>
+        <button class="btn btn-primary" *ngIf="selectedProject">
+          <a [href]="'/admin/projects/project/' + selectedProject" target="_blank">Go</a>
+        </button>
+      </div>
+
       <!-- Show Tags -->
       <div *ngIf="isProfessional && tags.length > 0" class="form-group">
         <label class="form-label">Tags</label>
