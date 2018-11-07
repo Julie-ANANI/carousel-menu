@@ -3,8 +3,7 @@ import { animate, query, style, transition, trigger, stagger, keyframes } from '
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService} from '@ngx-translate/core';
-import { InnovationService } from '../../services/innovation/innovation.service';
-import { TranslateNotificationsService } from '../../services/notifications/notifications.service';
+import { LocalStorageService } from '../../services/localStorage/localStorage.service';
 import { TranslateTitleService } from '../../services/title/title.service';
 import { MultilingPipe } from '../../pipe/pipes/multiling.pipe';
 import { Innovation } from '../../models/innovation';
@@ -63,8 +62,6 @@ export class DiscoverComponent implements OnInit {
 
   private _localResults: number; // hold the total number of innovations.
 
-  private _displaySpinner = true; // show the spinner until we are fetching the innovation from the server.
-
   private _allTags: Array<Tag> = []; // hold all the tags type of sector in the fetched innovations.
 
   private _appliedFilters: Array<Tag> = []; // hold all the filters that are selected by the user.
@@ -91,16 +88,22 @@ export class DiscoverComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private translateTitleService: TranslateTitleService,
-              private innovationService: InnovationService,
-              private translateNotificationsService: TranslateNotificationsService,
               private translateService: TranslateService,
-              private activatedRoute: ActivatedRoute) {}
+              private activatedRoute: ActivatedRoute,
+              private localStorage: LocalStorageService) {}
 
   ngOnInit() {
     this.translateTitleService.setTitle('DISCOVER.MENU_BAR_TITLE');
     this._paginationValue = { limit: 50, offset: this._config.offset };
     this.checkStoredFilters();
-    this.getAllInnovations();
+
+
+    this._totalInnovations = this.activatedRoute.snapshot.data.innovations;
+    this._totalResults = this._totalInnovations.length;
+    this.getTitles();
+    this.getAllTags();
+    this.checkSharedResult();
+    this.initialize();
   }
 
 
@@ -108,35 +111,14 @@ export class DiscoverComponent implements OnInit {
    * this function checks do we have any filters stored in session storage.
    */
   private checkStoredFilters() {
-    const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
-
-    if (sessionValues.length > 0) {
-      this._appliedFilters = sessionValues;
-    } else {
-      this._appliedFilters = [];
+    if (isPlatformBrowser(this.platformId)) {
+      const sessionValues = JSON.parse(sessionStorage.getItem('discover-filters')) || 0;
+      if (sessionValues.length > 0) {
+        this._appliedFilters = sessionValues;
+      } else {
+        this._appliedFilters = [];
+      }
     }
-
-  }
-
-
-
-  /***
-   * this function is to get all the innovations from the server.
-   */
-  private getAllInnovations() {
-    this.innovationService.getAll(this._config).first().subscribe((response) => {
-      this._totalInnovations = response.result;
-      this._totalResults = response._metadata.totalCount;
-      this.getTitles();
-      this.getAllTags();
-      this.checkSharedResult();
-      this.initialize();
-    }, () => {
-      this._displaySpinner = false;
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    }, () => {
-      this._displaySpinner = false;
-    });
   }
 
 
@@ -258,7 +240,7 @@ export class DiscoverComponent implements OnInit {
   private initialize() {
 
     this._startingIndex = 0;
-    this._endingIndex = parseInt(localStorage.getItem('discover-page-limit'), 10) || 50;
+    this._endingIndex = parseInt(this.localStorage.getItem('discover-page-limit'), 10) || 50;
 
     if (this._appliedFilters.length > 0) {
       this.applyFilters();
@@ -575,24 +557,26 @@ export class DiscoverComponent implements OnInit {
    * @param paginationValues
    */
   onChangePagination(paginationValues: PaginationTemplate) {
-    window.scroll(0, 0);
+    if (isPlatformBrowser(this.platformId)) {
+      window.scroll(0, 0);
 
-    const tempOffset = parseInt(paginationValues.offset, 10);
-    const tempLimit = parseInt(paginationValues.limit, 10);
+      const tempOffset = parseInt(paginationValues.offset, 10);
+      const tempLimit = parseInt(paginationValues.limit, 10);
 
-    this._startingIndex = tempOffset;
-    this._endingIndex = tempLimit;
+      this._startingIndex = tempOffset;
+      this._endingIndex = tempLimit;
 
-    if (paginationValues.limit >= this._localResults) {
-      this._startingIndex = 0;
-      this._endingIndex = this._localResults;
-    } else {
-      if (paginationValues.offset === 0) {
+      if (paginationValues.limit >= this._localResults) {
         this._startingIndex = 0;
-        this._endingIndex = tempLimit;
-      } else if (paginationValues.offset > 0) {
-        this._startingIndex = tempOffset;
-        this._endingIndex += tempOffset;
+        this._endingIndex = this._localResults;
+      } else {
+        if (paginationValues.offset === 0) {
+          this._startingIndex = 0;
+          this._endingIndex = tempLimit;
+        } else if (paginationValues.offset > 0) {
+          this._startingIndex = tempOffset;
+          this._endingIndex += tempOffset;
+        }
       }
     }
 
@@ -612,10 +596,6 @@ export class DiscoverComponent implements OnInit {
 
   get localResults(): number {
     return this._localResults;
-  }
-
-  get displaySpinner(): boolean {
-    return this._displaySpinner;
   }
 
   get allTags(): Array<Tag> {

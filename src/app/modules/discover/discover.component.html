@@ -2,13 +2,6 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
 
-    <!-- Displaying spinner -->
-    <ng-container *ngIf="displaySpinner">
-      <app-shared-loader></app-shared-loader>
-    </ng-container>
-    <!-- /Displaying spinner -->
-
-
     <!-- Tags section -->
     <div *ngIf="allTags.length > 0" class="section-tags">
 
@@ -54,7 +47,7 @@
 
 
     <!-- Share result section-->
-    <div *ngIf="appliedFilters.length > 0 && !displaySpinner" class="section-share">
+    <div *ngIf="appliedFilters.length > 0" class="section-share">
       <button
         type="button"
         class="btn ghost-secondary btn-xs"
@@ -66,7 +59,7 @@
 
 
     <!-- Heading section -->
-    <div *ngIf="!displaySpinner" class="section-heading">
+    <div class="section-heading">
 
       <!-- heading -->
       <h1 class="main-heading">{{ 'DISCOVER.PAGE_DESCRIPTION' | translate }}</h1>
