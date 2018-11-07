@@ -48,6 +48,7 @@ export const COMMON = {
   'PROGRESS': 'Évolution',
   'PROFILE-URL': 'Profil Linkedin',
   'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
+  'SEARCH_BY': 'Recherche par',
 
   'BLACKLIST': {
     'EMAILS': 'E-mails blacklistés',

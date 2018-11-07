@@ -1,15 +1,37 @@
-<div class="container">
+<section class="section-light-container" id="admin-users-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+
+    <!-- Table -->
+    <app-shared-table
+      [data]="tableInfos"
+      [config]="config"
+      (configChange)="configChange($event)"
+      (editRow)="editUser($event)"
+      (removeRows)="deleteUsersModal($event)"
+      (performAction)="performActions($event)">
+    </app-shared-table>
+    <!-- /Table -->
+
+
+  </div>
+</section>
+
+
+
+<!--
+<div class="container section-container">
   <div class="columns">
     <div class="column col-11 col-mx-auto">
 
-        <!--<button class="btn btn-lg btn-primary" (click)="inviteUser($event)">{{ 'USERS.INVITE_USER' | translate }}</button>-->
+        &lt;!&ndash;<button class="btn btn-lg btn-primary" (click)="inviteUser($event)">{{ 'USERS.INVITE_USER' | translate }}</button>&ndash;&gt;
 
-        <!-- TODO
+        &lt;!&ndash; TODO
         <div class="invitation-pending" *ngIf="pending_invitations && pending_invitations.length > 0">
           <h3>{{ 'USERS.WAITING_INVITATIONS' | translate }}</h3>
           <p>{{ pending_invitations.join(', ') }}</p>
         </div>
-        -->
+        &ndash;&gt;
 
         <app-shared-table [data]="tableInfos"
                           [config]="config"
@@ -29,7 +51,7 @@
           </app-user-form>
         </app-sidebar>
 
-        <!-- Modal to ask admin to sure about deleting the user -->
+        &lt;!&ndash; Modal to ask admin to sure about deleting the user &ndash;&gt;
         <div class="modal" [ngClass]="{ 'active': showDeleteModal }">
           <div class="modal-overlay" (click)="closeModal($event)"></div>
           <div class="modal-container">
@@ -56,3 +78,4 @@
     </div>
   </div>
 </div>
+-->

@@ -1,1 +1,33 @@
+@import "../../../../../style/variables";
 
+#filter-multi-component {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+  .filter-type-wrapper, .filter-search-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-right: 1.57rem;
+  }
+  
+  .filter-label {
+    font-weight: 600;
+    font-size: .875rem;
+    color: $text-dark;
+    margin-right: .6rem;
+  }
+
+  .form-select {
+    min-height: 2.5rem;
+    margin-top: 0;
+    padding-top: .18rem;
+    padding-bottom: .18rem;
+  }
+
+  .form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
+    border-color: $border-color;
+  }
+
+}

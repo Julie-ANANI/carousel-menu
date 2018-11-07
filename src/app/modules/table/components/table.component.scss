@@ -14,12 +14,17 @@
     .info-wrapper {
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
 
       .main-heading {
         font-size: 1rem;
         color: $meta-color;
         font-weight: normal;
-        margin-right: .6rem;
+        margin-right: 1.57rem;
+      }
+
+      .filter-wrapper {
+        margin-bottom: 1.57rem;
       }
 
     }
@@ -198,7 +203,7 @@
 
     .info-wrapper {
       flex-direction: column;
-      margin-bottom: 1.57rem;
+      align-items: flex-start !important;
 
       .main-heading {
         margin-right: 0 !important;
