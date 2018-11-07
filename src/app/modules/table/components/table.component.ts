@@ -247,11 +247,20 @@ export class TableComponent {
    * Emit the Output removeRows
    */
   removeSelectedRows() {
-    if (this._massSelection && this._total > this._content.length) {
+   if (this._massSelection) {
+     const values: Array<object> = [];
+     this._content.forEach((content) => {
+       values.push(content._content);
+     });
+     this.removeRows.emit(values);
+   } else {
+     this.removeRows.emit(this.getSelectedRowsContent());
+   }
+   /* if (this._massSelection && this._total > this._content.length) {
       this.removeRows.emit('all');
     } else {
       this.removeRows.emit(this.getSelectedRowsContent());
-    }
+    }*/
   }
 
   /***
@@ -430,7 +439,8 @@ export class TableComponent {
    */
   getSelectedRowsNumber(): number {
     if (this._massSelection) {
-      return this._total;
+      return this._content.length;
+      // return this._total;
     } else {
       return this.getSelectedRows().length;
     }

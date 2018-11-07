@@ -17,13 +17,13 @@
       <!-- Number of result and title -->
       <h1 class="main-heading">{{ total }} {{ title | translate }}</h1>
 
-      <!-- If we want to filter by columns (not local)
+      <!-- If we want to filter by columns (not local) -->
       <app-shared-multi-filter
         *ngIf="isFiltrable"
         [config]="config"
         (configChange)="changeConfig($event)"
         [props]="columns">
-      </app-shared-multi-filter>-->
+      </app-shared-multi-filter>
 
     </div>
     <!-- /Info row -->
@@ -97,7 +97,7 @@
                   *ngFor="let action of actions"
                   class="btn btn-xs ghost-edit"
                   style="margin-left: 10px;"
-                  (click)="onActionClick(a)">
+                  (click)="onActionClick(action)">
                   {{ action | translate }}
                 </button>
                 <button
@@ -118,11 +118,11 @@
 
 
       <tbody>
-        <tr *ngFor="let key of getRowsKeys()" [ngClass]="{ 'active': isLocal ? isSelected(filteredContent[key]) : isSelected(content[key]) }">
+        <tr *ngFor="let key of getRowsKeys()" [ngClass]="{ 'active': isLocal ? isSelected(filteredContent[key]) : isSelected(content[key]) || selectedRows > 0 }">
 
           <td *ngIf="isSelectable" class="th-checkbox">
             <label>
-              <input type="checkbox" (click)="selectRow(key)" [checked]="isLocal ? isSelected(filteredContent[key]) : isSelected(content[key])"/>
+              <input type="checkbox" (click)="selectRow(key)" [checked]="isLocal ? isSelected(filteredContent[key]) : isSelected(content[key]) || selectedRows > 0"/>
               <div class="square-checkbox active">
                 <i class="icon icon-check"></i>
               </div>
@@ -238,9 +238,23 @@
 
 
     </table>
+    <!-- /Table -->
 
+
+    <!-- Pagination -->
+    <div class="section-pagination">
+      <app-pagination
+        *ngIf="!isNotPaginable"
+        [configValue]="paginationConfig"
+        (configChange)="changePaginationConfig($event)"
+        [total]="total"
+        [propertyName]="selector">
+      </app-pagination>
+    </div>
+    <!-- /Pagination -->
 
   </div>
+  <!-- /Fetching done -->
 
 
 </div>

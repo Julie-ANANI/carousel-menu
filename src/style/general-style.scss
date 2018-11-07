@@ -196,3 +196,13 @@ a, a:focus, a:hover, a:active, a.active {
 .discreet-link.active {
   color: $primary-color;
 }
+
+
+/*
+    Pagination section
+ */
+.section-pagination {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1.57rem;
+}

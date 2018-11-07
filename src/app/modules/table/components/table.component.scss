@@ -189,37 +189,4 @@
 }
 
 
-.table-edit-button {
-  float: right;
-}
-
-
-.fa-tag:hover, .fa-tag.active {
-  color: #00b0ff;
-}
-
-.big {
-  i {
-    font-size: 28px;
-  }
-}
-
-button.visibleOnHover {
-  visibility: hidden;
-}
-
-tr:hover {
-  button.visibleOnHover {
-    visibility: visible;
-  }
-}
-
-th.pointable:hover {
-  cursor: pointer;
-}
-
-.table-title {
-  margin-bottom: 17px;
-}
-
 
