@@ -1,4 +1,6 @@
-$secondary-color: #0B90C6;
+@import "../../../../../style/variables";
+
+/*$secondary-color: #0B90C6;
 $dark-background: #262831;
 
 .list-table {
@@ -104,4 +106,73 @@ $dark-background: #262831;
   .emails-stats .form-select {
     margin: auto;
   }
+}*/
+
+#admin-dashboard-component {
+
+
+  .section-operator {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .text span {
+      margin-right: 1.57rem;
+    }
+
+    .form-select {
+      min-height: 2.5rem;
+      margin-top: 0;
+      padding-top: .18rem;
+      padding-bottom: .18rem;
+      min-width: 102px;
+    }
+
+    .text {
+      font-size: 1rem;
+      color: $meta-color;
+    }
+
+    .form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
+      border-color: $border-color;
+    }
+
+  }
+
+
+  .section-table, .section-batch {
+    margin-top: 1.57rem;
+  }
+
+
+  .section-batch {
+
+    .label-week {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .label-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+    }
+
+    .batch-wrapper {
+      margin-top: 1.57rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .batch-header {
+      }
+
+    }
+
+  }
+
+
 }

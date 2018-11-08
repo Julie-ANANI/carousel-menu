@@ -16,6 +16,7 @@ import { Template } from '../../../sidebar/interfaces/template';
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss']
 })
+
 export class AdminDashboardComponent implements OnInit {
 
   public operators: Array<User> = [];
@@ -71,7 +72,7 @@ export class AdminDashboardComponent implements OnInit {
     }
 
     this._dashboardService.getOperators().first().subscribe((operators) => {
-      this.operators = operators.result.sort((a,b) => {
+      this.operators = operators.result.sort((a, b) => {
         return a.firstName > b.firstName ? 1 : -1;
       });
     });
@@ -79,7 +80,6 @@ export class AdminDashboardComponent implements OnInit {
     this._dashboardService.getOperatorData(this.operatorId).first().subscribe((operatorData) => this.operatorData = operatorData);
 
     this.getPeriodStats();
-
 
     this.getWeek();
   }
@@ -105,7 +105,7 @@ export class AdminDashboardComponent implements OnInit {
     const now = Date.now();
     this._dateNow = new Date(now);
     this._dashboardService.getNextDateSend(this._dateNow.toString()).first().subscribe( (batches: Array<any>) => {
-        this._weekBatches = batches;
+      this._weekBatches = batches;
     });
   }
 
@@ -144,21 +144,26 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  public getDateString(d: any): string {
+  getDateString(d: any): string {
     let result = '';
     let day = d.split('/')[0];
     let month = d.split('/')[1];
+
     day = ('0' + day).slice(-2);
+
     month = Number(month);
     month ++;
     month = month.toString();
     month = ('0' + month).slice(-2);
+
     if (this._translateService.currentLang === 'fr') {
       result = day + '/' + month;
     } else {
       result = month + '/' + day;
     }
+
     return result;
+
   }
 
   showPreview(event: Event, batch: any) {

@@ -50,6 +50,7 @@ export const COMMON = {
   'PAGE_NOT_FOUND': 'This is not the web page you are looking for.',
   'SEARCH_BY': 'Search by',
   'SEARCH_PLACEHOLDER': 'Search here',
+  'SELECT': 'Select',
 
   'BLACKLIST': {
     'EMAILS': 'Blacklisted e-mails',

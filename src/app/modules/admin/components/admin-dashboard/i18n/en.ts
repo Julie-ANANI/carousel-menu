@@ -1,4 +1,25 @@
 export const DASHBOARD = {
+
+  'SELECT_OPERATOR': 'Select operator:',
+
+  'PROJECT': 'project',
+
+  'VALIDATED': 'to be validated',
+
+  'RESPONSE': 'response',
+
+  'PROCESSED': 'to be processed',
+
+  'LAST_WEEK': 'Last week',
+
+  'NEXT_WEEK': 'Next week',
+
+  'MAIL_LABEL': {
+    'FIRST': 'First mail',
+    'SECOND': 'Second mail',
+    'THIRD': 'Third mail'
+  },
+
   'PROJECT_STATE': {
     'EDITING': 'Editing',
     'SUBMITTED': 'To validate',
@@ -8,8 +29,11 @@ export const DASHBOARD = {
     'DONE': 'Completed',
     'EVALUATING_DONE': 'Completed'
   },
+
   'STATS': {
-    "ALL_OPERATORS": "All operators"
+    'ALL_OPERATORS': 'All operators'
   },
+
   'SENDINGDATE' : 'Planned :'
+
 };
