@@ -1,30 +1,41 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
 import { Table } from '../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import {Template} from '../../../sidebar/interfaces/template';
-import {Subject} from 'rxjs/Subject';
+import { Template } from '../../../sidebar/interfaces/template';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-admin-users',
   templateUrl: './admin-users.component.html',
   styleUrls: ['./admin-users.component.scss']
 })
+
 export class AdminUsersComponent implements OnInit {
 
   private _users: Array<User> = [];
+
   private _actions: string[] = [];
+
   private _usersToRemove: User[] = [];
+
   private _more: Template = {};
+
   private _tableInfos: Table = null;
+
   private _showDeleteModal = false;
+
   sidebarState = new Subject<string>();
+
   private _selfId = '';
+
   currentUser: User;
+
   private _total = 0;
+
   private _config = {
     fields: 'id companyName jobTitle created domain location firstName lastName',
     limit: 10,

@@ -19,6 +19,7 @@
       position: absolute;
       left: 10px;
       margin-top: 1px;
+      cursor: pointer;
 
       img {
         width: 20px;
@@ -53,6 +54,7 @@
     margin-top: 0;
     padding-top: .18rem;
     padding-bottom: .18rem;
+    min-width: 102px;
   }
 
   .form-default {
