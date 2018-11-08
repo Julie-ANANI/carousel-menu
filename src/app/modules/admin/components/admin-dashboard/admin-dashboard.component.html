@@ -2,8 +2,14 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
 
+    <!-- When loading -->
+    <div *ngIf="spinnerDisplay" class="section-spinner">
+      <app-shared-loader></app-shared-loader>
+    </div>
+
+
     <!-- Loading finished -->
-    <ng-container *ngIf="adminLevel > 2">
+    <ng-container *ngIf="adminLevel > 2 && !spinnerDisplay">
 
 
       <!-- Section operator -->
@@ -58,16 +64,52 @@
         </div>
 
         <div class="batch-wrapper">
-          <div *ngFor="let days of weekBatches; let index1 = index" class="batch-header">
+          <div *ngFor="let days of weekBatches; let index1 = index" class="batch-content">
             <div *ngFor="let batches of days; let index2 = index">
               <p *ngIf="index2 === 0">{{ getDateString(batches) }}</p>
+              <ng-container *ngIf="index2 !== 0">
+                <div *ngIf="index2 < 4" class="batch-body">
+                  <label *ngIf="getState(batches) === 0" class="label-validate" (click)="showPreview($event, batches)">
+                    {{ batches.innovation.name  | ellipsis:10 }}  {{ batches.size }}
+                  </label>
+                  <label *ngIf="getState(batches) === 1" class="label-draft" (click)="showPreview($event, batches)">
+                    {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
+                  </label>
+                  <label *ngIf="getState(batches) === 2" class="label-meta" (click)="showPreview($event, batches)">
+                    {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
+                  </label>
+                </div>
+                <div *ngIf="index2 === 4" class="batch-body">
+                  <div class="popover" [ngClass]="{ 'popover-right': index1 === 0, 'popover-left': index1 === 4 }">
+                    <span>{{ 'DASHBOARD.SEE_MORE' | translate }}</span>
+                    <div class="popover-container">
+                      <div class="card">
+                        <div class="card-body">
+                          <div *ngFor="let batchesOver of days; let index3 = index">
+                            <div *ngIf="index3 > 0" class="batch-body">
+                              <label *ngIf="getState(batchesOver) === 0" class="label-validate" (click)="showPreview($event, batches)">
+                                {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
+                              </label>
+                              <label *ngIf="getState(batchesOver) === 1" class="label-draft" (click)="showPreview($event, batches)">
+                                {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
+                              </label>
+                              <label *ngIf="getState(batchesOver) === 2" class="label-meta" (click)="showPreview($event, batches)">
+                                {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
             </div>
           </div>
         </div>
 
       </div>
       <!-- /Section batch -->
-
 
 
     </ng-container>

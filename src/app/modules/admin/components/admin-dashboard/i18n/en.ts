@@ -14,6 +14,8 @@ export const DASHBOARD = {
 
   'NEXT_WEEK': 'Next week',
 
+  'SEE_MORE': 'see more...',
+
   'MAIL_LABEL': {
     'FIRST': 'First mail',
     'SECOND': 'Second mail',
