@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { NguiAutoCompleteModule } from '../../../auto-complete/auto-complete.module';
 import { RouterModule } from '@angular/router';
 import { SharedTagItemComponent } from './shared-tag-item.component';
 import { ModalModule } from '../shared-modal/modal.module';

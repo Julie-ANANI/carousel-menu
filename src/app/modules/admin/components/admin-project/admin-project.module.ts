@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { NguiAutoCompleteModule } from '../../../auto-complete/auto-complete.module';
 import { SharedMarketReportModule } from '../../../shared/components/shared-market-report/shared-market-report.module';
 import { SharedSortModule } from '../../../shared/components/shared-sort/shared-sort.module';
 import { SharedTextZoneModule } from '../../../shared/components/shared-text-zone/shared-text-zone.module';
