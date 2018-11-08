@@ -193,6 +193,7 @@ export class TableComponent {
     this._config.offset = value.offset;
     window.scroll(0, 0);
     this.changeConfig(this._config);
+    this.selectAll(event);
   }
 
   /***
@@ -228,9 +229,11 @@ export class TableComponent {
     }
 
     this._total = this._filteredContent.length;
+
     if (!this._isNotPaginable) {
       this._filteredContent = this._filteredContent.slice(this._config.offset, this._config.offset + Number(this._config.limit));
     }
+
   }
 
   /***
