@@ -25,15 +25,6 @@ export const DISCOVER = {
 
   'FOOTER_TEXT': 'Aussi disponible en : ',
 
-  'NO_RESULT': {
-    'HEADING': 'Quelque chose ne va pas ici..',
-    'MESSAGE': {
-      'A': 'Désolé, nous n\'avons pas trouvé de résultats (comme vous pouvez le voir),',
-      'B': 'essayez à nouveau avec des mots-clés différents.'
-    }
-  },
-
-
   'CATEGORIES': 'Catégories',
   'ELECTRONIC': 'Electronique',
   'AGRICULTURE': 'Agriculture',

@@ -100,6 +100,14 @@ export const ERROR = {
 
   'QUIZ': {
     'CREATED': 'The quiz has been created successfully.'
-  }
+  },
+
+  'NO_RESULT': {
+    'HEADING': 'Something wrong here...',
+    'MESSAGE': {
+      'A': 'Sorry, we couldn\'t find any results (as you can see)',
+      'B': 'try again with some different keywords.'
+    }
+  },
 
 };

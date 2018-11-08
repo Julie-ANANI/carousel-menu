@@ -9,29 +9,29 @@
 
         <ul class="list-filter">
           <li>
-            <sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'name'">
+            <app-shared-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'name'">
               <button class="btn btn-link">{{ 'COMMON.SORT.BY_NAME' | translate }}</button>
-            </sq-sort>
+            </app-shared-sort>
           </li>
           <li>
-            <sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'owner.companyName'">
+            <app-shared-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'owner.companyName'">
               <button class="btn btn-link">{{ 'COMMON.SORT.BY_COMPANY' | translate }}</button>
-            </sq-sort>
+            </app-shared-sort>
           </li>
           <li>
-            <sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'owner.name'">
+            <app-shared-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'owner.name'">
               <button class="btn btn-link">{{ 'COMMON.SORT.BY_AUTHOR' | translate }}</button>
-            </sq-sort>
+            </app-shared-sort>
           </li>
           <li>
-            <sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'updated'">
+            <app-shared-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'updated'">
               <button class="btn btn-link">{{ 'COMMON.SORT.BY_UPDATE_DATE' | translate }}</button>
-            </sq-sort>
+            </app-shared-sort>
           </li>
           <li>
-            <sq-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'created'">
+            <app-shared-sort [config]="config" (configChange)="loadProjects($event)" [prop]="'created'">
               <button class="btn btn-link">{{ 'COMMON.SORT.BY_CREATION_DATE' | translate }}</button>
-            </sq-sort>
+            </app-shared-sort>
           </li>
           <li>
             <sqFilter [config]="config" (configChange)="loadProjects($event)" prop="name"></sqFilter>

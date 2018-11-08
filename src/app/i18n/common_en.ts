@@ -48,6 +48,8 @@ export const COMMON = {
   'PROGRESS': 'Progress',
   'PROFILE-URL': 'Linkedin profile',
   'PAGE_NOT_FOUND': 'This is not the web page you are looking for.',
+  'SEARCH_BY': 'Search by',
+  'SEARCH_PLACEHOLDER': 'Search here',
 
   'BLACKLIST': {
     'EMAILS': 'Blacklisted e-mails',
@@ -135,7 +137,7 @@ export const COMMON = {
   },
 
   'TABLE' : {
-    'SELECTED_ROWS': 'selected rows',
+    'SELECTED_ROWS': 'row(s) selected',
     'NO-RESULTS': 'Sorry, I can\'t display nothing'
   },
 
