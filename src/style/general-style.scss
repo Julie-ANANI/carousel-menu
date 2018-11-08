@@ -206,3 +206,31 @@ a, a:focus, a:hover, a:active, a.active {
   justify-content: flex-end;
   padding-top: 1.57rem;
 }
+
+
+/*
+    No result
+ */
+.section-no-result, .no-result-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 1.57rem;
+  animation-name: fadeIn;
+  animation-duration: .5s;
+  animation-timing-function: ease-in-out;
+
+  .main-heading {
+    margin-top: .6rem;
+    color: #A0A4AF;
+    margin-bottom: .6rem;
+  }
+
+  p {
+    padding-bottom: 0;
+    font-size: .875rem;
+  }
+
+}

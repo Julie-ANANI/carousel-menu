@@ -49,6 +49,7 @@ export const COMMON = {
   'PROFILE-URL': 'Profil Linkedin',
   'PAGE_NOT_FOUND': 'Ce n\'est pas la page Web que vous recherchez.',
   'SEARCH_BY': 'Recherche par',
+  'SEARCH_PLACEHOLDER': 'Rechercher ici',
 
   'BLACKLIST': {
     'EMAILS': 'E-mails blacklistés',

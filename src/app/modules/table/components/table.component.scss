@@ -3,12 +3,6 @@
 #table-component {
 
 
-  .spinner-wrapper {
-    display: flex;
-    justify-content: center;
-  }
-
-
   .table-wrapper {
 
     .info-wrapper {
@@ -238,6 +232,7 @@
 
     tr {
       height: unset !important;
+      padding-bottom: .18rem;
     }
 
   }

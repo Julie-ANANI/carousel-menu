@@ -20,6 +20,23 @@
   <!-- Search box -->
   <div *ngIf="textProps.length > 0" class="filter-search-box">
 
+    <label>
+      <input
+        type="search"
+        (keyup.enter)="filterText($event.srcElement)"
+        #search
+        class="form-default"
+        [placeholder]="'COMMON.SEARCH_PLACEHOLDER' | translate">
+    </label>
+
+    <div class="search-icon" (click)="filterText(search)">
+      <img src="https://res.cloudinary.com/umi/image/upload/v1541656930/app/default-images/icons/search-meta.svg">
+    </div>
+
+    <div *ngIf="search.value !== ''" class="search-cross" (click)="search.value = ''; filterText(search)">
+      <i class="fas fa-times"></i>
+    </div>
+
   </div>
   <!-- /Search box -->
 

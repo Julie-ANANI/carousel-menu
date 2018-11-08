@@ -1,14 +1,5 @@
 <div id="table-component">
-
-
-  <!-- Fetching result -->
-  <div *ngIf="total === 0" class="spinner-wrapper">
-    <app-shared-loader></app-shared-loader>
-  </div>
-
-
-  <!-- Fetching done -->
-  <div *ngIf="total > 0" class="table-wrapper">
+  <div class="table-wrapper">
 
 
     <!-- Info row -->
@@ -31,12 +22,23 @@
     <!-- /Info row -->
 
 
-    <!-- Table -->
-    <table>
+    <!-- No result -->
+    <div *ngIf="total === 0" class="no-result-wrapper">
+      <img src="https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg" class="img-responsive">
+      <h1 class="main-heading">{{ 'ERROR.NO_RESULT.HEADING' | translate }}</h1>
+      <p>{{ 'ERROR.NO_RESULT.MESSAGE.A' | translate }}</p>
+      <p>{{ 'ERROR.NO_RESULT.MESSAGE.B' | translate }}</p>
+    </div>
 
-      <thead>
+
+    <!-- When result -->
+    <ng-container *ngIf="total > 0">
+
+      <!-- Table -->
+      <table>
+
+        <thead>
         <tr>
-
 
           <!-- If there are no selected rows we show columns name in the header -->
           <ng-container *ngIf="selectedRows === 0">
@@ -116,10 +118,10 @@
           <!-- /If there are selected rows, the several actions to perform and the button delete (if isDeletable) -->
 
         </tr>
-      </thead>
+        </thead>
 
 
-      <tbody>
+        <tbody>
         <tr *ngFor="let key of getRowsKeys()" [ngClass]="{ 'active': isLocal ? isSelected(filteredContent[key]) : isSelected(content[key]) || selectedRows > 0 }">
 
           <td *ngIf="isSelectable" class="th-checkbox">
@@ -236,27 +238,29 @@
 
 
         </tr>
-      </tbody>
+        </tbody>
 
 
-    </table>
-    <!-- /Table -->
+      </table>
+      <!-- /Table -->
 
 
-    <!-- Pagination -->
-    <div class="section-pagination">
-      <app-pagination
-        *ngIf="!isNotPaginable"
-        [configValue]="paginationConfig"
-        (configChange)="changePaginationConfig($event)"
-        [total]="total"
-        [propertyName]="selector">
-      </app-pagination>
-    </div>
-    <!-- /Pagination -->
+      <!-- Pagination -->
+      <div class="section-pagination">
+        <app-pagination
+          *ngIf="!isNotPaginable"
+          [configValue]="paginationConfig"
+          (configChange)="changePaginationConfig($event)"
+          [total]="total"
+          [propertyName]="selector">
+        </app-pagination>
+      </div>
+      <!-- /Pagination -->
+
+
+    </ng-container>
+    <!-- /When result -->
+
 
   </div>
-  <!-- /Fetching done -->
-
-
 </div>
