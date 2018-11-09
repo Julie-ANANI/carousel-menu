@@ -1,25 +1,50 @@
-#admin-monitoring {
+@import "../../../../../style/variables";
 
-  .tabs li {
-    flex: unset;
+#admin-monitoring-component {
+  padding-top: 0;
 
-    a {
-      background: white;
-      color: #4F5D6B;
-      border-bottom: 5px solid transparent;
-      font-weight: 500;
-      padding-left: 20px;
-      padding-right: 20px;
-      margin-right: 25px;
+
+  .section-header {
+    background: white;
+    padding-top: 1.57rem;
+
+    .main-heading {
+      color: $background-color;
+      font-size: 1.4375rem;
+      font-weight: normal;
+    }
+
+    .tabs {
+      border-bottom: 1px solid #D8D8D8;
+
+      li {
+        flex: unset;
+
+        a {
+          background: white;
+          color: #4F5D6B;
+          font-weight: 500;
+          padding-right: 40px;
+          text-align: center;
+          margin-right: 1.57rem;
+        }
+
+      }
+
+    }
+
+    .tabs li a:hover, .tabs li a.active {
+      color:  #FFB300;
+      border-bottom: 5px solid #FFB300;
     }
 
   }
 
-  .tabs li a:hover,
-  .tabs li a.active {
-    color:  #FFB300;
-    border-bottom-color: #FFB300;
+
+  .section-other {
+    padding-top: 1.57rem;
   }
+
 
 }
 
@@ -27,8 +52,19 @@
 
 @media (max-width: 600px) {
 
-  .tabs li {
-    flex: 1 0 auto;
+  .tabs {
+    border-bottom: none !important;
+
+    li {
+      flex: 1 0 auto;
+
+      a {
+        margin-right: 0 !important;
+        border-bottom: 1px solid #D8D8D8;
+      }
+
+    }
+
   }
 
 }

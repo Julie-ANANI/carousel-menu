@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './admin-monitoring.component.html',
   styleUrls: ['./admin-monitoring.component.scss']
 })
+
 export class AdminMonitoringComponent{
 
 }
