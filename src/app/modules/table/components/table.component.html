@@ -140,7 +140,7 @@
           <!-- For each columns -->
           <td *ngFor="let column of columns; let i = index">
 
-            <span (click)="selectRow(key)" [ngClass]="{ 'text-margin': i === 0 }">
+            <span [ngClass]="{ 'text-margin': i === 0 }">
               <ng-container [ngSwitch]="getType(column)">
 
                 <!-- If column type is Date -->
