@@ -51,6 +51,11 @@
       .label-wrapper {
         display: flex;
         flex-wrap: wrap;
+
+        .label-validate, .label-draft, .label-meta {
+          border-radius: 25px;
+        }
+
       }
 
     }

@@ -89,9 +89,7 @@ export class AdminDashboardComponent implements OnInit {
 
     this.getWeek();
 
-    setTimeout(() => {
-      this._spinnerDisplay = false;
-    }, 500);
+    this._spinnerDisplay = false;
 
   }
 
