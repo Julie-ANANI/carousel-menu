@@ -107,4 +107,11 @@ export const ERROR = {
     }
   },
 
+  'FETCHING_RESULT': {
+    'MESSAGE': {
+      'A': 'Nous allons chercher les résultats, s\'il vous plaît soyez patient !',
+      'B': 's\'il vous plaît soyez patient !'
+    }
+  }
+
 };

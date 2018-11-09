@@ -209,7 +209,7 @@ a, a:focus, a:hover, a:active, a.active {
 
 
 /*
-    No result
+    No result & fetching result
  */
 .section-no-result, .no-result-wrapper {
   display: flex;
@@ -224,10 +224,10 @@ a, a:focus, a:hover, a:active, a.active {
 
   .bot-image {
     height: 9.37rem;
+    margin-bottom: .6rem;
   }
 
   .main-heading {
-    margin-top: .6rem;
     color: #A0A4AF;
     margin-bottom: .6rem;
   }

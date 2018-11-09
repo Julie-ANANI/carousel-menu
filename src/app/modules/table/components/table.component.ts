@@ -104,6 +104,8 @@ export class TableComponent {
 
   private _massSelection = false;
 
+  fetchingResult = true;
+
   constructor(private _translateService: TranslateService) {}
 
 
@@ -175,6 +177,7 @@ export class TableComponent {
    */
   changeConfig(value: any): void {
     this._config = value;
+    this.fetchingResult = false;
     if (!this._isLocal) {
       this.configChange.emit(this._config);
     } else {

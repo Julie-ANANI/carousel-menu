@@ -25,9 +25,15 @@
     <!-- No result -->
     <div *ngIf="total === 0" class="no-result-wrapper">
       <img src="https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg" class="img-responsive bot-image">
-      <h1 class="main-heading">{{ 'ERROR.NO_RESULT.HEADING' | translate }}</h1>
-      <p>{{ 'ERROR.NO_RESULT.MESSAGE.A' | translate }}</p>
-      <p>{{ 'ERROR.NO_RESULT.MESSAGE.B' | translate }}</p>
+      <ng-container *ngIf="!fetchingResult">
+        <h1 class="main-heading">{{ 'ERROR.NO_RESULT.HEADING' | translate }}</h1>
+        <p>{{ 'ERROR.NO_RESULT.MESSAGE.A' | translate }}</p>
+        <p>{{ 'ERROR.NO_RESULT.MESSAGE.B' | translate }}</p>
+      </ng-container>
+      <ng-container *ngIf="fetchingResult">
+        <p>{{ 'ERROR.FETCHING_RESULT.MESSAGE.A' | translate }}</p>
+        <p>{{ 'ERROR.FETCHING_RESULT.MESSAGE.B' | translate }}</p>
+      </ng-container>
     </div>
 
 
@@ -75,7 +81,6 @@
             </ng-container>
             <!-- /If there are no selected rows we show columns name in the header -->
 
-
             <!-- If there are selected rows, the several actions to perform and the button delete (if isDeletable) -->
             <ng-container *ngIf="selectedRows > 0">
 
@@ -120,7 +125,6 @@
           </tr>
         </thead>
 
-
         <tbody>
         <tr *ngFor="let key of getRowsKeys()" [ngClass]="{ 'active': isLocal ? isSelected(filteredContent[key]) : isSelected(content[key]) }">
 
@@ -139,30 +143,25 @@
             <span (click)="selectRow(key)" [ngClass]="{ 'text-margin': i === 0 }">
               <ng-container [ngSwitch]="getType(column)">
 
-
                 <!-- If column type is Date -->
                 <ng-container *ngSwitchCase="'DATE'">
                   <span>{{ (getContentValue(key, getAttrs(column)[0])?.toString() | date:dateFormat) }}</span>
                 </ng-container>
-
 
                 <!-- If column type is Country -->
                 <ng-container *ngSwitchCase="'COUNTRY'">
                   <app-country-flag [country]="(getContentValue(key, getAttrs(column)[0]) || '')"></app-country-flag>
                 </ng-container>
 
-
                 <!-- If column type is Array -->
                 <ng-container *ngSwitchCase="'ARRAY'">
                   <span>{{ (getContentValue(key, getAttrs(column)[0]) || []).length.toString() }}</span>
                 </ng-container>
 
-
                 <!-- If column type is Picture -->
                 <div *ngSwitchCase="'PICTURE'">
                   <img [src]="getContentValue(key, getAttrs(column)[0]) || ''" class="img-responsive" style="width: 100px">>
                 </div>
-
 
                 <!-- If column type is Progress -->
                 <ng-container *ngSwitchCase="'PROGRESS'">
@@ -174,13 +173,11 @@
                 </app-progress-bar>
                 </ng-container>
 
-
                 <!-- If column type is Check -->
                 <ng-container *ngSwitchCase="'CHECK'">
                   <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 0" class="icon icon-cross"></i>
                   <i *ngIf="getContentValue(key, getAttrs(column)[0]) == 1" class="icon icon-check"></i>
                 </ng-container>
-
 
                 <!-- If column type is Multi-Choices -->
                 <ng-container *ngSwitchCase="'MULTI-CHOICES'">
@@ -196,7 +193,6 @@
                   </span>
                 </ng-container>
 
-
                 <!-- If column type is Multi-Label -->
                 <ng-container *ngSwitchCase="'MULTI-LABEL'">
                   <span
@@ -209,12 +205,10 @@
                   </span>
                 </ng-container>
 
-
                 <!-- If column type is Multiling -->
                 <ng-container *ngSwitchCase="'MULTILING'">
                   <span>{{ (getContentValue(key, getAttrs(column)[0]) | multiling:lang) | FormatText }}</span>
                 </ng-container>
-
 
                 <!-- If column type is Text -->
                 <ng-container *ngSwitchDefault>
@@ -222,7 +216,6 @@
                     {{ (getContentValue(key, attr)|| " - ").toString() | FormatText | ellipsis:40 }}
                   </span>
                 </ng-container>
-
 
               </ng-container>
             </span>
@@ -236,14 +229,11 @@
 
           </td>
 
-
         </tr>
         </tbody>
 
-
       </table>
       <!-- /Table -->
-
 
       <!-- Pagination -->
       <div class="section-pagination">
@@ -256,7 +246,6 @@
         </app-pagination>
       </div>
       <!-- /Pagination -->
-
 
     </ng-container>
     <!-- /When result -->

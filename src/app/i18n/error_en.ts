@@ -110,4 +110,11 @@ export const ERROR = {
     }
   },
 
+  'FETCHING_RESULT': {
+    'MESSAGE': {
+      'A': 'We are fetching the results, please',
+      'B': 'have a patience!'
+    }
+  }
+
 };
