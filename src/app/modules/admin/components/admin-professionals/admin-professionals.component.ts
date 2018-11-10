@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './admin-professionals.component.html',
   styleUrls: ['./admin-professionals.component.scss']
 })
+
 export class AdminProfessionalsComponent implements OnInit {
 
   private _config: any;
@@ -24,6 +25,12 @@ export class AdminProfessionalsComponent implements OnInit {
     };
   }
 
-  set config(value: any) { this._config = value; }
-  get config() { return this._config; }
+  set config(value: any) {
+    this._config = value;
+  }
+
+  get config() {
+    return this._config;
+  }
+
 }

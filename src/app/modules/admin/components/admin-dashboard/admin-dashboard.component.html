@@ -1,49 +1,140 @@
+<section class="section-light-container" id="admin-dashboard-component">
+  <div class="column col-xs-12 col-11 col-mx-auto">
+
+
+    <!-- When loading -->
+    <div *ngIf="spinnerDisplay" class="section-spinner">
+      <app-shared-loader></app-shared-loader>
+    </div>
+
+
+    <!-- Loading finished -->
+    <ng-container *ngIf="adminLevel > 2 && !spinnerDisplay">
+
+
+      <!-- Section operator -->
+      <div class="section-operator">
+
+        <div *ngIf="operatorData.nbProjectsToValidate || operatorData.nbProjectsToTreat"  class="text">
+          <span *ngIf="operatorData.nbProjectsToValidate != 'undefined'">
+            {{ operatorData.nbProjectsToValidate }} {{ 'DASHBOARD.PROJECT' | translate }}{{ operatorData.nbProjectsToValidate > 1 ? 's' : '' }} {{ 'DASHBOARD.VALIDATED' | translate }}
+          </span>
+          <span *ngIf="operatorData.nbProjectsToTreat != 'undefined'">
+            {{ operatorData.nbProjectsToTreat }} {{ 'DASHBOARD.RESPONSE' | translate }}{{ operatorData.nbProjectsToTreat > 1 ? 's' : '' }} {{ 'DASHBOARD.PROCESSED' | translate }}
+          </span>
+        </div>
+
+        <label class="select-wrapper">
+          <select
+            class="form-select"
+            [(ngModel)]="operatorId"
+            (ngModelChange)="newOperatorSelected($event)">
+            <option value="">{{ 'DASHBOARD.STATS.ALL_OPERATORS' | translate }}</option>
+            <option
+              *ngFor="let operator of operators"
+              [ngValue]="operator._id"
+              [selected]="operatorId === operator._id">
+              {{ operator.firstName + ' ' + operator.lastName }}
+            </option>
+          </select>
+        </label>
+
+      </div>
+      <!-- /Section operator -->
+
+
+      <!-- Section table -->
+      <div class="section-table">
+        <app-admin-projects-list [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
+      </div>
+      <!-- /Section table -->
+
+
+      <!-- Section batch -->
+      <div class="section-batch">
+
+        <div class="label-week">
+          <button type="button" class="btn ghost-edit btn-xs" (click)="getLastWeek()">{{ 'DASHBOARD.LAST_WEEK' | translate }}</button>
+          <div class="label-wrapper">
+            <div class="label-validate">{{ 'DASHBOARD.MAIL_LABEL.FIRST' | translate }}</div>
+            <div class="label-draft">{{ 'DASHBOARD.MAIL_LABEL.SECOND' | translate }}</div>
+            <div class="label-meta">{{ 'DASHBOARD.MAIL_LABEL.THIRD' | translate }}</div>
+          </div>
+          <button type="button" class="btn ghost-edit btn-xs" (click)="getNextWeek()">{{ 'DASHBOARD.NEXT_WEEK' | translate }}</button>
+        </div>
+
+        <div class="batch-wrapper">
+          <div *ngFor="let days of weekBatches; let index1 = index" class="batch-content">
+            <div *ngFor="let batches of days; let index2 = index">
+              <p *ngIf="index2 === 0">{{ getDateString(batches) }}</p>
+              <ng-container *ngIf="index2 !== 0">
+                <div *ngIf="index2 < 4" class="batch-body">
+                  <label *ngIf="getState(batches) === 0" class="label-validate" (click)="showPreview($event, batches)">
+                    {{ batches.innovation.name  | ellipsis:10 }}  {{ batches.size }}
+                  </label>
+                  <label *ngIf="getState(batches) === 1" class="label-draft" (click)="showPreview($event, batches)">
+                    {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
+                  </label>
+                  <label *ngIf="getState(batches) === 2" class="label-meta" (click)="showPreview($event, batches)">
+                    {{ batches.innovation.name | ellipsis:10 }}  {{ batches.size }}
+                  </label>
+                </div>
+                <div *ngIf="index2 === 4" class="batch-body">
+                  <div class="popover" [ngClass]="{ 'popover-right': index1 === 0, 'popover-left': index1 === 4 }">
+                    <span>{{ 'DASHBOARD.SEE_MORE' | translate }}</span>
+                    <div class="popover-container">
+                      <div class="card">
+                        <div class="card-body">
+                          <div *ngFor="let batchesOver of days; let index3 = index">
+                            <div *ngIf="index3 > 0" class="batch-body">
+                              <label *ngIf="getState(batchesOver) === 0" class="label-validate" (click)="showPreview($event, batches)">
+                                {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
+                              </label>
+                              <label *ngIf="getState(batchesOver) === 1" class="label-draft" (click)="showPreview($event, batches)">
+                                {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
+                              </label>
+                              <label *ngIf="getState(batchesOver) === 2" class="label-meta" (click)="showPreview($event, batches)">
+                                {{ batchesOver.innovation.name | ellipsis:10 }}  {{ batchesOver.size }}
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /Section batch -->
+
+
+    </ng-container>
+    <!-- /Loading finished -->
+
+
+  </div>
+</section>
+
+
+<!-- Innovation preview sidebar-->
+<app-sidebar [template]="sidebarTemplateValue" (closeSidebar)="closeSidebar($event)">
+  <app-innovation-preview
+    [innovation]="selectedInnovation"
+    [batchInfo]="{ batchSelected:this.selectedBatch, date: this.dateNow }">
+  </app-innovation-preview>
+</app-sidebar>
+<!-- /Innovation preview sidebar-->
+
+<!--
 <div class="container">
   <div class="projects-stats" *ngIf="adminLevel > 2">
-    <select class="form-select" [(ngModel)]="operatorId" (ngModelChange)="newOperatorSelected($event)">
-      <option value="">{{ 'DASHBOARD.STATS.ALL_OPERATORS' | translate }}</option>
-      <option *ngFor="let operator of operators" [ngValue]="operator._id" [selected]="operatorId === operator._id">{{
-        operator.firstName + ' ' + operator.lastName }}
-      </option>
-    </select>
-
-    <div *ngIf="operatorData.nbProjectsToValidate !== 'undefined'"><span>{{ operatorData.nbProjectsToValidate }}</span> projet{{ operatorData.nbProjectsToValidate>1?'s':'' }} à valider</div>
-    <div *ngIf="operatorData.nbProjectsToTreat !== 'undefined'"><span>{{ operatorData.nbProjectsToTreat }}</span> réponse{{ operatorData.nbProjectsToTreat>1?'s':'' }} à traiter</div>
-  </div>
-  <!--
-  <div class="emails-stats" *ngIf="adminLevel > 2">
-    <select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="getPeriodStats()">
-      <option [value]="1">Comparer...</option>
-      <option [value]="30">Dernier mois</option>
-      <option [value]="365">Dernière année</option>
-    </select>
-    <div>Pros trouvés : <span>{{ statistics.percentFoundPros }}</span></div>
-    <div>Emails trouvés : <span>{{ statistics.percentFoundEmails }}%</span></div>
-    <div>Emails OK : <span>{{ statistics.percentOkEmails }}%</span></div>
-    <div>Emails reçus : <span>{{ statistics.percentReceivedEmails }}%</span></div>
-  </div>-->
-
-  <app-admin-projects-list [operatorId]="operatorId" [refreshNeededEmitter]="refreshNeededEmitter"></app-admin-projects-list>
 
   <div class="list-table">
-    <div>
-      <i class="fa fa-arrow-circle-left" style="font-size:36px"(click)="getLastWeek()"></i>
-      <br>
-      <br>
-      <label class="label-1st">
-        First Mail
-      </label>
-      <br>
-      <br>
-      <label class="label-2nd" >
-        Second Mail
-      </label>
-      <br>
-      <br>
-      <label class="label-3rd">
-        Third Mail
-      </label>
-    </div>
+
     <div *ngFor="let days of this.weekBatches; let i1 = index">
       <ul *ngFor="let batches of days; let i2 = index">
       <span *ngIf="i2==0">
@@ -97,15 +188,39 @@
     <div> <i class="fa fa-arrow-circle-right" style="font-size:36px" (click)="getNextWeek()"></i></div>
   </div>
 </div>
-
-<!-- Innovation preview sidebar-->
-<app-sidebar
-  [template]="sidebarTemplateValue"
-  (closeSidebar)="closeSidebar($event)">
-  <app-innovation-preview
-    [innovation]="this.selectedInnovation"
-    [batchInfo]="{batchSelected:this.selectedBatch,date: this.dateNow}">
-  </app-innovation-preview>
-</app-sidebar>
+-->
 
 
+<!--
+<div>
+      <i class="fa fa-arrow-circle-left" style="font-size:36px"(click)="getLastWeek()"></i>
+      <br>
+      <br>
+      <label class="label-1st">
+        First Mail
+      </label>
+      <br>
+      <br>
+      <label class="label-2nd" >
+        Second Mail
+      </label>
+      <br>
+      <br>
+      <label class="label-3rd">
+        Third Mail
+      </label>
+    </div>
+-->
+
+<!--
+  <div class="emails-stats" *ngIf="adminLevel > 2">
+    <select class="form-select" [(ngModel)]="nbDaysOfStats" (ngModelChange)="getPeriodStats()">
+      <option [value]="1">Comparer...</option>
+      <option [value]="30">Dernier mois</option>
+      <option [value]="365">Dernière année</option>
+    </select>
+    <div>Pros trouvés : <span>{{ statistics.percentFoundPros }}</span></div>
+    <div>Emails trouvés : <span>{{ statistics.percentFoundEmails }}%</span></div>
+    <div>Emails OK : <span>{{ statistics.percentOkEmails }}%</span></div>
+    <div>Emails reçus : <span>{{ statistics.percentReceivedEmails }}%</span></div>
+  </div>-->

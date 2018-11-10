@@ -7,8 +7,9 @@ import { PipeModule } from '../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../sidebar/sidebar.module';
 import { InputModule } from '../../../input/input.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
-import {AdminProjectsListModule} from '../admin-projects-list/admin-projects-list.module';
-import {SidebarInnovationPreviewModule} from '../../../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
+import { AdminProjectsListModule } from '../admin-projects-list/admin-projects-list.module';
+import { SidebarInnovationPreviewModule } from '../../../sidebar/components/innovation-preview/sidebar-innovation-preview.module';
+import { SharedLoaderModule } from '../../../shared/components/shared-loader/shared-loader.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import {SidebarInnovationPreviewModule} from '../../../sidebar/components/innova
     InputModule,
     AdminProjectsListModule,
     FormsModule,
+    SharedLoaderModule
   ],
   declarations: [
     AdminDashboardComponent

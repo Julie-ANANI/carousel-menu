@@ -196,3 +196,54 @@ a, a:focus, a:hover, a:active, a.active {
 .discreet-link.active {
   color: $primary-color;
 }
+
+
+/*
+    Pagination section
+ */
+.section-pagination {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1.57rem;
+}
+
+
+/*
+    No result & fetching result
+ */
+.section-no-result, .no-result-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 1.57rem;
+  animation-name: fadeIn;
+  animation-duration: .5s;
+  animation-timing-function: ease-in-out;
+
+  .bot-image {
+    height: 9.37rem;
+    margin-bottom: .6rem;
+  }
+
+  .main-heading {
+    color: #A0A4AF;
+    margin-bottom: .6rem;
+  }
+
+  p {
+    padding-bottom: 0;
+    font-size: .875rem;
+  }
+
+}
+
+
+/*
+    Spinner display
+ */
+.section-spinner {
+  display: flex;
+  justify-content: center;
+}
