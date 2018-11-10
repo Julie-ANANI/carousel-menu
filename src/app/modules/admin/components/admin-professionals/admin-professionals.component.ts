@@ -10,10 +10,11 @@ export class AdminProfessionalsComponent implements OnInit {
   private _config: any;
 
   constructor() { }
-
+  // These are the asked fields for the professional list. We don't use all of that...
+  //fields: 'language firstName lastName company email emailConfidence country jobTitle campaigns tags messages',
   ngOnInit() {
     this._config = {
-      fields: 'language firstName lastName company email emailConfidence country jobTitle campaigns tags',
+      fields: 'language firstName lastName company country jobTitle campaigns tags messages',
       limit: 10,
       offset: 0,
       search: {},
