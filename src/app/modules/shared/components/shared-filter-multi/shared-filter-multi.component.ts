@@ -30,7 +30,19 @@ export class SharedFilterMultiComponent {
       if (value === '') {
         this.configChange.emit(this.config);
       } else {
-        this.config.search[this._currentTextProp._attrs[0]] = value;
+        //Two cases, if attributes is a composed field, like firstName and lastName
+        if(this._currentTextProp._attrs.length > 1) {
+          const fields = this._currentTextProp._attrs.map(field=>{
+            const conf = {};
+            conf[field] = {$in:value.split(/\s+/gi)};
+            return conf;
+          });
+          this.config.search = {
+            "$or": fields
+          }
+        } else {
+          this.config.search[this._currentTextProp._attrs[0]] = value;
+        }
         this.configChange.emit(this.config);
       }
   }
