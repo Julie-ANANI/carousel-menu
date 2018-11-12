@@ -4,7 +4,7 @@ import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { Innovation } from '../../../models/innovation';
 import { InnovationService } from '../../../services/innovation/innovation.service';
 import { Observable } from 'rxjs';
-import { catchError, map, take, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 const INNOVATIONS_KEY = makeStateKey('innovations');
 
@@ -12,7 +12,7 @@ const INNOVATIONS_KEY = makeStateKey('innovations');
 export class InnovationsResolver implements Resolve<Array<Innovation>> {
 
   config = {
-    fields: 'created innovationCards tags status projectStatus',
+    fields: 'created principalMedia innovationCards tags status projectStatus',
     limit: '0',
     offset: '0',
     search: '{"isPublic":"1","$or":[{"status":"EVALUATING"},{"status":"DONE"}]}',
@@ -34,7 +34,6 @@ export class InnovationsResolver implements Resolve<Array<Innovation>> {
     } else {
       return this.innovationService.getAll(this.config)
         .pipe(
-          take(1),
           map((innovations: any) => innovations.result),
           tap((innovations) => {
             this.state.set(INNOVATIONS_KEY, innovations as Array<Innovation>);

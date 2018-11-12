@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { LoaderService } from '../services/loader/loader.service';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class LoaderBrowserInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error) => {
         console.error(error.message);
-        return throwError(error.text());
+        return of(null);
       }),
       finalize(() => {
         this.loaderService.stopLoading();
