@@ -14,6 +14,9 @@
   padding: .375rem .95rem;
   margin-right: .5rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .label-validate {
@@ -24,9 +27,12 @@
   padding: .375rem .95rem;
   margin-right: .5rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.label-alert{
+.label-alert {
   border-radius: .18rem;
   background: $alert-color;
   color: white;
@@ -34,9 +40,12 @@
   padding: .375rem .95rem;
   margin-right: .5rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.label-editing{
+.label-editing {
   border-radius: .18rem;
   background: $secondary-color;
   color: white;
@@ -44,9 +53,12 @@
   padding: .375rem .95rem;
   margin-right: .5rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.label-draft{
+.label-draft {
   border-radius: .18rem;
   background: $background-color;
   color: white;
@@ -54,4 +66,20 @@
   padding: .375rem .95rem;
   margin-right: .5rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label-meta {
+  border-radius: .18rem;
+  background: $meta-color;
+  color: white;
+  font-size: .75rem;
+  padding: .375rem .95rem;
+  margin-right: .5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

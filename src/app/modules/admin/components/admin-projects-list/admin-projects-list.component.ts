@@ -102,9 +102,9 @@ export class AdminProjectsListComponent implements OnInit, OnDestroy {
             {_attrs: ['name'], _name: 'COMMON.PROJECTS', _type: 'TEXT'},
             {_attrs: ['type'], _name: 'COMMON.TYPE', _type: 'MULTI-CHOICES',
               _choices: [
-                {_name: 'apps', _url: 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-apps.svg'},
-                {_name: 'insights', _url: 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-insights.svg'},
-                {_name: 'leads', _url: 'https://res.cloudinary.com/umi/image/upload/v1526375000/app/default-images/get-leads.svg'}
+                {_name: 'apps', _url: 'https://res.cloudinary.com/umi/image/upload/v1539157942/app/default-images/offers/get-apps.svg'},
+                {_name: 'insights', _url: 'https://res.cloudinary.com/umi/image/upload/v1539158153/app/default-images/offers/get-insights.svg'},
+                {_name: 'leads', _url: 'https://res.cloudinary.com/umi/image/upload/v1539157943/app/default-images/offers/get-leads.svg'}
               ]},
             {_attrs: ['percentages.preparation'], _name: 'Preparation', _type: 'PROGRESS'},
             {_attrs: ['percentages.campaign'], _name: 'PROJECT.CAMPAIGN.CAMPAIGN', _type: 'PROGRESS'},

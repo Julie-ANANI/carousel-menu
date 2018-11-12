@@ -9,6 +9,7 @@ import { SharedSortModule } from '../shared/components/shared-sort/shared-sort.m
 import { InputModule } from '../input/input.module';
 import { PaginationModule } from '../input/component/pagination/pagination.module';
 import { ProgressBarModule } from '../input/component/progress-bar/progress-bar.module';
+import { SharedLoaderModule } from '../shared/components/shared-loader/shared-loader.module';
 
 // Components
 import { PipeModule } from '../../pipe/pipe.module';
@@ -25,7 +26,8 @@ import { TableComponent } from './components/table.component';
     InputModule,
     PaginationModule,
     PipeModule,
-    ProgressBarModule
+    ProgressBarModule,
+    SharedLoaderModule
   ],
   declarations: [
     TableComponent

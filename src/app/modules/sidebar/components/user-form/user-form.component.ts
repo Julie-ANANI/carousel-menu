@@ -2,10 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { User } from '../../../../models/user.model';
+import { Innovation } from '../../../../models/innovation';
 import { Professional } from '../../../../models/professional';
 import { Campaign } from '../../../../models/campaign';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { UserService } from '../../../../services/user/user.service';
 import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -60,6 +62,8 @@ export class UserFormComponent implements OnInit {
   countriesSuggestion: Array<string> = [];
   displayCountrySuggestion = false;
 
+  private _selectedProject: String;
+  private _projects: Array<Innovation> = [];
   private _user: User;
   private _pro: Professional = null;
   private _campaign: Campaign = null;
@@ -85,6 +89,7 @@ export class UserFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
               private translateService: TranslateService,
+              private userService: UserService,
               private _authService: AuthService) {}
 
   ngOnInit() {
@@ -118,6 +123,18 @@ export class UserFormComponent implements OnInit {
 
   }
 
+  loadInnovations(): void {
+    this.userService.getInnovations(this._user.id)
+      .first()
+      .subscribe((innovations: any) => {
+        this._projects = innovations.result;
+      });
+  }
+
+  selectProject(event: any) {
+    this._selectedProject = event.target.value;
+  }
+
   reinitialiseForm() {
     this.isProfessional = false;
     this.isEditUser = false;
@@ -132,6 +149,7 @@ export class UserFormComponent implements OnInit {
     } else if (this._type === 'editUser') {
       this.isEditUser = true;
       this.loadEditUser();
+      this.loadInnovations();
     } else if (this._type === 'professional') {
       this.isProfessional = true;
       this.loadProfessional();
@@ -261,6 +279,14 @@ export class UserFormComponent implements OnInit {
 
   get tags(): Tag[] {
     return this._tags;
+  }
+
+  get projects(): Innovation[] {
+    return this._projects;
+  }
+
+  get selectedProject(): String {
+    return this._selectedProject;
   }
 
 }

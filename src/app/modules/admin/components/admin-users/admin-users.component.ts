@@ -1,31 +1,38 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../services/title/title.service';
-import { AuthService } from '../../../../services/auth/auth.service';
 import { User } from '../../../../models/user.model';
 import { Table } from '../../../table/models/table';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
-import {Template} from '../../../sidebar/interfaces/template';
-import { Subject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { Template } from '../../../sidebar/interfaces/template';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-admin-users',
   templateUrl: './admin-users.component.html',
   styleUrls: ['./admin-users.component.scss']
 })
+
 export class AdminUsersComponent implements OnInit {
 
   private _users: Array<User> = [];
+
   private _actions: string[] = [];
+
   private _usersToRemove: User[] = [];
+
   private _more: Template = {};
+
   private _tableInfos: Table = null;
+
   private _showDeleteModal = false;
+
   sidebarState = new Subject<string>();
-  private _selfId = '';
+
   currentUser: User;
+
   private _total = 0;
+
   private _config = {
     fields: 'id companyName jobTitle created domain location firstName lastName',
     limit: '10',
@@ -36,24 +43,20 @@ export class AdminUsersComponent implements OnInit {
 
   constructor(private _titleService: TranslateTitleService,
               private _userService: UserService,
-              private _authService: AuthService,
               private _notificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
     this._titleService.setTitle('USERS.TITLE');
-    this._selfId = this._authService.userId;
     this._actions = ['Action1', 'Action2', 'Action3'];
     this.loadUsers();
   }
 
-  get tableInfos(): Table
-  {
+  get tableInfos(): Table {
     return this._tableInfos;
   }
 
-  loadUsers(): void
-  {
-    this._userService.getAll(this._config).pipe(first()).subscribe((users: any) => {
+  loadUsers(): void {
+    this._userService.getAll(this._config).subscribe((users: any) => {
         this._users = users.result;
         this._total = users._metadata.totalCount;
 
@@ -106,9 +109,8 @@ export class AdminUsersComponent implements OnInit {
 
   userEditionFinish(user: User) {
     this._userService.updateOther(user)
-      .pipe(first())
       .subscribe(
-        (data: any) => {
+        (_data: any) => {
           this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
           this._more = {animate_state: 'inactive', title: this._more.title};
           this.loadUsers();
@@ -116,30 +118,6 @@ export class AdminUsersComponent implements OnInit {
         (error: any) => {
           this._notificationsService.error('ERROR.ERROR', error.message);
         });
-  }
-
-  get selfId(): string {
-    return this._selfId;
-  }
-
-  public isSelf(id: string): boolean {
-    return id && id === this.selfId;
-  }
-
-  loadInnovations(event: Event, userId: string): void {
-    event.preventDefault();
-    this._userService.getInnovations(userId)
-      .pipe(first())
-      .subscribe((innovations: any) => {
-        console.log(innovations.innovations);
-      });
-  }
-
-  deleteUserModal(user: User) {
-    this._usersToRemove = [];
-    this._more = {animate_state: 'inactive', title: this._more.title};
-    this._showDeleteModal = true;
-    this._usersToRemove.push(user);
   }
 
   deleteUsersModal(users: User[]) {
@@ -163,7 +141,6 @@ export class AdminUsersComponent implements OnInit {
 
   removeUser(userId: string) {
     this._userService.deleteUser(userId)
-      .pipe(first())
       .subscribe((foo: any) => {
         this.loadUsers();
       });
@@ -173,10 +150,6 @@ export class AdminUsersComponent implements OnInit {
     this._actions.find(value => value === action._action)
       ? console.log('Execution de l\'action ' + action._action + ' sur les lignes ' + JSON.stringify(action._rows, null, 2))
       : console.log('l\'Action' + action + 'n\'existe pas !');
-  }
-
-  getAnimateState() {
-    return this._more.animate_state;
   }
 
   set config(value: any) { this._config = value; }

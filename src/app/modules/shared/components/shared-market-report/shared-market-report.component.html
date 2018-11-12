@@ -138,6 +138,7 @@
                 {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_SHARE' | translate }}
               </button>
               <button
+                *ngIf="isOwner"
                 class="btn btn-primary gtm-export-synthesis"
                 (click)="displayModal($event, 'exportInnovation')">
                 {{ 'MARKET_REPORT.STICKY_BAR.BUTTON_EXPORT' | translate }}

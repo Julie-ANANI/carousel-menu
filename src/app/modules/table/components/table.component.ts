@@ -1,11 +1,10 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Table} from '../models/table';
-import {Row} from '../models/row';
-import {Column, types} from '../models/column';
-import {Choice} from '../models/choice';
-import {TranslateService} from '@ngx-translate/core';
-import {MultiLabel} from '../models/multi-label';
-import {PaginationTemplate} from '../../../models/pagination';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Table } from '../models/table';
+import { Row } from '../models/row';
+import { Column, types } from '../models/column';
+import { Choice } from '../models/choice';
+import { TranslateService } from '@ngx-translate/core';
+import { PaginationTemplate } from '../../../models/pagination';
 
 @Component({
   selector: 'app-shared-table',
@@ -18,6 +17,7 @@ import {PaginationTemplate} from '../../../models/pagination';
  */
 export class TableComponent {
 
+
   /***
    * Input use to set the config for the tables linked with the back office
    * @param value
@@ -25,6 +25,7 @@ export class TableComponent {
   @Input() set config(value: any) {
     this.loadConfig(value);
   }
+
 
   /***
    * Input use to set the data
@@ -34,11 +35,13 @@ export class TableComponent {
     this.loadData(value);
   }
 
+
   /***
    * Output call when the config change
    * @type {EventEmitter<any>}
    */
   @Output() configChange: EventEmitter<any> = new EventEmitter<any>();
+
 
   /***
    * Output call when the user click on the edit button
@@ -47,12 +50,14 @@ export class TableComponent {
    */
   @Output() editRow: EventEmitter<any> = new EventEmitter<any>();
 
+
   /***
    * Output call when the user click on the delete button
    * Send the list of selected rows
    * @type {EventEmitter<any>}
    */
   @Output() removeRows: EventEmitter<any> = new EventEmitter<any>();
+
 
   /***
    * Output call when the user click on one action
@@ -62,30 +67,47 @@ export class TableComponent {
   @Output() performAction: EventEmitter<any> = new EventEmitter<any>();
 
   private _selector = '';
+
   private _title = 'Résultats';
+
   private _isHeadable = false;
+
   private _isSelectable = false;
+
   private _isEditable = false;
+
   private _isLocal = false;
+
   private _isShowable = false;
+
   private _isDeletable = false;
+
   private _isFiltrable = false;
+
   private _isNotPaginable = false;
+
   private _reloadColumns = false;
+
   private _content: Row[] = [];
+
   private _total = 0;
+
   private _columns: Column[] = [];
+
   private _actions: string[] = [];
 
   private _filteredContent: Row[] = [];
 
-  editColumn = false;
-
   private _config: any = null;
+
   private _paginationConfig: PaginationTemplate = {};
+
   private _massSelection = false;
 
+  fetchingResult = true;
+
   constructor(private _translateService: TranslateService) {}
+
 
   /***
    * This function load and initialise the data send by the user
@@ -116,9 +138,7 @@ export class TableComponent {
 
       if (this._columns.length === 0 || this._reloadColumns) {
         // Si on a plus de 10 colonnes, on ne prends que les 10 premières
-        value._columns.length > 10
-          ? this._columns = value._columns.slice(0, 10)
-          : this._columns = value._columns;
+        value._columns.length > 10 ? this._columns = value._columns.slice(0, 10) : this._columns = value._columns;
 
         this.initialiseColumns();
       }
@@ -157,6 +177,7 @@ export class TableComponent {
    */
   changeConfig(value: any): void {
     this._config = value;
+    this.fetchingResult = false;
     if (!this._isLocal) {
       this.configChange.emit(this._config);
     } else {
@@ -175,6 +196,7 @@ export class TableComponent {
     this._config.offset = value.offset;
     window.scroll(0, 0);
     this.changeConfig(this._config);
+    this.selectAll(event);
   }
 
   /***
@@ -210,9 +232,11 @@ export class TableComponent {
     }
 
     this._total = this._filteredContent.length;
+
     if (!this._isNotPaginable) {
       this._filteredContent = this._filteredContent.slice(this._config.offset, this._config.offset + Number(this._config.limit));
     }
+
   }
 
   /***
@@ -229,11 +253,20 @@ export class TableComponent {
    * Emit the Output removeRows
    */
   removeSelectedRows() {
-    if (this._massSelection && this._total > this._content.length) {
+   if (this._massSelection) {
+     const values: Array<object> = [];
+     this._content.forEach((content) => {
+       values.push(content._content);
+     });
+     this.removeRows.emit(values);
+   } else {
+     this.removeRows.emit(this.getSelectedRowsContent());
+   }
+   /* if (this._massSelection && this._total > this._content.length) {
       this.removeRows.emit('all');
     } else {
       this.removeRows.emit(this.getSelectedRowsContent());
-    }
+    }*/
   }
 
   /***
@@ -388,10 +421,9 @@ export class TableComponent {
 
   /***
    * This function returns the class of one label of a multilabel
-   * @param {MultiLabel} multiLabel
-   * @returns {string}
+   * @param multiLabel
    */
-  getMultiLabelClass(multiLabel: MultiLabel): string {
+  getMultiLabelClass(multiLabel: any): string {
     return multiLabel._class;
   }
 
@@ -413,7 +445,8 @@ export class TableComponent {
    */
   getSelectedRowsNumber(): number {
     if (this._massSelection) {
-      return this._total;
+      return this._content.length;
+      // return this._total;
     } else {
       return this.getSelectedRows().length;
     }
@@ -435,8 +468,7 @@ export class TableComponent {
    */
   selectRow(key: string): void {
     if (this._isSelectable) {
-      this._isLocal
-        ? this._filteredContent[key]._isSelected = !(this._filteredContent[key]._isSelected)
+      this._isLocal ? this._filteredContent[key]._isSelected = !(this._filteredContent[key]._isSelected)
         : this._content[key]._isSelected = !(this._content[key]._isSelected); this._massSelection = false;
     }
   }

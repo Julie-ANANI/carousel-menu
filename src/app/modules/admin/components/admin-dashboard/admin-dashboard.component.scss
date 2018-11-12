@@ -1,107 +1,174 @@
-$secondary-color: #0B90C6;
-$dark-background: #262831;
+@import "../../../../../style/variables";
 
-.list-table {
-  display: flex;
-  justify-content: space-between;
+#admin-dashboard-component {
+
+  .section-operator {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .form-select {
+      min-height: 2.5rem;
+      margin-top: 0;
+      padding-top: .18rem;
+      padding-bottom: .18rem;
+      min-width: 102px;
+    }
+
+    .text {
+      font-size: 1rem;
+      color: $background-color;
+      font-weight: 600;
+
+      span {
+        margin-right: 1.57rem;
+      }
+
+    }
+
+    .form-default:not(:disabled):focus, .form-select:not(:disabled):focus {
+      border-color: $border-color;
+    }
+
+  }
+
+
+  .section-table, .section-batch {
+    margin-top: 1.57rem;
+  }
+
+
+  .section-batch {
+    margin-top: 3.15rem;
+
+    .label-week {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .label-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+
+        .label-validate, .label-draft, .label-meta {
+          border-radius: 25px;
+        }
+
+      }
+
+    }
+
+    .batch-wrapper {
+      margin-top: 1.57rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .batch-content {
+        display: flex;
+        flex-direction: column;
+
+        p {
+          padding-bottom: .9375rem;
+          color: $background-color;
+          font-weight: 600;
+        }
+
+        .batch-body {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: .9375rem;
+
+          .label-validate, .label-draft, .label-meta {
+            margin-right: 0;
+            border-radius: 25px;
+          }
+
+          span {
+            color: $secondary-color;
+            font-size: .875rem;
+            cursor: default;
+          }
+
+          .popover-container {
+            width: 250px;
+
+            .card {
+
+              .card-body {
+
+              }
+
+            }
+
+          }
+
+        }
+
+        .batch-body:last-child {
+          margin-bottom: 0;
+        }
+
+      }
+
+    }
+
+  }
+
 }
 
-.projects-stats {
-  display: flex;
-  min-height: 82px;
 
-  span {
-    font-size: 1.1rem;
+/********************************** Media ***************************************/
+
+@media (max-width: 600px) {
+
+  #admin-dashboard-component {
+
+    .section-operator {
+      flex-direction: column;
+      align-items: flex-start !important;
+
+      .text {
+        display: flex;
+        flex-direction: column;
+
+        span {
+          margin-right: 0 !important;
+          margin-bottom: .9375rem;
+        }
+
+      }
+
+    }
+
+
+    .section-batch {
+
+      .label-week {
+
+        .ghost-edit, .label-validate, .label-draft, .label-meta {
+          margin-bottom: .9375rem;
+        }
+
+      }
+
+      .batch-wrapper {
+        flex-direction: column;
+
+        .batch-content {
+          margin-bottom: .9375rem;
+        }
+
+      }
+
+      .batch-wrapper .batch-content:last-child {
+        margin-bottom: 0;
+      }
+
+    }
+
   }
-
-  div {
-    margin: auto 30px auto 0;
-  }
-
-  .form-select {
-    width: 150px;
-    color: $dark-background;
-    margin: auto 36px auto 0;
-  }
-}
-
-
-.label-1st{
-  border-radius: 5px;
-  background: #2ecc71;
-  color: white;
-  font-size: 0.6rem;
-  padding: 6px 15px;
-  margin-right: 10px;
-  font-weight: 600;
-}
-
-.label-3rd{
-  border-radius: 5px;
-  background: #5d5d5d;
-  color: white;
-  font-size: 0.6rem;
-  padding: 6px 15px;
-  margin-right: 10px;
-  font-weight: 600;
-}
-
-.label-2nd{
-  border-radius: 5px;
-  background: #97a4b1;
-  color: white;
-  font-size: 0.6rem;
-  padding: 6px 15px;
-  margin-right: 10px;
-  font-weight: 600;
-}
-
-
-
-
-
-.emails-stats {
-  background: #FAFAFA;
-  display: flex;
-  min-height: 82px;
-
-  span {
-    font-size: 1.1rem;
-    color: $secondary-color;
-  }
-
-  div {
-    margin: auto 30px auto 0;
-  }
-
-  .form-select {
-    width: 150px;
-    color: $dark-background;
-    margin: 0 36px 0 0;
-  }
-}
-.content {
-  margin: 0 35px;
-}
-
-@media (max-width: 840px) {
-
-  .sidebar {
-    min-height: inherit;
-  }
-
-  .projects-stats {
-    flex-direction: column;
-    padding: 30px;
-  }
-
-  .emails-stats {
-    flex-direction: column;
-    padding: 30px;
-  }
-
-  .projects-stats .form-select,
-  .emails-stats .form-select {
-    margin: auto;
-  }
+  
 }
