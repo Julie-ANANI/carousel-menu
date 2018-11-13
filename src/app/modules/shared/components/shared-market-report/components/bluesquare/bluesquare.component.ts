@@ -8,15 +8,9 @@ import { Component, Input } from '@angular/core';
 
 export class BluesquareComponent {
 
-  @Input() set executiveReport(value: boolean) {
-    this.executiveReportView = value;
-  }
-
   @Input() numberFocus: number;
   @Input() subtitle: string;
   @Input() percentage: number;
-
-  executiveReportView = false;
 
   constructor() {}
 

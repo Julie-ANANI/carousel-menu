@@ -3,9 +3,9 @@
 .question-section-wrapper {
 
   .header {
-    background-color: $background-color;
+    background-color: white;
     border-radius: .18rem;
-    color: white;
+    color: $dark-color;
   }
 
   .tags {
@@ -15,8 +15,8 @@
   .tags-wrapper {
     font-size: 0.6875rem;
     display: inline-flex;
-    background-color: white;
-    color: $background-color;
+    background-color: $background-color;
+    color: white;
     padding: .35rem .9375rem;
     font-weight: 600;
     border-radius: 1.57rem;

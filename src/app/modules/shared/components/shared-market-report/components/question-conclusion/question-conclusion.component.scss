@@ -6,15 +6,16 @@
 
   .umi-synthesis {
     flex: 2;
+    padding: 3.15rem;
 
     .section-heading {
       font-size: 1.12rem;
-      color: white;
+      color: $dark-color;
       font-weight: 600;
     }
 
     .main-heading {
-      color: white;
+      color: $dark-color;
     }
 
     p {
@@ -43,6 +44,9 @@
     justify-content: center;
     text-align: center;
     align-items: center;
+    padding: 3.15rem;
+    background-color: $background-color;
+    color: white;
   }
 
 }
@@ -58,10 +62,6 @@
 
     .divider-wrapper {
       display: none;
-    }
-
-    .stat-wrapper {
-      padding-top: 1.57rem;
     }
 
   }

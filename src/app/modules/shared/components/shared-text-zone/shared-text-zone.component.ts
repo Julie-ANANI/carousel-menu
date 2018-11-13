@@ -45,7 +45,7 @@ export class SharedTextZoneComponent implements AfterViewInit, OnDestroy, OnInit
       paste_as_text: true,
       paste_remove_styles_if_webkit: true,
       paste_retain_style_properties: 'none',
-      toolbar : 'undo redo | bold italic | bullist numlist | link',
+      toolbar : 'undo redo | bold italic underline | bullist numlist | link',
       skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
       setup: (editor: any) => {
         this.editor = editor;
