@@ -67,7 +67,7 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  public keyupHandlerFunction(event: any) {
+  keyupHandlerFunction(event: any) {
     const objToSave = {};
     objToSave[this.question.identifier] = {
       conclusion: event['content']
@@ -79,11 +79,11 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
       });
   }
 
-  public get domSectionId(): string {
+  get domSectionId(): string {
     return this._domSectionId;
   }
 
-  public get lang() {
+  get lang() {
     return this._lang;
   }
 

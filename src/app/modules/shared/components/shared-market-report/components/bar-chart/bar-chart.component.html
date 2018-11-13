@@ -5,18 +5,19 @@
     <div class="header-wrapper">
       <div>
 
-        <div *ngFor="let tag of tags" class="tags-wrapper"
+        <!--<div *ngFor="let tag of tags" class="tags-wrapper"
              (click)="addTagFilter($event, tag)">
           #{{ tag.label | multiling:lang }}
           <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
-        </div>
+        </div>-->
 
         <app-question-conclusion
           [innovation]="innovation"
           [pieChart]="pieChart"
           [question]="question"
           [readonly]="readonly"
-          [stats]="stats">
+          [stats]="stats"
+          [tags]="tags">
         </app-question-conclusion>
 
         <!-- Abstract -->
