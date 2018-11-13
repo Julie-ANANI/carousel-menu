@@ -500,6 +500,7 @@
     background-color: white;
     border-radius: .18rem;
     color: $dark-color;
+    box-shadow: $box-shadow;
   }
 
   .professional-wrapper {
@@ -552,6 +553,10 @@
       padding-bottom: 1.57rem;
     }
 
+  }
+
+  .keyLearning-wrapper, .conclusion-wrapper {
+    box-shadow: $box-shadow;
   }
 
 }
