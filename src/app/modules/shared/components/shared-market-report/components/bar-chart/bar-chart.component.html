@@ -150,7 +150,7 @@
 
       <!-- Row 3 -->
       <div *ngIf="data.answers.length > 0" class="row-3-wrapper">
-        <div *ngFor="let answer of data.answers | answerslimiter | slice:0:2" class="answer-outer">
+        <div *ngFor="let answer of data.answers | answerslimiter | slice:0:3" class="answer-outer">
           {{ answer?.professional?.company }}
         </div>
       </div>
