@@ -20,20 +20,21 @@
     <div class="header">
       <div>
 
-        <!-- Tags -->
+        <!-- Tags
         <div *ngIf="tags" class="tags">
           <div *ngFor="let tag of tags" class="tags-wrapper" (click)="addTagFilter($event, tag)">
             #{{ tag.label | multiling:lang }}
             <span *ngIf="tag.count > 1">&nbsp;(x{{tag.count}})</span>
           </div>
         </div>
-        <!-- /Tags -->
+        /Tags -->
 
         <app-question-conclusion
           [innovation]="innovation"
           [question]="questionReceived"
           [readonly]="readonly"
-          [stats]="stats">
+          [stats]="stats"
+          [tags]="tags">
         </app-question-conclusion>
 
         <!-- Abstract -->

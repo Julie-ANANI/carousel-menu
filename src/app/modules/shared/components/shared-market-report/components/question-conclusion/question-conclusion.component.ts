@@ -4,6 +4,7 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { Innovation } from '../../../../../../models/innovation';
 import { Question } from '../../../../../../models/question';
 import { Subject } from 'rxjs/Subject';
+import { Tag } from '../../../../../../models/tag';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -17,17 +18,29 @@ export class QuestionConclusionComponent implements OnInit, OnDestroy {
     this.executiveReportView = value;
   }
 
+  @Input() set tags(value: Array<Tag>) {
+    this.receivedTags = value;
+  }
+
   @Input() readonly = true;
+
   @Input() pieChart: any;
+
   @Input() innovation: Innovation;
+
   @Input() question: Question;
-  @Input() stats: {nbAnswers: number, percentage: number};
+
+  @Input() stats: { nbAnswers: number, percentage: number };
 
   private ngUnsubscribe: Subject<any> = new Subject();
+
   private _domSectionId: string;
+
   private _lang: string;
 
   executiveReportView = false;
+
+  receivedTags: Array<Tag> = [];
 
   constructor(private innovationService: InnovationService,
               private translateService: TranslateService) {}
