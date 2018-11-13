@@ -56,7 +56,7 @@ export class SharedProsListComponent {
     this._config = config;
 
     if (this.requestId) {
-      this._searchService.getPros(this._config, this.requestId).pipe(first()).subscribe((pros: any) => {
+      this._searchService.getPros(this._config, this.requestId).subscribe((pros: any) => {
         this._pros = pros.persons;
         this._total = pros._metadata.totalCount;
 
