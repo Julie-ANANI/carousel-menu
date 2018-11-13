@@ -496,9 +496,9 @@
   }
 
   .origin-wrapper {
-    background-color: $background-color;
+    background-color: white;
     border-radius: .18rem;
-    color: white;
+    color: $dark-color;
   }
 
   .professional-wrapper {
@@ -537,12 +537,12 @@
   }
 
   .conclusion-wrapper, .keyLearning-wrapper, .goal-wrapper {
-    background-color: $background-color;
+    background-color: white;
     border-radius: .18rem;
-    color: white;
+    color: $dark-color;
 
     .main-heading {
-      color: white;
+      color: $dark-color;
     }
 
     .op-text {

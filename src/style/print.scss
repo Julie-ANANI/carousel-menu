@@ -137,6 +137,10 @@
       display: none !important;
     }
 
+    .front-wrapper, .umi-intro-print {
+      display: flex !important;
+    }
+
 
     #executive-report-wrapper, #main-page, .umi-intro-print {
       padding-top: 0;

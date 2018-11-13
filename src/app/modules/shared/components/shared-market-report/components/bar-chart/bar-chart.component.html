@@ -3,7 +3,7 @@
   <div class="bar-chart-wrapper">
 
     <div class="header-wrapper">
-      <div class="section-inline-container">
+      <div>
 
         <div *ngFor="let tag of tags" class="tags-wrapper"
              (click)="addTagFilter($event, tag)">
@@ -76,7 +76,7 @@
             </div>
 
             <div class="response-arrow-wrapper" (click)="showAnswers[i] = !showAnswers[i]">
-              <span class="bar-count">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }} ({{ barData.absolutePercentage }})</span>
+              <span class="bar-count">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translate }}</span>
               <i class="icon" aria-hidden="true" [ngClass]="showAnswers[i] ? 'icon-arrow-down' : 'icon-arrow-right'"></i>
             </div>
 
