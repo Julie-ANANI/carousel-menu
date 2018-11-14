@@ -187,7 +187,7 @@ export class SharedMarketReportComponent implements OnInit, AfterViewInit, OnDes
      * we are checking do we have any template.
      * @type {number | undefined}
      */
-    this._numberOfSections = this._innovation.executiveReport.totalSections || 0;
+    this._numberOfSections = this._innovation.executiveReport ? this._innovation.executiveReport.totalSections || 0 : 0;
 
     /***
      * assinging the value of the executive template.
