@@ -74,20 +74,18 @@ export class AutocompleteInputComponent implements OnInit {
     return this._autocompleteService.get(queryConf);
   }
 
-  autocompleListFormatter = (data: any) : SafeHtml => {
+  autocompleListFormatter(data: any): SafeHtml {
     const text = this.autocompleValueFormatter(data);
     return this._sanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
-  };
+  }
 
-  autocompleValueFormatter = (data: any) : string => {
+  autocompleValueFormatter(data: any): string {
     if (this.multiLangObjects) {
       return MultilingPipe.prototype.transform(data[this._identifier], this._translateService.currentLang);
     } else {
       return data[this._identifier];
     }
-  };
-
-
+  }
 
   addProposition(val: any): void {
     val = val ? val.get('answer').value : '';
@@ -209,9 +207,5 @@ export class AutocompleteInputComponent implements OnInit {
   get canAdd(): boolean {
     return this.inputForm.get('answer').value && (!this.onlyOne || this.answerList.length === 0);
   }
-
-  /*stringify(v: string): string {
-    return JSON.stringify(v);
-  }*/
 
 }

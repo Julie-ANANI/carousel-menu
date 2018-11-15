@@ -203,10 +203,6 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
     return this.translateService.currentLang;
   }
 
-  get ngUnsubscribe(): Subject<any> {
-    return this._ngUnsubscribe;
-  }
-
   get answers(): Array<Answer> {
     return this._answers;
   }
@@ -252,7 +248,8 @@ export class ExecutiveSectionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._ngUnsubscribe.unsubscribe();
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
 }

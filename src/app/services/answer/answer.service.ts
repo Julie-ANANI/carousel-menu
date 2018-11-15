@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Answer } from '../../models/answer';
 import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class AnswerService {
@@ -64,9 +65,10 @@ export class AnswerService {
 
   public getReportHTML(innovationId: string, lang: string): Observable<any>  {
     const url = environment.apiUrl + '/reporting/job/answers/' + innovationId + (lang ? `?lang=${lang}` : '?lang=en');
-    return this._http.get(url)
-      .map((res: Response) => res['_body'])
-      .catch((error: Response) => Observable.throw(error.text()));
+    return this._http.get(url).pipe(
+      map((res: Response) => res['_body']),
+      catchError((error: Response) => throwError(error.text()))
+    );
   }
 
   public importFromGmail(file: File): Observable<any> {
